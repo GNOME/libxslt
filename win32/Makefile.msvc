@@ -167,7 +167,7 @@ distclean : clean
 	if exist config.* del config.*
 	if exist Makefile del Makefile
 
-install : all
+install-libs : all
 	if not exist $(INCPREFIX)\$(XSLT_BASENAME) mkdir $(INCPREFIX)\$(XSLT_BASENAME)
 	if not exist $(INCPREFIX)\$(EXSLT_BASENAME) mkdir $(INCPREFIX)\$(EXSLT_BASENAME)
 	if not exist $(BINPREFIX) mkdir $(BINPREFIX)
@@ -180,30 +180,19 @@ install : all
 	copy $(BINDIR)\$(EXSLT_SO) $(SOPREFIX)
 	copy $(BINDIR)\$(EXSLT_A) $(LIBPREFIX)
 	copy $(BINDIR)\$(EXSLT_IMP) $(LIBPREFIX)
+
+install : install-libs
 	copy $(BINDIR)\*.exe $(BINPREFIX)
 	-copy $(BINDIR)\*.pdb $(BINPREFIX)
 
-install-bindist : all
-	if not exist $(INCPREFIX)\$(XSLT_BASENAME) mkdir $(INCPREFIX)\$(XSLT_BASENAME)
-	if not exist $(INCPREFIX)\$(EXSLT_BASENAME) mkdir $(INCPREFIX)\$(EXSLT_BASENAME)
-	if not exist $(BINPREFIX) mkdir $(BINPREFIX)
-	if not exist $(LIBPREFIX) mkdir $(LIBPREFIX)
-	copy $(XSLT_SRCDIR)\*.h $(INCPREFIX)\$(XSLT_BASENAME)
-	copy $(EXSLT_SRCDIR)\*.h $(INCPREFIX)\$(EXSLT_BASENAME)
-	copy $(BINDIR)\$(XSLT_SO) $(SOPREFIX)
-	copy $(BINDIR)\$(XSLT_A) $(LIBPREFIX)
-	copy $(BINDIR)\$(XSLT_IMP) $(LIBPREFIX)
-	copy $(BINDIR)\$(EXSLT_SO) $(SOPREFIX)
-	copy $(BINDIR)\$(EXSLT_A) $(LIBPREFIX)
-	copy $(BINDIR)\$(EXSLT_IMP) $(LIBPREFIX)
-	copy $(BINDIR)\*.exe $(BINPREFIX)
+install-dist : install
 
 # This is a target for me, to make a binary distribution. Not for the public use,
 # keep your hands off :-)
 BDVERSION = $(LIBXSLT_MAJOR_VERSION).$(LIBXSLT_MINOR_VERSION).$(LIBXSLT_MICRO_VERSION)
 BDPREFIX = $(XSLT_BASENAME)-$(BDVERSION).win32
 bindist : all
-	$(MAKE) /nologo PREFIX=$(BDPREFIX) SOPREFIX=$(BDPREFIX)\bin install-bindist
+	$(MAKE) /nologo PREFIX=$(BDPREFIX) SOPREFIX=$(BDPREFIX)\bin install-dist
 	cscript //NoLogo configure.js genreadme $(XSLT_BASENAME) $(BDVERSION) $(BDPREFIX)\readme.txt
 
 # Makes the compiler output directory.
