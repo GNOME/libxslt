@@ -1,3 +1,10 @@
+Mon Nov  8 11:41:32 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: fixed problem with day-of-week-in-month
+	  (bug 157592) with patch from Sal Paradise
+	* tests/exslt/date/datetime.1.out: corrected expected output
+	  after above fix
+
 Mon Nov  1 15:57:24 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* tests/general/bug-155.*, tests/general/Makefile.am,

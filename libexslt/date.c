@@ -2203,7 +2203,7 @@ exsltDateWeekInMonth (const xmlChar *dateTime)
      */
     fdiw = (_exsltDateDayInWeek(fdiy, dt->value.date.year) + 6) % 7;
 
-    ret = ((dt->value.date.day + fdiw) / 7) + 1;
+    ret = ((dt->value.date.day + fdiw - 1) / 7) + 1;
 
     exsltDateFreeDate(dt);
 
@@ -2348,7 +2348,7 @@ exsltDateDayOfWeekInMonth (const xmlChar *dateTime)
 	}
     }
 
-    ret = (dt->value.date.day / 7) + 1;
+    ret = ((dt->value.date.day -1) / 7) + 1;
 
     exsltDateFreeDate(dt);
 
