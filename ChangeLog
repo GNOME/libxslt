@@ -1,3 +1,7 @@
+Thu Oct 17 15:50:04 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc: added and tested the --path option to close #79638
+
 Thu Oct 17 15:25:46 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attributes.c: fixing bug #95826 the attribute was reset

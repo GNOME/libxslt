@@ -8,6 +8,7 @@
 
 #include "libxslt/libxslt.h"
 #include "libexslt/exslt.h"
+#include <stdio.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -150,30 +151,48 @@ xmlExternalEntityLoader defaultEntityLoader = NULL;
 
 static xmlParserInputPtr 
 xsltprocExternalEntityLoader(const char *URL, const char *ID,
-			     xmlParserCtxtPtr context) {
+			     xmlParserCtxtPtr ctxt) {
     xmlParserInputPtr ret;
-    xmlURIPtr uri;
+    warningSAXFunc warning = NULL;
 
     int i;
 
+    if ((ctxt != NULL) && (ctxt->sax != NULL)) {
+	warning = ctxt->sax->warning;
+	ctxt->sax->warning = NULL;
+    }
+
     if (defaultEntityLoader != NULL) {
-	ret = defaultEntityLoader(URL, ID, context);
-	if (ret != NULL)
+	ret = defaultEntityLoader(URL, ID, ctxt);
+	if (ret != NULL) {
+	    if (warning != NULL)
+		ctxt->sax->warning = warning;
 	    return(ret);
+	}
     }
     for (i = 0;i < nbpaths;i++) {
 	xmlChar *newURL;
 	int len;
 
-	len = xmlStrlen(paths[i]) + xmlStrlen(URL) + 5;
+	len = xmlStrlen(paths[i]) + xmlStrlen(BAD_CAST URL) + 5;
 	newURL = xmlMalloc(len);
 	if (newURL != NULL) {
 	    snprintf(newURL, len, "%s/%s", paths[i], URL);
-	    ret = defaultEntityLoader((const char *)newURL, ID, context);
+	    ret = defaultEntityLoader((const char *)newURL, ID, ctxt);
 	    xmlFree(newURL);
-	    if (ret != NULL)
+	    if (ret != NULL) {
+		if (warning != NULL)
+		    ctxt->sax->warning = warning;
 		return(ret);
+	    }
 	}
+    }
+    if (warning != NULL) {
+	ctxt->sax->warning = warning;
+	if (URL != NULL)
+	    warning(ctxt, "failed to load external entity \"%s\"\n", URL);
+	else if (ID != NULL)
+	    warning(ctxt, "failed to load external entity \"%s\"\n", ID);
     }
     return(NULL);
 }
