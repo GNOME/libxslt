@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libxslt $(LIBXML_CFLAGS)
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)/libxslt -I$(top_srcdir)/libxslt $(LIBXML_CFLAGS)
 
 lib_LTLIBRARIES = libxsltbreakpoint.la
 

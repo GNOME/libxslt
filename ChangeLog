@@ -1,3 +1,10 @@
+Thu Nov 29 09:52:38 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+        Build patch from  Peter Williams  <peterw@ximian.com>
+	* breakpoint/Makefile.am (INCLUDES): meed $(top_builddir)/libxslt.
+	* doc/Makefile.am ($(PAGES)): xslt.html and site.xsl live in
+	  $(srcdir), not the build directory.
+
 Wed Nov 28 11:17:04 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* doc/FAQ.html doc/site.xsl doc/*.html doc/Makefile.am: added an FAQ

@@ -19,8 +19,8 @@ man_MANS = xsltproc.1
 
 all : $(PAGES)
 
-$(PAGES): xslt.html site.xsl
-	../xsltproc/xsltproc --html site.xsl xslt.html > index.html
+$(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl
+	../xsltproc/xsltproc --html $(srcdir)/site.xsl $(srcdir)/xslt.html > index.html
 
 scan:
 	gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR) --ignore-headers="acconfig.h config.h win32config.h"
