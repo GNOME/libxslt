@@ -204,7 +204,6 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
 		 xsltTransformFunction function ATTRIBUTE_UNUSED) {
     xsltStylePreCompPtr comp;
     xmlChar *filename = NULL;
-    xmlChar *URL = NULL;
 
     comp = xsltNewStylePreComp(style, XSLT_FUNC_DOCUMENT);
     if (comp == NULL)
@@ -250,12 +249,7 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
     if (!comp->has_filename) {
 	goto error;
     }
-
-    if (filename != NULL) {
-	comp->filename = filename;
-    } else {
-	comp->filename = NULL;
-    }
+    comp->filename = filename;
 
 error:
     return ((xsltElemPreCompPtr) comp);

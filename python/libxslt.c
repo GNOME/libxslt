@@ -1,5 +1,5 @@
 /*
- * libxslt.c: this modules implements the main part of the glue of the
+  libxslt.c: this modules implements the main part of the glue of the
  *           libxslt library and the Python interpreter. It provides the
  *           entry points where an automatically generated stub is either
  *           unpractical or would not match cleanly the Python model.
@@ -195,7 +195,7 @@ libxslt_xsltElementPreCompCallback(xsltStylesheetPtr style, xmlNodePtr inst,
 	return (NULL);
     }
 
-    args = Py_BuildValue("(OOO)", 
+    args = Py_BuildValue((char *)"(OOO)", 
 	    libxslt_xsltStylesheetPtrWrap(style),
 	    libxml_xmlNodePtrWrap(inst),
 	    pyobj_element_f);
@@ -252,7 +252,7 @@ libxslt_xsltElementTransformCallback(xsltTransformContextPtr ctxt,
 	return;
     }
 
-    args = Py_BuildValue("OOOO",
+    args = Py_BuildValue((char *)"OOOO",
     	libxslt_xsltTransformContextPtrWrap(ctxt),
     	libxml_xmlNodePtrWrap(node),
     	libxml_xmlNodePtrWrap(inst),
@@ -503,7 +503,7 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
 }
 
 PyObject *
-libxslt_xsltSaveResultToString(PyObject *self, PyObject *args) {
+libxslt_xsltSaveResultToString(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
     PyObject *py_retval;        /* our final return value, a python string   */ 
     xmlChar  *buffer;
     int       size    = 0;
@@ -554,7 +554,7 @@ static PyObject *libxslt_xsltPythonErrorFuncHandler = NULL;
 static PyObject *libxslt_xsltPythonErrorFuncCtxt = NULL;
 
 static void
-libxslt_xsltErrorFuncHandler(ATTRIBUTE_UNUSED void *ctx, const char *msg,
+libxslt_xsltErrorFuncHandler(void *ctx ATTRIBUTE_UNUSED, const char *msg,
                            ...)
 {
     int size;
@@ -621,7 +621,7 @@ libxslt_xsltErrorInitialize(void)
 }
 
 PyObject *
-libxslt_xsltRegisterErrorHandler(ATTRIBUTE_UNUSED PyObject * self,
+libxslt_xsltRegisterErrorHandler(PyObject * self ATTRIBUTE_UNUSED,
                                PyObject * args)
 {
     PyObject *py_retval;

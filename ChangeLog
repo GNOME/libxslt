@@ -1,3 +1,13 @@
+Tue Nov  4 19:08:53 PST 2003 William Brack <wbrack@mmm.com.hk>
+
+	Minor enhancements to eliminate compile/test warnings
+	* libxslt/xsltconfig.h.in, libexstl/exsltconfig.h.in:
+	  changed macro ATTRIBUTE_UNUSED for gcc so that, if undefined,
+	  it's defined as __attribute__((unused))
+	* python/libxslt.c: fixed ATTRIBUTE_UNUSED to appear after
+	  variable declaration
+	* libxslt/preproc.c: minor change to get rid of unused var/code
+	  
 Tue Nov  4 14:21:06 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* doc/* NEWS: preparing release 1.1.0
