@@ -99,7 +99,7 @@
           particular application which explains the various windows
           and features of the application.  Application Manuals
           typically use screenshots (PNG format) for clarity.  Writing
-          application manuals is discussed in more detail in <a href="indexs06.html" title="Writing Application and Applet Manuals">the section called &#x201C;Writing Application and Applet Manuals&#x201D;</a> below.
+          application manuals is discussed in more detail in <a href="indexs06.html" title="Writing Application and Applet Manuals">the section called &#8220;Writing Application and Applet Manuals&#8221;</a> below.
         </p>
 </div>
 <div class="sect3">
@@ -115,7 +115,7 @@
           GNOME Help Browser.  The help
           browser should show either the first page of the application
           manual, or else the relevant page thereof. Application help
-          is described in more detail in <a href="indexs08.html" title="Application Help Buttons">the section called &#x201C;Application Help Buttons&#x201D;</a> below.
+          is described in more detail in <a href="indexs08.html" title="Application Help Buttons">the section called &#8220;Application Help Buttons&#8221;</a> below.
         </p>
 </div>
 <div class="sect3">
@@ -129,7 +129,7 @@
           clicking on an icon or by right clicking on the application
           part and selecting &quot;What's This&quot; or whatever is decided on
           at the time.  Context sensitive help is described in more
-          detail in <a href="indexs10.html" title="Writing Context Sensitive Help (coming in GNOME-2.0)">the section called &#x201C;Writing Context Sensitive Help (coming in GNOME-2.0)&#x201D;</a>
+          detail in <a href="indexs10.html" title="Writing Context Sensitive Help (coming in GNOME-2.0)">the section called &#8220;Writing Context Sensitive Help (coming in GNOME-2.0)&#8221;</a>
           below.
         </p>
 </div>

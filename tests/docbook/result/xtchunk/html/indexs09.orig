@@ -72,7 +72,7 @@
 <a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2909858"></a>Developer Information</h3>
+<a name="id2910081"></a>Developer Information</h3>
 <p>
           This section is for developers.  Documentation authors
           generally do not need to know this material.
@@ -101,7 +101,7 @@ _(&quot;Manual&quot;), &amp;open_manual, NULL);
         You will need to write a simple callback function to open the
         help browser to the appropriate document.  This is done using
         the <tt>gnome_help_file_find_file</tt> function,
-        as described in <a href="indexs08.html" title="Application Help Buttons">the section called &#x201C;Application Help Buttons&#x201D;</a>.
+        as described in <a href="indexs08.html" title="Application Help Buttons">the section called &#8220;Application Help Buttons&#8221;</a>.
       </p>
 <p>
         You will also want to add an About menu

@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2757404" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2757725" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
@@ -93,7 +93,7 @@
           <fo:block keep-with-next.within-column="always" hyphenate="false">Graphics Test Document Title</fo:block>
         </fo:block>
       </fo:block>
-      <fo:block id="id2762073">
+      <fo:block id="id2762394">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
@@ -118,7 +118,7 @@
           <fo:external-graphic src="url(file:emc2.png)" content-width="20pt" content-height="20pt" width="auto" height="auto"/>
         </fo:block>
       </fo:block>
-      <fo:block id="id2762192">
+      <fo:block id="id2762513">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
@@ -130,7 +130,7 @@
         <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">entityref: <fo:external-graphic src="url(test/emc2.png)" content-width="auto" content-height="auto" width="auto" height="auto"/></fo:block>
         <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">fileref, scale=200: <fo:external-graphic src="url(file:emc2.png)" content-width="auto" content-height="auto" width="auto" height="auto"/></fo:block>
       </fo:block>
-      <fo:block id="id2762272">
+      <fo:block id="id2762593">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
