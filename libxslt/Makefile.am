@@ -1,5 +1,4 @@
-INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libxslt \
-	 $(LIBXML_CFLAGS) $(CFLAGS)
+INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libxslt $(LIBXML_CFLAGS)
 
 lib_LTLIBRARIES = libxslt.la
 

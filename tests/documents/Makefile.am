@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../xsltproc ; make xsltproc)
+	@(cd ../../xsltproc ;  xsltproc)
 
 EXTRA_DIST = bredfort.css index.xml system.xml \
              bredfort.xsl menu.xml worklog.xml \

@@ -37,7 +37,7 @@ check-local: tests
 dummy:
 
 tests: dummy
-	@(cd tests ; make test)
+	@(cd tests ; $(MAKE) test)
 
 cleantar:
 	@(rm -f libxslt*.tar.gz)
