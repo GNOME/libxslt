@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<pi>
+  one prefix3.14suffix
+  two _-3.14_
+  three _-003.1415_
+  four _(3.1)_
+  five prefix3*14suffix</pi>

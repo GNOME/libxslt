@@ -109,7 +109,7 @@ YES			name = { ncname }
 
 YES		    xsl:comment
 
-NO		    xsl:copy
+YES		    xsl:copy
 NO			use-attribute-sets = qnames
 
 YES		    xsl:value-of

@@ -25,6 +25,7 @@
 #include "pattern.h"
 #include "variables.h"
 #include "namespaces.h"
+#include "attributes.h"
 #include "xsltutils.h"
 
 #define DEBUG_PARSING
@@ -68,6 +69,102 @@ xsltIsBlank(xmlChar *str) {
  *		Routines to handle XSLT data structures			*
  *									*
  ************************************************************************/
+static xsltDecimalFormatPtr
+xsltNewDecimalFormat(xmlChar *name)
+{
+    xsltDecimalFormatPtr self;
+
+    self = xmlMalloc(sizeof(xsltDecimalFormat));
+    if (self != NULL) {
+	self->next = NULL;
+	self->name = (name == NULL) ? name : xmlStrdup(name);
+	
+	/* Default values */
+	self->digit = xmlStrdup(BAD_CAST("0"));
+	self->patternSeparator = xmlStrdup(BAD_CAST(";"));
+	self->decimalPoint = xmlStrdup(BAD_CAST("."));
+	self->grouping = xmlStrdup(BAD_CAST(","));
+	self->percent = xmlStrdup(BAD_CAST("%"));
+	self->permille = xmlStrdup(BAD_CAST("?"));
+	self->zeroDigit = xmlStrdup(BAD_CAST("#"));
+	self->minusSign = xmlStrdup(BAD_CAST("-"));
+	self->infinity = xmlStrdup(BAD_CAST("Infinity"));
+	self->noNumber = xmlStrdup(BAD_CAST("NaN"));
+    }
+    return self;
+}
+
+static void
+xsltFreeDecimalFormat(xsltDecimalFormatPtr self)
+{
+    if (self != NULL) {
+	if (self->digit)
+	    xmlFree(self->digit);
+	if (self->patternSeparator)
+	    xmlFree(self->patternSeparator);
+	if (self->decimalPoint)
+	    xmlFree(self->decimalPoint);
+	if (self->grouping)
+	    xmlFree(self->grouping);
+	if (self->percent)
+	    xmlFree(self->percent);
+	if (self->permille)
+	    xmlFree(self->permille);
+	if (self->zeroDigit)
+	    xmlFree(self->zeroDigit);
+	if (self->minusSign)
+	    xmlFree(self->minusSign);
+	if (self->infinity)
+	    xmlFree(self->infinity);
+	if (self->noNumber)
+	    xmlFree(self->noNumber);
+	if (self->name)
+	    xmlFree(self->name);
+	xmlFree(self);
+    }
+}
+
+static void
+xsltFreeDecimalFormatList(xsltStylesheetPtr self)
+{
+    xsltDecimalFormatPtr iter;
+    xsltDecimalFormatPtr tmp;
+
+    if (self == NULL)
+	return;
+    
+    iter = self->decimalFormat;
+    while (iter != NULL) {
+	tmp = iter->next;
+	xsltFreeDecimalFormat(iter);
+	iter = tmp;
+    }
+}
+
+/**
+ * xsltDecimalFormatGetByName:
+ * @sheet: the XSLT stylesheet
+ * @name: the decimal-format name to find
+ *
+ * Find decimal-format by name
+ */
+xsltDecimalFormatPtr
+xsltDecimalFormatGetByName(xsltStylesheetPtr sheet, xmlChar *name)
+{
+    xsltDecimalFormatPtr result;
+
+    if (name == NULL)
+	return sheet->decimalFormat;
+    
+    for (result = sheet->decimalFormat->next;
+	 result != NULL;
+	 result = result->next) {
+	if (xmlStrEqual(name, result->name))
+	    break; /* for */
+    }
+    return result;
+}
+
 
 /**
  * xsltNewTemplate:
@@ -147,6 +244,7 @@ xsltNewStylesheet(void) {
     memset(cur, 0, sizeof(xsltStylesheet));
     cur->omitXmlDeclaration = -1;
     cur->standalone = -1;
+    cur->decimalFormat = xsltNewDecimalFormat(NULL);
     cur->indent = -1;
     return(cur);
 }
@@ -163,7 +261,9 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
 	return;
 
     xsltFreeTemplateHashes(sheet);
+    xsltFreeDecimalFormatList(sheet);
     xsltFreeTemplateList(sheet->templates);
+    xsltFreeAttributeSetsHashes(sheet);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
     if (sheet->variables != NULL)
@@ -347,6 +447,108 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 }
 
 /**
+ * xsltParseStylesheetDecimalFormat:
+ * @style:  the XSLT stylesheet
+ * @cur:  the "decimal-format" element
+ *
+ * parse an XSLT stylesheet decimal-format element and
+ * and record the formatting characteristics
+ */
+void
+xsltParseStylesheetDecimalFormat(xsltStylesheetPtr sheet, xmlNodePtr cur)
+{
+    xmlChar *prop;
+    xsltDecimalFormatPtr format;
+    xsltDecimalFormatPtr iter;
+    
+    if ((cur == NULL) || (sheet == NULL))
+	return;
+
+    format = sheet->decimalFormat;
+    
+    prop = xmlGetNsProp(cur, BAD_CAST("name"), XSLT_NAMESPACE);
+    if (prop != NULL) {
+	format = xsltDecimalFormatGetByName(sheet, prop);
+	if (format != NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "xsltParseStylesheetDecimalFormat: %s already exists\n", prop);
+	    return;
+	}
+	format = xsltNewDecimalFormat(prop);
+	if (format == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "xsltParseStylesheetDecimalFormat: failed creating new decimal-format\n");
+	    return;
+	}
+	/* Append new decimal-format structure */
+	for (iter = sheet->decimalFormat; iter->next; iter = iter->next)
+	    ;
+	if (iter)
+	    iter->next = format;
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"decimal-separator", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->decimalPoint != NULL) xmlFree(format->decimalPoint);
+	format->decimalPoint  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"grouping-separator", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->grouping != NULL) xmlFree(format->grouping);
+	format->grouping  = prop;
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"infinity", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->infinity != NULL) xmlFree(format->infinity);
+	format->infinity  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"minus-sign", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->minusSign != NULL) xmlFree(format->minusSign);
+	format->minusSign  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"NaN", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->noNumber != NULL) xmlFree(format->noNumber);
+	format->noNumber  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"percent", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->percent != NULL) xmlFree(format->percent);
+	format->percent  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"per-mille", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->permille != NULL) xmlFree(format->permille);
+	format->permille  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"zero-digit", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->zeroDigit != NULL) xmlFree(format->zeroDigit);
+	format->zeroDigit  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"digit", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->digit != NULL) xmlFree(format->digit);
+	format->digit  = prop;
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"pattern-separator", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (format->patternSeparator != NULL) xmlFree(format->patternSeparator);
+	format->patternSeparator  = prop;
+    }
+}
+
+/**
  * xsltParseStylesheetPreserveSpace:
  * @style:  the XSLT stylesheet
  * @template:  the "preserve-space" element
@@ -447,6 +649,91 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 }
 
 /**
+ * xsltParseRemoveBlanks:
+ * @style:  the XSLT stylesheet
+ *
+ * Clean-up the stylesheet content from unwanted ignorable blank nodes
+ * and process xslt:text
+ */
+void
+xsltParseRemoveBlanks(xsltStylesheetPtr style) {
+    xmlNodePtr cur, delete;
+
+    /*
+     * This content comes from the stylesheet
+     * For stylesheets, the set of whitespace-preserving
+     * element names consists of just xsl:text.
+     */
+    cur = (xmlNodePtr) style->doc;
+    if (cur == NULL)
+	return;
+    cur = cur->children;
+    delete = NULL;
+    while (cur != NULL) {
+	if (delete != NULL) {
+#ifdef DEBUG_PARSING
+	    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltParseRemoveBlanks: removing ignorable blank node\n");
+#endif
+	    xmlUnlinkNode(delete);
+	    xmlFreeNode(delete);
+	    delete = NULL;
+	}
+	if (IS_XSLT_ELEM(cur)) {
+	    if (IS_XSLT_NAME(cur, "text")) {
+		goto skip_children;
+	    }
+	} else if (cur->type == XML_TEXT_NODE) {
+	    if (IS_BLANK_NODE(cur)) {
+		if (xmlNodeGetSpacePreserve(cur) != 1) {
+		    delete = cur;
+		}
+	    }
+	} else if (cur->type != XML_ELEMENT_NODE) {
+	    delete = cur;
+	}
+
+	/*
+	 * Skip to next node
+	 */
+	if (cur->children != NULL) {
+	    if (cur->children->type != XML_ENTITY_DECL) {
+		cur = cur->children;
+		continue;
+	    }
+	}
+skip_children:
+	if (cur->next != NULL) {
+	    cur = cur->next;
+	    continue;
+	}
+	
+	do {
+	    cur = cur->parent;
+	    if (cur == NULL)
+		break;
+	    if (cur == (xmlNodePtr) style->doc) {
+		cur = NULL;
+		break;
+	    }
+	    if (cur->next != NULL) {
+		cur = cur->next;
+		break;
+	    }
+	} while (cur != NULL);
+    }
+    if (delete != NULL) {
+#ifdef DEBUG_PARSING
+	xsltGenericDebug(xsltGenericDebugContext,
+	 "xsltParseRemoveBlanks: removing ignorable blank node\n");
+#endif
+	xmlUnlinkNode(delete);
+	xmlFreeNode(delete);
+	delete = NULL;
+    }
+}
+
+/**
  * xsltParseTemplateContent:
  * @style:  the XSLT stylesheet
  * @ret:  the "template" structure
@@ -472,7 +759,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 	if (delete != NULL) {
 #ifdef DEBUG_PARSING
 	    xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltParseStylesheetTemplate: removing ignorable blank node\n");
+	     "xsltParseStylesheetTemplate: removing text\n");
 #endif
 	    xmlUnlinkNode(delete);
 	    xmlFreeNode(delete);
@@ -510,14 +797,6 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 		delete = cur;
 		goto skip_children;
 	    }
-	} else if (cur->type == XML_TEXT_NODE) {
-	    if (IS_BLANK_NODE(cur)) {
-		if (xmlNodeGetSpacePreserve(cur) != 1) {
-		    delete = cur;
-		}
-	    }
-	} else if (cur->type != XML_ELEMENT_NODE) {
-	    delete = cur;
 	}
 
 	/*
@@ -552,7 +831,7 @@ skip_children:
     if (delete != NULL) {
 #ifdef DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltParseStylesheetTemplate: removing ignorable blank node\n");
+	 "xsltParseStylesheetTemplate: removing text\n");
 #endif
 	xmlUnlinkNode(delete);
 	xmlFreeNode(delete);
@@ -564,17 +843,6 @@ skip_children:
      */
     cur = template->children;
     while (cur != NULL) {
-	/*
-	 * Remove Blank nodes found at this level.
-	 */
-	if (IS_BLANK_NODE(cur)) {
-	    xmlNodePtr blank = cur;
-
-            cur = cur->next;
-	    xmlUnlinkNode(blank);
-	    xmlFreeNode(blank);
-	    continue;
-	}
 	if ((IS_XSLT_ELEM(cur)) && (!(IS_XSLT_NAME(cur, "param"))))
 	    break;
 	cur = cur->next;
@@ -584,17 +852,6 @@ skip_children:
      * Browse the remaining of the template
      */
     while (cur != NULL) {
-	/*
-	 * Remove Blank nodes found at this level.
-	 */
-	if (IS_BLANK_NODE(cur)) {
-	    xmlNodePtr blank = cur;
-
-            cur = cur->next;
-	    xmlUnlinkNode(blank);
-	    xmlFreeNode(blank);
-	    continue;
-	}
 	if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "param"))) {
 	    xmlNodePtr param = cur;
 
@@ -745,10 +1002,6 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	cur = cur->next;
     }
     while (cur != NULL) {
-	if (IS_BLANK_NODE(cur)) {
-            cur = cur->next;
-	    continue;
-	}
 	if (!(IS_XSLT_ELEM(cur))) {
 #ifdef DEBUG_PARSING
 	    xsltGenericDebug(xsltGenericDebugContext,
@@ -772,9 +1025,9 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
         } else if (IS_XSLT_NAME(cur, "key")) {
 	    TODO /* Handle key */
         } else if (IS_XSLT_NAME(cur, "decimal-format")) {
-	    TODO /* Handle decimal-format */
+	    xsltParseStylesheetDecimalFormat(style, cur);
         } else if (IS_XSLT_NAME(cur, "attribute-set")) {
-	    TODO /* Handle attribute-set */
+	    xsltParseStylesheetAttributeSet(style, cur);
         } else if (IS_XSLT_NAME(cur, "variable")) {
 	    xsltParseGlobalVariable(style, cur);
         } else if (IS_XSLT_NAME(cur, "param")) {
@@ -819,9 +1072,10 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
     ret = xsltNewStylesheet();
     if (ret == NULL)
 	return(NULL);
-
+    
     /*
-     * First step, locate the xsl:stylesheet element and the
+     * First steps, remove blank nodes,
+     * locate the xsl:stylesheet element and the
      * namespace declaration.
      */
     cur = xmlDocGetRootElement(doc);
@@ -833,6 +1087,7 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
     }
 
     ret->doc = doc;
+    xsltParseRemoveBlanks(ret);
     if ((IS_XSLT_ELEM(cur)) && 
 	((IS_XSLT_NAME(cur, "stylesheet")) ||
 	 (IS_XSLT_NAME(cur, "transform")))) {

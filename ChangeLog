@@ -1,3 +1,16 @@
+Mon Jan 29 18:40:23 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* tests/numbers/Makefile.am tests/numbers/format-number.*
+	  tests/Makefile.am configure.in: added number formattting
+	  test from Bjorn
+	* libxslt/attributes.[ch]: separated attribute support, started
+	  add support for attribute-sets
+	* libxslt/functions.[ch]: update for number and formatting
+	  from Bjorn
+	* libxslt/transform.c libxslt/xslt.c libxslt/xsltInternals.h:
+	  cleanups updates, etc ...
+
 Mon Jan 29 00:53:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES: updated

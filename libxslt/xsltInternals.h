@@ -62,6 +62,27 @@ struct _xsltTemplate {
 };
 
 /*
+ * Data structure of decimal-format
+ */
+typedef struct _xsltDecimalFormat {
+    struct _xsltDecimalFormat *next; /* chained list */
+    xmlChar *name;
+    /* Used for interpretation of pattern */
+    xmlChar *digit;
+    xmlChar *patternSeparator;
+    /* May appear in result */
+    xmlChar *minusSign;
+    xmlChar *infinity;
+    xmlChar *noNumber; /* Not-a-number */
+    /* Used for interpretation of pattern and may appear in result */
+    xmlChar *decimalPoint;
+    xmlChar *grouping;
+    xmlChar *percent;
+    xmlChar *permille;
+    xmlChar *zeroDigit;
+} xsltDecimalFormat, *xsltDecimalFormatPtr;
+
+/*
  * The in-memory structure corresponding to an XSLT Stylesheet
  * NOTE: most of the content is simply linked from the doc tree
  *       structure, no specific allocation is made.
@@ -107,6 +128,11 @@ struct _xsltStylesheet {
     xmlHashTablePtr nsAliases;	/* the namespace alias hash tables */
 
     /*
+     * Attribute sets
+     */
+    xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
+
+    /*
      * Output related stuff.
      */
     xmlChar *method;		/* the output method */
@@ -114,6 +140,9 @@ struct _xsltStylesheet {
     xmlChar *version;		/* version string */
     xmlChar *encoding;		/* encoding string */
     int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
+
+    /* Number formatting */
+    xsltDecimalFormatPtr decimalFormat;
     int standalone;             /* standalone = "yes" | "no" */
     xmlChar *doctypePublic;     /* doctype-public string */
     xmlChar *doctypeSystem;     /* doctype-system string */
@@ -163,6 +192,8 @@ struct _xsltTransformContext {
 
 /*
  * Functions associated to the internal types
+xsltDecimalFormatPtr	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
+						   xmlChar *name);
  */
 xsltStylesheetPtr	xsltParseStylesheetFile	(const xmlChar* filename);
 void			xsltFreeStylesheet	(xsltStylesheetPtr sheet);

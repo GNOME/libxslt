@@ -7,7 +7,7 @@
  * See Copyright for the status of this software.
  *
  * Daniel.Veillard@imag.fr
- * Bjorn Reese <breese@mail1.stofanet.dk> for number formatting
+ * Bjorn Reese <breese@users.sourceforge.net> for number formatting
  */
 
 #include "xsltconfig.h"
@@ -57,17 +57,8 @@
 
 #define DIGIT_LIST "0123456789"
 #define SYMBOL_QUOTE             ((xmlChar)'\'')
-#define SYMBOL_PATTERN_SEPARATOR ((xmlChar)';')
-#define SYMBOL_ZERO_DIGIT        ((xmlChar)'#')
-#define SYMBOL_DIGIT             ((xmlChar)'0')
-#define SYMBOL_DECIMAL_POINT     ((xmlChar)'.')
-#define SYMBOL_GROUPING          ((xmlChar)',')
-#define SYMBOL_MINUS             ((xmlChar)'-')
-#define SYMBOL_PERCENT           ((xmlChar)'%')
-#define SYMBOL_PERMILLE          ((xmlChar)'?')
 #define ID_STRING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-static struct _xsltDecimalFormat globalDecimalFormat;
 
 /************************************************************************
  *									*
@@ -291,27 +282,26 @@ xsltUnparsedEntityURIFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 /* TODO
  *
- *  The JDK description does not tell where percent and permille may
- *  and may not appear within the format string.
- *
- *  Error handling.
+ * The JDK description does not tell where they may and may not appear
+ * within the format string. Nor does it tell what happens to integer
+ * values that does not fit into the format string.
  *
  *  Inf and NaN not tested.
  */
 #define IS_SPECIAL(self,letter) \
-    ((letter == self->zeroDigit) || \
-     (letter == self->digit) || \
-     (letter == self->decimalPoint) || \
-     (letter == self->grouping) || \
-     (letter == self->minusSign) || \
-     (letter == self->percent) || \
-     (letter == self->permille)) \
+    (((letter) == (self)->zeroDigit[0]) || \
+     ((letter) == (self)->digit[0]) || \
+     ((letter) == (self)->decimalPoint[0]) || \
+     ((letter) == (self)->grouping[0]) || \
+     ((letter) == (self)->minusSign[0]) || \
+     ((letter) == (self)->percent[0]) || \
+     ((letter) == (self)->permille[0]))
 
 static xmlXPathError
-PrivateDecimalFormat(xsltDecimalFormatPtr self,
-		     xmlChar *format,
-		     double number,
-		     xmlChar **result)
+xsltFormatNumberConversion(xsltDecimalFormatPtr self,
+			   xmlChar *format,
+			   double number,
+			   xmlChar **result)
 {
     xmlXPathError status = XPATH_EXPRESSION_OK;
     xmlChar *the_format;
@@ -328,6 +318,8 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
     int decimal_point;
     double divisor;
     int digit;
+    int is_percent = FALSE;
+    int is_permille = FALSE;
 
     buffer = xmlBufferCreate();
     if (buffer == NULL) {
@@ -337,7 +329,7 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 
     /* Find positive or negative template */
     the_format = (xmlChar *)xmlStrchr(format,
-				      self->patternSeparator);
+				      self->patternSeparator[0]);
     if ((the_format != NULL) && (number < 0.0)) {
 	/* Use negative template */
 	the_format++;
@@ -385,7 +377,7 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 	group = 0;
 	for ( ; i < length; i++) {
 	    
-	    if (the_format[i] == self->digit) {
+	    if (the_format[i] == self->digit[0]) {
 		if (decimal_point) {
 		    if (fraction_zeroes > 0) {
 			status = XPATH_EXPR_ERROR;
@@ -397,7 +389,7 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 		    group++;
 		}
 		
-	    } else if (the_format[i] == self->zeroDigit) {
+	    } else if (the_format[i] == self->zeroDigit[0]) {
 		if (decimal_point)
 		    fraction_zeroes++;
 		else {
@@ -409,14 +401,14 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 		    group++;
 		}
 		
-	    } else if (the_format[i] == self->grouping) {
+	    } else if (the_format[i] == self->grouping[0]) {
 		if (decimal_point) {
 		    status = XPATH_EXPR_ERROR;
 		    goto DECIMAL_FORMAT_END;
 		}
 		group = 0;
 		
-	    } else if (the_format[i] == self->decimalPoint) {
+	    } else if (the_format[i] == self->decimalPoint[0]) {
 		if (decimal_point) {
 		    status = XPATH_EXPR_ERROR;
 		    goto DECIMAL_FORMAT_END;
@@ -426,13 +418,22 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 	    } else
 		break;
 	}
+	if (the_format[i] == self->percent[0]) {
+	    is_percent = TRUE;
+	} else if (the_format[i] == self->permille[0]) {
+	    is_permille = TRUE;
+	}
 	
 	/* Format the number */
 
 	if (use_minus)
-	    xmlBufferAdd(buffer, &(self->minusSign), 1);
+	    xmlBufferAdd(buffer, self->minusSign, 1);
 
 	number = fabs(number);
+	if (is_percent)
+	    number /= 100.0;
+	else if (is_permille)
+	    number /= 1000.0;
 	number = floor(0.5 + number * pow(10.0, (double)(fraction_digits + fraction_zeroes)));
 	
 	/* Integer part */
@@ -449,7 +450,7 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 	}
 	
 	if (decimal_point)
-	    xmlBufferAdd(buffer, &(self->decimalPoint), 1);
+	    xmlBufferAdd(buffer, self->decimalPoint, 1);
 
 	/* Fraction part */
 	for (j = fraction_digits + fraction_zeroes; j > 0; j--) {
@@ -463,6 +464,11 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 	}
     }
 
+    if (is_percent)
+	xmlBufferAdd(buffer, self->percent, 1);
+    else if (is_permille)
+	xmlBufferAdd(buffer, self->permille, 1);
+    
     /* Suffix */
     for ( ; i < length; i++) {
 	if (the_format[i] == SYMBOL_QUOTE)
@@ -483,13 +489,18 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
     xmlXPathObjectPtr numberObj = NULL;
     xmlXPathObjectPtr formatObj = NULL;
     xmlXPathObjectPtr decimalObj = NULL;
+    xsltStylesheetPtr sheet;
+    xsltDecimalFormatPtr formatValues;
     xmlChar *result;
+
+    sheet = ((xsltTransformContextPtr)ctxt->context->extra)->style;
+    formatValues = sheet->decimalFormat;
     
     switch (nargs) {
     case 3:
 	CAST_TO_STRING;
 	decimalObj = valuePop(ctxt);
-	globalDecimalFormat.decimalPoint = decimalObj->stringval[0]; /* hack */
+	formatValues = xsltDecimalFormatGetByName(sheet, decimalObj->stringval);
 	/* Intentional fall-through */
     case 2:
 	CAST_TO_STRING;
@@ -502,10 +513,10 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
 	return;
     }
 
-    if (PrivateDecimalFormat(&globalDecimalFormat,
-			     formatObj->stringval,
-			     numberObj->floatval,
-			     &result) == XPATH_EXPRESSION_OK) {
+    if (xsltFormatNumberConversion(formatValues,
+				   formatObj->stringval,
+				   numberObj->floatval,
+				   &result) == XPATH_EXPRESSION_OK) {
 	valuePush(ctxt, xmlXPathNewString(result));
     }
     
@@ -722,17 +733,4 @@ xsltRegisterAllFunctions(xmlXPathContextPtr ctxt) {
                          xsltElementAvailableFunction);
     xmlXPathRegisterFunc(ctxt, (const xmlChar *)"function-available",
                          xsltFunctionAvailableFunction);
-    
-    globalDecimalFormat.digit = SYMBOL_DIGIT;
-    globalDecimalFormat.patternSeparator = SYMBOL_PATTERN_SEPARATOR;
-    
-    globalDecimalFormat.decimalPoint = SYMBOL_DECIMAL_POINT;
-    globalDecimalFormat.grouping = SYMBOL_GROUPING;
-    globalDecimalFormat.percent = SYMBOL_PERCENT;
-    globalDecimalFormat.permille = SYMBOL_PERMILLE; /* #x2030 */
-    globalDecimalFormat.zeroDigit = SYMBOL_ZERO_DIGIT;
-    
-    globalDecimalFormat.minusSign = '-';
-    globalDecimalFormat.infinity = xmlStrdup(BAD_CAST("")); /* #x221E */
-    globalDecimalFormat.noNumber = xmlStrdup(BAD_CAST("")); /* #xFFFD */
 }

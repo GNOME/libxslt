@@ -350,6 +350,35 @@ error:
 }
 
 /**
+ * xsltCopy:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt copy node
+ *
+ * Process the xslt copy node on the source node
+ */
+void
+xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop;
+    xmlNodePtr copy;
+
+    if ((node->type != XML_DOCUMENT_NODE) &&
+	(node->type != XML_HTML_DOCUMENT_NODE)) {
+	copy = xsltCopyNode(ctxt, node, ctxt->insert);
+	if (node->type == XML_ELEMENT_NODE) {
+	    prop = xmlGetNsProp(inst, (const xmlChar *)"use-attribute-sets",
+				XSLT_NAMESPACE);
+	    if (prop != NULL) {
+		TODO /* xsl:copy use-attribute-sets */
+	    }
+	}
+    }
+
+    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+}
+
+/**
  * xsltComment:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -427,94 +456,6 @@ error:
         xmlFree(ncname);
     if (value != NULL)
 	xmlFree(value);
-}
-
-/**
- * xsltAttribute:
- * @ctxt:  a XSLT process context
- * @node:  the node in the source tree.
- * @inst:  the xslt attribute node
- *
- * Process the xslt attribute node on the source node
- */
-void
-xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
-    xmlChar *prop = NULL;
-    xmlChar *ncname = NULL;
-    xmlChar *prefix = NULL;
-    xmlChar *value = NULL;
-    xmlNsPtr ns = NULL;
-    xmlAttrPtr attr;
-
-
-    if (ctxt->insert == NULL)
-	return;
-    if (ctxt->insert->children != NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:attribute : node has already children\n");
-	return;
-    }
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
-    if (prop == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:attribute : name is missing\n");
-	goto error;
-    }
-
-    ncname = xmlSplitQName2(prop, &prefix);
-    if (ncname == NULL) {
-	ncname = prop;
-	prop = NULL;
-	prefix = NULL;
-    }
-    if (xmlStrEqual(ncname, (const xmlChar *) "xmlns")) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:attribute : xmlns forbidden\n");
-	goto error;
-    }
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
-    if (prop != NULL) {
-	TODO /* xsl:attribute namespace */
-	xmlFree(prop);
-	return;
-    } else {
-	if (prefix != NULL) {
-	    ns = xmlSearchNs(inst->doc, inst, prefix);
-	    if (ns == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-		    "no namespace bound to prefix %s\n", prefix);
-	    } else {
-		ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
-	    }
-	}
-    }
-    
-
-    value = xsltEvalTemplateString(ctxt, node, inst);
-    if (value == NULL) {
-	if (ns) {
-	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, 
-		                (const xmlChar *)"");
-	} else
-	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
-    } else {
-	if (ns) {
-	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, value);
-	} else
-	    attr = xmlSetProp(ctxt->insert, ncname, value);
-	
-    }
-
-error:
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
-    if (value != NULL)
-        xmlFree(value);
 }
 
 /**
@@ -1124,6 +1065,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltValueOf(ctxt, node, cur);
 		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "copy")) {
+		ctxt->insert = insert;
+		xsltCopy(ctxt, node, cur);
+		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "copy-of")) {
 		ctxt->insert = insert;
 		xsltCopyOf(ctxt, node, cur);
@@ -1173,6 +1118,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		}
 		xsltCallTemplate(ctxt, node, cur);
 	    } else if (IS_XSLT_NAME(cur, "message")) {
+		xsltMessage(ctxt, node, cur);
 	    } else {
 #ifdef DEBUG_PROCESS
 		xsltGenericError(xsltGenericDebugContext,
