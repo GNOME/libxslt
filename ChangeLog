@@ -1,3 +1,11 @@
+Wed Feb 13 14:22:22 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-74.xml
+	  tests/general/Makefile.am tests/general/bug-74.*: added a 
+	  specific example for bug #71342 in the regression tests
+	* tests/docbook/result/xhtml/gdp-handbook.xhtml: fixing
+	  #71342 changed one attribute serialization.
+
 Tue Feb 12 15:08:38 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/Makefile.am: trying to fix #71270 
