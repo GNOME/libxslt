@@ -2,6 +2,7 @@ Tue Apr 16 19:40:21 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/Makefile.msvc: XSLT debugger support fix
 	* win32/configure.js: XSLT debugger support fix
+	* libxslt/xsltconfig.h.in: XSLT debugger support fix
 
 Mon Apr 15 19:27:31 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
