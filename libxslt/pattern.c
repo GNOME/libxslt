@@ -9,6 +9,11 @@
  * Daniel.Veillard@imag.fr
  */
 
+/*
+ * TODO: handle pathological cases like *[*[@a="b"]]
+ * TODO: detect [number] at compilation, optimize accordingly
+ */
+
 #include "xsltconfig.h"
 
 #include <string.h>
@@ -60,6 +65,12 @@ struct _xsltStepOp {
     xmlChar *value;
     xmlChar *value2;
     xmlChar *value3;
+    /*
+     * Optimisations for count
+     */
+    xmlNodePtr previous;
+    int        index;
+    int        len;
 };
 
 struct _xsltCompMatch {
@@ -495,40 +506,135 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    (node->type == XML_ELEMENT_NODE) &&
 		    (node->parent != NULL)) {
 
-		    /* TODO: cache those informations !!! */
-		    xmlNodePtr siblings = node->parent->children;
+		    if ((select->previous != NULL) &&
+			(select->previous->parent == node->parent)) {
+			/*
+			 * just walk back to adjust the index
+			 */
+			int i = 0;
+			xmlNodePtr sibling = node;
 
-		    while (siblings != NULL) {
-			if (siblings->type == XML_ELEMENT_NODE) {
-			    if (siblings == node) {
-				len++;
-				pos = len;
-			    } else if (xmlStrEqual(node->name,
-				       siblings->name)) {
-				len++;
+			while (sibling != NULL) {
+			    if (sibling == select->previous)
+				break;
+			    if (xmlStrEqual(node->name, sibling->name)) {
+				if ((select->value2 == NULL) ||
+				    ((sibling->ns != NULL) &&
+				     (xmlStrEqual(select->value2,
+						  sibling->ns->href))))
+				    i++;
+			    }
+			    sibling = sibling->prev;
+			}
+			if (sibling == NULL) {
+			    /* hum going backward in document order ... */
+			    i = 0;
+			    sibling = node;
+			    while (sibling != NULL) {
+				if (sibling == select->previous)
+				    break;
+				if ((select->value2 == NULL) ||
+				    ((sibling->ns != NULL) &&
+				     (xmlStrEqual(select->value2,
+						  sibling->ns->href))))
+				    i--;
+				sibling = sibling->next;
 			    }
 			}
-			siblings = siblings->next;
+			if (sibling != NULL) {
+			    pos = select->index + i;
+			    len = select->len;
+			    select->previous = node;
+			    select->index = pos;
+			} else
+			    pos = 0;
+		    } else {
+			/*
+			 * recompute the index
+			 */
+			xmlNodePtr siblings = node->parent->children;
+
+			while (siblings != NULL) {
+			    if (siblings->type == XML_ELEMENT_NODE) {
+				if (siblings == node) {
+				    len++;
+				    pos = len;
+				} else if (xmlStrEqual(node->name,
+					   siblings->name)) {
+				    if ((select->value2 == NULL) ||
+					((siblings->ns != NULL) &&
+					 (xmlStrEqual(select->value2,
+						      siblings->ns->href))))
+					len++;
+				}
+			    }
+			    siblings = siblings->next;
+			}
 		    }
 		    if (pos != 0) {
 			ctxt->xpathCtxt->contextSize = len;
 			ctxt->xpathCtxt->proximityPosition = pos;
+			select->previous = node;
+			select->index = pos;
+			select->len = len;
 		    }
 		} else if ((select != NULL) && (select->op == XSLT_OP_ALL)) {
-		    xmlNodePtr siblings = node->parent->children;
+		    if ((select->previous != NULL) &&
+			(select->previous->parent == node->parent)) {
+			/*
+			 * just walk back to adjust the index
+			 */
+			int i = 0;
+			xmlNodePtr sibling = node;
 
-		    while (siblings != NULL) {
-			if (siblings->type == XML_ELEMENT_NODE) {
-			    len++;
-			    if (siblings == node) {
-				pos = len;
+			while (sibling != NULL) {
+			    if (sibling == select->previous)
+				break;
+			    if (sibling->type == XML_ELEMENT_NODE)
+				i++;
+			    sibling = sibling->prev;
+			}
+			if (sibling == NULL) {
+			    /* hum going backward in document order ... */
+			    i = 0;
+			    sibling = node;
+			    while (sibling != NULL) {
+				if (sibling == select->previous)
+				    break;
+				if (sibling->type == XML_ELEMENT_NODE)
+				    i--;
+				sibling = sibling->next;
 			    }
 			}
-			siblings = siblings->next;
+			if (sibling != NULL) {
+			    pos = select->index + i;
+			    len = select->len;
+			    select->previous = node;
+			    select->index = pos;
+			} else
+			    pos = 0;
+		    } else {
+			/*
+			 * recompute the index
+			 */
+			xmlNodePtr siblings = node->parent->children;
+
+			while (siblings != NULL) {
+			    if (siblings->type == XML_ELEMENT_NODE) {
+				len++;
+				if (siblings == node) {
+				    pos = len;
+				}
+			    }
+			    siblings = siblings->next;
+			}
 		    }
 		    if (pos != 0) {
 			ctxt->xpathCtxt->contextSize = len;
 			ctxt->xpathCtxt->proximityPosition = pos;
+			select->previous = node;
+			select->index = pos;
+			select->len = len;
 		    }
 		}
 		oldNode = ctxt->node;

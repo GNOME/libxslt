@@ -209,6 +209,14 @@ struct _xsltTransformContext {
     int               varsNr;		/* Nb of variable list in the stack */
     int               varsMax;		/* Size of the variable list stack */
     xsltStackElemPtr *varsTab;		/* the variable list stack */
+    int               varsComputed;     /* switched during param template
+					   evaluation */
+
+    /*
+     * Extensions
+     */
+    xmlHashTablePtr   extFunctions;	/* the extension functions */
+    xmlHashTablePtr   extElements;	/* the extension elements */
 
     const xmlChar *mode;		/* the current mode */
     const xmlChar *modeURI;		/* the current mode URI */
@@ -226,6 +234,9 @@ struct _xsltTransformContext {
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     xsltTransformState state;		/* the current state */
 };
+
+typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
+	                               xmlNodePtr node, xmlNodePtr inst);
 
 #define CHECK_STOPPED if (ctxt->state == XSLT_STATE_STOPPED) return;
 #define CHECK_STOPPEDE if (ctxt->state == XSLT_STATE_STOPPED) goto error;

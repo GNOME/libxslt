@@ -186,7 +186,15 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     if ((ctxt == NULL) || (name == NULL))
 	return(NULL);
 
-    for (i = ctxt->varsNr - 1;i >= 0;i--) {
+    /*
+     * Do the lookup from the top of the stack, but
+     * don't use params being computed in a call-param
+     */
+    i = ctxt->varsNr - 1;
+    if (ctxt->varsComputed)
+	i--;
+
+    for (;i >= 0;i--) {
 	cur = ctxt->varsTab[i];
 	while (cur != NULL) {
 	    if (xmlStrEqual(cur->name, name)) {

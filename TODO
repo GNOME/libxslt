@@ -4,6 +4,10 @@
                  *        *
                   ********
 
+Leak:
+  - find and fix memleak in xmlspec
+  => this is new ...
+
 Doc:
   - manpage and doc for xsltproc
 
@@ -18,24 +22,17 @@ Embedding Stylesheets:
   - example in 2.7 would force to validate
 
 Import:
-  -> make sure we use the cascade wherever it's needed
 
 Extra functions:
   -> document() should not be a problem since Result Tree Fragments are
      implemented
   => started, incomplete
-  -> missing key support
 
 ID and Key support:
   -> Id should be simple, key will probably requires some hash tables.
 
-Templates:
-  -> check the built-in template rule for attributes
-  -> make sure @xxx matches are applied
-
 Pattern tester:
   -> try to optimize for ID scan and tests.
-  -> support for mode
 
 Pattern scanner:
   -> add error checks on all returns
@@ -54,22 +51,28 @@ Sorting:
   -> add lang and case-order
   -> add foreign sorting functions (interfaces ?).
 
-Validity:
-  -> should we add validation by default ? Make this an option
-  -> redirrect validity errors
-
-Contextual error reporting:
-  -> provide a couple of functions providing context analysis, not urgent
-
                   ********
                  *        *
                  *  DONE  *
                  *        *
                   ********
 
+Templates:
+  -> check the built-in template rule for attributes
+  -> make sure @xxx matches are applied
+
+Contextual error reporting:
+  -> provide a couple of functions providing context analysis, not urgent
+
+Validity:
+  -> should we add validation by default ? Make this an option
+  -> redirrect validity errors
+  => done added a special parsing mode
+
 Import:
   -> parse them
   -> provide functions to circulate in the import tree of stylesheets
+  -> make sure we use the cascade wherever it's needed
 
 Extra functions:
   -> make a separate module.
@@ -95,6 +98,7 @@ Support for disable-output-escaping="yes":
 Pattern scanner:
   -> compute priority
   -> handle unions
+  -> support for mode
   => done
 
 Pattern tester:

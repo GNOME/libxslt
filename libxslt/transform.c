@@ -152,6 +152,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->varsNr = 0;
     cur->varsMax = 5;
     cur->vars = NULL;
+    cur->varsComputed = 0;
 
     cur->style = style;
     xmlXPathInit();
@@ -1470,8 +1471,12 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xslt:call-template: template %s not found\n", ncname);
 	goto error;
     }
+    /*
+     * Create a new frame but block access to variables
+     */
     templPush(ctxt, template);
     varsPush(ctxt, NULL);
+    ctxt->varsComputed = 1;
     cur = inst->children;
     while (cur != NULL) {
 	if (ctxt->state == XSLT_STATE_STOPPED) break;
@@ -1488,6 +1493,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	cur = cur->next;
     }
+    ctxt->varsComputed = 0;
     xsltApplyOneTemplate(ctxt, node, template->content, 1);
 
     xsltFreeStackElemList(varsPop(ctxt));
