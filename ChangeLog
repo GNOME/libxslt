@@ -1,3 +1,9 @@
+Mon Feb 26 09:41:04 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am libxslt/extensions.[ch]: started working
+	  on functions and element extensions. First on list will be
+	  a document element.
+
 Sun Feb 25 06:52:14 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in libxslt.spec.in: releasing 0.3.0

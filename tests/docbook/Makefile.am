@@ -17,7 +17,11 @@ html: ../../libxslt/xsltproc
 	  out=result/html/`basename $$i .xml`.tst; \
 	  html=result/html/`basename $$i .xml`.html; \
 	  ../../libxslt/xsltproc html/docbook.xsl $$i > $$out ; \
-	  if [ -f $$html ] ; then diff $$html $$out ; \
+	  if [ -f $$html ] ; then \
+	      grep -v id < $$html > $$html.noid ; \
+	      grep -v id < $$out > $$out.noid ; \
+	      diff $$html.noid $$out.noid ; \
+	      rm -f $$html.noid $$out.noid ; \
 	  else mv $$out $$html ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	  rm -f $$out ; done )

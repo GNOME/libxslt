@@ -13,6 +13,7 @@ xsltinc_HEADERS = 			\
 	variables.h			\
 	keys.h				\
 	numbersInternals.h		\
+	extensions.h			\
 	functions.h			\
 	namespaces.h			\
 	imports.h			\
@@ -29,6 +30,7 @@ libxslt_la_SOURCES = 			\
 	variables.c			\
 	keys.c				\
 	numbers.c			\
+	extensions.c			\
 	functions.c			\
 	namespaces.c			\
 	imports.c			\

@@ -38,14 +38,14 @@ main(int argc, char **argv) {
 	printf("   Options:\n");
 	printf("      --verbose or -v: show logs of what's happening\n");
 	printf("      --timing: display the time used\n");
-	printf("      --repeat: run the transformation 100 times\n");
+	printf("      --repeat: run the transformation 20 times\n");
 	printf("      --debug: dump the tree of the result instead\n");
 	printf("      --novalid: skip the Dtd loading phase\n");
 	printf("      --noout: do not dump the result\n");
 	printf("      --maxdepth val : increase the maximum depth\n");
 	return(0);
     }
-    /* --repeat : repeat 100 times, for timing or profiling */
+    /* --repeat : repeat 20 times, for timing or profiling */
     LIBXML_TEST_VERSION
     for (i = 1; i < argc ; i++) {
 #ifdef LIBXML_DEBUG_ENABLED
@@ -132,17 +132,17 @@ main(int argc, char **argv) {
 		fprintf(stderr, "Parsing document %s took %ld ms\n",
 			argv[i], msec);
 	    }
+	    if (timing)
+		gettimeofday(&begin, NULL);
 	    if (repeat) {
 		int j;
-		for (j = 0;j < 99; j++) {
+		for (j = 0;j < 19; j++) {
 		    res = xsltApplyStylesheet(cur, doc);
 		    xmlFreeDoc(res);
 		    xmlFreeDoc(doc);
 		    doc = xmlParseFile(argv[i]);
 		}
 	    }
-	    if (timing)
-		gettimeofday(&begin, NULL);
 	    res = xsltApplyStylesheet(cur, doc);
 	    if (timing) {
 		long msec;
@@ -150,8 +150,13 @@ main(int argc, char **argv) {
 		msec = end.tv_sec - begin.tv_sec;
 		msec *= 1000;
 		msec += (end.tv_usec - begin.tv_usec) / 1000;
-		fprintf(stderr, "Applying stylesheet took %ld ms\n",
-			msec);
+		if (repeat)
+		    fprintf(stderr,
+			    "Applying stylesheet 20 times took %ld ms\n",
+			    msec);
+		else
+		    fprintf(stderr, "Applying stylesheet took %ld ms\n",
+			    msec);
 	    }
 	    xmlFreeDoc(doc);
 	    if (res == NULL) {

@@ -1016,16 +1016,16 @@ xsltNumber(xsltTransformContextPtr ctxt,
     
     prop = xmlGetNsProp(cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
     if (prop != NULL) {
-	TODO;
+	TODO; /* xsl:number lang attribute */
 	xmlFree(prop);
     }
     
     prop = xmlGetNsProp(cur, (const xmlChar *)"letter-value", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, BAD_CAST("alphabetic"))) {
-	    TODO;
+	    TODO; /* xsl:number letter-value attribute alphabetic */
 	} else if (xmlStrEqual(prop, BAD_CAST("traditional"))) {
-	    TODO;
+	    TODO; /* xsl:number letter-value attribute traditional */
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
 			     "invalid value %s for letter-value\n", prop);
@@ -1855,7 +1855,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else {
 		xsltGenericError(xsltGenericDebugContext,
 		     "xsltApplyOneTemplate: found xslt:%s\n", cur->name);
-		TODO
 	    }
 	    CHECK_STOPPED;
 	    goto skip_children;

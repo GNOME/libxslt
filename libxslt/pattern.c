@@ -1574,9 +1574,14 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	    return(-1);
 	}
 #ifdef DEBUG_PATTERN
-	xsltGenericDebug(xsltGenericDebugContext,
-		     "added pattern : '%s' priority %f\n",
-		         pat->template->match, pat->priority);
+	if (mode)
+	    xsltGenericDebug(xsltGenericDebugContext,
+			 "added pattern : '%s' mode '%s' priority %f\n",
+			     pat->template->match, pat->mode, pat->priority);
+	else
+	    xsltGenericDebug(xsltGenericDebugContext,
+			 "added pattern : '%s' priority %f\n",
+			     pat->template->match, pat->priority);
 #endif
 
 	pat = next;
@@ -1653,7 +1658,8 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     */
 	    list = (xsltCompMatchPtr) xmlHashLookup3(curstyle->templatesHash,
 					     name, ctxt->mode, ctxt->modeURI);
-	}
+	} else
+	    list = NULL;
 	while (list != NULL) {
 	    if (xsltTestCompMatch(ctxt, list, node,
 			          ctxt->mode, ctxt->modeURI)) {

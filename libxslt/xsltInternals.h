@@ -151,9 +151,10 @@ struct _xsltStylesheet {
     xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
 
     /*
-     * Attribute sets
+     * Namespaces
      */
     xmlHashTablePtr nsHash;     /* the set of namespaces in use */
+    void           *nsDefs;     /* the namespaces defined */
 
     /*
      * Key definitions
