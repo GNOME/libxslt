@@ -207,27 +207,146 @@ xsltDocumentSortFunction(xmlNodeSetPtr list) {
 }
 
 /**
- * xsltSortFunction:
- * @list:  the node set
- * @results:  the results
- * @descending:  direction of order
- * @number:  the type of the result
+ * xsltComputeSortResult:
+ * @ctxt:  a XSLT process context
+ * @sorts:  array of sort nodes
+ * @nbsorts:  the number of sorts in the array
  *
- * reorder the current node list @list accordingly to the values
- * present in the array of results @results
+ * reorder the current node list accordingly to the set of sorting
+ * requirement provided by the arry of nodes.
+ */
+static xmlXPathObjectPtr *
+xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
+    xmlXPathObjectPtr *results = NULL;
+    xmlNodeSetPtr list = NULL;
+    xmlXPathObjectPtr res;
+    int len = 0;
+    int i;
+    xmlNodePtr oldNode;
+    xsltStylePreCompPtr comp;
+
+    comp = sort->_private;
+    if (comp == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:sort : compilation had failed\n");
+	return(NULL);
+    }
+
+    if (comp->select == NULL)
+	return(NULL);
+    if (comp->comp == NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL)
+	    return(NULL);
+    }
+
+
+    list = ctxt->nodeList;
+    if ((list == NULL) || (list->nodeNr <= 1))
+	return(NULL);
+
+    len = list->nodeNr;
+
+    /* TODO: xsl:sort lang attribute */
+    /* TODO: xsl:sort case-order attribute */
+
+
+    results = xmlMalloc(len * sizeof(xmlXPathObjectPtr));
+    if (results == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsltSort: memory allocation failure\n");
+	return(NULL);
+    }
+
+    oldNode = ctxt->node;
+    for (i = 0;i < len;i++) {
+	ctxt->xpathCtxt->contextSize = len;
+	ctxt->xpathCtxt->proximityPosition = i + 1;
+	ctxt->node = list->nodeTab[i];
+	ctxt->xpathCtxt->node = ctxt->node;
+	ctxt->xpathCtxt->namespaces = comp->nsList;
+	ctxt->xpathCtxt->nsNr = comp->nsNr;
+	res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
+	if (res != NULL) {
+	    if (res->type != XPATH_STRING)
+		res = xmlXPathConvertString(res);
+	    if (comp->number)
+		res = xmlXPathConvertNumber(res);
+	    res->index = i;	/* Save original pos for dupl resolv */
+	    if (comp->number) {
+		if (res->type == XPATH_NUMBER) {
+		    results[i] = res;
+		} else {
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"xsltSort: select didn't evaluate to a number\n");
+#endif
+		    results[i] = NULL;
+		}
+	    } else {
+		if (res->type == XPATH_STRING) {
+		    results[i] = res;
+		} else {
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"xsltSort: select didn't evaluate to a string\n");
+#endif
+		    results[i] = NULL;
+		}
+	    }
+	}
+    }
+    ctxt->node = oldNode;
+
+    return(results);
+}
+
+/**
+ * xsltDoSortFunction:
+ * @ctxt:  a XSLT process context
+ * @sorts:  array of sort nodes
+ * @nbsorts:  the number of sorts in the array
+ *
+ * reorder the current node list accordingly to the set of sorting
+ * requirement provided by the arry of nodes.
  */
 void	
-xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
-		 int descending, int number) {
+xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
+	           int nbsorts) {
+    xmlXPathObjectPtr *resultsTab[XSLT_MAX_SORT];
+    xmlXPathObjectPtr *results = NULL, *res;
+    xmlNodeSetPtr list = NULL;
+    int descending, number, desc, numb;
+    int len = 0;
     int i, j, incr;
-    int len, tst;
+    int tst;
+    int depth;
     xmlNodePtr node;
     xmlXPathObjectPtr tmp;
+    xsltStylePreCompPtr comp;
 
-    if ((list == NULL) || (results == NULL))
+    if ((ctxt == NULL) || (sorts == NULL) || (nbsorts <= 0) ||
+	(nbsorts >= XSLT_MAX_SORT))
 	return;
+    if (sorts[0] == NULL)
+	return;
+    comp = sorts[0]->_private;
+    if (comp == NULL)
+	return;
+
+    list = ctxt->nodeList;
+    if ((list == NULL) || (list->nodeNr <= 1))
+	return; /* nothing to do */
+
     len = list->nodeNr;
-    if (len <= 1)
+
+    resultsTab[0] = xsltComputeSortResult(ctxt, sorts[0]);
+
+    results = resultsTab[0];
+
+    descending = comp->descending;
+    number = comp->number;
+    if (results == NULL)
 	return;
 
     /* Shell's sort of node-set */
@@ -257,6 +376,59 @@ xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
 		    if (descending)
 			tst = -tst;
 		}
+		if (tst == 0) {
+		    /*
+		     * Okay we need to use multi level sorts
+		     */
+		    depth = 1;
+		    while (depth < nbsorts) {
+			if (sorts[depth] == NULL)
+			    break;
+			comp = sorts[depth]->_private;
+			if (comp == NULL)
+			    break;
+			desc = comp->descending;
+			numb = comp->number;
+
+			/*
+			 * Compute the result of the next level for the
+			 * full set, this might be optimized ... or not
+			 */
+			if (resultsTab[depth] == NULL) 
+			    resultsTab[depth] = xsltComputeSortResult(ctxt,
+				                        sorts[depth]);
+			res = resultsTab[depth];
+			if (res == NULL) 
+			    break;
+			if (res[j] == NULL)
+			    tst = 1;
+			else {
+			    if (numb) {
+				if (res[j]->floatval == res[j + incr]->floatval)
+				    tst = 0;
+				else if (res[j]->floatval > 
+					res[j + incr]->floatval)
+				    tst = 1;
+				else tst = -1;
+			    } else {
+				tst = xmlStrcmp(res[j]->stringval,
+					     res[j + incr]->stringval); 
+			    }
+			    if (tst == 0)
+				tst = res[j]->index > res[j + incr]->index;
+			    if (desc)
+				tst = -tst;
+			}
+
+			/*
+			 * if we still can't differenciate at this level
+			 * try one level deeper.
+			 */
+			if (tst != 0)
+			    break;
+			depth++;
+		    }
+		}
 		if (tst > 0) {
 		    tmp = results[j];
 		    results[j] = results[j + incr];
@@ -268,6 +440,14 @@ xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
 		} else
 		    break;
 	    }
+	}
+    }
+
+    for (j = 0; j < nbsorts; j++) {
+	if (resultsTab[j] != NULL) {
+	    for (i = 0;i < len;i++)
+		xmlXPathFreeObject(resultsTab[j][i]);
+	    xmlFree(resultsTab[j]);
 	}
     }
 }

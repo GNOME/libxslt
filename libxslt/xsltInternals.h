@@ -21,6 +21,11 @@ extern "C" {
 #endif
 
 /*
+ * Max number of specified xsl:sort on an element
+ */
+#define XSLT_MAX_SORT 5
+
+/*
  * The in-memory structure corresponding to an XSLT Variable
  * or Param
  */

@@ -71,10 +71,9 @@ void		xsltSetGenericDebugFunc		(void *ctx,
  */
 
 void		xsltDocumentSortFunction	(xmlNodeSetPtr list);
-void		xsltSortFunction		(xmlNodeSetPtr list,
-						 xmlXPathObjectPtr *results,
-						 int descending,
-						 int number);
+void		xsltDoSortFunction		(xsltTransformContextPtr ctxt,
+						 xmlNodePtr *sorts,
+						 int nbsorts);
 /*
  * Output, reuse libxml I/O buffers
  */

@@ -1,3 +1,9 @@
+Thu May  3 17:56:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* xsltutils.[ch] transform.c: implemented multiple levels of
+	  sorting
+	* test/REC/test-10-2.*: added a really small test for it
+
 Wed May  2 14:04:34 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/xslt.c: fixed xsl:text processing
