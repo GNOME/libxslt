@@ -8,10 +8,10 @@
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article">
 <div class="titlepage">
 <div><h1 class="title">
-<a name="id2702588"></a>libxslt Tutorial</h1></div>
+<a name="id2702654"></a>libxslt Tutorial</h1></div>
 <div><h3 class="author">John Fleck</h3></div>
 <div><p class="releaseinfo">
-      This is version 0.3 of the libxslt Tutorial
+      This is version 0.4 of the libxslt Tutorial
     </p></div>
 <div><p class="copyright">Copyright © 2001 John Fleck</p></div>
 <div><div class="legalnotice"><p>Permission is granted to copy, distribute and/or modify this
@@ -51,7 +51,7 @@
 </div>
 <div class="abstract">
 <p>
-<a name="id2708071"></a><b>Abstract</b>
+<a name="id2705766"></a><b>Abstract</b>
 </p>
 <p>A tutorial on building a simple application using the
       libxslt library to perform
@@ -81,7 +81,7 @@
 
       <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2754806"></a>Note</h3>
+<a name="id2754803"></a>Note</h3>
 <p>
 	While libxslt was written
 	under the auspices of the GNOME project, it does not
@@ -108,14 +108,14 @@
 <p>References:
       <div class="itemizedlist"><ul>
 <li><p>
-<a name="id2754758"></a><a href="http://www.w3.org/XML/" target="_top">W3C XML page</a>
+<a name="id2708005"></a><a href="http://www.w3.org/XML/" target="_top">W3C XML page</a>
 </p></li>
 <li><p>
-<a name="id2705552"></a><a href="http://www.w3.org/Style/XSL/" target="_top">W3C
+<a name="id2708026"></a><a href="http://www.w3.org/Style/XSL/" target="_top">W3C
 	  XSL page.</a>
 </p></li>
 <li><p>
-<a name="id2705573"></a><a href="http://xmlsoft.org/XSLT/" target="_top">libxslt</a>
+<a name="id2708047"></a><a href="http://xmlsoft.org/XSLT/" target="_top">libxslt</a>
 </p></li>
 </ul></div>
 
@@ -147,11 +147,11 @@
     functions:
       <div class="orderedlist"><ol type="1">
 <li><p>
-<a name="id2705618"></a>parse the input file</p></li>
+<a name="id2708093"></a>parse the input file</p></li>
 <li><p>
-<a name="id2705627"></a>parse the stylesheet</p></li>
+<a name="id2708101"></a>parse the stylesheet</p></li>
 <li><p>
-<a name="id2705635"></a>apply the stylesheet</p></li>
+<a name="id2708110"></a>apply the stylesheet</p></li>
 </ol></div>
     </p>
 <div class="sect2">
@@ -234,7 +234,7 @@ xsltSaveResultToFile(stdout, res, cur);
 
 	<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2708523"></a>Note</h3>
+<a name="id2708587"></a>Note</h3>
 <p>libxml also contains output
 	    functions, such as <tt>xmlSaveFile</tt>, which can be
 	    used here. However, output-related information contained in the
@@ -264,7 +264,7 @@ xsltSaveResultToFile(stdout, res, cur);
 
 	<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2708604"></a>Note</h3>
+<a name="id2708668"></a>Note</h3>
 <p>
 	    If a parameter being passed is a string rather than an
 	    XSLT node, it must be escaped. For the tutorial
@@ -288,24 +288,38 @@ xsltSaveResultToFile(stdout, res, cur);
 	  xsltFreeStylesheet(cur);<a name="cleanupstylesheet"></a><img src="../images/callouts/1.png" alt="1" border="0">
 	  xmlFreeDoc(res);<a name="cleanupresults"></a><img src="../images/callouts/2.png" alt="2" border="0">
 	  xmlFreeDoc(doc);<a name="cleanupdoc"></a><img src="../images/callouts/3.png" alt="3" border="0">
+	  xsltCleanupGlobals();<a name="cleanupglobals"></a><img src="../images/callouts/4.png" alt="4" border="0">
+	  xmlCleanupParser();<a name="cleanupparser"></a><img src="../images/callouts/5.png" alt="5" border="0">
+
 	  </pre>
 	
 	  <div class="calloutlist">
-<a name="id2708906"></a><table border="0" summary="Callout list">
+<a name="id2708994"></a><table border="0" summary="Callout list">
 <tr>
 <td width="5%" valign="top" align="left">
-<a name="id2708911"></a><a href="#cleanupstylesheet"><img src="../images/callouts/1.png" alt="1" border="0"></a> </td>
+<a name="id2709000"></a><a href="#cleanupstylesheet"><img src="../images/callouts/1.png" alt="1" border="0"></a> </td>
 <td valign="top" align="left"><p>Free the memory used by your stylesheet.</p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left">
-<a name="id2709027"></a><a href="#cleanupresults"><img src="../images/callouts/2.png" alt="2" border="0"></a> </td>
+<a name="id2709117"></a><a href="#cleanupresults"><img src="../images/callouts/2.png" alt="2" border="0"></a> </td>
 <td valign="top" align="left"><p>Free the memory used by the results document.</p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left">
-<a name="id2709045"></a><a href="#cleanupdoc"><img src="../images/callouts/3.png" alt="3" border="0"></a> </td>
+<a name="id2709136"></a><a href="#cleanupdoc"><img src="../images/callouts/3.png" alt="3" border="0"></a> </td>
 <td valign="top" align="left"><p>Free the memory used by your original document.</p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left">
+<a name="id2709155"></a><a href="#cleanupglobals"><img src="../images/callouts/4.png" alt="4" border="0"></a> </td>
+<td valign="top" align="left"><p>Free memory used by libxslt global
+	    variables</p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left">
+<a name="id2709176"></a><a href="#cleanupparser"><img src="../images/callouts/5.png" alt="5" border="0"></a> </td>
+<td valign="top" align="left"><p>Free memory used by the XML parser</p></td>
 </tr>
 </table>
 </div>
@@ -409,8 +423,8 @@ main(int argc, char **argv) {
 	xmlFreeDoc(res);
 	xmlFreeDoc(doc);
 
-	xsltCleanupGlobals();
-	xmlCleanupParser();
+        xsltCleanupGlobals();
+        xmlCleanupParser();
 	return(0);
 
 }

@@ -26,7 +26,7 @@
       <surname>Fleck</surname>
     </author>
     <releaseinfo>
-      This is version 0.3 of the libxslt Tutorial
+      This is version 0.4 of the libxslt Tutorial
     </releaseinfo>
   </articleinfo>
   <abstract>
@@ -250,6 +250,9 @@ xsltSaveResultToFile(stdout, res, cur);
 	  xsltFreeStylesheet(cur);<co id="cleanupstylesheet" />
 	  xmlFreeDoc(res);<co id="cleanupresults" />
 	  xmlFreeDoc(doc);<co id="cleanupdoc" />
+	  xsltCleanupGlobals();<co id="cleanupglobals" />
+	  xmlCleanupParser();<co id="cleanupparser" />
+
 	  </programlisting>
 	
 	  <calloutlist>
@@ -261,6 +264,13 @@ xsltSaveResultToFile(stdout, res, cur);
 	  </callout>
 	  <callout arearefs="cleanupdoc">
 	    <para>Free the memory used by your original document.</para>
+	  </callout>
+	  <callout arearefs="cleanupglobals">
+	    <para>Free memory used by <application>libxslt</application> global
+	    variables</para>
+	  </callout>
+	  <callout arearefs="cleanupparser">
+	    <para>Free memory used by the <acronym>XML</acronym> parser</para>
 	  </callout>
 	</calloutlist>
       </para>
