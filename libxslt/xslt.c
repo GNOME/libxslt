@@ -1397,6 +1397,10 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 		    }
 
 		    while (text != NULL) {
+			if (text->type == XML_COMMENT_NODE) {
+			    text = text->next;
+			    continue;
+			}
 			if ((text->type != XML_TEXT_NODE) &&
 			     (text->type != XML_CDATA_SECTION_NODE)) {
 			    xsltTransformError(NULL, style, cur,

@@ -1,3 +1,8 @@
+Wed Dec  4 18:12:24 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xslt.c: Matt Sergeant reported a bug when having comments
+	  within an <xsl:text>
+
 Mon Dec  2 17:19:38 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c: applied patch from Josh Parsons fixing bug
