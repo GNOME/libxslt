@@ -43,6 +43,7 @@ EXTRA_DIST =	\
 	bug-37-.xml \
 	bug-38-.xml \
 	bug-39-.xml \
+	bug-40-.xml \
 	character.xml \
 	array.xml \
 	items.xml
