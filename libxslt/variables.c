@@ -282,7 +282,8 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	         xsltStylePreCompPtr precomp) {
     xmlXPathObjectPtr result = NULL;
     int oldProximityPosition, oldContextSize;
-    xmlNodePtr oldInst;
+    xmlNodePtr oldInst, oldNode;
+    xsltDocumentPtr oldDoc;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
 
@@ -306,6 +307,8 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
 	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
+	oldDoc = ctxt->document;
+	oldNode = ctxt->node;
 	oldInst = ctxt->inst;
 	oldNsNr = ctxt->xpathCtxt->nsNr;
 	oldNamespaces = ctxt->xpathCtxt->namespaces;
@@ -324,6 +327,8 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	ctxt->xpathCtxt->nsNr = oldNsNr;
 	ctxt->xpathCtxt->namespaces = oldNamespaces;
 	ctxt->inst = oldInst;
+	ctxt->node = oldNode;
+	ctxt->document = oldDoc;
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
