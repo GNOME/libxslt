@@ -1,3 +1,12 @@
+Tue Jul 13 22:57:43 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/functions.c: added some logic to xsltKeyFunction
+	  to set the transform context doc ptr when the xpath context
+	  doc is different (bug 147445)
+	* tests/exslt/common/Makefile.am, tests/exslt/common/node-set.5*
+	  and tests/exslt/common/node-set.6*: added regression tests
+	  for bug 145547 (UNION and FILTER for RVT's)
+
 Mon Jul 12 08:28:07 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* python/libxslt-python-api.xml: fixed type for doctypeSystem
