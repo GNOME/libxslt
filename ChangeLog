@@ -1,3 +1,9 @@
+Fri Jan 12 22:33:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* pattern.c, xslt.c: removed debug
+	* transform.c: added value-of, seems to handle the first
+	  REC example correctly
+
 Fri Jan 12 18:34:01 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* transform.c, xsltproc.c: small fight with spaces and formatting

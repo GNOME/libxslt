@@ -22,7 +22,7 @@
 #include "xslt.h"
 #include "xsltInternals.h"
 
-#define DEBUG_PARSING
+/* #define DEBUG_PARSING */
 
 #define TODO 								\
     xsltGenericError(xsltGenericErrorContext,				\

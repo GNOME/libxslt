@@ -23,7 +23,7 @@
 #include "xsltInternals.h"
 #include "pattern.h"
 
-#define DEBUG_PARSING
+/* #define DEBUG_PARSING */
 
 /*
  * To cleanup

@@ -22,13 +22,14 @@
 #include <libxml/encoding.h>
 #include <libxml/xmlerror.h>
 #include <libxml/xpath.h>
+#include <libxml/xpathInternals.h>
 #include <libxml/HTMLtree.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "pattern.h"
 #include "transform.h"
 
-#define DEBUG_PROCESS
+/* #define DEBUG_PROCESS */
 
 /*
  * To cleanup
@@ -80,6 +81,7 @@ struct _xsltTransformContext {
     xsltStylesheetPtr style;		/* the stylesheet used */
     xsltOutputType type;		/* the type of output */
 
+    xmlDocPtr doc;			/* the current doc */
     xmlNodePtr node;			/* the current node */
     xmlNodeSetPtr nodeList;		/* the current node list */
 
@@ -87,6 +89,7 @@ struct _xsltTransformContext {
     xmlNodePtr insert;			/* the insertion node */
 
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
+    xmlXPathParserContextPtr xpathParserCtxt;/* the XPath parser context */
 };
 
 /************************************************************************
@@ -126,6 +129,8 @@ void
 xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
+    if (ctxt->xpathCtxt != NULL)
+	xmlXPathFreeContext(ctxt->xpathCtxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -137,6 +142,99 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
  ************************************************************************/
 
 void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
+
+/**
+ * xsltValueOf:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xsltValueOf node
+ *
+ * Process the xsltValueOf node on the source node
+ */
+void
+xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop;
+    int disableEscaping = 0;
+    xmlXPathObjectPtr res, tmp;
+    xmlNodePtr copy = NULL;
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return;
+
+    prop = xmlGetNsProp(inst, (const xmlChar *)"disable-output-escaping",
+	                XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *)"yes"))
+	    disableEscaping = 1;
+	else if (xmlStrEqual(prop, (const xmlChar *)"no"))
+	    disableEscaping = 0;
+	else 
+	    xsltGenericError(xsltGenericErrorContext,
+		 "invalud value %s for disable-output-escaping\n", prop);
+
+	xmlFree(prop);
+	if (disableEscaping) {
+	    TODO /* disable-output-escaping */
+	}
+    }
+    prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsltValueOf: select is not defined\n", prop);
+	return;
+    }
+#ifdef DEBUG_PROCESS
+    xsltGenericError(xsltGenericErrorContext,
+	 "xsltValueOf: select %s\n", prop);
+#endif
+
+    if (ctxt->xpathCtxt == NULL) {
+	xmlXPathInit();
+	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
+	if (ctxt->xpathCtxt == NULL)
+	    goto error;
+    }
+    ctxt->xpathParserCtxt =
+	xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
+    if (ctxt->xpathParserCtxt == NULL)
+	goto error;
+    ctxt->xpathCtxt->node = node;
+    valuePush(ctxt->xpathParserCtxt, xmlXPathNewNodeSet(node));
+    xmlXPathEvalExpr(ctxt->xpathParserCtxt);
+    xmlXPathStringFunction(ctxt->xpathParserCtxt, 1);
+    res = valuePop(ctxt->xpathParserCtxt);
+    do {
+        tmp = valuePop(ctxt->xpathParserCtxt);
+	if (tmp != NULL) {
+	    xmlXPathFreeObject(tmp);
+	}
+    } while (tmp != NULL);
+    if (res != NULL) {
+	if (res->type == XPATH_STRING) {
+            copy = xmlNewText(res->stringval);
+	    if (copy != NULL) {
+		xmlAddChild(ctxt->insert, copy);
+	    }
+	}
+    }
+    if (copy == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltDefaultProcessOneNode: text copy failed\n");
+    }
+#ifdef DEBUG_PROCESS
+    else
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsltValueOf: result %s\n", res->stringval);
+#endif
+error:
+    if (ctxt->xpathParserCtxt != NULL)
+	xmlXPathFreeParserContext(ctxt->xpathParserCtxt);
+    if (prop != NULL)
+	xmlFree(prop);
+    if (res != NULL)
+	xmlXPathFreeObject(res);
+}
 
 /**
  * xsltCopyNode:
@@ -335,6 +433,10 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		ctxt->insert = insert;
 		xsltApplyTemplates(ctxt, node, cur);
 		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "value-of")) {
+		ctxt->insert = insert;
+		xsltValueOf(ctxt, node, cur);
+		ctxt->insert = oldInsert;
 	    } else {
 #ifdef DEBUG_PROCESS
 		xsltGenericError(xsltGenericErrorContext,
@@ -435,6 +537,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
     ctxt = xsltNewTransformContext();
     if (ctxt == NULL)
 	return(NULL);
+    ctxt->doc = doc;
     ctxt->style = style;
     if ((style->method != NULL) &&
 	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {
