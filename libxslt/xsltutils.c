@@ -687,7 +687,7 @@ xsltGetQNameURI(xmlNodePtr node, xmlChar ** name)
     if (ns == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 		"%s:%s : no namespace bound to prefix %s\n",
-		         qname, &qname[len + 1]);
+		         qname, &qname[len + 1], qname);
 	*name = NULL;
 	xmlFree(qname);
 	return(NULL);
