@@ -1,3 +1,9 @@
+Thu Feb  8 12:09:58 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES libxslt/xsltInternals.h libxslt/pattern.c libxslt/keys.c:
+	  added support for keys in patterns
+	* tests/REC/test-12.2-2.*: added a specific testcase
+
 Wed Feb  7 21:16:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c FEATURES: started adding support for key()

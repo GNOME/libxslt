@@ -272,6 +272,7 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    ret = (xmlNodeSetPtr)xmlHashLookup(table->keys, value);
 	    return(ret);
 	}
+	table = table->next;
     }
     return(NULL);
 }
@@ -370,6 +371,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltKeyDefPtr keyd) {
 	    } else {
 		xmlXPathNodeSetAdd(keylist, nodelist->nodeTab[i]);
 	    }
+	    nodelist->nodeTab[i]->_private = keyd;
 	    xmlFree(str);
 #ifdef DEBUG_KEYS
 	} else {
@@ -431,3 +433,24 @@ xsltFreeCtxtKeys(xsltTransformContextPtr ctxt) {
 	xsltFreeKeyTableList((xsltKeyTablePtr) ctxt->keys);
 }
 
+/*
+ * xsltIsKey:
+ * @ctxt: an XSLT transformation context
+ * @node: a node
+ *
+ * Returns 1 if the node is a Key, 0 otherwise
+ */
+int
+xsltIsKey(xsltTransformContextPtr ctxt, xmlNodePtr node) {
+    if (node == NULL)
+	return(0);
+
+    /*
+     * TODO:
+     * Something a bit more complex may be needed if we want
+     * to be able to do similar things with IDs
+     */
+    if (node->_private != NULL)
+	return(1);
+    return(0);
+}

@@ -24,6 +24,7 @@
 #include "xsltutils.h"
 #include "imports.h"
 #include "templates.h"
+#include "keys.h"
 #include "pattern.h"
 
 /* #define DEBUG_PARSING */
@@ -58,6 +59,7 @@ struct _xsltStepOp {
     xsltOp op;
     xmlChar *value;
     xmlChar *value2;
+    xmlChar *value3;
 };
 
 typedef struct _xsltCompMatch xsltCompMatch;
@@ -139,6 +141,8 @@ xsltFreeCompMatch(xsltCompMatchPtr comp) {
 	    xmlFree(op->value);
 	if (op->value2 != NULL)
 	    xmlFree(op->value2);
+	if (op->value3 != NULL)
+	    xmlFree(op->value3);
     }
     memset(comp, -1, sizeof(xsltCompMatch));
     xmlFree(comp);
@@ -442,9 +446,21 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    return(0);
 		break;
 	    }
-            case XSLT_OP_KEY:
-		TODO /* Handle Keys, might be done differently */
+            case XSLT_OP_KEY: {
+		xmlNodeSetPtr list;
+		int i;
+
+		list = xsltGetKey(ctxt, step->value,
+			          step->value3, step->value2);
+		if (list == NULL)
+		    return(0);
+		for (i = 0;i < list->nodeNr;i++)
+		    if (list->nodeTab[i] == node)
+			break;
+		if (i >= list->nodeNr)
+		    return(0);
 		break;
+	    }
             case XSLT_OP_NS:
 		/* Namespace test */
 		if (node->ns == NULL) {
@@ -761,6 +777,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	}
 	NEXT;
+	/* TODO: support namespace in keys */
 	PUSH(XSLT_OP_KEY, lit, lit2);
     } else if (xmlStrEqual(name, (const xmlChar *)"processing-instruction")) {
 	NEXT;
@@ -1250,9 +1267,11 @@ next_pattern:
         case XSLT_OP_ROOT:
              top = (xsltCompMatchPtr *) &(style->rootMatch);
 	     break;
-        case XSLT_OP_ID:
         case XSLT_OP_KEY:
-	     /* TODO optimize ID/KEY !!! */
+             top = (xsltCompMatchPtr *) &(style->keyMatch);
+	     break;
+        case XSLT_OP_ID:
+	     /* TODO optimize ID !!! */
         case XSLT_OP_ALL:
              top = (xsltCompMatchPtr *) &(style->elemMatch);
 	     break;
@@ -1487,6 +1506,19 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    }
 	    list = list->next;
 	}
+	if (node->_private != NULL) {
+	    list = style->keyMatch;
+	    while ((list != NULL) &&
+		   ((ret == NULL)  || (list->priority > ret->priority))) {
+		if (xsltTestCompMatch(ctxt, list, node,
+				      ctxt->mode, ctxt->modeURI)) {
+		    ret = list->template;
+		    break;
+		}
+		list = list->next;
+	    }
+	}
+
 	if (ret != NULL)
 	    return(ret);
 
@@ -1512,6 +1544,8 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
 		    (xmlHashDeallocator) xsltFreeCompMatchList);
     if (style->rootMatch != NULL)
         xsltFreeCompMatchList(style->rootMatch);
+    if (style->keyMatch != NULL)
+        xsltFreeCompMatchList(style->keyMatch);
     if (style->elemMatch != NULL)
         xsltFreeCompMatchList(style->elemMatch);
     if (style->attrMatch != NULL)

@@ -116,6 +116,7 @@ struct _xsltStylesheet {
     void *templatesHash;	/* hash table or wherever compiled templates
 				   informations are stored */
     void *rootMatch;		/* template based on / */
+    void *keyMatch;		/* template based on key() */
     void *elemMatch;		/* template based on * */
     void *attrMatch;		/* template based on @* */
     void *parentMatch;		/* template based on .. */

@@ -194,7 +194,7 @@ YES			        match="*|/"
 YES				match="text()|@*"
 YES				match="processing-instruction()|comment()"
 YES				Namespace
-NO				Mode
+YES				Mode
 
 NO			    Extension Elements
 
@@ -238,6 +238,6 @@ YES			    item[position() mod 2 = 1]
 YES			    div[@class="appendix"]//p
 YES			    @class
 YES			    @*
-NO			    key('a','b')
+YES   except ns for key	    key('a','b')
 
 Daniel.Veillard@imag.fr
