@@ -16,10 +16,10 @@ def f(ctx, str):
     # Small check to verify the context is correcly accessed
     #
     try:
-	pctxt = libxslt.xpathParserContext(_obj=ctx)
-	ctxt = pctxt.context()
-	tctxt = ctxt.transformContext()
-	nodeName = tctxt.insertNode().name
+        pctxt = libxslt.xpathParserContext(_obj=ctx)
+        ctxt = pctxt.context()
+        tctxt = ctxt.transformContext()
+        nodeName = tctxt.insertNode().name
     except:
         pass
 

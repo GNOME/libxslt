@@ -1,3 +1,9 @@
+Mon Feb 11 19:40:34 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/*.py: removed tab used spaces
+	* configure.in libxslt/xsltwin32config.h: preparing 1.0.12
+	* doc/news.html doc/xslt.html: rebuild/updated
+
 Mon Feb 11 16:34:37 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-73.xml

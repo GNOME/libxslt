@@ -52,50 +52,50 @@ def xsltProcess(doc, cur, filename):
 
     if xinclude:
         if timing:
-	    startTimer()
+            startTimer()
         doc.XIncludeProcess()
-	if timing:
-	    endTimer("XInclude processing %s" % (filename))
+        if timing:
+            endTimer("XInclude processing %s" % (filename))
 
     if timing:
         startTimer()
     if output == None:
         if repeat != 0:
-	    for j in range(1, repeat):
-	        res = cur.applyStylesheet(doc, params)
-		res.freeDoc()
-		doc.freeDoc()
-		if html == 1:
-		    doc = libxml2.htmlParseFile(filename, None)
-		else:
-		    doc = libxml2.parseFile(filename, None)
-#	ctxt = libxslt.newTransformContext(doc)
-#	if ctxt == None:
-#	    return
-	if profile:
-	    print "TODO: Profiling not yet supported"
-	else:
-	    res = cur.applyStylesheet(doc, params)
-	if timing:
-	    if repeat != 0:
-	        endTimer("Applying stylesheet %d times" % (repeat))
-	    else:
-	        endTimer("Applying stylesheet")
-	doc.freeDoc()
-	if res == None:
-	    print "no result for %s" % (filename)
-	    return
-	if noout != 0:
-	    res.freeDoc()
-	    return
-	if debug == 1:
-	    res.debugDumpDocument(None)
-	else:
-	    if timing:
-	        startTimer()
-	    cur.saveResultToFilename("-", res, 0)
-	    if timing:
-	        endTimer("Saving result")
+            for j in range(1, repeat):
+                res = cur.applyStylesheet(doc, params)
+                res.freeDoc()
+                doc.freeDoc()
+                if html == 1:
+                    doc = libxml2.htmlParseFile(filename, None)
+                else:
+                    doc = libxml2.parseFile(filename, None)
+#        ctxt = libxslt.newTransformContext(doc)
+#        if ctxt == None:
+#            return
+        if profile:
+            print "TODO: Profiling not yet supported"
+        else:
+            res = cur.applyStylesheet(doc, params)
+        if timing:
+            if repeat != 0:
+                endTimer("Applying stylesheet %d times" % (repeat))
+            else:
+                endTimer("Applying stylesheet")
+        doc.freeDoc()
+        if res == None:
+            print "no result for %s" % (filename)
+            return
+        if noout != 0:
+            res.freeDoc()
+            return
+        if debug == 1:
+            res.debugDumpDocument(None)
+        else:
+            if timing:
+                startTimer()
+            cur.saveResultToFilename("-", res, 0)
+            if timing:
+                endTimer("Saving result")
         res.freeDoc()
     else:
         print "TODO: xsltRunStylesheet not yet mapped"
@@ -147,75 +147,75 @@ def main(args = None):
 
     if not args:
         args = sys.argv[1:]
-	if len(args) <= 0:
-	    usage(sys.argv[0])
-	    
+        if len(args) <= 0:
+            usage(sys.argv[0])
+            
 
     i = 0
     while i < len(args):
         if args[i] == "-":
-	    break
-	if args[i][0] != '-':
-	    i = i + 1
-	    continue
-	if args[i] == "-timing" or args[i] == "--timing":
-	    timing = 1
-	elif args[i] == "-debug" or args[i] == "--debug":
-	    debug = 1
-	elif args[i] == "-verbose" or args[i] == "--verbose" or \
-	     args[i] == "-v":
-	    print "TODO: xsltSetGenericDebugFunc() mapping missing"
-	elif args[i] == "-version" or args[i] == "--version" or \
-	     args[i] == "-V":
-	    print "TODO: version informations mapping missing"
-	elif args[i] == "-verbose" or args[i] == "--verbose" or \
-	     args[i] == "-v":
-	    if repeat == 0:
-	        repeat = 20
+            break
+        if args[i][0] != '-':
+            i = i + 1
+            continue
+        if args[i] == "-timing" or args[i] == "--timing":
+            timing = 1
+        elif args[i] == "-debug" or args[i] == "--debug":
+            debug = 1
+        elif args[i] == "-verbose" or args[i] == "--verbose" or \
+             args[i] == "-v":
+            print "TODO: xsltSetGenericDebugFunc() mapping missing"
+        elif args[i] == "-version" or args[i] == "--version" or \
+             args[i] == "-V":
+            print "TODO: version informations mapping missing"
+        elif args[i] == "-verbose" or args[i] == "--verbose" or \
+             args[i] == "-v":
+            if repeat == 0:
+                repeat = 20
             else:
-	        repeat = 100
-	elif args[i] == "-novalid" or args[i] == "--novalid":
-	    print "TODO: xmlLoadExtDtdDefaultValue mapping missing"
-	    novalid = 1
-	elif args[i] == "-noout" or args[i] == "--noout":
-	    noout = 1
-	elif args[i] == "-html" or args[i] == "--html":
-	    html = 1
-	elif args[i] == "-nonet" or args[i] == "--nonet":
-	    print "TODO: xmlSetExternalEntityLoader mapping missing"
-	    nonet = 1
-	elif args[i] == "-catalogs" or args[i] == "--catalogs":
-	    try:
-		catalogs = posix.environ['SGML_CATALOG_FILES']
-	    except:
-	        catalogs = None
+                repeat = 100
+        elif args[i] == "-novalid" or args[i] == "--novalid":
+            print "TODO: xmlLoadExtDtdDefaultValue mapping missing"
+            novalid = 1
+        elif args[i] == "-noout" or args[i] == "--noout":
+            noout = 1
+        elif args[i] == "-html" or args[i] == "--html":
+            html = 1
+        elif args[i] == "-nonet" or args[i] == "--nonet":
+            print "TODO: xmlSetExternalEntityLoader mapping missing"
+            nonet = 1
+        elif args[i] == "-catalogs" or args[i] == "--catalogs":
+            try:
+                catalogs = posix.environ['SGML_CATALOG_FILES']
+            except:
+                catalogs = None
             if catalogs != none:
-	        libxml2.xmlLoadCatalogs(catalogs)
-	    else:
-	        print "Variable $SGML_CATALOG_FILES not set"
-	elif args[i] == "-xinclude" or args[i] == "--xinclude":
-	    xinclude = 1
-	    libxslt.setXIncludeDefault(1)
-	elif args[i] == "-param" or args[i] == "--param":
-	    i = i + 1
-	    params[args[i]] = args[i + 1]
-	    i = i + 1
-	elif args[i] == "-stringparam" or args[i] == "--stringparam":
-	    i = i + 1
-	    params[args[i]] = "'%s'" % (args[i + 1])
-	    i = i + 1
-	elif args[i] == "-maxdepth" or args[i] == "--maxdepth":
-	    print "TODO: xsltMaxDepth mapping missing"
-	else:
-	    print "Unknown option %s" % (args[i])
-	    usage()
-	    return(3)
-	
-	
-	
-	
-	i = i + 1
-	
+                libxml2.xmlLoadCatalogs(catalogs)
+            else:
+                print "Variable $SGML_CATALOG_FILES not set"
+        elif args[i] == "-xinclude" or args[i] == "--xinclude":
+            xinclude = 1
+            libxslt.setXIncludeDefault(1)
+        elif args[i] == "-param" or args[i] == "--param":
+            i = i + 1
+            params[args[i]] = args[i + 1]
+            i = i + 1
+        elif args[i] == "-stringparam" or args[i] == "--stringparam":
+            i = i + 1
+            params[args[i]] = "'%s'" % (args[i + 1])
+            i = i + 1
+        elif args[i] == "-maxdepth" or args[i] == "--maxdepth":
+            print "TODO: xsltMaxDepth mapping missing"
+        else:
+            print "Unknown option %s" % (args[i])
+            usage()
+            return(3)
+        
+        
+        
+        
+        i = i + 1
+        
     libxml2.lineNumbersDefault(1)
     libxml2.substituteEntitiesDefault(1)
     # TODO: xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS
@@ -228,60 +228,60 @@ def main(args = None):
     i = 0
     while i < len(args) and done == 0:
         if args[i] == "-maxdepth" or args[i] == "--maxdepth":
-	    i = i + 2
-	    continue
+            i = i + 2
+            continue
         if args[i] == "-o" or args[i] == "-output" or args[i] == "--output":
-	    i = i + 2
-	    continue
+            i = i + 2
+            continue
         if args[i] == "-param" or args[i] == "--param":
-	    i = i + 3
-	    continue
+            i = i + 3
+            continue
         if args[i] == "-stringparam" or args[i] == "--stringparam":
-	    i = i + 3
-	    continue
+            i = i + 3
+            continue
         if args[i] != "-" and args[i][0] == '-':
-	    i = i + 1
-	    continue
-	if timing:
-	    startTimer()
-	style = libxml2.parseFile(args[i])
-	if timing:
-	    endTimer("Parsing stylesheet %s" % (args[i]))
-	if style == None:
-	    print "cannot parse %s" % (args[i])
-	    cur = None
-	    errorno = 4
-	    done = 1
-	else:
-	    cur = libxslt.loadStylesheetPI(style)
-	    if cur != None:
-	        xsltProcess(style, cur, args[i])
-		cur = None
-	    else:
-	        cur = libxslt.parseStylesheetDoc(style)
-		if cur == None:
-		    style.freeDoc()
-		    errorno = 5
-		    done = 1
-	i = i + 1
-	break
+            i = i + 1
+            continue
+        if timing:
+            startTimer()
+        style = libxml2.parseFile(args[i])
+        if timing:
+            endTimer("Parsing stylesheet %s" % (args[i]))
+        if style == None:
+            print "cannot parse %s" % (args[i])
+            cur = None
+            errorno = 4
+            done = 1
+        else:
+            cur = libxslt.loadStylesheetPI(style)
+            if cur != None:
+                xsltProcess(style, cur, args[i])
+                cur = None
+            else:
+                cur = libxslt.parseStylesheetDoc(style)
+                if cur == None:
+                    style.freeDoc()
+                    errorno = 5
+                    done = 1
+        i = i + 1
+        break
 
     while i < len(args) and done == 0 and cur != None:
         if timing:
-	    startTimer()
-	if html:
-	    doc = libxml2.htmlParseFile(args[i], None)
-	else:
-	    doc = libxml2.parseFile(args[i])
-	if doc == None:
-	    print "unable to parse %s" % (args[i])
-	    errorno = 6
-	    i = i + 1
-	    continue
-	if timing:
-	    endTimer("Parsing document %s" % (args[i]))
-	xsltProcess(doc, cur, args[i])
-	i = i + 1
+            startTimer()
+        if html:
+            doc = libxml2.htmlParseFile(args[i], None)
+        else:
+            doc = libxml2.parseFile(args[i])
+        if doc == None:
+            print "unable to parse %s" % (args[i])
+            errorno = 6
+            i = i + 1
+            continue
+        if timing:
+            endTimer("Parsing document %s" % (args[i]))
+        xsltProcess(doc, cur, args[i])
+        i = i + 1
 
     if cur != None:
         cur.freeStylesheet()
