@@ -1,0 +1,211 @@
+
+Stylesheet Constructs:
+======================
+
+YES		    xsl:stylesheet
+?			id = id 
+NO			extension-element-prefixes = tokens 
+NO			exclude-result-prefixes = tokens 
+YES			version = number
+
+YES		    xsl:transform
+?			id = id 
+NO			extension-element-prefixes = tokens 
+NO			exclude-result-prefixes = tokens 
+YES			version = number
+
+
+YES		    Literal Result Element as Stylesheet
+
+NO		    Embedding Stylesheets
+
+
+Top Level Elements:
+===================
+
+NO		    xsl:include
+NO			href = uri-reference
+
+NO		    xsl:import
+NO			href = uri-reference
+
+YES		    xsl:strip-space
+YES			elements = tokens
+
+YES		    xsl:preserve-space
+YES			elements = tokens
+
+YES		    xsl:template
+YES			match = pattern 
+YES			name = qname 
+YES			priority = number 
+NO			mode = qname
+
+NO		    xsl:namespace-alias
+NO			stylesheet-prefix = prefix | "#default"
+NO			result-prefix = prefix | "#default"
+
+NO		    xsl:attribute-set
+NO			name = qname 
+NO			use-attribute-sets = qnames
+
+YES		    xsl:variable
+YES			name = qname 
+YES			select = expression
+YES			Content: template
+
+YES		    xsl:param
+YES			name = qname 
+YES			select = expression
+YES			Content: template
+
+NO		    xsl:key
+NO			name = qname 
+NO			match = pattern 
+NO			use = expression
+
+YES		    xsl:output
+YES			method = "xml" | "html" | "text" | qname-but-not-ncname 
+YES			version = nmtoken 
+YES			encoding = string 
+YES			omit-xml-declaration = "yes" | "no"
+YES			standalone = "yes" | "no"
+YES			doctype-public = string 
+YES			doctype-system = string 
+NO			cdata-section-elements = qnames 
+YES			indent = "yes" | "no"
+YES			media-type = string
+
+Instructions:
+=============
+
+YES		    xsl:apply-templates
+YES			select = node-set-expression 
+NO			mode = qname
+
+NO		    xsl:apply-imports
+
+YES		    xsl:call-template
+YES			name = qname
+
+NO		    xsl:element
+NO			name = { qname }
+NO			namespace = { uri-reference }
+NO			use-attribute-sets = qnames
+
+YES		    xsl:attribute
+YES			name = { qname }
+YES			namespace = { uri-reference }
+
+YES		    xsl:text
+YES			disable-output-escaping = "yes" | "no"
+
+		    xsl:processing-instruction
+			name = { ncname }
+
+NO		    xsl:comment
+
+NO		    xsl:copy
+NO			use-attribute-sets = qnames
+
+YES		    xsl:value-of
+YES			select = string-expression 
+NO			disable-output-escaping = "yes" | "no"
+
+NO		    xsl:number
+NO			level = "single" | "multiple" | "any"
+NO			count = pattern 
+NO			from = pattern 
+NO			value = number-expression 
+NO			format = { string }
+NO			lang = { nmtoken }
+NO			letter-value = { "alphabetic" | "traditional" }
+NO			grouping-separator = { char }
+NO			grouping-size = { number }
+
+YES		    xsl:for-each
+YES			select = node-set-expression
+
+YES		    xsl:if
+YES			test = boolean-expression
+
+NO		    xsl:choose
+
+NO		    xsl:when
+NO			test = boolean-expression
+
+NO		    xsl:otherwise
+
+YES		    xsl:sort
+YES			select = string-expression 
+NO			lang = { nmtoken }
+YES			data-type = { "text" | "number" | qname-but-not-ncname }
+YES			order = { "ascending" | "descending" }
+NO			case-order = { "upper-first" | "lower-first" }
+
+YES		    xsl:variable
+YES			name = qname 
+YES			select = expression
+YES			Content: template
+
+YES		    xsl:param
+YES			name = qname 
+YES			select = expression
+YES			Content: template
+
+NO		    xsl:copy-of
+NO			select = expression
+
+YES		    xsl:with-param
+YES			name = qname 
+YES			select = expression
+
+NO		    xsl:decimal-format
+NO			name = qname 
+NO			decimal-separator = char 
+NO			grouping-separator = char 
+NO			infinity = string 
+NO			minus-sign = char 
+NO			NaN = string 
+NO			percent = char 
+NO			per-mille = char 
+NO			zero-digit = char 
+NO			digit = char 
+NO			pattern-separator = char
+
+NO		    xsl:message
+NO			terminate = "yes" | "no"
+
+NO		    xsl:fallback
+
+General:
+========
+
+YES (w.o import)    Conflict Resolution for Template Rules
+YES		    Whitespace Stripping
+YES		    Built-in Template Rules
+YES		        match="*|/"
+YES			match="text()|@*"
+YES			match="processing-instruction()|comment()"
+NO			Namespace
+NO			Mode
+
+YES		    Attribute Value Templates
+
+YES		    Result Tree Fragments
+
+Functions:
+==========
+
+NO		    node-set document(object, node-set?)
+NO		    node-set key(string, object)
+NO		    string format-number(number, string, string?)
+NO		    node-set current() 
+NO		    string unparsed-entity-uri(string)
+NO		    string generate-id(node-set?)
+NO		    object system-property(string)
+NO		    boolean element-available(string)
+NO		    boolean function-available(string)
+
+Daniel.Veillard@imag.fr
+$Id$

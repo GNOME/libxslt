@@ -1,3 +1,9 @@
+Mon Jan 22 15:30:19 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: updated
+	* FEATURES: added with alist of what's in and what's not
+	* libxslt/xslt.c: fixed top level Param and Variable stuff
+
 Mon Jan 22 11:46:44 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* xsltproc.c: removed bug

@@ -15,6 +15,15 @@ Import:
   -> parse them
   -> provide functions to circulate in the import tree of stylesheets
 
+Extra functions:
+  -> make a separate module.
+  -> document() should not be a problem since Result Tree Fragments are
+     implemnted
+  -> others 
+
+ID and Key support:
+  -> Id should be simple, key will probably requires some hash tables.
+
 Pattern tester:
   -> try to optimize for ID scan and tests.
 

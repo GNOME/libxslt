@@ -564,12 +564,13 @@ skip_children:
     }
 
     /*
-     * Find and handle the params
+     * Skip the first params
+     */
     cur = template->children;
     while (cur != NULL) {
-	/ *
+	/*
 	 * Remove Blank nodes found at this level.
-	 * /
+	 */
 	if (IS_BLANK_NODE(cur)) {
 	    xmlNodePtr blank = cur;
 
@@ -578,13 +579,10 @@ skip_children:
 	    xmlFreeNode(blank);
 	    continue;
 	}
-	if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "param"))) {
-	    xsltParseGlobalParam(style, cur);
-	} else
+	if ((IS_XSLT_ELEM(cur)) && (!(IS_XSLT_NAME(cur, "param"))))
 	    break;
 	cur = cur->next;
     }
-     */
 
     /*
      * Browse the remaining of the template
@@ -782,9 +780,9 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
         } else if (IS_XSLT_NAME(cur, "attribute-set")) {
 	    TODO /* Handle attribute-set */
         } else if (IS_XSLT_NAME(cur, "variable")) {
-	    TODO /* Handle variable */
+	    xsltParseGlobalVariable(style, cur);
         } else if (IS_XSLT_NAME(cur, "param")) {
-	    TODO /* Handle param */
+	    xsltParseGlobalParam(style, cur);
         } else if (IS_XSLT_NAME(cur, "template")) {
 #ifdef DEBUG_PARSING
 	    templates++;
