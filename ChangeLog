@@ -1,3 +1,11 @@
+Sun Aug 3 15:50:51 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	Fixed bug 117552 - sort with multiple keys
+	* xsltutils.c: enhanced treatment of NaN when multiple sort
+	  keys are specified.
+	* tests/general/Makefile.am tests/docs/Makefile.am:
+	  Added test case (bug-125) to regression suite.
+	  
 Sat Aug 2 09:55:38 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	Fixing bug 118561 (IRIX MIPSPro compiler warnings)

@@ -894,11 +894,24 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			res = resultsTab[depth];
 			if (res == NULL) 
 			    break;
-			if (res[j] == NULL)
-			    tst = 1;
-			else {
+			if (res[j] == NULL) {
+			    if (res[j+incr] != NULL)
+				tst = 1;
+			} else {
 			    if (numb) {
-				if (res[j]->floatval == res[j + incr]->floatval)
+				/* We make NaN smaller than number in
+				   accordance with XSLT spec */
+				if (xmlXPathIsNaN(res[j]->floatval)) {
+				    if (xmlXPathIsNaN(res[j +
+				    		incr]->floatval))
+					tst = 0;
+				    else
+				        tst = -1;
+				} else if (xmlXPathIsNaN(res[j + incr]->
+						floatval))
+				    tst = 1;
+				else if (res[j]->floatval == res[j + incr]->
+						floatval)
 				    tst = 0;
 				else if (res[j]->floatval > 
 					res[j + incr]->floatval)
