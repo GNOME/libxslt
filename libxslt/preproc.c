@@ -204,7 +204,6 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
 		 xsltTransformFunction function ATTRIBUTE_UNUSED) {
     xsltStylePreCompPtr comp;
     xmlChar *filename = NULL;
-    xmlChar *base = NULL;
     xmlChar *URL = NULL;
 
     comp = xsltNewStylePreComp(style, XSLT_FUNC_DOCUMENT);
@@ -253,29 +252,12 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
     }
 
     if (filename != NULL) {
-	/*
-	 * Compute output URL
-	 */
-	base = xmlNodeGetBase(inst->doc, inst);
-	URL = xmlBuildURI(filename, base);
-	if (URL == NULL) {
-	    xsltTransformError(NULL, style, inst,
-		"xsltDocumentComp: URL computation failed %s\n", filename);
-	    if (style != NULL) style->warnings++;
-	    comp->filename = xmlStrdup(filename);
-	} else {
-	    comp->filename = URL;
-	}
+	comp->filename = filename;
     } else {
 	comp->filename = NULL;
     }
 
 error:
-    if (base != NULL)
-	xmlFree(base);
-    if (filename != NULL)
-	xmlFree(filename);
-
     return ((xsltElemPreCompPtr) comp);
 }
 
