@@ -26,6 +26,11 @@ int		xsltGetXIncludeDefault	(void);
 /**
  * Private Interfaces
  */
+xsltTransformFunction
+		xsltExtElementLookup	(xsltTransformContextPtr ctxt,
+					 const xmlChar *name,
+					 const xmlChar *URI);
+
 xmlDocPtr	xsltApplyStylesheet	(xsltStylesheetPtr style,
 					 xmlDocPtr doc,
 					 const char **params);

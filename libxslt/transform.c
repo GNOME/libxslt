@@ -233,6 +233,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->xpathCtxt->proximityPosition = 0;
     cur->xpathCtxt->contextSize = 0;
     XSLT_REGISTER_VARIABLE_LOOKUP(cur);
+    XSLT_REGISTER_FUNCTION_LOOKUP(cur);
     cur->xpathCtxt->nsHash = style->nsHash;
     docu = xsltNewDocument(cur, doc);
     if (docu == NULL) {
@@ -632,7 +633,7 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
  ************************************************************************/
 
 void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	                xsltStackElemPtr params);
+			xsltStackElemPtr params);
 /**
  * xsltDefaultProcessOneNode:
  * @ctxt:  a XSLT process context
@@ -1129,8 +1130,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
              * Flagged as an extension element
              */
             function = (xsltTransformFunction)
-                xmlHashLookup2(ctxt->extElements, cur->name,
-                               cur->ns->href);
+                xsltExtElementLookup(ctxt, cur->name, cur->ns->href);
             if (function == NULL) {
                 xmlNodePtr child;
                 int found = 0;

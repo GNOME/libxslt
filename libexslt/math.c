@@ -271,19 +271,6 @@ exsltMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathReturnNodeSet(ctxt, ret);
 }
 
-static void *
-exsltMathInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "min",
-			     URI, exsltMathMinFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "max",
-			     URI, exsltMathMaxFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "highest",
-			     URI, exsltMathHighestFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "lowest",
-			     URI, exsltMathLowestFunction);
-    return(NULL);
-}
-
 /**
  * exsltMathRegister:
  *
@@ -292,5 +279,16 @@ exsltMathInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
 void
 exsltMathRegister (void) {
-    xsltRegisterExtModule (EXSLT_MATH_NAMESPACE, exsltMathInit, NULL);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "min",
+				   EXSLT_MATH_NAMESPACE,
+				   exsltMathMinFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "max",
+				   EXSLT_MATH_NAMESPACE,
+				   exsltMathMaxFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "highest",
+				   EXSLT_MATH_NAMESPACE,
+				   exsltMathHighestFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "lowest",
+				   EXSLT_MATH_NAMESPACE,
+				   exsltMathLowestFunction);
 }

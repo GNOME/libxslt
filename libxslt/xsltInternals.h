@@ -323,6 +323,11 @@ struct _xsltStylesheet {
     int       exclPrefixMax;	/* size of the array */
 
     void     *_private;		/* user defined data */
+
+    /*
+     * Extensions
+     */
+    xmlHashTablePtr extInfos;	/* the extension data */
 };
 
 /*
@@ -448,6 +453,9 @@ xmlXPathError		 xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 						 xmlChar *format,
 						 double number,
 						 xmlChar **result);
+
+void			xsltParseTemplateContent(xsltStylesheetPtr style,
+						 xmlNodePtr template);
 
 #ifdef __cplusplus
 }

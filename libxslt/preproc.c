@@ -36,6 +36,7 @@
 #include "preproc.h"
 #include "extra.h"
 #include "imports.h"
+#include "extensions.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PREPROC
@@ -1343,6 +1344,15 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	if (IS_XSLT_NAME(inst, "document")) {
 	    xsltDocumentComp(style, inst);
 	} else {
+	    xsltPreComputeFunction function;
+	    /*
+	     * Precompute the element
+	     */
+	    function =
+		xsltExtModuleElementPreComputeLookup(inst->name,
+						     inst->ns->href);
+	    if (function != NULL)
+		function(style, inst);
 	    /*
 	     * Mark the element for later recognition.
 	     */

@@ -52,19 +52,6 @@ exsltObjectTypeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 
-static void *
-exsltCommonInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "node-set",
-			     URI, xsltFunctionNodeSet);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "object-type",
-			     URI, exsltObjectTypeFunction);
-
-    xsltRegisterExtElement (ctxt, (const xmlChar *) "document",
-			    URI, xsltDocumentElem);
-
-    return(NULL);
-}
-
 /**
  * exsltCommonRegister:
  *
@@ -73,6 +60,13 @@ exsltCommonInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
 void
 exsltCommonRegister (void) {
-    xsltRegisterExtModule (EXSLT_COMMON_NAMESPACE,
-			   exsltCommonInit, NULL);
+    xsltRegisterExtModuleFunction((const xmlChar *) "node-set",
+				  EXSLT_COMMON_NAMESPACE,
+				  xsltFunctionNodeSet);
+    xsltRegisterExtModuleFunction((const xmlChar *) "object-type",
+				  EXSLT_COMMON_NAMESPACE,
+				  exsltObjectTypeFunction);
+    xsltRegisterExtModuleElement((const xmlChar *) "document",
+				 EXSLT_COMMON_NAMESPACE,
+				 NULL, xsltDocumentElem);
 }

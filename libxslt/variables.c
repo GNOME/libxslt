@@ -358,7 +358,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    xmlNodePtr oldInsert;
 
 	    container = xmlNewDocNode(ctxt->output, NULL,
-		                      (const xmlChar *) "fake", NULL);
+				      (const xmlChar *) "fake", NULL);
 	    if (container == NULL)
 		return(NULL);
 
@@ -472,7 +472,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    xmlNodePtr oldInsert;
 
 	    container = xmlNewDocNode(ctxt->output, NULL,
-		                      (const xmlChar *) "fake", NULL);
+				      (const xmlChar *) "fake", NULL);
 	    if (container == NULL)
 		return(NULL);
 

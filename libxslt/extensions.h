@@ -21,6 +21,30 @@ extern "C" {
  */
 
 /**
+ * xsltStyleExtInitFunction:
+ * @ctxt:  an XSLT stylesheet
+ * @URI:  the namespace URI for the extension
+ *
+ * A function called at initialization time of an XSLT extension module
+ *
+ * Returns a pointer to the module specific data for this transformation
+ */
+typedef void * (*xsltStyleExtInitFunction)	(xsltStylesheetPtr style,
+						 const xmlChar *URI);
+
+/**
+ * xsltStyleExtShutdownFunction:
+ * @ctxt:  an XSLT stylesheet
+ * @URI:  the namespace URI for the extension
+ * @data:  the data associated to this module
+ *
+ * A function called at shutdown time of an XSLT extension module
+ */
+typedef void (*xsltStyleExtShutdownFunction)	(xsltStylesheetPtr style,
+						 const xmlChar *URI,
+						 void *data);
+
+/**
  * xsltExtInitFunction:
  * @ctxt:  an XSLT transformation context
  * @URI:  the namespace URI for the extension
@@ -47,6 +71,12 @@ typedef void (*xsltExtShutdownFunction) (xsltTransformContextPtr ctxt,
 int		xsltRegisterExtModule	(const xmlChar *URI,
 					 xsltExtInitFunction initFunc,
 					 xsltExtShutdownFunction shutdownFunc);
+int		xsltRegisterExtModuleFull
+				(const xmlChar * URI,
+				 xsltExtInitFunction initFunc,
+				 xsltExtShutdownFunction shutdownFunc,
+				 xsltStyleExtInitFunction styleInitFunc,
+				 xsltStyleExtShutdownFunction styleShutdownFunc);
 
 int		xsltUnregisterExtModule	(const xmlChar * URI);
 
@@ -55,16 +85,76 @@ void		xsltUnregisterAllExtModules(void);
 void *		xsltGetExtData		(xsltTransformContextPtr ctxt,
 					 const xmlChar *URI);
 
+void *		xsltStyleGetExtData	(xsltStylesheetPtr style,
+					 const xmlChar *URI);
+
 void		xsltShutdownCtxtExts	(xsltTransformContextPtr ctxt);
+
+void		xsltShutdownExts	(xsltStylesheetPtr style);
 
 xsltTransformContextPtr
     		xsltXPathGetTransformContext
 					(xmlXPathParserContextPtr ctxt);
 
+/*
+ * extension functions
+*/
+int	xsltRegisterExtModuleFunction	(const xmlChar *name,
+					 const xmlChar *URI,
+					 xmlXPathFunction function);
+xmlXPathFunction
+	xsltExtFunctionLookup		(xsltTransformContextPtr ctxt,
+					 const xmlChar *name,
+					 const xmlChar *URI);
+xmlXPathFunction
+	xsltExtModuleFunctionLookup	(const xmlChar *name,
+					 const xmlChar *URI);
+int	xsltUnregisterExtModuleFunction	(const xmlChar *name,
+					 const xmlChar *URI);
+
+/*
+ * extension elements
+ */
+typedef void
+	(*xsltPreComputeFunction)	(xsltStylesheetPtr ctxt,
+					 xmlNodePtr inst);
+
+int	xsltRegisterExtModuleElement	(const xmlChar *name,
+					 const xmlChar *URI,
+					 xsltPreComputeFunction precomp,
+					 xsltTransformFunction transform);
+xsltTransformFunction
+	xsltExtElementLookup		(xsltTransformContextPtr ctxt,
+					 const xmlChar *name,
+					 const xmlChar *URI);
+xsltTransformFunction
+	xsltExtModuleElementLookup	(const xmlChar *name,
+					 const xmlChar *URI);
+xsltPreComputeFunction
+	xsltExtModuleElementPreComputeLookup
+					(const xmlChar *name,
+					 const xmlChar *URI);
+int	xsltUnregisterExtModuleElement	(const xmlChar *name,
+					 const xmlChar *URI);
+
+/*
+ * top-level elements
+ */
+int	xsltRegisterExtModuleTopLevel	(const xmlChar *name,
+					 const xmlChar *URI,
+					 xsltPreComputeFunction function);
+xsltPreComputeFunction
+	xsltExtModuleTopLevelLookup	(const xmlChar *name,
+					 const xmlChar *URI);
+int	xsltUnregisterExtModuleTopLevel	(const xmlChar *name,
+					 const xmlChar *URI);
+
+
+/* These 2 functions are deprecated for use within modules */
 int		xsltRegisterExtFunction	(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *URI,
-					 xmlXPathEvalFunc function);
+					 xmlXPathFunction function);
 int		xsltRegisterExtElement	(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *URI,
@@ -84,6 +174,11 @@ int		xsltInitCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeExts		(xsltStylesheetPtr style);
 
+
+/**
+ * Test module http://xmlsoft.org/XSLT/
+ */
+void	xsltRegisterTestModule		(void);
 
 #ifdef __cplusplus
 }

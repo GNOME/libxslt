@@ -1,3 +1,27 @@
+Thu Jul 26 19:05:48 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libxslt/extensions.[ch] libxslt/functions.[ch] libxslt/preproc.c
+	  libxslt/transform.[ch] libxslt/variables.c libxslt/xslt.c 
+	  libxslt/xsltInternals.h: new extension framework.
+	  Added stylesheet module data, top-level and extension elements
+	  precomputing, global registration of top-level elements and 
+	  extension elements and functions.
+	  Extensions are no longer initialized from extension-element-prefixes
+	  declarations but when modules need the data.
+	  init/shutdown functions registered with xsltRegisterExtModule{,Full}
+	  only allocate and free module data, they shouldn't register the
+	  elements and functions any more.
+	* libxslt/xsltutils.c: fixed a bug in xsltPrintErrorContext when
+	  @node wasn't NULL.
+	* libxslt/xslt.c: fixed xsltPrecomputeStylesheetTop which allowed
+	  non-XSLT top-level elements before any xsl:import element.
+	* libexslt/common.c libexslt/functions.c libexslt/math.c
+	  libexslt/sets.c: adapted to use the new extension framework.
+	* libxslt/functions.c libxslt/extensions[ch] xsltproc/xsltproc.c:
+	  moved the test module from functions.c to extensions.[ch],
+	  modified it to use the new extension framework. Updated xsltproc
+	  to register the test module.
+
 Thu Jul 26 10:20:19 EDT 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixed an ugly problem with namespaces

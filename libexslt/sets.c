@@ -221,24 +221,6 @@ exsltSetsTrailingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathReturnNodeSet(ctxt, ret);
 }
 
-static void *
-exsltSetsInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "difference",
-			     URI, exsltSetsDifferenceFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "intersection",
-			     URI, exsltSetsIntersectionFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "distinct",
-			     URI, exsltSetsDistinctFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "has-same-nodes",
-			     URI, exsltSetsHasSameNodesFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "leading",
-			     URI, exsltSetsLeadingFunction);
-    xsltRegisterExtFunction (ctxt, (const xmlChar *) "trailing",
-			     URI, exsltSetsTrailingFunction);
-
-    return(NULL);
-}
-
 /**
  * exsltCommonRegister:
  *
@@ -247,5 +229,22 @@ exsltSetsInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
 void
 exsltSetsRegister (void) {
-    xsltRegisterExtModule (EXSLT_SETS_NAMESPACE, exsltSetsInit, NULL);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "difference",
+				   EXSLT_SETS_NAMESPACE,
+				   exsltSetsDifferenceFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "intersection",
+				   EXSLT_SETS_NAMESPACE,
+				   exsltSetsIntersectionFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "distinct",
+				   EXSLT_SETS_NAMESPACE,
+				   exsltSetsDistinctFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "has-same-nodes",
+				   EXSLT_SETS_NAMESPACE,
+				   exsltSetsHasSameNodesFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "leading",
+				   EXSLT_SETS_NAMESPACE,
+				   exsltSetsLeadingFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "trailing",
+				   EXSLT_SETS_NAMESPACE,
+				   exsltSetsTrailingFunction);
 }

@@ -328,6 +328,7 @@ xsltNewStylesheet(void) {
     cur->exclPrefixNr = 0;
     cur->exclPrefixMax = 0;
     cur->exclPrefixTab = NULL;
+    cur->extInfos = NULL;
     return(cur);
 }
 
@@ -369,6 +370,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet)
     xsltFreeNamespaceAliasHashes(sheet);
     xsltFreeStyleDocuments(sheet);
     xsltFreeStylePreComps(sheet);
+    xsltShutdownExts(sheet);
     if (sheet->doc != NULL)
         xmlFreeDoc(sheet->doc);
     if (sheet->variables != NULL)
@@ -1247,24 +1249,21 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 /**
  * xsltParseTemplateContent:
  * @style:  the XSLT stylesheet
- * @ret:  the "template" structure
  * @template:  the container node (can be a document for literal results)
  *
- * parse an XSLT template element content
+ * parse a template content-model
  * Clean-up the template content from unwanted ignorable blank nodes
  * and process xslt:text
  */
 
-static void
-xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
-	                 xmlNodePtr template) {
+void
+xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr template) {
     xmlNodePtr cur, delete;
     /*
      * This content comes from the stylesheet
      * For stylesheets, the set of whitespace-preserving
      * element names consists of just xsl:text.
      */
-    ret->elem = template;
     cur = template->children;
     delete = NULL;
     while (cur != NULL) {
@@ -1412,8 +1411,6 @@ skip_children:
 	    break;
 	cur = cur->next;
     }
-
-    ret->content = template->children;
 }
 
 /**
@@ -1599,7 +1596,9 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     /*
      * parse the content and register the pattern
      */
-    xsltParseTemplateContent(style, ret, template);
+    xsltParseTemplateContent(style, template);
+    ret->elem = template;
+    ret->content = template->children;
     xsltAddTemplate(style, ret, mode, modeURI);
 
 error:
@@ -1652,28 +1651,44 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 
     cur = top->children;
 
+    /*
+     * process xsl:import elements
+     */
     while (cur != NULL) {
 	if (IS_BLANK_NODE(cur)) {
             cur = cur->next;
 	    continue;
 	}
-	if (!(IS_XSLT_ELEM(cur))) {
-#ifdef WITH_XSLT_DEBUG_PARSING
-	    xsltGenericDebug(xsltGenericDebugContext,
-		    "xsltParseStylesheetTop : found foreign element %s\n",
-		    cur->name);
-#endif
-            cur = cur->next;
-	    continue;
-	}
-	if (IS_XSLT_NAME(cur, "import")) {
+	if (IS_XSLT_ELEM(cur) && IS_XSLT_NAME(cur, "import")) {
 	    xsltParseStylesheetImport(style, cur);
 	} else
 	    break;
 	cur = cur->next;
     }
+    /*
+     * process other top-level elements
+     */
     while (cur != NULL) {
+	if (IS_BLANK_NODE(cur)) {
+	    cur = cur->next;
+	    continue;
+	}
+	if ((cur->type == XML_ELEMENT_NODE) && (cur->ns == NULL)) {
+	    xsltGenericError(xsltGenericErrorContext,
+		     "Found a top-level element %s with null namespace URI\n",
+		     cur->name);
+	    style->errors++;
+	    cur = cur->next;
+	    continue;
+	}
 	if (!(IS_XSLT_ELEM(cur))) {
+	    xsltPreComputeFunction function;
+
+	    function = xsltExtModuleTopLevelLookup(cur->name,
+						   cur->ns->href);
+	    if (function != NULL)
+		function(style, cur);
+
 #ifdef WITH_XSLT_DEBUG_PARSING
 	    xsltGenericDebug(xsltGenericDebugContext,
 		    "xsltParseStylesheetTop : found foreign element %s\n",
@@ -1819,7 +1834,9 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	/*
 	 * parse the content and register the pattern
 	 */
-	xsltParseTemplateContent(ret, template, (xmlNodePtr) doc);
+	xsltParseTemplateContent(ret, (xmlNodePtr) doc);
+	template->elem = (xmlNodePtr) doc;
+	template->content = doc->children;
 	xsltAddTemplate(ret, template, NULL, NULL);
     }
 

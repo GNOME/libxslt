@@ -51,6 +51,41 @@
  */
 #define DOCBOOK_XSL_HACK
 
+/**
+ * xsltXPathFunctionLookup:
+ * @ctxt:  a void * but the XSLT transformation context actually
+ * @name:  the function name
+ * @ns_uri:  the function namespace URI
+ *
+ * This is the entry point when a function is needed by the XPath
+ * interpretor.
+ *
+ * Returns the callback function or NULL if not found
+ */
+xmlXPathFunction
+xsltXPathFunctionLookup (void *ctxt ATTRIBUTE_UNUSED,
+			 const xmlChar *name, const xmlChar *ns_uri) {
+    xmlXPathFunction ret;
+
+    if ((name == NULL) || (ns_uri == NULL))
+	return (NULL);
+
+#ifdef WITH_XSLT_DEBUG_FUNCTION
+    xsltGenericDebug(xsltGenericDebugContext,
+            "Lookup function {%s}%s\n", ns_uri, name);
+#endif
+
+    ret = xsltExtModuleFunctionLookup(name, ns_uri);
+
+#ifdef WITH_XSLT_DEBUG_FUNCTION
+    if (ret != NULL)
+        xsltGenericDebug(xsltGenericDebugContext,
+            "found function %s\n", name);
+#endif
+    return(ret);
+}
+
+
 /************************************************************************
  *									*
  *			Module interfaces				*
@@ -625,7 +660,11 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
     name = xmlSplitQName2(obj->stringval, &prefix);
     if (name == NULL) {
+	xmlNsPtr ns;
+
 	name = xmlStrdup(obj->stringval);
+	ns = xmlSearchNs(tctxt->inst->doc, tctxt->inst, NULL);
+	nsURI = xmlStrdup(ns->href);
     } else {
 	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	if (nsURI == NULL) {
@@ -636,7 +675,7 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	}
     }
 
-    if (xmlHashLookup2(tctxt->extElements, name, nsURI) != NULL) {
+    if (xsltExtElementLookup(tctxt, name, nsURI) != NULL) {
 	valuePush(ctxt, xmlXPathNewBoolean(1));
     } else {
 	valuePush(ctxt, xmlXPathNewBoolean(0));
@@ -737,171 +776,6 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
 /************************************************************************
  * 									*
- * 		Test of the extension module API			*
- * 									*
- ************************************************************************/
-
-static xmlChar *testData = NULL;
-
-/**
- * xsltExtFunctionTest:
- * @ctxt:  the XPath Parser context
- * @nargs:  the number of arguments
- *
- * function libxslt:test() for testing the extensions support.
- */
-static void
-xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
-{
-    xsltTransformContextPtr tctxt;
-    void *data;
-
-    if (testData == NULL) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtFunctionTest: not initialized\n");
-        return;
-    }
-    tctxt = xsltXPathGetTransformContext(ctxt);
-    if (tctxt == NULL) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtFunctionTest: failed to get the transformation context\n");
-        return;
-    }
-    data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
-    if (data == NULL) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtFunctionTest: failed to get module data\n");
-        return;
-    }
-    if (data != testData) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtFunctionTest: got wrong module data\n");
-        return;
-    }
-#ifdef WITH_XSLT_DEBUG_FUNCTION
-    xsltGenericDebug(xsltGenericDebugContext,
-                     "libxslt:test() called with %d args\n", nargs);
-#endif
-}
-
-/**
- * xsltExtElementTest:
- * @ctxt:  an XSLT processing context
- * @node:  The current node
- * @inst:  the instruction in the stylesheet
- * @comp:  precomputed informations
- *
- * Process a libxslt:test node
- */
-static void
-xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
-                   xmlNodePtr inst,
-                   xsltStylePreCompPtr comp ATTRIBUTE_UNUSED)
-{
-    xmlNodePtr comment;
-
-    if (testData == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtElementTest: not initialized\n");
-        return;
-    }
-    if (ctxt == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtElementTest: no transformation context\n");
-        return;
-    }
-    if (node == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtElementTest: no current node\n");
-        return;
-    }
-    if (inst == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtElementTest: no instruction\n");
-        return;
-    }
-    if (ctxt->insert == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtElementTest: no insertion point\n");
-        return;
-    }
-    comment =
-        xmlNewComment((const xmlChar *)
-                      "libxslt:test element test worked");
-    xmlAddChild(ctxt->insert, comment);
-}
-
-/**
- * xsltExtInitTest:
- * @ctxt:  an XSLT transformation context
- * @URI:  the namespace URI for the extension
- *
- * A function called at initialization time of an XSLT extension module
- *
- * Returns a pointer to the module specific data for this transformation
- */
-static void *
-xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI)
-{
-    if (testData != NULL) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtInitTest: already initialized\n");
-        return (NULL);
-    }
-    testData = (void *) "test data";
-    xsltRegisterExtFunction(ctxt, (const xmlChar *) "test",
-                            (const xmlChar *) XSLT_DEFAULT_URL,
-                            xsltExtFunctionTest);
-    xsltRegisterExtElement(ctxt, (const xmlChar *) "test",
-                            (const xmlChar *) XSLT_DEFAULT_URL,
-                            xsltExtElementTest);
-
-    xsltGenericDebug(xsltGenericDebugContext,
-                     "Registered test module : %s\n", URI);
-    return (testData);
-}
-
-
-/**
- * xsltExtShutdownTest:
- * @ctxt:  an XSLT transformation context
- * @URI:  the namespace URI for the extension
- * @data:  the data associated to this module
- *
- * A function called at shutdown time of an XSLT extension module
- */
-static void
-xsltExtShutdownTest(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
-                    const xmlChar * URI, void *data)
-{
-    if (testData == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtShutdownTest: not initialized\n");
-        return;
-    }
-    if (data != testData) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltExtShutdownTest: wrong data\n");
-    }
-    testData = NULL;
-    xsltGenericDebug(xsltGenericDebugContext,
-                     "Unregistered test module : %s\n", URI);
-}
-
-/************************************************************************
- * 									*
  * 		Registration of XSLT and libxslt functions		*
  * 									*
  ************************************************************************/
@@ -932,8 +806,4 @@ xsltRegisterAllFunctions(xmlXPathContextPtr ctxt)
                          xsltElementAvailableFunction);
     xmlXPathRegisterFunc(ctxt, (const xmlChar *) "function-available",
                          xsltFunctionAvailableFunction);
-
-    xsltRegisterExtModule((const xmlChar *) XSLT_DEFAULT_URL,
-	                  xsltExtInitTest,
-                          xsltExtShutdownTest);
 }

@@ -406,9 +406,10 @@ main(int argc, char **argv)
     xmlSubstituteEntitiesDefault(1);
 
     /*
-     * Register the EXSLT extensions
+     * Register the EXSLT extensions and the test module
      */
     exsltRegisterAll();
+    xsltRegisterTestModule();
 
     for (i = 1; i < argc; i++) {
         if ((!strcmp(argv[i], "-maxdepth")) ||
