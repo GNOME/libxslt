@@ -1,3 +1,9 @@
+Sat Oct  6 19:45:07 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c: trying to fix bug #61070, seems there
+	  is still a couple of problem left. And optimizations are
+	  certainly needed.
+
 Sat Oct  6 15:10:16 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: fixing bug #61673 part II
