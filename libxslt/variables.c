@@ -852,6 +852,7 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
     xmlNsPtr *oldNamespaces;
     xsltStackElemPtr elem;
     int res;
+    void *res_ptr;
 
     if (ctxt == NULL)
 	return(-1);
@@ -901,8 +902,8 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
     if (ncname == NULL)
 	return (-1);
 
-    res = xmlHashLookup2(ctxt->globalVars, ncname, href);
-    if (res != 0) {
+    res_ptr = xmlHashLookup2(ctxt->globalVars, ncname, href);
+    if (res_ptr != 0) {
 	xsltTransformError(ctxt, style, NULL,
 	    "Global parameter %s already defined\n", ncname);
     }

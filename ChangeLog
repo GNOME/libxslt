@@ -1,3 +1,7 @@
+Tue May 20 12:14:12 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: fixes a 64bits cleanliness issue #113318
+
 Sat May 17 13:25:32 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* win32/defgen.xsl: new file, generates the export sources.
