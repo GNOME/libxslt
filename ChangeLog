@@ -1,3 +1,8 @@
+Fri Jul  2 16:24:12 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/keys.c: added namespace setup before calling XPath
+	  to evaluate key (Bug 143520)
+
 Thu Jul  1 10:07:55 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: added coding to xsltCopyTree to copy

@@ -558,8 +558,8 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
     ctxt->node = (xmlNodePtr) doc->doc;
     /* TODO : clarify the use of namespaces in keys evaluation */
-    ctxt->xpathCtxt->namespaces = NULL;
-    ctxt->xpathCtxt->nsNr = 0;
+    ctxt->xpathCtxt->namespaces = keyd->nsList;
+    ctxt->xpathCtxt->nsNr = keyd->nsNr;
     ctxt->inst = keyd->inst;
     res = xmlXPathCompiledEval(keyd->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->contextSize = oldSize;
