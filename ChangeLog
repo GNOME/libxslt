@@ -1,3 +1,11 @@
+Thu Feb 26 13:16:33 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attrvt.c libxslt/variables.c: fixed a regression for
+	  AVT found in global variable content.
+	* tests/docs/Makefile.am tests/docs/bug-143.xml
+	  tests/general/Makefile.am tests/docs/bug-143*: added test
+	  to the regression suite.
+
 Wed Feb 25 16:35:01 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attributes.c libxslt/keys.h libxslt/preproc.c 

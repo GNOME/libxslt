@@ -29,7 +29,6 @@
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_AVT
-#define WITH_XSLT_DEBUG_AVT
 #endif
 
 #define MAX_AVT_SEG 10
@@ -158,6 +157,17 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
     if ((xmlStrchr(str, '{') == NULL) &&
         (xmlStrchr(str, '}') == NULL)) return;
 
+#ifdef WITH_XSLT_DEBUG_AVT
+    xsltGenericDebug(xsltGenericDebugContext,
+		    "Found AVT %s: %s\n", attr->name, str);
+#endif
+    if (attr->_private != NULL) {
+#ifdef WITH_XSLT_DEBUG_AVT
+	xsltGenericDebug(xsltGenericDebugContext,
+			"AVT %s: already compiled\n");
+#endif
+        return;
+    }
     avt = xsltNewAttrVT(style);
     if (avt == NULL) return;
     attr->_private = avt;

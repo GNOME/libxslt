@@ -1405,6 +1405,9 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
 	return;
     }
 
+    if (cur->children != NULL) {
+        xsltParseTemplateContent(style, cur);
+    }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
 	"Registering global variable %s\n", comp->name);
@@ -1442,6 +1445,10 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
 	xsltTransformError(NULL, style, cur,
 	    "xsl:param : missing name attribute\n");
 	return;
+    }
+
+    if (cur->children != NULL) {
+        xsltParseTemplateContent(style, cur);
     }
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
