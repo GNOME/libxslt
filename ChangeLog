@@ -1,3 +1,8 @@
+Thu Mar  8 02:34:52 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/docbook/result/html/*.html: regenerated the HTML
+	  now that value-of an result tree don't include the fake root
+
 Thu Mar  8 02:26:56 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/variables.c: removed a couple

@@ -4,15 +4,15 @@
 <title>DocBook V4.0 Example Document</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.29">
 </head>
-<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" id="id2670159">
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" id="id2640370">
 <div class="titlepage">
 <div><h1 class="title">
-<a name="id2670159"></a>DocBook V4.0 Example Document</h1></div>
+<a name="id2640370"></a>DocBook V4.0 Example Document</h1></div>
 <div><h3 class="author">Norman Walsh</h3></div>
 <div><div class="abstract">
 <p>
-<a name="id2781641"></a>
-<b><fake>Abstract</fake></b>
+<a name="id2650886"></a>
+<b>Abstract</b>
 </p>
 <p>This document demonstrates the new tags in DocBook V4.0.</p>
 <p>The focus of this document is to present examples of new elements,
@@ -21,29 +21,28 @@ included.</p>
 </div></div>
 <hr>
 </div>
-<div id="id2781658" class="chapter">
+<div id="id2650904" class="chapter">
 <div class="titlepage"><div><h2 class="title">
-<a name="id2781658"></a>
-<fake>Chapter 1.</fake> Block-level Markup</h2></div></div>
-<p>There's a new simple-alternative for <tt><fake>msgentry</fake></tt>:
-<tt><fake>simplemsgentry</fake></tt>.</p>
+<a name="id2650904"></a>Chapter 1. Block-level Markup</h2></div></div>
+<p>There's a new simple-alternative for <tt>msgentry</tt>:
+<tt>simplemsgentry</tt>.</p>
 <div class="simplemsgentry">
-<a name="id2781688"></a>
+<a name="id2650925"></a>
 <p>The text of a message</p>
 <div class="msgexplan">
-<a name="id2781700"></a>
+<a name="id2650934"></a>
 <p>An explanation of the message.</p>
 </div>
 </div>
 <div class="simplemsgentry">
-<a name="id2781709"></a>
+<a name="id2650941"></a>
 <p>The text of a message</p>
 <div class="msgexplan">
-<a name="id2781719"></a>
+<a name="id2650950"></a>
 <p>An explanation of the message.</p>
 </div>
 </div>
-<p>Longer descriptions are possible in a <tt><fake>revhistory</fake></tt>:
+<p>Longer descriptions are possible in a <tt>revhistory</tt>:
 </p>
 <p>
 <div class="revhistory"><table border="0" width="100%" summary="Revision history">
@@ -65,22 +64,22 @@ included.</p>
 <p><b>Itemized List</b></p>
 <ul>
 <li><p>
-<a name="id2690979"></a>First thing</p></li>
+<a name="id2651054"></a>First thing</p></li>
 <li><p>
-<a name="id2690987"></a>Second thing</p></li>
+<a name="id2651061"></a>Second thing</p></li>
 <li><p>
-<a name="id2690996"></a>Third thing</p></li>
+<a name="id2651066"></a>Third thing</p></li>
 </ul>
 </div>
 <div class="itemizedlist">
 <p><b>Ordered List</b></p>
 <ul>
 <li><p>
-<a name="id2691011"></a>First thing</p></li>
+<a name="id2651080"></a>First thing</p></li>
 <li><p>
-<a name="id2691019"></a>Second thing</p></li>
+<a name="id2651086"></a>Second thing</p></li>
 <li><p>
-<a name="id2691028"></a>Third thing</p></li>
+<a name="id2651092"></a>Third thing</p></li>
 </ul>
 </div>
 <p>Linespecific environments can indicate line numbering:</p>
@@ -90,7 +89,7 @@ included.</p>
 			(linespecific)	'linespecific'
          linenumbering	(numbered|unnumbered) 	#IMPLIED&quot;&gt;
 </pre>
-<p>Added <tt><fake>classsynopsis</fake></tt> for documenting
+<p>Added <tt>classsynopsis</tt> for documenting
 object-oriented programming language classes. Here's one example:</p>
 <pre class="classsynopsis"> <span class="ooclass">
 <span class="modifier">public </span>
@@ -104,12 +103,10 @@ object-oriented programming language classes. Here's one example:</p>
 <span class="type">String </span>
 <span class="varname">writerName </span>
 <span class="initializer">= &quot;MyWriter&quot;</span>;</div>
-<div class="methodsynopsis">
-<fake>  <span>static </span>
-<span>public </span>
-<span>void </span>
-<span>write</span>
-</fake>(<span class="methodparam">
+<div class="methodsynopsis">  <span class="modifier">static </span>
+<span class="modifier">public </span>
+<span class="void">void </span>
+<span class="methodname">write</span>(<span class="methodparam">
 <span class="type">ResultTreeFragment </span>
 <span class="parameter">frag</span>
 </span>,
@@ -119,16 +116,15 @@ object-oriented programming language classes. Here's one example:</p>
 </span>)
     throws <span class="exceptionname">SAXException</span>;</div>}</pre>
 </div>
-<div id="id2689760" class="chapter">
+<div id="id2651326" class="chapter">
 <div class="titlepage"><div><h2 class="title">
-<a name="id2689760"></a>
-<fake>Chapter 2.</fake> Inline markup</h2></div></div>
-<p>The <tt><fake>sgmltag</fake></tt> element has new
-<fake>class</fake> attribute values:
-<tt><fake>xmlpi</fake></tt> and
-<tt><fake>emptytag</fake></tt>. These produce
-<tt><fake>&lt;?processing instructions?&gt;</fake></tt>
-and <tt><fake>&lt;empty-tag/&gt;</fake></tt> markup
+<a name="id2651326"></a>Chapter 2. Inline markup</h2></div></div>
+<p>The <tt>sgmltag</tt> element has new
+class attribute values:
+<tt>xmlpi</tt> and
+<tt>emptytag</tt>. These produce
+<tt>&lt;?processing instructions?&gt;</tt>
+and <tt>&lt;empty-tag/&gt;</tt> markup
 suitable for XML.
 </p>
 </div>

@@ -7,22 +7,20 @@
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section">
 <a name="dsssl.expr.loop"></a>
 <div class="titlepage"><div><h2 class="title" style="clear: all">
-<a name="dsssl.expr.loop"></a>
-<fake>Loops</fake>
-</h2></div></div>
+<a name="dsssl.expr.loop"></a>Loops</h2></div></div>
 <p>
-<a class="indexterm" name="id2691231"></a>
-<a class="indexterm" name="id2691240"></a>
-<a class="indexterm" name="id2691250"></a>
+<a class="indexterm" name="id2653662"></a>
+<a class="indexterm" name="id2653669"></a>
+<a class="indexterm" name="id2653675"></a>
 
-<fake>DSSSL</fake> doesn't have any construct that resembles the
+DSSSL doesn't have any construct that resembles the
 for loop that occurs in most imperative languages like C
-and Java. Instead, <fake>DSSSL</fake> employs a common trick in
+and Java. Instead, DSSSL employs a common trick in
 functional languages for implementing a loop: tail recursion.
 </p>
 <p>
-Loops in <fake>DSSSL</fake> use a special form of
-<tt><fake>let</fake></tt>. This loop counts from 1 to 10:
+Loops in DSSSL use a special form of
+<tt>let</tt>. This loop counts from 1 to 10:
 <pre class="screen">
 (let <a name="dl1"></a>
 <img src="../images/callouts/1.png" alt="1" border="0">loopvar <a name="dl2"></a>
@@ -40,18 +38,18 @@ Loops in <fake>DSSSL</fake> use a special form of
 <td width="5%" valign="top" align="left">
 <a href="#dl1"><img src="../images/callouts/1.png" alt="1" border="0"></a> </td>
 <td valign="top" align="left"><p>This variable controls the loop. It is declared without an
-initial value, immediately after the <tt><fake>let</fake></tt>
+initial value, immediately after the <tt>let</tt>
 operand.</p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left">
 <a href="#dl2"><img src="../images/callouts/2.png" alt="2" border="0"></a> </td>
 <td valign="top" align="left"><p>
-<a class="indexterm" name="id2781319"></a>
+<a class="indexterm" name="id2647503"></a>
 
 Any number of additional local variables can be defined after
 the loop variable, just as they can in any other
-<tt><fake>let</fake></tt> expression.</p></td>
+<tt>let</tt> expression.</p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left">
