@@ -49,44 +49,46 @@ main(int argc, char **argv) {
 		else
 		    xmlIndentTreeOutput = 0;
 		i++;
-		break;
 	    }
+	    break;
+		
 	}
     }
-    for (;i < argc ; i++) {
-	doc = xmlParseFile(argv[i]);
-	if (doc == NULL) {
-	    fprintf(stderr, "unable to parse %s\n", argv[i]);
-	    continue;
-	}
-	if (repeat) {
-	    int j;
-	    for (j = 0;j < 99; j++) {
-		res = xsltApplyStylesheet(cur, doc);
-		xmlFreeDoc(res);
-		xmlFreeDoc(doc);
-		doc = xmlParseFile(argv[i]);
+    if (cur != NULL) {
+	for (;i < argc ; i++) {
+	    doc = xmlParseFile(argv[i]);
+	    if (doc == NULL) {
+		fprintf(stderr, "unable to parse %s\n", argv[i]);
+		continue;
 	    }
-	}
-	res = xsltApplyStylesheet(cur, doc);
-	xmlFreeDoc(doc);
-	if (res == NULL) {
-	    fprintf(stderr, "no result for %s\n", argv[i]);
-	    continue;
-	}
-	if (cur->methodURI == NULL) {
+	    if (repeat) {
+		int j;
+		for (j = 0;j < 99; j++) {
+		    res = xsltApplyStylesheet(cur, doc);
+		    xmlFreeDoc(res);
+		    xmlFreeDoc(doc);
+		    doc = xmlParseFile(argv[i]);
+		}
+	    }
+	    res = xsltApplyStylesheet(cur, doc);
+	    xmlFreeDoc(doc);
+	    if (res == NULL) {
+		fprintf(stderr, "no result for %s\n", argv[i]);
+		continue;
+	    }
+	    if (cur->methodURI == NULL) {
 #ifdef LIBXML_DEBUG_ENABLED
-	    if (debug)
-		xmlDebugDumpDocument(stdout, res);
-	    else
+		if (debug)
+		    xmlDebugDumpDocument(stdout, res);
+		else
 #endif
-		xsltSaveResultToFile(stdout, res, cur);
-	}
+		    xsltSaveResultToFile(stdout, res, cur);
+	    }
 
-	xmlFreeDoc(res);
-    }
-    if (cur != NULL)
+	    xmlFreeDoc(res);
+	}
 	xsltFreeStylesheet(cur);
+    }
     xmlCleanupParser();
     xmlMemoryDump();
     return(0);

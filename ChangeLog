@@ -1,3 +1,9 @@
+Mon Jan 22 19:37:00 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: avoid segfault when stylesheet is inproper
+	* libxslt/transform.c: add support for "*" to strip and preserve
+	  space.
+
 Mon Jan 22 15:30:19 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* TODO: updated

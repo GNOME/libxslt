@@ -512,6 +512,7 @@ void
 xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr copy;
     xmlNodePtr delete = NULL;
+    int strip_spaces = -1;
 
     switch (node->type) {
 	case XML_DOCUMENT_NODE:
@@ -545,11 +546,29 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    (ctxt->style->stripSpaces != NULL)) {
 		    const xmlChar *val;
 
-		    val = (const xmlChar *)
-			  xmlHashLookup(ctxt->style->stripSpaces,
-				        node->parent->name);
-		    if ((val != NULL) &&
-			(xmlStrEqual(val, (xmlChar *) "strip"))) {
+		    if (strip_spaces == -1) {
+			/* TODO: add namespaces support */
+			val = (const xmlChar *)
+			      xmlHashLookup(ctxt->style->stripSpaces,
+					    node->parent->name);
+			if (val != NULL) {
+			    if (xmlStrEqual(val, (xmlChar *) "strip"))
+				strip_spaces = 1;
+			    if (xmlStrEqual(val, (xmlChar *) "preserve"))
+				strip_spaces = 0;
+			} 
+			if (strip_spaces == -1) {
+			    val = (const xmlChar *)
+				  xmlHashLookup(ctxt->style->stripSpaces,
+						(const xmlChar *)"*");
+			    if ((val != NULL) &&
+				(xmlStrEqual(val, (xmlChar *) "strip")))
+				strip_spaces = 1;
+			    else
+				strip_spaces = 0;
+			}
+		    }
+		    if (strip_spaces == 1) {
 			delete = node;
 			break;
 		    }
