@@ -1,3 +1,9 @@
+Fri Feb  7 15:34:24 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.c: fixing a segfault in document(), bug #105418
+	* tests/documents/Makefile.am tests/documents/test_bad: add the
+	  specific test as suggested by Jean T Anderson
+
 Fri Feb  7 14:18:40 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c libxslt/keys.c libxslt/pattern.c

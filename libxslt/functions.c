@@ -151,8 +151,8 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
 
 	    return;
 	}
-    }
-    doc = xsltdoc->doc;
+    } else
+	doc = xsltdoc->doc;
 
     if ( fragment == NULL ) {
 	valuePush(ctxt,
