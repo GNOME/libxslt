@@ -1996,9 +1996,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		if (ctxt->insert->type == XML_ELEMENT_NODE) {
 		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, cur;
 		    if (attr->ns != NULL) {
-			if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
-			    (xmlStrncasecmp(attr->ns->prefix,
-					    (xmlChar *)"xml", 3))) {
+			if (!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) {
 			    ret = xmlCopyProp(ctxt->insert, attr);
 			    ret->ns = xsltGetNamespace(ctxt, node, attr->ns,
 						       ctxt->insert);
