@@ -1134,8 +1134,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	while (attrs != NULL) {
 	    template = xsltGetTemplate(ctxt, (xmlNodePtr) attrs, NULL);
 	    if (template) {
-		xsltApplyOneTemplate(ctxt, node, template->content, template,
-				     NULL);
+		xsltApplyOneTemplate(ctxt, (xmlNodePtr) attrs,
+		                     template->content, template, NULL);
 	    }
 	    attrs = attrs->next;
 	}
