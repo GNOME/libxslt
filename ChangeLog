@@ -1,3 +1,8 @@
+Thu Feb 26 16:04:28 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c libxslt/variables.c: use the psvi field
+	  of teh document used for RVT instead of _private. 
+
 Thu Feb 26 15:17:52 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attrvt.c libxslt/templates.c: use the psvi field of

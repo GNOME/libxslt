@@ -650,7 +650,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    /*
 	     * Save a pointer to the global variable for later cleanup
 	     */
-	    container->_private = elem;
+	    container->psvi = elem;
 	    oldoutput = ctxt->output;
 	    ctxt->output = container;
 	    oldInsert = ctxt->insert;

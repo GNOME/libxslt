@@ -1792,7 +1792,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltStackElemPtr elem;
 	    xmlDocPtr tmp = ctxt->tmpRVT, next;
             while (tmp != NULL) {
-	        elem = (xsltStackElemPtr)tmp->_private;
+	        elem = (xsltStackElemPtr)tmp->psvi;
 		if (elem != NULL) {
 		    elem->computed = 0;
 		    xmlXPathFreeObject(elem->value);
@@ -3148,14 +3148,17 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		        (list->nodeTab[0]->doc != NULL) &&
 		        (xmlStrEqual((xmlChar *)list->nodeTab[0]->doc->name,
 			   (const xmlChar *) " fake node libxslt")) &&
-			(list->nodeTab[0]->doc->_private == NULL)) {
+			(list->nodeTab[0]->doc->psvi == NULL)) {
+			xmlDocPtr tmp;
+
 		        newDocPtr = xsltNewDocument(ctxt, 
 			       list->nodeTab[0]->doc);
 		        if (newDocPtr == NULL) {
 			    xsltTransformError(ctxt, NULL, inst,
 		    "xsltApplyTemplates : failed to allocate subdoc\n");
 		        }
-			list->nodeTab[0]->_private = (xmlNodePtr)newDocPtr;
+			tmp = (xmlDocPtr) list->nodeTab[0];
+			tmp->psvi = (xmlNodePtr)newDocPtr;
 			ctxt->document = newDocPtr;
 		    }
 		}
