@@ -241,7 +241,7 @@ xsltSecurityForbid(xsltSecurityPrefsPtr sec ATTRIBUTE_UNUSED,
  * (file, socket...) for XML.
  *
  * TODO: remove at some point !!!
- * Local copy of xmlCheckFilename to avoid a hard dependancy on
+ * Local copy of xmlCheckFilename to avoid a hard dependency on
  * a new version of libxml2 
  *
  * if stat is not available on the target machine,
