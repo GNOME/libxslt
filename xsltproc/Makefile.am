@@ -10,7 +10,6 @@ AM_CFLAGS = $(LIBGCRYPT_CFLAGS)
 xsltproc_SOURCES = xsltproc.c
 xsltproc_LDFLAGS = 
 xsltproc_DEPENDENCIES = $(DEPS)
-xsltproc_LDADD = $(LDADDS) $(LIBGCRYPT_LIBS)
 
 DEPS = $(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la 
@@ -19,6 +18,8 @@ LDADDS = @STATIC_BINARIES@ \
          $(top_builddir)/libxslt/libxslt.la \
          $(top_builddir)/libexslt/libexslt.la \
 	@LIBXML_LIBS@ $(EXTRA_LIBS) @WIN32_EXTRA_LIBADD@
+
+xsltproc_LDADD = $(LIBGCRYPT_LIBS) $(LDADDS)
 
 xsltproc.dv: xsltproc.o
 	$(CC) $(CFLAGS) -o xsltproc xsltproc.o ../libexslt/.libs/libexslt.a ../libxslt/.libs/libxslt.a @LIBXML_LIBS@ $(EXTRA_LIBS)
