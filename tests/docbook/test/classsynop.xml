@@ -1,5 +1,5 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.0//EN"
-                  "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+                  "../dtd/4.0/docbookx.dtd">
 <chapter><title>Class Synopses</title>
 
 <para>This example is Perl; it's the standard DirHandle module. I've

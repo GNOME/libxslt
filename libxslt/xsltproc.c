@@ -13,6 +13,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
+#include <libxml/xmlIO.h>
 #ifdef LIBXML_DOCB_ENABLED
 #include <libxml/DOCBparser.h>
 #endif
@@ -40,6 +41,48 @@ static int html = 0;
 #ifdef LIBXML_XINCLUDE_ENABLED
 static int xinclude = 0;
 #endif
+static int nonet;
+static xmlExternalEntityLoader defaultLoader = NULL;
+
+static xmlParserInputPtr
+xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
+                               xmlParserCtxtPtr ctxt) {
+    if (URL != NULL) {
+        if ((!xmlStrncasecmp((const xmlChar *) URL,
+		            (const xmlChar *) "ftp://", 6)) ||
+            (!xmlStrncasecmp((const xmlChar *) URL,
+		            (const xmlChar *) "http://", 7))) {
+	    fprintf(stderr, "Attempt to load network entity %s \n", URL);
+	    if (nonet)
+		return(NULL);
+	}
+    }
+    if (defaultLoader != NULL) {
+	return(defaultLoader(URL, ID, ctxt));
+    }
+    return(NULL);
+}
+
+static void usage(const char *name) {
+    printf("Usage: %s [options] stylesheet file [file ...]\n", name);
+    printf("   Options:\n");
+    printf("      --verbose or -v: show logs of what's happening\n");
+    printf("      --timing: display the time used\n");
+    printf("      --repeat: run the transformation 20 times\n");
+    printf("      --debug: dump the tree of the result instead\n");
+    printf("      --novalid: skip the Dtd loading phase\n");
+    printf("      --noout: do not dump the result\n");
+    printf("      --maxdepth val : increase the maximum depth\n");
+#ifdef LIBXML_HTML_ENABLED
+    printf("      --html: the input document is(are) an HTML file(s)\n");
+#endif
+#ifdef LIBXML_DOCB_ENABLED
+    printf("      --docbook: the input document is SGML docbook\n");
+#endif
+    printf("      --param name value\n");
+    printf("      --nonet refuse to fetch DTDs or entities over network\n");
+    printf("      --warnnet warn against fetching over the network\n");
+}
 
 int
 main(int argc, char **argv) {
@@ -51,28 +94,18 @@ main(int argc, char **argv) {
     int nbparams = 0;
 
     if (argc <= 1) {
-	printf("Usage: %s [options] stylesheet file [file ...]\n", argv[0]);
-	printf("   Options:\n");
-	printf("      --verbose or -v: show logs of what's happening\n");
-	printf("      --timing: display the time used\n");
-	printf("      --repeat: run the transformation 20 times\n");
-	printf("      --debug: dump the tree of the result instead\n");
-	printf("      --novalid: skip the Dtd loading phase\n");
-	printf("      --noout: do not dump the result\n");
-	printf("      --maxdepth val : increase the maximum depth\n");
-#ifdef LIBXML_HTML_ENABLED
-	printf("      --html: the input document is(are) an HTML file(s)\n");
-#endif
-#ifdef LIBXML_DOCB_ENABLED
-	printf("      --docbook: the input document is SGML docbook\n");
-#endif
-	printf("      --param name value\n");
-	printf("      --debug-mem use libxml memory debugging\n");
-	return(0);
+	usage(argv[0]);
+	return(1);
     }
     xmlInitMemory();
     LIBXML_TEST_VERSION
+    defaultLoader = xmlGetExternalEntityLoader();
     for (i = 1; i < argc ; i++) {
+	if (!strcmp(argv[i], "-"))
+	    break;
+
+	if (argv[i][0] != '-')
+	    continue;
 #ifdef LIBXML_DEBUG_ENABLED
 	if ((!strcmp(argv[i], "-debug")) || (!strcmp(argv[i], "--debug"))) {
 	    debug++;
@@ -107,6 +140,13 @@ main(int argc, char **argv) {
 	} else if ((!strcmp(argv[i], "-timing")) ||
 		   (!strcmp(argv[i], "--timing"))) {
 	    timing++;
+	} else if ((!strcmp(argv[i], "-warnnet")) ||
+		   (!strcmp(argv[i], "--warnnet"))) {
+	    xmlSetExternalEntityLoader(xsltNoNetExternalEntityLoader);
+	} else if ((!strcmp(argv[i], "-nonet")) ||
+		   (!strcmp(argv[i], "--nonet"))) {
+	    xmlSetExternalEntityLoader(xsltNoNetExternalEntityLoader);
+	    nonet = 1;
 #ifdef LIBXML_XINCLUDE_ENABLED
 	} else if ((!strcmp(argv[i], "-xinclude")) ||
 		   (!strcmp(argv[i], "--xinclude"))) {
@@ -129,6 +169,10 @@ main(int argc, char **argv) {
 		if (value > 0)
 		    xsltMaxDepth = value;
 	    }
+	} else {
+	    fprintf(stderr, "Unknown option %s\n", argv[i]);
+	    usage(argv[0]);
+	    return(1);
 	}
     }
     params[nbparams] = NULL;

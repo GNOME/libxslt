@@ -1,5 +1,5 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.0//EN"
-               "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+               "../dtd/4.0/docbookx.dtd">
 <book>
 <bookinfo>
 <title>DocBook V4.0 Example Document</title>

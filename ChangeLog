@@ -1,3 +1,11 @@
+Wed May  9 12:29:47 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: added --nonet and --warnnet to catch
+	  cases where a network access is needed to load a DTD or entity
+	* tests/docbook/Makefile.am: added --nonet
+	* tests/docbook/test/classsynop.xml tests/docbook/test/docbook40.xml:
+	  fixed 2 tests as a result
+
 Wed May  9 10:43:53 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in tests/docbook/Makefile.am tests/docbook/**/Makefile.am:

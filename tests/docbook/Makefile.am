@@ -14,7 +14,7 @@ html: $(top_builddir)/libxslt/xsltproc
 	  echo $$i ; \
 	  out=result/html/`basename $$i .xml`.tst; \
 	  html=result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/libxslt/xsltproc html/docbook.xsl $$i > $$out ; \
+	  $(top_builddir)/libxslt/xsltproc --nonet html/docbook.xsl $$i > $$out ; \
 	  if [ -f $$html ] ; then \
 	      grep -v id < $$html > $$html.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
