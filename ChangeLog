@@ -1,3 +1,7 @@
+Mon Nov 18 10:09:06 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: similar patch to #98825 for --with-python
+
 Sun Nov 17 22:06:59 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: fix bug #98793 on clash of imported global
