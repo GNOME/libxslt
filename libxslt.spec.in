@@ -110,7 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root)
 
 %doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
-%doc doc/*.html doc/html doc/tutorial
+%doc doc/*.html doc/html doc/tutorial doc/*.gif doc/*.png
 %doc %{_mandir}/man1/xsltproc.1*
 
 %{prefix}/lib/lib*.so.*

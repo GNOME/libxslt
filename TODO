@@ -8,10 +8,6 @@ Design:
   - seems that saving back XSLT stylesheet from a compiled form might
     be a bit ugly ... Yes forget about it, it's just twaeked to the extreme
 
-ID and Key support:
-  -> done but namespace support in keys is not defined
-  -> make sure keys are recomputed on new document input
-
 Pattern tester:
   -> try to optimize for ID scan and tests.
 
@@ -24,13 +20,13 @@ Error handling:
      and lack of optionnal features.
   -> catch recursion end of 5.4 ...
 
-Support Attribute value templates:
-  -> namespace support for attribute value templates is not done, need
-     a small API redesign
-
 Sorting:
   -> add lang and case-order
   -> add foreign sorting functions (interfaces ?).
+
+Format Number:
+  -> cleanup % handling (May 21 2001) possibly following the cleaned
+     up wording of XSLT-2.0
 
                   ********
                  *        *
@@ -112,6 +108,10 @@ Pattern tester:
      based patterns lists.
   => done
 
+Support Attribute value templates:
+  -> namespace support for attribute value templates is not done, need
+     a small API redesign
+
 Doc:
   - put a page at http://xmlsoft.org/XSLT/
   - generate/transform the DocBook to HTML
@@ -124,6 +124,10 @@ Error handling:
      and default handling, parsing vs. runtime, fatal / compat / warning,
      and lack of optionnal features.
   -> reports context
+
+ID and Key support:
+  -> done but namespace support in keys is not defined
+  -> make sure keys are recomputed on new document input
 
 Profiler:
   -> added looks good enough
