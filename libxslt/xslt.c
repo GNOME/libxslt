@@ -775,8 +775,21 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 		if (element == NULL) {
 		    if (style != NULL) style->errors++;
 		} else {
+		    xmlNsPtr ns;
+		    
 		    xmlHashAddEntry2(style->cdataSection, element, URI,
 			             (void *) "cdata");
+		    /*
+		     * if prefix is NULL, we must check whether it's
+		     * necessary to also put in the name of the default
+		     * namespace.
+		     */
+		    if (URI == NULL) {
+		        ns = xmlSearchNs(style->doc, cur, NULL);
+			if (ns != NULL)  
+			    xmlHashAddEntry2(style->cdataSection, element,
+			        ns->href, (void *) "cdata");
+		    }
 		    xmlFree(element);
 		}
             }
