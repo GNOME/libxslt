@@ -1,3 +1,9 @@
+Fri Dec 13 11:59:07 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c: numbering should not traverse XInclude
+	  nodes left in the tree. Closes bug #101114 raised by
+	  Bernd Kuemmerlen
+
 Thu Dec 12 01:17:09 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/apibuild.py: fixed a bug in merging public info from
