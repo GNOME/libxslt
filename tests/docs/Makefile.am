@@ -119,6 +119,8 @@ EXTRA_DIST =	\
 	bug-117.xml \
 	bug-118.xml \
 	bug-119.xml \
+	bug-120.xml \
+	bug-121.xml \
 	character.xml \
 	array.xml \
 	items.xml

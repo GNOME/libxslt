@@ -1,3 +1,10 @@
+Fri May 16 13:22:31 EDT 2003 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-121.*
+	  tests/general/Makefile.am tests/general/bug-121*: added the
+	  example for bug #112904 in the regression tests, the bug fix is
+	  actually in libxml2
+
 Thu May 15 16:26:34 EDT 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: fixing portability bug #113002 on HP-UX
