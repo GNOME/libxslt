@@ -1,3 +1,8 @@
+Sat Apr 28 14:20:29 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/preproc.c : fixed <xsl:sort/> bug reported by Ankh
+	* libxslt/xsltproc.c : added an option to process HTML input
+
 Thu Apr 26 21:13:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c: Tony Gorski found a bug pointed by

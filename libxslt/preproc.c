@@ -324,11 +324,12 @@ xsltSortComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 
     comp->select = xmlGetNsProp(inst,(const xmlChar *)"select", XSLT_NAMESPACE);
     if (comp->select == NULL) {
-	comp->select = xmlNodeGetContent(inst);
-	if (comp->select == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-		 "xsltSortComp: select is not defined\n");
-	}
+	/*
+	 * The default value of the select attribute is ., which will
+	 * cause the string-value of the current node to be used as
+	 * the sort key.
+	 */
+	comp->select = xmlStrdup((const xmlChar *)".");
     }
 }
 
