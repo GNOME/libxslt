@@ -246,6 +246,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     }
     decimal_point = (the_format[i] == self->decimalPoint[0]) ? TRUE : FALSE;
     if (decimal_point) {
+	i++;
 	for ( ; i < length; i++) {
 	    if (the_format[i] == self->digit[0]) {
 		fraction_digits++;
