@@ -632,7 +632,7 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     } else {
         const xmlChar *URI;
 
-	URI = xsltGetQNameURI(inst, &prop);
+	URI = xsltGetQNameURI(inst, (xmlChar **)&prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
 	} else {
@@ -716,14 +716,14 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltTransformError(NULL, style, cur,
 			 "xsl:number : invalid value %s for level\n", prop);
 	    if (style != NULL) style->warnings++;
-	    xmlFree(prop);
+	    xmlFree((void *)(prop));
 	}
     }
     
     prop = xsltGetCNsProp(style, cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
     if (prop != NULL) {
 	XSLT_TODO; /* xsl:number lang attribute */
-	xmlFree(prop);
+	xmlFree((void *)prop);
     }
     
     prop = xsltGetCNsProp(style, cur, (const xmlChar *)"letter-value", XSLT_NAMESPACE);
@@ -821,7 +821,7 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     } else {
         const xmlChar *URI;
 
-	URI = xsltGetQNameURI(inst, &prop);
+	URI = xsltGetQNameURI(inst, (xmlChar **)&prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
 	} else {
@@ -865,7 +865,7 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     if (prop != NULL) {
         const xmlChar *URI;
 
-	URI = xsltGetQNameURI(inst, &prop);
+	URI = xsltGetQNameURI(inst, (xmlChar **)&prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
 	} else {
@@ -1050,7 +1050,7 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     } else {
         const xmlChar *URI;
 
-	URI = xsltGetQNameURI(inst, &prop);
+	URI = xsltGetQNameURI(inst, (xmlChar **)&prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
 	} else {
@@ -1114,7 +1114,7 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     } else {
         const xmlChar *URI;
 
-	URI = xsltGetQNameURI(inst, &prop);
+	URI = xsltGetQNameURI(inst, (xmlChar **)&prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
 	} else {

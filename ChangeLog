@@ -1,3 +1,9 @@
+Tue Feb 24 00:37:28 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xsltutils.c, libxslt/templates.c, libxslt/preproc.c:
+	  minor changes to eliminate compilation warnings.  No change
+	  to logic.
+
 Sun Feb 22 23:59:12 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/exsltexports.h libxslt/xsltexports.h: patches from

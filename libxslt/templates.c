@@ -496,7 +496,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 		xmlChar *val;
 		val = xsltEvalAVT(ctxt, cur->_private, cur->parent);
 		if (val == NULL) {
-		    text->content = xmlStrdup("runtime error");
+		    text->content = xmlStrdup(BAD_CAST "runtime error");
 		} else {
 		    text->content = val;
 		}

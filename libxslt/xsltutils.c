@@ -13,6 +13,7 @@
 #include "libxslt.h"
 
 #include <stdio.h>
+#include <string.h>
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
@@ -1071,12 +1072,12 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	comp = sorts[j]->_private;
 	if (tempstype[j] == 1) {
 	    /* The data-type needs to be recomputed each time */
-	    xmlFree(comp->stype);
+	    xmlFree((void *)(comp->stype));
 	    comp->stype = NULL;
 	}
 	if (temporder[j] == 1) {
 	    /* The order needs to be recomputed each time */
-	    xmlFree(comp->order);
+	    xmlFree((void *)(comp->order));
 	    comp->order = NULL;
 	}
 	if (resultsTab[j] != NULL) {
