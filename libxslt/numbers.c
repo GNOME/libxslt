@@ -84,6 +84,8 @@ xsltIsDigitZero(xmlChar ch)
 }
 
 #ifndef isnan
+#ifndef HAVE_ISNAN
+
 /*
  * NaN (Not-A-Number)
  *
@@ -101,9 +103,11 @@ isnan(volatile double number)
 {
     return (!(number < 0.0 || number > 0.0) && (number != 0.0));
 }
-#endif
+#endif /* !HAVE_ISNAN */
+#endif /* !isnan */
 
 #ifndef isinf
+#ifndef HAVE_ISINF
 /*
  * Infinity (positive and negative)
  *
@@ -118,7 +122,8 @@ isinf(double number)
     return FALSE;
 # endif
 }
-#endif
+#endif /* !HAVE_ISINF */
+#endif /* !isinf */
 
 static void
 xsltNumberFormatDecimal(xmlBufferPtr buffer,

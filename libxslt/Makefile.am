@@ -40,7 +40,8 @@ libxslt_la_SOURCES = 			\
 	attributes.c			\
 	documents.c			\
 	preproc.c			\
-	transform.c
+	transform.c			\
+	win32config.h
 
 libxslt_la_LIBADD = $(EXTRA_LIBS)
 libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@

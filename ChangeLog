@@ -1,3 +1,12 @@
+Sat Jun 23 15:32:25 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am libxslt/Makefile.am libxslt/numbers.c 
+	  libxslt/win32config.h libxslt/xsltconfig.h.in libxslt/xsltproc.c:
+	  Patches for Windows mostly contributed by Yon Derek
+	* win32/libxslt/libxslt.def win32/libxslt/libxslt.dsw
+	  win32/libxslt/libxslt_so.dsp win32/libxslt/xsltproc.dsp:
+	  Project file for Mircrosoft C provided by Yon Derek
+
 Sat Jun 23 14:20:01 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/pattern.c: closing bug #56517, fixed a number of

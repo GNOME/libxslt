@@ -38,6 +38,16 @@
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 
+#ifdef WIN32
+#ifdef _MSC_VER
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib")
+#define gettimeofday(p1,p2)
+#endif /* _MS_VER */
+#else /* WIN32 */
+#include <sys/time.h>
+#endif /* WIN32 */
+
 extern int xmlLoadExtDtdDefaultValue;
 
 static int debug = 0;
