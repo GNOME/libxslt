@@ -123,10 +123,6 @@ xsltNewAttrElem(xmlNodePtr attr) {
  */
 static void
 xsltFreeAttrElem(xsltAttrElemPtr attr) {
-    if (attr->set != NULL)
-	xmlFree((char *)attr->set);
-    if (attr->ns != NULL)
-	xmlFree((char *)attr->ns);
     xmlFree(attr);
 }
 
@@ -275,11 +271,11 @@ xsltMergeAttrElemList(xsltAttrElemPtr list, xsltAttrElemPtr old) {
 
 void
 xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
-    xmlChar *prop = NULL;
-    xmlChar *ncname = NULL;
-    xmlChar *prefix = NULL;
+    const xmlChar *ncname;
+    const xmlChar *prefix;
+    const xmlChar *attrib, *endattr;
+    xmlChar *prop;
     xmlChar *attributes;
-    xmlChar *attrib, *endattr;
     xmlNodePtr list;
     xsltAttrElemPtr values;
 
@@ -290,15 +286,11 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xsl:attribute-set : name is missing\n");
-	goto error;
+	return;
     }
 
-    ncname = xmlSplitQName2(prop, &prefix);
-    if (ncname == NULL) {
-	ncname = prop;
-	prop = NULL;
-	prefix = NULL;
-    }
+    ncname = xsltSplitQName(style->dict, prop, &prefix);
+    xmlFree(prop);
 
     if (style->attributeSets == NULL) {
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
@@ -308,7 +300,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	style->attributeSets = xmlHashCreate(10);
     }
     if (style->attributeSets == NULL)
-	goto error;
+	return;
 
     values = xmlHashLookup2(style->attributeSets, ncname, prefix);
 
@@ -354,36 +346,24 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    break;
         endattr = attrib;
 	while ((*endattr != 0) && (!IS_BLANK(*endattr))) endattr++;
-	attrib = xmlStrndup(attrib, endattr - attrib);
+	attrib = xmlDictLookup(style->dict, attrib, endattr - attrib);
 	if (attrib) {
-	    xmlChar *ncname2 = NULL;
-	    xmlChar *prefix2 = NULL;
+	    const xmlChar *ncname2 = NULL;
+	    const xmlChar *prefix2 = NULL;
 	    xsltAttrElemPtr values2;
+
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"xsl:attribute-set : %s adds use %s\n", ncname, attrib);
 #endif
-	    ncname2 = xmlSplitQName2(attrib, &prefix2);
-	    if (ncname2 == NULL) {
-		ncname2 = attrib;
-		attrib = NULL;
-		prefix = NULL;
-	    }
+	    ncname2 = xsltSplitQName(style->dict, attrib, &prefix2);
 	    values2 = xsltNewAttrElem(NULL);
 	    if (values2 != NULL) {
 		values2->set = ncname2;
 		values2->ns = prefix2;
 		values = xsltMergeAttrElemList(values, values2);
 		xsltFreeAttrElem(values2);
-	    } else {
-		if (ncname2 != NULL)
-		    xmlFree(ncname2);
-		if (prefix2 != NULL)
-		    xmlFree(prefix2);
 	    }
-
-	    if (attrib != NULL)
-		xmlFree(attrib);
 	}
 	attrib = endattr;
     }
@@ -400,14 +380,6 @@ done:
     xsltGenericDebug(xsltGenericDebugContext,
 	"updated attribute list %s\n", ncname);
 #endif
-
-error:
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
 }
 
 /**
@@ -597,8 +569,9 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
                       int fromset)
 {
     xmlChar *prop = NULL;
-    xmlChar *ncname = NULL, *name, *namespace;
-    xmlChar *prefix = NULL;
+    xmlChar *namespace;
+    const xmlChar *name = NULL;
+    const xmlChar *prefix = NULL;
     xmlChar *value = NULL;
     xmlNsPtr ns = NULL;
     xmlAttrPtr attr;
@@ -639,22 +612,17 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
                              "xsl:attribute : name is missing\n");
             goto error;
         }
-        name = prop;
+	if (xmlValidateQName(prop, 0)) {
+	    xsltTransformError(ctxt, NULL, inst,
+			    "xsl:attribute : invalid QName\n");
+	    /* we fall through to catch any further errors, if possible */
+	}
+	name = xsltSplitQName(ctxt->dict, prop, &prefix);
+	xmlFree(prop);
     } else {
-        name = comp->name;
+	name = xsltSplitQName(ctxt->dict, comp->name, &prefix);
     }
 
-    if (xmlValidateQName(name, 0)) {
-        xsltTransformError(ctxt, NULL, inst,
-			"xsl:attribute : invalid QName\n");
-	/* we fall through to catch any further errors, if possible */
-    }
-    ncname = xmlSplitQName2(name, &prefix);
-    if (ncname == NULL) {
-        prefix = NULL;
-    } else {
-        name = ncname;
-    }
     if (!xmlStrncasecmp(prefix, (xmlChar *) "xmlns", 5)) {
 #ifdef WITH_XSLT_DEBUG_PARSING
         xsltGenericDebug(xsltGenericDebugContext,
@@ -721,13 +689,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
         }
     }
 
-  error:
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
+error:
     if (value != NULL)
         xmlFree(value);
 }
@@ -760,11 +722,11 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 void
 xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
                       xmlNodePtr inst ATTRIBUTE_UNUSED,
-                      xmlChar * attributes)
+                      const xmlChar * attributes)
 {
-    xmlChar *ncname = NULL;
-    xmlChar *prefix = NULL;
-    xmlChar *attrib, *endattr;
+    const xmlChar *ncname = NULL;
+    const xmlChar *prefix = NULL;
+    const xmlChar *attrib, *endattr;
     xsltAttrElemPtr values;
     xsltStylesheetPtr style;
 
@@ -781,18 +743,13 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
         endattr = attrib;
         while ((*endattr != 0) && (!IS_BLANK(*endattr)))
             endattr++;
-        attrib = xmlStrndup(attrib, endattr - attrib);
+        attrib = xmlDictLookup(ctxt->dict, attrib, endattr - attrib);
         if (attrib) {
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
             xsltGenericDebug(xsltGenericDebugContext,
                              "apply attribute set %s\n", attrib);
 #endif
-            ncname = xmlSplitQName2(attrib, &prefix);
-            if (ncname == NULL) {
-                ncname = attrib;
-                attrib = NULL;
-                prefix = NULL;
-            }
+            ncname = xsltSplitQName(ctxt->dict, attrib, &prefix);
 
             style = ctxt->style;
 #ifdef WITH_DEBUGGER
@@ -817,12 +774,6 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 }
                 style = xsltNextImport(style);
             }
-            if (attrib != NULL)
-                xmlFree(attrib);
-            if (ncname != NULL)
-                xmlFree(ncname);
-            if (prefix != NULL)
-                xmlFree(prefix);
         }
         attrib = endattr;
     }

@@ -289,7 +289,7 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	    xsltAllocateExtra(ctxt->style);
     }
     if (op == XSLT_OP_PREDICATE) {
-	comp->steps[comp->nbStep].comp = xmlXPathCompile(value);
+	comp->steps[comp->nbStep].comp = xsltXPathCompile(ctxt->style, value);
     }
     comp->nbStep++;
     return (0);

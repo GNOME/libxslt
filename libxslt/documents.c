@@ -14,6 +14,8 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
 #include <libxml/hash.h>
+#include <libxml/parser.h>
+#include <libxml/parserInternals.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -147,6 +149,55 @@ xsltFreeDocuments(xsltTransformContextPtr ctxt) {
     }
 }
 
+/**
+ * xsltParseDocument:
+ * @URI: the URI to load.
+ * @dict: the dictionnary to use
+ * @options: the options to use
+ *
+ * Specialized parsing function
+ *
+ * Returns NULL in case of error or the Document parsed.
+ */
+static xmlDocPtr
+xsltParseDocument(const xmlChar *URI, xmlDictPtr dict, int options) {
+    xmlParserCtxtPtr pctxt;
+    xmlParserInputPtr inputStream;
+    xmlDocPtr doc;
+
+    pctxt = xmlNewParserCtxt();
+    if (pctxt == NULL)
+        return(NULL);
+    if (pctxt->dict != NULL) {
+        xmlDictFree(pctxt->dict);
+	pctxt->dict = dict;
+	xmlDictReference(pctxt->dict);
+    }
+    xmlCtxtUseOptions(pctxt, options);
+    inputStream = xmlLoadExternalEntity((const char *) URI, NULL, pctxt);
+    if (inputStream == NULL) {
+        xmlFreeParserCtxt(pctxt);
+	return(NULL);
+    }
+    inputPush(pctxt, inputStream);
+    if (pctxt->directory == NULL)
+        pctxt->directory = xmlParserGetDirectory((const char *) URI);
+
+    xmlParseDocument(pctxt);
+
+    if (pctxt->wellFormed) {
+        doc = pctxt->myDoc;
+	xmlDictReference(pctxt->dict);
+    }
+    else {
+        doc = NULL;
+        xmlFreeDoc(pctxt->myDoc);
+        pctxt->myDoc = NULL;
+    }
+    xmlFreeParserCtxt(pctxt);
+
+    return(doc);
+}
 
 /**
  * xsltLoadDocument:
@@ -192,11 +243,8 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 	ret = ret->next;
     }
 
-#ifdef XSLT_PARSE_OPTIONS
-    doc = xmlReadFile((const char *) URI, NULL, ctxt->parserOptions);
-#else
-    doc = xmlParseFile((const char *) URI);
-#endif
+    doc = xsltParseDocument(URI, ctxt->dict, ctxt->parserOptions);
+
     if (doc == NULL)
 	return(NULL);
 
@@ -270,11 +318,7 @@ xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
 	ret = ret->next;
     }
 
-#ifdef XSLT_PARSE_OPTIONS
-    doc = xmlReadFile((const char *) URI, NULL, XSLT_PARSE_OPTIONS);
-#else
-    doc = xmlParseFile((const char *) URI);
-#endif
+    doc = xsltParseDocument(URI, style->dict, XSLT_PARSE_OPTIONS);
     if (doc == NULL)
 	return(NULL);
 

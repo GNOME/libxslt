@@ -34,7 +34,7 @@ XSLTPUBFUN xmlChar * XSLTCALL
 						 xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *ns);
-XSLTPUBFUN xmlChar * XSLTCALL	
+XSLTPUBFUN const xmlChar * XSLTCALL	
 		xsltEvalStaticAttrValueTemplate	(xsltStylesheetPtr style,
 						 xmlNodePtr node,
 						 const xmlChar *name,

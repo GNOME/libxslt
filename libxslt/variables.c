@@ -57,6 +57,8 @@ xsltCreateRVT(xsltTransformContextPtr ctxt)
     container = xmlNewDoc(NULL);
     if (container == NULL)
 	return(NULL);
+    container->dict = ctxt->dict;
+    xmlDictReference(container->dict);
 
     container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
     container->doc = container;
@@ -184,9 +186,9 @@ xsltCopyStackElem(xsltStackElemPtr elem) {
 		"xsltCopyStackElem : malloc failed\n");
 	return(NULL);
     }
-    cur->name = xmlStrdup(elem->name);
-    cur->nameURI = xmlStrdup(elem->nameURI);
-    cur->select = xmlStrdup(elem->select);
+    cur->name = elem->name;
+    cur->nameURI = elem->nameURI;
+    cur->select = elem->select;
     cur->tree = elem->tree;
     cur->comp = elem->comp;
     cur->computed = 0;
@@ -204,12 +206,6 @@ static void
 xsltFreeStackElem(xsltStackElemPtr elem) {
     if (elem == NULL)
 	return;
-    if (elem->name != NULL)
-	xmlFree(elem->name);
-    if (elem->nameURI != NULL)
-	xmlFree(elem->nameURI);
-    if (elem->select != NULL)
-	xmlFree(elem->select);
     if (elem->value != NULL)
 	xmlXPathFreeObject(elem->value);
 
@@ -255,8 +251,6 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
      * Do the lookup from the top of the stack, but
      * don't use params being computed in a call-param
      */
-    ;
-
     for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
 	cur = ctxt->varsTab[i-1];
 	while (cur != NULL) {
@@ -507,7 +501,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     xmlNodePtr oldInst;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
-    xmlChar *name;
+    const xmlChar *name;
 
     if ((ctxt == NULL) || (elem == NULL))
 	return(NULL);
@@ -761,8 +755,8 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
     if (elem == NULL)
 	return(-1);
     elem->comp = comp;
-    elem->name = xmlStrdup(name);
-    elem->select = xmlStrdup(select);
+    elem->name = xmlDictLookup(style->dict, name, -1);
+    elem->select = xmlDictLookup(style->dict, select, -1);
     if (ns_uri)
 	elem->nameURI = xmlStrdup(ns_uri);
     elem->tree = tree;
@@ -834,8 +828,7 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 			     int eval) {
 
     xsltStylesheetPtr style;
-    xmlChar *ncname;
-    xmlChar *prefix;
+    const xmlChar *prefix;
     const xmlChar *href;
     xmlXPathCompExprPtr comp;
     xmlXPathObjectPtr result;
@@ -865,40 +858,29 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
      * Name lookup
      */
 
-    ncname = xmlSplitQName2(name, &prefix);
+    name = xsltSplitQName(ctxt->dict, name, &prefix);
     href = NULL;
-    if (ncname != NULL) {
-	if (prefix != NULL) {
-	    xmlNsPtr ns;
+    if (prefix != NULL) {
+	xmlNsPtr ns;
 
-	    ns = xmlSearchNs(style->doc, xmlDocGetRootElement(style->doc),
-			     prefix);
-	    if (ns == NULL) {
-		xsltTransformError(ctxt, style, NULL,
-		"user param : no namespace bound to prefix %s\n", prefix);
-		href = NULL;
-	    } else {
-		href = ns->href;
-	    }
-	    xmlFree(prefix);
-	    prefix = NULL;
-	} else {
+	ns = xmlSearchNs(style->doc, xmlDocGetRootElement(style->doc),
+			 prefix);
+	if (ns == NULL) {
+	    xsltTransformError(ctxt, style, NULL,
+	    "user param : no namespace bound to prefix %s\n", prefix);
 	    href = NULL;
+	} else {
+	    href = ns->href;
 	}
-	xmlFree(ncname);
-	ncname = NULL;
-    } else {
-	href = NULL;
-	ncname = xmlStrdup(name);
     }
 
-    if (ncname == NULL)
+    if (name == NULL)
 	return (-1);
 
-    res_ptr = xmlHashLookup2(ctxt->globalVars, ncname, href);
+    res_ptr = xmlHashLookup2(ctxt->globalVars, name, href);
     if (res_ptr != 0) {
 	xsltTransformError(ctxt, style, NULL,
-	    "Global parameter %s already defined\n", ncname);
+	    "Global parameter %s already defined\n", name);
     }
 
     /*
@@ -909,9 +891,8 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	while (elem != NULL) {
 	    if ((elem->comp != NULL) &&
 	        (elem->comp->type == XSLT_FUNC_VARIABLE) &&
-		(xmlStrEqual(elem->name, ncname)) &&
+		(xmlStrEqual(elem->name, name)) &&
 		(xmlStrEqual(elem->nameURI, href))) {
-		xmlFree(ncname);
 		return(0);
 	    }
             elem = elem->next;
@@ -953,7 +934,6 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	    xsltTransformError(ctxt, style, NULL,
 		"Evaluating user parameter %s failed\n", name);
 	    ctxt->state = XSLT_STATE_STOPPED;
-	    xmlFree(ncname);
 	    return(-1);
 	}
     }
@@ -980,13 +960,13 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 
     elem = xsltNewStackElem();
     if (elem != NULL) {
-	elem->name = xmlStrdup(ncname);
+	elem->name = name;
 	if (value != NULL)
-	    elem->select = xmlStrdup(value);
+	    elem->select = xmlDictLookup(ctxt->dict, value, -1);
 	else
 	    elem->select = NULL;
 	if (href)
-	    elem->nameURI = xmlStrdup(href);
+	    elem->nameURI = xmlDictLookup(ctxt->dict, href, -1);
 	elem->tree = NULL;
 	elem->computed = 1;
 	if (eval == 0) {
@@ -1001,13 +981,12 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
      * Global parameters are stored in the XPath context variables pool.
      */
 
-    res = xmlHashAddEntry2(ctxt->globalVars, ncname, href, elem);
+    res = xmlHashAddEntry2(ctxt->globalVars, name, href, elem);
     if (res != 0) {
 	xsltFreeStackElem(elem);
 	xsltTransformError(ctxt, style, NULL,
-	    "Global parameter %s already defined\n", ncname);
+	    "Global parameter %s already defined\n", name);
     }
-    xmlFree(ncname);
     return(0);
 }
 
@@ -1148,13 +1127,13 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
     if (elem == NULL)
 	return(NULL);
     elem->comp = comp;
-    elem->name = xmlStrdup(comp->name);
+    elem->name = comp->name;
     if (comp->select != NULL)
-	elem->select = xmlStrdup(comp->select);
+	elem->select = comp->select;
     else
 	elem->select = NULL;
     if (comp->ns)
-	elem->nameURI = xmlStrdup(comp->ns);
+	elem->nameURI = comp->ns;
     elem->tree = tree;
     if (elem->computed == 0) {
 	elem->value = xsltEvalVariable(ctxt, elem, comp);

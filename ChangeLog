@@ -1,3 +1,12 @@
+Fri Feb 13 16:59:46 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attrvt.c libxslt/Makefile.am: added new code to handle
+	  attribute value templates
+	* libxslt/*.c libxslt/*.h: also a lot of work to reuse the 
+	  dictionaries at the stylesheet and transformation level.
+	* configure.in: this relies on a recent version of libxml2 
+	  with the sub dictionnary catalog.
+
 Sun Feb  8 16:53:14 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: added check for "?>" in PI content

@@ -58,6 +58,95 @@
  ************************************************************************/
 
 /**
+ * xsltGetCNsProp:
+ * @style: the stylesheet
+ * @node:  the node
+ * @name:  the attribute name
+ * @nameSpace:  the URI of the namespace
+ *
+ * Similar to xmlGetNsProp() but with a slightly different semantic
+ *
+ * Search and get the value of an attribute associated to a node
+ * This attribute has to be anchored in the namespace specified,
+ * or has no namespace and the element is in that namespace.
+ *
+ * This does the entity substitution.
+ * This function looks in DTD attribute declaration for #FIXED or
+ * default declaration values unless DTD use has been turned off.
+ *
+ * Returns the attribute value or NULL if not found. The string is allocated
+ *         in the stylesheet dictionnary.
+ */
+const xmlChar *
+xsltGetCNsProp(xsltStylesheetPtr style, xmlNodePtr node,
+              const xmlChar *name, const xmlChar *nameSpace) {
+    xmlAttrPtr prop;
+    xmlDocPtr doc;
+    xmlNsPtr ns;
+    xmlChar *tmp;
+    const xmlChar *ret;
+
+    if ((node == NULL) || (style == NULL) || (style->dict == NULL))
+	return(NULL);
+
+    prop = node->properties;
+    if (nameSpace == NULL) {
+        tmp = xmlGetProp(node, name);
+	goto found;
+    }
+    while (prop != NULL) {
+	/*
+	 * One need to have
+	 *   - same attribute names
+	 *   - and the attribute carrying that namespace
+	 */
+        if ((xmlStrEqual(prop->name, name)) &&
+	    (((prop->ns == NULL) && (node->ns != NULL) &&
+	      (xmlStrEqual(node->ns->href, nameSpace))) ||
+	     ((prop->ns != NULL) &&
+	      (xmlStrEqual(prop->ns->href, nameSpace))))) {
+
+	    tmp = xmlNodeListGetString(node->doc, prop->children, 1);
+	    goto found;
+        }
+	prop = prop->next;
+    }
+
+    /*
+     * Check if there is a default declaration in the internal
+     * or external subsets
+     */
+    doc =  node->doc;
+    if (doc != NULL) {
+        if (doc->intSubset != NULL) {
+	    xmlAttributePtr attrDecl;
+
+	    attrDecl = xmlGetDtdAttrDesc(doc->intSubset, node->name, name);
+	    if ((attrDecl == NULL) && (doc->extSubset != NULL))
+		attrDecl = xmlGetDtdAttrDesc(doc->extSubset, node->name, name);
+		
+	    if ((attrDecl != NULL) && (attrDecl->prefix != NULL)) {
+	        /*
+		 * The DTD declaration only allows a prefix search
+		 */
+		ns = xmlSearchNs(doc, node, attrDecl->prefix);
+		if ((ns != NULL) && (xmlStrEqual(ns->href, nameSpace)))
+		    return(xmlDictLookup(style->dict,
+		                         attrDecl->defaultValue, -1));
+	    }
+	}
+    }
+    return(NULL);
+found:
+    if (tmp == NULL)
+        ret = xmlDictLookup(style->dict, BAD_CAST "", 0);
+    else {
+	ret = xmlDictLookup(style->dict, tmp, -1);
+	xmlFree(tmp);
+    }
+    return(ret);
+}
+/**
  * xsltGetNsProp:
  * @node:  the node
  * @name:  the attribute name
@@ -504,6 +593,32 @@ xsltTransformError(xsltTransformContextPtr ctxt,
  * 				QNames					*
  * 									*
  ************************************************************************/
+
+/**
+ * xsltSplitQName:
+ * @dict: a dictionnary
+ * @name:  the full QName
+ * @prefix: the return value
+ *
+ * Split QNames into prefix and local names, both allocated from a dictionnary.
+ *
+ * Returns: the localname or NULL in case of error.
+ */
+const xmlChar *
+xsltSplitQName(xmlDictPtr dict, const xmlChar *name, const xmlChar **prefix) {
+    int len = 0;
+    const xmlChar *ret = NULL;
+
+    *prefix = NULL;
+    if ((name == NULL) || (dict == NULL)) return(NULL);
+    if (name[0] == ':')
+        return(xmlDictLookup(dict, name, -1));
+    while ((name[len] != 0) && (name[len] != ':')) len++;
+    if (name[len] == 0) return(xmlDictLookup(dict, name, -1));
+    *prefix = xmlDictLookup(dict, name, len);
+    ret = xmlDictLookup(dict, &name[len + 1], -1);
+    return(ret);
+}
 
 /**
  * xsltGetQNameURI:
@@ -1721,6 +1836,38 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
     return ret;
 }
 
+/************************************************************************
+ * 									*
+ * 		Hooks for libxml2 XPath					*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltXPathCompile:
+ * @style: the stylesheet
+ * @str:  the XPath expression
+ *
+ * Compile an XPath expression
+ *
+ * Returns the xmlXPathCompExprPtr resulting from the compilation or NULL.
+ *         the caller has to free the object.
+ */
+xmlXPathCompExprPtr
+xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
+    xmlXPathContext xctxt;
+    xmlXPathCompExprPtr ret;
+
+    memset(&xctxt, 0, sizeof(xctxt));
+    if (style != NULL)
+	xctxt.dict = style->dict;
+    ret = xmlXPathCtxtCompile(&xctxt, str);
+    /*
+     * TODO: there is a lot of optimizations which should be possible
+     *       like variable slot precomputations, function precomputations, etc.
+     */
+     
+    return(ret);
+}
 /************************************************************************
  * 									*
  * 		Hooks for the debugger					*

@@ -369,14 +369,14 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     xsltGenericDebug(xsltGenericDebugContext,
 	"   resulting pattern %s\n", pattern);
 #endif
-    key->comp = xmlXPathCompile(pattern);
+    key->comp = xsltXPathCompile(style, pattern);
     if (key->comp == NULL) {
 	xsltTransformError(NULL, style, inst,
 		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         pattern);
 	if (style != NULL) style->errors++;
     }
-    key->usecomp = xmlXPathCompile(use);
+    key->usecomp = xsltXPathCompile(style, use);
     if (key->usecomp == NULL) {
 	xsltTransformError(NULL, style, inst,
 		"xsl:key : XPath pattern compilation failed '%s'\n",

@@ -27,6 +27,7 @@ xsltinc_HEADERS = 			\
 	xsltexports.h
 
 libxslt_la_SOURCES = 			\
+	attrvt.c			\
 	xslt.c				\
 	xsltutils.c			\
 	pattern.c			\

@@ -27,7 +27,7 @@ XSLTPUBFUN void XSLTCALL
 	xsltApplyAttributeSet		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr inst,
-					 xmlChar *attributes);
+					 const xmlChar *attributes);
 XSLTPUBFUN void XSLTCALL	
 	xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style);
 #ifdef __cplusplus

@@ -65,6 +65,8 @@ static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 
 int xsltMaxDepth = 5000;
 
+xmlDictPtr xmlDictCreateSub(xmlDictPtr sub);
+
 /*
  * Useful macros
  */
@@ -450,6 +452,8 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->traceCode = (unsigned long*) &xsltDefaultTrace;
     cur->parserOptions = XSLT_PARSE_OPTIONS;
 
+    cur->dict = xmlDictCreateSub(style->dict);
+
     return(cur);
 }
 
@@ -494,6 +498,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
     xsltFreeRVTs(ctxt);
+    xmlDictFree(ctxt->dict);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -2161,6 +2166,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    res = xmlNewDoc(style->version);
 	    if (res == NULL)
 		goto error;
+	    res->dict = ctxt->dict;
+	    xmlDictReference(res->dict);
 	} else {
 	    xsltTransformError(ctxt, NULL, inst,
 			     "xsltDocumentElem: unsupported method %s\n",
@@ -2172,6 +2179,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	res = xmlNewDoc(style->version);
 	if (res == NULL)
 	    goto error;
+	res->dict = ctxt->dict;
+	xmlDictReference(res->dict);
     }
     res->charset = XML_CHAR_ENCODING_UTF8;
     if (style->encoding != NULL)
@@ -2499,10 +2508,9 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 void
 xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlChar *prop = NULL, *attributes = NULL;
-    xmlChar *ncname = NULL, *name, *namespace;
-    xmlChar *prefix = NULL;
-    xmlChar *value = NULL;
+    xmlChar *prop = NULL, *attributes = NULL, *namespace;
+    const xmlChar *name;
+    const xmlChar *prefix;
     xmlNsPtr ns = NULL, oldns = NULL;
     xmlNodePtr copy;
     xmlNodePtr oldInsert;
@@ -2526,33 +2534,27 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (prop == NULL) {
 	    xsltTransformError(ctxt, NULL, inst,
 		 "xsl:element : name is missing\n");
-	    goto error;
+	    return;
 	}
-	name = prop;
+	if (xmlValidateQName(prop, 0)) {
+	    xsltTransformError(ctxt, NULL, inst,
+		    "xsl:element : invalid name\n");
+	    /* we fall through to catch any other errors if possible */
+	}
+	name = xsltSplitQName(ctxt->dict, prop, &prefix);
+	xmlFree(prop);
     } else {
-	name = comp->name;
-    }
-
-    if (xmlValidateQName(name, 0)) {
-	xsltTransformError(ctxt, NULL, inst,
-		"xsl:element : invalid name\n");
-	/* we fall through to catch any other errors if possible */
-    }
-    ncname = xmlSplitQName2(name, &prefix);
-    if (ncname == NULL) {
-	prefix = NULL;
-    } else {
-	name = ncname;
+	name = xsltSplitQName(ctxt->dict, comp->name, &prefix);
     }
 
     /*
      * Create the new element
      */
-    copy = xmlNewDocNode(ctxt->output, NULL, name, NULL);
+    copy = xmlNewDocNodeEatName(ctxt->output, NULL, (xmlChar *)name, NULL);
     if (copy == NULL) {
 	xsltTransformError(ctxt, NULL, inst,
 	    "xsl:element : creation of %s failed\n", name);
-	goto error;
+	return;
     }
     xmlAddChild(ctxt->insert, copy);
     ctxt->insert = copy;
@@ -2577,7 +2579,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltElement: xml prefix forbidden\n");
 #endif
-	    goto error;
+	    return;
 	}
 	oldns = xmlSearchNs(inst->doc, inst, prefix);
 	if (oldns == NULL) {
@@ -2623,16 +2625,6 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltApplyOneTemplate(ctxt, ctxt->node, inst->children, NULL, NULL);
 
     ctxt->insert = oldInsert;
-
-error:
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
-    if (value != NULL)
-        xmlFree(value);
 }
 
 
@@ -2692,7 +2684,7 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
 void
 xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlChar *ncname = NULL, *name;
+    const xmlChar *name;
     xmlChar *value = NULL;
     xmlNodePtr pi;
 
@@ -2702,14 +2694,13 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (comp->has_name == 0)
 	return;
     if (comp->name == NULL) {
-	ncname = xsltEvalAttrValueTemplate(ctxt, inst,
+	name = xsltEvalAttrValueTemplate(ctxt, inst,
 			    (const xmlChar *)"name", XSLT_NAMESPACE);
-	if (ncname == NULL) {
+	if (name == NULL) {
 	    xsltTransformError(ctxt, NULL, inst,
 		 "xsl:processing-instruction : name is missing\n");
 	    goto error;
 	}
-	name = ncname;
     } else {
 	name = comp->name;
     }
@@ -2725,10 +2716,10 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef WITH_XSLT_DEBUG_PROCESS
     if (value == NULL) {
 	XSLT_TRACE(ctxt,XSLT_TRACE_PI,xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltProcessingInstruction: %s empty\n", ncname));
+	     "xsltProcessingInstruction: %s empty\n", name));
     } else {
 	XSLT_TRACE(ctxt,XSLT_TRACE_PI,xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltProcessingInstruction: %s content %s\n", ncname, value));
+	     "xsltProcessingInstruction: %s content %s\n", name, value));
     }
 #endif
 
@@ -2736,8 +2727,8 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlAddChild(ctxt->insert, pi);
 
 error:
-    if (ncname != NULL)
-        xmlFree(ncname);
+    if ((name != NULL) && (name != comp->name))
+        xmlFree((xmlChar *) name);
     if (value != NULL)
 	xmlFree(value);
 }
@@ -3963,6 +3954,8 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             }
             if (res == NULL)
                 goto error;
+	    res->dict = ctxt->dict;
+	    xmlDictReference(res->dict);
         } else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
      "xsltApplyStylesheetInternal: unsupported method xhtml, using html\n",
@@ -3971,11 +3964,15 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             res = htmlNewDoc(doctypeSystem, doctypePublic);
             if (res == NULL)
                 goto error;
+	    res->dict = ctxt->dict;
+	    xmlDictReference(res->dict);
         } else if (xmlStrEqual(method, (const xmlChar *) "text")) {
             ctxt->type = XSLT_OUTPUT_TEXT;
             res = xmlNewDoc(style->version);
             if (res == NULL)
                 goto error;
+	    res->dict = ctxt->dict;
+	    xmlDictReference(res->dict);
         } else {
 	    xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
 		     "xsltApplyStylesheetInternal: unsupported method %s\n",
@@ -3987,6 +3984,8 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
         res = xmlNewDoc(style->version);
         if (res == NULL)
             goto error;
+	res->dict = ctxt->dict;
+	xmlDictReference(ctxt->dict);
     }
     res->charset = XML_CHAR_ENCODING_UTF8;
     if (style->encoding != NULL)

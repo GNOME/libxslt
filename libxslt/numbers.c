@@ -315,7 +315,7 @@ xsltNumberFormatRoman(xmlBufferPtr buffer,
 }
 
 static void
-xsltNumberFormatTokenize(xmlChar *format,
+xsltNumberFormatTokenize(const xmlChar *format,
 			 xsltFormatPtr tokens)
 {
     int index = 0;
@@ -534,8 +534,8 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 static int
 xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			    xmlNodePtr node,
-			    xmlChar *count,
-			    xmlChar *from,
+			    const xmlChar *count,
+			    const xmlChar *from,
 			    double *array,
 			    xmlDocPtr doc,
 			    xmlNodePtr elem)
@@ -623,8 +623,8 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 static int
 xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 				 xmlNodePtr node,
-				 xmlChar *count,
-				 xmlChar *from,
+				 const xmlChar *count,
+				 const xmlChar *from,
 				 double *array,
 				 int max,
 				 xmlDocPtr doc,
@@ -698,7 +698,7 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 static int
 xsltNumberFormatGetValue(xmlXPathContextPtr context,
 			 xmlNodePtr node,
-			 xmlChar *value,
+			 const xmlChar *value,
 			 double *number)
 {
     int amount = 0;
@@ -842,7 +842,6 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 XSLT_NUMBER_FORMAT_END:
     if (tempformat == 1) {
 	/* The format need to be recomputed each time */
-	xmlFree(data->format);
 	data->format = NULL;
     }
     if (output != NULL)

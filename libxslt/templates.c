@@ -393,7 +393,7 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * Returns the static string value or NULL, must be deallocated by the
  *    caller.
  */
-xmlChar *
+const xmlChar *
 xsltEvalStaticAttrValueTemplate(xsltStylesheetPtr style, xmlNodePtr node,
 			const xmlChar *name, const xmlChar *ns, int *found) {
     const xmlChar *ret;
@@ -414,7 +414,9 @@ xsltEvalStaticAttrValueTemplate(xsltStylesheetPtr style, xmlNodePtr node,
 	xmlFree(expr);
 	return(NULL);
     }
-    return(expr);
+    ret = xmlDictLookup(style->dict, expr, -1);
+    xmlFree(expr);
+    return(ret);
 }
 
 /**
@@ -430,6 +432,7 @@ xsltEvalStaticAttrValueTemplate(xsltStylesheetPtr style, xmlNodePtr node,
 xmlAttrPtr
 xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	                xmlAttrPtr cur) {
+    const xmlChar *value;
     xmlNsPtr ns;
     xmlAttrPtr ret;
     if ((ctxt == NULL) || (cur == NULL))
@@ -438,20 +441,18 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
     if (cur->type != XML_ATTRIBUTE_NODE)
 	return(NULL);
 
+    if ((cur->children == NULL) || (cur->children->type != XML_TEXT_NODE) ||
+        (cur->children->next != NULL)) {
+	xsltTransformError(ctxt, NULL, cur->parent,
+		"attribute %s content problem\n", cur->name);
+        return(NULL);
+    }
+    value = cur->children->content;
+    if (value == NULL) value = BAD_CAST "";
     if ((cur->ns != NULL) &&
 	(xmlStrEqual(cur->ns->href, XSLT_NAMESPACE))) {
 	if (xmlStrEqual(cur->name, (const xmlChar *)"use-attribute-sets")) {
-	    xmlChar *in;
-
-	    if (ctxt->document != NULL)
-	        in = xmlNodeListGetString(ctxt->document->doc,
-			                  cur->children, 1);
-	    else
-	        in = xmlNodeListGetString(NULL, cur->children, 1);
-	    if (in != NULL) {
-		xsltApplyAttributeSet(ctxt, ctxt->node, NULL, in);
-		xmlFree(in);
-	    }
+	    xsltApplyAttributeSet(ctxt, ctxt->node, NULL, value);
 	}
 	return(NULL);
     }
@@ -460,27 +461,28 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
     else
 	ns = NULL;
 
-    if (cur->children != NULL) {
-	xmlChar *in;
-	xmlChar *out;
-	
-	if (ctxt->document != NULL)
-	    in = xmlNodeListGetString(ctxt->document->doc, cur->children, 1);
-	else
-	    in = xmlNodeListGetString(NULL, cur->children, 1);
+    /* TODO output doc->dict, use xmlNewNsPropEatName() instead */
+    ret = xmlNewNsProp(target, ns, cur->name, NULL);
+    if (ret != NULL) {
+        xmlNodePtr text;
 
-	/* TODO: optimize if no template value was detected */
-	if (in != NULL) {
-            out = xsltAttrTemplateValueProcessNode(ctxt, in, cur->parent);
-	    ret = xmlSetNsProp(target, ns, cur->name, out);
-	    if (out != NULL)
-		xmlFree(out);
-	    xmlFree(in);
-	} else
-	    ret = xmlSetNsProp(target, ns, cur->name, (const xmlChar *)"");
-       
-    } else 
-	ret = xmlSetNsProp(target, ns, cur->name, (const xmlChar *)"");
+        text = xmlNewText(NULL);
+	if (text != NULL) {
+	    ret->last = ret->children = text;
+	    text->parent = (xmlNodePtr) ret;
+	    if (cur->_private != NULL) {
+		xmlChar *val;
+		val = xsltEvalAVT(ctxt, cur->_private, cur->parent);
+		if (val == NULL) {
+		    text->content = xmlStrdup("runtime error");
+		} else {
+		    text->content = val;
+		}
+	    } else {
+		text->content = xmlStrdup(value);
+	    }
+	}
+    }
     return(ret);
 }
 

@@ -21,6 +21,7 @@
 #include <stdarg.h>
 #endif
 #include <libxml/xpath.h>
+#include <libxml/dict.h>
 #include <libxml/xmlerror.h>
 #include "xsltexports.h"
 #include "xsltInternals.h"
@@ -83,11 +84,18 @@ extern "C" {
 /*
  * Our own version of namespaced atributes lookup.
  */
-XSLTPUBFUN xmlChar * XSLTCALL	xsltGetNsProp	(xmlNodePtr node,
-						 const xmlChar *name,
-						 const xmlChar *nameSpace);
-XSLTPUBFUN int XSLTCALL		xsltGetUTF8Char	(const unsigned char *utf,
-						 int *len);
+XSLTPUBFUN xmlChar * XSLTCALL
+		xsltGetNsProp	(xmlNodePtr node,
+				 const xmlChar *name,
+				 const xmlChar *nameSpace);
+XSLTPUBFUN const xmlChar * XSLTCALL
+		xsltGetCNsProp	(xsltStylesheetPtr style,
+				 xmlNodePtr node,
+				 const xmlChar *name,
+				 const xmlChar *nameSpace);
+XSLTPUBFUN int XSLTCALL
+		xsltGetUTF8Char	(const unsigned char *utf,
+				 int *len);
 
 /*
  * XSLT Debug Tracing Tracing Types
@@ -191,6 +199,10 @@ XSLTPUBFUN xmlXPathObjectPtr * XSLTCALL
  * QNames handling.
  */
 
+XSLTPUBFUN const xmlChar * XSLTCALL
+		xsltSplitQName			(xmlDictPtr dict,
+						 const xmlChar *name,
+						 const xmlChar **prefix);
 XSLTPUBFUN const xmlChar * XSLTCALL 
     		xsltGetQNameURI			(xmlNodePtr node,
 						 xmlChar **name);
@@ -220,6 +232,13 @@ XSLTPUBFUN int XSLTCALL
                                                  int * doc_txt_len, 
                                                  xmlDocPtr result, 
                                                  xsltStylesheetPtr style);
+
+/*
+ * XPath interface
+ */
+XSLTPUBFUN xmlXPathCompExprPtr XSLTCALL
+		xsltXPathCompile		(xsltStylesheetPtr style,
+						 const xmlChar *str);
 
 /*
  * Profiling.

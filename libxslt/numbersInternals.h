@@ -26,11 +26,11 @@ typedef struct _xsltNumberData xsltNumberData;
 typedef xsltNumberData *xsltNumberDataPtr;
     
 struct _xsltNumberData {
-    xmlChar *level;
-    xmlChar *count;
-    xmlChar *from;
-    xmlChar *value;
-    xmlChar *format;
+    const xmlChar *level;
+    const xmlChar *count;
+    const xmlChar *from;
+    const xmlChar *value;
+    const xmlChar *format;
     int has_format;
     int digitsPerGroup;
     int groupingCharacter;
