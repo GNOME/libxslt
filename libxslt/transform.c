@@ -1,5 +1,5 @@
 /*
- * transform.c: Implemetation of the XSL Transformation 1.0 engine
+ * transform.c: Implementation of the XSL Transformation 1.0 engine
  *              transform part, i.e. applying a Stylesheet to a document
  *
  * References:
@@ -372,7 +372,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->varsBase = 0;
 
     /*
-     * the profiling stcka is not initialized by default
+     * the profiling stack is not initialized by default
      */
     cur->profTab = NULL;
     cur->profNr = 0;
@@ -424,6 +424,10 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     XSLT_REGISTER_VARIABLE_LOOKUP(cur);
     XSLT_REGISTER_FUNCTION_LOOKUP(cur);
     cur->xpathCtxt->nsHash = style->nsHash;
+    /*
+     * Initialize the registered external modules
+     */
+    xsltInitCtxtExts(cur);
     docu = xsltNewDocument(cur, doc);
     if (docu == NULL) {
 	xsltTransformError(cur, NULL, (xmlNodePtr)doc,
@@ -506,7 +510,7 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt,
  * @string:  the text string
  * @len:  the string length in byte
  *
- * Extend the current text node with the new string, it handle coalescing
+ * Extend the current text node with the new string, it handles coalescing
  *
  * Returns: the text node
  */
@@ -859,7 +863,7 @@ xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
  * @node:  the target node
  * @cur:  the first namespace
  *
- * Do a copy of an namespace list. If @node is non-NULL the
+ * Do a copy of a namespace list. If @node is non-NULL the
  * new namespaces are added automatically.
  *
  * Returns: a new xmlNsPtr, or NULL in case of error.
@@ -885,7 +889,7 @@ xsltCopyNamespaceListInternal(xmlNodePtr node, xmlNsPtr cur) {
 	    break;
 
 	/*
-	 * Avoid duplicating namespace declrations on the tree
+	 * Avoid duplicating namespace declarations on the tree
 	 */
 	if ((node != NULL) && (node->ns != NULL) &&
             (xmlStrEqual(node->ns->href, cur->href)) &&
@@ -1387,7 +1391,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *
  * Process the apply-templates node on the source node, if params are passed
  * they are pushed on the variable stack but not popped, it's left to the
- * caller to handle them back (they may be reused).
+ * caller to handle them after return (they may be reused).
  */
 void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
@@ -1791,7 +1795,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             if (spent <= 0) {
                 /*
                  * Not possible unless the original calibration failed
-                 * we can try to corret it on the fly.
+                 * we can try to correct it on the fly.
                  */
                 xsltCalibrateAdjust(spent);
                 spent = 0;
@@ -1959,7 +1963,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
     /*
-     * Version described in 1.1 draft allows full parametrization
+     * Version described in 1.1 draft allows full parameterization
      * of the output.
      */
     prop = xsltEvalAttrValueTemplate(ctxt, inst,
@@ -3797,7 +3801,7 @@ done:
  * xsltApplyStylesheetInternal:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
- * @params:  a NULL terminated arry of parameters names/values tuples
+ * @params:  a NULL terminated array of parameters names/values tuples
  * @output:  the targetted output
  * @profile:  profile FILE * output or NULL
  * @user:  user provided parameter
@@ -3946,8 +3950,6 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 	ctxt->globalVars = xmlHashCreate(20);
     if (params != NULL)
         xsltEvalUserParams(ctxt, params);
-
-    xsltInitCtxtExts(ctxt);
     xsltEvalGlobalVariables(ctxt);
     ctxt->node = (xmlNodePtr) doc;
     varsPush(ctxt, NULL);
@@ -4120,7 +4122,7 @@ xsltProfileStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
  * xsltApplyStylesheetUser:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
- * @params:  a NULL terminated arry of parameters names/values tuples
+ * @params:  a NULL terminated array of parameters names/values tuples
  * @output:  the targetted output
  * @profile:  profile FILE * output or NULL
  * @userCtxt:  user provided transform context
@@ -4146,7 +4148,7 @@ xsltApplyStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc,
  * xsltRunStylesheetUser:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
- * @params:  a NULL terminated arry of parameters names/values tuples
+ * @params:  a NULL terminated array of parameters names/values tuples
  * @output:  the URL/filename ot the generated resource if available
  * @SAX:  a SAX handler for progressive callback output (not implemented yet)
  * @IObuf:  an output buffer for progressive output (not implemented yet)
@@ -4209,7 +4211,7 @@ xsltRunStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc,
  * xsltRunStylesheet:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
- * @params:  a NULL terminated arry of parameters names/values tuples
+ * @params:  a NULL terminated array of parameters names/values tuples
  * @output:  the URL/filename ot the generated resource if available
  * @SAX:  a SAX handler for progressive callback output (not implemented yet)
  * @IObuf:  an output buffer for progressive output (not implemented yet)
@@ -4226,7 +4228,7 @@ xsltRunStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc,
  * NOTE: using SAX, any encoding specified in the stylesheet will be lost
  *       since the interface uses only UTF8
  *
- * Returns the number of by written to the main resource or -1 in case of
+ * Returns the number of bytes written to the main resource or -1 in case of
  *         error.
  */
 int
