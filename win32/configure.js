@@ -313,6 +313,8 @@ for (i = 0; (i < WScript.Arguments.length) && (error == 0); i++) {
 	if (opt.length > 0) {
 		if (opt == "xslt_debug")
 			withXsltDebug = strToBool(arg.substring(opt.length + 1, arg.length));
+		else if (opt == "trio")
+			withTrio = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "mem_debug")
 			withMemDebug = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "debugger")
