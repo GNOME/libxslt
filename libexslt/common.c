@@ -13,6 +13,34 @@
 #include "exslt.h"
 
 static void
+exsltNodeSetFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+    xmlChar *strval;
+    xmlNodePtr retNode;
+    xmlXPathObjectPtr ret;
+
+    if (nargs != 1) {
+	xmlXPathSetArityError(ctxt);
+	return;
+    }
+
+    if (xmlXPathStackIsNodeSet (ctxt)) {
+	xsltFunctionNodeSet (ctxt, nargs);
+	return;
+    }
+
+    strval = xmlXPathPopString (ctxt);
+    retNode = xmlNewDocText (xsltXPathGetTransformContext(ctxt)->document,
+			     strval);
+    ret = xmlXPathNewValueTree (retNode);
+    ret->type = XPATH_NODESET;
+
+    if (strval != NULL)
+	xmlFree (strval);
+
+    valuePush (ctxt, ret);
+}
+
+static void
 exsltObjectTypeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj, ret;
 
@@ -64,7 +92,7 @@ void
 exsltCommonRegister (void) {
     xsltRegisterExtModuleFunction((const xmlChar *) "node-set",
 				  EXSLT_COMMON_NAMESPACE,
-				  xsltFunctionNodeSet);
+				  exsltNodeSetFunction);
     xsltRegisterExtModuleFunction((const xmlChar *) "object-type",
 				  EXSLT_COMMON_NAMESPACE,
 				  exsltObjectTypeFunction);

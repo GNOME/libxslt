@@ -1,3 +1,10 @@
+Wed Aug 29 15:18:28 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/common.c: implemented version 3 of the exslt:node-set()
+	  function.
+	* tests/exslt/common/Makefile.am
+	  tests/exslt/common/node-set.3.{xml,xsl,out}: added a test
+
 Mon Aug 27 08:27:21 MDT 2001 John Fleck <jfleck@inkstain.net>
 
 	* adding doc/xsltproc.html - html generated from xsltproc.xml,

@@ -6,6 +6,7 @@ $(top_builddir)/xsltproc/xsltproc:
 EXTRA_DIST = 						\
 	node-set.1.xml node-set.1.xsl node-set.1.out	\
 	node-set.2.xml node-set.2.xsl node-set.2.out	\
+	node-set.3.xml node-set.3.xsl node-set.3.out	\
 	object-type.1.xml object-type.1.xsl object-type.1.out
 
 all: test
