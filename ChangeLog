@@ -1,3 +1,12 @@
+Tue Sep 11 12:33:03 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extra.c : close #59570 by simply not providing
+	  Norm's extension on FreeBSD.
+	* tests/general tests/docs: added a couple of new entries
+	  in the testsuite
+	* libexslt/strings.c: NULL initialized a local variable
+	  which was tested later on.
+
 Mon Sep 10 22:52:44 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c tests/docbook/result/fo/*: applied fix from

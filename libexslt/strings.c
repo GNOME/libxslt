@@ -108,7 +108,7 @@ error:
 static void
 exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     int number, str_len = 0;
-    xmlChar *str, *ret = NULL, *tmp;
+    xmlChar *str = NULL, *ret = NULL, *tmp;
 
     if ((nargs < 1) && (nargs > 2)) {
 	xmlXPathSetArityError(ctxt);
