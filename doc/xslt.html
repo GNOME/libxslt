@@ -547,18 +547,20 @@ few pointers and informations which may be helpful:</p>
   <li>The <a href="http://www.oasis-open.org/committees/docbook/">DocBook
     homepage at Oasis</a> you should find pointers there on all the lastest
     versions of the DTDs and XSLT stylesheets</li>
-  <li><a href="http://www.docbook.org/">DocBook: The Definitive Guide</a> is
-    the official reference documentation for DocBook.</li>
+  <li><a href="http://www.docbook.org/">DocBook: The Definitive Guide</a>
+     is the official reference documentation for DocBook.</li>
   <li>Ready to use <a href="ftp://xmlsoft.org/test/dbk412catalog.tar.gz">set
-    of XML Catalogs and DocBook XML 4.1.2 Dtd</a> for those
-    where their system doesn't provide them natively</li>
+    of XML Catalogs and DocBook XML 4.1.2 Dtd</a> for those where their
+    system doesn't provide them natively</li>
   <li>Informations on installing a <a
     href="http://ourworld.compuserve.com/homepages/hoenicka_markus/cygc2057.html">Windows
     DocBook processing setup</a> based on Cygwin (using the binaries from the
-    official Windows port should be possible too) </li>
+    official Windows port should be possible too)</li>
   <li>Alexander Kirillov's page on <a
     href="http://www.math.sunysb.edu/~kirillov/dbxml/">Using DocBook XML
     4.1.2</a> (RPM packages)</li>
+  <li>Tim Waugh's <a href="http://cyberelk.net/tim/xmlto/">xmlto front-end
+    conversion script</a></li>
 </ul>
 
 <p>Do not use the --docbook option of xsltproc to process XML DocBook
@@ -573,7 +575,7 @@ again:</p>
     Check the <a href="http://xmlsoft.org/catalog.html">XML Catalog page</a>
     to understand more on this subject.</li>
   <li>before processing a new document, use the command
-    <p> <code>xmllint --valid --noout path_to_document</code></p>
+    <p><code>xmllint --valid --noout path_to_document</code></p>
     <p>to make sure that your input is valid DocBook. And fixes the errors
     before processing further. Note that XSLT processing may work correctly
     with some forms of validity errors left, but in general it can give
