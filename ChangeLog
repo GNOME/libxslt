@@ -1,3 +1,10 @@
+Thu Jan 22 10:35:14 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* tests/general/Makefile.am, tests/general/bug-141.out,
+	  tests/general/bug-141.xsl, tests/docs/Makefile.am,
+	  tests/general/bug-141.xml: added test case for
+	  Bug 13971 (libxml2 xpath.c bug, but tested here)
+
 Fri Jan 16 22:15:34 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltutils.c: added a newline for any comment before
