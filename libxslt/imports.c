@@ -66,8 +66,10 @@ static void xsltFixImportedCompSteps(xsltStylesheetPtr master,
     xsltStylesheetPtr res;
     xmlHashScan(style->templatesHash,
 	            (xmlHashScanner) xsltNormalizeCompSteps, master);
-    for (res = style->imports; res != NULL; res = res->next)
-	xsltFixImportedCompSteps(master, res);
+    master->extrasNr += style->extrasNr;
+    for (res = style->imports; res != NULL; res = res->next) {
+        xsltFixImportedCompSteps(master, res);
+    }
 }
 
 /**
@@ -151,8 +153,9 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     if (res != NULL) {
 	res->next = style->imports;
 	style->imports = res;
-	xsltFixImportedCompSteps(style, res);
-	style->extrasNr += res->extrasNr;
+	if (style->parent == NULL) {
+	    xsltFixImportedCompSteps(style, res);
+	}
 	ret = 0;
     } else {
 	xmlFreeDoc(import);

@@ -1,3 +1,8 @@
+Fri Jul 23 21:55:14 PDT 2004 William Brack <wbrack@mmm.com.hk>
+	* libxslt/imports.c: further enhancement for template priorities
+	  on imported stylesheets (better fix for bug 141279, fixes
+	  bug 148246).
+
 Fri Jul 16 12:14:57 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libexslt/crypto.c libexslt/exslt.[ch] 
