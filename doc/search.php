@@ -311,7 +311,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 			    $id = mysql_result($result, $i, 2);
 			    $module = mysql_result($result, $i, 3);
 			    $desc = mysql_result($result, $i, 4);
-			    $url = "XSLT/$module";
+			    $url = "$module";
 			    if ($id != "") {
 				$url = $url + "#$id";
 			    }
