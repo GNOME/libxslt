@@ -478,7 +478,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
     } else {
         /* create a new attribute */
 	if (cur->ns != NULL)
-	    ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
+	    ns = xsltGetPlainNamespace(ctxt, cur->parent, cur->ns, target);
 	else
 	    ns = NULL;
 	/* TODO output doc->dict, use xmlNewNsPropEatName() instead */

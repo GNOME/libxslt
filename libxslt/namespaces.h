@@ -27,6 +27,11 @@ XSLTPUBFUN xmlNsPtr XSLTCALL
 					 xmlNsPtr ns,
 					 xmlNodePtr out);
 XSLTPUBFUN xmlNsPtr XSLTCALL	
+		xsltGetPlainNamespace	(xsltTransformContextPtr ctxt,
+					 xmlNodePtr cur,
+					 xmlNsPtr ns,
+					 xmlNodePtr out);
+XSLTPUBFUN xmlNsPtr XSLTCALL	
 		xsltGetSpecialNamespace	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr cur,
 					 const xmlChar *URI,

@@ -1,3 +1,12 @@
+Sun May 16 19:39:44 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/namespaces.c libxslt/namespaces.h libxslt/templates.c
+	  libxslt/transform.c: fixing bug #134500 on namespace lookup for
+	  attribute which sometimes lead to default namespace
+	* tests/general/bug-150*, tests/docs/bug-150.xml,
+	  tests/general/Makefile.am, tests/docs/Makefile.am: added
+	  regression test for bug #134500
+
 Sun May 16 18:09:36 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/date.h: fixing a small portability problem on Solaris

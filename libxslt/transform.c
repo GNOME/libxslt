@@ -742,7 +742,7 @@ xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	return(NULL);
 
     if (attr->ns != NULL) {
-	ns = xsltGetNamespace(ctxt, attr->parent, attr->ns, target);
+	ns = xsltGetPlainNamespace(ctxt, attr->parent, attr->ns, target);
     } else {
 	ns = NULL;
     }
