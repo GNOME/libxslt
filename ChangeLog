@@ -1,3 +1,8 @@
+Wed Jul 10 21:28:11 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+	
+	* win32/Makefile.msvc: Made the copy *.pdb in install succeed even
+	  if there is no *.pdb
+	
 Sat Jul  6 22:00:08 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing 1.0.19
