@@ -93,6 +93,14 @@ xmlChar *
 xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     xmlChar *ret = NULL;
     xmlXPathObjectPtr res;
+    xmlNodePtr oldInst;
+    xmlNodePtr oldNode;
+    int	oldPos, oldSize;
+
+    oldInst = ctxt->inst;
+    oldNode = ctxt->node;
+    oldPos = ctxt->xpathCtxt->proximityPosition;
+    oldSize = ctxt->xpathCtxt->contextSize;
 
     ctxt->xpathCtxt->node = ctxt->node;
     /* TODO: do we need to propagate the namespaces here ? */
@@ -115,6 +123,10 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltEvalXPathString: returns %s\n", ret);
 #endif
+    ctxt->inst = oldInst;
+    ctxt->node = oldNode;
+    ctxt->xpathCtxt->contextSize = oldSize;
+    ctxt->xpathCtxt->proximityPosition = oldPos;
     return(ret);
 }
 

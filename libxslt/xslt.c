@@ -1196,7 +1196,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     /*
      * register the key
      */
-    xsltAddKey(style, name, nameURI, match, use);
+    xsltAddKey(style, name, nameURI, match, use, key);
 
 error:
     if (use != NULL)

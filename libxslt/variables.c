@@ -375,8 +375,9 @@ static xmlXPathObjectPtr
 xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     xmlXPathObjectPtr result = NULL;
     xsltStylePreCompPtr precomp;
-
     int oldProximityPosition, oldContextSize;
+    xmlNodePtr oldInst;
+
     if ((ctxt == NULL) || (elem == NULL))
 	return(NULL);
     if (elem->computed)
@@ -401,6 +402,11 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    return(NULL);
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
+	oldInst = ctxt->inst;
+	if (precomp != NULL)
+	    ctxt->inst = precomp->inst;
+	else
+	    ctxt->inst = NULL;
 	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
 	/* TODO: do we need to propagate the namespaces here ? */
 	ctxt->xpathCtxt->namespaces = NULL;
@@ -408,6 +414,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+	ctxt->inst = oldInst;
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {

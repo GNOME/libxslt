@@ -20,7 +20,8 @@ int		xsltAddKey		(xsltStylesheetPtr style,
 					 const xmlChar *name,
 					 const xmlChar *nameURI,
 					 const xmlChar *match,
-					 const xmlChar *use);
+					 const xmlChar *use,
+					 xmlNodePtr inst);
 xmlNodeSetPtr	xsltGetKey		(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *nameURI,

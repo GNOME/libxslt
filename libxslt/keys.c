@@ -35,10 +35,13 @@ typedef struct _xsltKeyDef xsltKeyDef;
 typedef xsltKeyDef *xsltKeyDefPtr;
 struct _xsltKeyDef {
     struct _xsltKeyDef *next;
+    xmlNodePtr inst;
     xmlChar *name;
     xmlChar *nameURI;
     xmlChar *match;
     xmlChar *use;
+    xmlXPathCompExprPtr comp;
+    xmlXPathCompExprPtr usecomp;
 };
 
 typedef struct _xsltKeyTable xsltKeyTable;
@@ -94,6 +97,10 @@ static void
 xsltFreeKeyDef(xsltKeyDefPtr keyd) {
     if (keyd == NULL)
 	return;
+    if (keyd->comp != NULL)
+	xmlXPathFreeCompExpr(keyd->comp);
+    if (keyd->usecomp != NULL)
+	xmlXPathFreeCompExpr(keyd->usecomp);
     if (keyd->name != NULL)
 	xmlFree(keyd->name);
     if (keyd->nameURI != NULL)
@@ -215,6 +222,7 @@ xsltFreeKeys(xsltStylesheetPtr style) {
  * @nameURI:  the name URI or NULL
  * @match:  the match value
  * @use:  the use value
+ * @inst: the key instruction
  *
  * add a key definition to a stylesheet
  *
@@ -222,8 +230,10 @@ xsltFreeKeys(xsltStylesheetPtr style) {
  */
 int	
 xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
-	   const xmlChar *nameURI, const xmlChar *match, const xmlChar *use) {
+	   const xmlChar *nameURI, const xmlChar *match,
+	   const xmlChar *use, xmlNodePtr inst) {
     xsltKeyDefPtr key;
+    xmlChar *pattern = NULL;
 
     if ((style == NULL) || (name == NULL) || (match == NULL) || (use == NULL))
 	return(-1);
@@ -236,8 +246,32 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     key = xsltNewKeyDef(name, nameURI);
     key->match = xmlStrdup(match);
     key->use = xmlStrdup(use);
+    key->inst = inst;
+
+    if (key->match[0] != '/') {
+	pattern = xmlStrdup((xmlChar *)"//");
+	pattern = xmlStrcat(pattern, key->match);
+    } else {
+	pattern = xmlStrdup(key->match);
+    }
+    key->comp = xmlXPathCompile(pattern);
+    if (key->comp == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xslt:key : XPath pattern compilation failed '%s'\n",
+		         pattern);
+	style->errors++;
+    }
+    key->usecomp = xmlXPathCompile(use);
+    if (key->usecomp == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xslt:key : XPath pattern compilation failed '%s'\n",
+		         use);
+	style->errors++;
+    }
     key->next = style->keys;
     style->keys = key;
+    if (pattern != NULL)
+	xmlFree(pattern);
     return(0);
 }
 
@@ -292,41 +326,37 @@ static void
 xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	        xsltKeyDefPtr keyd) {
     int i;
-    xmlChar *pattern = NULL;
     xmlNodeSetPtr nodelist = NULL, keylist;
     xmlXPathObjectPtr res = NULL;
     xmlChar *str;
-    xmlXPathCompExprPtr comp;
     xsltKeyTablePtr table;
-    int	position;
-
-    /*
-     * Prepare the search
-     */
-    if (keyd->match[0] != '/') {
-	pattern = xmlStrdup((xmlChar *)"//");
-	pattern = xmlStrcat(pattern, keyd->match);
-    } else {
-	pattern = xmlStrdup(keyd->match);
-    }
+    int	oldPos, oldSize;
+    xmlNodePtr oldInst;
 
     /*
      * Evaluate the nodelist
      */
 
-    comp = xmlXPathCompile(pattern);
-    if (comp == NULL)
+    if (keyd->comp == NULL)
 	goto error;
+    if (keyd->usecomp == NULL)
+	goto error;
+
+    oldPos = ctxt->xpathCtxt->proximityPosition;
+    oldSize = ctxt->xpathCtxt->contextSize;
+    oldInst = ctxt->inst;
+
     ctxt->document = doc;
     ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
-    position = ctxt->xpathCtxt->proximityPosition;
     ctxt->node = (xmlNodePtr) doc->doc;
     /* TODO : clarify the use of namespaces in keys evaluation */
     ctxt->xpathCtxt->namespaces = NULL;
     ctxt->xpathCtxt->nsNr = 0;
-    res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
-    ctxt->xpathCtxt->proximityPosition = position;
-    xmlXPathFreeCompExpr(comp);
+    ctxt->inst = keyd->inst;
+    res = xmlXPathCompiledEval(keyd->comp, ctxt->xpathCtxt);
+    ctxt->xpathCtxt->contextSize = oldSize;
+    ctxt->xpathCtxt->proximityPosition = oldPos;
+    ctxt->inst = oldInst;
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
 	    nodelist = res->nodesetval;
@@ -334,19 +364,19 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	    if (nodelist != NULL)
 		xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltInitCtxtKey: %s evaluates to %d nodes\n",
-				 pattern, nodelist->nodeNr);
+				 keyd->match, nodelist->nodeNr);
 #endif
 	} else {
 #ifdef WITH_XSLT_DEBUG_KEYS
 	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltInitCtxtKey: %s is not a node set\n", pattern);
+		 "xsltInitCtxtKey: %s is not a node set\n", keyd->match);
 #endif
 	    goto error;
 	}
     } else {
 #ifdef WITH_XSLT_DEBUG_KEYS
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltInitCtxtKey: %s evaluation failed\n", pattern);
+	     "xsltInitCtxtKey: %s evaluation failed\n", keyd->match);
 #endif
 	goto error;
     }
@@ -361,12 +391,9 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     if (table == NULL)
 	goto error;
 
-    comp = xmlXPathCompile(keyd->use);
-    if (comp == NULL)
-	goto error;
     for (i = 0;i < nodelist->nodeNr;i++) {
 	ctxt->node = nodelist->nodeTab[i];
-	str = xsltEvalXPathString(ctxt, comp);
+	str = xsltEvalXPathString(ctxt, keyd->usecomp);
 	if (str != NULL) {
 #ifdef WITH_XSLT_DEBUG_KEYS
 	    xsltGenericDebug(xsltGenericDebugContext,
@@ -390,7 +417,6 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 #endif
 	}
     }
-    xmlXPathFreeCompExpr(comp);
 
     table->next = doc->keys;
     doc->keys = table;
@@ -398,8 +424,6 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 error:
     if (res != NULL)
 	xmlXPathFreeObject(res);
-    if (pattern != NULL)
-	xmlFree(pattern);
 }
 
 /**

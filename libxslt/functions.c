@@ -145,6 +145,10 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	    xsltTransformContextPtr tctxt = ctxt->context->extra;
 	    if ((tctxt != NULL) && (tctxt->inst != NULL)) {
 		base = xmlNodeGetBase(tctxt->inst->doc, tctxt->inst);
+	    } else if ((tctxt != NULL) && (tctxt->style != NULL) &&
+		       (tctxt->style->doc != NULL)) {
+		base = xmlNodeGetBase(tctxt->style->doc, 
+			              (xmlNodePtr) tctxt->style->doc);
 	    }
 	}
 	URI = xmlBuildURI(obj->stringval, base);
