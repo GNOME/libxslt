@@ -1167,6 +1167,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xmlChar *prop;
     xmlChar *mode;
     xmlChar *modeURI;
+    double  priority;
 
     if (template == NULL)
 	return;
@@ -1226,6 +1227,13 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     if (prop != NULL) {
 	if (ret->match != NULL) xmlFree(ret->match);
 	ret->match  = prop;
+    }
+
+    prop = xmlGetNsProp(template, (const xmlChar *)"priority", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	priority = xmlXPathStringEvalNumber(prop);
+	ret->priority = priority;
+	xmlFree(prop);
     }
 
     prop = xmlGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);

@@ -100,20 +100,20 @@
 <tr>
 <td class="tablecell">2210</td>
 <td class="tablecell"><table border="1"><tr>
-<td width="40">5</td>
-<td width="5" bgcolor="#ffffff">.</td>
-<td width="95" bgcolor="#000000">.</td>
-</tr></table></td>
-<td class="tablecell">knick knack</td>
-</tr>
-<tr>
-<td class="tablecell">2210</td>
-<td class="tablecell"><table border="1"><tr>
 <td width="40">0</td>
 <td width="0" bgcolor="#ffffff">.</td>
 <td width="100" bgcolor="#000000">.</td>
 </tr></table></td>
 <td class="tablecell">flange</td>
+</tr>
+<tr>
+<td class="tablecell">2210</td>
+<td class="tablecell"><table border="1"><tr>
+<td width="40">5</td>
+<td width="5" bgcolor="#ffffff">.</td>
+<td width="95" bgcolor="#000000">.</td>
+</tr></table></td>
+<td class="tablecell">knick knack</td>
 </tr>
 <tr>
 <td class="tablecell">2214</td>

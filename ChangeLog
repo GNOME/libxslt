@@ -1,3 +1,10 @@
+Thu Apr 12 14:40:22 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c: applied William M. Brack patch fixing the
+	  template lack of support for priority
+	* test/XSLTMark/*.out : this fixed anumber of problems in the
+	  XSLTMark output
+
 Thu Apr 12 14:29:48 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c: removed warning in unparsed-entity-uri()
