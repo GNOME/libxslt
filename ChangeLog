@@ -1,3 +1,10 @@
+Sun Jul  8 16:34:07 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-49-* tests/docs/bug-49-*
+	  tests/general/bug-50-* tests/docs/bug-50-*: added a
+	  couple of regression tests for bugs posted on the list
+
 Sun Jul  8 15:40:44 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: avoid generating CDATA node in document

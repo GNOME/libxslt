@@ -52,6 +52,8 @@ EXTRA_DIST =	\
 	bug-46-.xml \
 	bug-47-.xml \
 	bug-48-.xml \
+	bug-49-.xml \
+	bug-50-.xml \
 	character.xml \
 	array.xml \
 	items.xml
