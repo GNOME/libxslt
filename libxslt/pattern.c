@@ -2174,7 +2174,8 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 * Some of the tests for elements can also apply to documents
 	 */
 	if ((node->type == XML_DOCUMENT_NODE) ||
-	    (node->type == XML_HTML_DOCUMENT_NODE)) {
+	    (node->type == XML_HTML_DOCUMENT_NODE) ||
+	    (node->type == XML_TEXT_NODE)) {
 	    list = curstyle->elemMatch;
 	    while ((list != NULL) &&
 		   ((ret == NULL)  || (list->priority > priority))) {
