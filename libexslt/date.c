@@ -16,6 +16,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef WIN32
 #include <win32config.h>
@@ -703,6 +704,7 @@ exsltDateParse (const xmlChar *dateTime) {
 
 	/* is it an xs:gDay? */
 	if (*cur == '-') {
+	  ++cur;
 	    ret = _exsltDateParseGDay(dt, &cur);
 	    if (ret != 0)
 		goto error;
@@ -1155,7 +1157,8 @@ exsltDateMonthInYear (const xmlChar *dateTime) {
  */
 static const xmlChar *
 exsltDateMonthName (const xmlChar *dateTime) {
-    static const xmlChar monthNames[12][10] = {
+    static const xmlChar monthNames[13][10] = {
+        { 0 },
 	{ 'J', 'a', 'n', 'u', 'a', 'r', 'y', 0 },
 	{ 'F', 'e', 'b', 'r', 'u', 'a', 'r', 'y', 0 },
 	{ 'M', 'a', 'r', 'c', 'h', 0 },
@@ -1171,8 +1174,9 @@ exsltDateMonthName (const xmlChar *dateTime) {
     };
     int month;
     month = exsltDateMonthInYear(dateTime);
-
-    return monthNames[month - 1];
+    if (!VALID_MONTH(month))
+      month = 0;
+    return monthNames[month];
 }
 
 /**
@@ -1200,7 +1204,8 @@ exsltDateMonthName (const xmlChar *dateTime) {
  */
 static const xmlChar *
 exsltDateMonthAbbreviation (const xmlChar *dateTime) {
-    static const xmlChar monthAbbreviations[12][4] = {
+    static const xmlChar monthAbbreviations[13][4] = {
+        { 0 },
 	{ 'J', 'a', 'n', 0 },
 	{ 'F', 'e', 'b', 0 },
 	{ 'M', 'a', 'r', 0 },
@@ -1216,8 +1221,9 @@ exsltDateMonthAbbreviation (const xmlChar *dateTime) {
     };
     int month;
     month = exsltDateMonthInYear(dateTime);
-
-    return monthAbbreviations[month - 1];
+    if(!VALID_MONTH(month))
+      month = 0;
+    return monthAbbreviations[month];
 }
 
 /**
@@ -1511,8 +1517,7 @@ exsltDateDayInWeek (const xmlChar *dateTime) {
 	dt = exsltDateParse(dateTime);
 	if (dt == NULL)
 	    return xmlXPathNAN;
-	if ((dt->type != XS_DATETIME) && (dt->type != XS_DATE) &&
-	    (dt->type != XS_GMONTHDAY) && (dt->type != XS_GDAY)) {
+	if ((dt->type != XS_DATETIME) && (dt->type != XS_DATE)) {
 	    exsltDateFreeDate(dt);
 	    return xmlXPathNAN;
 	}
@@ -1548,7 +1553,8 @@ exsltDateDayInWeek (const xmlChar *dateTime) {
  */
 static const xmlChar *
 exsltDateDayName (const xmlChar *dateTime) {
-    static const xmlChar dayNames[7][10] = {
+    static const xmlChar dayNames[8][10] = {
+        { 0 },
 	{ 'S', 'u', 'n', 'd', 'a', 'y', 0 },
 	{ 'M', 'o', 'n', 'd', 'a', 'y', 0 },
 	{ 'T', 'u', 'e', 's', 'd', 'a', 'y', 0 },
@@ -1559,8 +1565,9 @@ exsltDateDayName (const xmlChar *dateTime) {
     };
     int day;
     day = exsltDateDayInWeek(dateTime);
-
-    return dayNames[day - 1];
+    if((day < 1) || (day > 7))
+      day = 0;
+    return dayNames[day];
 }
 
 /**
@@ -1585,7 +1592,8 @@ exsltDateDayName (const xmlChar *dateTime) {
  */
 static const xmlChar *
 exsltDateDayAbbreviation (const xmlChar *dateTime) {
-    static const xmlChar dayAbbreviations[7][4] = {
+    static const xmlChar dayAbbreviations[8][4] = {
+        { 0 },
 	{ 'S', 'u', 'n', 0 },
 	{ 'M', 'o', 'n', 0 },
 	{ 'T', 'u', 'e', 0 },
@@ -1596,8 +1604,9 @@ exsltDateDayAbbreviation (const xmlChar *dateTime) {
     };
     int day;
     day = exsltDateDayInWeek(dateTime);
-
-    return dayAbbreviations[day - 1];
+    if((day < 1) || (day > 7))
+      day = 0;
+    return dayAbbreviations[day];
 }
 
 /**
@@ -1633,8 +1642,7 @@ exsltDateHourInDay (const xmlChar *dateTime) {
 	dt = exsltDateParse(dateTime);
 	if (dt == NULL)
 	    return xmlXPathNAN;
-	if ((dt->type != XS_DATETIME) && (dt->type != XS_DATE) &&
-	    (dt->type != XS_GMONTHDAY) && (dt->type != XS_GDAY)) {
+	if ((dt->type != XS_DATETIME) && (dt->type != XS_TIME)) {
 	    exsltDateFreeDate(dt);
 	    return xmlXPathNAN;
 	}
@@ -1679,8 +1687,7 @@ exsltDateMinuteInHour (const xmlChar *dateTime) {
 	dt = exsltDateParse(dateTime);
 	if (dt == NULL)
 	    return xmlXPathNAN;
-	if ((dt->type != XS_DATETIME) && (dt->type != XS_DATE) &&
-	    (dt->type != XS_GMONTHDAY) && (dt->type != XS_GDAY)) {
+	if ((dt->type != XS_DATETIME) && (dt->type != XS_TIME)) {
 	    exsltDateFreeDate(dt);
 	    return xmlXPathNAN;
 	}
@@ -1725,8 +1732,7 @@ exsltDateSecondInMinute (const xmlChar *dateTime) {
 	dt = exsltDateParse(dateTime);
 	if (dt == NULL)
 	    return xmlXPathNAN;
-	if ((dt->type != XS_DATETIME) && (dt->type != XS_DATE) &&
-	    (dt->type != XS_GMONTHDAY) && (dt->type != XS_GDAY)) {
+	if ((dt->type != XS_DATETIME) && (dt->type != XS_TIME)) {
 	    exsltDateFreeDate(dt);
 	    return xmlXPathNAN;
 	}
