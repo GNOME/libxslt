@@ -66,7 +66,7 @@
           to query any part (button, widget, etc.) of an application
           window.  This is done by either entering a CS Help mode by
           clicking on an icon or by right clicking on the application
-          part and selecting &quot;What's This&quot; or whatever is decided on
+          part and selecting "What's This" or whatever is decided on
           at the time.  Context sensitive help is described in more
           detail in <a href="indexs10.html" title="Writing Context Sensitive Help (coming in GNOME-2.0)">the section called &#8220;Writing Context Sensitive Help (coming in GNOME-2.0)&#8221;</a>
           below.

@@ -273,7 +273,7 @@
                 </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline font-weight="bold">command</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
                   Command or text that would be typed.
                 </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline font-weight="bold"><fo:inline font-style="italic" font-family="Courier">replaceable</fo:inline></fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
-                  &quot;Variable&quot; text that can be replaced.
+                  "Variable" text that can be replaced.
                 </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline font-family="Courier">Program or Doc Code</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>Program or document code</fo:block></fo:table-cell></fo:table-row></fo:table-body></fo:table>
       </fo:block>
         </fo:block>
@@ -327,8 +327,8 @@
             </fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           The most frequently asked question of new contributors who
-          join the GDP is &quot;which document should I start
-          with?&quot;. Because most people involved are volunteers, we do
+          join the GDP is "which document should I start
+          with?". Because most people involved are volunteers, we do
           not <fo:inline font-style="italic">assign</fo:inline> projects and applications to
           write documents for. The first step is all yours - you must
           decide what about GNOME interests you most and find out if
@@ -382,7 +382,7 @@
           people to make announcements and suggestions and to discuss
           issues in the comments section.
         </fo:block>
-            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2778187">
+            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2786766">
               <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Note</fo:block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           Note that the information in the
@@ -409,7 +409,7 @@
         source nature of SGML. To contribute to the GDP you should
         learn to use DocBook.
       </fo:block>
-          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2778273">
+          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2786849">
             <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           To get started writing for the GDP you do not need to rush
@@ -490,8 +490,8 @@
           DTD's.  To install the GDP custom DTD with PNG image support
           by hand:
         </fo:block>
-            <fo:list-block id="id2778655" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2778666" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2787254" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2787263" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -506,7 +506,7 @@
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2778997" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2787326" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -518,11 +518,11 @@
               /usr/lib/sgml/CATALOG.) Add the following line to this
               file:
               <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
-PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.0//EN&quot; &quot;png-support-3.0.dtd&quot;
+PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN" "png-support-3.0.dtd"
               </fo:block> 
               If you are using the 3.1 DTD, use:
               <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
-PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot; &quot;png-support-3.1.dtd&quot;
+PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN" "png-support-3.1.dtd"
               </fo:block> 
             </fo:block>
                 </fo:list-item-body>
@@ -541,15 +541,15 @@ PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot; &quot;png-support-
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           Articles:
           <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant
-V1.1//EN&quot;[]&gt;
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant
+V1.1//EN"[]&gt;
           </fo:block>
         </fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           Books:
           <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
-&lt;!DOCTYPE Book PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant
-V1.1//EN&quot;[]&gt;
+&lt;!DOCTYPE Book PUBLIC "-//GNOME//DTD DocBook PNG Variant
+V1.1//EN"[]&gt;
           </fo:block>
         </fo:block>
           </fo:block>
@@ -620,7 +620,7 @@ V1.1//EN&quot;[]&gt;
           mydocument.sgml</fo:inline>, after which you can print out or
           view the resulting .ps file.  
         </fo:block>
-            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2899056">
+            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2787803">
               <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             The html files you get will not look quite the same as the
@@ -662,7 +662,7 @@ V1.1//EN&quot;[]&gt;
  &lt;title&gt;My Image&lt;/title&gt;
  &lt;screenshot&gt;
   &lt;screeninfo&gt;Sample GNOME Display&lt;/screeninfo&gt;
-  &lt;graphic  format=&quot;png&quot; fileref=&quot;myfile&quot; srccredit=&quot;me&quot;&gt;
+  &lt;graphic  format="png" fileref="myfile" srccredit="me"&gt;
   &lt;/graphic&gt;
  &lt;/screenshot&gt;
 &lt;/figure&gt;
@@ -700,8 +700,8 @@ V1.1//EN&quot;[]&gt;
           The following resources on the web are useful for learning
           DocBook:
         </fo:block>
-            <fo:list-block id="id2899339" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2899347" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2909700" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2909709" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -715,7 +715,7 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2899393" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2909755" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -728,7 +728,7 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2899433" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2909797" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -742,7 +742,7 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2899473" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2909836" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -766,8 +766,8 @@ V1.1//EN&quot;[]&gt;
           The following sections of this document are designed to help
           documentation authors write correct and consistent DocBook:
         </fo:block>
-            <fo:list-block id="id2899540" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2899548" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2909902" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2909910" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -894,11 +894,11 @@ V1.1//EN&quot;[]&gt;
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           Screenshots should be kept in the main documentation
           directory with your SGML file for applets, or should be
-          kept in a directory called &quot;figs&quot; for application and other
+          kept in a directory called "figs" for application and other
           documentation.  After you use <fo:inline font-weight="bold">db2html</fo:inline> to
           convert your SGML file to HTML (see <fo:basic-link internal-destination="make-output">the section called &#x201C;Creating Something Useful with your Docs&#x201D;</fo:basic-link>), you will need to copy your
           screenshots (either the individual PNG files for applet
-          documentation, or the whole &quot;figs&quot; directory for other
+          documentation, or the whole "figs" directory for other
           documentation) into the newly created HTML directory.  Note
           that every time you use <fo:inline font-weight="bold">db2html</fo:inline> the HTML
           directory is erased and rewritten, so do not store your only
@@ -971,7 +971,7 @@ V1.1//EN&quot;[]&gt;
           CVSROOT=':pserver:anonymous@anoncvs.gnome.org:/cvs/gnome'</fo:inline>
           and then login with <fo:inline font-weight="bold">cvs login</fo:inline>(there is no
           password, just hit return). As an example, we will use the
-          &quot;gnome-docu/gdp&quot; module which contains this and several
+          "gnome-docu/gdp" module which contains this and several
           other documents. To check these documents out for the first
           time, type <fo:inline font-weight="bold">cvs -z3 checkout
           gnome-docu/gdp</fo:inline>. After you have this document
@@ -1187,7 +1187,7 @@ V1.1//EN&quot;[]&gt;
           to query any part (button, widget, etc.) of an application
           window.  This is done by either entering a CS Help mode by
           clicking on an icon or by right clicking on the application
-          part and selecting &quot;What's This&quot; or whatever is decided on
+          part and selecting "What's This" or whatever is decided on
           at the time.  Context sensitive help is described in more
           detail in <fo:basic-link internal-destination="writingcontextsensitivehelp">the section called &#x201C;Writing Context Sensitive Help (coming in GNOME-2.0)&#x201D;</fo:basic-link>
           below.
@@ -1335,8 +1335,8 @@ V1.1//EN&quot;[]&gt;
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         Using 'content' as the elements to define the text of a document also
         allows for search engines to make use of the actual elements to make a
-        &quot;smarter search&quot;. For example, if you are searching for all documents
-        written by the author &quot;Susie&quot; your search engine could be made smart
+        "smarter search". For example, if you are searching for all documents
+        written by the author "Susie" your search engine could be made smart
         enough to only search &lt;author&gt; elements, making for a faster and more
         accurate search.
       </fo:block>
@@ -1373,8 +1373,8 @@ V1.1//EN&quot;[]&gt;
       advised</fo:inline> that the documentation writers conform to XML
       syntax rules. Here are most important differences:
       </fo:block>
-          <fo:list-block id="id2901979" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-            <fo:list-item id="id2901984" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-block id="id2912217" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2912223" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline> <fo:inline font-style="italic">Minimization</fo:inline></fo:inline>
@@ -1395,7 +1395,7 @@ V1.1//EN&quot;[]&gt;
          </fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2902116" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2912357" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline> <fo:inline font-style="italic">Self-closing tags</fo:inline></fo:inline>
@@ -1407,15 +1407,15 @@ V1.1//EN&quot;[]&gt;
             tags.  For example, it is legal for
             <fo:inline font-family="Courier">&lt;xref&gt;</fo:inline> not to have a closing tag: 
             <fo:inline font-family="Courier"><fo:inline font-family="Courier">&lt;xref 
-                   linkend=&quot;someid&quot;&gt;</fo:inline></fo:inline>. In
+                   linkend="someid"&gt;</fo:inline></fo:inline>. In
             XML, it is illegal; instead, you should use  
             <fo:inline font-family="Courier"><fo:inline font-family="Courier">&lt;xref 
-                   linkend=&quot;someid&quot;/&gt;</fo:inline></fo:inline> (note the
+                   linkend="someid"/&gt;</fo:inline></fo:inline> (note the
             slash!).
           </fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2902199" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2912442" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline> <fo:inline font-style="italic">Case sensitive tags</fo:inline></fo:inline>
@@ -1523,11 +1523,11 @@ V1.1//EN&quot;[]&gt;
           
           <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 
-&lt;figure id=&quot;shot1&quot;&gt;
+&lt;figure id="shot1"&gt;
  &lt;title&gt;Screenshot&lt;/title&gt;
  &lt;screenshot&gt;
   &lt;screeninfo&gt;Screenshot of a program&lt;/screeninfo&gt;
-  &lt;graphic format=&quot;PNG&quot;  fileref=&quot;figures/example_screenshot&quot; srccredit=&quot;ME&quot;&gt;
+  &lt;graphic format="PNG"  fileref="figures/example_screenshot" srccredit="ME"&gt;
   &lt;/graphic&gt;
  &lt;/screenshot&gt;
 &lt;/figure&gt;
@@ -1537,7 +1537,7 @@ V1.1//EN&quot;[]&gt;
           
           <fo:block id="shot1" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em" space-after.minimum="1em" space-after.optimum="1.5em" space-after.maximum="2em" keep-with-previous.within-column="always"><fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Screenshot</fo:block><fo:block><fo:block><fo:external-graphic src="url(file:figures/example_screenshot)" content-width="auto" content-height="auto" width="auto" height="auto"/></fo:block></fo:block></fo:block>
         </fo:block>
-            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2902735">
+            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2912982">
               <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             Notice in this example that the screenshot file name does
@@ -1599,7 +1599,7 @@ make: *** No rule to make target `love'.  Stop.
           Note the use of tags <fo:inline font-family="Courier">&lt;prompt&gt;</fo:inline> and
           <fo:inline font-family="Courier">&lt;userinput&gt;</fo:inline> for marking system prompt
           and commands entered by user.
-          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2902958"><fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block><fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2913198"><fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block><fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               Note that both <fo:inline font-family="Courier">&lt;programlisting&gt;</fo:inline>
               and <fo:inline font-family="Courier">&lt;screen&gt;</fo:inline> preserve linebreaks,
               but interpret SGML tags (unlike LaTeX
@@ -1623,8 +1623,8 @@ make: *** No rule to make target `love'.  Stop.
 	  <fo:inline font-family="Courier">&lt;orderedlist&gt;</fo:inline>, and 
 	  <fo:inline font-family="Courier">&lt;variablelist&gt;</fo:inline>.
 	</fo:block>
-            <fo:list-block id="id2903069" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-              <fo:list-item id="id2903075" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2913311" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2913317" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline> <fo:inline font-family="Courier">&lt;itemizedlist&gt;</fo:inline></fo:inline>
@@ -1646,7 +1646,7 @@ make: *** No rule to make target `love'.  Stop.
   &lt;listitem&gt;
     &lt;para&gt;
       &lt;guilabel&gt;Show hidden files&lt;/guilabel&gt; &amp;mdash; This will
-      show all &quot;dot files&quot; or files that begin with a dot.  This
+      show all "dot files" or files that begin with a dot.  This
       files typically include configuration files and directories.
     &lt;/para&gt;
   &lt;/listitem&gt;
@@ -1663,8 +1663,8 @@ make: *** No rule to make target `love'.  Stop.
 		</fo:block>
 		and output:
                 </fo:block>
-                  <fo:list-block id="id2903131" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-                    <fo:list-item id="id2903137" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                  <fo:list-block id="id2913370" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+                    <fo:list-item id="id2913375" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                       <fo:list-item-label end-indent="label-end()">
                         <fo:block>&#x2022;</fo:block>
                       </fo:list-item-label>
@@ -1676,20 +1676,20 @@ make: *** No rule to make target `love'.  Stop.
 		    </fo:block>
                       </fo:list-item-body>
                     </fo:list-item>
-                    <fo:list-item id="id2903185" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                    <fo:list-item id="id2913435" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                       <fo:list-item-label end-indent="label-end()">
                         <fo:block>&#x2022;</fo:block>
                       </fo:list-item-label>
                       <fo:list-item-body start-indent="body-start()">
                         <fo:block>
 		      Show hidden files --
-		      This will show all &quot;dot files&quot; or files that
+		      This will show all "dot files" or files that
 		      begin with a dot.  This files typically include
 		      configuration files and directories.
 		    </fo:block>
                       </fo:list-item-body>
                     </fo:list-item>
-                    <fo:list-item id="id2903217" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                    <fo:list-item id="id2913467" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                       <fo:list-item-label end-indent="label-end()">
                         <fo:block>&#x2022;</fo:block>
                       </fo:list-item-label>
@@ -1718,7 +1718,7 @@ make: *** No rule to make target `love'.  Stop.
 	      </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2903389" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2913638" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline> <fo:inline font-family="Courier">&lt;orderedlist&gt;</fo:inline></fo:inline>
@@ -1732,7 +1732,7 @@ make: *** No rule to make target `love'.  Stop.
 		this list uses Arabic numerals for numbering entries;
 		you can override this using <fo:inline font-family="Courier">numeration</fo:inline>,
 		for example <fo:inline font-family="Courier">&lt;orderedlist
-		  numeration=&quot;lowerroman&quot;&gt;</fo:inline>. Possible values of
+		  numeration="lowerroman"&gt;</fo:inline>. Possible values of
 		these attribute are <fo:inline font-family="Courier">arabic</fo:inline>,
 		<fo:inline font-family="Courier">upperalpha</fo:inline>,
 		<fo:inline font-family="Courier">loweralpha</fo:inline>,
@@ -1741,7 +1741,7 @@ make: *** No rule to make target `love'.  Stop.
 	      </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2903488" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2913738" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline> <fo:inline font-family="Courier">&lt;variablelist&gt;</fo:inline></fo:inline>
@@ -1812,8 +1812,8 @@ make: *** No rule to make target `love'.  Stop.
                 </fo:block>
               </fo:block>
             </fo:block>
-            <fo:list-block id="id2903661" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2903667" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2913920" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2913926" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1824,7 +1824,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2903693" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2913953" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1839,7 +1839,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2903743" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914003" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1850,7 +1850,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2903767" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914027" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1860,7 +1860,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2903791" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914052" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1871,7 +1871,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2903816" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914077" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1912,8 +1912,8 @@ make: *** No rule to make target `love'.  Stop.
           to (section, figure, etc.), while the second just creates a
           link (in HTML output). Here is an example:
           <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
-An example of a &lt;link linkend=&quot;extip&quot;&gt;tip&lt;/link&gt; was given in
-&lt;xref linkend=&quot;notes&quot; /&gt;.  
+An example of a &lt;link linkend="extip"&gt;tip&lt;/link&gt; was given in
+&lt;xref linkend="notes" /&gt;.  
           </fo:block>
           which produces: An example of a <fo:basic-link internal-destination="extip">tip</fo:basic-link> was given in  <fo:basic-link internal-destination="notes">the section called &#x201C;Notes, Warnings, And Tips&#x201D;</fo:basic-link>.
         </fo:block>
@@ -1926,8 +1926,8 @@ An example of a &lt;link linkend=&quot;extip&quot;&gt;tip&lt;/link&gt; was given
           Web page or a local file, use <fo:inline font-family="Courier">&lt;ulink&gt;</fo:inline>
           tag, for example:
           <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
- To find more about GNOME, please visit &lt;ulink type=&quot;http&quot;
-url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt; 
+ To find more about GNOME, please visit &lt;ulink type="http"
+url="http://www.gnome.org"&gt;GNOME Web page&lt;/ulink&gt; 
           </fo:block>
           which produces:  To find more about GNOME, please visit
           <fo:basic-link external-destination="http://www.gnome.org">The GNOME Web
@@ -1951,8 +1951,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           Here are some tags used to describe operating system-related
           things:  
         </fo:block>
-            <fo:list-block id="id2904206" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2904212" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2914461" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2914465" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1966,21 +1966,21 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2904266" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914523" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
                 <fo:list-item-body start-indent="body-start()">
                   <fo:block>  <fo:inline font-family="Courier">&lt;filename
-              class=&quot;directory&quot;&gt;</fo:inline> -- used for
+              class="directory"&gt;</fo:inline> -- used for
               directories, e.g.<fo:inline font-family="Courier">&lt;filename
-              class=&quot;directory&quot;&gt;</fo:inline>/usr/bin
+              class="directory"&gt;</fo:inline>/usr/bin
                   <fo:inline font-family="Courier">&lt;/filename&gt;</fo:inline>
               produces: <fo:inline font-family="Courier">/usr/bin</fo:inline>.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2904326" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914586" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1994,7 +1994,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2904381" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914641" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2006,7 +2006,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2904422" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914683" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2020,7 +2020,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2904477" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2914739" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2131,8 +2131,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
 	  here is partial list of most commonly used enitites:
 	</fo:block>
-            <fo:list-block id="id2904943" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2904949" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2915195" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2915200" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2142,7 +2142,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2904968" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2915221" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2152,7 +2152,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2904986" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2915240" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2162,7 +2162,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2905005" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2915258" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2172,7 +2172,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2905026" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2915283" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2262,7 +2262,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           application for which the documentation is written:
           <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 
-&lt;sect1 id=&quot;intro&quot;&gt;
+&lt;sect1 id="intro"&gt;
  &lt;title&gt;Introduction&lt;/title&gt;
  &lt;para&gt;
   blah-blah-blah This document describes version 1.0.53 of gfoo.
@@ -2300,7 +2300,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"> 
          All GNOME applications must contain information about the
        license (for software, not for documentation), either in the
-       &quot;About&quot; box or in the manual. 
+       "About" box or in the manual. 
        </fo:block>
           </fo:block>
           <fo:block id="bugtraq">
@@ -2336,7 +2336,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
       PNG format only) when appropriate.  They should also describe
       each feature and preference option available.
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905471">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2915726">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Documentation Availability</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         Applications and applets should not rely on documentation
@@ -2352,7 +2352,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
     versions 1.x and the templates in <fo:basic-link internal-destination="template2-2x">the section called &#x201C;Template 2: Applet Manual For GNOME 2.x&#x201D;</fo:basic-link>
     for GNOME versions 2.x.
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905564">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2915821">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Manuals For Large Applications</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         Manuals for very large applications, such as GNOME Workshop
@@ -2363,7 +2363,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         <fo:inline font-family="Courier">&lt;sect1&gt;</fo:inline>).
       </fo:block>
         </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905622">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2915878">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Applet Manuals in GNOME 2.0</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         Note that applet manuals in GNOME 2.0 are treated in a special
@@ -2378,7 +2378,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </fo:block>
         <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
       Application manuals should be made available by having a
-      &quot;Manual&quot; entry in the Help pull-down menu
+      "Manual" entry in the Help pull-down menu
       at the top of the 
       application, as described in <fo:basic-link internal-destination="listingdocsinhelpmenu">the section called &#x201C;Listing Documents in the Help Menu&#x201D;</fo:basic-link>.
       Applets should make their manuals available by
@@ -2393,7 +2393,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905742">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2916001">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Developer Information</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         This section is for developers.  Documentation authors
@@ -2430,7 +2430,7 @@ function-reference.html Gnumeric function reference
       from SGML into HTML with <fo:inline font-weight="bold">db2html</fo:inline>) should be
       placed in this directory too.
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905930">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2916189">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Note</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
        If the help files are not present in the correct directory, the
@@ -2444,12 +2444,12 @@ function-reference.html Gnumeric function reference
 <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 GnomeUIInfo helpmenu[] = {
               {GNOME_APP_UI_ITEM, 
-               N_(&quot;About&quot;), N_(&quot;Info about this program&quot;),
+               N_("About"), N_("Info about this program"),
                about_cb, NULL, NULL, 
                GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_ABOUT,
                0, 0, NULL},
                GNOMEUIINFO_SEPARATOR,
-               GNOMEUIINFO_HELP(&quot;<fo:inline font-style="italic">appname</fo:inline>&quot;),
+               GNOMEUIINFO_HELP("<fo:inline font-style="italic">appname</fo:inline>"),
                GNOMEUIINFO_END
         };
 </fo:block>
@@ -2470,7 +2470,7 @@ GnomeUIInfo helpmenu[] = {
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2906097">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2916354">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Developer Information</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         This section is for developers.  Documentation authors
@@ -2496,13 +2496,13 @@ GnomeUIInfo helpmenu[] = {
     </fo:block>
         <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 gchar *tmp;
-tmp = gnome_help_file_find_file (&quot;module&quot;, &quot;page.html&quot;);
+tmp = gnome_help_file_find_file ("module", "page.html");
 if (tmp) {
   gnome_help_goto(0, tmp);
   g_free(tmp);
 }
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2906232">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2916491">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         The example above is in the C language, please refer to other
@@ -2572,7 +2572,7 @@ if (tmp) {
               </fo:block>
             </fo:block>
           </fo:block>
-          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2906480">
+          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2916739">
             <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Developer Information</fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           This section is for developers.  Documentation authors
@@ -2590,8 +2590,8 @@ if (tmp) {
         To add an applet's manual to its applet menu, use:
 <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 /* add an item to the applet menu */
-applet_widget_register_callback(APPLET_WIDGET(applet), &quot;manual&quot;,
-_(&quot;Manual&quot;), &amp;open_manual, NULL);
+applet_widget_register_callback(APPLET_WIDGET(applet), "manual",
+_("Manual"), &amp;open_manual, NULL);
 </fo:block>
         Here the second argument is an arbitrary name for the
         callback, the third argument is the label which will appear
@@ -2609,8 +2609,8 @@ _(&quot;Manual&quot;), &amp;open_manual, NULL);
         item to the applet's menu.  This is a
         stock menu item and is done:
 <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
-applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
-       GNOME_STOCK_MENU_ABOUT, _(&quot;About&quot;), &amp;my_applet_cb_about,
+applet_widget_register_stock_callback (APPLET_WIDGET(applet), "about",
+       GNOME_STOCK_MENU_ABOUT, _("About"), &amp;my_applet_cb_about,
        NULL);
 </fo:block>
       </fo:block>
@@ -2629,7 +2629,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
           </fo:block>
         </fo:block>
         <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-      Context sensitive help, also known as &quot;pop-up&quot; help, will allow
+      Context sensitive help, also known as "pop-up" help, will allow
       a user to obtain help information about specific buttons or
       parts of an application.
     </fo:block>
@@ -2644,7 +2644,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       developer to give an id to a particular portion of the User
       Interface, for example, a button. Once the interface is complete
       a Perl script can then be run against the interface code to
-      create a &quot;map&quot; file. This map file allows the developer or
+      create a "map" file. This map file allows the developer or
       writer to associate particular paragraph sections from an XML
       document to the interface items.
     </fo:block>
@@ -2658,7 +2658,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       user launches context sensitive help on the interface (either by
       pressing a button and then clicking on the interface item they
       want information on, or by right mouse clicking on the interface
-      item and selecting a pop-up menu item like &quot;What's This&quot;) a
+      item and selecting a pop-up menu item like "What's This") a
       small transient window will appear with brief but detailed
       information on the interface item.
     </fo:block>
@@ -2740,7 +2740,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"> 
          Just as you need to juggle expert and novice readers,
          you'll have to juggle a number of other extremes as you write:
-         <fo:list-block id="id2907018" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em"><fo:list-item id="id2907025" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+         <fo:list-block id="id2917292" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em"><fo:list-item id="id2917298" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               Documents should be complete, yet concise.  You should
               describe every feature, but you'll have decide how much
               detail is really necessary.  It's not, for example,
@@ -2750,7 +2750,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               you spend fewer words on the obvious, you can spend more
               time clarifying the ambiguous labels and explaining
               items that are more complex.
-            </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2907052" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+            </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2917325" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               Be engaging and friendly, yet professional. Games
               documents may be less formal than productivity
               application documents (people don't
@@ -2759,14 +2759,14 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               maintain a standard of style which holds the reader's
               interest without resorting to jokes and untranslatable
               allusions or puns.
-           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2907091" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2917363" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               Examples, tips, notes, and screenshots are useful to
               break up long stretches of text, but too many can get in
               the way, and make your documents too choppy to read.
               It's good to provide a screenshot of any dialog windows
               a user might run into, but if a dialog box has several
               tabs, it's not usually necessary to have one for each.
-           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2907115" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2917387" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               The GDP strives to have all of its documentation conform
               to certain standards of style and content, but every
               document (and every writer) is different.  You will need
@@ -2830,7 +2830,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         bug reports, writers must check for errors in their documents.
         Poor grammar, bad spelling, and gross technical errors in
         draft documents are fine.  However, if those problems show up
-        in a &quot;real&quot; release, they can count against the credibility of
+        in a "real" release, they can count against the credibility of
         GNOME and Linux.  They'll also make you look bad.
       </fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
@@ -3058,11 +3058,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 
 
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
         &lt;!-- if not using PNG graphic, replace reference above with
-             .....PUBLIC &quot;-//OASIS//DTD DocBook V3.1//EN&quot;[
+             .....PUBLIC "-//OASIS//DTD DocBook V3.1//EN"[
          --&gt;
-&lt;!ENTITY version &quot;1.0.53&quot;&gt;
+&lt;!ENTITY version "1.0.53"&gt;
         &lt;!-- replace version above with actual application version number--&gt;
 	&lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 ]&gt;
@@ -3072,7 +3072,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   Documentation Project Team. Please use it for writing GNOME
   documentation, making obvious changes. In particular, all the words
   written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for &quot;legalnotice&quot;, please leave the reference
+  replaced. As for "legalnotice", please leave the reference
   unchanged.
 
   Remember that this is a guide, rather than a perfect model to follow
@@ -3082,7 +3082,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 &lt;!-- =============Document Header ============================= --&gt;
 
-&lt;article id=&quot;index&quot;&gt; &lt;!-- please do not change the id --&gt;
+&lt;article id="index"&gt; &lt;!-- please do not change the id --&gt;
 
   &lt;artheader&gt;
     &lt;title&gt;MY-GNOME-APP&lt;/title&gt;
@@ -3101,7 +3101,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    --&gt;
 
   &lt;!-- do not put authorname in the header except in copyright - use
-  section &quot;authors&quot; below --&gt;
+  section "authors" below --&gt;
 
     &lt;legalnotice&gt;
       &lt;para&gt;
@@ -3112,8 +3112,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         Invariant Sections, no Front-Cover Texts, and no Back-Cover
         Texts. You may obtain a copy of the &lt;citetitle&gt;GNU Free
         Documentation License&lt;/citetitle&gt; from the Free Software
-        Foundation by visiting &lt;ulink type=&quot;http&quot;
-        url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing
+        Foundation by visiting &lt;ulink type="http"
+        url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing
         to: Free Software Foundation, Inc., 59 Temple Place - Suite
         330, Boston, MA 02111-1307, USA.
       &lt;/para&gt;
@@ -3136,7 +3136,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;!-- ============= Document Body ============================= --&gt;
 
  &lt;!-- ============= Introduction ============================== --&gt;
-  &lt;sect1 id=&quot;intro&quot;&gt;
+  &lt;sect1 id="intro"&gt;
     &lt;title&gt;Introduction&lt;/title&gt;
 
     &lt;para&gt;
@@ -3177,7 +3177,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;!-- ================ Usage ================================ --&gt;
  &lt;!-- This section should describe basic usage of the application. --&gt;
 
-  &lt;sect1 id=&quot;usage&quot;&gt;
+  &lt;sect1 id="usage"&gt;
     &lt;title&gt;Using MY-GNOME-APP&lt;/title&gt;
     &lt;para&gt;
       &lt;application&gt;MY-GNOME-APP&lt;/application&gt; can be used to produce a
@@ -3189,19 +3189,19 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
 
     &lt;!-- ========= Basic Usage =========================== --&gt;
-    &lt;sect2 id=&quot;mainwin&quot;&gt;
+    &lt;sect2 id="mainwin"&gt;
       &lt;title&gt;Basic usage&lt;/title&gt;
       &lt;para&gt;
         Starting &lt;application&gt;MY-GNOME-APP&lt;/application&gt; opens the
         &lt;interface&gt;Main window&lt;/interface&gt;, shown in &lt;xref
-        linkend=&quot;mainwindow-fig&quot;&gt;. The window is at first empty.
+        linkend="mainwindow-fig"&gt;. The window is at first empty.
 
         &lt;!-- ==== Figure ==== --&gt;
-        &lt;figure id=&quot;mainwindow-fig&quot;&gt;
+        &lt;figure id="mainwindow-fig"&gt;
 	  &lt;title&gt;MY-GNOME-APP Main Window&lt;/title&gt;
 	  &lt;screenshot&gt;
 	    &lt;screeninfo&gt;MY-GNOME-APP Main Window&lt;/screeninfo&gt;
-	    &lt;graphic fileref=&quot;SCREENSHOT&quot; format=&quot;png&quot; srccredit=&quot;ME&quot;&gt;
+	    &lt;graphic fileref="SCREENSHOT" format="png" srccredit="ME"&gt;
             &lt;/graphic&gt;
 	  &lt;/screenshot&gt;
 	&lt;/figure&gt;
@@ -3209,13 +3209,13 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       &lt;/para&gt; 
 
 
- &lt;!-- For this app, one could put &quot;proving&quot; or &quot;edit&quot; (probably even
+ &lt;!-- For this app, one could put "proving" or "edit" (probably even
       both of them) as sect2's seperate from the main window
       section. Since they were both so closely involved with the main
       window, I decided to have them as sect3's isntead. Judgement
       call. --&gt;
 
-      &lt;sect3 id=&quot;proving&quot;&gt;
+      &lt;sect3 id="proving"&gt;
 	&lt;title&gt;Proving a Theorem&lt;/title&gt;
 	&lt;para&gt;
           To get a proof of a theorem, select
@@ -3294,7 +3294,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
           &lt;/para&gt;
 	&lt;/warning&gt;
       &lt;/sect3&gt;
-      &lt;sect3 id=&quot;editing&quot;&gt;
+      &lt;sect3 id="editing"&gt;
 	&lt;title&gt;Editing Proofs&lt;/title&gt;
 	&lt;para&gt;
           Once you have proven the theorem, it will be displayed in
@@ -3347,16 +3347,16 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       =============================================================  --&gt;
 
 
-    &lt;sect2 id=&quot;toolbar&quot;&gt;
+    &lt;sect2 id="toolbar"&gt;
       &lt;title&gt;Toolbar&lt;/title&gt;
       &lt;para&gt;
-        The toolbar (shown in &lt;xref linkend=&quot;figure-usage-toolbar&quot;&gt;)
+        The toolbar (shown in &lt;xref linkend="figure-usage-toolbar"&gt;)
         provides access to several commonly used routines.
-        &lt;figure id=&quot;figure-usage-toolbar&quot;&gt;
+        &lt;figure id="figure-usage-toolbar"&gt;
 	  &lt;title&gt;MY-GNOME-APP Toolbar&lt;/title&gt;
 	  &lt;screenshot&gt;
 	    &lt;screeninfo&gt;MY-GNOME-APP Toolbar&lt;/screeninfo&gt;
-	    &lt;graphic fileref=&quot;usage-toolbar.png&quot; format=&quot;png&quot;&gt;&lt;/graphic&gt;
+	    &lt;graphic fileref="usage-toolbar.png" format="png"&gt;&lt;/graphic&gt;
 	  &lt;/screenshot&gt;
 	&lt;/figure&gt;
         &lt;variablelist&gt;
@@ -3392,7 +3392,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/sect2&gt;
     &lt;!-- ========= Menus =========================== --&gt; 
 
-    &lt;sect2 id=&quot;menubar&quot;&gt;
+    &lt;sect2 id="menubar"&gt;
 
        &lt;!-- Describing the menubar ensures comprehensive feature
        coverage. Nest itemizedlists inside variablelists so that each
@@ -3531,7 +3531,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 		  &lt;para&gt;
 	      &lt;guimenuitem&gt;Preferences&amp;hellip;&lt;/guimenuitem&gt;
 	       &amp;mdash; This opens the &lt;link
-	       linkend=&quot;prefs&quot;&gt;&lt;interface&gt;Preferences
+	       linkend="prefs"&gt;&lt;interface&gt;Preferences
 	       Dialog&lt;/interface&gt;&lt;/link&gt;, which allows you to configure
 	       many settings.
 	     &lt;/para&gt;
@@ -3584,7 +3584,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
  &lt;!-- ============= Customization ============================= --&gt;
 
- &lt;sect1 id=&quot;prefs&quot;&gt;
+ &lt;sect1 id="prefs"&gt;
   &lt;title&gt;Customization&lt;/title&gt;
   &lt;para&gt;
    To change the application settings, select
@@ -3593,15 +3593,15 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;guimenuitem&gt;Preferences...&lt;/guimenuitem&gt;
    &lt;/menuchoice&gt;.  This opens the
    &lt;interface&gt;Preferences&lt;/interface&gt; dialog, shown in &lt;xref
-   linkend=&quot;preferences-fig&quot;&gt;.
+   linkend="preferences-fig"&gt;.
   &lt;/para&gt;
 
-  &lt;figure id=&quot;preferences-fig&quot;&gt;
+  &lt;figure id="preferences-fig"&gt;
    &lt;title&gt;Preferences Dialog&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;Preferences Dialog&lt;/screeninfo&gt;
-    &lt;graphic fileref=&quot;SCREENSHOT&quot; format=&quot;png&quot;
-     srccredit=&quot;ME&quot;&gt;
+    &lt;graphic fileref="SCREENSHOT" format="png"
+     srccredit="ME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
   &lt;/figure&gt;
@@ -3687,7 +3687,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;!-- This section should describe known bugs and limitations of
       the program if there are any - please be frank and list all
       problems you know of. --&gt;
- &lt;sect1 id=&quot;bugs&quot;&gt;
+ &lt;sect1 id="bugs"&gt;
   &lt;title&gt;Known Bugs and Limitations&lt;/title&gt;
   &lt;para&gt;
    This application has no known bugs.
@@ -3697,18 +3697,18 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 &lt;!-- ============= Authors ================================ --&gt;
 
- &lt;sect1 id=&quot;authors&quot;&gt;
+ &lt;sect1 id="authors"&gt;
   &lt;title&gt;Authors&lt;/title&gt;
   &lt;para&gt;
    &lt;application&gt;MY-GNOME-APP&lt;/application&gt; was written by GNOME-HACKER
    (&lt;email&gt;hacker@gnome.org&lt;/email&gt;). To find more information about
    &lt;application&gt;MY-GNOME-APP&lt;/application&gt;, please visit the &lt;ulink
-   url=&quot;http://www.my-gnome-app.org&quot; type=&quot;http&quot;&gt;MY-GNOME-APP Web
+   url="http://www.my-gnome-app.org" type="http"&gt;MY-GNOME-APP Web
    page&lt;/ulink&gt;.  Please send all comments, suggestions, and bug
-   reports to the &lt;ulink url=&quot;http://bugs.gnome.org&quot; type=&quot;http&quot;&gt;GNOME
+   reports to the &lt;ulink url="http://bugs.gnome.org" type="http"&gt;GNOME
    bug tracking database&lt;/ulink&gt;. (Instructions for submitting bug
    reports can be found &lt;ulink
-   url=&quot;http://bugs.gnome.org/Reporting.html&quot; type=&quot;http&quot;&gt;
+   url="http://bugs.gnome.org/Reporting.html" type="http"&gt;
    on-line&lt;/ulink&gt;.)  You can also use &lt;application&gt;Bug Report
    Tool&lt;/application&gt; (&lt;command&gt;bug-buddy&lt;/command&gt;), available in the
    &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of &lt;guimenu&gt;Main
@@ -3718,12 +3718,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;para&gt;
    This manual was written by ME
    (&lt;email&gt;MYNAME@MYADDRESS&lt;/email&gt;). Please send all comments and
-   suggestions regarding this manual to the &lt;ulink type=&quot;http&quot;
-   url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;GNOME Documentation 
+   suggestions regarding this manual to the &lt;ulink type="http"
+   url="http://developer.gnome.org/projects/gdp"&gt;GNOME Documentation 
    Project&lt;/ulink&gt; by sending an email to 
    &lt;email&gt;docs@gnome.org&lt;/email&gt;. You can also add your comments online 
-   by using the &lt;ulink type=&quot;http&quot; 
-   url=&quot;http://www.gnome.org/gdp/doctable/&quot;&gt;GNOME Documentation Status
+   by using the &lt;ulink type="http" 
+   url="http://www.gnome.org/gdp/doctable/"&gt;GNOME Documentation Status
    Table&lt;/ulink&gt;.
   &lt;/para&gt;
 
@@ -3742,7 +3742,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
  &lt;!-- ============= Application License ============================= --&gt;
 
- &lt;sect1 id=&quot;license&quot;&gt;
+ &lt;sect1 id="license"&gt;
   &lt;title&gt;License&lt;/title&gt;
   &lt;para&gt;
    This program is free software; you can redistribute it and/or
@@ -3762,8 +3762,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    included as an appendix to the &lt;citetitle&gt;GNOME Users
    Guide&lt;/citetitle&gt;.  You may also obtain a copy of the
    &lt;citetitle&gt;GNU General Public License&lt;/citetitle&gt; from the Free
-   Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-   url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to
+   Software Foundation by visiting &lt;ulink type="http"
+   url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to
    &lt;address&gt;
     Free Software Foundation, Inc.
     &lt;street&gt;59 Temple Place&lt;/street&gt; - Suite 330
@@ -3812,8 +3812,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 
 
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
- &lt;!entity APPLETNAME.sgml SYSTEM &quot;applet_template_1.sgml&quot;&gt;
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+ &lt;!entity APPLETNAME.sgml SYSTEM "applet_template_1.sgml"&gt;
         &lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 ]&gt;
 
@@ -3821,7 +3821,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   Documentation Project Team. Please use it for writing GNOME
   documentation, making obvious changes. In particular, all the words
   written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for &quot;legalnotice&quot;, please leave the reference
+  replaced. As for "legalnotice", please leave the reference
   unchanged,make sure to add/remove trademarks to the list as
   appropriate for your document.
 
@@ -3829,7 +3829,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   thanks ;-).
 --&gt;
 
-&lt;article id=&quot;index&quot;&gt; &lt;!-- please do not change the id --&gt;
+&lt;article id="index"&gt; &lt;!-- please do not change the id --&gt;
 
  &lt;!-- ============= Document Header ============================= --&gt;
  &lt;artheader&gt; 
@@ -3849,7 +3849,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    --&gt;
 
   &lt;!-- do not put authorname in the header except in copyright - use
-  section &quot;authors&quot; below --&gt;
+  section "authors" below --&gt;
 
   &lt;legalnotice&gt;
    &lt;para&gt;
@@ -3859,8 +3859,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     by the Free Software Foundation with no Invariant Sections, no
     Front-Cover Texts, and no Back-Cover Texts. You may obtain a copy
     of the &lt;citetitle&gt;GNU Free Documentation License&lt;/citetitle&gt; from
-    the Free Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to:
+    the Free Software Foundation by visiting &lt;ulink type="http"
+    url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to:
     Free Software Foundation, Inc., 59 Temple Place - Suite 330,
     Boston, MA 02111-1307, USA.
    &lt;/para&gt;
@@ -3893,12 +3893,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
         &lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 
- &lt;sect1 id=&quot;APPLET&quot;&gt;
+ &lt;sect1 id="APPLET"&gt;
   &lt;title&gt;APPLET Applet&lt;/title&gt;
 
   &lt;para&gt;
    &lt;application&gt;APPLET&lt;/application&gt; applet, shown in &lt;xref
-   linkend=&quot;APPLETapplet-fig&quot;&gt;, allows you to &amp;hellip;.  To add this
+   linkend="APPLETapplet-fig"&gt;, allows you to &amp;hellip;.  To add this
    applet to a &lt;interface&gt;Panel&lt;/interface&gt;, 
    right-click on the &lt;interface&gt;Panel&lt;/interface&gt; and choose
    &lt;menuchoice&gt;
@@ -3910,18 +3910,18 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;/menuchoice&gt;.
   &lt;/para&gt;
 
-  &lt;figure id=&quot;APPLETapplet-fig&quot;&gt;
+  &lt;figure id="APPLETapplet-fig"&gt;
    &lt;title&gt;APPLET Applet&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;APPLET Applet&lt;/screeninfo&gt;
-    &lt;graphic format=&quot;png&quot; fileref=&quot;APPLET_applet&quot; 
-    srccredit=&quot;YOURNAME&quot;&gt;
+    &lt;graphic format="png" fileref="APPLET_applet" 
+    srccredit="YOURNAME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
   &lt;/figure&gt;
 
   &lt;!-- ============= Usage  ================================ --&gt;
-  &lt;sect2 id=&quot;APPLET-usage&quot;&gt;
+  &lt;sect2 id="APPLET-usage"&gt;
    &lt;title&gt;Usage&lt;/title&gt;
    &lt;para&gt;
     (Place a short description of how to use the applet here.)
@@ -3935,7 +3935,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      &lt;listitem&gt;
       &lt;para&gt;
        &lt;guimenuitem&gt;Properties&amp;hellip;&lt;/guimenuitem&gt; &amp;mdash;
-       opens the &lt;link linkend=&quot;APPLET-prefs&quot;&gt;
+       opens the &lt;link linkend="APPLET-prefs"&gt;
        &lt;guilabel&gt;Properties&lt;/guilabel&gt;&lt;/link&gt; dialog.
       &lt;/para&gt;
      &lt;/listitem&gt;
@@ -3962,23 +3962,23 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 
   &lt;!-- ============= Customization ============================= --&gt;
-  &lt;sect2 id=&quot;APPLET-prefs&quot;&gt;
+  &lt;sect2 id="APPLET-prefs"&gt;
     &lt;title&gt;Customization&lt;/title&gt;
     &lt;para&gt;
       You can customize &lt;application&gt;APPLET&lt;/application&gt;
       applet by right-clicking on it and choosing
       &lt;guimenuitem&gt;Properties&amp;hellip;&lt;/guimenuitem&gt;. This will open the
       &lt;interface&gt;Properties&lt;/interface&gt; dialog(shown in &lt;xref
-      linkend=&quot;APPLET-settings-fig&quot;&gt;), which allows you to
+      linkend="APPLET-settings-fig"&gt;), which allows you to
       change various settings.
     &lt;/para&gt;
 
-    &lt;figure id=&quot;APPLET-settings-fig&quot;&gt;
+    &lt;figure id="APPLET-settings-fig"&gt;
      &lt;title&gt;Properties dialog&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Properties dialog&lt;/screeninfo&gt;
-      &lt;graphic format=&quot;png&quot; fileref=&quot;APPLET_settings&quot;
-      srccredit=&quot;YOURNAME&quot;&gt;
+      &lt;graphic format="png" fileref="APPLET_settings"
+      srccredit="YOURNAME"&gt;
       &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
@@ -4024,7 +4024,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;!-- This section should describe known bugs and limitations of
        the program if there are any - please be frank and list all
        problems you know of --&gt;
-  &lt;sect2 id=&quot;bugs&quot;&gt;
+  &lt;sect2 id="bugs"&gt;
    &lt;title&gt;Known Bugs and Limitations&lt;/title&gt;
    &lt;para&gt;
     This applet has no known bugs.
@@ -4034,16 +4034,16 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
   &lt;!-- ============= Authors ================================ --&gt;
 
-  &lt;sect2 id=&quot;authors&quot;&gt;
+  &lt;sect2 id="authors"&gt;
    &lt;title&gt;Authors&lt;/title&gt;
    &lt;para&gt;
     &lt;application&gt;APPLET&lt;/application&gt; was written by GNOME-HACKER
     (&lt;email&gt;hacker@gnome.org&lt;/email&gt;).  Please send all comments,
     suggestions, and bug 
-    reports to the &lt;ulink url=&quot;http://bugs.gnome.org&quot; type=&quot;http&quot;&gt;GNOME
+    reports to the &lt;ulink url="http://bugs.gnome.org" type="http"&gt;GNOME
     bug tracking database&lt;/ulink&gt;. (Instructions for submitting bug
     reports can be found &lt;ulink
-    url=&quot;http://bugs.gnome.org/Reporting.html&quot; type=&quot;http&quot;&gt;
+    url="http://bugs.gnome.org/Reporting.html" type="http"&gt;
     on-line&lt;/ulink&gt;.  You can also use &lt;application&gt;Bug Report
     Tool&lt;/application&gt; (&lt;command&gt;bug-buddy&lt;/command&gt;), available in the
     &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of &lt;guimenu&gt;Main
@@ -4053,12 +4053,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;para&gt;
     This manual was written by ME
     (&lt;email&gt;MYNAME@MYADDRESS&lt;/email&gt;). Please send all comments and
-    suggestions regarding this manual to the &lt;ulink type=&quot;http&quot;
-    url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;GNOME Documentation
+    suggestions regarding this manual to the &lt;ulink type="http"
+    url="http://developer.gnome.org/projects/gdp"&gt;GNOME Documentation
     Project&lt;/ulink&gt;  by sending an email to
     &lt;email&gt;docs@gnome.org&lt;/email&gt;. You can also submit comments online
-    by using the &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.gnome.org/gdp/doctable/&quot;&gt;GNOME Documentation
+    by using the &lt;ulink type="http"
+    url="http://www.gnome.org/gdp/doctable/"&gt;GNOME Documentation
     Status Table&lt;/ulink&gt;.
    &lt;/para&gt;
 
@@ -4077,7 +4077,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
   &lt;!-- ============= Application License ============================= --&gt;
 
-  &lt;sect2 id=&quot;license&quot;&gt;
+  &lt;sect2 id="license"&gt;
    &lt;title&gt;License&lt;/title&gt;
    &lt;para&gt;
     This program is free software; you can redistribute it and/or
@@ -4097,8 +4097,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     included as an appendix to the &lt;citetitle&gt;GNOME Users
     Guide&lt;/citetitle&gt;.  You may also obtain a copy of the
     &lt;citetitle&gt;GNU General Public License&lt;/citetitle&gt; from the Free
-    Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to
+    Software Foundation by visiting &lt;ulink type="http"
+    url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to
     &lt;address&gt;
      Free Software Foundation, Inc.
      &lt;street&gt;59 Temple Place&lt;/street&gt; - Suite 330
@@ -4150,12 +4150,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 
-&lt;!DOCTYPE book PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
-&lt;!ENTITY TEMPLATE-APPLET SYSTEM &quot;gnome-applet-template.sgml.part&quot;&gt;
+&lt;!DOCTYPE book PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+&lt;!ENTITY TEMPLATE-APPLET SYSTEM "gnome-applet-template.sgml.part"&gt;
 
 ]&gt;
 
-&lt;book id=&quot;gnome-applets&quot;&gt;
+&lt;book id="gnome-applets"&gt;
 
  &lt;bookinfo&gt;
   &lt;title&gt;GNOME Applets&lt;/title&gt;
@@ -4204,11 +4204,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;/bookinfo&gt;
 
  &lt;!-- #### Introduction ###### --&gt;
- &lt;chapter id=&quot;applets-intro&quot;&gt;
+ &lt;chapter id="applets-intro"&gt;
   &lt;title&gt;Introduction&lt;/title&gt; 
 
   &lt;!-- #### Intro | What Are Applets? ###### --&gt;
-  &lt;sect1 id=&quot;applets-what-are&quot;&gt;
+  &lt;sect1 id="applets-what-are"&gt;
    &lt;title&gt;What Are Applets?&lt;/title&gt; 
    &lt;para&gt;
     Applets are one of the most popular and useful objects you can add
@@ -4240,17 +4240,17 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;/para&gt;
 
    &lt;para&gt;
-    &lt;figure id=&quot;example-applets-fig&quot;&gt;
+    &lt;figure id="example-applets-fig"&gt;
      &lt;title&gt;Example Applets&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Example Applets&lt;/screeninfo&gt;
-       &lt;graphic fileref=&quot;example_applets&quot; format=&quot;png&quot;
-       srccredit=&quot;muet&quot;&gt;
+       &lt;graphic fileref="example_applets" format="png"
+       srccredit="muet"&gt;
        &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
     Several example applets are shown in &lt;xref
-    linkend=&quot;example-applets-fig&quot;&gt;.  From left to right, they are: (1)
+    linkend="example-applets-fig"&gt;.  From left to right, they are: (1)
     &lt;application&gt;Mixer Applet&lt;/application&gt;, which allows you to turn
     on/off sound and control its volume by clicking on the applet.  (2)
     &lt;application&gt;Sound Monitor&lt;/application&gt; Applet, which displays
@@ -4272,8 +4272,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;interface&gt;Panels&lt;/interface&gt; and using them. The following
     chapters go through each of the standard GNOME applets describing
     them in detail.  There are also additional applets which can be
-    downloaded off the Web.   See &lt;ulink type=&quot;http&quot;
-     url=&quot;http://www.gnome.org/applist/list-martin.phtml&quot;&gt;The GNOME
+    downloaded off the Web.   See &lt;ulink type="http"
+     url="http://www.gnome.org/applist/list-martin.phtml"&gt;The GNOME
     Software Map&lt;/ulink&gt; for lists of additional GNOME applications
     and applets. 
    &lt;/para&gt;
@@ -4285,10 +4285,10 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;/sect1&gt;
 
   &lt;!-- #### Intro | Adding, Moving, and Removing Applets ###### --&gt;
-  &lt;sect1 id=&quot;applet-add-move-replace&quot;&gt;
+  &lt;sect1 id="applet-add-move-replace"&gt;
    &lt;title&gt;Adding, Moving, and Removing Applets&lt;/title&gt;
 
-   &lt;sect2 id=&quot;adding-applets&quot;&gt;   
+   &lt;sect2 id="adding-applets"&gt;   
     &lt;title&gt;Adding Applets to a Panel&lt;/title&gt;
     &lt;para&gt;
      To add an applet to a &lt;interface&gt;Panel&lt;/interface&gt;, right-click
@@ -4301,7 +4301,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;moving-applets&quot;&gt;
+   &lt;sect2 id="moving-applets"&gt;
     &lt;title&gt;Moving Applets In or Between Panels&lt;/title&gt;
     &lt;para&gt;
      It is easy to move applets in a &lt;interface&gt;Panel&lt;/interface&gt; or
@@ -4320,12 +4320,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      other objects, the behavior depends on the global preferences
      you have set for your &lt;interface&gt;Panels&lt;/interface&gt; in the
      &lt;application&gt;GNOME Control Center&lt;/application&gt;: the applet you are
-     moving can switch places with other objects, &quot;push&quot; all objects
-     it meets, or &quot;jump&quot; over all other objects without disturbing
+     moving can switch places with other objects, "push" all objects
+     it meets, or "jump" over all other objects without disturbing
      them. You can also override the default behavior by holding
-     &lt;keycap&gt;Shift&lt;/keycap&gt; button (for &quot;push&quot; mode),
-     &lt;keycap&gt;Ctrl&lt;/keycap&gt; (for &quot;switched&quot; mode), or
-     &lt;keycap&gt;Alt&lt;/keycap&gt; (for &quot;free&quot; mode, i.e. jumping other other
+     &lt;keycap&gt;Shift&lt;/keycap&gt; button (for "push" mode),
+     &lt;keycap&gt;Ctrl&lt;/keycap&gt; (for "switched" mode), or
+     &lt;keycap&gt;Alt&lt;/keycap&gt; (for "free" mode, i.e. jumping other other
      objects without disturbing them) button while dragging.
     &lt;/para&gt;
     &lt;para&gt;
@@ -4340,7 +4340,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;removing-applets&quot;&gt;
+   &lt;sect2 id="removing-applets"&gt;
     &lt;title&gt;Removing Applets from a Panel&lt;/title&gt; 
     &lt;para&gt;  
      To remove an applet from a &lt;interface&gt;Panel&lt;/interface&gt;,
@@ -4352,7 +4352,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 
   &lt;!-- #### Intro | The Right-Click Pop-Up Menu ###### --&gt;
-  &lt;sect1 id=&quot;right-click-pop-up-menu&quot;&gt;
+  &lt;sect1 id="right-click-pop-up-menu"&gt;
    &lt;title&gt;The Right-Click Pop-Up Menu&lt;/title&gt;
    &lt;para&gt;
     Clicking the right mouse button on any applet brings up
@@ -4361,7 +4361,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     often has additional items which vary depending on the particular
     applet. 
    &lt;/para&gt;
-   &lt;sect2 id=&quot;standard-right-click-items&quot;&gt; 
+   &lt;sect2 id="standard-right-click-items"&gt; 
     &lt;title&gt;Standard Pop-Up Items&lt;/title&gt;
     &lt;para&gt;
      All applets should have the following items in their right-click
@@ -4429,7 +4429,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;applet-properties-dialog&quot;&gt; 
+   &lt;sect2 id="applet-properties-dialog"&gt; 
     &lt;title&gt;The Applet Properties Dialog&lt;/title&gt;
     &lt;para&gt;
      Many applets have customizable properties.  These applets will
@@ -4437,12 +4437,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      right-click &lt;guimenu&gt;pop-up menu&lt;/guimenu&gt; which brings up the
      &lt;interface&gt;Properties&lt;/interface&gt; dialog where you can alter the 
      appearance or behaviour of the applet.
-     &lt;figure id=&quot;example-props-dialog-fig&quot;&gt;
+     &lt;figure id="example-props-dialog-fig"&gt;
       &lt;title&gt;An Example Applet Properties Dialog&lt;/title&gt;
       &lt;screenshot&gt;
        &lt;screeninfo&gt;An Example Applets Properties Dialog&lt;/screeninfo&gt;
-       &lt;graphic fileref=&quot;applet_props_dialog&quot; format=&quot;png&quot;
-        srccredit=&quot;muet&quot;&gt;
+       &lt;graphic fileref="applet_props_dialog" format="png"
+        srccredit="muet"&gt;
        &lt;/graphic&gt;
       &lt;/screenshot&gt;
      &lt;/figure&gt;
@@ -4489,7 +4489,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
  
-   &lt;sect2 id=&quot;common-right-click-items&quot;&gt; 
+   &lt;sect2 id="common-right-click-items"&gt; 
     &lt;title&gt;Other Common Pop-Up Items&lt;/title&gt;
     &lt;para&gt;
      Many applets also have one or more of the following items in their
@@ -4530,13 +4530,13 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;/sect2&gt;
   &lt;/sect1&gt;
   
-  &lt;sect1 id=&quot;feedback&quot;&gt;
+  &lt;sect1 id="feedback"&gt;
    &lt;title&gt;Feedback&lt;/title&gt;
-   &lt;sect2 id=&quot;reporting-bugs&quot;&gt; 
+   &lt;sect2 id="reporting-bugs"&gt; 
     &lt;title&gt;Reporting Applet Bugs&lt;/title&gt;
     &lt;para&gt;
-     GNOME users are encouraged to report bugs to &lt;ulink type=&quot;http&quot;
-     url=&quot;http://bugs.gnome.org&quot;&gt;The GNOME Bug Tracking
+     GNOME users are encouraged to report bugs to &lt;ulink type="http"
+     url="http://bugs.gnome.org"&gt;The GNOME Bug Tracking
      System&lt;/ulink&gt;.  The easiest way to submit bugs is to use the
      &lt;application&gt;Bug Report Tool&lt;/application&gt; program by selecting
      &lt;menuchoice&gt;
@@ -4548,7 +4548,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      reproduce the the scenario.
     &lt;/para&gt;
    &lt;/sect2&gt;
-   &lt;sect2 id=&quot;documentation-feedback&quot;&gt; 
+   &lt;sect2 id="documentation-feedback"&gt; 
     &lt;title&gt;Providing Feedback&lt;/title&gt;
     &lt;para&gt;
      GNOME users are welcome to provide suggestions for how
@@ -4557,27 +4557,27 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      &lt;application&gt;Bug Report Tool&lt;/application&gt; discussed above.
      Suggestions for documentation changes can be emailed directly to
      the documentation author (whose email should be included in the
-     &quot;Authors&quot; section of the document) or by sending an email to
+     "Authors" section of the document) or by sending an email to
      &lt;email&gt;docs@gnome.org&lt;/email&gt;. 
     &lt;/para&gt;
    &lt;/sect2&gt;
-   &lt;sect2 id=&quot;joining-gnome&quot;&gt;  
+   &lt;sect2 id="joining-gnome"&gt;  
     &lt;title&gt;Joining GNOME&lt;/title&gt;
     &lt;para&gt;
      GNOME is a community project, created by hundreds of programmers,
      documentation writers, icon design artists, web masters, and
      other people, most of whom work on a volunteer basis.  New GNOME
      contributors are always welcome. To join the GNOME team, visit
-     these web sites: developers &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org&quot;&gt;The GNOME Development
-     Site&lt;/ulink&gt;, documentation writers &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;The GNOME Documentation
-     Project&lt;/ulink&gt;, icon design artists &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://gnome-icons.sourceforge.net/&quot;&gt;Gnome Icon Web&lt;/ulink&gt;,
-     general &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org/helping/&quot;&gt;Helping GNOME&lt;/ulink&gt;,
-     or just join the gnome-list email list (see &lt;ulink type=&quot;http&quot;
-     url=&quot;http://www.gnome.org/resources/mailing-lists.html&quot;&gt;GNOME Mailing
+     these web sites: developers &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org"&gt;The GNOME Development
+     Site&lt;/ulink&gt;, documentation writers &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org/projects/gdp"&gt;The GNOME Documentation
+     Project&lt;/ulink&gt;, icon design artists &amp;mdash; &lt;ulink type="http"
+     url="http://gnome-icons.sourceforge.net/"&gt;Gnome Icon Web&lt;/ulink&gt;,
+     general &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org/helping/"&gt;Helping GNOME&lt;/ulink&gt;,
+     or just join the gnome-list email list (see &lt;ulink type="http"
+     url="http://www.gnome.org/resources/mailing-lists.html"&gt;GNOME Mailing
      Lists&lt;/ulink&gt;) to discuss what you are interested in doing.
     &lt;/para&gt;
    &lt;/sect2&gt;
@@ -4585,7 +4585,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;/chapter&gt;
 
  &lt;!-- ############### Template Applets ##################### --&gt;
- &lt;chapter id=&quot;template-applets&quot;&gt;
+ &lt;chapter id="template-applets"&gt;
   &lt;title&gt;Template Applets&lt;/title&gt;
 
   &amp;TEMPLATE-APPLET
@@ -4637,27 +4637,27 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;!-- stated in a translation approved by the Foundation. --&gt;
 
   &lt;!-- ###############   GNOMEAPPLET   ############### --&gt;
-  &lt;sect1 id=&quot;GNOMEAPPLET&quot;&gt;
+  &lt;sect1 id="GNOMEAPPLET"&gt;
    &lt;title&gt;GNOMEAPPLET Applet&lt;/title&gt; 
 
    &lt;para&gt; 
     &lt;application&gt;GNOMEAPPLET&lt;/application&gt; applet, shown in &lt;xref
-    linkend=&quot;GNOMEAPPLET-fig&quot;&gt;, does this and that. To learn how to
+    linkend="GNOMEAPPLET-fig"&gt;, does this and that. To learn how to
     add this applet to a &lt;interface&gt;Panel&lt;/interface&gt;, see &lt;xref
-    linkend=&quot;adding-applets&quot;&gt;. 
+    linkend="adding-applets"&gt;. 
    &lt;/para&gt;
   
  
-   &lt;figure id=&quot;GNOMEAPPLET-fig&quot;&gt;
+   &lt;figure id="GNOMEAPPLET-fig"&gt;
    &lt;title&gt;GNOMEAPPLET&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;GNOMEAPPLET&lt;/screeninfo&gt;
-    &lt;graphic format=&quot;png&quot; fileref=&quot;GNOMEAPPLET-fig&quot; srccredit=&quot;ME&quot;&gt;
+    &lt;graphic format="png" fileref="GNOMEAPPLET-fig" srccredit="ME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
    &lt;/figure&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-usage&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-usage"&gt;
     &lt;title&gt;Usage&lt;/title&gt;
     &lt;para&gt;
      This applet does nothing. To use it, just
@@ -4665,18 +4665,18 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-right-click&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-right-click"&gt;
     &lt;title&gt;Right-Click Pop-Up Menu Items&lt;/title&gt;
     &lt;para&gt; 
      In addition to the standard menu items (see &lt;xref
-     linkend=&quot;standard-right-click-items&quot;&gt;), the right-click pop-up menu has 
+     linkend="standard-right-click-items"&gt;), the right-click pop-up menu has 
      the following items: 
      &lt;itemizedlist&gt; 	
       &lt;listitem&gt;
        &lt;para&gt;
         &lt;guimenuitem&gt;Properties...&lt;/guimenuitem&gt; &amp;mdash; This menu
         item opens the &lt;interface&gt;Properties&lt;/interface&gt; dialog (see
-        &lt;xref linkend=&quot;GNOMEAPPLET-properties&quot;&gt;) which allows you to
+        &lt;xref linkend="GNOMEAPPLET-properties"&gt;) which allows you to
         customize the appearance and behavior of this applet.
        &lt;/para&gt;
       &lt;/listitem&gt;
@@ -4684,27 +4684,27 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
        &lt;para&gt;
         &lt;guimenuitem&gt;Run Hello World...&lt;/guimenuitem&gt; &amp;mdash; This
         menu item starts the program &lt;application&gt;Hello
-        World&lt;/application&gt;, used to say &quot;hello&quot; to the world. 
+        World&lt;/application&gt;, used to say "hello" to the world. 
        &lt;/para&gt;
       &lt;/listitem&gt;
      &lt;/itemizedlist&gt;
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-properties&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-properties"&gt;
     &lt;title&gt;Properties&lt;/title&gt;
     &lt;para&gt;
      You can configure &lt;application&gt;GNOMEAPPLET&lt;/application&gt; applet by
      right-clicking on the applet and choosing the
      &lt;guimenuitem&gt;Properties...&lt;/guimenuitem&gt; menu item. This will open the
      &lt;interface&gt;Properties&lt;/interface&gt; dialog, shown in &lt;xref
-     linkend=&quot;GNOMEAPPLET-properties-fig&quot;&gt;.
+     linkend="GNOMEAPPLET-properties-fig"&gt;.
     &lt;/para&gt;
-    &lt;figure id=&quot;GNOMEAPPLET-properties-fig&quot;&gt;
+    &lt;figure id="GNOMEAPPLET-properties-fig"&gt;
      &lt;title&gt;Properties Dialog&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Properties Dialog&lt;/screeninfo&gt; 
-      &lt;graphic format=&quot;png&quot; fileref=&quot;GNOMEAPPLET-properties&quot; srccredit=&quot;ME&quot;&gt;
+      &lt;graphic format="png" fileref="GNOMEAPPLET-properties" srccredit="ME"&gt;
       &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
@@ -4720,11 +4720,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      dialog, including descriptions of the &lt;guibutton&gt;OK&lt;/guibutton&gt;,
      &lt;guibutton&gt;Apply&lt;/guibutton&gt;, &lt;guibutton&gt;Cancel&lt;/guibutton&gt;, and
      &lt;guibutton&gt;Help&lt;/guibutton&gt; buttons, see &lt;xref
-     linkend=&quot;applet-properties-dialog&quot;&gt;.
+     linkend="applet-properties-dialog"&gt;.
     &lt;/para&gt;
    &lt;/sect2&gt;
   
-   &lt;sect2 id=&quot;GNOMEAPPLET-bugs&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-bugs"&gt;
     &lt;title&gt; Known Bugs and Limitations&lt;/title&gt;
     &lt;para&gt;
      There are no known bugs in the
@@ -4732,7 +4732,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-authors&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-authors"&gt;
     &lt;title&gt;Authors&lt;/title&gt;
     &lt;para&gt;
      This applet was writen by HACKER-NAME
@@ -4740,7 +4740,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      which you are reading now was written by
      YOUR-NAME &lt;email&gt;YOUR-EMAIL&lt;/email&gt;. For information on submitting
      bug reports and suggestions for improvements, see &lt;xref
-     linkend=&quot;feedback&quot;&gt;. 
+     linkend="feedback"&gt;. 
     &lt;/para&gt;
    &lt;/sect2&gt;
 

@@ -1,3 +1,13 @@
+Fri Jun 13 16:53:33 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.spec.in libexslt/Makefile.am libexslt/libexslt.3
+	  libxslt/Makefile.am libxslt/libxslt.3: Moved the man pages
+	  to section 3
+	* libexslt/sets.c: applied patch from Peter Breitenlohner
+	* doc/*: rebuilt the docs
+	* tests/docbook/result//* tests/xmlspec/*.html: changes in
+	  generattion of &quot; as " in element content.
+
 Sun Jun 08 22:57:13 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/transform.c: changed xsltChoose to ignore whitespace 

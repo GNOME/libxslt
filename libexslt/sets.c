@@ -101,8 +101,8 @@ static void
 exsltSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj;
     xmlNodeSetPtr ns, ret;
-    int boolval;
-    void *user;
+    int boolval = 0;
+    void *user = NULL;
 
     if (nargs != 1) {
 	xmlXPathSetArityError(ctxt);

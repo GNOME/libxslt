@@ -51,7 +51,7 @@ libxslt_la_SOURCES = 			\
 libxslt_la_LIBADD = $(EXTRA_LIBS)
 libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@
 
-man_MANS = libxslt.4
+man_MANS = libxslt.3
 
 EXTRA_DIST = $(man_MANS)
 

@@ -1,4 +1,4 @@
-<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type"><title>The GNOME Handbook of Writing Software Documentation</title><meta name="generator" content="DocBook XSL Stylesheets V1.40"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"><div><h2 class="title"><a name="index"></a>The GNOME Handbook of Writing Software Documentation</h2></div><div><h3 class="author">David Mason</h3><div class="affiliation"><span class="orgname">Red Hat, Inc.<br></span><div class="address"><br>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>The GNOME Handbook of Writing Software Documentation</title><meta name="generator" content="DocBook XSL Stylesheets V1.40"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"><div><h2 class="title"><a name="index"></a>The GNOME Handbook of Writing Software Documentation</h2></div><div><h3 class="author">David Mason</h3><div class="affiliation"><span class="orgname">Red Hat, Inc.<br></span><div class="address"><br>
             <tt>&lt;<a href="mailto:dcm@redhat.com">dcm@redhat.com</a>&gt;</tt><br>
           </div></div><h3 class="author">Daniel Mueth</h3><div class="affiliation"><div class="address"><br>
             <tt>&lt;<a href="mailto:d-mueth@uchicago.edu">d-mueth@uchicago.edu</a>&gt;</tt><br>
@@ -83,14 +83,14 @@
         irc.gnome.org is another option for contacting GDP members.
        </p></div></div><div class="sect2"><a name="notation"></a><div class="titlepage"><div><h3 class="title"><a name="notation"></a>Notation and Conventions</h3></div></div><p>
         This Handbook uses the following notation:
-        <div class="informaltable" id="id2797250"><a name="id2797250"></a><table border="0"><colgroup><col><col></colgroup><tbody><tr><td><tt>/usr/bin</tt></td><td>
+        <div class="informaltable" id="id2797678"><a name="id2797678"></a><table border="0"><colgroup><col><col></colgroup><tbody><tr><td><tt>/usr/bin</tt></td><td>
                   Directory
                 </td></tr><tr><td><tt>foo.sgml</tt></td><td>
                   Filename
                 </td></tr><tr><td><b>command</b></td><td>
                   Command or text that would be typed.
                 </td></tr><tr><td><b><i><tt>replaceable</tt></i></b></td><td>
-                  &quot;Variable&quot; text that can be replaced.
+                  "Variable" text that can be replaced.
                 </td></tr><tr><td><tt>Program or Doc Code</tt></td><td>Program or document code</td></tr></tbody></table></div>
       </p></div><div class="sect2"><a name="about"></a><div class="titlepage"><div><h3 class="title"><a name="about"></a>About This Handbook</h3></div></div><p>
        This Handbook is a guide for both writing documentation for
@@ -106,8 +106,8 @@
        download it anonymously from GNOME CVS under <tt>gnome-docu/gdp</tt>.
       </p></div></div><div class="sect1"><a name="gettingstarted"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="gettingstarted"></a>Getting Started Writing GNOME Documentation</h2></div></div><div class="sect2"><a name="selecting"></a><div class="titlepage"><div><h3 class="title"><a name="selecting"></a>Selecting A Document</h3></div></div><div class="sect3"><a name="know"></a><div class="titlepage"><div><h4 class="title"><a name="know"></a>Document Something You Know</h4></div></div><p>
           The most frequently asked question of new contributors who
-          join the GDP is &quot;which document should I start
-          with?&quot;. Because most people involved are volunteers, we do
+          join the GDP is "which document should I start
+          with?". Because most people involved are volunteers, we do
           not <i>assign</i> projects and applications to
           write documents for. The first step is all yours - you must
           decide what about GNOME interests you most and find out if
@@ -147,7 +147,7 @@
           help.  The <i>DocTable</i> also allows
           people to make announcements and suggestions and to discuss
           issues in the comments section.
-        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2787277"></a>Note</h3><p>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2795548"></a>Note</h3><p>
           Note that the information in the
           <i>DocTable</i> may not always be up-to-date
           or accurate.  When you assign yourself to documenting an
@@ -159,7 +159,7 @@
         this for documentation, not least of which is the single
         source nature of SGML. To contribute to the GDP you should
         learn to use DocBook.
-      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2787363"></a>NOTE</h3><p>
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2795631"></a>NOTE</h3><p>
           To get started writing for the GDP you do not need to rush
           out and learn DocBook - if you feel it is too much to handle
           for now, you can submit plain ASCII text to the <a href="http://mail.gnome.org/mailman/listinfo/gnome-doc-list/" target="_top">
@@ -205,25 +205,25 @@
           your output document appearance subtly vary between the two
           DTD's.  To install the GDP custom DTD with PNG image support
           by hand:
-        </p><div class="itemizedlist"><ul><li style="list-style-type: opencircle"><p><a name="id2787765"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: opencircle"><p><a name="id2796045"></a>
               Download <a href="http://www.labs.redhat.com/png/png-support.html" target="_top">the
               GDP DocBook DTD for PNG support</a> and install it
               where you keep your DTD's. (On Red Hat use <tt>/usr/lib/sgml/</tt>.) Note that
               the 3.0 DTD is missing support for the
               <tt>&lt;legalnotice&gt;</tt> tag, so it is
               recommended that you use version 3.1
-            </p></li><li style="list-style-type: disc"><p><a name="id2788094"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2796107"></a>
               Add the new DTD to your SGML CATALOG file.  The location
               of your SGML CATALOG file may vary depending upon your
               distribution. (On Red Hat it is usually in
               /usr/lib/sgml/CATALOG.) Add the following line to this
               file:
               <pre class="programlisting">
-PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.0//EN&quot; &quot;png-support-3.0.dtd&quot;
+PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN" "png-support-3.0.dtd"
               </pre> 
               If you are using the 3.1 DTD, use:
               <pre class="programlisting">
-PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot; &quot;png-support-3.1.dtd&quot;
+PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN" "png-support-3.1.dtd"
               </pre> 
             </p></li></ul></div><p>
           Alternately, you can download and install the
@@ -236,14 +236,14 @@ PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot; &quot;png-support-
         </p><p>
           Articles:
           <pre class="programlisting">
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant
-V1.1//EN&quot;[]&gt;
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant
+V1.1//EN"[]&gt;
           </pre>
         </p><p>
           Books:
           <pre class="programlisting">
-&lt;!DOCTYPE Book PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant
-V1.1//EN&quot;[]&gt;
+&lt;!DOCTYPE Book PUBLIC "-//GNOME//DTD DocBook PNG Variant
+V1.1//EN"[]&gt;
           </pre>
         </p></div><div class="sect3"><a name="editors"></a><div class="titlepage"><div><h4 class="title"><a name="editors"></a>Editors</h4></div></div><p>
           There are many editors on Linux and UNIX systems available
@@ -290,7 +290,7 @@ V1.1//EN&quot;[]&gt;
           the command <tt>$</tt><b>db2ps
           mydocument.sgml</b>, after which you can print out or
           view the resulting .ps file.  
-        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2907798"></a>NOTE</h3><p>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2796585"></a>NOTE</h3><p>
             The html files you get will not look quite the same as the
             documentation distributed with GNOME unless you have the
             custom stylesheets installed on your machine. DocBook
@@ -316,7 +316,7 @@ V1.1//EN&quot;[]&gt;
  &lt;title&gt;My Image&lt;/title&gt;
  &lt;screenshot&gt;
   &lt;screeninfo&gt;Sample GNOME Display&lt;/screeninfo&gt;
-  &lt;graphic  format=&quot;png&quot; fileref=&quot;myfile&quot; srccredit=&quot;me&quot;&gt;
+  &lt;graphic  format="png" fileref="myfile" srccredit="me"&gt;
   &lt;/graphic&gt;
  &lt;/screenshot&gt;
 &lt;/figure&gt;
@@ -341,24 +341,24 @@ V1.1//EN&quot;[]&gt;
           There are many resources available to help you learn DocBook.
           The following resources on the web are useful for learning
           DocBook:
-        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2908088"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2918531"></a>
               <a href="http://www.docbook.org" target="_top">http://www.docbook.org</a>  - Norman
               Walsh's <i>DocBook: The Definitive
               Guide</i>.  Online O'Reilly book on using
               DocBook. Contains an excellent element reference. May be
               too formal for a beginner.
-            </p></li><li style="list-style-type: disc"><p><a name="id2908133"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2918577"></a>
               <a href="http://www.oswg.org/oswg-nightly/oswg/en_US.ISO_8859-1/articles/DocBook-Intro/docbook-intro/index.html" target="_top">A Practical Introduction to DocBook</a>
               - The Open Source Writers Group's introduction to using
               DocBook. This is an excellent HOW-TO type article on
               getting started.
-            </p></li><li style="list-style-type: disc"><p><a name="id2908173"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2918619"></a>
               <a href="http://nis-www.lanl.gov/~rosalia/mydocs/docbook-intro/docbook-intro.html" target="_top">Getting Going with DocBook: Notes for
               Hackers</a> - Mark Galassi's introduction to DocBook
               for hackers. This has to be one of the first
               introductions to DocBook ever - still as good as it ever
               was.
-            </p></li><li style="list-style-type: disc"><p><a name="id2908213"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2918658"></a>
               <a href="http://www.freebsd.org/tutorials/docproj-primer/" target="_top">
               FreeBSD Documentation Project Primer for New
               Contributors</a> - FreeBSD documentation project
@@ -371,7 +371,7 @@ V1.1//EN&quot;[]&gt;
         </p><p>
           The following sections of this document are designed to help
           documentation authors write correct and consistent DocBook:
-        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2908289"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2918733"></a>
               <a href="#docbookbasics" title="DocBook Basics ">the section called &#8220;DocBook Basics &#8221;</a> - Descriptions of
               commonly used DocBook tags.
             </p></li></ul></div><p>
@@ -439,11 +439,11 @@ V1.1//EN&quot;[]&gt;
         </p></div><div class="sect3"><a name="screenshotfiles"></a><div class="titlepage"><div><h4 class="title"><a name="screenshotfiles"></a>Screenshot Files</h4></div></div><p>
           Screenshots should be kept in the main documentation
           directory with your SGML file for applets, or should be
-          kept in a directory called &quot;figs&quot; for application and other
+          kept in a directory called "figs" for application and other
           documentation.  After you use <b>db2html</b> to
           convert your SGML file to HTML (see <a href="#make-output" title="Creating Something Useful with your Docs">the section called &#8220;Creating Something Useful with your Docs&#8221;</a>), you will need to copy your
           screenshots (either the individual PNG files for applet
-          documentation, or the whole &quot;figs&quot; directory for other
+          documentation, or the whole "figs" directory for other
           documentation) into the newly created HTML directory.  Note
           that every time you use <b>db2html</b> the HTML
           directory is erased and rewritten, so do not store your only
@@ -486,7 +486,7 @@ V1.1//EN&quot;[]&gt;
           CVSROOT=':pserver:anonymous@anoncvs.gnome.org:/cvs/gnome'</b>
           and then login with <b>cvs login</b>(there is no
           password, just hit return). As an example, we will use the
-          &quot;gnome-docu/gdp&quot; module which contains this and several
+          "gnome-docu/gdp" module which contains this and several
           other documents. To check these documents out for the first
           time, type <b>cvs -z3 checkout
           gnome-docu/gdp</b>. After you have this document
@@ -602,7 +602,7 @@ V1.1//EN&quot;[]&gt;
           to query any part (button, widget, etc.) of an application
           window.  This is done by either entering a CS Help mode by
           clicking on an icon or by right clicking on the application
-          part and selecting &quot;What's This&quot; or whatever is decided on
+          part and selecting "What's This" or whatever is decided on
           at the time.  Context sensitive help is described in more
           detail in <a href="#writingcontextsensitivehelp" title="Writing Context Sensitive Help (coming in GNOME-2.0)">the section called &#8220;Writing Context Sensitive Help (coming in GNOME-2.0)&#8221;</a>
           below.
@@ -684,8 +684,8 @@ V1.1//EN&quot;[]&gt;
       </p><p>
         Using 'content' as the elements to define the text of a document also
         allows for search engines to make use of the actual elements to make a
-        &quot;smarter search&quot;. For example, if you are searching for all documents
-        written by the author &quot;Susie&quot; your search engine could be made smart
+        "smarter search". For example, if you are searching for all documents
+        written by the author "Susie" your search engine could be made smart
         enough to only search &lt;author&gt; elements, making for a faster and more
         accurate search.
       </p><p>
@@ -709,7 +709,7 @@ V1.1//EN&quot;[]&gt;
       ready for this transistion, it is <i>strongly
       advised</i> that the documentation writers conform to XML
       syntax rules. Here are most important differences:
-      </p><div class="variablelist"><dl><dt><a name="id2910725"></a><span class="term"> <i>Minimization</i></span></dt><dd><p><a name="id2910743"></a>
+      </p><div class="variablelist"><dl><dt><a name="id2921045"></a><span class="term"> <i>Minimization</i></span></dt><dd><p><a name="id2921063"></a>
 	      It is possible with some implementations of SGML to use
 	      minimizations to close elements in a document by using
 	      &lt;/&gt;, for example:
@@ -720,17 +720,17 @@ V1.1//EN&quot;[]&gt;
               if you are using Emacs with psgml
               mode, you can also use menu command
           Modify-&gt;Normalize.
-         </p></dd><dt><a name="id2910856"></a><span class="term"> <i>Self-closing tags</i></span></dt><dd><p><a name="id2910876"></a>
+         </p></dd><dt><a name="id2921179"></a><span class="term"> <i>Self-closing tags</i></span></dt><dd><p><a name="id2921197"></a>
             Also, in SGML some tags are allowed not to have closing
             tags.  For example, it is legal for
             <tt>&lt;xref&gt;</tt> not to have a closing tag: 
             <tt><tt>&lt;xref 
-                   linkend=&quot;someid&quot;&gt;</tt></tt>. In
+                   linkend="someid"&gt;</tt></tt>. In
             XML, it is illegal; instead, you should use  
             <tt><tt>&lt;xref 
-                   linkend=&quot;someid&quot;/&gt;</tt></tt> (note the
+                   linkend="someid"/&gt;</tt></tt> (note the
             slash!).
-          </p></dd><dt><a name="id2910939"></a><span class="term"> <i>Case sensitive tags</i></span></dt><dd><p><a name="id2910958"></a>
+          </p></dd><dt><a name="id2921264"></a><span class="term"> <i>Case sensitive tags</i></span></dt><dd><p><a name="id2921281"></a>
 	      In XML, unlike SGML, tags are case-senstive
 	      <tt>&lt;title&gt;</tt> and
 	      <tt>&lt;TITLE&gt;</tt> are different tags!
@@ -783,11 +783,11 @@ V1.1//EN&quot;[]&gt;
           
           <pre class="programlisting">
 
-&lt;figure id=&quot;shot1&quot;&gt;
+&lt;figure id="shot1"&gt;
  &lt;title&gt;Screenshot&lt;/title&gt;
  &lt;screenshot&gt;
   &lt;screeninfo&gt;Screenshot of a program&lt;/screeninfo&gt;
-  &lt;graphic format=&quot;PNG&quot;  fileref=&quot;figures/example_screenshot&quot; srccredit=&quot;ME&quot;&gt;
+  &lt;graphic format="PNG"  fileref="figures/example_screenshot" srccredit="ME"&gt;
   &lt;/graphic&gt;
  &lt;/screenshot&gt;
 &lt;/figure&gt;
@@ -796,7 +796,7 @@ V1.1//EN&quot;[]&gt;
           actual file name (without extension). The result will look like this:
           
           <div class="figure"><p><a name="shot1"></a><b>Figure 1. Screenshot</b></p><div class="screenshot"><p><img src="figures/example_screenshot"></p></div></div>
-        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2911476"></a>NOTE</h3><p>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2921804"></a>NOTE</h3><p>
             Notice in this example that the screenshot file name does
             not include the file type extension -- to find out
             why, please read <a href="#jadeimages" title="Images in DocBook Tools">the section called &#8220;Images in DocBook Tools&#8221;</a>.
@@ -844,7 +844,7 @@ make: *** No rule to make target `love'.  Stop.
           Note the use of tags <tt>&lt;prompt&gt;</tt> and
           <tt>&lt;userinput&gt;</tt> for marking system prompt
           and commands entered by user.
-          <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2911698"></a>NOTE</h3><p>
+          <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2922020"></a>NOTE</h3><p>
               Note that both <tt>&lt;programlisting&gt;</tt>
               and <tt>&lt;screen&gt;</tt> preserve linebreaks,
               but interpret SGML tags (unlike LaTeX
@@ -857,7 +857,7 @@ make: *** No rule to make target `love'.  Stop.
 	  <tt>&lt;itemizedlist&gt;</tt>,
 	  <tt>&lt;orderedlist&gt;</tt>, and 
 	  <tt>&lt;variablelist&gt;</tt>.
-	</p><div class="variablelist"><dl><dt><a name="id2911815"></a><span class="term"> <tt>&lt;itemizedlist&gt;</tt></span></dt><dd><p><a name="id2911834"></a> 
+	</p><div class="variablelist"><dl><dt><a name="id2922139"></a><span class="term"> <tt>&lt;itemizedlist&gt;</tt></span></dt><dd><p><a name="id2922158"></a> 
 		This is the simplest unnumbered list, parallel to
 	    <tt>&lt;ul&gt;</tt> in HTML. Here is an example: 
 		<pre class="programlisting">
@@ -872,7 +872,7 @@ make: *** No rule to make target `love'.  Stop.
   &lt;listitem&gt;
     &lt;para&gt;
       &lt;guilabel&gt;Show hidden files&lt;/guilabel&gt; &amp;mdash; This will
-      show all &quot;dot files&quot; or files that begin with a dot.  This
+      show all "dot files" or files that begin with a dot.  This
       files typically include configuration files and directories.
     &lt;/para&gt;
   &lt;/listitem&gt;
@@ -888,16 +888,16 @@ make: *** No rule to make target `love'.  Stop.
 
 		</pre>
 		and output:
-                </p><div class="itemizedlist"><ul><li><p><a name="id2911878"></a>
+                </p><div class="itemizedlist"><ul><li><p><a name="id2922197"></a>
 		      Show backup files --
 		      This will show any backup file that might be on
 		      your system.
-		    </p></li><li><p><a name="id2911925"></a>
+		    </p></li><li><p><a name="id2922257"></a>
 		      Show hidden files --
-		      This will show all &quot;dot files&quot; or files that
+		      This will show all "dot files" or files that
 		      begin with a dot.  This files typically include
 		      configuration files and directories.
-		    </p></li><li><p><a name="id2911957"></a>
+		    </p></li><li><p><a name="id2922289"></a>
 		      Mix files and directories
 		      -- This option will display files and
 		      directories in the order you sort them instead
@@ -915,20 +915,20 @@ make: *** No rule to make target `love'.  Stop.
               or -- if none of
               this applies -- use
               <a href="#gui" title="GUI elements"><tt>&lt;emphasis&gt;</tt></a>.
-	      </p></dd><dt><a name="id2912130"></a><span class="term"> <tt>&lt;orderedlist&gt;</tt></span></dt><dd><p><a name="id2912148"></a>
+	      </p></dd><dt><a name="id2922461"></a><span class="term"> <tt>&lt;orderedlist&gt;</tt></span></dt><dd><p><a name="id2922479"></a>
 		This list is completely analogous to
 		<tt>&lt;itemizedlist&gt;</tt> and has the same
 		syntax, but  it produces numbered list. By default,
 		this list uses Arabic numerals for numbering entries;
 		you can override this using <tt>numeration</tt>,
 		for example <tt>&lt;orderedlist
-		  numeration=&quot;lowerroman&quot;&gt;</tt>. Possible values of
+		  numeration="lowerroman"&gt;</tt>. Possible values of
 		these attribute are <tt>arabic</tt>,
 		<tt>upperalpha</tt>,
 		<tt>loweralpha</tt>,
 		<tt>upperroman</tt>,
 		<tt>lowerroman</tt>.
-	      </p></dd><dt><a name="id2912228"></a><span class="term"> <tt>&lt;variablelist&gt;</tt></span></dt><dd><p><a name="id2912247"></a> This list is used when each entry is
+	      </p></dd><dt><a name="id2922560"></a><span class="term"> <tt>&lt;variablelist&gt;</tt></span></dt><dd><p><a name="id2922579"></a> This list is used when each entry is
 	    rather long, so it should be formatted as a block of text
 	    with some subtitle, like a small subsection.  The
 	    <tt>&lt;variablelist&gt;</tt> is more complicated
@@ -969,25 +969,25 @@ make: *** No rule to make target `love'.  Stop.
 	are smart enough to change the numeration (for
 	<tt>&lt;orderedlist&gt;</tt>) or marks of each entry
 	(in  <tt>&lt;itemizedlist&gt;</tt>) for sub-lists
-	</p></div></div><div class="sect2"><a name="inline"></a><div class="titlepage"><div><h3 class="title"><a name="inline"></a>Inline Elements</h3></div></div><div class="sect3"><a name="gui"></a><div class="titlepage"><div><h4 class="title"><a name="gui"></a>GUI elements</h4></div></div><div class="itemizedlist"><ul><li><p><a name="id2912407"></a>
+	</p></div></div><div class="sect2"><a name="inline"></a><div class="titlepage"><div><h3 class="title"><a name="inline"></a>Inline Elements</h3></div></div><div class="sect3"><a name="gui"></a><div class="titlepage"><div><h4 class="title"><a name="gui"></a>GUI elements</h4></div></div><div class="itemizedlist"><ul><li><p><a name="id2922748"></a>
               <tt>&lt;guibutton&gt;</tt> -- used for
               buttons, including checkbuttons and radio buttons
-            </p></li><li><p><a name="id2912433"></a>
+            </p></li><li><p><a name="id2922775"></a>
               <tt>&lt;guimenu&gt;</tt>, 
               <tt>&lt;guisubmenu&gt;</tt> --used for 
 	      top-level menus and submenus
               respectively, for example <tt>
               &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of the
               &lt;guimenu&gt;Main Menu&lt;/guimenu&gt;</tt>
-            </p></li><li><p><a name="id2912484"></a>
+            </p></li><li><p><a name="id2922825"></a>
               <tt>&lt;guimenuitem&gt;</tt>--an entry in a
               menu
-            </p></li><li><p><a name="id2912507"></a>
+            </p></li><li><p><a name="id2922849"></a>
               <tt>&lt;guiicon&gt;</tt>--an icon
-            </p></li><li><p><a name="id2912532"></a>
+            </p></li><li><p><a name="id2922874"></a>
               <tt>&lt;guilabel&gt;</tt>--for items which have
               labels, like tabs, or bounding boxes. 
-            </p></li><li><p><a name="id2912557"></a>
+            </p></li><li><p><a name="id2922899"></a>
               <tt>&lt;interface&gt;</tt>-- for most everything
               else... a window, a dialog box, the Panel, etc.
             </p></li></ul></div><p>
@@ -1009,8 +1009,8 @@ make: *** No rule to make target `love'.  Stop.
           to (section, figure, etc.), while the second just creates a
           link (in HTML output). Here is an example:
           <pre class="programlisting">
-An example of a &lt;link linkend=&quot;extip&quot;&gt;tip&lt;/link&gt; was given in
-&lt;xref linkend=&quot;notes&quot; /&gt;.  
+An example of a &lt;link linkend="extip"&gt;tip&lt;/link&gt; was given in
+&lt;xref linkend="notes" /&gt;.  
           </pre>
           which produces: An example of a <a href="#extip">tip</a> was given in  <a href="#notes" title="Notes, Warnings, And Tips">the section called &#8220;Notes, Warnings, And Tips&#8221;</a>.
         </p><p>
@@ -1021,8 +1021,8 @@ An example of a &lt;link linkend=&quot;extip&quot;&gt;tip&lt;/link&gt; was given
           Web page or a local file, use <tt>&lt;ulink&gt;</tt>
           tag, for example:
           <pre class="programlisting">
- To find more about GNOME, please visit &lt;ulink type=&quot;http&quot;
-url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt; 
+ To find more about GNOME, please visit &lt;ulink type="http"
+url="http://www.gnome.org"&gt;GNOME Web page&lt;/ulink&gt; 
           </pre>
           which produces:  To find more about GNOME, please visit
           <a href="http://www.gnome.org" target="_top">The GNOME Web
@@ -1035,35 +1035,35 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         computer-related things</h4></div></div><p>
           Here are some tags used to describe operating system-related
           things:  
-        </p><div class="itemizedlist"><ul><li><p><a name="id2912952"></a>  <tt>&lt;filename&gt;</tt> -- used
+        </p><div class="itemizedlist"><ul><li><p><a name="id2923288"></a>  <tt>&lt;filename&gt;</tt> -- used
               for filenames,
               e.g.<tt>&lt;filename&gt;</tt>
                     foo.sgml
                   <tt>&lt;/filename&gt;</tt> 
               produces: <tt>foo.sgml</tt>.
-            </p></li><li><p><a name="id2913007"></a>  <tt>&lt;filename
-              class=&quot;directory&quot;&gt;</tt> -- used for
+            </p></li><li><p><a name="id2923345"></a>  <tt>&lt;filename
+              class="directory"&gt;</tt> -- used for
               directories, e.g.<tt>&lt;filename
-              class=&quot;directory&quot;&gt;</tt>/usr/bin
+              class="directory"&gt;</tt>/usr/bin
                   <tt>&lt;/filename&gt;</tt>
               produces: <tt>/usr/bin</tt>.
-            </p></li><li><p><a name="id2913067"></a>
+            </p></li><li><p><a name="id2923408"></a>
               <tt>&lt;application&gt;</tt> -- used for
               application names,
               e.g. <tt>&lt;application&gt;</tt>Gnumeric
               <tt>&lt;/application&gt;</tt> produces:
               Gnumeric.
-            </p></li><li><p><a name="id2913121"></a>
+            </p></li><li><p><a name="id2923463"></a>
 	      <tt>&lt;envar&gt;</tt> -- used for
 	      environment variables, e.g. 
               <tt>&lt;envar&gt;</tt>PATH<tt>&lt;/envar&gt;</tt>. 
-            </p></li><li><p><a name="id2913162"></a>
+            </p></li><li><p><a name="id2923505"></a>
               <tt>&lt;command&gt;</tt> -- used for
               commands entered on command line, e.g.
               <tt>&lt;command&gt;</tt>make install
               <tt>&lt;/command&gt;</tt> produces:
               <b>make install</b>.
-            </p></li><li><p><a name="id2913218"></a>
+            </p></li><li><p><a name="id2923561"></a>
               <tt>&lt;replaceable&gt;</tt> -- used for
               replaceable text, e.g.
               <tt>&lt;command&gt;</tt>db2html<tt>&lt;replaceable&gt;</tt>
@@ -1131,15 +1131,15 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	is required. 
 	</p><p>
 	  here is partial list of most commonly used enitites:
-	</p><div class="itemizedlist"><ul><li><p><a name="id2913689"></a>
+	</p><div class="itemizedlist"><ul><li><p><a name="id2924022"></a>
              <tt>&amp;amp;</tt> -- ampersend (&amp;)
-	  </p></li><li><p><a name="id2913708"></a>
+	  </p></li><li><p><a name="id2924043"></a>
              <tt>&amp;lt;</tt> -- left angle bracket (&lt;)
-	  </p></li><li><p><a name="id2913727"></a>
+	  </p></li><li><p><a name="id2924062"></a>
              <tt>&amp;copy;</tt> -- copyright sign (©)
-	  </p></li><li><p><a name="id2913746"></a>
+	  </p></li><li><p><a name="id2924080"></a>
              <tt>&amp;mdash;</tt> -- long dash (--)
-	  </p></li><li><p><a name="id2913767"></a>
+	  </p></li><li><p><a name="id2924106"></a>
              <tt>&amp;hellip;</tt> -- ellipsis (...)
 	  </p></li></ul></div><p>
 	  Note that the actual look of the resulting symbols depends
@@ -1163,7 +1163,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           application for which the documentation is written:
           <pre class="programlisting">
 
-&lt;sect1 id=&quot;intro&quot;&gt;
+&lt;sect1 id="intro"&gt;
  &lt;title&gt;Introduction&lt;/title&gt;
  &lt;para&gt;
   blah-blah-blah This document describes version 1.0.53 of gfoo.
@@ -1181,7 +1181,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	</p></div><div class="sect3"><a name="license2"></a><div class="titlepage"><div><h4 class="title"><a name="license2"></a>Software license</h4></div></div><p> 
          All GNOME applications must contain information about the
        license (for software, not for documentation), either in the
-       &quot;About&quot; box or in the manual. 
+       "About" box or in the manual. 
        </p></div><div class="sect3"><a name="bugtraq"></a><div class="titlepage"><div><h4 class="title"><a name="bugtraq"></a> Bug reporting</h4></div></div><p> 
 	  Application documentation should give an address for
         reporting bugs and for submitting comments about the
@@ -1194,7 +1194,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
       each window or panel presented to the user using screenshots (in
       PNG format only) when appropriate.  They should also describe
       each feature and preference option available.
-    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2914212"></a>Documentation Availability</h3><p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2924548"></a>Documentation Availability</h3><p>
         Applications and applets should not rely on documentation
         which is only available on the internet.  All manuals and
         other documentation should be packaged with the application or
@@ -1205,14 +1205,14 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
     the templates in <a href="#template2-1x" title="Template 2: Applet Manual For GNOME 1.x">the section called &#8220;Template 2: Applet Manual For GNOME 1.x&#8221;</a> for GNOME
     versions 1.x and the templates in <a href="#template2-2x" title="Template 2: Applet Manual For GNOME 2.x">the section called &#8220;Template 2: Applet Manual For GNOME 2.x&#8221;</a>
     for GNOME versions 2.x.
-    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2914304"></a>Manuals For Large Applications</h3><p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2924643"></a>Manuals For Large Applications</h3><p>
         Manuals for very large applications, such as GNOME Workshop
         components should be a <tt>&lt;book&gt;</tt> (and thus
         use <tt>&lt;chapter&gt;</tt> for each primary section)
         , instead of <tt>&lt;article&gt;</tt> which most
         applications use(with each primary section being a
         <tt>&lt;sect1&gt;</tt>).
-      </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2914362"></a>Applet Manuals in GNOME 2.0</h3><p>
+      </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2924700"></a>Applet Manuals in GNOME 2.0</h3><p>
         Note that applet manuals in GNOME 2.0 are treated in a special
         way.  The manuals for all applets are merged into a single
         virtual document by Nautilus.  For this reason, the header
@@ -1223,12 +1223,12 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         <tt>&lt;sect2&gt;</tt>.
       </p></div><p>
       Application manuals should be made available by having a
-      &quot;Manual&quot; entry in the Help pull-down menu
+      "Manual" entry in the Help pull-down menu
       at the top of the 
       application, as described in <a href="#listingdocsinhelpmenu" title="Listing Documents in the Help Menu">the section called &#8220;Listing Documents in the Help Menu&#8221;</a>.
       Applets should make their manuals available by
       right-clicking on the applet. 
-    </p></div><div class="sect1"><a name="listingdocsinhelpmenu"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="listingdocsinhelpmenu"></a>Listing Documents in the Help Menu</h2></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2914482"></a>Developer Information</h3><p>
+    </p></div><div class="sect1"><a name="listingdocsinhelpmenu"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="listingdocsinhelpmenu"></a>Listing Documents in the Help Menu</h2></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2924823"></a>Developer Information</h3><p>
         This section is for developers.  Documentation authors
         generally do not need to know this material.
       </p></div><p>
@@ -1260,7 +1260,7 @@ function-reference.html Gnumeric function reference
       application's name.  The application documentation (converted
       from SGML into HTML with <b>db2html</b>) should be
       placed in this directory too.
-    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2914671"></a>Note</h3><p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2925011"></a>Note</h3><p>
        If the help files are not present in the correct directory, the
        menu items will NOT appear when the program is run. 
       </p></div><p>
@@ -1270,12 +1270,12 @@ function-reference.html Gnumeric function reference
 <pre class="programlisting">
 GnomeUIInfo helpmenu[] = {
               {GNOME_APP_UI_ITEM, 
-               N_(&quot;About&quot;), N_(&quot;Info about this program&quot;),
+               N_("About"), N_("Info about this program"),
                about_cb, NULL, NULL, 
                GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_ABOUT,
                0, 0, NULL},
                GNOMEUIINFO_SEPARATOR,
-               GNOMEUIINFO_HELP(&quot;<i>appname</i>&quot;),
+               GNOMEUIINFO_HELP("<i>appname</i>"),
                GNOMEUIINFO_END
         };
 </pre>
@@ -1286,7 +1286,7 @@ GnomeUIInfo helpmenu[] = {
       Help menu. When the user selects any of these
       topics from the Help menu, a help browser
       will be started with the associated HTML documentation.
-    </p></div><div class="sect1"><a name="applicationhelpbuttons"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="applicationhelpbuttons"></a>Application Help Buttons</h2></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2914837"></a>Developer Information</h3><p>
+    </p></div><div class="sect1"><a name="applicationhelpbuttons"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="applicationhelpbuttons"></a>Application Help Buttons</h2></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2925176"></a>Developer Information</h3><p>
         This section is for developers.  Documentation authors
         generally do not need to know this material.
       </p></div><p>
@@ -1306,12 +1306,12 @@ GnomeUIInfo helpmenu[] = {
       Browser the developer should add code based on the following example:
     </p><pre class="programlisting">
 gchar *tmp;
-tmp = gnome_help_file_find_file (&quot;module&quot;, &quot;page.html&quot;);
+tmp = gnome_help_file_find_file ("module", "page.html");
 if (tmp) {
   gnome_help_goto(0, tmp);
   g_free(tmp);
 }
-    </pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2914973"></a>NOTE</h3><p>
+    </pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2925314"></a>NOTE</h3><p>
         The example above is in the C language, please refer to other
         documentation or forums for other GNOME language bindings.
       </p></div></div><div class="sect1"><a name="packagingappletdocs"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="packagingappletdocs"></a>Packaging Applet Documentation</h2></div></div><div class="sect2"><a name="appletfiles"></a><div class="titlepage"><div><h3 class="title"><a name="appletfiles"></a>Applet Documentation Files</h3></div></div><p>
@@ -1348,7 +1348,7 @@ if (tmp) {
         of the <i>GNOME Applets</i> book, you must
         remember to add <tt>&lt;legalnotice&gt;</tt> and
         <tt>&lt;copyright&gt;</tt> sections.
-      </p></div><div class="sect2"><a name="appletmenu"></a><div class="titlepage"><div><h3 class="title"><a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2915220"></a>Developer Information</h3><p>
+      </p></div><div class="sect2"><a name="appletmenu"></a><div class="titlepage"><div><h3 class="title"><a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2925561"></a>Developer Information</h3><p>
           This section is for developers.  Documentation authors
           generally do not need to know this material.
         </p></div><p>
@@ -1361,8 +1361,8 @@ if (tmp) {
         To add an applet's manual to its applet menu, use:
 <pre class="programlisting">
 /* add an item to the applet menu */
-applet_widget_register_callback(APPLET_WIDGET(applet), &quot;manual&quot;,
-_(&quot;Manual&quot;), &amp;open_manual, NULL);
+applet_widget_register_callback(APPLET_WIDGET(applet), "manual",
+_("Manual"), &amp;open_manual, NULL);
 </pre>
         Here the second argument is an arbitrary name for the
         callback, the third argument is the label which will appear
@@ -1378,15 +1378,15 @@ _(&quot;Manual&quot;), &amp;open_manual, NULL);
         item to the applet's menu.  This is a
         stock menu item and is done:
 <pre class="programlisting">
-applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
-       GNOME_STOCK_MENU_ABOUT, _(&quot;About&quot;), &amp;my_applet_cb_about,
+applet_widget_register_stock_callback (APPLET_WIDGET(applet), "about",
+       GNOME_STOCK_MENU_ABOUT, _("About"), &amp;my_applet_cb_about,
        NULL);
 </pre>
       </p><p>
         More information can be found at <a href="http://developer.gnome.org/doc/tutorials/applet/index.html" target="_top">Writing
         GNOME panel applets using the GTK+/GTK-- widget set</a>.
       </p></div></div><div class="sect1"><a name="writingcontextsensitivehelp"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="writingcontextsensitivehelp"></a>Writing Context Sensitive Help (coming in GNOME-2.0)</h2></div></div><p>
-      Context sensitive help, also known as &quot;pop-up&quot; help, will allow
+      Context sensitive help, also known as "pop-up" help, will allow
       a user to obtain help information about specific buttons or
       parts of an application.
     </p><p>
@@ -1399,7 +1399,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       developer to give an id to a particular portion of the User
       Interface, for example, a button. Once the interface is complete
       a Perl script can then be run against the interface code to
-      create a &quot;map&quot; file. This map file allows the developer or
+      create a "map" file. This map file allows the developer or
       writer to associate particular paragraph sections from an XML
       document to the interface items.
     </p><p>
@@ -1411,7 +1411,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       user launches context sensitive help on the interface (either by
       pressing a button and then clicking on the interface item they
       want information on, or by right mouse clicking on the interface
-      item and selecting a pop-up menu item like &quot;What's This&quot;) a
+      item and selecting a pop-up menu item like "What's This") a
       small transient window will appear with brief but detailed
       information on the interface item.
     </p></div><div class="sect1"><a name="referring"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="referring"></a>Referring to Other GNOME Documentation (coming in
@@ -1453,7 +1453,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </p></div><div class="sect2"><a name="balance"></a><div class="titlepage"><div><h3 class="title"><a name="balance"></a>Achieving a Balanced Style</h3></div></div><p> 
          Just as you need to juggle expert and novice readers,
          you'll have to juggle a number of other extremes as you write:
-         <div class="itemizedlist"><ul><li><p><a name="id2915765"></a>
+         <div class="itemizedlist"><ul><li><p><a name="id2926120"></a>
               Documents should be complete, yet concise.  You should
               describe every feature, but you'll have decide how much
               detail is really necessary.  It's not, for example,
@@ -1463,7 +1463,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               you spend fewer words on the obvious, you can spend more
               time clarifying the ambiguous labels and explaining
               items that are more complex.
-            </p></li><li><p><a name="id2915792"></a>
+            </p></li><li><p><a name="id2926147"></a>
               Be engaging and friendly, yet professional. Games
               documents may be less formal than productivity
               application documents (people don't
@@ -1472,14 +1472,14 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               maintain a standard of style which holds the reader's
               interest without resorting to jokes and untranslatable
               allusions or puns.
-           </p></li><li><p><a name="id2915831"></a>
+           </p></li><li><p><a name="id2926185"></a>
               Examples, tips, notes, and screenshots are useful to
               break up long stretches of text, but too many can get in
               the way, and make your documents too choppy to read.
               It's good to provide a screenshot of any dialog windows
               a user might run into, but if a dialog box has several
               tabs, it's not usually necessary to have one for each.
-           </p></li><li><p><a name="id2915855"></a>
+           </p></li><li><p><a name="id2926209"></a>
               The GDP strives to have all of its documentation conform
               to certain standards of style and content, but every
               document (and every writer) is different.  You will need
@@ -1521,7 +1521,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         bug reports, writers must check for errors in their documents.
         Poor grammar, bad spelling, and gross technical errors in
         draft documents are fine.  However, if those problems show up
-        in a &quot;real&quot; release, they can count against the credibility of
+        in a "real" release, they can count against the credibility of
         GNOME and Linux.  They'll also make you look bad.
       </p><p>
         There is no substitute for a human proofreader; use a
@@ -1623,11 +1623,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         <pre class="programlisting">
 
 
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
         &lt;!-- if not using PNG graphic, replace reference above with
-             .....PUBLIC &quot;-//OASIS//DTD DocBook V3.1//EN&quot;[
+             .....PUBLIC "-//OASIS//DTD DocBook V3.1//EN"[
          --&gt;
-&lt;!ENTITY version &quot;1.0.53&quot;&gt;
+&lt;!ENTITY version "1.0.53"&gt;
         &lt;!-- replace version above with actual application version number--&gt;
 	&lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 ]&gt;
@@ -1637,7 +1637,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   Documentation Project Team. Please use it for writing GNOME
   documentation, making obvious changes. In particular, all the words
   written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for &quot;legalnotice&quot;, please leave the reference
+  replaced. As for "legalnotice", please leave the reference
   unchanged.
 
   Remember that this is a guide, rather than a perfect model to follow
@@ -1647,7 +1647,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 &lt;!-- =============Document Header ============================= --&gt;
 
-&lt;article id=&quot;index&quot;&gt; &lt;!-- please do not change the id --&gt;
+&lt;article id="index"&gt; &lt;!-- please do not change the id --&gt;
 
   &lt;artheader&gt;
     &lt;title&gt;MY-GNOME-APP&lt;/title&gt;
@@ -1666,7 +1666,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    --&gt;
 
   &lt;!-- do not put authorname in the header except in copyright - use
-  section &quot;authors&quot; below --&gt;
+  section "authors" below --&gt;
 
     &lt;legalnotice&gt;
       &lt;para&gt;
@@ -1677,8 +1677,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         Invariant Sections, no Front-Cover Texts, and no Back-Cover
         Texts. You may obtain a copy of the &lt;citetitle&gt;GNU Free
         Documentation License&lt;/citetitle&gt; from the Free Software
-        Foundation by visiting &lt;ulink type=&quot;http&quot;
-        url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing
+        Foundation by visiting &lt;ulink type="http"
+        url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing
         to: Free Software Foundation, Inc., 59 Temple Place - Suite
         330, Boston, MA 02111-1307, USA.
       &lt;/para&gt;
@@ -1701,7 +1701,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;!-- ============= Document Body ============================= --&gt;
 
  &lt;!-- ============= Introduction ============================== --&gt;
-  &lt;sect1 id=&quot;intro&quot;&gt;
+  &lt;sect1 id="intro"&gt;
     &lt;title&gt;Introduction&lt;/title&gt;
 
     &lt;para&gt;
@@ -1742,7 +1742,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;!-- ================ Usage ================================ --&gt;
  &lt;!-- This section should describe basic usage of the application. --&gt;
 
-  &lt;sect1 id=&quot;usage&quot;&gt;
+  &lt;sect1 id="usage"&gt;
     &lt;title&gt;Using MY-GNOME-APP&lt;/title&gt;
     &lt;para&gt;
       &lt;application&gt;MY-GNOME-APP&lt;/application&gt; can be used to produce a
@@ -1754,19 +1754,19 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
 
     &lt;!-- ========= Basic Usage =========================== --&gt;
-    &lt;sect2 id=&quot;mainwin&quot;&gt;
+    &lt;sect2 id="mainwin"&gt;
       &lt;title&gt;Basic usage&lt;/title&gt;
       &lt;para&gt;
         Starting &lt;application&gt;MY-GNOME-APP&lt;/application&gt; opens the
         &lt;interface&gt;Main window&lt;/interface&gt;, shown in &lt;xref
-        linkend=&quot;mainwindow-fig&quot;&gt;. The window is at first empty.
+        linkend="mainwindow-fig"&gt;. The window is at first empty.
 
         &lt;!-- ==== Figure ==== --&gt;
-        &lt;figure id=&quot;mainwindow-fig&quot;&gt;
+        &lt;figure id="mainwindow-fig"&gt;
 	  &lt;title&gt;MY-GNOME-APP Main Window&lt;/title&gt;
 	  &lt;screenshot&gt;
 	    &lt;screeninfo&gt;MY-GNOME-APP Main Window&lt;/screeninfo&gt;
-	    &lt;graphic fileref=&quot;SCREENSHOT&quot; format=&quot;png&quot; srccredit=&quot;ME&quot;&gt;
+	    &lt;graphic fileref="SCREENSHOT" format="png" srccredit="ME"&gt;
             &lt;/graphic&gt;
 	  &lt;/screenshot&gt;
 	&lt;/figure&gt;
@@ -1774,13 +1774,13 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       &lt;/para&gt; 
 
 
- &lt;!-- For this app, one could put &quot;proving&quot; or &quot;edit&quot; (probably even
+ &lt;!-- For this app, one could put "proving" or "edit" (probably even
       both of them) as sect2's seperate from the main window
       section. Since they were both so closely involved with the main
       window, I decided to have them as sect3's isntead. Judgement
       call. --&gt;
 
-      &lt;sect3 id=&quot;proving&quot;&gt;
+      &lt;sect3 id="proving"&gt;
 	&lt;title&gt;Proving a Theorem&lt;/title&gt;
 	&lt;para&gt;
           To get a proof of a theorem, select
@@ -1859,7 +1859,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
           &lt;/para&gt;
 	&lt;/warning&gt;
       &lt;/sect3&gt;
-      &lt;sect3 id=&quot;editing&quot;&gt;
+      &lt;sect3 id="editing"&gt;
 	&lt;title&gt;Editing Proofs&lt;/title&gt;
 	&lt;para&gt;
           Once you have proven the theorem, it will be displayed in
@@ -1912,16 +1912,16 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       =============================================================  --&gt;
 
 
-    &lt;sect2 id=&quot;toolbar&quot;&gt;
+    &lt;sect2 id="toolbar"&gt;
       &lt;title&gt;Toolbar&lt;/title&gt;
       &lt;para&gt;
-        The toolbar (shown in &lt;xref linkend=&quot;figure-usage-toolbar&quot;&gt;)
+        The toolbar (shown in &lt;xref linkend="figure-usage-toolbar"&gt;)
         provides access to several commonly used routines.
-        &lt;figure id=&quot;figure-usage-toolbar&quot;&gt;
+        &lt;figure id="figure-usage-toolbar"&gt;
 	  &lt;title&gt;MY-GNOME-APP Toolbar&lt;/title&gt;
 	  &lt;screenshot&gt;
 	    &lt;screeninfo&gt;MY-GNOME-APP Toolbar&lt;/screeninfo&gt;
-	    &lt;graphic fileref=&quot;usage-toolbar.png&quot; format=&quot;png&quot;&gt;&lt;/graphic&gt;
+	    &lt;graphic fileref="usage-toolbar.png" format="png"&gt;&lt;/graphic&gt;
 	  &lt;/screenshot&gt;
 	&lt;/figure&gt;
         &lt;variablelist&gt;
@@ -1957,7 +1957,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/sect2&gt;
     &lt;!-- ========= Menus =========================== --&gt; 
 
-    &lt;sect2 id=&quot;menubar&quot;&gt;
+    &lt;sect2 id="menubar"&gt;
 
        &lt;!-- Describing the menubar ensures comprehensive feature
        coverage. Nest itemizedlists inside variablelists so that each
@@ -2096,7 +2096,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 		  &lt;para&gt;
 	      &lt;guimenuitem&gt;Preferences&amp;hellip;&lt;/guimenuitem&gt;
 	       &amp;mdash; This opens the &lt;link
-	       linkend=&quot;prefs&quot;&gt;&lt;interface&gt;Preferences
+	       linkend="prefs"&gt;&lt;interface&gt;Preferences
 	       Dialog&lt;/interface&gt;&lt;/link&gt;, which allows you to configure
 	       many settings.
 	     &lt;/para&gt;
@@ -2149,7 +2149,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
  &lt;!-- ============= Customization ============================= --&gt;
 
- &lt;sect1 id=&quot;prefs&quot;&gt;
+ &lt;sect1 id="prefs"&gt;
   &lt;title&gt;Customization&lt;/title&gt;
   &lt;para&gt;
    To change the application settings, select
@@ -2158,15 +2158,15 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;guimenuitem&gt;Preferences...&lt;/guimenuitem&gt;
    &lt;/menuchoice&gt;.  This opens the
    &lt;interface&gt;Preferences&lt;/interface&gt; dialog, shown in &lt;xref
-   linkend=&quot;preferences-fig&quot;&gt;.
+   linkend="preferences-fig"&gt;.
   &lt;/para&gt;
 
-  &lt;figure id=&quot;preferences-fig&quot;&gt;
+  &lt;figure id="preferences-fig"&gt;
    &lt;title&gt;Preferences Dialog&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;Preferences Dialog&lt;/screeninfo&gt;
-    &lt;graphic fileref=&quot;SCREENSHOT&quot; format=&quot;png&quot;
-     srccredit=&quot;ME&quot;&gt;
+    &lt;graphic fileref="SCREENSHOT" format="png"
+     srccredit="ME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
   &lt;/figure&gt;
@@ -2252,7 +2252,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;!-- This section should describe known bugs and limitations of
       the program if there are any - please be frank and list all
       problems you know of. --&gt;
- &lt;sect1 id=&quot;bugs&quot;&gt;
+ &lt;sect1 id="bugs"&gt;
   &lt;title&gt;Known Bugs and Limitations&lt;/title&gt;
   &lt;para&gt;
    This application has no known bugs.
@@ -2262,18 +2262,18 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 &lt;!-- ============= Authors ================================ --&gt;
 
- &lt;sect1 id=&quot;authors&quot;&gt;
+ &lt;sect1 id="authors"&gt;
   &lt;title&gt;Authors&lt;/title&gt;
   &lt;para&gt;
    &lt;application&gt;MY-GNOME-APP&lt;/application&gt; was written by GNOME-HACKER
    (&lt;email&gt;hacker@gnome.org&lt;/email&gt;). To find more information about
    &lt;application&gt;MY-GNOME-APP&lt;/application&gt;, please visit the &lt;ulink
-   url=&quot;http://www.my-gnome-app.org&quot; type=&quot;http&quot;&gt;MY-GNOME-APP Web
+   url="http://www.my-gnome-app.org" type="http"&gt;MY-GNOME-APP Web
    page&lt;/ulink&gt;.  Please send all comments, suggestions, and bug
-   reports to the &lt;ulink url=&quot;http://bugs.gnome.org&quot; type=&quot;http&quot;&gt;GNOME
+   reports to the &lt;ulink url="http://bugs.gnome.org" type="http"&gt;GNOME
    bug tracking database&lt;/ulink&gt;. (Instructions for submitting bug
    reports can be found &lt;ulink
-   url=&quot;http://bugs.gnome.org/Reporting.html&quot; type=&quot;http&quot;&gt;
+   url="http://bugs.gnome.org/Reporting.html" type="http"&gt;
    on-line&lt;/ulink&gt;.)  You can also use &lt;application&gt;Bug Report
    Tool&lt;/application&gt; (&lt;command&gt;bug-buddy&lt;/command&gt;), available in the
    &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of &lt;guimenu&gt;Main
@@ -2283,12 +2283,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;para&gt;
    This manual was written by ME
    (&lt;email&gt;MYNAME@MYADDRESS&lt;/email&gt;). Please send all comments and
-   suggestions regarding this manual to the &lt;ulink type=&quot;http&quot;
-   url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;GNOME Documentation 
+   suggestions regarding this manual to the &lt;ulink type="http"
+   url="http://developer.gnome.org/projects/gdp"&gt;GNOME Documentation 
    Project&lt;/ulink&gt; by sending an email to 
    &lt;email&gt;docs@gnome.org&lt;/email&gt;. You can also add your comments online 
-   by using the &lt;ulink type=&quot;http&quot; 
-   url=&quot;http://www.gnome.org/gdp/doctable/&quot;&gt;GNOME Documentation Status
+   by using the &lt;ulink type="http" 
+   url="http://www.gnome.org/gdp/doctable/"&gt;GNOME Documentation Status
    Table&lt;/ulink&gt;.
   &lt;/para&gt;
 
@@ -2307,7 +2307,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
  &lt;!-- ============= Application License ============================= --&gt;
 
- &lt;sect1 id=&quot;license&quot;&gt;
+ &lt;sect1 id="license"&gt;
   &lt;title&gt;License&lt;/title&gt;
   &lt;para&gt;
    This program is free software; you can redistribute it and/or
@@ -2327,8 +2327,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    included as an appendix to the &lt;citetitle&gt;GNOME Users
    Guide&lt;/citetitle&gt;.  You may also obtain a copy of the
    &lt;citetitle&gt;GNU General Public License&lt;/citetitle&gt; from the Free
-   Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-   url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to
+   Software Foundation by visiting &lt;ulink type="http"
+   url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to
    &lt;address&gt;
     Free Software Foundation, Inc.
     &lt;street&gt;59 Temple Place&lt;/street&gt; - Suite 330
@@ -2367,8 +2367,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         <pre class="programlisting">
 
 
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
- &lt;!entity APPLETNAME.sgml SYSTEM &quot;applet_template_1.sgml&quot;&gt;
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+ &lt;!entity APPLETNAME.sgml SYSTEM "applet_template_1.sgml"&gt;
         &lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 ]&gt;
 
@@ -2376,7 +2376,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   Documentation Project Team. Please use it for writing GNOME
   documentation, making obvious changes. In particular, all the words
   written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for &quot;legalnotice&quot;, please leave the reference
+  replaced. As for "legalnotice", please leave the reference
   unchanged,make sure to add/remove trademarks to the list as
   appropriate for your document.
 
@@ -2384,7 +2384,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   thanks ;-).
 --&gt;
 
-&lt;article id=&quot;index&quot;&gt; &lt;!-- please do not change the id --&gt;
+&lt;article id="index"&gt; &lt;!-- please do not change the id --&gt;
 
  &lt;!-- ============= Document Header ============================= --&gt;
  &lt;artheader&gt; 
@@ -2404,7 +2404,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    --&gt;
 
   &lt;!-- do not put authorname in the header except in copyright - use
-  section &quot;authors&quot; below --&gt;
+  section "authors" below --&gt;
 
   &lt;legalnotice&gt;
    &lt;para&gt;
@@ -2414,8 +2414,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     by the Free Software Foundation with no Invariant Sections, no
     Front-Cover Texts, and no Back-Cover Texts. You may obtain a copy
     of the &lt;citetitle&gt;GNU Free Documentation License&lt;/citetitle&gt; from
-    the Free Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to:
+    the Free Software Foundation by visiting &lt;ulink type="http"
+    url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to:
     Free Software Foundation, Inc., 59 Temple Place - Suite 330,
     Boston, MA 02111-1307, USA.
    &lt;/para&gt;
@@ -2448,12 +2448,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
         &lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 
- &lt;sect1 id=&quot;APPLET&quot;&gt;
+ &lt;sect1 id="APPLET"&gt;
   &lt;title&gt;APPLET Applet&lt;/title&gt;
 
   &lt;para&gt;
    &lt;application&gt;APPLET&lt;/application&gt; applet, shown in &lt;xref
-   linkend=&quot;APPLETapplet-fig&quot;&gt;, allows you to &amp;hellip;.  To add this
+   linkend="APPLETapplet-fig"&gt;, allows you to &amp;hellip;.  To add this
    applet to a &lt;interface&gt;Panel&lt;/interface&gt;, 
    right-click on the &lt;interface&gt;Panel&lt;/interface&gt; and choose
    &lt;menuchoice&gt;
@@ -2465,18 +2465,18 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;/menuchoice&gt;.
   &lt;/para&gt;
 
-  &lt;figure id=&quot;APPLETapplet-fig&quot;&gt;
+  &lt;figure id="APPLETapplet-fig"&gt;
    &lt;title&gt;APPLET Applet&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;APPLET Applet&lt;/screeninfo&gt;
-    &lt;graphic format=&quot;png&quot; fileref=&quot;APPLET_applet&quot; 
-    srccredit=&quot;YOURNAME&quot;&gt;
+    &lt;graphic format="png" fileref="APPLET_applet" 
+    srccredit="YOURNAME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
   &lt;/figure&gt;
 
   &lt;!-- ============= Usage  ================================ --&gt;
-  &lt;sect2 id=&quot;APPLET-usage&quot;&gt;
+  &lt;sect2 id="APPLET-usage"&gt;
    &lt;title&gt;Usage&lt;/title&gt;
    &lt;para&gt;
     (Place a short description of how to use the applet here.)
@@ -2490,7 +2490,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      &lt;listitem&gt;
       &lt;para&gt;
        &lt;guimenuitem&gt;Properties&amp;hellip;&lt;/guimenuitem&gt; &amp;mdash;
-       opens the &lt;link linkend=&quot;APPLET-prefs&quot;&gt;
+       opens the &lt;link linkend="APPLET-prefs"&gt;
        &lt;guilabel&gt;Properties&lt;/guilabel&gt;&lt;/link&gt; dialog.
       &lt;/para&gt;
      &lt;/listitem&gt;
@@ -2517,23 +2517,23 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 
   &lt;!-- ============= Customization ============================= --&gt;
-  &lt;sect2 id=&quot;APPLET-prefs&quot;&gt;
+  &lt;sect2 id="APPLET-prefs"&gt;
     &lt;title&gt;Customization&lt;/title&gt;
     &lt;para&gt;
       You can customize &lt;application&gt;APPLET&lt;/application&gt;
       applet by right-clicking on it and choosing
       &lt;guimenuitem&gt;Properties&amp;hellip;&lt;/guimenuitem&gt;. This will open the
       &lt;interface&gt;Properties&lt;/interface&gt; dialog(shown in &lt;xref
-      linkend=&quot;APPLET-settings-fig&quot;&gt;), which allows you to
+      linkend="APPLET-settings-fig"&gt;), which allows you to
       change various settings.
     &lt;/para&gt;
 
-    &lt;figure id=&quot;APPLET-settings-fig&quot;&gt;
+    &lt;figure id="APPLET-settings-fig"&gt;
      &lt;title&gt;Properties dialog&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Properties dialog&lt;/screeninfo&gt;
-      &lt;graphic format=&quot;png&quot; fileref=&quot;APPLET_settings&quot;
-      srccredit=&quot;YOURNAME&quot;&gt;
+      &lt;graphic format="png" fileref="APPLET_settings"
+      srccredit="YOURNAME"&gt;
       &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
@@ -2579,7 +2579,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;!-- This section should describe known bugs and limitations of
        the program if there are any - please be frank and list all
        problems you know of --&gt;
-  &lt;sect2 id=&quot;bugs&quot;&gt;
+  &lt;sect2 id="bugs"&gt;
    &lt;title&gt;Known Bugs and Limitations&lt;/title&gt;
    &lt;para&gt;
     This applet has no known bugs.
@@ -2589,16 +2589,16 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
   &lt;!-- ============= Authors ================================ --&gt;
 
-  &lt;sect2 id=&quot;authors&quot;&gt;
+  &lt;sect2 id="authors"&gt;
    &lt;title&gt;Authors&lt;/title&gt;
    &lt;para&gt;
     &lt;application&gt;APPLET&lt;/application&gt; was written by GNOME-HACKER
     (&lt;email&gt;hacker@gnome.org&lt;/email&gt;).  Please send all comments,
     suggestions, and bug 
-    reports to the &lt;ulink url=&quot;http://bugs.gnome.org&quot; type=&quot;http&quot;&gt;GNOME
+    reports to the &lt;ulink url="http://bugs.gnome.org" type="http"&gt;GNOME
     bug tracking database&lt;/ulink&gt;. (Instructions for submitting bug
     reports can be found &lt;ulink
-    url=&quot;http://bugs.gnome.org/Reporting.html&quot; type=&quot;http&quot;&gt;
+    url="http://bugs.gnome.org/Reporting.html" type="http"&gt;
     on-line&lt;/ulink&gt;.  You can also use &lt;application&gt;Bug Report
     Tool&lt;/application&gt; (&lt;command&gt;bug-buddy&lt;/command&gt;), available in the
     &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of &lt;guimenu&gt;Main
@@ -2608,12 +2608,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;para&gt;
     This manual was written by ME
     (&lt;email&gt;MYNAME@MYADDRESS&lt;/email&gt;). Please send all comments and
-    suggestions regarding this manual to the &lt;ulink type=&quot;http&quot;
-    url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;GNOME Documentation
+    suggestions regarding this manual to the &lt;ulink type="http"
+    url="http://developer.gnome.org/projects/gdp"&gt;GNOME Documentation
     Project&lt;/ulink&gt;  by sending an email to
     &lt;email&gt;docs@gnome.org&lt;/email&gt;. You can also submit comments online
-    by using the &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.gnome.org/gdp/doctable/&quot;&gt;GNOME Documentation
+    by using the &lt;ulink type="http"
+    url="http://www.gnome.org/gdp/doctable/"&gt;GNOME Documentation
     Status Table&lt;/ulink&gt;.
    &lt;/para&gt;
 
@@ -2632,7 +2632,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
   &lt;!-- ============= Application License ============================= --&gt;
 
-  &lt;sect2 id=&quot;license&quot;&gt;
+  &lt;sect2 id="license"&gt;
    &lt;title&gt;License&lt;/title&gt;
    &lt;para&gt;
     This program is free software; you can redistribute it and/or
@@ -2652,8 +2652,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     included as an appendix to the &lt;citetitle&gt;GNOME Users
     Guide&lt;/citetitle&gt;.  You may also obtain a copy of the
     &lt;citetitle&gt;GNU General Public License&lt;/citetitle&gt; from the Free
-    Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to
+    Software Foundation by visiting &lt;ulink type="http"
+    url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to
     &lt;address&gt;
      Free Software Foundation, Inc.
      &lt;street&gt;59 Temple Place&lt;/street&gt; - Suite 330
@@ -2693,12 +2693,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </p><p>
         <pre class="programlisting">
 
-&lt;!DOCTYPE book PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
-&lt;!ENTITY TEMPLATE-APPLET SYSTEM &quot;gnome-applet-template.sgml.part&quot;&gt;
+&lt;!DOCTYPE book PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+&lt;!ENTITY TEMPLATE-APPLET SYSTEM "gnome-applet-template.sgml.part"&gt;
 
 ]&gt;
 
-&lt;book id=&quot;gnome-applets&quot;&gt;
+&lt;book id="gnome-applets"&gt;
 
  &lt;bookinfo&gt;
   &lt;title&gt;GNOME Applets&lt;/title&gt;
@@ -2747,11 +2747,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;/bookinfo&gt;
 
  &lt;!-- #### Introduction ###### --&gt;
- &lt;chapter id=&quot;applets-intro&quot;&gt;
+ &lt;chapter id="applets-intro"&gt;
   &lt;title&gt;Introduction&lt;/title&gt; 
 
   &lt;!-- #### Intro | What Are Applets? ###### --&gt;
-  &lt;sect1 id=&quot;applets-what-are&quot;&gt;
+  &lt;sect1 id="applets-what-are"&gt;
    &lt;title&gt;What Are Applets?&lt;/title&gt; 
    &lt;para&gt;
     Applets are one of the most popular and useful objects you can add
@@ -2783,17 +2783,17 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;/para&gt;
 
    &lt;para&gt;
-    &lt;figure id=&quot;example-applets-fig&quot;&gt;
+    &lt;figure id="example-applets-fig"&gt;
      &lt;title&gt;Example Applets&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Example Applets&lt;/screeninfo&gt;
-       &lt;graphic fileref=&quot;example_applets&quot; format=&quot;png&quot;
-       srccredit=&quot;muet&quot;&gt;
+       &lt;graphic fileref="example_applets" format="png"
+       srccredit="muet"&gt;
        &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
     Several example applets are shown in &lt;xref
-    linkend=&quot;example-applets-fig&quot;&gt;.  From left to right, they are: (1)
+    linkend="example-applets-fig"&gt;.  From left to right, they are: (1)
     &lt;application&gt;Mixer Applet&lt;/application&gt;, which allows you to turn
     on/off sound and control its volume by clicking on the applet.  (2)
     &lt;application&gt;Sound Monitor&lt;/application&gt; Applet, which displays
@@ -2815,8 +2815,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;interface&gt;Panels&lt;/interface&gt; and using them. The following
     chapters go through each of the standard GNOME applets describing
     them in detail.  There are also additional applets which can be
-    downloaded off the Web.   See &lt;ulink type=&quot;http&quot;
-     url=&quot;http://www.gnome.org/applist/list-martin.phtml&quot;&gt;The GNOME
+    downloaded off the Web.   See &lt;ulink type="http"
+     url="http://www.gnome.org/applist/list-martin.phtml"&gt;The GNOME
     Software Map&lt;/ulink&gt; for lists of additional GNOME applications
     and applets. 
    &lt;/para&gt;
@@ -2828,10 +2828,10 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;/sect1&gt;
 
   &lt;!-- #### Intro | Adding, Moving, and Removing Applets ###### --&gt;
-  &lt;sect1 id=&quot;applet-add-move-replace&quot;&gt;
+  &lt;sect1 id="applet-add-move-replace"&gt;
    &lt;title&gt;Adding, Moving, and Removing Applets&lt;/title&gt;
 
-   &lt;sect2 id=&quot;adding-applets&quot;&gt;   
+   &lt;sect2 id="adding-applets"&gt;   
     &lt;title&gt;Adding Applets to a Panel&lt;/title&gt;
     &lt;para&gt;
      To add an applet to a &lt;interface&gt;Panel&lt;/interface&gt;, right-click
@@ -2844,7 +2844,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;moving-applets&quot;&gt;
+   &lt;sect2 id="moving-applets"&gt;
     &lt;title&gt;Moving Applets In or Between Panels&lt;/title&gt;
     &lt;para&gt;
      It is easy to move applets in a &lt;interface&gt;Panel&lt;/interface&gt; or
@@ -2863,12 +2863,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      other objects, the behavior depends on the global preferences
      you have set for your &lt;interface&gt;Panels&lt;/interface&gt; in the
      &lt;application&gt;GNOME Control Center&lt;/application&gt;: the applet you are
-     moving can switch places with other objects, &quot;push&quot; all objects
-     it meets, or &quot;jump&quot; over all other objects without disturbing
+     moving can switch places with other objects, "push" all objects
+     it meets, or "jump" over all other objects without disturbing
      them. You can also override the default behavior by holding
-     &lt;keycap&gt;Shift&lt;/keycap&gt; button (for &quot;push&quot; mode),
-     &lt;keycap&gt;Ctrl&lt;/keycap&gt; (for &quot;switched&quot; mode), or
-     &lt;keycap&gt;Alt&lt;/keycap&gt; (for &quot;free&quot; mode, i.e. jumping other other
+     &lt;keycap&gt;Shift&lt;/keycap&gt; button (for "push" mode),
+     &lt;keycap&gt;Ctrl&lt;/keycap&gt; (for "switched" mode), or
+     &lt;keycap&gt;Alt&lt;/keycap&gt; (for "free" mode, i.e. jumping other other
      objects without disturbing them) button while dragging.
     &lt;/para&gt;
     &lt;para&gt;
@@ -2883,7 +2883,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;removing-applets&quot;&gt;
+   &lt;sect2 id="removing-applets"&gt;
     &lt;title&gt;Removing Applets from a Panel&lt;/title&gt; 
     &lt;para&gt;  
      To remove an applet from a &lt;interface&gt;Panel&lt;/interface&gt;,
@@ -2895,7 +2895,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 
   &lt;!-- #### Intro | The Right-Click Pop-Up Menu ###### --&gt;
-  &lt;sect1 id=&quot;right-click-pop-up-menu&quot;&gt;
+  &lt;sect1 id="right-click-pop-up-menu"&gt;
    &lt;title&gt;The Right-Click Pop-Up Menu&lt;/title&gt;
    &lt;para&gt;
     Clicking the right mouse button on any applet brings up
@@ -2904,7 +2904,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     often has additional items which vary depending on the particular
     applet. 
    &lt;/para&gt;
-   &lt;sect2 id=&quot;standard-right-click-items&quot;&gt; 
+   &lt;sect2 id="standard-right-click-items"&gt; 
     &lt;title&gt;Standard Pop-Up Items&lt;/title&gt;
     &lt;para&gt;
      All applets should have the following items in their right-click
@@ -2972,7 +2972,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;applet-properties-dialog&quot;&gt; 
+   &lt;sect2 id="applet-properties-dialog"&gt; 
     &lt;title&gt;The Applet Properties Dialog&lt;/title&gt;
     &lt;para&gt;
      Many applets have customizable properties.  These applets will
@@ -2980,12 +2980,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      right-click &lt;guimenu&gt;pop-up menu&lt;/guimenu&gt; which brings up the
      &lt;interface&gt;Properties&lt;/interface&gt; dialog where you can alter the 
      appearance or behaviour of the applet.
-     &lt;figure id=&quot;example-props-dialog-fig&quot;&gt;
+     &lt;figure id="example-props-dialog-fig"&gt;
       &lt;title&gt;An Example Applet Properties Dialog&lt;/title&gt;
       &lt;screenshot&gt;
        &lt;screeninfo&gt;An Example Applets Properties Dialog&lt;/screeninfo&gt;
-       &lt;graphic fileref=&quot;applet_props_dialog&quot; format=&quot;png&quot;
-        srccredit=&quot;muet&quot;&gt;
+       &lt;graphic fileref="applet_props_dialog" format="png"
+        srccredit="muet"&gt;
        &lt;/graphic&gt;
       &lt;/screenshot&gt;
      &lt;/figure&gt;
@@ -3032,7 +3032,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
  
-   &lt;sect2 id=&quot;common-right-click-items&quot;&gt; 
+   &lt;sect2 id="common-right-click-items"&gt; 
     &lt;title&gt;Other Common Pop-Up Items&lt;/title&gt;
     &lt;para&gt;
      Many applets also have one or more of the following items in their
@@ -3073,13 +3073,13 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
    &lt;/sect2&gt;
   &lt;/sect1&gt;
   
-  &lt;sect1 id=&quot;feedback&quot;&gt;
+  &lt;sect1 id="feedback"&gt;
    &lt;title&gt;Feedback&lt;/title&gt;
-   &lt;sect2 id=&quot;reporting-bugs&quot;&gt; 
+   &lt;sect2 id="reporting-bugs"&gt; 
     &lt;title&gt;Reporting Applet Bugs&lt;/title&gt;
     &lt;para&gt;
-     GNOME users are encouraged to report bugs to &lt;ulink type=&quot;http&quot;
-     url=&quot;http://bugs.gnome.org&quot;&gt;The GNOME Bug Tracking
+     GNOME users are encouraged to report bugs to &lt;ulink type="http"
+     url="http://bugs.gnome.org"&gt;The GNOME Bug Tracking
      System&lt;/ulink&gt;.  The easiest way to submit bugs is to use the
      &lt;application&gt;Bug Report Tool&lt;/application&gt; program by selecting
      &lt;menuchoice&gt;
@@ -3091,7 +3091,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      reproduce the the scenario.
     &lt;/para&gt;
    &lt;/sect2&gt;
-   &lt;sect2 id=&quot;documentation-feedback&quot;&gt; 
+   &lt;sect2 id="documentation-feedback"&gt; 
     &lt;title&gt;Providing Feedback&lt;/title&gt;
     &lt;para&gt;
      GNOME users are welcome to provide suggestions for how
@@ -3100,27 +3100,27 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      &lt;application&gt;Bug Report Tool&lt;/application&gt; discussed above.
      Suggestions for documentation changes can be emailed directly to
      the documentation author (whose email should be included in the
-     &quot;Authors&quot; section of the document) or by sending an email to
+     "Authors" section of the document) or by sending an email to
      &lt;email&gt;docs@gnome.org&lt;/email&gt;. 
     &lt;/para&gt;
    &lt;/sect2&gt;
-   &lt;sect2 id=&quot;joining-gnome&quot;&gt;  
+   &lt;sect2 id="joining-gnome"&gt;  
     &lt;title&gt;Joining GNOME&lt;/title&gt;
     &lt;para&gt;
      GNOME is a community project, created by hundreds of programmers,
      documentation writers, icon design artists, web masters, and
      other people, most of whom work on a volunteer basis.  New GNOME
      contributors are always welcome. To join the GNOME team, visit
-     these web sites: developers &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org&quot;&gt;The GNOME Development
-     Site&lt;/ulink&gt;, documentation writers &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;The GNOME Documentation
-     Project&lt;/ulink&gt;, icon design artists &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://gnome-icons.sourceforge.net/&quot;&gt;Gnome Icon Web&lt;/ulink&gt;,
-     general &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org/helping/&quot;&gt;Helping GNOME&lt;/ulink&gt;,
-     or just join the gnome-list email list (see &lt;ulink type=&quot;http&quot;
-     url=&quot;http://www.gnome.org/resources/mailing-lists.html&quot;&gt;GNOME Mailing
+     these web sites: developers &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org"&gt;The GNOME Development
+     Site&lt;/ulink&gt;, documentation writers &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org/projects/gdp"&gt;The GNOME Documentation
+     Project&lt;/ulink&gt;, icon design artists &amp;mdash; &lt;ulink type="http"
+     url="http://gnome-icons.sourceforge.net/"&gt;Gnome Icon Web&lt;/ulink&gt;,
+     general &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org/helping/"&gt;Helping GNOME&lt;/ulink&gt;,
+     or just join the gnome-list email list (see &lt;ulink type="http"
+     url="http://www.gnome.org/resources/mailing-lists.html"&gt;GNOME Mailing
      Lists&lt;/ulink&gt;) to discuss what you are interested in doing.
     &lt;/para&gt;
    &lt;/sect2&gt;
@@ -3128,7 +3128,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
  &lt;/chapter&gt;
 
  &lt;!-- ############### Template Applets ##################### --&gt;
- &lt;chapter id=&quot;template-applets&quot;&gt;
+ &lt;chapter id="template-applets"&gt;
   &lt;title&gt;Template Applets&lt;/title&gt;
 
   &amp;TEMPLATE-APPLET
@@ -3180,27 +3180,27 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
   &lt;!-- stated in a translation approved by the Foundation. --&gt;
 
   &lt;!-- ###############   GNOMEAPPLET   ############### --&gt;
-  &lt;sect1 id=&quot;GNOMEAPPLET&quot;&gt;
+  &lt;sect1 id="GNOMEAPPLET"&gt;
    &lt;title&gt;GNOMEAPPLET Applet&lt;/title&gt; 
 
    &lt;para&gt; 
     &lt;application&gt;GNOMEAPPLET&lt;/application&gt; applet, shown in &lt;xref
-    linkend=&quot;GNOMEAPPLET-fig&quot;&gt;, does this and that. To learn how to
+    linkend="GNOMEAPPLET-fig"&gt;, does this and that. To learn how to
     add this applet to a &lt;interface&gt;Panel&lt;/interface&gt;, see &lt;xref
-    linkend=&quot;adding-applets&quot;&gt;. 
+    linkend="adding-applets"&gt;. 
    &lt;/para&gt;
   
  
-   &lt;figure id=&quot;GNOMEAPPLET-fig&quot;&gt;
+   &lt;figure id="GNOMEAPPLET-fig"&gt;
    &lt;title&gt;GNOMEAPPLET&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;GNOMEAPPLET&lt;/screeninfo&gt;
-    &lt;graphic format=&quot;png&quot; fileref=&quot;GNOMEAPPLET-fig&quot; srccredit=&quot;ME&quot;&gt;
+    &lt;graphic format="png" fileref="GNOMEAPPLET-fig" srccredit="ME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
    &lt;/figure&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-usage&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-usage"&gt;
     &lt;title&gt;Usage&lt;/title&gt;
     &lt;para&gt;
      This applet does nothing. To use it, just
@@ -3208,18 +3208,18 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-right-click&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-right-click"&gt;
     &lt;title&gt;Right-Click Pop-Up Menu Items&lt;/title&gt;
     &lt;para&gt; 
      In addition to the standard menu items (see &lt;xref
-     linkend=&quot;standard-right-click-items&quot;&gt;), the right-click pop-up menu has 
+     linkend="standard-right-click-items"&gt;), the right-click pop-up menu has 
      the following items: 
      &lt;itemizedlist&gt; 	
       &lt;listitem&gt;
        &lt;para&gt;
         &lt;guimenuitem&gt;Properties...&lt;/guimenuitem&gt; &amp;mdash; This menu
         item opens the &lt;interface&gt;Properties&lt;/interface&gt; dialog (see
-        &lt;xref linkend=&quot;GNOMEAPPLET-properties&quot;&gt;) which allows you to
+        &lt;xref linkend="GNOMEAPPLET-properties"&gt;) which allows you to
         customize the appearance and behavior of this applet.
        &lt;/para&gt;
       &lt;/listitem&gt;
@@ -3227,27 +3227,27 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
        &lt;para&gt;
         &lt;guimenuitem&gt;Run Hello World...&lt;/guimenuitem&gt; &amp;mdash; This
         menu item starts the program &lt;application&gt;Hello
-        World&lt;/application&gt;, used to say &quot;hello&quot; to the world. 
+        World&lt;/application&gt;, used to say "hello" to the world. 
        &lt;/para&gt;
       &lt;/listitem&gt;
      &lt;/itemizedlist&gt;
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-properties&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-properties"&gt;
     &lt;title&gt;Properties&lt;/title&gt;
     &lt;para&gt;
      You can configure &lt;application&gt;GNOMEAPPLET&lt;/application&gt; applet by
      right-clicking on the applet and choosing the
      &lt;guimenuitem&gt;Properties...&lt;/guimenuitem&gt; menu item. This will open the
      &lt;interface&gt;Properties&lt;/interface&gt; dialog, shown in &lt;xref
-     linkend=&quot;GNOMEAPPLET-properties-fig&quot;&gt;.
+     linkend="GNOMEAPPLET-properties-fig"&gt;.
     &lt;/para&gt;
-    &lt;figure id=&quot;GNOMEAPPLET-properties-fig&quot;&gt;
+    &lt;figure id="GNOMEAPPLET-properties-fig"&gt;
      &lt;title&gt;Properties Dialog&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Properties Dialog&lt;/screeninfo&gt; 
-      &lt;graphic format=&quot;png&quot; fileref=&quot;GNOMEAPPLET-properties&quot; srccredit=&quot;ME&quot;&gt;
+      &lt;graphic format="png" fileref="GNOMEAPPLET-properties" srccredit="ME"&gt;
       &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
@@ -3263,11 +3263,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      dialog, including descriptions of the &lt;guibutton&gt;OK&lt;/guibutton&gt;,
      &lt;guibutton&gt;Apply&lt;/guibutton&gt;, &lt;guibutton&gt;Cancel&lt;/guibutton&gt;, and
      &lt;guibutton&gt;Help&lt;/guibutton&gt; buttons, see &lt;xref
-     linkend=&quot;applet-properties-dialog&quot;&gt;.
+     linkend="applet-properties-dialog"&gt;.
     &lt;/para&gt;
    &lt;/sect2&gt;
   
-   &lt;sect2 id=&quot;GNOMEAPPLET-bugs&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-bugs"&gt;
     &lt;title&gt; Known Bugs and Limitations&lt;/title&gt;
     &lt;para&gt;
      There are no known bugs in the
@@ -3275,7 +3275,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-authors&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-authors"&gt;
     &lt;title&gt;Authors&lt;/title&gt;
     &lt;para&gt;
      This applet was writen by HACKER-NAME
@@ -3283,7 +3283,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
      which you are reading now was written by
      YOUR-NAME &lt;email&gt;YOUR-EMAIL&lt;/email&gt;. For information on submitting
      bug reports and suggestions for improvements, see &lt;xref
-     linkend=&quot;feedback&quot;&gt;. 
+     linkend="feedback"&gt;. 
     &lt;/para&gt;
    &lt;/sect2&gt;
 

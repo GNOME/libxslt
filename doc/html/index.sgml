@@ -226,6 +226,10 @@
 <ANCHOR id="xsltParseTemplateContent" href="libxslt/libxslt-xsltInternals.html#xsltParseTemplateContent">
 <ANCHOR id="xsltAllocateExtra" href="libxslt/libxslt-xsltInternals.html#xsltAllocateExtra">
 <ANCHOR id="xsltAllocateExtraCtxt" href="libxslt/libxslt-xsltInternals.html#xsltAllocateExtraCtxt">
+<ANCHOR id="xsltCreateRVT" href="libxslt/libxslt-xsltInternals.html#xsltCreateRVT">
+<ANCHOR id="xsltRegisterTmpRVT" href="libxslt/libxslt-xsltInternals.html#xsltRegisterTmpRVT">
+<ANCHOR id="xsltRegisterPersistRVT" href="libxslt/libxslt-xsltInternals.html#xsltRegisterPersistRVT">
+<ANCHOR id="xsltFreeRVTs" href="libxslt/libxslt-xsltInternals.html#xsltFreeRVTs">
 <ANCHOR id="xsltNumberData" href="libxslt/libxslt-numbersInternals.html#xsltNumberData">
 <ANCHOR id="xsltNumberDataPtr" href="libxslt/libxslt-numbersInternals.html#xsltNumberDataPtr">
 <ANCHOR id="xsltFormatNumberInfo" href="libxslt/libxslt-numbersInternals.html#xsltFormatNumberInfo">

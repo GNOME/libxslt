@@ -504,6 +504,7 @@ struct _xsltTransformContext {
      */
     xmlDocPtr       tmpRVT;		/* list of RVT without persistance */
     xmlDocPtr       persistRVT;		/* list of persistant RVTs */
+    int             ctxtflags;          /* context processing flags */
 };
 
 /**

@@ -13,7 +13,7 @@
           application for which the documentation is written:
           <pre class="programlisting">
 
-&lt;sect1 id=&quot;intro&quot;&gt;
+&lt;sect1 id="intro"&gt;
  &lt;title&gt;Introduction&lt;/title&gt;
  &lt;para&gt;
   blah-blah-blah This document describes version 1.0.53 of gfoo.
@@ -31,7 +31,7 @@
 	</p></div><div class="sect3"><a name="license2"></a><div class="titlepage"><div><h4 class="title"><a name="license2"></a>Software license</h4></div></div><p> 
          All GNOME applications must contain information about the
        license (for software, not for documentation), either in the
-       &quot;About&quot; box or in the manual. 
+       "About" box or in the manual. 
        </p></div><div class="sect3"><a name="bugtraq"></a><div class="titlepage"><div><h4 class="title"><a name="bugtraq"></a> Bug reporting</h4></div></div><p> 
 	  Application documentation should give an address for
         reporting bugs and for submitting comments about the

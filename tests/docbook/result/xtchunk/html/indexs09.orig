@@ -32,7 +32,7 @@
         of the <i>GNOME Applets</i> book, you must
         remember to add <tt>&lt;legalnotice&gt;</tt> and
         <tt>&lt;copyright&gt;</tt> sections.
-      </p></div><div class="sect2"><a name="appletmenu"></a><div class="titlepage"><div><h3 class="title"><a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2929573"></a>Developer Information</h3><p>
+      </p></div><div class="sect2"><a name="appletmenu"></a><div class="titlepage"><div><h3 class="title"><a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2940608"></a>Developer Information</h3><p>
           This section is for developers.  Documentation authors
           generally do not need to know this material.
         </p></div><p>
@@ -45,8 +45,8 @@
         To add an applet's manual to its applet menu, use:
 <pre class="programlisting">
 /* add an item to the applet menu */
-applet_widget_register_callback(APPLET_WIDGET(applet), &quot;manual&quot;,
-_(&quot;Manual&quot;), &amp;open_manual, NULL);
+applet_widget_register_callback(APPLET_WIDGET(applet), "manual",
+_("Manual"), &amp;open_manual, NULL);
 </pre>
         Here the second argument is an arbitrary name for the
         callback, the third argument is the label which will appear
@@ -62,8 +62,8 @@ _(&quot;Manual&quot;), &amp;open_manual, NULL);
         item to the applet's menu.  This is a
         stock menu item and is done:
 <pre class="programlisting">
-applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
-       GNOME_STOCK_MENU_ABOUT, _(&quot;About&quot;), &amp;my_applet_cb_about,
+applet_widget_register_stock_callback (APPLET_WIDGET(applet), "about",
+       GNOME_STOCK_MENU_ABOUT, _("About"), &amp;my_applet_cb_about,
        NULL);
 </pre>
       </p><p>

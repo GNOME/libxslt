@@ -6,11 +6,11 @@
         <pre class="programlisting">
 
 
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
         &lt;!-- if not using PNG graphic, replace reference above with
-             .....PUBLIC &quot;-//OASIS//DTD DocBook V3.1//EN&quot;[
+             .....PUBLIC "-//OASIS//DTD DocBook V3.1//EN"[
          --&gt;
-&lt;!ENTITY version &quot;1.0.53&quot;&gt;
+&lt;!ENTITY version "1.0.53"&gt;
         &lt;!-- replace version above with actual application version number--&gt;
 	&lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 ]&gt;
@@ -20,7 +20,7 @@
   Documentation Project Team. Please use it for writing GNOME
   documentation, making obvious changes. In particular, all the words
   written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for &quot;legalnotice&quot;, please leave the reference
+  replaced. As for "legalnotice", please leave the reference
   unchanged.
 
   Remember that this is a guide, rather than a perfect model to follow
@@ -30,7 +30,7 @@
 
 &lt;!-- =============Document Header ============================= --&gt;
 
-&lt;article id=&quot;index&quot;&gt; &lt;!-- please do not change the id --&gt;
+&lt;article id="index"&gt; &lt;!-- please do not change the id --&gt;
 
   &lt;artheader&gt;
     &lt;title&gt;MY-GNOME-APP&lt;/title&gt;
@@ -49,7 +49,7 @@
    --&gt;
 
   &lt;!-- do not put authorname in the header except in copyright - use
-  section &quot;authors&quot; below --&gt;
+  section "authors" below --&gt;
 
     &lt;legalnotice&gt;
       &lt;para&gt;
@@ -60,8 +60,8 @@
         Invariant Sections, no Front-Cover Texts, and no Back-Cover
         Texts. You may obtain a copy of the &lt;citetitle&gt;GNU Free
         Documentation License&lt;/citetitle&gt; from the Free Software
-        Foundation by visiting &lt;ulink type=&quot;http&quot;
-        url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing
+        Foundation by visiting &lt;ulink type="http"
+        url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing
         to: Free Software Foundation, Inc., 59 Temple Place - Suite
         330, Boston, MA 02111-1307, USA.
       &lt;/para&gt;
@@ -84,7 +84,7 @@
  &lt;!-- ============= Document Body ============================= --&gt;
 
  &lt;!-- ============= Introduction ============================== --&gt;
-  &lt;sect1 id=&quot;intro&quot;&gt;
+  &lt;sect1 id="intro"&gt;
     &lt;title&gt;Introduction&lt;/title&gt;
 
     &lt;para&gt;
@@ -125,7 +125,7 @@
  &lt;!-- ================ Usage ================================ --&gt;
  &lt;!-- This section should describe basic usage of the application. --&gt;
 
-  &lt;sect1 id=&quot;usage&quot;&gt;
+  &lt;sect1 id="usage"&gt;
     &lt;title&gt;Using MY-GNOME-APP&lt;/title&gt;
     &lt;para&gt;
       &lt;application&gt;MY-GNOME-APP&lt;/application&gt; can be used to produce a
@@ -137,19 +137,19 @@
     &lt;/para&gt;
 
     &lt;!-- ========= Basic Usage =========================== --&gt;
-    &lt;sect2 id=&quot;mainwin&quot;&gt;
+    &lt;sect2 id="mainwin"&gt;
       &lt;title&gt;Basic usage&lt;/title&gt;
       &lt;para&gt;
         Starting &lt;application&gt;MY-GNOME-APP&lt;/application&gt; opens the
         &lt;interface&gt;Main window&lt;/interface&gt;, shown in &lt;xref
-        linkend=&quot;mainwindow-fig&quot;&gt;. The window is at first empty.
+        linkend="mainwindow-fig"&gt;. The window is at first empty.
 
         &lt;!-- ==== Figure ==== --&gt;
-        &lt;figure id=&quot;mainwindow-fig&quot;&gt;
+        &lt;figure id="mainwindow-fig"&gt;
 	  &lt;title&gt;MY-GNOME-APP Main Window&lt;/title&gt;
 	  &lt;screenshot&gt;
 	    &lt;screeninfo&gt;MY-GNOME-APP Main Window&lt;/screeninfo&gt;
-	    &lt;graphic fileref=&quot;SCREENSHOT&quot; format=&quot;png&quot; srccredit=&quot;ME&quot;&gt;
+	    &lt;graphic fileref="SCREENSHOT" format="png" srccredit="ME"&gt;
             &lt;/graphic&gt;
 	  &lt;/screenshot&gt;
 	&lt;/figure&gt;
@@ -157,13 +157,13 @@
       &lt;/para&gt; 
 
 
- &lt;!-- For this app, one could put &quot;proving&quot; or &quot;edit&quot; (probably even
+ &lt;!-- For this app, one could put "proving" or "edit" (probably even
       both of them) as sect2's seperate from the main window
       section. Since they were both so closely involved with the main
       window, I decided to have them as sect3's isntead. Judgement
       call. --&gt;
 
-      &lt;sect3 id=&quot;proving&quot;&gt;
+      &lt;sect3 id="proving"&gt;
 	&lt;title&gt;Proving a Theorem&lt;/title&gt;
 	&lt;para&gt;
           To get a proof of a theorem, select
@@ -242,7 +242,7 @@
           &lt;/para&gt;
 	&lt;/warning&gt;
       &lt;/sect3&gt;
-      &lt;sect3 id=&quot;editing&quot;&gt;
+      &lt;sect3 id="editing"&gt;
 	&lt;title&gt;Editing Proofs&lt;/title&gt;
 	&lt;para&gt;
           Once you have proven the theorem, it will be displayed in
@@ -295,16 +295,16 @@
       =============================================================  --&gt;
 
 
-    &lt;sect2 id=&quot;toolbar&quot;&gt;
+    &lt;sect2 id="toolbar"&gt;
       &lt;title&gt;Toolbar&lt;/title&gt;
       &lt;para&gt;
-        The toolbar (shown in &lt;xref linkend=&quot;figure-usage-toolbar&quot;&gt;)
+        The toolbar (shown in &lt;xref linkend="figure-usage-toolbar"&gt;)
         provides access to several commonly used routines.
-        &lt;figure id=&quot;figure-usage-toolbar&quot;&gt;
+        &lt;figure id="figure-usage-toolbar"&gt;
 	  &lt;title&gt;MY-GNOME-APP Toolbar&lt;/title&gt;
 	  &lt;screenshot&gt;
 	    &lt;screeninfo&gt;MY-GNOME-APP Toolbar&lt;/screeninfo&gt;
-	    &lt;graphic fileref=&quot;usage-toolbar.png&quot; format=&quot;png&quot;&gt;&lt;/graphic&gt;
+	    &lt;graphic fileref="usage-toolbar.png" format="png"&gt;&lt;/graphic&gt;
 	  &lt;/screenshot&gt;
 	&lt;/figure&gt;
         &lt;variablelist&gt;
@@ -340,7 +340,7 @@
     &lt;/sect2&gt;
     &lt;!-- ========= Menus =========================== --&gt; 
 
-    &lt;sect2 id=&quot;menubar&quot;&gt;
+    &lt;sect2 id="menubar"&gt;
 
        &lt;!-- Describing the menubar ensures comprehensive feature
        coverage. Nest itemizedlists inside variablelists so that each
@@ -479,7 +479,7 @@
 		  &lt;para&gt;
 	      &lt;guimenuitem&gt;Preferences&amp;hellip;&lt;/guimenuitem&gt;
 	       &amp;mdash; This opens the &lt;link
-	       linkend=&quot;prefs&quot;&gt;&lt;interface&gt;Preferences
+	       linkend="prefs"&gt;&lt;interface&gt;Preferences
 	       Dialog&lt;/interface&gt;&lt;/link&gt;, which allows you to configure
 	       many settings.
 	     &lt;/para&gt;
@@ -532,7 +532,7 @@
 
  &lt;!-- ============= Customization ============================= --&gt;
 
- &lt;sect1 id=&quot;prefs&quot;&gt;
+ &lt;sect1 id="prefs"&gt;
   &lt;title&gt;Customization&lt;/title&gt;
   &lt;para&gt;
    To change the application settings, select
@@ -541,15 +541,15 @@
     &lt;guimenuitem&gt;Preferences...&lt;/guimenuitem&gt;
    &lt;/menuchoice&gt;.  This opens the
    &lt;interface&gt;Preferences&lt;/interface&gt; dialog, shown in &lt;xref
-   linkend=&quot;preferences-fig&quot;&gt;.
+   linkend="preferences-fig"&gt;.
   &lt;/para&gt;
 
-  &lt;figure id=&quot;preferences-fig&quot;&gt;
+  &lt;figure id="preferences-fig"&gt;
    &lt;title&gt;Preferences Dialog&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;Preferences Dialog&lt;/screeninfo&gt;
-    &lt;graphic fileref=&quot;SCREENSHOT&quot; format=&quot;png&quot;
-     srccredit=&quot;ME&quot;&gt;
+    &lt;graphic fileref="SCREENSHOT" format="png"
+     srccredit="ME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
   &lt;/figure&gt;
@@ -635,7 +635,7 @@
  &lt;!-- This section should describe known bugs and limitations of
       the program if there are any - please be frank and list all
       problems you know of. --&gt;
- &lt;sect1 id=&quot;bugs&quot;&gt;
+ &lt;sect1 id="bugs"&gt;
   &lt;title&gt;Known Bugs and Limitations&lt;/title&gt;
   &lt;para&gt;
    This application has no known bugs.
@@ -645,18 +645,18 @@
 
 &lt;!-- ============= Authors ================================ --&gt;
 
- &lt;sect1 id=&quot;authors&quot;&gt;
+ &lt;sect1 id="authors"&gt;
   &lt;title&gt;Authors&lt;/title&gt;
   &lt;para&gt;
    &lt;application&gt;MY-GNOME-APP&lt;/application&gt; was written by GNOME-HACKER
    (&lt;email&gt;hacker@gnome.org&lt;/email&gt;). To find more information about
    &lt;application&gt;MY-GNOME-APP&lt;/application&gt;, please visit the &lt;ulink
-   url=&quot;http://www.my-gnome-app.org&quot; type=&quot;http&quot;&gt;MY-GNOME-APP Web
+   url="http://www.my-gnome-app.org" type="http"&gt;MY-GNOME-APP Web
    page&lt;/ulink&gt;.  Please send all comments, suggestions, and bug
-   reports to the &lt;ulink url=&quot;http://bugs.gnome.org&quot; type=&quot;http&quot;&gt;GNOME
+   reports to the &lt;ulink url="http://bugs.gnome.org" type="http"&gt;GNOME
    bug tracking database&lt;/ulink&gt;. (Instructions for submitting bug
    reports can be found &lt;ulink
-   url=&quot;http://bugs.gnome.org/Reporting.html&quot; type=&quot;http&quot;&gt;
+   url="http://bugs.gnome.org/Reporting.html" type="http"&gt;
    on-line&lt;/ulink&gt;.)  You can also use &lt;application&gt;Bug Report
    Tool&lt;/application&gt; (&lt;command&gt;bug-buddy&lt;/command&gt;), available in the
    &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of &lt;guimenu&gt;Main
@@ -666,12 +666,12 @@
   &lt;para&gt;
    This manual was written by ME
    (&lt;email&gt;MYNAME@MYADDRESS&lt;/email&gt;). Please send all comments and
-   suggestions regarding this manual to the &lt;ulink type=&quot;http&quot;
-   url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;GNOME Documentation 
+   suggestions regarding this manual to the &lt;ulink type="http"
+   url="http://developer.gnome.org/projects/gdp"&gt;GNOME Documentation 
    Project&lt;/ulink&gt; by sending an email to 
    &lt;email&gt;docs@gnome.org&lt;/email&gt;. You can also add your comments online 
-   by using the &lt;ulink type=&quot;http&quot; 
-   url=&quot;http://www.gnome.org/gdp/doctable/&quot;&gt;GNOME Documentation Status
+   by using the &lt;ulink type="http" 
+   url="http://www.gnome.org/gdp/doctable/"&gt;GNOME Documentation Status
    Table&lt;/ulink&gt;.
   &lt;/para&gt;
 
@@ -690,7 +690,7 @@
 
  &lt;!-- ============= Application License ============================= --&gt;
 
- &lt;sect1 id=&quot;license&quot;&gt;
+ &lt;sect1 id="license"&gt;
   &lt;title&gt;License&lt;/title&gt;
   &lt;para&gt;
    This program is free software; you can redistribute it and/or
@@ -710,8 +710,8 @@
    included as an appendix to the &lt;citetitle&gt;GNOME Users
    Guide&lt;/citetitle&gt;.  You may also obtain a copy of the
    &lt;citetitle&gt;GNU General Public License&lt;/citetitle&gt; from the Free
-   Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-   url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to
+   Software Foundation by visiting &lt;ulink type="http"
+   url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to
    &lt;address&gt;
     Free Software Foundation, Inc.
     &lt;street&gt;59 Temple Place&lt;/street&gt; - Suite 330

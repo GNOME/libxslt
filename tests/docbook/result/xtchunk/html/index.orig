@@ -83,14 +83,14 @@
         irc.gnome.org is another option for contacting GDP members.
        </p></div></div><div class="sect2"><a name="notation"></a><div class="titlepage"><div><h3 class="title"><a name="notation"></a>Notation and Conventions</h3></div></div><p>
         This Handbook uses the following notation:
-        <div class="informaltable" id="id2807857"><a name="id2807857"></a><table border="0"><colgroup><col><col></colgroup><tbody><tr><td><tt>/usr/bin</tt></td><td>
+        <div class="informaltable" id="id2814391"><a name="id2814391"></a><table border="0"><colgroup><col><col></colgroup><tbody><tr><td><tt>/usr/bin</tt></td><td>
                   Directory
                 </td></tr><tr><td><tt>foo.sgml</tt></td><td>
                   Filename
                 </td></tr><tr><td><b>command</b></td><td>
                   Command or text that would be typed.
                 </td></tr><tr><td><b><i><tt>replaceable</tt></i></b></td><td>
-                  &quot;Variable&quot; text that can be replaced.
+                  "Variable" text that can be replaced.
                 </td></tr><tr><td><tt>Program or Doc Code</tt></td><td>Program or document code</td></tr></tbody></table></div>
       </p></div><div class="sect2"><a name="about"></a><div class="titlepage"><div><h3 class="title"><a name="about"></a>About This Handbook</h3></div></div><p>
        This Handbook is a guide for both writing documentation for

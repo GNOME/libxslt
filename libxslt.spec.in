@@ -85,8 +85,8 @@ rm -fr %{buildroot}
 %doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
 %doc doc/libxslt-api.xml
 %doc doc/libexslt-api.xml
-%doc %{_mandir}/man4/libxslt.4*
-%doc %{_mandir}/man4/libexslt.4*
+%doc %{_mandir}/man3/libxslt.3*
+%doc %{_mandir}/man3/libexslt.3*
 %{_libdir}/lib*.so
 %{_libdir}/*a
 %{_libdir}/*.sh

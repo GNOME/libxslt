@@ -118,7 +118,7 @@ static xmlChar *strparams[MAX_PARAMETERS + 1];
 static int nbstrparams = 0;
 static xmlChar *paths[MAX_PATHS + 1];
 static int nbpaths = 0;
-static const char *output = NULL;
+static char *output = NULL;
 static int errorno = 0;
 static const char *writesubtree = NULL;
 
@@ -555,7 +555,7 @@ main(int argc, char **argv)
 	    output = xmlCanonicPath(argv[i]);
             if (output == NULL)
 #endif
-		output = xmlStrdup(argv[i]);
+		output = (char *) xmlStrdup((xmlChar *) argv[i]);
         } else if ((!strcmp(argv[i], "-V")) ||
                    (!strcmp(argv[i], "-version")) ||
                    (!strcmp(argv[i], "--version"))) {

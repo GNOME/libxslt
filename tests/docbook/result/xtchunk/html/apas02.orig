@@ -14,8 +14,8 @@
         <pre class="programlisting">
 
 
-&lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
- &lt;!entity APPLETNAME.sgml SYSTEM &quot;applet_template_1.sgml&quot;&gt;
+&lt;!DOCTYPE Article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+ &lt;!entity APPLETNAME.sgml SYSTEM "applet_template_1.sgml"&gt;
         &lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 ]&gt;
 
@@ -23,7 +23,7 @@
   Documentation Project Team. Please use it for writing GNOME
   documentation, making obvious changes. In particular, all the words
   written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for &quot;legalnotice&quot;, please leave the reference
+  replaced. As for "legalnotice", please leave the reference
   unchanged,make sure to add/remove trademarks to the list as
   appropriate for your document.
 
@@ -31,7 +31,7 @@
   thanks ;-).
 --&gt;
 
-&lt;article id=&quot;index&quot;&gt; &lt;!-- please do not change the id --&gt;
+&lt;article id="index"&gt; &lt;!-- please do not change the id --&gt;
 
  &lt;!-- ============= Document Header ============================= --&gt;
  &lt;artheader&gt; 
@@ -51,7 +51,7 @@
    --&gt;
 
   &lt;!-- do not put authorname in the header except in copyright - use
-  section &quot;authors&quot; below --&gt;
+  section "authors" below --&gt;
 
   &lt;legalnotice&gt;
    &lt;para&gt;
@@ -61,8 +61,8 @@
     by the Free Software Foundation with no Invariant Sections, no
     Front-Cover Texts, and no Back-Cover Texts. You may obtain a copy
     of the &lt;citetitle&gt;GNU Free Documentation License&lt;/citetitle&gt; from
-    the Free Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to:
+    the Free Software Foundation by visiting &lt;ulink type="http"
+    url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to:
     Free Software Foundation, Inc., 59 Temple Place - Suite 330,
     Boston, MA 02111-1307, USA.
    &lt;/para&gt;
@@ -95,12 +95,12 @@
 
         &lt;!--  Template Version: 1.0.1  (do not remove this line) --&gt;
 
- &lt;sect1 id=&quot;APPLET&quot;&gt;
+ &lt;sect1 id="APPLET"&gt;
   &lt;title&gt;APPLET Applet&lt;/title&gt;
 
   &lt;para&gt;
    &lt;application&gt;APPLET&lt;/application&gt; applet, shown in &lt;xref
-   linkend=&quot;APPLETapplet-fig&quot;&gt;, allows you to &amp;hellip;.  To add this
+   linkend="APPLETapplet-fig"&gt;, allows you to &amp;hellip;.  To add this
    applet to a &lt;interface&gt;Panel&lt;/interface&gt;, 
    right-click on the &lt;interface&gt;Panel&lt;/interface&gt; and choose
    &lt;menuchoice&gt;
@@ -112,18 +112,18 @@
    &lt;/menuchoice&gt;.
   &lt;/para&gt;
 
-  &lt;figure id=&quot;APPLETapplet-fig&quot;&gt;
+  &lt;figure id="APPLETapplet-fig"&gt;
    &lt;title&gt;APPLET Applet&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;APPLET Applet&lt;/screeninfo&gt;
-    &lt;graphic format=&quot;png&quot; fileref=&quot;APPLET_applet&quot; 
-    srccredit=&quot;YOURNAME&quot;&gt;
+    &lt;graphic format="png" fileref="APPLET_applet" 
+    srccredit="YOURNAME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
   &lt;/figure&gt;
 
   &lt;!-- ============= Usage  ================================ --&gt;
-  &lt;sect2 id=&quot;APPLET-usage&quot;&gt;
+  &lt;sect2 id="APPLET-usage"&gt;
    &lt;title&gt;Usage&lt;/title&gt;
    &lt;para&gt;
     (Place a short description of how to use the applet here.)
@@ -137,7 +137,7 @@
      &lt;listitem&gt;
       &lt;para&gt;
        &lt;guimenuitem&gt;Properties&amp;hellip;&lt;/guimenuitem&gt; &amp;mdash;
-       opens the &lt;link linkend=&quot;APPLET-prefs&quot;&gt;
+       opens the &lt;link linkend="APPLET-prefs"&gt;
        &lt;guilabel&gt;Properties&lt;/guilabel&gt;&lt;/link&gt; dialog.
       &lt;/para&gt;
      &lt;/listitem&gt;
@@ -164,23 +164,23 @@
 
 
   &lt;!-- ============= Customization ============================= --&gt;
-  &lt;sect2 id=&quot;APPLET-prefs&quot;&gt;
+  &lt;sect2 id="APPLET-prefs"&gt;
     &lt;title&gt;Customization&lt;/title&gt;
     &lt;para&gt;
       You can customize &lt;application&gt;APPLET&lt;/application&gt;
       applet by right-clicking on it and choosing
       &lt;guimenuitem&gt;Properties&amp;hellip;&lt;/guimenuitem&gt;. This will open the
       &lt;interface&gt;Properties&lt;/interface&gt; dialog(shown in &lt;xref
-      linkend=&quot;APPLET-settings-fig&quot;&gt;), which allows you to
+      linkend="APPLET-settings-fig"&gt;), which allows you to
       change various settings.
     &lt;/para&gt;
 
-    &lt;figure id=&quot;APPLET-settings-fig&quot;&gt;
+    &lt;figure id="APPLET-settings-fig"&gt;
      &lt;title&gt;Properties dialog&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Properties dialog&lt;/screeninfo&gt;
-      &lt;graphic format=&quot;png&quot; fileref=&quot;APPLET_settings&quot;
-      srccredit=&quot;YOURNAME&quot;&gt;
+      &lt;graphic format="png" fileref="APPLET_settings"
+      srccredit="YOURNAME"&gt;
       &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
@@ -226,7 +226,7 @@
   &lt;!-- This section should describe known bugs and limitations of
        the program if there are any - please be frank and list all
        problems you know of --&gt;
-  &lt;sect2 id=&quot;bugs&quot;&gt;
+  &lt;sect2 id="bugs"&gt;
    &lt;title&gt;Known Bugs and Limitations&lt;/title&gt;
    &lt;para&gt;
     This applet has no known bugs.
@@ -236,16 +236,16 @@
 
   &lt;!-- ============= Authors ================================ --&gt;
 
-  &lt;sect2 id=&quot;authors&quot;&gt;
+  &lt;sect2 id="authors"&gt;
    &lt;title&gt;Authors&lt;/title&gt;
    &lt;para&gt;
     &lt;application&gt;APPLET&lt;/application&gt; was written by GNOME-HACKER
     (&lt;email&gt;hacker@gnome.org&lt;/email&gt;).  Please send all comments,
     suggestions, and bug 
-    reports to the &lt;ulink url=&quot;http://bugs.gnome.org&quot; type=&quot;http&quot;&gt;GNOME
+    reports to the &lt;ulink url="http://bugs.gnome.org" type="http"&gt;GNOME
     bug tracking database&lt;/ulink&gt;. (Instructions for submitting bug
     reports can be found &lt;ulink
-    url=&quot;http://bugs.gnome.org/Reporting.html&quot; type=&quot;http&quot;&gt;
+    url="http://bugs.gnome.org/Reporting.html" type="http"&gt;
     on-line&lt;/ulink&gt;.  You can also use &lt;application&gt;Bug Report
     Tool&lt;/application&gt; (&lt;command&gt;bug-buddy&lt;/command&gt;), available in the
     &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of &lt;guimenu&gt;Main
@@ -255,12 +255,12 @@
    &lt;para&gt;
     This manual was written by ME
     (&lt;email&gt;MYNAME@MYADDRESS&lt;/email&gt;). Please send all comments and
-    suggestions regarding this manual to the &lt;ulink type=&quot;http&quot;
-    url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;GNOME Documentation
+    suggestions regarding this manual to the &lt;ulink type="http"
+    url="http://developer.gnome.org/projects/gdp"&gt;GNOME Documentation
     Project&lt;/ulink&gt;  by sending an email to
     &lt;email&gt;docs@gnome.org&lt;/email&gt;. You can also submit comments online
-    by using the &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.gnome.org/gdp/doctable/&quot;&gt;GNOME Documentation
+    by using the &lt;ulink type="http"
+    url="http://www.gnome.org/gdp/doctable/"&gt;GNOME Documentation
     Status Table&lt;/ulink&gt;.
    &lt;/para&gt;
 
@@ -279,7 +279,7 @@
 
   &lt;!-- ============= Application License ============================= --&gt;
 
-  &lt;sect2 id=&quot;license&quot;&gt;
+  &lt;sect2 id="license"&gt;
    &lt;title&gt;License&lt;/title&gt;
    &lt;para&gt;
     This program is free software; you can redistribute it and/or
@@ -299,8 +299,8 @@
     included as an appendix to the &lt;citetitle&gt;GNOME Users
     Guide&lt;/citetitle&gt;.  You may also obtain a copy of the
     &lt;citetitle&gt;GNU General Public License&lt;/citetitle&gt; from the Free
-    Software Foundation by visiting &lt;ulink type=&quot;http&quot;
-    url=&quot;http://www.fsf.org&quot;&gt;their Web site&lt;/ulink&gt; or by writing to
+    Software Foundation by visiting &lt;ulink type="http"
+    url="http://www.fsf.org"&gt;their Web site&lt;/ulink&gt; or by writing to
     &lt;address&gt;
      Free Software Foundation, Inc.
      &lt;street&gt;59 Temple Place&lt;/street&gt; - Suite 330

@@ -18,12 +18,12 @@
       </p><p>
         <pre class="programlisting">
 
-&lt;!DOCTYPE book PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
-&lt;!ENTITY TEMPLATE-APPLET SYSTEM &quot;gnome-applet-template.sgml.part&quot;&gt;
+&lt;!DOCTYPE book PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+&lt;!ENTITY TEMPLATE-APPLET SYSTEM "gnome-applet-template.sgml.part"&gt;
 
 ]&gt;
 
-&lt;book id=&quot;gnome-applets&quot;&gt;
+&lt;book id="gnome-applets"&gt;
 
  &lt;bookinfo&gt;
   &lt;title&gt;GNOME Applets&lt;/title&gt;
@@ -72,11 +72,11 @@
  &lt;/bookinfo&gt;
 
  &lt;!-- #### Introduction ###### --&gt;
- &lt;chapter id=&quot;applets-intro&quot;&gt;
+ &lt;chapter id="applets-intro"&gt;
   &lt;title&gt;Introduction&lt;/title&gt; 
 
   &lt;!-- #### Intro | What Are Applets? ###### --&gt;
-  &lt;sect1 id=&quot;applets-what-are&quot;&gt;
+  &lt;sect1 id="applets-what-are"&gt;
    &lt;title&gt;What Are Applets?&lt;/title&gt; 
    &lt;para&gt;
     Applets are one of the most popular and useful objects you can add
@@ -108,17 +108,17 @@
    &lt;/para&gt;
 
    &lt;para&gt;
-    &lt;figure id=&quot;example-applets-fig&quot;&gt;
+    &lt;figure id="example-applets-fig"&gt;
      &lt;title&gt;Example Applets&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Example Applets&lt;/screeninfo&gt;
-       &lt;graphic fileref=&quot;example_applets&quot; format=&quot;png&quot;
-       srccredit=&quot;muet&quot;&gt;
+       &lt;graphic fileref="example_applets" format="png"
+       srccredit="muet"&gt;
        &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
     Several example applets are shown in &lt;xref
-    linkend=&quot;example-applets-fig&quot;&gt;.  From left to right, they are: (1)
+    linkend="example-applets-fig"&gt;.  From left to right, they are: (1)
     &lt;application&gt;Mixer Applet&lt;/application&gt;, which allows you to turn
     on/off sound and control its volume by clicking on the applet.  (2)
     &lt;application&gt;Sound Monitor&lt;/application&gt; Applet, which displays
@@ -140,8 +140,8 @@
     &lt;interface&gt;Panels&lt;/interface&gt; and using them. The following
     chapters go through each of the standard GNOME applets describing
     them in detail.  There are also additional applets which can be
-    downloaded off the Web.   See &lt;ulink type=&quot;http&quot;
-     url=&quot;http://www.gnome.org/applist/list-martin.phtml&quot;&gt;The GNOME
+    downloaded off the Web.   See &lt;ulink type="http"
+     url="http://www.gnome.org/applist/list-martin.phtml"&gt;The GNOME
     Software Map&lt;/ulink&gt; for lists of additional GNOME applications
     and applets. 
    &lt;/para&gt;
@@ -153,10 +153,10 @@
   &lt;/sect1&gt;
 
   &lt;!-- #### Intro | Adding, Moving, and Removing Applets ###### --&gt;
-  &lt;sect1 id=&quot;applet-add-move-replace&quot;&gt;
+  &lt;sect1 id="applet-add-move-replace"&gt;
    &lt;title&gt;Adding, Moving, and Removing Applets&lt;/title&gt;
 
-   &lt;sect2 id=&quot;adding-applets&quot;&gt;   
+   &lt;sect2 id="adding-applets"&gt;   
     &lt;title&gt;Adding Applets to a Panel&lt;/title&gt;
     &lt;para&gt;
      To add an applet to a &lt;interface&gt;Panel&lt;/interface&gt;, right-click
@@ -169,7 +169,7 @@
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;moving-applets&quot;&gt;
+   &lt;sect2 id="moving-applets"&gt;
     &lt;title&gt;Moving Applets In or Between Panels&lt;/title&gt;
     &lt;para&gt;
      It is easy to move applets in a &lt;interface&gt;Panel&lt;/interface&gt; or
@@ -188,12 +188,12 @@
      other objects, the behavior depends on the global preferences
      you have set for your &lt;interface&gt;Panels&lt;/interface&gt; in the
      &lt;application&gt;GNOME Control Center&lt;/application&gt;: the applet you are
-     moving can switch places with other objects, &quot;push&quot; all objects
-     it meets, or &quot;jump&quot; over all other objects without disturbing
+     moving can switch places with other objects, "push" all objects
+     it meets, or "jump" over all other objects without disturbing
      them. You can also override the default behavior by holding
-     &lt;keycap&gt;Shift&lt;/keycap&gt; button (for &quot;push&quot; mode),
-     &lt;keycap&gt;Ctrl&lt;/keycap&gt; (for &quot;switched&quot; mode), or
-     &lt;keycap&gt;Alt&lt;/keycap&gt; (for &quot;free&quot; mode, i.e. jumping other other
+     &lt;keycap&gt;Shift&lt;/keycap&gt; button (for "push" mode),
+     &lt;keycap&gt;Ctrl&lt;/keycap&gt; (for "switched" mode), or
+     &lt;keycap&gt;Alt&lt;/keycap&gt; (for "free" mode, i.e. jumping other other
      objects without disturbing them) button while dragging.
     &lt;/para&gt;
     &lt;para&gt;
@@ -208,7 +208,7 @@
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;removing-applets&quot;&gt;
+   &lt;sect2 id="removing-applets"&gt;
     &lt;title&gt;Removing Applets from a Panel&lt;/title&gt; 
     &lt;para&gt;  
      To remove an applet from a &lt;interface&gt;Panel&lt;/interface&gt;,
@@ -220,7 +220,7 @@
 
 
   &lt;!-- #### Intro | The Right-Click Pop-Up Menu ###### --&gt;
-  &lt;sect1 id=&quot;right-click-pop-up-menu&quot;&gt;
+  &lt;sect1 id="right-click-pop-up-menu"&gt;
    &lt;title&gt;The Right-Click Pop-Up Menu&lt;/title&gt;
    &lt;para&gt;
     Clicking the right mouse button on any applet brings up
@@ -229,7 +229,7 @@
     often has additional items which vary depending on the particular
     applet. 
    &lt;/para&gt;
-   &lt;sect2 id=&quot;standard-right-click-items&quot;&gt; 
+   &lt;sect2 id="standard-right-click-items"&gt; 
     &lt;title&gt;Standard Pop-Up Items&lt;/title&gt;
     &lt;para&gt;
      All applets should have the following items in their right-click
@@ -297,7 +297,7 @@
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;applet-properties-dialog&quot;&gt; 
+   &lt;sect2 id="applet-properties-dialog"&gt; 
     &lt;title&gt;The Applet Properties Dialog&lt;/title&gt;
     &lt;para&gt;
      Many applets have customizable properties.  These applets will
@@ -305,12 +305,12 @@
      right-click &lt;guimenu&gt;pop-up menu&lt;/guimenu&gt; which brings up the
      &lt;interface&gt;Properties&lt;/interface&gt; dialog where you can alter the 
      appearance or behaviour of the applet.
-     &lt;figure id=&quot;example-props-dialog-fig&quot;&gt;
+     &lt;figure id="example-props-dialog-fig"&gt;
       &lt;title&gt;An Example Applet Properties Dialog&lt;/title&gt;
       &lt;screenshot&gt;
        &lt;screeninfo&gt;An Example Applets Properties Dialog&lt;/screeninfo&gt;
-       &lt;graphic fileref=&quot;applet_props_dialog&quot; format=&quot;png&quot;
-        srccredit=&quot;muet&quot;&gt;
+       &lt;graphic fileref="applet_props_dialog" format="png"
+        srccredit="muet"&gt;
        &lt;/graphic&gt;
       &lt;/screenshot&gt;
      &lt;/figure&gt;
@@ -357,7 +357,7 @@
     &lt;/para&gt;
    &lt;/sect2&gt;
  
-   &lt;sect2 id=&quot;common-right-click-items&quot;&gt; 
+   &lt;sect2 id="common-right-click-items"&gt; 
     &lt;title&gt;Other Common Pop-Up Items&lt;/title&gt;
     &lt;para&gt;
      Many applets also have one or more of the following items in their
@@ -398,13 +398,13 @@
    &lt;/sect2&gt;
   &lt;/sect1&gt;
   
-  &lt;sect1 id=&quot;feedback&quot;&gt;
+  &lt;sect1 id="feedback"&gt;
    &lt;title&gt;Feedback&lt;/title&gt;
-   &lt;sect2 id=&quot;reporting-bugs&quot;&gt; 
+   &lt;sect2 id="reporting-bugs"&gt; 
     &lt;title&gt;Reporting Applet Bugs&lt;/title&gt;
     &lt;para&gt;
-     GNOME users are encouraged to report bugs to &lt;ulink type=&quot;http&quot;
-     url=&quot;http://bugs.gnome.org&quot;&gt;The GNOME Bug Tracking
+     GNOME users are encouraged to report bugs to &lt;ulink type="http"
+     url="http://bugs.gnome.org"&gt;The GNOME Bug Tracking
      System&lt;/ulink&gt;.  The easiest way to submit bugs is to use the
      &lt;application&gt;Bug Report Tool&lt;/application&gt; program by selecting
      &lt;menuchoice&gt;
@@ -416,7 +416,7 @@
      reproduce the the scenario.
     &lt;/para&gt;
    &lt;/sect2&gt;
-   &lt;sect2 id=&quot;documentation-feedback&quot;&gt; 
+   &lt;sect2 id="documentation-feedback"&gt; 
     &lt;title&gt;Providing Feedback&lt;/title&gt;
     &lt;para&gt;
      GNOME users are welcome to provide suggestions for how
@@ -425,27 +425,27 @@
      &lt;application&gt;Bug Report Tool&lt;/application&gt; discussed above.
      Suggestions for documentation changes can be emailed directly to
      the documentation author (whose email should be included in the
-     &quot;Authors&quot; section of the document) or by sending an email to
+     "Authors" section of the document) or by sending an email to
      &lt;email&gt;docs@gnome.org&lt;/email&gt;. 
     &lt;/para&gt;
    &lt;/sect2&gt;
-   &lt;sect2 id=&quot;joining-gnome&quot;&gt;  
+   &lt;sect2 id="joining-gnome"&gt;  
     &lt;title&gt;Joining GNOME&lt;/title&gt;
     &lt;para&gt;
      GNOME is a community project, created by hundreds of programmers,
      documentation writers, icon design artists, web masters, and
      other people, most of whom work on a volunteer basis.  New GNOME
      contributors are always welcome. To join the GNOME team, visit
-     these web sites: developers &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org&quot;&gt;The GNOME Development
-     Site&lt;/ulink&gt;, documentation writers &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org/projects/gdp&quot;&gt;The GNOME Documentation
-     Project&lt;/ulink&gt;, icon design artists &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://gnome-icons.sourceforge.net/&quot;&gt;Gnome Icon Web&lt;/ulink&gt;,
-     general &amp;mdash; &lt;ulink type=&quot;http&quot;
-     url=&quot;http://developer.gnome.org/helping/&quot;&gt;Helping GNOME&lt;/ulink&gt;,
-     or just join the gnome-list email list (see &lt;ulink type=&quot;http&quot;
-     url=&quot;http://www.gnome.org/resources/mailing-lists.html&quot;&gt;GNOME Mailing
+     these web sites: developers &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org"&gt;The GNOME Development
+     Site&lt;/ulink&gt;, documentation writers &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org/projects/gdp"&gt;The GNOME Documentation
+     Project&lt;/ulink&gt;, icon design artists &amp;mdash; &lt;ulink type="http"
+     url="http://gnome-icons.sourceforge.net/"&gt;Gnome Icon Web&lt;/ulink&gt;,
+     general &amp;mdash; &lt;ulink type="http"
+     url="http://developer.gnome.org/helping/"&gt;Helping GNOME&lt;/ulink&gt;,
+     or just join the gnome-list email list (see &lt;ulink type="http"
+     url="http://www.gnome.org/resources/mailing-lists.html"&gt;GNOME Mailing
      Lists&lt;/ulink&gt;) to discuss what you are interested in doing.
     &lt;/para&gt;
    &lt;/sect2&gt;
@@ -453,7 +453,7 @@
  &lt;/chapter&gt;
 
  &lt;!-- ############### Template Applets ##################### --&gt;
- &lt;chapter id=&quot;template-applets&quot;&gt;
+ &lt;chapter id="template-applets"&gt;
   &lt;title&gt;Template Applets&lt;/title&gt;
 
   &amp;TEMPLATE-APPLET
@@ -505,27 +505,27 @@
   &lt;!-- stated in a translation approved by the Foundation. --&gt;
 
   &lt;!-- ###############   GNOMEAPPLET   ############### --&gt;
-  &lt;sect1 id=&quot;GNOMEAPPLET&quot;&gt;
+  &lt;sect1 id="GNOMEAPPLET"&gt;
    &lt;title&gt;GNOMEAPPLET Applet&lt;/title&gt; 
 
    &lt;para&gt; 
     &lt;application&gt;GNOMEAPPLET&lt;/application&gt; applet, shown in &lt;xref
-    linkend=&quot;GNOMEAPPLET-fig&quot;&gt;, does this and that. To learn how to
+    linkend="GNOMEAPPLET-fig"&gt;, does this and that. To learn how to
     add this applet to a &lt;interface&gt;Panel&lt;/interface&gt;, see &lt;xref
-    linkend=&quot;adding-applets&quot;&gt;. 
+    linkend="adding-applets"&gt;. 
    &lt;/para&gt;
   
  
-   &lt;figure id=&quot;GNOMEAPPLET-fig&quot;&gt;
+   &lt;figure id="GNOMEAPPLET-fig"&gt;
    &lt;title&gt;GNOMEAPPLET&lt;/title&gt;
    &lt;screenshot&gt;
     &lt;screeninfo&gt;GNOMEAPPLET&lt;/screeninfo&gt;
-    &lt;graphic format=&quot;png&quot; fileref=&quot;GNOMEAPPLET-fig&quot; srccredit=&quot;ME&quot;&gt;
+    &lt;graphic format="png" fileref="GNOMEAPPLET-fig" srccredit="ME"&gt;
     &lt;/graphic&gt;
    &lt;/screenshot&gt;
    &lt;/figure&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-usage&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-usage"&gt;
     &lt;title&gt;Usage&lt;/title&gt;
     &lt;para&gt;
      This applet does nothing. To use it, just
@@ -533,18 +533,18 @@
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-right-click&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-right-click"&gt;
     &lt;title&gt;Right-Click Pop-Up Menu Items&lt;/title&gt;
     &lt;para&gt; 
      In addition to the standard menu items (see &lt;xref
-     linkend=&quot;standard-right-click-items&quot;&gt;), the right-click pop-up menu has 
+     linkend="standard-right-click-items"&gt;), the right-click pop-up menu has 
      the following items: 
      &lt;itemizedlist&gt; 	
       &lt;listitem&gt;
        &lt;para&gt;
         &lt;guimenuitem&gt;Properties...&lt;/guimenuitem&gt; &amp;mdash; This menu
         item opens the &lt;interface&gt;Properties&lt;/interface&gt; dialog (see
-        &lt;xref linkend=&quot;GNOMEAPPLET-properties&quot;&gt;) which allows you to
+        &lt;xref linkend="GNOMEAPPLET-properties"&gt;) which allows you to
         customize the appearance and behavior of this applet.
        &lt;/para&gt;
       &lt;/listitem&gt;
@@ -552,27 +552,27 @@
        &lt;para&gt;
         &lt;guimenuitem&gt;Run Hello World...&lt;/guimenuitem&gt; &amp;mdash; This
         menu item starts the program &lt;application&gt;Hello
-        World&lt;/application&gt;, used to say &quot;hello&quot; to the world. 
+        World&lt;/application&gt;, used to say "hello" to the world. 
        &lt;/para&gt;
       &lt;/listitem&gt;
      &lt;/itemizedlist&gt;
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-properties&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-properties"&gt;
     &lt;title&gt;Properties&lt;/title&gt;
     &lt;para&gt;
      You can configure &lt;application&gt;GNOMEAPPLET&lt;/application&gt; applet by
      right-clicking on the applet and choosing the
      &lt;guimenuitem&gt;Properties...&lt;/guimenuitem&gt; menu item. This will open the
      &lt;interface&gt;Properties&lt;/interface&gt; dialog, shown in &lt;xref
-     linkend=&quot;GNOMEAPPLET-properties-fig&quot;&gt;.
+     linkend="GNOMEAPPLET-properties-fig"&gt;.
     &lt;/para&gt;
-    &lt;figure id=&quot;GNOMEAPPLET-properties-fig&quot;&gt;
+    &lt;figure id="GNOMEAPPLET-properties-fig"&gt;
      &lt;title&gt;Properties Dialog&lt;/title&gt;
      &lt;screenshot&gt;
       &lt;screeninfo&gt;Properties Dialog&lt;/screeninfo&gt; 
-      &lt;graphic format=&quot;png&quot; fileref=&quot;GNOMEAPPLET-properties&quot; srccredit=&quot;ME&quot;&gt;
+      &lt;graphic format="png" fileref="GNOMEAPPLET-properties" srccredit="ME"&gt;
       &lt;/graphic&gt;
      &lt;/screenshot&gt;
     &lt;/figure&gt;
@@ -588,11 +588,11 @@
      dialog, including descriptions of the &lt;guibutton&gt;OK&lt;/guibutton&gt;,
      &lt;guibutton&gt;Apply&lt;/guibutton&gt;, &lt;guibutton&gt;Cancel&lt;/guibutton&gt;, and
      &lt;guibutton&gt;Help&lt;/guibutton&gt; buttons, see &lt;xref
-     linkend=&quot;applet-properties-dialog&quot;&gt;.
+     linkend="applet-properties-dialog"&gt;.
     &lt;/para&gt;
    &lt;/sect2&gt;
   
-   &lt;sect2 id=&quot;GNOMEAPPLET-bugs&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-bugs"&gt;
     &lt;title&gt; Known Bugs and Limitations&lt;/title&gt;
     &lt;para&gt;
      There are no known bugs in the
@@ -600,7 +600,7 @@
     &lt;/para&gt;
    &lt;/sect2&gt;
 
-   &lt;sect2 id=&quot;GNOMEAPPLET-authors&quot;&gt;
+   &lt;sect2 id="GNOMEAPPLET-authors"&gt;
     &lt;title&gt;Authors&lt;/title&gt;
     &lt;para&gt;
      This applet was writen by HACKER-NAME
@@ -608,7 +608,7 @@
      which you are reading now was written by
      YOUR-NAME &lt;email&gt;YOUR-EMAIL&lt;/email&gt;. For information on submitting
      bug reports and suggestions for improvements, see &lt;xref
-     linkend=&quot;feedback&quot;&gt;. 
+     linkend="feedback"&gt;. 
     &lt;/para&gt;
    &lt;/sect2&gt;
 

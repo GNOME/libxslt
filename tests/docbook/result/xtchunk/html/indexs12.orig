@@ -33,7 +33,7 @@
       </p></div><div class="sect2"><a name="balance"></a><div class="titlepage"><div><h3 class="title"><a name="balance"></a>Achieving a Balanced Style</h3></div></div><p> 
          Just as you need to juggle expert and novice readers,
          you'll have to juggle a number of other extremes as you write:
-         <div class="itemizedlist"><ul><li><p><a name="id2930118"></a>
+         <div class="itemizedlist"><ul><li><p><a name="id2941166"></a>
               Documents should be complete, yet concise.  You should
               describe every feature, but you'll have decide how much
               detail is really necessary.  It's not, for example,
@@ -43,7 +43,7 @@
               you spend fewer words on the obvious, you can spend more
               time clarifying the ambiguous labels and explaining
               items that are more complex.
-            </p></li><li><p><a name="id2930146"></a>
+            </p></li><li><p><a name="id2941193"></a>
               Be engaging and friendly, yet professional. Games
               documents may be less formal than productivity
               application documents (people don't
@@ -52,14 +52,14 @@
               maintain a standard of style which holds the reader's
               interest without resorting to jokes and untranslatable
               allusions or puns.
-           </p></li><li><p><a name="id2930185"></a>
+           </p></li><li><p><a name="id2941232"></a>
               Examples, tips, notes, and screenshots are useful to
               break up long stretches of text, but too many can get in
               the way, and make your documents too choppy to read.
               It's good to provide a screenshot of any dialog windows
               a user might run into, but if a dialog box has several
               tabs, it's not usually necessary to have one for each.
-           </p></li><li><p><a name="id2930208"></a>
+           </p></li><li><p><a name="id2941255"></a>
               The GDP strives to have all of its documentation conform
               to certain standards of style and content, but every
               document (and every writer) is different.  You will need
@@ -101,7 +101,7 @@
         bug reports, writers must check for errors in their documents.
         Poor grammar, bad spelling, and gross technical errors in
         draft documents are fine.  However, if those problems show up
-        in a &quot;real&quot; release, they can count against the credibility of
+        in a "real" release, they can count against the credibility of
         GNOME and Linux.  They'll also make you look bad.
       </p><p>
         There is no substitute for a human proofreader; use a

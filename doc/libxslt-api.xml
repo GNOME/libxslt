@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <api name='libxslt'>
   <files>
-    <file name='extra'>
-     <exports symbol='XSLT_LIBXSLT_NAMESPACE'/>
-     <exports symbol='XSLT_NORM_SAXON_NAMESPACE'/>
-     <exports symbol='XSLT_SAXON_NAMESPACE'/>
-     <exports symbol='XSLT_XALAN_NAMESPACE'/>
-     <exports symbol='XSLT_XT_NAMESPACE'/>
-     <exports symbol='xsltDebug'/>
-     <exports symbol='xsltFunctionNodeSet'/>
-     <exports symbol='xsltRegisterAllExtras'/>
-     <exports symbol='xsltRegisterExtras'/>
+    <file name='documents'>
+     <exports symbol='xsltFindDocument'/>
+     <exports symbol='xsltFreeDocuments'/>
+     <exports symbol='xsltFreeStyleDocuments'/>
+     <exports symbol='xsltLoadDocument'/>
+     <exports symbol='xsltLoadStyleDocument'/>
+     <exports symbol='xsltNewDocument'/>
+     <exports symbol='xsltNewStyleDocument'/>
     </file>
     <file name='imports'>
      <exports symbol='XSLT_GET_IMPORT_INT'/>
@@ -22,11 +20,40 @@
      <exports symbol='xsltParseStylesheetImport'/>
      <exports symbol='xsltParseStylesheetInclude'/>
     </file>
-    <file name='preproc'>
-     <exports symbol='xsltDocumentComp'/>
-     <exports symbol='xsltExtMarker'/>
-     <exports symbol='xsltFreeStylePreComps'/>
-     <exports symbol='xsltStylePreCompute'/>
+    <file name='security'>
+     <exports symbol='XSLT_SECPREF_CREATE_DIRECTORY'/>
+     <exports symbol='XSLT_SECPREF_READ_FILE'/>
+     <exports symbol='XSLT_SECPREF_READ_NETWORK'/>
+     <exports symbol='XSLT_SECPREF_WRITE_FILE'/>
+     <exports symbol='XSLT_SECPREF_WRITE_NETWORK'/>
+     <exports symbol='xsltCheckRead'/>
+     <exports symbol='xsltCheckWrite'/>
+     <exports symbol='xsltFreeSecurityPrefs'/>
+     <exports symbol='xsltGetDefaultSecurityPrefs'/>
+     <exports symbol='xsltGetSecurityPrefs'/>
+     <exports symbol='xsltNewSecurityPrefs'/>
+     <exports symbol='xsltSecurityAllow'/>
+     <exports symbol='xsltSecurityCheck'/>
+     <exports symbol='xsltSecurityForbid'/>
+     <exports symbol='xsltSecurityOption'/>
+     <exports symbol='xsltSecurityPrefs'/>
+     <exports symbol='xsltSecurityPrefsPtr'/>
+     <exports symbol='xsltSetCtxtSecurityPrefs'/>
+     <exports symbol='xsltSetDefaultSecurityPrefs'/>
+     <exports symbol='xsltSetSecurityPrefs'/>
+    </file>
+    <file name='templates'>
+     <exports symbol='xsltAttrListTemplateProcess'/>
+     <exports symbol='xsltAttrTemplateProcess'/>
+     <exports symbol='xsltAttrTemplateValueProcess'/>
+     <exports symbol='xsltAttrTemplateValueProcessNode'/>
+     <exports symbol='xsltEvalAttrValueTemplate'/>
+     <exports symbol='xsltEvalStaticAttrValueTemplate'/>
+     <exports symbol='xsltEvalTemplateString'/>
+     <exports symbol='xsltEvalXPathPredicate'/>
+     <exports symbol='xsltEvalXPathString'/>
+     <exports symbol='xsltEvalXPathStringNs'/>
+     <exports symbol='xsltTemplateProcess'/>
     </file>
     <file name='xsltutils'>
      <exports symbol='IS_XSLT_ELEM'/>
@@ -95,49 +122,24 @@
      <exports symbol='xsltUnparsedEntityURIFunction'/>
      <exports symbol='xsltXPathFunctionLookup'/>
     </file>
-    <file name='security'>
-     <exports symbol='XSLT_SECPREF_CREATE_DIRECTORY'/>
-     <exports symbol='XSLT_SECPREF_READ_FILE'/>
-     <exports symbol='XSLT_SECPREF_READ_NETWORK'/>
-     <exports symbol='XSLT_SECPREF_WRITE_FILE'/>
-     <exports symbol='XSLT_SECPREF_WRITE_NETWORK'/>
-     <exports symbol='xsltCheckRead'/>
-     <exports symbol='xsltCheckWrite'/>
-     <exports symbol='xsltFreeSecurityPrefs'/>
-     <exports symbol='xsltGetDefaultSecurityPrefs'/>
-     <exports symbol='xsltGetSecurityPrefs'/>
-     <exports symbol='xsltNewSecurityPrefs'/>
-     <exports symbol='xsltSecurityAllow'/>
-     <exports symbol='xsltSecurityCheck'/>
-     <exports symbol='xsltSecurityForbid'/>
-     <exports symbol='xsltSecurityOption'/>
-     <exports symbol='xsltSecurityPrefs'/>
-     <exports symbol='xsltSecurityPrefsPtr'/>
-     <exports symbol='xsltSetCtxtSecurityPrefs'/>
-     <exports symbol='xsltSetDefaultSecurityPrefs'/>
-     <exports symbol='xsltSetSecurityPrefs'/>
+    <file name='namespaces'>
+     <exports symbol='xsltCopyNamespace'/>
+     <exports symbol='xsltCopyNamespaceList'/>
+     <exports symbol='xsltFreeNamespaceAliasHashes'/>
+     <exports symbol='xsltGetNamespace'/>
+     <exports symbol='xsltGetSpecialNamespace'/>
+     <exports symbol='xsltNamespaceAlias'/>
     </file>
-    <file name='templates'>
-     <exports symbol='xsltAttrListTemplateProcess'/>
-     <exports symbol='xsltAttrTemplateProcess'/>
-     <exports symbol='xsltAttrTemplateValueProcess'/>
-     <exports symbol='xsltAttrTemplateValueProcessNode'/>
-     <exports symbol='xsltEvalAttrValueTemplate'/>
-     <exports symbol='xsltEvalStaticAttrValueTemplate'/>
-     <exports symbol='xsltEvalTemplateString'/>
-     <exports symbol='xsltEvalXPathPredicate'/>
-     <exports symbol='xsltEvalXPathString'/>
-     <exports symbol='xsltEvalXPathStringNs'/>
-     <exports symbol='xsltTemplateProcess'/>
-    </file>
-    <file name='documents'>
-     <exports symbol='xsltFindDocument'/>
-     <exports symbol='xsltFreeDocuments'/>
-     <exports symbol='xsltFreeStyleDocuments'/>
-     <exports symbol='xsltLoadDocument'/>
-     <exports symbol='xsltLoadStyleDocument'/>
-     <exports symbol='xsltNewDocument'/>
-     <exports symbol='xsltNewStyleDocument'/>
+    <file name='extra'>
+     <exports symbol='XSLT_LIBXSLT_NAMESPACE'/>
+     <exports symbol='XSLT_NORM_SAXON_NAMESPACE'/>
+     <exports symbol='XSLT_SAXON_NAMESPACE'/>
+     <exports symbol='XSLT_XALAN_NAMESPACE'/>
+     <exports symbol='XSLT_XT_NAMESPACE'/>
+     <exports symbol='xsltDebug'/>
+     <exports symbol='xsltFunctionNodeSet'/>
+     <exports symbol='xsltRegisterAllExtras'/>
+     <exports symbol='xsltRegisterExtras'/>
     </file>
     <file name='xsltInternals'>
      <exports symbol='CHECK_STOPPED'/>
@@ -335,13 +337,11 @@
      <exports symbol='xsltLibxsltVersion'/>
      <exports symbol='xsltMaxDepth'/>
     </file>
-    <file name='namespaces'>
-     <exports symbol='xsltCopyNamespace'/>
-     <exports symbol='xsltCopyNamespaceList'/>
-     <exports symbol='xsltFreeNamespaceAliasHashes'/>
-     <exports symbol='xsltGetNamespace'/>
-     <exports symbol='xsltGetSpecialNamespace'/>
-     <exports symbol='xsltNamespaceAlias'/>
+    <file name='preproc'>
+     <exports symbol='xsltDocumentComp'/>
+     <exports symbol='xsltExtMarker'/>
+     <exports symbol='xsltFreeStylePreComps'/>
+     <exports symbol='xsltStylePreCompute'/>
     </file>
     <file name='variables'>
      <exports symbol='XSLT_REGISTER_VARIABLE_LOOKUP'/>
@@ -751,6 +751,7 @@ informations are stored'/>
 *'/>
       <field name='tmpRVT' type='xmlDocPtr' info=' list of RVT without persistance'/>
       <field name='persistRVT' type='xmlDocPtr' info=' list of persistant RVTs'/>
+      <field name='ctxtflags' type='int' info=' context processing flags'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
