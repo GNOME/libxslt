@@ -1070,29 +1070,64 @@ xsltCalibrateAdjust(long delta) {
  * profiling
  */
 long
-xsltTimestamp(void) {
+xsltTimestamp(void)
+{
 #ifdef HAVE_GETTIMEOFDAY
     static struct timeval startup;
     struct timeval cur;
-    long msec;
+    long tics;
 
     if (calibration < 0) {
-	gettimeofday(&startup, NULL);
-	calibration = 0;
-	calibration = xsltCalibrateTimestamps();
-	gettimeofday(&startup, NULL);
-	return(0);
+        gettimeofday(&startup, NULL);
+        calibration = 0;
+        calibration = xsltCalibrateTimestamps();
+        gettimeofday(&startup, NULL);
+        return (0);
     }
 
     gettimeofday(&cur, NULL);
-    msec = cur.tv_sec - startup.tv_sec;
-    msec *= 10000;
-    msec += (cur.tv_usec - startup.tv_usec) / 100;
+    tics = (cur.tv_sec - startup.tv_sec) * XSLT_TIMESTAMP_TICS_PER_SEC;
+    tics += (cur.tv_usec - startup.tv_usec) /
+                          (1000000l / XSLT_TIMESTAMP_TICS_PER_SEC);
     
-    msec -= calibration;
-    return((unsigned long) msec);
+    tics -= calibration;
+    return(tics);
 #else
-    return(0);
+#ifdef XSLT_WIN32_PERFORMANCE_COUNTER
+
+    BOOL ok;
+    LARGE_INTEGER performanceCount;
+    LARGE_INTEGER performanceFrequency;
+    LONGLONG quadCount;
+    double seconds;
+    static LONGLONG startupQuadCount = 0;
+    static LONGLONG startupQuadFreq = 0;
+
+    ok = QueryPerformanceCounter(&performanceCount);
+    if (!ok)
+        return 0;
+    quadCount = performanceCount.QuadPart;
+    if (calibration < 0) {
+        calibration = 0;
+        ok = QueryPerformanceFrequency(&performanceFrequency);
+        if (!ok)
+            return 0;
+        startupQuadFreq = performanceFrequency.QuadPart;
+        startupQuadCount = quadCount;
+        return (0);
+    }
+    if (startupQuadFreq == 0)
+        return 0;
+    seconds = (quadCount - startupQuadCount) / (double) startupQuadFreq;
+    return (long) (seconds * XSLT_TIMESTAMP_TICS_PER_SEC);
+
+#else /* XSLT_WIN32_PERFORMANCE_COUNTER */
+
+    /* Neither gettimeofday() nor Win32 performance counter available */
+
+    return (0);
+
+#endif /* XSLT_WIN32_PERFORMANCE_COUNTER */
 #endif
 }
 

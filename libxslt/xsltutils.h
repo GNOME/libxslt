@@ -122,6 +122,8 @@ void		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
 long		xsltTimestamp			(void);
 void		xsltCalibrateAdjust		(long delta);
 
+#define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
+
 #ifdef __cplusplus
 }
 #endif

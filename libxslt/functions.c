@@ -186,14 +186,19 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 			"document() : internal error tctxt == NULL\n");
 		valuePush(ctxt, xmlXPathNewNodeSet(NULL));
 	    } else {
-		doc = xsltLoadDocument(tctxt, URI);
-		if (doc == NULL)
-		    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-		else {
-		    /* TODO: use XPointer of HTML location for fragment ID */
-		    /* pbm #xxx can lead to location sets, not nodesets :-) */
-		    valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) doc->doc));
-		}
+                if (xmlStrEqual(tctxt->style->doc->URL, URI)) {
+                    valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr)tctxt->style->doc));
+                }
+                else {
+		    doc = xsltLoadDocument(tctxt, URI);
+		    if (doc == NULL)
+		        valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+		    else {
+		        /* TODO: use XPointer of HTML location for fragment ID */
+		        /* pbm #xxx can lead to location sets, not nodesets :-) */
+		        valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) doc->doc));
+		    }
+                }
 	    }
 	    xmlFree(URI);
 	}

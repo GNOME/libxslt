@@ -321,6 +321,8 @@ struct _xsltStylesheet {
     xmlChar **exclPrefixTab;	/* array of excluded prefixes */
     int       exclPrefixNr;	/* number of excluded prefixes in scope */
     int       exclPrefixMax;	/* size of the array */
+
+    void     *_private;		/* user defined data */
 };
 
 /*
@@ -392,6 +394,8 @@ struct _xsltTransformContext {
     int              profNr;		/* Nb of templates in the stack */
     int              profMax;		/* Size of the templtaes stack */
     long            *profTab;		/* the profile template stack */
+
+    void            *_private;		/* user defined data */
 };
 
 /**

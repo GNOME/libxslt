@@ -8,6 +8,8 @@
 
 #include "exslt.h"
 
+extern double xmlXPathNAN;
+
 /**
  * exsltMathMin:
  * @ns:  a node-set
