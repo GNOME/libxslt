@@ -1,3 +1,10 @@
+Tue Oct 16 11:25:15 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/Makefile.am configure.in config.h.in: trying to
+	  bypass libtool crazyness when compiling in my debug environment
+	* libxslt/templates.c: fix a compilation problem due to recent
+	  libxml changes
+
 Sun Oct 14 17:17:03 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libxslt/numbers.c tests/REC/test-7.7-4.out: implement initial

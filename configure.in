@@ -207,10 +207,14 @@ fi
 dnl
 dnl In build tree I use a static version with memory debug enabled
 dnl libtool 1.4 tries to use the shared lib and this won't work
+dnl libtool is a 5000+ line of perl module and hence absolutely pure crap
+dnl no surprise there.
 dnl
-dnl if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
-dnl     LIBXML_LIBS="./libxml2.a"
-dnl fi
+if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
+    LIBXML_LIBS="../../XML/.libs/libxml2.a -lz"
+    DV_LINK="1"
+fi
+AM_CONDITIONAL(DV_STATIC_LINK, test "${DV_LINK}" = "1")
 
 AC_SUBST(XML_CONFIG)
 AC_SUBST(LIBXML_LIBS)
@@ -225,7 +229,7 @@ case ${host} in
 esac
 
 XSLT_INCLUDEDIR='-I${includedir}'
-EXTRA_LIBS="$LIBXML_LIBS $M_LIBS"
+EXTRA_LIBS="$M_LIBS"
 XSLT_LIBS="-lxslt $LIBXML_LIBS $M_LIBS"
 
 AC_SUBST(XSLT_LIBDIR)

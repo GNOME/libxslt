@@ -14,8 +14,9 @@
 #include <string.h>
 
 #include <libxml/xmlmemory.h>
-#include <libxml/tree.h>
+#include <libxml/globals.h>
 #include <libxml/xmlerror.h>
+#include <libxml/tree.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/parserInternals.h>
 #include "xslt.h"
