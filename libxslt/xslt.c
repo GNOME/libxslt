@@ -1534,14 +1534,17 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 			while (text != NULL) {
 			    if ((text->content != NULL) &&
 			        (!xmlDictOwns(style->dict, text->content))) {
-				xmlChar *old = (xmlChar *) text->content;
 
 				/*
 				 * internalize the text string
 				 */
-				text->content = (xmlChar *)
-					xmlDictLookup(style->dict, old, -1);
-				xmlFree(old);
+				if (text->doc->dict != NULL) {
+				    xmlChar *old = (xmlChar *) text->content;
+				    text->content = 
+					(xmlChar *) xmlDictLookup(
+						text->doc->dict, old, -1);
+				    xmlFree(old);
+				}
 			    }
 
 			    next = text->next;

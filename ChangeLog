@@ -1,3 +1,8 @@
+Wed Mar 16 17:19:24 HKT 2005 William Brack (wbrack@mmm.com.hk)
+
+	* libxslt/xslt.c: fixed problem with text node on stylesheet
+	  document without a dictionary (bug 170533)
+
 Sun Mar 13 20:08:34 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* NEWS configure.in doc/*: preparing 1.1.13, updated and rebuilt
