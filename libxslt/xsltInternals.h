@@ -1,6 +1,6 @@
 /*
  * xsltInternals.h: internal data structures, constants and functions used
- *                  by the XSLT engine
+ *                  by the XSLT engine.
  *                  They are not part of the API or ABI, i.e. they can change
  *                  without prior notice, use carefully.
  *
@@ -25,21 +25,21 @@ extern "C" {
 /**
  * XSLT_MAX_SORT:
  *
- * Max number of specified xsl:sort on an element
+ * Max number of specified xsl:sort on an element.
  */
 #define XSLT_MAX_SORT 5
 
 /**
  * XSLT_PAT_NO_PRIORITY:
  *
- * specific value for pattern without priority expressed
+ * Specific value for pattern without priority expressed.
  */
 #define XSLT_PAT_NO_PRIORITY -12345789
 
 /**
  * xsltRuntimeExtra:
  *
- * Extra information added to the transformation context
+ * Extra information added to the transformation context.
  */
 typedef struct _xsltRuntimeExtra xsltRuntimeExtra;
 typedef xsltRuntimeExtra *xsltRuntimeExtraPtr;
@@ -54,7 +54,7 @@ struct _xsltRuntimeExtra {
 /**
  * xsltTemplate:
  *
- * The in-memory structure corresponding to an XSLT Template
+ * The in-memory structure corresponding to an XSLT Template.
  */
 typedef struct _xsltTemplate xsltTemplate;
 typedef xsltTemplate *xsltTemplatePtr;
@@ -81,7 +81,7 @@ struct _xsltTemplate {
 /**
  * xsltDecimalFormat:
  *
- * Data structure of decimal-format
+ * Data structure of decimal-format.
  */
 typedef struct _xsltDecimalFormat xsltDecimalFormat;
 typedef xsltDecimalFormat *xsltDecimalFormatPtr;
@@ -106,7 +106,7 @@ struct _xsltDecimalFormat {
 /**
  * xsltDocument:
  *
- * Data structure associated to a parsed document
+ * Data structure associated to a parsed document.
  */
 
 typedef struct _xsltDocument xsltDocument;
@@ -137,7 +137,7 @@ typedef xsltElemPreComp *xsltElemPreCompPtr;
  * @inst: the stylesheet node
  * @comp: the compiled information from the stylesheet
  *
- * signature of the function associated to elements part of the
+ * Signature of the function associated to elements part of the
  * stylesheet language like xsl:if or xsl:apply-templates.
  */
 typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
@@ -174,7 +174,7 @@ typedef enum {
  * xsltElemPreCompDeallocator:
  * @comp:  the #xsltElemPreComp to free up
  *
- * Deallocates an #xsltElemPreComp structure
+ * Deallocates an #xsltElemPreComp structure.
  */
 typedef void (*xsltElemPreCompDeallocator) (xsltElemPreCompPtr comp);
 
@@ -211,7 +211,7 @@ struct _xsltStylePreComp {
     xmlNodePtr inst;		/* the instruction */
 
     /*
-     * Pre computed values
+     * Pre computed values.
      */
 
     xmlChar *stype;             /* sort */
@@ -253,7 +253,7 @@ struct _xsltStylePreComp {
 
 /*
  * The in-memory structure corresponding to an XSLT Variable
- * or Param
+ * or Param.
  */
 
 typedef struct _xsltStackElem xsltStackElem;
@@ -270,7 +270,7 @@ struct _xsltStackElem {
 };
 
 /*
- * The in-memory structure corresponding to an XSLT Stylesheet
+ * The in-memory structure corresponding to an XSLT Stylesheet.
  * NOTE: most of the content is simply linked from the doc tree
  *       structure, no specific allocation is made.
  */
@@ -278,7 +278,7 @@ typedef struct _xsltStylesheet xsltStylesheet;
 typedef xsltStylesheet *xsltStylesheetPtr;
 struct _xsltStylesheet {
     /*
-     * The stylesheet import relation is kept as a tree
+     * The stylesheet import relation is kept as a tree.
      */
     struct _xsltStylesheet *parent;
     struct _xsltStylesheet *next;
@@ -287,7 +287,7 @@ struct _xsltStylesheet {
     xsltDocumentPtr docList;		/* the include document list */
 
     /*
-     * General data on the style sheet document
+     * General data on the style sheet document.
      */
     xmlDocPtr doc;		/* the parsed XML stylesheet */
     xmlHashTablePtr stripSpaces;/* the hash table of the strip-space and
@@ -296,12 +296,12 @@ struct _xsltStylesheet {
     xmlHashTablePtr cdataSection;/* the hash table of the cdata-section */
 
     /*
-     * Global variable or parameters
+     * Global variable or parameters.
      */
     xsltStackElemPtr variables; /* linked list of param and variables */
 
     /*
-     * Template descriptions
+     * Template descriptions.
      */
     xsltTemplatePtr templates;	/* the ordered list of templates */
     void *templatesHash;	/* hash table or wherever compiled templates
@@ -316,23 +316,23 @@ struct _xsltStylesheet {
     void *commentMatch;		/* template based on comment() */
     
     /*
-     * Namespace aliases
+     * Namespace aliases.
      */
     xmlHashTablePtr nsAliases;	/* the namespace alias hash tables */
 
     /*
-     * Attribute sets
+     * Attribute sets.
      */
     xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
 
     /*
-     * Namespaces
+     * Namespaces.
      */
     xmlHashTablePtr nsHash;     /* the set of namespaces in use */
     void           *nsDefs;     /* the namespaces defined */
 
     /*
-     * Key definitions
+     * Key definitions.
      */
     void *keys;				/* key definitions */
 
@@ -345,7 +345,9 @@ struct _xsltStylesheet {
     xmlChar *encoding;		/* encoding string */
     int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
 
-    /* Number formatting */
+    /* 
+     * Number formatting.
+     */
     xsltDecimalFormatPtr decimalFormat;
     int standalone;             /* standalone = "yes" | "no" */
     xmlChar *doctypePublic;     /* doctype-public string */
@@ -354,7 +356,7 @@ struct _xsltStylesheet {
     xmlChar *mediaType;		/* media-type string */
 
     /*
-     * Precomputed blocks
+     * Precomputed blocks.
      */
     xsltElemPreCompPtr preComps;/* list of precomputed blocks */
     int warnings;		/* number of warnings found at compilation */
@@ -368,14 +370,14 @@ struct _xsltStylesheet {
     void     *_private;		/* user defined data */
 
     /*
-     * Extensions
+     * Extensions.
      */
     xmlHashTablePtr extInfos;	/* the extension data */
     int		    extrasNr;	/* the number of extras required */
 };
 
 /*
- * The in-memory structure corresponding to an XSLT Transformation
+ * The in-memory structure corresponding to an XSLT Transformation.
  */
 typedef enum {
     XSLT_OUTPUT_XML = 0,
@@ -454,24 +456,24 @@ struct _xsltTransformContext {
 /**
  * CHECK_STOPPED:
  *
- * Macro to check if the XSLT processing should be stopped
- * will return from the function
+ * Macro to check if the XSLT processing should be stopped.
+ * Will return from the function.
  */
 #define CHECK_STOPPED if (ctxt->state == XSLT_STATE_STOPPED) return;
 
 /**
  * CHECK_STOPPEDE:
  *
- * Macro to check if the XSLT processing should be stopped
- * will goto the error: label
+ * Macro to check if the XSLT processing should be stopped.
+ * Will goto the error: label.
  */
 #define CHECK_STOPPEDE if (ctxt->state == XSLT_STATE_STOPPED) goto error;
 
 /**
  * CHECK_STOPPED0:
  *
- * Macro to check if the XSLT processing should be stopped
- * will return from the function with a 0 value
+ * Macro to check if the XSLT processing should be stopped.
+ * Will return from the function with a 0 value.
  */
 #define CHECK_STOPPED0 if (ctxt->state == XSLT_STATE_STOPPED) return(0);
 

@@ -19,7 +19,7 @@ extern "C" {
 /**
  * XSLT_GET_IMPORT_PTR:
  *
- * a macro to import pointers from the stylesheet cascading order
+ * A macro to import pointers from the stylesheet cascading order.
  */
 #define XSLT_GET_IMPORT_PTR(res, style, name) {			\
     xsltStylesheetPtr st = style;				\
@@ -32,7 +32,7 @@ extern "C" {
 /**
  * XSLT_GET_IMPORT_INT:
  *
- * a macro to import intergers from the stylesheet cascading order
+ * A macro to import intergers from the stylesheet cascading order.
  */
 #define XSLT_GET_IMPORT_INT(res, style, name) {			\
     xsltStylesheetPtr st = style;				\

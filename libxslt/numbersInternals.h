@@ -19,7 +19,7 @@ extern "C" {
 /**
  * xsltNumberData:
  *
- * This data structure is just a wrapper to pass xsl:number data in
+ * This data structure is just a wrapper to pass xsl:number data in.
  */
 typedef struct _xsltNumberData {
     xmlChar *level;
@@ -37,7 +37,7 @@ typedef struct _xsltNumberData {
 /**
  * xsltFormatNumberInfo,:
  *
- * This data structure lists the various parameters needed to format numbers
+ * This data structure lists the various parameters needed to format numbers.
  */
 typedef struct _xsltFormatNumberInfo {
     int	    integer_digits;	/* Number of '0' in integer part */

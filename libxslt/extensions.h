@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 /**
- * Extension Modules API
+ * Extension Modules API.
  */
 
 /**
@@ -25,9 +25,9 @@ extern "C" {
  * @ctxt:  an XSLT stylesheet
  * @URI:  the namespace URI for the extension
  *
- * A function called at initialization time of an XSLT extension module
+ * A function called at initialization time of an XSLT extension module.
  *
- * Returns a pointer to the module specific data for this transformation
+ * Returns a pointer to the module specific data for this transformation.
  */
 typedef void * (*xsltStyleExtInitFunction)	(xsltStylesheetPtr style,
 						 const xmlChar *URI);
@@ -38,7 +38,7 @@ typedef void * (*xsltStyleExtInitFunction)	(xsltStylesheetPtr style,
  * @URI:  the namespace URI for the extension
  * @data:  the data associated to this module
  *
- * A function called at shutdown time of an XSLT extension module
+ * A function called at shutdown time of an XSLT extension module.
  */
 typedef void (*xsltStyleExtShutdownFunction)	(xsltStylesheetPtr style,
 						 const xmlChar *URI,
@@ -49,9 +49,9 @@ typedef void (*xsltStyleExtShutdownFunction)	(xsltStylesheetPtr style,
  * @ctxt:  an XSLT transformation context
  * @URI:  the namespace URI for the extension
  *
- * A function called at initialization time of an XSLT extension module
+ * A function called at initialization time of an XSLT extension module.
  *
- * Returns a pointer to the module specific data for this transformation
+ * Returns a pointer to the module specific data for this transformation.
  */
 typedef void * (*xsltExtInitFunction)	(xsltTransformContextPtr ctxt,
 					 const xmlChar *URI);
@@ -62,7 +62,7 @@ typedef void * (*xsltExtInitFunction)	(xsltTransformContextPtr ctxt,
  * @URI:  the namespace URI for the extension
  * @data:  the data associated to this module
  *
- * A function called at shutdown time of an XSLT extension module
+ * A function called at shutdown time of an XSLT extension module.
  */
 typedef void (*xsltExtShutdownFunction) (xsltTransformContextPtr ctxt,
 					 const xmlChar *URI,
@@ -155,7 +155,7 @@ int	xsltUnregisterExtModuleTopLevel	(const xmlChar *name,
 					 const xmlChar *URI);
 
 
-/* These 2 functions are deprecated for use within modules */
+/* These 2 functions are deprecated for use within modules. */
 int		xsltRegisterExtFunction	(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *URI,
@@ -166,7 +166,7 @@ int		xsltRegisterExtElement	(xsltTransformContextPtr ctxt,
 					 xsltTransformFunction function);
 
 /*
- * Extension Prefix handling API
+ * Extension Prefix handling API.
  * Those are used by the XSLT (pre)processor.
  */
 

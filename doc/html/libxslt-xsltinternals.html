@@ -478,7 +478,7 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Max number of specified xsl:sort on an element</P
+>Max number of specified xsl:sort on an element.</P
 ><P
 ></P
 ></DIV
@@ -506,7 +506,7 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->specific value for pattern without priority expressed</P
+>Specific value for pattern without priority expressed.</P
 ><P
 ></P
 ></DIV
@@ -537,7 +537,7 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Extra information added to the transformation context</P
+>Extra information added to the transformation context.</P
 ><P
 ></P
 ></DIV
@@ -769,7 +769,7 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->The in-memory structure corresponding to an XSLT Template</P
+>The in-memory structure corresponding to an XSLT Template.</P
 ><P
 ></P
 ></DIV
@@ -839,7 +839,7 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Data structure of decimal-format</P
+>Data structure of decimal-format.</P
 ><P
 ></P
 ></DIV
@@ -898,7 +898,7 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Data structure associated to a parsed document</P
+>Data structure associated to a parsed document.</P
 ><P
 ></P
 ></DIV
@@ -1142,7 +1142,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 ></TR
 ></TABLE
 ><P
->signature of the function associated to elements part of the
+>Signature of the function associated to elements part of the
 stylesheet language like xsl:if or xsl:apply-templates.</P
 ><P
 ></P
@@ -1314,7 +1314,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >Deallocates an <A
 HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 >xsltElemPreComp</A
-> structure</P
+> structure.</P
 ><P
 ></P
 ><DIV
@@ -1384,7 +1384,7 @@ CLASS="PROGRAMLISTING"
     xmlNodePtr inst;		/* the instruction */
 
     /*
-     * Pre computed values
+     * Pre computed values.
      */
 
     xmlChar *stype;             /* sort */
@@ -1540,7 +1540,7 @@ CELLPADDING="6"
 CLASS="PROGRAMLISTING"
 >struct xsltStylesheet {
     /*
-     * The stylesheet import relation is kept as a tree
+     * The stylesheet import relation is kept as a tree.
      */
     struct _xsltStylesheet *parent;
     struct _xsltStylesheet *next;
@@ -1549,7 +1549,7 @@ CLASS="PROGRAMLISTING"
     xsltDocumentPtr docList;		/* the include document list */
 
     /*
-     * General data on the style sheet document
+     * General data on the style sheet document.
      */
     xmlDocPtr doc;		/* the parsed XML stylesheet */
     xmlHashTablePtr stripSpaces;/* the hash table of the strip-space and
@@ -1558,12 +1558,12 @@ CLASS="PROGRAMLISTING"
     xmlHashTablePtr cdataSection;/* the hash table of the cdata-section */
 
     /*
-     * Global variable or parameters
+     * Global variable or parameters.
      */
     xsltStackElemPtr variables; /* linked list of param and variables */
 
     /*
-     * Template descriptions
+     * Template descriptions.
      */
     xsltTemplatePtr templates;	/* the ordered list of templates */
     void *templatesHash;	/* hash table or wherever compiled templates
@@ -1578,23 +1578,23 @@ CLASS="PROGRAMLISTING"
     void *commentMatch;		/* template based on comment() */
     
     /*
-     * Namespace aliases
+     * Namespace aliases.
      */
     xmlHashTablePtr nsAliases;	/* the namespace alias hash tables */
 
     /*
-     * Attribute sets
+     * Attribute sets.
      */
     xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
 
     /*
-     * Namespaces
+     * Namespaces.
      */
     xmlHashTablePtr nsHash;     /* the set of namespaces in use */
     void           *nsDefs;     /* the namespaces defined */
 
     /*
-     * Key definitions
+     * Key definitions.
      */
     void *keys;				/* key definitions */
 
@@ -1607,7 +1607,9 @@ CLASS="PROGRAMLISTING"
     xmlChar *encoding;		/* encoding string */
     int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
 
-    /* Number formatting */
+    /* 
+     * Number formatting.
+     */
     xsltDecimalFormatPtr decimalFormat;
     int standalone;             /* standalone = "yes" | "no" */
     xmlChar *doctypePublic;     /* doctype-public string */
@@ -1616,7 +1618,7 @@ CLASS="PROGRAMLISTING"
     xmlChar *mediaType;		/* media-type string */
 
     /*
-     * Precomputed blocks
+     * Precomputed blocks.
      */
     xsltElemPreCompPtr preComps;/* list of precomputed blocks */
     int warnings;		/* number of warnings found at compilation */
@@ -1630,7 +1632,7 @@ CLASS="PROGRAMLISTING"
     void     *_private;		/* user defined data */
 
     /*
-     * Extensions
+     * Extensions.
      */
     xmlHashTablePtr extInfos;	/* the extension data */
     int		    extrasNr;	/* the number of extras required */
@@ -1751,8 +1753,8 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Macro to check if the XSLT processing should be stopped
-will return from the function</P
+>Macro to check if the XSLT processing should be stopped.
+Will return from the function.</P
 ><P
 ></P
 ></DIV
@@ -1780,8 +1782,8 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Macro to check if the XSLT processing should be stopped
-will goto the error: label</P
+>Macro to check if the XSLT processing should be stopped.
+Will goto the error: label.</P
 ><P
 ></P
 ></DIV
@@ -1809,8 +1811,8 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Macro to check if the XSLT processing should be stopped
-will return from the function with a 0 value</P
+>Macro to check if the XSLT processing should be stopped.
+Will return from the function with a 0 value.</P
 ><P
 ></P
 ></DIV

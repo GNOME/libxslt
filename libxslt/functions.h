@@ -21,7 +21,7 @@ extern "C" {
 /**
  * XSLT_REGISTER_FUNCTION_LOOKUP:
  *
- * registering macro, not general purpose at all but used in different modules
+ * Registering macro, not general purpose at all but used in different modules.
  */
 #define XSLT_REGISTER_FUNCTION_LOOKUP(ctxt)			\
     xmlXPathRegisterFuncLookup((ctxt)->xpathCtxt,		\
@@ -34,7 +34,7 @@ xmlXPathFunction
 				 const xmlChar *ns_uri);
 
 /*
- * Interfaces for the functions implementations
+ * Interfaces for the functions implementations.
  */
 
 void	xsltDocumentFunction		(xmlXPathParserContextPtr ctxt,

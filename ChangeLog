@@ -1,3 +1,8 @@
+Wed Mar 13 15:17:51 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/*.h doc/* python/*: applied another cleanup comment
+	  diff from Heiko W. Rupp, regenerated the API and python
+
 Wed Mar 13 13:41:19 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-76.xml

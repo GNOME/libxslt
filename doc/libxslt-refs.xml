@@ -1433,6 +1433,7 @@
           <ref name='xsltFindElemSpaceHandling'/>
         </word>
         <word name='Check'>
+          <ref name='IS_XSLT_REAL_NODE'/>
           <ref name='xsltCheckExtPrefix'/>
           <ref name='xsltEvalStaticAttrValueTemplate'/>
           <ref name='xsltIsBlank'/>
@@ -1636,7 +1637,7 @@
         <word name='Name'>
           <ref name='xsltEvalStaticAttrValueTemplate'/>
         </word>
-        <word name='Nom'>
+        <word name='Norm'>
           <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
         </word>
       </letter>
@@ -1711,6 +1712,10 @@
           <ref name='xsltRegisterExtModule'/>
           <ref name='xsltRegisterExtModuleFull'/>
         </word>
+        <word name='Registering'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+        </word>
         <word name='Registers'>
           <ref name='xsltRegisterAllElement'/>
           <ref name='xsltRegisterAllExtras'/>
@@ -1763,8 +1768,14 @@
           <ref name='xsltShutdownCtxtExts'/>
           <ref name='xsltShutdownExts'/>
         </word>
+        <word name='Signature'>
+          <ref name='xsltTransformFunction'/>
+        </word>
         <word name='Similar'>
           <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='Specific'>
+          <ref name='XSLT_PAT_NO_PRIORITY'/>
         </word>
         <word name='Speed'>
           <ref name='WITH_XSLT_DEBUG'/>
@@ -1854,6 +1865,11 @@
         <word name='WITH_XSLT_DEBUG_BREAKPOINTS'>
           <ref name='xslAddCall'/>
         </word>
+        <word name='Will'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='CHECK_STOPPEDE'/>
+        </word>
         <word name='Win32'>
           <ref name='LIBXSLT_PUBLIC'/>
         </word>
@@ -1899,9 +1915,6 @@
         <word name='XSLT-1'>
           <ref name='xsltDocumentComp'/>
           <ref name='xsltDocumentElem'/>
-        </word>
-        <word name='XSLt'>
-          <ref name='IS_XSLT_ELEM'/>
         </word>
       </letter>
       <letter name='a'>
@@ -2266,7 +2279,6 @@
           <ref name='CHECK_STOPPED'/>
           <ref name='CHECK_STOPPED0'/>
           <ref name='CHECK_STOPPEDE'/>
-          <ref name='IS_XSLT_REAL_NODE'/>
         </word>
         <word name='choose'>
           <ref name='xsltChoose'/>
@@ -3763,10 +3775,6 @@
         <word name='registered'>
           <ref name='xsltInitCtxtExts'/>
         </word>
-        <word name='registering'>
-          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
-          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
-        </word>
         <word name='related'>
           <ref name='xsltParseStylesheetOutput'/>
         </word>
@@ -3939,9 +3947,6 @@
         <word name='signalled'>
           <ref name='xsltGetQNameURI'/>
         </word>
-        <word name='signature'>
-          <ref name='xsltTransformFunction'/>
-        </word>
         <word name='simply'>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
@@ -3977,7 +3982,6 @@
         </word>
         <word name='specific'>
           <ref name='XSLT_LIBXSLT_NAMESPACE'/>
-          <ref name='XSLT_PAT_NO_PRIORITY'/>
         </word>
         <word name='specification'>
           <ref name='XSLT_NAMESPACE'/>
@@ -4462,9 +4466,6 @@
           <ref name='xsltFindElemSpaceHandling'/>
         </word>
         <word name='will'>
-          <ref name='CHECK_STOPPED'/>
-          <ref name='CHECK_STOPPED0'/>
-          <ref name='CHECK_STOPPEDE'/>
           <ref name='xsltAttrListTemplateProcess'/>
           <ref name='xsltGetQNameURI'/>
           <ref name='xsltLoadStylesheetPI'/>

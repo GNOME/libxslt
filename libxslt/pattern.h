@@ -19,13 +19,13 @@ extern "C" {
  * xsltCompMatch:
  *
  * Data structure used for the implementation of patterns.
- * It is kept private (in pattern.c)
+ * It is kept private (in pattern.c).
  */
 typedef struct _xsltCompMatch xsltCompMatch;
 typedef xsltCompMatch *xsltCompMatchPtr;
 
 /*
- * Pattern related interfaces
+ * Pattern related interfaces.
  */
 
 xsltCompMatchPtr xsltCompilePattern	(const xmlChar *pattern,
@@ -39,7 +39,7 @@ int		 xsltTestCompMatchList	(xsltTransformContextPtr ctxt,
 					 xsltCompMatchPtr comp);
 
 /*
- * Template related interfaces
+ * Template related interfaces.
  */
 int		xsltAddTemplate		(xsltStylesheetPtr style,
 					 xsltTemplatePtr cur,

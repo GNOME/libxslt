@@ -29,15 +29,15 @@ void
 </FUNCTION>
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.12"
+#define LIBXSLT_DOTTED_VERSION "1.0.13"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10012
+#define LIBXSLT_VERSION 10013
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10012"
+#define LIBXSLT_VERSION_STRING "10013"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -73,15 +73,15 @@ void
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.12"
+#define LIBXSLT_DOTTED_VERSION "1.0.13"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10012
+#define LIBXSLT_VERSION 10013
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10012"
+#define LIBXSLT_VERSION_STRING "10013"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -1255,7 +1255,7 @@ struct xsltStylePreComp {
     xmlNodePtr inst;		/* the instruction */
 
     /*
-     * Pre computed values
+     * Pre computed values.
      */
 
     xmlChar *stype;             /* sort */
@@ -1326,7 +1326,7 @@ typedef xsltStylesheet *xsltStylesheetPtr;
 <NAME>xsltStylesheet</NAME>
 struct xsltStylesheet {
     /*
-     * The stylesheet import relation is kept as a tree
+     * The stylesheet import relation is kept as a tree.
      */
     struct _xsltStylesheet *parent;
     struct _xsltStylesheet *next;
@@ -1335,7 +1335,7 @@ struct xsltStylesheet {
     xsltDocumentPtr docList;		/* the include document list */
 
     /*
-     * General data on the style sheet document
+     * General data on the style sheet document.
      */
     xmlDocPtr doc;		/* the parsed XML stylesheet */
     xmlHashTablePtr stripSpaces;/* the hash table of the strip-space and
@@ -1344,12 +1344,12 @@ struct xsltStylesheet {
     xmlHashTablePtr cdataSection;/* the hash table of the cdata-section */
 
     /*
-     * Global variable or parameters
+     * Global variable or parameters.
      */
     xsltStackElemPtr variables; /* linked list of param and variables */
 
     /*
-     * Template descriptions
+     * Template descriptions.
      */
     xsltTemplatePtr templates;	/* the ordered list of templates */
     void *templatesHash;	/* hash table or wherever compiled templates
@@ -1364,23 +1364,23 @@ struct xsltStylesheet {
     void *commentMatch;		/* template based on comment() */
     
     /*
-     * Namespace aliases
+     * Namespace aliases.
      */
     xmlHashTablePtr nsAliases;	/* the namespace alias hash tables */
 
     /*
-     * Attribute sets
+     * Attribute sets.
      */
     xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
 
     /*
-     * Namespaces
+     * Namespaces.
      */
     xmlHashTablePtr nsHash;     /* the set of namespaces in use */
     void           *nsDefs;     /* the namespaces defined */
 
     /*
-     * Key definitions
+     * Key definitions.
      */
     void *keys;				/* key definitions */
 
@@ -1393,7 +1393,9 @@ struct xsltStylesheet {
     xmlChar *encoding;		/* encoding string */
     int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
 
-    /* Number formatting */
+    /* 
+     * Number formatting.
+     */
     xsltDecimalFormatPtr decimalFormat;
     int standalone;             /* standalone = "yes" | "no" */
     xmlChar *doctypePublic;     /* doctype-public string */
@@ -1402,7 +1404,7 @@ struct xsltStylesheet {
     xmlChar *mediaType;		/* media-type string */
 
     /*
-     * Precomputed blocks
+     * Precomputed blocks.
      */
     xsltElemPreCompPtr preComps;/* list of precomputed blocks */
     int warnings;		/* number of warnings found at compilation */
@@ -1416,7 +1418,7 @@ struct xsltStylesheet {
     void     *_private;		/* user defined data */
 
     /*
-     * Extensions
+     * Extensions.
      */
     xmlHashTablePtr extInfos;	/* the extension data */
     int		    extrasNr;	/* the number of extras required */

@@ -298,13 +298,13 @@
       <info>This macro is used to flag unused function parameters to GCC, useless here</info>
     </macro>
     <macro name='CHECK_STOPPED' file='xsltInternals'>
-      <info>Macro to check if the XSLT processing should be stopped will return from the function</info>
+      <info>Macro to check if the XSLT processing should be stopped. Will return from the function.</info>
     </macro>
     <macro name='CHECK_STOPPED0' file='xsltInternals'>
-      <info>Macro to check if the XSLT processing should be stopped will return from the function with a 0 value</info>
+      <info>Macro to check if the XSLT processing should be stopped. Will return from the function with a 0 value.</info>
     </macro>
     <macro name='CHECK_STOPPEDE' file='xsltInternals'>
-      <info>Macro to check if the XSLT processing should be stopped will goto the error: label</info>
+      <info>Macro to check if the XSLT processing should be stopped. Will goto the error: label.</info>
     </macro>
     <macro name='DEBUG_MEMORY' file='xsltwin32config'>
       <info>should be activated only when debugging libxslt. It replaces the allocator with a collect and debug shell to the libc allocator. Use configure --with-mem-debug to activate it on both library</info>
@@ -315,13 +315,13 @@
     <macro name='IN_LIBXSLT' file='libxslt'>
     </macro>
     <macro name='IS_XSLT_ELEM' file='xsltutils'>
-      <info>Checks that the element pertains to XSLt namespace</info>
+      <info>Checks that the element pertains to XSLT namespace.</info>
     </macro>
     <macro name='IS_XSLT_NAME' file='xsltutils'>
-      <info>Checks the value of an element in XSLT namespace</info>
+      <info>Checks the value of an element in XSLT namespace.</info>
     </macro>
     <macro name='IS_XSLT_REAL_NODE' file='xsltutils'>
-      <info>check that a node is a &apos;real&apos; one: document, element, text or attribute</info>
+      <info>Check that a node is a &apos;real&apos; one: document, element, text or attribute.</info>
     </macro>
     <macro name='LIBXSLT_DOTTED_VERSION' file='xsltwin32config'>
       <info>the version string like &quot;1.2.3&quot;</info>
@@ -352,13 +352,13 @@
     <const name='XSLT_DEBUG_STEPOUT' file='xsltutils'/>
     <const name='XSLT_DEBUG_STOP' file='xsltutils'/>
     <macro name='XSLT_DEFAULT_URL' file='xslt'>
-      <info>The XSLT &quot;vendor&quot; URL for this processor</info>
+      <info>The XSLT &quot;vendor&quot; URL for this processor.</info>
     </macro>
     <macro name='XSLT_DEFAULT_VENDOR' file='xslt'>
-      <info>The XSLT &quot;vendor&quot; string for this processor</info>
+      <info>The XSLT &quot;vendor&quot; string for this processor.</info>
     </macro>
     <macro name='XSLT_DEFAULT_VERSION' file='xslt'>
-      <info>The default version of XSLT supported</info>
+      <info>The default version of XSLT supported.</info>
     </macro>
     <const name='XSLT_FUNC_APPLYIMPORTS' file='xsltInternals'/>
     <const name='XSLT_FUNC_APPLYTEMPLATES' file='xsltInternals'/>
@@ -383,41 +383,41 @@
     <const name='XSLT_FUNC_WHEN' file='xsltInternals'/>
     <const name='XSLT_FUNC_WITHPARAM' file='xsltInternals'/>
     <macro name='XSLT_GET_IMPORT_INT' file='imports'>
-      <info>a macro to import intergers from the stylesheet cascading order</info>
+      <info>A macro to import intergers from the stylesheet cascading order.</info>
     </macro>
     <macro name='XSLT_GET_IMPORT_PTR' file='imports'>
-      <info>a macro to import pointers from the stylesheet cascading order</info>
+      <info>A macro to import pointers from the stylesheet cascading order.</info>
     </macro>
     <macro name='XSLT_LIBXSLT_NAMESPACE' file='extra'>
-      <info>This is the libxslt namespace for specific extensions</info>
+      <info>This is the libxslt namespace for specific extensions.</info>
     </macro>
     <macro name='XSLT_MAX_SORT' file='xsltInternals'>
-      <info>Max number of specified xsl:sort on an element</info>
+      <info>Max number of specified xsl:sort on an element.</info>
     </macro>
     <macro name='XSLT_NAMESPACE' file='xslt'>
-      <info>The XSLT specification namespace</info>
+      <info>The XSLT specification namespace.</info>
     </macro>
     <macro name='XSLT_NORM_SAXON_NAMESPACE' file='extra'>
-      <info>This is Nom&apos;s namespace for SAXON extensions</info>
+      <info>This is Norm&apos;s namespace for SAXON extensions.</info>
     </macro>
     <const name='XSLT_OUTPUT_HTML' file='xsltInternals'/>
     <const name='XSLT_OUTPUT_TEXT' file='xsltInternals'/>
     <const name='XSLT_OUTPUT_XML' file='xsltInternals'/>
     <macro name='XSLT_PAT_NO_PRIORITY' file='xsltInternals'>
-      <info>specific value for pattern without priority expressed</info>
+      <info>Specific value for pattern without priority expressed.</info>
     </macro>
     <macro name='XSLT_REGISTER_FUNCTION_LOOKUP' file='functions'>
-      <info>registering macro, not general purpose at all but used in different modules</info>
+      <info>Registering macro, not general purpose at all but used in different modules.</info>
     </macro>
     <macro name='XSLT_REGISTER_VARIABLE_LOOKUP' file='variables'>
-      <info>registering macro, not general purpose at all but used in different modules</info>
+      <info>Registering macro, not general purpose at all but used in different modules.</info>
     </macro>
     <macro name='XSLT_RUNTIME_EXTRA' file='xsltInternals'>
     </macro>
     <macro name='XSLT_RUNTIME_EXTRA_FREE' file='xsltInternals'>
     </macro>
     <macro name='XSLT_SAXON_NAMESPACE' file='extra'>
-      <info>This is Michael Kay&apos;s Saxon processor namespace for extensions</info>
+      <info>This is Michael Kay&apos;s Saxon processor namespace for extensions.</info>
     </macro>
     <const name='XSLT_STATE_ERROR' file='xsltInternals'/>
     <const name='XSLT_STATE_OK' file='xsltInternals'/>
@@ -429,10 +429,10 @@
     <macro name='XSLT_TODO' file='xsltutils'>
     </macro>
     <macro name='XSLT_XALAN_NAMESPACE' file='extra'>
-      <info>This is the Apache project XALAN processor namespace for extensions</info>
+      <info>This is the Apache project XALAN processor namespace for extensions.</info>
     </macro>
     <macro name='XSLT_XT_NAMESPACE' file='extra'>
-      <info>This is James Clark&apos;s XT processor namespace for extensions</info>
+      <info>This is James Clark&apos;s XT processor namespace for extensions.</info>
     </macro>
     <function name='xslAddCall' file='xsltutils'>
       <info>Add template &quot;call&quot; to call stack</info>
@@ -619,7 +619,7 @@
       <arg name='inst' type='xmlNodePtr' info='the xslt comment node '/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information '/>
     </function>
-    <struct name='xsltCompMatch' file='pattern' info='Data structure used for the implementation of patterns. It is kept private (in pattern.c)'/>
+    <struct name='xsltCompMatch' file='pattern' info='Data structure used for the implementation of patterns. It is kept private (in pattern.c).'/>
     <typedef name='xsltCompMatchPtr' file='pattern'/>
     <function name='xsltCompilePattern' file='pattern'>
       <info>Compile the XSLT pattern and generates a list of precompiled form suitable for fast matching. </info>
@@ -669,7 +669,7 @@
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed informations '/>
     </function>
     <enum name='xsltDebugStatusCodes' file='xsltutils'/>
-    <struct name='xsltDecimalFormat' file='xsltInternals' info='Data structure of decimal-format'/>
+    <struct name='xsltDecimalFormat' file='xsltInternals' info='Data structure of decimal-format.'/>
     <function name='xsltDecimalFormatGetByName' file='xsltInternals'>
       <info>Find decimal-format by name</info>
       <return type='xsltDecimalFormatPtr'/>
@@ -684,7 +684,7 @@
       <arg name='sorts' type='xmlNodePtr *' info='array of sort nodes '/>
       <arg name='nbsorts' type='int' info='the number of sorts in the array '/>
     </function>
-    <struct name='xsltDocument' file='xsltInternals' info='Data structure associated to a parsed document'/>
+    <struct name='xsltDocument' file='xsltInternals' info='Data structure associated to a parsed document.'/>
     <function name='xsltDocumentComp' file='preproc'>
       <info>Pre process an XSLT-1.1 document element</info>
       <return type='xsltElemPreCompPtr'/>
@@ -717,7 +717,7 @@
     </functype>
     <struct name='xsltElemPreComp' file='xsltInternals' info='The in-memory structure corresponding to element precomputed data, designed to be extended by extension implementors.'/>
     <functype name='xsltElemPreCompDeallocator' file='xsltInternals'>
-      <info>Deallocates an xsltElemPreComp structure</info>
+      <info>Deallocates an xsltElemPreComp structure.</info>
       <return type='void'/>
       <arg name='comp' type='xsltElemPreCompPtr' info='the xsltElemPreComp to free up '/>
     </functype>
@@ -806,7 +806,7 @@
       <arg name='URI' type='const xmlChar *'/>
     </function>
     <functype name='xsltExtInitFunction' file='extensions'>
-      <info>A function called at initialization time of an XSLT extension module</info>
+      <info>A function called at initialization time of an XSLT extension module.</info>
       <return type='void *'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
       <arg name='URI' type='const xmlChar *' info='the namespace URI for the extension '/>
@@ -836,7 +836,7 @@
       <arg name='URI' type='const xmlChar *' info='the top-level element namespace URI '/>
     </function>
     <functype name='xsltExtShutdownFunction' file='extensions'>
-      <info>A function called at shutdown time of an XSLT extension module</info>
+      <info>A function called at shutdown time of an XSLT extension module.</info>
       <return type='void'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
       <arg name='URI' type='const xmlChar *' info='the namespace URI for the extension '/>
@@ -1383,7 +1383,7 @@
       <arg name='SAX' type='xmlSAXHandlerPtr' info='a SAX handler for progressive callback output (not implemented yet) '/>
       <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet) '/>
     </function>
-    <struct name='xsltRuntimeExtra' file='xsltInternals' info='Extra information added to the transformation context'/>
+    <struct name='xsltRuntimeExtra' file='xsltInternals' info='Extra information added to the transformation context.'/>
     <typedef name='xsltRuntimeExtraPtr' file='xsltInternals'/>
     <function name='xsltSaveProfiling' file='xsltutils'>
       <info>Save the profiling informations on output</info>
@@ -1463,13 +1463,13 @@
     <struct name='xsltStackElem' file='xsltInternals'/>
     <typedef name='xsltStackElemPtr' file='xsltInternals'/>
     <functype name='xsltStyleExtInitFunction' file='extensions'>
-      <info>A function called at initialization time of an XSLT extension module</info>
+      <info>A function called at initialization time of an XSLT extension module.</info>
       <return type='void *'/>
       <arg name='style' type='xsltStylesheetPtr'/>
       <arg name='URI' type='const xmlChar *' info='the namespace URI for the extension '/>
     </functype>
     <functype name='xsltStyleExtShutdownFunction' file='extensions'>
-      <info>A function called at shutdown time of an XSLT extension module</info>
+      <info>A function called at shutdown time of an XSLT extension module.</info>
       <return type='void'/>
       <arg name='style' type='xsltStylesheetPtr'/>
       <arg name='URI' type='const xmlChar *' info='the namespace URI for the extension '/>
@@ -1498,7 +1498,7 @@
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context '/>
       <arg name='nargs' type='int' info='the number of arguments '/>
     </function>
-    <struct name='xsltTemplate' file='xsltInternals' info='The in-memory structure corresponding to an XSLT Template'/>
+    <struct name='xsltTemplate' file='xsltInternals' info='The in-memory structure corresponding to an XSLT Template.'/>
     <function name='xsltTemplateProcess' file='templates'>
       <info>Process the given node and return the new string value.</info>
       <return type='xmlNodePtr *' info='the computed tree replacement '/>
@@ -1533,7 +1533,7 @@
     <struct name='xsltTransformContext' file='xsltInternals'/>
     <typedef name='xsltTransformContextPtr' file='xsltInternals'/>
     <functype name='xsltTransformFunction' file='xsltInternals'>
-      <info>signature of the function associated to elements part of the stylesheet language like xsl:if or xsl:apply-templates.</info>
+      <info>Signature of the function associated to elements part of the stylesheet language like xsl:if or xsl:apply-templates.</info>
       <return type='void'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
       <arg name='node' type='xmlNodePtr' info='the input node '/>

@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 /**
- * XInclude default processing
+ * XInclude default processing.
  */
 void		xsltSetXIncludeDefault	(int xinclude);
 int		xsltGetXIncludeDefault	(void);
@@ -38,7 +38,7 @@ xmlDocPtr		xsltApplyStylesheetUser	(xsltStylesheetPtr style,
 						 FILE * profile,
 					     xsltTransformContextPtr userCtxt);
 /**
- * Private Interfaces
+ * Private Interfaces.
  */
 void		xsltApplyStripSpaces	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node);

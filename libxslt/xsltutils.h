@@ -1,5 +1,5 @@
 /*
- * xsltutils.h: interfaces for the utilities module of the XSLT engine
+ * xsltutils.h: interfaces for the utilities module of the XSLT engine.
  *
  * See Copyright for the status of this software.
  *
@@ -26,7 +26,7 @@ extern "C" {
 /**
  * TODO:
  *
- * macro to flag unimplemented blocks
+ * Macro to flag unimplemented blocks.
  */
 #define XSLT_TODO 							\
     xsltGenericError(xsltGenericErrorContext,				\
@@ -36,7 +36,7 @@ extern "C" {
 /**
  * STRANGE:
  *
- * macro to flag that a problem was detected internally
+ * Macro to flag that a problem was detected internally.
  */
 #define XSLT_STRANGE 							\
     xsltGenericError(xsltGenericErrorContext,				\
@@ -46,7 +46,7 @@ extern "C" {
 /**
  * IS_XSLT_ELEM:
  *
- * Checks that the element pertains to XSLt namespace
+ * Checks that the element pertains to XSLT namespace.
  */
 #define IS_XSLT_ELEM(n)							\
     (((n) != NULL) && ((n)->ns != NULL) &&				\
@@ -55,7 +55,7 @@ extern "C" {
 /**
  * IS_XSLT_NAME:
  *
- * Checks the value of an element in XSLT namespace
+ * Checks the value of an element in XSLT namespace.
  */
 #define IS_XSLT_NAME(n, val)						\
     (xmlStrEqual((n)->name, (const xmlChar *) (val)))
@@ -63,7 +63,7 @@ extern "C" {
 /**
  * IS_XSLT_REAL_NODE:
  *
- * check that a node is a 'real' one: document, element, text or attribute
+ * Check that a node is a 'real' one: document, element, text or attribute.
  */
 #ifdef LIBXML_DOCB_ENABLED
 #define IS_XSLT_REAL_NODE(n)						\
@@ -85,14 +85,14 @@ extern "C" {
 #endif
 
 /*
- * Our own version of namespaced atributes lookup
+ * Our own version of namespaced atributes lookup.
  */
 xmlChar *	 xsltGetNsProp			(xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *nameSpace);
 
 /*
- * XSLT specific error and debug reporting functions
+ * XSLT specific error and debug reporting functions.
  */
 LIBXSLT_PUBLIC extern xmlGenericErrorFunc xsltGenericError;
 LIBXSLT_PUBLIC extern void *xsltGenericErrorContext;
@@ -111,7 +111,7 @@ void		xsltSetGenericDebugFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
 
 /*
- * Sorting
+ * Sorting.
  */
 
 void		xsltDocumentSortFunction	(xmlNodeSetPtr list);
@@ -120,14 +120,14 @@ void		xsltDoSortFunction		(xsltTransformContextPtr ctxt,
 						 int nbsorts);
 
 /*
- * QNames handling
+ * QNames handling.
  */
 
 const xmlChar * xsltGetQNameURI			(xmlNodePtr node,
 						 xmlChar **name);
 
 /*
- * Output, reuse libxml I/O buffers
+ * Output, reuse libxml I/O buffers.
  */
 int		xsltSaveResultTo		(xmlOutputBufferPtr buf,
 						 xmlDocPtr result,
@@ -144,7 +144,7 @@ int		xsltSaveResultToFd		(int fd,
 						 xsltStylesheetPtr style);
 
 /*
- * profiling
+ * Profiling.
  */
 void		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
 						 FILE *output);
@@ -155,7 +155,7 @@ void		xsltCalibrateAdjust		(long delta);
 #define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
 
 /*
- * Hooks for the debugger
+ * Hooks for the debugger.
  */
 
 typedef enum {
