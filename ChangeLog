@@ -1,3 +1,11 @@
+Wed Jun 30 18:41:20 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* win32/Makefile.msvc win32/Makefile.mingw libexslt/Makefile.am
+	  libexslt/exslt.c libexslt/exslt.h config.h.in configure.in
+	  libexslt/crypto.c: applied patch from Joel Reed to get EXSLT
+	  crypto extensions based on libgcrypt if found at configure time.
+	* tests/namespaces/Makefile.am: fixed a small breakage
+
 Wed Jun 30 12:28:34 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/namespaces: some enhancement for fixing bug 142768

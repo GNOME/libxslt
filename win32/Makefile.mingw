@@ -111,6 +111,7 @@ XSLT_OBJS_A = $(XSLT_INTDIR_A)/attributes.o\
 
 # Libexslt object files.
 EXSLT_OBJS = $(EXSLT_INTDIR)/common.o\
+	$(EXSLT_INTDIR)/crypto.o\
 	$(EXSLT_INTDIR)/date.o\
 	$(EXSLT_INTDIR)/exslt.o\
 	$(EXSLT_INTDIR)/functions.o\
@@ -123,6 +124,7 @@ EXSLT_SRCS = $(subst .o,.c,$(subst $(EXSLT_INTDIR)/,$(EXSLT_SRCDIR)/,$(EXSLT_OBJ
 
 # Static libexslt object files.
 EXSLT_OBJS_A = $(EXSLT_INTDIR_A)/common.o\
+	$(EXSLT_INTDIR_A)/crypto.o\
 	$(EXSLT_INTDIR_A)/date.o\
 	$(EXSLT_INTDIR_A)/exslt.o\
 	$(EXSLT_INTDIR_A)/functions.o\

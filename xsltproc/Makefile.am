@@ -5,10 +5,12 @@ INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
 EXTRA_PROGRAMS=
 bin_PROGRAMS = xsltproc $(XSLTPROCDV)
 
+AM_CFLAGS = $(LIBGCRYPT_CFLAGS)
+
 xsltproc_SOURCES = xsltproc.c
-xsltproc_LDFLAGS =
+xsltproc_LDFLAGS = 
 xsltproc_DEPENDENCIES = $(DEPS)
-xsltproc_LDADD = $(LDADDS)
+xsltproc_LDADD = $(LDADDS) $(LIBGCRYPT_LIBS)
 
 DEPS = $(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la 

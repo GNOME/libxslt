@@ -200,6 +200,23 @@ AC_SUBST(pythondir)
 AC_SUBST(PYTHON_SUBDIR)
 
 dnl
+dnl check for gcrypt
+dnl
+AC_PATH_PROG(LIBGCRYPT_CONFIG, libgcrypt-config, no)
+if test "$LIBGCRYPT_CONFIG" != "no" ; then
+	 LIBGCRYPT_CFLAGS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --cflags`
+  LIBGCRYPT_LIBS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --libs`
+	 AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
+  AC_MSG_NOTICE([Crypto extensions will be available.])
+else
+  LIBGCRYPT_CFLAGS=""
+  LIBGCRYPT_LIBS=""
+  AC_MSG_NOTICE([Crypto extensions will not be available. Install libgcrypt and reconfigure to make available.])
+fi
+
+AC_SUBST(LIBGCRYPT_CFLAGS)
+AC_SUBST(LIBGCRYPT_LIBS)
+dnl
 dnl Debug for DV (-Wunreachable-code)
 dnl
 if [[ "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ]] || \
@@ -408,7 +425,7 @@ AC_SUBST(XSLT_LIBS)
 
 EXSLT_LIBDIR='-L${libdir}'
 EXSLT_INCLUDEDIR='-I${includedir}'
-EXSLT_LIBS="-lexslt $XSLT_LIBS"
+EXSLT_LIBS="-lexslt $XSLT_LIBS $LIBGCRYPT_LIBS"
 AC_SUBST(EXSLT_LIBDIR)
 AC_SUBST(EXSLT_INCLUDEDIR)
 AC_SUBST(EXSLT_LIBS)

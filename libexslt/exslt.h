@@ -22,6 +22,12 @@ EXSLTPUBVAR const int exsltLibxmlVersion;
  */
 #define EXSLT_COMMON_NAMESPACE ((const xmlChar *) "http://exslt.org/common")
 /**
+ * EXSLT_CRYPTO_NAMESPACE:
+ *
+ * Namespace for EXSLT crypto functions
+ */
+#define EXSLT_CRYPTO_NAMESPACE ((const xmlChar *) "http://exslt.org/crypto")
+/**
  * EXSLT_MATH_NAMESPACE:
  *
  * Namespace for EXSLT math functions
@@ -66,6 +72,7 @@ EXSLTPUBVAR const int exsltLibxmlVersion;
 #define SAXON_NAMESPACE ((const xmlChar *) "http://icl.com/saxon")
 
 EXSLTPUBFUN void EXSLTCALL exsltCommonRegister (void);
+EXSLTPUBFUN void EXSLTCALL exsltCryptoRegister (void);
 EXSLTPUBFUN void EXSLTCALL exsltMathRegister (void);
 EXSLTPUBFUN void EXSLTCALL exsltSetsRegister (void);
 EXSLTPUBFUN void EXSLTCALL exsltFuncRegister (void);
