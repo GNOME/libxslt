@@ -314,7 +314,7 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 xmlNodePtr
 xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
 	     xmlNodePtr insert) {
-    xmlNodePtr copy, ret = NULL, last;
+    xmlNodePtr copy, ret = NULL, last = NULL;
 
     while (list != NULL) {
 	copy = xsltCopyTree(ctxt, list, insert);
@@ -814,7 +814,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	             xmlNodePtr list, int real) {
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
-    xmlNodePtr oldCurrent;
+    xmlNodePtr oldCurrent = NULL;
     xmlAttrPtr attrs;
 
     if (list == NULL)

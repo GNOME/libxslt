@@ -614,7 +614,7 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     xmlChar *name, *ncname, *prefix;
     xmlChar *select;
     xmlNodePtr tree = NULL;
-    xsltStackElemPtr elem;
+    xsltStackElemPtr elem = NULL;
 
     if ((cur == NULL) || (ctxt == NULL))
 	return(NULL);
