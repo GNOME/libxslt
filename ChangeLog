@@ -1,3 +1,9 @@
+Mon Feb 11 13:27:42 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltInternals.h libxslt/pattern.c: expected to have
+	  closed bug #70131, still wondering about the position() when
+	  the node is selected.
+
 Mon Feb 11 10:45:27 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-71.xml

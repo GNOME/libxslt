@@ -49,6 +49,7 @@ struct _xsltRuntimeExtra {
 };
 
 #define XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].info
+#define XSLT_RUNTIME_EXTRA_FREE(ctxt, nr) (ctxt)->extras[(nr)].deallocate
 
 /**
  * xsltTemplate:

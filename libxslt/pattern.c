@@ -561,6 +561,58 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		int oldCS, oldCP;
 		int pos = 0, len = 0;
 		/*
+		 * The simple existing predicate code cannot handle
+		 * properly cascaded predicates. If in this situation
+		 * compute directly the full node list once and check
+		 * if the node is in the result list.
+		 */
+		if (comp->steps[i + 1].op == XSLT_OP_PREDICATE) {
+		    xmlNodePtr previous;
+		    xmlXPathObjectPtr list;
+		    int index, j;
+
+		    previous = (xmlNodePtr)
+			XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra);
+		    index = (int)
+			XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra);
+		    list = (xmlXPathObjectPtr)
+			XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra);
+		    if (list == NULL) {
+			xmlChar *query;
+
+			if (comp->pattern[0] == '/')
+			    query = xmlStrdup(comp->pattern);
+			else {
+			    query = xmlStrdup((const xmlChar *)"//");
+			    query = xmlStrcat(query, comp->pattern);
+			}
+			list = xmlXPathEval(query, ctxt->xpathCtxt);
+			xmlFree(query);
+			if (list == NULL)
+			    return(-1);
+			if (list->type != XPATH_NODESET) {
+			    xmlXPathFreeObject(list);
+			    return(-1);
+			}
+			XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra) =
+			    (void *) list;
+			XSLT_RUNTIME_EXTRA_FREE(ctxt, select->lenExtra) =
+			    (xmlFreeFunc) xmlXPathFreeObject;
+		    }
+		    if ((list->nodesetval == NULL) ||
+			(list->nodesetval->nodeNr <= 0))
+			return(0);
+		    if (index == 0) {
+			for (j = 0;j < list->nodesetval->nodeNr;j++) {
+			    if (list->nodesetval->nodeTab[j] == node) {
+				return(1);
+			    }
+			}
+		    } else {
+		    }
+		    return(0);
+		}
+		/*
 		 * Depending on the last selection, one may need to
 		 * recompute contextSize and proximityPosition.
 		 *
