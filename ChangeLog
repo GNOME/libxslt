@@ -1,3 +1,8 @@
+Mon Aug 12 23:12:59 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: applied a patch from Nathan Myers about
+	  an erroneous free in case of error
+
 Thu Aug  1 14:29:11 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: upon suggestion of Marc-Andre Lemburg, make 

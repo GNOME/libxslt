@@ -3663,7 +3663,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if (profile != NULL) {
         xsltSaveProfiling(ctxt, profile);
     }
-    if (userCtxt == NULL)
+    if ((ctxt != NULL) && (userCtxt == NULL))
 	xsltFreeTransformContext(ctxt);
 
     return (res);
