@@ -3,7 +3,7 @@
 $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
-test: $(top_builddir)/libxslt/xsltproc
+test tests: $(top_builddir)/libxslt/xsltproc
 	@(rm -f .memdump ; touch .memdump)
 	@($(top_builddir)/libxslt/xsltproc vrml.xsl data.xml > vrml.res ; \
 	diff vrml.xml vrml.res ; \
@@ -13,5 +13,9 @@ test: $(top_builddir)/libxslt/xsltproc
 	diff svg.xml svg.res ; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	rm -f svg.res)
+	@($(top_builddir)/libxslt/xsltproc html.xsl data.xml > html.res ; \
+	diff html.xml html.res ; \
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	rm -f html.res)
 
 

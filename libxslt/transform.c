@@ -294,7 +294,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     value = xmlNodeListGetString(inst->doc, inst->children, 1);
     if (value == NULL) {
 	if (ns) {
-#if LIBXML_VERSION > 202111
+#if LIBXML_VERSION > 20211
 	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href,
 		                (const xmlChar *)"");
 #else
@@ -316,6 +316,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	} else
 	    attr = xmlSetProp(ctxt->insert, ncname, value);
+	
     }
 
 error:

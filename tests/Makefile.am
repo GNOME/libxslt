@@ -18,6 +18,6 @@ LDADDS = $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS)
 #testevents_DEPENDENCIES = $(DEPS)
 #testevents_LDADD = $(LDADDS)
 
-test: $(top_builddir)/libxslt/xsltproc
+test tests: $(top_builddir)/libxslt/xsltproc
 	@(cd REC1 ; make test)
 	@(cd REC2 ; make test)

@@ -202,8 +202,11 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	xmlChar *out;
 
 	if (in != NULL) {
+	    xmlNodePtr child;
+
             out = xsltAttrTemplateValueProcess(ctxt, in);
-	    ret->children = xmlNewDocText(ctxt->output, out);
+	    child = xmlNewDocText(ctxt->output, out);
+	    xmlAddChild((xmlNodePtr) ret, child);
 	    xmlFree(out);
 	    xmlFree(in);
 	} else
@@ -233,12 +236,16 @@ xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt,
 
     while (cur != NULL) {
         q = xsltAttrTemplateProcess(ctxt, target, cur);
-	if (p == NULL) {
-	    ret = p = q;
-	} else {
-	    p->next = q;
-	    q->prev = p;
-	    p = q;
+	if (q != NULL) {
+	    q->parent = target;
+	    q->doc = ctxt->output;
+	    if (p == NULL) {
+		ret = p = q;
+	    } else {
+		p->next = q;
+		q->prev = p;
+		p = q;
+	    }
 	}
 	cur = cur->next;
     }

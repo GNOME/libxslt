@@ -1,3 +1,14 @@
+Sun Jan 21 12:03:16 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am tests/Makefile.am tests/REC1/Makefile.am
+	  tests/REC2/Makefile.am tests/REC2/html.xml: added tests target
+	  too, added the HTML output test
+	* libxmls/xsltutils.c: added HTML output
+	* libxslt/xslt.c: check version on literal result used as templates
+	* libxslt/transform.c: fixed an error in VERSION number
+	* libxslt/templates.c: make sure generated nodes have doc and
+	  parent properly set
+
 Sat Jan 20 23:35:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/Makefile.am libxslt/template.[ch]: added a template

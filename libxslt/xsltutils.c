@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#include <libxml/xmlversion.h>
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
 #include <libxml/xmlerror.h>
@@ -198,6 +199,7 @@ int
 xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	       xsltStylesheetPtr style) {
     const xmlChar *encoding;
+    xmlNodePtr root;
     int base;
 
     if ((buf == NULL) || (result == NULL) || (style == NULL))
@@ -212,9 +214,22 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
     /* TODO: when outputing and having imported stylesheets, apply cascade */
     base = buf->written;
     encoding = style->encoding;
-    if (xmlStrEqual(style->method, (const xmlChar *) "html")) {
-	TODO /* HTML dump ... */
-    } else if (xmlStrEqual(style->method, (const xmlChar *) "text")) {
+    if (style->method == NULL)
+	root = xmlDocGetRootElement(result);
+    else
+	root = NULL;
+    if (((style->method != NULL) &&
+	 (xmlStrEqual(style->method, (const xmlChar *) "html"))) ||
+	((root != NULL) &&
+	 (xmlStrEqual(root->name, (const xmlChar *) "html")))){
+#if LIBXML_VERSION > 20211
+	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
+#else
+	xsltGenericError(xsltGenericErrorContext,
+		"HTML output requires libxml version > 2.2.11\n");
+#endif
+    } else if ((style->method != NULL) &&
+	       (xmlStrEqual(style->method, (const xmlChar *) "text"))) {
 	xmlNodePtr cur;
 
 	cur = result->children;
@@ -258,7 +273,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    xmlNodePtr child = result->children;
 
 	    while (child != NULL) {
-		xmlNodeDumpOutput(buf, result, child, 0, style->indent,
+		xmlNodeDumpOutput(buf, result, child, 0, (style->indent == 1),
 			          (const char *) encoding);
 		xmlOutputBufferWriteString(buf, "\n");
 		child = child->next;

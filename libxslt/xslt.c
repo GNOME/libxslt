@@ -866,7 +866,11 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 		"xsltParseStylesheetDoc : document is stylesheet\n");
 #endif
 	
-	/* TODO: check the version */
+	if (!xmlStrEqual(prop, (const xmlChar *)"1.0")) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsl:version: only 1.0 features are supported\n");
+	    TODO /* set up compatibility when not XSLT 1.0 */
+	}
 	xmlFree(prop);
 
 	/*
