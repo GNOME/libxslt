@@ -26,14 +26,23 @@
   </p></div></div>
 <hr>
 </div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><a href="#bib1">A Test Bibliography</a></dt>
+<dt><a href="#gloss">Example Glossary</a></dt>
+<dt><a href="#index">Index</a></dt>
+<dt><a href="#id2689851">Index</a></dt>
+</dl>
+</div>
 <div class="bibliography">
 <h2 class="title"><a name="bib1">A Test Bibliography</a></h2>
 <p>The stock stylesheet attempts to do a Bibliography.  It probably needs
 a lot of tweaking.  It probably doesn't conform to any specific style.</p>
 <div class="bibliodiv">
-<h3 class="title"><a name="id2650583">Books</a></h3>
-<div id="id2695377" class="biblioentry">
-<a name="id2695377"></a>
+<h3 class="title"><a name="id2806608">Books</a></h3>
+<div id="id2806621" class="biblioentry">
+<a name="id2806621"></a>
 <p>
 <span class="abbrev">[AhoSethiUllman96] </span>
 <span class="authorgroup">Alfred V. Aho, Ravi Sethi, and Jeffrey D. Ullman. </span>
@@ -47,7 +56,7 @@ a lot of tweaking.  It probably doesn't conform to any specific style.</p>
 </div>
 </div>
 <div class="bibliodiv">
-<h3 class="title"><a name="id2653648">Periodicals</a></h3>
+<h3 class="title"><a name="id2690342">Periodicals</a></h3>
 <div id="walsh97" class="biblioentry">
 <a name="walsh97"></a>
 <p>
@@ -76,8 +85,8 @@ a lot of tweaking.  It probably doesn't conform to any specific style.</p>
     <span class="pubdate">Winter, 1996</span>
 </span>.</p>
 </div>
-<div id="id2647056" class="biblioentry">
-<a name="id2647056"></a>
+<div id="id2694096" class="biblioentry">
+<a name="id2694096"></a>
 <p>
 <span class="abbrev">[Abbrev] </span>
 <span class="title">
@@ -190,7 +199,7 @@ USA. </span>
 </div>
 <div class="glossdiv">
 <h3 class="title">S</h3>
-<dt><a name="id2654899">SGML</a></dt>
+<dt><a name="id2691276">SGML</a></dt>
 <dd><p>See <a href="#sgml">Standard Generalized
   Markup Language</a>.</p></dd>
 <dt><a name="sgml">Standard Generalized
@@ -208,26 +217,50 @@ USA. </span>
 <p>
 <b>a formal para</b> this is a formal paragraph.</p>
 <dt>Primary</dt>
-<dd><dl></dl></dd>
+<dd><dl>
+<dt>Secondary 1</dt>
+<dd><dl>
+<dt>Tertiary 11</dt>
+<dt>Tertiary 12</dt>
+<dt>Tertiary 21</dt>
+</dl></dd>
+<dt>Secondary 2</dt>
+<dd><dl><dt>Tertiary 21</dt></dl></dd>
+</dl></dd>
 <dt>primary</dt>
 <dt>primary</dt>
 <dt>primary</dt>
-<dd><dl></dl></dd>
+<dd><dl><dt>secondary</dt></dl></dd>
 <dt>primary</dt>
-<dd><dl></dl></dd>
+<dd><dl><dt>secondary</dt></dl></dd>
 <dt>primary</dt>
-<dd><dl></dl></dd>
+<dd><dl>
+<dt>secondary</dt>
+<dd><dl><dt>tertiary1</dt></dl></dd>
+</dl></dd>
 <dt>primary</dt>
-<dd><dl></dl></dd>
+<dd><dl>
+<dt>secondary</dt>
+<dd><dl><dt>tertiary2</dt></dl></dd>
+</dl></dd>
 <dt>primary</dt>
-<dd><dl></dl></dd>
+<dd><dl>
+<dt>secondary2</dt>
+<dd><dl><dt>tertiary3</dt></dl></dd>
+</dl></dd>
 <dt>primary</dt>
-<dd><dl></dl></dd>
+<dd><dl><dt>see ie</dt></dl></dd>
 <dt>primary</dt>
-<dd><dl></dl></dd>
+<dd><dl>
+<dt>secondary2</dt>
+<dd><dl>
+<dt>tertiary3</dt>
+<dd><dl><dt>seealso ie</dt></dl></dd>
+</dl></dd>
+</dl></dd>
 </div>
 <div class="index">
-<h2 class="title"><a name="id2655182">Index</a></h2>
+<h2 class="title"><a name="id2689851">Index</a></h2>
 <div class="indexdiv">Symbols<dl>
 <dt>!,
     <a href="c3.htm#aen10" target="_top">Index Term Sect 1</a>
@@ -245,7 +278,14 @@ USA. </span>
 <dt>chap-level,
     <a href="c3.htm" target="_top">Index Term Tests</a>
   </dt>
-<dd><dl></dl></dd>
+<dd><dl>
+<dt>sec
+  </dt>
+<dd><dl><dt>tert,
+    <a href="c3.htm#aen10" target="_top">Index Term Sect 1</a>,
+    <a href="c3.htm#aen38" target="_top">Index Term Sect 2</a>
+  </dt></dl></dd>
+</dl></dd>
 </dl>
 </div>
 <div class="indexdiv">O<dl>
@@ -253,17 +293,23 @@ USA. </span>
     <a href="c3.htm" target="_top">Index Term Tests</a>,
     <a href="c3.htm#aen38" target="_top">Index Term Sect 2</a>
   </dt>
-<dd><dl></dl></dd>
+<dd><dl><dt>with id,
+    <a href="c3.htm#aen10" target="_top">Index Term Sect 1</a>
+  </dt></dl></dd>
 </dl>
 </div>
 <div class="indexdiv">S<dl>
 <dt>sect1-level,
     <a href="c3.htm#aen10" target="_top"><i>Index Term Sect 1</i></a>
   </dt>
-<dd><dl></dl></dd>
+<dd><dl><dt>sec,
+    <a href="c3.htm#aen10" target="_top">Index Term Sect 1</a>
+  </dt></dl></dd>
 <dt>sect1-other
   </dt>
-<dd><dl></dl></dd>
+<dd><dl><dt>sec,
+    <a href="c3.htm#aen10" target="_top">Index Term Sect 1</a>
+  </dt></dl></dd>
 </dl>
 </div>
 </div>

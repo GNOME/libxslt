@@ -1991,7 +1991,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 void
 xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlNodePtr cur, delete = NULL;
+    xmlNodePtr cur, delete = NULL, oldnode;
     xmlXPathObjectPtr res = NULL;
     xmlNodeSetPtr list = NULL, oldlist;
     int i, oldProximityPosition, oldContextSize;
@@ -2015,6 +2015,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     /*
      * Get mode if any
      */
+    oldnode = ctxt->node;
     oldmode = ctxt->mode;
     oldmodeURI = ctxt->modeURI;
     ctxt->mode = comp->mode;
@@ -2154,6 +2155,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 
 error:
+    ctxt->node = oldnode;
     ctxt->mode = oldmode;
     ctxt->modeURI = oldmodeURI;
     if (res != NULL)

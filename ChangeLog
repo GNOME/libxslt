@@ -1,3 +1,12 @@
+Thu Mar 29 10:24:42 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: applied fix to xsltApplyTemplates from
+	  William M. Brack
+	* test/docbook/result/html/*.html: this change the output
+	* tests/xmlspec/REC-xml-20001006-review.html 
+	  tests/xmlspec/REC-xml-20001006.html: this also fixed some of
+	  the reference anchors generated for the XML spec
+
 Mon Mar 26 18:57:58 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/attributes.c libxslt/extra.c libxslt/keys.c libxslt/numbers.c
