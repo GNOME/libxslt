@@ -1,3 +1,10 @@
+Wed Sep 18 15:46:50 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* libexslt/date.c: fixed the embedded '-' in the duration format 
+	  function
+	* tests/.../difference.1.xml: added test cases which illustrated
+	  the above bug
+
 Tue Sep 17 18:01:22 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libexslt/date.c: fixed date:difference() bugs, removed all
