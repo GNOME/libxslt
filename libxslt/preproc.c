@@ -1326,7 +1326,7 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 				(xsltTransformFunction) xsltDocumentElem);
 	} else {
 	    xsltPrintErrorContext(NULL, style, inst);
-	    xsltGenericError(xsltGenericDebugContext,
+	    xsltGenericError(xsltGenericErrorContext,
 		 "xsltStylePreCompute: unknown xsl:%s\n", inst->name);
 	    style->warnings++;
 	}
