@@ -1971,6 +1971,8 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodeSetPtr list = NULL;
     int i;
     int oldProximityPosition, oldContextSize;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -1987,12 +1989,16 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
     oldContextSize = ctxt->xpathCtxt->contextSize;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     ctxt->xpathCtxt->contextSize = oldContextSize;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -2071,6 +2077,8 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr copy = NULL;
     int oldProximityPosition, oldContextSize;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -2087,12 +2095,16 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
     oldContextSize = ctxt->xpathCtxt->contextSize;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     ctxt->xpathCtxt->contextSize = oldContextSize;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
     if (res != NULL) {
 	if (res->type != XPATH_STRING)
 	    res = xmlXPathConvertString(res);
@@ -2263,6 +2275,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr sorts[XSLT_MAX_SORT];
     xmlDocPtr oldXDocPtr;
     xsltDocumentPtr oldCDocPtr;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -2296,6 +2310,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldCDocPtr = ctxt->document;
     oldContextSize = ctxt->xpathCtxt->contextSize;
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
+    oldList = ctxt->nodeList;
 
     if (comp->select != NULL) {
 	if (comp->comp == NULL) {
@@ -2388,7 +2405,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	"xsltApplyTemplates: list of %d nodes\n", list->nodeNr);
 #endif
 
-    oldList = ctxt->nodeList;
     ctxt->nodeList = list;
     ctxt->xpathCtxt->contextSize = list->nodeNr;
 
@@ -2471,13 +2487,16 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     }
     xsltFreeStackElemList(params);	/* free the parameter list */
+error:
+
     ctxt->nodeList = oldList;
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     ctxt->xpathCtxt->doc = oldXDocPtr;
     ctxt->document = oldCDocPtr;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
 
-error:
     ctxt->node = oldNode;
     ctxt->mode = oldMode;
     ctxt->modeURI = oldModeURI;
@@ -2505,6 +2524,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr replacement, when;
     int doit = 1;
     int oldProximityPosition, oldContextSize;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -2540,12 +2561,16 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
+	oldNsNr = ctxt->xpathCtxt->nsNr;
+	oldNamespaces = ctxt->xpathCtxt->namespaces;
   	ctxt->xpathCtxt->node = node;
 	ctxt->xpathCtxt->namespaces = comp->nsList;
 	ctxt->xpathCtxt->nsNr = comp->nsNr;
   	res = xmlXPathCompiledEval(wcomp->comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	ctxt->xpathCtxt->contextSize = oldContextSize;
+	ctxt->xpathCtxt->nsNr = oldNsNr;
+	ctxt->xpathCtxt->namespaces = oldNamespaces;
 	if (res != NULL) {
 	    if (res->type != XPATH_BOOLEAN)
 		res = xmlXPathConvertBoolean(res);
@@ -2613,6 +2638,8 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlXPathObjectPtr res = NULL;
     int doit = 1;
     int oldContextSize, oldProximityPosition;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -2629,12 +2656,16 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     oldContextSize = ctxt->xpathCtxt->contextSize;
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
     if (res != NULL) {
 	if (res->type != XPATH_BOOLEAN)
 	    res = xmlXPathConvertBoolean(res);
@@ -2685,6 +2716,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr sorts[XSLT_MAX_SORT];
     xmlDocPtr oldXDocPtr;
     xsltDocumentPtr oldCDocPtr;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -2701,6 +2734,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
     oldContextSize = ctxt->xpathCtxt->contextSize;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
@@ -2709,6 +2744,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
     if (res != NULL) {
 	if (res->type == XPATH_NODESET)
 	    list = res->nodesetval;
@@ -2784,6 +2821,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->doc = oldXDocPtr;
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
 
 error:
     if (res != NULL)

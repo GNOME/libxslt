@@ -281,6 +281,10 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	         xsltStylePreCompPtr precomp) {
     xmlXPathObjectPtr result = NULL;
     int oldProximityPosition, oldContextSize;
+    xmlNodePtr oldInst;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
+
     if ((ctxt == NULL) || (elem == NULL))
 	return(NULL);
 
@@ -301,6 +305,9 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
 	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
+	oldInst = ctxt->inst;
+	oldNsNr = ctxt->xpathCtxt->nsNr;
+	oldNamespaces = ctxt->xpathCtxt->namespaces;
 	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
 	    ctxt->xpathCtxt->namespaces = precomp->nsList;
@@ -313,6 +320,9 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+	ctxt->xpathCtxt->nsNr = oldNsNr;
+	ctxt->xpathCtxt->namespaces = oldNamespaces;
+	ctxt->inst = oldInst;
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
@@ -382,6 +392,8 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     xsltStylePreCompPtr precomp;
     int oldProximityPosition, oldContextSize;
     xmlNodePtr oldInst;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if ((ctxt == NULL) || (elem == NULL))
 	return(NULL);
@@ -408,6 +420,8 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
 	oldInst = ctxt->inst;
+	oldNsNr = ctxt->xpathCtxt->nsNr;
+	oldNamespaces = ctxt->xpathCtxt->namespaces;
 	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
 	    ctxt->xpathCtxt->namespaces = precomp->nsList;
@@ -422,6 +436,8 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	ctxt->inst = oldInst;
+	ctxt->xpathCtxt->nsNr = oldNsNr;
+	ctxt->xpathCtxt->namespaces = oldNamespaces;
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
@@ -642,6 +658,8 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
     xmlXPathCompExprPtr comp;
     xmlXPathObjectPtr result;
     int oldProximityPosition, oldContextSize;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     if (ctxt == NULL)
 	return(-1);
@@ -702,11 +720,15 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 	     * There is really no in scope namespace for parameters on the
 	     * command line.
 	     */
+	    oldNsNr = ctxt->xpathCtxt->nsNr;
+	    oldNamespaces = ctxt->xpathCtxt->namespaces;
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
 	    result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
 	    ctxt->xpathCtxt->contextSize = oldContextSize;
 	    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+	    ctxt->xpathCtxt->nsNr = oldNsNr;
+	    ctxt->xpathCtxt->namespaces = oldNamespaces;
 	    xmlXPathFreeCompExpr(comp);
 	}
 	if (result == NULL) {

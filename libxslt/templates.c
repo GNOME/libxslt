@@ -53,15 +53,25 @@
 int
 xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
 		       xmlNsPtr *nsList, int nsNr) {
-    int ret, position;
+    int ret;
     xmlXPathObjectPtr res;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
+    xmlNodePtr oldInst;
+    int oldProximityPosition, oldContextSize;
 
-    position = ctxt->xpathCtxt->proximityPosition;
+    oldContextSize = ctxt->xpathCtxt->contextSize;
+    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
+    oldInst = ctxt->inst;
+
     ctxt->xpathCtxt->node = ctxt->node;
     ctxt->xpathCtxt->namespaces = nsList;
     ctxt->xpathCtxt->nsNr = nsNr;
+
     res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
-    ctxt->xpathCtxt->proximityPosition = position;
+
     if (res != NULL) {
 	ret = xmlXPathEvalPredicate(ctxt->xpathCtxt, res);
 	xmlXPathFreeObject(res);
@@ -76,6 +86,13 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
 #endif
 	ret = 0;
     }
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
+    ctxt->inst = oldInst;
+    ctxt->xpathCtxt->contextSize = oldContextSize;
+    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+
     return(ret);
 }
 
@@ -96,11 +113,15 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     xmlNodePtr oldInst;
     xmlNodePtr oldNode;
     int	oldPos, oldSize;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     oldInst = ctxt->inst;
     oldNode = ctxt->node;
     oldPos = ctxt->xpathCtxt->proximityPosition;
     oldSize = ctxt->xpathCtxt->contextSize;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
 
     ctxt->xpathCtxt->node = ctxt->node;
     /* TODO: do we need to propagate the namespaces here ? */
@@ -127,6 +148,8 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     ctxt->node = oldNode;
     ctxt->xpathCtxt->contextSize = oldSize;
     ctxt->xpathCtxt->proximityPosition = oldPos;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
     return(ret);
 }
 

@@ -309,6 +309,8 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     xmlNodePtr oldNode;
     xmlNodePtr oldInst;
     int	oldPos, oldSize ;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     comp = sort->_private;
     if (comp == NULL) {
@@ -341,6 +343,8 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     oldInst = ctxt->inst;
     oldPos = ctxt->xpathCtxt->proximityPosition;
     oldSize = ctxt->xpathCtxt->contextSize;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
     for (i = 0;i < len;i++) {
 	ctxt->inst = sort;
 	ctxt->xpathCtxt->contextSize = len;
@@ -385,6 +389,8 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     ctxt->inst = oldInst;
     ctxt->xpathCtxt->contextSize = oldSize;
     ctxt->xpathCtxt->proximityPosition = oldPos;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
 
     return(results);
 }

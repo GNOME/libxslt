@@ -333,6 +333,8 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     xmlNodePtr oldInst;
     xsltDocumentPtr oldDoc;
     xmlDocPtr oldXDoc;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
 
     /*
      * Evaluate the nodelist
@@ -343,6 +345,8 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     oldSize = ctxt->xpathCtxt->contextSize;
     oldInst = ctxt->inst;
     oldDoc = ctxt->document;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
 
     if (keyd->comp == NULL)
 	goto error;
@@ -429,6 +433,8 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 error:
     ctxt->document = oldDoc;
     ctxt->xpathCtxt->doc = oldXDoc;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
     if (res != NULL)
 	xmlXPathFreeObject(res);
 }
