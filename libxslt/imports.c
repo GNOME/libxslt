@@ -78,8 +78,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:import : missing href attribute\n");
 	goto error;
     }
@@ -87,8 +86,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     base = xmlNodeGetBase(style->doc, cur);
     URI = xmlBuildURI(uriRef, base);
     if (URI == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:import : invalid URI reference %s\n", uriRef);
 	goto error;
     }
@@ -98,12 +96,11 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
      */
     sec = xsltGetDefaultSecurityPrefs();
     if (sec != NULL) {
-	int res;
+	int secres;
 
-	res = xsltCheckRead(sec, NULL, URI);
-	if (res == 0) {
-	    xsltPrintErrorContext(NULL, NULL, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	secres = xsltCheckRead(sec, NULL, URI);
+	if (secres == 0) {
+	    xsltTransformError(NULL, NULL, NULL,
 		 "xsl:import: read rights for %s denied\n",
 			     URI);
 	    goto error;
@@ -112,8 +109,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     import = xmlParseFile((const char *)URI);
     if (import == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:import : unable to load %s\n", URI);
 	goto error;
     }
@@ -164,8 +160,7 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:include : missing href attribute\n");
 	goto error;
     }
@@ -173,16 +168,14 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     base = xmlNodeGetBase(style->doc, cur);
     URI = xmlBuildURI(uriRef, base);
     if (URI == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:include : invalid URI reference %s\n", uriRef);
 	goto error;
     }
 
     include = xsltLoadStyleDocument(style, URI);
     if (include == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:include : unable to load %s\n", URI);
 	goto error;
     }

@@ -456,6 +456,9 @@ struct _xsltTransformContext {
 
     xsltDocumentPtr  styleList;		/* the stylesheet docs list */
     void                 * sec;		/* the security preferences if any */
+
+    xmlGenericErrorFunc  error;		/* a specific error handler */
+    void              * errctx;		/* context for the error handler */
 };
 
 /**

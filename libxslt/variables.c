@@ -53,8 +53,7 @@ xsltNewStackElem(void) {
 
     cur = (xsltStackElemPtr) xmlMalloc(sizeof(xsltStackElem));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltNewStackElem : malloc failed\n");
 	return(NULL);
     }
@@ -82,8 +81,7 @@ xsltCopyStackElem(xsltStackElemPtr elem) {
 
     cur = (xsltStackElemPtr) xmlMalloc(sizeof(xsltStackElem));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltCopyStackElem : malloc failed\n");
 	return(NULL);
     }
@@ -335,8 +333,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
-	    xsltPrintErrorContext(ctxt, NULL, precomp->inst);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, NULL, precomp->inst,
 		"Evaluating variable %s failed\n", elem->name);
 	    ctxt->state = XSLT_STATE_STOPPED;
 #ifdef WITH_XSLT_DEBUG_VARIABLE
@@ -466,8 +463,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
-	    xsltPrintErrorContext(ctxt, NULL, precomp->inst);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, NULL, precomp->inst,
 		"Evaluating global variable %s failed\n", elem->name);
 	    ctxt->state = XSLT_STATE_STOPPED;
 #ifdef WITH_XSLT_DEBUG_VARIABLE
@@ -595,8 +591,7 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 		if ((elem->comp->inst != NULL) &&
 		    (def->comp != NULL) && (def->comp->inst != NULL) &&
 		    (elem->comp->inst->doc == def->comp->inst->doc)) {
-		    xsltPrintErrorContext(ctxt, style, elem->comp->inst);
-		    xsltGenericError(xsltGenericErrorContext,
+		    xsltTransformError(ctxt, style, elem->comp->inst,
 			"Global variable %s already defined\n", elem->name);
 		}
 	    }
@@ -759,8 +754,7 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	    ns = xmlSearchNs(style->doc, xmlDocGetRootElement(style->doc),
 			     prefix);
 	    if (ns == NULL) {
-		xsltPrintErrorContext(ctxt, style, NULL);
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(ctxt, style, NULL,
 		"user param : no namespace bound to prefix %s\n", prefix);
 		href = NULL;
 	    } else {
@@ -810,8 +804,7 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	    xmlXPathFreeCompExpr(comp);
 	}
 	if (result == NULL) {
-	    xsltPrintErrorContext(ctxt, style, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, style, NULL,
 		"Evaluating user parameter %s failed\n", name);
 	    ctxt->state = XSLT_STATE_STOPPED;
 	    xmlFree(ncname);
@@ -865,8 +858,7 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
     res = xmlHashAddEntry2(ctxt->globalVars, ncname, href, elem);
     if (res != 0) {
 	xsltFreeStackElem(elem);
-	xsltPrintErrorContext(ctxt, style, NULL);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, style, NULL,
 	    "Global parameter %s already defined\n", ncname);
     }
     xmlFree(ncname);
@@ -1046,8 +1038,7 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 
     if (xsltCheckStackElem(ctxt, comp->name, comp->ns) != 0) {
 	if (!param) {
-	    xsltPrintErrorContext(ctxt, NULL, comp->inst);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, NULL, comp->inst,
 	    "xsl:variable : redefining %s\n", comp->name);
 	}
 #ifdef WITH_XSLT_DEBUG_VARIABLE
@@ -1161,15 +1152,13 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 	return(NULL);
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, cur,
 	    "xsl:param : compilation error\n");
 	return(NULL);
     }
 
     if (comp->name == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, cur,
 	    "xsl:param : missing name attribute\n");
 	return(NULL);
     }
@@ -1213,15 +1202,13 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
     xsltStylePreCompute(style, cur);
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	     "xsl:variable : compilation failed\n");
 	return;
     }
 
     if (comp->name == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:variable : missing name attribute\n");
 	return;
     }
@@ -1254,15 +1241,13 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
     xsltStylePreCompute(style, cur);
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	     "xsl:param : compilation failed\n");
 	return;
     }
 
     if (comp->name == NULL) {
-	xsltPrintErrorContext(NULL, style, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, cur,
 	    "xsl:param : missing name attribute\n");
 	return;
     }
@@ -1294,15 +1279,13 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, cur,
 	     "xsl:variable : compilation failed\n");
 	return;
     }
 
     if (comp->name == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, cur,
 	    "xsl:variable : missing name attribute\n");
 	return;
     }
@@ -1333,15 +1316,13 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, cur,
 	     "xsl:param : compilation failed\n");
 	return;
     }
 
     if (comp->name == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, cur);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, cur,
 	    "xsl:param : missing name attribute\n");
 	return;
     }
@@ -1394,8 +1375,7 @@ xsltXPathVariableLookup(void *ctxt, const xmlChar *name,
     context = (xsltTransformContextPtr) ctxt;
     ret = xsltVariableLookup(context, name, ns_uri);
     if (ret == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, NULL,
 	    "unregistered variable %s\n", name);
     }
 #ifdef WITH_XSLT_DEBUG_VARIABLE

@@ -95,8 +95,7 @@ xsltNewExtDef(const xmlChar * prefix, const xmlChar * URI)
 
     cur = (xsltExtDefPtr) xmlMalloc(sizeof(xsltExtDef));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
                          "xsltNewExtDef : malloc failed\n");
         return (NULL);
     }
@@ -163,8 +162,7 @@ xsltNewExtModule(xsltExtInitFunction initFunc,
 
     cur = (xsltExtModulePtr) xmlMalloc(sizeof(xsltExtModule));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
                          "xsltNewExtModule : malloc failed\n");
         return (NULL);
     }
@@ -206,8 +204,7 @@ xsltNewExtData(xsltExtModulePtr extModule, void *extData)
 	return(NULL);
     cur = (xsltExtDataPtr) xmlMalloc(sizeof(xsltExtData));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
                          "xsltNewExtData : malloc failed\n");
         return (NULL);
     }
@@ -249,8 +246,7 @@ xsltNewExtElement (xsltPreComputeFunction precomp,
 
     cur = (xsltExtElementPtr) xmlMalloc(sizeof(xsltExtElement));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
                          "xsltNewExtElement : malloc failed\n");
         return (NULL);
     }
@@ -524,8 +520,7 @@ xsltGetExtData(xsltTransformContextPtr ctxt, const xmlChar * URI) {
 		return (NULL);
 	    if (xmlHashAddEntry(ctxt->extInfos, URI,
 				(void *) data) < 0) {
-		xsltPrintErrorContext(ctxt, NULL, NULL);
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(ctxt, NULL, NULL,
 				 "Failed to register module data: %s\n", URI);
 		if (module->shutdownFunc)
 		    module->shutdownFunc(ctxt, URI, extData);
@@ -984,8 +979,7 @@ xsltNewElemPreComp (xsltStylesheetPtr style, xmlNodePtr inst,
 
     cur = (xsltElemPreCompPtr) xmlMalloc (sizeof(xsltElemPreComp));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, style, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, NULL,
                          "xsltNewExtElement : malloc failed\n");
         return (NULL);
     }
@@ -1307,29 +1301,25 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs ATTRIBUTE_UNUSED)
 			 " calling xsltGetExtData\n");
 	data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
 	if (data == NULL) {
-	    xsltPrintErrorContext(tctxt, NULL, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(tctxt, NULL, NULL,
 			     "xsltExtElementTest: not initialized\n");
 	    return;
 	}
     }
     if (tctxt == NULL) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
                          "xsltExtFunctionTest: failed to get the transformation context\n");
         return;
     }
     if (data == NULL)
 	data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
     if (data == NULL) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
                          "xsltExtFunctionTest: failed to get module data\n");
         return;
     }
     if (data != testData) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
                          "xsltExtFunctionTest: got wrong module data\n");
         return;
     }
@@ -1352,8 +1342,7 @@ xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst,
     xsltElemPreCompPtr ret;
 
     if (style == NULL) {
-	xsltPrintErrorContext(NULL, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, inst,
 		 "xsltExtElementTest: no transformation context\n");
         return (NULL);
     }
@@ -1363,16 +1352,14 @@ xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst,
 		 " calling xsltStyleGetExtData\n");
 	xsltStyleGetExtData(style, (const xmlChar *) XSLT_DEFAULT_URL);
 	if (testStyleData == NULL) {
-	    xsltPrintErrorContext(NULL, style, inst);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, style, inst,
 		 "xsltExtElementPreCompTest: not initialized\n");
 	    style->errors++;
 	    return (NULL);
 	}
     }
     if (inst == NULL) {
-	xsltPrintErrorContext(NULL, style, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, inst,
 		 "xsltExtElementPreCompTest: no instruction\n");
 	style->errors++;
         return (NULL);
@@ -1403,33 +1390,28 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			 " calling xsltGetExtData\n");
 	xsltGetExtData(ctxt, (const xmlChar *) XSLT_DEFAULT_URL);
 	if (testData == NULL) {
-	    xsltPrintErrorContext(ctxt, NULL, inst);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, NULL, inst,
 			     "xsltExtElementTest: not initialized\n");
 	    return;
 	}
     }
     if (ctxt == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, inst,
                          "xsltExtElementTest: no transformation context\n");
         return;
     }
     if (node == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, inst,
                          "xsltExtElementTest: no current node\n");
         return;
     }
     if (inst == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, inst,
                          "xsltExtElementTest: no instruction\n");
         return;
     }
     if (ctxt->insert == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, inst,
                          "xsltExtElementTest: no insertion point\n");
         return;
     }
@@ -1456,15 +1438,13 @@ xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI) {
 			 " calling xsltStyleGetExtData\n");
 	xsltStyleGetExtData(ctxt->style, URI);
 	if (testStyleData == NULL) {
-	    xsltPrintErrorContext(ctxt, NULL, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, NULL, NULL,
 			     "xsltExtInitTest: not initialized\n");
 	    return (NULL);
 	}
     }	
     if (testData != NULL) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, NULL,
                          "xsltExtInitTest: already initialized\n");
         return (NULL);
     }
@@ -1487,14 +1467,12 @@ static void
 xsltExtShutdownTest(xsltTransformContextPtr ctxt,
                     const xmlChar * URI, void *data) {
     if (testData == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, NULL,
                          "xsltExtShutdownTest: not initialized\n");
         return;
     }
     if (data != testData) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, NULL,
                          "xsltExtShutdownTest: wrong data\n");
     }
     testData = NULL;
@@ -1515,8 +1493,7 @@ xsltExtStyleInitTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 	             const xmlChar * URI)
 {
     if (testStyleData != NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
                          "xsltExtInitTest: already initialized\n");
         return (NULL);
     }
@@ -1544,8 +1521,7 @@ xsltExtStyleShutdownTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
         return;
     }
     if (data != testStyleData) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
                          "xsltExtShutdownTest: wrong data\n");
     }
     testStyleData = NULL;
@@ -1588,7 +1564,10 @@ xsltCleanupGlobals(void)
 }
 
 static void
-xsltDebugDumpExtensionsCallback(void* function, FILE *output, const xmlChar* name, const xmlChar* URI, const xmlChar* not_used) {
+xsltDebugDumpExtensionsCallback(void* function ATTRIBUTE_UNUSED,
+	                        FILE *output, const xmlChar* name,
+				const xmlChar* URI,
+				const xmlChar* not_used ATTRIBUTE_UNUSED) {
 	if (!name||!URI)
 		return;
 	fprintf(output,"{%s}%s\n",URI,name);

@@ -52,8 +52,7 @@ xsltNewDocument(xsltTransformContextPtr ctxt, xmlDocPtr doc) {
 
     cur = (xsltDocumentPtr) xmlMalloc(sizeof(xsltDocument));
     if (cur == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, (xmlNodePtr) doc);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
 		"xsltNewDocument : malloc failed\n");
 	return(NULL);
     }
@@ -80,8 +79,7 @@ xsltNewStyleDocument(xsltStylesheetPtr style, xmlDocPtr doc) {
 
     cur = (xsltDocumentPtr) xmlMalloc(sizeof(xsltDocument));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, style, (xmlNodePtr) doc);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, (xmlNodePtr) doc,
 		"xsltNewStyleDocument : malloc failed\n");
 	return(NULL);
     }
@@ -172,8 +170,7 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 	
 	res = xsltCheckRead(ctxt->sec, ctxt, URI);
 	if (res == 0) {
-	    xsltPrintErrorContext(ctxt, NULL, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, NULL, NULL,
 		 "xsltLoadDocument: read rights for %s denied\n",
 			     URI);
 	    return(NULL);
@@ -199,8 +196,7 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 #ifdef LIBXML_XINCLUDE_ENABLED
 	xmlXIncludeProcess(doc);
 #else
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, NULL,
 	    "xsltLoadDocument(%s) : XInclude processing not compiled in\n",
 	                 URI);
 #endif
@@ -242,8 +238,7 @@ xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
 
 	res = xsltCheckRead(sec, NULL, URI);
 	if (res == 0) {
-	    xsltPrintErrorContext(NULL, NULL, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		 "xsltLoadStyleDocument: read rights for %s denied\n",
 			     URI);
 	    return(NULL);

@@ -37,6 +37,10 @@ xmlChar *	xsltEvalStaticAttrValueTemplate	(xsltStylesheetPtr style,
 /* TODO: this is obviously broken ... the namespaces should be passed too ! */
 xmlChar *	xsltEvalXPathString		(xsltTransformContextPtr ctxt,
 						 xmlXPathCompExprPtr comp);
+xmlChar *	xsltEvalXPathStringNs		(xsltTransformContextPtr ctxt,
+						 xmlXPathCompExprPtr comp,
+						 int nsNr,
+						 xmlNsPtr *nsList);
 
 xmlNodePtr *	xsltTemplateProcess		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node);
@@ -48,6 +52,9 @@ xmlAttrPtr	xsltAttrTemplateProcess		(xsltTransformContextPtr ctxt,
 						 xmlAttrPtr attr);
 xmlChar *	xsltAttrTemplateValueProcess	(xsltTransformContextPtr ctxt,
 						 const xmlChar* attr);
+xmlChar *	xsltAttrTemplateValueProcessNode(xsltTransformContextPtr ctxt,
+						 const xmlChar* str,
+						 xmlNodePtr node);
 #ifdef __cplusplus
 }
 #endif

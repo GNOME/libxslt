@@ -185,6 +185,35 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
  * 									*
  ************************************************************************/
 
+#define XSLT_GET_VAR_STR(msg, str) {				\
+    int       size;						\
+    int       chars;						\
+    char      *larger;						\
+    va_list   ap;						\
+								\
+    str = (char *) xmlMalloc(150);				\
+    if (str == NULL) 						\
+	return;							\
+								\
+    size = 150;							\
+								\
+    while (1) {							\
+	va_start(ap, msg);					\
+  	chars = vsnprintf(str, size, msg, ap);			\
+	va_end(ap);						\
+	if ((chars > -1) && (chars < size))			\
+	    break;						\
+	if (chars > -1)						\
+	    size += chars + 1;					\
+	else							\
+	    size += 100;					\
+	if ((larger = (char *) xmlRealloc(str, size)) == NULL) {\
+	    xmlFree(str);					\
+	    return;						\
+	}							\
+	str = larger;						\
+    }								\
+}
 /**
  * xsltGenericErrorDefaultFunc:
  * @ctx:  an error context
@@ -292,9 +321,16 @@ xsltPrintErrorContext(xsltTransformContextPtr ctxt,
     const xmlChar *file = NULL;
     const xmlChar *name = NULL;
     const char *type = "error";
+    xmlGenericErrorFunc error = xsltGenericError;
+    void *errctx = xsltGenericErrorContext;
 
-    if (ctxt != NULL)
+    if (ctxt != NULL) {
 	ctxt->state = XSLT_STATE_ERROR;
+	if (ctxt->error != NULL) {
+	    error = ctxt->error;
+	    errctx = ctxt->errctx;
+	}
+    }
     if ((node == NULL) && (ctxt != NULL))
 	node = ctxt->inst;
 
@@ -330,29 +366,72 @@ xsltPrintErrorContext(xsltTransformContextPtr ctxt,
 	type = "compilation error";
 
     if ((file != NULL) && (line != 0) && (name != NULL))
-	xsltGenericError(xsltGenericErrorContext,
-		"%s: file %s line %d element %s\n",
-		type, file, line, name);
+	error(errctx, "%s: file %s line %d element %s\n",
+	      type, file, line, name);
     else if ((file != NULL) && (name != NULL))
-	xsltGenericError(xsltGenericErrorContext,
-		"%s: file %s element %s\n",
-		type, file, name);
+	error(errctx, "%s: file %s element %s\n", type, file, name);
     else if ((file != NULL) && (line != 0))
-	xsltGenericError(xsltGenericErrorContext,
-		"%s: file %s line %d\n",
-		type, file, line);
+	error(errctx, "%s: file %s line %d\n", type, file, line);
     else if (file != NULL)
-	xsltGenericError(xsltGenericErrorContext,
-		"%s: file %s\n",
-		type, file);
+	error(errctx, "%s: file %s\n", type, file);
     else if (name != NULL)
-	xsltGenericError(xsltGenericErrorContext,
-		"%s: element %s\n",
-		type, name);
+	error(errctx, "%s: element %s\n", type, name);
     else
-	xsltGenericError(xsltGenericErrorContext,
-		"%s\n",
-		type);
+	error(errctx, "%s\n", type);
+}
+
+/**
+ * xsltSetTransformErrorFunc:
+ * @ctxt:  the XSLT transformation context
+ * @ctx:  the new error handling context
+ * @handler:  the new handler function
+ *
+ * Function to reset the handler and the error context for out of
+ * context error messages specific to a given XSLT transromation.
+ *
+ * This simply means that @handler will be called for subsequent
+ * error messages while running the transformation.
+ */
+void
+xsltSetTransformErrorFunc(xsltTransformContextPtr ctxt,
+                          void *ctx, xmlGenericErrorFunc handler)
+{
+    ctxt->error = handler;
+    ctxt->errctx = ctx;
+}
+
+/**
+ * xsltTransformError:
+ * @ctxt:  an XSLT transformation context
+ * @msg:  the message to display/transmit
+ * @...:  extra parameters for the message display
+ *
+ * Display and format an error messages, gives file, line, position and
+ * extra parameters, will use the specific transformation context if available
+ */
+void
+xsltTransformError(xsltTransformContextPtr ctxt,
+		   xsltStylesheetPtr style,
+		   xmlNodePtr node,
+		   const char *msg, ...) {
+    xmlGenericErrorFunc error = xsltGenericError;
+    void *errctx = xsltGenericErrorContext;
+    char * str;
+
+    if (ctxt != NULL) {
+	ctxt->state = XSLT_STATE_ERROR;
+	if (ctxt->error != NULL) {
+	    error = ctxt->error;
+	    errctx = ctxt->errctx;
+	}
+    }
+    if ((node == NULL) && (ctxt != NULL))
+	node = ctxt->inst;
+    xsltPrintErrorContext(ctxt, style, node);
+    XSLT_GET_VAR_STR(msg, str);
+    error(errctx, "%s", str);
+    if (str != NULL)
+	xmlFree(str);
 }
 
 /************************************************************************
@@ -635,8 +714,7 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 		else if (xmlStrEqual(comp->stype, (const xmlChar *) "number"))
 		    comp->number = 1;
 		else {
-		    xsltPrintErrorContext(ctxt, NULL, sorts[j]);
-		    xsltGenericError(xsltGenericErrorContext,
+		    xsltTransformError(ctxt, NULL, sorts[j],
 			  "xsltDoSortFunction: no support for data-type = %s\n",
 				     comp->stype);
 		    comp->number = 0; /* use default */
@@ -656,8 +734,7 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 				     (const xmlChar *) "descending"))
 		    comp->descending = 1;
 		else {
-		    xsltPrintErrorContext(ctxt, NULL, sorts[j]);
-		    xsltGenericError(xsltGenericErrorContext,
+		    xsltTransformError(ctxt, NULL, sorts[j],
 			     "xsltDoSortFunction: invalid value %s for order\n",
 				     comp->order);
 		    comp->descending = 0; /* use default */

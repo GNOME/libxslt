@@ -1,3 +1,14 @@
+Tue Oct 15 18:02:37 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltInternals.h libxslt/xsltutils.[ch]: added the
+	  possibility to register a transformation context specific
+	  error handler, with xsltSetTransformErrorFunc() and provided
+	  a new routine xsltTransformError() to handle contextual errors,
+	  this should fix #94435
+	* libxslt/*.c: modified all the code to use the context specific
+	  error handling, as a result xsltPrintErrorContext() is not called
+	  anymore except internally from xsltTransformError()
+
 Tue Oct 15 14:52:23 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: closing #94933, any error will make

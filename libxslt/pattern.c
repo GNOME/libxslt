@@ -125,8 +125,7 @@ xsltNewCompMatch(void) {
 
     cur = (xsltCompMatchPtr) xmlMalloc(sizeof(xsltCompMatch));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltNewCompMatch : malloc failed\n");
 	return(NULL);
     }
@@ -205,8 +204,7 @@ xsltNewParserContext(xsltStylesheetPtr style, xsltTransformContextPtr ctxt) {
 
     cur = (xsltParserContextPtr) xmlMalloc(sizeof(xsltParserContext));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltNewParserContext : malloc failed\n");
 	return(NULL);
     }
@@ -246,8 +244,7 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
                  xsltOp op, xmlChar * value, xmlChar * value2)
 {
     if (comp->nbStep >= 40) {
-        xsltPrintErrorContext(NULL, NULL, NULL);        /* TODO */
-        xsltGenericError(xsltGenericErrorContext,
+        xsltTransformError(NULL, NULL, NULL,
                          "xsltCompMatchAdd: overflow\n");
         return (-1);
     }
@@ -366,8 +363,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
     xsltStepOpPtr step, select = NULL;
 
     if ((comp == NULL) || (node == NULL) || (ctxt == NULL)) {
-	xsltPrintErrorContext(ctxt, NULL, node);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, node,
 		"xsltTestCompMatch: null arg\n");
         return(-1);
     }
@@ -1192,8 +1188,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
     xmlChar *lit2 = NULL;
 
     if (CUR != '(') {
-	xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltCompileIdKeyPattern : ( expected\n");
 	ctxt->error = 1;
 	return;
@@ -1206,8 +1201,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	SKIP_BLANKS;
 	if (CUR != ')') {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : ) expected\n");
 	    ctxt->error = 1;
 	    return;
@@ -1222,8 +1216,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	SKIP_BLANKS;
 	if (CUR != ',') {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : , expected\n");
 	    ctxt->error = 1;
 	    return;
@@ -1235,8 +1228,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	SKIP_BLANKS;
 	if (CUR != ')') {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : ) expected\n");
 	    ctxt->error = 1;
 	    return;
@@ -1253,8 +1245,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 		return;
 	    SKIP_BLANKS;
 	    if (CUR != ')') {
-		xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(NULL, NULL, NULL,
 			"xsltCompileIdKeyPattern : ) expected\n");
 		ctxt->error = 1;
 		return;
@@ -1266,8 +1257,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	NEXT;
 	SKIP_BLANKS;
 	if (CUR != ')') {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : ) expected\n");
 	    ctxt->error = 1;
 	    return;
@@ -1278,8 +1268,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	NEXT;
 	SKIP_BLANKS;
 	if (CUR != ')') {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : ) expected\n");
 	    ctxt->error = 1;
 	    return;
@@ -1290,8 +1279,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	NEXT;
 	SKIP_BLANKS;
 	if (CUR != ')') {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : ) expected\n");
 	    ctxt->error = 1;
 	    return;
@@ -1299,14 +1287,12 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	NEXT;
 	PUSH(XSLT_OP_NODE, NULL, NULL);
     } else if (aid) {
-	xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 	    "xsltCompileIdKeyPattern : expecting 'key' or 'id' or node type\n");
 	ctxt->error = 1;
 	return;
     } else {
-	xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 	    "xsltCompileIdKeyPattern : node type\n");
 	ctxt->error = 1;
 	return;
@@ -1360,8 +1346,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 
 	    ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
 	    if (ns == NULL) {
-		xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(NULL, NULL, NULL,
 		"xsltCompileStepPattern : no namespace bound to prefix %s\n",
 				 prefix);
 	    } else {
@@ -1375,8 +1360,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		PUSH(XSLT_OP_ATTR, NULL, URL);
 		return;
 	    }
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileStepPattern : Name expected\n");
 	    ctxt->error = 1;
 	    goto error;
@@ -1392,8 +1376,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    PUSH(XSLT_OP_ALL, token, NULL);
 	    goto parse_predicate;
 	} else {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileStepPattern : Name expected\n");
 	    ctxt->error = 1;
 	    goto error;
@@ -1418,8 +1401,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    token = xsltScanName(ctxt);
 	    ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
 	    if (ns == NULL) {
-		xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(NULL, NULL, NULL,
 	    "xsltCompileStepPattern : no namespace bound to prefix %s\n",
 				 prefix);
 		ctxt->error = 1;
@@ -1433,8 +1415,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		    NEXT;
 		    PUSH(XSLT_OP_NS, URL, NULL);
 		} else {
-		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		    xsltGenericError(xsltGenericErrorContext,
+		    xsltTransformError(NULL, NULL, NULL,
 			    "xsltCompileStepPattern : Name expected\n");
 		    ctxt->error = 1;
 		    goto error;
@@ -1453,8 +1434,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	                PUSH(XSLT_OP_ALL, token, NULL);
 	                goto parse_predicate;
 	            } else {
-		        xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		        xsltGenericError(xsltGenericErrorContext,
+		        xsltTransformError(NULL, NULL, NULL,
 			    "xsltCompileStepPattern : QName expected\n");
 		        ctxt->error = 1;
 		        goto error;
@@ -1474,8 +1454,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		xmlFree(token);
 		token = xsltScanName(ctxt);
 		if (token == NULL) {
-		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		    xsltGenericError(xsltGenericErrorContext,
+		    xsltTransformError(NULL, NULL, NULL,
 			    "xsltCompileStepPattern : QName expected\n");
 		    ctxt->error = 1;
 		    goto error;
@@ -1491,8 +1470,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		}
 		PUSH(XSLT_OP_ATTR, name, URL);
 	    } else {
-		xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileStepPattern : 'child' or 'attribute' expected\n");
 		ctxt->error = 1;
 		goto error;
@@ -1542,8 +1520,7 @@ parse_predicate:
 	    NEXT;
 	}
 	if (CUR == 0) {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileStepPattern : ']' expected\n");
 	    ctxt->error = 1;
 	    goto error;
@@ -1647,8 +1624,7 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	xmlChar *name;
 	name = xsltScanName(ctxt);
 	if (name == NULL) {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileLocationPathPattern : Name expected\n");
 	    ctxt->error = 1;
 	    return;
@@ -1701,8 +1677,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
     int current, start, end, level, j;
 
     if (pattern == NULL) {
-	xsltPrintErrorContext(NULL, NULL, node); /* TODO */
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, node,
 			 "xsltCompilePattern : NULL pattern\n");
 	return(NULL);
     }
@@ -1736,8 +1711,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	    end++;
 	}
 	if (current == end) {
-	    xsltPrintErrorContext(NULL, NULL, node); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, NULL, node,
 			     "xsltCompilePattern : NULL pattern\n");
 	    goto error;
 	}
@@ -1773,8 +1747,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 #endif
 	xsltCompileLocationPathPattern(ctxt);
 	if (ctxt->error) {
-	    xsltPrintErrorContext(NULL, style, node);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, style, node,
 			     "xsltCompilePattern : failed to compile '%s'\n",
 			     element->pattern);
 	    style->errors++;
@@ -1836,8 +1809,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	current = end;
     }
     if (end == 0) {
-	xsltPrintErrorContext(NULL, NULL, node); /* TODO */
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, node,
 			 "xsltCompilePattern : NULL pattern\n");
 	style->errors++;
 	goto error;
@@ -1925,8 +1897,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	    break;
         case XSLT_OP_END:
 	case XSLT_OP_PREDICATE:
-	    xsltPrintErrorContext(NULL, style, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, style, NULL,
 			     "xsltAddTemplate: invalid compiled pattern\n");
 	    xsltFreeCompMatch(pat);
 	    return(-1);
@@ -2007,8 +1978,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 		list->next = pat;
 	    }
 	} else {
-	    xsltPrintErrorContext(NULL, style, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, style, NULL,
 			     "xsltAddTemplate: invalid compiled pattern\n");
 	    xsltFreeCompMatch(pat);
 	    return(-1);

@@ -142,8 +142,7 @@ xsltEvalXPathStringNs(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
             ret = res->stringval;
 	    res->stringval = NULL;
 	} else {
-	    xsltPrintErrorContext(ctxt, NULL, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(ctxt, NULL, NULL,
 		 "xpath : string() function didn't return a String\n");
 	}
 	xmlXPathFreeObject(res);

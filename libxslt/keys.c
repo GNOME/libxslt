@@ -76,8 +76,7 @@ xsltNewKeyDef(const xmlChar *name, const xmlChar *nameURI) {
 
     cur = (xsltKeyDefPtr) xmlMalloc(sizeof(xsltKeyDef));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltNewKeyDef : malloc failed\n");
 	return(NULL);
     }
@@ -147,8 +146,7 @@ xsltNewKeyTable(const xmlChar *name, const xmlChar *nameURI) {
 
     cur = (xsltKeyTablePtr) xmlMalloc(sizeof(xsltKeyTable));
     if (cur == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltNewKeyTable : malloc failed\n");
 	return(NULL);
     }
@@ -265,8 +263,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	    end++;
 	}
 	if (current == end) {
-	    xsltPrintErrorContext(NULL, style, inst);
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltTransformError(NULL, style, inst,
 			     "key pattern is empty\n");
 	    style->errors++;
 	    goto error;
@@ -296,16 +293,14 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 #endif
     key->comp = xmlXPathCompile(pattern);
     if (key->comp == NULL) {
-	xsltPrintErrorContext(NULL, style, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, inst,
 		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         pattern);
 	style->errors++;
     }
     key->usecomp = xmlXPathCompile(use);
     if (key->usecomp == NULL) {
-	xsltPrintErrorContext(NULL, style, inst);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, style, inst,
 		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         use);
 	style->errors++;
@@ -419,8 +414,7 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 		    res->stringval = NULL;
 		}
 	    } else {
-		xsltPrintErrorContext(ctxt, NULL, NULL);
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(ctxt, NULL, NULL,
 		     "xpath : string() function didn't return a String\n");
 	    }
 	}

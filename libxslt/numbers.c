@@ -1073,8 +1073,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 
 OUTPUT_NUMBER:
     if (found_error != 0) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
                 "xsltFormatNumberConversion : error in format string, using default\n");
 	default_sign = (number < 0.0) ? 1 : 0;
 	prefix_length = suffix_length = 0;

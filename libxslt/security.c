@@ -72,8 +72,7 @@ xsltNewSecurityPrefs(void) {
 
     ret = (xsltSecurityPrefsPtr) xmlMalloc(sizeof(xsltSecurityPrefs));
     if (ret == NULL) {
-	xsltPrintErrorContext(NULL, NULL, NULL);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(NULL, NULL, NULL,
 		"xsltNewSecurityPrefs : malloc failed\n");
 	return(NULL);
     }
@@ -290,8 +289,7 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
 
     uri = xmlParseURI((const char *)URL);
     if (uri == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, NULL,
 	 "xsltDocumentElem: URL parsing failed for %s\n",
 			 URL);
 	return(-1);
@@ -307,8 +305,7 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
 	if (check != NULL) {
 	    ret = check(sec, ctxt, uri->path);
 	    if (ret == 0) {
-		xsltPrintErrorContext(ctxt, NULL, NULL);
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(ctxt, NULL, NULL,
 			     "File write for %s refused\n", URL);
 		xmlFreeURI(uri);
 		return(0);
@@ -327,8 +324,7 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
 		if (check != NULL) {
 		    ret = check(sec, ctxt, directory);
 		    if (ret == 0) {
-			xsltPrintErrorContext(ctxt, NULL, NULL);
-			xsltGenericError(xsltGenericErrorContext,
+			xsltTransformError(ctxt, NULL, NULL,
 					 "Directory creation for %s refused\n",
 					 URL);
 			xmlFree(directory);
@@ -352,8 +348,7 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
 	if (check != NULL) {
 	    ret = check(sec, ctxt, uri->path);
 	    if (ret == 0) {
-		xsltPrintErrorContext(ctxt, NULL, NULL);
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(ctxt, NULL, NULL,
 			     "File write for %s refused\n", URL);
 		xmlFreeURI(uri);
 		return(0);
@@ -384,8 +379,7 @@ xsltCheckRead(xsltSecurityPrefsPtr sec,
 
     uri = xmlParseURI((const char *)URL);
     if (uri == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, NULL);
-	xsltGenericError(xsltGenericErrorContext,
+	xsltTransformError(ctxt, NULL, NULL,
 	 "xsltCheckRead: URL parsing failed for %s\n",
 			 URL);
 	return(-1);
@@ -400,8 +394,7 @@ xsltCheckRead(xsltSecurityPrefsPtr sec,
 	if (check != NULL) {
 	    ret = check(sec, ctxt, uri->path);
 	    if (ret == 0) {
-		xsltPrintErrorContext(ctxt, NULL, NULL);
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(ctxt, NULL, NULL,
 			     "Local file read for %s refused\n", URL);
 		xmlFreeURI(uri);
 		return(0);
@@ -415,8 +408,7 @@ xsltCheckRead(xsltSecurityPrefsPtr sec,
 	if (check != NULL) {
 	    ret = check(sec, ctxt, uri->path);
 	    if (ret == 0) {
-		xsltPrintErrorContext(ctxt, NULL, NULL);
-		xsltGenericError(xsltGenericErrorContext,
+		xsltTransformError(ctxt, NULL, NULL,
 			     "Network file read for %s refused\n", URL);
 		xmlFreeURI(uri);
 		return(0);

@@ -533,8 +533,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (ctxt->insert == NULL)
         return;
     if (comp == NULL) {
-        xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
+        xsltTransformError(ctxt, NULL, inst,
                          "xsl:attribute : compilation failed\n");
         return;
     }
@@ -546,8 +545,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
         return;
     }
     if (ctxt->insert->children != NULL) {
-        xsltPrintErrorContext(ctxt, NULL, inst);
-        xsltGenericError(xsltGenericErrorContext,
+        xsltTransformError(ctxt, NULL, inst,
                          "xsl:attribute : node already has children\n");
         return;
     }
@@ -562,8 +560,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
             xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *) "name",
                                       XSLT_NAMESPACE);
         if (prop == NULL) {
-            xsltPrintErrorContext(ctxt, NULL, inst);
-            xsltGenericError(xsltGenericErrorContext,
+            xsltTransformError(ctxt, NULL, inst,
                              "xsl:attribute : name is missing\n");
             goto error;
         }
@@ -597,9 +594,8 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
             if (prefix != NULL) {
                 ns = xmlSearchNs(inst->doc, inst, prefix);
                 if (ns == NULL) {
-                    xsltPrintErrorContext(ctxt, NULL, inst);
-                    xsltGenericError(xsltGenericErrorContext,
-                                     "xsl:attribute : no namespace bound to prefix %s\n",
+                    xsltTransformError(ctxt, NULL, inst,
+			 "xsl:attribute : no namespace bound to prefix %s\n",
                                      prefix);
                 } else {
                     ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);

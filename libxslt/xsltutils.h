@@ -109,6 +109,14 @@ void		xsltSetGenericErrorFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
 void		xsltSetGenericDebugFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
+void		xsltSetTransformErrorFunc	(xsltTransformContextPtr ctxt,
+						 void *ctx,
+						 xmlGenericErrorFunc handler);
+void		xsltTransformError		(xsltTransformContextPtr ctxt,
+						 xsltStylesheetPtr style,
+						 xmlNodePtr node,
+						 const char *msg,
+						 ...);
 
 /*
  * Sorting.
