@@ -10,4 +10,7 @@
 	<token>f</token><token>o</token><token>o</token><token>b</token><token>a</token><token>r</token>
 
 	str:split('-*- hello - world -*-', '-')
-	<token>*</token><token> hello </token><token> world </token><token>*</token></out>
+	<token>*</token><token> hello </token><token> world </token><token>*</token>
+
+	str:split('data &amp;math str;')
+	<token>data</token><token>&amp;math</token><token>str;</token></out>

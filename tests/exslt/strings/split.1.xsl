@@ -17,6 +17,9 @@
 
 	str:split('-*- hello - world -*-', '-')
 	<xsl:copy-of select="str:split('-*- hello - world -*-', '-')"/>
+
+	str:split('data &amp;math str;')
+	<xsl:copy-of select="str:split('data &amp;math str;')"/>
 </out>
 </xsl:template>
 

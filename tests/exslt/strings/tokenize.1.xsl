@@ -11,6 +11,15 @@
 
   str:tokenize('date math str')
   <xsl:copy-of select="str:tokenize('date math str')"/>;
+
+  str:tokenize('This is &amp; strange behavior', ' ')
+  <xsl:copy-of select="str:tokenize('This is &amp; strange behavior', ' ')"/>;
+
+  str:tokenize('This is &amp; strange; behavior', ' ')
+  <xsl:copy-of select="str:tokenize('This is &amp; strange; behavior', ' ')"/>;
+
+  str:tokenize('This is &amp;strange; behavior', ' ')
+  <xsl:copy-of select="str:tokenize('This is &amp;strange; behavior', ' ')"/>;
 </out>
 </xsl:template>
 

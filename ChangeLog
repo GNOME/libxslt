@@ -1,3 +1,10 @@
+Sat Nov  1 07:41:06 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/strings.c: fix bug #125265 about entities breaking
+	  exsl:tokenize and exsl:split
+	* tests/exslt/strings/split.1.* tests/exslt/strings/tokenize.1.*:
+	  augmented the reression tests with the example from the bug report.
+
 Fri Oct 31 20:26:04 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/preproc.c: fix bug #120828 make sure that xsl:sort is

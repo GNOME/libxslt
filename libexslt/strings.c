@@ -83,9 +83,9 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                             break;
                         }
                         *cur = 0;
-                        node = xmlNewChild((xmlNodePtr) container, NULL,
-                                           (const xmlChar *) "token",
-                                           token);
+                        node = xmlNewDocRawNode(container, NULL,
+                                           (const xmlChar *) "token", token);
+			xmlAddChild((xmlNodePtr) container, node);
 			xmlXPathNodeSetAddUnique(ret->nodesetval, node);
                         *cur = *delimiter;
                         token = cur + 1;
@@ -172,9 +172,9 @@ exsltStrSplitFunction(xmlXPathParserContextPtr ctxt, int nargs) {
 		    if (cur != token) {
 			xmlChar tmp = *cur;
 			*cur = 0;
-			node = xmlNewChild((xmlNodePtr) container, NULL,
-					   (const xmlChar *) "token",
-					   token);
+                        node = xmlNewDocRawNode(container, NULL,
+                                           (const xmlChar *) "token", token);
+			xmlAddChild((xmlNodePtr) container, node);
 			xmlXPathNodeSetAddUnique(ret->nodesetval, node);
 			*cur = tmp;
 			token++;
@@ -188,9 +188,9 @@ exsltStrSplitFunction(xmlXPathParserContextPtr ctxt, int nargs) {
 			continue;
 		    }
 		    *cur = 0;
-		    node = xmlNewChild((xmlNodePtr) container, NULL,
-				       (const xmlChar *) "token",
-				       token);
+		    node = xmlNewDocRawNode(container, NULL,
+				       (const xmlChar *) "token", token);
+		    xmlAddChild((xmlNodePtr) container, node);
 		    xmlXPathNodeSetAddUnique(ret->nodesetval, node);
 		    *cur = *delimiter;
 		    cur = cur + delimiterLength - 1;
@@ -198,9 +198,9 @@ exsltStrSplitFunction(xmlXPathParserContextPtr ctxt, int nargs) {
                 }
             }
 	    if (token != cur) {
-		node =
-		    xmlNewChild((xmlNodePtr) container, NULL,
-				(const xmlChar *) "token", token);
+		node = xmlNewDocRawNode(container, NULL,
+				   (const xmlChar *) "token", token);
+		xmlAddChild((xmlNodePtr) container, node);
 		xmlXPathNodeSetAddUnique(ret->nodesetval, node);
 	    }
         }
