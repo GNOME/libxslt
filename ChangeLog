@@ -1,3 +1,8 @@
+Thu Apr 26 16:33:36 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* test/general/bug-14*.* test/docs/bug-14*.xml: added testcase from
+	  bug #53689
+
 Wed Apr 25 16:58:11 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* transform.c: fixed text and cdata handling in xsl:copy
