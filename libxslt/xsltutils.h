@@ -17,6 +17,7 @@
 
 #include <libxml/xpath.h>
 #include <libxml/xmlerror.h>
+#include "xsltexports.h"
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
@@ -87,34 +88,34 @@ extern "C" {
 /*
  * Our own version of namespaced atributes lookup.
  */
-xmlChar *	xsltGetNsProp			(xmlNodePtr node,
+XSLTPUBFUN xmlChar * XSLTCALL	xsltGetNsProp			(xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *nameSpace);
-int		xsltGetUTF8Char			(const unsigned char *utf,
+XSLTPUBFUN int XSLTCALL		xsltGetUTF8Char			(const unsigned char *utf,
 						 int *len);
 
 /*
  * XSLT specific error and debug reporting functions.
  */
-LIBXSLT_PUBLIC extern xmlGenericErrorFunc xsltGenericError;
-LIBXSLT_PUBLIC extern void *xsltGenericErrorContext;
-LIBXSLT_PUBLIC extern xmlGenericErrorFunc xsltGenericDebug;
-LIBXSLT_PUBLIC extern void *xsltGenericDebugContext;
+XSLTPUBVAR xmlGenericErrorFunc xsltGenericError;
+XSLTPUBVAR void *xsltGenericErrorContext;
+XSLTPUBVAR xmlGenericErrorFunc xsltGenericDebug;
+XSLTPUBVAR void *xsltGenericDebugContext;
 
-void		xsltPrintErrorContext		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltPrintErrorContext		(xsltTransformContextPtr ctxt,
 	                                         xsltStylesheetPtr style,
 						 xmlNodePtr node);
-void		xsltMessage			(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltMessage			(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 xmlNodePtr inst);
-void		xsltSetGenericErrorFunc		(void *ctx,
+XSLTPUBFUN void XSLTCALL		xsltSetGenericErrorFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
-void		xsltSetGenericDebugFunc		(void *ctx,
+XSLTPUBFUN void XSLTCALL		xsltSetGenericDebugFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
-void		xsltSetTransformErrorFunc	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltSetTransformErrorFunc	(xsltTransformContextPtr ctxt,
 						 void *ctx,
 						 xmlGenericErrorFunc handler);
-void		xsltTransformError		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltTransformError		(xsltTransformContextPtr ctxt,
 						 xsltStylesheetPtr style,
 						 xmlNodePtr node,
 						 const char *msg,
@@ -124,43 +125,43 @@ void		xsltTransformError		(xsltTransformContextPtr ctxt,
  * Sorting.
  */
 
-void		xsltDocumentSortFunction	(xmlNodeSetPtr list);
-void		xsltSetSortFunc			(xsltSortFunc handler);
-void		xsltSetCtxtSortFunc		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltDocumentSortFunction	(xmlNodeSetPtr list);
+XSLTPUBFUN void XSLTCALL		xsltSetSortFunc			(xsltSortFunc handler);
+XSLTPUBFUN void XSLTCALL		xsltSetCtxtSortFunc		(xsltTransformContextPtr ctxt,
 						 xsltSortFunc handler);
-void		xsltDefaultSortFunction		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltDefaultSortFunction		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr *sorts,
 						 int nbsorts);
-void		xsltDoSortFunction		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltDoSortFunction		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr * sorts,
 						 int nbsorts);
-xmlXPathObjectPtr *xsltComputeSortResult	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlXPathObjectPtr * XSLTCALL xsltComputeSortResult	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr sort);
 
 /*
  * QNames handling.
  */
 
-const xmlChar * xsltGetQNameURI			(xmlNodePtr node,
+XSLTPUBFUN const xmlChar * XSLTCALL xsltGetQNameURI			(xmlNodePtr node,
 						 xmlChar **name);
 
 /*
  * Output, reuse libxml I/O buffers.
  */
-int		xsltSaveResultTo		(xmlOutputBufferPtr buf,
+XSLTPUBFUN int XSLTCALL		xsltSaveResultTo		(xmlOutputBufferPtr buf,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
-int		xsltSaveResultToFilename	(const char *URI,
+XSLTPUBFUN int XSLTCALL		xsltSaveResultToFilename	(const char *URI,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style,
 						 int compression);
-int		xsltSaveResultToFile		(FILE *file,
+XSLTPUBFUN int XSLTCALL		xsltSaveResultToFile		(FILE *file,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
-int		xsltSaveResultToFd		(int fd,
+XSLTPUBFUN int XSLTCALL		xsltSaveResultToFd		(int fd,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
-int             xsltSaveResultToString          (xmlChar **doc_txt_ptr, 
+XSLTPUBFUN int XSLTCALL             xsltSaveResultToString          (xmlChar **doc_txt_ptr, 
                                                  int * doc_txt_len, 
                                                  xmlDocPtr result, 
                                                  xsltStylesheetPtr style);
@@ -168,12 +169,12 @@ int             xsltSaveResultToString          (xmlChar **doc_txt_ptr,
 /*
  * Profiling.
  */
-void		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
 						 FILE *output);
-xmlDocPtr	xsltGetProfileInformation	(xsltTransformContextPtr ctxt);
+XSLTPUBFUN xmlDocPtr XSLTCALL	xsltGetProfileInformation	(xsltTransformContextPtr ctxt);
 
-long		xsltTimestamp			(void);
-void		xsltCalibrateAdjust		(long delta);
+XSLTPUBFUN long XSLTCALL		xsltTimestamp			(void);
+XSLTPUBFUN void XSLTCALL		xsltCalibrateAdjust		(long delta);
 
 /**
  * XSLT_TIMESTAMP_TICS_PER_SEC:
@@ -199,17 +200,17 @@ typedef enum {
     XSLT_DEBUG_QUIT
 } xsltDebugStatusCodes;
 
-LIBXSLT_PUBLIC extern int xslDebugStatus;
+XSLTPUBVAR int xslDebugStatus;
 
 typedef void (*xsltHandleDebuggerCallback) (xmlNodePtr cur, xmlNodePtr node,
 			xsltTemplatePtr templ, xsltTransformContextPtr ctxt);
 typedef int (*xsltAddCallCallback) (xsltTemplatePtr templ, xmlNodePtr source);
 typedef void (*xsltDropCallCallback) (void);
 
-int		xsltSetDebuggerCallbacks	(int no, void *block);
-int		xslAddCall			(xsltTemplatePtr templ,
+XSLTPUBFUN int XSLTCALL		xsltSetDebuggerCallbacks	(int no, void *block);
+XSLTPUBFUN int XSLTCALL		xslAddCall			(xsltTemplatePtr templ,
 						 xmlNodePtr source);
-void		xslDropCall			(void);
+XSLTPUBFUN void XSLTCALL		xslDropCall			(void);
 
 #ifdef __cplusplus
 }

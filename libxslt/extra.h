@@ -10,6 +10,7 @@
 #define __XML_XSLT_EXTRA_H__
 
 #include "libxml/xpath.h"
+#include "xsltexports.h"
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
@@ -54,16 +55,17 @@ extern "C" {
 	"http://nwalsh.com/xslt/ext/com.nwalsh.saxon.CVS")
 
 
-void		xsltFunctionNodeSet	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL
+		xsltFunctionNodeSet	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void		xsltDebug		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltDebug		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr inst,
 					 xsltStylePreCompPtr comp);
 
 
-void		xsltRegisterExtras	(xsltTransformContextPtr ctxt);
-void		xsltRegisterAllExtras	(void);
+XSLTPUBFUN void XSLTCALL		xsltRegisterExtras	(xsltTransformContextPtr ctxt);
+XSLTPUBFUN void XSLTCALL		xsltRegisterAllExtras	(void);
 
 #ifdef __cplusplus
 }

@@ -10,6 +10,7 @@
 #define __XML_XSLT_H__
 
 #include <libxml/tree.h>
+#include "xsltexports.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,50 +45,37 @@ extern "C" {
 #define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
 
 /**
- * LIBXSLT_PUBLIC:
- *
- * Macro used on Windows to tag public identifiers from shared libraries.
- */
-#if !defined LIBXSLT_PUBLIC
-#if (defined (__CYGWIN__) || defined _MSC_VER) && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
-#define LIBXSLT_PUBLIC __declspec(dllimport)
-#else
-#define LIBXSLT_PUBLIC 
-#endif
-#endif
-
-/**
  * xsltMaxDepth:
  *
  * This value is used to detect templates loops.
  */
-LIBXSLT_PUBLIC extern int xsltMaxDepth;
+XSLTPUBVAR int xsltMaxDepth;
 
 /**
  * xsltEngineVersion:
  *
  * The version string for libxslt.
  */
-LIBXSLT_PUBLIC extern const char *xsltEngineVersion;
+XSLTPUBVAR const char *xsltEngineVersion;
 
 /**
  * xsltLibxsltVersion:
  *
  * The version of libxslt compiled.
  */
-LIBXSLT_PUBLIC extern const int xsltLibxsltVersion;
+XSLTPUBVAR const int xsltLibxsltVersion;
 
 /**
  * xsltLibxmlVersion:
  *
  * The version of libxml libxslt was compiled against.
  */
-LIBXSLT_PUBLIC extern const int xsltLibxmlVersion;
+XSLTPUBVAR const int xsltLibxmlVersion;
 
 /*
  * Global cleanup function.
  */
-void	xsltCleanupGlobals	(void);
+XSLTPUBFUN void XSLTCALL	xsltCleanupGlobals	(void);
 
 #ifdef __cplusplus
 }

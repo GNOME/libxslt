@@ -10,6 +10,7 @@
 #define __XML_XSLT_PATTERN_H__
 
 #include "xsltInternals.h"
+#include "xsltexports.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,28 +29,28 @@ typedef xsltCompMatch *xsltCompMatchPtr;
  * Pattern related interfaces.
  */
 
-xsltCompMatchPtr xsltCompilePattern	(const xmlChar *pattern,
+XSLTPUBFUN xsltCompMatchPtr XSLTCALL xsltCompilePattern	(const xmlChar *pattern,
 					 xmlDocPtr doc,
 					 xmlNodePtr node,
 					 xsltStylesheetPtr style,
 					 xsltTransformContextPtr runtime);
-void		 xsltFreeCompMatchList	(xsltCompMatchPtr comp);
-int		 xsltTestCompMatchList	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		 xsltFreeCompMatchList	(xsltCompMatchPtr comp);
+XSLTPUBFUN int XSLTCALL		 xsltTestCompMatchList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xsltCompMatchPtr comp);
 
 /*
  * Template related interfaces.
  */
-int		xsltAddTemplate		(xsltStylesheetPtr style,
+XSLTPUBFUN int XSLTCALL		xsltAddTemplate		(xsltStylesheetPtr style,
 					 xsltTemplatePtr cur,
 					 const xmlChar *mode,
 					 const xmlChar *modeURI);
-xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltTemplatePtr XSLTCALL	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xsltStylesheetPtr style);
-void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
-void		xsltCleanupTemplates	(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL		xsltCleanupTemplates	(xsltStylesheetPtr style);
 
 #if 0
 int		xsltMatchPattern	(xsltTransformContextPtr ctxt,

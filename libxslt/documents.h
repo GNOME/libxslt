@@ -10,25 +10,27 @@
 #define __XML_XSLT_DOCUMENTS_H__
 
 #include <libxml/tree.h>
+#include "xsltexports.h"
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-xsltDocumentPtr	xsltNewDocument		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltDocumentPtr XSLTCALL	
+		xsltNewDocument		(xsltTransformContextPtr ctxt,
 					 xmlDocPtr doc);
-xsltDocumentPtr	xsltLoadDocument	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltDocumentPtr XSLTCALL	xsltLoadDocument	(xsltTransformContextPtr ctxt,
 					 const xmlChar *URI);
-xsltDocumentPtr	xsltFindDocument	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltDocumentPtr XSLTCALL	xsltFindDocument	(xsltTransformContextPtr ctxt,
 					 xmlDocPtr doc);
-void		xsltFreeDocuments	(xsltTransformContextPtr ctxt);
+XSLTPUBFUN void XSLTCALL		xsltFreeDocuments	(xsltTransformContextPtr ctxt);
 
-xsltDocumentPtr	xsltLoadStyleDocument	(xsltStylesheetPtr style,
+XSLTPUBFUN xsltDocumentPtr XSLTCALL	xsltLoadStyleDocument	(xsltStylesheetPtr style,
 					 const xmlChar *URI);
-xsltDocumentPtr	xsltNewStyleDocument	(xsltStylesheetPtr style,
+XSLTPUBFUN xsltDocumentPtr XSLTCALL	xsltNewStyleDocument	(xsltStylesheetPtr style,
 					 xmlDocPtr doc);
-void		xsltFreeStyleDocuments	(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL		xsltFreeStyleDocuments	(xsltStylesheetPtr style);
 
 #ifdef __cplusplus
 }

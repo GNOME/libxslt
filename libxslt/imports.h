@@ -10,6 +10,7 @@
 #define __XML_XSLT_IMPORTS_H__
 
 #include <libxml/tree.h>
+#include "xsltexports.h"
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
@@ -45,15 +46,15 @@ extern "C" {
 /*
  * Module interfaces
  */
-int			xsltParseStylesheetImport(xsltStylesheetPtr style,
+XSLTPUBFUN int XSLTCALL			xsltParseStylesheetImport(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
-int			xsltParseStylesheetInclude(xsltStylesheetPtr style,
+XSLTPUBFUN int XSLTCALL			xsltParseStylesheetInclude(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
-xsltStylesheetPtr	xsltNextImport		 (xsltStylesheetPtr style);
-int			xsltNeedElemSpaceHandling(xsltTransformContextPtr ctxt);
-int			xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltNextImport		 (xsltStylesheetPtr style);
+XSLTPUBFUN int XSLTCALL			xsltNeedElemSpaceHandling(xsltTransformContextPtr ctxt);
+XSLTPUBFUN int XSLTCALL			xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt,
 						  xmlNodePtr node);
-xsltTemplatePtr		xsltFindTemplate	 (xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltTemplatePtr XSLTCALL		xsltFindTemplate	 (xsltTransformContextPtr ctxt,
 						  const xmlChar *name,
 						  const xmlChar *nameURI);
 

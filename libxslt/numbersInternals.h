@@ -11,6 +11,7 @@
 #define __XML_XSLT_NUMBERSINTERNALS_H__
 
 #include <libxml/tree.h>
+#include "xsltexports.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -10,19 +10,24 @@
 #define __XML_XSLT_ATTRIBUTES_H__
 
 #include <libxml/tree.h>
+#include "xsltexports.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void	xsltParseStylesheetAttributeSet	(xsltStylesheetPtr style,
+XSLTPUBFUN void XSLTCALL
+	xsltParseStylesheetAttributeSet	(xsltStylesheetPtr style,
 					 xmlNodePtr cur);
-void	xsltFreeAttributeSetsHashes	(xsltStylesheetPtr style);
-void	xsltApplyAttributeSet		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL    
+	xsltFreeAttributeSetsHashes	(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL	
+	xsltApplyAttributeSet		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr inst,
 					 xmlChar *attributes);
-void	xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL	
+	xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style);
 #ifdef __cplusplus
 }
 #endif

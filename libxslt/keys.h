@@ -10,26 +10,28 @@
 #define __XML_XSLT_KEY_H__
 
 #include <libxml/xpath.h>
+#include "xsltexports.h"
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int		xsltAddKey		(xsltStylesheetPtr style,
+XSLTPUBFUN int XSLTCALL
+		xsltAddKey		(xsltStylesheetPtr style,
 					 const xmlChar *name,
 					 const xmlChar *nameURI,
 					 const xmlChar *match,
 					 const xmlChar *use,
 					 xmlNodePtr inst);
-xmlNodeSetPtr	xsltGetKey		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlNodeSetPtr XSLTCALL	xsltGetKey		(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *nameURI,
 					 const xmlChar *value);
-void		xsltInitCtxtKeys	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		xsltInitCtxtKeys	(xsltTransformContextPtr ctxt,
 					 xsltDocumentPtr doc);
-void		xsltFreeKeys		(xsltStylesheetPtr style);
-void		xsltFreeDocumentKeys	(xsltDocumentPtr doc);
+XSLTPUBFUN void XSLTCALL		xsltFreeKeys		(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL		xsltFreeDocumentKeys	(xsltDocumentPtr doc);
 
 #ifdef __cplusplus
 }

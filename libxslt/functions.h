@@ -12,6 +12,7 @@
 
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
+#include "xsltexports.h"
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
@@ -28,7 +29,7 @@ extern "C" {
 	(xmlXPathFuncLookupFunc) xsltXPathFunctionLookup,	\
 	(void *)(ctxt->xpathCtxt));
 
-xmlXPathFunction
+XSLTPUBFUN xmlXPathFunction XSLTCALL
 	xsltXPathFunctionLookup	(xmlXPathContextPtr ctxt,
 				 const xmlChar *name,
 				 const xmlChar *ns_uri);
@@ -37,28 +38,28 @@ xmlXPathFunction
  * Interfaces for the functions implementations.
  */
 
-void	xsltDocumentFunction		(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltDocumentFunction		(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltKeyFunction			(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltKeyFunction			(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltUnparsedEntityURIFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltUnparsedEntityURIFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltFormatNumberFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltFormatNumberFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltGenerateIdFunction		(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltGenerateIdFunction		(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltSystemPropertyFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltSystemPropertyFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltElementAvailableFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltElementAvailableFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltFunctionAvailableFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	xsltFunctionAvailableFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
 
 /*
  * And the registration
  */
 
-void	xsltRegisterAllFunctions	(xmlXPathContextPtr ctxt);
+XSLTPUBFUN void XSLTCALL	xsltRegisterAllFunctions	(xmlXPathContextPtr ctxt);
 
 #ifdef __cplusplus
 }

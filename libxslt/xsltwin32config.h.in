@@ -77,23 +77,6 @@ extern "C" {
 #define ATTRIBUTE_UNUSED
 #endif
 
-/**
- * LIBXSLT_PUBLIC:
- *
- * This macro is needed on Win32 when using MSVC. It enables the client code
- * to access exported variables. It should expand to nothing when compiling
- * this library itself, but must expand to __declspec(dllimport) when a
- * client includes the library header and that only if it links dynamically
- * against this library.
- */
-#if !defined LIBXSLT_PUBLIC
-#if defined _MSC_VER && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
-#define LIBXSLT_PUBLIC __declspec(dllimport)
-#else
-#define LIBXSLT_PUBLIC 
-#endif
-#endif
-
 #ifdef __cplusplus
 }
 #endif
