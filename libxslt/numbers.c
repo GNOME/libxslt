@@ -1182,8 +1182,15 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	    default_sign = 1;
 	}
 	else {
+            int lenPS;
+	    lenPS = xmlUTF8Size(self->patternSeparator);
+	    if (lenPS <= 0) {
+	        found_error = 1;
+	        goto OUTPUT_NUMBER;
+	    }
+	
 	    /* Skip over pattern separator */
-	    the_format = format + j + 1;
+	    the_format = format + j + lenPS;
 	    /* 
 	     * Flag changes interpretation of percent/permille 
 	     * in -ve pattern 
