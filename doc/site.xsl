@@ -31,6 +31,8 @@
   </xsl:variable>
   <xsl:variable name="related">
     <ul style="margin-left: -2pt">
+      <li><a href="tutorial/libxslttutorial.html">Tutorial</a></li>
+      <li><a href="xsltproc.html">Man page for xsltproc</a></li>
       <li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li>
       <li><a href="http://xmlsoft.org/">XML libxml</a></li>
       <li><a href="http://www.cs.unibo.it/~casarini/gdome2/">DOM gdome2</a></li>
