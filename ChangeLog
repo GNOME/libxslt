@@ -1,3 +1,8 @@
+Sun Dec 21 21:38:11 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/numbers.c: added namespace comparison for
+	  xsl:number count function (Bug 129057)
+
 Sun Dec 21 13:56:48 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-139.xml

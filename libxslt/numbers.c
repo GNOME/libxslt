@@ -663,9 +663,14 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 		        xmlXPathNextPrecedingSibling(parser, preceding)) {
 		    if (count == NULL) {
 			if ((preceding->type == ancestor->type) &&
-			    /* FIXME */
-			    xmlStrEqual(preceding->name, ancestor->name))
-			    cnt++;
+			    xmlStrEqual(preceding->name, ancestor->name)){
+			    if ((preceding->ns == ancestor->ns) ||
+			        ((preceding->ns != NULL) &&
+				 (ancestor->ns != NULL) &&
+			         (xmlStrEqual(preceding->ns->href,
+			             ancestor->ns->href) )))
+			        cnt++;
+			}
 		    } else {
 			if (xsltTestCompMatchList(context, preceding,
 				                  countPat))
