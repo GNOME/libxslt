@@ -44,6 +44,10 @@ void		xsltParseStylesheetVariable	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr cur);
 void		xsltParseStylesheetParam	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr cur);
+xsltStackElemPtr xsltParseStylesheetCallerParam	(xsltTransformContextPtr ctxt,
+						 xmlNodePtr cur);
+int		 xsltAddStackElemList		(xsltTransformContextPtr ctxt,
+						 xsltStackElemPtr elems);
 void			xsltFreeVariableHashes	(xsltTransformContextPtr ctxt);
 xmlXPathObjectPtr	xsltVariableLookup	(xsltTransformContextPtr ctxt,
 						 const xmlChar *name,

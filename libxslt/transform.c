@@ -152,7 +152,6 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->varsNr = 0;
     cur->varsMax = 5;
     cur->vars = NULL;
-    cur->varsComputed = 0;
 
     cur->style = style;
     xmlXPathInit();
@@ -264,12 +263,19 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 xmlNodePtr
 xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
 	     xmlNodePtr insert) {
-    xmlNodePtr copy, ret = NULL;
+    xmlNodePtr copy, ret = NULL, last;
 
     while (list != NULL) {
 	copy = xsltCopyTree(ctxt, list, insert);
-	if (ret != NULL)
-	    ret = copy;
+	if (copy != NULL) {
+	    if (ret == NULL) {
+		ret = copy;
+		last = ret;
+	    } else {
+		last->next = copy;
+		last = copy;
+	    }
+	}
 	list = list->next;
     }
     return(ret);
@@ -304,7 +310,7 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, insert);
 	}
 	if (node->children != NULL)
-	    copy->children = xsltCopyTreeList(ctxt, node->children, copy);
+	    xsltCopyTreeList(ctxt, node->children, copy);
     } else {
 	xsltGenericError(xsltGenericErrorContext,
 		"xsltCopyTree: copy %s failed\n", node->name);
@@ -1438,6 +1444,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNsPtr ns = NULL;
     xsltTemplatePtr template;
     xmlNodePtr cur = NULL;
+    xsltStackElemPtr params = NULL, param;
 
 
     if (ctxt->insert == NULL)
@@ -1475,14 +1482,14 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      * Create a new frame but block access to variables
      */
     templPush(ctxt, template);
-    varsPush(ctxt, NULL);
-    ctxt->varsComputed = 1;
     cur = inst->children;
     while (cur != NULL) {
 	if (ctxt->state == XSLT_STATE_STOPPED) break;
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "with-param")) {
-		xsltParseStylesheetParam(ctxt, cur);
+		param = xsltParseStylesheetCallerParam(ctxt, cur);
+		param->next = params;
+		params = param;
 	    } else {
 		xsltGenericError(xsltGenericDebugContext,
 		     "xslt:call-template: misplaced xslt:%s\n", cur->name);
@@ -1493,9 +1500,8 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	cur = cur->next;
     }
-    ctxt->varsComputed = 0;
+    varsPush(ctxt, params);
     xsltApplyOneTemplate(ctxt, node, template->content, 1);
-
     xsltFreeStackElemList(varsPop(ctxt));
     templPop(ctxt);
 

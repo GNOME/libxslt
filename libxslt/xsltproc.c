@@ -158,8 +158,10 @@ main(int argc, char **argv) {
 		fprintf(stderr, "no result for %s\n", argv[i]);
 		continue;
 	    }
-	    if (noout)
+	    if (noout) {
+		xmlFreeDoc(res);
 		continue;
+	    }
 
 #ifdef LIBXML_DEBUG_ENABLED
 	    if (debug)

@@ -1,3 +1,11 @@
+Sat Feb 24 14:02:05 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltutils.c: reformat of messages
+	* libxslt/xsltproc.c: removed memleak on --noout
+	* libxslt/xsltInternals.h libxslt/variables.[ch] libxslt/transform.c:
+	  changed again the way parameter are evaluated before a
+	  call-template, seems to fix a few nasty bugs, memory alloc debug too
+	
 Wed Feb 21 09:10:13 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/variables.c libxslt/xsltInternals.h:

@@ -42,43 +42,43 @@ void
 xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     int i, j;
 
-    printf("Templates:\n");
+    fprintf(stderr, "Templates:\n");
     for (i = 0, j = ctxt->templNr - 1;((i < 5) && (j >= 0));i++,j--) {
-	printf("#%d ", i);
+	fprintf(stderr, "#%d ", i);
 	if (ctxt->templTab[j]->name != NULL)
-	    printf("name %s ", ctxt->templTab[j]->name);
+	    fprintf(stderr, "name %s ", ctxt->templTab[j]->name);
 	if (ctxt->templTab[j]->match != NULL)
-	    printf("name %s ", ctxt->templTab[j]->match);
+	    fprintf(stderr, "name %s ", ctxt->templTab[j]->match);
 	if (ctxt->templTab[j]->mode != NULL)
-	    printf("name %s ", ctxt->templTab[j]->mode);
-	printf("\n");
+	    fprintf(stderr, "name %s ", ctxt->templTab[j]->mode);
+	fprintf(stderr, "\n");
     }
-    printf("Variables:\n");
+    fprintf(stderr, "Variables:\n");
     for (i = 0, j = ctxt->varsNr - 1;((i < 10) && (j >= 0));i++,j--) {
 	xsltStackElemPtr cur;
 
 	if (ctxt->varsTab[j] == NULL)
 	    continue;
-	printf("#%d\n", i);
+	fprintf(stderr, "#%d\n", i);
 	cur = ctxt->varsTab[j];
 	while (cur != NULL) {
 	    if (cur->type == XSLT_ELEM_VARIABLE)
-		printf("var ");
+		fprintf(stderr, "var ");
 	    else if (cur->type == XSLT_ELEM_PARAM)
-		printf("param ");
+		fprintf(stderr, "param ");
 	    else {
-		printf("corrupted !!!\n");
+		fprintf(stderr, "corrupted !!!\n");
 	    }
 	    if (cur->name != NULL)
-		printf("%s ", cur->name);
+		fprintf(stderr, "%s ", cur->name);
 	    else
-		printf("noname !!!!");
+		fprintf(stderr, "noname !!!!");
 	    if (cur->value != NULL) {
-		xmlXPathDebugDumpObject(stdout, cur->value, 1);
+		xmlXPathDebugDumpObject(stderr, cur->value, 1);
 	    } else {
-		printf("NULL !!!!");
+		fprintf(stderr, "NULL !!!!");
 	    }
-	    printf("\n");
+	    fprintf(stderr, "\n");
 	    cur = cur->next;
 	}
 	

@@ -147,21 +147,23 @@ xsltFreeAttrElemList(xsltAttrElemPtr list) {
  */
 xsltAttrElemPtr
 xsltAddAttrElemList(xsltAttrElemPtr list, xmlNodePtr attr) {
-    xsltAttrElemPtr next;
+    xsltAttrElemPtr next, cur;
 
     if (attr == NULL)
 	return(list);
-    while (list != NULL) {
-	next = list->next;
-	if (list->attr == attr)
-	    return(list);
-	if (next == NULL) {
-	    list->next = xsltNewAttrElem(attr);
-	    return(list);
+    if (list == NULL)
+	return(xsltNewAttrElem(attr));
+    cur = list;
+    while (cur != NULL) {
+	next = cur->next;
+	if (cur->attr == attr)
+	    return(cur);
+	if (cur->next == NULL) {
+	    cur->next = xsltNewAttrElem(attr);
 	}
-	list = next;
+	cur = next;
     }
-    return(xsltNewAttrElem(attr));
+    return(list);
 }
 
 /**
