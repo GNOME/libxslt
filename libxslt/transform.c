@@ -1373,7 +1373,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldInsert;
     xmlNodePtr oldCurrent = NULL;
     xmlNodePtr oldInst = NULL;
-    xmlAttrPtr attrs;
     int oldBase;
     xmlDocPtr tmpRVT = NULL;
 
@@ -1624,8 +1623,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
              * all the attributes are directly inherited
              */
             if (cur->properties != NULL) {
-                attrs = xsltAttrListTemplateProcess(ctxt, copy,
-                                                    cur->properties);
+                xsltAttrListTemplateProcess(ctxt, copy,
+					    cur->properties);
             }
             /*
              * Add extra namespaces inherited from the current template

@@ -1165,14 +1165,13 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	}
 	if (cur->type == XML_ELEMENT_NODE) {
 	    int exclPrefixes;
-	    xmlChar *prefix;
 
 	    exclPrefixes = xsltParseStylesheetExcludePrefix(style, cur);
 	    if (IS_XSLT_ELEM(cur)) {
 		xsltStylePreCompute(style, cur);
 		if (IS_XSLT_NAME(cur, "text")) {
 		    for (;exclPrefixes > 0;exclPrefixes--)
-			prefix = exclPrefixPop(style);
+			exclPrefixPop(style);
 		    goto skip_children;
 		}
 	    }
@@ -1222,7 +1221,7 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    if (exclPrefixes > 0) {
 		xsltPrecomputeStylesheet(style, cur->children);
 		for (;exclPrefixes > 0;exclPrefixes--)
-		    prefix = exclPrefixPop(style);
+		    exclPrefixPop(style);
 		goto skip_children;
 	    }
 	} else if (cur->type == XML_TEXT_NODE) {

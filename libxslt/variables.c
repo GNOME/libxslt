@@ -691,10 +691,9 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 		    xmlHashLookup2(ctxt->globalVars,
 		                 elem->name, elem->nameURI);
 	    if (def == NULL) {
-		int res;
 
 		def = xsltCopyStackElem(elem);
-		res = xmlHashAddEntry2(ctxt->globalVars,
+		xmlHashAddEntry2(ctxt->globalVars,
 				 elem->name, elem->nameURI, def);
 	    } else if ((elem->comp != NULL) &&
 		       (elem->comp->type == XSLT_FUNC_VARIABLE)) {

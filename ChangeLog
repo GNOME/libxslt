@@ -1,3 +1,9 @@
+Sat Aug 2 09:55:38 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	Fixing bug 118561 (IRIX MIPSPro compiler warnings)
+	* transform.c, variables.c, xslt.c, xsltutils.c:
+	  removed some unused variables
+  
 Thu Jul 31 20:33:12 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	Fixing bug 118558 (Solaris 8 compiler warnings)

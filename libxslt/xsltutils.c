@@ -1048,7 +1048,6 @@ int
 xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	       xsltStylesheetPtr style) {
     const xmlChar *encoding;
-    xmlNodePtr root;
     int base;
     const xmlChar *method;
     int indent;
@@ -1076,11 +1075,6 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 
     if ((method == NULL) && (result->type == XML_HTML_DOCUMENT_NODE))
 	method = (const xmlChar *) "html";
-
-    if (method == NULL)
-	root = xmlDocGetRootElement(result);
-    else
-	root = NULL;
 
     if ((method != NULL) &&
 	(xmlStrEqual(method, (const xmlChar *) "html"))) {
@@ -1146,11 +1140,9 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
     } else {
 	int omitXmlDecl;
 	int standalone;
-	const xmlChar *version;
 
 	XSLT_GET_IMPORT_INT(omitXmlDecl, style, omitXmlDeclaration);
 	XSLT_GET_IMPORT_INT(standalone, style, standalone);
-	XSLT_GET_IMPORT_PTR(version, style, version)
 
 	if (omitXmlDecl != 1) {
 	    xmlOutputBufferWriteString(buf, "<?xml version=");
@@ -1620,7 +1612,7 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
     xsltStylesheetPtr style;
     xsltTemplatePtr *templates;
     xsltTemplatePtr templ;
-    int nb = 0, max = 0, i, j, total, totalt;
+    int nb = 0, max = 0, i, j;
 
     if (!ctxt)
         return NULL;
@@ -1675,8 +1667,6 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
     root = xmlNewDocNode(ret, NULL, BAD_CAST "profile", NULL);
     xmlDocSetRootElement(ret, root);
 
-    total = 0;
-    totalt = 0;
     for (i = 0; i < nb; i++) {
         child = xmlNewChild(root, NULL, BAD_CAST "template", NULL);
         sprintf(buf, "%d", i + 1);
