@@ -228,6 +228,7 @@
      <exports symbol='xsltApplyStylesheet'/>
      <exports symbol='xsltProfileStylesheet'/>
      <exports symbol='xsltRunStylesheet'/>
+     <exports symbol='xsltRunStylesheetUser'/>
      <exports symbol='xsltApplyOneTemplate'/>
      <exports symbol='xsltDocumentElem'/>
      <exports symbol='xsltSort'/>
@@ -1385,6 +1386,18 @@
       <arg name='output' type='const char *' info='the URL/filename ot the generated resource if available '/>
       <arg name='SAX' type='xmlSAXHandlerPtr' info='a SAX handler for progressive callback output (not implemented yet) '/>
       <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet) '/>
+    </function>
+    <function name='xsltRunStylesheetUser' file='transform'>
+      <info>Apply the stylesheet to the document and generate the output according to output SAX and IObuf. It&apos;s an error to specify both SAX and IObuf. </info>
+      <return type='int' info='the number of by written to the main resource or -1 in case of error. '/>
+      <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet '/>
+      <arg name='doc' type='xmlDocPtr' info='a parsed XML document '/>
+      <arg name='params' type='const char **' info='a NULL terminated arry of parameters names/values tuples '/>
+      <arg name='output' type='const char *' info='the URL/filename ot the generated resource if available '/>
+      <arg name='SAX' type='xmlSAXHandlerPtr' info='a SAX handler for progressive callback output (not implemented yet) '/>
+      <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet) '/>
+      <arg name='profile' type='FILE *' info='profile FILE * output or NULL '/>
+      <arg name='userCtxt' type='xsltTransformContextPtr' info='user provided transform context '/>
     </function>
     <struct name='xsltRuntimeExtra' file='xsltInternals' info='Extra information added to the transformation context.'/>
     <typedef name='xsltRuntimeExtraPtr' file='xsltInternals'/>

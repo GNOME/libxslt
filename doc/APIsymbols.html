@@ -91,7 +91,6 @@ A:link, A:visited, A:active { text-decoration: underline }
 </p>
 <h2>Letter I:</h2>
 <p>
-<a href="html/libxslt-libxslt.html#IN-LIBXSLT-CAPS">IN_LIBXSLT</a>
 <a href="html/libxslt-xsltutils.html#IS-XSLT-ELEM-CAPS">IS_XSLT_ELEM</a>
 <a href="html/libxslt-xsltutils.html#IS-XSLT-NAME-CAPS">IS_XSLT_NAME</a>
 <a href="html/libxslt-xsltutils.html#IS-XSLT-REAL-NODE-CAPS">IS_XSLT_REAL_NODE</a>
@@ -122,6 +121,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltinternals.html#XSLT-PAT-NO-PRIORITY-CAPS">XSLT_PAT_NO_PRIORITY</a>
 <a href="html/libxslt-functions.html#XSLT-REGISTER-FUNCTION-LOOKUP-CAPS">XSLT_REGISTER_FUNCTION_LOOKUP</a>
 <a href="html/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS">XSLT_REGISTER_VARIABLE_LOOKUP</a>
+<a href="html/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-CAPS">XSLT_RUNTIME_EXTRA</a>
+<a href="html/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-FREE-CAPS">XSLT_RUNTIME_EXTRA_FREE</a>
 <a href="html/libxslt-extra.html#XSLT-SAXON-NAMESPACE-CAPS">XSLT_SAXON_NAMESPACE</a>
 <a href="html/libxslt-xsltutils.html#XSLT-STRANGE-CAPS">XSLT_STRANGE</a>
 <a href="html/libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS">XSLT_TIMESTAMP_TICS_PER_SEC</a>
@@ -138,6 +139,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-keys.html#XSLTADDKEY">xsltAddKey</a>
 <a href="html/libxslt-variables.html#XSLTADDSTACKELEMLIST">xsltAddStackElemList</a>
 <a href="html/libxslt-pattern.html#XSLTADDTEMPLATE">xsltAddTemplate</a>
+<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRA">xsltAllocateExtra</a>
+<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT">xsltAllocateExtraCtxt</a>
 <a href="html/libxslt-attributes.html#XSLTAPPLYATTRIBUTESET">xsltApplyAttributeSet</a>
 <a href="html/libxslt-transform.html#XSLTAPPLYIMPORTS">xsltApplyImports</a>
 <a href="html/libxslt-transform.html#XSLTAPPLYONETEMPLATE">xsltApplyOneTemplate</a>
@@ -194,6 +197,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#XSLTEXTINITFUNCTION">xsltExtInitFunction</a>
 <a href="html/libxslt-preproc.html#XSLTEXTMARKER">xsltExtMarker</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULEELEMENTLOOKUP">xsltExtModuleElementLookup</a>
+<a href="html/libxslt-extensions.html#XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP">xsltExtModuleElementPreComputeLookup</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULEFUNCTIONLOOKUP">xsltExtModuleFunctionLookup</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULETOPLEVELLOOKUP">xsltExtModuleTopLevelLookup</a>
 <a href="html/libxslt-extensions.html#XSLTEXTSHUTDOWNFUNCTION">xsltExtShutdownFunction</a>
@@ -284,7 +288,11 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#XSLTREGISTEREXTPREFIX">xsltRegisterExtPrefix</a>
 <a href="html/libxslt-extra.html#XSLTREGISTEREXTRAS">xsltRegisterExtras</a>
 <a href="html/libxslt-extensions.html#XSLTREGISTERTESTMODULE">xsltRegisterTestModule</a>
+<a href="html/libxslt-attributes.html#XSLTRESOLVESTYLESHEETATTRIBUTESET">xsltResolveStylesheetAttributeSet</a>
 <a href="html/libxslt-transform.html#XSLTRUNSTYLESHEET">xsltRunStylesheet</a>
+<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
+<a href="html/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRA">xsltRuntimeExtra</a>
+<a href="html/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRAPTR">xsltRuntimeExtraPtr</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVEPROFILING">xsltSaveProfiling</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTO">xsltSaveResultTo</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">xsltSaveResultToFd</a>
@@ -315,6 +323,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-pattern.html#XSLTTESTCOMPMATCHLIST">xsltTestCompMatchList</a>
 <a href="html/libxslt-transform.html#XSLTTEXT">xsltText</a>
 <a href="html/libxslt-xsltutils.html#XSLTTIMESTAMP">xsltTimestamp</a>
+<a href="html/libxslt-extensions.html#XSLTTOPLEVELFUNCTION">xsltTopLevelFunction</a>
 <a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXT">xsltTransformContext</a>
 <a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR">xsltTransformContextPtr</a>
 <a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
@@ -327,6 +336,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-transform.html#XSLTVALUEOF">xsltValueOf</a>
 <a href="html/libxslt-variables.html#XSLTVARIABLELOOKUP">xsltVariableLookup</a>
 <a href="html/libxslt-functions.html#XSLTXPATHFUNCTIONLOOKUP">xsltXPathFunctionLookup</a>
+<a href="html/libxslt-extensions.html#XSLTXPATHGETTRANSFORMCONTEXT">xsltXPathGetTransformContext</a>
 <a href="html/libxslt-variables.html#XSLTXPATHVARIABLELOOKUP">xsltXPathVariableLookup</a>
 </p>
 <p><a href="mailto:daniel@veillard.com">Daniel Veillard</a></p>

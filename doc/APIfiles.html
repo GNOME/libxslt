@@ -79,6 +79,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-attributes.html#XSLTPARSESTYLESHEETATTRIBUTESET">xsltParseStylesheetAttributeSet</a>
 <a href="html/libxslt-attributes.html#XSLTFREEATTRIBUTESETSHASHES">xsltFreeAttributeSetsHashes</a>
 <a href="html/libxslt-attributes.html#XSLTAPPLYATTRIBUTESET">xsltApplyAttributeSet</a>
+<a href="html/libxslt-attributes.html#XSLTRESOLVESTYLESHEETATTRIBUTESET">xsltResolveStylesheetAttributeSet</a>
 </p>
 <h2>Module documents:</h2>
 <p>
@@ -103,7 +104,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#XSLTSTYLEGETEXTDATA">xsltStyleGetExtData</a>
 <a href="html/libxslt-extensions.html#XSLTSHUTDOWNCTXTEXTS">xsltShutdownCtxtExts</a>
 <a href="html/libxslt-extensions.html#XSLTSHUTDOWNEXTS">xsltShutdownExts</a>
-<a href="">xsltXPathGetTransformContext</a>
+<a href="html/libxslt-extensions.html#XSLTXPATHGETTRANSFORMCONTEXT">xsltXPathGetTransformContext</a>
 <a href="html/libxslt-extensions.html#XSLTREGISTEREXTMODULEFUNCTION">xsltRegisterExtModuleFunction</a>
 <a href="html/libxslt-extensions.html#XSLTEXTFUNCTIONLOOKUP">xsltExtFunctionLookup</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULEFUNCTIONLOOKUP">xsltExtModuleFunctionLookup</a>
@@ -113,9 +114,9 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#XSLTREGISTEREXTMODULEELEMENT">xsltRegisterExtModuleElement</a>
 <a href="html/libxslt-transform.html#XSLTEXTELEMENTLOOKUP">xsltExtElementLookup</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULEELEMENTLOOKUP">xsltExtModuleElementLookup</a>
-<a href="">xsltExtModuleElementPreComputeLookup</a>
+<a href="html/libxslt-extensions.html#XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP">xsltExtModuleElementPreComputeLookup</a>
 <a href="html/libxslt-extensions.html#XSLTUNREGISTEREXTMODULEELEMENT">xsltUnregisterExtModuleElement</a>
-<a href="">xsltTopLevelFunction</a>
+<a href="html/libxslt-extensions.html#XSLTTOPLEVELFUNCTION">xsltTopLevelFunction</a>
 <a href="html/libxslt-extensions.html#XSLTREGISTEREXTMODULETOPLEVEL">xsltRegisterExtModuleTopLevel</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULETOPLEVELLOOKUP">xsltExtModuleTopLevelLookup</a>
 <a href="html/libxslt-extensions.html#XSLTUNREGISTEREXTMODULETOPLEVEL">xsltUnregisterExtModuleTopLevel</a>
@@ -176,7 +177,6 @@ A:link, A:visited, A:active { text-decoration: underline }
 </p>
 <h2>Module libxslt:</h2>
 <p>
-<a href="html/libxslt-libxslt.html#IN-LIBXSLT-CAPS">IN_LIBXSLT</a>
 <a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
 </p>
 <h2>Module namespaces:</h2>
@@ -234,6 +234,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEET">xsltApplyStylesheet</a>
 <a href="html/libxslt-transform.html#XSLTPROFILESTYLESHEET">xsltProfileStylesheet</a>
 <a href="html/libxslt-transform.html#XSLTRUNSTYLESHEET">xsltRunStylesheet</a>
+<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
 <a href="html/libxslt-transform.html#XSLTAPPLYONETEMPLATE">xsltApplyOneTemplate</a>
 <a href="html/libxslt-transform.html#XSLTDOCUMENTELEM">xsltDocumentElem</a>
 <a href="html/libxslt-transform.html#XSLTSORT">xsltSort</a>
@@ -286,10 +287,10 @@ A:link, A:visited, A:active { text-decoration: underline }
 <p>
 <a href="html/libxslt-xsltinternals.html#XSLT-MAX-SORT-CAPS">XSLT_MAX_SORT</a>
 <a href="html/libxslt-xsltinternals.html#XSLT-PAT-NO-PRIORITY-CAPS">XSLT_PAT_NO_PRIORITY</a>
-<a href="">xsltRuntimeExtra</a>
-<a href="">xsltRuntimeExtraPtr</a>
-<a href="">XSLT_RUNTIME_EXTRA</a>
-<a href="">XSLT_RUNTIME_EXTRA_FREE</a>
+<a href="html/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRA">xsltRuntimeExtra</a>
+<a href="html/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRAPTR">xsltRuntimeExtraPtr</a>
+<a href="html/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-CAPS">XSLT_RUNTIME_EXTRA</a>
+<a href="html/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-FREE-CAPS">XSLT_RUNTIME_EXTRA_FREE</a>
 <a href="html/libxslt-xsltinternals.html#XSLTTEMPLATE">xsltTemplate</a>
 <a href="html/libxslt-xsltinternals.html#XSLTTEMPLATEPTR">xsltTemplatePtr</a>
 <a href="html/libxslt-xsltinternals.html#XSLTDECIMALFORMAT">xsltDecimalFormat</a>
@@ -327,8 +328,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltinternals.html#XSLTNUMBERFORMAT">xsltNumberFormat</a>
 <a href="html/libxslt-xsltinternals.html#XSLTFORMATNUMBERCONVERSION">xsltFormatNumberConversion</a>
 <a href="html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">xsltParseTemplateContent</a>
-<a href="">xsltAllocateExtra</a>
-<a href="">xsltAllocateExtraCtxt</a>
+<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRA">xsltAllocateExtra</a>
+<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT">xsltAllocateExtraCtxt</a>
 </p>
 <h2>Module xsltconfig:</h2>
 <p>
