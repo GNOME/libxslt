@@ -1,3 +1,12 @@
+Tue Oct 28 15:30:54 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in python/Makefile.am python/tests/Makefile.am: applied
+	  patch from Roumen Petrov for bug #124539 when building outside the
+	  source directory
+	* libxslt/xsltutils.c: fixed the way to grab the line number from
+	  the document, use the predefiend libxml2 API which mate it work
+	  with both 2.5.x and 2.6.x
+
 Mon Oct 27 08:57:43 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xslt.c: put in #undef for IS_BLANK macros to fix

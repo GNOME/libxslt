@@ -7,7 +7,8 @@ INCLUDES = \
 	-I$(PYTHON_INCLUDES) \
 	 $(LIBXML_CFLAGS) \
 	-I$(top_srcdir)/libxslt \
-	-I$(top_srcdir)
+	-I$(top_srcdir) \
+	-I../libexslt
 
 DOCS_DIR = $(datadir)/doc/libxslt-python-$(LIBXSLT_VERSION)
 # libxsltclass.txt is generated
@@ -46,7 +47,7 @@ install-data-local:
 	@INSTALL@ -m 0644 libxslt.py $(DESTDIR)$(pythondir)
 	$(mkinstalldirs) $(DESTDIR)$(DOCS_DIR)
 	@(for doc in $(DOCS) ; \
-	   do @INSTALL@ -m 0644 $$doc $(DESTDIR)$(DOCS_DIR) ; done)
+	   do @INSTALL@ -m 0644 $(srcdir)/$$doc $(DESTDIR)$(DOCS_DIR) ; done)
 
 GENERATE = generator.py
 API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml

@@ -304,6 +304,7 @@ AC_ARG_WITH(libxml-src,
 	[  --with-libxml-src=[DIR]              For libxml thats not installed yet (sets all three above)],
 	LIBXML_SRC="$withval"
 )
+AC_SUBST(LIBXML_SRC)
 
 dnl
 dnl where is xml2-config
@@ -440,8 +441,10 @@ dnl for the spec file
 RELDATE=`date +'%a %b %e %Y'`
 AC_SUBST(RELDATE)
 
+( cd $srcdir
 rm -f COPYING.LIB COPYING
-ln -s Copyright COPYING
+$LN_S Copyright COPYING
+)
 
 
 AC_OUTPUT([
