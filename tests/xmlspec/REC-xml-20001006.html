@@ -65,7 +65,7 @@ be contacted at <a href="mailto:cmsmcq@w3.org">cmsmcq@w3.org</a>.</p>
 <h2><a name="contents">Table of Contents</a></h2><p class="toc">1 <a href="#sec-intro">Introduction</a><br>    1.1 <a href="#sec-origin-goals">Origin and Goals</a><br>    1.2 <a href="#sec-terminology">Terminology</a><br>2 <a href="#sec-documents">Documents</a><br>    2.1 <a href="#sec-well-formed">Well-Formed XML Documents</a><br>    2.2 <a href="#charsets">Characters</a><br>    2.3 <a href="#sec-common-syn">Common Syntactic Constructs</a><br>    2.4 <a href="#syntax">Character Data and Markup</a><br>    2.5 <a href="#sec-comments">Comments</a><br>    2.6 <a href="#sec-pi">Processing Instructions</a><br>    2.7 <a href="#sec-cdata-sect">CDATA Sections</a><br>    2.8 <a href="#sec-prolog-dtd">Prolog and Document Type Declaration</a><br>    2.9 <a href="#sec-rmd">Standalone Document Declaration</a><br>    2.10 <a href="#sec-white-space">White Space Handling</a><br>    2.11 <a href="#sec-line-ends">End-of-Line Handling</a><br>    2.12 <a href="#sec-lang-tag">Language Identification</a><br>3 <a href="#sec-logical-struct">Logical Structures</a><br>    3.1 <a href="#sec-starttags">Start-Tags, End-Tags, and Empty-Element Tags</a><br>    3.2 <a href="#elemdecls">Element Type Declarations</a><br>        3.2.1 <a href="#sec-element-content">Element Content</a><br>        3.2.2 <a href="#sec-mixed-content">Mixed Content</a><br>    3.3 <a href="#attdecls">Attribute-List Declarations</a><br>        3.3.1 <a href="#sec-attribute-types">Attribute Types</a><br>        3.3.2 <a href="#sec-attr-defaults">Attribute Defaults</a><br>        3.3.3 <a href="#AVNormalize">Attribute-Value
 Normalization</a><br>    3.4 <a href="#sec-condition-sect">Conditional Sections</a><br>4 <a href="#sec-physical-struct">Physical Structures</a><br>    4.1 <a href="#sec-references">Character and Entity References</a><br>    4.2 <a href="#sec-entity-decl">Entity Declarations</a><br>        4.2.1 <a href="#sec-internal-ent">Internal Entities</a><br>        4.2.2 <a href="#sec-external-ent">External Entities</a><br>    4.3 <a href="#TextEntities">Parsed Entities</a><br>        4.3.1 <a href="#sec-TextDecl">The Text Declaration</a><br>        4.3.2 <a href="#wf-entities">Well-Formed Parsed Entities</a><br>        4.3.3 <a href="#charencoding">Character Encoding in Entities</a><br>    4.4 <a href="#entproc">XML Processor Treatment of Entities and References</a><br>        4.4.1 <a href="#not-recognized">Not Recognized</a><br>        4.4.2 <a href="#included">Included</a><br>        4.4.3 <a href="#include-if-valid">Included If Validating</a><br>        4.4.4 <a href="#forbidden">Forbidden</a><br>        4.4.5 <a href="#inliteral">Included in Literal</a><br>        4.4.6 <a href="#notify">Notify</a><br>        4.4.7 <a href="#bypass">Bypassed</a><br>        4.4.8 <a href="#as-PE">Included as PE</a><br>    4.5 <a href="#intern-replacement">Construction of Internal Entity Replacement Text</a><br>    4.6 <a href="#sec-predefined-ent">Predefined Entities</a><br>    4.7 <a href="#Notations">Notation Declarations</a><br>    4.8 <a href="#sec-doc-entity">Document Entity</a><br>5 <a href="#sec-conformance">Conformance</a><br>    5.1 <a href="#proc-types">Validating and Non-Validating Processors</a><br>    5.2 <a href="#safe-behavior">Using XML Processors</a><br>6 <a href="#sec-notation">Notation</a><br></p>
 <h3>Appendices</h3><p class="toc">A <a href="#sec-bibliography">References</a><br>    A.1 <a href="#sec-existing-stds">Normative References</a><br>    A.2 <a href="#null">Other References</a><br>B <a href="#CharClasses">Character Classes</a><br>C <a href="#sec-xml-and-sgml">XML and SGML</a> (Non-Normative)<br>D <a href="#sec-entexpand">Expansion of Entity and Character References</a> (Non-Normative)<br>E <a href="#determinism">Deterministic Content Models</a> (Non-Normative)<br>F <a href="#sec-guessing">Autodetection
-of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2681697">Production Notes</a> (Non-Normative)<br></p></div><hr><div class="body">
+of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2683713">Production Notes</a> (Non-Normative)<br></p></div><hr><div class="body">
 <div class="div1">
 
 <h2><a name="sec-intro"></a>1 Introduction</h2>
@@ -1151,15 +1151,15 @@ declarations:</p>
 to the character sequences of the middle column if the attribute <code>a</code>
 is declared <b>NMTOKENS</b> and to those of the right columns if <code>a</code>
 is declared <b>CDATA</b>.</p>
-<table border="1" frame="border"><thead><tr><th colspan="1" rowspan="1">Attribute specification</th>
-<th colspan="1" rowspan="1">a is NMTOKENS</th><th colspan="1" rowspan="1">a is CDATA</th></tr></thead><tbody><tr><td colspan="1" rowspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a="
+<table border="1" frame="border"><thead><tr><th rowspan="1" colspan="1">Attribute specification</th>
+<th rowspan="1" colspan="1">a is NMTOKENS</th><th rowspan="1" colspan="1">a is CDATA</th></tr></thead><tbody><tr><td rowspan="1" colspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a="
 
-xyz"</pre></td></tr></table></td><td colspan="1" rowspan="1"><code>x y z</code></td><td colspan="1" rowspan="1"><code>#x20 #x20 x y z</code></td>
-</tr><tr><td colspan="1" rowspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a="&amp;d;&amp;d;A&amp;a;&amp;a;B&amp;da;"</pre></td></tr></table></td><td colspan="1" rowspan="1"><code>A
-#x20 B</code></td><td colspan="1" rowspan="1"><code>#x20 #x20 A #x20 #x20 B #x20 #x20</code></td>
-</tr><tr><td colspan="1" rowspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=
-"&amp;#xd;&amp;#xd;A&amp;#xa;&amp;#xa;B&amp;#xd;&amp;#xa;"</pre></td></tr></table></td><td colspan="1" rowspan="1"><code>#xD
-#xD A #xA #xA B #xD #xA</code></td><td colspan="1" rowspan="1"><code>#xD #xD A #xA #xA B #xD #xD</code></td>
+xyz"</pre></td></tr></table></td><td rowspan="1" colspan="1"><code>x y z</code></td><td rowspan="1" colspan="1"><code>#x20 #x20 x y z</code></td>
+</tr><tr><td rowspan="1" colspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a="&amp;d;&amp;d;A&amp;a;&amp;a;B&amp;da;"</pre></td></tr></table></td><td rowspan="1" colspan="1"><code>A
+#x20 B</code></td><td rowspan="1" colspan="1"><code>#x20 #x20 A #x20 #x20 B #x20 #x20</code></td>
+</tr><tr><td rowspan="1" colspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=
+"&amp;#xd;&amp;#xd;A&amp;#xa;&amp;#xa;B&amp;#xd;&amp;#xa;"</pre></td></tr></table></td><td rowspan="1" colspan="1"><code>#xD
+#xD A #xA #xA B #xD #xA</code></td><td rowspan="1" colspan="1"><code>#xD #xD A #xA #xA B #xD #xD</code></td>
 </tr></tbody></table>
 <p>Note that the last example is invalid (but well-formed) if <code>a</code>
 is declared to be of type <b>NMTOKENS</b>.</p>
@@ -1577,24 +1577,24 @@ or the contents of an ignored conditional section (see <a href="#sec-condition-s
 </dd>
 </dl><p></p>
 <table border="1" frame="border" cellpadding="7"><tbody align="center"><tr>
-<td rowspan="2" colspan="1"></td><td rowspan="1" colspan="4" align="center" valign="bottom">Entity
-Type</td><td colspan="1" rowspan="2" align="center">Character</td></tr><tr align="center" valign="bottom"><td colspan="1" rowspan="1">Parameter</td><td colspan="1" rowspan="1">Internal General</td><td colspan="1" rowspan="1">External Parsed
-General</td><td colspan="1" rowspan="1">Unparsed</td></tr><tr align="center" valign="middle"><td colspan="1" rowspan="1" align="right">Reference
-in Content</td><td colspan="1" rowspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td><td colspan="1" rowspan="1"><a href="#include-if-valid"><cite>Included
-if validating</cite></a></td><td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td></tr><tr align="center" valign="middle"><td colspan="1" rowspan="1" align="right">Reference in Attribute Value</td><td colspan="1" rowspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td><td colspan="1" rowspan="1"><a href="#inliteral"><cite>Included
-in literal</cite></a></td><td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td>
-</tr><tr align="center" valign="middle"><td colspan="1" rowspan="1" align="right">Occurs as Attribute
-Value</td><td colspan="1" rowspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td colspan="1" rowspan="1"><a href="#notify"><cite>Notify</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td></tr><tr align="center" valign="middle"><td colspan="1" rowspan="1" align="right">Reference in EntityValue</td><td colspan="1" rowspan="1"><a href="#inliteral"><cite>Included in literal</cite></a></td><td colspan="1" rowspan="1"><a href="#bypass"><cite>Bypassed</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#bypass"><cite>Bypassed</cite></a></td><td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td></tr><tr align="center" valign="middle"><td colspan="1" rowspan="1" align="right">Reference in DTD</td><td colspan="1" rowspan="1"><a href="#as-PE"><cite>Included
-as PE</cite></a></td><td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td></tr></tbody></table>
+<td rowspan="2" colspan="1"></td><td colspan="4" align="center" valign="bottom" rowspan="1">Entity
+Type</td><td rowspan="2" align="center" colspan="1">Character</td></tr><tr align="center" valign="bottom"><td rowspan="1" colspan="1">Parameter</td><td rowspan="1" colspan="1">Internal General</td><td rowspan="1" colspan="1">External Parsed
+General</td><td rowspan="1" colspan="1">Unparsed</td></tr><tr align="center" valign="middle"><td align="right" rowspan="1" colspan="1">Reference
+in Content</td><td rowspan="1" colspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#included"><cite>Included</cite></a></td><td rowspan="1" colspan="1"><a href="#include-if-valid"><cite>Included
+if validating</cite></a></td><td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#included"><cite>Included</cite></a></td></tr><tr align="center" valign="middle"><td align="right" rowspan="1" colspan="1">Reference in Attribute Value</td><td rowspan="1" colspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td><td rowspan="1" colspan="1"><a href="#inliteral"><cite>Included
+in literal</cite></a></td><td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td rowspan="1" colspan="1"><a href="#included"><cite>Included</cite></a></td>
+</tr><tr align="center" valign="middle"><td align="right" rowspan="1" colspan="1">Occurs as Attribute
+Value</td><td rowspan="1" colspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td rowspan="1" colspan="1"><a href="#notify"><cite>Notify</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td></tr><tr align="center" valign="middle"><td align="right" rowspan="1" colspan="1">Reference in EntityValue</td><td rowspan="1" colspan="1"><a href="#inliteral"><cite>Included in literal</cite></a></td><td rowspan="1" colspan="1"><a href="#bypass"><cite>Bypassed</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#bypass"><cite>Bypassed</cite></a></td><td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#included"><cite>Included</cite></a></td></tr><tr align="center" valign="middle"><td align="right" rowspan="1" colspan="1">Reference in DTD</td><td rowspan="1" colspan="1"><a href="#as-PE"><cite>Included
+as PE</cite></a></td><td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td><td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td rowspan="1" colspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td></tr></tbody></table>
 <div class="div3">
 
 <h4><a name="not-recognized"></a>4.4.1 Not Recognized</h4>
@@ -2318,42 +2318,42 @@ list, it may help to know that in UCS-4, '&lt;' is "<code>#x0000003C</code>"
 and '?' is "<code>#x0000003F</code>", and the Byte Order Mark
 required of UTF-16 data streams is "<code>#xFEFF</code>". The notation <var>##</var> is used to denote any byte value except that two consecutive <var>##</var>s cannot be both 00.</p>
 <p>With a Byte Order Mark:</p>
-<table border="1" frame="border"><tbody><tr><td colspan="1" rowspan="1"><code>00 00 FE
-FF</code></td><td colspan="1" rowspan="1">UCS-4, big-endian machine (1234 order)</td></tr><tr><td colspan="1" rowspan="1"><code>FF
-FE 00 00</code></td><td colspan="1" rowspan="1">UCS-4, little-endian machine (4321 order)</td></tr>
-<tr><td colspan="1" rowspan="1"><code>00 00 FF FE</code></td><td colspan="1" rowspan="1">UCS-4, unusual octet order (2143)</td>
-</tr><tr><td colspan="1" rowspan="1"><code>FE FF 00 00</code></td><td colspan="1" rowspan="1">UCS-4, unusual octet order (3412)</td>
-</tr><tr><td colspan="1" rowspan="1"><code>FE FF ## ##</code></td><td colspan="1" rowspan="1">UTF-16, big-endian</td></tr>
-<tr><td colspan="1" rowspan="1"><code>FF FE ## ##</code></td><td colspan="1" rowspan="1">UTF-16, little-endian</td></tr><tr>
-<td colspan="1" rowspan="1"><code>EF BB BF</code></td><td colspan="1" rowspan="1">UTF-8</td></tr></tbody></table>
+<table border="1" frame="border"><tbody><tr><td rowspan="1" colspan="1"><code>00 00 FE
+FF</code></td><td rowspan="1" colspan="1">UCS-4, big-endian machine (1234 order)</td></tr><tr><td rowspan="1" colspan="1"><code>FF
+FE 00 00</code></td><td rowspan="1" colspan="1">UCS-4, little-endian machine (4321 order)</td></tr>
+<tr><td rowspan="1" colspan="1"><code>00 00 FF FE</code></td><td rowspan="1" colspan="1">UCS-4, unusual octet order (2143)</td>
+</tr><tr><td rowspan="1" colspan="1"><code>FE FF 00 00</code></td><td rowspan="1" colspan="1">UCS-4, unusual octet order (3412)</td>
+</tr><tr><td rowspan="1" colspan="1"><code>FE FF ## ##</code></td><td rowspan="1" colspan="1">UTF-16, big-endian</td></tr>
+<tr><td rowspan="1" colspan="1"><code>FF FE ## ##</code></td><td rowspan="1" colspan="1">UTF-16, little-endian</td></tr><tr>
+<td rowspan="1" colspan="1"><code>EF BB BF</code></td><td rowspan="1" colspan="1">UTF-8</td></tr></tbody></table>
 <p>Without a Byte Order Mark:</p>
-<table border="1" frame="border"><tbody><tr><td colspan="1" rowspan="1"><code>00 00 00 3C</code></td>
-<td colspan="1" rowspan="4">UCS-4 or other encoding with a 32-bit code unit and ASCII
+<table border="1" frame="border"><tbody><tr><td rowspan="1" colspan="1"><code>00 00 00 3C</code></td>
+<td rowspan="4" colspan="1">UCS-4 or other encoding with a 32-bit code unit and ASCII
 characters encoded as ASCII values, in respectively big-endian (1234), little-endian
 (4321) and two unusual byte orders (2143 and 3412). The encoding declaration
 must be read to determine which of UCS-4 or other supported 32-bit encodings
-applies.</td></tr><tr><td colspan="1" rowspan="1"><code>3C 00 00 00</code></td>
+applies.</td></tr><tr><td rowspan="1" colspan="1"><code>3C 00 00 00</code></td>
 
-</tr><tr><td colspan="1" rowspan="1"><code>00 00 3C 00</code></td>
+</tr><tr><td rowspan="1" colspan="1"><code>00 00 3C 00</code></td>
 
-</tr><tr><td colspan="1" rowspan="1"><code>00 3C 00 00</code></td>
+</tr><tr><td rowspan="1" colspan="1"><code>00 3C 00 00</code></td>
 
-</tr><tr><td colspan="1" rowspan="1"><code>00 3C 00 3F</code></td><td colspan="1" rowspan="1">UTF-16BE or big-endian ISO-10646-UCS-2
+</tr><tr><td rowspan="1" colspan="1"><code>00 3C 00 3F</code></td><td rowspan="1" colspan="1">UTF-16BE or big-endian ISO-10646-UCS-2
 or other encoding with a 16-bit code unit in big-endian order and ASCII characters
 encoded as ASCII values (the encoding declaration must be read to determine
-which)</td></tr><tr><td colspan="1" rowspan="1"><code>3C 00 3F 00</code></td><td colspan="1" rowspan="1">UTF-16LE or little-endian
+which)</td></tr><tr><td rowspan="1" colspan="1"><code>3C 00 3F 00</code></td><td rowspan="1" colspan="1">UTF-16LE or little-endian
 ISO-10646-UCS-2 or other encoding with a 16-bit code unit in little-endian
 order and ASCII characters encoded as ASCII values (the encoding declaration
-must be read to determine which)</td></tr><tr><td colspan="1" rowspan="1"><code>3C 3F 78 6D</code></td>
-<td colspan="1" rowspan="1">UTF-8, ISO 646, ASCII, some part of ISO 8859, Shift-JIS, EUC, or any other
+must be read to determine which)</td></tr><tr><td rowspan="1" colspan="1"><code>3C 3F 78 6D</code></td>
+<td rowspan="1" colspan="1">UTF-8, ISO 646, ASCII, some part of ISO 8859, Shift-JIS, EUC, or any other
 7-bit, 8-bit, or mixed-width encoding which ensures that the characters of
 ASCII have their normal positions, width, and values; the actual encoding
 declaration must be read to detect which of these applies, but since all of
 these encodings use the same bit patterns for the relevant ASCII characters,
-the encoding declaration itself may be read reliably</td></tr><tr><td colspan="1" rowspan="1"><code>4C
-6F A7 94</code></td><td colspan="1" rowspan="1">EBCDIC (in some flavor; the full encoding declaration
-must be read to tell which code page is in use)</td></tr><tr><td colspan="1" rowspan="1">Other</td>
-<td colspan="1" rowspan="1">UTF-8 without an encoding declaration, or else the data stream is mislabeled
+the encoding declaration itself may be read reliably</td></tr><tr><td rowspan="1" colspan="1"><code>4C
+6F A7 94</code></td><td rowspan="1" colspan="1">EBCDIC (in some flavor; the full encoding declaration
+must be read to tell which code page is in use)</td></tr><tr><td rowspan="1" colspan="1">Other</td>
+<td rowspan="1" colspan="1">UTF-8 without an encoding declaration, or else the data stream is mislabeled
 (lacking a required encoding declaration), corrupt, fragmentary, or enclosed
 in a wrapper of some kind</td></tr></tbody></table>
 <div class="note"><p class="prefix"><b>Note:</b></p>
@@ -2484,7 +2484,7 @@ Contact</i>) </li>
 </div>
 <div class="div1">
 
-<h2><a name="id2681697"></a>I Production Notes (Non-Normative)</h2>
+<h2><a name="id2683713"></a>I Production Notes (Non-Normative)</h2>
 <p>This Second Edition was encoded in the <a href="http://www.w3.org/XML/1998/06/xmlspec-v21.dtd">XMLspec
 DTD</a> (which has <a href="http://www.w3.org/XML/1998/06/xmlspec-report-v21.htm">documentation</a>
 available). The HTML versions were produced with a combination of the <a href="http://www.w3.org/XML/1998/06/xmlspec.xsl">xmlspec.xsl</a>, <a href="http://www.w3.org/XML/1998/06/diffspec.xsl">diffspec.xsl</a>,

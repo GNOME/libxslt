@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <!-- filename:      test.xsl                                                         created on:    2001 Jun 14 01:35:21 +0200 (CEST)                                last modified: 2001 Jun 14 01:47:18 +0200 (CEST)                                (c) 2001 by Goetz Bock <bock@blacknet.de>
 -->
-<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"                                xmlns:local="data local to this file"                                           version='1.0'>
+<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:local="data_local_to_this_file"
+	       version='1.0'>
 <xsl:output method="text" />
 <local:benefit>
 <local:period ID='12M'>1</local:period>
