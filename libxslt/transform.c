@@ -2195,6 +2195,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	    if (res == NULL)
 		goto error;
+	    res->dict = ctxt->dict;
+	    xmlDictReference(res->dict);
 	} else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltTransformError(ctxt, NULL, inst,
 	     "xsltDocumentElem: unsupported method xhtml\n",
@@ -2203,6 +2205,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    res = htmlNewDocNoDtD(doctypeSystem, doctypePublic);
 	    if (res == NULL)
 		goto error;
+	    res->dict = ctxt->dict;
+	    xmlDictReference(res->dict);
 	} else if (xmlStrEqual(method, (const xmlChar *) "text")) {
 	    ctxt->type = XSLT_OUTPUT_TEXT;
 	    res = xmlNewDoc(style->version);
