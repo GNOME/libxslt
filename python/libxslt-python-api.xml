@@ -5,6 +5,12 @@
     </file>
   </files>
   <symbols>
+    <function name='xsltSaveResultToString' file='python'>
+      <info>Have the stylesheet serialize the result of a transformation to a python string</info>
+      <return type='char *' info='The result document as a string' />
+      <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet'/>
+      <arg name='result' type='xmlDocPtr' info='The result document'/>
+    </function>
     <function name='xsltApplyStylesheet' file='python'>
       <info>Apply the stylesheet to the document</info>
       <return type='xmlDocPtr' info="the result document or NULL in case of error"/>

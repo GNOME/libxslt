@@ -1,4 +1,5 @@
 #!/usr/bin/python -u
+import sys
 import libxml2
 import libxslt
 
@@ -11,6 +12,10 @@ style = libxslt.parseStylesheetDoc(styledoc)
 doc = libxml2.parseFile("test.xml")
 result = style.applyStylesheet(doc, None)
 style.saveResultToFilename("foo", result, 0)
+stringval = style.saveResultToString(result)
+if (len(stringval) != 68):
+  print "Error in saveResultToString"
+  sys.exit(255)
 style.freeStylesheet()
 doc.freeDoc()
 result.freeDoc()

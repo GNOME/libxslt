@@ -251,6 +251,49 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
     return(py_retval);
 }
 
+PyObject *
+libxslt_xsltSaveResultToString(PyObject *self, PyObject *args) {
+    PyObject *py_retval;        /* our final return value, a python string   */ 
+    xmlChar  *buffer;
+    xmlChar  *tmp;
+    int       size    = 0;
+    int       emitted = 0;
+    xmlDocPtr result;
+    PyObject *pyobj_result;
+    xsltStylesheetPtr style;
+    PyObject *pyobj_style;
+
+    if (!PyArg_ParseTuple(args, (char *)"OO:xsltSaveResultToString", &pyobj_style, &pyobj_result))
+      goto FAIL;
+    result = (xmlDocPtr) PyxmlNode_Get(pyobj_result);
+    style  = (xsltStylesheetPtr) Pystylesheet_Get(pyobj_style);
+
+     
+    /* FIXME: We should probably add more restrictive error checking
+     * and raise an error instead of "just" returning NULL.
+     * FIXME: Documentation and code for xsltSaveResultToString diff
+     * -> emmitted will never be positive non-null. 
+     */
+    emitted = xsltSaveResultToString(&buffer, &size, result, style);
+    if(!buffer || emitted < 0) 
+      goto FAIL;
+    /* We haven't tested the aberrant case of a transformation that
+     * renders to an empty string. For now we try to play it save.
+     */
+    if(size)
+      {
+      buffer[size] = '\0';
+      py_retval = PyString_FromString((char *) buffer); 
+      xmlFree(buffer);
+      }
+    else
+      py_retval = PyString_FromString("");
+    return(py_retval);
+ FAIL:
+    return(0);
+}
+
+
 /************************************************************************
  *									*
  *			Error message callback				*

@@ -184,6 +184,7 @@ Class stylesheet()
 
     # functions from module python
     applyStylesheet()
+    saveResultToString()
 
     # functions from module transform
     newTransformContext()
