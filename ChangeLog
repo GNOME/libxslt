@@ -1,3 +1,8 @@
+Tue Nov 13 16:16:41 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* vms/* Makefile.am: included OpenVMS port instructions from
+	  John A Fotheringham, integrated in the tar file.
+
 Mon Nov 12 22:46:26 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* win32/dsp/* xsltproc/xsltproc.c libxslt/transform.c: Patches
