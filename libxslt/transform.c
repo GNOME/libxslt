@@ -558,9 +558,13 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
     len = xmlStrlen(string);
     if ((ctxt->type == XSLT_OUTPUT_XML) &&
 	(ctxt->style->cdataSection != NULL) &&
-	(target != NULL) &&
-	(xmlHashLookup(ctxt->style->cdataSection,
-		       target->name) != NULL)) {
+	(target != NULL) && (target->type == XML_ELEMENT_NODE) &&
+	(((target->ns == NULL) && 
+	  (xmlHashLookup2(ctxt->style->cdataSection,
+		          target->name, NULL) != NULL)) ||
+	 ((target->ns != NULL) &&
+	  (xmlHashLookup2(ctxt->style->cdataSection,
+	                  target->name, target->ns->href) != NULL)))) {
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_CDATA_SECTION_NODE)) {
 	    return(xsltAddTextString(ctxt, target->last, string, len));
@@ -634,9 +638,13 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 
     if ((ctxt->type == XSLT_OUTPUT_XML) &&
 	(ctxt->style->cdataSection != NULL) &&
-	(target != NULL) &&
-	(xmlHashLookup(ctxt->style->cdataSection,
-		       target->name) != NULL)) {
+	(target != NULL) && (target->type == XML_ELEMENT_NODE) &&
+	(((target->ns == NULL) && 
+	  (xmlHashLookup2(ctxt->style->cdataSection,
+		          target->name, NULL) != NULL)) ||
+	 ((target->ns != NULL) &&
+	  (xmlHashLookup2(ctxt->style->cdataSection,
+	                  target->name, target->ns->href) != NULL)))) {
 	copy = xmlNewCDataBlock(ctxt->output, cur->content,
 				xmlStrlen(cur->content));
 	ctxt->lasttext = NULL;

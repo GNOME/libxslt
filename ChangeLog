@@ -1,3 +1,11 @@
+Fri Aug 29 12:28:12 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixing the bug #120971 on cdata-section-elements
+	  with namespaced names reported by Steve Hay
+	* tests/docs/Makefile.am tests/docs/bug-129.*
+	  tests/general/Makefile.am tests/general/bug-129*: added the
+	  test to the regression suite for this bug.
+
 Thu Aug 28 18:30:11 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/xsltexports.h libexslt/exsltexports.h: fixed typos reported by
