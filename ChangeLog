@@ -1,3 +1,9 @@
+Thu Jun  7 04:23:38 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-32-* tests/docs/bug-32-*: added a specific
+	  regression test for #55722 
+
 Wed Jun  6 09:48:53 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/xslt.html: updated to ask to not send mail directly
