@@ -2910,10 +2910,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	xsltProcessOneNode(ctxt, list->nodeTab[i], params);
     }
+error:
     if (params != NULL)
 	xsltFreeStackElemList(params);	/* free the parameter list */
-error:
-
     ctxt->nodeList = oldList;
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
