@@ -1,3 +1,9 @@
+Wed Jun  6 11:07:50 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c : trying to fix #55670
+	* tests/XSLTMark/reverser.out : result of test changed when
+	  William fixed XPath
+
 Sat Jun  2 06:52:12 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/xslt.html: updated with 0.11.0

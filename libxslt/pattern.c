@@ -853,9 +853,6 @@ xsltScanLiteral(xsltParserContextPtr ctxt) {
  * xsltScanName:
  * @ctxt:  the XPath Parser context
  *
- * Trickery: parse an XML name but without consuming the input flow
- * Needed to avoid insanity in the parser state.
- *
  * [4] NameChar ::= Letter | Digit | '.' | '-' | '_' | ':' |
  *                  CombiningChar | Extender
  *
@@ -899,6 +896,73 @@ xsltScanName(xsltParserContextPtr ctxt) {
     SKIP(len);
     return(xmlStrndup(buf, len));
 }
+
+/**
+ * xsltScanNCName:
+ * @ctxt:  the XPath Parser context
+ *
+ * Parses a non qualified name
+ *
+ * Returns the Name parsed or NULL
+ */
+
+static xmlChar *
+xsltScanNCName(xsltParserContextPtr ctxt) {
+    xmlChar buf[XML_MAX_NAMELEN];
+    int len = 0;
+
+    SKIP_BLANKS;
+    if (!IS_LETTER(CUR) && (CUR != '_')) {
+	return(NULL);
+    }
+
+    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
+           (NXT(len) == '.') || (NXT(len) == '-') ||
+	   (NXT(len) == '_') ||
+	   (IS_COMBINING(NXT(len))) ||
+	   (IS_EXTENDER(NXT(len)))) {
+	buf[len] = NXT(len);
+	len++;
+	if (len >= XML_MAX_NAMELEN) {
+	    xmlGenericError(xmlGenericErrorContext, 
+	       "xmlScanNCName: reached XML_MAX_NAMELEN limit\n");
+	    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
+		   (NXT(len) == '.') || (NXT(len) == '-') ||
+		   (NXT(len) == '_') ||
+		   (IS_COMBINING(NXT(len))) ||
+		   (IS_EXTENDER(NXT(len))))
+		 len++;
+	    break;
+	}
+    }
+    SKIP(len);
+    return(xmlStrndup(buf, len));
+}
+
+/**
+ * xsltScanQName:
+ * @ctxt:  the XPath Parser context
+ * @prefix:  the place to store the prefix
+ *
+ * Parse a qualified name
+ *
+ * Returns the Name parsed or NULL
+ */
+
+static xmlChar *
+xsltScanQName(xsltParserContextPtr ctxt, xmlChar **prefix) {
+    xmlChar *ret = NULL;
+
+    *prefix = NULL;
+    ret = xsltScanNCName(ctxt);
+    if (CUR == ':') {
+        *prefix = ret;
+	NEXT;
+	ret = xsltScanNCName(ctxt);
+    }
+    return(ret);
+}
+
 /*
  * xsltCompileIdKeyPattern:
  * @comp:  the compilation context
@@ -1072,14 +1136,32 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    PUSH(XSLT_OP_ATTR, NULL, NULL);
 	    return;
 	}
-	token = xsltScanName(ctxt);
+	token = xsltScanQName(ctxt, &prefix);
+	if (prefix != NULL) {
+	    xmlNsPtr ns;
+
+	    ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
+	    if (ns == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+		    "xsl: pattern, no namespace bound to prefix %s\n",
+				 prefix);
+	    } else {
+		URL = xmlStrdup(ns->href);
+	    }
+	    xmlFree(prefix);
+	}
 	if (token == NULL) {
+	    if (CUR == '*') {
+		NEXT;
+		PUSH(XSLT_OP_ATTR, NULL, URL);
+		return;
+	    }
 	    xsltGenericError(xsltGenericErrorContext,
 		    "xsltCompileStepPattern : Name expected\n");
 	    ctxt->error = 1;
 	    goto error;
 	}
-	PUSH(XSLT_OP_ATTR, token, NULL);
+	PUSH(XSLT_OP_ATTR, token, URL);
 	return;
     }
     if (token == NULL)
@@ -1439,10 +1521,19 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
 		   (element->steps[0].value != NULL) &&
 		   (element->steps[1].op == XSLT_OP_END)) {
 	    element->priority = 0;
+	} else if ((element->steps[0].op == XSLT_OP_ATTR) &&
+		   (element->steps[0].value2 != NULL) &&
+		   (element->steps[1].op == XSLT_OP_END)) {
+	    element->priority = -0.25;
 	} else if ((element->steps[0].op == XSLT_OP_NS) &&
 		   (element->steps[0].value != NULL) &&
 		   (element->steps[1].op == XSLT_OP_END)) {
 	    element->priority = -0.25;
+	} else if ((element->steps[0].op == XSLT_OP_ATTR) &&
+		   (element->steps[0].value == NULL) &&
+		   (element->steps[0].value2 == NULL) &&
+		   (element->steps[1].op == XSLT_OP_END)) {
+	    element->priority = -0.5;
 	} else if (((element->steps[0].op == XSLT_OP_PI) ||
 		    (element->steps[0].op == XSLT_OP_TEXT) ||
 		    (element->steps[0].op == XSLT_OP_ALL) ||
