@@ -1,3 +1,9 @@
+Sun Jan  4 19:06:59 MST 2004 John Fleck <jfleck@inkstain.net>
+
+	* doc/newapi.xsl: change background color of function
+	declaration to improve readability
+	* doc/*: rebuild docs with new stylesheet
+
 Fri Jan  2 21:42:49 MST 2004 John Fleck <jfleck@inkstain.net>
 
 	* libxslt/transform.c: fix bad doc comment formatting on 
