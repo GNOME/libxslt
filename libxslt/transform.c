@@ -2456,7 +2456,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
-	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	    xmlNodePtr inst, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     if ((inst->children != NULL) && (comp != NULL)) {
 	xmlNodePtr text = inst->children;
 	xmlNodePtr copy;
@@ -2469,7 +2469,7 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 		break;
 	    }
 	    copy = xmlNewDocText(ctxt->output, text->content);
-	    if ((comp->noescape) || (text->type != XML_CDATA_SECTION_NODE)) {
+	    if (text->type != XML_CDATA_SECTION_NODE) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
 		     "Disable escaping: %s\n", text->content);

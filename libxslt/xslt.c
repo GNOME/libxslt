@@ -1435,7 +1435,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 			    if (style != NULL) style->errors++;
 			    break;
 			}
-			if (noesc)
+			if ((noesc) && (text->type != XML_CDATA_SECTION_NODE))
 			    text->name = xmlStringTextNoenc;
 			text = text->next;
 		    }
