@@ -61,7 +61,7 @@ indicates the kind of node it represents, the most common ones are:</p><ul><li>d
   <li>text nodes</li>
 </ul><p>For the XSLT processing, entity nodes should not be generated (i.e. they
 should be replaced by their content). Most nodes also contains the following
-&quot;navigation&quot; informations:</p><ul><li>the containing <strong>doc</strong>ument</li>
+"navigation" informations:</p><ul><li>the containing <strong>doc</strong>ument</li>
   <li>the <strong>parent</strong> node</li>
   <li>the first <strong>children</strong> node</li>
   <li>the <strong>last</strong> children node</li>
@@ -89,7 +89,7 @@ level:</p><ol><li>parse the stylesheet and generate a DOM tree</li>
   <li>the input tree 4/ is not modified except the _private field which may
     be used for labelling keys if used by the stylesheet</li>
 </ul><h3><a name="XSLT1" id="XSLT1">The XSLT stylesheet compilation</a></h3><p>This is the second step described. It takes a stylesheet tree, and
-&quot;compiles&quot; it. This associates to each node a structure stored in the
+"compiles" it. This associates to each node a structure stored in the
 _private field and containing information computed in the stylesheet:</p><p align="center"><img src="stylesheet.gif" alt="a compiled XSLT stylesheet" /></p><p>One xsltStylesheet structure is generated per document parsed for the
 stylesheet. XSLT documents allow includes and imports of other documents,
 imports are stored in the <strong>imports</strong> list (hence keeping the
@@ -119,7 +119,7 @@ the match. As a result libxslt builds a relatively more complex set of
 structures for the templates:</p><p align="center"><img src="templates.gif" alt="The templates related structure" /></p><p>Let's describe a bit more closely what is built. First the xsltStylesheet
 structure holds a pointer to the template hash table. All the XSLT patterns
 compiled in this stylesheet are indexed by the value of the the target
-element (or attribute, pi ...) name, so when a element or an attribute &quot;foo&quot;
+element (or attribute, pi ...) name, so when a element or an attribute "foo"
 needs to be processed the lookup is done using the name as a key.</p><p>Each of the patterns is compiled into an xsltCompMatch structure. It holds
 the set of rules based on the tokenization of the pattern stored in reverse
 order (matching is easier this way). It also holds some information about the
@@ -129,7 +129,7 @@ threaded computation, it's unclear that this is a big deal in practice.)
 Predicate expressions are not compiled at this stage, they may be at run-time
 if needed, but in this case they are compiled as full XPath expressions (the
 use of some fixed predicate can probably be optimized, they are not yet).</p><p>The xsltCompMatch are then stored in the hash table, the clash list is
-itself sorted by priority of the template to implement &quot;naturally&quot; the XSLT
+itself sorted by priority of the template to implement "naturally" the XSLT
 priority rules.</p><p>Associated to the compiled pattern is the xsltTemplate itself containing
 the information required for the processing of the pattern including, of
 course, a pointer to the list of elements used for building the pattern

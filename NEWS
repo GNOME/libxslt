@@ -10,6 +10,21 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.1.1: Dec 10 2003:
+   - code cleanup (William Brack)
+   - Windows: Makefile improvements (Igor Zlatkovic)
+   - documentation improvements: William Brack, libexslt man page (Jonathan
+    Wakely)
+   - param in EXSLT functions (Shaun McCance)
+   - XSLT debugging improvements (Mark Vakoc)
+   - bug fixes: number formatting (Bjorn Reese), exslt:tokenize (William
+    Brack), key selector parsing with | reported by Oleg Paraschenko,
+    xsl:element with computed namespaces (William Brack), xslt:import/include
+    recursion detection (William Brack), exslt:function used in keys (William
+    Brack), bug when CDATA_SECTION are foun in the tree (William Brack),
+    entities handling when using XInclude.
+
+
 1.1.0: Nov 4 2003:
    - Removed DocBook SGML broken support
    - fix xsl:key to work with PIs

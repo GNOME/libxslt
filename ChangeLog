@@ -1,3 +1,7 @@
+Wed Dec 10 17:20:27 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in NEWS doc/*: updated the docs, made release 1.1.1
+
 Wed Dec 10 16:13:38 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: upp'ed the dependancy to libxml2-2.6.3

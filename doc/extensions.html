@@ -37,11 +37,11 @@ two <a href="http://www.w3.org/TR/xslt">ways to extend an XSLT engine</a>:</p><u
 </ul><p>In both cases the extensions need to be associated to a new namespace,
 i.e. an URI used as the name for the extension's namespace (there is no need
 to have a resource there for this to work).</p><p>libxslt provides a few extensions itself, either in libxslt namespace
-&quot;http://xmlsoft.org/XSLT/&quot; or in other namespace for well known extensions
+"http://xmlsoft.org/XSLT/" or in other namespace for well known extensions
 provided by other XSLT processors like Saxon, Xalan or XT.</p><h3><a name="Keep" id="Keep">Extension modules</a></h3><p>Since extensions are bound to a namespace name, usually sets of extensions
 coming from a given source are using the same namespace name defining in
 practice a group of extensions providing elements, functions or both. From
-libxslt point of view those are considered as an &quot;extension module&quot;, and most
+libxslt point of view those are considered as an "extension module", and most
 of the APIs work at a module point of view.</p><p>Registration of new functions or elements are bound to the activation of
 the module, this is currently done by declaring the namespace as an extension
 by using the attribute  <code>extension-element-prefixes</code> on the
@@ -156,18 +156,18 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
     tctxt = xsltXPathGetTransformContext(ctxt);
     if (tctxt == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-            &quot;xsltExtFunctionTest: failed to get the transformation context\n&quot;);
+            "xsltExtFunctionTest: failed to get the transformation context\n");
         return;
     }
     data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
     if (data == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-            &quot;xsltExtFunctionTest: failed to get module data\n&quot;);
+            "xsltExtFunctionTest: failed to get module data\n");
         return;
     }
 #ifdef WITH_XSLT_DEBUG_FUNCTION
     xsltGenericDebug(xsltGenericDebugContext,
-                     &quot;libxslt:test() called with %d args\n&quot;, nargs);
+                     "libxslt:test() called with %d args\n", nargs);
 #endif
 }</pre><h3><a name="Registerin2" id="Registerin2">Registering an extension element</a></h3><p>There is a single call to do this registration:</p><pre>int xsltRegisterExtElement(xsltTransformContextPtr ctxt,
                            const xmlChar *name,
@@ -230,27 +230,27 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (ctxt == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-                         &quot;xsltExtElementTest: no transformation context\n&quot;);
+                         "xsltExtElementTest: no transformation context\n");
         return;
     }
     if (node == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-                         &quot;xsltExtElementTest: no current node\n&quot;);
+                         "xsltExtElementTest: no current node\n");
         return;
     }
     if (inst == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-                         &quot;xsltExtElementTest: no instruction\n&quot;);
+                         "xsltExtElementTest: no instruction\n");
         return;
     }
     if (ctxt-&gt;insert == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-                         &quot;xsltExtElementTest: no insertion point\n&quot;);
+                         "xsltExtElementTest: no insertion point\n");
         return;
     }
     comment =
         xmlNewComment((const xmlChar *)
-                      &quot;libxslt:test element test worked&quot;);
+                      "libxslt:test element test worked");
     xmlAddChild(ctxt-&gt;insert, comment);
 }</pre><h3><a name="shutdown" id="shutdown">The shutdown of a module</a></h3><p>When the XSLT processor ends a transformation, the shutdown function (if
 it exists) of all the modules initialized are called.The
