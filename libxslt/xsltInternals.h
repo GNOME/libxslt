@@ -28,7 +28,7 @@ extern "C" {
  *
  * Max number of specified xsl:sort on an element.
  */
-#define XSLT_MAX_SORT 5
+#define XSLT_MAX_SORT 15
 
 /**
  * XSLT_PAT_NO_PRIORITY:

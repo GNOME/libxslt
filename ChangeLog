@@ -1,3 +1,10 @@
+Wed Dec 18 15:41:21 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltInternals.h: increase the max number of cascaded
+	  sort operations.
+	* AUTHORS doc/* win32/*: updated Igor's mail and the Web page for
+	  the Windows binaries.
+
 Mon Dec 16 19:31:16 CET 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/libxslt.def.src: added more exports for Stephane Bidoul
