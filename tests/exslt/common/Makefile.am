@@ -10,6 +10,7 @@ EXTRA_DIST = 						\
 	node-set.4.xml node-set.4.xsl node-set.4.out	\
 	node-set.5.xml node-set.5.xsl node-set.5.out	\
 	node-set.6.xml node-set.6.xsl node-set.6.out	\
+	node-set.7.xml node-set.7.xsl node-set.7.out	\
 	object-type.1.xml object-type.1.xsl object-type.1.out \
 	import-test1a.imp import-test1b.imp import-test1.out \
 	import-test1.xml import-test1.xsl

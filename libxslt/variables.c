@@ -29,6 +29,7 @@
 #include "transform.h"
 #include "imports.h"
 #include "preproc.h"
+#include "keys.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_VARIABLE
@@ -128,12 +129,20 @@ xsltFreeRVTs(xsltTransformContextPtr ctxt)
     cur = ctxt->tmpRVT;
     while (cur != NULL) {
         next = (xmlDocPtr) cur->next;
+	if (cur->_private != NULL) {
+	    xsltFreeDocumentKeys(cur->_private);
+	    xmlFree(cur->_private);
+	}
 	xmlFreeDoc(cur);
 	cur = next;
     }
     cur = ctxt->persistRVT;
     while (cur != NULL) {
         next = (xmlDocPtr) cur->next;
+	if (cur->_private != NULL) {
+	    xsltFreeDocumentKeys(cur->_private);
+	    xmlFree(cur->_private);
+	}
 	xmlFreeDoc(cur);
 	cur = next;
     }

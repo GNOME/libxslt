@@ -63,8 +63,10 @@ xsltNewDocument(xsltTransformContextPtr ctxt, xmlDocPtr doc) {
     memset(cur, 0, sizeof(xsltDocument));
     cur->doc = doc;
     if (ctxt != NULL) {
-	cur->next = ctxt->docList;
-	ctxt->docList = cur;
+        if (!xmlStrEqual((xmlChar *)doc->name, BAD_CAST " fake node libxslt")) {
+	    cur->next = ctxt->docList;
+	    ctxt->docList = cur;
+	}
 	xsltInitCtxtKeys(ctxt, cur);
     }
     return(cur);

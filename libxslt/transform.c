@@ -1815,6 +1815,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    xmlXPathFreeObject(elem->value);
 		}
 	        next = (xmlDocPtr) tmp->next;
+		if (tmp->_private != NULL) {
+		    xsltFreeDocumentKeys(tmp->_private);
+		    xmlFree(tmp->_private);
+		}
 		xmlFreeDoc(tmp);
 		tmp = next;
 	    }
@@ -3108,7 +3112,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int nbsorts = 0;
     xmlNodePtr sorts[XSLT_MAX_SORT];
     xmlDocPtr oldXDocPtr;
-    xsltDocumentPtr oldCDocPtr, tmpDocPtr, newDocPtr = NULL;
+    xsltDocumentPtr oldCDocPtr, newDocPtr = NULL;
     xmlNodePtr newDocPtrPtr = NULL;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
@@ -3376,10 +3380,6 @@ error:
 	  If we created a "pseudo-document" we must free it now
 	*/
 	if (newDocPtr != NULL) {
-	    tmpDocPtr = (xsltDocumentPtr)&ctxt->docList;
-	    while (tmpDocPtr->next != newDocPtr)
-	        tmpDocPtr = tmpDocPtr->next;
-	    tmpDocPtr->next = newDocPtr->next;
 	    newDocPtr->doc->parent = NULL;
 	    xsltFreeDocumentKeys(newDocPtr);
 	    xmlFree(newDocPtr);
