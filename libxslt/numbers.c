@@ -1187,7 +1187,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	}
 	else {
 	    /* Skip over pattern separator (accounting for UTF8) */
-	    the_format = xmlUTF8Strpos(format, j + 1);
+	    the_format = (xmlChar *)xmlUTF8Strpos(format, j + 1);
 	    /* 
 	     * Flag changes interpretation of percent/permille 
 	     * in -ve pattern 

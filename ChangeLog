@@ -1,3 +1,13 @@
+Wed Dec  1 22:37:55 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/extensions.c, libxslt/functions.c, libxslt/numbers.c,
+	  libxslt/pattern.c, libxslt/transform.c, libxslt/xslt.c,
+	  libxslt/xsltInternals.h: minor changes to get rid of gcc
+	  warnings, especially on 64-bit system. Implemented
+	  XML_CAST_FPTR macro to cast between function pointer <->
+	  object pointer while avoiding gcc warnings (a hack).
+	  No change to the logic.
+
 Wed Dec  1 10:47:15 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/security.c xsltproc/xsltproc.c: applied patch from

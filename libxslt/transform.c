@@ -421,7 +421,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
 	for (i = 0;i < cur->extrasMax;i++) {
 	    cur->extras[i].info = NULL;
 	    cur->extras[i].deallocate = NULL;
-	    cur->extras[i].val = NULL;
+	    cur->extras[i].val.ptr = NULL;
 	}
     } else {
 	cur->extras = NULL;

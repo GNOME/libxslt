@@ -634,9 +634,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    int nocache = 0;
 
 		    prevdoc = (xmlDocPtr)
-			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra);
-		    ix = (int)
-			XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra);
+			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr);
+		    ix = XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival);
 		    list = (xmlXPathObjectPtr)
 			XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra);
 		    
@@ -679,9 +678,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 
 			    XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra) =
 				(void *) list;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra) =
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr) =
 				(void *) doc;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) =
 			        0;
 			    XSLT_RUNTIME_EXTRA_FREE(ctxt, sel->lenExtra) =
 				(xmlFreeFunc) xmlXPathFreeObject;
@@ -726,9 +725,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    int ix, nocache = 0;
 
 		    previous = (xmlNodePtr)
-			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra);
-		    ix = (int)
-			XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra);
+			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr);
+		    ix = XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival);
 		    if ((previous != NULL) &&
 			(previous->parent == node->parent)) {
 			/*
@@ -776,13 +774,13 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			     * (bugs 153137 and 158840)
 			     */
 			    if (node->doc != NULL) {
-				len = (int)
-				    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra);
+				len = XSLT_RUNTIME_EXTRA(ctxt,
+				        sel->lenExtra, ival);
 				if (!isRVT) {
 				    XSLT_RUNTIME_EXTRA(ctxt,
-					sel->previousExtra) = node;
-				    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
-					(void *) pos;
+					sel->previousExtra, ptr) = node;
+				    XSLT_RUNTIME_EXTRA(ctxt,
+				        sel->indexExtra, ival) = pos;
 				}
 			    }
 			    ix = pos;
@@ -833,12 +831,12 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			 */
 			if ((!isRVT) && (node->doc != NULL) &&
 			    (nocache == 0)) {
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra) =
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr) =
 				node;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
-				(void *) pos;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra) =
-				(void *) len;
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) =
+				pos;
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra, ival) =
+				len;
 			}
 		    }
 		} else if ((sel != NULL) && (sel->op == XSLT_OP_ALL) &&
@@ -847,9 +845,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    int ix, nocache = 0;
 
 		    previous = (xmlNodePtr)
-			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra);
-		    ix = (int)
-			XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra);
+			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr);
+		    ix = XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival);
 		    if ((previous != NULL) &&
 			(previous->parent == node->parent)) {
 			/*
@@ -884,12 +881,12 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			     * cache it !
 			     */
 			    if ((node->doc != NULL) && !isRVT) {
-				len = (int)
-				    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra);
+				len = XSLT_RUNTIME_EXTRA(ctxt,
+				        sel->lenExtra, ival);
 				XSLT_RUNTIME_EXTRA(ctxt,
-					sel->previousExtra) = node;
-				XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
-				    (void *) pos;
+					sel->previousExtra, ptr) = node;
+				XSLT_RUNTIME_EXTRA(ctxt,
+					sel->indexExtra, ival) = pos;
 			    }
 			} else
 			    pos = 0;
@@ -928,12 +925,12 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			 * cache it !
 			 */
 			if ((node->doc != NULL) && (nocache == 0) && !isRVT) {
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra) =
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr) =
 				node;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
-				(void *) pos;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra) =
-				(void *) len;
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) =
+				pos;
+			    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra, ival) =
+				len;
 			}
 		    }
 		}

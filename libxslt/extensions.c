@@ -367,7 +367,7 @@ xsltRegisterExtFunction(xsltTransformContextPtr ctxt, const xmlChar *name,
 	ctxt->extFunctions = xmlHashCreate(10);
     if (ctxt->extFunctions == NULL)
 	return(-1);
-    return(xmlHashAddEntry2(ctxt->extFunctions, name, URI, (void *) function));
+    return(xmlHashAddEntry2(ctxt->extFunctions, name, URI, XML_CAST_FPTR(function)));
 }
 
 /**
@@ -391,7 +391,7 @@ xsltRegisterExtElement(xsltTransformContextPtr ctxt, const xmlChar *name,
 	ctxt->extElements = xmlHashCreate(10);
     if (ctxt->extElements == NULL)
 	return(-1);
-    return(xmlHashAddEntry2(ctxt->extElements, name, URI, (void *) function));
+    return(xmlHashAddEntry2(ctxt->extElements, name, URI, XML_CAST_FPTR(function)));
 }
 
 /**
@@ -938,7 +938,7 @@ xsltRegisterExtModuleFunction (const xmlChar *name, const xmlChar *URI,
 	return(-1);
 
     xmlHashUpdateEntry2(xsltFunctionsHash, name, URI,
-			(void *) function, NULL);
+			XML_CAST_FPTR(function), NULL);
 
     return(0);
 }
@@ -954,10 +954,12 @@ xsltRegisterExtModuleFunction (const xmlChar *name, const xmlChar *URI,
  */
 xmlXPathFunction
 xsltExtModuleFunctionLookup (const xmlChar *name, const xmlChar *URI) {
+    xmlXPathFunction ret;
     if ((xsltFunctionsHash == NULL) || (name == NULL) || (URI == NULL))
 	return(NULL);
 
-    return (xmlXPathFunction) xmlHashLookup2(xsltFunctionsHash, name, URI);
+    XML_CAST_FPTR(ret) = xmlHashLookup2(xsltFunctionsHash, name, URI);
+    return ret;
 }
 
 /**
@@ -1133,8 +1135,7 @@ xsltExtElementLookup (xsltTransformContextPtr ctxt,
 	return(NULL);
 
     if ((ctxt != NULL) && (ctxt->extElements != NULL)) {
-	ret = (xsltTransformFunction)
-	    xmlHashLookup2(ctxt->extElements, name, URI);
+	XML_CAST_FPTR(ret) = xmlHashLookup2(ctxt->extElements, name, URI);
 	if (ret != NULL)
 	    return(ret);
     }
@@ -1240,7 +1241,7 @@ xsltRegisterExtModuleTopLevel (const xmlChar *name, const xmlChar *URI,
 	return(-1);
 
     xmlHashUpdateEntry2(xsltTopLevelsHash, name, URI,
-			(void *) function, NULL);
+			XML_CAST_FPTR(function), NULL);
 
     return(0);
 }
@@ -1256,11 +1257,12 @@ xsltRegisterExtModuleTopLevel (const xmlChar *name, const xmlChar *URI,
  */
 xsltTopLevelFunction
 xsltExtModuleTopLevelLookup (const xmlChar *name, const xmlChar *URI) {
+    xsltTopLevelFunction ret;
     if ((xsltTopLevelsHash == NULL) || (name == NULL) || (URI == NULL))
 	return(NULL);
 
-    return((xsltTopLevelFunction)
-	    xmlHashLookup2(xsltTopLevelsHash, name, URI));
+    XML_CAST_FPTR(ret) = xmlHashLookup2(xsltTopLevelsHash, name, URI);
+    return(ret);
 }
 
 /**

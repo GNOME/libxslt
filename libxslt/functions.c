@@ -78,7 +78,10 @@ xsltXPathFunctionLookup (xmlXPathContextPtr ctxt,
 #endif
 
     /* give priority to context-level functions */
+    /*
     ret = (xmlXPathFunction) xmlHashLookup2(ctxt->funcHash, name, ns_uri);
+    */
+    XML_CAST_FPTR(ret) = xmlHashLookup2(ctxt->funcHash, name, ns_uri);
 
     if (ret == NULL)
 	ret = xsltExtModuleFunctionLookup(name, ns_uri);

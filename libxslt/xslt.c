@@ -426,7 +426,7 @@ xsltAllocateExtraCtxt(xsltTransformContextPtr ctxt)
 	    for (i = 0;i < ctxt->extrasMax;i++) {
 		ctxt->extras[i].info = NULL;
 		ctxt->extras[i].deallocate = NULL;
-		ctxt->extras[i].val = NULL;
+		ctxt->extras[i].val.ptr = NULL;
 	    }
 
 	} else {
@@ -445,7 +445,7 @@ xsltAllocateExtraCtxt(xsltTransformContextPtr ctxt)
 	    for (i = ctxt->extrasNr;i < ctxt->extrasMax;i++) {
 		ctxt->extras[i].info = NULL;
 		ctxt->extras[i].deallocate = NULL;
-		ctxt->extras[i].val = NULL;
+		ctxt->extras[i].val.ptr = NULL;
 	    }
 	}
     }

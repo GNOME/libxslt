@@ -50,7 +50,10 @@ typedef xsltRuntimeExtra *xsltRuntimeExtraPtr;
 struct _xsltRuntimeExtra {
     void       *info;		/* pointer to the extra data */
     xmlFreeFunc deallocate;	/* pointer to the deallocation routine */
-    void       *val;		/* data not needing deallocation */
+    union {			/* dual-purpose field */
+        void   *ptr;		/* data not needing deallocation */
+	int    ival;		/* integer value storage */
+    } val;
 };
 
 /**
@@ -76,7 +79,7 @@ struct _xsltRuntimeExtra {
  *
  * Macro used to define extra information stored in the context
  */
-#define	XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].val
+#define	XSLT_RUNTIME_EXTRA(ctxt, nr, typ) (ctxt)->extras[(nr)].val.typ
 
 /**
  * xsltTemplate:
@@ -582,6 +585,23 @@ struct _xsltTransformContext {
  */
 #define CHECK_STOPPED0 if (ctxt->state == XSLT_STATE_STOPPED) return(0);
 
+/*
+ * The macro XML_CAST_FPTR is a hack to avoid a gcc warning about
+ * possible incompatibilities between function pointers and object
+ * pointers.  It is defined in libxml/hash.h within recent versions
+ * of libxml2, but is put here for compatibility.
+ */
+#ifndef XML_CAST_FPTR
+/**
+ * XML_CAST_FPTR:
+ * @fptr:  pointer to a function
+ *
+ * Macro to do a casting from an object pointer to a
+ * function pointer without encountering a warning from
+ * gcc
+ */
+#define XML_CAST_FPTR(fptr) (*(void **)(&fptr))
+#endif
 /*
  * Functions associated to the internal types
 xsltDecimalFormatPtr	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
