@@ -1,3 +1,10 @@
+Thu Oct 17 16:32:44 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: fixed bug #86421 
+	* tests/docs/Makefile.am tests/docs/bug-94.xml
+	  tests/general/Makefile.am tests/general/bug-94.*: added the
+	  example in the regression tests for this case
+
 Thu Oct 17 15:50:04 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc: added and tested the --path option to close #79638

@@ -142,7 +142,8 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
  *
  * check wether the variable or param is already defined
  *
- * Returns 1 if present, 0 if not, -1 in case of failure.
+ * Returns 1 if variable is present, 2 if param is present, 3 if this
+ *         is an inherited param, 0 if not found, -1 in case of failure.
  */
 static int
 xsltCheckStackElem(xsltTransformContextPtr ctxt, const xmlChar *name,
@@ -158,6 +159,12 @@ xsltCheckStackElem(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    if (((nameURI == NULL) && (cur->nameURI == NULL)) ||
 		((nameURI != NULL) && (cur->nameURI != NULL) &&
 		 (xmlStrEqual(nameURI, cur->nameURI)))) {
+		if ((cur->comp != NULL) &&
+		    (cur->comp->type == XSLT_FUNC_WITHPARAM))
+		    return(3);
+		if ((cur->comp != NULL) &&
+		    (cur->comp->type == XSLT_FUNC_PARAM))
+		    return(2);
 		return(1);
 	    }
 	}
@@ -1035,16 +1042,24 @@ static int
 xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 		     xmlNodePtr tree, int param) {
     xsltStackElemPtr elem;
+    int present;
 
-    if (xsltCheckStackElem(ctxt, comp->name, comp->ns) != 0) {
-	if (!param) {
+    present = xsltCheckStackElem(ctxt, comp->name, comp->ns);
+    if (param == 0) {
+	if ((present != 0) && (present != 3)) {
 	    xsltTransformError(ctxt, NULL, comp->inst,
-	    "xsl:variable : redefining %s\n", comp->name);
+		"xsl:variable : redefining %s\n", comp->name);
+	    return(0);
+	}
+    } else if (present != 0) {
+	if ((present == 1) || (present == 2)) {
+	    xsltTransformError(ctxt, NULL, comp->inst,
+		"xsl:param : redefining %s\n", comp->name);
+	    return(0);
 	}
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-	else
-	    xsltGenericDebug(xsltGenericDebugContext,
-		     "param %s defined by caller\n", comp->name);
+	xsltGenericDebug(xsltGenericDebugContext,
+		 "param %s defined by caller\n", comp->name);
 #endif
 	return(0);
     }
