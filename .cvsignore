@@ -20,3 +20,6 @@ xslt-config
 xsltConf.sh
 stamp-h1
 libexslt.pc
+.project
+.cdtproject
+.externalToolBuilders
