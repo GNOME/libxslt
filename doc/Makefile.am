@@ -122,6 +122,11 @@ html/index.html: libxslt-api.xml $(srcdir)/newapi.xsl
 	  echo "Validating the resulting XHTML pages" ; \
 	  $(bindir)/xmllint --nonet --valid --noout html/*.html ; fi );
 
+wiki: libxslt-api.xml $(srcdir)/wiki.xsl
+	-@(if [ -x $(bindir)/xsltproc ] ; then \
+		echo "Rebuilding the wiki HTML pages from the XSLT API" ; \
+		$(bindir)/xsltproc --nonet $(srcdir)/wiki.xsl libxslt-api.xml; fi )
+
 EXSLT/html/index.html: EXSLT/libexslt-api.xml \
 	$(srcdir)/newapi.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \

@@ -1,3 +1,10 @@
+Wed Feb  9 21:58:56 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am doc/libxslt-api.xml doc/libxslt-refs.xml 
+	  doc/EXSLT/libexslt-api.xml: applied patch for make wiki from
+	  Joel Reed and rebuild
+	* tests/plugins/Makefile.am: fix from Joel Reed for make dist
+
 Sun Jan 30 20:01:21 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* tests/plugins/testplugin.c win32/Makefile.msvc win32/configure.js:

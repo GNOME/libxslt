@@ -300,6 +300,7 @@
      <exports symbol='XSLT_MAX_SORT' type='macro'/>
      <exports symbol='XSLT_RUNTIME_EXTRA' type='macro'/>
      <exports symbol='CHECK_STOPPEDE' type='macro'/>
+     <exports symbol='XML_CAST_FPTR' type='macro'/>
      <exports symbol='XSLT_FUNC_ELEMENT' type='enum'/>
      <exports symbol='XSLT_FUNC_VALUEOF' type='enum'/>
      <exports symbol='XSLT_FUNC_WITHPARAM' type='enum'/>
@@ -507,6 +508,10 @@
     <macro name='NODE_IS_KEYED' file='keys'>
     </macro>
     <macro name='UNDEFINED_DEFAULT_NS' file='namespaces'>
+    </macro>
+    <macro name='XML_CAST_FPTR' file='xsltInternals'>
+      <info>Macro to do a casting from an object pointer to a function pointer without encountering a warning from gcc</info>
+      <arg name='fptr' info='pointer to a function'/>
     </macro>
     <macro name='XSLTCALL' file='xsltexports'>
     </macro>
@@ -724,7 +729,6 @@
     <struct name='xsltRuntimeExtra' file='xsltInternals' type='struct _xsltRuntimeExtra'>
       <field name='info' type='void *' info=' pointer to the extra data'/>
       <field name='deallocate' type='xmlFreeFunc' info=' pointer to the deallocation routine'/>
-      <field name='val' type='void *' info=' data not needing deallocation'/>
     </struct>
     <typedef name='xsltRuntimeExtraPtr' file='xsltInternals' type='xsltRuntimeExtra *'/>
     <typedef name='xsltSecurityOption' file='security' type='enum'/>
@@ -847,7 +851,9 @@ informations are stored'/>
 *'/>
       <field name='defaultAlias' type='const xmlChar *' info='* bypass pre-processing (already done) (used in imports)
 *'/>
-      <field name='nopreproc' type='int' info=''/>
+      <field name='nopreproc' type='int' info='* all document text strings were internalized
+*'/>
+      <field name='internalized' type='int' info=''/>
     </struct>
     <typedef name='xsltStylesheetPtr' file='xsltInternals' type='xsltStylesheet *'/>
     <struct name='xsltTemplate' file='xsltInternals' type='struct _xsltTemplate'>
@@ -857,8 +863,8 @@ informations are stored'/>
       <field name='priority' type='float' info=' as given from the stylesheet, not computed'/>
       <field name='name' type='xmlChar *' info=' the local part of the name QName'/>
       <field name='nameURI' type='xmlChar *' info=' the URI part of the name QName'/>
-      <field name='mode' type='xmlChar *' info=' the local part of the mode QName'/>
-      <field name='modeURI' type='xmlChar *' info=' the URI part of the mode QName'/>
+      <field name='mode' type='const xmlChar *' info=' the local part of the mode QName'/>
+      <field name='modeURI' type='const xmlChar *' info=' the URI part of the mode QName'/>
       <field name='content' type='xmlNodePtr' info=' the template replacement value'/>
       <field name='elem' type='xmlNodePtr' info=' the source element'/>
       <field name='inheritedNsNr' type='int' info=' number of inherited namespaces'/>
@@ -925,7 +931,12 @@ informations are stored'/>
       <field name='traceCode' type='unsigned long *' info=' pointer to the variable holding the mask'/>
       <field name='parserOptions' type='int' info='* dictionnary: shared between stylesheet, context and documents.
 *'/>
-      <field name='dict' type='xmlDictPtr' info=''/>
+      <field name='dict' type='xmlDictPtr' info='* temporary storage for doc ptr, currently only used for
+* global var evaluation
+*'/>
+      <field name='tmpDoc' type='xmlDocPtr' info='* all document text strings are internalized
+*'/>
+      <field name='internalized' type='int' info=''/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -2305,7 +2316,7 @@ informations are stored'/>
       <arg name='node' type='xmlNodePtr' info='the attribute template node'/>
     </function>
     <function name='xsltTestCompMatchList' file='pattern'>
-      <info>Test wether the node matches one of the patterns in the list</info>
+      <info>Test whether the node matches one of the patterns in the list</info>
       <return type='int' info='1 if it matches, 0 if it doesn&apos;t and -1 in case of failure'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
       <arg name='node' type='xmlNodePtr' info='a node'/>

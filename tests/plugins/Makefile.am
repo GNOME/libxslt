@@ -9,14 +9,15 @@ $(top_builddir)/xsltproc/xsltproc:
 
 EXTRA_DIST = plugin.out	plugin.xml plugin.xsl
 
-all:
-
-if WITH_MODULES
 pkglib_LTLIBRARIES = xmlsoft_org_xslt_testplugin.la
 
 xmlsoft_org_xslt_testplugin_la_CFLAGS = -DMODULE_COMPILE $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
 xmlsoft_org_xslt_testplugin_la_SOURCES = testplugin.c
 xmlsoft_org_xslt_testplugin_la_LDFLAGS = -module -avoid-version $(LIBXML_LIBS) $(XSLT_LIBS)
+
+all:
+
+if WITH_MODULES
 
 test-logall:
 	@echo '## Running plugin tests'

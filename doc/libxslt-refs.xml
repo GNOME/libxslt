@@ -10,6 +10,7 @@
     <reference name='LIBXSLT_PUBLIC' href='html/libxslt-xsltexports.html#LIBXSLT_PUBLIC'/>
     <reference name='NODE_IS_KEYED' href='html/libxslt-keys.html#NODE_IS_KEYED'/>
     <reference name='UNDEFINED_DEFAULT_NS' href='html/libxslt-namespaces.html#UNDEFINED_DEFAULT_NS'/>
+    <reference name='XML_CAST_FPTR' href='html/libxslt-xsltInternals.html#XML_CAST_FPTR'/>
     <reference name='XSLTCALL' href='html/libxslt-xsltexports.html#XSLTCALL'/>
     <reference name='XSLTPUBFUN' href='html/libxslt-xsltexports.html#XSLTPUBFUN'/>
     <reference name='XSLTPUBVAR' href='html/libxslt-xsltexports.html#XSLTPUBVAR'/>
@@ -409,6 +410,7 @@
       <ref name='UNDEFINED_DEFAULT_NS'/>
     </letter>
     <letter name='X'>
+      <ref name='XML_CAST_FPTR'/>
       <ref name='XSLTCALL'/>
       <ref name='XSLTPUBFUN'/>
       <ref name='XSLTPUBVAR'/>
@@ -1741,6 +1743,7 @@
       <ref name='CHECK_STOPPED'/>
       <ref name='CHECK_STOPPED0'/>
       <ref name='CHECK_STOPPEDE'/>
+      <ref name='XML_CAST_FPTR'/>
       <ref name='XSLT_FUNC_APPLYIMPORTS'/>
       <ref name='XSLT_FUNC_APPLYTEMPLATES'/>
       <ref name='XSLT_FUNC_ATTRIBUTE'/>
@@ -2218,6 +2221,7 @@
           <ref name='CHECK_STOPPED'/>
           <ref name='CHECK_STOPPED0'/>
           <ref name='CHECK_STOPPEDE'/>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='XSLT_RUNTIME_EXTRA'/>
           <ref name='XSLT_RUNTIME_EXTRA_FREE'/>
           <ref name='XSLT_RUNTIME_EXTRA_LST'/>
@@ -2676,6 +2680,8 @@
         <word name='all'>
           <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
           <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+          <ref name='_xsltStylesheet'/>
+          <ref name='_xsltTransformContext'/>
           <ref name='xsltCleanupGlobals'/>
           <ref name='xsltFreeCompMatchList'/>
           <ref name='xsltFreeDocuments'/>
@@ -2793,6 +2799,7 @@
         <word name='are'>
           <ref name='_xsltDocument'/>
           <ref name='_xsltStylesheet'/>
+          <ref name='_xsltTransformContext'/>
           <ref name='xslHandleDebugger'/>
           <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltCopyNamespace'/>
@@ -3104,6 +3111,9 @@
         <word name='cases'>
           <ref name='xsltLoadStylesheetPI'/>
         </word>
+        <word name='casting'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='catch'>
           <ref name='_xsltFormatNumberInfo'/>
         </word>
@@ -3315,6 +3325,9 @@
           <ref name='xsltPrintErrorContext'/>
           <ref name='xsltTransformError'/>
         </word>
+        <word name='currently'>
+          <ref name='_xsltTransformContext'/>
+        </word>
       </letter>
     </chunk>
     <chunk name='chunk3'>
@@ -3498,6 +3511,7 @@
           <ref name='xsltTransformError'/>
         </word>
         <word name='doc'>
+          <ref name='_xsltTransformContext'/>
           <ref name='xsltLoadStylesheetPI'/>
         </word>
         <word name='docs'>
@@ -3581,6 +3595,9 @@
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
         </word>
+        <word name='encountering'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='end'>
           <ref name='_xsltElemPreComp'/>
           <ref name='xsltRegisterPersistRVT'/>
@@ -3622,6 +3639,7 @@
         </word>
         <word name='evaluation'>
           <ref name='_xsltStackElem'/>
+          <ref name='_xsltTransformContext'/>
         </word>
         <word name='everything'>
           <ref name='xsltFindElemSpaceHandling'/>
@@ -3842,6 +3860,7 @@
         <word name='from'>
           <ref name='CHECK_STOPPED'/>
           <ref name='CHECK_STOPPED0'/>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='XSLT_GET_IMPORT_INT'/>
           <ref name='XSLT_GET_IMPORT_PTR'/>
           <ref name='_xsltTemplate'/>
@@ -3877,6 +3896,9 @@
       <letter name='g'>
         <word name='gathering'>
           <ref name='xsltTimestamp'/>
+        </word>
+        <word name='gcc'>
+          <ref name='XML_CAST_FPTR'/>
         </word>
         <word name='general'>
           <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
@@ -4189,6 +4211,10 @@
         </word>
         <word name='intergers'>
           <ref name='XSLT_GET_IMPORT_INT'/>
+        </word>
+        <word name='internalized'>
+          <ref name='_xsltStylesheet'/>
+          <ref name='_xsltTransformContext'/>
         </word>
         <word name='internally'>
           <ref name='XSLT_STRANGE'/>
@@ -4583,9 +4609,6 @@
           <ref name='xsltXPathGetTransformContext'/>
           <ref name='xsltXPathVariableLookup'/>
         </word>
-        <word name='needing'>
-          <ref name='_xsltRuntimeExtra'/>
-        </word>
         <word name='needs'>
           <ref name='xsltEvalUserParams'/>
           <ref name='xsltGetTemplate'/>
@@ -4663,6 +4686,7 @@
       </letter>
       <letter name='o'>
         <word name='object'>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='xsltDocumentFunction'/>
           <ref name='xsltKeyFunction'/>
           <ref name='xsltSystemPropertyFunction'/>
@@ -4709,6 +4733,7 @@
           <ref name='xsltCleanupTemplates'/>
         </word>
         <word name='only'>
+          <ref name='_xsltTransformContext'/>
           <ref name='xsltExtElementLookup'/>
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
@@ -4934,8 +4959,10 @@
           <ref name='xsltXPathVariableLookup'/>
         </word>
         <word name='pointer'>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='_xsltRuntimeExtra'/>
           <ref name='_xsltTransformContext'/>
+          <ref name='fptr'/>
           <ref name='xsltDocLoaderFunc'/>
           <ref name='xsltExtInitFunction'/>
           <ref name='xsltFreeAVTList'/>
@@ -5154,6 +5181,9 @@
           <ref name='xsltDocLoaderFunc'/>
           <ref name='xsltRunStylesheetUser'/>
           <ref name='xsltSecurityCheck'/>
+        </word>
+        <word name='ptr'>
+          <ref name='_xsltTransformContext'/>
         </word>
         <word name='purpose'>
           <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
@@ -5625,6 +5655,7 @@
         </word>
         <word name='storage'>
           <ref name='_xsltDocument'/>
+          <ref name='_xsltTransformContext'/>
         </word>
         <word name='store'>
           <ref name='xsltInitElemPreComp'/>
@@ -5640,6 +5671,10 @@
         </word>
         <word name='string?'>
           <ref name='xsltFormatNumberFunction'/>
+        </word>
+        <word name='strings'>
+          <ref name='_xsltStylesheet'/>
+          <ref name='_xsltTransformContext'/>
         </word>
         <word name='strip-space'>
           <ref name='_xsltStylesheet'/>
@@ -6065,6 +6100,9 @@
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
         </word>
+        <word name='var'>
+          <ref name='_xsltTransformContext'/>
+        </word>
         <word name='variable'>
           <ref name='_xsltStylesheet'/>
           <ref name='_xsltTransformContext'/>
@@ -6109,6 +6147,9 @@
         <word name='want'>
           <ref name='xsltEvalUserParams'/>
         </word>
+        <word name='warning'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='warnings'>
           <ref name='_xsltStylesheet'/>
         </word>
@@ -6125,8 +6166,8 @@
         <word name='went'>
           <ref name='xsltParseStylesheetProcess'/>
         </word>
-        <word name='wether'>
-          <ref name='xsltTestCompMatchList'/>
+        <word name='were'>
+          <ref name='_xsltStylesheet'/>
         </word>
         <word name='when'>
           <ref name='XSLT_PARSE_OPTIONS'/>
@@ -6153,6 +6194,7 @@
           <ref name='xsltEvalStaticAttrValueTemplate'/>
           <ref name='xsltNeedElemSpaceHandling'/>
           <ref name='xsltSetXIncludeDefault'/>
+          <ref name='xsltTestCompMatchList'/>
         </word>
         <word name='which'>
           <ref name='xsltDocLoaderFunc'/>
@@ -6210,6 +6252,7 @@
           <ref name='xsltLoadStylesheetPI'/>
         </word>
         <word name='without'>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='XSLT_PAT_NO_PRIORITY'/>
           <ref name='_xsltTransformContext'/>
         </word>
