@@ -532,7 +532,7 @@ xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt,
         q = xsltAttrTemplateProcess(ctxt, target, cur);
 	if (q != NULL) {
 	    q->parent = target;
-	    q->doc = ctxt->output;
+	    q->doc = target->doc;
 	    if (ret == NULL) {
 		ret = q;
 	    }
