@@ -1,3 +1,9 @@
+Sat Feb  9 23:17:53 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/Makefile.am: seems some version of automake didn't
+	  generate the dependancies right as Jacob found out. Add
+	  an extra dependancy rule.
+
 Sat Feb  9 19:04:01 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt.spec.in python/Makefile.am python/generator.py
