@@ -10,6 +10,8 @@
  * Bjorn Reese <breese@users.sourceforge.net>
  */
 
+#include "xsltconfig.h"
+
 #include <math.h>
 #include <limits.h>
 #include <float.h>
@@ -38,18 +40,6 @@
 
 static char alpha_upper_list[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static char alpha_lower_list[] = "abcdefghijklmnopqrstuvwxyz";
-
-/************************************************************************
- *									*
- * 		When running GCC in vaacum cleaner mode			*
- *									*
- ************************************************************************/
-
-#ifdef __GNUC__
-#define UNUSED __attribute__((__unused__))
-#else
-#define UNUSED
-#endif
 
 /************************************************************************
  *									*
@@ -410,7 +400,7 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			    xmlChar *count,
 			    xmlChar *from,
 			    double *array,
-			    int max UNUSED,
+			    int max ATTRIBUTE_UNUSED,
 			    xmlDocPtr doc,
 			    xmlNodePtr elem)
 {

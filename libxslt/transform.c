@@ -51,18 +51,6 @@
 
 #define DEBUG_PROCESS
 
-/************************************************************************
- *									*
- * 		When running GCC in vaacum cleaner mode			*
- *									*
- ************************************************************************/
-
-#ifdef __GNUC__
-#define UNUSED __attribute__((__unused__))
-#else
-#define UNUSED
-#endif
-
 int xsltMaxDepth = 250;
 
 /*
@@ -1383,7 +1371,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * Process the xslt text node on the source node
  */
 void
-xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node UNUSED,
+xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlNodePtr copy;
 
@@ -1651,7 +1639,7 @@ error:
  */
 void
 xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp UNUSED) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     xmlChar *value = NULL;
     xmlNodePtr comment;
 
@@ -1916,7 +1904,7 @@ xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	         xmlNodePtr inst UNUSED, xsltStylePreCompPtr comp UNUSED) {
+	         xmlNodePtr inst ATTRIBUTE_UNUSED, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     xsltTemplatePtr template;
 
     if ((ctxt->templ == NULL) || (ctxt->templ->style == NULL)) {
@@ -2186,7 +2174,7 @@ error:
  */
 void
 xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	   xmlNodePtr inst, xsltStylePreCompPtr comp UNUSED) {
+	   xmlNodePtr inst, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     xmlChar *prop = NULL;
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement, when;

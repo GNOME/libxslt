@@ -48,18 +48,6 @@
 
 #define DEBUG_ATTRIBUTES
 
-/************************************************************************
- *									*
- * 		When running GCC in vaacum cleaner mode			*
- *									*
- ************************************************************************/
-
-#ifdef __GNUC__
-#define UNUSED __attribute__((__unused__))
-#else
-#define UNUSED
-#endif
-
 /*
  * TODO: merge attribute sets from different import precedence.
  *       all this should be precomputed just before the transformation
@@ -393,7 +381,7 @@ error:
 
 void
 xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	              xmlNodePtr inst UNUSED, xmlChar *attributes) {
+	              xmlNodePtr inst ATTRIBUTE_UNUSED, xmlChar *attributes) {
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
     xmlChar *attribute, *end;

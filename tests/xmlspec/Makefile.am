@@ -16,7 +16,7 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	grep " ms$$" debug ; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	rm -f REC-xml-20001006.out)
-	@($(top_builddir)/libxslt/xsltproc  --param show.diff.markup 1 -timing REC-xml-2e.xsl REC-xml-20001006.xml > REC-xml-20001006-review.out 2> debug ; \
+	@($(top_builddir)/libxslt/xsltproc  -timing --param show.diff.markup 1 REC-xml-2e.xsl REC-xml-20001006.xml > REC-xml-20001006-review.out 2> debug ; \
 	diff $(srcdir)/REC-xml-20001006-review.html REC-xml-20001006-review.out | grep -v 'id[0-9]' | grep -v -- '---' | grep -v 158 | grep -v 4031 ; \
 	grep implemented debug | sort | uniq -c ; \
 	grep " ms$$" debug ; \

@@ -32,18 +32,6 @@
 
 /************************************************************************
  *									*
- * 		When running GCC in vaacum cleaner mode			*
- *									*
- ************************************************************************/
-
-#ifdef __GNUC__
-#define UNUSED __attribute__((__unused__))
-#else
-#define UNUSED
-#endif
-
-/************************************************************************
- *									*
  *			Module interfaces				*
  *									*
  ************************************************************************/
@@ -417,7 +405,7 @@ xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt,
  * Returns the computed tree replacement
  */
 xmlNodePtr *
-xsltTemplateProcess(xsltTransformContextPtr ctxt UNUSED, xmlNodePtr node) {
+xsltTemplateProcess(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED, xmlNodePtr node) {
     if (node == NULL)
 	return(NULL);
     

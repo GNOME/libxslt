@@ -25,18 +25,6 @@
 #include "imports.h"
 
 /************************************************************************
- *									*
- * 		When running GCC in vaacum cleaner mode			*
- *									*
- ************************************************************************/
-
-#ifdef __GNUC__
-#define UNUSED __attribute__((__unused__))
-#else
-#define UNUSED
-#endif
-
-/************************************************************************
  * 									*
  * 		Handling of XSLT stylesheets messages			*
  * 									*
@@ -98,7 +86,7 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
  * Default handler for out of context error messages.
  */
 static void
-xsltGenericErrorDefaultFunc(void *ctx UNUSED, const char *msg, ...) {
+xsltGenericErrorDefaultFunc(void *ctx ATTRIBUTE_UNUSED, const char *msg, ...) {
     va_list args;
 
     if (xsltGenericErrorContext == NULL)
@@ -144,7 +132,7 @@ xsltSetGenericErrorFunc(void *ctx, xmlGenericErrorFunc handler) {
  * Default handler for out of context error messages.
  */
 static void
-xsltGenericDebugDefaultFunc(void *ctx UNUSED, const char *msg, ...) {
+xsltGenericDebugDefaultFunc(void *ctx ATTRIBUTE_UNUSED, const char *msg, ...) {
     va_list args;
 
     if (xsltGenericDebugContext == NULL)

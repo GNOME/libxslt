@@ -50,18 +50,6 @@ struct _xsltKeyTable {
 
 
 /************************************************************************
- *									*
- * 		When running GCC in vaacum cleaner mode			*
- *									*
- ************************************************************************/
-
-#ifdef __GNUC__
-#define UNUSED __attribute__((__unused__))
-#else
-#define UNUSED
-#endif
-
-/************************************************************************
  * 									*
  * 			Type functions 					*
  * 									*

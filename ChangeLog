@@ -1,3 +1,12 @@
+Mon Mar 26 18:57:58 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/attributes.c libxslt/extra.c libxslt/keys.c libxslt/numbers.c
+	  libxslt/templates.c libxslt/transform.c libxslt/xsltconfig.h.in
+	  libxslt/xsltutils.c: of course the way I defined
+	  UNUSED breaks on old gcc version. Try to be smart and
+	  also define it directly in xsltconfig.h
+	* tests/xmlspec/Makefile.am: fixed the timing arg test
+
 Sun Mar 25 22:07:34 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.[ch] libxslt/variables.[ch] libxslt/xsltproc.c:
