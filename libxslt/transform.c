@@ -1532,7 +1532,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             /*
              * This is an XSLT node
              */
-            xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
+            xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->psvi;
 
             if (info == NULL) {
                 if (IS_XSLT_NAME(cur, "message")) {
@@ -1607,17 +1607,17 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
             xsltCopyText(ctxt, insert, cur);
         } else if ((cur->type == XML_ELEMENT_NODE) &&
-                   (cur->ns != NULL) && (cur->_private != NULL)) {
+                   (cur->ns != NULL) && (cur->psvi != NULL)) {
             xsltTransformFunction function;
 
             /*
              * Flagged as an extension element
              */
-            if (cur->_private == xsltExtMarker)
+            if (cur->psvi == xsltExtMarker)
                 function = (xsltTransformFunction)
                     xsltExtElementLookup(ctxt, cur->name, cur->ns->href);
             else
-                function = ((xsltElemPreCompPtr) cur->_private)->func;
+                function = ((xsltElemPreCompPtr) cur->psvi)->func;
 
             if (function == NULL) {
                 xmlNodePtr child;
@@ -1655,7 +1655,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 
                 ctxt->insert = insert;
-                function(ctxt, node, cur, cur->_private);
+                function(ctxt, node, cur, cur->psvi);
                 ctxt->insert = oldInsert;
             }
             goto skip_children;
@@ -3407,7 +3407,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     while ((IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when")))
 	    || xmlIsBlankNode(replacement)) {
-	xsltStylePreCompPtr wcomp = replacement->_private;
+	xsltStylePreCompPtr wcomp = replacement->psvi;
 
 	if (xmlIsBlankNode(replacement)) {
 	    replacement = replacement->next;

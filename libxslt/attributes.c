@@ -768,7 +768,7 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 while (values != NULL) {
                     if (values->attr != NULL) {
                         xsltAttributeInternal(ctxt, node, values->attr,
-                                              values->attr->_private, 1);
+                                              values->attr->psvi, 1);
                     }
                     values = values->next;
                 }

@@ -1342,7 +1342,7 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 
     if ((cur == NULL) || (ctxt == NULL))
 	return(NULL);
-    comp = (xsltStylePreCompPtr) cur->_private;
+    comp = (xsltStylePreCompPtr) cur->psvi;
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
 	    "xsl:param : compilation error\n");
@@ -1392,7 +1392,7 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
 	return;
 
     xsltStylePreCompute(style, cur);
-    comp = (xsltStylePreCompPtr) cur->_private;
+    comp = (xsltStylePreCompPtr) cur->psvi;
     if (comp == NULL) {
 	xsltTransformError(NULL, style, cur,
 	     "xsl:variable : compilation failed\n");
@@ -1431,7 +1431,7 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
 	return;
 
     xsltStylePreCompute(style, cur);
-    comp = (xsltStylePreCompPtr) cur->_private;
+    comp = (xsltStylePreCompPtr) cur->psvi;
     if (comp == NULL) {
 	xsltTransformError(NULL, style, cur,
 	     "xsl:param : compilation failed\n");
@@ -1469,7 +1469,7 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     if ((cur == NULL) || (ctxt == NULL))
 	return;
 
-    comp = (xsltStylePreCompPtr) cur->_private;
+    comp = (xsltStylePreCompPtr) cur->psvi;
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
 	     "xsl:variable : compilation failed\n");
@@ -1506,7 +1506,7 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     if ((cur == NULL) || (ctxt == NULL))
 	return;
 
-    comp = (xsltStylePreCompPtr) cur->_private;
+    comp = (xsltStylePreCompPtr) cur->psvi;
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
 	     "xsl:param : compilation failed\n");

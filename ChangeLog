@@ -1,3 +1,10 @@
+Wed Feb 25 16:35:01 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c libxslt/keys.h libxslt/preproc.c 
+	  libxslt/transform.c libxslt/variables.c libxslt/xsltutils.c:
+	  First step toward _private cleanup: use the psvi field to store
+	  the precompilation informations in the stylesheet nodes.
+
 Wed Feb 25 14:24:34 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: trying to use the fact that names comes

@@ -246,7 +246,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_SORT);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     comp->stype = xsltEvalStaticAttrValueTemplate(style, inst,
@@ -339,7 +339,7 @@ xsltCopyComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_COPY);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
 
@@ -368,7 +368,7 @@ xsltTextComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_TEXT);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
     comp->noescape = 0;
 
@@ -403,7 +403,7 @@ xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_ELEMENT);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     comp->name = xsltEvalStaticAttrValueTemplate(style, inst,
@@ -449,7 +449,7 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_ATTRIBUTE);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     /*
@@ -487,7 +487,7 @@ xsltCommentComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_COMMENT);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 }
 
@@ -507,7 +507,7 @@ xsltProcessingInstructionComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_PI);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     comp->name = xsltEvalStaticAttrValueTemplate(style, inst,
@@ -531,7 +531,7 @@ xsltCopyOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_COPYOF);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     comp->select = xsltGetCNsProp(style, inst, (const xmlChar *)"select",
@@ -568,7 +568,7 @@ xsltValueOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_VALUEOF);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     prop = xsltGetCNsProp(style, inst,
@@ -618,7 +618,7 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_WITHPARAM);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     /*
@@ -682,7 +682,7 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_NUMBER);
     if (comp == NULL)
 	return;
-    cur->_private = comp;
+    cur->psvi = comp;
 
     if ((style == NULL) || (cur == NULL))
 	return;
@@ -786,7 +786,7 @@ xsltApplyImportsComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_APPLYIMPORTS);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 }
 
@@ -807,7 +807,7 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_CALLTEMPLATE);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     /*
@@ -855,7 +855,7 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_APPLYTEMPLATES);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     /*
@@ -908,7 +908,7 @@ xsltChooseComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_CHOOSE);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 }
 
@@ -928,7 +928,7 @@ xsltIfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_IF);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     comp->test = xsltGetCNsProp(style, inst, (const xmlChar *)"test", XSLT_NAMESPACE);
@@ -963,7 +963,7 @@ xsltWhenComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_WHEN);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     comp->test = xsltGetCNsProp(style, inst, (const xmlChar *)"test", XSLT_NAMESPACE);
@@ -998,7 +998,7 @@ xsltForEachComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_FOREACH);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     comp->select = xsltGetCNsProp(style, inst, (const xmlChar *)"select",
@@ -1036,7 +1036,7 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_VARIABLE);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     /*
@@ -1100,7 +1100,7 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp = xsltNewStylePreComp(style, XSLT_FUNC_PARAM);
     if (comp == NULL)
 	return;
-    inst->_private = comp;
+    inst->psvi = comp;
     comp->inst = inst;
 
     /*
@@ -1186,7 +1186,7 @@ xsltFreeStylePreComps(xsltStylesheetPtr style) {
  */
 void
 xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
-    if (inst->_private != NULL) 
+    if (inst->psvi != NULL) 
         return;
     if (IS_XSLT_ELEM(inst)) {
 	xsltStylePreCompPtr cur;
@@ -1277,7 +1277,7 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    /* no computation needed */
 	    return;
 	} else if (IS_XSLT_NAME(inst, "document")) {
-	    inst->_private = (void *) xsltDocumentComp(style, inst,
+	    inst->psvi = (void *) xsltDocumentComp(style, inst,
 				(xsltTransformFunction) xsltDocumentElem);
 	} else {
 	    xsltTransformError(NULL, style, inst,
@@ -1288,7 +1288,7 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	 * Add the namespace lookup here, this code can be shared by
 	 * all precomputations.
 	 */
-	cur = (xsltStylePreCompPtr) inst->_private;
+	cur = (xsltStylePreCompPtr) inst->psvi;
 	if (cur != NULL) {
 	    int i = 0;
 
@@ -1300,14 +1300,14 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    cur->nsNr = i;
 	}
     } else {
-	inst->_private =
+	inst->psvi =
 	    (void *) xsltPreComputeExtModuleElement(style, inst);
 
 	/*
 	 * Unknown element, maybe registered at the context
 	 * level. Mark it for later recognition.
 	 */
-	if (inst->_private == NULL)
-	    inst->_private = (void *) xsltExtMarker;
+	if (inst->psvi == NULL)
+	    inst->psvi = (void *) xsltExtMarker;
     }
 }

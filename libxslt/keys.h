@@ -18,6 +18,7 @@
 extern "C" {
 #endif
 
+#define NODE_IS_KEYED (1 >> 15)
 XSLTPUBFUN int XSLTCALL
 		xsltAddKey		(xsltStylesheetPtr style,
 					 const xmlChar *name,

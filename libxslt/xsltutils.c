@@ -760,7 +760,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
 
-    comp = sort->_private;
+    comp = sort->psvi;
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xsl:sort : compilation failed\n");
@@ -874,7 +874,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	return;
     if (sorts[0] == NULL)
 	return;
-    comp = sorts[0]->_private;
+    comp = sorts[0]->psvi;
     if (comp == NULL)
 	return;
 
@@ -883,7 +883,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	return; /* nothing to do */
 
     for (j = 0; j < nbsorts; j++) {
-	comp = sorts[j]->_private;
+	comp = sorts[j]->psvi;
 	tempstype[j] = 0;
 	if ((comp->stype == NULL) && (comp->has_stype != 0)) {
 	    comp->stype =
@@ -934,7 +934,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 
     results = resultsTab[0];
 
-    comp = sorts[0]->_private;
+    comp = sorts[0]->psvi;
     descending = comp->descending;
     number = comp->number;
     if (results == NULL)
@@ -983,7 +983,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 		    while (depth < nbsorts) {
 			if (sorts[depth] == NULL)
 			    break;
-			comp = sorts[depth]->_private;
+			comp = sorts[depth]->psvi;
 			if (comp == NULL)
 			    break;
 			desc = comp->descending;
@@ -1069,7 +1069,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     }
 
     for (j = 0; j < nbsorts; j++) {
-	comp = sorts[j]->_private;
+	comp = sorts[j]->psvi;
 	if (tempstype[j] == 1) {
 	    /* The data-type needs to be recomputed each time */
 	    xmlFree((void *)(comp->stype));
