@@ -10,6 +10,7 @@
 #ifndef __XML_XSLT_NUMBERSINTERNALS_H__
 #define __XML_XSLT_NUMBERSINTERNALS_H__
 
+#include <libxml/tree.h>
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
@@ -20,6 +21,9 @@ extern "C" {
  * This data structure is just a wrapper to pass data in
  */
 typedef struct _xsltNumberData {
+    xmlChar *level;
+    xmlChar *count;
+    xmlChar *from;
     xmlChar *value;
     xmlChar *format;
     int digitsPerGroup;

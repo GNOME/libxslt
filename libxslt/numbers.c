@@ -10,7 +10,6 @@
  * Bjorn Reese <breese@users.sourceforge.net>
  */
 
-#include <ctype.h>
 #include <math.h>
 #include <limits.h>
 #include <float.h>
@@ -22,6 +21,7 @@
 #include <nan.h>
 #endif
 
+#include <libxml/parserInternals.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include "xsltutils.h"
@@ -34,7 +34,6 @@
 
 #define SYMBOL_QUOTE             ((xmlChar)'\'')
 
-static char digit_list[] = "0123456789";
 static char alpha_upper_list[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static char alpha_lower_list[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -75,6 +74,18 @@ xsltIsDigitZero(xmlChar ch)
 }
 
 #ifndef isnan
+/*
+ * NaN (Not-A-Number)
+ *
+ * In C99 isnan() is defined as a macro, so its existence can be determined
+ * with the preprocessor.
+ *
+ * ANSI/IEEE 754-1986 states that "Every NaN shall compare unordered
+ * with everything, including itself." This means that "number == number"
+ * will return true for all numbers, except NaN. Unfortunately, this
+ * simple test does not work on all platforms supporting NaNs. Instead
+ * we use an almost equivalent comparison.
+ */
 static int
 isnan(volatile double number)
 {
@@ -83,6 +94,11 @@ isnan(volatile double number)
 #endif
 
 #ifndef isinf
+/*
+ * Infinity (positive and negative)
+ *
+ * C99 defines isinf() as a macro. See comment for isnan().
+ */
 static int
 isinf(double number)
 {
@@ -96,7 +112,466 @@ isinf(double number)
 
 /************************************************************************
  *
- * JDK 1.1 DecimalFormat class:
+ * xsltNumberFormat
+ *
+ * Convert one number.
+ */
+static void
+xsltNumberFormatDecimal(xmlBufferPtr buffer,
+			double number,
+			xmlChar digit_zero,
+			int width,
+			int digitsPerGroup,
+			xmlChar groupingCharacter)
+{
+    xmlChar temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 1];
+    xmlChar *pointer;
+    int i;
+
+    /* Build buffer from back */
+    pointer = &temp_string[sizeof(temp_string)];
+    *(--pointer) = 0;
+    for (i = 1; i < (int)sizeof(temp_string); i++) {
+	*(--pointer) = digit_zero + (int)fmod(number, 10.0);
+	number /= 10.0;
+	if ((i >= width) && (fabs(number) < 1.0))
+	    break; /* for */
+	if ((groupingCharacter != 0) &&
+	    (digitsPerGroup > 0) &&
+	    ((i % digitsPerGroup) == 0)) {
+	    *(--pointer) = groupingCharacter;
+	}
+    }
+    xmlBufferCat(buffer, pointer);
+}
+
+static void
+xsltNumberFormatAlpha(xmlBufferPtr buffer,
+		      double number,
+		      int is_upper)
+{
+    char temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 1];
+    char *pointer;
+    int i;
+    char *alpha_list;
+    double alpha_size = (double)(sizeof(alpha_upper_list) - 1);
+
+    /* Build buffer from back */
+    pointer = &temp_string[sizeof(temp_string)];
+    *(--pointer) = 0;
+    alpha_list = (is_upper) ? alpha_upper_list : alpha_lower_list;
+    
+    for (i = 1; i < (int)sizeof(buffer); i++) {
+	number--;
+	*(--pointer) = alpha_list[((int)fmod(number, alpha_size))];
+	number /= alpha_size;
+	if (fabs(number) < 1.0)
+	    break; /* for */
+    }
+    xmlBufferCCat(buffer, pointer);
+}
+
+static void
+xsltNumberFormatRoman(xmlBufferPtr buffer,
+		      double number,
+		      int is_upper)
+{
+    /*
+     * Based on an example by Jim Walsh
+     */
+    while (number >= 1000.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "M" : "m");
+	number -= 1000.0;
+    }
+    if (number >= 900.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "CM" : "cm");
+	number -= 900.0;
+    }
+    while (number >= 500.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "D" : "d");
+	number -= 500.0;
+    }
+    if (number >= 400.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "CD" : "cd");
+	number -= 400.0;
+    }
+    while (number >= 100.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "C" : "c");
+	number -= 100.0;
+    }
+    if (number >= 90.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "XC" : "xc");
+	number -= 90.0;
+    }
+    while (number >= 50.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "L" : "l");
+	number -= 50.0;
+    }
+    if (number >= 40.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "XL" : "xl");
+	number -= 40.0;
+    }
+    while (number >= 10.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "X" : "x");
+	number -= 10.0;
+    }
+    if (number >= 9.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "IX" : "ix");
+	number -= 9.0;
+    }
+    while (number >= 5.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "V" : "v");
+	number -= 5.0;
+    }
+    if (number >= 4.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "IV" : "iv");
+	number -= 4.0;
+    }
+    while (number >= 1.0) {
+	xmlBufferCCat(buffer, (is_upper) ? "I" : "i");
+	number--;
+    }
+}
+
+typedef struct _xsltNumberFormatToken {
+    xmlChar token;
+    int width;
+    xmlChar *filling;
+} xsltNumberFormatToken, *xsltNumberFormatTokenPtr;
+
+static int
+xsltNumberFormatTokenize(xmlChar *format,
+			 xsltNumberFormatTokenPtr array,
+			 int array_max)
+{
+    int index = 0;
+    int cnt;
+    int j;
+
+    for (cnt = 0; cnt < array_max; cnt++) {
+	if (format[index] == 0) {
+	    break; /* for */
+	} else if (IS_DIGIT_ONE(format[index]) ||
+		 IS_DIGIT_ZERO(format[index])) {
+	    array[cnt].width = 1;
+	    while (IS_DIGIT_ZERO(format[index])) {
+		array[cnt].width++;
+		index++;
+	    }
+	    if (IS_DIGIT_ONE(format[index])) {
+		array[cnt].token = format[index] - 1;
+		index++;
+	    }
+	} else if (format[index] == (xmlChar)'A') {
+	    array[cnt].token = format[index];
+	    index++;
+	} else if (format[index] == (xmlChar)'a') {
+	    array[cnt].token = format[index];
+	    index++;
+	} else if (format[index] == (xmlChar)'I') {
+	    array[cnt].token = format[index];
+	    index++;
+	} else if (format[index] == (xmlChar)'i') {
+	    array[cnt].token = format[index];
+	    index++;
+	} else {
+	    /* XSLT section 7.7
+	     * "Any other format token indicates a numbering sequence
+	     *  that starts with that token. If an implementation does
+	     *  not support a numbering sequence that starts with that
+	     *  token, it must use a format token of 1."
+	     */
+	    array[cnt].token = (xmlChar)'0';
+	    array[cnt].width = 1;
+	    index++;
+	}
+	/*
+	 * Skip over remaining alphanumeric characters from the Nd
+	 * (Number, decimal digit), Nl (Number, letter), No (Number,
+	 * other), Lu (Letter, uppercase), Ll (Letter, lowercase), Lt
+	 * (Letters, titlecase), Lm (Letters, modifiers), and Lo
+	 * (Letters, other (uncased)) Unicode categories. This happens
+	 * to correspond to the Letter and Digit classes from XML (and
+	 * one wonders why XSLT doesn't refer to these instead).
+	 */
+	while (IS_LETTER(format[index]) || IS_DIGIT(format[index]))
+	    index++;
+	/*
+	 * Insert non-alphanumeric separator.
+	 */
+	j = index;
+	while (! (IS_LETTER(format[index]) || IS_DIGIT(format[index]))) {
+	    if (format[index] == 0)
+		break; /* while */
+	    index++;
+	}
+	array[cnt].filling = (index > j)
+	    ? xmlStrndup(&format[j], index - j)
+	    : NULL;
+    }
+    return cnt;
+}
+
+
+static void
+xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
+			      double *numbers,
+			      int numbers_max,
+			      xsltNumberFormatToken (*array)[],
+			      int array_max,
+			      xmlBufferPtr buffer)
+{
+    int i = 0;
+    int minmax;
+    double number;
+    xsltNumberFormatTokenPtr token;
+
+    minmax = (array_max >= numbers_max) ? numbers_max : array_max;
+    for (i = 0; i < minmax; i++) {
+	/* Insert number */
+	number = numbers[(numbers_max - 1) - i];
+	token = &(*array)[i];
+	
+	switch (isinf(number)) {
+	case -1:
+	    xmlBufferCCat(buffer, "-Infinity");
+	    break;
+	case 1:
+	    xmlBufferCCat(buffer, "Infinity");
+	    break;
+	default:
+	    if (isnan(number)) {
+		xmlBufferCCat(buffer, "NaN");
+	    } else {
+
+		switch (token->token) {
+		case 'A':
+		    xsltNumberFormatAlpha(buffer,
+					  number,
+					  TRUE);
+
+		    break;
+		case 'a':
+		    xsltNumberFormatAlpha(buffer,
+					  number,
+					  FALSE);
+
+		    break;
+		case 'I':
+		    xsltNumberFormatRoman(buffer,
+					  number,
+					  TRUE);
+
+		    break;
+		case 'i':
+		    xsltNumberFormatRoman(buffer,
+					  number,
+					  FALSE);
+
+		    break;
+		default:
+		    if (IS_DIGIT_ZERO(token->token)) {
+			xsltNumberFormatDecimal(buffer,
+						number,
+						token->token,
+						token->width,
+						data->digitsPerGroup,
+						data->groupingCharacter);
+		    }
+		    break;
+		}
+	    }
+
+	}
+
+	if (token->filling)
+	    xmlBufferCat(buffer, token->filling);
+    }
+}
+
+#if 0
+static void
+xsltNumberFormatGetAnyLevel(xmlXPathContextPtr context)
+{
+    /* preceding | ancestor-or-self */
+}
+#endif
+
+static int
+xsltNumberFormatMatch(xmlXPathContextPtr context,
+		      xmlNodePtr node,
+		      xmlChar *pattern)
+{
+    /* FIXME: must handle generic patterns */
+    return xmlStrEqual(node->name, pattern);
+}
+
+static int
+xsltNumberFormatGetMultipleLevel(xmlXPathContextPtr context,
+				 xmlNodePtr node,
+				 xmlChar *count,
+				 xmlChar *from,
+				 double *array,
+				 int max)
+{
+    int amount = 0;
+    int cnt;
+    xmlNodePtr ancestor;
+    xmlNodePtr preceding;
+    xmlXPathParserContextPtr parser;
+
+    context->node = node;
+    parser = xmlXPathNewParserContext(NULL, context);
+    if (parser) {
+	/* ancestor-or-self::*[count] */
+	for (ancestor = node;
+	     ancestor != NULL;
+	     ancestor = xmlXPathNextAncestor(parser, ancestor)) {
+	    
+	    if ((from != NULL) &&
+		xsltNumberFormatMatch(context, ancestor, from))
+		break; /* for */
+	    
+	    if ((count == NULL) ||
+		xsltNumberFormatMatch(context, ancestor, count)) {
+		/* count(preceding-sibling::*) */
+		cnt = 0;
+		for (preceding = ancestor;
+		     preceding != NULL;
+		     preceding = xmlXPathNextPrecedingSibling(parser, preceding)) {
+		    if (count == NULL) {
+			if (preceding->type == ancestor->type)
+			    cnt++;
+		    } else {
+			if (preceding->type != XML_TEXT_NODE)
+			    cnt++;
+		    }
+		}
+		array[amount++] = (double)cnt;
+	    }
+	}
+	xmlXPathFreeParserContext(parser);
+    }
+    return amount;
+}
+
+static int
+xsltNumberFormatGetValue(xmlXPathContextPtr context,
+			 xmlNodePtr node,
+			 xmlChar *value,
+			 double *number)
+{
+    int amount = 0;
+    xmlBufferPtr pattern;
+    xmlXPathObjectPtr obj;
+    
+    pattern = xmlBufferCreate();
+    if (pattern != NULL) {
+	xmlBufferCCat(pattern, "number(");
+	xmlBufferCat(pattern, value);
+	xmlBufferCCat(pattern, ")");
+	context->node = node;
+	obj = xmlXPathEvalExpression(xmlBufferContent(pattern),
+				     context);
+	if (obj != NULL) {
+	    *number = obj->floatval;
+	    amount++;
+	    xmlXPathFreeObject(obj);
+	}
+	xmlBufferFree(pattern);
+    }
+    return amount;
+}
+
+void
+xsltNumberFormat(xsltTransformContextPtr ctxt,
+		 xsltNumberDataPtr data,
+		 xmlNodePtr node)
+{
+    xmlBufferPtr output = NULL;
+    xmlNodePtr copy = NULL;
+    int amount;
+    int array_amount;
+    double number;
+    xsltNumberFormatToken array[1024];
+
+    output = xmlBufferCreate();
+    if (output == NULL)
+	goto XSLT_NUMBER_FORMAT_END;
+
+    array_amount = xsltNumberFormatTokenize(data->format,
+					    array,
+					    sizeof(array)/sizeof(array[0]));
+
+    /*
+     * Evaluate the XPath expression to find the value(s)
+     */
+    if (data->value) {
+	amount = xsltNumberFormatGetValue(ctxt->xpathCtxt,
+					  node,
+					  data->value,
+					  &number);
+	if (amount == 1) {
+	    xsltNumberFormatInsertNumbers(data,
+					  &number,
+					  1,
+					  &array,
+					  array_amount,
+					  output);
+	}
+	
+    } else if (data->level) {
+	
+	if (xmlStrEqual(data->level, "single")) {
+	    amount = xsltNumberFormatGetMultipleLevel(ctxt->xpathCtxt,
+						      node,
+						      data->count,
+						      data->from,
+						      &number,
+						      1);
+	    if (amount == 1) {
+		xsltNumberFormatInsertNumbers(data,
+					      &number,
+					      1,
+					      &array,
+					      array_amount,
+					      output);
+	    }
+	} else if (xmlStrEqual(data->level, "multiple")) {
+	    double numarray[1024];
+	    int max = sizeof(numarray)/sizeof(numarray[0]);
+	    amount = xsltNumberFormatGetMultipleLevel(ctxt->xpathCtxt,
+						      node,
+						      data->count,
+						      data->from,
+						      numarray,
+						      max);
+	    if (amount > 0) {
+		xsltNumberFormatInsertNumbers(data,
+					      numarray,
+					      amount,
+					      &array,
+					      array_amount,
+					      output);
+	    }
+	} else if (xmlStrEqual(data->level, "any")) {
+	    TODO;
+	}
+    }
+    /* Insert number as text node */
+    copy = xmlNewText(xmlBufferContent(output));
+    if (copy != NULL) {
+	xmlAddChild(ctxt->insert, copy);
+    }
+    
+ XSLT_NUMBER_FORMAT_END:
+    if (output != NULL)
+	xmlBufferFree(output);
+}
+
+/************************************************************************
+ *
+ * format-number() uses the JDK 1.1 DecimalFormat class:
  *
  * http://java.sun.com/products/jdk/1.1/docs/api/java.text.DecimalFormat.html
  *
@@ -129,14 +604,6 @@ isinf(double number)
  *   X      any other characters can be used in the prefix or suffix
  *   '      used to quote special characters in a prefix or suffix.
  */
-/* TODO
- *
- * The JDK description does not tell where they may and may not appear
- * within the format string. Nor does it tell what happens to integer
- * values that does not fit into the format string.
- *
- *  Inf and NaN not tested.
- */
 xmlXPathError
 xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 			   xmlChar *format,
@@ -146,18 +613,14 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     xmlXPathError status = XPATH_EXPRESSION_OK;
     xmlChar *the_format;
     xmlBufferPtr buffer;
-    char digit_buffer[2];
     int use_minus;
     int i, j;
     int length;
-    int group = 0;
+    int group = INT_MAX;
     int integer_digits = 0;
-    int integer_hash = 0;
     int fraction_digits = 0;
     int fraction_hash = 0;
     int decimal_point;
-    double divisor;
-    int digit;
     int is_percent;
     int is_permille;
 
@@ -226,9 +689,13 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     /*
      * Parse the number part of the format string
      */
+    is_percent = (the_format[i] == self->percent[0]) ? TRUE : FALSE;
+    is_permille = (the_format[i] == self->permille[0]) ? TRUE : FALSE;
+    if (is_percent || is_permille)
+	i++;
+    
     for ( ; i < length; i++) {
 	if (the_format[i] == self->zeroDigit[0]) {
-	    integer_hash++;
 	    group++;
 	} else if (the_format[i] == self->grouping[0]) {
 	    group = 0; /* Reset count */
@@ -260,8 +727,12 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 		break; /* for */
 	}
     }
-    is_percent = (the_format[i] == self->percent[0]) ? TRUE : FALSE;
-    is_permille = (the_format[i] == self->permille[0]) ? TRUE : FALSE;
+    if (!(is_percent || is_permille)) {
+	is_percent = (the_format[i] == self->percent[0]) ? TRUE : FALSE;
+	is_permille = (the_format[i] == self->permille[0]) ? TRUE : FALSE;
+	if (is_percent || is_permille)
+	    i++;
+    }
     
     /*
      * Format the number
@@ -275,35 +746,27 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	number *= 100.0;
     else if (is_permille)
 	number *= 1000.0;
-    number = floor(0.5 + number * pow(10.0, (double)(fraction_digits + fraction_hash)));
 	
     /* Integer part */
-    digit_buffer[1] = (char)0;
-    divisor = pow(10.0, (double)(integer_digits + integer_hash + fraction_digits + fraction_hash - 1));
-    for (j = integer_digits + integer_hash; j > 0; j--) {
-	digit = (int)(number / divisor);
-	number -= (double)digit * divisor;
-	divisor /= 10.0;
-	if ((digit > 0) || (j <= integer_digits)) {
-	    digit_buffer[0] = digit_list[digit];
-	    xmlBufferCCat(buffer, digit_buffer);
-	}
-    }
-	
-    if (decimal_point)
+    xsltNumberFormatDecimal(buffer, floor(number), (xmlChar)'0',
+			    integer_digits, group, (xmlChar)',');
+    
+    if (decimal_point) {
 	xmlBufferAdd(buffer, self->decimalPoint, 1);
 
-    /* Fraction part */
-    for (j = fraction_digits + fraction_hash; j > 0; j--) {
-	digit = (int)(number / divisor);
-	number -= (double)digit * divisor;
-	divisor /= 10.0;
-	if ((digit > 0) || (j > fraction_hash)) {
-	    digit_buffer[0] = digit_list[digit];
-	    xmlBufferCCat(buffer, digit_buffer);
+	/* Fraction part */
+	number -= floor(number);
+	number = number * pow(10.0, (double)(fraction_digits + fraction_hash));
+	for (j = fraction_hash; j > 0; j--) {
+	    if (fmod(number, 10.0) >= 1.0)
+		break; /* for */
+	    number /= 10.0;
 	}
+	number = floor(0.5 + number);
+	xsltNumberFormatDecimal(buffer, number, (xmlChar)'0',
+				fraction_digits + j,
+				0, (xmlChar)0);
     }
-
     if (is_percent)
 	xmlBufferAdd(buffer, self->percent, 1);
     else if (is_permille)
@@ -322,260 +785,4 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     *result = xmlStrdup(xmlBufferContent(buffer));
     xmlBufferFree(buffer);
     return status;
-}
-
-/************************************************************************
- *
- * xsltNumberFormat
- *
- * Convert one number.
- */
-static void
-xsltNumberFormatDecimal(xmlBufferPtr buffer,
-			double number,
-			xmlChar digit_zero,
-			int width,
-			int digitsPerGroup,
-			xmlChar groupingCharacter)
-{
-    xmlChar temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 1];
-    xmlChar *pointer;
-    int i;
-
-    /* Build buffer from back */
-    pointer = &temp_string[sizeof(temp_string) - 1];
-    *pointer-- = 0;
-    for (i = 1; i < (int)sizeof(temp_string); i++) {
-	*pointer-- = digit_zero + (int)fmod(number, 10.0);
-	number /= 10.0;
-	width--;
-	if ((width <= 0) && (fabs(number) < 1.0))
-	    break; /* for */
-	if ((groupingCharacter != 0) &&
-	    ((i % digitsPerGroup) == 0)) {
-	    *pointer-- = groupingCharacter;
-	}
-    }
-    xmlBufferCat(buffer, pointer + 1);
-}
-
-static void
-xsltNumberFormatAlpha(xmlBufferPtr buffer,
-		      double number,
-		      int is_upper)
-{
-    char temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 1];
-    char *pointer;
-    int i;
-    char *alpha_list;
-    double alpha_size = (double)(sizeof(alpha_upper_list) - 1);
-
-    /* Build buffer from back */
-    pointer = &temp_string[sizeof(temp_string) - 1];
-    *pointer-- = 0;
-    alpha_list = (is_upper) ? alpha_upper_list : alpha_lower_list;
-    
-    for (i = 1; i < (int)sizeof(buffer); i++) {
-	number--;
-	*pointer-- = alpha_list[((int)fmod(number, alpha_size))];
-	number /= alpha_size;
-	if (fabs(number) < 1.0)
-	    break; /* for */
-    }
-    xmlBufferCCat(buffer, pointer + 1);
-}
-
-static void
-xsltNumberFormatRoman(xmlBufferPtr buffer,
-		      double number,
-		      int is_upper)
-{
-    /*
-     * Based on an example by Jim Walsh
-     */
-    while (number >= 1000.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "M" : "m");
-	number -= 1000.0;
-    }
-    if (number >= 900.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "CM" : "cm");
-	number -= 900.0;
-    }
-    while (number >= 500.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "D" : "d");
-	number -= 500.0;
-    }
-    if (number >= 400.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "CD" : "cd");
-	number -= 400.0;
-    }
-    while (number >= 100.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "C" : "c");
-	number -= 100.0;
-    }
-    if (number >= 90.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "XC" : "xc");
-	number -= 90.0;
-    }
-    while (number >= 50.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "L" : "l");
-	number -= 50.0;
-    }
-    if (number >= 40.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "XL" : "xl");
-	number -= 40.0;
-    }
-    while (number >= 10.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "X" : "x");
-	number -= 10.0;
-    }
-    if (number >= 9.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "IX" : "ix");
-	number -= 9.0;
-    }
-    while (number >= 5.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "V" : "v");
-	number -= 5.0;
-    }
-    if (number >= 4.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "IV" : "iv");
-	number -= 4.0;
-    }
-    while (number >= 1.0) {
-	xmlBufferCCat(buffer, (is_upper) ? "I" : "i");
-	number--;
-    }
-}
-
-void
-xsltNumberFormat(xsltTransformContextPtr ctxt,
-		 xsltNumberDataPtr data,
-		 xmlNodePtr node)
-{
-    xmlXPathParserContextPtr parser = NULL;
-    xmlXPathObjectPtr res;
-    xmlBufferPtr buffer;
-    xmlNodePtr copy = NULL;
-    xmlChar *format;
-    int i, j;
-    int width;
-    
-    buffer = xmlBufferCreate();
-    if (buffer == NULL)
-	goto XSLT_NUMBER_FORMAT_END;
-
-    format = data->format;
-    
-    /*
-     * Evaluate the XPath expression to find the value(s)
-     */
-    parser = xmlXPathNewParserContext(data->value, ctxt->xpathCtxt);
-    if (parser == NULL)
-	goto XSLT_NUMBER_FORMAT_END;
-    ctxt->xpathCtxt->node = node;
-    valuePush(parser, xmlXPathNewNodeSet(node));
-    xmlXPathEvalExpr(parser);
-
-    /*
-     * Parse format string
-     */
-    i = 0;
-    for (;;) {
-	/*
-	 * Workaround:
-	 *  There always seem to be a superfluos object on the stack.
-	 *  We handle this by exiting the loop if there is only one
-	 *  object back.
-	 */
-	if (parser->valueNr == 1)
-	    break; /* for */
-	
-	/* Cast to number if necessary */
-	if ((parser->value != NULL) &&
-	    (parser->value->type != XPATH_NUMBER))
-	    xmlXPathNumberFunction(parser, 1);
-	
-	res = valuePop(parser);
-	if (res == NULL)
-	    break; /* for */
-
-	if (res->type == XPATH_NUMBER) {
-
-	    switch (isinf(res->floatval)) {
-	    case -1:
-		xmlBufferCCat(buffer, "-Infinity");
-		break;
-	    case 1:
-		xmlBufferCCat(buffer, "Infinity");
-		break;
-	    default:
-		if (isnan(res->floatval)) {
-		    xmlBufferCCat(buffer, "NaN");
-		} else {
-	    
-		    /* Find formatting token */
-		    if (IS_DIGIT_ONE(format[i]) || IS_DIGIT_ZERO(format[i])) {
-			width = 1;
-			while (IS_DIGIT_ZERO(format[i])) {
-			    width++;
-			    i++;
-			}
-			if (IS_DIGIT_ONE(format[i])) {
-			    xsltNumberFormatDecimal(buffer,
-						    res->floatval,
-						    format[i] - 1,
-						    width,
-						    data->digitsPerGroup,
-						    data->groupingCharacter);
-			    i++;
-			}
-		    } else if (format[i] == 'A') {
-			xsltNumberFormatAlpha(buffer,
-					      res->floatval,
-					      TRUE);
-			i++;
-		    } else if (format[i] == 'a') {
-			xsltNumberFormatAlpha(buffer,
-					      res->floatval,
-					      FALSE);
-			i++;
-		    } else if (format[i] == 'I') {
-			xsltNumberFormatRoman(buffer,
-					      res->floatval,
-					      TRUE);
-			i++;
-		    } else if (format[i] == 'i') {
-			xsltNumberFormatRoman(buffer,
-					      res->floatval,
-					      FALSE);
-			i++;
-		    }
-		}
-		break;
-	    }
-	    /* Insert separator */
-	    for (j = i; !isalnum(format[i]); i++)
-		;
-	    if (i > j)
-		xmlBufferAdd(buffer, &format[j], i - j);
-	}
-	xmlXPathFreeObject(res);
-    }
-    /* Insert number as text */
-    copy = xmlNewText(xmlBufferContent(buffer));
-    if (copy != NULL) {
-	xmlAddChild(ctxt->insert, copy);
-    }
-    
-    if (parser != NULL) {
-	while ((res = valuePop(parser)) != NULL) {
-	    xmlXPathFreeObject(res);
-	}
-    }
-    
- XSLT_NUMBER_FORMAT_END:
-    if (parser != NULL)
-	xmlXPathFreeParserContext(parser);
-    if (buffer != NULL)
-	xmlBufferFree(buffer);
 }

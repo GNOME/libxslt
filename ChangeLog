@@ -1,3 +1,9 @@
+Sun Feb 11 17:24:03 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* FEATURES libxslt/transform.c libxslt/numbers.c: partial support
+	  for the level attribute for xsl:number
+	* libxslt/numbers.c: internal restructuring
+
 Fri Feb  9 15:49:19 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/Makefile.am libxslt/documents.[ch]: added a new module

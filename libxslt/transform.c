@@ -830,57 +830,29 @@ xsltNumber(xsltTransformContextPtr ctxt,
 
     memset(&numdata, 0, sizeof(numdata));
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"level", XSLT_NAMESPACE);
-    if (prop != NULL) {
-	if (xmlStrEqual(prop, BAD_CAST("single"))) {
-	    TODO;
-	} else if (xmlStrEqual(prop, BAD_CAST("multiple"))) {
-	    TODO;
-	} else if (xmlStrEqual(prop, BAD_CAST("any"))) {
-	    TODO;
-	} else {
-	    xsltGenericError(xsltGenericErrorContext,
-			     "invalid value %s for level\n", prop);
-	}
-	xmlFree(prop);
-    }
-    
-    prop = xmlGetNsProp(cur, (const xmlChar *)"count", XSLT_NAMESPACE);
-    if (prop != NULL) {
-	TODO;
-	xmlFree(prop);
-    }
-    
-    prop = xmlGetNsProp(cur, (const xmlChar *)"from", XSLT_NAMESPACE);
-    if (prop != NULL) {
-	TODO;
-	xmlFree(prop);
-    }
-    
-    prop = xmlGetNsProp(cur, (const xmlChar *)"value", XSLT_NAMESPACE);
-    if (prop != NULL) {
-	numdata.value = prop;
-    } else {
-	numdata.value = xmlStrdup(BAD_CAST("position()"));
-    }
+    numdata.value = xmlGetNsProp(cur, (const xmlChar *)"value", XSLT_NAMESPACE);
     
     prop = xmlGetNsProp(cur, (const xmlChar *)"format", XSLT_NAMESPACE);
     if (prop != NULL) {
-	/* Unicode categories:
-	 *  Nd = Number, decimal digit
-	 *  Nl = Number, letter
-	 *  No = Number, other
-	 *  Lu = Letters, uppercase
-	 *  Ll = Letters, lowercase
-	 *  Lt = Letters, titlecase
-	 *  Lm = Letters, modifiers
-	 *  Lo = Letters, other (uncased)
-	 *
-	 *  This corresponds to isalnum() in a Unicode locale.
-	 */
 	numdata.format = prop;
     } else {
 	numdata.format = xmlStrdup(BAD_CAST("1"));
+    }
+    
+    numdata.count = xmlGetNsProp(cur, (const xmlChar *)"count", XSLT_NAMESPACE);
+    numdata.from = xmlGetNsProp(cur, (const xmlChar *)"from", XSLT_NAMESPACE);
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"level", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, BAD_CAST("single")) ||
+	    xmlStrEqual(prop, BAD_CAST("multiple")) ||
+	    xmlStrEqual(prop, BAD_CAST("any"))) {
+	    numdata.level = prop;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "invalid value %s for level\n", prop);
+	    xmlFree(prop);
+	}
     }
     
     prop = xmlGetNsProp(cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
@@ -918,10 +890,16 @@ xsltNumber(xsltTransformContextPtr ctxt,
 
     xsltNumberFormat(ctxt, &numdata, node);
 
-    if (numdata.format != NULL)
-	xmlFree(numdata.format);
+    if (numdata.level != NULL)
+	xmlFree(numdata.level);
+    if (numdata.count != NULL)
+	xmlFree(numdata.count);
+    if (numdata.from != NULL)
+	xmlFree(numdata.from);
     if (numdata.value != NULL)
 	xmlFree(numdata.value);
+    if (numdata.format != NULL)
+	xmlFree(numdata.format);
 }
 
 /**
