@@ -35,24 +35,24 @@ web: $(PAGES) $(APIPAGES)
 
 $(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
-	  $(bindir)/xsltproc --html $(srcdir)/site.xsl $(srcdir)/xslt.html > index.html ; fi )
+	  $(bindir)/xsltproc --nonet --html $(srcdir)/site.xsl $(srcdir)/xslt.html > index.html ; fi )
 	-@(if [ -x $(bindir)/xmllint ] ; then \
-	  $(bindir)/xmllint --valid --noout $(PAGES) ; fi );
+	  $(bindir)/xmllint --nonet --valid --noout $(PAGES) ; fi );
 
 $(top_srcdir)/NEWS: $(top_srcdir)/doc/news.xsl $(top_srcdir)/doc/news.html
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
-	  $(bindir)/xsltproc $(top_srcdir)/doc/news.xsl $(top_srcdir)/doc/news.html > $(top_srcdir)/NEWS ; fi );
+	  $(bindir)/xsltproc --nonet $(top_srcdir)/doc/news.xsl $(top_srcdir)/doc/news.html > $(top_srcdir)/NEWS ; fi );
 
 libxslt.xsa: $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
-	  $(bindir)/xsltproc $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html > libxslt.xsa ; fi );
+	  $(bindir)/xsltproc --nonet $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html > libxslt.xsa ; fi );
 
 $(APIPAGES): libxslt-refs.xml site.xsl api.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
-	  $(bindir)/xsltproc --html $(srcdir)/api.xsl $(srcdir)/xslt.html ; fi );
+	  $(bindir)/xsltproc --nonet --html $(srcdir)/api.xsl $(srcdir)/xslt.html ; fi );
 
 xsltproc.1: xsltproc.xml
-	-@(xsltproc xsltproc.xml)
+	-@(xsltproc --nonet xsltproc.xml)
 
 scan:
 	-gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --ignore-headers="acconfig.h config.h win32config.h"

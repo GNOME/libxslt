@@ -1,3 +1,8 @@
+Tue May 13 18:22:38 EDT 2003 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am: fixing bug #112803 , make sure to avoid
+	  network accesses when building
+
 Sat May 10 14:19:14 EDT 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed a segfault introduced with the RVT
