@@ -67,7 +67,10 @@ EXTRA_DIST = 						\
     test-8-1.out test-8-1.xml test-8-1.xsl		\
     test-9.1-1.out test-9.1-1.xml test-9.1-1.xsl	\
     test-9.1-2.out test-9.1-2.xml test-9.1-2.xsl	\
-    test-9.2-1.xsl
+    test-9.2-1.xsl					\
+    stand-2.7-1.dtd stand-2.7-1.stand.out stand-2.7-1.xsl \
+    stand-2.7-1.out  stand-2.7-1.xml
+
 
 all: test
 

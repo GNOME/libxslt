@@ -1,3 +1,9 @@
+Tue Jan  8 17:21:02 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: added the --stringparam option
+	* xsltproc/xsltproc.c: applied John Fleck's patch to correct
+	  the --novalid behaviour.
+
 Tue Jan  8 13:51:08 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/site.xsl doc/*.html: added a DocBook section docbook.html

@@ -102,6 +102,8 @@ static int profile = 0;
 
 static const char *params[MAX_PARAMETERS + 1];
 static int nbparams = 0;
+static xmlChar *strparams[MAX_PARAMETERS + 1];
+static int nbstrparams = 0;
 static const char *output = NULL;
 static int errorno = 0;
 
@@ -306,7 +308,7 @@ static void usage(const char *name) {
     printf("\t--timing: display the time used\n");
     printf("\t--repeat: run the transformation 20 times\n");
     printf("\t--debug: dump the tree of the result instead\n");
-    printf("\t--novalid: skip the Dtd loading phase\n");
+    printf("\t--novalid skip the Dtd loading phase\n");
     printf("\t--noout: do not dump the result\n");
     printf("\t--maxdepth val : increase the maximum depth\n");
 #ifdef LIBXML_HTML_ENABLED
@@ -316,7 +318,10 @@ static void usage(const char *name) {
     printf("\t--docbook: the input document is SGML docbook\n");
 #endif
     printf("\t--param name value : pass a (parameter,value) pair\n");
-    printf("\t      string values must be quoted like \"'string'\"\n");
+    printf("\t       value is an XPath expression.");
+    printf("\t       string values must be quoted like \"'string'\"\n or");
+    printf("\t       use stringparam to avoid it\n");
+    printf("\t--stringparam name value : pass a (parameter,string value) pair\n");
     printf("\t--nonet refuse to fetch DTDs or entities over network\n");
 #ifdef LIBXML_CATALOG_ENABLED
     printf("\t--catalogs : use SGML catalogs from $SGML_CATALOG_FILES\n");
@@ -347,10 +352,6 @@ main(int argc, char **argv)
 
     xmlLineNumbersDefault(1);
 
-    if (novalid == 0)
-        xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
-    else
-        xmlLoadExtDtdDefaultValue = 0;
     for (i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-"))
             break;
@@ -444,6 +445,37 @@ main(int argc, char **argv)
                 fprintf(stderr, "too many params increase MAX_PARAMETERS \n");
                 return (2);
             }
+        } else if ((!strcmp(argv[i], "-stringparam")) ||
+                   (!strcmp(argv[i], "--stringparam"))) {
+	    const xmlChar *string;
+	    xmlChar *value;
+	    int len;
+
+            i++;
+            params[nbparams++] = argv[i++];
+	    string = (const xmlChar *) argv[i];
+	    len = xmlStrlen(string);
+	    if (xmlStrchr(string, '"')) {
+		if (xmlStrchr(string, '\'')) {
+		    fprintf(stderr,
+		    "stringparam contains both quote and double-quotes !\n");
+		    return(8);
+		}
+		value = xmlStrdup((const xmlChar *)"'");
+		value = xmlStrcat(value, string);
+		value = xmlStrcat(value, (const xmlChar *)"'");
+	    } else {
+		value = xmlStrdup((const xmlChar *)"\"");
+		value = xmlStrcat(value, string);
+		value = xmlStrcat(value, (const xmlChar *)"\"");
+	    }
+
+            params[nbparams++] = (const char *) value;
+	    strparams[nbstrparams++] = value;
+            if (nbparams >= MAX_PARAMETERS) {
+                fprintf(stderr, "too many params increase MAX_PARAMETERS \n");
+                return (2);
+            }
         } else if ((!strcmp(argv[i], "-maxdepth")) ||
                    (!strcmp(argv[i], "--maxdepth"))) {
             int value;
@@ -460,6 +492,12 @@ main(int argc, char **argv)
         }
     }
     params[nbparams] = NULL;
+
+    if (novalid == 0)
+        xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
+    else
+        xmlLoadExtDtdDefaultValue = 0;
+
 
     /*
      * Replace entities with their content.
@@ -557,6 +595,8 @@ main(int argc, char **argv)
     }
     if (cur != NULL)
         xsltFreeStylesheet(cur);
+    for (i = 0;i < nbstrparams;i++)
+	xmlFree(strparams[i]);
 done:
     xsltCleanupGlobals();
     xmlCleanupParser();
