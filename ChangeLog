@@ -1,3 +1,7 @@
+Wed Jul 11 00:32:21 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libexslt/Makefile.am: initial EXSLT framework
+
 Tue Jul 10 18:03:36 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in libxslt/xsltwin32config.h: releaseing 1.0.0
