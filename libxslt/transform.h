@@ -112,7 +112,7 @@ void 		xsltForEach		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
 					 xmlNodePtr inst,
 					 xsltStylePreCompPtr comp);
-
+void		xsltRegisterAllElement	(xsltTransformContextPtr ctxt);
 #ifdef __cplusplus
 }
 #endif

@@ -1,3 +1,12 @@
+Sun Jul  8 22:12:02 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/extra.c libxslt/functions.c libxslt/transform.[ch]
+	  libxslt/variables.h: Norm pointed out that element-available()
+	  didn't work, implemented it
+	* tests/extensions/Makefile.am tests/extensions/list.*: added
+	  a test for all registered xslt element, function and default
+	  extensions.
+
 Sun Jul  8 20:44:25 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/documents/Makefile.am 'tests/documents/doc file.xml'

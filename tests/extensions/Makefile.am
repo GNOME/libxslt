@@ -4,7 +4,8 @@ $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = \
-    module.xml module.xsl module.out
+    module.xml module.xsl module.out \
+    list.xml list.xsl list.out
 
 
 all: test

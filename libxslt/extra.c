@@ -179,7 +179,7 @@ xsltRegisterExtras(xsltTransformContextPtr ctxt) {
     xsltRegisterExtElement(ctxt, (const xmlChar *) "output",
 	                    XSLT_SAXON_NAMESPACE, xsltDocumentElem);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "write",
-	                    XSLT_SAXON_NAMESPACE, xsltDocumentElem);
+	                    XSLT_XALAN_NAMESPACE, xsltDocumentElem);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "document",
 	                    XSLT_XT_NAMESPACE, xsltDocumentElem);
 }

@@ -568,6 +568,9 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 void
 xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlXPathObjectPtr obj;
+    xmlChar *prefix, *name;
+    const xmlChar *nsURI = NULL;
+    xsltTransformContextPtr tctxt;
 
     if (nargs != 1) {
         xsltGenericError(xsltGenericErrorContext,
@@ -582,8 +585,38 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	return;
     }
     obj = valuePop(ctxt);
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    if (tctxt == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+		"element-available() : internal error tctxt == NULL\n");
+	xmlXPathFreeObject(obj);
+	valuePush(ctxt, xmlXPathNewBoolean(0));
+	return;
+    }
+
+
+    name = xmlSplitQName2(obj->stringval, &prefix);
+    if (name == NULL) {
+	name = xmlStrdup(obj->stringval);
+    } else {
+	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
+	if (nsURI == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"element-available() : prefix %s is not bound\n", prefix);
+	}
+    }
+
+    if (xmlHashLookup2(tctxt->extElements, name, nsURI) != NULL) {
+	valuePush(ctxt, xmlXPathNewBoolean(1));
+    } else {
+	valuePush(ctxt, xmlXPathNewBoolean(0));
+    }
+
     xmlXPathFreeObject(obj);
-    valuePush(ctxt, xmlXPathNewBoolean(0));
+    if (name != NULL)
+	xmlFree(name);
+    if (prefix != NULL)
+	xmlFree(prefix);
 }
 
 /**

@@ -29,6 +29,7 @@ extern "C" {
     xmlXPathRegisterVariableLookup((ctxt)->xpathCtxt,		\
 	       xsltXPathVariableLookup,	(void *)(ctxt));	\
     xsltRegisterAllFunctions((ctxt)->xpathCtxt);		\
+    xsltRegisterAllElement(ctxt);				\
     (ctxt)->xpathCtxt->extra = ctxt
 
 /*
