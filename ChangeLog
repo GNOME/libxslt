@@ -1,3 +1,7 @@
+Tue Aug 31 15:45:42 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* NEWS configure.in doc/*: Release of libxslt-1.1.10
+
 Tue Aug 31 11:41:11 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.1 doc/xsltproc.xml: added missing descriptions
