@@ -1,3 +1,8 @@
+Sun Dec 22 22:54:04 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* vms/build_xslt.com libxslt/xsltconfig.h.in libxslt/xsltutils.c:
+	  applied patch from Craig A. Berry for the VMS port.
+
 Wed Dec 18 15:41:21 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltInternals.h: increase the max number of cascaded

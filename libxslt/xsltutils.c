@@ -46,6 +46,13 @@
 #endif /* _MS_VER */
 #endif /* WIN32 */
 
+#ifdef XSLT_NEED_TRIO
+#include "trio.h"
+#ifdef __VMS 
+# define vsnprintf trio_vsnprintf
+#endif
+#endif
+
 /************************************************************************
  * 									*
  * 			Convenience function				*
@@ -253,10 +260,6 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
  * 		Handling of out of context errors			*
  * 									*
  ************************************************************************/
-
-#ifdef XSLT_NEED_TRIO
-#define vsnprintf trio_vsnprintf
-#endif
 
 #define XSLT_GET_VAR_STR(msg, str) {				\
     int       size;						\

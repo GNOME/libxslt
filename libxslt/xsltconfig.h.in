@@ -76,6 +76,11 @@ extern "C" {
 #if @WITH_TRIO@
 #define XSLT_NEED_TRIO
 #endif
+#ifdef __VMS
+#ifndef XSLT_NEED_TRIO
+#define XSLT_NEED_TRIO
+#endif
+#endif
 
 /**
  * WITH_XSLT_DEBUGGER:

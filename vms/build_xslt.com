@@ -12,8 +12,8 @@ $! directory containing libxml's .h files
 $!
 $! This procedure creates the object libraries
 $!
-$!	XMLOLB:LIBXSLT.OLB
-$!	XMLOLB:LIBEXSLT.OLB
+$!	XML_LIBDIR:LIBXSLT.OLB
+$!	XML_LIBDIR:LIBEXSLT.OLB
 $!
 $! and the program
 $!
@@ -22,7 +22,7 @@ $!
 $! After the library is built, you can link these routines into
 $! your code with the command  
 $!
-$! 	LINK your_modules,XMLOLB:LIBEXSLT/LIB,LIBXSLT/LIBRARY,LIBXML/LIB
+$! 	LINK your_modules,XML_LIBDIR:LIBEXSLT/LIB,LIBXSLT/LIBRARY,LIBXML/LIB
 $!
 $! Change History
 $! --------------
@@ -33,13 +33,15 @@ $!- configuration -------------------------------------------------------------
 $!
 $!- compile command.
 $!
-$   if p1.eqs."DEBUG" 
-$   then 
-$     debug = "y"
-$     cc_command = "CC/DEBUG/NOOPT"
+$   cc_opts = "/INCLUDE=([],XML_SRCDIR:,[-.libxslt])/NAMES=(SHORTENED)/FLOAT=IEEE/IEEE_MODE=DENORM_RESULTS"
+$!
+$   if p1.eqs."DEBUG"
+$   then
+$     debug = "Y"
+$     cc_command = "CC''cc_opts'/DEBUG/NOOPTIMIZE/LIST/SHOW=ALL"
 $   else
-$     debug = "n"
-$     cc_command = "CC"
+$     debug = "N"
+$     cc_command = "CC''cc_opts'"
 $   endif
 $!
 $!- configure multiple build passes for each library. -------------------------
@@ -67,7 +69,7 @@ $   ! see "libxslt_la_SOURCES" in [.libxslt]makefile.in
 $   src_1 = "xslt.c xsltutils.c pattern.c templates.c variables.c keys.c"
 $   src_1 = src_1 + " numbers.c extensions.c extra.c functions.c"
 $   src_1 = src_1 + " namespaces.c imports.c attributes.c documents.c"
-$   src_1 = src_1 + " preproc.c transform.c"
+$   src_1 = src_1 + " preproc.c transform.c security.c"
 $!
 $!- pass 2 - library LIBEXSLT
 $!
@@ -76,7 +78,7 @@ $   h_file_2   = "exslt.h"
 $   progname_2 = ""
 $!
 $   ! see "libexslt_la_SOURCES" in [.libexslt]makefile.in
-$   src_2   = "exslt.c common.c math.c sets.c functions.c strings.c date.c saxon.c"
+$   src_2   = "exslt.c common.c math.c sets.c functions.c strings.c date.c saxon.c dynamic.c"
 $!
 $!- pass 3 - program XSLTPROC
 $!
@@ -89,19 +91,29 @@ $   src_3   = "xsltproc.c"
 $!
 $!- set up and check logicals  -----------------------------------------------
 $!
-$!  XMLOLB - object library directory
+$!  XML_LIBDIR - object library directory
+$!  XML_SRCDIR - top-level build directory of libxml package -- needed for config.h and trio.h
 $!  LIBXML - source directory containing .h files for libxml package
 $!
-$   if f$trnlnm("XMLOLB").eqs.""
+$   if f$trnlnm("XML_LIBDIR").eqs.""
 $   then
-$     write sys$output ""
-$     write sys$output "	You need to define a XMLOLB logical directory to"
-$     write sys$output "	point to the directory containing your CMS object"
-$     write sys$output "	libraries.  This should already contain LIBXML.OLB"
-$     write sys$output "	from the libxml package, and will be the directory"
-$     write sys$output "	the new LIBXSLT.OLB library will be placed in"
-$     write sys$output ""
-$     exit
+$     on error then continue
+$     globfile = f$search("[--...]libxml.olb")
+$     if globfile.eqs.""
+$     then
+$       write sys$output ""
+$       write sys$output "	You need to define the XML_LIBDIR logical name to"
+$       write sys$output "	point to the directory containing your object"
+$       write sys$output "	libraries.  This should already contain LIBXML.OLB"
+$       write sys$output "	from the libxml package, and will be the directory"
+$       write sys$output "	the new LIBXSLT.OLB library will be placed in"
+$       write sys$output ""
+$       exit
+$     else
+$	srcdir = f$parse(globfile,,,"DEVICE") + f$parse(globfile,,,"DIRECTORY")
+$	define/process XML_LIBDIR "''srcdir'"
+$       write sys$output "Defining XML_LIBDIR as ""''srcdir'"""
+$     endif
 $   endif
 $!
 $   if f$trnlnm("libxml").eqs.""
@@ -121,6 +133,20 @@ $     else
 $	srcdir = f$element(0,"]",globfile)+ "]"
 $	define/process LIBXML "''srcdir'"
 $       write sys$output "Defining LIBXML as ""''srcdir'"""
+$     endif
+$   endif
+$!
+$   if f$trnlnm("XML_SRCDIR").eqs.""
+$   then
+$     globfile = f$search("[--...]globals.c")
+$     if globfile.eqs.""
+$     then
+$	write sys$output "Can't locate globals.c.  You need to manually define a XML_SRCDIR logical"
+$	exit
+$     else
+$	srcdir = f$parse(globfile,,,"DEVICE") + f$parse(globfile,,,"DIRECTORY")
+$	define/process XML_SRCDIR "''srcdir'"
+$       write sys$output "Defining XML_SRCDIR as ""''srcdir'"""
 $     endif
 $   endif
 $!
@@ -208,7 +234,7 @@ $   progname = progname_'pass_no'
 $   if libname.nes.""
 $   then
 $     logname  = "''libname'_SRCDIR"
-$     pass_description = "the XMLOLB:''libname'.OLB object library"
+$     pass_description = "the XML_LIBDIR:''libname'.OLB object library"
 $   else
 $     logname  = "''progname'_SRCDIR"
 $     pass_description = "the programs in ''progname'"
@@ -219,10 +245,10 @@ $!- create the library if need
 $!
 $   if libname.nes."" 
 $   then
-$     if f$search("XMLOLB:''libname'.OLB").eqs."" 
+$     if f$search("XML_LIBDIR:''libname'.OLB").eqs."" 
 $     then
-$       write sys$output "Creating new object library XMLOLB:''libname'.OLB..."
-$       library/create XMLOLB:'libname'.OLB
+$       write sys$output "Creating new object library XML_LIBDIR:''libname'.OLB..."
+$       library/create XML_LIBDIR:'libname'.OLB
 $     endif
 $   endif
 $!
@@ -234,7 +260,7 @@ $!- define the library and link commands (link command not used as is)
 $!
 $   if libname.nes.""
 $   then
-$     lib_command  = "LIBRARY/REPLACE XMLOLB:''libname'.OLB"
+$     lib_command  = "LIBRARY/REPLACE XML_LIBDIR:''libname'.OLB"
 $     link_command = ""
 $   else
 $     lib_command  = ""
@@ -253,12 +279,7 @@ $!
 $     next_source = f$element (S_no," ",src)
 $     if next_source.nes."" .and. next_source.nes." "
 $     then
-$	if link_command.nes."" .or. next_source.eqs."xsltutils.c"
-$	then
-$         call build 'next_source' /IEEE_MODE=UNDERFLOW_TO_ZERO/FLOAT=IEEE
-$	else
-$         call build 'next_source'
-$	endif
+$       call build 'next_source'
 $       s_no = s_no + 1
 $       goto source_loop
 $     endif
@@ -287,7 +308,7 @@ $BUILD: subroutine
 $   on warning then goto EXIT_BUILD
 $   source_file = p1
 $   name = f$element(0,".",source_file)
-$   object_file = f$fao("XMLOLB:!AS.OBJ",name)
+$   object_file = f$fao("XML_LIBDIR:!AS.OBJ",name)
 $!
 $!- compile
 $   write sys$output "Compiling ",p1,p2,"..."
@@ -310,9 +331,9 @@ $	write sys$output "Linking ",text,"..."
 $	dbgopts = ""
 $	if debug then dbgopts = "/DEBUG"
 $	link_command'dbgopts' 'object_file',-
-      		XMLOLB:libexslt/lib,-
-      		XMLOLB:libxslt/lib,-
-      		XMLOLB:libxml/library
+      		XML_LIBDIR:libexslt/lib,-
+      		XML_LIBDIR:libxslt/lib,-
+      		XML_LIBDIR:libxml/library
 $   endif
 $!
 $EXIT_BUILD:
