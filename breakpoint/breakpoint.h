@@ -23,6 +23,10 @@
 #include <libxml/xpath.h>
 #include <libxml/list.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Define the types of status whilst debugging*/
 typedef enum {
     DEBUG_NONE,                 /* no debugging allowed */
@@ -62,7 +66,7 @@ struct _xslBreakPoint {
 -----------------------------------------------------------
              Break point related functions
 ----------------------------------------------------------
-*
+*/
 
 /**
  * xslFindTemplateNode: 
@@ -81,7 +85,7 @@ xmlNodePtr xslFindTemplateNode(const xsltStylesheetPtr style,
  *
  * Return the break point number that we stoped at
 */
-int xslActiveBreakPoint();
+int xslActiveBreakPoint(void);
 
 
 /**
@@ -188,7 +192,7 @@ int xslIsBreakPointEnabled(int breakPointNumber);
  *
  * Returns  the number of break points present
  */
-int xslBreakPointCount();
+int xslBreakPointCount(void);
 
 
 /**
@@ -261,7 +265,7 @@ void xslDebugBreak(xmlNodePtr templ, xmlNodePtr node, xsltTemplatePtr root,
  *
  * Initialize debugger allocating any memory needed by debugger
  */
-void xslDebugInit();
+void xslDebugInit(void);
 
 
 /**
@@ -269,7 +273,7 @@ void xslDebugInit();
  *
  * Free up any memory taken by debugger
  */
-void xslDebugFree();
+void xslDebugFree(void);
 
 
 /** 
@@ -337,7 +341,7 @@ int xslAddCall(xsltTemplatePtr templ, xmlNodePtr source);
  *
  * Drop the topmost item off the call stack
  */
-void xslDropCall();
+void xslDropCall(void);
 
 
 /** 
@@ -379,7 +383,7 @@ xslCallPointPtr xslGetCall(int depth);
  *
  * Returns the top of the call stack
  */
-xslCallPointPtr xslGetCallStackTop();
+xslCallPointPtr xslGetCallStackTop(void);
 
 
 /**
@@ -387,10 +391,13 @@ xslCallPointPtr xslGetCallStackTop();
  *
  * Returns the depth of call stack
  */
-int xslCallDepth();
+int xslCallDepth(void);
 
 
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

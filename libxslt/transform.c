@@ -31,6 +31,7 @@
 #include <libxml/parserInternals.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/HTMLtree.h>
+#include <libxml/debugXML.h>
 #include <libxml/uri.h>
 #include "xslt.h"
 #include "xsltInternals.h"

@@ -52,6 +52,7 @@ xslDebugFree()
 
 extern char *xslShellReadline(char *prompt);
 
+
 /**
  * @templ : The source node being executed
  * @node : The data node being processed
@@ -61,8 +62,10 @@ extern char *xslShellReadline(char *prompt);
  * A break point has been found so pass control to user
  */
 void
-xslDebugBreak(xmlNodePtr templ, xmlNodePtr node, xsltTemplatePtr root,
-              xsltTransformContextPtr ctxt)
+xslDebugBreak(xmlNodePtr templ ATTRIBUTE_UNUSED,
+              xmlNodePtr node ATTRIBUTE_UNUSED,
+              xsltTemplatePtr root ATTRIBUTE_UNUSED,
+              xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslDebugBreak' not overloaded\n");

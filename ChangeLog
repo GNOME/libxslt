@@ -1,3 +1,13 @@
+Sat Nov 10 14:01:44 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.7
+	* libxslt.spec.in: cleanup similar to libxml2 one
+	* breakpoint/*.[hc]: finished cleaning up contributed code
+	* doc/*: updated and rebuilt the documentation
+	* xsltproc/xsltproc.c: cleanup of the timing code
+	* xsltproc/Makefile.am: auto* sucks
+	* libxslt/transform.c: added a missing include
+
 Mon Nov  5 14:29:26 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am acconfig.h config.h.in configure.in 

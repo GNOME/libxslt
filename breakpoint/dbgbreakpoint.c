@@ -43,7 +43,7 @@ xslActiveBreakPoint()
  *        0 otherwise 
  */
 int
-xslSetActiveBreakPoint(int breakPointNumber)
+xslSetActiveBreakPoint(int breakPointNumber ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslSetActiveBreakPoint' not overloaded\n");
@@ -66,8 +66,8 @@ xslSetActiveBreakPoint(int breakPointNumber)
  *	    0 otherwise 
 */
 int
-xslAddBreakPoint(const xmlChar * url, long lineNumber,
-                 const xmlChar * templateName, int type)
+xslAddBreakPoint(const xmlChar * url ATTRIBUTE_UNUSED, long lineNumber ATTRIBUTE_UNUSED,
+                 const xmlChar * templateName ATTRIBUTE_UNUSED, int type ATTRIBUTE_UNUSED)
 {
 
     xsltGenericError(xsltGenericErrorContext,
@@ -85,7 +85,7 @@ xslAddBreakPoint(const xmlChar * url, long lineNumber,
  *	    0 otherwise
 */
 int
-xslDeleteBreakPoint(int breakPointNumber)
+xslDeleteBreakPoint(int breakPointNumber ATTRIBUTE_UNUSED)
 {
 
     xsltGenericError(xsltGenericErrorContext,
@@ -107,7 +107,7 @@ xslDeleteBreakPoint(int breakPointNumber)
  *	    0 otherwise
 */
 int
-xslEnableBreakPoint(int breakPointNumber, int enable)
+xslEnableBreakPoint(int breakPointNumber ATTRIBUTE_UNUSED, int enable ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslEnableBreakPoint' not overloaded\n");
@@ -126,7 +126,7 @@ xslEnableBreakPoint(int breakPointNumber, int enable)
  *           1 if break point is enabled      
 */
 int
-xslIsBreakPointEnabled(int breakPointNumber)
+xslIsBreakPointEnabled(int breakPointNumber ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslIsBreakPointEnabled' not overloaded\n");
@@ -155,7 +155,7 @@ xslBreakPointCount()
  *          NULL otherwise
 */
 xslBreakPointPtr
-xslGetBreakPoint(int breakPointNumber)
+xslGetBreakPoint(int breakPointNumber ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslGetBreakPoint' not overloaded\n");
@@ -174,7 +174,7 @@ xslGetBreakPoint(int breakPointNumber)
  *          0 otherwise
  */
 int
-xslPrintBreakPoint(FILE * file, int breakPointNumber)
+xslPrintBreakPoint(FILE * file ATTRIBUTE_UNUSED, int breakPointNumber ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslPrintBreakPoint' not overloaded\n");
@@ -194,7 +194,7 @@ xslPrintBreakPoint(FILE * file, int breakPointNumber)
  *         0 otherwise
 */
 int
-xslIsBreakPoint(const xmlChar * url, long lineNumber)
+xslIsBreakPoint(const xmlChar * url ATTRIBUTE_UNUSED, long lineNumber ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslIsBreakPoint' not overloaded\n");
@@ -212,7 +212,7 @@ xslIsBreakPoint(const xmlChar * url, long lineNumber)
  *           0 otherwise
  */
 int
-xslIsBreakPointNode(xmlNodePtr node)
+xslIsBreakPointNode(xmlNodePtr node ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslIsBreakPointNode' not overloaded\n");

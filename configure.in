@@ -78,7 +78,7 @@ dnl
 
 AC_CHECK_HEADERS(sys/types.h sys/time.h stdlib.h unistd.h string.h)
 AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h ansidecl.h)
-AC_CHECK_HEADERS(time.h sys/stat.h)
+AC_CHECK_HEADERS(time.h sys/stat.h stdarg.h)
 AC_CHECK_FUNCS(stat _stat)
 
 AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,

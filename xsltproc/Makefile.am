@@ -9,11 +9,11 @@ if DV_STATIC_LINK
 all: xsltproc
 
 if WITH_DEBUGGER
-xsltproc: xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../breakpoint/.libs/libxsltbreakpoint.a ../../XML/.libs/libxml2.a
-	gcc -g -O -o xsltproc  xsltproc.o ../libxslt/.libs/libxslt.a ../breakpoint/.libs/libxsltbreakpoint.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a -lz -lm
+xsltproc$(EXEEXT): xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../breakpoint/.libs/libxsltbreakpoint.a ../../XML/.libs/libxml2.a
+	gcc -g -O -o xsltproc$(EXEEXT) xsltproc.o ../libxslt/.libs/libxslt.a ../breakpoint/.libs/libxsltbreakpoint.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a -lz -lm
 else
-xsltproc: xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a
-	gcc -g -O -o xsltproc  xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a -lz -lm
+xsltproc$(EXEEXT): xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a
+	gcc -g -O -o xsltproc$(EXEEXT) xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a -lz -lm
 endif
 
 programs=

@@ -55,6 +55,9 @@
 /* Define if you have the <nan.h> header file.  */
 #undef HAVE_NAN_H
 
+/* Define if you have the <stdarg.h> header file.  */
+#undef HAVE_STDARG_H
+
 /* Define if you have the <stdlib.h> header file.  */
 #undef HAVE_STDLIB_H
 

@@ -1,21 +1,16 @@
-# Note that this is NOT a relocatable package
-%define ver      @VERSION@
-%define prefix   /usr
-%define datadir  %{prefix}/share
-
 Summary: Library providing the Gnome XSLT engine
 Name: libxslt
-Version: %ver
+Version: @VERSION@
 Release: 1
 Copyright: LGPL
 Group: Development/Libraries
-Source: ftp://xmlsoft.org/XSLT/libxslt-%{ver}.tar.gz
-BuildRoot: /var/tmp/libxslt-%{PACKAGE_VERSION}-root
+Source: ftp://xmlsoft.org/XSLT/libxslt-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
+URL: http://xmlsoft.org/XSLT/
 Requires: libxml2 >= @LIBXML_REQUIRED_VERSION@
 BuildRequires: libxml2-devel >= @LIBXML_REQUIRED_VERSION@
-
-URL: http://xmlsoft.org/XSLT/
-Docdir: %{prefix}/doc
+Prefix: %{_prefix}
+Docdir: %{_docdir}
 
 %description
 This C library allows to transform XML files into other XML files
@@ -27,7 +22,7 @@ installed. The xsltproc command is a command line interface to the XSLT engine
 Summary: Libraries, includes, etc. to embed the Gnome XSLT engine
 Group: Development/Libraries
 Requires: libxslt = %{version}
-Requires: libxml2-devel >= 2.3.10
+Requires: libxml2-devel >= @LIBXML_REQUIRED_VERSION@
 
 %description devel
 This C library allows to transform XML files into other XML files
@@ -35,28 +30,22 @@ This C library allows to transform XML files into other XML files
 mechanism. To use it you need to have a version of libxml2 >= 2.3.8
 installed.
 
-%changelog
-
-* Mon Jan 22 2001 Daniel.Veillard <daniel@veillard.com>
-
-- created based on libxml2 spec file
-
 %prep
-%setup
+%setup -q
 
 %build
 # Needed for snapshot releases.
 if [ ! -f configure ]; then
 %ifarch alpha
-  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc"
+  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
 %else
-  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --prefix=%prefix --sysconfdir="/etc"
+  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
 %endif
 else
 %ifarch alpha
-  CFLAGS="$RPM_OPT_FLAGS" ./configure --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc"
+  CFLAGS="$RPM_OPT_FLAGS" ./configure --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
 %else
-  CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%prefix --sysconfdir="/etc"
+  CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
 %endif
 fi
 
@@ -70,9 +59,9 @@ fi
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{datadir}/man/man1
-install -d $RPM_BUILD_ROOT%{datadir}/man/man4
-make prefix=$RPM_BUILD_ROOT%{prefix} mandir=$RPM_BUILD_ROOT%{datadir}/man install
+install -d $RPM_BUILD_ROOT%{_mandir}/man1
+install -d $RPM_BUILD_ROOT%{_mandir}/man4
+make prefix=$RPM_BUILD_ROOT%{prefix} mandir=$RPM_BUILD_ROOT%{_mandir} install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -86,7 +75,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %doc AUTHORS ChangeLog NEWS README COPYING COPYING.LIB TODO FEATURES
 %doc doc/*.html doc/html doc/tutorial
-%doc %{prefix}/share/man/man1/xsltproc.1*
+%doc %{_mandir}/man1/xsltproc.1*
 
 %{prefix}/lib/lib*.so.*
 %{prefix}/bin/xsltproc
@@ -99,3 +88,14 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/lib/*.sh
 %{prefix}/include/*
 %{prefix}/bin/xslt-config
+
+%changelog
+
+* Sat Nov 10 2001 Daniel.Veillard <daniel@veillard.com>
+
+- cleaned up the specfile
+
+* Mon Jan 22 2001 Daniel.Veillard <daniel@veillard.com>
+
+- created based on libxml2 spec file
+

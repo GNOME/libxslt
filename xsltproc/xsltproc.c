@@ -23,6 +23,9 @@
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
+#ifdef HAVE_STDARG_H
+#include <stdarg.h>
+#endif
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
@@ -53,7 +56,11 @@
 #define gettimeofday(p1,p2)
 #endif /* _MS_VER */
 #else /* WIN32 */
+#if defined(HAVE_SYS_TIME_H)
 #include <sys/time.h>
+#elif defined(HAVE_TIME_H)
+#include <time.h>
+#endif
 #endif /* WIN32 */
 
 #ifndef HAVE_STAT
@@ -87,10 +94,103 @@ static int xinclude = 0;
 #endif
 static int profile = 0;
 
-static struct timeval begin, end;
 static const char *params[16 + 1];
 static int nbparams = 0;
 static const char *output = NULL;
+
+/*
+ * Internal timing routines to remove the necessity to have unix-specific
+ * function calls
+ */
+
+#if defined(HAVE_GETTIMEOFDAY)
+static struct timeval begin, end;
+/*
+ * startTimer: call where you want to start timing
+ */
+static void startTimer(void)
+{
+    gettimeofday(&begin,NULL);
+}
+/*
+ * endTimer: call where you want to stop timing and to print out a
+ *           message about the timing performed; format is a printf
+ *           type argument
+ */
+static void endTimer(const char *format, ...)
+{
+    long msec;
+    va_list ap;
+
+    gettimeofday(&end, NULL);
+    msec = end.tv_sec - begin.tv_sec;
+    msec *= 1000;
+    msec += (end.tv_usec - begin.tv_usec) / 1000;
+
+#ifndef HAVE_STDARG_H
+#error "endTimer required stdarg functions"
+#endif
+    va_start(ap, format);
+    vfprintf(stderr,format,ap);
+    va_end(ap);
+
+    fprintf(stderr, " took %ld ms\n", msec);
+}
+#elif defined(HAVE_TIME_H)
+/*
+ * No gettimeofday function, so we have to make do with calling clock.
+ * This is obviously less accurate, but there's little we can do about
+ * that.
+ */
+
+clock_t begin, end;
+static void startTimer(void)
+{
+    begin=clock();
+}
+static void endTimer(char *format, ...)
+{
+    long msec;
+    va_list ap;
+
+    end=clock();
+    msec = ((end-begin) * 1000) / CLOCKS_PER_SEC;
+
+#ifndef HAVE_STDARG_H
+#error "endTimer required stdarg functions"
+#endif
+    va_start(ap, format);
+    vfprintf(stderr,format,ap);
+    va_end(ap);
+    fprintf(stderr, " took %ld ms\n", msec);
+}
+#else
+/*
+ * We don't have a gettimeofday or time.h, so we just don't do timing
+ */
+static void startTimer(void)
+{
+  /*
+   * Do nothing
+   */
+}
+static void endTimer(char *format, ...)
+{
+  /*
+   * We cannot do anything because we don't have a timing function
+   */
+#ifdef HAVE_STDARG_H
+    va_start(ap, format);
+    vfprintf(stderr,format,ap);
+    va_end(ap);
+    fprintf(stderr, " was not timed\n", msec);
+#else
+  /* We don't have gettimeofday, time or stdarg.h, what crazy world is
+   * this ?!
+   */
+#endif
+}
+#endif
 
 static void
 xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
@@ -99,22 +199,15 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 #ifdef LIBXML_XINCLUDE_ENABLED
     if (xinclude) {
 	if (timing)
-	    gettimeofday(&begin, NULL);
+	    startTimer();
 	xmlXIncludeProcess(doc);
 	if (timing) {
-	    long msec;
-
-	    gettimeofday(&end, NULL);
-	    msec = end.tv_sec - begin.tv_sec;
-	    msec *= 1000;
-	    msec += (end.tv_usec - begin.tv_usec) / 1000;
-	    fprintf(stderr, "XInclude processing %s took %ld ms\n",
-		    filename, msec);
+	    endTimer("XInclude processing %s", filename);
 	}
     }
 #endif
     if (timing)
-	gettimeofday(&begin, NULL);
+        startTimer();
     if (output == NULL) {
 	if (repeat) {
 	    int j;
@@ -142,19 +235,10 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	    res = xsltApplyStylesheet(cur, doc, params);
 	}
 	if (timing) {
-	    long msec;
-
-	    gettimeofday(&end, NULL);
-	    msec = end.tv_sec - begin.tv_sec;
-	    msec *= 1000;
-	    msec += (end.tv_usec - begin.tv_usec) / 1000;
 	    if (repeat)
-		fprintf(stderr,
-			"Applying stylesheet %d times took %ld ms\n",
-			repeat, msec);
+		endTimer("Applying stylesheet %d times", repeat);
 	    else
-		fprintf(stderr,
-			"Applying stylesheet took %ld ms\n", msec);
+		endTimer("Applying stylesheet");
 	}
 	xmlFreeDoc(doc);
 	if (res == NULL) {
@@ -172,37 +256,19 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 #endif
 	    if (cur->methodURI == NULL) {
 		if (timing)
-		    gettimeofday(&begin, NULL);
+		    startTimer();
 		xsltSaveResultToFile(stdout, res, cur);
-		if (timing) {
-		    long msec;
-
-		    gettimeofday(&end, NULL);
-		    msec = end.tv_sec - begin.tv_sec;
-		    msec *= 1000;
-		    msec += (end.tv_usec - begin.tv_usec) / 1000;
-		    fprintf(stderr, "Saving result took %ld ms\n",
-			    msec);
-		}
+		if (timing)
+		    endTimer("Saving result");
 	    } else {
 		if (xmlStrEqual
 		    (cur->method, (const xmlChar *) "xhtml")) {
 		    fprintf(stderr, "non standard output xhtml\n");
 		    if (timing)
-			gettimeofday(&begin, NULL);
+			startTimer();
 		    xsltSaveResultToFile(stdout, res, cur);
-		    if (timing) {
-			long msec;
-
-			gettimeofday(&end, NULL);
-			msec = end.tv_sec - begin.tv_sec;
-			msec *= 1000;
-			msec +=
-			    (end.tv_usec - begin.tv_usec) / 1000;
-			fprintf(stderr,
-				"Saving result took %ld ms\n",
-				msec);
-		    }
+		    if (timing)
+			endTimer("Saving result");
 		} else {
 		    fprintf(stderr,
 			    "Unsupported non standard output %s\n",
@@ -216,17 +282,8 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	xmlFreeDoc(res);
     } else {
 	xsltRunStylesheet(cur, doc, params, output, NULL, NULL);
-	if (timing) {
-	    long msec;
-
-	    gettimeofday(&end, NULL);
-	    msec = end.tv_sec - begin.tv_sec;
-	    msec *= 1000;
-	    msec += (end.tv_usec - begin.tv_usec) / 1000;
-	    fprintf(stderr,
-		"Running stylesheet and saving result took %ld ms\n",
-		    msec);
-	}
+	if (timing)
+	    endTimer("Running stylesheet and saving result");
 	xmlFreeDoc(doc);
     }
 }
@@ -421,18 +478,10 @@ main(int argc, char **argv)
         }
         if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
             if (timing)
-                gettimeofday(&begin, NULL);
+                startTimer();
 	    style = xmlParseFile((const char *) argv[i]);
-            if (timing) {
-                long msec;
-
-                gettimeofday(&end, NULL);
-                msec = end.tv_sec - begin.tv_sec;
-                msec *= 1000;
-                msec += (end.tv_usec - begin.tv_usec) / 1000;
-                fprintf(stderr, "Parsing stylesheet %s took %ld ms\n",
-                        argv[i], msec);
-            }
+            if (timing) 
+		endTimer("Parsing stylesheet %s", argv[i]);
 	    if (style == NULL) {
 		fprintf(stderr,  "cannot parse %s\n", argv[i]);
 		cur = NULL;
@@ -471,7 +520,7 @@ main(int argc, char **argv)
         for (; i < argc; i++) {
 	    doc = NULL;
             if (timing)
-                gettimeofday(&begin, NULL);
+                startTimer();
 #ifdef LIBXML_HTML_ENABLED
             if (html)
                 doc = htmlParseFile(argv[i], NULL);
@@ -487,16 +536,8 @@ main(int argc, char **argv)
                 fprintf(stderr, "unable to parse %s\n", argv[i]);
                 continue;
             }
-            if (timing) {
-                long msec;
-
-                gettimeofday(&end, NULL);
-                msec = end.tv_sec - begin.tv_sec;
-                msec *= 1000;
-                msec += (end.tv_usec - begin.tv_usec) / 1000;
-                fprintf(stderr, "Parsing document %s took %ld ms\n",
-                        argv[i], msec);
-            }
+            if (timing)
+		endTimer("Parsing document %s", argv[i]);
 	    xsltProcess(doc, cur, argv[i]);
         }
     }

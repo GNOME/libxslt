@@ -30,7 +30,8 @@
  *           NULL otherwise 
  */
 xmlNodePtr
-xslFindTemplateNode(xsltStylesheetPtr style, const xmlChar * name)
+xslFindTemplateNode(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
+                    const xmlChar * name ATTRIBUTE_UNUSED)
 {
 
     xsltGenericError(xsltGenericErrorContext,
@@ -51,8 +52,9 @@ xslFindTemplateNode(xsltStylesheetPtr style, const xmlChar * name)
  *	    0 otherwise
 */
 xmlNodePtr
-xslFindNodeByLineNo(xsltTransformContextPtr ctxt,
-                    const xmlChar * url, long lineNumber)
+xslFindNodeByLineNo(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
+                    const xmlChar * url ATTRIBUTE_UNUSED,
+                    long lineNumber ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslFindNodeByLineNo' not overloaded\n");
@@ -70,7 +72,7 @@ xslFindNodeByLineNo(xsltTransformContextPtr ctxt,
  *          0 otherwise 
  */
 int
-xslFindBreakPointById(int id)
+xslFindBreakPointById(int id ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslFindBreakPointById' not overloaded\n");
@@ -89,7 +91,8 @@ xslFindBreakPointById(int id)
  *	    0 otherwise
 */
 int
-xslFindBreakPointByLineNo(const xmlChar * url, long lineNumber)
+xslFindBreakPointByLineNo(const xmlChar * url ATTRIBUTE_UNUSED,
+                          long lineNumber ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslFindBreakPointByLineNo' not overloaded\n");
@@ -108,7 +111,7 @@ xslFindBreakPointByLineNo(const xmlChar * url, long lineNumber)
  *          0 otherwise
 */
 int
-xslFindBreakPointByName(const xmlChar * templateName)
+xslFindBreakPointByName(const xmlChar * templateName ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslFindBreakPointByName' not overloaded\n");

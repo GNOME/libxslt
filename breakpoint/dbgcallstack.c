@@ -17,6 +17,7 @@
 -----------------------------------------------------
 */
 
+#include "libxslt.h"
 #include "xsltutils.h"
 #include "breakpoint.h"
 
@@ -29,7 +30,8 @@
  * Returns a reference to the added info if sucessfull, otherwise NULL  
  */
 xslCallPointInfoPtr
-xslAddCallInfo(const xmlChar * templateName, const xmlChar * url)
+xslAddCallInfo(const xmlChar * templateName ATTRIBUTE_UNUSED,
+	       const xmlChar * url ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslAddCallInfo' not overloaded\n");
@@ -47,7 +49,7 @@ xslAddCallInfo(const xmlChar * templateName, const xmlChar * url)
  * Returns : 1 on sucess, 0 otherwise
  */
 int
-xslAddCall(xsltTemplatePtr templ, xmlNodePtr source)
+xslAddCall(xsltTemplatePtr templ ATTRIBUTE_UNUSED, xmlNodePtr source ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslAddCall' not overloaded\n");
@@ -62,7 +64,7 @@ xslAddCall(xsltTemplatePtr templ, xmlNodePtr source)
  * Drop the topmost item off the call stack
  */
 void
-xslDropCall()
+xslDropCall(void)
 {
 
     xsltGenericError(xsltGenericErrorContext,
@@ -79,7 +81,7 @@ xslDropCall()
  * Returns 1 on sucess , 0 otherwise
  */
 int
-xslStepupToDepth(int depth)
+xslStepupToDepth(int depth ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslStepupToDepth' not overloaded\n");
@@ -95,7 +97,7 @@ xslStepupToDepth(int depth)
  * Returns 1 on sucess , 0 otherwise
  */
 int
-xslStepdownToDepth(int depth)
+xslStepdownToDepth(int depth ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslStepdownToDepth' not overloaded\n");
@@ -113,7 +115,7 @@ xslStepdownToDepth(int depth)
  *         NULL otherwise 
  */
 xslCallPointPtr
-xslGetCall(int depth)
+xslGetCall(int depth ATTRIBUTE_UNUSED)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslGetCall' not overloaded\n");
@@ -128,7 +130,7 @@ xslGetCall(int depth)
  * Returns the top of the call stack
  */
 xslCallPointPtr
-xslGetCallStackTop()
+xslGetCallStackTop(void)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslGetCallStackTop' not overloaded\n");
@@ -143,7 +145,7 @@ xslGetCallStackTop()
  * Return the depth of call stack
  */
 int
-xslCallDepth()
+xslCallDepth(void)
 {
     xsltGenericError(xsltGenericErrorContext,
                      "Error!: Debugger function 'xslCallDepth' not overloaded\n");
