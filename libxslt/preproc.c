@@ -625,9 +625,6 @@ static void
 xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
-    xmlChar *ncname = NULL;
-    xmlChar *prefix = NULL;
-    xmlNsPtr ns = NULL;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -646,28 +643,21 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	     "xslt:with-param : name is missing\n");
 	style->errors++;
     } else {
+        const xmlChar *URI;
 
-	ncname = xmlSplitQName2(prop, &prefix);
-	if (ncname == NULL) {
-	    ncname = prop;
-	    prop = NULL;
-	    prefix = NULL;
-	}
-	if (prefix != NULL) {
-	    ns = xmlSearchNs(inst->doc, inst, prefix);
-	    if (ns == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-		"xslt:with-param : no namespace bound to prefix %s\n", prefix);
-		style->warnings++;
+	URI = xsltGetQNameURI(inst, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	} else {
+	    comp->name = prop;
+	    comp->has_name = 1;
+	    if (URI != NULL) {
+		comp->ns = xmlStrdup(URI);
+		comp->has_ns = 1;
+	    } else {
+		comp->has_ns = 0;
 	    }
 	}
-	comp->name = xmlStrdup(ncname);
-	comp->has_name = 1;
-	if (ns != NULL) {
-	    comp->has_ns = 1;
-	    comp->ns = xmlStrdup(ns->href);
-	} else
-	    comp->has_ns = 0;
     }
 
     comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
@@ -685,13 +675,6 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    "xsl:param : content should be empty since select is present \n");
 	style->warnings++;
     }
-
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
 }
 
 /**
@@ -828,9 +811,6 @@ static void
 xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
-    xmlChar *ncname = NULL;
-    xmlChar *prefix = NULL;
-    xmlNsPtr ns = NULL;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -849,37 +829,23 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	     "xslt:call-template : name is missing\n");
 	style->errors++;
     } else {
+        const xmlChar *URI;
 
-	ncname = xmlSplitQName2(prop, &prefix);
-	if (ncname == NULL) {
-	    ncname = prop;
-	    prop = NULL;
-	    prefix = NULL;
-	}
-	if (prefix != NULL) {
-	    ns = xmlSearchNs(inst->doc, inst, prefix);
-	    if (ns == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-	"xslt:call-template : no namespace bound to prefix %s\n", prefix);
-		style->warnings++;
+	URI = xsltGetQNameURI(inst, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	} else {
+	    comp->name = prop;
+	    comp->has_name = 1;
+	    if (URI != NULL) {
+		comp->ns = xmlStrdup(URI);
+		comp->has_ns = 1;
+	    } else {
+		comp->has_ns = 0;
 	    }
 	}
-	comp->name = xmlStrdup(ncname);
-	comp->has_name = 1;
-	if (ns != NULL) {
-	    comp->ns = xmlStrdup(ns->href);
-	    comp->has_ns = 1;
-	} else
-	    comp->has_ns = 0;
 	comp->templ = NULL;
     }
-
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
 }
 
 /**
@@ -907,34 +873,18 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
      */
     prop = xsltGetNsProp(inst, (const xmlChar *)"mode", XSLT_NAMESPACE);
     if (prop != NULL) {
-	xmlChar *prefix = NULL;
+        const xmlChar *URI;
 
-	comp->mode = xmlSplitQName2(prop, &prefix);
-	if (comp->mode != NULL) {
-	    if (prefix != NULL) {
-		xmlNsPtr ns;
-
-		ns = xmlSearchNs(inst->doc, inst, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"no namespace bound to prefix %s\n", prefix);
-		    style->warnings++;
-		    xmlFree(prefix);
-		    xmlFree(comp->mode);
-		    comp->mode = prop;
-		    comp->modeURI = NULL;
-		} else {
-		    comp->modeURI = xmlStrdup(ns->href);
-		    xmlFree(prefix);
-		    xmlFree(prop);
-		}
-	    } else {
-		xmlFree(prop);
-		comp->modeURI = NULL;
-	    }
+	URI = xsltGetQNameURI(inst, &prop);
+	if (prop == NULL) {
+	    style->errors++;
 	} else {
 	    comp->mode = prop;
-	    comp->modeURI = NULL;
+	    if (URI != NULL) {
+		comp->modeURI = xmlStrdup(URI);
+	    } else {
+		comp->modeURI = NULL;
+	    }
 	}
     }
     comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
@@ -1090,9 +1040,6 @@ static void
 xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
-    xmlChar *ncname = NULL;
-    xmlChar *prefix = NULL;
-    xmlNsPtr ns = NULL;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1111,27 +1058,21 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	     "xslt:variable : name is missing\n");
 	style->errors++;
     } else {
-	ncname = xmlSplitQName2(prop, &prefix);
-	if (ncname == NULL) {
-	    ncname = prop;
-	    prop = NULL;
-	    prefix = NULL;
-	}
-	if (prefix != NULL) {
-	    ns = xmlSearchNs(inst->doc, inst, prefix);
-	    if (ns == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-		"xsl:variable no namespace bound to prefix %s\n", prefix);
-		style->warnings++;
+        const xmlChar *URI;
+
+	URI = xsltGetQNameURI(inst, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	} else {
+	    comp->name = prop;
+	    comp->has_name = 1;
+	    if (URI != NULL) {
+		comp->ns = xmlStrdup(URI);
+		comp->has_ns = 1;
+	    } else {
+		comp->has_ns = 0;
 	    }
 	}
-	comp->name = xmlStrdup(ncname);
-	comp->has_name = 1;
-	if (ns != NULL) {
-	    comp->ns = xmlStrdup(ns->href);
-	    comp->has_ns = 1;
-	} else
-	    comp->has_ns = 0;
     }
 
     comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
@@ -1149,13 +1090,6 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	"xsl:variable : content should be empty since select is present \n");
 	style->warnings++;
     }
-
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
 }
 
 /**
@@ -1169,9 +1103,6 @@ static void
 xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
-    xmlChar *ncname = NULL;
-    xmlChar *prefix = NULL;
-    xmlNsPtr ns = NULL;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1190,27 +1121,21 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	     "xslt:param : name is missing\n");
 	style->errors++;
     } else {
-	ncname = xmlSplitQName2(prop, &prefix);
-	if (ncname == NULL) {
-	    ncname = prop;
-	    prop = NULL;
-	    prefix = NULL;
-	}
-	if (prefix != NULL) {
-	    ns = xmlSearchNs(inst->doc, inst, prefix);
-	    if (ns == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-		    "xsl:param no namespace bound to prefix %s\n", prefix);
-		style->warnings++;
+        const xmlChar *URI;
+
+	URI = xsltGetQNameURI(inst, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	} else {
+	    comp->name = prop;
+	    comp->has_name = 1;
+	    if (URI != NULL) {
+		comp->ns = xmlStrdup(URI);
+		comp->has_ns = 1;
+	    } else {
+		comp->has_ns = 0;
 	    }
 	}
-	comp->name = xmlStrdup(ncname);
-	comp->has_name = 1;
-	if (ns != NULL) {
-	    comp->ns = xmlStrdup(ns->href);
-	    comp->has_ns = 1;
-	} else
-	    comp->has_ns = 0;
     }
 
     comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
@@ -1228,13 +1153,6 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	"xsl:param : content should be empty since select is present \n");
 	style->warnings++;
     }
-
-    if (prop != NULL)
-        xmlFree(prop);
-    if (ncname != NULL)
-        xmlFree(ncname);
-    if (prefix != NULL)
-        xmlFree(prefix);
 }
 
 

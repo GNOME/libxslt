@@ -255,6 +255,91 @@ xsltSetGenericDebugFunc(void *ctx, xmlGenericErrorFunc handler) {
 
 /************************************************************************
  * 									*
+ * 				QNames					*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltGetQNameURI:
+ * @node:  the node holding the QName
+ * @name:  pointer to the initial QName value
+ *
+ * This function analyze @name, if the name contains a prefix,
+ * the function seaches the associated namespace in scope for it.
+ * It will also replace @name value with the NCName, the old value being
+ * freed.
+ * Errors in the prefix lookup are signalled by setting @name to NULL.
+ *
+ * NOTE: the namespace returned is a pointer to the place where it is
+ *       defined and hence has the same lifespan as the document holding it.
+ *
+ * Returns the namespace URI if there is a prefix, or NULL if @name is
+ *         not prefixed.
+ */
+const xmlChar *
+xsltGetQNameURI(xmlNodePtr node, xmlChar ** name)
+{
+    int len = 0;
+    xmlChar *qname;
+    xmlNsPtr ns;
+
+    if (name == NULL)
+	return(NULL);
+    qname = *name;
+    if ((qname == NULL) || (*qname == 0))
+	return(NULL);
+    if (node == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+		         "QName: no element for namespace lookup %s\n",
+			 qname);
+	xmlFree(qname);
+	*name = NULL;
+	return(NULL);
+    }
+
+    /* nasty but valid */
+    if (qname[0] == ':')
+	return(NULL);
+
+    /*
+     * we are not trying to validate but just to cut, and yes it will
+     * work even if this is as set of UTF-8 encoded chars
+     */
+    while ((qname[len] != 0) && (qname[len] != ':')) 
+	len++;
+    
+    if (qname[len] == 0)
+	return(NULL);
+
+    /*
+     * handle xml: separately, this one is magical
+     */
+    if ((qname[0] == 'x') && (qname[1] == 'm') &&
+        (qname[2] == 'l') && (qname[3] == ':')) {
+	if (qname[4] == 0)
+	    return(NULL);
+        *name = xmlStrdup(&qname[4]);
+	xmlFree(qname);
+	return(XML_XML_NAMESPACE);
+    }
+
+    qname[len] = 0;
+    ns = xmlSearchNs(node->doc, node, qname);
+    if (ns == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+		"%s:%s : no namespace bound to prefix %s\n",
+		         qname, &qname[len + 1]);
+	*name = NULL;
+	xmlFree(qname);
+	return(NULL);
+    }
+    *name = xmlStrdup(&qname[len + 1]);
+    xmlFree(qname);
+    return(ns->href);
+}
+
+/************************************************************************
+ * 									*
  * 				Sorting					*
  * 									*
  ************************************************************************/

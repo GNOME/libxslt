@@ -1193,52 +1193,32 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                          (const xmlChar *) "method",
                                          XSLT_NAMESPACE);
         if (prop != NULL) {
-            xmlChar *ncname;
-            xmlChar *prefix = NULL;
+	    const xmlChar *URI;
 
-            if (style->method != NULL)
-                xmlFree(style->method);
-            style->method = NULL;
-            if (style->methodURI != NULL)
-                xmlFree(style->methodURI);
-            style->methodURI = NULL;
+	    if (style->method != NULL)
+		xmlFree(style->method);
+	    style->method = NULL;
+	    if (style->methodURI != NULL)
+		xmlFree(style->methodURI);
+	    style->methodURI = NULL;
 
-            ncname = xmlSplitQName2(prop, &prefix);
-            if (ncname != NULL) {
-                if (prefix != NULL) {
-                    xmlNsPtr ns;
-
-                    ns = xmlSearchNs(inst->doc, inst, prefix);
-                    if (ns == NULL) {
-                        xsltGenericError(xsltGenericErrorContext,
-                                         "no namespace bound to prefix %s\n",
-                                         prefix);
-                        style->warnings++;
-                        xmlFree(prefix);
-                        xmlFree(ncname);
-                        style->method = prop;
-                    } else {
-                        style->methodURI = xmlStrdup(ns->href);
-                        style->method = ncname;
-                        xmlFree(prefix);
-                        xmlFree(prop);
-                    }
-                } else {
-                    style->method = ncname;
-                    xmlFree(prop);
-                }
-            } else {
-                if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
-                    (xmlStrEqual(prop, (const xmlChar *) "html")) ||
-                    (xmlStrEqual(prop, (const xmlChar *) "text"))) {
-                    style->method = prop;
-                } else {
-                    xsltGenericError(xsltGenericErrorContext,
-                                     "invalid value for method: %s\n",
-                                     prop);
-                    style->warnings++;
-                }
-            }
+	    URI = xsltGetQNameURI(inst, &prop);
+	    if (prop == NULL) {
+		style->errors++;
+	    } else if (URI == NULL) {
+		if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
+		    (xmlStrEqual(prop, (const xmlChar *) "html")) ||
+		    (xmlStrEqual(prop, (const xmlChar *) "text"))) {
+		    style->method = prop;
+		} else {
+		    xsltGenericError(xsltGenericErrorContext,
+				     "invalid value for method: %s\n", prop);
+		    style->warnings++;
+		}
+	    } else {
+		style->method = prop;
+		style->methodURI = xmlStrdup(URI);
+	    }
         }
         prop = xsltEvalAttrValueTemplate(ctxt, inst,
                                          (const xmlChar *)

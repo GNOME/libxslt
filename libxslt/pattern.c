@@ -234,7 +234,7 @@ xsltFreeParserContext(xsltParserContextPtr ctxt) {
  */
 static int
 xsltCompMatchAdd(xsltCompMatchPtr comp, xsltOp op, xmlChar *value,
-	           xmlChar *value2) {
+	         xmlChar *value2) {
     if (comp->nbStep >= 20) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltCompMatchAddOp: overflow\n");
@@ -1126,13 +1126,14 @@ error:
 static void
 xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     xmlChar *name = NULL;
-    xmlChar *prefix = NULL;
-    xmlChar *ncname = NULL;
+    const xmlChar *URI = NULL;
     xmlChar *URL = NULL;
     int level;
 
     SKIP_BLANKS;
     if ((token == NULL) && (CUR == '@')) {
+	xmlChar *prefix = NULL;
+
 	NEXT;
 	if (CUR == '*') {
 	    NEXT;
@@ -1205,23 +1206,14 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		ctxt->error = 1;
 		goto error;
 	    }
-	    ncname = xmlSplitQName2(name, &prefix);
-	    if (ncname != NULL) {
-		if (prefix != NULL) {
-		    xmlNsPtr ns;
-
-		    ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
-		    if (ns == NULL) {
-			xsltGenericError(xsltGenericErrorContext,
-			    "xsl: pattern, no namespace bound to prefix %s\n",
-			                 prefix);
-		    } else {
-			URL = xmlStrdup(ns->href);
-		    }
-		    xmlFree(prefix);
-		}
-		xmlFree(name);
-		name = ncname;
+	    URI = xsltGetQNameURI(ctxt->elem, &token);
+	    if (token == NULL) {
+		ctxt->error = 1;
+		goto error;
+	    } else {
+		name = xmlStrdup(token);
+		if (URI != NULL)
+		    URL = xmlStrdup(URI);
 	    }
 	    PUSH(XSLT_OP_CHILD, name, URL);
 	} else if (xmlStrEqual(token, (const xmlChar *) "attribute")) {
@@ -1232,23 +1224,14 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		ctxt->error = 1;
 		goto error;
 	    }
-	    ncname = xmlSplitQName2(name, &prefix);
-	    if (ncname != NULL) {
-		if (prefix != NULL) {
-		    xmlNsPtr ns;
-
-		    ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
-		    if (ns == NULL) {
-			xsltGenericError(xsltGenericErrorContext,
-			    "xsl: pattern, no namespace bound to prefix %s\n",
-			                 prefix);
-		    } else {
-			URL = xmlStrdup(ns->href);
-		    }
-		    xmlFree(prefix);
-		}
-		xmlFree(name);
-		name = ncname;
+	    URI = xsltGetQNameURI(ctxt->elem, &token);
+	    if (token == NULL) {
+		ctxt->error = 1;
+		goto error;
+	    } else {
+		name = xmlStrdup(token);
+		if (URI != NULL)
+		    URL = xmlStrdup(URI);
 	    }
 	    PUSH(XSLT_OP_ATTR, name, URL);
 	} else {
@@ -1262,24 +1245,13 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	NEXT;
 	PUSH(XSLT_OP_ALL, token, NULL);
     } else {
-	ncname = xmlSplitQName2(token, &prefix);
-	if (ncname != NULL) {
-	    if (prefix != NULL) {
-		xmlNsPtr ns;
-
-		ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"xsl: pattern, no namespace bound to prefix %s\n",
-				     prefix);
-		} else {
-		    URL = xmlStrdup(ns->href);
-		}
-		xmlFree(prefix);
-	    }
-	    xmlFree(token);
-	    token = ncname;
+	URI = xsltGetQNameURI(ctxt->elem, &token);
+	if (token == NULL) {
+	    ctxt->error = 1;
+	    goto error;
 	}
+	if (URI != NULL)
+	    URL = xmlStrdup(URI);
 	PUSH(XSLT_OP_ELEM, token, URL);
     }
 parse_predicate:

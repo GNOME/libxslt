@@ -1,3 +1,12 @@
+Fri Jun 29 23:32:37 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c libxslt/preproc.c libxslt/transform.c
+	  libxslt/xslt.c libxslt/xsltutils.[ch]: added xsltGetQNameURI()
+	  and cleaned up the way URI for QNames were computed through
+	  the code, serious cleanup.
+	* libxslt/xsltInternals.h libxslt/xslt.c: moved cdata-sections
+	  in their own hash table, implementation not yet finished.
+
 Thu Jun 28 23:01:14 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/keys.c libxslt/templates.c libxslt/transform.c

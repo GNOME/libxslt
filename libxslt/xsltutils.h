@@ -78,13 +78,21 @@ void		xsltSetGenericDebugFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
 
 /*
- * Sorting ... this is definitely a temporary interface !
+ * Sorting
  */
 
 void		xsltDocumentSortFunction	(xmlNodeSetPtr list);
 void		xsltDoSortFunction		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr *sorts,
 						 int nbsorts);
+
+/*
+ * QNames handling
+ */
+
+const xmlChar * xsltGetQNameURI			(xmlNodePtr node,
+						 xmlChar **name);
+
 /*
  * Output, reuse libxml I/O buffers
  */

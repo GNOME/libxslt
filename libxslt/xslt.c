@@ -316,6 +316,8 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet)
         xmlFreeDoc(sheet->doc);
     if (sheet->variables != NULL)
         xsltFreeStackElemList(sheet->variables);
+    if (sheet->cdataSection != NULL)
+        xmlHashFree(sheet->cdataSection, NULL);
     if (sheet->stripSpaces != NULL)
         xmlHashFree(sheet->stripSpaces, NULL);
     if (sheet->nsHash != NULL)
@@ -387,8 +389,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
     /* relaxed to support xt:document */
     prop = xmlGetProp(cur, (const xmlChar *) "method");
     if (prop != NULL) {
-        xmlChar *ncname;
-        xmlChar *prefix = NULL;
+        const xmlChar *URI;
 
         if (style->method != NULL)
             xmlFree(style->method);
@@ -397,31 +398,10 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
             xmlFree(style->methodURI);
         style->methodURI = NULL;
 
-        ncname = xmlSplitQName2(prop, &prefix);
-        if (ncname != NULL) {
-            if (prefix != NULL) {
-                xmlNsPtr ns;
-
-                ns = xmlSearchNs(cur->doc, cur, prefix);
-                if (ns == NULL) {
-                    xsltGenericError(xsltGenericErrorContext,
-                                     "no namespace bound to prefix %s\n",
-                                     prefix);
-                    style->warnings++;
-                    xmlFree(prefix);
-                    xmlFree(ncname);
-                    style->method = prop;
-                } else {
-                    style->methodURI = xmlStrdup(ns->href);
-                    style->method = ncname;
-                    xmlFree(prefix);
-                    xmlFree(prop);
-                }
-            } else {
-                style->method = ncname;
-                xmlFree(prop);
-            }
-        } else {
+	URI = xsltGetQNameURI(cur, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	} else if (URI == NULL) {
             if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
                 (xmlStrEqual(prop, (const xmlChar *) "html")) ||
                 (xmlStrEqual(prop, (const xmlChar *) "text"))) {
@@ -431,7 +411,10 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
                                  "invalid value for method: %s\n", prop);
                 style->warnings++;
             }
-        }
+	} else {
+	    style->method = prop;
+	    style->methodURI = xmlStrdup(URI);
+	}
     }
 
     prop =
@@ -501,9 +484,9 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
         xsltGetNsProp(cur, (const xmlChar *) "cdata-section-elements",
                       XSLT_NAMESPACE);
     if (elements != NULL) {
-        if (style->stripSpaces == NULL)
-            style->stripSpaces = xmlHashCreate(10);
-        if (style->stripSpaces == NULL)
+        if (style->cdataSection == NULL)
+            style->cdataSection = xmlHashCreate(10);
+        if (style->cdataSection == NULL)
             return;
 
         element = elements;
@@ -517,14 +500,21 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
                 end++;
             element = xmlStrndup(element, end - element);
             if (element) {
+		const xmlChar *URI;
 #ifdef WITH_XSLT_DEBUG_PARSING
                 xsltGenericDebug(xsltGenericDebugContext,
                                  "add cdata section output element %s\n",
                                  element);
 #endif
-                xmlHashAddEntry(style->stripSpaces, element,
-                                (xmlChar *) "cdata");
-                xmlFree(element);
+
+		URI = xsltGetQNameURI(cur, &element);
+		if (element == NULL) {
+		    style->errors++;
+		} else {
+		    xmlHashAddEntry2(style->cdataSection, element, URI,
+			             (void *) "cdata");
+		    xmlFree(element);
+		}
             }
             element = end;
         }
@@ -1176,34 +1166,16 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
      */
     prop = xsltGetNsProp(key, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop != NULL) {
-	xmlChar *prefix = NULL;
+        const xmlChar *URI;
 
-	name = xmlSplitQName2(prop, &prefix);
-	if (name != NULL) {
-	    if (prefix != NULL) {
-		xmlNsPtr ns;
-
-		ns = xmlSearchNs(key->doc, key, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"no namespace bound to prefix %s\n", prefix);
-		    style->warnings++;
-		    xmlFree(prefix);
-		    xmlFree(name);
-		    name = prop;
-		    nameURI = NULL;
-		} else {
-		    nameURI = xmlStrdup(ns->href);
-		    xmlFree(prefix);
-		    xmlFree(prop);
-		}
-	    } else {
-		xmlFree(prop);
-		nameURI = NULL;
-	    }
+	URI = xsltGetQNameURI(key, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	    goto error;
 	} else {
 	    name = prop;
-	    nameURI = NULL;
+	    if (URI != NULL)
+		nameURI = xmlStrdup(URI);
 	}
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
@@ -1260,8 +1232,8 @@ static void
 xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltTemplatePtr ret;
     xmlChar *prop;
-    xmlChar *mode;
-    xmlChar *modeURI;
+    xmlChar *mode = NULL;
+    xmlChar *modeURI = NULL;
     double  priority;
 
     if (template == NULL)
@@ -1282,34 +1254,16 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
      */
     prop = xsltGetNsProp(template, (const xmlChar *)"mode", XSLT_NAMESPACE);
     if (prop != NULL) {
-	xmlChar *prefix = NULL;
+        const xmlChar *URI;
 
-	mode = xmlSplitQName2(prop, &prefix);
-	if (mode != NULL) {
-	    if (prefix != NULL) {
-		xmlNsPtr ns;
-
-		ns = xmlSearchNs(template->doc, template, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"no namespace bound to prefix %s\n", prefix);
-		    style->warnings++;
-		    xmlFree(prefix);
-		    xmlFree(mode);
-		    mode = prop;
-		    modeURI = NULL;
-		} else {
-		    modeURI = xmlStrdup(ns->href);
-		    xmlFree(prefix);
-		    xmlFree(prop);
-		}
-	    } else {
-		xmlFree(prop);
-		modeURI = NULL;
-	    }
+	URI = xsltGetQNameURI(template, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	    goto error;
 	} else {
 	    mode = prop;
-	    modeURI = NULL;
+	    if (URI != NULL)
+		modeURI = xmlStrdup(URI);
 	}
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
@@ -1334,39 +1288,23 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 
     prop = xsltGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop != NULL) {
-	xmlChar *ncname;
-	xmlChar *prefix = NULL;
+        const xmlChar *URI;
 
 	if (ret->name != NULL) xmlFree(ret->name);
 	ret->name = NULL;
 	if (ret->nameURI != NULL) xmlFree(ret->nameURI);
 	ret->nameURI = NULL;
 
-	ncname = xmlSplitQName2(prop, &prefix);
-	if (ncname != NULL) {
-	    if (prefix != NULL) {
-		xmlNsPtr ns;
-
-		ns = xmlSearchNs(template->doc, template, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"no namespace bound to prefix %s\n", prefix);
-		    style->warnings++;
-		    xmlFree(prefix);
-		    xmlFree(ncname);
-		    ret->name = prop;
-		} else {
-		    ret->nameURI = xmlStrdup(ns->href);
-		    ret->name = ncname;
-		    xmlFree(prefix);
-		    xmlFree(prop);
-		}
-	    } else {
-		ret->name = ncname;
-		xmlFree(prop);
-	    }
+	URI = xsltGetQNameURI(template, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	    goto error;
 	} else {
-	    ret->name  = prop;
+	    ret->name = prop;
+	    if (URI != NULL)
+		ret->nameURI = xmlStrdup(URI);
+	    else
+		ret->nameURI = NULL;
 	}
     }
 
@@ -1376,6 +1314,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltParseTemplateContent(style, ret, template);
     xsltAddTemplate(style, ret, mode, modeURI);
 
+error:
     if (mode != NULL)
 	xmlFree(mode);
     if (modeURI != NULL)

@@ -1,6 +1,8 @@
 /*
  * xsltInternals.h: internal data structures, constants and functions used
  *                  by the XSLT engine
+ *                  They are not part of the API or ABI, i.e. they can change
+ *                  without prior notice, use carefully.
  *
  * See Copyright for the status of this software.
  *
@@ -237,9 +239,10 @@ struct _xsltStylesheet {
      * General data on the style sheet document
      */
     xmlDocPtr doc;		/* the parsed XML stylesheet */
-    xmlHashTablePtr stripSpaces;/* the hash table of the strip-space
-				   preserve space and cdata-section elements */
+    xmlHashTablePtr stripSpaces;/* the hash table of the strip-space and
+				   preserve space elements */
     int             stripAll;	/* strip-space * (1) preserve-space * (-1) */
+    xmlHashTablePtr cdataSection;/* the hash table of the cdata-section */
 
     /*
      * Global variable or parameters
