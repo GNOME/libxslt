@@ -1,3 +1,12 @@
+Fri May 11 16:20:40 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in tests/XSLTMark/Makefile.am: try to handle gracefully
+	  the cases where perl is not in the path (nor in /usr/bin)
+	* tests/docbook/result/html/gdp-handbook.html
+	  tests/docbook/result/html/kwrite.html
+	  tests/docbook/test/gdp-handbook.xml
+	  tests/docbook/test/kwrite.xml: commited a few more DocBook tests
+
 Wed May  9 12:29:47 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: added --nonet and --warnnet to catch

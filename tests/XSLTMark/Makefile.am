@@ -47,6 +47,10 @@ EXTRA_DIST = \
   xslbench3.out xslbench3.xsl \
   xslbenchdream.xml
 
+if WITH_PERL
+PERL = perl
+endif
+
 $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
@@ -60,14 +64,16 @@ all: alphabetize attsets avts axis backwards bottles breadth brutal chart \
 clean:
 	rm -f *.tmp *~ core db100.xml db1000.xml db10000.xml
 
+
+if WITH_PERL
 db100.xml: $(srcdir)/dbgen.pl
-	$(srcdir)/dbgen.pl 100 > db100.xml
+	perl $(srcdir)/dbgen.pl 100 > db100.xml
 
 db1000.xml: $(srcdir)/dbgen.pl
-	$(srcdir)/dbgen.pl 1000 > db1000.xml
+	perl $(srcdir)/dbgen.pl 1000 > db1000.xml
 
 db10000.xml: $(srcdir)/dbgen.pl
-	$(srcdir)/dbgen.pl 10000 > db10000.xml
+	perl $(srcdir)/dbgen.pl 10000 > db10000.xml
 
 alphabetize: db100.xml
 	@(rm -f .memdump ; touch .memdump)
@@ -77,17 +83,8 @@ alphabetize: db100.xml
 	  else diff $(srcdir)/alphabetize.out alphabetize.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
 
+
 # reference=alphabetize.ref
-
-attsets:
-	@(rm -f .memdump ; touch .memdump)
-	@(echo attsets)
-	@($(top_builddir)/libxslt/xsltproc attsets.xsl chart.xml > attsets.tmp; \
-	  if [ ! -f $(srcdir)/attsets.out ] ; then cp attsets.tmp $(srcdir)/attsets.out ; \
-	  else diff $(srcdir)/attsets.out attsets.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=attsets.ref
 
 avts: db100.xml
 	@(rm -f .memdump ; touch .memdump)
@@ -98,6 +95,128 @@ avts: db100.xml
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
 
 # reference=avts.ref
+
+creation: db100.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo creation)
+	@($(top_builddir)/libxslt/xsltproc creation.xsl db100.xml > creation.tmp; \
+	  if [ ! -f $(srcdir)/creation.out ] ; then cp creation.tmp $(srcdir)/creation.out ; \
+	  else diff $(srcdir)/creation.out creation.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=creation.ref
+
+dbonerow: db10000.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo dbonerow)
+	@($(top_builddir)/libxslt/xsltproc dbonerow.xsl db10000.xml > dbonerow.tmp; \
+	  if [ ! -f $(srcdir)/dbonerow.out ] ; then cp dbonerow.tmp $(srcdir)/dbonerow.out ; \
+	  else diff $(srcdir)/dbonerow.out dbonerow.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=dbonerow.ref
+
+dbtail: db100.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo dbtail)
+	@($(top_builddir)/libxslt/xsltproc dbtail.xsl db100.xml > dbtail.tmp; \
+	  if [ ! -f $(srcdir)/dbtail.out ] ; then cp dbtail.tmp $(srcdir)/dbtail.out ; \
+	  else diff $(srcdir)/dbtail.out dbtail.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=dbtail.ref
+
+decoy: db100.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo decoy)
+	@($(top_builddir)/libxslt/xsltproc decoy.xsl db100.xml > decoy.tmp; \
+	  if [ ! -f $(srcdir)/decoy.out ] ; then cp decoy.tmp $(srcdir)/decoy.out ; \
+	  else diff $(srcdir)/decoy.out decoy.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=patterns.ref
+
+encrypt: db100.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo encrypt)
+	@($(top_builddir)/libxslt/xsltproc encrypt.xsl db100.xml > encrypt.tmp; \
+	  if [ ! -f $(srcdir)/encrypt.out ] ; then cp encrypt.tmp $(srcdir)/encrypt.out ; \
+	  else diff $(srcdir)/encrypt.out encrypt.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=encrypt.ref
+
+functions: db100.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo functions)
+	@($(top_builddir)/libxslt/xsltproc functions.xsl db100.xml > functions.tmp; \
+	  if [ ! -f $(srcdir)/functions.out ] ; then cp functions.tmp $(srcdir)/functions.out ; \
+	  else diff $(srcdir)/functions.out functions.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=functions.ref
+
+identity: db1000.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo identity)
+	@($(top_builddir)/libxslt/xsltproc identity.xsl db1000.xml > identity.tmp; \
+	  if [ ! -f $(srcdir)/identity.out ] ; then cp identity.tmp $(srcdir)/identity.out ; \
+	  else diff $(srcdir)/identity.out identity.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=identity.ref
+
+inventory:
+	@(rm -f .memdump ; touch .memdump)
+	@(echo inventory)
+	@($(top_builddir)/libxslt/xsltproc inventory.xsl inventory.xml > inventory.tmp; \
+	  if [ ! -f $(srcdir)/inventory.out ] ; then cp inventory.tmp $(srcdir)/inventory.out ; \
+	  else diff $(srcdir)/inventory.out inventory.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=inventory.ref
+
+patterns: db100.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo patterns)
+	@($(top_builddir)/libxslt/xsltproc patterns.xsl db100.xml > patterns.tmp; \
+	  if [ ! -f $(srcdir)/patterns.out ] ; then cp patterns.tmp $(srcdir)/patterns.out ; \
+	  else diff $(srcdir)/patterns.out patterns.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=patterns.ref
+
+prettyprint: db100.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo prettyprint)
+	@($(top_builddir)/libxslt/xsltproc prettyprint.xsl db100.xml > prettyprint.tmp; \
+	  if [ ! -f $(srcdir)/prettyprint.out ] ; then cp prettyprint.tmp $(srcdir)/prettyprint.out ; \
+	  else diff $(srcdir)/prettyprint.out prettyprint.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=prettyprint.ref
+
+stringsort: db1000.xml
+	@(rm -f .memdump ; touch .memdump)
+	@(echo stringsort)
+	@($(top_builddir)/libxslt/xsltproc stringsort.xsl db1000.xml > stringsort.tmp; \
+	  if [ ! -f $(srcdir)/stringsort.out ] ; then cp stringsort.tmp $(srcdir)/stringsort.out ; \
+	  else diff $(srcdir)/stringsort.out stringsort.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=stringsort.ref
+
+endif
+
+attsets:
+	@(rm -f .memdump ; touch .memdump)
+	@(echo attsets)
+	@($(top_builddir)/libxslt/xsltproc attsets.xsl chart.xml > attsets.tmp; \
+	  if [ ! -f $(srcdir)/attsets.out ] ; then cp attsets.tmp $(srcdir)/attsets.out ; \
+	  else diff $(srcdir)/attsets.out attsets.tmp ; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
+
+# reference=attsets.ref
 
 axis:
 	@(rm -f .memdump ; touch .memdump)
@@ -159,16 +278,6 @@ chart:
 
 # reference=chart.ref
 
-creation: db100.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo creation)
-	@($(top_builddir)/libxslt/xsltproc creation.xsl db100.xml > creation.tmp; \
-	  if [ ! -f $(srcdir)/creation.out ] ; then cp creation.tmp $(srcdir)/creation.out ; \
-	  else diff $(srcdir)/creation.out creation.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=creation.ref
-
 current:
 	@(rm -f .memdump ; touch .memdump)
 	@(echo current)
@@ -179,36 +288,6 @@ current:
 
 # reference=current.ref
 
-dbonerow: db10000.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo dbonerow)
-	@($(top_builddir)/libxslt/xsltproc dbonerow.xsl db10000.xml > dbonerow.tmp; \
-	  if [ ! -f $(srcdir)/dbonerow.out ] ; then cp dbonerow.tmp $(srcdir)/dbonerow.out ; \
-	  else diff $(srcdir)/dbonerow.out dbonerow.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=dbonerow.ref
-
-dbtail: db100.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo dbtail)
-	@($(top_builddir)/libxslt/xsltproc dbtail.xsl db100.xml > dbtail.tmp; \
-	  if [ ! -f $(srcdir)/dbtail.out ] ; then cp dbtail.tmp $(srcdir)/dbtail.out ; \
-	  else diff $(srcdir)/dbtail.out dbtail.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=dbtail.ref
-
-decoy: db100.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo decoy)
-	@($(top_builddir)/libxslt/xsltproc decoy.xsl db100.xml > decoy.tmp; \
-	  if [ ! -f $(srcdir)/decoy.out ] ; then cp decoy.tmp $(srcdir)/decoy.out ; \
-	  else diff $(srcdir)/decoy.out decoy.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=patterns.ref
-
 depth:
 	@(rm -f .memdump ; touch .memdump)
 	@(echo depth)
@@ -218,26 +297,6 @@ depth:
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
 
 # reference=depth.ref
-
-encrypt: db100.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo encrypt)
-	@($(top_builddir)/libxslt/xsltproc encrypt.xsl db100.xml > encrypt.tmp; \
-	  if [ ! -f $(srcdir)/encrypt.out ] ; then cp encrypt.tmp $(srcdir)/encrypt.out ; \
-	  else diff $(srcdir)/encrypt.out encrypt.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=encrypt.ref
-
-functions: db100.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo functions)
-	@($(top_builddir)/libxslt/xsltproc functions.xsl db100.xml > functions.tmp; \
-	  if [ ! -f $(srcdir)/functions.out ] ; then cp functions.tmp $(srcdir)/functions.out ; \
-	  else diff $(srcdir)/functions.out functions.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=functions.ref
 
 game:
 	@(rm -f .memdump ; touch .memdump)
@@ -258,26 +317,6 @@ html:
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
 
 # reference=html.ref
-
-identity: db1000.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo identity)
-	@($(top_builddir)/libxslt/xsltproc identity.xsl db1000.xml > identity.tmp; \
-	  if [ ! -f $(srcdir)/identity.out ] ; then cp identity.tmp $(srcdir)/identity.out ; \
-	  else diff $(srcdir)/identity.out identity.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=identity.ref
-
-inventory:
-	@(rm -f .memdump ; touch .memdump)
-	@(echo inventory)
-	@($(top_builddir)/libxslt/xsltproc inventory.xsl inventory.xml > inventory.tmp; \
-	  if [ ! -f $(srcdir)/inventory.out ] ; then cp inventory.tmp $(srcdir)/inventory.out ; \
-	  else diff $(srcdir)/inventory.out inventory.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=inventory.ref
 
 metric:
 	@(rm -f .memdump ; touch .memdump)
@@ -308,26 +347,6 @@ oddtemplate:
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
 
 # reference=oddtemplate.ref
-
-patterns: db100.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo patterns)
-	@($(top_builddir)/libxslt/xsltproc patterns.xsl db100.xml > patterns.tmp; \
-	  if [ ! -f $(srcdir)/patterns.out ] ; then cp patterns.tmp $(srcdir)/patterns.out ; \
-	  else diff $(srcdir)/patterns.out patterns.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=patterns.ref
-
-prettyprint: db100.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo prettyprint)
-	@($(top_builddir)/libxslt/xsltproc prettyprint.xsl db100.xml > prettyprint.tmp; \
-	  if [ ! -f $(srcdir)/prettyprint.out ] ; then cp prettyprint.tmp $(srcdir)/prettyprint.out ; \
-	  else diff $(srcdir)/prettyprint.out prettyprint.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=prettyprint.ref
 
 priority:
 	@(rm -f .memdump ; touch .memdump)
@@ -368,16 +387,6 @@ reverser:
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
 
 # reference=reverser.ref
-
-stringsort: db1000.xml
-	@(rm -f .memdump ; touch .memdump)
-	@(echo stringsort)
-	@($(top_builddir)/libxslt/xsltproc stringsort.xsl db1000.xml > stringsort.tmp; \
-	  if [ ! -f $(srcdir)/stringsort.out ] ; then cp stringsort.tmp $(srcdir)/stringsort.out ; \
-	  else diff $(srcdir)/stringsort.out stringsort.tmp ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" ; exit 0 )
-
-# reference=stringsort.ref
 
 summarize:
 	@(rm -f .memdump ; touch .memdump)

@@ -52,6 +52,12 @@ AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, pow,
 AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, pow,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
 
+dnl
+dnl Perl is just needed for generating some data for XSLtmark
+dnl
+
+AC_CHECK_PROG(perl_val, perl, true, false)
+AM_CONDITIONAL(WITH_PERL, $perl_val)
 
 dnl
 dnl Debug for DV
