@@ -1,3 +1,8 @@
+Sat Nov  8 13:27:12 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/libexslt.3: applied improvement patch from Jonathan Wakely
+	  describing the entry points.
+
 Wed Nov  6 17:27:23 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* win32/configure.js: fixed #122146
