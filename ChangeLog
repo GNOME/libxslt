@@ -1,3 +1,9 @@
+Sun Dec 21 20:33:27 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* tests/docs/Makefile.am tests/docs/bug-138.xml
+	  tests/general/Makefile.am tests/general/bug-138*: added
+	  test for namespace problem (Bug 129624)
+
 Sun Dec 21 13:17:05 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc.c: fixed #129327 make sure parser flags get transmitted to
