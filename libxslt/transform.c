@@ -60,6 +60,18 @@ static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 			  const xmlChar **systemID);
 #endif
 
+#ifdef WITH_DEBUGGER
+
+/* -- breakpoint code --- */
+#include "../breakpoint/breakpoint.h"
+
+int xslDebugStatus;
+
+/* -------- end ---------- */
+#endif
+
+
+
 
 int xsltMaxDepth = 500;
 
@@ -1008,6 +1020,68 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 }
 
+#ifdef WITH_DEBUGGER
+
+/* make it eaier to reuse the code for handling checking of debug 
+ status and breaking to debugger if needed */
+
+/**
+ * xslHandleDebugger:
+ * @cur : source node being executed
+ * @node : data node being processed
+ * @templ : temlate that applies to node
+ * @ctxt : the xslt transform context 
+ * 
+ * If either cur or node are a breakpoint, or xslDebugStatus in state 
+ *   where debugging must occcur at this time then transfer control
+ *   to the xslDebugBreak function
+ */
+void
+xslHandleDebugger(xmlNodePtr cur, xmlNodePtr node,
+                  xsltTemplatePtr templ, xsltTransformContextPtr ctxt)
+{
+
+    xslSetActiveBreakPoint(0);
+
+    switch (xslDebugStatus) {
+
+            /* A temparary stopping point */
+        case DEBUG_STOP:
+            xslDebugStatus = DEBUG_CONT;
+            /* only allow breakpoints at xml elements */
+            if (xmlGetLineNo(cur) != -1)
+                xslDebugBreak(cur, node, templ, ctxt);
+            break;
+
+        case DEBUG_STEP:
+            /* only allow breakpoints at xml elements */
+            if (xmlGetLineNo(cur) != -1)
+                xslDebugBreak(cur, node, templ, ctxt);
+            break;
+
+        case DEBUG_CONT:
+            {
+                int breakPoint = xslIsBreakPointNode(cur);
+
+                if (breakPoint) {
+                    if (xslIsBreakPointEnabled(breakPoint) == 1) {
+                        xslSetActiveBreakPoint(breakPoint);
+                        xslDebugBreak(cur, node, templ, ctxt);
+                    }
+                } else {
+                    breakPoint = xslIsBreakPointNode(node);
+                    if (xslIsBreakPointEnabled(breakPoint) == 1) {
+                        xslSetActiveBreakPoint(breakPoint);
+                        xslDebugBreak(cur, node, templ, ctxt);
+                    }
+                }
+            }
+            break;
+    }
+}
+#endif
+
+
 /**
  * xsltApplyOneTemplate:
  * @ctxt:  a XSLT process context
@@ -1031,7 +1105,38 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldInst = NULL;
     xmlAttrPtr attrs;
     int oldBase;
+
+#ifdef WITH_DEBUGGER
+    int addCallResult = 0;
+#endif
     long start = 0;
+
+#ifdef WITH_DEBUGGER
+    /* --- break point code --- */
+    if (xslDebugStatus != DEBUG_NONE) {
+        if (templ) {
+            addCallResult = xslAddCall(templ, templ->elem);
+        } else {
+            addCallResult = xslAddCall(NULL, list);
+        }
+
+        switch (xslDebugStatus) {
+
+            case DEBUG_RUN_RESTART:
+            case DEBUG_QUIT:
+                if (addCallResult)
+                    xslDropCall();
+                return;
+        }
+
+        if (templ)
+            xslHandleDebugger(templ->elem, node, templ, ctxt);
+        else
+            xslHandleDebugger(list, node, templ, ctxt);
+
+    }
+    /*  -- end --- */
+#endif
 
     if ((ctxt == NULL) || (list == NULL))
         return;
@@ -1078,6 +1183,16 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     cur = list;
     while (cur != NULL) {
         ctxt->inst = cur;
+#ifdef WITH_DEBUGGER
+        /* --- break point code --- */
+        switch (xslDebugStatus) {
+            case DEBUG_RUN_RESTART:
+            case DEBUG_QUIT:
+                break;
+
+        }
+        /* --- end  --- */
+#endif
         /*
          * test, we must have a valid insertion point
          */
@@ -1088,6 +1203,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    goto error;
         }
+#ifdef WITH_DEBUGGER
+        if (xslDebugStatus != DEBUG_NONE)
+            xslHandleDebugger(cur, node, templ, ctxt);
+#endif
 
         if (IS_XSLT_ELEM(cur)) {
             /*
@@ -1336,6 +1455,11 @@ error:
 		ctxt->profTab[ctxt->profNr - 1] += total;
 	}
     }
+#ifdef WITH_DEBUGGER
+    if (xslDebugStatus != DEBUG_NONE && addCallResult) {
+        xslDropCall();
+    }
+#endif
 }
 
 
@@ -2388,6 +2512,10 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     cur = inst->children;
     while (cur != NULL) {
+#ifdef WITH_DEBUGGER
+        if (xslDebugStatus != DEBUG_NONE)
+            xslHandleDebugger(cur, node, comp->templ, ctxt);
+#endif
 	if (ctxt->state == XSLT_STATE_STOPPED) break;
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "with-param")) {
@@ -2584,6 +2712,10 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */
     cur = inst->children;
     while (cur!=NULL) {
+#ifdef WITH_DEBUGGER
+        if (xslDebugStatus != DEBUG_NONE)
+            xslHandleDebugger(cur, node, comp->templ, ctxt);
+#endif
         if (ctxt->state == XSLT_STATE_STOPPED) break;
         if (IS_XSLT_ELEM(cur)) {
             if (IS_XSLT_NAME(cur, "with-param")) {
@@ -2712,6 +2844,13 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    goto error;
 	}
 	when = replacement;
+
+
+#ifdef WITH_DEBUGGER
+        if (xslDebugStatus != DEBUG_NONE)
+            xslHandleDebugger(when, node, comp->templ, ctxt);
+#endif
+
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltChoose: test %s\n", wcomp->test);
@@ -2763,6 +2902,11 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	replacement = replacement->next;
     }
     if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "otherwise"))) {
+#ifdef WITH_DEBUGGER
+        if (xslDebugStatus != DEBUG_NONE)
+            xslHandleDebugger(replacement, node, comp->templ, ctxt);
+#endif
+
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
 			 "evaluating xsl:otherwise\n");
@@ -2947,6 +3091,10 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	} else {
 	    sorts[nbsorts++] = replacement;
 	}
+#ifdef WITH_DEBUGGER
+        if (xslDebugStatus != DEBUG_NONE)
+            xslHandleDebugger(replacement, node, NULL, ctxt);
+#endif
 	replacement = replacement->next;
     }
 

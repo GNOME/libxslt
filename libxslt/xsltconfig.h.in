@@ -66,6 +66,17 @@ extern "C" {
 #endif
 
 /**
+ * WITH_XSLT_DEBUGGER:
+ *
+ * Activate the compilation of the debugger support. Speed penalty
+ * is insignifiant.
+ * On by default unless --without-debugger is passed to configure
+ */
+#if @WITH_DEBUGGER@
+#define WITH_XSLT_DEBUGGER
+#endif
+
+/**
  * ATTRIBUTE_UNUSED:
  *
  * This macro is used to flag unused function parameters to GCC

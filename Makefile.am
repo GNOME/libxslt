@@ -1,5 +1,6 @@
 SUBDIRS = \
 	libxslt \
+	breakpoint \
 	libexslt \
 	xsltproc \
 	tests \

@@ -133,6 +133,21 @@ else
 fi
 AC_SUBST(WITH_MEM_DEBUG)
 
+dnl 
+dnl Is debugger support requested
+dnl
+AC_ARG_WITH(with_debugger, [  --with-debugger        Add the debugging module (off)])
+if test "$with_debugger" = "no" ; then
+    echo Disabling debugger
+    WITH_DEBUGGER=0
+else
+    echo Enabling debugger
+    WITH_DEBUGGER=1
+    AC_DEFINE(WITH_DEBUGGER)
+fi
+AM_CONDITIONAL(WITH_DEBUGGER, test "${WITH_DEBUGGER}" = "1")
+AC_SUBST(WITH_DEBUGGER)
+
 dnl
 dnl The following new parameters were added to offer
 dnl the ability to specify the location of the libxml
@@ -250,18 +265,25 @@ esac
 
 XSLT_INCLUDEDIR='-I${includedir}'
 EXTRA_LIBS="$M_LIBS"
-XSLT_LIBS="-lxslt $LIBXML_LIBS $M_LIBS"
+if test "${WITH_DEBUGGER}" = "1" ; then
+	XSLT_LIBS="-lxslt -lxsltbreakpoint $LIBXML_LIBS $M_LIBS"
+else
+	XSLT_LIBS="-lxslt $LIBXML_LIBS $M_LIBS"
+fi
+
 
 AC_SUBST(XSLT_LIBDIR)
 AC_SUBST(XSLT_INCLUDEDIR)
 AC_SUBST(EXTRA_LIBS)
 AC_SUBST(XSLT_LIBS)
 
+
 AC_OUTPUT([
 Makefile
 libxslt/Makefile
 libxslt/xsltconfig.h
 libxslt/xsltwin32config.h
+breakpoint/Makefile
 libexslt/Makefile
 libexslt/exsltconfig.h
 xsltproc/Makefile

@@ -134,6 +134,15 @@ void 		xsltForEach		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr inst,
 					 xsltStylePreCompPtr comp);
 void		xsltRegisterAllElement	(xsltTransformContextPtr ctxt);
+
+/*
+ * Hook for the debugger if activated.
+ */
+void		xslHandleDebugger	(xmlNodePtr cur,
+					 xmlNodePtr node,
+					 xsltTemplatePtr templ,
+					 xsltTransformContextPtr ctxt);
+
 #ifdef __cplusplus
 }
 #endif

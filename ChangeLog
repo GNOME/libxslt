@@ -1,3 +1,11 @@
+Mon Nov  5 14:29:26 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am acconfig.h config.h.in configure.in 
+	  xsltproc/Makefile.am breakpoint/* libxslt/transform.[ch]
+	  libxslt/xsltconfig.h.in:  Applied Keith Isdale patch for
+	  the debugger support, make it the default, added the
+	  WITH_XSLT_DEBUGGER define to xsltconfig.h.in, small cleanups
+
 Fri Nov  2 11:19:49 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/libxslt.h: make sure LIBXSLT_PUBLIC is defined

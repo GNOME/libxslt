@@ -8,8 +8,13 @@ if DV_STATIC_LINK
 #
 all: xsltproc
 
+if WITH_DEBUGGER
+xsltproc: xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../breakpoint/.libs/libxsltbreakpoint.a ../../XML/.libs/libxml2.a
+	gcc -g -O -o xsltproc  xsltproc.o ../libxslt/.libs/libxslt.a ../breakpoint/.libs/libxsltbreakpoint.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a -lz -lm
+else
 xsltproc: xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a
 	gcc -g -O -o xsltproc  xsltproc.o ../libxslt/.libs/libxslt.a ../libexslt/.libs/libexslt.a ../../XML/.libs/libxml2.a -lz -lm
+endif
 
 programs=
 else
@@ -23,6 +28,22 @@ xsltproc_LDFLAGS =
 xsltproc_DEPENDENCIES = $(DEPS)
 xsltproc_LDADD = $(LDADDS)
 
-DEPS = $(top_builddir)/libxslt/libxslt.la $(top_builddir)/libexslt/libexslt.la
+if WITH_DEBUGGER
+DEPS = $(top_builddir)/libxslt/libxslt.la \
+	$(top_builddir)/breakpoint/libxsltbreakpoint.la \
+	$(top_builddir)/libexslt/libexslt.la 
+else
+DEPS = $(top_builddir)/libxslt/libxslt.la \
+	$(top_builddir)/libexslt/libexslt.la 
+endif
+
+if WITH_DEBUGGER
 LDADDS = $(top_builddir)/libxslt/libxslt.la \
-         $(top_builddir)/libexslt/libexslt.la @LIBXML_LIBS@ $(EXTRA_LIBS)
+         $(top_builddir)/libexslt/libexslt.la \
+	$(top_builddir)/breakpoint/libxsltbreakpoint.la \
+	@LIBXML_LIBS@ $(EXTRA_LIBS)
+else
+LDADDS = $(top_builddir)/libxslt/libxslt.la \
+         $(top_builddir)/libexslt/libexslt.la \
+	@LIBXML_LIBS@ $(EXTRA_LIBS)
+endif
