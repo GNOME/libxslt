@@ -1,3 +1,7 @@
+Thu Oct 23 15:37:26 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* restored earliest portion of ChangeLog (was corrupted)
+
 Wed Oct 22 13:07:50 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.[ch]: applied patch from Kasimier Buchcik
@@ -99,6 +103,7 @@ Sat Sep  6 09:57:03 PDT 2003 William Brack <wbrack@mmm.com.hk>
 	* tests/docs/Makefile.am tests/docs/bug-130.xml tests/docs/bug-130.doc
 	  tests/general/Makefile.am test/docs/bug-130*: added tests
 	  to the regression suite for this bug.
+
 
 Wed Sep  3 15:33:40 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
@@ -3405,7 +3410,102 @@ Thu Jul  5 10:44:47 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 	  test output accordingly
 	* libxslt/transform.c libxslt/preproc.c: added xsl:fallback support
 	* tests/REC/Makefile.am tests/REC/test-15-1.*: xsl:fallback test
-	* tests/xmlspec/Makefile.am tests/docbook/Makefi; ; ; ; ; ; ; ; ; ; ; ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 r>
+	* tests/xmlspec/Makefile.am tests/docbook/Makefile.am: cleanups
+
+Wed Jul  4 15:15:50 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/extension.[ch] libxslt/extra.[ch] libxslt/xsltInternals.h
+	  libxslt/transform.c libxslt/functions.c: Added the extension API
+	  suggested by Thomas Broyer, this should allow implementation of
+	  EXSLT for example.
+	* libxslt/extra.[ch]: added a fake xsltFunctionLocalTime() in Norm's
+	  CVS extension namespace to avoid complaints, some cleanup
+	* configure.in tests/Makefile.am tests/extensions/*: added a test
+	  for new modules testing both elements and functions registration
+
+Fri Jun 29 23:32:37 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c libxslt/preproc.c libxslt/transform.c
+	  libxslt/xslt.c libxslt/xsltutils.[ch]: added xsltGetQNameURI()
+	  and cleaned up the way URI for QNames were computed through
+	  the code, serious cleanup.
+	* libxslt/xsltInternals.h libxslt/xslt.c: moved cdata-sections
+	  in their own hash table, implementation not yet finished.
+
+Thu Jun 28 23:01:14 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/keys.c libxslt/templates.c libxslt/transform.c
+	  libxslt/variables.c libxslt/xsltutils.c: hum seems I forgot
+	  to save/restore some XPath context, bug raised by
+	  Steve Cheng
+
+Thu Jun 28 15:48:06 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltwin32config.h[.in]: added configuration/version
+	  informations for Windows/MSC
+	* libxslt/libxslt.h libxslt/*.c: internal header to centralize
+	  includes switches
+	* libxslt/Makefile.am: added libxslt.h and xsltwin32config.h[.in]
+	* libxslt/*.[ch] libxslt/*.in: quite a bit of cleanup, especially
+	  the email addresses
+	* AUTHORS: added William
+
+Tue Jun 26 18:45:38 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in doc/xslt.html: releasing 0.13.0
+	* doc/Makefile.am: don't index the win32 include
+	* doc/html/*: rebuilt the docs
+
+Mon Jun 25 15:30:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: John Fleck found a typo in usage()
+	* libxslt/xslt.c: avoid warning if version="1.1" is used
+	* libxslt/transform.c: forgot to initialize cur->outputFile
+	* libxslt/functions.c: DOCBOOK_XSL_HACK some versions of DocBook XSL
+	  use the vendor string to detect supporting chunking, this
+	  is a workaround to be considered in the list of decent XSLT
+	  processors <grin/>
+
+Mon Jun 25 12:41:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.[ch] libxslt/xslt.c libxslt/xsltInternals.h:
+	  added a new interface xsltRunStylesheet() for a more flexible
+	  handling of the output and trying to adhere to xsl:document
+	  filename generation semantic if one knows the URL of the output,
+	  also add IObuf capacity and SAX for output but is currently not
+	  implemented.
+	* libxslt/xsltproc.c: added a -o or --output filename argument
+	  to test xsltRunStylesheet() or provide a base when generating
+	  multiple outputs
+	* tests/docbook/Makefile.am tests/docbook/result/xtchunk/html/*:
+	  updated tests to add DocBook xt:document based chunking
+	* tests/multiple/Makefile.am: cleaned up the makefile a bit
+	* tests/multiple/out/*.html: the new xt:document now generate
+	  the DOCTYPE if available as is the case for HTML
+
+Mon Jun 25 08:45:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
+
+	* Removed some redundant code in xsltDefaultProcessOneNode
+	  and revised the default processing of an attribute node
+
+Sun Jun 24 14:40:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
+
+	* Enhanced ApplyTemplates and ForEach to allow multiple
+	  documents within a nodelist.
+	* Repaired small bug in xsltDocument function which caused
+	  a crash if invalid second argument was provided.
+
+Sat Jun 23 15:44:00 MDT 2001 John Fleck <jfleck@inkstain.net>
+
+	* doc/tutorial/libxslttutorial.xml, libxslttutorial.html
+	  updating tutorial with explanation of xsltSave vs. xmlSave
+	  functions 
+
+Sat Jun 23 19:04:27 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* test/docbook: updated to docbook-xsl-1.4, regenerated results
+
+Sat Jun 23 15:32:25 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* Makefile.am libxslt/Makefile.am libxslt/numbers.c 
 	  libxslt/win32config.h libxslt/xsltconfig.h.in libxslt/xsltproc.c:
@@ -4094,10 +4194,10 @@ Sat Mar 24 19:35:42 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 	-Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return
 	-Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline
 	* libxslt/attributes.c libxslt/extensions.c libxslt/extra.c
-          libxslt/functions.c libxslt/keys.c libxslt/numbers.c
-          libxslt/pattern.c libxslt/preproc.c libxslt/templates.c
-          libxslt/transform.c libxslt/variables.c libxslt/xslt.c
-          libxslt/xsltutils.c: basically made static unexported functions
+	  libxslt/functions.c libxslt/keys.c libxslt/numbers.c
+	  libxslt/pattern.c libxslt/preproc.c libxslt/templates.c
+	  libxslt/transform.c libxslt/variables.c libxslt/xslt.c
+	  libxslt/xsltutils.c: basically made static unexported functions
 	  avoided name clashes and flagged unused parameters.
 
 Thu Mar 22 22:52:48 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
@@ -4346,6 +4446,7 @@ Sun Feb 18 16:39:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 Sun Feb 18 15:44:33 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
+
 	* libxslt/xsltproc.c: added --novalid and --noout as well
 	  as options printing when no args
 	* libxslt/variables.c libxslt/transform.c: trying to get rid
@@ -4452,4 +4553,497 @@ Sun Feb 11 17:24:03 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
 	  for the level attribute for xsl:number
 	* libxslt/numbers.c: internal restructuring
 
-Fri Feb; ; 
+Fri Feb  9 15:49:19 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am libxslt/documents.[ch]: added a new module
+	  to deal with documents
+	* libxslt/functions.c: fixed document() to return the same set
+	  for teh same URL
+	* libxslt/keys.[ch] libxslt/templates.c libxslt/transform.c
+	  libxslt/variables.c libxslt/xsltInternals.h: keys are really
+	  associated to loaded documents, not to the transformation
+	  context, made the change, this impacted a number of modules
+
+Thu Feb  8 12:51:00 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/libxslt.sgml doc/html/*.html: updated and rebuilt the doc list
+
+Thu Feb  8 12:36:23 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* README configure.in libxslt.spec.in: bumped to 0.1.0, getting
+	  ready for the release
+	* libxslt/keys.c libxslt/xslt.c: cleanup of uninitialized vars
+	* tests/REC1/Makefile.am tests/REC/Makefile.am: the EXTRA list
+	  was not up to date
+
+Thu Feb  8 12:09:58 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES libxslt/xsltInternals.h libxslt/pattern.c libxslt/keys.c:
+	  added support for keys in patterns
+	* tests/REC/test-12.2-2.*: added a specific testcase
+
+Wed Feb  7 21:16:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.c FEATURES: started adding support for key()
+	* tests/REC/test-12.2-1.*: first key test
+
+Wed Feb  7 19:46:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* libxslt/Makefile.am libxslt/keys.[ch] libxslt/xslt.c
+	  libxslt/transform.c libxslt/xsltInternals.h: started adding key
+	  support
+	* libxslt/xsltutils.c: warning cleanup
+	* libxslt/pattern.h: fixed soopid cut'n paste prob
+
+Tue Feb  6 10:56:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xslt.c: chased some reported
+	  unitinitialized variables.
+
+Tue Feb  6 10:55:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/numbers/Makefile.am: fixed the EXTRA stuff
+
+Mon Feb  5 22:02:24 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Copyright IPR Makefile.am: added some wording and a rewrite
+	  of the W3C IPR but without giving Copyright rights to W3C,
+	  should suit everybody
+
+Mon Feb  5 18:58:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated, added mode support for templates
+	* pattern.[ch] transform.c xslt.c xsltInternals.h: added mode
+	  support for templates
+	* templates.c variables.c: simple fixes
+	* xslt.c: added a separate DEBUG_BLANKS debug class disabled
+	* xsltproc.c: added option -timing
+	* xsltutils.c: seem I forgot to add encoding support in output...
+	* configure.in tests/Makefile.am tests/xmlspec/*: added a test
+	  consisting of reformatting the XML REC with the xmlspec XSLT,
+	  heavy !
+
+Mon Feb  5 18:43:37 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* FEATURES: updated
+	* numbers.c: handles actual number formatting for both xsl:number
+	  and the format-number extension function.
+	* function.c: formatting moved to numbers.c
+	* transform.c: added xsl:number
+	* xslt.c: minor memory leak removed
+	* Makefile.am: added numbers.c and numbersInternals.h
+
+Sat Feb  3 21:49:36 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: updated
+	* doc/html/*.html updated
+	* doc/libxslt.sgml: added new modules
+	* libxslt/pattern.c: fix loop on hash clashes.
+
+Sat Feb  3 16:13:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* imports.c: bugfix
+	* pattern.c: lots of changes to make most patterns work
+	* templates.[ch]: added xsltEvalXPathPredicate() for predicate testing
+	* transform.c: cleanup and attribute patterns testing
+	* xslt.c: added xsltFreeStylesheetList() and now cleanup
+	  the imports
+	* tests/REC/test-2.3* tests/REC/test-2.6.2*: more tests
+	* tests/REC/test-5.2-*: 18 pattern tests from the spec, all should
+	  work now.
+
+Fri Feb  2 11:15:24 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* transform.c: added xsl:element support
+	* namespaces.[ch]: added xsltGetSpecialNamespace()
+	* attributes.c: added xsl:attribute namespace support.
+
+Thu Feb  1 20:58:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am libxslt/imports.[ch]: new module to
+	  implement import cascade lookups and traversal
+	* libxslt/attributes.c libxslt/namespaces.c libxslt/pattern.[ch]
+	  libxslt/transform.c libxslt/xslt.c libxslt/xsltInternals.h:
+	  started coding the import cascade lookup in the places needed,
+	  probably incomplete.
+
+Thu Feb  1 18:04:39 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltInternals.h libxslt/xslt.h: started implementing
+	  xsl:include and xsl:import, untested
+
+Thu Feb  1 14:54:39 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated choose/when/otherwise added
+	* libxslt/transform.c: plugged choose in
+	* configure.in tests/Makefile.am tests/REC/Makefile.am
+	  tests/docs/Makefile.am tests/docs/items.xml tests/general/Makefile.am
+	  tests/general/itemschoose.*: started adding a more generic
+	  infrastructure for testing.
+
+Thu Feb  1 05:36:28 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-11*: added more tests
+	* libxslt/transform.c libxslt/variables.c: fixing bugs raised by
+	  said tests
+
+Wed Jan 31 21:42:43 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-[9-10]*: added more tests
+	* tests/REC2/html.xml libxslt/xsltutils.c libxslt/transform.c:
+	  fixed sorting
+
+Wed Jan 31 19:25:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-[7-9]*: added more tests
+	* libxslt/templates.c libxslt/transform.c libxslt/variables.c:
+	  fixing bugs raised by said tests, cleaned up the way ctxt->xpathctxt
+	  is allocated, overall cleanup.
+
+Wed Jan 31 14:25:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-7.*: added more tests
+	* libxslt/pattern.c libxslt/templates.c libxslt/transform.c:
+	  fixing bugs raised by said tests
+
+Tue Jan 30 18:55:49 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-7.*: added more tests
+	* libxslt/namespaces.[ch] libxslt/pattern.c libxslt/attributes.c
+	  libxslt/templates.c libxslt/transform.c libxslt/xslt.c: fixing bugs
+	  raised by said tests
+
+Tue Jan 30 15:16:56 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: updated
+	* configure.in tests/Makefile.am tests/REC/*: started adding
+	  some regression tests based from fragments of spec examples
+	* libxslt/transform.c: fixed a problem on namespace generation
+
+Mon Jan 29 18:40:23 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* tests/numbers/Makefile.am tests/numbers/format-number.*
+	  tests/Makefile.am configure.in: added number formattting
+	  test from Bjorn
+	* libxslt/attributes.[ch]: separated attribute support, started
+	  add support for attribute-sets
+	* libxslt/functions.[ch]: update for number and formatting
+	  from Bjorn
+	* libxslt/transform.c libxslt/xslt.c libxslt/xsltInternals.h:
+	  cleanups updates, etc ...
+
+Mon Jan 29 00:53:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* libxslt/transform.c: added copy-of support
+	* libxslt/xsltutils.[ch]: added xsltDocumentSortFunction()
+
+Sun Jan 28 21:45:23 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES TODO: updates
+	* libxslt/xsltutils.[ch] libxslt/xsltInternals.h libxslt/xsltutils.h:
+	  added xsl:message
+
+Sun Jan 28 17:25:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES TODO: updates
+	* libxslt/namespaces.[ch] libxslt/templates.c libxslt/transform.c
+	  libxslt/xslt.c libxslt/xsltInternals.h: added support for
+	  namespace aliases and cleaned up the overall namespace related
+	  code. This materialize as a new module.
+
+Sun Jan 28 08:41:10 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt.spec.in: changes needed for libxml2-devel
+	  changes
+
+Sat Jan 27 11:00:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt.spec.in doc/xslt.html: updating doc and trying to add
+	  it to the RPM.
+
+Fri Jan 26 22:29:34 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am configure.in doc/Makefile.am: added a doc subdir
+	  and the rules to generates the makefiles.
+	* doc/libxslt.sgml doc/xslt.html: very first version of the manual
+	* doc/html/*.html : autogenerated documentation
+	* libxslt/xsltInternals.h: fixed a typedef wich was breaking gtk-doc
+
+Fri Jan 26 21:48:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.c: xsltGenerateIdFunction() small patch
+
+Thu Jan 25 19:36:45 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES TODO README INSTALL: updated
+	* libxslt/xslt.h: added URL and version/vendor :-)
+	* libxslt/transform.c: fixed a problem in xsl:attribute, removed
+	  attempt to support older libxml2 version.
+	* libxslt/variables.h libxslt/xsltInternals.h: update to structures
+	  and macros to add/register new document created by document()
+	* libxslt/functions.c: implemented current(), unparsed-entity-uri()
+	  system-property(), element-available() and function-available().
+	  A crippled version of document() has been added too.
+
+Thu Jan 25 12:13:04 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* functions.[ch]: Bjorn Reese <breese@mail1.stofanet.dk> provided
+	  number formatting !!!
+	* acconfig.h config.h.in configure.in libxslt/Makefile.am
+	  tests/Makefile.am; added testing for mathematical functions,
+	  fixed make test(s)
+	* FEATURES: updated
+
+Wed Jan 24 16:59:05 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltInternals.h libxslt/pattern.c: fixed problems
+	  with non-named rules (*, ...) added accelerators
+	* libxslt/templates.[ch]: added xsltEvalTemplateString()
+	  and xsltEvalAttrValueTemplate() high level functions
+	* libxslt/transform.c: fixed the part where attributes
+	  had to be looked at as templates, added comment and
+	  PI generation
+	* TODO FEATURES: updated to reflect the new state
+
+Wed Jan 24 05:33:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.[ch] Makefile.am: added new module functions
+	  with templates for the XSLT functions.
+	* libxslt/variables.h templates.c: added registrations of new
+	  functions when an XPath context is created
+
+Tue Jan 23 17:24:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/Makefile.am: cleanup
+	* libxslt/pattern.c: should support most of the patterns now
+	  except ID/Key and maybe some namespace checks when having
+	  a default namespace
+	* TODO: updated
+
+Tue Jan 23 14:58:32 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am libxslt.spec.in tests/REC1/Makefile.am
+	  tests/REC2/Makefile.am: updated the makefiles and spec files to
+	  add tests, and the FEATURES file to the RPM
+
+Mon Jan 22 23:35:57 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am libxslt.spec.in libxslt/Makefile.am tests/Makefile.am:
+	  prepared the Makefiles and spec files for a first release.
+	* COPYING.LIB: added LGPL Licence
+
+Mon Jan 22 22:36:43 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: applied cleanup patch from Bjorn Reese
+	  <breese@mail1.stofanet.dk>
+
+Mon Jan 22 20:24:36 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt.spec.in: first try to get a spec file
+
+Mon Jan 22 19:37:00 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: avoid segfault when stylesheet is inproper
+	* libxslt/transform.c: add support for "*" to strip and preserve
+	  space.
+
+Mon Jan 22 15:30:19 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: updated
+	* FEATURES: added with alist of what's in and what's not
+	* libxslt/xslt.c: fixed top level Param and Variable stuff
+
+Mon Jan 22 11:46:44 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* xsltproc.c: removed bug
+	* tests/REC2/html.xml: added newline after doctype
+	* libxslt/variables.[ch] libxslt/xsltInternals.h: added param
+	  support, result tree fragment support (requires just commited
+	  extensions to libxml2 XPath !!!)
+	* transform.c: added call-template, with-param support
+	* libxslt/pattern.[ch]: xsltFindTemplate() needed for call-template
+	* TODO: updated, added a DONE section and started migrating stuff :-)
+
+Sun Jan 21 12:03:16 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am tests/Makefile.am tests/REC1/Makefile.am
+	  tests/REC2/Makefile.am tests/REC2/html.xml: added tests target
+	  too, added the HTML output test
+	* libxmls/xsltutils.c: added HTML output
+	* libxslt/xslt.c: check version on literal result used as templates
+	* libxslt/transform.c: fixed an error in VERSION number
+	* libxslt/templates.c: make sure generated nodes have doc and
+	  parent properly set
+
+Sat Jan 20 23:35:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am libxslt/template.[ch]: added a template
+	  specific module. Added attribute value template, at least in
+	  one spot.
+	* tests/REC2/Makefile.am tests/REC2/svg.xml: the SVG test from
+	  the spec now works too.
+	* libxslt/variables.c: fixed the debug
+	* libxslt/xslt.c: fixed an ugly uninitialized variable
+	* libxslt/transform.c: now using attr template processing
+
+Sat Jan 20 17:59:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/variables.[ch] libxslt/xslt.c
+	  libxslt/xsltInternals.h libxslt/xsltutils.h: changed a few
+	  structure to add an execution stack with variables. Tree
+	  valued variables still missing.
+	* TODO: updated
+
+Fri Jan 19 13:16:57 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c: check version on stylesheets
+	* libxslt/xslt.c libxslt/xsltInternals.h libxslt/variables[.ch]:
+	  started adding variables interfaces and modules.
+
+Thu Jan 18 16:08:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c: added support for disable-output-escaping
+	  will need libxml version > 20211
+	* libxslt/transform.c: cleanup
+	* libxslt/xsltutils.[ch]: added output functions
+	* libxslt/xsltproc.c: reuse the output function
+	* tests/REC2/Makefile.am tests/REC2/vrml.xml: added VRML output
+	  test
+
+Wed Jan 17 21:03:01 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xslt.c: avoiding some problems
+	  with blank node stripping when not allowed.
+
+Wed Jan 17 20:15:40 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: modified apply-templates processing
+	  added select and sort support support.
+
+Wed Jan 17 17:45:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: guess what, it's growing :-(
+	* configure.in: setup hacking values when compiling in my
+	  own environment.
+	* libxslt/transform.c libxslt/xsltutils.[hc]: added a first
+	  very rudimentary version of xsl:sort
+
+Wed Jan 17 14:25:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: more stuff
+	* libxslt/transform.c: context position and size in for-each
+	* libxslt/xsltutils[ch] libxslt/makefile.am: added the util module
+	  and put Error and Debug routines
+	* libxslt/xslt.c libxslt/transform.c libxslt/pattern.c: switched
+	  to use the Debug calls, cleanup
+	* libxslt/xsltproc.c: added -v to enable debug printing
+
+Tue Jan 16 17:17:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: started filling it :-(
+	* libxslt/pattern.c: should now at least compile the full
+	  set of patterns authorized. Default priorities added.
+	* libxslt/transform.c: a bit more work and cleanup.
+
+Mon Jan 15 15:34:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: started adding in there :-(
+
+Mon Jan 15 15:31:41 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* transform.c, xslt.c, xsltproc.c: lots of fixes, added
+	  support of xslt:if and xslt:attribute, need libxml2 interfaces
+	  present only in CVS.
+
+Sat Jan 13 23:26:21 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* test/Makefile.am test/REC*/Makefile.am: added first test
+	* libxslt/pattern.c libxslt/transform.c libxslt/xslt.c:
+	  cleanup of nodes at reading of stylesheet, added support
+	  for xsl:for-each and fixed a few recursion bugs
+
+Fri Jan 12 22:33:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* pattern.c, xslt.c: removed debug
+	* transform.c: added value-of, seems to handle the first
+	  REC example correctly
+
+Fri Jan 12 18:34:01 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* transform.c, xsltproc.c: small fight with spaces and formatting
+	  may need a revisit later but looks pretty good right now.
+
+Fri Jan 12 13:43:30 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* transform.c: basic processing in place
+	* xsltInternals.h: exported one xslt.c function
+
+Thu Jan 11 21:10:59 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.[ch] Makefile.am: started adding the
+	  transformation module
+	* pattern.[ch] xslt.c: more work...
+
+Thu Jan 11 14:02:03 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c: started adding xsltTestCompMatch()
+
+Wed Jan 10 20:44:30 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c: more work on parsing selectors
+
+Wed Jan 10 16:29:41 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt*: completeted the structures
+	* libxslt/pattern.[ch]: started adding code to precompile patterns
+	  and do the lookup
+	* libxslt/makefile.am: added the new files
+
+Mon Jan  8 19:55:18 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c : small cleanup
+	* configure.in libxslt/xsltconfig.h.in: add memory debug and
+	  mechanism for compile-time options
+
+Sun Jan  7 22:53:12 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.[ch]: started parsing templates
+
+Sun Jan  7 19:50:02 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.[ch]: started parsing stylesheet xsl:stylesheet
+
+Sun Jan  7 16:11:42 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.[ch] libxslt/xsltInternals.h libxslt/xsltproc.c:
+	  very early coding
+
+Sun Jan  7 15:10:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in Makefile.am AUTHORS NEWS autogen.sh config.h.in
+	  libxslt/Makefile.am tests/Makefile.am:
+	  Created the library framework, imported it into the GNOME CVS base
+	* INSTALL: added a small instruction file.
+
+Sun Jan  7 13:51:30 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.[ch] libxslt/xsltInternals.h libxslt/xsltproc.c:
+	  first steps toward building the framework
+
+Sun Jan  7 12:22:13 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* NOTES: added notes taken while reading the spec.
+
+Fri Jan  5 11:34:12 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* test/REC1 test/REC2: added examples from the XSLT REC
+
+Fri Jan  5 11:14:29 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* README: basic informations
+	* Changelog: created
