@@ -1,3 +1,8 @@
+Mon Jul 23 23:35:00 HKT 2001 William M. Brack <wbrack@mmm.com.hk>
+
+	* libxslt/documents.c enhancement to xsltFindDocument to
+	  cater for the Matt Sergeant patch
+
 Mon Jul 23 09:32:27 MDT 2001 John Fleck <jfleck@inkstain.net>
 
 	* updating libxslt tutorial to include param support
