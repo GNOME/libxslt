@@ -907,6 +907,8 @@ xsltStylePreCompute(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	    xsltElementComp(ctxt, inst);
 	} else if (IS_XSLT_NAME(inst, "text")) {
 	    xsltTextComp(ctxt, inst);
+	} else if (IS_XSLT_NAME(inst, "sort")) {
+	    xsltSortComp(ctxt, inst);
 	} else if (IS_XSLT_NAME(inst, "comment")) {
 	    xsltCommentComp(ctxt, inst);
 	} else if (IS_XSLT_NAME(inst, "number")) {
@@ -928,7 +930,7 @@ xsltStylePreCompute(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	    xsltDocumentComp(ctxt, inst);
 	} else {
 	    xsltGenericError(xsltGenericDebugContext,
-		 "xsltStylePreComp: unknown xslt:%s\n", inst->name);
+		 "xsltStylePreCompute: unknown xslt:%s\n", inst->name);
 	}
     }
 }

@@ -348,62 +348,28 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 void 
 xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	         xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlChar *filename = NULL;
-    xmlChar *base = NULL;
-    xmlChar *URL = NULL;
     xsltStylesheetPtr style = NULL;
-    int ver11 = 0, ret;
+    int ret;
     xmlDocPtr result = NULL;
     xmlDocPtr oldOutput;
     xmlNodePtr oldInsert;
 
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
+	return;
+
+    if (comp->filename == NULL)
+	return;
+
     oldOutput = ctxt->output;
     oldInsert = ctxt->insert;
-    if (xmlStrEqual(inst->name, (const xmlChar *) "output")) {
-#ifdef DEBUG_EXTRA
-	xsltGenericDebug(xsltGenericDebugContext,
-	    "Found saxon:output extension\n");
-#endif
-	filename = xmlGetNsProp(inst, (const xmlChar *)"file",
-	                XSLT_SAXON_NAMESPACE);
-    } else if (xmlStrEqual(inst->name, (const xmlChar *) "write")) {
-#ifdef DEBUG_EXTRA
-	xsltGenericDebug(xsltGenericDebugContext,
-	    "Found xalan:write extension\n");
-#endif
-	filename = xmlGetNsProp(inst, (const xmlChar *)"select",
-	                XSLT_XALAN_NAMESPACE);
-    } else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
-	filename = xmlGetNsProp(inst, (const xmlChar *)"href",
-	                XSLT_XT_NAMESPACE);
-	if (filename == NULL) {
-#ifdef DEBUG_EXTRA
-	    xsltGenericDebug(xsltGenericDebugContext,
-		"Found xslt11:document construct\n");
-#endif
-	    filename = xmlGetNsProp(inst, (const xmlChar *)"href",
-			    XSLT_NAMESPACE);
-	    ver11 = 1;
-	} else {
-#ifdef DEBUG_EXTRA
-	    xsltGenericDebug(xsltGenericDebugContext,
-		"Found xt:document extension\n");
-#endif
-	    ver11 = 0;
-	}
-    }
-    if (filename == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsltDocumentElem: could not find the href\n");
-	goto error;
-    }
+
     style = xsltNewStylesheet();
     if (style == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltDocumentElem: out of memory\n");
 	goto error;
     }
-    if (ver11) {
+    if (comp->ver11) {
 	/*
 	 * Version described in 1.1 draft allows full parametrization
 	 * of the output.
@@ -429,16 +395,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     /*
      * Save the result
      */
-    base = xmlNodeGetBase(inst->doc, inst);
-    URL = xmlBuildURI(base, filename);
-    if (URL == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsltDocumentElem: URL computation failed %s\n", filename);
-	ret = xsltSaveResultToFilename((const char *)filename,
+    ret = xsltSaveResultToFilename((const char *) comp->filename,
 		                       result, style, 0);
-    } else {
-	ret = xsltSaveResultToFilename((const char *)URL, result, style, 0);
-    }
     if (ret < 0) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltDocumentElem: unable to save to %s\n");
@@ -452,14 +410,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 error:
     ctxt->output = oldOutput;
     ctxt->insert = oldInsert;
-    if (base != NULL)
-	xmlFree(base);
-    if (URL != NULL)
-	xmlFree(URL);
     if (style != NULL)
 	xsltFreeStylesheet(style);
-    if (filename != NULL)
-	xmlFree(filename);
     if (result != NULL)
 	xmlFreeDoc(result);
 }
@@ -487,16 +439,20 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlXPathObjectPtr *results = NULL;
     xmlNodeSetPtr list = NULL;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
-    xmlChar *prop = NULL;
     xmlXPathObjectPtr res, tmp;
     const xmlChar *start;
-    int descending = 0;
-    int number = 0;
     int len = 0;
     int i;
     xmlNodePtr oldNode;
 
-    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+    if (comp == NULL) {
+	xsltStylePreCompute(ctxt, inst);
+	comp = inst->_private;
+    }
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
+	return;
+    if (comp->select == NULL)
 	return;
 
     list = ctxt->nodeList;
@@ -505,46 +461,11 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     len = list->nodeNr;
 
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"data-type");
-    if (prop != NULL) {
-	if (xmlStrEqual(prop, (const xmlChar *) "text"))
-	    number = 0;
-	else if (xmlStrEqual(prop, (const xmlChar *) "number"))
-	    number = 1;
-	else {
-	    xsltGenericError(xsltGenericErrorContext,
-		 "xsltSort: no support for data-type = %s\n", prop);
-	    goto error;
-	}
-	xmlFree(prop);
-    }
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"order");
-    if (prop != NULL) {
-	if (xmlStrEqual(prop, (const xmlChar *) "ascending"))
-	    descending = 0;
-	else if (xmlStrEqual(prop, (const xmlChar *) "descending"))
-	    descending = 1;
-	else {
-	    xsltGenericError(xsltGenericErrorContext,
-		 "xsltSort: invalid value %s for order\n", prop);
-	    goto error;
-	}
-	xmlFree(prop);
-    }
     /* TODO: xsl:sort lang attribute */
     /* TODO: xsl:sort case-order attribute */
 
-    prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
-    if (prop == NULL) {
-	prop = xmlNodeGetContent(inst);
-	if (prop == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-		 "xsltSort: select is not defined\n");
-	    return;
-	}
-    }
 
-    xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
+    xpathParserCtxt = xmlXPathNewParserContext(comp->select, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
 	goto error;
     results = xmlMalloc(len * sizeof(xmlXPathObjectPtr));
@@ -564,7 +485,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->xpathCtxt->node = ctxt->node;
 	xmlXPathEvalExpr(xpathParserCtxt);
 	xmlXPathStringFunction(xpathParserCtxt, 1);
-	if (number)
+	if (comp->number)
 	    xmlXPathNumberFunction(xpathParserCtxt, 1);
 	res = valuePop(xpathParserCtxt);
 	do {
@@ -575,7 +496,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	} while (tmp != NULL);
 
 	if (res != NULL) {
-	    if (number) {
+	    if (comp->number) {
 		if (res->type == XPATH_NUMBER) {
 		    results[i] = res;
 		} else {
@@ -600,13 +521,11 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     ctxt->node = oldNode;
 
-    xsltSortFunction(list, &results[0], descending, number);
+    xsltSortFunction(list, &results[0], comp->descending, comp->number);
 
 error:
     if (xpathParserCtxt != NULL)
 	xmlXPathFreeParserContext(xpathParserCtxt);
-    if (prop != NULL)
-	xmlFree(prop);
     if (results != NULL) {
 	for (i = 0;i < len;i++)
 	    xmlXPathFreeObject(results[i]);
@@ -626,7 +545,6 @@ error:
 void
 xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlChar *prop;
     xmlNodePtr copy, oldInsert;
 
     oldInsert = ctxt->insert;
@@ -642,11 +560,8 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		copy = xsltCopyNode(ctxt, node, ctxt->insert);
 		ctxt->insert = copy;
-		prop = xmlGetNsProp(inst, (const xmlChar *)"use-attribute-sets",
-				    XSLT_NAMESPACE);
-		if (prop != NULL) {
-		    xsltApplyAttributeSet(ctxt, node, inst, prop);
-		    xmlFree(prop);
+		if (comp->use != NULL) {
+		    xsltApplyAttributeSet(ctxt, node, inst, comp->use);
 		}
 		break;
 	    case XML_ATTRIBUTE_NODE: {
@@ -718,27 +633,15 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xslt:text has content problem !\n");
 	} else {
-	    xmlChar *prop;
 	    xmlNodePtr text = inst->children;
 	    
 	    copy = xmlNewDocText(ctxt->output, text->content);
-	    prop = xmlGetNsProp(inst,
-		    (const xmlChar *)"disable-output-escaping",
-				XSLT_NAMESPACE);
-	    if (prop != NULL) {
+	    if (comp->noescape) {
 #ifdef DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
 		     "Disable escaping: %s\n", text->content);
 #endif
-		if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
-		    copy->name = xmlStringTextNoenc;
-		} else if (!xmlStrEqual(prop,
-					(const xmlChar *)"no")){
-		    xsltGenericError(xsltGenericErrorContext,
-     "xslt:text: disable-output-escaping allow only yes or no\n");
-
-		}
-		xmlFree(prop);
+		copy->name = xmlStringTextNoenc;
 	    }
 	    xmlAddChild(ctxt->insert, copy);
 	}
@@ -758,7 +661,7 @@ void
 xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL, *attributes = NULL;
-    xmlChar *ncname = NULL;
+    xmlChar *ncname = NULL, *name, *namespace;
     xmlChar *prefix = NULL;
     xmlChar *value = NULL;
     xmlNsPtr ns = NULL;
@@ -768,59 +671,82 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (ctxt->insert == NULL)
 	return;
+    if (!comp->has_name) {
+	return;
+    }
+
     /*
      * stack and saves
      */
     oldInsert = ctxt->insert;
 
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
-    if (prop == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:element : name is missing\n");
-	goto error;
+    if (comp->name == NULL) {
+	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+	if (prop == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:element : name is missing\n");
+	    goto error;
+	}
+	name = prop;
+    } else {
+	name = comp->name;
     }
 
-    ncname = xmlSplitQName2(prop, &prefix);
+    ncname = xmlSplitQName2(name, &prefix);
     if (ncname == NULL) {
-	ncname = prop;
-	prop = NULL;
 	prefix = NULL;
-    }
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
-    if (prop != NULL) {
-	ns = xsltGetSpecialNamespace(ctxt, inst, prop, prefix, ctxt->insert);
     } else {
-	if (prefix != NULL) {
-	    if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
+	name = ncname;
+    }
+    if ((comp->ns == NULL) && (comp->has_ns)) {
+	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
+		(const xmlChar *)"namespace");
+	if (namespace != NULL) {
+	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
+		                         ctxt->insert);
+	    xmlFree(namespace);
+	} else {
+	    if (prefix != NULL) {
+		if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
 #ifdef DEBUG_PARSING
-		xsltGenericDebug(xsltGenericDebugContext,
-		     "xslt:element : xml prefix forbidden\n");
+		    xsltGenericDebug(xsltGenericDebugContext,
+			 "xslt:element : xml prefix forbidden\n");
 #endif
-		goto error;
-	    }
-	    ns = xmlSearchNs(inst->doc, inst, prefix);
-	    if (ns == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-		    "no namespace bound to prefix %s\n", prefix);
-	    } else {
-		ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+		    goto error;
+		}
+		ns = xmlSearchNs(inst->doc, inst, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		} else {
+		    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+		}
 	    }
 	}
+    } else if (comp->ns != NULL) {
+	ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
+				     ctxt->insert);
     }
 
-    copy = xmlNewDocNode(ctxt->output, ns, ncname, NULL);
+    copy = xmlNewDocNode(ctxt->output, ns, name, NULL);
     if (copy == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	    "xsl:element : creation of %s failed\n", ncname);
+	    "xsl:element : creation of %s failed\n", name);
 	goto error;
     }
     xmlAddChild(ctxt->insert, copy);
     ctxt->insert = copy;
-    attributes = xsltEvalAttrValueTemplate(ctxt, inst,
-	                               (const xmlChar *)"use-attribute-sets");
-    if (attributes != NULL) {
-	xsltApplyAttributeSet(ctxt, node, inst, attributes);
-        xmlFree(attributes);
+    if (comp->has_use) {
+	if (comp->use != NULL) {
+	    xsltApplyAttributeSet(ctxt, node, inst, comp->use);
+	} else {
+	    attributes = xsltEvalAttrValueTemplate(ctxt, inst,
+			       (const xmlChar *)"use-attribute-sets");
+	    if (attributes != NULL) {
+		xsltApplyAttributeSet(ctxt, node, inst, attributes);
+		xmlFree(attributes);
+	    }
+	}
     }
     
     varsPush(ctxt, NULL);
@@ -853,7 +779,7 @@ void
 xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL;
-    xmlChar *ncname = NULL;
+    xmlChar *ncname = NULL, *name, *namespace;
     xmlChar *prefix = NULL;
     xmlChar *value = NULL;
     xmlNsPtr ns = NULL;
@@ -862,60 +788,81 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (ctxt->insert == NULL)
 	return;
+    if (comp == NULL) {
+	xsltStylePreCompute(ctxt, inst);
+	comp = inst->_private;
+    }
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
+	return;
+    if (!comp->has_name) {
+	return;
+    }
     if (ctxt->insert->children != NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:attribute : node has already children\n");
 	return;
     }
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
-    if (prop == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:attribute : name is missing\n");
-	goto error;
+    if (comp->name == NULL) {
+	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+	if (prop == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:element : name is missing\n");
+	    goto error;
+	}
+	name = prop;
+    } else {
+	name = comp->name;
     }
 
-    ncname = xmlSplitQName2(prop, &prefix);
+    ncname = xmlSplitQName2(name, &prefix);
     if (ncname == NULL) {
-	ncname = prop;
-	prop = NULL;
 	prefix = NULL;
+    } else {
+	name = ncname;
     }
-
-    if ((prefix != NULL) && (xmlStrEqual(prefix, (const xmlChar *)"xmlns"))) {
-#ifdef DEBUG_ATTRIBUTES
+    if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
+#ifdef DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xslt:attribute : xmlns prefix forbidden\n");
+	     "xslt:attribute : xml prefix forbidden\n");
 #endif
 	goto error;
     }
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
-    if (prop != NULL) {
-	ns = xsltGetSpecialNamespace(ctxt, inst, prop, prefix, ctxt->insert);
-    } else {
-	if (prefix != NULL) {
-	    ns = xmlSearchNs(inst->doc, inst, prefix);
-	    if (ns == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-		    "no namespace bound to prefix %s\n", prefix);
-	    } else {
-		ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+    if ((comp->ns == NULL) && (comp->has_ns)) {
+	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
+		(const xmlChar *)"namespace");
+	if (namespace != NULL) {
+	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
+		                         ctxt->insert);
+	    xmlFree(namespace);
+	} else {
+	    if (prefix != NULL) {
+		ns = xmlSearchNs(inst->doc, inst, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		} else {
+		    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+		}
 	    }
 	}
+    } else if (comp->ns != NULL) {
+	ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
+				     ctxt->insert);
     }
-    
 
     value = xsltEvalTemplateString(ctxt, node, inst);
     if (value == NULL) {
 	if (ns) {
-	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, 
+	    attr = xmlSetNsProp(ctxt->insert, ns, name, 
 		                (const xmlChar *)"");
 	} else
-	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
+	    attr = xmlSetProp(ctxt->insert, name, (const xmlChar *)"");
     } else {
 	if (ns) {
-	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, value);
+	    attr = xmlSetNsProp(ctxt->insert, ns, name, value);
 	} else
-	    attr = xmlSetProp(ctxt->insert, ncname, value);
+	    attr = xmlSetProp(ctxt->insert, name, value);
 	
     }
 
