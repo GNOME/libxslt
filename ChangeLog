@@ -1,3 +1,7 @@
+Wed May  9 01:39:14 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* libexslt/exslt.h: fixed a typo _cplusplus -> __cplusplus
+
 Thu May  2 11:08:22 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c libxslt/xsltutils.c doc/xsltproc.xml:
