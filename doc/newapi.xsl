@@ -84,6 +84,7 @@
       <!--   Coming soon .....
       <li><a href="{$href_base}guidelines.html">XSLT Guidelines</a></li>
       -->
+      <li><a href="{$href_base}ChangeLog.html">ChangeLog</a></li>
     </ul>
   </xsl:variable>
   <xsl:template name="toc">
