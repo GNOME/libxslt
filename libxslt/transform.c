@@ -419,6 +419,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->xinclude = xsltDoXIncludeDefault;
     cur->outputFile = NULL;
     cur->sec = xsltGetDefaultSecurityPrefs();
+	cur->debugStatus = xslDebugStatus;
 
     return(cur);
 }
@@ -1381,14 +1382,14 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     long start = 0;
 
 #ifdef WITH_DEBUGGER
-    if (xslDebugStatus != XSLT_DEBUG_NONE) {
+    if (ctxt->debugStatus != XSLT_DEBUG_NONE) {
         if (templ) {
             addCallResult = xslAddCall(templ, templ->elem);
         } else {
             addCallResult = xslAddCall(NULL, list);
         }
 
-        switch (xslDebugStatus) {
+        switch (ctxt->debugStatus) {
 
             case XSLT_DEBUG_RUN_RESTART:
             case XSLT_DEBUG_QUIT:
@@ -1456,7 +1457,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     while (cur != NULL) {
         ctxt->inst = cur;
 #ifdef WITH_DEBUGGER
-        switch (xslDebugStatus) {
+        switch (ctxt->debugStatus) {
             case XSLT_DEBUG_RUN_RESTART:
             case XSLT_DEBUG_QUIT:
                 break;
@@ -1474,7 +1475,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             goto error;
         }
 #ifdef WITH_DEBUGGER
-        if ((xslDebugStatus != XSLT_DEBUG_NONE) && (debugedNode != cur))
+        if ((ctxt->debugStatus != XSLT_DEBUG_NONE) && (debugedNode != cur))
             xslHandleDebugger(cur, node, templ, ctxt);
 #endif
 
@@ -1773,7 +1774,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
         }
     }
 #ifdef WITH_DEBUGGER
-    if ((xslDebugStatus != XSLT_DEBUG_NONE) && (addCallResult)) {
+    if ((ctxt->debugStatus != XSLT_DEBUG_NONE) && (addCallResult)) {
         xslDropCall();
     }
 #endif
@@ -2943,7 +2944,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     cur = inst->children;
     while (cur != NULL) {
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != XSLT_DEBUG_NONE)
+        if (ctxt->debugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(cur, node, comp->templ, ctxt);
 #endif
 	if (ctxt->state == XSLT_STATE_STOPPED) break;
@@ -3163,7 +3164,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     cur = inst->children;
     while (cur!=NULL) {
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != XSLT_DEBUG_NONE)
+        if (ctxt->debugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(cur, node, comp->templ, ctxt);
 #endif
         if (ctxt->state == XSLT_STATE_STOPPED) break;

@@ -513,6 +513,10 @@ struct _xsltTransformContext {
     const xmlChar  *lasttext;		/* last text node content */
     unsigned int    lasttsize;		/* last text node size */
     unsigned int    lasttuse;		/* last text node use */
+	/*
+	 * Per Context Debugging
+	 */
+	int debugStatus;				/* the context level debug status */
 };
 
 /**

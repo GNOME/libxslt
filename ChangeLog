@@ -1,3 +1,10 @@
+Thu Nov 13 11:54:36 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c libxslt/documents.c libxslt/transform.c
+	  libxslt/variables.c libxslt/xsltInternals.h: applied Mark Vakoc
+	  patch to moves the control of the XSLT debugger into the transform
+	  context.
+
 Tue Nov 12 18:17:24 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/functions.c: applied patch for param visibility from
