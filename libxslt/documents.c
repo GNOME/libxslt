@@ -238,8 +238,8 @@ xsltFindDocument (xsltTransformContextPtr ctxt, xmlDocPtr doc) {
 	    return(ret);
 	ret = ret->next;
     }
-    if (doc==ctxt->style->doc)
-	return ctxt->style;
+    if (doc == ctxt->style->doc)
+	return(ctxt->document);
     return(NULL);
 }
 

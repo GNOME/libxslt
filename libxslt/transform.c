@@ -164,7 +164,7 @@ xsltGetXIncludeDefault(void) {
  *
  * Returns the newly allocated xsltTransformContextPtr or NULL in case of error
  */
-static xsltTransformContextPtr
+xsltTransformContextPtr
 xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     xsltTransformContextPtr cur;
     xsltDocumentPtr docu;
@@ -259,7 +259,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
  *
  * Free up the memory allocated by @ctxt
  */
-static void
+void
 xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
@@ -3117,6 +3117,7 @@ xsltGetHTMLIDs(const xmlChar *version, const xmlChar **public,
  * @params:  a NULL terminated arry of parameters names/values tuples
  * @output:  the targetted output
  * @profile:  profile FILE * output or NULL
+ * @user:  user provided parameter
  *
  * Apply the stylesheet to the document
  * NOTE: This may lead to a non-wellformed output XML wise !
@@ -3126,7 +3127,7 @@ xsltGetHTMLIDs(const xmlChar *version, const xmlChar **public,
 static xmlDocPtr
 xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                             const char **params, const char *output,
-                            FILE * profile)
+                            FILE * profile, xsltTransformContextPtr userCtxt)
 {
     xmlDocPtr res = NULL;
     xsltTransformContextPtr ctxt = NULL;
@@ -3140,7 +3141,12 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 
     if ((style == NULL) || (doc == NULL))
         return (NULL);
-    ctxt = xsltNewTransformContext(style, doc);
+
+    if (userCtxt != NULL)
+	ctxt = userCtxt;
+    else
+	ctxt = xsltNewTransformContext(style, doc);
+
     if (ctxt == NULL)
         return (NULL);
 
@@ -3311,7 +3317,9 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if (profile != NULL) {
         xsltSaveProfiling(ctxt, profile);
     }
-    xsltFreeTransformContext(ctxt);
+    if (userCtxt == NULL)
+	xsltFreeTransformContext(ctxt);
+
     return (res);
 
 error:
@@ -3337,7 +3345,7 @@ xmlDocPtr
 xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
                     const char **params)
 {
-    return (xsltApplyStylesheetInternal(style, doc, params, NULL, NULL));
+    return (xsltApplyStylesheetInternal(style, doc, params, NULL, NULL, NULL));
 }
 
 /**
@@ -3358,7 +3366,33 @@ xsltProfileStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
 {
     xmlDocPtr res;
 
-    res = xsltApplyStylesheetInternal(style, doc, params, NULL, output);
+    res = xsltApplyStylesheetInternal(style, doc, params, NULL, output, NULL);
+    return (res);
+}
+
+/**
+ * xsltApplyStylesheetUser:
+ * @style:  a parsed XSLT stylesheet
+ * @doc:  a parsed XML document
+ * @params:  a NULL terminated arry of parameters names/values tuples
+ * @output:  the targetted output
+ * @profile:  profile FILE * output or NULL
+ * @userCtxt:  user provided transform context
+ *
+ * Apply the stylesheet to the document and allow the user to provide
+ * its own transformation context.
+ *
+ * Returns the result document or NULL in case of error
+ */
+xmlDocPtr
+xsltApplyStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc,
+                            const char **params, const char *output,
+                            FILE * profile, xsltTransformContextPtr userCtxt)
+{
+    xmlDocPtr res;
+
+    res = xsltApplyStylesheetInternal(style, doc, params, output,
+	                              profile, userCtxt);
     return (res);
 }
 
@@ -3405,7 +3439,7 @@ xsltRunStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
             return (-1);
     }
 
-    tmp = xsltApplyStylesheetInternal(style, doc, params, output, NULL);
+    tmp = xsltApplyStylesheetInternal(style, doc, params, output, NULL, NULL);
     if (tmp == NULL) {
 	xsltPrintErrorContext(NULL, NULL, (xmlNodePtr) doc);
         xsltGenericError(xsltGenericErrorContext,

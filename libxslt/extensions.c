@@ -1113,7 +1113,8 @@ xsltExtModuleTopLevelLookup (const xmlChar *name, const xmlChar *URI) {
     if ((xsltTopLevelsHash == NULL) || (name == NULL) || (URI == NULL))
 	return(NULL);
 
-    return xmlHashLookup2(xsltTopLevelsHash, name, URI);
+    return((xsltPreComputeFunction)
+	    xmlHashLookup2(xsltTopLevelsHash, name, URI));
 }
 
 /**
@@ -1158,10 +1159,10 @@ static xmlChar *testStyleData = NULL;
  * function libxslt:test() for testing the extensions support.
  */
 static void
-xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
+xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs ATTRIBUTE_UNUSED)
 {
     xsltTransformContextPtr tctxt;
-    void *data;
+    void *data = NULL;
 
     tctxt = xsltXPathGetTransformContext(ctxt);
 
@@ -1370,7 +1371,8 @@ xsltExtShutdownTest(xsltTransformContextPtr ctxt,
  * Returns a pointer to the module specific data for this transformation
  */
 static void *
-xsltExtStyleInitTest(xsltStylesheetPtr style, const xmlChar * URI)
+xsltExtStyleInitTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
+	             const xmlChar * URI)
 {
     if (testStyleData != NULL) {
 	xsltPrintErrorContext(NULL, NULL, NULL);
@@ -1394,7 +1396,7 @@ xsltExtStyleInitTest(xsltStylesheetPtr style, const xmlChar * URI)
  * A function called at shutdown time of an XSLT extension module
  */
 static void
-xsltExtStyleShutdownTest(xsltStylesheetPtr style,
+xsltExtStyleShutdownTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 			 const xmlChar * URI, void *data) {
     if (testStyleData == NULL) {
         xsltGenericError(xsltGenericErrorContext,

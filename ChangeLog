@@ -1,3 +1,10 @@
+Fri Jul 27 10:50:39 EDT 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.[ch]: applied changes from Tom Moog #58002
+	* libexslt/functions.c libxslt/documents.c libxslt/extensions.c:
+	  Some cleanup, there is still a memory leak left and some warnings
+	  in libexslt.
+
 Thu Jul 26 19:05:48 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libxslt/extensions.[ch] libxslt/functions.[ch] libxslt/preproc.c
