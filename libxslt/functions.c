@@ -63,11 +63,11 @@
  * Returns the callback function or NULL if not found
  */
 xmlXPathFunction
-xsltXPathFunctionLookup (void *ctxt ATTRIBUTE_UNUSED,
+xsltXPathFunctionLookup (xmlXPathContextPtr ctxt,
 			 const xmlChar *name, const xmlChar *ns_uri) {
     xmlXPathFunction ret;
 
-    if ((name == NULL) || (ns_uri == NULL))
+    if ((ctxt == NULL) || (name == NULL) || (ns_uri == NULL))
 	return (NULL);
 
 #ifdef WITH_XSLT_DEBUG_FUNCTION
@@ -75,7 +75,11 @@ xsltXPathFunctionLookup (void *ctxt ATTRIBUTE_UNUSED,
             "Lookup function {%s}%s\n", ns_uri, name);
 #endif
 
-    ret = xsltExtModuleFunctionLookup(name, ns_uri);
+    /* give priority to context-level functions */
+    ret = (xmlXPathFunction) xmlHashLookup2(ctxt->funcHash, name, ns_uri);
+
+    if (ret == NULL)
+	ret = xsltExtModuleFunctionLookup(name, ns_uri);
 
 #ifdef WITH_XSLT_DEBUG_FUNCTION
     if (ret != NULL)

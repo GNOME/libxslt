@@ -175,6 +175,16 @@ exsltSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
+    /*  If the second node set is empty, then the first node set is
+     * returned.
+     */
+    if (xmlXPathNodeSetIsEmpty(arg2)) {
+	xmlXPathReturnNodeSet(ctxt, arg1);
+
+	xmlXPathFreeNodeSet(arg2);
+
+	return;
+    }
     /* !!! must be sorted */
     ret = xmlXPathNodeLeadingSorted(arg1, xmlXPathNodeSetItem(arg2, 0));
 
@@ -212,6 +222,16 @@ exsltSetsTrailingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
+    /*  If the second node set is empty, then the first node set is
+     * returned.
+     */
+    if (xmlXPathNodeSetIsEmpty(arg2)) {
+	xmlXPathReturnNodeSet(ctxt, arg1);
+
+	xmlXPathFreeNodeSet(arg2);
+
+	return;
+    }
     /* !!! mist be sorted */
     ret = xmlXPathNodeTrailingSorted(arg1, xmlXPathNodeSetItem(arg2, 0));
 

@@ -1,3 +1,16 @@
+Wed Aug  1 01:37:41 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/sets.c: fixed bugs in exsltTrailingFunction and
+	  exsltLeadingFunction when passing an empty node-set as the
+	  second argument
+	* libxslt/functions.[ch]: gave priority to context-level functions
+	  over extension module functions. This allows a function declared
+	  with a func:function element to override an extension module
+	  function for example. This is a bit hackish...
+	* tests/exslt/sets/{lead,trail}ing.1.out: fixed errors. The result
+	  values didn't conform to the expected values. This is a bug in
+	  the EXSLT official use cases.
+
 Tue Jul 31 23:53:55 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* config.h.in configure.in libxslt/extra.c: tried to integrate
