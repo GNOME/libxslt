@@ -406,7 +406,7 @@ main(int argc, char **argv)
     /*
      * Register the EXSLT extensions
      */
-    exslRegisterAll();
+    exsltRegisterAll();
 
     for (i = 1; i < argc; i++) {
         if ((!strcmp(argv[i], "-maxdepth")) ||

@@ -1,3 +1,18 @@
+2001-07-16  Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/.cvsignore: some more generated files to ignore
+	* libexslt/Makefile.am: utils.h not installed anymore
+	* libexslt/common.c libexslt/exslt.[ch] libexslt/functions.c
+	  libexslt/math.c libexslt/sets.c:
+	  changed function prefix from exsl* to exslt*
+	  {common.c,exslt.c} moved exsltLib{rary,exslt,xslt,xml}Version
+	  from common.c to exslt.c
+	  {common.c} removed exslNodeSetFunction, uses xsltFunctionNodeSet
+	  instead
+	* libxslt/extra.c: fixed xsltFunctionNodeSet to accept
+	  XPATH_NODESET arguments in addition to XPATH_XSLT_TREE
+	* xsltproc/xsltproc.c: updated to use the new function prefix
+
 2001-07-15  Darin Adler  <darin@bentspoon.com>
 
 	* libxslt/.cvsignore:

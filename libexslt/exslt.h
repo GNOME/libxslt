@@ -14,12 +14,12 @@ extern const int exsltLibxmlVersion;
 #define EXSLT_SETS_NAMESPACE ((const xmlChar *) "http://exslt.org/sets")
 #define EXSLT_FUNCTIONS_NAMESPACE ((const xmlChar *) "http://exslt.org/functions")
 
-void exslCommonRegister (void);
-void exslMathRegister (void);
-void exslSetsRegister (void);
-void exslFuncRegister (void);
+void exsltCommonRegister (void);
+void exsltMathRegister (void);
+void exsltSetsRegister (void);
+void exsltFuncRegister (void);
 
-void exslRegisterAll (void);
+void exsltRegisterAll (void);
 
 #endif /* __EXSLT_H__ */
 

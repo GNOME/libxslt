@@ -13,7 +13,7 @@
 extern double xmlXPathNAN;
 
 /**
- * exslMathMin:
+ * exsltMathMin:
  * @ns:  a node-set
  *
  * Implements the EXSLT - Math min() function:
@@ -24,7 +24,7 @@ extern double xmlXPathNAN;
  *         turns into NaN.
  */
 static double
-exslMathMin (xmlNodeSetPtr ns) {
+exsltMathMin (xmlNodeSetPtr ns) {
     double ret, cur;
     int i;
 
@@ -44,14 +44,14 @@ exslMathMin (xmlNodeSetPtr ns) {
 }
 
 /**
- * exslMathMinFunction:
+ * exsltMathMinFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslMathMin for use by the XPath processor.
+ * Wraps #exsltMathMin for use by the XPath processor.
  */
 static void
-exslMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns;
     double ret;
 
@@ -65,7 +65,7 @@ exslMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     if (xmlXPathCheckError(ctxt))
 	return;
 
-    ret = exslMathMin(ns);
+    ret = exsltMathMin(ns);
 
     xmlXPathFreeNodeSet(ns);
 
@@ -74,7 +74,7 @@ exslMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 
 
 /**
- * exslMathMax:
+ * exsltMathMax:
  * @ns:  a node-set
  *
  * Implements the EXSLT - Math max() function:
@@ -85,7 +85,7 @@ exslMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         turns into NaN.
  */
 static double
-exslMathMax (xmlNodeSetPtr ns) {
+exsltMathMax (xmlNodeSetPtr ns) {
     double ret, cur;
     int i;
 
@@ -105,14 +105,14 @@ exslMathMax (xmlNodeSetPtr ns) {
 }
 
 /**
- * exslMathMaxFunction:
+ * exsltMathMaxFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslMathMax for use by the XPath processor.
+ * Wraps #exsltMathMax for use by the XPath processor.
  */
 static void
-exslMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns;
     double ret;
 
@@ -124,7 +124,7 @@ exslMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     if (xmlXPathCheckError(ctxt))
 	return;
 
-    ret = exslMathMax(ns);
+    ret = exsltMathMax(ns);
 
     xmlXPathFreeNodeSet(ns);
 
@@ -132,7 +132,7 @@ exslMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 /**
- * exslMathHighest:
+ * exsltMathHighest:
  * @ns:  a node-set
  *
  * Implements the EXSLT - Math highest() function:
@@ -142,7 +142,7 @@ exslMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         for the node-set.
  */
 static xmlNodeSetPtr
-exslMathHighest (xmlNodeSetPtr ns) {
+exsltMathHighest (xmlNodeSetPtr ns) {
     xmlNodeSetPtr ret = xmlXPathNodeSetCreate(NULL);
     double max, cur;
     int i;
@@ -176,14 +176,14 @@ exslMathHighest (xmlNodeSetPtr ns) {
 }
 
 /**
- * exslMathHighestFunction:
+ * exsltMathHighestFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslMathHighest for use by the XPath processor
+ * Wraps #exsltMathHighest for use by the XPath processor
  */
 static void
-exslMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
 
     if (nargs != 1) {
@@ -195,7 +195,7 @@ exslMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     if (xmlXPathCheckError(ctxt))
 	return;
 
-    ret = exslMathHighest(ns);
+    ret = exsltMathHighest(ns);
 
     xmlXPathFreeNodeSet(ns);
 
@@ -203,7 +203,7 @@ exslMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 /**
- * exslMathLowest:
+ * exsltMathLowest:
  * @ns:  a node-set
  *
  * Implements the EXSLT - Math lowest() function
@@ -213,7 +213,7 @@ exslMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         for the node-set.
  */
 static xmlNodeSetPtr
-exslMathLowest (xmlNodeSetPtr ns) {
+exsltMathLowest (xmlNodeSetPtr ns) {
     xmlNodeSetPtr ret = xmlXPathNodeSetCreate(NULL);
     double min, cur;
     int i;
@@ -247,14 +247,14 @@ exslMathLowest (xmlNodeSetPtr ns) {
 }
 
 /**
- * exslMathLowestFunction:
+ * exsltMathLowestFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslMathLowest for use by the XPath processor
+ * Wraps #exsltMathLowest for use by the XPath processor
  */
 static void
-exslMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
 
     if (nargs != 1) {
@@ -266,7 +266,7 @@ exslMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     if (xmlXPathCheckError(ctxt))
 	return;
 
-    ret = exslMathLowest(ns);
+    ret = exsltMathLowest(ns);
 
     xmlXPathFreeNodeSet(ns);
 
@@ -274,25 +274,25 @@ exslMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 static void *
-exslMathInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
+exsltMathInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "min",
-			     URI, exslMathMinFunction);
+			     URI, exsltMathMinFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "max",
-			     URI, exslMathMaxFunction);
+			     URI, exsltMathMaxFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "highest",
-			     URI, exslMathHighestFunction);
+			     URI, exsltMathHighestFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "lowest",
-			     URI, exslMathLowestFunction);
+			     URI, exsltMathLowestFunction);
     return(NULL);
 }
 
 /**
- * exslMathRegister:
+ * exsltMathRegister:
  *
  * Registers the EXSLT - Math module
  */
 
 void
-exslMathRegister (void) {
-    xsltRegisterExtModule (EXSLT_MATH_NAMESPACE, exslMathInit, NULL);
+exsltMathRegister (void) {
+    xsltRegisterExtModule (EXSLT_MATH_NAMESPACE, exsltMathInit, NULL);
 }

@@ -10,7 +10,7 @@
 #include "utils.h"
 
 /**
- * exslSetsDifference:
+ * exsltSetsDifference:
  * @nodes1:  a node-set
  * @nodes2:  a node-set
  *
@@ -21,7 +21,7 @@
  *         nodes2 is empty
  */
 static xmlNodeSetPtr
-exslSetsDifference (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
+exsltSetsDifference (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     xmlNodeSetPtr ret;
     int i, l1;
     xmlNodePtr cur;
@@ -44,14 +44,14 @@ exslSetsDifference (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
 }
 
 /**
- * exslSetsDifferenceFunction:
+ * exsltSetsDifferenceFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslSetsDifference for use by the XPath processor
+ * Wraps #exsltSetsDifference for use by the XPath processor
  */
 static void
-exslSetsDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltSetsDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
     if (nargs != 2) {
@@ -71,7 +71,7 @@ exslSetsDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    ret = exslSetsDifference(arg1, arg2);
+    ret = exsltSetsDifference(arg1, arg2);
 
     if (ret != arg1)
 	xmlXPathFreeNodeSet(arg1);
@@ -81,7 +81,7 @@ exslSetsDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 /**
- * exslSetsIntersection:
+ * exsltSetsIntersection:
  * @nodes1:  a node-set
  * @nodes2:  a node-set
  *
@@ -92,7 +92,7 @@ exslSetsDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         node sets passed as arguments
  */
 static xmlNodeSetPtr
-exslSetsIntersection (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
+exsltSetsIntersection (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     xmlNodeSetPtr ret = xmlXPathNodeSetCreate(NULL);
     int i, l1;
     xmlNodePtr cur;
@@ -113,14 +113,14 @@ exslSetsIntersection (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
 }
 
 /**
- * exslSetsIntersectionFunction:
+ * exsltSetsIntersectionFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslSetsIntersection for use by the XPath processor
+ * Wraps #exsltSetsIntersection for use by the XPath processor
  */
 static void
-exslSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
     if (nargs != 2) {
@@ -140,7 +140,7 @@ exslSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    ret = exslSetsIntersection(arg1, arg2);
+    ret = exsltSetsIntersection(arg1, arg2);
 
     xmlXPathFreeNodeSet(arg1);
     xmlXPathFreeNodeSet(arg2);
@@ -149,7 +149,7 @@ exslSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 /**
- * exslSetsDistinctSorted:
+ * exsltSetsDistinctSorted:
  * @nodes:  a node-set, sorted by document order
  *
  * Implements the EXSLT - Sets distinct() function:
@@ -159,7 +159,7 @@ exslSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         it is empty
  */
 static xmlNodeSetPtr
-exslSetsDistinctSorted (xmlNodeSetPtr nodes) {
+exsltSetsDistinctSorted (xmlNodeSetPtr nodes) {
     xmlNodeSetPtr ret;
     xmlHashTablePtr hash;
     int i, l;
@@ -187,7 +187,7 @@ exslSetsDistinctSorted (xmlNodeSetPtr nodes) {
 }
 
 /**
- * exslSetsDistinct:
+ * exsltSetsDistinct:
  * @nodes:  a node-set
  *
  * Implements the EXSLT - Sets distinct() function:
@@ -199,23 +199,23 @@ exslSetsDistinctSorted (xmlNodeSetPtr nodes) {
  *         it is empty
  */
 xmlNodeSetPtr
-exslSetsDistinct (xmlNodeSetPtr nodes) {
+exsltSetsDistinct (xmlNodeSetPtr nodes) {
     if (xmlXPathNodeSetIsEmpty(nodes))
 	return(nodes);
 
     xmlXPathNodeSetSort(nodes);
-    return(exslSetsDistinctSorted(nodes));
+    return(exsltSetsDistinctSorted(nodes));
 }
 
 /**
- * exslSetsDistinctFunction:
+ * exsltSetsDistinctFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslSetsDistinct for use by the XPath processor
+ * Wraps #exsltSetsDistinct for use by the XPath processor
  */
 static void
-exslSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
 
     if (nargs != 1) {
@@ -228,7 +228,7 @@ exslSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
 
     /* !!! must be sorted !!! */
-    ret = exslSetsDistinctSorted(ns);
+    ret = exsltSetsDistinctSorted(ns);
 
     xmlXPathFreeNodeSet(ns);
 
@@ -236,7 +236,7 @@ exslSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 /**
- * exslSetsHasSameNodes:
+ * exsltSetsHasSameNodes:
  * @nodes1:  a node-set
  * @nodes2:  a node-set
  *
@@ -247,7 +247,7 @@ exslSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         otherwise
  */
 static int
-exslSetsHasSameNodes (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
+exsltSetsHasSameNodes (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     int i, l;
     xmlNodePtr cur;
 
@@ -265,14 +265,14 @@ exslSetsHasSameNodes (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
 }
 
 /**
- * exslSetsHasSameNodesFunction:
+ * exsltSetsHasSameNodesFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslSetsHasSameNodes for use by the XPath processor
+ * Wraps #exsltSetsHasSameNodes for use by the XPath processor
  */
 static void
-exslSetsHasSameNodesFunction (xmlXPathParserContextPtr ctxt,
+exsltSetsHasSameNodesFunction (xmlXPathParserContextPtr ctxt,
 			      int nargs) {
     xmlNodeSetPtr arg1, arg2;
     int ret;
@@ -294,7 +294,7 @@ exslSetsHasSameNodesFunction (xmlXPathParserContextPtr ctxt,
 	return;
     }
 
-    ret = exslSetsHasSameNodes(arg1, arg2);
+    ret = exsltSetsHasSameNodes(arg1, arg2);
 
     xmlXPathFreeNodeSet(arg1);
     xmlXPathFreeNodeSet(arg2);
@@ -303,7 +303,7 @@ exslSetsHasSameNodesFunction (xmlXPathParserContextPtr ctxt,
 }
 
 /**
- * exslSetsNodeLeadingSorted:
+ * exsltSetsNodeLeadingSorted:
  * @nodes: a node-set, sorted by document order
  * @node: a node
  *
@@ -315,7 +315,7 @@ exslSetsHasSameNodesFunction (xmlXPathParserContextPtr ctxt,
  *         doesn't contain @node
  */
 static xmlNodeSetPtr
-exslSetsNodeLeadingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
+exsltSetsNodeLeadingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
     int i, l;
     xmlNodePtr cur;
     xmlNodeSetPtr ret;
@@ -339,7 +339,7 @@ exslSetsNodeLeadingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
 }
 
 /**
- * exslSetsNodeLeading:
+ * exsltSetsNodeLeading:
  * @nodes:  a node-set
  * @node:  a node
  *
@@ -353,13 +353,13 @@ exslSetsNodeLeadingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
  *         doesn't contain @node
  */
 xmlNodeSetPtr
-exslSetsNodeLeading (xmlNodeSetPtr nodes, xmlNodePtr node) {
+exsltSetsNodeLeading (xmlNodeSetPtr nodes, xmlNodePtr node) {
     xmlXPathNodeSetSort(nodes);
-    return(exslSetsNodeLeadingSorted(nodes, node));
+    return(exsltSetsNodeLeadingSorted(nodes, node));
 }
 
 /**
- * exslSetsLeadingSorted:
+ * exsltSetsLeadingSorted:
  * @nodes1:  a node-set, sorted by document order
  * @nodes2:  a node-set, sorted by document order
  *
@@ -371,15 +371,15 @@ exslSetsNodeLeading (xmlNodeSetPtr nodes, xmlNodePtr node) {
  *         an empty node-set if @nodes1 doesn't contain @nodes2
  */
 static xmlNodeSetPtr
-exslSetsLeadingSorted (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
+exsltSetsLeadingSorted (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     if (xmlXPathNodeSetIsEmpty(nodes2))
 	return(nodes1);
-    return(exslSetsNodeLeadingSorted(nodes1,
+    return(exsltSetsNodeLeadingSorted(nodes1,
 				     xmlXPathNodeSetItem(nodes2, 1)));
 }
 
 /**
- * exslSetsLeading:
+ * exsltSetsLeading:
  * @nodes1:  a node-set
  * @nodes2:  a node-set
  *
@@ -393,26 +393,26 @@ exslSetsLeadingSorted (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
  *         an empty node-set if @nodes1 doesn't contain @nodes2
  */
 xmlNodeSetPtr
-exslSetsLeading (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
+exsltSetsLeading (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     if (xmlXPathNodeSetIsEmpty(nodes2))
 	return(nodes1);
     if (xmlXPathNodeSetIsEmpty(nodes1))
 	return(xmlXPathNodeSetCreate(NULL));
     xmlXPathNodeSetSort(nodes1);
     xmlXPathNodeSetSort(nodes2);
-    return(exslSetsNodeLeadingSorted(nodes1,
-				     xmlXPathNodeSetItem(nodes2, 1)));
+    return(exsltSetsNodeLeadingSorted(nodes1,
+				      xmlXPathNodeSetItem(nodes2, 1)));
 }
 
 /**
- * exslSetsLeadingFunction:
+ * exsltSetsLeadingFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslSetsLeading for use by the XPath processor
+ * Wraps #exsltSetsLeading for use by the XPath processor
  */
 static void
-exslSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
     if (nargs != 2) {
@@ -432,7 +432,8 @@ exslSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    ret = exslSetsLeadingSorted(arg1, arg2);
+    /* !!! must be sorted */
+    ret = exsltSetsLeadingSorted(arg1, arg2);
 
     xmlXPathFreeNodeSet(arg1);
     xmlXPathFreeNodeSet(arg2);
@@ -441,7 +442,7 @@ exslSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 /**
- * exslSetsNodeTrailingSorted:
+ * exsltSetsNodeTrailingSorted:
  * @nodes: a node-set, sorted by document order
  * @node: a node
  *
@@ -453,7 +454,7 @@ exslSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         doesn't contain @node
  */
 static xmlNodeSetPtr
-exslSetsNodeTrailingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
+exsltSetsNodeTrailingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
     int i, l;
     xmlNodePtr cur;
     xmlNodeSetPtr ret;
@@ -477,13 +478,13 @@ exslSetsNodeTrailingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
 }
 
 /**
- * exslSetsNodeTrailing:
+ * exsltSetsNodeTrailing:
  * @nodes:  a node-set
  * @node:  a node
  *
  * Implements the EXSLT - Sets trailing() function:
  *    node-set set:trailing (node-set, node-set)
- * @nodes is sorted by document order, then #exslSetsNodeLeadingSorted
+ * @nodes is sorted by document order, then #exsltSetsNodeTrailingSorted
  * is called.
  *
  * Returns the nodes in @nodes that follow @node in document order,
@@ -491,13 +492,13 @@ exslSetsNodeTrailingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
  *         doesn't contain @node
  */
 xmlNodeSetPtr
-exslSetsNodeTrailing (xmlNodeSetPtr nodes, xmlNodePtr node) {
+exsltSetsNodeTrailing (xmlNodeSetPtr nodes, xmlNodePtr node) {
     xmlXPathNodeSetSort(nodes);
-    return(exslSetsNodeTrailingSorted(nodes, node));
+    return(exsltSetsNodeTrailingSorted(nodes, node));
 }
 
 /**
- * exslSetsTrailingSorted:
+ * exsltSetsTrailingSorted:
  * @nodes1:  a node-set, sorted by document order
  * @nodes2:  a node-set, sorted by document order
  *
@@ -509,48 +510,48 @@ exslSetsNodeTrailing (xmlNodeSetPtr nodes, xmlNodePtr node) {
  *         an empty node-set if @nodes1 doesn't contain @nodes2
  */
 xmlNodeSetPtr
-exslSetsTrailingSorted (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
+exsltSetsTrailingSorted (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     if (xmlXPathNodeSetIsEmpty(nodes2))
 	return(nodes1);
-    return(exslSetsNodeTrailingSorted(nodes1,
-				     xmlXPathNodeSetItem(nodes2, 0)));
+    return(exsltSetsNodeTrailingSorted(nodes1,
+				       xmlXPathNodeSetItem(nodes2, 0)));
 }
 
 /**
- * exslSetsTrailing:
+ * exsltSetsTrailing:
  * @nodes1:  a node-set
  * @nodes2:  a node-set
  *
  * Implements the EXSLT - Sets trailing() function:
  *    node-set set:trailing (node-set, node-set)
  * @nodes1 and @nodes2 are sorted by document order, then
- * #exslSetsLeadingSorted is called.
+ * #exsltSetsTrailingSorted is called.
  *
  * Returns the nodes in @nodes1 that follow the first node in @nodes2
  *         in document order, @nodes1 if @nodes2 is NULL or empty or
  *         an empty node-set if @nodes1 doesn't contain @nodes2
  */
 xmlNodeSetPtr
-exslSetsTrailing (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
+exsltSetsTrailing (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     if (xmlXPathNodeSetIsEmpty(nodes2))
 	return(nodes1);
     if (xmlXPathNodeSetIsEmpty(nodes1))
 	return(xmlXPathNodeSetCreate(NULL));
     xmlXPathNodeSetSort(nodes1);
     xmlXPathNodeSetSort(nodes2);
-    return(exslSetsNodeTrailingSorted(nodes1,
-				     xmlXPathNodeSetItem(nodes2, 0)));
+    return(exsltSetsNodeTrailingSorted(nodes1,
+				       xmlXPathNodeSetItem(nodes2, 0)));
 }
 
 /**
- * exslSetsTrailingFunction:
+ * exsltSetsTrailingFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
- * Wraps #exslSetsTrailing for use by the XPath processor
+ * Wraps #exsltSetsTrailing for use by the XPath processor
  */
 static void
-exslSetsTrailingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltSetsTrailingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
     if (nargs != 2) {
@@ -570,7 +571,8 @@ exslSetsTrailingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    ret = exslSetsNodeTrailingSorted(arg1, xmlXPathNodeSetItem(arg2, 0));
+    /* !!! mist be sorted */
+    ret = exsltSetsNodeTrailingSorted(arg1, xmlXPathNodeSetItem(arg2, 0));
 
     xmlXPathFreeNodeSet(arg1);
     xmlXPathFreeNodeSet(arg2);
@@ -579,30 +581,30 @@ exslSetsTrailingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 static void *
-exslSetsInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
+exsltSetsInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "difference",
-			     URI, exslSetsDifferenceFunction);
+			     URI, exsltSetsDifferenceFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "intersection",
-			     URI, exslSetsIntersectionFunction);
+			     URI, exsltSetsIntersectionFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "distinct",
-			     URI, exslSetsDistinctFunction);
+			     URI, exsltSetsDistinctFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "has-same-nodes",
-			     URI, exslSetsHasSameNodesFunction);
+			     URI, exsltSetsHasSameNodesFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "leading",
-			     URI, exslSetsLeadingFunction);
+			     URI, exsltSetsLeadingFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "trailing",
-			     URI, exslSetsTrailingFunction);
+			     URI, exsltSetsTrailingFunction);
 
     return(NULL);
 }
 
 /**
- * exslCommonRegister:
+ * exsltCommonRegister:
  *
  * Registers the EXSLT - Sets module
  */
 
 void
-exslSetsRegister (void) {
-    xsltRegisterExtModule (EXSLT_SETS_NAMESPACE, exslSetsInit, NULL);
+exsltSetsRegister (void) {
+    xsltRegisterExtModule (EXSLT_SETS_NAMESPACE, exsltSetsInit, NULL);
 }

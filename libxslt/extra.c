@@ -123,7 +123,9 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
-    if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_XSLT_TREE)) {
+    if ((ctxt->value == NULL) ||
+	((ctxt->value->type != XPATH_XSLT_TREE) &&
+	 (ctxt->value->type != XPATH_NODESET))) {
 	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "node-set() invalid arg expecting a result tree\n");

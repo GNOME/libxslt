@@ -1,18 +1,26 @@
+#include <libxml/xmlversion.h>
 
+#include <libxslt/xsltconfig.h>
 #include <libxslt/extensions.h>
 
+#include "exsltconfig.h"
 #include "exslt.h"
 
+const char *exsltLibraryVersion = LIBEXSLT_VERSION_STRING;
+const int exsltLibexsltVersion = LIBEXSLT_VERSION;
+const int exsltLibxsltVersion = LIBXSLT_VERSION;
+const int exsltLibxmlVersion = LIBXML_VERSION;
+
 /**
- * exslRegisterAll:
+ * exsltRegisterAll:
  *
  * Registers all available EXSLT extensions
  */
 void
-exslRegisterAll (void) {
-    exslCommonRegister();
-    exslMathRegister();
-    exslSetsRegister();
-    exslFuncRegister();
+exsltRegisterAll (void) {
+    exsltCommonRegister();
+    exsltMathRegister();
+    exsltSetsRegister();
+    exsltFuncRegister();
 }
 

@@ -11,26 +11,28 @@
 #include "exslt.h"
 #include "utils.h"
 
-typedef struct _exslFuncFunctionData exslFuncFunctionData;
-struct _exslFuncFunctionData {
+typedef struct _exsltFuncFunctionData exsltFuncFunctionData;
+struct _exsltFuncFunctionData {
     int nargs;
     xmlNodePtr content;
 };
 
-typedef struct _exslFuncData exslFuncData;
-struct _exslFuncData {
+typedef struct _exsltFuncData exsltFuncData;
+struct _exsltFuncData {
     xmlHashTablePtr funcs;
     xmlXPathObjectPtr result;
     int error;
 };
 
-void exslFuncFunctionElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
-			   xmlNodePtr inst, xsltStylePreCompPtr comp);
-void exslFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
-			 xmlNodePtr inst, xsltStylePreCompPtr comp);
+static void exsltFuncFunctionElem (xsltTransformContextPtr ctxt,
+				   xmlNodePtr node, xmlNodePtr inst,
+				   xsltStylePreCompPtr comp);
+static void exsltFuncResultElem (xsltTransformContextPtr ctxt,
+				 xmlNodePtr node, xmlNodePtr inst,
+				 xsltStylePreCompPtr comp);
 
 /**
- * exslFuncInit:
+ * exsltFuncInit:
  * @ctxt: an XSLT transformation context
  * @URI: the namespace URI for the extension
  *
@@ -38,43 +40,43 @@ void exslFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
  *
  * Returns the data for this transformation
  */
-static exslFuncData *
-exslFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
-    exslFuncData *ret;
+static exsltFuncData *
+exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
+    exsltFuncData *ret;
 
-    ret = (exslFuncData *) xmlMalloc (sizeof(exslFuncData));
+    ret = (exsltFuncData *) xmlMalloc (sizeof(exsltFuncData));
     if (ret == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-			 "exslFuncInit: not enough memory\n");
+			 "exsltFuncInit: not enough memory\n");
 	return(NULL);
     }
+    memset(ret, 0, sizeof(exsltFuncData));
 
     ret->funcs = xmlHashCreate(1);
     ret->result = NULL;
     ret->error = 0;
 
     xsltRegisterExtElement (ctxt, (const xmlChar *) "function",
-			    URI, exslFuncFunctionElem);
+			    URI, exsltFuncFunctionElem);
     xsltRegisterExtElement (ctxt, (const xmlChar *) "result",
-			    URI, exslFuncResultElem);
-
+			    URI, exsltFuncResultElem);
 
 
     return(ret);
 }
 
 /**
- * exslFuncShutdown:
+ * exsltFuncShutdown:
  * @ctxt: an XSLT transformation context
  * @URI: the namespace URI fir the extension
  * @data: the module data to free up
  *
  * Shutdown the EXSLT - Functions module
  */
-static static void
-exslFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
-		  const xmlChar *URI ATTRIBUTE_UNUSED,
-		  exslFuncData *data) {
+static void
+exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
+		   const xmlChar *URI ATTRIBUTE_UNUSED,
+		   exsltFuncData *data) {
     if (data->funcs != NULL)
 	xmlHashFree(data->funcs, (xmlHashDeallocator) xmlFree);
     if (data->result != NULL)
@@ -83,52 +85,53 @@ exslFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
 }
 
 /**
- * exslFuncRegister:
+ * exsltFuncRegister:
  *
  * Registers the EXSLT - Functions module
  */
 void
-exslFuncRegister (void) {
+exsltFuncRegister (void) {
     xsltRegisterExtModule (EXSLT_FUNCTIONS_NAMESPACE,
-			   (xsltExtInitFunction) exslFuncInit,
-			   (xsltExtShutdownFunction) exslFuncShutdown);
+			   (xsltExtInitFunction) exsltFuncInit,
+			   (xsltExtShutdownFunction) exsltFuncShutdown);
 }
 
 /**
- * exslFuncNewFunctionData:
+ * exsltFuncNewFunctionData:
  *
  * Allocates an #exslFuncFunctionData object
  *
  * Returns the new structure
  */
-static exslFuncFunctionData *
-exslFuncNewFunctionData (void) {
-    exslFuncFunctionData *ret;
+static exsltFuncFunctionData *
+exsltFuncNewFunctionData (void) {
+    exsltFuncFunctionData *ret;
 
-    ret = (exslFuncFunctionData *) xmlMalloc (sizeof(exslFuncFunctionData));
+    ret = (exsltFuncFunctionData *) xmlMalloc (sizeof(exsltFuncFunctionData));
     if (ret == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-			 "exslFuncNewFunctionData: not enough memory\n");
+			 "exsltFuncNewFunctionData: not enough memory\n");
 	return (NULL);
     }
 
     ret->nargs = 0;
     ret->content = NULL;
+
     return(ret);
 }
 
 /**
- * exslFuncFunctionFunction:
+ * exsltFuncFunctionFunction:
  * @ctxt:  an XPath parser context
  * @nargs:  the number of arguments
  *
  * Evaluates the func:function element defining the called function.
  */
 static void
-exslFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj, oldResult, ret;
-    exslFuncData *data;
-    exslFuncFunctionData *func;
+    exsltFuncData *data;
+    exsltFuncFunctionData *func;
     xmlNodePtr paramNode, oldInsert, fake;
     xsltStackElemPtr params = NULL, param;
     xsltTransformContextPtr tctxt = xsltXPathGetTransformContext(ctxt);
@@ -137,14 +140,14 @@ exslFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     /*
      * retrieve func:function template
      */
-    data = (exslFuncData *) xsltGetExtData (tctxt,
-					    EXSLT_FUNCTIONS_NAMESPACE);
+    data = (exsltFuncData *) xsltGetExtData (tctxt,
+					     EXSLT_FUNCTIONS_NAMESPACE);
     oldResult = data->result;
     data->result = NULL;
 
-    func = (exslFuncFunctionData*) xmlHashLookup2 (data->funcs,
-						   ctxt->context->functionURI,
-						   ctxt->context->function);
+    func = (exsltFuncFunctionData*) xmlHashLookup2 (data->funcs,
+						    ctxt->context->functionURI,
+						    ctxt->context->function);
 
     /*
      * params handling
@@ -222,13 +225,13 @@ exslFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     valuePush(ctxt, ret);
 }
 
-void
-exslFuncFunctionElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
-		      xmlNodePtr inst, xsltStylePreCompPtr comp) {
+static void
+exsltFuncFunctionElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
+		       xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *name, *prefix;
     xmlNsPtr ns;
-    exslFuncData *data;
-    exslFuncFunctionData *func;
+    exsltFuncData *data;
+    exsltFuncFunctionData *func;
     xsltStylePreCompPtr param_comp;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
@@ -263,7 +266,7 @@ exslFuncFunctionElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
     /*
      * Create function data
      */
-    func = exslFuncNewFunctionData();
+    func = exsltFuncNewFunctionData();
     func->content = inst->children;
     param_comp = (xsltStylePreCompPtr) func->content->_private;
     while ((param_comp != NULL) && (param_comp->type == XSLT_FUNC_PARAM)) {
@@ -276,7 +279,7 @@ exslFuncFunctionElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
      * Register the function data such that it can be retrieved
      * by exslFuncFunctionFunction
      */
-    data = (exslFuncData *) xsltGetExtData (ctxt, EXSLT_FUNCTIONS_NAMESPACE);
+    data = (exsltFuncData *) xsltGetExtData (ctxt, EXSLT_FUNCTIONS_NAMESPACE);
     xmlHashAddEntry2 (data->funcs, ns->href, name, func);
 
     /*
@@ -284,17 +287,17 @@ exslFuncFunctionElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
      * expressions.
      */
     xsltRegisterExtFunction (ctxt, name, ns->href,
-			     exslFuncFunctionFunction);
+			     exsltFuncFunctionFunction);
 
     xmlFree(name);
 }
 
-void
-exslFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
-		    xmlNodePtr inst, xsltStylePreCompPtr comp) {
+static void
+exsltFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
+		     xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlNodePtr test;
     xmlChar *select;
-    exslFuncData *data;
+    exsltFuncData *data;
     xmlXPathObjectPtr ret;
 
     /*
@@ -309,7 +312,7 @@ exslFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (IS_XSLT_ELEM(test) && IS_XSLT_NAME(test, "fallback"))
 	    continue;
 	xsltGenericError(xsltGenericErrorContext,
-			 "exslFuncResultElem: only xsl:fallback is "
+			 "exsltFuncResultElem: only xsl:fallback is "
 			 "allowed to follow func:result\n");
 	return;
     }
@@ -347,10 +350,10 @@ exslFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
      * func:function element results in the instantiation of more than
      * one func:result elements.
      */
-    data = (exslFuncData *) xsltGetExtData (ctxt, EXSLT_FUNCTIONS_NAMESPACE);
+    data = (exsltFuncData *) xsltGetExtData (ctxt, EXSLT_FUNCTIONS_NAMESPACE);
     if (data == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-			 "exslFuncReturnElem: data == NULL\n");
+			 "exsltFuncReturnElem: data == NULL\n");
 	return;
     }
     if (data->result != NULL) {
@@ -380,7 +383,7 @@ exslFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ret = xmlXPathEvalExpression(select, ctxt->xpathCtxt);
 	if (ret == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
-			     "exslFuncResultElem: ret == NULL\n");
+			     "exsltFuncResultElem: ret == NULL\n");
 	    return;
 	}
     } else if (test->children != NULL) {
@@ -402,7 +405,7 @@ exslFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ret = xmlXPathNewValueTree(container);
 	if (ret == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
-			     "exslFuncResultElem: ret == NULL\n");
+			     "exsltFuncResultElem: ret == NULL\n");
 	    data->error = 1;
 	}
     } else {

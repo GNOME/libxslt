@@ -7,7 +7,6 @@ exsltincdir = $(includedir)/libexslt
 
 exsltinc_HEADERS =                      \
 	exslt.h				\
-	utils.h				\
 	exsltconfig.h
 
 libexslt_la_SOURCES =                   \

@@ -13,3 +13,6 @@ functions.lo
 functions.o
 utils.lo
 utils.o
+.deps
+.libs
+exsltconfig.h
