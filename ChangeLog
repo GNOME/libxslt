@@ -1,3 +1,7 @@
+Fri Feb 21 17:07:59 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.spec.in: fixed RH#84801 wrong prereqs in the spec file
+
 Wed Feb 19 18:51:06 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/functions.c libxslt/xslt.c: fixed bug 106251
