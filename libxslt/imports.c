@@ -100,6 +100,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	res->parent = style;
 	res->next = style->imports;
 	style->imports = res;
+	style->extrasNr += res->extrasNr;
     }
 
 error:

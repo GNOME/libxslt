@@ -1,3 +1,10 @@
+Sun Feb 10 20:16:15 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/imports.c libxslt/numbers.c libxslt/pattern.c
+	  libxslt/pattern.h libxslt/transform.c libxslt/xslt.c
+	  libxslt/xsltInternals.h: adding extra run-time informations
+	  to make the stylesheet really read-only at run-time.
+
 Sun Feb 10 16:21:09 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixing bug #70281

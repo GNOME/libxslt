@@ -37,6 +37,20 @@ extern "C" {
 #define XSLT_PAT_NO_PRIORITY -12345789
 
 /**
+ * xsltRuntimeExtra:
+ *
+ * Extra information added to the transformation context
+ */
+typedef struct _xsltRuntimeExtra xsltRuntimeExtra;
+typedef xsltRuntimeExtra *xsltRuntimeExtraPtr;
+struct _xsltRuntimeExtra {
+    void       *info;		/* pointer to the extra data */
+    xmlFreeFunc deallocate;	/* pointer to the deallocation routine */
+};
+
+#define XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].info
+
+/**
  * xsltTemplate:
  *
  * The in-memory structure corresponding to an XSLT Template
@@ -354,6 +368,7 @@ struct _xsltStylesheet {
      * Extensions
      */
     xmlHashTablePtr extInfos;	/* the extension data */
+    int		    extrasNr;	/* the number of extras required */
 };
 
 /*
@@ -427,6 +442,10 @@ struct _xsltTransformContext {
     long            *profTab;		/* the profile template stack */
 
     void            *_private;		/* user defined data */
+
+    int              extrasNr;		/* the number of extras used */
+    int              extrasMax;		/* the number of extras allocated */
+    xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
 };
 
 /**
@@ -482,7 +501,8 @@ xmlXPathError		 xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 
 void			xsltParseTemplateContent(xsltStylesheetPtr style,
 						 xmlNodePtr templ);
-
+int			xsltAllocateExtra	(xsltStylesheetPtr style);
+int			xsltAllocateExtraCtxt	(xsltTransformContextPtr ctxt);
 #ifdef __cplusplus
 }
 #endif

@@ -175,6 +175,7 @@ xsltTransformContextPtr
 xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     xsltTransformContextPtr cur;
     xsltDocumentPtr docu;
+    int i;
 
     cur = (xsltTransformContextPtr) xmlMalloc(sizeof(xsltTransformContext));
     if (cur == NULL) {
@@ -217,6 +218,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->varsMax = 5;
     cur->vars = NULL;
     cur->varsBase = 0;
+
     /*
      * the profiling stcka is not initialized by default
      */
@@ -239,6 +241,35 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     }
     cur->xpathCtxt->proximityPosition = 0;
     cur->xpathCtxt->contextSize = 0;
+
+    /*
+     * Initialize the extras array
+     */
+    if (style->extrasNr != 0) {
+	cur->extrasMax = style->extrasNr + 20;
+	cur->extras = (xsltRuntimeExtraPtr) 
+	    xmlMalloc(cur->extrasMax * sizeof(xsltRuntimeExtra));
+	if (cur->extras == NULL) {
+	    xmlGenericError(xmlGenericErrorContext,
+		    "xsltNewTransformContext: out of memory\n");
+	    xmlFree(cur->xpathCtxt);
+	    xmlFree(cur->varsTab);
+	    xmlFree(cur->templTab);
+	    xmlFree(cur);
+	    return(NULL);
+	}
+	cur->extrasNr = style->extrasNr;
+	for (i = 0;i < cur->extrasMax;i++) {
+	    cur->extras[i].info = NULL;
+	    cur->extras[i].deallocate = NULL;
+	}
+    } else {
+	cur->extras = NULL;
+	cur->extrasNr = 0;
+	cur->extrasMax = 0;
+    }
+
+
     XSLT_REGISTER_VARIABLE_LOOKUP(cur);
     XSLT_REGISTER_FUNCTION_LOOKUP(cur);
     cur->xpathCtxt->nsHash = style->nsHash;
@@ -280,6 +311,16 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	xmlFree(ctxt->varsTab);
     if (ctxt->profTab != NULL)
 	xmlFree(ctxt->profTab);
+    if ((ctxt->extrasNr > 0) && (ctxt->extras != NULL)) {
+	int i;
+
+	for (i = 0;i < ctxt->extrasNr;i++) {
+	    if ((ctxt->extras[i].deallocate != NULL) &&
+		(ctxt->extras[i].info != NULL))
+		ctxt->extras[i].deallocate(ctxt->extras[i].info);
+	}
+	xmlFree(ctxt->extras);
+    }
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
     xsltFreeGlobalVariables(ctxt);

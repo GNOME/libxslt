@@ -346,10 +346,78 @@ xsltNewStylesheet(void) {
     cur->exclPrefixMax = 0;
     cur->exclPrefixTab = NULL;
     cur->extInfos = NULL;
+    cur->extrasNr = 0;
 
     xsltInit();
 
     return(cur);
+}
+
+/**
+ * xsltAllocateExtra:
+ * @style:  an XSLT stylesheet
+ *
+ * Allocate an extra runtime information slot statically while compiling
+ * the stylesheet and return its number
+ *
+ * Returns the number of the slot
+ */
+int
+xsltAllocateExtra(xsltStylesheetPtr style)
+{
+    return(style->extrasNr++);
+}
+
+/**
+ * xsltAllocateExtraCtxt:
+ * @ctxt:  an XSLT transformation context
+ *
+ * Allocate an extra runtime information slot at run-time
+ * and return its number
+ * This make sure there is a slot ready in the transformation context
+ *
+ * Returns the number of the slot
+ */
+int
+xsltAllocateExtraCtxt(xsltTransformContextPtr ctxt)
+{
+    if (ctxt->extrasNr >= ctxt->extrasMax) {
+	int i;
+	if (ctxt->extrasNr == 0) {
+	    ctxt->extrasMax = 20;
+	    ctxt->extras = (xsltRuntimeExtraPtr)
+		xmlMalloc(ctxt->extrasMax * sizeof(xsltRuntimeExtra));
+	    if (ctxt->extras == NULL) {
+		xmlGenericError(xmlGenericErrorContext,
+			"xsltAllocateExtraCtxt: out of memory\n");
+		ctxt->state = XSLT_STATE_ERROR;
+		return(0);
+	    }
+	    for (i = 0;i < ctxt->extrasMax;i++) {
+		ctxt->extras[i].info = NULL;
+		ctxt->extras[i].deallocate = NULL;
+	    }
+
+	} else {
+	    xsltRuntimeExtraPtr tmp;
+
+	    ctxt->extrasMax += 100;
+	    tmp = (xsltRuntimeExtraPtr) xmlRealloc(ctxt->extras,
+		            ctxt->extrasMax * sizeof(xsltRuntimeExtra));
+	    if (tmp == NULL) {
+		xmlGenericError(xmlGenericErrorContext,
+			"xsltAllocateExtraCtxt: out of memory\n");
+		ctxt->state = XSLT_STATE_ERROR;
+		return(0);
+	    }
+	    ctxt->extras = tmp;
+	    for (i = ctxt->extrasNr;i < ctxt->extrasMax;i++) {
+		ctxt->extras[i].info = NULL;
+		ctxt->extras[i].deallocate = NULL;
+	    }
+	}
+    }
+    return(ctxt->extrasNr++);
 }
 
 /**

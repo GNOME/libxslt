@@ -71,9 +71,9 @@ struct _xsltStepOp {
     /*
      * Optimisations for count
      */
-    xmlNodePtr previous;
-    int        index;
-    int        len;
+    int        previousExtra;
+    int        indexExtra;
+    int        lenExtra;
 };
 
 struct _xsltCompMatch {
@@ -95,6 +95,8 @@ struct _xsltCompMatch {
 typedef struct _xsltParserContext xsltParserContext;
 typedef xsltParserContext *xsltParserContextPtr;
 struct _xsltParserContext {
+    xsltStylesheetPtr style;		/* the stylesheet */
+    xsltTransformContextPtr ctxt;	/* the transformation or NULL */
     const xmlChar *cur;			/* the current char being parsed */
     const xmlChar *base;		/* the full expression */
     xmlDocPtr      doc;			/* the source document */
@@ -189,13 +191,15 @@ xsltFreeCompMatchList(xsltCompMatchPtr comp) {
 
 /**
  * xsltNewParserContext:
+ * @style:  the stylesheet
+ * @ctxt:  the transformation context, if done at run-time
  *
  * Create a new XSLT ParserContext
  *
  * Returns the newly allocated xsltParserContextPtr or NULL in case of error
  */
 static xsltParserContextPtr
-xsltNewParserContext(void) {
+xsltNewParserContext(xsltStylesheetPtr style, xsltTransformContextPtr ctxt) {
     xsltParserContextPtr cur;
 
     cur = (xsltParserContextPtr) xmlMalloc(sizeof(xsltParserContext));
@@ -206,6 +210,8 @@ xsltNewParserContext(void) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltParserContext));
+    cur->style = style;
+    cur->ctxt = ctxt;
     return(cur);
 }
 
@@ -235,19 +241,35 @@ xsltFreeParserContext(xsltParserContextPtr ctxt) {
  * Returns -1 in case of failure, 0 otherwise.
  */
 static int
-xsltCompMatchAdd(xsltCompMatchPtr comp, xsltOp op, xmlChar *value,
-	         xmlChar *value2) {
+xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
+                 xsltOp op, xmlChar * value, xmlChar * value2)
+{
     if (comp->nbStep >= 40) {
-	xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
+        xsltPrintErrorContext(NULL, NULL, NULL);        /* TODO */
         xsltGenericError(xsltGenericErrorContext,
-		"xsltCompMatchAdd: overflow\n");
-        return(-1);
+                         "xsltCompMatchAdd: overflow\n");
+        return (-1);
     }
     comp->steps[comp->nbStep].op = op;
     comp->steps[comp->nbStep].value = value;
     comp->steps[comp->nbStep].value2 = value2;
+    if (ctxt->ctxt != NULL) {
+	comp->steps[comp->nbStep].previousExtra =
+	    xsltAllocateExtraCtxt(ctxt->ctxt);
+	comp->steps[comp->nbStep].indexExtra =
+	    xsltAllocateExtraCtxt(ctxt->ctxt);
+	comp->steps[comp->nbStep].lenExtra =
+	    xsltAllocateExtraCtxt(ctxt->ctxt);
+    } else {
+	comp->steps[comp->nbStep].previousExtra =
+	    xsltAllocateExtra(ctxt->style);
+	comp->steps[comp->nbStep].indexExtra =
+	    xsltAllocateExtra(ctxt->style);
+	comp->steps[comp->nbStep].lenExtra =
+	    xsltAllocateExtra(ctxt->style);
+    }
     comp->nbStep++;
-    return(0);
+    return (0);
 }
 
 /**
@@ -304,21 +326,6 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
 	i++;
     }
     comp->steps[comp->nbStep++].op = XSLT_OP_END;
-}
-
-/**
- * xsltCleanupCompMatch:
- * @comp:  the compiled match expression
- *
- * remove all computation state from the pattern
- */
-static void
-xsltCleanupCompMatch(xsltCompMatchPtr comp) {
-    int i;
-    
-    for (i = 0;i < comp->nbStep;i++) {
-	comp->steps[i].previous = NULL;
-    }
 }
 
 /************************************************************************
@@ -566,9 +573,15 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    (select->value != NULL) &&
 		    (node->type == XML_ELEMENT_NODE) &&
 		    (node->parent != NULL)) {
+		    xmlNodePtr previous;
+		    int index;
 
-		    if ((select->previous != NULL) &&
-			(select->previous->parent == node->parent)) {
+		    previous = (xmlNodePtr)
+			XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra);
+		    index = (int)
+			XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra);
+		    if ((previous != NULL) &&
+			(previous->parent == node->parent)) {
 			/*
 			 * just walk back to adjust the index
 			 */
@@ -576,7 +589,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			xmlNodePtr sibling = node;
 
 			while (sibling != NULL) {
-			    if (sibling == select->previous)
+			    if (sibling == previous)
 				break;
 			    if (xmlStrEqual(node->name, sibling->name)) {
 				if ((select->value2 == NULL) ||
@@ -592,7 +605,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    indx = 0;
 			    sibling = node;
 			    while (sibling != NULL) {
-				if (sibling == select->previous)
+				if (sibling == previous)
 				    break;
 				if ((select->value2 == NULL) ||
 				    ((sibling->ns != NULL) &&
@@ -603,10 +616,14 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    }
 			}
 			if (sibling != NULL) {
-			    pos = select->index + indx;
-			    len = select->len;
-			    select->previous = node;
-			    select->index = pos;
+			    pos = index + indx;
+			    len = (int)
+				XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra);
+			    XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra) =
+			        node;
+			    XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra) =
+			        (void *) pos;
+			    index = pos;
 			} else
 			    pos = 0;
 		    } else {
@@ -635,14 +652,24 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    if (pos != 0) {
 			ctxt->xpathCtxt->contextSize = len;
 			ctxt->xpathCtxt->proximityPosition = pos;
-			select->previous = node;
-			select->index = pos;
-			select->len = len;
+			XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra) =
+			    node;
+			XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra) =
+			    (void *) pos;
+			XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra) =
+			    (void *) len;
 		    }
 		} else if ((select != NULL) && (select->op == XSLT_OP_ALL) &&
 			   (node->type == XML_ELEMENT_NODE)) {
-		    if ((select->previous != NULL) &&
-			(select->previous->parent == node->parent)) {
+		    xmlNodePtr previous;
+		    int index;
+
+		    previous = (xmlNodePtr)
+			XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra);
+		    index = (int)
+			XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra);
+		    if ((previous != NULL) &&
+			(previous->parent == node->parent)) {
 			/*
 			 * just walk back to adjust the index
 			 */
@@ -650,7 +677,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			xmlNodePtr sibling = node;
 
 			while (sibling != NULL) {
-			    if (sibling == select->previous)
+			    if (sibling == previous)
 				break;
 			    if (sibling->type == XML_ELEMENT_NODE)
 				indx++;
@@ -661,7 +688,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    indx = 0;
 			    sibling = node;
 			    while (sibling != NULL) {
-				if (sibling == select->previous)
+				if (sibling == previous)
 				    break;
 				if (sibling->type == XML_ELEMENT_NODE)
 				    indx--;
@@ -669,10 +696,13 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    }
 			}
 			if (sibling != NULL) {
-			    pos = select->index + indx;
-			    len = select->len;
-			    select->previous = node;
-			    select->index = pos;
+			    pos = index + indx;
+			    len = (int)
+				XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra);
+			    XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra) =
+			        node;
+			    XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra) =
+			        (void *) pos;
 			} else
 			    pos = 0;
 		    } else {
@@ -694,9 +724,12 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    if (pos != 0) {
 			ctxt->xpathCtxt->contextSize = len;
 			ctxt->xpathCtxt->proximityPosition = pos;
-			select->previous = node;
-			select->index = pos;
-			select->len = len;
+			XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra) =
+			    node;
+			XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra) =
+			    (void *) pos;
+			XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra) =
+			    (void *) len;
 		    }
 		}
 		oldNode = ctxt->node;
@@ -823,7 +856,7 @@ xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 
 #define PUSH(op, val, val2) 						\
-    if (xsltCompMatchAdd(ctxt->comp, (op), (val), (val2))) goto error;
+    if (xsltCompMatchAdd(ctxt, ctxt->comp, (op), (val), (val2))) goto error;
 
 #define SWAP() 						\
     xsltSwapTopCompMatch(ctxt->comp);
@@ -1498,6 +1531,8 @@ error:
  * @pattern: an XSLT pattern
  * @doc:  the containing document
  * @node:  the containing element
+ * @style:  the stylesheet
+ * @runtime:  the transformation context, if done at run-time
  *
  * Compile the XSLT pattern and generates a list of precompiled form suitable
  * for fast matching.
@@ -1508,7 +1543,9 @@ error:
  */
 
 xsltCompMatchPtr
-xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
+xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
+	           xmlNodePtr node, xsltStylesheetPtr style,
+		   xsltTransformContextPtr runtime) {
     xsltParserContextPtr ctxt = NULL;
     xsltCompMatchPtr element, first = NULL, previous = NULL;
     int current, start, end;
@@ -1520,7 +1557,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
 	return(NULL);
     }
 
-    ctxt = xsltNewParserContext();
+    ctxt = xsltNewParserContext(style, runtime);
     if (ctxt == NULL)
 	return(NULL);
     ctxt->doc = doc;
@@ -1665,7 +1702,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	return(-1);
 
     priority = cur->priority;
-    pat = xsltCompilePattern(cur->match, style->doc, cur->elem);
+    pat = xsltCompilePattern(cur->match, style->doc, cur->elem, style, NULL);
     while (pat) {
 	next = pat->next;
 	pat->next = NULL;
@@ -1998,13 +2035,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * the ones it imports.
  */
 void
-xsltCleanupTemplates(xsltStylesheetPtr style) {
-    while (style != NULL) {
-	xmlHashScan((xmlHashTablePtr) style->templatesHash,
-		    (xmlHashScanner) xsltCleanupCompMatch, NULL);
-
-	style = xsltNextImport(style);
-    }
+xsltCleanupTemplates(xsltStylesheetPtr style ATTRIBUTE_UNUSED) {
 }
 
 /**
@@ -2036,6 +2067,7 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
         xsltFreeCompMatchList(style->commentMatch);
 }
 
+#if 0
 /**
  * xsltMatchPattern
  * @node: a node in the source tree
@@ -2067,3 +2099,4 @@ xsltMatchPattern(xsltTransformContextPtr context,
     }
     return match;
 }
+#endif

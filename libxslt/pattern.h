@@ -30,7 +30,9 @@ typedef xsltCompMatch *xsltCompMatchPtr;
 
 xsltCompMatchPtr xsltCompilePattern	(const xmlChar *pattern,
 					 xmlDocPtr doc,
-					 xmlNodePtr node);
+					 xmlNodePtr node,
+					 xsltStylesheetPtr style,
+					 xsltTransformContextPtr runtime);
 void		 xsltFreeCompMatchList	(xsltCompMatchPtr comp);
 int		 xsltTestCompMatchList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
@@ -49,11 +51,13 @@ xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
 void		xsltCleanupTemplates	(xsltStylesheetPtr style);
 
+#if 0
 int		xsltMatchPattern	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 const xmlChar *pattern,
 					 xmlDocPtr ctxtdoc,
 					 xmlNodePtr ctxtnode);
+#endif
 #ifdef __cplusplus
 }
 #endif

@@ -432,9 +432,9 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
     xsltCompMatchPtr fromPat = NULL;
 
     if (count != NULL)
-	countPat = xsltCompilePattern(count, doc, elem);
+	countPat = xsltCompilePattern(count, doc, elem, NULL, context);
     if (from != NULL)
-	fromPat = xsltCompilePattern(from, doc, elem);
+	fromPat = xsltCompilePattern(from, doc, elem, NULL, context);
 	
     /* select the starting node */
     switch (node->type) {
@@ -516,11 +516,11 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
     xsltCompMatchPtr fromPat;
 
     if (count != NULL)
-	countPat = xsltCompilePattern(count, doc, elem);
+	countPat = xsltCompilePattern(count, doc, elem, NULL, context);
     else
 	countPat = NULL;
     if (from != NULL)
-	fromPat = xsltCompilePattern(from, doc, elem);
+	fromPat = xsltCompilePattern(from, doc, elem, NULL, context);
     else
 	fromPat = NULL;
     context->xpathCtxt->node = node;
