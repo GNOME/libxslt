@@ -295,31 +295,33 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 static void usage(const char *name) {
     printf("Usage: %s [options] stylesheet file [file ...]\n", name);
     printf("   Options:\n");
-    printf("      --version or -V: show the version of libxml and libxslt used\n");
-    printf("      --verbose or -v: show logs of what's happening\n");
-    printf("      --output file or -o file: save to a given file\n");
-    printf("      --timing: display the time used\n");
-    printf("      --repeat: run the transformation 20 times\n");
-    printf("      --debug: dump the tree of the result instead\n");
-    printf("      --novalid: skip the Dtd loading phase\n");
-    printf("      --noout: do not dump the result\n");
-    printf("      --maxdepth val : increase the maximum depth\n");
+    printf("\t--version or -V: show the version of libxml and libxslt used\n");
+    printf("\t--verbose or -v: show logs of what's happening\n");
+    printf("\t--output file or -o file: save to a given file\n");
+    printf("\t--timing: display the time used\n");
+    printf("\t--repeat: run the transformation 20 times\n");
+    printf("\t--debug: dump the tree of the result instead\n");
+    printf("\t--novalid: skip the Dtd loading phase\n");
+    printf("\t--noout: do not dump the result\n");
+    printf("\t--maxdepth val : increase the maximum depth\n");
 #ifdef LIBXML_HTML_ENABLED
-    printf("      --html: the input document is(are) an HTML file(s)\n");
+    printf("\t--html: the input document is(are) an HTML file(s)\n");
 #endif
 #ifdef LIBXML_DOCB_ENABLED
-    printf("      --docbook: the input document is SGML docbook\n");
+    printf("\t--docbook: the input document is SGML docbook\n");
 #endif
-    printf("      --param name value : pass a (parameter,value) pair\n");
-    printf("            string values must be quoted like \"'string'\"\n");
-    printf("      --nonet refuse to fetch DTDs or entities over network\n");
+    printf("\t--param name value : pass a (parameter,value) pair\n");
+    printf("\t      string values must be quoted like \"'string'\"\n");
+    printf("\t--nonet refuse to fetch DTDs or entities over network\n");
 #ifdef LIBXML_CATALOG_ENABLED
-    printf("      --catalogs : use the catalogs from $SGML_CATALOG_FILES\n");
+    printf("\t--catalogs : use SGML catalogs from $SGML_CATALOG_FILES\n");
+    printf("\t             otherwise XML Catalogs starting from \n");
+    printf("\t         file:///etc/xml/catalog are activated by default\n");
 #endif
 #ifdef LIBXML_XINCLUDE_ENABLED
-    printf("      --xinclude : do XInclude processing on document intput\n");
+    printf("\t--xinclude : do XInclude processing on document intput\n");
 #endif
-    printf("      --profile or --norman : dump profiling informations \n");
+    printf("\t--profile or --norman : dump profiling informations \n");
 }
 
 int

@@ -4,7 +4,7 @@ lib_LTLIBRARIES = libxsltbreakpoint.la
 
 xsltbreakpointincdir = $(includedir)/breakpoint
 
-xsltbreakpointinc_HEADERS = 		\
+xsltbreakpointinc_HEADERS = 	\
 	breakpoint.h
 
 libxsltbreakpoint_la_SOURCES = 	\
@@ -14,7 +14,7 @@ libxsltbreakpoint_la_SOURCES = 	\
 	dbgmain.c	
 
 
-libxsltbreakpoint_la_LIBADD = $(EXTRA_LIBS)
+libxsltbreakpoint_la_LIBADD = -lxml2 $(M_LIBS)
 libxsltbreakpoint_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@
 
 man_MANS = #breakpoint.4

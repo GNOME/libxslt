@@ -241,15 +241,11 @@ AC_SUBST(LDFLAGS)
 
 dnl
 dnl In build tree I use a static version with memory debug enabled
-dnl libtool 1.4 tries to use the shared lib and this won't work
-dnl libtool is a 5000+ line of perl module and hence absolutely pure crap
-dnl no surprise there.
 dnl
 if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
     LIBXML_LIBS="../../XML/.libs/libxml2.a -lz"
     DV_LINK="1"
 fi
-AM_CONDITIONAL(DV_STATIC_LINK, test "${DV_LINK}" = "1")
 
 AC_SUBST(XML_CONFIG)
 AC_SUBST(LIBXML_LIBS)
@@ -266,11 +262,12 @@ esac
 XSLT_INCLUDEDIR='-I${includedir}'
 if test "${WITH_DEBUGGER}" = "1" ; then
 	XSLT_LIBS="-lxslt -lxsltbreakpoint $LIBXML_LIBS $M_LIBS"
+	EXTRA_LIBS='$(top_builddir)/breakpoint/libxsltbreakpoint.la'" $LIBXML_LIBS $M_LIBS"
 else
 	XSLT_LIBS="-lxslt $LIBXML_LIBS $M_LIBS"
+	EXTRA_LIBS="$LIBXML_LIBS $M_LIBS"
 fi
 
-EXTRA_LIBS="-lxml2 $M_LIBS"
 AC_SUBST(XSLT_LIBDIR)
 AC_SUBST(XSLT_INCLUDEDIR)
 AC_SUBST(EXTRA_LIBS)

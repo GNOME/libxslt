@@ -1,3 +1,8 @@
+Mon Nov 26 10:27:30 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am configure.in breakpoint/Makefile.am libexslt/Makefile.am:
+	  updating Makefiles to fix the prelinking.
+
 Sun Nov 25 15:52:38 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed a bug in the document extension

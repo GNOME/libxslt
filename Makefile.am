@@ -1,10 +1,20 @@
+## don't bother compiling the breakpoint library unless it is needed
+if WITH_DEBUGGER
+SUBDIRS = \
+  	breakpoint \
+  	libxslt \
+  	libexslt \
+  	xsltproc \
+  	tests \
+  	doc
+else
 SUBDIRS = \
 	libxslt \
-	breakpoint \
 	libexslt \
 	xsltproc \
 	tests \
 	doc
+endif
 
 confexecdir=$(libdir)
 confexec_DATA = xsltConf.sh
