@@ -1,7 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 EXTRA_DIST = 			\
 	libxslt-api.xml		\
-	libxslt-decl.txt
+	libxslt-decl.txt	\
+	xsltproc.xml
 
 # The name of the module.
 DOC_MODULE=libxslt-$(VERSION)

@@ -1,3 +1,8 @@
+Thu Jul 11 22:04:30 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am: adding doc/xsltproc.xml to the tarball
+	  to fix Red Hat bug #68614 
+
 Wed Jul 10 21:28:11 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 	
 	* win32/Makefile.msvc: Made the copy *.pdb in install succeed even
