@@ -1,3 +1,7 @@
+Sat Feb 21 16:47:04 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* win32/Makefile.msvc: patch from Mark Vadoc for attrvt.c
+
 Wed Feb 18 13:32:55 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c: applied patch from Steve Little to 
