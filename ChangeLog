@@ -1,3 +1,9 @@
+Thu Mar  7 15:20:32 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-75.xml
+	  tests/general/Makefile.am tests/general/bug-75.*: added a 
+	  specific example for bug #72150 in the regression tests
+
 Thu Mar  7 15:17:21 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in xsltproc/xsltproc.c: fixed bug #71488 in a
