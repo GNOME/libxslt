@@ -112,6 +112,7 @@
       <li><a href="http://sourceforge.net/projects/libxml2-pas/">Pascal bindings</a></li>
       <li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li>
       <li><a href="http://xsldbg.sourceforge.net/">Xsldbg Debugger</a></li>
+      <li><a href="http://www.mod-xslt.com/mod-xslt/">Apache module</a></li>
     </ul>
   </xsl:variable>
   <xsl:template name="toc">
