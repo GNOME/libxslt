@@ -99,13 +99,22 @@ exsltSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  */
 static void
 exsltSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+    xmlXPathObjectPtr obj;
     xmlNodeSetPtr ns, ret;
+    int boolval;
+    void *user;
 
     if (nargs != 1) {
 	xmlXPathSetArityError(ctxt);
 	return;
     }
 
+    if (ctxt->value != NULL) {
+        boolval = ctxt->value->boolval;
+	user = ctxt->value->user;
+	ctxt->value->boolval = 0;
+	ctxt->value->user = NULL;
+    }
     ns = xmlXPathPopNodeSet(ctxt);
     if (xmlXPathCheckError(ctxt))
 	return;
@@ -116,7 +125,10 @@ exsltSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	if (ret != ns)
 		xmlXPathFreeNodeSet(ns);
 
-    xmlXPathReturnNodeSet(ctxt, ret);
+    obj = xmlXPathWrapNodeSet(ns);
+    obj->user = user;
+    obj->boolval = boolval;
+    valuePush((ctxt), obj);
 }
 
 /**

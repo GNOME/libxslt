@@ -4,9 +4,9 @@
                  *        *
                   ********
 
-Design:
-  - seems that saving back XSLT stylesheet from a compiled form might
-    be a bit ugly ... Yes forget about it, it's just twaeked to the extreme
+Lifetime of result Value Tree, make sure we keep pointers. Exslt
+handling of node set values is especially nasty in this respect,
+lots of potential mem leaks...
 
 Pattern tester:
   -> try to optimize for ID scan and tests.
@@ -14,19 +14,9 @@ Pattern tester:
 Pattern scanner:
   -> add error checks on all returns
 
-Error handling:
-  -> check the version stuff, design a separate module for error interfacing
-     and default handling, parsing vs. runtime, fatal / compat / warning,
-     and lack of optionnal features.
-  -> catch recursion end of 5.4 ...
-
 Sorting:
   -> add lang and case-order
   -> add foreign sorting functions (interfaces ?).
-
-Format Number:
-  -> cleanup % handling (May 21 2001) possibly following the cleaned
-     up wording of XSLT-2.0
 
                   ********
                  *        *

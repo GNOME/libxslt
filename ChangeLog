@@ -1,3 +1,12 @@
+Wed Apr 23 22:41:08 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/strings.c: applied last patch for #110023 from 
+	  Mark Vakoc
+	* libexslt/sets.c: fixed a memory leak when mixing one of the
+	  EXSLT set functions and a Result Value Tree
+	* TODO: there are other bugs around in libexslt/sets.c in conjunction
+	  with Result Value Tree
+
 Wed Apr 23 17:00:16 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	*  libxslt/extensions.c: patch from Vasily Tchekalkin fixing

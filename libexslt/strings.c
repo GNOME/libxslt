@@ -30,7 +30,8 @@
  * containing one token from the string. 
  */
 static void
-exsltStrTokenizeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
+{
     xmlChar *str, *delimiters, *cur;
     const xmlChar *token, *delimiter;
     xmlNodePtr node;
@@ -39,64 +40,69 @@ exsltStrTokenizeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr ret;
 
     if ((nargs < 1) || (nargs > 2)) {
-	xmlXPathSetArityError (ctxt);
-	return;
+        xmlXPathSetArityError(ctxt);
+        return;
     }
 
     if (nargs == 2) {
-	delimiters = xmlXPathPopString (ctxt);
-	if (xmlXPathCheckError(ctxt))
-	    return;
+        delimiters = xmlXPathPopString(ctxt);
+        if (xmlXPathCheckError(ctxt))
+            return;
     } else {
-	delimiters = xmlStrdup((const xmlChar *) "\t\r\n ");
+        delimiters = xmlStrdup((const xmlChar *) "\t\r\n ");
     }
     if (delimiters == NULL)
-	return;
+        return;
 
-    str = xmlXPathPopString (ctxt);
+    str = xmlXPathPopString(ctxt);
     if (xmlXPathCheckError(ctxt) || (str == NULL)) {
-	xmlFree (delimiters);
-	return;
+        xmlFree(delimiters);
+        return;
     }
 
-	/* Return a result tree fragment */
+    /* Return a result tree fragment */
 
-	container = xmlNewDoc(NULL);
-	if (container != NULL) {
-		container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
-		container->doc = container;
-		ret = xmlXPathNewValueTree((xmlNodePtr) container);
-   		if (ret != NULL) {
-			/* Tag the subtree for removal once consumed */
-			ret->boolval = 1;
-   		 	for (cur = str, token = str; *cur != 0; cur++) {
-				for (delimiter = delimiters; *delimiter != 0; delimiter++) {
-				   	if (*cur == *delimiter) {
-						if (cur == token) {
-					    /* discard empty tokens */
-					    break;
-				  	    }
-					    *cur = 0;
-						node = xmlNewChild ( (xmlNodePtr) container, NULL,
-					      (const xmlChar *) "token", token);
-						*cur = *delimiter;
-						token = cur + 1;
-						break;
-	    			}
-				}
-    		}
-    	node = xmlNewChild ((xmlNodePtr) container, NULL, (const xmlChar *) "token", token);
-		}
-	}
+    container = xmlNewDoc(NULL);
+    if (container != NULL) {
+        container->name =
+            (char *) xmlStrdup(BAD_CAST " fake node libxslt");
+        container->doc = container;
+        ret = xmlXPathNewValueTree((xmlNodePtr) container);
+        if (ret != NULL) {
+            /* Tag the subtree for removal once consumed */
+            ret->boolval = 1;
+            ret->type = XPATH_NODESET;
+            for (cur = str, token = str; *cur != 0; cur++) {
+                for (delimiter = delimiters; *delimiter != 0; delimiter++) {
+                    if (*cur == *delimiter) {
+                        if (cur == token) {
+                            /* discard empty tokens */
+                            break;
+                        }
+                        *cur = 0;
+                        node = xmlNewChild((xmlNodePtr) container, NULL,
+                                           (const xmlChar *) "token",
+                                           token);
+                        *cur = *delimiter;
+                        token = cur + 1;
+                        break;
+                    }
+                }
+            }
+            node =
+                xmlNewChild((xmlNodePtr) container, NULL,
+                            (const xmlChar *) "token", token);
+        }
+    }
 
     if (str != NULL)
-	xmlFree(str);
+        xmlFree(str);
     if (delimiters != NULL)
-	xmlFree(delimiters);
-	if (ret != NULL)
-    	valuePush (ctxt, ret);
-	else
-		valuePush(ctxt,xmlXPathNewNodeSet(NULL));
+        xmlFree(delimiters);
+    if (ret != NULL)
+        valuePush(ctxt, ret);
+    else
+        valuePush(ctxt, xmlXPathNewNodeSet(NULL));
 }
 
 /**
