@@ -1,7 +1,7 @@
-Sun Mar  4 13:21:16 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
+Sun Mar  4 17:53:13 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* libxslt/pattern.c: fixed the compilation of patterns which
-	  contains XPath NodeTypes.
+	  contains XPath NodeTypes. Handling of nested predicates.
 
 Sat Mar  3 20:56:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 

@@ -1016,6 +1016,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     xmlChar *prefix = NULL;
     xmlChar *ncname = NULL;
     xmlChar *URL = NULL;
+    int level;
 
     SKIP_BLANKS;
     if ((token == NULL) && (CUR == '@')) {
@@ -1152,15 +1153,26 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     }
 parse_predicate:
     SKIP_BLANKS;
+    level = 0;
     while (CUR == '[') {
 	const xmlChar *q;
 	xmlChar *ret = NULL;
 
+	level++;
 	NEXT;
 	q = CUR_PTR;
 	/* TODO: avoid breaking in strings ... */
-	while ((IS_CHAR(CUR)) && (CUR != ']'))
+	while (IS_CHAR(CUR)) {
+	    /* Skip over nested predicates */
+	    if (CUR == '[')
+		level++;
+	    if (CUR == ']') {
+		level--;
+		if (level == 0)
+		    break;
+	    }
 	    NEXT;
+	}
 	if (!IS_CHAR(CUR)) {
 	    xsltGenericError(xsltGenericErrorContext,
 		    "xsltCompileStepPattern : ']' expected\n");
