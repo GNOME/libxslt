@@ -116,16 +116,16 @@ YES			    xsl:value-of
 YES				select = string-expression 
 NO				disable-output-escaping = "yes" | "no"
 
-NO			    xsl:number
+YES			    xsl:number
 NO				level = "single" | "multiple" | "any"
 NO				count = pattern 
 NO				from = pattern 
-NO				value = number-expression 
-NO				format = { string }
+YES				value = number-expression 
+YES				format = { string }
 NO				lang = { nmtoken }
 NO				letter-value = { "alphabetic" | "traditional" }
-NO				grouping-separator = { char }
-NO				grouping-size = { number }
+YES				grouping-separator = { char }
+YES				grouping-size = { number }
 
 YES			    xsl:for-each
 YES				select = node-set-expression
@@ -164,18 +164,18 @@ YES			    xsl:with-param
 YES				name = qname 
 YES				select = expression
 
-NO			    xsl:decimal-format
-NO				name = qname 
-NO				decimal-separator = char 
-NO				grouping-separator = char 
-NO				infinity = string 
-NO				minus-sign = char 
-NO				NaN = string 
-NO				percent = char 
-NO				per-mille = char 
-NO				zero-digit = char 
-NO				digit = char 
-NO				pattern-separator = char
+YES			    xsl:decimal-format
+YES				name = qname 
+YES				decimal-separator = char 
+YES				grouping-separator = char 
+YES				infinity = string 
+YES				minus-sign = char 
+YES				NaN = string 
+YES				percent = char 
+YES				per-mille = char 
+YES				zero-digit = char 
+YES				digit = char 
+YES				pattern-separator = char
 
 YES			    xsl:message
 YES				terminate = "yes" | "no"

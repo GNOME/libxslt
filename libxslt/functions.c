@@ -17,18 +17,6 @@
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
-#ifdef HAVE_MATH_H
-#include <math.h>
-#endif
-#ifdef HAVE_FLOAT_H
-#include <float.h>
-#endif
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h>
-#endif
-#ifdef HAVE_NAN_H
-#include <nan.h>
-#endif
 #ifdef HAVE_CTYPE_H
 #include <ctype.h>
 #endif
@@ -47,44 +35,9 @@
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "functions.h"
+#include "numbersInternals.h"
 
 #define DEBUG_FUNCTION
-
-#ifndef FALSE
-# define FALSE (0 == 1)
-# define TRUE (1 == 1)
-#endif
-
-#define DIGIT_LIST "0123456789"
-#define SYMBOL_QUOTE             ((xmlChar)'\'')
-#define ID_STRING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-
-/************************************************************************
- *									*
- *			Utility functions				*
- *									*
- ************************************************************************/
-
-#ifndef isnan
-static int
-isnan(volatile double number)
-{
-    return (!(number < 0.0 || number > 0.0) && (number != 0.0));
-}
-#endif
-
-#ifndef isinf
-static int
-isinf(double number)
-{
-# ifdef HUGE_VAL
-    return ((number == HUGE_VAL) ? 1 : ((number == -HUGE_VAL) ? -1 : 0));
-# else
-    return FALSE;
-# endif
-}
-#endif
 
 
 /************************************************************************
@@ -246,243 +199,6 @@ xsltUnparsedEntityURIFunction(xmlXPathParserContextPtr ctxt, int nargs){
  * Implement the format-number() XSLT function
  *   string format-number(number, string, string?)
  */
-/*
- * JDK 1.1 DecimalFormat class:
- *
- * http://java.sun.com/products/jdk/1.1/docs/api/java.text.DecimalFormat.html
- *
- * Structure:
- *
- *   pattern    := subpattern{;subpattern}
- *   subpattern := {prefix}integer{.fraction}{suffix}
- *   prefix     := '\\u0000'..'\\uFFFD' - specialCharacters
- *   suffix     := '\\u0000'..'\\uFFFD' - specialCharacters
- *   integer    := '#'* '0'* '0'
- *   fraction   := '0'* '#'*
- *
- *   Notation:
- *    X*       0 or more instances of X
- *    (X | Y)  either X or Y.
- *    X..Y     any character from X up to Y, inclusive.
- *    S - T    characters in S, except those in T
- *
- * Special Characters:
- *
- *   Symbol Meaning
- *   0      a digit
- *   #      a digit, zero shows as absent
- *   .      placeholder for decimal separator
- *   ,      placeholder for grouping separator.
- *   ;      separates formats.
- *   -      default negative prefix.
- *   %      multiply by 100 and show as percentage
- *   ?      multiply by 1000 and show as per mille
- *   X      any other characters can be used in the prefix or suffix
- *   '      used to quote special characters in a prefix or suffix.
- */
-/* TODO
- *
- * The JDK description does not tell where they may and may not appear
- * within the format string. Nor does it tell what happens to integer
- * values that does not fit into the format string.
- *
- *  Inf and NaN not tested.
- */
-#define IS_SPECIAL(self,letter) \
-    (((letter) == (self)->zeroDigit[0]) || \
-     ((letter) == (self)->digit[0]) || \
-     ((letter) == (self)->decimalPoint[0]) || \
-     ((letter) == (self)->grouping[0]) || \
-     ((letter) == (self)->minusSign[0]) || \
-     ((letter) == (self)->percent[0]) || \
-     ((letter) == (self)->permille[0]))
-
-static xmlXPathError
-xsltFormatNumberConversion(xsltDecimalFormatPtr self,
-			   xmlChar *format,
-			   double number,
-			   xmlChar **result)
-{
-    xmlXPathError status = XPATH_EXPRESSION_OK;
-    xmlChar *the_format;
-    xmlBufferPtr buffer;
-    char digit_buffer[2];
-    int use_minus;
-    int i, j;
-    int length;
-    int group;
-    int integer_digits = 0;
-    int integer_zeroes = 0;
-    int fraction_digits = 0;
-    int fraction_zeroes = 0;
-    int decimal_point;
-    double divisor;
-    int digit;
-    int is_percent = FALSE;
-    int is_permille = FALSE;
-
-    buffer = xmlBufferCreate();
-    if (buffer == NULL) {
-	status = XPATH_MEMORY_ERROR;
-	goto DECIMAL_FORMAT_END;
-    }
-
-    /* Find positive or negative template */
-    the_format = (xmlChar *)xmlStrchr(format,
-				      self->patternSeparator[0]);
-    if ((the_format != NULL) && (number < 0.0)) {
-	/* Use negative template */
-	the_format++;
-	use_minus = FALSE;
-    } else {
-	/* Use positive template */
-	if (the_format)
-	    the_format[0] = 0;
-	the_format = format;
-	use_minus = (number < 0.0) ? TRUE : FALSE;
-    }
-  
-    /* Prefix */
-    length = xmlStrlen(the_format);
-    for (i = 0; i < length; i++) {
-	if (IS_SPECIAL(self, the_format[i])) {
-	    break; /* for */
-	} else {
-	    if (the_format[i] == SYMBOL_QUOTE) {
-		/* Quote character */
-		i++;
-	    }
-	    xmlBufferAdd(buffer, &the_format[i], 1);
-	}
-    }
-
-    if (isinf(number)) {
-	xmlBufferCat(buffer, self->infinity);
-	/* Skip until suffix */
-	for ( ; i < length; i++) {
-	    if (! IS_SPECIAL(self, the_format[i]))
-		break; /* for */
-	}
-    } else if (isnan(number)) {
-	xmlBufferCat(buffer, self->noNumber);
-	/* Skip until suffix */
-	for ( ; i < length; i++) {
-	    if (! IS_SPECIAL(self, the_format[i]))
-		break; /* for */
-	}
-    } else {
-	
-	/* Parse the number part of the format string */
-	decimal_point = FALSE;
-	group = 0;
-	for ( ; i < length; i++) {
-	    
-	    if (the_format[i] == self->digit[0]) {
-		if (decimal_point) {
-		    if (fraction_zeroes > 0) {
-			status = XPATH_EXPR_ERROR;
-			goto DECIMAL_FORMAT_END;
-		    }
-		    fraction_digits++;
-		} else {
-		    integer_digits++;
-		    group++;
-		}
-		
-	    } else if (the_format[i] == self->zeroDigit[0]) {
-		if (decimal_point)
-		    fraction_zeroes++;
-		else {
-		    if (integer_digits > 0) {
-			status = XPATH_EXPR_ERROR;
-			goto DECIMAL_FORMAT_END;
-		    }
-		    integer_zeroes++;
-		    group++;
-		}
-		
-	    } else if (the_format[i] == self->grouping[0]) {
-		if (decimal_point) {
-		    status = XPATH_EXPR_ERROR;
-		    goto DECIMAL_FORMAT_END;
-		}
-		group = 0;
-		
-	    } else if (the_format[i] == self->decimalPoint[0]) {
-		if (decimal_point) {
-		    status = XPATH_EXPR_ERROR;
-		    goto DECIMAL_FORMAT_END;
-		}
-		decimal_point = TRUE;
-		
-	    } else
-		break;
-	}
-	if (the_format[i] == self->percent[0]) {
-	    is_percent = TRUE;
-	} else if (the_format[i] == self->permille[0]) {
-	    is_permille = TRUE;
-	}
-	
-	/* Format the number */
-
-	if (use_minus)
-	    xmlBufferAdd(buffer, self->minusSign, 1);
-
-	number = fabs(number);
-	if (is_percent)
-	    number /= 100.0;
-	else if (is_permille)
-	    number /= 1000.0;
-	number = floor(0.5 + number * pow(10.0, (double)(fraction_digits + fraction_zeroes)));
-	
-	/* Integer part */
-	digit_buffer[1] = (char)0;
-	divisor = pow(10.0, (double)(integer_digits + integer_zeroes + fraction_digits + fraction_zeroes - 1));
-	for (j = integer_digits + integer_zeroes; j > 0; j--) {
-	    digit = (int)(number / divisor);
-	    number -= (double)digit * divisor;
-	    divisor /= 10.0;
-	    if ((digit > 0) || (j <= integer_digits)) {
-		digit_buffer[0] = DIGIT_LIST[digit];
-		xmlBufferCCat(buffer, digit_buffer);
-	    }
-	}
-	
-	if (decimal_point)
-	    xmlBufferAdd(buffer, self->decimalPoint, 1);
-
-	/* Fraction part */
-	for (j = fraction_digits + fraction_zeroes; j > 0; j--) {
-	    digit = (int)(number / divisor);
-	    number -= (double)digit * divisor;
-	    divisor /= 10.0;
-	    if ((digit > 0) || (j > fraction_zeroes)) {
-		digit_buffer[0] = DIGIT_LIST[digit];
-		xmlBufferCCat(buffer, digit_buffer);
-	    }
-	}
-    }
-
-    if (is_percent)
-	xmlBufferAdd(buffer, self->percent, 1);
-    else if (is_permille)
-	xmlBufferAdd(buffer, self->permille, 1);
-    
-    /* Suffix */
-    for ( ; i < length; i++) {
-	if (the_format[i] == SYMBOL_QUOTE)
-	    i++;
-	xmlBufferAdd(buffer, &the_format[i], 1);
-    }
-
- DECIMAL_FORMAT_END:
-    if (status == XPATH_EXPRESSION_OK)
-	*result = xmlStrdup(xmlBufferContent(buffer));
-    xmlBufferFree(buffer);
-    return status;
-}
-
 void
 xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
 {
@@ -518,6 +234,7 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
 				   numberObj->floatval,
 				   &result) == XPATH_EXPRESSION_OK) {
 	valuePush(ctxt, xmlXPathNewString(result));
+	xmlFree(result);
     }
     
     xmlXPathFreeObject(numberObj);

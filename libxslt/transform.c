@@ -30,6 +30,7 @@
 #include "pattern.h"
 #include "transform.h"
 #include "variables.h"
+#include "numbersInternals.h"
 #include "namespaces.h"
 #include "attributes.h"
 #include "templates.h"
@@ -40,6 +41,11 @@
 /*
  * Useful macros
  */
+
+#ifndef FALSE
+# define FALSE (0 == 1)
+# define TRUE (!FALSE)
+#endif
 
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
@@ -799,6 +805,120 @@ error:
 	xmlXPathFreeObject(res);
 }
 
+/**
+ * xsltNumber:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @cur:   the xslt number node
+ *
+ * Process the xslt number node on the source node
+ */
+void
+xsltNumber(xsltTransformContextPtr ctxt,
+	   xmlNodePtr node,
+	   xmlNodePtr cur)
+{
+    xmlChar *prop;
+    xsltNumberData numdata;
+
+    if ((ctxt == NULL) || (cur == NULL))
+	return;
+
+    memset(&numdata, 0, sizeof(numdata));
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"level", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, BAD_CAST("single"))) {
+	    TODO;
+	} else if (xmlStrEqual(prop, BAD_CAST("multiple"))) {
+	    TODO;
+	} else if (xmlStrEqual(prop, BAD_CAST("any"))) {
+	    TODO;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "invalid value %s for level\n", prop);
+	}
+	xmlFree(prop);
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"count", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	TODO;
+	xmlFree(prop);
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"from", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	TODO;
+	xmlFree(prop);
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"value", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	numdata.value = prop;
+    } else {
+	numdata.value = xmlStrdup(BAD_CAST("position()"));
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"format", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	/* Unicode categories:
+	 *  Nd = Number, decimal digit
+	 *  Nl = Number, letter
+	 *  No = Number, other
+	 *  Lu = Letters, uppercase
+	 *  Ll = Letters, lowercase
+	 *  Lt = Letters, titlecase
+	 *  Lm = Letters, modifiers
+	 *  Lo = Letters, other (uncased)
+	 *
+	 *  This corresponds to isalnum() in a Unicode locale.
+	 */
+	numdata.format = prop;
+    } else {
+	numdata.format = xmlStrdup(BAD_CAST("1"));
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	TODO;
+	xmlFree(prop);
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"letter-value", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, BAD_CAST("alphabetic"))) {
+	    TODO;
+	} else if (xmlStrEqual(prop, BAD_CAST("traditional"))) {
+	    TODO;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "invalid value %s for letter-value\n", prop);
+	}
+	xmlFree(prop);
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"grouping-separator", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	numdata.groupingCharacter = prop[0];
+	xmlFree(prop);
+    }
+    
+    prop = xmlGetNsProp(cur, (const xmlChar *)"grouping-size", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	sscanf(prop, "%d", &numdata.digitsPerGroup);
+	xmlFree(prop);
+    } else {
+	numdata.groupingCharacter = 0;
+    }
+
+    xsltNumberFormat(ctxt, &numdata, node);
+
+    if (numdata.format != NULL)
+	xmlFree(numdata.format);
+    if (numdata.value != NULL)
+	xmlFree(numdata.value);
+}
 
 /**
  * xsltDefaultProcessOneNode:
@@ -1334,6 +1454,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else if (IS_XSLT_NAME(cur, "comment")) {
 		ctxt->insert = insert;
 		xsltComment(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "number")) {
+		ctxt->insert = insert;
+		xsltNumber(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "processing-instruction")) {
 		ctxt->insert = insert;

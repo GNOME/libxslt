@@ -79,7 +79,7 @@ xsltNewDecimalFormat(xmlChar *name)
     self = xmlMalloc(sizeof(xsltDecimalFormat));
     if (self != NULL) {
 	self->next = NULL;
-	self->name = (name == NULL) ? name : xmlStrdup(name);
+	self->name = name;
 	
 	/* Default values */
 	self->digit = xmlStrdup(BAD_CAST("0"));

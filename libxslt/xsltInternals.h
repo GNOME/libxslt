@@ -200,6 +200,8 @@ xsltStylesheetPtr	xsltParseStylesheetFile	(const xmlChar* filename);
 void			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
 int			xsltIsBlank		(xmlChar *str);
 void			xsltFreeStackElemList	(xsltStackElemPtr elem);
+xsltDecimalFormatPtr	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
+						   xmlChar *name);
 
 xsltStylesheetPtr	xsltParseStylesheetProcess(xsltStylesheetPtr ret,
 	                                         xmlDocPtr doc);
