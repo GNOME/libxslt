@@ -360,21 +360,21 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    /*
 	     * This is a result tree fragment.
 	     */
-	    xmlNodePtr container;
+	    xmlDocPtr container;
 	    xmlNodePtr oldInsert;
 	    xmlDocPtr  oldoutput;
 
-	    container = xmlNewDocNode(NULL, NULL,
-			      (const xmlChar *) " fake node libxslt", NULL);
+	    container = xmlNewDoc(NULL);
 	    if (container == NULL)
 		return(NULL);
-	    container->doc = (xmlDocPtr) container;
+	    container->name = xmlStrdup(BAD_CAST " fake node libxslt");
+	    container->doc = container;
 	    container->parent = NULL;
 
 	    oldoutput = ctxt->output;
-	    ctxt->output = (xmlDocPtr) container;
+	    ctxt->output = container;
 	    oldInsert = ctxt->insert;
-	    ctxt->insert = container;
+	    ctxt->insert = (xmlNodePtr) container;
 	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, NULL, NULL);
 	    ctxt->insert = oldInsert;
 	    ctxt->output = oldoutput;
@@ -497,23 +497,21 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    /*
 	     * This is a result tree fragment.
 	     */
-	    xmlNodePtr container;
+	    xmlDocPtr container;
 	    xmlNodePtr oldInsert;
 	    xmlDocPtr  oldoutput;
 
-	    container = xmlNewDocNode(NULL , NULL,
-			      (const xmlChar *) " fake node libxslt", NULL);
-	    if (container == NULL) {
-		elem->name = name;
+	    container = xmlNewDoc(NULL);
+	    if (container == NULL)
 		return(NULL);
-	    }
-	    container->doc = (xmlDocPtr) container;
+	    container->name = xmlStrdup(BAD_CAST " fake node libxslt");
+	    container->doc = container;
 	    container->parent = NULL;
 
 	    oldoutput = ctxt->output;
-	    ctxt->output = (xmlDocPtr) container;
+	    ctxt->output = container;
 	    oldInsert = ctxt->insert;
-	    ctxt->insert = container;
+	    ctxt->insert = (xmlNodePtr) container;
 	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, NULL, NULL);
 	    ctxt->insert = oldInsert;
 	    ctxt->output = oldoutput;

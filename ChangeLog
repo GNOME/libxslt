@@ -1,3 +1,12 @@
+Mon Mar 24 22:30:00 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c libxslt/transform.c libxslt/variables.c:
+	  Result Value Tree are now generated with a document root node
+	  not an element, it's quite cleaner.
+	* configure.in libxslt.spec.in NEWS: But this requires libxml2-2.5.5
+	  also prepared for libxslt-1.0.28 release
+	* doc/*: updated and regenerated the docs
+
 Mon Mar 24 15:01:07 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c libxslt/transform.c libxslt/variables.c:

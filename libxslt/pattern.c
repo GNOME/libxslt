@@ -638,11 +638,10 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			if ((parent == NULL) || (node->doc == NULL))
 			    nocache = 1;
 			else {
-			    while (parent->parent != NULL)
-				parent = parent->parent;
-			    if (((parent->type != XML_DOCUMENT_NODE) &&
-				 (parent->type != XML_HTML_DOCUMENT_NODE)) ||
-				 (parent != (xmlNodePtr) node->doc))
+			    if ((doc->name != NULL) &&
+				(doc->name[0] == ' ') &&
+				(xmlStrEqual(BAD_CAST doc->name, 
+					     BAD_CAST " fake node libxslt")))
 				nocache = 1;
 			}
 			if (nocache == 0) {

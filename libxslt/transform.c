@@ -3064,25 +3064,19 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
 	    /* The nodeset is from another document, so must change */
 	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
-	    if (list->nodeTab[i]->doc->type != XML_ELEMENT_NODE) {
-		if ((ctxt->document = xsltFindDocument(ctxt,
-				       list->nodeTab[i]->doc->doc))==NULL) { 
-		    xsltTransformError(ctxt, NULL, inst,
-			    "xsl:apply-templates : can't find doc\n");
-		    goto error;
-		}
+	    if (list->nodeTab[i]->doc->name != NULL) {
+		ctxt->document = xsltFindDocument(ctxt,
+			            list->nodeTab[i]->doc->doc);
 		ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
+		if (ctxt->document != NULL) {
+		    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
 		 ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
-#endif
-	    } else {
-		ctxt->xpathCtxt->node = list->nodeTab[i];
-		ctxt->document = NULL;
-#ifdef WITH_XSLT_DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
+		} else {
+		    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltApplyTemplates: Changing document - Return tree fragment\n");
+		}
 #endif
 	    }
 	}

@@ -11,10 +11,18 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.0.28: Mar 24 2003:
+   - fixed node() in patterns semantic.
+   - fixed a memory access problem in format-number()
+   - fixed stack overflow in recursive global variable or params
+   - cleaned up Result Value Tree handling, and fixed a couple of old bugs
+    in the process
+
+
 1.0.27: Feb 24 2003:
    - bug fixes: spurious xmlns:nsX="" generation, serialization bug (in
     libxml2), a namespace copy problem, errors in the RPM spec prereqs
-   - Windows path canonicalization and document cache fix (Igor) 
+   - Windows path canonicalization and document cache fix (Igor)
 
 
 1.0.26: Feb 10 2003:

@@ -359,6 +359,7 @@ xsltDecimalFormatGetByName
 xsltParseStylesheetProcess
 xsltParseStylesheetOutput
 xsltParseStylesheetDoc
+xsltParseStylesheetImportedDoc
 xsltLoadStylesheetPI
 xsltNumberFormat
 xsltFormatNumberConversion
