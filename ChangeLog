@@ -1,3 +1,8 @@
+Fri Jan 18 09:43:16 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/math.c: Charlie Bozeman provided the implementation
+	  for the EXSLT math other functions
+
 Thu Jan 17 23:41:53 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/Makefile.am: jacob berkman pointed out that the
