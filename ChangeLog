@@ -1,15 +1,20 @@
+Mon Jun 25 08:45:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
+
+	* Removed some redundant code in xsltDefaultProcessOneNode
+	  and revised the default processing of an attribute node
+
 Sun Jun 24 14:40:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
 
 	* Enhanced ApplyTemplates and ForEach to allow multiple
-	documents within a nodelist.
+	  documents within a nodelist.
 	* Repaired small bug in xsltDocument function which caused
-	a crash if invalid second argument was provided.
+	  a crash if invalid second argument was provided.
 
 Sat Jun 23 15:44:00 MDT 2001 John Fleck <jfleck@inkstain.net>
 
 	* doc/tutorial/libxslttutorial.xml, libxslttutorial.html
-	updating tutorial with explanation of xsltSave vs. xmlSave
-	functions 
+	  updating tutorial with explanation of xsltSave vs. xmlSave
+	  functions 
 
 Sat Jun 23 19:04:27 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 

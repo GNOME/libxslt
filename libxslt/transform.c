@@ -520,123 +520,60 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	case XML_ELEMENT_NODE:
 	    break;
 	case XML_CDATA_SECTION_NODE:
-	    template = xsltGetTemplate(ctxt, node, NULL);
-	    if (template) {
-		xmlNodePtr oldNode;
-
 #ifdef WITH_XSLT_DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltDefaultProcessOneNode: applying template for CDATA %s\n",
-		                 node->content);
+	    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltDefaultProcessOneNode: copy CDATA %s\n",
+		node->content);
 #endif
-		oldNode = ctxt->node;
-		ctxt->node = node;
-		templPush(ctxt, template);
-		xsltApplyOneTemplate(ctxt, node, template->content, 1);
-		templPop(ctxt);
-		ctxt->node = oldNode;
-	    } else /* if (ctxt->mode == NULL) */ {
-#ifdef WITH_XSLT_DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltDefaultProcessOneNode: copy CDATA %s\n",
-		                 node->content);
-#endif
-		copy = xmlNewDocText(ctxt->output, node->content);
-		if (copy != NULL) {
-		    xmlAddChild(ctxt->insert, copy);
-		} else {
-		    xsltGenericError(xsltGenericErrorContext,
-			"xsltDefaultProcessOneNode: cdata copy failed\n");
-		}
+	    copy = xmlNewDocText(ctxt->output, node->content);
+	    if (copy != NULL) {
+		xmlAddChild(ctxt->insert, copy);
+	    } else {
+		xsltGenericError(xsltGenericErrorContext,
+		 "xsltDefaultProcessOneNode: cdata copy failed\n");
 	    }
 	    return;
 	case XML_TEXT_NODE:
-	    template = xsltGetTemplate(ctxt, node, NULL);
-	    if (template) {
-		xmlNodePtr oldNode;
-
 #ifdef WITH_XSLT_DEBUG_PROCESS
+	    if (node->content == NULL)
 		xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltDefaultProcessOneNode: applying template for text %s\n",
-		                 node->content);
+		 "xsltDefaultProcessOneNode: copy empty text\n");
+	    else
+		xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltDefaultProcessOneNode: copy text %s\n",
+			node->content);
 #endif
-		oldNode = ctxt->node;
-		ctxt->node = node;
-		templPush(ctxt, template);
-		xsltApplyOneTemplate(ctxt, node, template->content, 1);
-		templPop(ctxt);
-		ctxt->node = oldNode;
-	    } else /* if (ctxt->mode == NULL) */ {
+	    copy = xmlCopyNode(node, 0);
+	    if (copy != NULL) {
+		xmlAddChild(ctxt->insert, copy);
+	    } else {
+		xsltGenericError(xsltGenericErrorContext,
+		 "xsltDefaultProcessOneNode: text copy failed\n");
+	    }
+	    return;
+	case XML_ATTRIBUTE_NODE:
+	    cur = node->children;
+	    while ((cur != NULL) && (cur->type != XML_TEXT_NODE))
+		cur = cur->next;
+	    if (cur == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+		 "xsltDefaultProcessOneNode: no text for attribute\n");
+	    } else {
 #ifdef WITH_XSLT_DEBUG_PROCESS
-		if (node->content == NULL)
+		if (cur->content == NULL)
 		    xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltDefaultProcessOneNode: copy empty text\n");
 		else
 		    xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltDefaultProcessOneNode: copy text %s\n",
-				     node->content);
+			cur->content);
 #endif
-		copy = xmlCopyNode(node, 0);
+		copy = xmlCopyNode(cur, 0);
 		if (copy != NULL) {
 		    xmlAddChild(ctxt->insert, copy);
 		} else {
 		    xsltGenericError(xsltGenericErrorContext,
-			"xsltDefaultProcessOneNode: text copy failed\n");
-		}
-	    }
-	    return;
-	case XML_ATTRIBUTE_NODE:
-	    if (ctxt->insert->type == XML_ELEMENT_NODE) {
-		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, current;
-		template = xsltGetTemplate(ctxt, node, NULL);
-		if (template) {
-		    xmlNodePtr oldNode;
-
-		    oldNode = ctxt->node;
-		    ctxt->node = node;
-		    templPush(ctxt, template);
-		    xsltApplyOneTemplate(ctxt, node, template->content, 1);
-		    templPop(ctxt);
-		    ctxt->node = oldNode;
-		} else if (ctxt->mode == NULL) {
-		    if (attr->ns != NULL) {
-			if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
-			    (xmlStrncasecmp(attr->ns->prefix,
-					    (xmlChar *)"xml", 3))) {
-			    ret = xmlCopyProp(ctxt->insert, attr);
-			    ret->ns = xsltGetNamespace(ctxt, node, attr->ns,
-						       ctxt->insert);
-			} 
-		    } else
-			ret = xmlCopyProp(ctxt->insert, attr);
-
-		    current = ctxt->insert->properties;
-		    if (current != NULL) {
-			if ((xmlStrEqual(current->name, ret->name)) &&
-			    (current->ns == ret->ns)) {
-			    xmlNodePtr tmp;
-			    tmp = current->children;
-			    current->children = ret->children;
-			    ret->children = tmp;
-			    xmlFreeProp(ret);
-			    return;
-			}
-			while (current->next != NULL) {
-			    current = current->next;
-			    if ((xmlStrEqual(current->name, ret->name)) &&
-				(current->ns == ret->ns)) {
-				xmlNodePtr tmp;
-				tmp = current->children;
-				current->children = ret->children;
-				ret->children = tmp;
-				xmlFreeProp(ret);
-				return;
-			    }
-			}
-			current->next = ret;
-			ret->prev = current;
-		    } else
-			ctxt->insert->properties = ret;
+		     "xsltDefaultProcessOneNode: text copy failed\n");
 		}
 	    }
 	    return;
