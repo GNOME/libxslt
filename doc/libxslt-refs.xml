@@ -2615,6 +2615,7 @@
           <ref name='xsltSetDebuggerCallbacks'/>
         </word>
         <word name='after'>
+          <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltGetProfileInformation'/>
         </word>
         <word name='aliases'>
@@ -2764,21 +2765,21 @@
         </word>
         <word name='array'>
           <ref name='_xsltStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
           <ref name='xsltComputeSortResult'/>
           <ref name='xsltDefaultSortFunction'/>
           <ref name='xsltDoSortFunction'/>
           <ref name='xsltEvalUserParams'/>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltRunStylesheetUser'/>
           <ref name='xsltVariableLookup'/>
         </word>
         <word name='arry'>
           <ref name='xsltApplyStylesheet'/>
-          <ref name='xsltApplyStylesheetUser'/>
           <ref name='xsltDefaultSortFunction'/>
           <ref name='xsltDoSortFunction'/>
           <ref name='xsltProfileStylesheet'/>
           <ref name='xsltQuoteUserParams'/>
-          <ref name='xsltRunStylesheet'/>
-          <ref name='xsltRunStylesheetUser'/>
         </word>
         <word name='associated'>
           <ref name='_xsltStylesheet'/>
@@ -2838,9 +2839,6 @@
     </chunk>
     <chunk name='chunk2'>
       <letter name='b'>
-        <word name='back'>
-          <ref name='xsltApplyOneTemplate'/>
-        </word>
         <word name='based'>
           <ref name='_xsltStylesheet'/>
         </word>
@@ -2945,6 +2943,7 @@
         </word>
         <word name='bytes'>
           <ref name='xsltGetUTF8Char'/>
+          <ref name='xsltRunStylesheet'/>
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
         </word>
@@ -5135,6 +5134,7 @@
           <ref name='CHECK_STOPPED0'/>
           <ref name='xsltAllocateExtra'/>
           <ref name='xsltAllocateExtraCtxt'/>
+          <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltAttrTemplateProcess'/>
           <ref name='xsltAttrTemplateValueProcess'/>
           <ref name='xsltAttrTemplateValueProcessNode'/>

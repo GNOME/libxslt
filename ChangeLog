@@ -1,3 +1,10 @@
+Sun Nov 30 23:25:22 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* doc/Makefile.am: small further enhancement to makefile
+	* doc/APIchunk[127].html, doc/libxslt-api.xml, doc/libxslt-refs.xml,
+	  doc/html/libxslt-transform.html: updated to reflect last change
+	  to transform.c
+
 Sun Nov 30 22:44:07 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* doc/newapi.xsl, doc/api.xsl, doc/apibuild.py, doc/site.xsl,

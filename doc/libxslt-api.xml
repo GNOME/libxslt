@@ -919,7 +919,7 @@ informations are stored'/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information'/>
     </function>
     <function name='xsltApplyOneTemplate' file='transform'>
-      <info>Process the apply-templates node on the source node, if params are passed they are pushed on the variable stack but not popped, it&apos;s left to the caller to handle them back (they may be reused).</info>
+      <info>Process the apply-templates node on the source node, if params are passed they are pushed on the variable stack but not popped, it&apos;s left to the caller to handle them after return (they may be reused).</info>
       <return type='void'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
       <arg name='node' type='xmlNodePtr' info='the node in the source tree.'/>
@@ -945,7 +945,7 @@ informations are stored'/>
       <return type='xmlDocPtr' info='the result document or NULL in case of error'/>
       <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet'/>
       <arg name='doc' type='xmlDocPtr' info='a parsed XML document'/>
-      <arg name='params' type='const char **' info='a NULL terminated arry of parameters names/values tuples'/>
+      <arg name='params' type='const char **' info='a NULL terminated array of parameters names/values tuples'/>
       <arg name='output' type='const char *' info='the targetted output'/>
       <arg name='profile' type='FILE *' info='profile FILE * output or NULL'/>
       <arg name='userCtxt' type='xsltTransformContextPtr' info='user provided transform context'/>
@@ -1930,10 +1930,10 @@ informations are stored'/>
     </function>
     <function name='xsltRunStylesheet' file='transform'>
       <info>Apply the stylesheet to the document and generate the output according to @output @SAX and @IObuf. It&apos;s an error to specify both @SAX and @IObuf.  NOTE: This may lead to a non-wellformed output XML wise ! NOTE: This may also result in multiple files being generated NOTE: using IObuf, the result encoding used will be the one used for creating the output buffer, use the following macro to read it from the stylesheet XSLT_GET_IMPORT_PTR(encoding, style, encoding) NOTE: using SAX, any encoding specified in the stylesheet will be lost since the interface uses only UTF8</info>
-      <return type='int' info='the number of by written to the main resource or -1 in case of error.'/>
+      <return type='int' info='the number of bytes written to the main resource or -1 in case of error.'/>
       <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet'/>
       <arg name='doc' type='xmlDocPtr' info='a parsed XML document'/>
-      <arg name='params' type='const char **' info='a NULL terminated arry of parameters names/values tuples'/>
+      <arg name='params' type='const char **' info='a NULL terminated array of parameters names/values tuples'/>
       <arg name='output' type='const char *' info='the URL/filename ot the generated resource if available'/>
       <arg name='SAX' type='xmlSAXHandlerPtr' info='a SAX handler for progressive callback output (not implemented yet)'/>
       <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet)'/>
@@ -1943,7 +1943,7 @@ informations are stored'/>
       <return type='int' info='the number of by written to the main resource or -1 in case of error.'/>
       <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet'/>
       <arg name='doc' type='xmlDocPtr' info='a parsed XML document'/>
-      <arg name='params' type='const char **' info='a NULL terminated arry of parameters names/values tuples'/>
+      <arg name='params' type='const char **' info='a NULL terminated array of parameters names/values tuples'/>
       <arg name='output' type='const char *' info='the URL/filename ot the generated resource if available'/>
       <arg name='SAX' type='xmlSAXHandlerPtr' info='a SAX handler for progressive callback output (not implemented yet)'/>
       <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet)'/>

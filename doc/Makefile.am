@@ -23,7 +23,6 @@ APIPAGES=APIconstructors.html APIfiles.html APIfunctions.html \
 EXTRA_DIST = 			\
 	libxslt-api.xml		\
 	libexslt-api.xml	\
-	libxslt-decl.txt	\
 	xsltproc.xml		\
 	apibuild.py		\
 	libxslt.xsa		\
@@ -33,7 +32,7 @@ man_MANS = xsltproc.1
 
 all: web $(top_srcdir)/NEWS libxslt.xsa $(man_MANS)
 
-api: libxslt-api.xml libxslt-refs.xml $(APIPAGES) $(srcdir)/html/index.html $(WIN32_DIR)/libxslt.def.src
+api: libxslt-api.xml libxslt-refs.xml $(APIPAGES) $(srcdir)/html/index.html $(WIN32_DIR)/libxslt.def.src $(WIN32_DIR)/libexslt.def.src
 
 web: $(PAGES)
 
@@ -88,13 +87,10 @@ $(WIN32_DIR)/libexslt.def.src: libexslt-api.xml
 	  $(bindir)/xsltproc -o $(WIN32_DIR)/libexslt.def.src \
 	  --nonet $(WIN32_DIR)/defgen.xsl libexslt-api.xml ; fi )
 
-api: libxslt-api.xml libxslt-refs.xml $(WIN32_DIR)/libxslt.def.src $(WIN32_DIR)/libexslt.def.src
-
 clean-local:
 	rm -f *~ *.bak *.hierarchy *.signals *-unused.txt
 
 maintainer-clean-local: clean
-	rm -rf libxslt-decl-list.txt libxslt-decl.txt 
 
 rebuild: api all
 
