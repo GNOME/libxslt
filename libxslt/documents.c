@@ -168,10 +168,17 @@ xsltParseDocument(const xmlChar *URI, xmlDictPtr dict, int options) {
     pctxt = xmlNewParserCtxt();
     if (pctxt == NULL)
         return(NULL);
-    if (pctxt->dict != NULL) {
+    if ((dict != NULL) && (pctxt->dict != NULL)) {
         xmlDictFree(pctxt->dict);
+	pctxt->dict = NULL;
+    }
+    if (dict != NULL) {
 	pctxt->dict = dict;
 	xmlDictReference(pctxt->dict);
+#ifdef WITH_XSLT_DEBUG
+	xsltGenericDebug(xsltGenericDebugContext,
+                     "Reusing dictionary for document\n");
+#endif
     }
     xmlCtxtUseOptions(pctxt, options);
     inputStream = xmlLoadExternalEntity((const char *) URI, NULL, pctxt);

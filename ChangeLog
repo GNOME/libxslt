@@ -1,3 +1,12 @@
+Sun Feb 15 19:57:20 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attrvt.c: found the memory leak shown in DocBook,
+	  mostly an error handling some ATV coupled with doctionnaries
+	  reference counting.
+	* libxslt/documents.c libxslt/transform.c libxslt/variables.c
+	  libxslt/xslt.c: added a bit of debug to be able to trace 
+	  dictionnaries.
+
 Fri Feb 13 16:59:46 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attrvt.c libxslt/Makefile.am: added new code to handle

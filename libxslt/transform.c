@@ -453,6 +453,10 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->parserOptions = XSLT_PARSE_OPTIONS;
 
     cur->dict = xmlDictCreateSub(style->dict);
+#ifdef WITH_XSLT_DEBUG
+    xsltGenericDebug(xsltGenericDebugContext,
+	     "Creating sub-dictionary from stylesheet for transformation\n");
+#endif
 
     return(cur);
 }
@@ -499,6 +503,10 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     xsltFreeCtxtExts(ctxt);
     xsltFreeRVTs(ctxt);
     xmlDictFree(ctxt->dict);
+#ifdef WITH_XSLT_DEBUG
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "freeing transformation dictionnary\n");
+#endif
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -2168,6 +2176,10 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		goto error;
 	    res->dict = ctxt->dict;
 	    xmlDictReference(res->dict);
+#ifdef WITH_XSLT_DEBUG
+	    xsltGenericDebug(xsltGenericDebugContext,
+                     "reusing transformation dict for output\n");
+#endif
 	} else {
 	    xsltTransformError(ctxt, NULL, inst,
 			     "xsltDocumentElem: unsupported method %s\n",
@@ -2181,6 +2193,10 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    goto error;
 	res->dict = ctxt->dict;
 	xmlDictReference(res->dict);
+#ifdef WITH_XSLT_DEBUG
+	xsltGenericDebug(xsltGenericDebugContext,
+                     "reusing transformation dict for output\n");
+#endif
     }
     res->charset = XML_CHAR_ENCODING_UTF8;
     if (style->encoding != NULL)
@@ -3956,6 +3972,10 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                 goto error;
 	    res->dict = ctxt->dict;
 	    xmlDictReference(res->dict);
+#ifdef WITH_XSLT_DEBUG
+	    xsltGenericDebug(xsltGenericDebugContext,
+			 "reusing transformation dict for output\n");
+#endif
         } else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
      "xsltApplyStylesheetInternal: unsupported method xhtml, using html\n",
@@ -3966,6 +3986,10 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                 goto error;
 	    res->dict = ctxt->dict;
 	    xmlDictReference(res->dict);
+#ifdef WITH_XSLT_DEBUG
+	    xsltGenericDebug(xsltGenericDebugContext,
+			 "reusing transformation dict for output\n");
+#endif
         } else if (xmlStrEqual(method, (const xmlChar *) "text")) {
             ctxt->type = XSLT_OUTPUT_TEXT;
             res = xmlNewDoc(style->version);
@@ -3973,6 +3997,10 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                 goto error;
 	    res->dict = ctxt->dict;
 	    xmlDictReference(res->dict);
+#ifdef WITH_XSLT_DEBUG
+	    xsltGenericDebug(xsltGenericDebugContext,
+			 "reusing transformation dict for output\n");
+#endif
         } else {
 	    xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
 		     "xsltApplyStylesheetInternal: unsupported method %s\n",
@@ -3986,6 +4014,10 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             goto error;
 	res->dict = ctxt->dict;
 	xmlDictReference(ctxt->dict);
+#ifdef WITH_XSLT_DEBUG
+	xsltGenericDebug(xsltGenericDebugContext,
+			 "reusing transformation dict for output\n");
+#endif
     }
     res->charset = XML_CHAR_ENCODING_UTF8;
     if (style->encoding != NULL)

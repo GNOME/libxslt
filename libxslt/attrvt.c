@@ -100,14 +100,16 @@ xsltFreeAttrVT(xsltAttrVTPtr avt) {
 
     if (avt->strstart == 1) {
 	for (i = 0;i < avt->nb_seg; i += 2)
-	    xmlFree((xmlChar *) avt->segments[i]);
+	    if (avt->segments[i] != NULL)
+		xmlFree((xmlChar *) avt->segments[i]);
 	for (i = 1;i < avt->nb_seg; i += 2)
 	    xmlXPathFreeCompExpr((xmlXPathCompExprPtr) avt->segments[i]);
     } else {
 	for (i = 0;i < avt->nb_seg; i += 2)
 	    xmlXPathFreeCompExpr((xmlXPathCompExprPtr) avt->segments[i]);
 	for (i = 1;i < avt->nb_seg; i += 2)
-	    xmlFree((xmlChar *) avt->segments[i]);
+	    if (avt->segments[i] != NULL)
+		xmlFree((xmlChar *) avt->segments[i]);
     }
     if (avt->nsList != NULL)
         xmlFree(avt->nsList);
@@ -147,7 +149,7 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
     xmlChar *ret = NULL;
     xmlChar *expr = NULL;
     xsltAttrVTPtr avt;
-    int i = 0;
+    int i = 0, lastavt = 0;
 
     if ((style == NULL) || (attr == NULL) || (attr->children == NULL))
         return;
@@ -195,6 +197,7 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 		    avt->strstart = 1;
 		avt->segments[avt->nb_seg++] = (void *) ret;
 		ret = NULL;
+		lastavt = 0;
 	    }
 
 	    cur++;
@@ -223,7 +226,10 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 		}
 		if (avt->nb_seg == 0)
 		    avt->strstart = 0;
+		if (lastavt == 1)
+		    avt->segments[avt->nb_seg++] = NULL;
 		avt->segments[avt->nb_seg++] = (void *) comp;
+		lastavt = 1;
 		xmlFree(expr);
 		expr = NULL;
 	    }

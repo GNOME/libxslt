@@ -59,6 +59,10 @@ xsltCreateRVT(xsltTransformContextPtr ctxt)
 	return(NULL);
     container->dict = ctxt->dict;
     xmlDictReference(container->dict);
+#ifdef WITH_XSLT_DEBUG
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "reusing transformation dict for RVT\n");
+#endif
 
     container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
     container->doc = container;

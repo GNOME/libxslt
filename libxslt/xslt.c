@@ -373,6 +373,10 @@ xsltNewStylesheet(void) {
     cur->extInfos = NULL;
     cur->extrasNr = 0;
     cur->dict = xmlDictCreate();
+#ifdef WITH_XSLT_DEBUG
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "creating dictionary for stylesheet\n");
+#endif
 
     xsltInit();
 
@@ -520,6 +524,10 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet)
     if (sheet->imports != NULL)
         xsltFreeStylesheetList(sheet->imports);
 
+#ifdef WITH_XSLT_DEBUG
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "freeing dictionary from stylesheet\n");
+#endif
     xmlDictFree(sheet->dict);
 
     memset(sheet, -1, sizeof(xsltStylesheet));
@@ -2029,6 +2037,11 @@ xsltParseStylesheetImportedDoc(xmlDocPtr doc, xsltStylesheetPtr style) {
     if (doc->dict != NULL) {
         xmlDictFree(ret->dict);
 	ret->dict = doc->dict;
+#ifdef WITH_XSLT_DEBUG
+        xsltGenericDebug(xsltGenericDebugContext,
+                         "reusing dictionary from %s for stylesheet\n",
+			 doc->URL);
+#endif
 	xmlDictReference(ret->dict);
     }
     
@@ -2314,6 +2327,11 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 		     */
 		    fake->dict = doc->dict;
 		    xmlDictReference(doc->dict);
+#ifdef WITH_XSLT_DEBUG
+		    xsltGenericDebug(xsltGenericDebugContext,
+                         "reusing dictionary from %s for stylesheet\n",
+			 doc->URL);
+#endif
 
 		    xmlUnlinkNode(subtree);
 		    xmlAddChild((xmlNodePtr) fake, subtree);
