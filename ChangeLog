@@ -1,3 +1,9 @@
+Wed Mar 26 21:43:30 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in python/Makefile.am python/libxslt.c libxslt/xsltutils.c
+	  libxslt/trio.h libxslt/triodef.h: portability fixes from Albert Chin
+	* python/libxslt.py: avoid RTLD_GLOBAL detection warning too
+
 Wed Mar 26 19:08:55 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: forgot to make one change related to

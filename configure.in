@@ -417,12 +417,6 @@ AC_SUBST(PYTHON_SITE_PACKAGES)
 
 XSLT_LIBDIR='-L${libdir}'
 
-case ${host} in
-    *-*-solaris*)
-        XSLT_LIBDIR="${XSLT_LIBDIR} -R${libdir}"
-	;;
-esac
-
 XSLT_INCLUDEDIR='-I${includedir}'
 XSLT_LIBS="-lxslt $LIBXML_LIBS $M_LIBS"
 EXTRA_LIBS="$LIBXML_LIBS $M_LIBS"

@@ -6,6 +6,7 @@ SUBDIRS= . tests
 INCLUDES = \
 	-I$(PYTHON_INCLUDES) \
 	 $(LIBXML_CFLAGS) \
+	-I$(top_srcdir)/libxslt \
 	-I$(top_srcdir)
 
 DOCS_DIR = $(datadir)/doc/libxslt-python-$(LIBXSLT_VERSION)

@@ -48,9 +48,7 @@
 
 #ifdef XSLT_NEED_TRIO
 #include "trio.h"
-#ifdef __VMS 
-# define vsnprintf trio_vsnprintf
-#endif
+#define vsnprintf trio_vsnprintf
 #endif
 
 /************************************************************************
