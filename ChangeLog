@@ -1,3 +1,8 @@
+Sat Jul  6 17:51:14 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed bug #83749 about namespace generated
+	  being invalid when they are inherited from the context.
+
 Fri Jul  5 22:27:47 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed bug #86753 on multiple identical
