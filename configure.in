@@ -45,7 +45,7 @@ if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
     if test "${with_mem_debug}" = "" ; then
 	with_mem_debug="yes"
     fi
-    CFLAGS="-Wall -g -pedantic"
+    CFLAGS="-Wall -g -O -ansi -pedantic -W -Wunused -Wimplicit -Wreturn-type -Wswitch -Wcomment -Wtrigraphs -Wformat -Wchar-subscripts -Wuninitialized -Wparentheses -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline "
 fi
 
 AC_ARG_WITH(mem_debug, [  --with-mem-debug        Add the memory debugging module (off)])

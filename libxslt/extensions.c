@@ -50,7 +50,7 @@ const xmlChar *xsltExtMarker = (const xmlChar *)"extension";
  *
  * Returns the newly allocated xsltExtDefPtr or NULL in case of error
  */
-xsltExtDefPtr
+static xsltExtDefPtr
 xsltNewExtDef(const xmlChar *prefix, const xmlChar *URI) {
     xsltExtDefPtr cur;
 
@@ -74,7 +74,7 @@ xsltNewExtDef(const xmlChar *prefix, const xmlChar *URI) {
  *
  * Free up the memory allocated by @extensiond
  */
-void
+static void
 xsltFreeExtDef(xsltExtDefPtr extensiond) {
     if (extensiond == NULL)
 	return;
@@ -92,7 +92,7 @@ xsltFreeExtDef(xsltExtDefPtr extensiond) {
  *
  * Free up the memory allocated by all the elements of @extensiond
  */
-void
+static void
 xsltFreeExtDefList(xsltExtDefPtr extensiond) {
     xsltExtDefPtr cur;
 

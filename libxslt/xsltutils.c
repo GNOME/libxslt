@@ -24,6 +24,17 @@
 #include "xsltInternals.h"
 #include "imports.h"
 
+/************************************************************************
+ *									*
+ * 		When running GCC in vaacum cleaner mode			*
+ *									*
+ ************************************************************************/
+
+#ifdef __GNUC__
+#define UNUSED __attribute__((__unused__))
+#else
+#define UNUSED
+#endif
 
 /************************************************************************
  * 									*
@@ -86,8 +97,8 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
  * 
  * Default handler for out of context error messages.
  */
-void
-xsltGenericErrorDefaultFunc(void *ctx, const char *msg, ...) {
+static void
+xsltGenericErrorDefaultFunc(void *ctx UNUSED, const char *msg, ...) {
     va_list args;
 
     if (xsltGenericErrorContext == NULL)
@@ -132,8 +143,8 @@ xsltSetGenericErrorFunc(void *ctx, xmlGenericErrorFunc handler) {
  * 
  * Default handler for out of context error messages.
  */
-void
-xsltGenericDebugDefaultFunc(void *ctx, const char *msg, ...) {
+static void
+xsltGenericDebugDefaultFunc(void *ctx UNUSED, const char *msg, ...) {
     va_list args;
 
     if (xsltGenericDebugContext == NULL)

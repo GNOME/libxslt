@@ -41,6 +41,18 @@ static char alpha_lower_list[] = "abcdefghijklmnopqrstuvwxyz";
 
 /************************************************************************
  *									*
+ * 		When running GCC in vaacum cleaner mode			*
+ *									*
+ ************************************************************************/
+
+#ifdef __GNUC__
+#define UNUSED __attribute__((__unused__))
+#else
+#define UNUSED
+#endif
+
+/************************************************************************
+ *									*
  *			Utility functions				*
  *									*
  ************************************************************************/
@@ -398,7 +410,7 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			    xmlChar *count,
 			    xmlChar *from,
 			    double *array,
-			    int max,
+			    int max UNUSED,
 			    xmlDocPtr doc,
 			    xmlNodePtr elem)
 {

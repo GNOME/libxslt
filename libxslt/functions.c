@@ -184,7 +184,7 @@ void
 xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlNodeSetPtr nodelist;
     xmlXPathObjectPtr obj1, obj2;
-    xmlChar *key, *value;
+    xmlChar *key = NULL, *value;
     const xmlChar *keyURI;
     xsltTransformContextPtr tctxt;
 
@@ -449,7 +449,7 @@ void
 xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlXPathObjectPtr obj;
     xmlChar *prefix, *name;
-    const xmlChar *nsURI;
+    const xmlChar *nsURI = NULL;
 
     if (nargs != 1) {
         xsltGenericError(xsltGenericErrorContext,
@@ -541,7 +541,7 @@ void
 xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlXPathObjectPtr obj;
     xmlChar *prefix, *name;
-    const xmlChar *nsURI;
+    const xmlChar *nsURI = NULL;
 
     if (nargs != 1) {
         xsltGenericError(xsltGenericErrorContext,
@@ -589,7 +589,7 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
  * Implement the current() XSLT function
  *   node-set current()
  */
-void
+static void
 xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xsltTransformContextPtr tctxt;
 

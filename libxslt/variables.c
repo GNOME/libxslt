@@ -44,7 +44,7 @@
  *
  * Returns the newly allocated xsltParserStackElem or NULL in case of error
  */
-xsltStackElemPtr
+static xsltStackElemPtr
 xsltNewStackElem(void) {
     xsltStackElemPtr cur;
 
@@ -65,7 +65,7 @@ xsltNewStackElem(void) {
  *
  * Free up the memory allocated by @elem
  */
-void
+static void
 xsltFreeStackElem(xsltStackElemPtr elem) {
     if (elem == NULL)
 	return;
@@ -109,7 +109,7 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
  *
  * Returns 1 if present, 0 if not, -1 in case of failure.
  */
-int
+static int
 xsltCheckStackElem(xsltTransformContextPtr ctxt, const xmlChar *name,
 	           const xmlChar *nameURI) {
     xsltStackElemPtr cur;
@@ -140,7 +140,7 @@ xsltCheckStackElem(xsltTransformContextPtr ctxt, const xmlChar *name,
  *
  * Returns 0 in case of success, -1 in case of failure.
  */
-int
+static int
 xsltAddStackElem(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
     if ((ctxt == NULL) || (elem == NULL))
 	return(-1);
@@ -189,7 +189,7 @@ xsltAddStackElemList(xsltTransformContextPtr ctxt, xsltStackElemPtr elems) {
  *
  * Locate an element in the stack based on its name.
  */
-xsltStackElemPtr
+static xsltStackElemPtr
 xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	        const xmlChar *nameURI) {
     xsltStackElemPtr ret = NULL;
@@ -242,7 +242,7 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
  *
  * Returns 0 in case of success, -1 in case of error
  */
-int
+static int
 xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
     if ((ctxt == NULL) || (elem == NULL))
 	return(-1);
@@ -369,7 +369,7 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
  *
  * Returns 0 in case of success, -1 in case of error
  */
-int
+static int
 xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
 		     const xmlChar *ns_uri, const xmlChar *select,
 		     xmlNodePtr tree, int param) {
@@ -417,7 +417,7 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
  *
  * Returns the xsltStackElemPtr or NULL in case of error
  */
-xsltStackElemPtr
+static xsltStackElemPtr
 xsltBuildVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
 		     const xmlChar *ns_uri, const xmlChar *select,
 		     xmlNodePtr tree, int param) {
@@ -505,7 +505,7 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
  *
  * Returns the value or NULL if not found
  */
-xmlXPathObjectPtr
+static xmlXPathObjectPtr
 xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 		         const xmlChar *ns_uri) {
     xsltStylesheetPtr style;

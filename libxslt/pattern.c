@@ -111,7 +111,7 @@ struct _xsltParserContext {
  *
  * Returns the newly allocated xsltCompMatchPtr or NULL in case of error
  */
-xsltCompMatchPtr
+static xsltCompMatchPtr
 xsltNewCompMatch(void) {
     xsltCompMatchPtr cur;
 
@@ -132,7 +132,7 @@ xsltNewCompMatch(void) {
  *
  * Free up the memory allocated by @comp
  */
-void
+static void
 xsltFreeCompMatch(xsltCompMatchPtr comp) {
     xsltStepOpPtr op;
     int i;
@@ -182,7 +182,7 @@ xsltFreeCompMatchList(xsltCompMatchPtr comp) {
  *
  * Returns the newly allocated xsltParserContextPtr or NULL in case of error
  */
-xsltParserContextPtr
+static xsltParserContextPtr
 xsltNewParserContext(void) {
     xsltParserContextPtr cur;
 
@@ -202,7 +202,7 @@ xsltNewParserContext(void) {
  *
  * Free up the memory allocated by @ctxt
  */
-void
+static void
 xsltFreeParserContext(xsltParserContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
@@ -221,7 +221,7 @@ xsltFreeParserContext(xsltParserContextPtr ctxt) {
  *
  * Returns -1 in case of failure, 0 otherwise.
  */
-int
+static int
 xsltCompMatchAdd(xsltCompMatchPtr comp, xsltOp op, xmlChar *value,
 	           xmlChar *value2) {
     if (comp->nbStep >= 20) {
@@ -242,7 +242,7 @@ xsltCompMatchAdd(xsltCompMatchPtr comp, xsltOp op, xmlChar *value,
  *
  * reverse the two top steps.
  */
-void
+static void
 xsltSwapTopCompMatch(xsltCompMatchPtr comp) {
     int i;
     int j = comp->nbStep - 1;
@@ -269,7 +269,7 @@ xsltSwapTopCompMatch(xsltCompMatchPtr comp) {
  *
  * reverse all the stack of expressions
  */
-void
+static void
 xsltReverseCompMatch(xsltCompMatchPtr comp) {
     int i = 0;
     int j = comp->nbStep - 1;
@@ -298,7 +298,7 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
  *
  * remove all computation state from the pattern
  */
-void
+static void
 xsltCleanupCompMatch(xsltCompMatchPtr comp) {
     int i;
     
@@ -325,7 +325,7 @@ xsltCleanupCompMatch(xsltCompMatchPtr comp) {
  *
  * Returns 1 if it matches, 0 if it doesn't and -1 in case of failure
  */
-int
+static int
 xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	          xmlNodePtr node, const xmlChar *mode,
 		  const xmlChar *modeURI) {
@@ -473,16 +473,16 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	    }
             case XSLT_OP_KEY: {
 		xmlNodeSetPtr list;
-		int i;
+		int indx;
 
 		list = xsltGetKey(ctxt, step->value,
 			          step->value3, step->value2);
 		if (list == NULL)
 		    return(0);
-		for (i = 0;i < list->nodeNr;i++)
-		    if (list->nodeTab[i] == node)
+		for (indx = 0;indx < list->nodeNr;indx++)
+		    if (list->nodeTab[indx] == node)
 			break;
-		if (i >= list->nodeNr)
+		if (indx >= list->nodeNr)
 		    return(0);
 		break;
 	    }
@@ -529,7 +529,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			/*
 			 * just walk back to adjust the index
 			 */
-			int i = 0;
+			int indx = 0;
 			xmlNodePtr sibling = node;
 
 			while (sibling != NULL) {
@@ -540,13 +540,13 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 				    ((sibling->ns != NULL) &&
 				     (xmlStrEqual(select->value2,
 						  sibling->ns->href))))
-				    i++;
+				    indx++;
 			    }
 			    sibling = sibling->prev;
 			}
 			if (sibling == NULL) {
 			    /* hum going backward in document order ... */
-			    i = 0;
+			    indx = 0;
 			    sibling = node;
 			    while (sibling != NULL) {
 				if (sibling == select->previous)
@@ -555,12 +555,12 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 				    ((sibling->ns != NULL) &&
 				     (xmlStrEqual(select->value2,
 						  sibling->ns->href))))
-				    i--;
+				    indx--;
 				sibling = sibling->next;
 			    }
 			}
 			if (sibling != NULL) {
-			    pos = select->index + i;
+			    pos = select->index + indx;
 			    len = select->len;
 			    select->previous = node;
 			    select->index = pos;
@@ -602,30 +602,30 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			/*
 			 * just walk back to adjust the index
 			 */
-			int i = 0;
+			int indx = 0;
 			xmlNodePtr sibling = node;
 
 			while (sibling != NULL) {
 			    if (sibling == select->previous)
 				break;
 			    if (sibling->type == XML_ELEMENT_NODE)
-				i++;
+				indx++;
 			    sibling = sibling->prev;
 			}
 			if (sibling == NULL) {
 			    /* hum going backward in document order ... */
-			    i = 0;
+			    indx = 0;
 			    sibling = node;
 			    while (sibling != NULL) {
 				if (sibling == select->previous)
 				    break;
 				if (sibling->type == XML_ELEMENT_NODE)
-				    i--;
+				    indx--;
 				sibling = sibling->next;
 			    }
 			}
 			if (sibling != NULL) {
-			    pos = select->index + i;
+			    pos = select->index + indx;
 			    len = select->len;
 			    select->previous = node;
 			    select->index = pos;
@@ -790,7 +790,7 @@ xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * Returns the Literal parsed or NULL
  */
 
-xmlChar *
+static xmlChar *
 xsltScanLiteral(xsltParserContextPtr ctxt) {
     const xmlChar *q;
     xmlChar *ret = NULL;
@@ -847,7 +847,7 @@ xsltScanLiteral(xsltParserContextPtr ctxt) {
  * Returns the Name parsed or NULL
  */
 
-xmlChar *
+static xmlChar *
 xsltScanName(xsltParserContextPtr ctxt) {
     xmlChar buf[XML_MAX_NAMELEN];
     int len = 0;
@@ -896,7 +896,7 @@ xsltScanName(xsltParserContextPtr ctxt) {
  *                 | NodeType '(' ')'
  *                 | 'processing-instruction' '(' Literal ')'
  */
-void
+static void
 xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
     xmlChar *lit = NULL;
     xmlChar *lit2 = NULL;
@@ -1037,7 +1037,7 @@ error:
  * [37] NameTest ::= '*' | NCName ':' '*' | QName
  */
 
-void
+static void
 xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     xmlChar *name = NULL;
     xmlChar *prefix = NULL;
@@ -1232,7 +1232,7 @@ error:
  *                           | RelativePathPattern '/' StepPattern
  *                           | RelativePathPattern '//' StepPattern
  */
-void
+static void
 xsltCompileRelativePathPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     xsltCompileStepPattern(ctxt, token);
     if (ctxt->error)
@@ -1274,7 +1274,7 @@ error:
  *                           | IdKeyPattern (('/' | '//') RelativePathPattern)?
  *                           | '//'? RelativePathPattern
  */
-void
+static void
 xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
     SKIP_BLANKS;
     if ((CUR == '/') && (NXT(1) == '/')) {

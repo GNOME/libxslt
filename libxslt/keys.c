@@ -25,6 +25,7 @@
 #include "xsltutils.h"
 #include "imports.h"
 #include "templates.h"
+#include "keys.h"
 
 #define DEBUG_KEYS
 
@@ -49,6 +50,18 @@ struct _xsltKeyTable {
 
 
 /************************************************************************
+ *									*
+ * 		When running GCC in vaacum cleaner mode			*
+ *									*
+ ************************************************************************/
+
+#ifdef __GNUC__
+#define UNUSED __attribute__((__unused__))
+#else
+#define UNUSED
+#endif
+
+/************************************************************************
  * 									*
  * 			Type functions 					*
  * 									*
@@ -63,7 +76,7 @@ struct _xsltKeyTable {
  *
  * Returns the newly allocated xsltKeyDefPtr or NULL in case of error
  */
-xsltKeyDefPtr
+static xsltKeyDefPtr
 xsltNewKeyDef(const xmlChar *name, const xmlChar *nameURI) {
     xsltKeyDefPtr cur;
 
@@ -87,7 +100,7 @@ xsltNewKeyDef(const xmlChar *name, const xmlChar *nameURI) {
  *
  * Free up the memory allocated by @keyd
  */
-void
+static void
 xsltFreeKeyDef(xsltKeyDefPtr keyd) {
     if (keyd == NULL)
 	return;
@@ -109,7 +122,7 @@ xsltFreeKeyDef(xsltKeyDefPtr keyd) {
  *
  * Free up the memory allocated by all the elements of @keyd
  */
-void
+static void
 xsltFreeKeyDefList(xsltKeyDefPtr keyd) {
     xsltKeyDefPtr cur;
 
@@ -129,7 +142,7 @@ xsltFreeKeyDefList(xsltKeyDefPtr keyd) {
  *
  * Returns the newly allocated xsltKeyTablePtr or NULL in case of error
  */
-xsltKeyTablePtr
+static xsltKeyTablePtr
 xsltNewKeyTable(const xmlChar *name, const xmlChar *nameURI) {
     xsltKeyTablePtr cur;
 
@@ -154,7 +167,7 @@ xsltNewKeyTable(const xmlChar *name, const xmlChar *nameURI) {
  *
  * Free up the memory allocated by @keyt
  */
-void
+static void
 xsltFreeKeyTable(xsltKeyTablePtr keyt) {
     if (keyt == NULL)
 	return;
@@ -175,7 +188,7 @@ xsltFreeKeyTable(xsltKeyTablePtr keyt) {
  *
  * Free up the memory allocated by all the elements of @keyt
  */
-void
+static void
 xsltFreeKeyTableList(xsltKeyTablePtr keyt) {
     xsltKeyTablePtr cur;
 
@@ -285,7 +298,7 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
  *
  * Computes the key tables this key and for the current input document.
  */
-void
+static void
 xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	        xsltKeyDefPtr keyd) {
     int i;
@@ -423,28 +436,6 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr doc) {
 
 	style = xsltNextImport(style);
     }
-}
-
-/*
- * xsltIsKey:
- * @ctxt: an XSLT transformation context
- * @node: a node
- *
- * Returns 1 if the node is a Key, 0 otherwise
- */
-int
-xsltIsKey(xsltTransformContextPtr ctxt, xmlNodePtr node) {
-    if (node == NULL)
-	return(0);
-
-    /*
-     * TODO:
-     * Something a bit more complex may be needed if we want
-     * to be able to do similar things with IDs
-     */
-    if (node->_private != NULL)
-	return(1);
-    return(0);
 }
 
 /*

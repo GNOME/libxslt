@@ -179,7 +179,7 @@ xsltDecimalFormatGetByName(xsltStylesheetPtr sheet, xmlChar *name)
  *
  * Returns the newly allocated xsltTemplatePtr or NULL in case of error
  */
-xsltTemplatePtr
+static xsltTemplatePtr
 xsltNewTemplate(void) {
     xsltTemplatePtr cur;
 
@@ -200,7 +200,7 @@ xsltNewTemplate(void) {
  *
  * Free up the memory allocated by @template
  */
-void
+static void
 xsltFreeTemplate(xsltTemplatePtr template) {
     if (template == NULL)
 	return;
@@ -219,7 +219,7 @@ xsltFreeTemplate(xsltTemplatePtr template) {
  *
  * Free up the memory allocated by all the elements of @template
  */
-void
+static void
 xsltFreeTemplateList(xsltTemplatePtr template) {
     xsltTemplatePtr cur;
 
@@ -261,7 +261,7 @@ xsltNewStylesheet(void) {
  *
  * Free up the memory allocated by the list @sheet
  */
-void
+static void
 xsltFreeStylesheetList(xsltStylesheetPtr sheet) {
     xsltStylesheetPtr next;
 
@@ -470,7 +470,8 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 		xsltGenericDebug(xsltGenericDebugContext,
 		    "add cdata section output element %s\n", element);
 #endif
-		xmlHashAddEntry(style->stripSpaces, element, "cdata");
+		xmlHashAddEntry(style->stripSpaces, element,
+			        (xmlChar *) "cdata");
 		xmlFree(element);
 	    }
 	    element = end;
@@ -487,7 +488,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
  * parse an XSLT stylesheet decimal-format element and
  * and record the formatting characteristics
  */
-void
+static void
 xsltParseStylesheetDecimalFormat(xsltStylesheetPtr sheet, xmlNodePtr cur)
 {
     xmlChar *prop;
@@ -590,7 +591,7 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr sheet, xmlNodePtr cur)
  * elements needing preserving
  */
 
-void
+static void
 xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlChar *elements;
     xmlChar *element, *end;
@@ -626,7 +627,8 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    if (xmlStrEqual(element, (const xmlChar *)"*")) {
 		style->stripAll = -1;
 	    } else {
-		xmlHashAddEntry(style->stripSpaces, element, "preserve");
+		xmlHashAddEntry(style->stripSpaces, element,
+				(xmlChar *) "preserve");
 	    }
 	    xmlFree(element);
 	}
@@ -644,7 +646,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
  * prefixes needing stripping
  */
 
-void
+static void
 xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlChar *prefixes;
     xmlChar *prefix, *end;
@@ -700,7 +702,7 @@ xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
  * elements needing stripping
  */
 
-void
+static void
 xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlChar *elements;
     xmlChar *element, *end;
@@ -736,7 +738,8 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    if (xmlStrEqual(element, (const xmlChar *)"*")) {
 		style->stripAll = 1;
 	    } else {
-		xmlHashAddEntry(style->stripSpaces, element, "strip");
+		xmlHashAddEntry(style->stripSpaces, element,
+			        (xmlChar *) "strip");
 	    }
 	    xmlFree(element);
 	}
@@ -752,7 +755,7 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
  * Clean-up the stylesheet content from unwanted ignorable blank nodes
  * and process xslt:text
  */
-void
+static void
 xsltParseRemoveBlanks(xsltStylesheetPtr style) {
     xmlNodePtr cur, delete;
 
@@ -838,7 +841,7 @@ skip_children:
  * will be used for XPath interpretation. If needed do a bit of normalization
  */
 
-void
+static void
 xsltGatherNamespaces(xsltStylesheetPtr style) {
     xmlNodePtr cur;
     const xmlChar *URI;
@@ -921,7 +924,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
  * and process xslt:text
  */
 
-void
+static void
 xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 	                 xmlNodePtr template) {
     xmlNodePtr cur, delete;
@@ -1066,7 +1069,7 @@ skip_children:
  * parse an XSLT stylesheet key definition and register it
  */
 
-void
+static void
 xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     xmlChar *prop = NULL;
     xmlChar *use = NULL;
@@ -1158,7 +1161,7 @@ error:
  * parse an XSLT stylesheet template building the associated structures
  */
 
-void
+static void
 xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltTemplatePtr ret;
     xmlChar *prop;
@@ -1282,7 +1285,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
  * scan the top level elements of an XSL stylesheet
  */
 
-void
+static void
 xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     xmlNodePtr cur;
     xmlChar *prop;

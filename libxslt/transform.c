@@ -51,6 +51,18 @@
 
 #define DEBUG_PROCESS
 
+/************************************************************************
+ *									*
+ * 		When running GCC in vaacum cleaner mode			*
+ *									*
+ ************************************************************************/
+
+#ifdef __GNUC__
+#define UNUSED __attribute__((__unused__))
+#else
+#define UNUSED
+#endif
+
 int xsltMaxDepth = 250;
 
 /*
@@ -101,8 +113,8 @@ scope type name##Pop(xsltTransformContextPtr ctxt) {			\
 /*
  * Those macros actually generate the functions
  */
-PUSH_AND_POP(extern, xsltTemplatePtr, templ)
-PUSH_AND_POP(extern, xsltStackElemPtr, vars)
+PUSH_AND_POP(static, xsltTemplatePtr, templ)
+PUSH_AND_POP(static, xsltStackElemPtr, vars)
 
 /************************************************************************
  *									*
@@ -119,7 +131,7 @@ PUSH_AND_POP(extern, xsltStackElemPtr, vars)
  *
  * Returns the newly allocated xsltTransformContextPtr or NULL in case of error
  */
-xsltTransformContextPtr
+static xsltTransformContextPtr
 xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     xsltTransformContextPtr cur;
     xsltDocumentPtr docu;
@@ -196,7 +208,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
  *
  * Free up the memory allocated by @ctxt
  */
-void
+static void
 xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
@@ -234,7 +246,7 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *
  * Returns: a new xmlAttrPtr, or NULL in case of error.
  */
-xmlAttrPtr
+static xmlAttrPtr
 xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	     xmlAttrPtr attr) {
     xmlAttrPtr ret = NULL;
@@ -266,7 +278,7 @@ xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr target,
  *
  * Returns: a new xmlAttrPtr, or NULL in case of error.
  */
-xmlAttrPtr
+static xmlAttrPtr
 xsltCopyPropList(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	         xmlAttrPtr cur) {
     xmlAttrPtr ret = NULL;
@@ -306,7 +318,7 @@ xsltCopyPropList(xsltTransformContextPtr ctxt, xmlNodePtr target,
  *
  * Returns a pointer to the new node, or NULL in case of error
  */
-xmlNodePtr
+static xmlNodePtr
 xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     xmlNodePtr insert) {
     xmlNodePtr copy;
@@ -343,7 +355,7 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *
  * Returns a pointer to the new list, or NULL in case of error
  */
-xmlNodePtr
+static xmlNodePtr
 xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
 	     xmlNodePtr insert) {
     xmlNodePtr copy, ret = NULL, last = NULL;
@@ -432,7 +444,7 @@ void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
  * the built-in template rule is the only template rule that is applied
  * for namespace nodes.
  */
-void
+static void
 xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr copy;
     xmlAttrPtr attrs;
@@ -523,7 +535,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    return;
 	case XML_ATTRIBUTE_NODE:
 	    if (ctxt->insert->type == XML_ELEMENT_NODE) {
-		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, cur;
+		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, current;
 		template = xsltGetTemplate(ctxt, node, NULL);
 		if (template) {
 		    xmlNodePtr oldNode;
@@ -548,12 +560,12 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    } else
 			ret = xmlCopyProp(ctxt->insert, attr);
 
-		    cur = ctxt->insert->properties;
-		    if (cur != NULL) {
-			while (cur->next != NULL)
-			    cur = cur->next;
-			cur->next = ret;
-			ret->prev = cur;
+		    current = ctxt->insert->properties;
+		    if (current != NULL) {
+			while (current->next != NULL)
+			    current = current->next;
+			current->next = ret;
+			ret->prev = current;
 		    }else
 			ctxt->insert->properties = ret;
 		}
@@ -982,10 +994,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		attrs = xsltAttrListTemplateProcess(ctxt, copy,
 			                            cur->properties);
 		if (copy->properties != NULL) {
-		    xmlAttrPtr cur = copy->properties;
-		    while (cur->next != NULL)
-			cur = cur->next;
-		    cur->next = attrs;
+		    xmlAttrPtr current = copy->properties;
+		    while (current->next != NULL)
+			current = current->next;
+		    current->next = attrs;
 		} else
 		    copy->properties = attrs;
 	    }
@@ -1371,7 +1383,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * Process the xslt text node on the source node
  */
 void
-xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node,
+xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node UNUSED,
 	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlNodePtr copy;
 
@@ -1639,11 +1651,12 @@ error:
  */
 void
 xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp UNUSED) {
     xmlChar *value = NULL;
     xmlNodePtr comment;
 
     value = xsltEvalTemplateString(ctxt, node, inst);
+    /* TODO: use or generate the compiled form */
     /* TODO: check that there is no -- sequence and doesn't end up with - */
 #ifdef DEBUG_PROCESS
     if (value == NULL)
@@ -1903,7 +1916,7 @@ xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	         xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	         xmlNodePtr inst UNUSED, xsltStylePreCompPtr comp UNUSED) {
     xsltTemplatePtr template;
 
     if ((ctxt->templ == NULL) || (ctxt->templ->style == NULL)) {
@@ -2173,7 +2186,7 @@ error:
  */
 void
 xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	   xmlNodePtr inst, xsltStylePreCompPtr comp UNUSED) {
     xmlChar *prop = NULL;
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement, when;
@@ -2198,8 +2211,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     }
     while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when"))) {
-	xmlXPathCompExprPtr comp;
-        /* TODO: build a precompiled block for when too ! */
+	xmlXPathCompExprPtr xpathComp;
+        /* TODO: build a prexpathCompiled block for when too ! */
 	when = replacement;
 	prop = xmlGetNsProp(when, (const xmlChar *)"test", XSLT_NAMESPACE);
 	if (prop == NULL) {
@@ -2212,12 +2225,12 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsl:when: test %s\n", prop);
 #endif
 
-	comp = xmlXPathCompile(prop);
-	if (comp == NULL)
+	xpathComp = xmlXPathCompile(prop);
+	if (xpathComp == NULL)
 	    goto error;
 	ctxt->xpathCtxt->node = node;
-	res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
-	xmlXPathFreeCompExpr(comp);
+	res = xmlXPathCompiledEval(xpathComp, ctxt->xpathCtxt);
+	xmlXPathFreeCompExpr(xpathComp);
 	if (res != NULL) {
 	    if (res->type != XPATH_BOOLEAN)
 		res = xmlXPathConvertBoolean(res);

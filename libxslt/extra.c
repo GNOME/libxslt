@@ -31,6 +31,18 @@
 #define DEBUG_EXTRA
 
 /************************************************************************
+ *									*
+ * 		When running GCC in vaacum cleaner mode			*
+ *									*
+ ************************************************************************/
+
+#ifdef __GNUC__
+#define UNUSED __attribute__((__unused__))
+#else
+#define UNUSED
+#endif
+
+/************************************************************************
  * 									*
  * 		Handling of XSLT debugging				*
  * 									*
@@ -46,8 +58,8 @@
  * Process an debug node
  */
 void 
-xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst,
-	  xsltStylePreCompPtr comp) {
+xsltDebug(xsltTransformContextPtr ctxt UNUSED, xmlNodePtr node UNUSED,
+	  xmlNodePtr inst UNUSED, xsltStylePreCompPtr comp UNUSED) {
     int i, j;
 
     fprintf(stdout, "Templates:\n");

@@ -55,7 +55,7 @@
  *
  * Returns the newly allocated xsltStylePreCompPtr or NULL in case of error
  */
-xsltStylePreCompPtr
+static xsltStylePreCompPtr
 xsltNewStylePreComp(xsltTransformContextPtr ctxt, xsltStyleType type) {
     xsltStylePreCompPtr cur;
 
@@ -120,7 +120,7 @@ xsltNewStylePreComp(xsltTransformContextPtr ctxt, xsltStyleType type) {
  *
  * Free up the memory allocated by @comp
  */
-void
+static void
 xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
     if (comp == NULL)
 	return;
@@ -180,7 +180,7 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
  *
  * Pre process an XSLT-1.1 document element
  */
-void
+static void
 xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *filename = NULL;
@@ -274,7 +274,7 @@ error:
  *
  * Process the xslt sort node on the source node
  */
-void
+static void
 xsltSortComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -335,7 +335,7 @@ xsltSortComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt copy node on the source node
  */
-void
+static void
 xsltCopyComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -364,7 +364,7 @@ xsltCopyComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt text node on the source node
  */
-void
+static void
 xsltTextComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
@@ -400,7 +400,7 @@ xsltTextComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt element node on the source node
  */
-void
+static void
 xsltElementComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -434,7 +434,7 @@ xsltElementComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt attribute node on the source node
  */
-void
+static void
 xsltAttributeComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -465,7 +465,7 @@ xsltAttributeComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt comment node on the source node
  */
-void
+static void
 xsltCommentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -485,7 +485,7 @@ xsltCommentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt processing-instruction node on the source node
  */
-void
+static void
 xsltProcessingInstructionComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -509,7 +509,7 @@ xsltProcessingInstructionComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt copy-of node on the source node
  */
-void
+static void
 xsltCopyOfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -536,7 +536,7 @@ xsltCopyOfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt value-of node on the source node
  */
-void
+static void
 xsltValueOfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
@@ -577,7 +577,7 @@ xsltValueOfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt number node on the source node
  */
-void
+static void
 xsltNumberComp(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
@@ -671,7 +671,7 @@ xsltNumberComp(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
  *
  * Process the xslt apply-imports node on the source node
  */
-void
+static void
 xsltApplyImportsComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -691,7 +691,7 @@ xsltApplyImportsComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt call-template node on the source node
  */
-void
+static void
 xsltCallTemplateComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
@@ -757,7 +757,7 @@ xsltCallTemplateComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the apply-templates node on the source node
  */
-void
+static void
 xsltApplyTemplatesComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
     xmlChar *prop;
@@ -817,7 +817,7 @@ xsltApplyTemplatesComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt choose node on the source node
  */
-void
+static void
 xsltChooseComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -837,7 +837,7 @@ xsltChooseComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt if node on the source node
  */
-void
+static void
 xsltIfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
@@ -864,7 +864,7 @@ xsltIfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
  *
  * Process the xslt for-each node on the source node
  */
-void
+static void
 xsltForEachComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 

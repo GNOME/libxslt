@@ -1,3 +1,18 @@
+Sat Mar 24 19:35:42 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+        Huge cleanup, I switched to compile with
+	-Wall -g -O -ansi -pedantic -W -Wunused -Wimplicit
+	-Wreturn-type -Wswitch -Wcomment -Wtrigraphs -Wformat
+	-Wchar-subscripts -Wuninitialized -Wparentheses -Wshadow
+	-Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return
+	-Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline
+	* libxslt/attributes.c libxslt/extensions.c libxslt/extra.c
+          libxslt/functions.c libxslt/keys.c libxslt/numbers.c
+          libxslt/pattern.c libxslt/preproc.c libxslt/templates.c
+          libxslt/transform.c libxslt/variables.c libxslt/xslt.c
+          libxslt/xsltutils.c: basically made static unexported functions
+	  avoided name clashes and flagged unused parameters.
+
 Thu Mar 22 22:52:48 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in: 0.6.0 yet another release
