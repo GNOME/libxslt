@@ -1,16 +1,13 @@
 /*
- * xsltwin32config.h: compile-time version informations for the XSLT engine
- *                    when compiled on windows
+ * xsltconfig.h: compile-time version informations for the XSLT engine
  *
  * See Copyright for the status of this software.
  *
  * daniel@veillard.com
  */
 
-#ifndef __XML_XSLTWIN32CONFIG_H__
-#define __XML_XSLTWIN32CONFIG_H__
-
-#include "win32config.h"
+#ifndef __XML_XSLTCONFIG_H__
+#define __XML_XSLTCONFIG_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,7 +39,7 @@ extern "C" {
  *
  * Activate the compilation of the debug reporting. Speed penalty
  * is insignifiant and being able to run xsltpoc -v is useful. On
- * by default
+ * by default unless --without-debug is passed to configure
  */
 #if 1
 #define WITH_XSLT_DEBUG
@@ -69,28 +66,61 @@ extern "C" {
 #endif
 
 /**
+ * XSLT_NEED_TRIO:
+ *
+ * should be activated in the existing libc library lacks some of the
+ * string formatting function, in that case reuse the Trio ones already
+ * compiled in the libxml2 library.
+ */
+
+#if 0
+#define XSLT_NEED_TRIO
+#endif
+#ifdef __VMS
+#ifndef XSLT_NEED_TRIO
+#define XSLT_NEED_TRIO
+#endif
+#endif
+
+/**
+ * WITH_XSLT_DEBUGGER:
+ *
+ * Activate the compilation of the debugger support. Speed penalty
+ * is insignifiant.
+ * On by default unless --without-debugger is passed to configure
+ */
+#if 1
+#ifndef WITH_DEBUGGER
+#define WITH_DEBUGGER
+#endif
+#endif
+
+/**
  * ATTRIBUTE_UNUSED:
  *
- * This macro is used to flag unused function parameters to GCC, useless here
+ * This macro is used to flag unused function parameters to GCC
  */
+#ifdef __GNUC__
+#ifdef HAVE_ANSIDECL_H
+#include <ansidecl.h>
+#endif
 #ifndef ATTRIBUTE_UNUSED
+#define ATTRIBUTE_UNUSED
+#endif
+#else
 #define ATTRIBUTE_UNUSED
 #endif
 
 /**
  * LIBXSLT_PUBLIC:
  *
- * This macro is needed on Win32 when using MSVC. It enables the client code
- * to access exported variables. It should expand to nothing when compiling
- * this library itself, but must expand to __declspec(dllimport) when a
- * client includes the library header and that only if it links dynamically
- * against this library.
+ * This macro is used to declare PUBLIC variables for Cygwin and for MSC on Windows
  */
 #if !defined LIBXSLT_PUBLIC
-#if defined _MSC_VER && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
+#if (defined(__CYGWIN__) || defined _MSC_VER) && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
 #define LIBXSLT_PUBLIC __declspec(dllimport)
 #else
-#define LIBXSLT_PUBLIC 
+#define LIBXSLT_PUBLIC
 #endif
 #endif
 
@@ -98,4 +128,4 @@ extern "C" {
 }
 #endif
 
-#endif /* __XML_XSLTWIN32CONFIG_H__ */
+#endif /* __XML_XSLTCONFIG_H__ */
