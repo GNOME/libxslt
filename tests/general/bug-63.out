@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<namespace><name>xsl</name><uri>http://www.w3.org/1999/XSL/Transform</uri><parent/></namespace><namespace><name>xml</name><uri>http://www.w3.org/XML/1998/namespace</uri><parent/></namespace>
