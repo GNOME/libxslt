@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <api name='libxslt'>
   <files>
-    <file name='xsltutils'>
-     <exports symbol='XSLT_TODO'/>
-     <exports symbol='XSLT_STRANGE'/>
-     <exports symbol='IS_XSLT_ELEM'/>
-     <exports symbol='IS_XSLT_NAME'/>
-     <exports symbol='IS_XSLT_REAL_NODE'/>
-     <exports symbol='xsltGetNsProp'/>
-     <exports symbol='xsltPrintErrorContext'/>
-     <exports symbol='xsltMessage'/>
-     <exports symbol='xsltSetGenericErrorFunc'/>
-     <exports symbol='xsltSetGenericDebugFunc'/>
-     <exports symbol='xsltSetTransformErrorFunc'/>
-     <exports symbol='xsltTransformError'/>
-     <exports symbol='xsltDocumentSortFunction'/>
-     <exports symbol='xsltDoSortFunction'/>
-     <exports symbol='xsltGetQNameURI'/>
-     <exports symbol='xsltSaveResultTo'/>
-     <exports symbol='xsltSaveResultToFilename'/>
-     <exports symbol='xsltSaveResultToFile'/>
-     <exports symbol='xsltSaveResultToFd'/>
-     <exports symbol='xsltSaveResultToString'/>
-     <exports symbol='xsltSaveProfiling'/>
-     <exports symbol='xsltTimestamp'/>
-     <exports symbol='xsltCalibrateAdjust'/>
-     <exports symbol='XSLT_TIMESTAMP_TICS_PER_SEC'/>
-     <exports symbol='xsltDebugStatusCodes'/>
-     <exports symbol='xsltHandleDebuggerCallback'/>
-     <exports symbol='xsltAddCallCallback'/>
-     <exports symbol='xsltDropCallCallback'/>
-     <exports symbol='xsltSetDebuggerCallbacks'/>
-     <exports symbol='xslAddCall'/>
-     <exports symbol='xslDropCall'/>
+    <file name='templates'>
+     <exports symbol='xsltEvalXPathPredicate'/>
+     <exports symbol='xsltEvalTemplateString'/>
+     <exports symbol='xsltEvalAttrValueTemplate'/>
+     <exports symbol='xsltEvalStaticAttrValueTemplate'/>
+     <exports symbol='xsltEvalXPathString'/>
+     <exports symbol='xsltEvalXPathStringNs'/>
+     <exports symbol='xsltTemplateProcess'/>
+     <exports symbol='xsltAttrListTemplateProcess'/>
+     <exports symbol='xsltAttrTemplateProcess'/>
+     <exports symbol='xsltAttrTemplateValueProcess'/>
+     <exports symbol='xsltAttrTemplateValueProcessNode'/>
+    </file>
+    <file name='functions'>
+     <exports symbol='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+     <exports symbol='xsltXPathFunctionLookup'/>
+     <exports symbol='xsltDocumentFunction'/>
+     <exports symbol='xsltKeyFunction'/>
+     <exports symbol='xsltUnparsedEntityURIFunction'/>
+     <exports symbol='xsltFormatNumberFunction'/>
+     <exports symbol='xsltGenerateIdFunction'/>
+     <exports symbol='xsltSystemPropertyFunction'/>
+     <exports symbol='xsltElementAvailableFunction'/>
+     <exports symbol='xsltFunctionAvailableFunction'/>
+     <exports symbol='xsltRegisterAllFunctions'/>
+    </file>
+    <file name='xsltconfig'>
+     <exports symbol='LIBXSLT_DOTTED_VERSION'/>
+     <exports symbol='LIBXSLT_VERSION'/>
+     <exports symbol='LIBXSLT_VERSION_STRING'/>
+     <exports symbol='WITH_XSLT_DEBUG'/>
+     <exports symbol='DEBUG_MEMORY'/>
+     <exports symbol='DEBUG_MEMORY_LOCATION'/>
+     <exports symbol='XSLT_NEED_TRIO'/>
+     <exports symbol='WITH_DEBUGGER'/>
+     <exports symbol='ATTRIBUTE_UNUSED'/>
+     <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
     <file name='xsltwin32config'>
      <exports symbol='LIBXSLT_DOTTED_VERSION'/>
@@ -44,80 +49,91 @@
      <exports symbol='ATTRIBUTE_UNUSED'/>
      <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
-    <file name='security'>
-     <exports symbol='xsltSecurityPrefs'/>
-     <exports symbol='xsltSecurityPrefsPtr'/>
-     <exports symbol='xsltSecurityOption'/>
-     <exports symbol='xsltSecurityCheck'/>
-     <exports symbol='xsltNewSecurityPrefs'/>
-     <exports symbol='xsltFreeSecurityPrefs'/>
-     <exports symbol='xsltSetSecurityPrefs'/>
-     <exports symbol='xsltGetSecurityPrefs'/>
-     <exports symbol='xsltSetDefaultSecurityPrefs'/>
-     <exports symbol='xsltGetDefaultSecurityPrefs'/>
-     <exports symbol='xsltSetCtxtSecurityPrefs'/>
-     <exports symbol='xsltSecurityAllow'/>
-     <exports symbol='xsltSecurityForbid'/>
-     <exports symbol='xsltCheckWrite'/>
-     <exports symbol='xsltCheckRead'/>
+    <file name='extra'>
+     <exports symbol='XSLT_LIBXSLT_NAMESPACE'/>
+     <exports symbol='XSLT_SAXON_NAMESPACE'/>
+     <exports symbol='XSLT_XT_NAMESPACE'/>
+     <exports symbol='XSLT_XALAN_NAMESPACE'/>
+     <exports symbol='XSLT_NORM_SAXON_NAMESPACE'/>
+     <exports symbol='xsltFunctionNodeSet'/>
+     <exports symbol='xsltDebug'/>
+     <exports symbol='xsltRegisterExtras'/>
+     <exports symbol='xsltRegisterAllExtras'/>
     </file>
-    <file name='libxslt'>
+    <file name='keys'>
+     <exports symbol='xsltAddKey'/>
+     <exports symbol='xsltGetKey'/>
+     <exports symbol='xsltInitCtxtKeys'/>
+     <exports symbol='xsltFreeKeys'/>
+     <exports symbol='xsltFreeDocumentKeys'/>
+    </file>
+    <file name='imports'>
+     <exports symbol='XSLT_GET_IMPORT_PTR'/>
+     <exports symbol='XSLT_GET_IMPORT_INT'/>
+     <exports symbol='xsltParseStylesheetImport'/>
+     <exports symbol='xsltParseStylesheetInclude'/>
+     <exports symbol='xsltNextImport'/>
+     <exports symbol='xsltNeedElemSpaceHandling'/>
+     <exports symbol='xsltFindElemSpaceHandling'/>
+     <exports symbol='xsltFindTemplate'/>
+    </file>
+    <file name='variables'>
+     <exports symbol='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+     <exports symbol='xsltEvalGlobalVariables'/>
+     <exports symbol='xsltEvalUserParams'/>
+     <exports symbol='xsltQuoteUserParams'/>
+     <exports symbol='xsltEvalOneUserParam'/>
+     <exports symbol='xsltQuoteOneUserParam'/>
+     <exports symbol='xsltParseGlobalVariable'/>
+     <exports symbol='xsltParseGlobalParam'/>
+     <exports symbol='xsltParseStylesheetVariable'/>
+     <exports symbol='xsltParseStylesheetParam'/>
+     <exports symbol='xsltParseStylesheetCallerParam'/>
+     <exports symbol='xsltAddStackElemList'/>
+     <exports symbol='xsltFreeGlobalVariables'/>
+     <exports symbol='xsltVariableLookup'/>
+     <exports symbol='xsltXPathVariableLookup'/>
+    </file>
+    <file name='xslt'>
+     <exports symbol='XSLT_DEFAULT_VERSION'/>
+     <exports symbol='XSLT_DEFAULT_VENDOR'/>
+     <exports symbol='XSLT_DEFAULT_URL'/>
+     <exports symbol='XSLT_NAMESPACE'/>
      <exports symbol='LIBXSLT_PUBLIC'/>
+     <exports symbol='xsltCleanupGlobals'/>
     </file>
-    <file name='numbersInternals'>
-    </file>
-    <file name='namespaces'>
-     <exports symbol='xsltNamespaceAlias'/>
-     <exports symbol='xsltGetNamespace'/>
-     <exports symbol='xsltGetSpecialNamespace'/>
-     <exports symbol='xsltCopyNamespace'/>
-     <exports symbol='xsltCopyNamespaceList'/>
-     <exports symbol='xsltFreeNamespaceAliasHashes'/>
-    </file>
-    <file name='extensions'>
-     <exports symbol='xsltStyleExtInitFunction'/>
-     <exports symbol='xsltStyleExtShutdownFunction'/>
-     <exports symbol='xsltExtInitFunction'/>
-     <exports symbol='xsltExtShutdownFunction'/>
-     <exports symbol='xsltRegisterExtModule'/>
-     <exports symbol='xsltRegisterExtModuleFull'/>
-     <exports symbol='xsltUnregisterExtModule'/>
-     <exports symbol='xsltGetExtData'/>
-     <exports symbol='xsltStyleGetExtData'/>
-     <exports symbol='xsltShutdownCtxtExts'/>
-     <exports symbol='xsltShutdownExts'/>
-     <exports symbol='xsltXPathGetTransformContext'/>
-     <exports symbol='xsltRegisterExtModuleFunction'/>
-     <exports symbol='xsltExtFunctionLookup'/>
-     <exports symbol='xsltExtModuleFunctionLookup'/>
-     <exports symbol='xsltUnregisterExtModuleFunction'/>
-     <exports symbol='xsltNewElemPreComp'/>
-     <exports symbol='xsltInitElemPreComp'/>
-     <exports symbol='xsltRegisterExtModuleElement'/>
+    <file name='transform'>
+     <exports symbol='xsltSetXIncludeDefault'/>
+     <exports symbol='xsltGetXIncludeDefault'/>
+     <exports symbol='xsltNewTransformContext'/>
+     <exports symbol='xsltFreeTransformContext'/>
+     <exports symbol='xsltApplyStylesheetUser'/>
+     <exports symbol='xsltApplyStripSpaces'/>
      <exports symbol='xsltExtElementLookup'/>
-     <exports symbol='xsltExtModuleElementLookup'/>
-     <exports symbol='xsltExtModuleElementPreComputeLookup'/>
-     <exports symbol='xsltUnregisterExtModuleElement'/>
-     <exports symbol='xsltTopLevelFunction'/>
-     <exports symbol='xsltRegisterExtModuleTopLevel'/>
-     <exports symbol='xsltExtModuleTopLevelLookup'/>
-     <exports symbol='xsltUnregisterExtModuleTopLevel'/>
-     <exports symbol='xsltRegisterExtFunction'/>
-     <exports symbol='xsltRegisterExtElement'/>
-     <exports symbol='xsltRegisterExtPrefix'/>
-     <exports symbol='xsltCheckExtPrefix'/>
-     <exports symbol='xsltInitCtxtExts'/>
-     <exports symbol='xsltFreeCtxtExts'/>
-     <exports symbol='xsltFreeExts'/>
-     <exports symbol='xsltPreComputeExtModuleElement'/>
-     <exports symbol='xsltRegisterTestModule'/>
-     <exports symbol='xsltDebugDumpExtensions'/>
-    </file>
-    <file name='attributes'>
-     <exports symbol='xsltParseStylesheetAttributeSet'/>
-     <exports symbol='xsltFreeAttributeSetsHashes'/>
-     <exports symbol='xsltApplyAttributeSet'/>
-     <exports symbol='xsltResolveStylesheetAttributeSet'/>
+     <exports symbol='xsltApplyStylesheet'/>
+     <exports symbol='xsltProfileStylesheet'/>
+     <exports symbol='xsltRunStylesheet'/>
+     <exports symbol='xsltRunStylesheetUser'/>
+     <exports symbol='xsltApplyOneTemplate'/>
+     <exports symbol='xsltDocumentElem'/>
+     <exports symbol='xsltSort'/>
+     <exports symbol='xsltCopy'/>
+     <exports symbol='xsltText'/>
+     <exports symbol='xsltElement'/>
+     <exports symbol='xsltComment'/>
+     <exports symbol='xsltAttribute'/>
+     <exports symbol='xsltProcessingInstruction'/>
+     <exports symbol='xsltCopyOf'/>
+     <exports symbol='xsltValueOf'/>
+     <exports symbol='xsltNumber'/>
+     <exports symbol='xsltApplyImports'/>
+     <exports symbol='xsltCallTemplate'/>
+     <exports symbol='xsltApplyTemplates'/>
+     <exports symbol='xsltChoose'/>
+     <exports symbol='xsltIf'/>
+     <exports symbol='xsltForEach'/>
+     <exports symbol='xsltRegisterAllElement'/>
+     <exports symbol='xslHandleDebugger'/>
     </file>
     <file name='xsltInternals'>
      <exports symbol='XSLT_MAX_SORT'/>
@@ -167,6 +183,60 @@
      <exports symbol='xsltAllocateExtra'/>
      <exports symbol='xsltAllocateExtraCtxt'/>
     </file>
+    <file name='preproc'>
+     <exports symbol='xsltExtMarker'/>
+     <exports symbol='xsltDocumentComp'/>
+     <exports symbol='xsltStylePreCompute'/>
+     <exports symbol='xsltFreeStylePreComps'/>
+    </file>
+    <file name='documents'>
+     <exports symbol='xsltNewDocument'/>
+     <exports symbol='xsltLoadDocument'/>
+     <exports symbol='xsltFindDocument'/>
+     <exports symbol='xsltFreeDocuments'/>
+     <exports symbol='xsltLoadStyleDocument'/>
+     <exports symbol='xsltNewStyleDocument'/>
+     <exports symbol='xsltFreeStyleDocuments'/>
+    </file>
+    <file name='extensions'>
+     <exports symbol='xsltStyleExtInitFunction'/>
+     <exports symbol='xsltStyleExtShutdownFunction'/>
+     <exports symbol='xsltExtInitFunction'/>
+     <exports symbol='xsltExtShutdownFunction'/>
+     <exports symbol='xsltRegisterExtModule'/>
+     <exports symbol='xsltRegisterExtModuleFull'/>
+     <exports symbol='xsltUnregisterExtModule'/>
+     <exports symbol='xsltGetExtData'/>
+     <exports symbol='xsltStyleGetExtData'/>
+     <exports symbol='xsltShutdownCtxtExts'/>
+     <exports symbol='xsltShutdownExts'/>
+     <exports symbol='xsltXPathGetTransformContext'/>
+     <exports symbol='xsltRegisterExtModuleFunction'/>
+     <exports symbol='xsltExtFunctionLookup'/>
+     <exports symbol='xsltExtModuleFunctionLookup'/>
+     <exports symbol='xsltUnregisterExtModuleFunction'/>
+     <exports symbol='xsltNewElemPreComp'/>
+     <exports symbol='xsltInitElemPreComp'/>
+     <exports symbol='xsltRegisterExtModuleElement'/>
+     <exports symbol='xsltExtElementLookup'/>
+     <exports symbol='xsltExtModuleElementLookup'/>
+     <exports symbol='xsltExtModuleElementPreComputeLookup'/>
+     <exports symbol='xsltUnregisterExtModuleElement'/>
+     <exports symbol='xsltTopLevelFunction'/>
+     <exports symbol='xsltRegisterExtModuleTopLevel'/>
+     <exports symbol='xsltExtModuleTopLevelLookup'/>
+     <exports symbol='xsltUnregisterExtModuleTopLevel'/>
+     <exports symbol='xsltRegisterExtFunction'/>
+     <exports symbol='xsltRegisterExtElement'/>
+     <exports symbol='xsltRegisterExtPrefix'/>
+     <exports symbol='xsltCheckExtPrefix'/>
+     <exports symbol='xsltInitCtxtExts'/>
+     <exports symbol='xsltFreeCtxtExts'/>
+     <exports symbol='xsltFreeExts'/>
+     <exports symbol='xsltPreComputeExtModuleElement'/>
+     <exports symbol='xsltRegisterTestModule'/>
+     <exports symbol='xsltDebugDumpExtensions'/>
+    </file>
     <file name='pattern'>
      <exports symbol='xsltCompMatch'/>
      <exports symbol='xsltCompMatchPtr'/>
@@ -179,143 +249,76 @@
      <exports symbol='xsltCleanupTemplates'/>
      <exports symbol='xsltMatchPattern'/>
     </file>
-    <file name='documents'>
-     <exports symbol='xsltNewDocument'/>
-     <exports symbol='xsltLoadDocument'/>
-     <exports symbol='xsltFindDocument'/>
-     <exports symbol='xsltFreeDocuments'/>
-     <exports symbol='xsltLoadStyleDocument'/>
-     <exports symbol='xsltNewStyleDocument'/>
-     <exports symbol='xsltFreeStyleDocuments'/>
+    <file name='namespaces'>
+     <exports symbol='xsltNamespaceAlias'/>
+     <exports symbol='xsltGetNamespace'/>
+     <exports symbol='xsltGetSpecialNamespace'/>
+     <exports symbol='xsltCopyNamespace'/>
+     <exports symbol='xsltCopyNamespaceList'/>
+     <exports symbol='xsltFreeNamespaceAliasHashes'/>
     </file>
-    <file name='variables'>
-     <exports symbol='XSLT_REGISTER_VARIABLE_LOOKUP'/>
-     <exports symbol='xsltEvalGlobalVariables'/>
-     <exports symbol='xsltEvalUserParams'/>
-     <exports symbol='xsltQuoteUserParams'/>
-     <exports symbol='xsltEvalOneUserParam'/>
-     <exports symbol='xsltQuoteOneUserParam'/>
-     <exports symbol='xsltParseGlobalVariable'/>
-     <exports symbol='xsltParseGlobalParam'/>
-     <exports symbol='xsltParseStylesheetVariable'/>
-     <exports symbol='xsltParseStylesheetParam'/>
-     <exports symbol='xsltParseStylesheetCallerParam'/>
-     <exports symbol='xsltAddStackElemList'/>
-     <exports symbol='xsltFreeGlobalVariables'/>
-     <exports symbol='xsltVariableLookup'/>
-     <exports symbol='xsltXPathVariableLookup'/>
+    <file name='attributes'>
+     <exports symbol='xsltParseStylesheetAttributeSet'/>
+     <exports symbol='xsltFreeAttributeSetsHashes'/>
+     <exports symbol='xsltApplyAttributeSet'/>
+     <exports symbol='xsltResolveStylesheetAttributeSet'/>
     </file>
-    <file name='imports'>
-     <exports symbol='XSLT_GET_IMPORT_PTR'/>
-     <exports symbol='XSLT_GET_IMPORT_INT'/>
-     <exports symbol='xsltParseStylesheetImport'/>
-     <exports symbol='xsltParseStylesheetInclude'/>
-     <exports symbol='xsltNextImport'/>
-     <exports symbol='xsltNeedElemSpaceHandling'/>
-     <exports symbol='xsltFindElemSpaceHandling'/>
-     <exports symbol='xsltFindTemplate'/>
+    <file name='numbersInternals'>
     </file>
-    <file name='keys'>
-     <exports symbol='xsltAddKey'/>
-     <exports symbol='xsltGetKey'/>
-     <exports symbol='xsltInitCtxtKeys'/>
-     <exports symbol='xsltFreeKeys'/>
-     <exports symbol='xsltFreeDocumentKeys'/>
-    </file>
-    <file name='extra'>
-     <exports symbol='XSLT_LIBXSLT_NAMESPACE'/>
-     <exports symbol='XSLT_SAXON_NAMESPACE'/>
-     <exports symbol='XSLT_XT_NAMESPACE'/>
-     <exports symbol='XSLT_XALAN_NAMESPACE'/>
-     <exports symbol='XSLT_NORM_SAXON_NAMESPACE'/>
-     <exports symbol='xsltFunctionNodeSet'/>
-     <exports symbol='xsltDebug'/>
-     <exports symbol='xsltRegisterExtras'/>
-     <exports symbol='xsltRegisterAllExtras'/>
-    </file>
-    <file name='preproc'>
-     <exports symbol='xsltExtMarker'/>
-     <exports symbol='xsltDocumentComp'/>
-     <exports symbol='xsltStylePreCompute'/>
-     <exports symbol='xsltFreeStylePreComps'/>
-    </file>
-    <file name='transform'>
-     <exports symbol='xsltSetXIncludeDefault'/>
-     <exports symbol='xsltGetXIncludeDefault'/>
-     <exports symbol='xsltNewTransformContext'/>
-     <exports symbol='xsltFreeTransformContext'/>
-     <exports symbol='xsltApplyStylesheetUser'/>
-     <exports symbol='xsltApplyStripSpaces'/>
-     <exports symbol='xsltExtElementLookup'/>
-     <exports symbol='xsltApplyStylesheet'/>
-     <exports symbol='xsltProfileStylesheet'/>
-     <exports symbol='xsltRunStylesheet'/>
-     <exports symbol='xsltRunStylesheetUser'/>
-     <exports symbol='xsltApplyOneTemplate'/>
-     <exports symbol='xsltDocumentElem'/>
-     <exports symbol='xsltSort'/>
-     <exports symbol='xsltCopy'/>
-     <exports symbol='xsltText'/>
-     <exports symbol='xsltElement'/>
-     <exports symbol='xsltComment'/>
-     <exports symbol='xsltAttribute'/>
-     <exports symbol='xsltProcessingInstruction'/>
-     <exports symbol='xsltCopyOf'/>
-     <exports symbol='xsltValueOf'/>
-     <exports symbol='xsltNumber'/>
-     <exports symbol='xsltApplyImports'/>
-     <exports symbol='xsltCallTemplate'/>
-     <exports symbol='xsltApplyTemplates'/>
-     <exports symbol='xsltChoose'/>
-     <exports symbol='xsltIf'/>
-     <exports symbol='xsltForEach'/>
-     <exports symbol='xsltRegisterAllElement'/>
-     <exports symbol='xslHandleDebugger'/>
-    </file>
-    <file name='xslt'>
-     <exports symbol='XSLT_DEFAULT_VERSION'/>
-     <exports symbol='XSLT_DEFAULT_VENDOR'/>
-     <exports symbol='XSLT_DEFAULT_URL'/>
-     <exports symbol='XSLT_NAMESPACE'/>
-     <exports symbol='LIBXSLT_PUBLIC'/>
-     <exports symbol='xsltCleanupGlobals'/>
-    </file>
-    <file name='xsltconfig'>
-     <exports symbol='LIBXSLT_DOTTED_VERSION'/>
-     <exports symbol='LIBXSLT_VERSION'/>
-     <exports symbol='LIBXSLT_VERSION_STRING'/>
-     <exports symbol='WITH_XSLT_DEBUG'/>
-     <exports symbol='DEBUG_MEMORY'/>
-     <exports symbol='DEBUG_MEMORY_LOCATION'/>
-     <exports symbol='WITH_DEBUGGER'/>
-     <exports symbol='ATTRIBUTE_UNUSED'/>
+    <file name='libxslt'>
      <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
-    <file name='functions'>
-     <exports symbol='XSLT_REGISTER_FUNCTION_LOOKUP'/>
-     <exports symbol='xsltXPathFunctionLookup'/>
-     <exports symbol='xsltDocumentFunction'/>
-     <exports symbol='xsltKeyFunction'/>
-     <exports symbol='xsltUnparsedEntityURIFunction'/>
-     <exports symbol='xsltFormatNumberFunction'/>
-     <exports symbol='xsltGenerateIdFunction'/>
-     <exports symbol='xsltSystemPropertyFunction'/>
-     <exports symbol='xsltElementAvailableFunction'/>
-     <exports symbol='xsltFunctionAvailableFunction'/>
-     <exports symbol='xsltRegisterAllFunctions'/>
+    <file name='security'>
+     <exports symbol='xsltSecurityPrefs'/>
+     <exports symbol='xsltSecurityPrefsPtr'/>
+     <exports symbol='xsltSecurityOption'/>
+     <exports symbol='xsltSecurityCheck'/>
+     <exports symbol='xsltNewSecurityPrefs'/>
+     <exports symbol='xsltFreeSecurityPrefs'/>
+     <exports symbol='xsltSetSecurityPrefs'/>
+     <exports symbol='xsltGetSecurityPrefs'/>
+     <exports symbol='xsltSetDefaultSecurityPrefs'/>
+     <exports symbol='xsltGetDefaultSecurityPrefs'/>
+     <exports symbol='xsltSetCtxtSecurityPrefs'/>
+     <exports symbol='xsltSecurityAllow'/>
+     <exports symbol='xsltSecurityForbid'/>
+     <exports symbol='xsltCheckWrite'/>
+     <exports symbol='xsltCheckRead'/>
     </file>
-    <file name='templates'>
-     <exports symbol='xsltEvalXPathPredicate'/>
-     <exports symbol='xsltEvalTemplateString'/>
-     <exports symbol='xsltEvalAttrValueTemplate'/>
-     <exports symbol='xsltEvalStaticAttrValueTemplate'/>
-     <exports symbol='xsltEvalXPathString'/>
-     <exports symbol='xsltEvalXPathStringNs'/>
-     <exports symbol='xsltTemplateProcess'/>
-     <exports symbol='xsltAttrListTemplateProcess'/>
-     <exports symbol='xsltAttrTemplateProcess'/>
-     <exports symbol='xsltAttrTemplateValueProcess'/>
-     <exports symbol='xsltAttrTemplateValueProcessNode'/>
+    <file name='xsltutils'>
+     <exports symbol='XSLT_TODO'/>
+     <exports symbol='XSLT_STRANGE'/>
+     <exports symbol='IS_XSLT_ELEM'/>
+     <exports symbol='IS_XSLT_NAME'/>
+     <exports symbol='IS_XSLT_REAL_NODE'/>
+     <exports symbol='xsltGetNsProp'/>
+     <exports symbol='xsltGetUTF8Char'/>
+     <exports symbol='xsltPrintErrorContext'/>
+     <exports symbol='xsltMessage'/>
+     <exports symbol='xsltSetGenericErrorFunc'/>
+     <exports symbol='xsltSetGenericDebugFunc'/>
+     <exports symbol='xsltSetTransformErrorFunc'/>
+     <exports symbol='xsltTransformError'/>
+     <exports symbol='xsltDocumentSortFunction'/>
+     <exports symbol='xsltDoSortFunction'/>
+     <exports symbol='xsltGetQNameURI'/>
+     <exports symbol='xsltSaveResultTo'/>
+     <exports symbol='xsltSaveResultToFilename'/>
+     <exports symbol='xsltSaveResultToFile'/>
+     <exports symbol='xsltSaveResultToFd'/>
+     <exports symbol='xsltSaveResultToString'/>
+     <exports symbol='xsltSaveProfiling'/>
+     <exports symbol='xsltGetProfileInformation'/>
+     <exports symbol='xsltTimestamp'/>
+     <exports symbol='xsltCalibrateAdjust'/>
+     <exports symbol='XSLT_TIMESTAMP_TICS_PER_SEC'/>
+     <exports symbol='xsltDebugStatusCodes'/>
+     <exports symbol='xsltHandleDebuggerCallback'/>
+     <exports symbol='xsltAddCallCallback'/>
+     <exports symbol='xsltDropCallCallback'/>
+     <exports symbol='xsltSetDebuggerCallbacks'/>
+     <exports symbol='xslAddCall'/>
+     <exports symbol='xslDropCall'/>
     </file>
   </files>
   <symbols>
@@ -339,12 +342,16 @@
     </macro>
     <macro name='IS_XSLT_ELEM' file='xsltutils'>
       <info>Checks that the element pertains to XSLT namespace.</info>
+      <arg name='n'/>
     </macro>
     <macro name='IS_XSLT_NAME' file='xsltutils'>
       <info>Checks the value of an element in XSLT namespace.</info>
+      <arg name='n'/>
+      <arg name='val'/>
     </macro>
     <macro name='IS_XSLT_REAL_NODE' file='xsltutils'>
       <info>Check that a node is a &apos;real&apos; one: document, element, text or attribute.</info>
+      <arg name='n'/>
     </macro>
     <macro name='LIBXSLT_DOTTED_VERSION' file='xsltwin32config'>
       <info>the version string like &quot;1.2.3&quot;</info>
@@ -406,9 +413,15 @@
     <const name='XSLT_FUNC_WITHPARAM' file='xsltInternals'/>
     <macro name='XSLT_GET_IMPORT_INT' file='imports'>
       <info>A macro to import intergers from the stylesheet cascading order.</info>
+      <arg name='res'/>
+      <arg name='style'/>
+      <arg name='name'/>
     </macro>
     <macro name='XSLT_GET_IMPORT_PTR' file='imports'>
       <info>A macro to import pointers from the stylesheet cascading order.</info>
+      <arg name='res'/>
+      <arg name='style'/>
+      <arg name='name'/>
     </macro>
     <macro name='XSLT_LIBXSLT_NAMESPACE' file='extra'>
       <info>This is the libxslt namespace for specific extensions.</info>
@@ -418,6 +431,9 @@
     </macro>
     <macro name='XSLT_NAMESPACE' file='xslt'>
       <info>The XSLT specification namespace.</info>
+    </macro>
+    <macro name='XSLT_NEED_TRIO' file='xsltconfig'>
+      <info>should be activated in the existing libc library lacks some of the string formatting function, in that case reuse the Trio ones already compiled in the libxml2 library.</info>
     </macro>
     <macro name='XSLT_NORM_SAXON_NAMESPACE' file='extra'>
       <info>This is Norm&apos;s namespace for SAXON extensions.</info>
@@ -430,15 +446,23 @@
     </macro>
     <macro name='XSLT_REGISTER_FUNCTION_LOOKUP' file='functions'>
       <info>Registering macro, not general purpose at all but used in different modules.</info>
+      <arg name='ctxt'/>
     </macro>
     <macro name='XSLT_REGISTER_VARIABLE_LOOKUP' file='variables'>
       <info>Registering macro, not general purpose at all but used in different modules.</info>
+      <arg name='ctxt'/>
     </macro>
     <macro name='XSLT_RUNTIME_EXTRA' file='xsltInternals'>
+      <arg name='ctxt'/>
+      <arg name='nr'/>
     </macro>
     <macro name='XSLT_RUNTIME_EXTRA_FREE' file='xsltInternals'>
+      <arg name='ctxt'/>
+      <arg name='nr'/>
     </macro>
     <macro name='XSLT_RUNTIME_EXTRA_LST' file='xsltInternals'>
+      <arg name='ctxt'/>
+      <arg name='nr'/>
     </macro>
     <macro name='XSLT_SAXON_NAMESPACE' file='extra'>
       <info>This is Michael Kay&apos;s Saxon processor namespace for extensions.</info>
@@ -614,7 +638,7 @@
     <function name='xsltCalibrateAdjust' file='xsltutils'>
       <info>Used for to correct the calibration for xsltTimestamp()</info>
       <return type='void'/>
-      <arg name='delta' type='long' info='a negative dealy value found '/>
+      <arg name='delta' type='long'/>
     </function>
     <function name='xsltCallTemplate' file='transform'>
       <info>Process the xslt call-template node on the source node</info>
@@ -631,14 +655,14 @@
       <arg name='prefix' type='const xmlChar *' info='the namespace prefix (possibly NULL) '/>
     </function>
     <function name='xsltCheckRead' file='security'>
-      <info>Check if the resource is allowed to be read </info>
+      <info>Check if the resource is allowed to be read Return 1 if read is allowed, 0 if not and -1 in case or error.</info>
       <return type='int'/>
       <arg name='sec' type='xsltSecurityPrefsPtr' info='the security options '/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
       <arg name='URL' type='const xmlChar *' info='the resource to be read '/>
     </function>
     <function name='xsltCheckWrite' file='security'>
-      <info>Check if the resource is allowed to be written, if necessary makes some preliminary work like creating directories </info>
+      <info>Check if the resource is allowed to be written, if necessary makes some preliminary work like creating directories Return 1 if write is allowed, 0 if not and -1 in case or error.</info>
       <return type='int'/>
       <arg name='sec' type='xsltSecurityPrefsPtr' info='the security options '/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
@@ -669,10 +693,10 @@
       <arg name='inst' type='xmlNodePtr' info='the xslt comment node '/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information '/>
     </function>
-    <struct name='xsltCompMatch' file='pattern' info='Data structure used for the implementation of patterns. It is kept private (in pattern.c).'/>
+    <struct name='xsltCompMatch' file='pattern'/>
     <typedef name='xsltCompMatchPtr' file='pattern'/>
     <function name='xsltCompilePattern' file='pattern'>
-      <info>Compile the XSLT pattern and generates a list of precompiled form suitable for fast matching. </info>
+      <info>Compile the XSLT pattern and generates a list of precompiled form suitable for fast matching. [1] Pattern ::= LocationPathPattern | Pattern &apos;|&apos; LocationPathPattern</info>
       <return type='xsltCompMatchPtr' info='the generated pattern list or NULL in case of failure '/>
       <arg name='pattern' type='const xmlChar *' info='an XSLT pattern '/>
       <arg name='doc' type='xmlDocPtr' info='the containing document '/>
@@ -724,7 +748,7 @@
       <arg name='output' type='FILE *' info='the FILE * for the output, if NULL stdout is used '/>
     </function>
     <enum name='xsltDebugStatusCodes' file='xsltutils'/>
-    <struct name='xsltDecimalFormat' file='xsltInternals' info='Data structure of decimal-format.'/>
+    <struct name='xsltDecimalFormat' file='xsltInternals'/>
     <function name='xsltDecimalFormatGetByName' file='xsltInternals'>
       <info>Find decimal-format by name</info>
       <return type='xsltDecimalFormatPtr'/>
@@ -739,7 +763,7 @@
       <arg name='sorts' type='xmlNodePtr *' info='array of sort nodes '/>
       <arg name='nbsorts' type='int' info='the number of sorts in the array '/>
     </function>
-    <struct name='xsltDocument' file='xsltInternals' info='Data structure associated to a parsed document.'/>
+    <struct name='xsltDocument' file='xsltInternals'/>
     <function name='xsltDocumentComp' file='preproc'>
       <info>Pre process an XSLT-1.1 document element</info>
       <return type='xsltElemPreCompPtr'/>
@@ -770,7 +794,7 @@
     <functype name='xsltDropCallCallback' file='xsltutils'>
       <return type='void'/>
     </functype>
-    <struct name='xsltElemPreComp' file='xsltInternals' info='The in-memory structure corresponding to element precomputed data, designed to be extended by extension implementors.'/>
+    <struct name='xsltElemPreComp' file='xsltInternals'/>
     <functype name='xsltElemPreCompDeallocator' file='xsltInternals'>
       <info>Deallocates an xsltElemPreComp structure.</info>
       <return type='void'/>
@@ -805,7 +829,7 @@
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
     </function>
     <function name='xsltEvalOneUserParam' file='variables'>
-      <info>ctxt: the XSLT transformation context name: a null terminated string giving the name of the parameter value a null terminated string giving the XPath expression to be evaluated </info>
+      <info>ctxt: the XSLT transformation context name: a null terminated string giving the name of the parameter value a null terminated string giving the XPath expression to be evaluated This is normally called from xsltEvalUserParams to process a single parameter from a list of parameters. The value is evaluated as an XPath expression and the result is stored in the context&apos;s global variable/parameter hash table. To have a parameter treated literally (not as an XPath expression) use xsltQuoteUserParams (or xsltQuoteOneUserParam). For more details see description of xsltProcessOneUserParamInternal.</info>
       <return type='int' info='0 in case of success, -1 in case of error. '/>
       <arg name='ctxt' type='xsltTransformContextPtr'/>
       <arg name='name' type='const xmlChar *'/>
@@ -828,7 +852,7 @@
       <arg name='parent' type='xmlNodePtr' info='the content parent '/>
     </function>
     <function name='xsltEvalUserParams' file='variables'>
-      <info>ctxt: the XSLT transformation context params: a NULL terminated array of parameters name/value tuples </info>
+      <info>ctxt: the XSLT transformation context params: a NULL terminated array of parameters name/value tuples Evaluate the global variables of a stylesheet. This needs to be done on parsed stylesheets before starting to apply transformations. Each of the parameters is evaluated as an XPath expression and stored in the global variables/parameter hash table. If you want your parameter used literally, use xsltQuoteUserParams.</info>
       <return type='int' info='0 in case of success, -1 in case of error '/>
       <arg name='ctxt' type='xsltTransformContextPtr'/>
       <arg name='params' type='const char **'/>
@@ -857,10 +881,10 @@
     </function>
     <function name='xsltExtElementLookup' file='transform'>
       <info>Looks up an extension element. ctxt can be NULL to search only in module elements.</info>
-      <return type='xsltTransformFunction' info='the element callback or NULL if not found '/>
-      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT process context '/>
-      <arg name='name' type='const xmlChar *' info='the element name '/>
-      <arg name='URI' type='const xmlChar *' info='the element namespace URI '/>
+      <return type='xsltTransformFunction'/>
+      <arg name='ctxt' type='xsltTransformContextPtr'/>
+      <arg name='name' type='const xmlChar *'/>
+      <arg name='URI' type='const xmlChar *'/>
     </function>
     <function name='xsltExtFunctionLookup' file='extensions'>
       <return type='xmlXPathFunction'/>
@@ -933,7 +957,7 @@
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information '/>
     </function>
     <function name='xsltFormatNumberConversion' file='xsltInternals'>
-      <info>format-number() uses the JDK 1.1 DecimalFormat class: </info>
+      <info>format-number() uses the JDK 1.1 DecimalFormat class: http://java.sun.com/products/jdk/1.1/docs/api/java.text.DecimalFormat.html Structure: pattern := subpattern{;subpattern} subpattern := {prefix}integer{.fraction}{suffix} prefix := &apos;\\u0000&apos;..&apos;\\uFFFD&apos; - specialCharacters suffix := &apos;\\u0000&apos;..&apos;\\uFFFD&apos; - specialCharacters integer := &apos;#&apos;* &apos;0&apos;* &apos;0&apos; fraction := &apos;0&apos;* &apos;#&apos;* Notation: X* 0 or more instances of X (X | Y) either X or Y. X..Y any character from X up to Y, inclusive. S - T characters in S, except those in T Special Characters: Symbol Meaning 0 a digit # a digit, zero shows as absent . placeholder for decimal separator , placeholder for grouping separator. ; separates formats. - default negative prefix. % multiply by 100 and show as percentage ? multiply by 1000 and show as per mille X any other characters can be used in the prefix or suffix &apos; used to quote special characters in a prefix or suffix.</info>
       <return type='xmlXPathError'/>
       <arg name='self' type='xsltDecimalFormatPtr' info='the decimal format '/>
       <arg name='format' type='xmlChar *' info='the format requested '/>
@@ -1033,7 +1057,7 @@
       <arg name='nargs' type='int' info='the number of arguments '/>
     </function>
     <function name='xsltFunctionNodeSet' file='extra'>
-      <info>Implement the node-set() XSLT function node-set node-set(result-tree) </info>
+      <info>Implement the node-set() XSLT function node-set node-set(result-tree) This function is available in libxslt, saxon or xt namespace.</info>
       <return type='void'/>
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context '/>
       <arg name='nargs' type='int' info='the number of arguments '/>
@@ -1070,15 +1094,20 @@
       <arg name='out' type='xmlNodePtr' info='the output node (or its parent) '/>
     </function>
     <function name='xsltGetNsProp' file='xsltutils'>
-      <info>Similar to xmlGetNsProp() but with a slightly different semantic </info>
+      <info>Similar to xmlGetNsProp() but with a slightly different semantic Search and get the value of an attribute associated to a node This attribute has to be anchored in the namespace specified, or has no namespace and the element is in that namespace. This does the entity substitution. This function looks in DTD attribute declaration for FIXED or default declaration values unless DTD use has been turned off.</info>
       <return type='xmlChar *' info='the attribute value or NULL if not found. It&apos;s up to the caller to free the memory. '/>
       <arg name='node' type='xmlNodePtr' info='the node '/>
       <arg name='name' type='const xmlChar *' info='the attribute name '/>
       <arg name='nameSpace' type='const xmlChar *' info='the URI of the namespace '/>
     </function>
+    <function name='xsltGetProfileInformation' file='xsltutils'>
+      <info>This function should be called after the transformation completed to extract template processing profiling informations if availble. The informations are returned as an XML document tree like &lt;?xml version=&quot;1.0&quot;?&gt; &lt;profile&gt; &lt;template rank=&quot;1&quot; match=&quot;*&quot; name=&quot;&quot; mode=&quot;&quot; calls=&quot;6&quot; time=&quot;48&quot; average=&quot;8&quot;/&gt; &lt;template rank=&quot;2&quot; match=&quot;item2|item3&quot; name=&quot;&quot; mode=&quot;&quot; calls=&quot;10&quot; time=&quot;30&quot; average=&quot;3&quot;/&gt; &lt;template rank=&quot;3&quot; match=&quot;item1&quot; name=&quot;&quot; mode=&quot;&quot; calls=&quot;5&quot; time=&quot;17&quot; average=&quot;3&quot;/&gt; &lt;/profile&gt; The caller will need to free up the returned tree with xmlFreeDoc()</info>
+      <return type='xmlDocPtr' info='the xmlDocPtr corresponding to the result or NULL if not available. '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a transformation context '/>
+    </function>
     <function name='xsltGetQNameURI' file='xsltutils'>
-      <info>This function analyzes name, if the name contains a prefix, the function seaches the associated namespace in scope for it. It will also replace name value with the NCName, the old value being freed. Errors in the prefix lookup are signalled by setting name to NULL. </info>
-      <return type='const xmlChar *' info='name is not prefixed. '/>
+      <info>This function analyzes name, if the name contains a prefix, the function seaches the associated namespace in scope for it. It will also replace name value with the NCName, the old value being freed. Errors in the prefix lookup are signalled by setting name to NULL. NOTE: the namespace returned is a pointer to the place where it is defined and hence has the same lifespan as the document holding it.</info>
+      <return type='const xmlChar *' info='the namespace URI if there is a prefix, or NULL if name is not prefixed. '/>
       <arg name='node' type='xmlNodePtr' info='the node holding the QName '/>
       <arg name='name' type='xmlChar **' info='pointer to the initial QName value '/>
     </function>
@@ -1103,6 +1132,12 @@
       <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context '/>
       <arg name='node' type='xmlNodePtr' info='the node being processed '/>
       <arg name='style' type='xsltStylesheetPtr' info='the current style '/>
+    </function>
+    <function name='xsltGetUTF8Char' file='xsltutils'>
+      <info>Read one UTF8 Char from utf Function copied from libxml2 xmlGetUTF8Char() ... to discard ultimately and use the original API</info>
+      <return type='int' info='the char value or -1 in case of error and update len with the number of bytes used '/>
+      <arg name='utf' type='const unsigned char *' info='a sequence of UTF-8 encoded bytes '/>
+      <arg name='len' type='int *' info='a pointer to bytes len '/>
     </function>
     <function name='xsltGetXIncludeDefault' file='transform'>
       <info>return the default state for XInclude processing</info>
@@ -1141,7 +1176,7 @@
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
       <arg name='inst' type='xmlNodePtr' info='the element node '/>
       <arg name='function' type='xsltTransformFunction' info='the transform function '/>
-      <arg name='freeFunc' type='xsltElemPreCompDeallocator' info='comp deallocator '/>
+      <arg name='freeFunc' type='xsltElemPreCompDeallocator' info='the comp deallocator '/>
     </function>
     <function name='xsltIsBlank' file='xsltInternals'>
       <info>Check if a string is ignorable</info>
@@ -1206,7 +1241,7 @@
     </function>
     <function name='xsltNewElemPreComp' file='extensions'>
       <info>Creates and initializes an xsltElemPreComp</info>
-      <return type='xsltElemPreCompPtr' info='the new and initialized xsltElemPreComp '/>
+      <return type='xsltElemPreCompPtr' info='the new and initialized xsltElemPreComp'/>
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
       <arg name='inst' type='xmlNodePtr' info='the element node '/>
       <arg name='function' type='xsltTransformFunction' info='the transform function '/>
@@ -1271,7 +1306,7 @@
       <arg name='cur' type='xmlNodePtr'/>
     </function>
     <function name='xsltParseStylesheetCallerParam' file='variables'>
-      <info>parse an XSLT transformation param declaration, compute its value but doesn&apos;t record it. </info>
+      <info>parse an XSLT transformation param declaration, compute its value but doesn&apos;t record it. It returns the new xsltStackElemPtr or NULL</info>
       <return type='xsltStackElemPtr'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
       <arg name='cur' type='xmlNodePtr' info='the &quot;param&quot; element '/>
@@ -1358,14 +1393,14 @@
       <arg name='output' type='FILE *' info='a FILE * for the profiling output '/>
     </function>
     <function name='xsltQuoteOneUserParam' file='variables'>
-      <info>ctxt: the XSLT transformation context name: a null terminated string giving the name of the parameter value a null terminated string giving the parameter value </info>
+      <info>ctxt: the XSLT transformation context name: a null terminated string giving the name of the parameter value a null terminated string giving the parameter value This is normally called from xsltQuoteUserParams to process a single parameter from a list of parameters. The value is stored in the context&apos;s global variable/parameter hash table.</info>
       <return type='int' info='0 in case of success, -1 in case of error. '/>
       <arg name='ctxt' type='xsltTransformContextPtr'/>
       <arg name='name' type='const xmlChar *'/>
       <arg name='value' type='const xmlChar *'/>
     </function>
     <function name='xsltQuoteUserParams' file='variables'>
-      <info>ctxt: the XSLT transformation context params: a NULL terminated arry of parameters names/values tuples </info>
+      <info>ctxt: the XSLT transformation context params: a NULL terminated arry of parameters names/values tuples Similar to xsltEvalUserParams, but the values are treated literally and are * *not* evaluated as XPath expressions. This should be done on parsed stylesheets before starting to apply transformations.</info>
       <return type='int' info='0 in case of success, -1 in case of error. '/>
       <arg name='ctxt' type='xsltTransformContextPtr'/>
       <arg name='params' type='const char **'/>
@@ -1460,7 +1495,7 @@
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
     </function>
     <function name='xsltRunStylesheet' file='transform'>
-      <info>Apply the stylesheet to the document and generate the output according to output SAX and IObuf. It&apos;s an error to specify both SAX and IObuf. </info>
+      <info>Apply the stylesheet to the document and generate the output according to outputSAX and IObuf. It&apos;s an error to specify both SAX and IObuf. NOTE: This may lead to a non-wellformed output XML wise ! NOTE: This may also result in multiple files being generated NOTE: using IObuf, the result encoding used will be the one used for creating the output buffer, use the following macro to read it from the stylesheet XSLT_GET_IMPORT_PTR(encoding, style, encoding) NOTE: using SAX, any encoding specified in the stylesheet will be lost since the interface uses only UTF8</info>
       <return type='int' info='the number of by written to the main resource or -1 in case of error. '/>
       <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet '/>
       <arg name='doc' type='xmlDocPtr' info='a parsed XML document '/>
@@ -1470,7 +1505,7 @@
       <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet) '/>
     </function>
     <function name='xsltRunStylesheetUser' file='transform'>
-      <info>Apply the stylesheet to the document and generate the output according to output SAX and IObuf. It&apos;s an error to specify both SAX and IObuf. </info>
+      <info>Apply the stylesheet to the document and generate the output according to outputSAX and IObuf. It&apos;s an error to specify both SAX and IObuf. NOTE: This may lead to a non-wellformed output XML wise ! NOTE: This may also result in multiple files being generated NOTE: using IObuf, the result encoding used will be the one used for creating the output buffer, use the following macro to read it from the stylesheet XSLT_GET_IMPORT_PTR(encoding, style, encoding) NOTE: using SAX, any encoding specified in the stylesheet will be lost since the interface uses only UTF8</info>
       <return type='int' info='the number of by written to the main resource or -1 in case of error. '/>
       <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet '/>
       <arg name='doc' type='xmlDocPtr' info='a parsed XML document '/>
@@ -1481,7 +1516,7 @@
       <arg name='profile' type='FILE *' info='profile FILE * output or NULL '/>
       <arg name='userCtxt' type='xsltTransformContextPtr' info='user provided transform context '/>
     </function>
-    <struct name='xsltRuntimeExtra' file='xsltInternals' info='Extra information added to the transformation context.'/>
+    <struct name='xsltRuntimeExtra' file='xsltInternals'/>
     <typedef name='xsltRuntimeExtraPtr' file='xsltInternals'/>
     <function name='xsltSaveProfiling' file='xsltutils'>
       <info>Save the profiling informations on output</info>
@@ -1586,7 +1621,7 @@
       <arg name='func' type='xsltSecurityCheck' info='the user callback to use for this option '/>
     </function>
     <function name='xsltSetTransformErrorFunc' file='xsltutils'>
-      <info>Function to reset the handler and the error context for out of context error messages specific to a given XSLT transromation. </info>
+      <info>Function to reset the handler and the error context for out of context error messages specific to a given XSLT transromation. This simply means that handler will be called for subsequent error messages while running the transformation.</info>
       <return type='void'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
       <arg name='ctx' type='void *' info='the new error handling context '/>
@@ -1636,7 +1671,7 @@
       <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet '/>
       <arg name='URI' type='const xmlChar *' info='the URI associated to the exension module '/>
     </function>
-    <struct name='xsltStylePreComp' file='xsltInternals' info='The in-memory structure corresponding to XSLT stylesheet constructs precomputed data.'/>
+    <struct name='xsltStylePreComp' file='xsltInternals'/>
     <typedef name='xsltStylePreCompPtr' file='xsltInternals'/>
     <function name='xsltStylePreCompute' file='preproc'>
       <info>Precompute an XSLT stylesheet element</info>
@@ -1653,7 +1688,7 @@
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context '/>
       <arg name='nargs' type='int' info='the number of arguments '/>
     </function>
-    <struct name='xsltTemplate' file='xsltInternals' info='The in-memory structure corresponding to an XSLT Template.'/>
+    <struct name='xsltTemplate' file='xsltInternals'/>
     <function name='xsltTemplateProcess' file='templates'>
       <info>Process the given node and return the new string value.</info>
       <return type='xmlNodePtr *' info='the computed tree replacement '/>

@@ -51,12 +51,10 @@ html:
 	if ! test -d html ; then mkdir html ; fi
 	-cd html && gtkdoc-mkhtml libxslt ../$(DOC_MAIN_SGML_FILE)
 
-xml: sgml
+xml: sgml 
 	if test -d xml ; then rm xml/* ; else mkdir xml ; fi
 	-@(for s in sgml/*.sgml ; do name=`basename $$s .sgml` ; \
-	   echo '<!DOCTYPE refentry [ <!ENTITY nbsp   "&#x00A0;"> ]>' > \
-	       xml/"$$name".xml ;\
-	   grep -v "^<colspec" $$s >> xml/"$$name".xml ; done)
+	   xmllint --sgml $$s > xml/"$$name".xml ; done)
 	   
 libxslt-api.xml libxslt-refs.xml: xml parsedecl.py libxslt-decl.txt libxslt-decl-list.txt
 	-(./parsedecl.py)

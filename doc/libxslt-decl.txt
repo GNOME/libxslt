@@ -1021,6 +1021,11 @@ xmlChar **doc_txt_ptr,int * doc_txt_len,xmlDocPtr result,xsltStylesheetPtr style
 xsltTransformContextPtr ctxt,FILE *output
 </FUNCTION>
 <FUNCTION>
+<NAME>xsltGetProfileInformation</NAME>
+<RETURNS>xmlDocPtr 	</RETURNS>
+xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
 <NAME>xsltTimestamp</NAME>
 <RETURNS>long 	</RETURNS>
 void

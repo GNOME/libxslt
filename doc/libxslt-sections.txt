@@ -6,6 +6,7 @@ LIBXSLT_VERSION_STRING
 WITH_XSLT_DEBUG
 DEBUG_MEMORY
 DEBUG_MEMORY_LOCATION
+XSLT_NEED_TRIO
 WITH_DEBUGGER
 ATTRIBUTE_UNUSED
 LIBXSLT_PUBLIC
@@ -248,6 +249,7 @@ IS_XSLT_ELEM
 IS_XSLT_NAME
 IS_XSLT_REAL_NODE
 xsltGetNsProp
+xsltGetUTF8Char
 xsltPrintErrorContext
 xsltMessage
 xsltSetGenericErrorFunc
@@ -263,6 +265,7 @@ xsltSaveResultToFile
 xsltSaveResultToFd
 xsltSaveResultToString
 xsltSaveProfiling
+xsltGetProfileInformation
 xsltTimestamp
 xsltCalibrateAdjust
 XSLT_TIMESTAMP_TICS_PER_SEC

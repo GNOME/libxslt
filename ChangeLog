@@ -1,3 +1,11 @@
+Tue Nov 26 16:02:38 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am doc/parsedecl.py: fixed the API generation
+	  scripts.
+	* doc/libxslt-api.xml doc/libxslt-refs.xml: regenerated
+	* doc/html/*.html: updated too
+	* python/libxsltclass.txt: updated too
+
 Tue Nov 26 15:17:13 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c libxslt/xsltutils.h: added the function
