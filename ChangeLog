@@ -1,3 +1,8 @@
+Sun May 16 18:09:36 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.h: fixing a small portability problem on Solaris
+	  for the declaration of localtime_r bug #140468
+
 Sun May 16 16:36:38 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.m4: applied patch from Edward Rudd to fix the problems

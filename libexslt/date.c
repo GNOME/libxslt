@@ -49,6 +49,13 @@
 #include <math.h>
 #endif
 
+/* needed to get localtime_r on Solaris */
+#ifdef sun
+#ifndef __EXTENSION__
+#define __EXTENSION__
+#endif
+#endif
+
 #ifdef HAVE_TIME_H
 #include <time.h>
 #endif
