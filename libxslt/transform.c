@@ -33,6 +33,7 @@
 #include "namespaces.h"
 #include "attributes.h"
 #include "templates.h"
+#include "imports.h"
 
 #define DEBUG_PROCESS
 
@@ -795,30 +796,9 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		if ((IS_BLANK_NODE(cur)) &&
 		    (cur->parent != NULL) &&
 		    (ctxt->style->stripSpaces != NULL)) {
-		    const xmlChar *val;
-
-		    if (strip_spaces == -1) {
-			/* TODO: add namespaces support */
-			val = (const xmlChar *)
-			      xmlHashLookup(ctxt->style->stripSpaces,
-					    cur->parent->name);
-			if (val != NULL) {
-			    if (xmlStrEqual(val, (xmlChar *) "strip"))
-				strip_spaces = 1;
-			    if (xmlStrEqual(val, (xmlChar *) "preserve"))
-				strip_spaces = 0;
-			} 
-			if (strip_spaces == -1) {
-			    val = (const xmlChar *)
-				  xmlHashLookup(ctxt->style->stripSpaces,
-						(const xmlChar *)"*");
-			    if ((val != NULL) &&
-				(xmlStrEqual(val, (xmlChar *) "strip")))
-				strip_spaces = 1;
-			    else
-				strip_spaces = 0;
-			}
-		    }
+		    if (strip_spaces == -1)
+			strip_spaces =
+			    xsltFindElemSpaceHandling(ctxt, cur->parent);
 		    if (strip_spaces == 1) {
 			delete = cur;
 			break;
@@ -928,9 +908,9 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     }
     if (ns != NULL)
-	template = xsltFindTemplate(ctxt->style, ncname, ns->href);
+	template = xsltFindTemplate(ctxt, ncname, ns->href);
     else
-	template = xsltFindTemplate(ctxt->style, ncname, NULL);
+	template = xsltFindTemplate(ctxt, ncname, NULL);
     if (template == NULL) {
 	xsltGenericError(xsltGenericDebugContext,
 	     "xslt:call-template: template %s not found\n", cur->name);
@@ -1614,7 +1594,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
 
-    template = xsltGetTemplate(ctxt->style, node);
+    template = xsltGetTemplate(ctxt, node);
     /*
      * If no template is found, apply the default rule.
      */

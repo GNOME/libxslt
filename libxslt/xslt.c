@@ -28,6 +28,7 @@
 #include "namespaces.h"
 #include "attributes.h"
 #include "xsltutils.h"
+#include "imports.h"
 
 #define DEBUG_PARSING
 
@@ -41,9 +42,6 @@
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
-xsltStylesheetPtr xsltParseStylesheetProcess(xsltStylesheetPtr ret,
-	                                     xmlDocPtr doc);
-xsltStylesheetPtr xsltParseStylesheetDoc(xmlDocPtr doc);
 
 /************************************************************************
  *									*
@@ -601,121 +599,6 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	element = end;
     }
     xmlFree(elements);
-}
-
-/**
- * xsltParseStylesheetImport:
- * @style:  the XSLT stylesheet
- * @template:  the "strip-space" element
- *
- * parse an XSLT stylesheet strip-space element and record
- * elements needing stripping
- */
-
-void
-xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
-    xmlDocPtr import = NULL;
-    xmlChar *base = NULL;
-    xmlChar *uriRef = NULL;
-    xmlChar *URI = NULL;
-    xsltStylesheetPtr res;
-
-    if ((cur == NULL) || (style == NULL))
-	return;
-
-    uriRef = xmlGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
-    if (uriRef == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsl:import : missing href attribute\n");
-	goto error;
-    }
-
-    base = xmlNodeGetBase(style->doc, cur);
-    URI = xmlBuildURI(uriRef, base);
-    if (URI == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsl:import : invalid URI reference %s\n", uriRef);
-	goto error;
-    }
-    import = xmlParseFile((const char *)URI);
-    if (import == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsl:import : unable to load %s\n", URI);
-	goto error;
-    }
-
-    res = xsltParseStylesheetDoc(import);
-    if (res != NULL) {
-	res->parent = style;
-	res->next = style->imports;
-	style->imports = res;
-    }
-
-error:
-    if (import != NULL)
-	xmlFreeDoc(import);
-    if (uriRef != NULL)
-	xmlFree(uriRef);
-    if (base != NULL)
-	xmlFree(base);
-    if (URI != NULL)
-	xmlFree(URI);
-}
-
-/**
- * xsltParseStylesheetInclude:
- * @style:  the XSLT stylesheet
- * @template:  the "strip-space" element
- *
- * parse an XSLT stylesheet strip-space element and record
- * elements needing stripping
- */
-
-void
-xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
-    xmlDocPtr include = NULL, oldDoc;
-    xmlChar *base = NULL;
-    xmlChar *uriRef = NULL;
-    xmlChar *URI = NULL;
-
-    if ((cur == NULL) || (style == NULL))
-	return;
-
-    uriRef = xmlGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
-    if (uriRef == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsl:include : missing href attribute\n");
-	goto error;
-    }
-
-    base = xmlNodeGetBase(style->doc, cur);
-    URI = xmlBuildURI(uriRef, base);
-    if (URI == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsl:include : invalid URI reference %s\n", uriRef);
-	goto error;
-    }
-    include = xmlParseFile((const char *)URI);
-    if (include == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsl:include : unable to load %s\n", URI);
-	goto error;
-    }
-
-    oldDoc = style->doc;
-    style->doc = include;
-    xsltParseStylesheetProcess(style, include);
-    style->doc = oldDoc;
-
-error:
-    if (include != NULL)
-	xmlFreeDoc(include);
-    if (uriRef != NULL)
-	xmlFree(uriRef);
-    if (base != NULL)
-	xmlFree(base);
-    if (URI != NULL)
-	xmlFree(URI);
 }
 
 /**

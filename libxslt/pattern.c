@@ -22,6 +22,7 @@
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
+#include "imports.h"
 
 /* #define DEBUG_PARSING */
 
@@ -1229,7 +1230,7 @@ next_pattern:
 
 /**
  * xsltGetTemplate:
- * @style: an XSLT stylesheet
+ * @ctxt:  a XSLT process context
  * @node: an XML Node
  *
  * Finds the template applying to this node
@@ -1237,30 +1238,90 @@ next_pattern:
  * Returns the xsltTemplatePtr or NULL if not found
  */
 xsltTemplatePtr
-xsltGetTemplate(xsltStylesheetPtr style, xmlNodePtr node) {
+xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
+    xsltStylesheetPtr style;
     xsltTemplatePtr ret = NULL;
     const xmlChar *name = NULL;
     xsltCompMatchPtr list = NULL;
 
-    if ((style == NULL) || (node == NULL))
+    if ((ctxt == NULL) || (node == NULL))
 	return(NULL);
 
-    /* TODO : handle IDs/keys here ! */
-    if (style->templatesHash != NULL) {
+    style = ctxt->style;
+    while (style != NULL) {
+	/* TODO : handle IDs/keys here ! */
+	if (style->templatesHash != NULL) {
+	    /*
+	     * Use the top name as selector
+	     */
+	    switch (node->type) {
+		case XML_ELEMENT_NODE:
+		case XML_ATTRIBUTE_NODE:
+		case XML_PI_NODE:
+		    name = node->name;
+		    break;
+		case XML_DOCUMENT_NODE:
+		case XML_HTML_DOCUMENT_NODE:
+		case XML_TEXT_NODE:
+		case XML_CDATA_SECTION_NODE:
+		case XML_COMMENT_NODE:
+		case XML_ENTITY_REF_NODE:
+		case XML_ENTITY_NODE:
+		case XML_DOCUMENT_TYPE_NODE:
+		case XML_DOCUMENT_FRAG_NODE:
+		case XML_NOTATION_NODE:
+		case XML_DTD_NODE:
+		case XML_ELEMENT_DECL:
+		case XML_ATTRIBUTE_DECL:
+		case XML_ENTITY_DECL:
+		case XML_NAMESPACE_DECL:
+		case XML_XINCLUDE_START:
+		case XML_XINCLUDE_END:
+		    break;
+		default:
+		    return(NULL);
+
+	    }
+	}
+	if (name != NULL) {
+	    /*
+	     * find the list of appliable expressions based on the name
+	     */
+	    list = (xsltCompMatchPtr) xmlHashLookup(style->templatesHash, name);
+	}
+	while (list != NULL) {
+	    if (xsltTestCompMatch(list, node)) {
+		ret = list->template;
+		break;
+	    }
+	    list = list->next;
+	}
+	list = NULL;
+
 	/*
-	 * Use the top name as selector
+	 * find alternate generic matches
 	 */
 	switch (node->type) {
 	    case XML_ELEMENT_NODE:
+		list = style->elemMatch;
+		break;
 	    case XML_ATTRIBUTE_NODE:
+		list = style->attrMatch;
+		break;
 	    case XML_PI_NODE:
-		name = node->name;
+		list = style->piMatch;
 		break;
 	    case XML_DOCUMENT_NODE:
 	    case XML_HTML_DOCUMENT_NODE:
+		list = style->rootMatch;
+		break;
 	    case XML_TEXT_NODE:
 	    case XML_CDATA_SECTION_NODE:
+		list = style->textMatch;
+		break;
 	    case XML_COMMENT_NODE:
+		list = style->commentMatch;
+		break;
 	    case XML_ENTITY_REF_NODE:
 	    case XML_ENTITY_NODE:
 	    case XML_DOCUMENT_TYPE_NODE:
@@ -1275,74 +1336,25 @@ xsltGetTemplate(xsltStylesheetPtr style, xmlNodePtr node) {
 	    case XML_XINCLUDE_END:
 		break;
 	    default:
-		return(NULL);
+		break;
 
 	}
-    }
-    if (name != NULL) {
+	while ((list != NULL) &&
+	       ((ret == NULL)  || (list->priority > ret->priority))) {
+	    if (xsltTestCompMatch(list, node)) {
+		ret = list->template;
+		break;
+	    }
+	}
+	if (ret != NULL)
+	    return(ret);
+
 	/*
-	 * find the list of appliable expressions based on the name
+	 * Cycle on next stylesheet import.
 	 */
-	list = (xsltCompMatchPtr) xmlHashLookup(style->templatesHash, name);
+	style = xsltNextImport(style);
     }
-    while (list != NULL) {
-	if (xsltTestCompMatch(list, node)) {
-	    ret = list->template;
-	    break;
-	}
-	list = list->next;
-    }
-    list = NULL;
-
-    /*
-     * find alternate generic matches
-     */
-    switch (node->type) {
-        case XML_ELEMENT_NODE:
-	    list = style->elemMatch;
-	    break;
-        case XML_ATTRIBUTE_NODE:
-	    list = style->attrMatch;
-	    break;
-        case XML_PI_NODE:
-	    list = style->piMatch;
-	    break;
-        case XML_DOCUMENT_NODE:
-        case XML_HTML_DOCUMENT_NODE:
-	    list = style->rootMatch;
-	    break;
-        case XML_TEXT_NODE:
-        case XML_CDATA_SECTION_NODE:
-	    list = style->textMatch;
-	    break;
-        case XML_COMMENT_NODE:
-	    list = style->commentMatch;
-	    break;
-        case XML_ENTITY_REF_NODE:
-        case XML_ENTITY_NODE:
-        case XML_DOCUMENT_TYPE_NODE:
-        case XML_DOCUMENT_FRAG_NODE:
-        case XML_NOTATION_NODE:
-        case XML_DTD_NODE:
-        case XML_ELEMENT_DECL:
-        case XML_ATTRIBUTE_DECL:
-        case XML_ENTITY_DECL:
-        case XML_NAMESPACE_DECL:
-        case XML_XINCLUDE_START:
-        case XML_XINCLUDE_END:
-	    break;
-	default:
-	    break;
-
-    }
-    while ((list != NULL) &&
-	   ((ret == NULL)  || (list->priority > ret->priority))) {
-	if (xsltTestCompMatch(list, node)) {
-	    ret = list->template;
-	    break;
-	}
-    }
-    return(ret);
+    return(NULL);
 }
 
 
@@ -1371,38 +1383,5 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
         xsltFreeCompMatchList(style->piMatch);
     if (style->commentMatch != NULL)
         xsltFreeCompMatchList(style->commentMatch);
-}
-
-/**
- * xsltFindTemplate:
- * @style: an XSLT stylesheet
- * @name: the template name
- * @nameURI: the template name URI
- *
- * Finds the named template.
- *
- * Returns the xsltTemplatePtr or NULL if not found
- */
-xsltTemplatePtr
-xsltFindTemplate(xsltStylesheetPtr style, const xmlChar *name,
-	        const xmlChar *nameURI) {
-    xsltTemplatePtr cur;
-
-    if ((style == NULL) || (name == NULL))
-	return(NULL);
-
-    /* TODO: apply stylesheet import order */
-    cur = style->templates;
-    while (cur != NULL) {
-	if (xmlStrEqual(name, cur->name)) {
-	    if (((nameURI == NULL) && (cur->nameURI == NULL)) ||
-		((nameURI != NULL) && (cur->nameURI != NULL) &&
-		 (xmlStrEqual(nameURI, cur->nameURI)))) {
-		return(cur);
-	    }
-	}
-	cur = cur->next;
-    }
-    return(NULL);
 }
 

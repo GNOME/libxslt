@@ -17,12 +17,9 @@ extern "C" {
 
 int		xsltAddTemplate		(xsltStylesheetPtr style,
 					 xsltTemplatePtr cur);
-xsltTemplatePtr	xsltGetTemplate		(xsltStylesheetPtr style,
+xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node);
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
-xsltTemplatePtr xsltFindTemplate	(xsltStylesheetPtr style,
-					 const xmlChar *name,
-					 const xmlChar *nameURI);
 #ifdef __cplusplus
 }
 #endif

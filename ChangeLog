@@ -1,3 +1,12 @@
+Thu Feb  1 20:58:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am libxslt/imports.[ch]: new module to
+	  implement import cascade lookups and traversal
+	* libxslt/attributes.c libxslt/namespaces.c libxslt/pattern.[ch]
+	  libxslt/transform.c libxslt/xslt.c libxslt/xsltInternals.h:
+	  started coding the import cascade lookup in the places needed,
+	  probably incomplete.
+
 Thu Feb  1 18:04:39 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltInternals.h libxslt/xslt.h: started implementing

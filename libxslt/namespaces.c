@@ -41,6 +41,7 @@
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "namespaces.h"
+#include "imports.h"
 
 
 
@@ -134,18 +135,25 @@ error:
 xmlNsPtr
 xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 	         xmlNodePtr out) {
+    xsltStylesheetPtr style;
     xmlNsPtr ret;
-    const xmlChar *URI;
+    const xmlChar *URI = NULL; /* the replacement URI */
 
     if ((ctxt == NULL) || (cur == NULL) || (out == NULL) || (ns == NULL))
 	return(NULL);
 
-    /* TODO apply cascading */
-    if (ctxt->style->nsAliases != NULL) {
-	URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases, ns->href);
-	if (URI == NULL)
-	    URI = ns->href;
-    } else
+    style = ctxt->style;
+    while (style != NULL) {
+	if (style->nsAliases != NULL)
+	    URI = (const xmlChar *) 
+		xmlHashLookup(ctxt->style->nsAliases, ns->href);
+	if (URI != NULL)
+	    break;
+
+	style = xsltNextImport(style);
+    }
+
+    if (URI == NULL)
 	URI = ns->href;
 
     if ((out->parent != NULL) &&

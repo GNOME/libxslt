@@ -201,6 +201,9 @@ void			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
 int			xsltIsBlank		(xmlChar *str);
 void			xsltFreeStackElemList	(xsltStackElemPtr elem);
 
+xsltStylesheetPtr	xsltParseStylesheetProcess(xsltStylesheetPtr ret,
+	                                         xmlDocPtr doc);
+xsltStylesheetPtr	xsltParseStylesheetDoc	(xmlDocPtr doc);
 #ifdef __cplusplus
 }
 #endif

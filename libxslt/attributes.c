@@ -43,6 +43,15 @@
 #include "attributes.h"
 #include "namespaces.h"
 #include "templates.h"
+#include "imports.h"
+
+/*
+ * TODO: merge attribute sets from different import precedence.
+ *       all this should be precomputed just before the transformation
+ *       starts or at first hit with a cache in the context.
+ *       The simple way for now would be to not allow redefinition of
+ *       attributes once generated in the output tree, possibly costlier.
+ */
 
 /*
  * Useful macros
@@ -382,6 +391,7 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlChar *prefix = NULL;
     xmlChar *attribute, *end;
     xsltAttrElemPtr values;
+    xsltStylesheetPtr style;
 
     if (attributes == NULL) {
 	return;
@@ -407,11 +417,14 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		prefix = NULL;
 	    }
 
-	    /* TODO: apply cascade */
-	    values = xmlHashLookup2(ctxt->style->attributeSets, ncname, prefix);
-	    while (values != NULL) {
-		xsltAttribute(ctxt, node, values->attr);
-		values = values->next;
+	    style = ctxt->style;
+	    while (style != NULL) {
+		values = xmlHashLookup2(style->attributeSets, ncname, prefix);
+		while (values != NULL) {
+		    xsltAttribute(ctxt, node, values->attr);
+		    values = values->next;
+		}
+		style = xsltNextImport(style);
 	    }
 	    if (attribute != NULL)
 		xmlFree(attribute);
