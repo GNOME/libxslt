@@ -269,7 +269,7 @@ xsltAttrTemplateValueProcessNode(xsltTransformContextPtr ctxt,
 		/*
 		 * TODO: keep precompiled form around
 		 */
-		if (nsList == NULL) {
+		if ((nsList == NULL) && (node != NULL)) {
 		    int i = 0;
 
 		    nsList = xmlGetNsList(node->doc, node);

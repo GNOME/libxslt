@@ -1,3 +1,7 @@
+Fri Sep 20 10:55:03 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/templates.c: fixed a problem reported by Mark Vakoc
+
 Wed Sep 18 15:46:50 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libexslt/date.c: fixed the embedded '-' in the duration format 
@@ -13,7 +17,7 @@ Tue Sep 17 18:01:22 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 Sat Sep 14 16:17:51 MDT 2002 John Fleck <jfleck@inkstain.net>
 
-	* doc/xsltproc.html
+	* doc/xsltproc.html:
 	oops, forgot to update the html version of the man page
 
 Sat Sep 14 16:10:21 MDT 2002 John Fleck <jfleck@inkstain.net>
