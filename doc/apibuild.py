@@ -11,6 +11,8 @@ import sys
 import string
 import glob
 
+debug=0
+
 def escape(raw):
     raw = string.replace(raw, '&', '&amp;')
     raw = string.replace(raw, '<', '&lt;')
@@ -224,6 +226,15 @@ ignored_files = {
 ignored_words = {
   "WINAPI": (0, "Windows keyword"),
   "LIBXML_DLL_IMPORT": (0, "Special macro to flag external keywords"),
+  "XMLPUBVAR": (0, "Special macro for extern vars for win32"),
+  "XSLTPUBVAR": (0, "Special macro for extern vars for win32"),
+  "EXSLTPUBVAR": (0, "Special macro for extern vars for win32"),
+  "XMLPUBFUN": (0, "Special macro for extern funcs for win32"),
+  "XSLTPUBFUN": (0, "Special macro for extern funcs for win32"),
+  "EXSLTPUBFUN": (0, "Special macro for extern funcs for win32"),
+  "XMLCALL": (0, "Special macro for win32 calls"),
+  "XSLTCALL": (0, "Special macro for win32 calls"),
+  "EXSLTCALL": (0, "Special macro for win32 calls"),
   "__declspec": (3, "Windows keyword"),
   "ATTRIBUTE_UNUSED": (0, "macro keyword"),
   "LIBEXSLT_PUBLIC": (0, "macro keyword"),
@@ -727,7 +738,8 @@ class CParser:
 		 token = self.lexer.token()
 		 continue
 	     else:
-	         #print "=> ", token
+	         if debug:
+		     print "=> ", token
 	         return token
 	 return None
 

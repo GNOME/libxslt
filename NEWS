@@ -10,6 +10,20 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.0.33: Sep 12 2003:
+   This is a bugfix only release   - error message missing argument (William Brack)
+   - mode not cascaded in template fallbacks (William Brack)
+   - catch redefinition of parameter/variables  (William Brack)
+   - multiple keys with same namespace name (William Brack)
+   - patch for compilation using MingW on Windows (Mikhail Grushinskiy)
+   - header export macros for Windows (Igor Zlatkovic)
+   - cdata-section-elements handling of namespaced names
+   - compilation without libxml2 XPointer support (Mark Vadoc)
+   - apply-templates crash (William Brack)
+   - bug with imported templates (William Brack)
+   - imported attribute-sets merging bug (DocBook) (William Brack)
+
+
 1.0.32: Aug 9 2003:
    - bugfixes: xsltSaveResultToFile() python binding (Chris Jaeger), EXSLT
     function (William Brack), RVT for globals (William Brack), EXSLT date

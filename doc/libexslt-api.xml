@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <api name='libexslt'>
   <files>
+    <file name='exsltexports'>
+     <exports symbol='EXSLTCALL'/>
+     <exports symbol='EXSLTPUBFUN'/>
+     <exports symbol='EXSLTPUBVAR'/>
+     <exports symbol='LIBEXSLT_PUBLIC'/>
+     <exports symbol='_REENTRANT'/>
+    </file>
     <file name='exslt'>
      <exports symbol='EXSLT_COMMON_NAMESPACE'/>
      <exports symbol='EXSLT_DATE_NAMESPACE'/>
@@ -26,6 +33,12 @@
     </file>
   </files>
   <symbols>
+    <macro name='EXSLTCALL' file='exsltexports'>
+    </macro>
+    <macro name='EXSLTPUBFUN' file='exsltexports'>
+    </macro>
+    <macro name='EXSLTPUBVAR' file='exsltexports'>
+    </macro>
     <macro name='EXSLT_COMMON_NAMESPACE' file='exslt'>
       <info>Namespace for EXSLT common functions</info>
     </macro>
@@ -47,8 +60,12 @@
     <macro name='EXSLT_STRINGS_NAMESPACE' file='exslt'>
       <info>Namespace for EXSLT strings functions</info>
     </macro>
+    <macro name='LIBEXSLT_PUBLIC' file='exsltexports'>
+    </macro>
     <macro name='SAXON_NAMESPACE' file='exslt'>
       <info>Namespace for SAXON extensions functions</info>
+    </macro>
+    <macro name='_REENTRANT' file='exsltexports'>
     </macro>
     <variable name='exsltLibexsltVersion' file='exslt' type='const int'/>
     <variable name='exsltLibraryVersion' file='exslt' type='const char *'/>

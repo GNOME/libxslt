@@ -55,6 +55,13 @@
      <exports symbol='xsltEvalXPathStringNs'/>
      <exports symbol='xsltTemplateProcess'/>
     </file>
+    <file name='xsltexports'>
+     <exports symbol='LIBXSLT_PUBLIC'/>
+     <exports symbol='XSLTCALL'/>
+     <exports symbol='XSLTPUBFUN'/>
+     <exports symbol='XSLTPUBVAR'/>
+     <exports symbol='_REENTRANT'/>
+    </file>
     <file name='xsltutils'>
      <exports symbol='IS_XSLT_ELEM'/>
      <exports symbol='IS_XSLT_NAME'/>
@@ -328,7 +335,6 @@
      <exports symbol='xsltNumberDataPtr'/>
     </file>
     <file name='xslt'>
-     <exports symbol='LIBXSLT_PUBLIC'/>
      <exports symbol='XSLT_DEFAULT_URL'/>
      <exports symbol='XSLT_DEFAULT_VENDOR'/>
      <exports symbol='XSLT_DEFAULT_VERSION'/>
@@ -372,6 +378,7 @@
      <exports symbol='xsltFreeTemplateHashes'/>
      <exports symbol='xsltGetTemplate'/>
      <exports symbol='xsltMatchPattern'/>
+     <exports symbol='xsltNormalizeCompSteps'/>
      <exports symbol='xsltTestCompMatchList'/>
     </file>
   </files>
@@ -394,8 +401,13 @@
     <macro name='IS_XSLT_REAL_NODE' file='xsltutils'>
       <info>Check that a node is a &apos;real&apos; one: document, element, text or attribute.</info>
     </macro>
-    <macro name='LIBXSLT_PUBLIC' file='xslt'>
-      <info>Macro used on Windows to tag public identifiers from shared libraries.</info>
+    <macro name='LIBXSLT_PUBLIC' file='xsltexports'>
+    </macro>
+    <macro name='XSLTCALL' file='xsltexports'>
+    </macro>
+    <macro name='XSLTPUBFUN' file='xsltexports'>
+    </macro>
+    <macro name='XSLTPUBVAR' file='xsltexports'>
     </macro>
     <macro name='XSLT_DEFAULT_URL' file='xslt'>
       <info>The XSLT &quot;vendor&quot; URL for this processor.</info>
@@ -465,6 +477,8 @@
     </macro>
     <macro name='XSLT_XT_NAMESPACE' file='extra'>
       <info>This is James Clark&apos;s XT processor namespace for extensions.</info>
+    </macro>
+    <macro name='_REENTRANT' file='xsltexports'>
     </macro>
     <enum name='XSLT_DEBUG_CONT' file='xsltutils' value='6' type='xsltDebugStatusCodes'/>
     <enum name='XSLT_DEBUG_INIT' file='xsltutils' value='1' type='xsltDebugStatusCodes'/>
@@ -565,7 +579,8 @@
       <field name='groupingCharacter' type='int' info=''/>
       <field name='groupingCharacterLen' type='int' info=''/>
       <field name='doc' type='xmlDocPtr' info=''/>
-      <field name='node' type='xmlNodePtr' info=''/>
+      <field name='node' type='xmlNodePtr' info='* accelerators
+*'/>
     </struct>
     <typedef name='xsltNumberDataPtr' file='numbersInternals' type='xsltNumberData *'/>
     <typedef name='xsltOutputType' file='xsltInternals' type='enum'/>
@@ -1587,6 +1602,13 @@ informations are stored'/>
       <info>Find the next stylesheet in import precedence.</info>
       <return type='xsltStylesheetPtr' info='the next stylesheet or NULL if it was the last one'/>
       <arg name='cur' type='xsltStylesheetPtr' info='the current XSLT stylesheet'/>
+    </function>
+    <function name='xsltNormalizeCompSteps' file='pattern'>
+      <info>This is a hashtable scanner function to normalize the compiled steps of an imported stylesheet.</info>
+      <return type='void'/>
+      <arg name='payload' type='void *' info='pointer to template hash table entry'/>
+      <arg name='data' type='void *' info='pointer to the stylesheet'/>
+      <arg name='name' type='const xmlChar *' info='template match name'/>
     </function>
     <function name='xsltNumber' file='transform'>
       <info>Process the xslt number node on the source node</info>

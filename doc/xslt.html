@@ -282,6 +282,23 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
+<h3>1.0.33: Sep 12 2003</h3>
+
+<p>   This is a bugfix only release</p>
+<ul>
+  <li>error message missing argument (William Brack)</li>
+  <li>mode not cascaded in template fallbacks (William Brack)</li>
+  <li>catch redefinition of parameter/variables  (William Brack)</li>
+  <li>multiple keys with same namespace name (William Brack)</li>
+  <li>patch for compilation using MingW on Windows (Mikhail Grushinskiy)</li>
+  <li>header export macros for Windows (Igor Zlatkovic)</li>
+  <li>cdata-section-elements handling of namespaced names</li>
+  <li>compilation without libxml2 XPointer support (Mark Vadoc)</li>
+  <li>apply-templates crash (William Brack)</li>
+  <li>bug with imported templates (William Brack)</li>
+  <li>imported attribute-sets merging bug (DocBook) (William Brack)</li>
+</ul>
+
 <h3>1.0.32: Aug 9 2003</h3>
 <ul>
   <li>bugfixes: xsltSaveResultToFile() python binding (Chris Jaeger), EXSLT
@@ -846,8 +863,8 @@ few pointers and informations which may be helpful:</p>
   <li><a
     href="https://sourceforge.net/docman/index.php?group_id=21935">DocBook
     Open Repository</a> contains a lot of informations about DocBook</li>
-  <li> Bob Stayton provides a <a href="http://www.sagehill.net/">lot of
-    resources</a> and consulting services around DocBook.
+  <li>Bob Stayton provides a <a href="http://www.sagehill.net/">lot of
+    resources</a> and consulting services around DocBook.</li>
   <li>Here is a <a href="/buildDocBookCatalog">shell script</a> to generate
     XML Catalogs for DocBook 4.1.2 . If it can write to the /etc/xml/
     directory, it will set-up /etc/xml/catalog and /etc/xml/docbook based on
