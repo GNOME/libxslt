@@ -1,3 +1,10 @@
+Sun Jul  8 20:44:25 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/documents/Makefile.am 'tests/documents/doc file.xml'
+	  tests/documents/docfile.xml tests/documents/test.result
+	  tests/documents/test.xml tests/documents/test.xsl:
+	  added a test for URI-escaping on document() input
+
 Sun Jul  8 16:34:07 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docs/Makefile.am tests/general/Makefile.am
