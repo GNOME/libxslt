@@ -79,6 +79,58 @@ xsltIsBlank(xmlChar *str) {
  ************************************************************************/
 
 /**
+ * xsltNewTemplate:
+ *
+ * Create a new XSLT Template
+ *
+ * Returns the newly allocated xsltTemplatePtr or NULL in case of error
+ */
+xsltTemplatePtr
+xsltNewTemplate(void) {
+    xsltTemplatePtr cur;
+
+    cur = (xsltTemplatePtr) xmlMalloc(sizeof(xsltTemplate));
+    if (cur == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNewTemplate : malloc failed\n");
+	return(NULL);
+    }
+    memset(cur, 0, sizeof(xsltTemplate));
+    return(cur);
+}
+
+/**
+ * xsltFreeTemplate:
+ * @template:  an XSLT template
+ *
+ * Free up the memory allocated by @template
+ */
+void
+xsltFreeTemplate(xsltTemplatePtr template) {
+    if (template == NULL)
+	return;
+    memset(template, -1, sizeof(xsltTemplate));
+    xmlFree(template);
+}
+
+/**
+ * xsltFreeTemplateList:
+ * @template:  an XSLT template list
+ *
+ * Free up the memory allocated by all the elements of @template
+ */
+void
+xsltFreeTemplateList(xsltTemplatePtr template) {
+    xsltTemplatePtr cur;
+
+    while (template == NULL) {
+	cur = template;
+	template = template->next;
+	xsltFreeTemplate(cur);
+    }
+}
+
+/**
  * xsltNewStylesheet:
  *
  * Create a new XSLT Stylesheet
@@ -109,6 +161,7 @@ void
 xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     if (sheet == NULL)
 	return;
+    xsltFreeTemplateList(sheet->templates);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
     memset(sheet, -1, sizeof(xsltStylesheet));
@@ -120,6 +173,57 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
  *		Parsing of an XSLT Stylesheet				*
  *									*
  ************************************************************************/
+
+/**
+ * xsltParseStylesheetTemplate:
+ * @style:  the XSLT stylesheet
+ * @template:  the "template" element
+ *
+ * parse an XSLT stylesheet building the associated structures
+ */
+
+void
+xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
+    xsltTemplatePtr ret;
+    xmlNodePtr cur;
+
+    if (template == NULL)
+	return;
+
+    ret = xsltNewTemplate();
+    if (ret == NULL)
+	return;
+    ret->next = style->templates;
+    style->templates = ret;
+
+    cur = template->children;
+
+    /*
+     * Find and handle the params
+     */
+    while (cur != NULL) {
+	if (IS_BLANK_NODE(cur)) {
+            cur = cur->next;
+	    continue;
+	}
+	if (!(IS_XSLT_ELEM(cur))) {
+#ifdef DEBUG_PARSING
+	    xsltGenericError(xsltGenericErrorContext,
+		    "xsltParseStylesheetTop : found foreign element %s\n",
+		    cur->name);
+#endif
+            cur = cur->next;
+	    continue;
+	}
+	if (xmlStrEqual(cur->name, "param")) {
+	    TODO /* Handle param */
+	} else
+	    break;
+	cur = cur->next;
+    }
+
+    ret->content = template->children;
+}
 
 /**
  * xsltParseStylesheetTop:
@@ -193,7 +297,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
         } else if (xmlStrEqual(cur->name, "param")) {
 	    TODO /* Handle param */
         } else if (xmlStrEqual(cur->name, "template")) {
-	    TODO /* Handle template */
+	    xsltParseStylesheetTemplate(style, cur);
         } else if (xmlStrEqual(cur->name, "namespace-alias")) {
 	    TODO /* Handle namespace-alias */
 	} else {
