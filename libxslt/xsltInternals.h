@@ -223,6 +223,10 @@ struct _xsltStylePreComp {
     xmlChar *order;             /* sort */
     int      has_order;		/* sort */
     int      descending;	/* sort */
+    xmlChar *lang;		/* sort */
+    int      has_lang;		/* sort */
+    xmlChar *case_order;	/* sort */
+    int      lower_first;	/* sort */
 
     xmlChar *use;		/* copy, element */
     int      has_use;		/* copy, element */

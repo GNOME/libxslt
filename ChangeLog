@@ -1,3 +1,10 @@
+Wed Nov 27 13:33:26 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c libxslt/xsltInternals.h libxslt/xsltutils.c
+	  libxslt/xsltutils.h: Applied patch from Richard Jinks to allow
+	  redefining the sorting routine, plus a bit of tweaking of the
+	  interfaces.
+
 Tue Nov 26 16:02:38 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/Makefile.am doc/parsedecl.py: fixed the API generation

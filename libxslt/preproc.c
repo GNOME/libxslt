@@ -332,8 +332,25 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    style->warnings++;
 	}
     }
-    /* TODO: xsl:sort lang attribute */
-    /* TODO: xsl:sort case-order attribute */
+    comp->case_order = xsltEvalStaticAttrValueTemplate(style, inst,
+			      (const xmlChar *)"case-order",
+			      XSLT_NAMESPACE, &comp->has_order);
+    if (comp->case_order != NULL) {
+	if (xmlStrEqual(comp->case_order, (const xmlChar *) "upper-first"))
+	    comp->lower_first = 0;
+	else if (xmlStrEqual(comp->case_order, (const xmlChar *) "lower-first"))
+	    comp->lower_first = 1;
+	else {
+	    xsltTransformError(NULL, style, inst,
+		 "xsltSortComp: invalid value %s for order\n", comp->order);
+	    comp->lower_first = 0; /* use default */
+	    style->warnings++;
+	}
+    }
+
+    comp->lang = xsltEvalStaticAttrValueTemplate(style, inst,
+				 (const xmlChar *)"lang",
+				 XSLT_NAMESPACE, &comp->has_lang);
 
     comp->select = xsltGetNsProp(inst,(const xmlChar *)"select", XSLT_NAMESPACE);
     if (comp->select == NULL) {

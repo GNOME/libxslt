@@ -636,7 +636,7 @@ xsltDocumentSortFunction(xmlNodeSetPtr list) {
  * reorder the current node list accordingly to the set of sorting
  * requirement provided by the array of nodes.
  */
-static xmlXPathObjectPtr *
+xmlXPathObjectPtr *
 xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     xmlXPathObjectPtr *results = NULL;
     xmlNodeSetPtr list = NULL;
@@ -735,7 +735,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
 }
 
 /**
- * xsltDoSortFunction:
+ * xsltDefaultSortFunction:
  * @ctxt:  a XSLT process context
  * @sorts:  array of sort nodes
  * @nbsorts:  the number of sorts in the array
@@ -744,7 +744,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
  * requirement provided by the arry of nodes.
  */
 void	
-xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
+xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	           int nbsorts) {
     xmlXPathObjectPtr *resultsTab[XSLT_MAX_SORT];
     xmlXPathObjectPtr *results = NULL, *res;
@@ -953,6 +953,42 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	    xmlFree(resultsTab[j]);
 	}
     }
+}
+
+
+static xsltSortFunc xsltSortFunction = xsltDefaultSortFunction;
+
+/**
+ * xsltDoSortFunction:
+ * @ctxt:  a XSLT process context
+ * @sorts:  array of sort nodes
+ * @nbsorts:  the number of sorts in the array
+ *
+ * reorder the current node list accordingly to the set of sorting
+ * requirement provided by the arry of nodes.
+ * This is a wrapper function, the actual function used can be overriden
+ * using xsltSetSortFunc()
+ */
+void
+xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr * sorts,
+                   int nbsorts)
+{
+    if (xsltSortFunction != NULL)
+        xsltSortFunction(ctxt, sorts, nbsorts);
+}
+
+/**
+ * xsltSetSortFunc:
+ * @handler:  the new handler function
+ *
+ * Function to reset the handler for XSLT sorting.
+ */
+void
+xsltSetSortFunc(xsltSortFunc handler) {
+    if (handler != NULL)
+	xsltSortFunction = handler;
+    else
+	xsltSortFunction = xsltDefaultSortFunction;
 }
 
 /************************************************************************
@@ -1730,4 +1766,5 @@ xslDropCall(void)
     if (xsltDebuggerCurrentCallbacks.drop != NULL)
 	xsltDebuggerCurrentCallbacks.drop();
 }
+
 

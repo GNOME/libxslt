@@ -313,7 +313,8 @@ EXPORTS
 
 	/* Sorting. */
 	xsltDocumentSortFunction
-	xsltDoSortFunction
+	xsltComputeSortResult
+	xsltSetSortFunc
 
 	/* QNames handling. */
 	xsltGetQNameURI
