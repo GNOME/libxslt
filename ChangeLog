@@ -1,3 +1,8 @@
+Mon Mar  4 12:57:21 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixed bug #73363, bad tokenization of
+	  pattern
+
 Mon Mar  4 12:01:34 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/date.c: patch from Charles Bozeman for the exslt date

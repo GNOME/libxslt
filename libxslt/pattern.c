@@ -1611,7 +1611,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 		   xsltTransformContextPtr runtime) {
     xsltParserContextPtr ctxt = NULL;
     xsltCompMatchPtr element, first = NULL, previous = NULL;
-    int current, start, end;
+    int current, start, end, level;
 
     if (pattern == NULL) {
 	xsltPrintErrorContext(NULL, NULL, node); /* TODO */
@@ -1631,8 +1631,23 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	while (IS_BLANK(pattern[current]))
 	    current++;
 	end = current;
-	while ((pattern[end] != 0) && (pattern[end] != '|'))
+	level = 0;
+	while ((pattern[end] != 0) && ((pattern[end] != '|') || (level != 0))) {
+	    if (pattern[end] == '[')
+		level++;
+	    else if (pattern[end] == ']')
+		level--;
+	    else if (pattern[end] == '\'') {
+		end++;
+		while ((pattern[end] != 0) && (pattern[end] != '\''))
+		    end++;
+	    } else if (pattern[end] == '"') {
+		end++;
+		while ((pattern[end] != 0) && (pattern[end] != '"'))
+		    end++;
+	    }
 	    end++;
+	}
 	if (current == end) {
 	    xsltPrintErrorContext(NULL, NULL, node); /* TODO */
 	    xsltGenericError(xsltGenericErrorContext,
