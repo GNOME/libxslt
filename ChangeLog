@@ -1,3 +1,11 @@
+Wed Oct 17 02:46:55 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libxslt/numbers.c: reworked internal representation of
+	  tokenized number format and parsing/tokenization. This fixes
+	  many bugs regarding separator and default tokens.
+	* tests/REC/test-7.7-3.out: the fix changes the output of this
+	  test. It now complies to the XSLT spec (wow! ;o)
+
 Tue Oct 16 11:25:15 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/Makefile.am configure.in config.h.in: trying to
