@@ -240,6 +240,7 @@ tests/REC1/Makefile
 tests/REC2/Makefile
 tests/REC/Makefile
 tests/general/Makefile
+tests/reports/Makefile
 tests/extensions/Makefile
 tests/namespaces/Makefile
 tests/numbers/Makefile

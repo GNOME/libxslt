@@ -571,9 +571,17 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 				 elem->name, elem->nameURI, def);
 	    } else if ((elem->comp != NULL) &&
 		       (elem->comp->type == XSLT_FUNC_VARIABLE)) {
-		xsltPrintErrorContext(ctxt, style, elem->comp->inst);
-		xsltGenericError(xsltGenericErrorContext,
-		    "Global variable %s already defined\n", elem->name);
+		/*
+		 * Redefinition of variables from a different stylesheet
+		 * should not generate a message.
+		 */
+		if ((elem->comp->inst != NULL) &&
+		    (def->comp != NULL) && (def->comp->inst != NULL) &&
+		    (elem->comp->inst->doc == def->comp->inst->doc)) {
+		    xsltPrintErrorContext(ctxt, style, elem->comp->inst);
+		    xsltGenericError(xsltGenericErrorContext,
+			"Global variable %s already defined\n", elem->name);
+		}
 	    }
 	    elem = elem->next;
 	}

@@ -1,3 +1,14 @@
+Mon Sep 17 14:45:48 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: fixed a problem with global var override
+	  being reported as an error.
+	* tests/docs/Makefile.am tests/docs/bug-61.xml
+	  tests/general/Makefile.am tests/general/bug-61.*: added a 
+	  specific example in the regression tests
+	* configure.in tests/Makefile.am tests/reports/*: adding a test
+	  to make sure redefinition of global variables in the same stylesheet
+	  are still reported
+
 Sat Sep 15 17:32:16 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extra.c: okay the code from Norm is really non
