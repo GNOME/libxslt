@@ -1,10 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 EXTRA_DIST = 			\
 	libxslt-api.xml		\
-	libexslt-api.xml		\
+	libexslt-api.xml	\
 	libxslt-decl.txt	\
 	xsltproc.xml		\
-	apibuild.py
+	apibuild.py		\
+	libxslt.xsa		\
+	news.xsl
 
 # The name of the module.
 DOC_MODULE=libxslt-$(VERSION)
@@ -25,7 +27,7 @@ APIPAGES=APIconstructors.html APIfiles.html APIfunctions.html \
 
 man_MANS = xsltproc.1
 
-all : $(PAGES)
+all : $(PAGES) $(top_srcdir)/NEWS libxslt.xsa
 
 tests:
 
@@ -34,6 +36,14 @@ web: $(PAGES) $(APIPAGES)
 $(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
 	  $(bindir)/xsltproc --html $(srcdir)/site.xsl $(srcdir)/xslt.html > index.html ; fi )
+
+$(top_srcdir)/NEWS: $(top_srcdir)/doc/news.xsl $(top_srcdir)/doc/news.html
+	-@(if [ -x $(bindir)/xsltproc ] ; then \
+	  $(bindir)/xsltproc --html $(top_srcdir)/doc/news.xsl $(top_srcdir)/doc/news.html > $(top_srcdir)/NEWS ; fi );
+
+libxslt.xsa: $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html
+	-@(if [ -x $(bindir)/xsltproc ] ; then \
+	  $(bindir)/xsltproc --html $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html > libxslt.xsa ; fi );
 
 $(APIPAGES): libxslt-refs.xml site.xsl api.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
@@ -89,6 +99,6 @@ install-data-local:
 	-(cd $(DESTDIR); gtkdoc-fixxref --module=libxslt --html-dir=$(HTML_DIR))
 
 dist-hook:
-	(cd $(srcdir) ; tar cvf - *.1 *.html site.xsl *.gif html/*.html html/*.sgml tutorial/libxslt*) | (cd $(distdir); tar xf -)
+	(cd $(srcdir) ; tar cvf - *.1 *.html site.xsl news.xsl xsa.xsl *.gif html/*.html html/*.sgml tutorial/libxslt*) | (cd $(distdir); tar xf -)
 
 .PHONY : html sgml templates scan
