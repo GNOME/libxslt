@@ -25,11 +25,11 @@ xsltproc \- command line xslt processor
 .nf
 \fBxsltproc\fR [\fB-V\fR | \fB-v\fR | \fB-o \fIfile\fR\fR | \fB--timing\fR | \fB--repeat\fR
          | \fB--debug\fR | \fB--novalid\fR | \fB--noout\fR | \fB--maxdepth \fIval\fR\fR
-         | \fB--html\fR | \fB--docbook\fR | \fB--param \fIname\fR \fIvalue\fR\fR
-         | \fB--stringparam \fIname\fR \fIvalue\fR\fR | \fB--nonet\fR | \fB--catalogs\fR
-         | \fB--xinclude\fR | \fB--profile\fR | \fB--dumpextensions\fR | \fB--nowrite\fR
-         | \fB--nomkdir\fR | \fB--writesubtree\fR] [\fBstylesheet\fR] [\fIfile1\fR]
-         [\fIfile2\fR] [\fI....\fR]
+         | \fB--html\fR | \fB--param \fIname\fR \fIvalue\fR\fR | \fB--stringparam
+         \fIname\fR \fIvalue\fR\fR | \fB--nonet\fR | \fB--catalogs\fR | \fB--xinclude\fR
+         | \fB--profile\fR | \fB--dumpextensions\fR | \fB--nowrite\fR | \fB--nomkdir\fR
+         | \fB--writesubtree\fR] [\fBstylesheet\fR] [\fIfile1\fR] [\fIfile2\fR]
+         [\fI....\fR]
 .fi
 
 .SH "INTRODUCTION"
@@ -87,10 +87,6 @@ Adjust the maximum depth of the template stack before libxslt concludes it is in
 .TP
 \fB--html\fR
 The input document is an HTML file.
-
-.TP
-\fB--docbook\fR
-The input document is DocBook SGML. Do not use the --docbook option of xsltproc to process XML DocBook documents, this option is only intended to provide some (limited) support of the SGML version of DocBook.
 
 .TP
 \fB--param\fR \fIname\fR \fIvalue\fR

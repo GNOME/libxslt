@@ -1,3 +1,8 @@
+Sat Sep 13 02:04:13 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c doc/xsltproc.1 doc/xsltproc.xml
+	  libxslt/xsltutils.h: removing the DocBook SGML support
+
 Fri Sep 12 13:52:07 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing release libxslt-1.0.33

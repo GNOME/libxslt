@@ -44,7 +44,6 @@
 	<arg>--noout</arg>
 	<arg>--maxdepth <replaceable>val</replaceable></arg>
 	<arg>--html</arg>
-	<arg>--docbook</arg>
 	<arg>--param <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
 	<arg>--stringparam <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
 	<arg>--nonet</arg>
@@ -208,21 +207,6 @@
 	</listitem>
       </varlistentry>
 
-    
-      <varlistentry>
-	<term>
-      <option>--docbook</option></term>
-	<listitem>
-	  <simpara>The input document is DocBook
-      <acronym>SGML</acronym>.
-      Do not use the --docbook option of xsltproc to process XML DocBook
-      documents, this option is only intended to provide some (limited) support
-      of the SGML version of DocBook.
-    </simpara>
-	</listitem>
-      </varlistentry>
-
-    
       <varlistentry>
 	<term>
       <option>--param</option> <replaceable>name</replaceable> <replaceable>value</replaceable></term>

@@ -66,16 +66,6 @@ extern "C" {
  *
  * Check that a node is a 'real' one: document, element, text or attribute.
  */
-#ifdef LIBXML_DOCB_ENABLED
-#define IS_XSLT_REAL_NODE(n)						\
-    (((n) != NULL) &&							\
-     (((n)->type == XML_ELEMENT_NODE) ||				\
-      ((n)->type == XML_TEXT_NODE) ||					\
-      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
-      ((n)->type == XML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_HTML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_DOCB_DOCUMENT_NODE)))
-#else
 #define IS_XSLT_REAL_NODE(n)						\
     (((n) != NULL) &&							\
      (((n)->type == XML_ELEMENT_NODE) ||				\
@@ -83,7 +73,6 @@ extern "C" {
       ((n)->type == XML_ATTRIBUTE_NODE) ||				\
       ((n)->type == XML_DOCUMENT_NODE) ||				\
       ((n)->type == XML_HTML_DOCUMENT_NODE)))
-#endif
 
 /*
  * Our own version of namespaced atributes lookup.

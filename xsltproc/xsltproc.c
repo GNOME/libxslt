@@ -34,9 +34,6 @@
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
 #include <libxml/xmlIO.h>
-#ifdef LIBXML_DOCB_ENABLED
-#include <libxml/DOCBparser.h>
-#endif
 #ifdef LIBXML_XINCLUDE_ENABLED
 #include <libxml/xinclude.h>
 #endif
@@ -94,9 +91,6 @@ static int timing = 0;
 static int dumpextensions = 0;
 static int novalid = 0;
 static int noout = 0;
-#ifdef LIBXML_DOCB_ENABLED
-static int docbook = 0;
-#endif
 #ifdef LIBXML_HTML_ENABLED
 static int html = 0;
 #endif
@@ -381,11 +375,6 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 		    doc = htmlParseFile(filename, NULL);
 		else
 #endif
-#ifdef LIBXML_DOCB_ENABLED
-		if (docbook)
-		    doc = docbParseFile(filename, NULL);
-		else
-#endif
 		    doc = xmlParseFile(filename);
 	    }
 	}
@@ -489,9 +478,6 @@ static void usage(const char *name) {
 #ifdef LIBXML_HTML_ENABLED
     printf("\t--html: the input document is(are) an HTML file(s)\n");
 #endif
-#ifdef LIBXML_DOCB_ENABLED
-    printf("\t--docbook: the input document is SGML docbook\n");
-#endif
     printf("\t--param name value : pass a (parameter,value) pair\n");
     printf("\t       value is an UTF8 XPath expression.\n");
     printf("\t       string values must be quoted like \"'string'\"\n or");
@@ -586,11 +572,6 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-noout")) ||
                    (!strcmp(argv[i], "--noout"))) {
             noout++;
-#ifdef LIBXML_DOCB_ENABLED
-        } else if ((!strcmp(argv[i], "-docbook")) ||
-                   (!strcmp(argv[i], "--docbook"))) {
-            docbook++;
-#endif
 #ifdef LIBXML_HTML_ENABLED
         } else if ((!strcmp(argv[i], "-html")) ||
                    (!strcmp(argv[i], "--html"))) {
@@ -808,11 +789,6 @@ main(int argc, char **argv)
 #ifdef LIBXML_HTML_ENABLED
             if (html)
                 doc = htmlParseFile(argv[i], NULL);
-            else
-#endif
-#ifdef LIBXML_DOCB_ENABLED
-            if (docbook)
-                doc = docbParseFile(argv[i], NULL);
             else
 #endif
                 doc = xmlParseFile(argv[i]);
