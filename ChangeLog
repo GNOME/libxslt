@@ -1,3 +1,10 @@
+Fri May  4 17:06:01 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/general/bug-2[0-4].* tests/docs/bug-2[0-4].*: added more
+	  tests especially on sorting
+	* test/xsltutils.c: oops multiple sorts was actually broken !!!
+	  this should fix it
+
 Thu May  3 19:02:21 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* TODO configure.in libxslt.spec.in: getting ready for 0.9.0

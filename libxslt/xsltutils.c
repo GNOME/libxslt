@@ -294,6 +294,8 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
 		    results[i] = NULL;
 		}
 	    }
+	} else {
+	    results[i] = NULL;
 	}
     }
     ctxt->node = oldNode;
@@ -341,6 +343,8 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     len = list->nodeNr;
 
     resultsTab[0] = xsltComputeSortResult(ctxt, sorts[0]);
+    for (i = 1;i < XSLT_MAX_SORT;i++)
+	resultsTab[i] = NULL;
 
     results = resultsTab[0];
 
@@ -371,8 +375,6 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			tst = xmlStrcmp(results[j]->stringval,
 				     results[j + incr]->stringval); 
 		    }
-		    if (tst == 0)
-			tst = results[j]->index > results[j + incr]->index;
 		    if (descending)
 			tst = -tst;
 		}
@@ -414,8 +416,6 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 				tst = xmlStrcmp(res[j]->stringval,
 					     res[j + incr]->stringval); 
 			    }
-			    if (tst == 0)
-				tst = res[j]->index > res[j + incr]->index;
 			    if (desc)
 				tst = -tst;
 			}
@@ -429,6 +429,9 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			depth++;
 		    }
 		}
+		if (tst == 0) {
+		    tst = results[j]->index > results[j + incr]->index;
+		}
 		if (tst > 0) {
 		    tmp = results[j];
 		    results[j] = results[j + incr];
@@ -436,6 +439,18 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 		    node = list->nodeTab[j];
 		    list->nodeTab[j] = list->nodeTab[j + incr];
 		    list->nodeTab[j + incr] = node;
+		    depth = 1;
+		    while (depth < nbsorts) {
+			if (sorts[depth] == NULL)
+			    break;
+			if (resultsTab[depth] == NULL)
+			    break;
+			res = resultsTab[depth];
+			tmp = res[j];
+			res[j] = res[j + incr];
+			res[j + incr] = tmp;
+			depth++;
+		    }
 		    j -= incr;
 		} else
 		    break;
