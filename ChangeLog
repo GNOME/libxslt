@@ -1,3 +1,7 @@
+Wed Feb 19 18:51:06 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/functions.c libxslt/xslt.c: fixed bug 106251
+
 Wed Feb 19 15:52:33 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* xsltproc/xsltproc.c: obsoleted xmlNormalizeWindowsPath
