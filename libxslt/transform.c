@@ -35,6 +35,7 @@
  * To cleanup
  */
 xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
+void xmlXPathBooleanFunction(xmlXPathParserContextPtr ctxt, int nargs);
 
 /*
  * There is no XSLT specific error reporting module yet
@@ -206,16 +207,28 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     value = xmlNodeListGetString(inst->doc, inst->children, 1);
     if (value == NULL) {
-	if (ns)
+	if (ns) {
+#if LIBXML_VERSION > 202111
 	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href,
 		                (const xmlChar *)"");
-	else
+#else
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsl:attribute: recompile against newer libxml version\n");
+	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
+#endif
+	} else
 	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
     } else {
 	/* TODO: attribute value template */
-	if (ns)
+	if (ns) {
+#if LIBXML_VERSION > 202111
 	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href, value);
-	else
+#else
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsl:attribute: recompile against newer libxml version\n");
+	    attr = xmlSetProp(ctxt->insert, ncname, value);
+#endif
+	} else
 	    attr = xmlSetProp(ctxt->insert, ncname, value);
     }
 

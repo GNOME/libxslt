@@ -1,3 +1,10 @@
+Tue Jan 16 17:17:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: started filling it :-(
+	* libxslt/pattern.c: should now at least compile the full
+	  set of patterns authorized. Default priorities added.
+	* libxslt/transform.c: a bit more work and cleanup.
+
 Mon Jan 15 15:34:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* TODO: started adding in there :-(
