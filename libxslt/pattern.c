@@ -1442,15 +1442,22 @@ parse_predicate:
 	level++;
 	NEXT;
 	q = CUR_PTR;
-	/* TODO: avoid breaking in strings ... */
 	while (CUR != 0) {
 	    /* Skip over nested predicates */
 	    if (CUR == '[')
 		level++;
-	    if (CUR == ']') {
+	    else if (CUR == ']') {
 		level--;
 		if (level == 0)
 		    break;
+	    } else if (CUR == '"') {
+		NEXT;
+		while ((CUR != 0) && (CUR != '"'))
+		    NEXT;
+	    } else if (CUR == '\'') {
+		NEXT;
+		while ((CUR != 0) && (CUR != '\''))
+		    NEXT;
 	    }
 	    NEXT;
 	}
