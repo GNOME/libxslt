@@ -1,3 +1,9 @@
+Mon Jun 18 18:36:36 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltutils.c: forgot to flush in xsltSaveTo() in html and
+	  xml cases, and fixed text output to be recursive in text nodes
+	  lookups
+
 Mon Jun 18 15:44:51 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in: patch from Tony Graham to cleanup libxml2 detection

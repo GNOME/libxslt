@@ -611,6 +611,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    htmlSetMetaEncoding(result, (const xmlChar *) "UTF-8");
 	}
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
+	xmlOutputBufferFlush(buf);
     } else if ((method != NULL) &&
 	(xmlStrEqual(method, (const xmlChar *) "xhtml"))) {
 	if (encoding != NULL) {
@@ -619,6 +620,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    htmlSetMetaEncoding(result, (const xmlChar *) "UTF-8");
 	}
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
+	xmlOutputBufferFlush(buf);
     } else if ((method != NULL) &&
 	       (xmlStrEqual(method, (const xmlChar *) "text"))) {
 	xmlNodePtr cur;
@@ -627,8 +629,38 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	while (cur != NULL) {
 	    if (cur->type == XML_TEXT_NODE)
 		xmlOutputBufferWriteString(buf, (const char *) cur->content);
-	    cur = cur->next;
+
+	    /*
+	     * Skip to next node
+	     */
+	    if (cur->children != NULL) {
+		if ((cur->children->type != XML_ENTITY_DECL) &&
+		    (cur->children->type != XML_ENTITY_REF_NODE) &&
+		    (cur->children->type != XML_ENTITY_NODE)) {
+		    cur = cur->children;
+		    continue;
+		}
+	    }
+	    if (cur->next != NULL) {
+		cur = cur->next;
+		continue;
+	    }
+	    
+	    do {
+		cur = cur->parent;
+		if (cur == NULL)
+		    break;
+		if (cur == (xmlNodePtr) style->doc) {
+		    cur = NULL;
+		    break;
+		}
+		if (cur->next != NULL) {
+		    cur = cur->next;
+		    break;
+		}
+	    } while (cur != NULL);
 	}
+	xmlOutputBufferFlush(buf);
     } else {
 	int omitXmlDecl;
 	int standalone;
