@@ -96,8 +96,8 @@ xtchunk:
 	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc \
 		-o $(srcdir)/result/xtchunk/html/gdp-handbook \
 		$(srcdir)/html/xtchunk.xsl $$i 2> $$base.err ; \
-	    if [ -f $(srcdir)/result/html/base.err ] ; then \
-		diff $(srcdir)/result/html/base.err $$base.err ; \
+	    if [ -f $(srcdir)/result/html/$$base.err ] ; then \
+		diff $(srcdir)/result/html/$$base.err $$base.err ; \
 		rm $$base.err ; \
 	    else \
 		mv $$base.err $(srcdir)/result/html/$$base.err ; \
