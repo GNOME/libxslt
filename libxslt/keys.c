@@ -338,16 +338,16 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
      * Evaluate the nodelist
      */
 
-    if (keyd->comp == NULL)
-	goto error;
-    if (keyd->usecomp == NULL)
-	goto error;
-
+    oldXDoc= ctxt->xpathCtxt->doc;
     oldPos = ctxt->xpathCtxt->proximityPosition;
     oldSize = ctxt->xpathCtxt->contextSize;
     oldInst = ctxt->inst;
     oldDoc = ctxt->document;
-    oldXDoc= ctxt->xpathCtxt->doc;
+
+    if (keyd->comp == NULL)
+	goto error;
+    if (keyd->usecomp == NULL)
+	goto error;
 
     ctxt->document = doc;
     ctxt->xpathCtxt->doc = doc->doc;

@@ -108,6 +108,35 @@ PUSH_AND_POP(static, xsltStackElemPtr, vars)
 
 /************************************************************************
  *									*
+ *			XInclude default settings			*
+ *									*
+ ************************************************************************/
+
+static int xsltDoXIncludeDefault = 0;
+
+/**
+ * xsltSetXIncludeDefault:
+ * @xinclude: whether to do XInclude processing
+ *
+ * Set whether XInclude should be processed on document being loaded by default
+ */
+void
+xsltSetXIncludeDefault(int xinclude) {
+    xsltDoXIncludeDefault = xinclude;
+}
+
+/**
+ * xsltGetXIncludeDefault:
+ *
+ * Returns whether XInclude should be processed on document being loaded
+ */
+int
+xsltGetXIncludeDefault(void) {
+    return(xsltDoXIncludeDefault);
+}
+
+/************************************************************************
+ *									*
  *			handling of transformation contexts		*
  *									*
  ************************************************************************/
@@ -192,6 +221,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     docu->main = 1;
     cur->document = docu;
     cur->inst = NULL;
+    cur->xinclude = xsltDoXIncludeDefault;
     return(cur);
 }
 

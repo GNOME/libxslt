@@ -364,6 +364,8 @@ struct _xsltTransformContext {
     xmlHashTablePtr   globalVars;	/* the global variables and params */
 
     xmlNodePtr inst;			/* the instruction in the stylesheet */
+
+    int xinclude;			/* should XInclude be processed */
 };
 
 /**

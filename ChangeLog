@@ -1,3 +1,10 @@
+Fri Jun 15 18:29:29 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/keys.c: avoid a possibility of an uninitialized variable
+	* libxslt/documents.c libxslt/transform.[ch] libxslt/transform.h
+	  libxslt/xsltInternals.h libxslt/xsltproc.c: Implement Raphael Hertzog
+	  request to have xinclude processing done on document() if requested
+
 Thu Jun 14 20:52:13 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/Makefile.am: applied patch from Sander Vesik for -j2 

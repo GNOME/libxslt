@@ -188,6 +188,7 @@ main(int argc, char **argv) {
 	} else if ((!strcmp(argv[i], "-xinclude")) ||
 		   (!strcmp(argv[i], "--xinclude"))) {
 	    xinclude++;
+	    xsltSetXIncludeDefault(1);
 #endif
 	} else if ((!strcmp(argv[i], "-param")) ||
 		   (!strcmp(argv[i], "--param"))) {

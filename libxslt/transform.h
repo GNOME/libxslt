@@ -16,8 +16,14 @@
 extern "C" {
 #endif
 
-/*
- * Interfaces
+/**
+ * XInclude default processing
+ */
+void		xsltSetXIncludeDefault	(int xinclude);
+int		xsltGetXIncludeDefault	(void);
+
+/**
+ * Private Interfaces
  */
 xmlDocPtr	xsltApplyStylesheet	(xsltStylesheetPtr style,
 					 xmlDocPtr doc,
@@ -94,6 +100,7 @@ void 		xsltForEach		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
 					 xmlNodePtr inst,
 					 xsltStylePreCompPtr comp);
+
 #ifdef __cplusplus
 }
 #endif
