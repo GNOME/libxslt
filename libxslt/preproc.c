@@ -158,6 +158,8 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
 	xmlFree(comp->numdata.value);
     if (comp->numdata.format != NULL)
 	xmlFree(comp->numdata.format);
+    if (comp->comp != NULL)
+	xmlXPathFreeCompExpr(comp->comp);
 
     memset(comp, -1, sizeof(xsltStylePreComp));
 

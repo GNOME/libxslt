@@ -291,10 +291,11 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     int i;
     xmlChar *pattern = NULL;
     xmlNodeSetPtr nodelist = NULL, keylist;
-    xmlXPathObjectPtr res = NULL, tmp;
+    xmlXPathObjectPtr res = NULL;
     xmlChar *str;
-    xmlXPathParserContextPtr xpathParserCtxt;
+    xmlXPathCompExprPtr comp;
     xsltKeyTablePtr table;
+
 
     /*
      * Prepare the search
@@ -310,22 +311,14 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
      * Evaluate the nodelist
      */
 
-    xpathParserCtxt =
-	xmlXPathNewParserContext(pattern, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
+    comp = xmlXPathCompile(pattern);
+    if (comp == NULL)
 	goto error;
     ctxt->document = doc;
     ctxt->node = (xmlNodePtr) doc->doc;
     ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
-    xmlXPathEvalExpr(xpathParserCtxt);
-    xmlXPathRunEval(xpathParserCtxt);
-    res = valuePop(xpathParserCtxt);
-    do {
-        tmp = valuePop(xpathParserCtxt);
-	if (tmp != NULL) {
-	    xmlXPathFreeObject(tmp);
-	}
-    } while (tmp != NULL);
+    res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+    xmlXPathFreeCompExpr(comp);
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
 	    nodelist = res->nodesetval;
@@ -359,9 +352,12 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     if (table == NULL)
 	goto error;
 
+    comp = xmlXPathCompile(keyd->use);
+    if (comp == NULL)
+	goto error;
     for (i = 0;i < nodelist->nodeNr;i++) {
 	ctxt->node = nodelist->nodeTab[i];
-	str = xsltEvalXPathString(ctxt, keyd->use);
+	str = xsltEvalXPathString(ctxt, comp);
 	if (str != NULL) {
 #ifdef DEBUG_KEYS
 	    xsltGenericDebug(xsltGenericDebugContext,
@@ -385,6 +381,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 #endif
 	}
     }
+    xmlXPathFreeCompExpr(comp);
 
     table->next = doc->keys;
     doc->keys = table;
@@ -392,8 +389,6 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 error:
     if (res != NULL)
 	xmlXPathFreeObject(res);
-    if (xpathParserCtxt != NULL)
-	xmlXPathFreeParserContext(xpathParserCtxt);
     if (pattern != NULL)
 	xmlFree(pattern);
 }

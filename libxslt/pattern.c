@@ -65,6 +65,7 @@ struct _xsltStepOp {
     xmlChar *value;
     xmlChar *value2;
     xmlChar *value3;
+    xmlXPathCompExprPtr comp;
     /*
      * Optimisations for count
      */
@@ -150,6 +151,8 @@ xsltFreeCompMatch(xsltCompMatchPtr comp) {
 	    xmlFree(op->value2);
 	if (op->value3 != NULL)
 	    xmlFree(op->value3);
+	if (op->comp != NULL)
+	    xmlXPathFreeCompExpr(op->comp);
     }
     memset(comp, -1, sizeof(xsltCompMatch));
     xmlFree(comp);
@@ -655,21 +658,30 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		oldNode = ctxt->node;
 		ctxt->node = node;
 
-		if ((step->value == NULL) ||
-		    (!xsltEvalXPathPredicate(ctxt, step->value))) {
-		    if (pos != 0) {
-			ctxt->xpathCtxt->contextSize = oldCS;
-			ctxt->xpathCtxt->proximityPosition = oldCP;
-		    }
-		    ctxt->node = oldNode;
-		    return(0);
+		if (step->value == NULL)
+		    goto wrong_index;
+
+		if (step->comp == NULL) {
+		    step->comp = xmlXPathCompile(step->value);
+		    if (step->comp == NULL)
+			goto wrong_index;
 		}
+		if (!xsltEvalXPathPredicate(ctxt, step->comp))
+		    goto wrong_index;
+
 		if (pos != 0) {
 		    ctxt->xpathCtxt->contextSize = oldCS;
 		    ctxt->xpathCtxt->proximityPosition = oldCP;
 		}
 		ctxt->node = oldNode;
 		break;
+wrong_index:
+		if (pos != 0) {
+		    ctxt->xpathCtxt->contextSize = oldCS;
+		    ctxt->xpathCtxt->proximityPosition = oldCP;
+		}
+		ctxt->node = oldNode;
+		return(0);
 	    }
             case XSLT_OP_PI:
 		if (node->type != XML_PI_NODE)

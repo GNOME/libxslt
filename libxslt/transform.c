@@ -1132,9 +1132,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlXPathObjectPtr *results = NULL;
     xmlNodeSetPtr list = NULL;
-    xmlXPathParserContextPtr xpathParserCtxt = NULL;
-    xmlXPathObjectPtr res, tmp;
-    const xmlChar *start;
+    xmlXPathObjectPtr res;
     int len = 0;
     int i;
     xmlNodePtr oldNode;
@@ -1148,6 +1146,12 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     if (comp->select == NULL)
 	return;
+    if (comp->comp == NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL)
+	    return;
+    }
+
 
     list = ctxt->nodeList;
     if ((list == NULL) || (list->nodeNr <= 1))
@@ -1159,9 +1163,6 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     /* TODO: xsl:sort case-order attribute */
 
 
-    xpathParserCtxt = xmlXPathNewParserContext(comp->select, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
-	goto error;
     results = xmlMalloc(len * sizeof(xmlXPathObjectPtr));
     if (results == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -1169,28 +1170,18 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     }
 
-    start = xpathParserCtxt->cur;
     oldNode = ctxt->node;
     for (i = 0;i < len;i++) {
-	xpathParserCtxt->cur = start;
 	ctxt->xpathCtxt->contextSize = len;
 	ctxt->xpathCtxt->proximityPosition = i + 1;
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->node = ctxt->node;
-	xmlXPathEvalExpr(xpathParserCtxt);
-	xmlXPathRunEval(xpathParserCtxt);
-	xmlXPathStringFunction(xpathParserCtxt, 1);
-	if (comp->number)
-	    xmlXPathNumberFunction(xpathParserCtxt, 1);
-	res = valuePop(xpathParserCtxt);
-	do {
-	    tmp = valuePop(xpathParserCtxt);
-	    if (tmp != NULL) {
-		xmlXPathFreeObject(tmp);
-	    }
-	} while (tmp != NULL);
-
+	res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
 	if (res != NULL) {
+	    if (res->type != XPATH_STRING)
+		res = xmlXPathConvertString(res);
+	    if (comp->number)
+		res = xmlXPathConvertNumber(res);
 	    if (comp->number) {
 		if (res->type == XPATH_NUMBER) {
 		    results[i] = res;
@@ -1219,8 +1210,6 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltSortFunction(list, &results[0], comp->descending, comp->number);
 
 error:
-    if (xpathParserCtxt != NULL)
-	xmlXPathFreeParserContext(xpathParserCtxt);
     if (results != NULL) {
 	for (i = 0;i < len;i++)
 	    xmlXPathFreeObject(results[i]);
@@ -1674,8 +1663,7 @@ error:
 void
 xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlXPathObjectPtr res = NULL, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    xmlXPathObjectPtr res = NULL;
     xmlNodePtr copy = NULL;
     xmlNodeSetPtr list = NULL;
     int i;
@@ -1685,25 +1673,18 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (comp->select == NULL)
 	return;
+    if (comp->comp == NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL)
+	    return;
+    }
 #ifdef DEBUG_PROCESS
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltCopyOf: select %s\n", comp->select);
 #endif
 
-    xpathParserCtxt =
-	xmlXPathNewParserContext(comp->select, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
-	goto error;
     ctxt->xpathCtxt->node = node;
-    xmlXPathEvalExpr(xpathParserCtxt);
-    xmlXPathRunEval(xpathParserCtxt);
-    res = valuePop(xpathParserCtxt);
-    do {
-        tmp = valuePop(xpathParserCtxt);
-	if (tmp != NULL) {
-	    xmlXPathFreeObject(tmp);
-	}
-    } while (tmp != NULL);
+    res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
 	    list = res->nodesetval;
@@ -1735,9 +1716,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	} else {
 	    /* convert to a string */
-	    valuePush(xpathParserCtxt, res);
-	    xmlXPathStringFunction(xpathParserCtxt, 1);
-	    res = valuePop(xpathParserCtxt);
+	    res = xmlXPathConvertString(res);
 	    if ((res != NULL) && (res->type == XPATH_STRING)) {
 		/* append content as text node */
 		copy = xmlNewText(res->stringval);
@@ -1745,12 +1724,6 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    xmlAddChild(ctxt->insert, copy);
 		}
 	    }
-	    do {
-		tmp = valuePop(xpathParserCtxt);
-		if (tmp != NULL) {
-		    xmlXPathFreeObject(tmp);
-		}
-	    } while (tmp != NULL);
 	    if (copy == NULL) {
 		xsltGenericError(xsltGenericErrorContext,
 		    "xsltDefaultProcessOneNode: text copy failed\n");
@@ -1763,11 +1736,6 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     }
 
-error:
-    if (xpathParserCtxt != NULL) {
-	xmlXPathFreeParserContext(xpathParserCtxt);
-        xpathParserCtxt = NULL;
-    }
     if (res != NULL)
 	xmlXPathFreeObject(res);
 }
@@ -1784,8 +1752,7 @@ error:
 void
 xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlXPathObjectPtr res = NULL, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    xmlXPathObjectPtr res = NULL;
     xmlNodePtr copy = NULL;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
@@ -1793,28 +1760,22 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (comp->select == NULL)
 	return;
+    if (comp->comp == NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL)
+	    return;
+    }
 
 #ifdef DEBUG_PROCESS
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltValueOf: select %s\n", comp->select);
 #endif
 
-    xpathParserCtxt =
-	xmlXPathNewParserContext(comp->select, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
-	goto error;
     ctxt->xpathCtxt->node = node;
-    xmlXPathEvalExpr(xpathParserCtxt);
-    xmlXPathRunEval(xpathParserCtxt);
-    xmlXPathStringFunction(xpathParserCtxt, 1);
-    res = valuePop(xpathParserCtxt);
-    do {
-        tmp = valuePop(xpathParserCtxt);
-	if (tmp != NULL) {
-	    xmlXPathFreeObject(tmp);
-	}
-    } while (tmp != NULL);
+    res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     if (res != NULL) {
+	if (res->type != XPATH_STRING)
+	    res = xmlXPathConvertString(res);
 	if (res->type == XPATH_STRING) {
             copy = xmlNewText(res->stringval);
 	    if (copy != NULL) {
@@ -1833,11 +1794,6 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltValueOf: result %s\n", res->stringval);
 #endif
-error:
-    if (xpathParserCtxt != NULL) {
-	xmlXPathFreeParserContext(xpathParserCtxt);
-        xpathParserCtxt = NULL;
-    }
     if (res != NULL)
 	xmlXPathFreeObject(res);
 }
@@ -1968,9 +1924,8 @@ void
 xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlNodePtr cur, delete = NULL;
-    xmlXPathObjectPtr res = NULL, tmp;
+    xmlXPathObjectPtr res = NULL;
     xmlNodeSetPtr list = NULL, oldlist;
-    xmlXPathParserContextPtr xpathParserCtxt = NULL;
     int i, oldProximityPosition, oldContextSize;
     const xmlChar *oldmode, *oldmodeURI;
     int have_sort=0;
@@ -1998,27 +1953,18 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->modeURI = comp->modeURI;
 
     if (comp->select != NULL) {
+	if (comp->comp == NULL) {
+	    comp->comp = xmlXPathCompile(comp->select);
+	    if (comp->comp == NULL)
+		goto error;
+	}
 #ifdef DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltApplyTemplates: select %s\n", comp->select);
 #endif
 
-	if (ctxt->xpathCtxt == NULL) {
-	}
-	xpathParserCtxt =
-	    xmlXPathNewParserContext(comp->select, ctxt->xpathCtxt);
-	if (xpathParserCtxt == NULL)
-	    goto error;
 	ctxt->xpathCtxt->node = node;
-	xmlXPathEvalExpr(xpathParserCtxt);
-	xmlXPathRunEval(xpathParserCtxt);
-	res = valuePop(xpathParserCtxt);
-	do {
-	    tmp = valuePop(xpathParserCtxt);
-	    if (tmp != NULL) {
-		xmlXPathFreeObject(tmp);
-	    }
-	} while (tmp != NULL);
+	res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
 	if (res != NULL) {
 	    if (res->type == XPATH_NODESET) {
 		list = res->nodesetval;
@@ -2142,8 +2088,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 error:
     ctxt->mode = oldmode;
     ctxt->modeURI = oldmodeURI;
-    if (xpathParserCtxt != NULL)
-	xmlXPathFreeParserContext(xpathParserCtxt);
     if (res != NULL)
 	xmlXPathFreeObject(res);
     if (list != NULL)
@@ -2164,8 +2108,7 @@ void
 xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL;
-    xmlXPathObjectPtr res = NULL, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement, when;
     int doit = 1;
 
@@ -2188,7 +2131,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     }
     while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when"))) {
-
+	xmlXPathCompExprPtr comp;
+        /* TODO: build a precompiled block for when too ! */
 	when = replacement;
 	prop = xmlGetNsProp(when, (const xmlChar *)"test", XSLT_NAMESPACE);
 	if (prop == NULL) {
@@ -2201,22 +2145,15 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsl:when: test %s\n", prop);
 #endif
 
-	xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
-	if (xpathParserCtxt == NULL)
+	comp = xmlXPathCompile(prop);
+	if (comp == NULL)
 	    goto error;
 	ctxt->xpathCtxt->node = node;
-	xmlXPathEvalExpr(xpathParserCtxt);
-	xmlXPathRunEval(xpathParserCtxt);
-	xmlXPathBooleanFunction(xpathParserCtxt, 1);
-	res = valuePop(xpathParserCtxt);
-	do {
-	    tmp = valuePop(xpathParserCtxt);
-	    if (tmp != NULL) {
-		xmlXPathFreeObject(tmp);
-	    }
-	} while (tmp != NULL);
-
+	res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+	xmlXPathFreeCompExpr(comp);
 	if (res != NULL) {
+	    if (res->type != XPATH_BOOLEAN)
+		res = xmlXPathConvertBoolean(res);
 	    if (res->type == XPATH_BOOLEAN)
 		doit = res->boolval;
 	    else {
@@ -2238,9 +2175,6 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltFreeStackElemList(varsPop(ctxt));
 	    goto done;
 	}
-	if (xpathParserCtxt != NULL)
-	    xmlXPathFreeParserContext(xpathParserCtxt);
-	xpathParserCtxt = NULL;
 	if (prop != NULL)
 	    xmlFree(prop);
 	prop = NULL;
@@ -2267,8 +2201,6 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 done:
 error:
-    if (xpathParserCtxt != NULL)
-	xmlXPathFreeParserContext(xpathParserCtxt);
     if (prop != NULL)
 	xmlFree(prop);
     if (res != NULL)
@@ -2287,8 +2219,7 @@ error:
 void
 xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlXPathObjectPtr res = NULL, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    xmlXPathObjectPtr res = NULL;
     int doit = 1;
 
     if (comp == NULL) {
@@ -2300,28 +2231,22 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (comp->test == NULL)
 	return;
+    if (comp->comp == NULL) {
+	comp->comp = xmlXPathCompile(comp->test);
+	if (comp->comp == NULL)
+	    return;
+    }
 
 #ifdef DEBUG_PROCESS
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltIf: test %s\n", comp->test);
 #endif
 
-    xpathParserCtxt = xmlXPathNewParserContext(comp->test, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
-	goto error;
     ctxt->xpathCtxt->node = node;
-    xmlXPathEvalExpr(xpathParserCtxt);
-    xmlXPathRunEval(xpathParserCtxt);
-    xmlXPathBooleanFunction(xpathParserCtxt, 1);
-    res = valuePop(xpathParserCtxt);
-    do {
-        tmp = valuePop(xpathParserCtxt);
-	if (tmp != NULL) {
-	    xmlXPathFreeObject(tmp);
-	}
-    } while (tmp != NULL);
-
+    res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     if (res != NULL) {
+	if (res->type != XPATH_BOOLEAN)
+	    res = xmlXPathConvertBoolean(res);
 	if (res->type == XPATH_BOOLEAN)
 	    doit = res->boolval;
 	else {
@@ -2344,8 +2269,6 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
 error:
-    if (xpathParserCtxt != NULL)
-	xmlXPathFreeParserContext(xpathParserCtxt);
     if (res != NULL)
 	xmlXPathFreeObject(res);
 }
@@ -2362,10 +2285,9 @@ error:
 void
 xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlXPathObjectPtr res = NULL, tmp;
+    xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement;
     xmlNodeSetPtr list = NULL, oldlist;
-    xmlXPathParserContextPtr xpathParserCtxt = NULL;
     int i, oldProximityPosition, oldContextSize;
     /* xmlNodePtr oldInsert = ctxt->insert; */
     xmlNodePtr oldNode = ctxt->node;
@@ -2379,26 +2301,19 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (comp->select == NULL)
 	return;
+    if (comp->comp == NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL)
+	    return;
+    }
 
 #ifdef DEBUG_PROCESS
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltForEach: select %s\n", comp->select);
 #endif
 
-    xpathParserCtxt = xmlXPathNewParserContext(comp->select, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
-	goto error;
     ctxt->xpathCtxt->node = node;
-    xmlXPathEvalExpr(xpathParserCtxt);
-    xmlXPathRunEval(xpathParserCtxt);
-    res = valuePop(xpathParserCtxt);
-    do {
-        tmp = valuePop(xpathParserCtxt);
-	if (tmp != NULL) {
-	    xmlXPathFreeObject(tmp);
-	}
-    } while (tmp != NULL);
-
+    res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     if (res != NULL) {
 	if (res->type == XPATH_NODESET)
 	    list = res->nodesetval;
@@ -2445,8 +2360,6 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 
 error:
-    if (xpathParserCtxt != NULL)
-	xmlXPathFreeParserContext(xpathParserCtxt);
     if (res != NULL)
 	xmlXPathFreeObject(res);
 }

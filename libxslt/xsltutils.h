@@ -23,7 +23,6 @@ extern "C" {
 int xmlXPathIsNodeType(const xmlChar *name);
 xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
 void xmlXPathBooleanFunction(xmlXPathParserContextPtr ctxt, int nargs);
-void xmlXPathRunEval(xmlXPathParserContextPtr ctxt);
 /*********
 void xmlXPathRegisterVariableLookup(xmlXPathContextPtr ctxt,
 	             xmlXPathVariableLookupFunc f, void *data)

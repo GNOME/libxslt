@@ -39,7 +39,7 @@
 /**
  * xsltEvalXPathPredicate:
  * @ctxt:  the XSLT transformation context
- * @str:  the XPath expression
+ * @comp:  the XPath compiled expression
  *
  * Process the expression using XPath and evaluate the result as
  * an XPath predicate
@@ -47,47 +47,36 @@
  * Returns 1 is the predicate was true, 0 otherwise
  */
 int
-xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, const xmlChar *expr) {
-    int ret;
-    xmlXPathObjectPtr res, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt;
+xsltEvalXPathPredicate(xsltTransformContextPtr ctxt,
+	               xmlXPathCompExprPtr comp) {
+    int ret, position;
+    xmlXPathObjectPtr res;
 
-    xpathParserCtxt =
-	xmlXPathNewParserContext(expr, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
-	return(0);
+    position = ctxt->xpathCtxt->proximityPosition;
     ctxt->xpathCtxt->node = ctxt->node;
-    xmlXPathEvalExpr(xpathParserCtxt);
-    xmlXPathRunEval(xpathParserCtxt);
-    res = valuePop(xpathParserCtxt);
-    do {
-        tmp = valuePop(xpathParserCtxt);
-	if (tmp != NULL) {
-	    xmlXPathFreeObject(tmp);
-	}
-    } while (tmp != NULL);
+    res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+    ctxt->xpathCtxt->proximityPosition = position;
     if (res != NULL) {
-	ret = xmlXPathEvaluatePredicateResult(xpathParserCtxt, res);
+	ret = xmlXPathEvalPredicate(ctxt->xpathCtxt, res);
 	xmlXPathFreeObject(res);
 #ifdef DEBUG_TEMPLATES
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltEvalXPathPredicate: %s returns %d\n", expr, ret);
+	     "xsltEvalXPathPredicate: returns %d\n", ret);
 #endif
     } else {
 #ifdef DEBUG_TEMPLATES
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltEvalXPathPredicate: %s failed\n", expr);
+	     "xsltEvalXPathPredicate: failed\n");
 #endif
 	ret = 0;
     }
-    xmlXPathFreeParserContext(xpathParserCtxt);
     return(ret);
 }
 
 /**
  * xsltEvalXPathString:
  * @ctxt:  the XSLT transformation context
- * @str:  the XPath expression
+ * @comp:  the compiled XPath expression
  *
  * Process the expression using XPath and get a string
  *
@@ -95,27 +84,15 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, const xmlChar *expr) {
  *    caller.
  */
 xmlChar *
-xsltEvalXPathString(xsltTransformContextPtr ctxt, const xmlChar *expr) {
+xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     xmlChar *ret = NULL;
-    xmlXPathObjectPtr res, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt;
+    xmlXPathObjectPtr res;
 
-    xpathParserCtxt =
-	xmlXPathNewParserContext(expr, ctxt->xpathCtxt);
-    if (xpathParserCtxt == NULL)
-	return(NULL);
     ctxt->xpathCtxt->node = ctxt->node;
-    xmlXPathEvalExpr(xpathParserCtxt);
-    xmlXPathRunEval(xpathParserCtxt);
-    xmlXPathStringFunction(xpathParserCtxt, 1);
-    res = valuePop(xpathParserCtxt);
-    do {
-        tmp = valuePop(xpathParserCtxt);
-	if (tmp != NULL) {
-	    xmlXPathFreeObject(tmp);
-	}
-    } while (tmp != NULL);
+    res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
     if (res != NULL) {
+	if (res->type != XPATH_STRING)
+	    res = xmlXPathConvertString(res);
 	if (res->type == XPATH_STRING) {
             ret = res->stringval;
 	    res->stringval = NULL;
@@ -125,10 +102,9 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, const xmlChar *expr) {
 	}
 	xmlXPathFreeObject(res);
     }
-    xmlXPathFreeParserContext(xpathParserCtxt);
 #ifdef DEBUG_TEMPLATES
     xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltEvalXPathString: %s returns %s\n", expr, ret);
+	 "xsltEvalXPathString: returns %s\n", ret);
 #endif
     return(ret);
 }
@@ -208,7 +184,13 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
 	    if (expr == NULL)
 		return(ret);
 	    else {
-                val = xsltEvalXPathString(ctxt, expr);
+		xmlXPathCompExprPtr comp;
+		/*
+		 * TODO: keep precompiled form around
+		 */
+		comp = xmlXPathCompile(expr);
+                val = xsltEvalXPathString(ctxt, comp);
+		xmlXPathFreeCompExpr(comp);
 		xmlFree(expr);
 		if (val != NULL) {
 		    ret = xmlStrcat(ret, val);
@@ -254,8 +236,9 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return(NULL);
 
     /*
-     * TODO: accelerator if there is no AttrValueTemplate in the stylesheet
-     *       return expr directly
+     * TODO: though now {} is detected ahead, it would still be good to
+     *       optimize both functions to keep the splitted value if the
+     *       attribute content and the XPath precompiled expressions around
      */
 
     ret = xsltAttrTemplateValueProcess(ctxt, expr);

@@ -257,6 +257,8 @@ struct _xsltStylePreComp {
     xmlChar *filename;		/* document URL */
 
     xsltNumberData numdata;	/* number */
+
+    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
 };
 
 /*
