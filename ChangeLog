@@ -1,3 +1,8 @@
+Sun Apr  8 11:42:03 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.c libxslt/keys.c libxslt/transform.c:
+	  some checking against NULL pointers
+
 Mon Apr  2 17:00:39 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in tests/Makefile.am tests/XSLTMark/* tests/multiple:

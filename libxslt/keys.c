@@ -326,9 +326,10 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	if (res->type == XPATH_NODESET) {
 	    nodelist = res->nodesetval;
 #ifdef DEBUG_KEYS
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltInitCtxtKey: %s evaluates to %d nodes\n",
-			     pattern, nodelist->nodeNr);
+	    if (nodelist != NULL)
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltInitCtxtKey: %s evaluates to %d nodes\n",
+				 pattern, nodelist->nodeNr);
 #endif
 	} else {
 #ifdef DEBUG_KEYS

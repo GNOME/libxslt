@@ -2039,6 +2039,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		list = res->nodesetval;
 		res->nodesetval = NULL;
 	     } else {
+		list == NULL;
+	     }
+	     if (list == NULL) {
 #ifdef DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
 		    "xsltApplyTemplates: select didn't evaluate to a node list\n");
@@ -2098,6 +2101,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
 #ifdef DEBUG_PROCESS
+    if (list != NULL)
     xsltGenericDebug(xsltGenericDebugContext,
 	"xsltApplyTemplates: list of %d nodes\n", list->nodeNr);
 #endif
