@@ -1037,6 +1037,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 #ifdef WITH_DEBUGGER
     int addCallResult = 0;
+    xmlNodePtr debugedNode = NULL;
 #endif
     long start = 0;
 
@@ -1057,12 +1058,16 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 return;
         }
 
-        if (templ)
+        if (templ) {
             xslHandleDebugger(templ->elem, node, templ, ctxt);
-        else if (list)
+            debugedNode = templ->elem;
+        } else if (list) {
             xslHandleDebugger(list, node, templ, ctxt);
-        else if (ctxt->inst)
+            debugedNode = list;
+        } else if (ctxt->inst) {
             xslHandleDebugger(ctxt->inst, node, templ, ctxt);
+            debugedNode = ctxt->inst;
+        }
     }
 #endif
 
@@ -1129,7 +1134,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             goto error;
         }
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != XSLT_DEBUG_NONE)
+        if ((xslDebugStatus != XSLT_DEBUG_NONE) && (debugedNode != cur))
             xslHandleDebugger(cur, node, templ, ctxt);
 #endif
 

@@ -1,3 +1,8 @@
+Wed Dec  5 18:49:53 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c libxslt/variables.c: applied Keith Isdale
+	  patch for the debugger glue.
+
 Wed Dec  5 18:43:45 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* breakpoint/Makefile.am breakpoint/deprecated.c: replaced

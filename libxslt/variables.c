@@ -419,6 +419,12 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	"Evaluating global variable %s\n", elem->name);
 #endif
 
+#ifdef WITH_DEBUGGER
+    if ((xslDebugStatus != XSLT_DEBUG_NONE) &&
+        elem->comp && elem->comp->inst)
+        xslHandleDebugger(elem->comp->inst, NULL, NULL, ctxt);
+#endif
+
     precomp = elem->comp;
     if (elem->select != NULL) {
 	xmlXPathCompExprPtr comp = NULL;
