@@ -1998,8 +1998,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
-    xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltApplyTemplates: node: %s\n", node->name);
+    if ((node != NULL) && (node->name != NULL))
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltApplyTemplates: node: %s\n", node->name);
 #endif
 
     /*

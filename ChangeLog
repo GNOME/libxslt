@@ -1,3 +1,12 @@
+Tue May 15 14:34:23 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/keys.c libxslt/transform.c: avoid some possibilities
+	  of crashes on debug
+	* tests/REC/Makefile.am: be less verbose if things really go wrong
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/docs/bug-28-.xml tests/general/bug-28-.*: added bug-28 in
+	  the regression tests
+
 Sat May 12 12:39:54 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/xsltutils.c: fixed the default

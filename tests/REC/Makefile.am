@@ -74,7 +74,8 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	  echo $$name.xml ; \
 	  $(top_builddir)/libxslt/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
 	  if [ ! -f $(srcdir)/$$name.out ] ; then cp $$name.res $(srcdir)/$$name.out ; \
-	  else diff $(srcdir)/$$name.out $$name.res ; fi ; \
+	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
+	  else diff $(srcdir)/$$name.out $$name.res ; fi ; fi; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	  rm -f $$name.res ; \
 	  done)

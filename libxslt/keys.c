@@ -418,7 +418,8 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr doc) {
     if ((ctxt == NULL) || (doc == NULL))
 	return;
 #ifdef WITH_XSLT_DEBUG_KEYS
-    xsltGenericDebug(xsltGenericDebugContext, "Initializing keys on %s\n",
+    if ((doc->doc != NULL) && (doc->doc->URL != NULL))
+	xsltGenericDebug(xsltGenericDebugContext, "Initializing keys on %s\n",
 		     doc->doc->URL);
 #endif
     style = ctxt->style;
