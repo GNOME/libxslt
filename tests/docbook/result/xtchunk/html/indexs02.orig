@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type"><title>Getting Started Writing GNOME Documentation</title><meta name="generator" content="DocBook XSL Stylesheets V1.40"><link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation"><link rel="up" href="index.html" title="The GNOME Handbook of Writing Software Documentation"><link rel="previous" href="index.html" title="The GNOME Handbook of Writing Software Documentation"><link rel="next" href="indexs03.html" title="The GNOME Documentation System"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Getting Started Writing GNOME Documentation</th></tr><tr><td width="20%" align="left"><a href="index.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a href="indexs03.html">Next</a></td></tr></table><hr></div><div class="sect1"><a name="gettingstarted"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="gettingstarted"></a>Getting Started Writing GNOME Documentation</h2></div></div><div class="sect2"><a name="selecting"></a><div class="titlepage"><div><h3 class="title"><a name="selecting"></a>Selecting A Document</h3></div></div><div class="sect3"><a name="know"></a><div class="titlepage"><div><h4 class="title"><a name="know"></a>Document Something You Know</h4></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Getting Started Writing GNOME Documentation</title><meta name="generator" content="DocBook XSL Stylesheets V1.40"><link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation"><link rel="up" href="index.html" title="The GNOME Handbook of Writing Software Documentation"><link rel="previous" href="index.html" title="The GNOME Handbook of Writing Software Documentation"><link rel="next" href="indexs03.html" title="The GNOME Documentation System"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Getting Started Writing GNOME Documentation</th></tr><tr><td width="20%" align="left"><a href="index.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a href="indexs03.html">Next</a></td></tr></table><hr></div><div class="sect1"><a name="gettingstarted"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="gettingstarted"></a>Getting Started Writing GNOME Documentation</h2></div></div><div class="sect2"><a name="selecting"></a><div class="titlepage"><div><h3 class="title"><a name="selecting"></a>Selecting A Document</h3></div></div><div class="sect3"><a name="know"></a><div class="titlepage"><div><h4 class="title"><a name="know"></a>Document Something You Know</h4></div></div><p>
           The most frequently asked question of new contributors who
           join the GDP is &quot;which document should I start
           with?&quot;. Because most people involved are volunteers, we do
@@ -42,7 +42,7 @@
           help.  The <i>DocTable</i> also allows
           people to make announcements and suggestions and to discuss
           issues in the comments section.
-        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2801390"></a>Note</h3><p>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2801402"></a>Note</h3><p>
           Note that the information in the
           <i>DocTable</i> may not always be up-to-date
           or accurate.  When you assign yourself to documenting an
@@ -54,7 +54,7 @@
         this for documentation, not least of which is the single
         source nature of SGML. To contribute to the GDP you should
         learn to use DocBook.
-      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2801476"></a>NOTE</h3><p>
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2801489"></a>NOTE</h3><p>
           To get started writing for the GDP you do not need to rush
           out and learn DocBook - if you feel it is too much to handle
           for now, you can submit plain ASCII text to the <a href="http://mail.gnome.org/mailman/listinfo/gnome-doc-list/" target="_top">
@@ -100,14 +100,14 @@
           your output document appearance subtly vary between the two
           DTD's.  To install the GDP custom DTD with PNG image support
           by hand:
-        </p><div class="itemizedlist"><ul><li style="list-style-type: opencircle"><p><a name="id2801862"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: opencircle"><p><a name="id2801874"></a>
               Download <a href="http://www.labs.redhat.com/png/png-support.html" target="_top">the
               GDP DocBook DTD for PNG support</a> and install it
               where you keep your DTD's. (On Red Hat use <tt>/usr/lib/sgml/</tt>.) Note that
               the 3.0 DTD is missing support for the
               <tt>&lt;legalnotice&gt;</tt> tag, so it is
               recommended that you use version 3.1
-            </p></li><li style="list-style-type: disc"><p><a name="id2802192"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2802204"></a>
               Add the new DTD to your SGML CATALOG file.  The location
               of your SGML CATALOG file may vary depending upon your
               distribution. (On Red Hat it is usually in
@@ -185,7 +185,7 @@ V1.1//EN&quot;[]&gt;
           the command <tt>$</tt><b>db2ps
           mydocument.sgml</b>, after which you can print out or
           view the resulting .ps file.  
-        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2922138"></a>NOTE</h3><p>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2922151"></a>NOTE</h3><p>
             The html files you get will not look quite the same as the
             documentation distributed with GNOME unless you have the
             custom stylesheets installed on your machine. DocBook
@@ -236,24 +236,24 @@ V1.1//EN&quot;[]&gt;
           There are many resources available to help you learn DocBook.
           The following resources on the web are useful for learning
           DocBook:
-        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2922428"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2922441"></a>
               <a href="http://www.docbook.org" target="_top">http://www.docbook.org</a>  - Norman
               Walsh's <i>DocBook: The Definitive
               Guide</i>.  Online O'Reilly book on using
               DocBook. Contains an excellent element reference. May be
               too formal for a beginner.
-            </p></li><li style="list-style-type: disc"><p><a name="id2922474"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2922486"></a>
               <a href="http://www.oswg.org/oswg-nightly/oswg/en_US.ISO_8859-1/articles/DocBook-Intro/docbook-intro/index.html" target="_top">A Practical Introduction to DocBook</a>
               - The Open Source Writers Group's introduction to using
               DocBook. This is an excellent HOW-TO type article on
               getting started.
-            </p></li><li style="list-style-type: disc"><p><a name="id2922514"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2922526"></a>
               <a href="http://nis-www.lanl.gov/~rosalia/mydocs/docbook-intro/docbook-intro.html" target="_top">Getting Going with DocBook: Notes for
               Hackers</a> - Mark Galassi's introduction to DocBook
               for hackers. This has to be one of the first
               introductions to DocBook ever - still as good as it ever
               was.
-            </p></li><li style="list-style-type: disc"><p><a name="id2922554"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2922566"></a>
               <a href="http://www.freebsd.org/tutorials/docproj-primer/" target="_top">
               FreeBSD Documentation Project Primer for New
               Contributors</a> - FreeBSD documentation project
@@ -266,7 +266,7 @@ V1.1//EN&quot;[]&gt;
         </p><p>
           The following sections of this document are designed to help
           documentation authors write correct and consistent DocBook:
-        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2922629"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2922642"></a>
               <a href="indexs04.html" title="DocBook Basics ">the section called &#8220;DocBook Basics &#8221;</a> - Descriptions of
               commonly used DocBook tags.
             </p></li></ul></div><p>
