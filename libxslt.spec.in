@@ -82,6 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root)
 
 %doc AUTHORS ChangeLog NEWS README COPYING COPYING.LIB TODO FEATURES
+%doc doc/*.html doc/html
 
 %{prefix}/lib/lib*.so.*
 %{prefix}/bin/xsltproc
