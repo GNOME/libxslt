@@ -104,7 +104,7 @@ static const int daysInMonth[12] =
 
 #define VALID_MDAY(dt)						\
 	(((dt->mon == 2) && !IS_LEAP(dt->year) && (dt->day <= 28)) ||\
-	 (dt->day == daysInMonth[dt->mon - 1]))
+	 (dt->day <= daysInMonth[dt->mon - 1]))
 
 #define VALID_DATE(dt)						\
 	(VALID_YEAR(dt->year) && VALID_MONTH(dt->mon) && VALID_MDAY(dt))
@@ -119,9 +119,14 @@ static const int daysInMonth[12] =
 
 static const int dayInYearByMonth[12] =
 	{ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
+static const int dayInLeapYearByMonth[12] =
+	{ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
 
 #define DAY_IN_YEAR(day, month, year)				\
-	(dayInYearByMonth[month - 1] + (IS_LEAP(year) ? 1 : 0))
+	(IS_LEAP(year) ?					\
+		dayInLeapYearByMonth[month - 1] :		\
+		dayInYearByMonth[month - 1])
+
 #define DAY_IN_WEEK(yday, yr)					\
 	(((yr-1)+((yr-1)/4)-((yr-1)/100)+((yr-1)/400)+yday) % 7)
 
@@ -620,6 +625,8 @@ exsltDateCurrent (void) {
     exsltDatePtr ret;
 
     ret = exsltDateCreateDate();
+    if (ret == NULL)
+	return NULL;
 
     /* get current time */
     secs    = time(NULL);
@@ -630,7 +637,7 @@ exsltDateCurrent (void) {
     /* get real year, not years since 1900 */
     ret->year = localTm->tm_year + 1900;
 
-    ret->mon = localTm->tm_mon;
+    ret->mon = localTm->tm_mon + 1;
     ret->day = localTm->tm_mday;
     ret->hour = localTm->tm_hour;
     ret->min = localTm->tm_min;
