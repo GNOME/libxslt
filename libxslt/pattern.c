@@ -59,11 +59,13 @@ typedef enum {
     XSLT_OP_PREDICATE
 } xsltOp;
 
-typedef union _xsltStepOp xsltStepOp;
+
+typedef struct _xsltStepOp xsltStepOp;
 typedef xsltStepOp *xsltStepOpPtr;
-union _xsltStepOp {
+struct _xsltStepOp {
     xsltOp op;
     xmlChar *value;
+    xmlChar *value2;
 };
 
 typedef struct _xsltCompMatch xsltCompMatch;
@@ -169,55 +171,41 @@ xsltNewParserContext(void) {
 
 /**
  * xsltFreeParserContext:
- * @comp:  an XSLT comp
+ * @ctxt:  an XSLT parser context
  *
- * Free up the memory allocated by @comp
+ * Free up the memory allocated by @ctxt
  */
 void
-xsltFreeParserContext(xsltParserContextPtr comp) {
-    if (comp == NULL)
+xsltFreeParserContext(xsltParserContextPtr ctxt) {
+    if (ctxt == NULL)
 	return;
-    memset(comp, -1, sizeof(xsltParserContext));
-    xmlFree(comp);
+    memset(ctxt, -1, sizeof(xsltParserContext));
+    xmlFree(ctxt);
 }
 
 /**
- * xsltCompMatchAddOp:
+ * xsltCompMatchAdd:
  * @comp:  the compiled match expression
  * @op:  an op
+ * @value:  the first value
+ * @value2:  the second value
  *
  * Add an step to an XSLT Compiled Match
  *
  * Returns -1 in case of failure, 0 otherwise.
  */
 int
-xsltCompMatchAddOp(xsltCompMatchPtr comp, xsltOp op) {
+xsltCompMatchAdd(xsltCompMatchPtr comp, xsltOp op, xmlChar *value,
+	           xmlChar *value2) {
     if (comp->nbStep >= 20) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltCompMatchAddOp: overflow\n");
         return(-1);
     }
-    comp->steps[comp->nbStep++].op = op;
-    return(0);
-}
-
-/**
- * xsltCompMatchAddValue:
- * @comp:  the compiled match expression
- * @val:  a name
- *
- * Add an step to an XSLT Compiled Match
- *
- * Returns -1 in case of failure, 0 otherwise.
- */
-int
-xsltCompMatchAddValue(xsltCompMatchPtr comp, xmlChar *val) {
-    if (comp->nbStep >= 20) {
-        xsltGenericError(xsltGenericErrorContext,
-		"xsltCompMatchAddOp: overflow\n");
-        return(-1);
-    }
-    comp->steps[comp->nbStep++].value = val;
+    comp->steps[comp->nbStep].op = op;
+    comp->steps[comp->nbStep].value = value;
+    comp->steps[comp->nbStep].value2 = value2;
+    comp->nbStep++;
     return(0);
 }
 
@@ -234,13 +222,132 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
 
     while (j > i) {
 	register xmlChar *tmp;
+	register xsltOp op;
 	tmp = comp->steps[i].value;
 	comp->steps[i].value = comp->steps[j].value;
 	comp->steps[j].value = tmp;
+	tmp = comp->steps[i].value2;
+	comp->steps[i].value2 = comp->steps[j].value2;
+	comp->steps[j].value2 = tmp;
+	op = comp->steps[i].op;
+	comp->steps[i].op = comp->steps[j].op;
+	comp->steps[j].op = op;
 	j--;
 	i++;
     }
-    comp->steps[comp->nbStep].op = XSLT_OP_END;
+    comp->steps[comp->nbStep++].op = XSLT_OP_END;
+}
+
+/************************************************************************
+ * 									*
+ * 		The interpreter for the precompiled patterns		*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltTestCompMatch:
+ * @comp: the precompiled pattern
+ * @node: a node
+ *
+ * Test wether the node matches the pattern
+ *
+ * Returns 1 if it matches, 0 if it doesn't and -1 in case of failure
+ */
+int
+xsltTestCompMatch(xsltCompMatchPtr comp, xmlNodePtr node) {
+    int i;
+    xsltStepOpPtr step;
+
+    if ((comp == NULL) || (node == NULL)) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltTestCompMatch: null arg\n");
+        return(-1);
+    }
+    for (i = 0;i < comp->nbStep;i++) {
+	step = &comp->steps[i];
+	switch (step->op) {
+            case XSLT_OP_END:
+		return(1);
+            case XSLT_OP_ROOT:
+		if ((node->type != XML_DOCUMENT_NODE) &&
+		    (node->type != XML_HTML_DOCUMENT_NODE))
+		    return(0);
+		continue;
+            case XSLT_OP_ELEM:
+		if (node->type != XML_ELEMENT_NODE)
+		    return(0);
+		if (step->value == NULL)
+		    continue;
+		if (!xmlStrEqual(step->value, node->name))
+		    return(0);
+		/* TODO: Handle namespace ... */
+		continue;
+            case XSLT_OP_CHILD:
+		TODO /* Hummm !!! */
+		return(0);
+            case XSLT_OP_ATTR:
+		if (node->type != XML_ATTRIBUTE_NODE)
+		    return(0);
+		if (step->value == NULL)
+		    continue;
+		if (!xmlStrEqual(step->value, node->name))
+		    return(0);
+		/* TODO: Handle namespace ... */
+		continue;
+            case XSLT_OP_PARENT:
+		node = node->parent;
+		if (node == NULL)
+		    return(0);
+		if (step->value == NULL)
+		    continue;
+		if (!xmlStrEqual(step->value, node->name))
+		    return(0);
+		/* TODO: Handle namespace ... */
+		continue;
+            case XSLT_OP_ANCESTOR:
+		/* TODO: implement coalescing of ANCESTOR/NODE ops */
+		if (step->value == NULL) {
+		    i++;
+		    step = &comp->steps[i];
+		    if (step->op == XSLT_OP_ROOT)
+			return(1);
+		    if (step->op != XSLT_OP_ELEM)
+			return(0);
+		    if (step->value == NULL)
+			return(-1);
+		}
+		if (node == NULL)
+		    return(0);
+		node = node->parent;
+		while (node != NULL) {
+		    if (node == NULL)
+			return(0);
+		    if (xmlStrEqual(step->value, node->name)) {
+			/* TODO: Handle namespace ... */
+			break;
+		    }
+		}
+		if (node == NULL)
+		    return(0);
+		continue;
+            case XSLT_OP_ID:
+		TODO /* Handle IDs, might be done differently */
+		break;
+            case XSLT_OP_KEY:
+		TODO /* Handle Keys, might be done differently */
+		break;
+            case XSLT_OP_NS:
+		TODO /* Handle Namespace */
+		break;
+            case XSLT_OP_ALL:
+		TODO /* Handle Namespace */
+		break;
+	    case XSLT_OP_PREDICATE:
+		TODO /* Handle Namespace */
+		break;
+	}
+    }
+    return(1);
 }
 
 /************************************************************************
@@ -261,11 +368,8 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
 #define NEXT ((*ctxt->cur) ?  ctxt->cur++: ctxt->cur)
 
 
-#define PUSH(step) 						\
-    if (xsltCompMatchAddOp(ctxt->comp, (xsltOp) step)) goto error;
-
-#define PUSHSTR(step)						\
-    if (xsltCompMatchAddValue(ctxt->comp, (xmlChar *) step)) goto error;
+#define PUSH(op, val, val2) 						\
+    if (xsltCompMatchAdd(ctxt->comp, (op), (val), (val2))) goto error;
 
 /**
  * xsltScanName:
@@ -373,8 +477,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     } else if (CUR == '*') {
 	TODO;
     } else {
-	PUSH(XSLT_OP_ELEM);
-	PUSHSTR(token);
+	PUSH(XSLT_OP_ELEM, token, NULL);
     }
     SKIP_BLANKS;
     while (CUR == '[') {
@@ -405,13 +508,13 @@ xsltCompileRelativePathPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     SKIP_BLANKS;
     while ((CUR != 0) && (CUR != '|')) {
 	if ((CUR == '/') && (NXT(1) == '/')) {
-	    PUSH(XSLT_OP_ANCESTOR);
+	    PUSH(XSLT_OP_ANCESTOR, NULL, NULL);
 	    NEXT;
 	    NEXT;
 	    SKIP_BLANKS;
 	    xsltCompileStepPattern(ctxt, NULL);
 	} else if (CUR == '/') {
-	    PUSH(XSLT_OP_PARENT);
+	    PUSH(XSLT_OP_PARENT, NULL, NULL);
 	    NEXT;
 	    SKIP_BLANKS;
 	    if ((CUR != 0) || (CUR == '|')) {
@@ -456,8 +559,8 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	 */
 	NEXT;
 	SKIP_BLANKS;
-	PUSH(XSLT_OP_ROOT);
-	PUSH(XSLT_OP_PARENT);
+	PUSH(XSLT_OP_ROOT, NULL, NULL);
+	PUSH(XSLT_OP_PARENT, NULL, NULL);
 	if ((CUR != 0) || (CUR == '|')) {
 	    xsltCompileRelativePathPattern(ctxt, NULL);
 	}
@@ -592,7 +695,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
         case XSLT_OP_ID:
         case XSLT_OP_KEY:
         case XSLT_OP_NS:
-             name = pat->steps[1].value;
+             name = pat->steps[0].value;
 	     break;
         case XSLT_OP_ROOT:
              name = (const xmlChar *) "/";
@@ -606,6 +709,12 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
 		    "xsltAddTemplate: invalid compiled pattern\n");
 	    xsltFreeCompMatch(pat);
 	    return(-1);
+    }
+    if (name == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+		"xsltAddTemplate: invalid compiled pattern\n");
+	xsltFreeCompMatch(pat);
+	return(-1);
     }
     if (style->templatesHash == NULL) {
 	style->templatesHash = xmlHashCreate(0);
@@ -656,7 +765,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
 }
 
 /**
- * xsltAddTemplate:
+ * xsltGetTemplate:
  * @style: an XSLT stylesheet
  * @node: an XML Node
  *
