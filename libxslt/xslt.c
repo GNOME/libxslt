@@ -1704,6 +1704,12 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	    if (style != NULL) style->errors++;
 	    goto error;
 	} else {
+	    if (xmlValidateNCName(prop,0)) {
+	        xsltTransformError(NULL, style, template,
+	            "xsl:template : error invalid name '%s'\n", prop);
+		if (style != NULL) style->errors++;
+		goto error;
+	    } 
 	    ret->name = prop;
 	    if (URI != NULL)
 		ret->nameURI = xmlStrdup(URI);
