@@ -1,3 +1,10 @@
+Tue Nov 26 14:40:45 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/imports.c: apply patch from Daniel Stodden, a bug
+	  in xsltFindElemSpaceHandling() missing imported informations
+	* tests/REC/stand-2.7-1.stand.out: this change slightly the result
+	  of this test.
+
 Mon Nov 25 17:33:48 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/namespaces.c: fix for namespace generation on 

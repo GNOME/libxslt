@@ -284,9 +284,9 @@ xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    if (xmlStrEqual(val, (xmlChar *) "preserve"))
 		return(0);
 	} 
-	if (ctxt->style->stripAll == 1)
+	if (style->stripAll == 1)
 	    return(1);
-	if (ctxt->style->stripAll == -1)
+	if (style->stripAll == -1)
 	    return(0);
 
 	style = xsltNextImport(style);
