@@ -360,14 +360,14 @@ Save the profiling informations on <i><tt>output</tt></i></p><p>
 This function should be called after the transformation completed
 to extract template processing profiling informations if availble.
 The informations are returned as an XML document tree like
-&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml version="1.0"?&gt;
 &lt;profile&gt;
-&lt;template rank=&quot;1&quot; match=&quot;*&quot; name=&quot;&quot;
-        mode=&quot;&quot; calls=&quot;6&quot; time=&quot;48&quot; average=&quot;8&quot;/&gt;
-&lt;template rank=&quot;2&quot; match=&quot;item2|item3&quot; name=&quot;&quot;
-        mode=&quot;&quot; calls=&quot;10&quot; time=&quot;30&quot; average=&quot;3&quot;/&gt;
-&lt;template rank=&quot;3&quot; match=&quot;item1&quot; name=&quot;&quot;
-        mode=&quot;&quot; calls=&quot;5&quot; time=&quot;17&quot; average=&quot;3&quot;/&gt;
+&lt;template rank="1" match="*" name=""
+        mode="" calls="6" time="48" average="8"/&gt;
+&lt;template rank="2" match="item2|item3" name=""
+        mode="" calls="10" time="30" average="3"/&gt;
+&lt;template rank="3" match="item1" name=""
+        mode="" calls="5" time="17" average="3"/&gt;
 &lt;/profile&gt;
 The caller will need to free up the returned tree with <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlFreeDoc">xmlFreeDoc</GTKDOCLINK>()</p><p>
 
@@ -432,7 +432,7 @@ callback routines.</p><p>
 </td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>0 in case of success and -1 in case of error
 </td></tr></tbody></table></div></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xslAddCall"></a>xslAddCall ()</h3><pre class="programlisting">int         xslAddCall                      (<a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> templ,
                                              <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> source);</pre><p>
-Add template &quot;call&quot; to call stack</p><p>
+Add template "call" to call stack</p><p>
 
 </p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i><tt>templ</tt></i> :</span></td><td> current template being applied
 </td></tr><tr><td><span class="term"><i><tt>source</tt></i> :</span></td><td> the source node being processed

@@ -10,6 +10,22 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.0.32: Aug 9 2003:
+   - bugfixes: xsltSaveResultToFile() python binding (Chris Jaeger), EXSLT
+    function (William Brack), RVT for globals (William Brack), EXSLT date
+    (William Brack),
+    speed of large text output, xsl:copy with attributes, strip-space and
+    namespaces prefix, fix for --path xsltproc option, EXST:tokenize (Shaun
+    McCance), EXSLT:seconds (William Brack), sort with multiple keys (William
+    Brack), checking of { and } for attribute value templates (William
+    Brack)
+  
+   - Python bindings for extension elements (Sean Treadway)
+   - EXSLT:split added (Shaun McCance)
+   - portability fixes for HP-UX/Solaris/IRIX (William Brack)
+   - doc cleanup
+
+
 1.0.31: Jul 6 2003:
    - bugfixes: xsl:copy on namespace nodes, AVT for xsl:sort order, fix for
     the debugger (Keith Isdale), output filename limitation, trio.h and
@@ -18,7 +34,7 @@ for a really accurate description:
     stylesheet compilation (Igor Zlatkovic), NaN and sort (William Brack),
     RVT bug introduced in 1.0.30
   
-   - avoid generating &quot; (fix in libxml2-2.5.8) 
+   - avoid generating &quot; (fix in libxml2-2.5.8)
    - fix 64bit cleaness problem and compilation troubles introduced in
   1.0.30
    - Windows makefile generation (Igor Zlatkovic)

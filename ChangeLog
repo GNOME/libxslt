@@ -1,3 +1,8 @@
+Sun Aug 10 00:21:48 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* News configure.in: preparing libxslt-1.0.32 release
+	* doc/* : updated the doc and rebuilt
+
 Thu Aug  7 21:02:07 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* breakpoint/Makefile.am: removed ref to libxslt.la

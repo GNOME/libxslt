@@ -494,13 +494,13 @@ precomputed data.</p><p>
     xmlChar *methodURI;		/* associated namespace if any */
     xmlChar *version;		/* version string */
     xmlChar *encoding;		/* encoding string */
-    int omitXmlDeclaration;     /* omit-xml-declaration = &quot;yes&quot; | &quot;no&quot; */
+    int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
 
     /* 
      * Number formatting.
      */
     xsltDecimalFormatPtr decimalFormat;
-    int standalone;             /* standalone = &quot;yes&quot; | &quot;no&quot; */
+    int standalone;             /* standalone = "yes" | "no" */
     xmlChar *doctypePublic;     /* doctype-public string */
     xmlChar *doctypeSystem;     /* doctype-system string */
     int indent;			/* should output being indented */
@@ -605,7 +605,7 @@ parse an XSLT stylesheet output element and record
 information related to the stylesheet output</p><p>
 
 </p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i><tt>style</tt></i> :</span></td><td>  the XSLT stylesheet
-</td></tr><tr><td><span class="term"><i><tt>cur</tt></i> :</span></td><td>  the &quot;output&quot; element
+</td></tr><tr><td><span class="term"><i><tt>cur</tt></i> :</span></td><td>  the "output" element
 </td></tr></tbody></table></div></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltParseStylesheetDoc"></a>xsltParseStylesheetDoc ()</h3><pre class="programlisting"><a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> xsltParseStylesheetDoc    (<GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlDocPtr">xmlDocPtr</GTKDOCLINK> doc);</pre><p>
 parse an XSLT stylesheet building the associated structures</p><p>
 
