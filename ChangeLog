@@ -1,3 +1,10 @@
+Wed Jul  9 21:27:43 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* fixed bug 114812, trouble with imported exslt functions
+	  added lookup function in libxslt/extension.c
+	  enhanced exsltInitFunc in libexslt/functions.c to take
+	  better care of imports
+
 Wed Jul  9 12:19:34 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* python/generator.py python/libxslt-python-api.xml python/libxslt.c

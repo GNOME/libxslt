@@ -20,6 +20,7 @@
 #include <libxslt/xsltInternals.h>
 #include <libxslt/extensions.h>
 #include <libxslt/transform.h>
+#include <libxslt/imports.h>
 
 #include "exslt.h"
 
@@ -42,8 +43,16 @@ struct _exsltFuncResultPreComp {
     xmlXPathCompExprPtr select;
 };
 
+/* Used for callback function in exsltInitFunc */
+typedef struct _exsltFuncImportRegData exsltFuncImportRegData;
+struct _exsltFuncImportRegData {
+    xsltTransformContextPtr ctxt;
+    xmlHashTablePtr hash;
+};
+
 static void exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt,
 				       int nargs);
+static exsltFuncFunctionData *exsltFuncNewFunctionData(void);
 
 /**
  * exsltFuncRegisterFunc:
@@ -68,6 +77,48 @@ exsltFuncRegisterFunc (exsltFuncFunctionData *data,
 			    exsltFuncFunctionFunction);
 }
 
+/*
+ * exsltFuncRegisterImportFunc
+ * @data:    the exsltFuncFunctionData for the function
+ * @ch:	     structure containing context and hash table
+ * @URI:     the function namespace URI
+ * @name:    the function name
+ *
+ * Checks if imported function is already registered in top-level
+ * stylesheet.  If not, copies function data and registers function
+ */
+static void
+exsltFuncRegisterImportFunc (exsltFuncFunctionData *data,
+			     exsltFuncImportRegData *ch,
+			     const xmlChar *URI, const xmlChar *name) {
+    exsltFuncFunctionData *func=NULL;
+
+    if ((data == NULL) || (ch == NULL) || (URI == NULL) || (name == NULL))
+            return;
+
+    if (ch->ctxt == NULL || ch->hash == NULL)
+    	return;
+
+    /* Check if already present */
+    func = (exsltFuncFunctionData*)xmlHashLookup2(ch->hash,
+    	   URI, name);
+    if (func == NULL) {		/* Not yet present - copy it in */
+    	func = exsltFuncNewFunctionData();
+	memcpy(func, data, sizeof(exsltFuncFunctionData));
+	if (xmlHashAddEntry2(ch->hash, URI, name, func) < 0) {
+	    xsltGenericError(xsltGenericErrorContext,
+	    	    "Failed to register function {%s}%s\n",
+		    URI, name);
+	} else {		/* Do the registration */
+	    xsltGenericDebug(xsltGenericDebugContext,
+	            "exsltFuncRegisterImportFunc: register {%s}%s\n",
+		    URI, name);
+	    xsltRegisterExtFunction(ch->ctxt, name, URI,
+		    exsltFuncFunctionFunction);
+	}
+    }
+}
+
 /**
  * exsltFuncInit:
  * @ctxt: an XSLT transformation context
@@ -79,9 +130,11 @@ exsltFuncRegisterFunc (exsltFuncFunctionData *data,
  */
 static exsltFuncData *
 exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
-    xmlHashTablePtr hash;
     exsltFuncData *ret;
-
+    xsltStylesheetPtr tmp;
+    exsltFuncImportRegData ch;
+    xmlHashTablePtr hash;
+    
     ret = (exsltFuncData *) xmlMalloc (sizeof(exsltFuncData));
     if (ret == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -93,10 +146,18 @@ exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
     ret->result = NULL;
     ret->error = 0;
 
-    hash = (xmlHashTablePtr) xsltStyleGetExtData(ctxt->style, URI);
-    xmlHashScanFull(hash, (xmlHashScannerFull) exsltFuncRegisterFunc, ctxt);
-
-    ret->funcs = hash;
+    ch.hash = (xmlHashTablePtr) xsltStyleGetExtData(ctxt->style, URI);
+    ret->funcs = ch.hash;
+    xmlHashScanFull(ch.hash, (xmlHashScannerFull) exsltFuncRegisterFunc, ctxt);
+    tmp = ctxt->style;
+    ch.ctxt = ctxt;
+    while ((tmp=xsltNextImport(tmp))!=NULL) {
+	hash = xsltGetExtInfo(tmp, URI);
+	if (hash != NULL) {
+	    xmlHashScanFull(hash, 
+		    (xmlHashScannerFull) exsltFuncRegisterImportFunc, &ch);
+	}
+    }
 
     return(ret);
 }
@@ -128,8 +189,8 @@ exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
  * Returns the allocated data
  */
 static xmlHashTablePtr
-exsltFuncStyleInit (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
-		    const xmlChar *URI ATTRIBUTE_UNUSED) {
+exsltFuncStyleInit (xsltStylesheetPtr style,
+		    const xmlChar *URI) {
     return xmlHashCreate(1);
 }
 

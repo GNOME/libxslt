@@ -1296,6 +1296,26 @@ xsltUnregisterAllExtModuleTopLevel (void) {
     xsltTopLevelsHash = NULL;
 }
 
+/**
+ * xsltGetExtInfo:
+ * @style:  pointer to a stylesheet
+ * @URI:    the namespace URI desired
+ *
+ * looks up URI in extInfos of the stylesheet
+ *
+ * returns a pointer to the hash table if found, else NULL
+ */
+xmlHashTablePtr
+xsltGetExtInfo (xsltStylesheetPtr style, const xmlChar *URI) {
+    xsltExtDataPtr data;
+    
+    if (style != NULL && style->extInfos != NULL) {
+	data = xmlHashLookup(style->extInfos, URI);
+	if (data != NULL && data->extData != NULL)
+	    return data->extData;
+    }
+    return NULL;
+}
 
 /************************************************************************
  * 									*

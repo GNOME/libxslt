@@ -181,6 +181,12 @@ void		xsltFreeExts		(xsltStylesheetPtr style);
 
 xsltElemPreCompPtr xsltPreComputeExtModuleElement(xsltStylesheetPtr style,
 					 xmlNodePtr inst);
+/*
+ * Extension Infos access.
+ * Used by exslt initialisation
+ */
+
+xmlHashTablePtr xsltGetExtInfo (xsltStylesheetPtr style, const xmlChar *URI);
 
 /**
  * Test module http://xmlsoft.org/XSLT/
