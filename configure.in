@@ -152,9 +152,10 @@ tests/general/Makefile
 tests/numbers/Makefile
 tests/documents/Makefile
 tests/xmlspec/Makefile
+tests/docbook/test/Makefile
+tests/docbook/html/Makefile
 tests/docbook/common/Makefile
 tests/docbook/lib/Makefile
-tests/docbook/test/Makefile
 tests/docbook/dtd/simple/3.1.7.1/Makefile
 tests/docbook/dtd/simple/4.1.2.4/Makefile
 tests/docbook/dtd/simple/Makefile
