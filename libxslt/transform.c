@@ -478,6 +478,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		copy = xmlNewDocText(ctxt->output, node->content);
 		if (copy != NULL) {
+		    copy->name = xmlStringTextNoenc;
 		    xmlAddChild(ctxt->insert, copy);
 		} else {
 		    xsltGenericError(xsltGenericErrorContext,
@@ -662,6 +663,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		    copy = xmlNewDocText(ctxt->output, node->content);
 		    if (copy != NULL) {
+			copy->name = xmlStringTextNoenc;
 			xmlAddChild(ctxt->insert, copy);
 		    } else {
 			xsltGenericError(xsltGenericErrorContext,
@@ -929,7 +931,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    copy = xmlNewText(cur->content);
 	    if (copy != NULL) {
-		if (cur->name == xmlStringTextNoenc)
+		if ((cur->name == xmlStringTextNoenc) ||
+		    (cur->type == XML_CDATA_SECTION_NODE))
 		    copy->name = xmlStringTextNoenc;
 		xmlAddChild(insert, copy);
 	    } else {
@@ -1229,7 +1232,8 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		copy = xmlNewText(node->content);
 		if (copy != NULL) {
-		    if (node->name == xmlStringTextNoenc)
+		    if ((node->name == xmlStringTextNoenc) ||
+			(node->type == XML_CDATA_SECTION_NODE))
 			copy->name = xmlStringTextNoenc;
 		    xmlAddChild(ctxt->insert, copy);
 		} else {
@@ -1325,7 +1329,7 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 		break;
 	    }
 	    copy = xmlNewDocText(ctxt->output, text->content);
-	    if (comp->noescape) {
+	    if ((comp->noescape) || (text->type != XML_CDATA_SECTION_NODE)) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
 		     "Disable escaping: %s\n", text->content);
