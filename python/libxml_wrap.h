@@ -56,7 +56,7 @@ typedef struct {
 } Pycatalog_Object;
 
 #define PyFile_Get(v) (((v) == Py_None) ? NULL : \
-	(PyFile_Check(v) ? NULL : (PyFile_AsFile(v))))
+	(PyFile_Check(v) ? (PyFile_AsFile(v)) : stdout))
 
 PyObject * libxml_intWrap(int val);
 PyObject * libxml_longWrap(long val);
