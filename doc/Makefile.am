@@ -31,7 +31,9 @@ EXTRA_DIST = 			\
 	xslt.html		\
 	EXSLT/exslt.html	\
 	libxslt-api.xml		\
+	libxslt-refs.xml		\
 	EXSLT/libexslt-api.xml	\
+	EXSLT/libexslt-refs.xml	\
 	xsltproc.xml		\
 	apibuild.py		\
 	libxslt.xsa		\

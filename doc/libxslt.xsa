@@ -8,21 +8,16 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.1</version>
-    <last-release> Dec 10 2003</last-release>
+    <version>1.1.2</version>
+    <last-release> Dec 24 2003</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - code cleanup (William Brack)
-   - Windows: Makefile improvements (Igor Zlatkovic)
-   - documentation improvements: William Brack, libexslt man page (Jonathan
-    Wakely)
-   - param in EXSLT functions (Shaun McCance)
-   - XSLT debugging improvements (Mark Vakoc)
-   - bug fixes: number formatting (Bjorn Reese), exslt:tokenize (William
-    Brack), key selector parsing with | reported by Oleg Paraschenko,
-    xsl:element with computed namespaces (William Brack), xslt:import/include
-    recursion detection (William Brack), exslt:function used in keys (William
-    Brack), bug when CDATA_SECTION are foun in the tree (William Brack),
-    entities handling when using XInclude.
+    <changes>   - Documentation fixes (John Fleck, William Brack), EXSLT documentation
+    (William Brack)
+   - Windows compilation fixes for MSVC and Mingw (Igor Zlatkovic)
+   - Bug fixes: exslt:date returning NULL strings (William Brack),
+    namespaces output (William Brack),  key and namespace definition problem,
+    passing options down to the document() parser, xsl:number fixes (William
+    Brack)
 
 </changes>
   </product>

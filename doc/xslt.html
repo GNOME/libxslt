@@ -62,9 +62,9 @@ the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developed for the
 <p>There are some on-line resources about using libxslt:</p>
 <ol>
   <li>Check the <a href="html/libxslt-lib.html#LIBXSLT-LIB">API
-    documentation</a> automatically extracted from code comments (using
-    the program apibuild.py, developed for libxml, together with the
-    xsl script 'newapi.xsl' and the libxslt xsltproc program).</li>
+    documentation</a> automatically extracted from code comments (using the
+    program apibuild.py, developed for libxml, together with the xsl script
+    'newapi.xsl' and the libxslt xsltproc program).</li>
   <li>Look at the <a href="http://mail.gnome.org/archives/xslt/">mailing-list
     archive</a>.</li>
   <li>Of course since libxslt is based on libxml, it's a good idea to at
@@ -286,6 +286,17 @@ platform, get in touch with me to upload the package. I will keep them in the
 <h3>CVS only : check the <a
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
+
+<h3>1.1.2: Dec 24 2003</h3>
+<ul>
+  <li>Documentation fixes (John Fleck, William Brack), EXSLT documentation
+    (William Brack)</li>
+  <li>Windows compilation fixes for MSVC and Mingw (Igor Zlatkovic)</li>
+  <li>Bug fixes: exslt:date returning NULL strings (William Brack),
+    namespaces output (William Brack),  key and namespace definition problem,
+    passing options down to the document() parser, xsl:number fixes (William
+    Brack)</li>
+</ul>
 
 <h3>1.1.1: Dec 10 2003</h3>
 <ul>

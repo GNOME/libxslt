@@ -1,3 +1,9 @@
+Wed Dec 24 15:15:52 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: prepared release of libxslt-1.1.2
+	* libxslt.spec.in doc/Makefile.am: some tweaking following the
+	  new EXSLT docs.
+
 Mon Dec 22 20:33:08 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxlst/numbers.c: fixed xsl:number level="any" for Bug
