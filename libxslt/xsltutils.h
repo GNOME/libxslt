@@ -11,6 +11,7 @@
 
 #include <libxml/xpath.h>
 #include <libxml/xmlerror.h>
+#include "xsltInternals.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,6 +66,22 @@ void		xsltSortFunction		(xmlNodeSetPtr list,
 						 xmlXPathObjectPtr *results,
 						 int descending,
 						 int number);
+/*
+ * Output, reuse libxml I/O buffers
+ */
+int		xsltSaveResultTo		(xmlOutputBufferPtr buf,
+						 xmlDocPtr result,
+						 xsltStylesheetPtr style);
+int		xsltSaveResultToFilename	(const char *URI,
+						 xmlDocPtr result,
+						 xsltStylesheetPtr style,
+						 int compression);
+int		xsltSaveResultToFile		(FILE *file,
+						 xmlDocPtr result,
+						 xsltStylesheetPtr style);
+int		xsltSaveResultToFd		(int fd,
+						 xmlDocPtr result,
+						 xsltStylesheetPtr style);
 #ifdef __cplusplus
 }
 #endif

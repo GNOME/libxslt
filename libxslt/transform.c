@@ -329,7 +329,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     } else {
 	/* TODO: attribute value template */
 	if (ns) {
-#if LIBXML_VERSION > 202111
+#if LIBXML_VERSION > 20211
 	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href, value);
 #else
 	    xsltGenericError(xsltGenericErrorContext,
@@ -773,7 +773,7 @@ error:
 void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	             xmlNodePtr list) {
-    xmlNodePtr cur, insert, copy, delete = NULL;
+    xmlNodePtr cur, insert, copy;
     xmlNodePtr oldInsert;
 
     oldInsert = insert = ctxt->insert;

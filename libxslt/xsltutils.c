@@ -17,7 +17,9 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
 #include <libxml/xmlerror.h>
+#include <libxml/xmlIO.h>
 #include "xsltutils.h"
+#include "xsltInternals.h"
 
 
 /************************************************************************
@@ -174,3 +176,181 @@ xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
 	}
     }
 }
+
+/************************************************************************
+ * 									*
+ * 				Output					*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltSaveResultTo:
+ * @buf:  an output buffer
+ * @result:  the result xmlDocPtr
+ * @style:  the stylesheet
+ *
+ * Save the result @result obtained by applying the @style stylesheet
+ * to an I/O output channel @buf
+ *
+ * Returns the number of byte written or -1 in case of failure.
+ */
+int
+xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
+	       xsltStylesheetPtr style) {
+    const xmlChar *encoding;
+    int base;
+
+    if ((buf == NULL) || (result == NULL) || (style == NULL))
+	return(-1);
+
+    if (style->methodURI != NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltSaveResultTo : unknown ouput method\n");
+        return(-1);
+    }
+
+    /* TODO: when outputing and having imported stylesheets, apply cascade */
+    base = buf->written;
+    encoding = style->encoding;
+    if (xmlStrEqual(style->method, (const xmlChar *) "html")) {
+	TODO /* HTML dump ... */
+    } else if (xmlStrEqual(style->method, (const xmlChar *) "text")) {
+	xmlNodePtr cur;
+
+	cur = result->children;
+	while (cur != NULL) {
+	    if (cur->type == XML_TEXT_NODE)
+		xmlOutputBufferWriteString(buf, (const char *) cur->content);
+	    cur = cur->next;
+	}
+    } else {
+	if (style->omitXmlDeclaration != 1) {
+	    xmlOutputBufferWriteString(buf, "<?xml version=");
+	    if (result->version != NULL) 
+		xmlBufferWriteQuotedString(buf->buffer, result->version);
+	    else
+		xmlOutputBufferWriteString(buf, "\"1.0\"");
+	    if (encoding == NULL) {
+		if (result->encoding != NULL)
+		    encoding = result->encoding;
+		else if (result->charset != XML_CHAR_ENCODING_UTF8)
+		    encoding = (const xmlChar *)
+			       xmlGetCharEncodingName((xmlCharEncoding)
+			                              result->charset);
+	    }
+	    if (encoding != NULL) {
+		xmlOutputBufferWriteString(buf, " encoding=");
+		xmlBufferWriteQuotedString(buf->buffer, (xmlChar *) encoding);
+	    }
+	    switch (style->standalone) {
+		case 0:
+		    xmlOutputBufferWriteString(buf, " standalone=\"no\"");
+		    break;
+		case 1:
+		    xmlOutputBufferWriteString(buf, " standalone=\"yes\"");
+		    break;
+		default:
+		    break;
+	    }
+	    xmlOutputBufferWriteString(buf, "?>\n");
+	}
+	if (result->children != NULL) {
+	    xmlNodePtr child = result->children;
+
+	    while (child != NULL) {
+		xmlNodeDumpOutput(buf, result, child, 0, style->indent,
+			          (const char *) encoding);
+		xmlOutputBufferWriteString(buf, "\n");
+		child = child->next;
+	    }
+	}
+	xmlOutputBufferFlush(buf);
+    }
+    return(buf->written - base);
+}
+
+/**
+ * xsltSaveResultToFilename:
+ * @URL:  a filename or URL
+ * @result:  the result xmlDocPtr
+ * @style:  the stylesheet
+ * @compression:  the compression factor (0 - 9 included)
+ *
+ * Save the result @result obtained by applying the @style stylesheet
+ * to a file or URL @URL
+ *
+ * Returns the number of byte written or -1 in case of failure.
+ */
+int
+xsltSaveResultToFilename(const char *URL, xmlDocPtr result,
+			 xsltStylesheetPtr style, int compression) {
+    xmlOutputBufferPtr buf;
+    int ret;
+
+    if ((URL == NULL) || (result == NULL) || (style == NULL))
+	return(-1);
+
+    buf = xmlOutputBufferCreateFilename(URL, NULL, compression);
+    if (buf == NULL)
+	return(-1);
+    xsltSaveResultTo(buf, result, style);
+    ret = xmlOutputBufferClose(buf);
+    return(ret);
+}
+
+/**
+ * xsltSaveResultToFile:
+ * @file:  a FILE * I/O
+ * @result:  the result xmlDocPtr
+ * @style:  the stylesheet
+ *
+ * Save the result @result obtained by applying the @style stylesheet
+ * to an open FILE * I/O.
+ * This does not close the FILE @file
+ *
+ * Returns the number of byte written or -1 in case of failure.
+ */
+int
+xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
+    xmlOutputBufferPtr buf;
+    int ret;
+
+    if ((file == NULL) || (result == NULL) || (style == NULL))
+	return(-1);
+
+    buf = xmlOutputBufferCreateFile(file, NULL);
+    if (buf == NULL)
+	return(-1);
+    xsltSaveResultTo(buf, result, style);
+    ret = xmlOutputBufferClose(buf);
+    return(ret);
+}
+
+/**
+ * xsltSaveResultToFd:
+ * @fd:  a file descriptor
+ * @result:  the result xmlDocPtr
+ * @style:  the stylesheet
+ *
+ * Save the result @result obtained by applying the @style stylesheet
+ * to an open file descriptor
+ * This does not close the descriptor.
+ *
+ * Returns the number of byte written or -1 in case of failure.
+ */
+int
+xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
+    xmlOutputBufferPtr buf;
+    int ret;
+
+    if ((fd < 0) || (result == NULL) || (style == NULL))
+	return(-1);
+
+    buf = xmlOutputBufferCreateFd(fd, NULL);
+    if (buf == NULL)
+	return(-1);
+    xsltSaveResultTo(buf, result, style);
+    ret = xmlOutputBufferClose(buf);
+    return(ret);
+}
+

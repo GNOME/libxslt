@@ -1,3 +1,13 @@
+Thu Jan 18 16:08:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c: added support for disable-output-escaping
+	  will need libxml version > 20211
+	* libxslt/transform.c: cleanup
+	* libxslt/xsltutils.[ch]: added output functions
+	* libxslt/xsltproc.c: reuse the output function
+	* tests/REC2/Makefile.am tests/REC2/vrml.xml: added VRML output
+	  test
+
 Wed Jan 17 21:03:01 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/xslt.c: avoiding some problems
