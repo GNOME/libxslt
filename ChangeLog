@@ -1,3 +1,7 @@
+Thu Feb 15 13:34:42 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/numbers.c: removed a couple of memleaks
+
 Thu Feb 15 12:41:44 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/pattern.[ch]: exported pattern matching interfaces

@@ -21,6 +21,7 @@
 #include <nan.h>
 #endif
 
+#include <libxml/xmlmemory.h>
 #include <libxml/parserInternals.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
@@ -306,9 +307,10 @@ xsltNumberFormatTokenize(xmlChar *format,
 		break; /* while */
 	    index++;
 	}
-	array[cnt].filling = (index > j)
-	    ? xmlStrndup(&format[j], index - j)
-	    : NULL;
+	if (index > j)
+	    array[cnt].filling = xmlStrndup(&format[j], index - j);
+	else
+	    array[cnt].filling = NULL;
     }
     return cnt;
 }
@@ -459,10 +461,11 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 	    }
 	}
 	array[amount++] = (double)cnt;
+	xmlXPathFreeParserContext(parser);
     }
     xsltFreeCompMatchList(countPat);
     xsltFreeCompMatchList(fromPat);
-    return amount;
+    return(amount);
 }
 
 static int
@@ -567,7 +570,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 {
     xmlBufferPtr output = NULL;
     xmlNodePtr copy = NULL;
-    int amount;
+    int amount, i;
     int array_amount;
     double number;
     xsltNumberFormatToken array[1024];
@@ -652,6 +655,10 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
     copy = xmlNewText(xmlBufferContent(output));
     if (copy != NULL) {
 	xmlAddChild(ctxt->insert, copy);
+    }
+    for (i = 0;i < array_amount;i++) {
+	if (array[i].filling != NULL)
+	    xmlFree(array[i].filling);
     }
     
  XSLT_NUMBER_FORMAT_END:
