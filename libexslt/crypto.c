@@ -353,7 +353,8 @@ exsltCryptoGcryptInit (void) {
  */
 static void
 exsltCryptoGcryptHash (xmlXPathParserContextPtr ctxt ATTRIBUTE_UNUSED,
-		       enum gcry_md_algos algorithm, const char *msg,
+/* changed the enum to int */
+		       int algorithm, const char *msg,
 		       unsigned long msglen,
 		       char dest[HASH_DIGEST_LENGTH]) {
     exsltCryptoGcryptInit ();

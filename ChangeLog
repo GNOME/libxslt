@@ -1,3 +1,9 @@
+Fri Oct 29 17:03:26 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in NEWS doc/*: preparing release of libxslt-1.1.12
+	* libexslt/crypto.c: mini change to avoid breaking apibuild.py
+	* libxslt/templates.c: small fix, first step in adressing #153660
+
 Fri Oct 29 14:18:35 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.1 doc/xsltproc.xml: indicate - means stdin closing
