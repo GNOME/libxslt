@@ -363,6 +363,7 @@ static void usage(const char *name) {
     printf("      --docbook: the input document is SGML docbook\n");
 #endif
     printf("      --param name value : pass a (parameter,value) pair\n");
+    printf("            string values must be quoted like \"'string'\"\n");
     printf("      --nonet refuse to fetch DTDs or entities over network\n");
     printf("      --warnnet warn against fetching over the network\n");
 #ifdef LIBXML_CATALOG_ENABLED

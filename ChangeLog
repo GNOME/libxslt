@@ -1,3 +1,8 @@
+Tue Sep 11 14:48:43 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: tell in usage that parameter strings
+	  need to be quoted 
+
 Tue Sep 11 13:42:49 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/Makefile.am libxslt/transform.c: trying to close
