@@ -53,7 +53,7 @@ libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@
 
 man_MANS = libxslt.3
 
-EXTRA_DIST = $(man_MANS)
+EXTRA_DIST = $(man_MANS) trio.h triodef.h
 
 xsltproc: all
 	@(cd ../xsltproc ; $(MAKE))
