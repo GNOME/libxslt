@@ -1,3 +1,7 @@
+Mon Nov 26 13:14:14 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libxslt/xsltwin32config.h: preparing release of 1.0.8
+
 Mon Nov 26 11:21:27 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixing bug #64044 reported by Gero Meiﬂner,
