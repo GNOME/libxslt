@@ -1,3 +1,10 @@
+Tue Nov 26 15:17:13 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.c libxslt/xsltutils.h: added the function
+	  xsltGetProfileInformation() to retrieve profiling informations
+	  from an XSLT transformation context. It returns it as an XML
+	  tree. Provided by Michael Rothwell this closes RFE #99527
+
 Tue Nov 26 14:40:45 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/imports.c: apply patch from Daniel Stodden, a bug

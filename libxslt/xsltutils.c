@@ -1514,6 +1514,123 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 
 /************************************************************************
  * 									*
+ * 		Fetching profiling informations				*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltGetProfileInformation:
+ * @ctxt:  a transformation context
+ *
+ * This function should be called after the transformation completed
+ * to extract template processing profiling informations if availble.
+ * The informations are returned as an XML document tree like
+ * <?xml version="1.0"?>
+ * <profile>
+ * <template rank="1" match="*" name=""
+ *         mode="" calls="6" time="48" average="8"/>
+ * <template rank="2" match="item2|item3" name=""
+ *         mode="" calls="10" time="30" average="3"/>
+ * <template rank="3" match="item1" name=""
+ *         mode="" calls="5" time="17" average="3"/>
+ * </profile>
+ * The caller will need to free up the returned tree with xmlFreeDoc()
+ *
+ * Returns the xmlDocPtr corresponding to the result or NULL if not available.
+ */
+
+xmlDocPtr
+xsltGetProfileInformation(xsltTransformContextPtr ctxt)
+{
+    xmlDocPtr ret = NULL;
+    xmlNodePtr root, child;
+    char buf[100];
+
+    xsltStylesheetPtr style;
+    xsltTemplatePtr *templates;
+    xsltTemplatePtr templ;
+    int nb = 0, max = 0, i, j, total, totalt;
+
+    if (!ctxt)
+        return NULL;
+
+    if (!ctxt->profile)
+        return NULL;
+
+    nb = 0;
+    max = 10000;
+    templates =
+        (xsltTemplatePtr *) xmlMalloc(max * sizeof(xsltTemplatePtr));
+    if (templates == NULL)
+        return NULL;
+
+    /*
+     * collect all the templates in an array
+     */
+    style = ctxt->style;
+    while (style != NULL) {
+        templ = style->templates;
+        while (templ != NULL) {
+            if (nb >= max)
+                break;
+
+            if (templ->nbCalls > 0)
+                templates[nb++] = templ;
+            templ = templ->next;
+        }
+
+        style = (xsltStylesheetPtr) xsltNextImport(style);
+    }
+
+    /*
+     * Sort the array by time spent
+     */
+    for (i = 0; i < nb - 1; i++) {
+        for (j = i + 1; j < nb; j++) {
+            if ((templates[i]->time <= templates[j]->time) ||
+                ((templates[i]->time == templates[j]->time) &&
+                 (templates[i]->nbCalls <= templates[j]->nbCalls))) {
+                templ = templates[j];
+                templates[j] = templates[i];
+                templates[i] = templ;
+            }
+        }
+    }
+
+    /*
+     * Generate a document corresponding to the results.
+     */
+    ret = xmlNewDoc(BAD_CAST "1.0");
+    root = xmlNewDocNode(ret, NULL, BAD_CAST "profile", NULL);
+    xmlDocSetRootElement(ret, root);
+
+    total = 0;
+    totalt = 0;
+    for (i = 0; i < nb; i++) {
+        child = xmlNewChild(root, NULL, BAD_CAST "template", NULL);
+        sprintf(buf, "%d", i + 1);
+        xmlSetProp(child, BAD_CAST "rank", BAD_CAST buf);
+        xmlSetProp(child, BAD_CAST "match", BAD_CAST templates[i]->match);
+        xmlSetProp(child, BAD_CAST "name", BAD_CAST templates[i]->name);
+        xmlSetProp(child, BAD_CAST "mode", BAD_CAST templates[i]->mode);
+
+        sprintf(buf, "%d", templates[i]->nbCalls);
+        xmlSetProp(child, BAD_CAST "calls", BAD_CAST buf);
+
+        sprintf(buf, "%ld", templates[i]->time);
+        xmlSetProp(child, BAD_CAST "time", BAD_CAST buf);
+
+        sprintf(buf, "%ld", templates[i]->time / templates[i]->nbCalls);
+        xmlSetProp(child, BAD_CAST "average", BAD_CAST buf);
+    };
+
+    xmlFree(templates);
+
+    return ret;
+}
+
+/************************************************************************
+ * 									*
  * 		Hooks for the debugger					*
  * 									*
  ************************************************************************/

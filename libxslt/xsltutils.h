@@ -162,6 +162,7 @@ int             xsltSaveResultToString          (xmlChar **doc_txt_ptr,
  */
 void		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
 						 FILE *output);
+xmlDocPtr	xsltGetProfileInformation	(xsltTransformContextPtr ctxt);
 
 long		xsltTimestamp			(void);
 void		xsltCalibrateAdjust		(long delta);
