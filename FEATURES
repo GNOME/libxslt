@@ -118,8 +118,8 @@ YES				disable-output-escaping = "yes" | "no"
 
 YES			    xsl:number
 PARTIAL				level = "single" | "multiple" | "any"
-NO				count = pattern 
-NO				from = pattern 
+YES				count = pattern 
+YES				from = pattern 
 YES				value = number-expression 
 YES				format = { string }
 NO				lang = { nmtoken }
