@@ -94,6 +94,7 @@ static int noout = 0;
 #ifdef LIBXML_HTML_ENABLED
 static int html = 0;
 #endif
+static int load_trace = 0;
 #ifdef LIBXML_XINCLUDE_ENABLED
 static int xinclude = 0;
 #endif
@@ -171,6 +172,13 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
 	if (ret != NULL) {
 	    if (warning != NULL)
 		ctxt->sax->warning = warning;
+	    if (load_trace) {
+		fprintf \
+			(stderr,
+			 "Loaded URL=\"%s\" ID=\"%s\"\n",
+			 URL ? URL : "(null)",
+			 ID ? ID : "(null)");
+	    }
 	    return(ret);
 	}
     }
@@ -182,12 +190,20 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
 	newURL = xmlStrcat(newURL, (const xmlChar *) lastsegment);
 	if (newURL != NULL) {
 	    ret = defaultEntityLoader((const char *)newURL, ID, ctxt);
-	    xmlFree(newURL);
 	    if (ret != NULL) {
 		if (warning != NULL)
 		    ctxt->sax->warning = warning;
+		if (load_trace) {
+		    fprintf \
+		    	(stderr,
+		    	 "Loaded URL=\"%s\" ID=\"%s\"\n",
+			 newURL,
+		    	 ID ? ID : "(null)");
+		}
+		xmlFree(newURL);
 		return(ret);
 	    }
+	    xmlFree(newURL);
 	}
     }
     if (warning != NULL) {
@@ -476,6 +492,9 @@ static void usage(const char *name) {
     printf("\t--novalid skip the Dtd loading phase\n");
     printf("\t--noout: do not dump the result\n");
     printf("\t--maxdepth val : increase the maximum depth\n");
+#if LIBXML_VERSION >= 20600
+    printf("\t--maxparserdepth val : increase the maximum parser depth\n");
+#endif
 #ifdef LIBXML_HTML_ENABLED
     printf("\t--html: the input document is(are) an HTML file(s)\n");
 #endif
@@ -497,6 +516,7 @@ static void usage(const char *name) {
 #ifdef LIBXML_XINCLUDE_ENABLED
     printf("\t--xinclude : do XInclude processing on document intput\n");
 #endif
+    printf("\t--load-trace : print trace of all external entites loaded\n");
     printf("\t--profile or --norman : dump profiling informations \n");
     printf("\nProject libxslt home page: http://xmlsoft.org/XSLT/\n");
     printf("To report bugs and get help: http://xmlsoft.org/XSLT/bugs.html\n");
@@ -630,6 +650,9 @@ main(int argc, char **argv)
             xinclude++;
             xsltSetXIncludeDefault(1);
 #endif
+        } else if ((!strcmp(argv[i], "-load-trace")) ||
+                   (!strcmp(argv[i], "--load-trace"))) {
+            load_trace++;
         } else if ((!strcmp(argv[i], "-param")) ||
                    (!strcmp(argv[i], "--param"))) {
             i++;
@@ -677,6 +700,17 @@ main(int argc, char **argv)
                 if (value > 0)
                     xsltMaxDepth = value;
             }
+#if LIBXML_VERSION >= 20600
+        } else if ((!strcmp(argv[i], "-maxparserdepth")) ||
+                   (!strcmp(argv[i], "--maxparserdepth"))) {
+            int value;
+
+            i++;
+            if (sscanf(argv[i], "%d", &value) == 1) {
+                if (value > 0)
+                    xmlParserMaxDepth = value;
+            }
+#endif
         } else if ((!strcmp(argv[i],"-dumpextensions"))||
 			(!strcmp(argv[i],"--dumpextensions"))) {
 		dumpextensions++;
@@ -714,6 +748,12 @@ main(int argc, char **argv)
             (!strcmp(argv[i], "--maxdepth"))) {
             i++;
             continue;
+#if LIBXML_VERSION >= 20600
+        } else if ((!strcmp(argv[i], "-maxparserdepth")) ||
+            (!strcmp(argv[i], "--maxparserdepth"))) {
+            i++;
+            continue;
+#endif
         } else if ((!strcmp(argv[i], "-o")) ||
                    (!strcmp(argv[i], "-output")) ||
                    (!strcmp(argv[i], "--output"))) {

@@ -406,6 +406,7 @@
     <macro name='XSLTCALL' file='xsltexports'>
     </macro>
     <macro name='XSLTPUBFUN' file='xsltexports'>
+      <info>XSLTPUBFUN, XSLTPUBVAR, XSLTCALL  Macros which declare an exportable function, an exportable variable and the calling convention used for functions.  Please use an extra block for every platform/compiler combination when modifying this, rather than overlong #ifdef lines. This helps readability as well as the fact that different compilers on the same platform might need different definitions. Windows platform with MS compiler Windows platform with Borland compiler Windows platform with GNU compiler (Mingw) Cygwin platform, GNU compiler</info>
     </macro>
     <macro name='XSLTPUBVAR' file='xsltexports'>
     </macro>

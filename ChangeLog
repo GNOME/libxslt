@@ -1,3 +1,13 @@
+Sun Oct 19 23:32:23 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: bump the libxml2 require to 2.6.0 which
+	  should ship for good real soon...
+	* doc/Makefile.am: fix installation of HTML pages
+	* doc/libxslt-api.xml: rebuilt
+	* libxslt/xsltexports.h: cleanup
+	* python/generator.py: ATTRIBUTE_UNUSED is after the parameter
+	* xsltproc/xsltproc.c: applied Crutcher Dunnavant --load-trace patch 2
+
 Fri Oct 17 18:25:42 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/attributes.c: fixed bug 123822

@@ -10,6 +10,7 @@
 #define __XSLT_EXPORTS_H__
 
 /**
+ * XSLTPUBFUN:
  * XSLTPUBFUN, XSLTPUBVAR, XSLTCALL
  *
  * Macros which declare an exportable function, an exportable variable and
