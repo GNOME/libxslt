@@ -1,4 +1,4 @@
-EXAMPLE_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXSLT_VERSION)/examples
+EXAMPLE_DIR = $(datadir)/doc/libxslt-python-$(LIBXSLT_VERSION)/examples
 
 TESTSPY=	\
     basic.py	\

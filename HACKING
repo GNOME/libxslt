@@ -5,8 +5,9 @@ If what you are fixing is a compilation issue either at compile
 time or linking time on one of the main Linux platforms, then feel free
 to patch first and send mail afterward, as long as it's a 'small fix'.
 
-Otherwise, oly Bjorn Reese (breese@users.sourceforge.net), 
-"William M. Brack" <wbrack@mmm.com.hk> and me (veillard@redhat.com)
+Otherwise, only Bjorn Reese (breese@users.sourceforge.net), 
+"William M. Brack" <wbrack@mmm.com.hk>, Igor Zlatkovic
+<igor@stud.fh-frankfurt.de> and me (veillard@redhat.com)
 should commit there. John Fleck also have commit rights for the doc
 subdir. Send a mail and if it's a bug issue, provide a test case and
 register it at bugzilla.gnome.org in the libxslt module.
