@@ -54,6 +54,7 @@ extern "C" {
 #define XSLT_PARSE_OPTIONS \
  XML_PARSE_NOENT | XML_PARSE_DTDLOAD | XML_PARSE_DTDATTR | XML_PARSE_NOCDATA
 #endif
+
 /**
  * xsltMaxDepth:
  *

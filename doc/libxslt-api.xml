@@ -341,6 +341,7 @@
      <exports symbol='XSLT_DEFAULT_VENDOR'/>
      <exports symbol='XSLT_DEFAULT_VERSION'/>
      <exports symbol='XSLT_NAMESPACE'/>
+     <exports symbol='XSLT_PARSE_OPTIONS'/>
      <exports symbol='xsltCleanupGlobals'/>
      <exports symbol='xsltEngineVersion'/>
      <exports symbol='xsltLibxmlVersion'/>
@@ -438,6 +439,9 @@
     </macro>
     <macro name='XSLT_NORM_SAXON_NAMESPACE' file='extra'>
       <info>This is Norm&apos;s namespace for SAXON extensions.</info>
+    </macro>
+    <macro name='XSLT_PARSE_OPTIONS' file='xslt'>
+      <info>The set of options to pass to an xmlReadxxx when loading files for XSLT consumption.</info>
     </macro>
     <macro name='XSLT_PAT_NO_PRIORITY' file='xsltInternals'>
       <info>Specific value for pattern without priority expressed.</info>

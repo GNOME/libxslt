@@ -1,14 +1,3 @@
-## don't bother compiling the breakpoint library unless it is needed
-if WITH_DEBUGGER
-SUBDIRS = \
-  	libxslt \
-	breakpoint \
-  	libexslt \
-  	xsltproc \
-  	doc \
-	@PYTHON_SUBDIR@ \
-  	tests
-else
 SUBDIRS = \
 	libxslt \
 	libexslt \
@@ -16,9 +5,8 @@ SUBDIRS = \
 	doc \
 	@PYTHON_SUBDIR@ \
 	tests
-endif
 
-DIST_SUBDIRS = libxslt libexslt xsltproc python doc tests breakpoint
+DIST_SUBDIRS = libxslt libexslt xsltproc python doc tests
 
 confexecdir=$(libdir)
 confexec_DATA = xsltConf.sh

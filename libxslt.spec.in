@@ -7,8 +7,8 @@ Group: Development/Libraries
 Source: ftp://xmlsoft.org/XSLT/libxslt-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 URL: http://xmlsoft.org/XSLT/
-Requires: libxml2 >= 2.5.10
-BuildRequires: libxml2-devel >= 2.5.10
+Requires: libxml2 >= @LIBXML_REQUIRED_VERSION@
+BuildRequires: libxml2-devel >= @LIBXML_REQUIRED_VERSION@
 BuildRequires: python python-devel
 BuildRequires: libxml2-python
 Prefix: %{_prefix}
@@ -17,7 +17,7 @@ Docdir: %{_docdir}
 %description
 This C library allows to transform XML files into other XML files
 (or HTML, text, ...) using the standard XSLT stylesheet transformation
-mechanism. To use it you need to have a version of libxml2 >= 2.5.6
+mechanism. To use it you need to have a version of libxml2 >= @LIBXML_REQUIRED_VERSION@
 installed. The xsltproc command is a command line interface to the XSLT engine
 
 %package devel
@@ -29,14 +29,15 @@ Requires: libxml2-devel >= 2.5.6
 %description devel
 This C library allows to transform XML files into other XML files
 (or HTML, text, ...) using the standard XSLT stylesheet transformation
-mechanism. To use it you need to have a version of libxml2 >= 2.5.6
+mechanism. To use it you need to have a version of libxml2 >= @LIBXML_REQUIRED_VERSION@
 installed.
 
 %package python
 Summary: Python bindings for the libxslt library
 Group: Development/Libraries
 Requires: libxslt = %{version}
-Requires: libxml2 >= 2.5.6
+Requires: libxml2 >= @LIBXML_REQUIRED_VERSION@
+Requires: libxml2-python >= @LIBXML_REQUIRED_VERSION@
 Requires: python
 
 %description python
@@ -110,6 +111,10 @@ rm -fr %{buildroot}
 %changelog
 * @RELDATE@ Daniel Veillard <veillard@redhat.com>
 - upstream release @VERSION@ see http://xmlsoft.org/XSLT/news.html
+
+* Sun Nov  2 2003 Daniel Veillard <veillard@redhat.com>
+- cleanup, removal of the deprecated breakpoint library and
+  automated libxml2 dependancy level in the generated spec file.
 
 * Wed Oct 23 2002 Daniel Veillard <veillard@redhat.com>
 - revamped the spec file, cleaned up some rpm building problems

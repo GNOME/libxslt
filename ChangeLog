@@ -1,3 +1,10 @@
+Sun Nov  2 10:51:58 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am configure.in libxslt.spec.in doc/libxslt-api.xml
+	  libxslt/xslt.h libxslt/xsltwin32config.h: some cleanup and trial
+	  for the upcoming 1.1.0 release
+	* breakpoint/*: this release removes the deprecated breakpoint library
+
 Sat Nov  1 17:04:27 PST 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c, tests/general/bug-119.out: fixed
