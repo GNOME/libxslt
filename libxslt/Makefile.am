@@ -50,7 +50,7 @@ libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@
 
 bin_PROGRAMS = xsltproc
 
-DEPS = $(top_builddir)/libxslt/libxslt.la
+DEPS = $(lib_LTLIBRARIES)
 LDADDS = -L. $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
 
 xsltproc_SOURCES = xsltproc.c

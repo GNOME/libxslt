@@ -1,3 +1,7 @@
+Thu Jun 14 20:52:13 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am: applied patch from Sander Vesik for -j2 
+
 Thu Jun 14 10:07:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/preproc.c: removed a warning on xsl:transform
