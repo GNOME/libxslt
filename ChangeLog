@@ -1,3 +1,11 @@
+Tue Oct 15 11:40:19 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixed the behaviour of node() patter which
+	  didn't patch the one defined in XPath :-( . Closes bug #95793
+	* tests/docs/Makefile.am tests/docs/bug-92.xml
+	  tests/general/Makefile.am tests/general/bug-92.*: added the
+	  example in the regression tests for this case
+
 Mon Oct 14 12:29:53 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libxslt/win32config.h: remapped mkdir to _mkdir for MS runtime
