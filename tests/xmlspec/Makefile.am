@@ -4,7 +4,8 @@ $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = REC-xml-20001006.xml xmlspec-v21.dtd W3C-REC.css \
-             logo-REC xmlspec.xsl REC-xml-2e.xsl diffspec.xsl
+             logo-REC xmlspec.xsl REC-xml-2e.xsl diffspec.xsl \
+	     REC-xml-20001006.html REC-xml-20001006-review.html
 
 all: test
 

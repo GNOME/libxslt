@@ -1294,6 +1294,31 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = ctxt->insert;
     if (ctxt->insert != NULL) {
 	switch (node->type) {
+	    case XML_TEXT_NODE:
+	    case XML_CDATA_SECTION_NODE:
+		/*
+		 * This text comes from the stylesheet
+		 * For stylesheets, the set of whitespace-preserving
+		 * element names consists of just xsl:text.
+		 */
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		if (node->type == XML_CDATA_SECTION_NODE)
+		    xsltGenericDebug(xsltGenericDebugContext,
+			 "xsl:copy: CDATA text %s\n", node->content);
+		else
+		    xsltGenericDebug(xsltGenericDebugContext,
+			 "xsl:copy: text %s\n", node->content);
+#endif
+		copy = xmlNewText(node->content);
+		if (copy != NULL) {
+		    if (node->name == xmlStringTextNoenc)
+			copy->name = xmlStringTextNoenc;
+		    xmlAddChild(ctxt->insert, copy);
+		} else {
+		    xsltGenericError(xsltGenericErrorContext,
+			    "xsl:copy: text copy failed\n");
+		}
+		break;
 	    case XML_DOCUMENT_NODE:
 	    case XML_HTML_DOCUMENT_NODE:
 		break;

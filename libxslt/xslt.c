@@ -781,7 +781,7 @@ xsltParseRemoveBlanks(xsltStylesheetPtr style) {
 	    xmlFreeNode(delete);
 	    delete = NULL;
 	}
-	if (IS_XSLT_ELEM(cur)) {
+	if ((cur->type == XML_ELEMENT_NODE) && (IS_XSLT_ELEM(cur))) {
 	    if (IS_XSLT_NAME(cur, "text")) {
 		goto skip_children;
 	    }
@@ -793,13 +793,16 @@ xsltParseRemoveBlanks(xsltStylesheetPtr style) {
 	    }
 	} else if (cur->type != XML_ELEMENT_NODE) {
 	    delete = cur;
+	    goto skip_children;
 	}
 
 	/*
 	 * Skip to next node
 	 */
 	if (cur->children != NULL) {
-	    if (cur->children->type != XML_ENTITY_DECL) {
+	    if ((cur->children->type != XML_ENTITY_DECL) &&
+		(cur->children->type != XML_ENTITY_REF_NODE) &&
+		(cur->children->type != XML_ENTITY_NODE)) {
 		cur = cur->children;
 		continue;
 	    }
@@ -1423,6 +1426,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
     if (cur == NULL) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetProcess : empty stylesheet\n");
+	ret->doc = NULL;
 	xsltFreeStylesheet(ret);
 	return(NULL);
     }
@@ -1448,6 +1452,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	if (prop == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetProcess : document is not a stylesheet\n");
+	    ret->doc = NULL;
 	    xsltFreeStylesheet(ret);
 	    return(NULL);
 	}
@@ -1469,6 +1474,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	 */
 	template = xsltNewTemplate();
 	if (template == NULL) {
+	    ret->doc = NULL;
 	    xsltFreeStylesheet(ret);
 	    return(NULL);
 	}
@@ -1508,7 +1514,7 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
     
     ret->doc = doc;
     xsltGatherNamespaces(ret);
-    xsltParseStylesheetProcess(ret, doc);
+    ret = xsltParseStylesheetProcess(ret, doc);
 
     return(ret);
 }
