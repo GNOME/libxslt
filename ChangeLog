@@ -1,3 +1,10 @@
+Wed Jan 10 16:29:41 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt*: completeted the structures
+	* libxslt/pattern.[ch]: started adding code to precompile patterns
+	  and do the lookup
+	* libxslt/makefile.am: added the new files
+
 Mon Jan  8 19:55:18 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.c : small cleanup

@@ -19,7 +19,7 @@ extern "C" {
  * Constants.
  */
 #define XSLT_DEFAULT_VERSION     "1.0"
-#define XSLT_NAMESPACE "http://www.w3.org/1999/XSL/Transform"
+#define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
 
 #ifdef __cplusplus
 }

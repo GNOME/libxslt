@@ -23,6 +23,9 @@ extern "C" {
  * NOTE: most of the content is simply linked from the doc tree
  *       structure, no specific allocation is made.
  */
+
+#define XSLT_PAT_NO_PRIORITY -12345789
+
 typedef struct _xsltTemplate xsltTemplate;
 typedef xsltTemplate *xsltTemplatePtr;
 struct _xsltTemplate {
@@ -43,7 +46,29 @@ typedef struct _xsltStylesheet xsltStylesheet;
 typedef xsltStylesheet *xsltStylesheetPtr;
 struct _xsltStylesheet {
     xmlDocPtr doc;		/* the parsed XML stylesheet */
+    xmlHashTablePtr stripSpaces;/* the hash table of the strip-space
+				   preserve space and cdata-section elements */
+
+    /*
+     * Template descriptions
+     */
     xsltTemplatePtr templates;	/* the ordered list of templates */
+    void *templatesHash;	/* hash table or wherever compiled templates
+				   informations are stored */
+
+    /*
+     * Output related stuff.
+     */
+    xmlChar *method;		/* the output method */
+    xmlChar *methodURI;		/* associated namespace if any */
+    xmlChar *version;		/* version string */
+    xmlChar *encoding;		/* encoding string */
+    int omitXmlDeclaration;   /* omit-xml-declaration = "yes" | "no" */
+    int standalone;             /* standalone = "yes" | "no" */
+    xmlChar *doctypePublic;     /* doctype-public string */
+    xmlChar *doctypeSystem;     /* doctype-system string */
+    int indent;			/* should output being indented */
+    xmlChar *mediaType;		/* media-type string */
 };
 
 

@@ -1,5 +1,5 @@
 /*
- * xslt.h: Implemetation of an XSL Transformation 1.0 engine
+ * xslt.c: Implemetation of an XSL Transformation 1.0 engine
  *
  * Reference:
  *   http://www.w3.org/TR/1999/REC-xslt-19991116
@@ -16,11 +16,19 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
+#include <libxml/valid.h>
+#include <libxml/hash.h>
 #include <libxml/xmlerror.h>
 #include "xslt.h"
 #include "xsltInternals.h"
+#include "pattern.h"
 
 #define DEBUG_PARSING
+
+/*
+ * To cleanup
+ */
+xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
 
 /*
  * There is no XSLT specific error reporting module yet
@@ -33,7 +41,10 @@
  */
 
 #define IS_XSLT_ELEM(n)							\
-    ((n)->ns != NULL) && (xmlStrEqual(cur->ns->href, XSLT_NAMESPACE))
+    ((n)->ns != NULL) && (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE))
+
+#define IS_XSLT_NAME(n, val)						\
+    (xmlStrEqual((n)->name, (const xmlChar *) (val)))
 
 #define IS_BLANK(c) (((c) == 0x20) || ((c) == 0x09) || ((c) == 0xA) ||	\
                      ((c) == 0x0D))
@@ -98,6 +109,7 @@ xsltNewTemplate(void) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltTemplate));
+    cur->priority = XSLT_PAT_NO_PRIORITY;
     return(cur);
 }
 
@@ -150,6 +162,9 @@ xsltNewStylesheet(void) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltStylesheet));
+    cur->omitXmlDeclaration = -1;
+    cur->standalone = -1;
+    cur->indent = -1;
     return(cur);
 }
 
@@ -166,6 +181,17 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     xsltFreeTemplateList(sheet->templates);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
+    if (sheet->stripSpaces != NULL)
+	xmlHashFree(sheet->stripSpaces, NULL);
+
+    if (sheet->method != NULL) xmlFree(sheet->method);
+    if (sheet->methodURI != NULL) xmlFree(sheet->methodURI);
+    if (sheet->version != NULL) xmlFree(sheet->version);
+    if (sheet->encoding != NULL) xmlFree(sheet->encoding);
+    if (sheet->doctypePublic != NULL) xmlFree(sheet->doctypePublic);
+    if (sheet->doctypeSystem != NULL) xmlFree(sheet->doctypeSystem);
+    if (sheet->mediaType != NULL) xmlFree(sheet->mediaType);
+
     memset(sheet, -1, sizeof(xsltStylesheet));
     xmlFree(sheet);
 }
@@ -177,32 +203,339 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
  ************************************************************************/
 
 /**
+ * xsltParseStylesheetOutput:
+ * @style:  the XSLT stylesheet
+ * @template:  the "output" element
+ *
+ * parse an XSLT stylesheet output element and record
+ * information related to the stylesheet output
+ */
+
+void
+xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
+    xmlChar *elements, *prop;
+    xmlChar *element, *end;
+
+    if ((cur == NULL) || (style == NULL))
+	return;
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (style->version != NULL) xmlFree(style->version);
+	style->version  = prop;
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"encoding", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (style->encoding != NULL) xmlFree(style->encoding);
+	style->encoding  = prop;
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"method", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	xmlChar *ncname;
+	xmlChar *prefix = NULL;
+
+	if (style->method != NULL) xmlFree(style->method);
+	style->method = NULL;
+	if (style->methodURI != NULL) xmlFree(style->methodURI);
+	style->methodURI = NULL;
+
+	ncname = xmlSplitQName2(prop, &prefix);
+	if (ncname != NULL) {
+	    if (prefix != NULL) {
+		xmlNsPtr ns;
+
+		ns = xmlSearchNs(cur->doc, cur, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		    xmlFree(prefix);
+		    xmlFree(ncname);
+		    style->method = prop;
+		} else {
+		    style->methodURI = xmlStrdup(ns->href);
+		    style->method = ncname;
+		    xmlFree(prefix);
+		    xmlFree(prop);
+		}
+	    } else {
+		style->method = ncname;
+		xmlFree(prop);
+	    }
+	} else {
+	    if ((xmlStrEqual(prop, (const xmlChar *)"xml")) ||
+		(xmlStrEqual(prop, (const xmlChar *)"html")) ||
+		(xmlStrEqual(prop, (const xmlChar *)"text"))) {
+		style->method  = prop;
+	    } else {
+		xsltGenericError(xsltGenericErrorContext,
+		    "invalid value for method: %s\n", prop);
+	    }
+	}
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"doctype-system", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (style->doctypeSystem != NULL) xmlFree(style->doctypeSystem);
+	style->doctypeSystem  = prop;
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"doctype-public", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (style->doctypePublic != NULL) xmlFree(style->doctypePublic);
+	style->doctypePublic  = prop;
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"standalone",
+	                XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+	    style->standalone = 1;
+	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
+	    style->standalone = 0;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+		"invalid value for standalone: %s\n", prop);
+	}
+	xmlFree(prop);
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"indent",
+	                XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+	    style->indent = 1;
+	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
+	    style->indent = 0;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+		"invalid value for indent: %s\n", prop);
+	}
+	xmlFree(prop);
+    }
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"omit-xml-declaration",
+	                XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+	    style->omitXmlDeclaration = 1;
+	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
+	    style->omitXmlDeclaration = 0;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+		"invalid value for omit-xml-declaration: %s\n", prop);
+	}
+	xmlFree(prop);
+    }
+
+    elements = xmlGetNsProp(cur, (const xmlChar *)"cdata-section-elements",
+	                    XSLT_NAMESPACE);
+    if (elements != NULL) {
+	if (style->stripSpaces == NULL)
+	    style->stripSpaces = xmlHashCreate(10);
+	if (style->stripSpaces == NULL)
+	    return;
+
+	element = elements;
+	while (*element != 0) {
+	    while (IS_BLANK(*element)) element++;
+	    if (*element == 0)
+		break;
+	    end = element;
+	    while ((*end != 0) && (!IS_BLANK(*end))) end++;
+	    element = xmlStrndup(element, end - element);
+	    if (element) {
+#ifdef DEBUG_PARSING
+		xsltGenericError(xsltGenericErrorContext,
+		    "add cdata section output element %s\n", element);
+#endif
+		xmlHashAddEntry(style->stripSpaces, element, "cdata");
+		xmlFree(element);
+	    }
+	    element = end;
+	}
+	xmlFree(elements);
+    }
+}
+
+/**
+ * xsltParseStylesheetPreserveSpace:
+ * @style:  the XSLT stylesheet
+ * @template:  the "preserve-space" element
+ *
+ * parse an XSLT stylesheet preserve-space element and record
+ * elements needing preserving
+ */
+
+void
+xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
+    xmlChar *elements;
+    xmlChar *element, *end;
+
+    if ((cur == NULL) || (style == NULL))
+	return;
+
+    elements = xmlGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
+    if (elements == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltParseStylesheetPreserveSpace: missing elements attribute\n");
+	return;
+    }
+
+    if (style->stripSpaces == NULL)
+	style->stripSpaces = xmlHashCreate(10);
+    if (style->stripSpaces == NULL)
+	return;
+
+    element = elements;
+    while (*element != 0) {
+	while (IS_BLANK(*element)) element++;
+	if (*element == 0)
+	    break;
+        end = element;
+	while ((*end != 0) && (!IS_BLANK(*end))) end++;
+	element = xmlStrndup(element, end - element);
+	if (element) {
+#ifdef DEBUG_PARSING
+	    xsltGenericError(xsltGenericErrorContext,
+		"add preserved space element %s\n", element);
+#endif
+	    xmlHashAddEntry(style->stripSpaces, element, "preserve");
+	    xmlFree(element);
+	}
+	element = end;
+    }
+    xmlFree(elements);
+}
+
+/**
+ * xsltParseStylesheetStripSpace:
+ * @style:  the XSLT stylesheet
+ * @template:  the "strip-space" element
+ *
+ * parse an XSLT stylesheet strip-space element and record
+ * elements needing stripping
+ */
+
+void
+xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
+    xmlChar *elements;
+    xmlChar *element, *end;
+
+    if ((cur == NULL) || (style == NULL))
+	return;
+
+    elements = xmlGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
+    if (elements == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltParseStylesheetStripSpace: missing elements attribute\n");
+	return;
+    }
+
+    if (style->stripSpaces == NULL)
+	style->stripSpaces = xmlHashCreate(10);
+    if (style->stripSpaces == NULL)
+	return;
+
+    element = elements;
+    while (*element != 0) {
+	while (IS_BLANK(*element)) element++;
+	if (*element == 0)
+	    break;
+        end = element;
+	while ((*end != 0) && (!IS_BLANK(*end))) end++;
+	element = xmlStrndup(element, end - element);
+	if (element) {
+#ifdef DEBUG_PARSING
+	    xsltGenericError(xsltGenericErrorContext,
+		"add stripped space element %s\n", element);
+#endif
+	    xmlHashAddEntry(style->stripSpaces, element, "strip");
+	    xmlFree(element);
+	}
+	element = end;
+    }
+    xmlFree(elements);
+}
+
+/**
  * xsltParseStylesheetTemplate:
  * @style:  the XSLT stylesheet
  * @template:  the "template" element
  *
- * parse an XSLT stylesheet building the associated structures
+ * parse an XSLT stylesheet template building the associated structures
  */
 
 void
 xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltTemplatePtr ret;
     xmlNodePtr cur;
+    xmlChar *prop;
 
     if (template == NULL)
 	return;
 
+
+    /*
+     * Create and link the structure
+     */
     ret = xsltNewTemplate();
     if (ret == NULL)
 	return;
     ret->next = style->templates;
     style->templates = ret;
 
-    cur = template->children;
+    /*
+     * Get arguments
+     */
+    prop = xmlGetNsProp(template, (const xmlChar *)"match", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (ret->match != NULL) xmlFree(ret->match);
+	ret->match  = prop;
+    }
+
+    prop = xmlGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	xmlChar *ncname;
+	xmlChar *prefix = NULL;
+
+	if (ret->name != NULL) xmlFree(ret->name);
+	ret->name = NULL;
+	if (ret->nameURI != NULL) xmlFree(ret->nameURI);
+	ret->nameURI = NULL;
+
+	ncname = xmlSplitQName2(prop, &prefix);
+	if (ncname != NULL) {
+	    if (prefix != NULL) {
+		xmlNsPtr ns;
+
+		ns = xmlSearchNs(cur->doc, cur, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		    xmlFree(prefix);
+		    xmlFree(ncname);
+		    ret->name = prop;
+		} else {
+		    ret->nameURI = xmlStrdup(ns->href);
+		    ret->name = ncname;
+		    xmlFree(prefix);
+		    xmlFree(prop);
+		}
+	    } else {
+		ret->name = ncname;
+		xmlFree(prop);
+	    }
+	} else {
+	    ret->name  = prop;
+	}
+    }
 
     /*
      * Find and handle the params
      */
+    cur = template->children;
     while (cur != NULL) {
 	/*
 	 * Remove Blank nodes found at this level.
@@ -215,7 +548,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	    xmlFreeNode(blank);
 	    continue;
 	}
-	if ((IS_XSLT_ELEM(cur)) && (xmlStrEqual(cur->name, "param"))) {
+	if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "param"))) {
 	    TODO /* Handle param */
 	} else
 	    break;
@@ -237,7 +570,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	    xmlFreeNode(blank);
 	    continue;
 	}
-	if ((IS_XSLT_ELEM(cur)) && (xmlStrEqual(cur->name, "param"))) {
+	if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "param"))) {
 	    xmlNodePtr param = cur;
 
             cur = cur->next;
@@ -252,6 +585,11 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     }
 
     ret->content = template->children;
+
+    /*
+     * Register pattern
+     */
+    xsltAddTemplate(style, ret);
 }
 
 /**
@@ -265,6 +603,9 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 void
 xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     xmlNodePtr cur;
+#ifdef DEBUG_PARSING
+    int templates = 0;
+#endif
 
     if (top == NULL)
 	return;
@@ -284,7 +625,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
             cur = cur->next;
 	    continue;
 	}
-	if (xmlStrEqual(cur->name, "import")) {
+	if (IS_XSLT_NAME(cur, "import")) {
 	    TODO /* Handle import */
 	} else
 	    break;
@@ -304,30 +645,33 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
             cur = cur->next;
 	    continue;
 	}
-	if (xmlStrEqual(cur->name, "import")) {
+	if (IS_XSLT_NAME(cur, "import")) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetTop: ignoring misplaced import element\n");
-        } else if (xmlStrEqual(cur->name, "include")) {
+        } else if (IS_XSLT_NAME(cur, "include")) {
 	    TODO /* Handle include */
-        } else if (xmlStrEqual(cur->name, "strip-space")) {
-	    TODO /* Handle strip-space */
-        } else if (xmlStrEqual(cur->name, "preserve-space")) {
-	    TODO /* Handle preserve-space */
-        } else if (xmlStrEqual(cur->name, "output")) {
-	    TODO /* Handle output */
-        } else if (xmlStrEqual(cur->name, "key")) {
+        } else if (IS_XSLT_NAME(cur, "strip-space")) {
+	    xsltParseStylesheetStripSpace(style, cur);
+        } else if (IS_XSLT_NAME(cur, "preserve-space")) {
+	    xsltParseStylesheetPreserveSpace(style, cur);
+        } else if (IS_XSLT_NAME(cur, "output")) {
+	    xsltParseStylesheetOutput(style, cur);
+        } else if (IS_XSLT_NAME(cur, "key")) {
 	    TODO /* Handle key */
-        } else if (xmlStrEqual(cur->name, "decimal-format")) {
+        } else if (IS_XSLT_NAME(cur, "decimal-format")) {
 	    TODO /* Handle decimal-format */
-        } else if (xmlStrEqual(cur->name, "attribute-set")) {
+        } else if (IS_XSLT_NAME(cur, "attribute-set")) {
 	    TODO /* Handle attribute-set */
-        } else if (xmlStrEqual(cur->name, "variable")) {
+        } else if (IS_XSLT_NAME(cur, "variable")) {
 	    TODO /* Handle variable */
-        } else if (xmlStrEqual(cur->name, "param")) {
+        } else if (IS_XSLT_NAME(cur, "param")) {
 	    TODO /* Handle param */
-        } else if (xmlStrEqual(cur->name, "template")) {
+        } else if (IS_XSLT_NAME(cur, "template")) {
+#ifdef DEBUG_PARSING
+	    templates++;
+#endif
 	    xsltParseStylesheetTemplate(style, cur);
-        } else if (xmlStrEqual(cur->name, "namespace-alias")) {
+        } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
 	    TODO /* Handle namespace-alias */
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
@@ -336,6 +680,10 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	}
 	cur = cur->next;
     }
+#ifdef DEBUG_PARSING
+    xsltGenericError(xsltGenericErrorContext,
+		    "parsed %d templates\n", templates);
+#endif
 }
 
 /**
@@ -371,7 +719,7 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 	return(NULL);
     }
 
-    if ((IS_XSLT_ELEM(cur)) && (xmlStrEqual(cur->name, "stylesheet"))) {
+    if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "stylesheet"))) {
 #ifdef DEBUG_PARSING
 	xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetDoc : found stylesheet\n");
@@ -414,7 +762,7 @@ xsltParseStylesheetFile(const xmlChar* filename) {
 	    "xsltParseStylesheetFile : parse %s\n", filename);
 #endif
 
-    doc = xmlParseFile(filename);
+    doc = xmlParseFile((const char *) filename);
     if (doc == NULL) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetFile : cannot parse %s\n", filename);
