@@ -49,13 +49,18 @@ A:link, A:visited, A:active { text-decoration: underline }
 </table>
 <table width="100%" border="0" cellspacing="1" cellpadding="3">
 <tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>API Indexes</b></center></td></tr>
-<tr><td bgcolor="#fffacd"><ul>
+<tr><td bgcolor="#fffacd">
+<form action="http://xmlsoft.org/XSLT/search.php" enctype="application/x-www-form-urlencoded" method="GET">
+<input name="query" type="TEXT" size="20" value=""><input name="submit" type="submit" value="Search ...">
+</form>
+<ul>
 <li><a href="APIchunk0.html">Alphabetic</a></li>
 <li><a href="APIconstructors.html">Constructors</a></li>
 <li><a href="APIfunctions.html">Functions/Types</a></li>
 <li><a href="APIfiles.html">Modules</a></li>
 <li><a href="APIsymbols.html">Symbols</a></li>
-</ul></td></tr>
+</ul>
+</td></tr>
 </table>
 <table width="100%" border="0" cellspacing="1" cellpadding="3">
 <tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>Related links</b></center></td></tr>
@@ -214,9 +219,9 @@ A:link, A:visited, A:active { text-decoration: underline }
 </p>
 <h2>Type xmlChar **:</h2>
 <p>
-<a href="html/libxslt-xsltinternals.html#XSLTFORMATNUMBERCONVERSION">xsltFormatNumberConversion</a>
 <a href="html/libxslt-xsltutils.html#XSLTGETQNAMEURI">xsltGetQNameURI</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOSTRING">xsltSaveResultToString</a>
+<a href="html/libxslt-xsltinternals.html#XSLTFORMATNUMBERCONVERSION">xsltFormatNumberConversion</a>
 </p>
 <h2>Type xmlDocPtr:</h2>
 <p>
@@ -231,14 +236,14 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-transform.html#XSLTPROFILESTYLESHEET">xsltProfileStylesheet</a>
 <a href="html/libxslt-transform.html#XSLTRUNSTYLESHEET">xsltRunStylesheet</a>
 <a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETPROCESS">xsltParseStylesheetProcess</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETDOC">xsltParseStylesheetDoc</a>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTO">xsltSaveResultTo</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILENAME">xsltSaveResultToFilename</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE">xsltSaveResultToFile</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">xsltSaveResultToFd</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOSTRING">xsltSaveResultToString</a>
+<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETPROCESS">xsltParseStylesheetProcess</a>
+<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETDOC">xsltParseStylesheetDoc</a>
+<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
 </p>
 <h2>Type xmlGenericErrorFunc:</h2>
 <p>
@@ -325,11 +330,6 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-variables.html#XSLTPARSESTYLESHEETVARIABLE">xsltParseStylesheetVariable</a>
 <a href="html/libxslt-variables.html#XSLTPARSESTYLESHEETPARAM">xsltParseStylesheetParam</a>
 <a href="html/libxslt-variables.html#XSLTPARSESTYLESHEETCALLERPARAM">xsltParseStylesheetCallerParam</a>
-<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
-<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETOUTPUT">xsltParseStylesheetOutput</a>
-<a href="html/libxslt-xsltinternals.html#XSLTNUMBERFORMAT">xsltNumberFormat</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">xsltParseTemplateContent</a>
 <a href="html/libxslt-xsltutils.html#XSLTGETNSPROP">xsltGetNsProp</a>
 <a href="html/libxslt-xsltutils.html#XSLTPRINTERRORCONTEXT">xsltPrintErrorContext</a>
 <a href="html/libxslt-xsltutils.html#XSLTMESSAGE">xsltMessage</a>
@@ -339,6 +339,11 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#XSLTHANDLEDEBUGGERCALLBACK">xsltHandleDebuggerCallback</a>
 <a href="html/libxslt-xsltutils.html#XSLTADDCALLCALLBACK">xsltAddCallCallback</a>
 <a href="html/libxslt-xsltutils.html#XSLADDCALL">xslAddCall</a>
+<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
+<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
+<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETOUTPUT">xsltParseStylesheetOutput</a>
+<a href="html/libxslt-xsltinternals.html#XSLTNUMBERFORMAT">xsltNumberFormat</a>
+<a href="html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">xsltParseTemplateContent</a>
 </p>
 <h2>Type xmlNodePtr *:</h2>
 <p>
@@ -517,18 +522,18 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
 <a href="html/libxslt-variables.html#XSLTPARSEGLOBALVARIABLE">xsltParseGlobalVariable</a>
 <a href="html/libxslt-variables.html#XSLTPARSEGLOBALPARAM">xsltParseGlobalParam</a>
-<a href="html/libxslt-xsltinternals.html#XSLTFREESTYLESHEET">xsltFreeStylesheet</a>
-<a href="html/libxslt-xsltinternals.html#XSLTDECIMALFORMATGETBYNAME">xsltDecimalFormatGetByName</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETPROCESS">xsltParseStylesheetProcess</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETOUTPUT">xsltParseStylesheetOutput</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">xsltParseTemplateContent</a>
-<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRA">xsltAllocateExtra</a>
 <a href="html/libxslt-xsltutils.html#XSLTPRINTERRORCONTEXT">xsltPrintErrorContext</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTO">xsltSaveResultTo</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILENAME">xsltSaveResultToFilename</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE">xsltSaveResultToFile</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">xsltSaveResultToFd</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOSTRING">xsltSaveResultToString</a>
+<a href="html/libxslt-xsltinternals.html#XSLTFREESTYLESHEET">xsltFreeStylesheet</a>
+<a href="html/libxslt-xsltinternals.html#XSLTDECIMALFORMATGETBYNAME">xsltDecimalFormatGetByName</a>
+<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETPROCESS">xsltParseStylesheetProcess</a>
+<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETOUTPUT">xsltParseStylesheetOutput</a>
+<a href="html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">xsltParseTemplateContent</a>
+<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRA">xsltAllocateExtra</a>
 </p>
 <h2>Type xsltTemplatePtr:</h2>
 <p>
@@ -619,14 +624,14 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-variables.html#XSLTADDSTACKELEMLIST">xsltAddStackElemList</a>
 <a href="html/libxslt-variables.html#XSLTFREEGLOBALVARIABLES">xsltFreeGlobalVariables</a>
 <a href="html/libxslt-variables.html#XSLTVARIABLELOOKUP">xsltVariableLookup</a>
-<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
-<a href="html/libxslt-xsltinternals.html#XSLTNUMBERFORMAT">xsltNumberFormat</a>
-<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT">xsltAllocateExtraCtxt</a>
 <a href="html/libxslt-xsltutils.html#XSLTPRINTERRORCONTEXT">xsltPrintErrorContext</a>
 <a href="html/libxslt-xsltutils.html#XSLTMESSAGE">xsltMessage</a>
 <a href="html/libxslt-xsltutils.html#XSLTDOSORTFUNCTION">xsltDoSortFunction</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVEPROFILING">xsltSaveProfiling</a>
 <a href="html/libxslt-xsltutils.html#XSLTHANDLEDEBUGGERCALLBACK">xsltHandleDebuggerCallback</a>
+<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
+<a href="html/libxslt-xsltinternals.html#XSLTNUMBERFORMAT">xsltNumberFormat</a>
+<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT">xsltAllocateExtraCtxt</a>
 </p>
 <h2>Type xsltTransformFunction:</h2>
 <p>

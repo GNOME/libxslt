@@ -1,3 +1,8 @@
+Wed Oct  9 18:37:56 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/*: updated the doc XSLT to add the search, added the search
+	  page, fixed a link problem raised by Yves Pratter, regenerated
+
 Wed Oct  9 14:27:17 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/index.py: the indexer version of the XSLT part of the

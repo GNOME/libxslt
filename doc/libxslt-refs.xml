@@ -30,6 +30,7 @@
     <reference name='XSLT_REGISTER_VARIABLE_LOOKUP' href='html/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS'/>
     <reference name='XSLT_RUNTIME_EXTRA' href='html/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-CAPS'/>
     <reference name='XSLT_RUNTIME_EXTRA_FREE' href='html/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-FREE-CAPS'/>
+    <reference name='XSLT_RUNTIME_EXTRA_LST' href='html/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-LST-CAPS'/>
     <reference name='XSLT_SAXON_NAMESPACE' href='html/libxslt-extra.html#XSLT-SAXON-NAMESPACE-CAPS'/>
     <reference name='XSLT_STRANGE' href='html/libxslt-xsltutils.html#XSLT-STRANGE-CAPS'/>
     <reference name='XSLT_TIMESTAMP_TICS_PER_SEC' href='html/libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS'/>
@@ -288,6 +289,7 @@
     <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
     <ref name='XSLT_RUNTIME_EXTRA'/>
     <ref name='XSLT_RUNTIME_EXTRA_FREE'/>
+    <ref name='XSLT_RUNTIME_EXTRA_LST'/>
     <ref name='XSLT_SAXON_NAMESPACE'/>
     <ref name='XSLT_STRANGE'/>
     <ref name='XSLT_TIMESTAMP_TICS_PER_SEC'/>
