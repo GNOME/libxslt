@@ -61,7 +61,7 @@
  - The table of content
  -->
   <xsl:variable name="toc">
-    <ul style="margin-left: -2pt">
+    <ul>
       <li><a href="index.html">Home</a></li>
       <xsl:for-each select="/html/body/h2">
         <xsl:variable name="filename">
@@ -81,8 +81,17 @@
       <li><a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a></li>
     </ul>
   </xsl:variable>
+  <xsl:variable name="api">
+    <ul>
+      <li><a href="APIchunk0.html">Alphabetic</a></li>
+      <li><a href="APIconstructors.html">Constructors</a></li>
+      <li><a href="APIfunctions.html">Functions/Types</a></li>
+      <li><a href="APIfiles.html">Modules</a></li>
+      <li><a href="APIsymbols.html">Symbols</a></li>
+    </ul>
+  </xsl:variable>
   <xsl:variable name="related">
-    <ul style="margin-left: -2pt">
+    <ul>
       <li><a href="tutorial/libxslttutorial.html">Tutorial</a></li>
       <li><a href="xsltproc.html">Man page for xsltproc</a></li>
       <li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li>
@@ -110,6 +119,20 @@
             <tr>
               <td bgcolor="#fffacd">
                 <xsl:copy-of select="$toc"/>
+              </td>
+            </tr>
+          </table>
+          <table width="100%" border="0" cellspacing="1" cellpadding="3">
+            <tr>
+              <td colspan="1" bgcolor="#eecfa1" align="center">
+                <center>
+                  <b>API Indexes</b>
+                </center>
+              </td>
+            </tr>
+            <tr>
+              <td bgcolor="#fffacd">
+                <xsl:copy-of select="$api"/>
               </td>
             </tr>
           </table>
@@ -147,11 +170,11 @@
  -->
   <xsl:template name="style">
     <style type="text/css"><xsl:text disable-output-escaping="yes">&lt;!--</xsl:text>
-TD {font-size: 10pt; font-family: Verdana,Arial,Helvetica}
-BODY {font-size: 10pt; font-family: Verdana,Arial,Helvetica; margin-top: 5pt; margin-left: 0pt; margin-right: 0pt}
-H1 {font-size: 16pt; font-family: Verdana,Arial,Helvetica}
-H2 {font-size: 14pt; font-family: Verdana,Arial,Helvetica}
-H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
+TD {font-size: 14pt; font-family: Verdana,Arial,Helvetica}
+BODY {font-size: 14pt; font-family: Verdana,Arial,Helvetica; margin-top: 2em; margin-left: 0em; margin-right: 0em}
+H1 {font-size: 20pt; font-family: Verdana,Arial,Helvetica}
+H2 {font-size: 18pt; font-family: Verdana,Arial,Helvetica}
+H3 {font-size: 16pt; font-family: Verdana,Arial,Helvetica}
 A:link, A:visited, A:active { text-decoration: underline }
 <xsl:text disable-output-escaping="yes">--&gt;</xsl:text></style>
   </xsl:template>

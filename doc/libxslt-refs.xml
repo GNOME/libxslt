@@ -1,0 +1,4507 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<apirefs name='libxslt'>
+  <references>
+    <reference name='ATTRIBUTE_UNUSED' href='html/libxslt-xsltconfig.html#ATTRIBUTE-UNUSED-CAPS'/>
+    <reference name='CHECK_STOPPED' href='html/libxslt-xsltinternals.html#CHECK-STOPPED-CAPS'/>
+    <reference name='CHECK_STOPPED0' href='html/libxslt-xsltinternals.html#CHECK-STOPPED0-CAPS'/>
+    <reference name='CHECK_STOPPEDE' href='html/libxslt-xsltinternals.html#CHECK-STOPPEDE-CAPS'/>
+    <reference name='DEBUG_MEMORY' href='html/libxslt-xsltconfig.html#DEBUG-MEMORY-CAPS'/>
+    <reference name='DEBUG_MEMORY_LOCATION' href='html/libxslt-xsltconfig.html#DEBUG-MEMORY-LOCATION-CAPS'/>
+    <reference name='IN_LIBXSLT' href='html/libxslt-libxslt.html#IN-LIBXSLT-CAPS'/>
+    <reference name='IS_XSLT_ELEM' href='html/libxslt-xsltutils.html#IS-XSLT-ELEM-CAPS'/>
+    <reference name='IS_XSLT_NAME' href='html/libxslt-xsltutils.html#IS-XSLT-NAME-CAPS'/>
+    <reference name='IS_XSLT_REAL_NODE' href='html/libxslt-xsltutils.html#IS-XSLT-REAL-NODE-CAPS'/>
+    <reference name='LIBXSLT_DOTTED_VERSION' href='html/libxslt-xsltconfig.html#LIBXSLT-DOTTED-VERSION-CAPS'/>
+    <reference name='LIBXSLT_PUBLIC' href='html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS'/>
+    <reference name='LIBXSLT_VERSION' href='html/libxslt-xsltconfig.html#LIBXSLT-VERSION-CAPS'/>
+    <reference name='LIBXSLT_VERSION_STRING' href='html/libxslt-xsltconfig.html#LIBXSLT-VERSION-STRING-CAPS'/>
+    <reference name='WITH_XSLT_DEBUG' href='html/libxslt-xsltconfig.html#WITH-XSLT-DEBUG-CAPS'/>
+    <reference name='WITH_XSLT_DEBUGGER' href='html/libxslt-xsltconfig.html#WITH-XSLT-DEBUGGER-CAPS'/>
+    <reference name='XSLT_DEFAULT_URL' href='html/libxslt-xslt.html#XSLT-DEFAULT-URL-CAPS'/>
+    <reference name='XSLT_DEFAULT_VENDOR' href='html/libxslt-xslt.html#XSLT-DEFAULT-VENDOR-CAPS'/>
+    <reference name='XSLT_DEFAULT_VERSION' href='html/libxslt-xslt.html#XSLT-DEFAULT-VERSION-CAPS'/>
+    <reference name='XSLT_GET_IMPORT_INT' href='html/libxslt-imports.html#XSLT-GET-IMPORT-INT-CAPS'/>
+    <reference name='XSLT_GET_IMPORT_PTR' href='html/libxslt-imports.html#XSLT-GET-IMPORT-PTR-CAPS'/>
+    <reference name='XSLT_LIBXSLT_NAMESPACE' href='html/libxslt-extra.html#XSLT-LIBXSLT-NAMESPACE-CAPS'/>
+    <reference name='XSLT_MAX_SORT' href='html/libxslt-xsltinternals.html#XSLT-MAX-SORT-CAPS'/>
+    <reference name='XSLT_NAMESPACE' href='html/libxslt-xslt.html#XSLT-NAMESPACE-CAPS'/>
+    <reference name='XSLT_NORM_SAXON_NAMESPACE' href='html/libxslt-extra.html#XSLT-NORM-SAXON-NAMESPACE-CAPS'/>
+    <reference name='XSLT_PAT_NO_PRIORITY' href='html/libxslt-xsltinternals.html#XSLT-PAT-NO-PRIORITY-CAPS'/>
+    <reference name='XSLT_REGISTER_FUNCTION_LOOKUP' href='html/libxslt-functions.html#XSLT-REGISTER-FUNCTION-LOOKUP-CAPS'/>
+    <reference name='XSLT_REGISTER_VARIABLE_LOOKUP' href='html/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS'/>
+    <reference name='XSLT_SAXON_NAMESPACE' href='html/libxslt-extra.html#XSLT-SAXON-NAMESPACE-CAPS'/>
+    <reference name='XSLT_STRANGE' href='html/libxslt-xsltutils.html#XSLT-STRANGE-CAPS'/>
+    <reference name='XSLT_TIMESTAMP_TICS_PER_SEC' href='html/libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS'/>
+    <reference name='XSLT_TODO' href='html/libxslt-xsltutils.html#XSLT-TODO-CAPS'/>
+    <reference name='XSLT_XALAN_NAMESPACE' href='html/libxslt-extra.html#XSLT-XALAN-NAMESPACE-CAPS'/>
+    <reference name='XSLT_XT_NAMESPACE' href='html/libxslt-extra.html#XSLT-XT-NAMESPACE-CAPS'/>
+    <reference name='void' href='html/libxslt-extensions.html#VOID'/>
+    <reference name='xslAddCall' href='html/libxslt-xsltutils.html#XSLADDCALL'/>
+    <reference name='xslDropCall' href='html/libxslt-xsltutils.html#XSLDROPCALL'/>
+    <reference name='xslHandleDebugger' href='html/libxslt-transform.html#XSLHANDLEDEBUGGER'/>
+    <reference name='xsltAddCallCallback' href='html/libxslt-xsltutils.html#XSLTADDCALLCALLBACK'/>
+    <reference name='xsltAddKey' href='html/libxslt-keys.html#XSLTADDKEY'/>
+    <reference name='xsltAddStackElemList' href='html/libxslt-variables.html#XSLTADDSTACKELEMLIST'/>
+    <reference name='xsltAddTemplate' href='html/libxslt-pattern.html#XSLTADDTEMPLATE'/>
+    <reference name='xsltApplyAttributeSet' href='html/libxslt-attributes.html#XSLTAPPLYATTRIBUTESET'/>
+    <reference name='xsltApplyImports' href='html/libxslt-transform.html#XSLTAPPLYIMPORTS'/>
+    <reference name='xsltApplyOneTemplate' href='html/libxslt-transform.html#XSLTAPPLYONETEMPLATE'/>
+    <reference name='xsltApplyStripSpaces' href='html/libxslt-transform.html#XSLTAPPLYSTRIPSPACES'/>
+    <reference name='xsltApplyStylesheet' href='html/libxslt-transform.html#XSLTAPPLYSTYLESHEET'/>
+    <reference name='xsltApplyStylesheetUser' href='html/libxslt-transform.html#XSLTAPPLYSTYLESHEETUSER'/>
+    <reference name='xsltApplyTemplates' href='html/libxslt-transform.html#XSLTAPPLYTEMPLATES'/>
+    <reference name='xsltAttrListTemplateProcess' href='html/libxslt-templates.html#XSLTATTRLISTTEMPLATEPROCESS'/>
+    <reference name='xsltAttrTemplateProcess' href='html/libxslt-templates.html#XSLTATTRTEMPLATEPROCESS'/>
+    <reference name='xsltAttrTemplateValueProcess' href='html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESS'/>
+    <reference name='xsltAttribute' href='html/libxslt-transform.html#XSLTATTRIBUTE'/>
+    <reference name='xsltCalibrateAdjust' href='html/libxslt-xsltutils.html#XSLTCALIBRATEADJUST'/>
+    <reference name='xsltCallTemplate' href='html/libxslt-transform.html#XSLTCALLTEMPLATE'/>
+    <reference name='xsltCheckExtPrefix' href='html/libxslt-extensions.html#XSLTCHECKEXTPREFIX'/>
+    <reference name='xsltChoose' href='html/libxslt-transform.html#XSLTCHOOSE'/>
+    <reference name='xsltCleanupGlobals' href='html/libxslt-xslt.html#XSLTCLEANUPGLOBALS'/>
+    <reference name='xsltCleanupTemplates' href='html/libxslt-pattern.html#XSLTCLEANUPTEMPLATES'/>
+    <reference name='xsltComment' href='html/libxslt-transform.html#XSLTCOMMENT'/>
+    <reference name='xsltCompMatch' href='html/libxslt-pattern.html#XSLTCOMPMATCH'/>
+    <reference name='xsltCompMatchPtr' href='html/libxslt-pattern.html#XSLTCOMPMATCHPTR'/>
+    <reference name='xsltCompilePattern' href='html/libxslt-pattern.html#XSLTCOMPILEPATTERN'/>
+    <reference name='xsltCopy' href='html/libxslt-transform.html#XSLTCOPY'/>
+    <reference name='xsltCopyNamespace' href='html/libxslt-namespaces.html#XSLTCOPYNAMESPACE'/>
+    <reference name='xsltCopyNamespaceList' href='html/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST'/>
+    <reference name='xsltCopyOf' href='html/libxslt-transform.html#XSLTCOPYOF'/>
+    <reference name='xsltDebug' href='html/libxslt-extra.html#XSLTDEBUG'/>
+    <reference name='xsltDebugStatusCodes' href='html/libxslt-xsltutils.html#XSLTDEBUGSTATUSCODES'/>
+    <reference name='xsltDecimalFormat' href='html/libxslt-xsltinternals.html#XSLTDECIMALFORMAT'/>
+    <reference name='xsltDecimalFormatGetByName' href='html/libxslt-xsltinternals.html#XSLTDECIMALFORMATGETBYNAME'/>
+    <reference name='xsltDecimalFormatPtr' href='html/libxslt-xsltinternals.html#XSLTDECIMALFORMATPTR'/>
+    <reference name='xsltDoSortFunction' href='html/libxslt-xsltutils.html#XSLTDOSORTFUNCTION'/>
+    <reference name='xsltDocument' href='html/libxslt-xsltinternals.html#XSLTDOCUMENT'/>
+    <reference name='xsltDocumentComp' href='html/libxslt-preproc.html#XSLTDOCUMENTCOMP'/>
+    <reference name='xsltDocumentElem' href='html/libxslt-transform.html#XSLTDOCUMENTELEM'/>
+    <reference name='xsltDocumentFunction' href='html/libxslt-functions.html#XSLTDOCUMENTFUNCTION'/>
+    <reference name='xsltDocumentPtr' href='html/libxslt-xsltinternals.html#XSLTDOCUMENTPTR'/>
+    <reference name='xsltDocumentSortFunction' href='html/libxslt-xsltutils.html#XSLTDOCUMENTSORTFUNCTION'/>
+    <reference name='xsltDropCallCallback' href='html/libxslt-xsltutils.html#XSLTDROPCALLCALLBACK'/>
+    <reference name='xsltElemPreComp' href='html/libxslt-xsltinternals.html#XSLTELEMPRECOMP'/>
+    <reference name='xsltElemPreCompDeallocator' href='html/libxslt-xsltinternals.html#XSLTELEMPRECOMPDEALLOCATOR'/>
+    <reference name='xsltElemPreCompPtr' href='html/libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR'/>
+    <reference name='xsltElement' href='html/libxslt-transform.html#XSLTELEMENT'/>
+    <reference name='xsltElementAvailableFunction' href='html/libxslt-functions.html#XSLTELEMENTAVAILABLEFUNCTION'/>
+    <reference name='xsltEvalAttrValueTemplate' href='html/libxslt-templates.html#XSLTEVALATTRVALUETEMPLATE'/>
+    <reference name='xsltEvalGlobalVariables' href='html/libxslt-variables.html#XSLTEVALGLOBALVARIABLES'/>
+    <reference name='xsltEvalOneUserParam' href='html/libxslt-variables.html#XSLTEVALONEUSERPARAM'/>
+    <reference name='xsltEvalStaticAttrValueTemplate' href='html/libxslt-templates.html#XSLTEVALSTATICATTRVALUETEMPLATE'/>
+    <reference name='xsltEvalTemplateString' href='html/libxslt-templates.html#XSLTEVALTEMPLATESTRING'/>
+    <reference name='xsltEvalUserParams' href='html/libxslt-variables.html#XSLTEVALUSERPARAMS'/>
+    <reference name='xsltEvalXPathPredicate' href='html/libxslt-templates.html#XSLTEVALXPATHPREDICATE'/>
+    <reference name='xsltEvalXPathString' href='html/libxslt-templates.html#XSLTEVALXPATHSTRING'/>
+    <reference name='xsltExtElementLookup' href='html/libxslt-transform.html#XSLTEXTELEMENTLOOKUP'/>
+    <reference name='xsltExtFunctionLookup' href='html/libxslt-extensions.html#XSLTEXTFUNCTIONLOOKUP'/>
+    <reference name='xsltExtInitFunction' href='html/libxslt-extensions.html#XSLTEXTINITFUNCTION'/>
+    <reference name='xsltExtMarker' href='html/libxslt-preproc.html#XSLTEXTMARKER'/>
+    <reference name='xsltExtModuleElementLookup' href='html/libxslt-extensions.html#XSLTEXTMODULEELEMENTLOOKUP'/>
+    <reference name='xsltExtModuleFunctionLookup' href='html/libxslt-extensions.html#XSLTEXTMODULEFUNCTIONLOOKUP'/>
+    <reference name='xsltExtModuleTopLevelLookup' href='html/libxslt-extensions.html#XSLTEXTMODULETOPLEVELLOOKUP'/>
+    <reference name='xsltExtShutdownFunction' href='html/libxslt-extensions.html#XSLTEXTSHUTDOWNFUNCTION'/>
+    <reference name='xsltFindDocument' href='html/libxslt-documents.html#XSLTFINDDOCUMENT'/>
+    <reference name='xsltFindElemSpaceHandling' href='html/libxslt-imports.html#XSLTFINDELEMSPACEHANDLING'/>
+    <reference name='xsltFindTemplate' href='html/libxslt-imports.html#XSLTFINDTEMPLATE'/>
+    <reference name='xsltForEach' href='html/libxslt-transform.html#XSLTFOREACH'/>
+    <reference name='xsltFormatNumberConversion' href='html/libxslt-xsltinternals.html#XSLTFORMATNUMBERCONVERSION'/>
+    <reference name='xsltFormatNumberFunction' href='html/libxslt-functions.html#XSLTFORMATNUMBERFUNCTION'/>
+    <reference name='xsltFreeAttributeSetsHashes' href='html/libxslt-attributes.html#XSLTFREEATTRIBUTESETSHASHES'/>
+    <reference name='xsltFreeCompMatchList' href='html/libxslt-pattern.html#XSLTFREECOMPMATCHLIST'/>
+    <reference name='xsltFreeCtxtExts' href='html/libxslt-extensions.html#XSLTFREECTXTEXTS'/>
+    <reference name='xsltFreeDocumentKeys' href='html/libxslt-keys.html#XSLTFREEDOCUMENTKEYS'/>
+    <reference name='xsltFreeDocuments' href='html/libxslt-documents.html#XSLTFREEDOCUMENTS'/>
+    <reference name='xsltFreeExts' href='html/libxslt-extensions.html#XSLTFREEEXTS'/>
+    <reference name='xsltFreeGlobalVariables' href='html/libxslt-variables.html#XSLTFREEGLOBALVARIABLES'/>
+    <reference name='xsltFreeKeys' href='html/libxslt-keys.html#XSLTFREEKEYS'/>
+    <reference name='xsltFreeNamespaceAliasHashes' href='html/libxslt-namespaces.html#XSLTFREENAMESPACEALIASHASHES'/>
+    <reference name='xsltFreeStackElemList' href='html/libxslt-xsltinternals.html#XSLTFREESTACKELEMLIST'/>
+    <reference name='xsltFreeStyleDocuments' href='html/libxslt-documents.html#XSLTFREESTYLEDOCUMENTS'/>
+    <reference name='xsltFreeStylePreComps' href='html/libxslt-preproc.html#XSLTFREESTYLEPRECOMPS'/>
+    <reference name='xsltFreeStylesheet' href='html/libxslt-xsltinternals.html#XSLTFREESTYLESHEET'/>
+    <reference name='xsltFreeTemplateHashes' href='html/libxslt-pattern.html#XSLTFREETEMPLATEHASHES'/>
+    <reference name='xsltFreeTransformContext' href='html/libxslt-transform.html#XSLTFREETRANSFORMCONTEXT'/>
+    <reference name='xsltFunctionAvailableFunction' href='html/libxslt-functions.html#XSLTFUNCTIONAVAILABLEFUNCTION'/>
+    <reference name='xsltFunctionNodeSet' href='html/libxslt-extra.html#XSLTFUNCTIONNODESET'/>
+    <reference name='xsltGenerateIdFunction' href='html/libxslt-functions.html#XSLTGENERATEIDFUNCTION'/>
+    <reference name='xsltGetExtData' href='html/libxslt-extensions.html#XSLTGETEXTDATA'/>
+    <reference name='xsltGetKey' href='html/libxslt-keys.html#XSLTGETKEY'/>
+    <reference name='xsltGetNamespace' href='html/libxslt-namespaces.html#XSLTGETNAMESPACE'/>
+    <reference name='xsltGetNsProp' href='html/libxslt-xsltutils.html#XSLTGETNSPROP'/>
+    <reference name='xsltGetQNameURI' href='html/libxslt-xsltutils.html#XSLTGETQNAMEURI'/>
+    <reference name='xsltGetSpecialNamespace' href='html/libxslt-namespaces.html#XSLTGETSPECIALNAMESPACE'/>
+    <reference name='xsltGetTemplate' href='html/libxslt-pattern.html#XSLTGETTEMPLATE'/>
+    <reference name='xsltGetXIncludeDefault' href='html/libxslt-transform.html#XSLTGETXINCLUDEDEFAULT'/>
+    <reference name='xsltHandleDebuggerCallback' href='html/libxslt-xsltutils.html#XSLTHANDLEDEBUGGERCALLBACK'/>
+    <reference name='xsltIf' href='html/libxslt-transform.html#XSLTIF'/>
+    <reference name='xsltInitCtxtExts' href='html/libxslt-extensions.html#XSLTINITCTXTEXTS'/>
+    <reference name='xsltInitCtxtKeys' href='html/libxslt-keys.html#XSLTINITCTXTKEYS'/>
+    <reference name='xsltInitElemPreComp' href='html/libxslt-extensions.html#XSLTINITELEMPRECOMP'/>
+    <reference name='xsltIsBlank' href='html/libxslt-xsltinternals.html#XSLTISBLANK'/>
+    <reference name='xsltKeyFunction' href='html/libxslt-functions.html#XSLTKEYFUNCTION'/>
+    <reference name='xsltLoadDocument' href='html/libxslt-documents.html#XSLTLOADDOCUMENT'/>
+    <reference name='xsltLoadStyleDocument' href='html/libxslt-documents.html#XSLTLOADSTYLEDOCUMENT'/>
+    <reference name='xsltLoadStylesheetPI' href='html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI'/>
+    <reference name='xsltMatchPattern' href='html/libxslt-pattern.html#XSLTMATCHPATTERN'/>
+    <reference name='xsltMessage' href='html/libxslt-xsltutils.html#XSLTMESSAGE'/>
+    <reference name='xsltNamespaceAlias' href='html/libxslt-namespaces.html#XSLTNAMESPACEALIAS'/>
+    <reference name='xsltNeedElemSpaceHandling' href='html/libxslt-imports.html#XSLTNEEDELEMSPACEHANDLING'/>
+    <reference name='xsltNewDocument' href='html/libxslt-documents.html#XSLTNEWDOCUMENT'/>
+    <reference name='xsltNewElemPreComp' href='html/libxslt-extensions.html#XSLTNEWELEMPRECOMP'/>
+    <reference name='xsltNewStyleDocument' href='html/libxslt-documents.html#XSLTNEWSTYLEDOCUMENT'/>
+    <reference name='xsltNewStylesheet' href='html/libxslt-xsltinternals.html#XSLTNEWSTYLESHEET'/>
+    <reference name='xsltNewTransformContext' href='html/libxslt-transform.html#XSLTNEWTRANSFORMCONTEXT'/>
+    <reference name='xsltNextImport' href='html/libxslt-imports.html#XSLTNEXTIMPORT'/>
+    <reference name='xsltNumber' href='html/libxslt-transform.html#XSLTNUMBER'/>
+    <reference name='xsltNumberFormat' href='html/libxslt-xsltinternals.html#XSLTNUMBERFORMAT'/>
+    <reference name='xsltOutputType' href='html/libxslt-xsltinternals.html#XSLTOUTPUTTYPE'/>
+    <reference name='xsltParseGlobalParam' href='html/libxslt-variables.html#XSLTPARSEGLOBALPARAM'/>
+    <reference name='xsltParseGlobalVariable' href='html/libxslt-variables.html#XSLTPARSEGLOBALVARIABLE'/>
+    <reference name='xsltParseStylesheetAttributeSet' href='html/libxslt-attributes.html#XSLTPARSESTYLESHEETATTRIBUTESET'/>
+    <reference name='xsltParseStylesheetCallerParam' href='html/libxslt-variables.html#XSLTPARSESTYLESHEETCALLERPARAM'/>
+    <reference name='xsltParseStylesheetDoc' href='html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETDOC'/>
+    <reference name='xsltParseStylesheetFile' href='html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETFILE'/>
+    <reference name='xsltParseStylesheetImport' href='html/libxslt-imports.html#XSLTPARSESTYLESHEETIMPORT'/>
+    <reference name='xsltParseStylesheetInclude' href='html/libxslt-imports.html#XSLTPARSESTYLESHEETINCLUDE'/>
+    <reference name='xsltParseStylesheetOutput' href='html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETOUTPUT'/>
+    <reference name='xsltParseStylesheetParam' href='html/libxslt-variables.html#XSLTPARSESTYLESHEETPARAM'/>
+    <reference name='xsltParseStylesheetProcess' href='html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETPROCESS'/>
+    <reference name='xsltParseStylesheetVariable' href='html/libxslt-variables.html#XSLTPARSESTYLESHEETVARIABLE'/>
+    <reference name='xsltParseTemplateContent' href='html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT'/>
+    <reference name='xsltPreComputeExtModuleElement' href='html/libxslt-extensions.html#XSLTPRECOMPUTEEXTMODULEELEMENT'/>
+    <reference name='xsltPrintErrorContext' href='html/libxslt-xsltutils.html#XSLTPRINTERRORCONTEXT'/>
+    <reference name='xsltProcessingInstruction' href='html/libxslt-transform.html#XSLTPROCESSINGINSTRUCTION'/>
+    <reference name='xsltProfileStylesheet' href='html/libxslt-transform.html#XSLTPROFILESTYLESHEET'/>
+    <reference name='xsltQuoteOneUserParam' href='html/libxslt-variables.html#XSLTQUOTEONEUSERPARAM'/>
+    <reference name='xsltQuoteUserParams' href='html/libxslt-variables.html#XSLTQUOTEUSERPARAMS'/>
+    <reference name='xsltRegisterAllElement' href='html/libxslt-transform.html#XSLTREGISTERALLELEMENT'/>
+    <reference name='xsltRegisterAllExtras' href='html/libxslt-extra.html#XSLTREGISTERALLEXTRAS'/>
+    <reference name='xsltRegisterAllFunctions' href='html/libxslt-functions.html#XSLTREGISTERALLFUNCTIONS'/>
+    <reference name='xsltRegisterExtElement' href='html/libxslt-extensions.html#XSLTREGISTEREXTELEMENT'/>
+    <reference name='xsltRegisterExtFunction' href='html/libxslt-extensions.html#XSLTREGISTEREXTFUNCTION'/>
+    <reference name='xsltRegisterExtModule' href='html/libxslt-extensions.html#XSLTREGISTEREXTMODULE'/>
+    <reference name='xsltRegisterExtModuleElement' href='html/libxslt-extensions.html#XSLTREGISTEREXTMODULEELEMENT'/>
+    <reference name='xsltRegisterExtModuleFull' href='html/libxslt-extensions.html#XSLTREGISTEREXTMODULEFULL'/>
+    <reference name='xsltRegisterExtModuleFunction' href='html/libxslt-extensions.html#XSLTREGISTEREXTMODULEFUNCTION'/>
+    <reference name='xsltRegisterExtModuleTopLevel' href='html/libxslt-extensions.html#XSLTREGISTEREXTMODULETOPLEVEL'/>
+    <reference name='xsltRegisterExtPrefix' href='html/libxslt-extensions.html#XSLTREGISTEREXTPREFIX'/>
+    <reference name='xsltRegisterExtras' href='html/libxslt-extra.html#XSLTREGISTEREXTRAS'/>
+    <reference name='xsltRegisterTestModule' href='html/libxslt-extensions.html#XSLTREGISTERTESTMODULE'/>
+    <reference name='xsltRunStylesheet' href='html/libxslt-transform.html#XSLTRUNSTYLESHEET'/>
+    <reference name='xsltSaveProfiling' href='html/libxslt-xsltutils.html#XSLTSAVEPROFILING'/>
+    <reference name='xsltSaveResultTo' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTO'/>
+    <reference name='xsltSaveResultToFd' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD'/>
+    <reference name='xsltSaveResultToFile' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE'/>
+    <reference name='xsltSaveResultToFilename' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILENAME'/>
+    <reference name='xsltSetDebuggerCallbacks' href='html/libxslt-xsltutils.html#XSLTSETDEBUGGERCALLBACKS'/>
+    <reference name='xsltSetGenericDebugFunc' href='html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC'/>
+    <reference name='xsltSetGenericErrorFunc' href='html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC'/>
+    <reference name='xsltSetXIncludeDefault' href='html/libxslt-transform.html#XSLTSETXINCLUDEDEFAULT'/>
+    <reference name='xsltShutdownCtxtExts' href='html/libxslt-extensions.html#XSLTSHUTDOWNCTXTEXTS'/>
+    <reference name='xsltShutdownExts' href='html/libxslt-extensions.html#XSLTSHUTDOWNEXTS'/>
+    <reference name='xsltSort' href='html/libxslt-transform.html#XSLTSORT'/>
+    <reference name='xsltStackElem' href='html/libxslt-xsltinternals.html#XSLTSTACKELEM'/>
+    <reference name='xsltStackElemPtr' href='html/libxslt-xsltinternals.html#XSLTSTACKELEMPTR'/>
+    <reference name='xsltStyleExtInitFunction' href='html/libxslt-extensions.html#XSLTSTYLEEXTINITFUNCTION'/>
+    <reference name='xsltStyleExtShutdownFunction' href='html/libxslt-extensions.html#XSLTSTYLEEXTSHUTDOWNFUNCTION'/>
+    <reference name='xsltStyleGetExtData' href='html/libxslt-extensions.html#XSLTSTYLEGETEXTDATA'/>
+    <reference name='xsltStylePreComp' href='html/libxslt-xsltinternals.html#XSLTSTYLEPRECOMP'/>
+    <reference name='xsltStylePreCompPtr' href='html/libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR'/>
+    <reference name='xsltStylePreCompute' href='html/libxslt-preproc.html#XSLTSTYLEPRECOMPUTE'/>
+    <reference name='xsltStyleType' href='html/libxslt-xsltinternals.html#XSLTSTYLETYPE'/>
+    <reference name='xsltStylesheet' href='html/libxslt-xsltinternals.html#XSLTSTYLESHEET'/>
+    <reference name='xsltStylesheetPtr' href='html/libxslt-xsltinternals.html#XSLTSTYLESHEETPTR'/>
+    <reference name='xsltSystemPropertyFunction' href='html/libxslt-functions.html#XSLTSYSTEMPROPERTYFUNCTION'/>
+    <reference name='xsltTemplate' href='html/libxslt-xsltinternals.html#XSLTTEMPLATE'/>
+    <reference name='xsltTemplateProcess' href='html/libxslt-templates.html#XSLTTEMPLATEPROCESS'/>
+    <reference name='xsltTemplatePtr' href='html/libxslt-xsltinternals.html#XSLTTEMPLATEPTR'/>
+    <reference name='xsltTestCompMatchList' href='html/libxslt-pattern.html#XSLTTESTCOMPMATCHLIST'/>
+    <reference name='xsltText' href='html/libxslt-transform.html#XSLTTEXT'/>
+    <reference name='xsltTimestamp' href='html/libxslt-xsltutils.html#XSLTTIMESTAMP'/>
+    <reference name='xsltTransformContext' href='html/libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXT'/>
+    <reference name='xsltTransformContextPtr' href='html/libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR'/>
+    <reference name='xsltTransformFunction' href='html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION'/>
+    <reference name='xsltTransformState' href='html/libxslt-xsltinternals.html#XSLTTRANSFORMSTATE'/>
+    <reference name='xsltUnparsedEntityURIFunction' href='html/libxslt-functions.html#XSLTUNPARSEDENTITYURIFUNCTION'/>
+    <reference name='xsltUnregisterExtModule' href='html/libxslt-extensions.html#XSLTUNREGISTEREXTMODULE'/>
+    <reference name='xsltUnregisterExtModuleElement' href='html/libxslt-extensions.html#XSLTUNREGISTEREXTMODULEELEMENT'/>
+    <reference name='xsltUnregisterExtModuleFunction' href='html/libxslt-extensions.html#XSLTUNREGISTEREXTMODULEFUNCTION'/>
+    <reference name='xsltUnregisterExtModuleTopLevel' href='html/libxslt-extensions.html#XSLTUNREGISTEREXTMODULETOPLEVEL'/>
+    <reference name='xsltValueOf' href='html/libxslt-transform.html#XSLTVALUEOF'/>
+    <reference name='xsltVariableLookup' href='html/libxslt-variables.html#XSLTVARIABLELOOKUP'/>
+    <reference name='xsltXPathFunctionLookup' href='html/libxslt-functions.html#XSLTXPATHFUNCTIONLOOKUP'/>
+    <reference name='xsltXPathVariableLookup' href='html/libxslt-variables.html#XSLTXPATHVARIABLELOOKUP'/>
+  </references>
+  <alpha>
+    <letter name='A'>
+    <ref name='ATTRIBUTE_UNUSED'/>
+    </letter>
+    <letter name='C'>
+    <ref name='CHECK_STOPPED'/>
+    <ref name='CHECK_STOPPED0'/>
+    <ref name='CHECK_STOPPEDE'/>
+    </letter>
+    <letter name='D'>
+    <ref name='DEBUG_MEMORY'/>
+    <ref name='DEBUG_MEMORY_LOCATION'/>
+    </letter>
+    <letter name='I'>
+    <ref name='IN_LIBXSLT'/>
+    <ref name='IS_XSLT_ELEM'/>
+    <ref name='IS_XSLT_NAME'/>
+    <ref name='IS_XSLT_REAL_NODE'/>
+    </letter>
+    <letter name='L'>
+    <ref name='LIBXSLT_DOTTED_VERSION'/>
+    <ref name='LIBXSLT_PUBLIC'/>
+    <ref name='LIBXSLT_VERSION'/>
+    <ref name='LIBXSLT_VERSION_STRING'/>
+    </letter>
+    <letter name='W'>
+    <ref name='WITH_XSLT_DEBUG'/>
+    <ref name='WITH_XSLT_DEBUGGER'/>
+    </letter>
+    <letter name='X'>
+    <ref name='XSLT_DEFAULT_URL'/>
+    <ref name='XSLT_DEFAULT_VENDOR'/>
+    <ref name='XSLT_DEFAULT_VERSION'/>
+    <ref name='XSLT_GET_IMPORT_INT'/>
+    <ref name='XSLT_GET_IMPORT_PTR'/>
+    <ref name='XSLT_LIBXSLT_NAMESPACE'/>
+    <ref name='XSLT_MAX_SORT'/>
+    <ref name='XSLT_NAMESPACE'/>
+    <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
+    <ref name='XSLT_PAT_NO_PRIORITY'/>
+    <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+    <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+    <ref name='XSLT_SAXON_NAMESPACE'/>
+    <ref name='XSLT_STRANGE'/>
+    <ref name='XSLT_TIMESTAMP_TICS_PER_SEC'/>
+    <ref name='XSLT_TODO'/>
+    <ref name='XSLT_XALAN_NAMESPACE'/>
+    <ref name='XSLT_XT_NAMESPACE'/>
+    </letter>
+    <letter name='v'>
+    <ref name='void'/>
+    </letter>
+    <letter name='x'>
+    <ref name='xslAddCall'/>
+    <ref name='xslDropCall'/>
+    <ref name='xslHandleDebugger'/>
+    <ref name='xsltAddCallCallback'/>
+    <ref name='xsltAddKey'/>
+    <ref name='xsltAddStackElemList'/>
+    <ref name='xsltAddTemplate'/>
+    <ref name='xsltApplyAttributeSet'/>
+    <ref name='xsltApplyImports'/>
+    <ref name='xsltApplyOneTemplate'/>
+    <ref name='xsltApplyStripSpaces'/>
+    <ref name='xsltApplyStylesheet'/>
+    <ref name='xsltApplyStylesheetUser'/>
+    <ref name='xsltApplyTemplates'/>
+    <ref name='xsltAttrListTemplateProcess'/>
+    <ref name='xsltAttrTemplateProcess'/>
+    <ref name='xsltAttrTemplateValueProcess'/>
+    <ref name='xsltAttribute'/>
+    <ref name='xsltCalibrateAdjust'/>
+    <ref name='xsltCallTemplate'/>
+    <ref name='xsltCheckExtPrefix'/>
+    <ref name='xsltChoose'/>
+    <ref name='xsltCleanupGlobals'/>
+    <ref name='xsltCleanupTemplates'/>
+    <ref name='xsltComment'/>
+    <ref name='xsltCompMatch'/>
+    <ref name='xsltCompMatchPtr'/>
+    <ref name='xsltCompilePattern'/>
+    <ref name='xsltCopy'/>
+    <ref name='xsltCopyNamespace'/>
+    <ref name='xsltCopyNamespaceList'/>
+    <ref name='xsltCopyOf'/>
+    <ref name='xsltDebug'/>
+    <ref name='xsltDebugStatusCodes'/>
+    <ref name='xsltDecimalFormat'/>
+    <ref name='xsltDecimalFormatGetByName'/>
+    <ref name='xsltDecimalFormatPtr'/>
+    <ref name='xsltDoSortFunction'/>
+    <ref name='xsltDocument'/>
+    <ref name='xsltDocumentComp'/>
+    <ref name='xsltDocumentElem'/>
+    <ref name='xsltDocumentFunction'/>
+    <ref name='xsltDocumentPtr'/>
+    <ref name='xsltDocumentSortFunction'/>
+    <ref name='xsltDropCallCallback'/>
+    <ref name='xsltElemPreComp'/>
+    <ref name='xsltElemPreCompDeallocator'/>
+    <ref name='xsltElemPreCompPtr'/>
+    <ref name='xsltElement'/>
+    <ref name='xsltElementAvailableFunction'/>
+    <ref name='xsltEvalAttrValueTemplate'/>
+    <ref name='xsltEvalGlobalVariables'/>
+    <ref name='xsltEvalOneUserParam'/>
+    <ref name='xsltEvalStaticAttrValueTemplate'/>
+    <ref name='xsltEvalTemplateString'/>
+    <ref name='xsltEvalUserParams'/>
+    <ref name='xsltEvalXPathPredicate'/>
+    <ref name='xsltEvalXPathString'/>
+    <ref name='xsltExtElementLookup'/>
+    <ref name='xsltExtFunctionLookup'/>
+    <ref name='xsltExtInitFunction'/>
+    <ref name='xsltExtMarker'/>
+    <ref name='xsltExtModuleElementLookup'/>
+    <ref name='xsltExtModuleFunctionLookup'/>
+    <ref name='xsltExtModuleTopLevelLookup'/>
+    <ref name='xsltExtShutdownFunction'/>
+    <ref name='xsltFindDocument'/>
+    <ref name='xsltFindElemSpaceHandling'/>
+    <ref name='xsltFindTemplate'/>
+    <ref name='xsltForEach'/>
+    <ref name='xsltFormatNumberConversion'/>
+    <ref name='xsltFormatNumberFunction'/>
+    <ref name='xsltFreeAttributeSetsHashes'/>
+    <ref name='xsltFreeCompMatchList'/>
+    <ref name='xsltFreeCtxtExts'/>
+    <ref name='xsltFreeDocumentKeys'/>
+    <ref name='xsltFreeDocuments'/>
+    <ref name='xsltFreeExts'/>
+    <ref name='xsltFreeGlobalVariables'/>
+    <ref name='xsltFreeKeys'/>
+    <ref name='xsltFreeNamespaceAliasHashes'/>
+    <ref name='xsltFreeStackElemList'/>
+    <ref name='xsltFreeStyleDocuments'/>
+    <ref name='xsltFreeStylePreComps'/>
+    <ref name='xsltFreeStylesheet'/>
+    <ref name='xsltFreeTemplateHashes'/>
+    <ref name='xsltFreeTransformContext'/>
+    <ref name='xsltFunctionAvailableFunction'/>
+    <ref name='xsltFunctionNodeSet'/>
+    <ref name='xsltGenerateIdFunction'/>
+    <ref name='xsltGetExtData'/>
+    <ref name='xsltGetKey'/>
+    <ref name='xsltGetNamespace'/>
+    <ref name='xsltGetNsProp'/>
+    <ref name='xsltGetQNameURI'/>
+    <ref name='xsltGetSpecialNamespace'/>
+    <ref name='xsltGetTemplate'/>
+    <ref name='xsltGetXIncludeDefault'/>
+    <ref name='xsltHandleDebuggerCallback'/>
+    <ref name='xsltIf'/>
+    <ref name='xsltInitCtxtExts'/>
+    <ref name='xsltInitCtxtKeys'/>
+    <ref name='xsltInitElemPreComp'/>
+    <ref name='xsltIsBlank'/>
+    <ref name='xsltKeyFunction'/>
+    <ref name='xsltLoadDocument'/>
+    <ref name='xsltLoadStyleDocument'/>
+    <ref name='xsltLoadStylesheetPI'/>
+    <ref name='xsltMatchPattern'/>
+    <ref name='xsltMessage'/>
+    <ref name='xsltNamespaceAlias'/>
+    <ref name='xsltNeedElemSpaceHandling'/>
+    <ref name='xsltNewDocument'/>
+    <ref name='xsltNewElemPreComp'/>
+    <ref name='xsltNewStyleDocument'/>
+    <ref name='xsltNewStylesheet'/>
+    <ref name='xsltNewTransformContext'/>
+    <ref name='xsltNextImport'/>
+    <ref name='xsltNumber'/>
+    <ref name='xsltNumberFormat'/>
+    <ref name='xsltOutputType'/>
+    <ref name='xsltParseGlobalParam'/>
+    <ref name='xsltParseGlobalVariable'/>
+    <ref name='xsltParseStylesheetAttributeSet'/>
+    <ref name='xsltParseStylesheetCallerParam'/>
+    <ref name='xsltParseStylesheetDoc'/>
+    <ref name='xsltParseStylesheetFile'/>
+    <ref name='xsltParseStylesheetImport'/>
+    <ref name='xsltParseStylesheetInclude'/>
+    <ref name='xsltParseStylesheetOutput'/>
+    <ref name='xsltParseStylesheetParam'/>
+    <ref name='xsltParseStylesheetProcess'/>
+    <ref name='xsltParseStylesheetVariable'/>
+    <ref name='xsltParseTemplateContent'/>
+    <ref name='xsltPreComputeExtModuleElement'/>
+    <ref name='xsltPrintErrorContext'/>
+    <ref name='xsltProcessingInstruction'/>
+    <ref name='xsltProfileStylesheet'/>
+    <ref name='xsltQuoteOneUserParam'/>
+    <ref name='xsltQuoteUserParams'/>
+    <ref name='xsltRegisterAllElement'/>
+    <ref name='xsltRegisterAllExtras'/>
+    <ref name='xsltRegisterAllFunctions'/>
+    <ref name='xsltRegisterExtElement'/>
+    <ref name='xsltRegisterExtFunction'/>
+    <ref name='xsltRegisterExtModule'/>
+    <ref name='xsltRegisterExtModuleElement'/>
+    <ref name='xsltRegisterExtModuleFull'/>
+    <ref name='xsltRegisterExtModuleFunction'/>
+    <ref name='xsltRegisterExtModuleTopLevel'/>
+    <ref name='xsltRegisterExtPrefix'/>
+    <ref name='xsltRegisterExtras'/>
+    <ref name='xsltRegisterTestModule'/>
+    <ref name='xsltRunStylesheet'/>
+    <ref name='xsltSaveProfiling'/>
+    <ref name='xsltSaveResultTo'/>
+    <ref name='xsltSaveResultToFd'/>
+    <ref name='xsltSaveResultToFile'/>
+    <ref name='xsltSaveResultToFilename'/>
+    <ref name='xsltSetDebuggerCallbacks'/>
+    <ref name='xsltSetGenericDebugFunc'/>
+    <ref name='xsltSetGenericErrorFunc'/>
+    <ref name='xsltSetXIncludeDefault'/>
+    <ref name='xsltShutdownCtxtExts'/>
+    <ref name='xsltShutdownExts'/>
+    <ref name='xsltSort'/>
+    <ref name='xsltStackElem'/>
+    <ref name='xsltStackElemPtr'/>
+    <ref name='xsltStyleExtInitFunction'/>
+    <ref name='xsltStyleExtShutdownFunction'/>
+    <ref name='xsltStyleGetExtData'/>
+    <ref name='xsltStylePreComp'/>
+    <ref name='xsltStylePreCompPtr'/>
+    <ref name='xsltStylePreCompute'/>
+    <ref name='xsltStyleType'/>
+    <ref name='xsltStylesheet'/>
+    <ref name='xsltStylesheetPtr'/>
+    <ref name='xsltSystemPropertyFunction'/>
+    <ref name='xsltTemplate'/>
+    <ref name='xsltTemplateProcess'/>
+    <ref name='xsltTemplatePtr'/>
+    <ref name='xsltTestCompMatchList'/>
+    <ref name='xsltText'/>
+    <ref name='xsltTimestamp'/>
+    <ref name='xsltTransformContext'/>
+    <ref name='xsltTransformContextPtr'/>
+    <ref name='xsltTransformFunction'/>
+    <ref name='xsltTransformState'/>
+    <ref name='xsltUnparsedEntityURIFunction'/>
+    <ref name='xsltUnregisterExtModule'/>
+    <ref name='xsltUnregisterExtModuleElement'/>
+    <ref name='xsltUnregisterExtModuleFunction'/>
+    <ref name='xsltUnregisterExtModuleTopLevel'/>
+    <ref name='xsltValueOf'/>
+    <ref name='xsltVariableLookup'/>
+    <ref name='xsltXPathFunctionLookup'/>
+    <ref name='xsltXPathVariableLookup'/>
+    </letter>
+  </alpha>
+  <constructors>
+    <type name='const xmlChar *'>
+      <ref name='xsltGetQNameURI'/>
+    </type>
+    <type name='long'>
+      <ref name='xsltTimestamp'/>
+    </type>
+    <type name='typedef'>
+      <ref name='xsltElemPreCompPtr'/>
+      <ref name='void'/>
+    </type>
+    <type name='void *'>
+      <ref name='xsltStyleExtInitFunction'/>
+      <ref name='xsltExtInitFunction'/>
+      <ref name='xsltGetExtData'/>
+      <ref name='xsltStyleGetExtData'/>
+    </type>
+    <type name='xmlAttrPtr'>
+      <ref name='xsltAttrListTemplateProcess'/>
+      <ref name='xsltAttrTemplateProcess'/>
+    </type>
+    <type name='xmlChar *'>
+      <ref name='xsltGetNsProp'/>
+      <ref name='xsltEvalTemplateString'/>
+      <ref name='xsltEvalAttrValueTemplate'/>
+      <ref name='xsltEvalStaticAttrValueTemplate'/>
+      <ref name='xsltEvalXPathString'/>
+      <ref name='xsltAttrTemplateValueProcess'/>
+    </type>
+    <type name='xmlDocPtr'>
+      <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStylesheet'/>
+      <ref name='xsltProfileStylesheet'/>
+    </type>
+    <type name='xmlNodePtr *'>
+      <ref name='xsltTemplateProcess'/>
+    </type>
+    <type name='xmlNodeSetPtr'>
+      <ref name='xsltGetKey'/>
+    </type>
+    <type name='xmlNsPtr'>
+      <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
+      <ref name='xsltCopyNamespace'/>
+      <ref name='xsltCopyNamespaceList'/>
+    </type>
+    <type name='xmlXPathError'>
+      <ref name='xsltFormatNumberConversion'/>
+    </type>
+    <type name='xmlXPathFunction'>
+      <ref name='xsltXPathFunctionLookup'/>
+      <ref name='xsltExtFunctionLookup'/>
+      <ref name='xsltExtModuleFunctionLookup'/>
+    </type>
+    <type name='xmlXPathObjectPtr'>
+      <ref name='xsltVariableLookup'/>
+      <ref name='xsltXPathVariableLookup'/>
+    </type>
+    <type name='xsltCompMatchPtr'>
+      <ref name='xsltCompilePattern'/>
+    </type>
+    <type name='xsltDecimalFormatPtr'>
+      <ref name='xsltDecimalFormatGetByName'/>
+    </type>
+    <type name='xsltDocumentPtr'>
+      <ref name='xsltNewDocument'/>
+      <ref name='xsltLoadDocument'/>
+      <ref name='xsltFindDocument'/>
+      <ref name='xsltLoadStyleDocument'/>
+      <ref name='xsltNewStyleDocument'/>
+    </type>
+    <type name='xsltElemPreCompPtr'>
+      <ref name='xsltNewElemPreComp'/>
+      <ref name='xsltPreComputeExtModuleElement'/>
+      <ref name='xsltDocumentComp'/>
+    </type>
+    <type name='xsltStackElemPtr'>
+      <ref name='xsltParseStylesheetCallerParam'/>
+    </type>
+    <type name='xsltStylesheetPtr'>
+      <ref name='xsltNewStylesheet'/>
+      <ref name='xsltParseStylesheetFile'/>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetDoc'/>
+      <ref name='xsltLoadStylesheetPI'/>
+      <ref name='xsltNextImport'/>
+    </type>
+    <type name='xsltTemplatePtr'>
+      <ref name='xsltGetTemplate'/>
+      <ref name='xsltFindTemplate'/>
+    </type>
+    <type name='xsltTopLevelFunction'>
+      <ref name='xsltExtModuleTopLevelLookup'/>
+    </type>
+    <type name='xsltTransformContextPtr'>
+      <ref name='xsltNewTransformContext'/>
+    </type>
+    <type name='xsltTransformFunction'>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltExtModuleElementLookup'/>
+    </type>
+  </constructors>
+  <functions>
+    <type name='*xsltPreComputeFunction) (xsltStylesheetPtr'>
+      <ref name='xsltElemPreCompPtr'/>
+    </type>
+    <type name='*xsltTopLevelFunction) (xsltStylesheetPtr'>
+      <ref name='void'/>
+    </type>
+    <type name='FILE *'>
+      <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltProfileStylesheet'/>
+      <ref name='xsltSaveResultToFile'/>
+      <ref name='xsltSaveProfiling'/>
+    </type>
+    <type name='const char **'>
+      <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStylesheet'/>
+      <ref name='xsltProfileStylesheet'/>
+      <ref name='xsltRunStylesheet'/>
+      <ref name='xsltEvalUserParams'/>
+      <ref name='xsltQuoteUserParams'/>
+    </type>
+    <type name='const xmlChar *'>
+      <ref name='xsltAddKey'/>
+      <ref name='xsltAddKey'/>
+      <ref name='xsltAddKey'/>
+      <ref name='xsltAddKey'/>
+      <ref name='xsltGetKey'/>
+      <ref name='xsltGetKey'/>
+      <ref name='xsltGetKey'/>
+      <ref name='xsltCompilePattern'/>
+      <ref name='xsltAddTemplate'/>
+      <ref name='xsltAddTemplate'/>
+      <ref name='xsltMatchPattern'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltGetNsProp'/>
+      <ref name='xsltGetNsProp'/>
+      <ref name='xsltEvalAttrValueTemplate'/>
+      <ref name='xsltEvalAttrValueTemplate'/>
+      <ref name='xsltEvalStaticAttrValueTemplate'/>
+      <ref name='xsltEvalStaticAttrValueTemplate'/>
+      <ref name='xsltEvalOneUserParam'/>
+      <ref name='xsltEvalOneUserParam'/>
+      <ref name='xsltQuoteOneUserParam'/>
+      <ref name='xsltQuoteOneUserParam'/>
+      <ref name='xsltVariableLookup'/>
+      <ref name='xsltVariableLookup'/>
+      <ref name='xsltXPathVariableLookup'/>
+      <ref name='xsltXPathVariableLookup'/>
+      <ref name='xsltXPathFunctionLookup'/>
+      <ref name='xsltXPathFunctionLookup'/>
+      <ref name='xsltStyleExtInitFunction'/>
+      <ref name='xsltStyleExtShutdownFunction'/>
+      <ref name='xsltExtInitFunction'/>
+      <ref name='xsltExtShutdownFunction'/>
+      <ref name='xsltRegisterExtModule'/>
+      <ref name='xsltRegisterExtModuleFull'/>
+      <ref name='xsltUnregisterExtModule'/>
+      <ref name='xsltGetExtData'/>
+      <ref name='xsltStyleGetExtData'/>
+      <ref name='xsltRegisterExtModuleFunction'/>
+      <ref name='xsltRegisterExtModuleFunction'/>
+      <ref name='xsltExtFunctionLookup'/>
+      <ref name='xsltExtFunctionLookup'/>
+      <ref name='xsltExtModuleFunctionLookup'/>
+      <ref name='xsltExtModuleFunctionLookup'/>
+      <ref name='xsltUnregisterExtModuleFunction'/>
+      <ref name='xsltUnregisterExtModuleFunction'/>
+      <ref name='xsltRegisterExtModuleElement'/>
+      <ref name='xsltRegisterExtModuleElement'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltExtModuleElementLookup'/>
+      <ref name='xsltExtModuleElementLookup'/>
+      <ref name='xsltUnregisterExtModuleElement'/>
+      <ref name='xsltUnregisterExtModuleElement'/>
+      <ref name='xsltRegisterExtModuleTopLevel'/>
+      <ref name='xsltRegisterExtModuleTopLevel'/>
+      <ref name='xsltExtModuleTopLevelLookup'/>
+      <ref name='xsltExtModuleTopLevelLookup'/>
+      <ref name='xsltUnregisterExtModuleTopLevel'/>
+      <ref name='xsltUnregisterExtModuleTopLevel'/>
+      <ref name='xsltRegisterExtFunction'/>
+      <ref name='xsltRegisterExtFunction'/>
+      <ref name='xsltRegisterExtElement'/>
+      <ref name='xsltRegisterExtElement'/>
+      <ref name='xsltRegisterExtPrefix'/>
+      <ref name='xsltRegisterExtPrefix'/>
+      <ref name='xsltCheckExtPrefix'/>
+      <ref name='xsltFindTemplate'/>
+      <ref name='xsltFindTemplate'/>
+      <ref name='xsltGetSpecialNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
+      <ref name='xsltLoadDocument'/>
+      <ref name='xsltLoadStyleDocument'/>
+    </type>
+    <type name='const xmlChar*'>
+      <ref name='xsltParseStylesheetFile'/>
+      <ref name='xsltAttrTemplateValueProcess'/>
+    </type>
+    <type name='double'>
+      <ref name='xsltFormatNumberConversion'/>
+    </type>
+    <type name='int *'>
+      <ref name='xsltEvalStaticAttrValueTemplate'/>
+    </type>
+    <type name='long'>
+      <ref name='xsltCalibrateAdjust'/>
+    </type>
+    <type name='void *'>
+      <ref name='xsltSetGenericErrorFunc'/>
+      <ref name='xsltSetGenericDebugFunc'/>
+      <ref name='xsltSetDebuggerCallbacks'/>
+      <ref name='xsltXPathVariableLookup'/>
+      <ref name='xsltStyleExtShutdownFunction'/>
+      <ref name='xsltExtShutdownFunction'/>
+    </type>
+    <type name='xmlAttrPtr'>
+      <ref name='xsltAttrListTemplateProcess'/>
+      <ref name='xsltAttrTemplateProcess'/>
+    </type>
+    <type name='xmlChar *'>
+      <ref name='xsltIsBlank'/>
+      <ref name='xsltDecimalFormatGetByName'/>
+      <ref name='xsltFormatNumberConversion'/>
+      <ref name='xsltApplyAttributeSet'/>
+    </type>
+    <type name='xmlChar **'>
+      <ref name='xsltFormatNumberConversion'/>
+      <ref name='xsltGetQNameURI'/>
+    </type>
+    <type name='xmlDocPtr'>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetDoc'/>
+      <ref name='xsltLoadStylesheetPI'/>
+      <ref name='xsltCompilePattern'/>
+      <ref name='xsltNewTransformContext'/>
+      <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStylesheet'/>
+      <ref name='xsltProfileStylesheet'/>
+      <ref name='xsltRunStylesheet'/>
+      <ref name='xsltSaveResultTo'/>
+      <ref name='xsltSaveResultToFilename'/>
+      <ref name='xsltSaveResultToFile'/>
+      <ref name='xsltSaveResultToFd'/>
+      <ref name='xsltNewDocument'/>
+      <ref name='xsltFindDocument'/>
+      <ref name='xsltNewStyleDocument'/>
+    </type>
+    <type name='xmlGenericErrorFunc'>
+      <ref name='xsltSetGenericErrorFunc'/>
+      <ref name='xsltSetGenericDebugFunc'/>
+    </type>
+    <type name='xmlNodePtr'>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltParseStylesheetOutput'/>
+      <ref name='xsltNumberFormat'/>
+      <ref name='xsltParseTemplateContent'/>
+      <ref name='xsltAddKey'/>
+      <ref name='xsltCompilePattern'/>
+      <ref name='xsltTestCompMatchList'/>
+      <ref name='xsltGetTemplate'/>
+      <ref name='xsltMatchPattern'/>
+      <ref name='xsltApplyStripSpaces'/>
+      <ref name='xsltApplyOneTemplate'/>
+      <ref name='xsltApplyOneTemplate'/>
+      <ref name='xsltDocumentElem'/>
+      <ref name='xsltDocumentElem'/>
+      <ref name='xsltSort'/>
+      <ref name='xsltSort'/>
+      <ref name='xsltCopy'/>
+      <ref name='xsltCopy'/>
+      <ref name='xsltText'/>
+      <ref name='xsltText'/>
+      <ref name='xsltElement'/>
+      <ref name='xsltElement'/>
+      <ref name='xsltComment'/>
+      <ref name='xsltComment'/>
+      <ref name='xsltAttribute'/>
+      <ref name='xsltAttribute'/>
+      <ref name='xsltProcessingInstruction'/>
+      <ref name='xsltProcessingInstruction'/>
+      <ref name='xsltCopyOf'/>
+      <ref name='xsltCopyOf'/>
+      <ref name='xsltValueOf'/>
+      <ref name='xsltValueOf'/>
+      <ref name='xsltNumber'/>
+      <ref name='xsltNumber'/>
+      <ref name='xsltApplyImports'/>
+      <ref name='xsltApplyImports'/>
+      <ref name='xsltCallTemplate'/>
+      <ref name='xsltCallTemplate'/>
+      <ref name='xsltApplyTemplates'/>
+      <ref name='xsltApplyTemplates'/>
+      <ref name='xsltChoose'/>
+      <ref name='xsltChoose'/>
+      <ref name='xsltIf'/>
+      <ref name='xsltIf'/>
+      <ref name='xsltForEach'/>
+      <ref name='xsltForEach'/>
+      <ref name='xslHandleDebugger'/>
+      <ref name='xslHandleDebugger'/>
+      <ref name='xsltGetNsProp'/>
+      <ref name='xsltPrintErrorContext'/>
+      <ref name='xsltMessage'/>
+      <ref name='xsltMessage'/>
+      <ref name='xsltGetQNameURI'/>
+      <ref name='xsltHandleDebuggerCallback'/>
+      <ref name='xsltHandleDebuggerCallback'/>
+      <ref name='xsltAddCallCallback'/>
+      <ref name='xslAddCall'/>
+      <ref name='xsltEvalTemplateString'/>
+      <ref name='xsltEvalTemplateString'/>
+      <ref name='xsltEvalAttrValueTemplate'/>
+      <ref name='xsltEvalStaticAttrValueTemplate'/>
+      <ref name='xsltTemplateProcess'/>
+      <ref name='xsltAttrListTemplateProcess'/>
+      <ref name='xsltAttrTemplateProcess'/>
+      <ref name='xsltParseGlobalVariable'/>
+      <ref name='xsltParseGlobalParam'/>
+      <ref name='xsltParseStylesheetVariable'/>
+      <ref name='xsltParseStylesheetParam'/>
+      <ref name='xsltParseStylesheetCallerParam'/>
+      <ref name='xsltElemPreCompPtr'/>
+      <ref name='xsltNewElemPreComp'/>
+      <ref name='xsltInitElemPreComp'/>
+      <ref name='void'/>
+      <ref name='xsltPreComputeExtModuleElement'/>
+      <ref name='xsltParseStylesheetImport'/>
+      <ref name='xsltParseStylesheetInclude'/>
+      <ref name='xsltFindElemSpaceHandling'/>
+      <ref name='xsltParseStylesheetAttributeSet'/>
+      <ref name='xsltApplyAttributeSet'/>
+      <ref name='xsltApplyAttributeSet'/>
+      <ref name='xsltNamespaceAlias'/>
+      <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
+      <ref name='xsltCopyNamespace'/>
+      <ref name='xsltCopyNamespaceList'/>
+      <ref name='xsltDebug'/>
+      <ref name='xsltDebug'/>
+      <ref name='xsltDocumentComp'/>
+      <ref name='xsltStylePreCompute'/>
+    </type>
+    <type name='xmlNodePtr *'>
+      <ref name='xsltDoSortFunction'/>
+    </type>
+    <type name='xmlNodeSetPtr'>
+      <ref name='xsltDocumentSortFunction'/>
+    </type>
+    <type name='xmlNsPtr'>
+      <ref name='xsltGetNamespace'/>
+      <ref name='xsltCopyNamespace'/>
+      <ref name='xsltCopyNamespaceList'/>
+    </type>
+    <type name='xmlNsPtr *'>
+      <ref name='xsltEvalXPathPredicate'/>
+    </type>
+    <type name='xmlOutputBufferPtr'>
+      <ref name='xsltRunStylesheet'/>
+      <ref name='xsltSaveResultTo'/>
+    </type>
+    <type name='xmlSAXHandlerPtr'>
+      <ref name='xsltRunStylesheet'/>
+    </type>
+    <type name='xmlXPathCompExprPtr'>
+      <ref name='xsltEvalXPathPredicate'/>
+      <ref name='xsltEvalXPathString'/>
+    </type>
+    <type name='xmlXPathContextPtr'>
+      <ref name='xsltXPathFunctionLookup'/>
+      <ref name='xsltRegisterAllFunctions'/>
+    </type>
+    <type name='xmlXPathFunction'>
+      <ref name='xsltRegisterExtModuleFunction'/>
+      <ref name='xsltRegisterExtFunction'/>
+    </type>
+    <type name='xmlXPathParserContextPtr'>
+      <ref name='xsltDocumentFunction'/>
+      <ref name='xsltKeyFunction'/>
+      <ref name='xsltUnparsedEntityURIFunction'/>
+      <ref name='xsltFormatNumberFunction'/>
+      <ref name='xsltGenerateIdFunction'/>
+      <ref name='xsltSystemPropertyFunction'/>
+      <ref name='xsltElementAvailableFunction'/>
+      <ref name='xsltFunctionAvailableFunction'/>
+      <ref name='xsltFunctionNodeSet'/>
+    </type>
+    <type name='xsltCompMatchPtr'>
+      <ref name='xsltFreeCompMatchList'/>
+      <ref name='xsltTestCompMatchList'/>
+    </type>
+    <type name='xsltDecimalFormatPtr'>
+      <ref name='xsltFormatNumberConversion'/>
+    </type>
+    <type name='xsltDocumentPtr'>
+      <ref name='xsltInitCtxtKeys'/>
+      <ref name='xsltFreeDocumentKeys'/>
+    </type>
+    <type name='xsltElemPreCompDeallocator'>
+      <ref name='xsltInitElemPreComp'/>
+    </type>
+    <type name='xsltElemPreCompPtr'>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltElemPreCompDeallocator'/>
+      <ref name='xsltInitElemPreComp'/>
+    </type>
+    <type name='xsltExtInitFunction'>
+      <ref name='xsltRegisterExtModule'/>
+      <ref name='xsltRegisterExtModuleFull'/>
+    </type>
+    <type name='xsltExtShutdownFunction'>
+      <ref name='xsltRegisterExtModule'/>
+      <ref name='xsltRegisterExtModuleFull'/>
+    </type>
+    <type name='xsltNumberDataPtr'>
+      <ref name='xsltNumberFormat'/>
+    </type>
+    <type name='xsltPreComputeFunction'>
+      <ref name='xsltRegisterExtModuleElement'/>
+    </type>
+    <type name='xsltStackElemPtr'>
+      <ref name='xsltFreeStackElemList'/>
+      <ref name='xsltApplyOneTemplate'/>
+      <ref name='xsltAddStackElemList'/>
+    </type>
+    <type name='xsltStyleExtInitFunction'>
+      <ref name='xsltRegisterExtModuleFull'/>
+    </type>
+    <type name='xsltStyleExtShutdownFunction'>
+      <ref name='xsltRegisterExtModuleFull'/>
+    </type>
+    <type name='xsltStylePreCompPtr'>
+      <ref name='xsltDocumentElem'/>
+      <ref name='xsltSort'/>
+      <ref name='xsltCopy'/>
+      <ref name='xsltText'/>
+      <ref name='xsltElement'/>
+      <ref name='xsltComment'/>
+      <ref name='xsltAttribute'/>
+      <ref name='xsltProcessingInstruction'/>
+      <ref name='xsltCopyOf'/>
+      <ref name='xsltValueOf'/>
+      <ref name='xsltNumber'/>
+      <ref name='xsltApplyImports'/>
+      <ref name='xsltCallTemplate'/>
+      <ref name='xsltApplyTemplates'/>
+      <ref name='xsltChoose'/>
+      <ref name='xsltIf'/>
+      <ref name='xsltForEach'/>
+      <ref name='xsltDebug'/>
+    </type>
+    <type name='xsltStylesheetPtr'>
+      <ref name='xsltFreeStylesheet'/>
+      <ref name='xsltDecimalFormatGetByName'/>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetOutput'/>
+      <ref name='xsltParseTemplateContent'/>
+      <ref name='xsltAddKey'/>
+      <ref name='xsltFreeKeys'/>
+      <ref name='xsltAddTemplate'/>
+      <ref name='xsltGetTemplate'/>
+      <ref name='xsltFreeTemplateHashes'/>
+      <ref name='xsltCleanupTemplates'/>
+      <ref name='xsltNewTransformContext'/>
+      <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStylesheet'/>
+      <ref name='xsltProfileStylesheet'/>
+      <ref name='xsltRunStylesheet'/>
+      <ref name='xsltPrintErrorContext'/>
+      <ref name='xsltSaveResultTo'/>
+      <ref name='xsltSaveResultToFilename'/>
+      <ref name='xsltSaveResultToFile'/>
+      <ref name='xsltSaveResultToFd'/>
+      <ref name='xsltEvalStaticAttrValueTemplate'/>
+      <ref name='xsltParseGlobalVariable'/>
+      <ref name='xsltParseGlobalParam'/>
+      <ref name='xsltStyleExtInitFunction'/>
+      <ref name='xsltStyleExtShutdownFunction'/>
+      <ref name='xsltStyleGetExtData'/>
+      <ref name='xsltShutdownExts'/>
+      <ref name='xsltNewElemPreComp'/>
+      <ref name='xsltInitElemPreComp'/>
+      <ref name='xsltRegisterExtPrefix'/>
+      <ref name='xsltCheckExtPrefix'/>
+      <ref name='xsltFreeExts'/>
+      <ref name='xsltPreComputeExtModuleElement'/>
+      <ref name='xsltParseStylesheetImport'/>
+      <ref name='xsltParseStylesheetInclude'/>
+      <ref name='xsltNextImport'/>
+      <ref name='xsltParseStylesheetAttributeSet'/>
+      <ref name='xsltFreeAttributeSetsHashes'/>
+      <ref name='xsltNamespaceAlias'/>
+      <ref name='xsltFreeNamespaceAliasHashes'/>
+      <ref name='xsltLoadStyleDocument'/>
+      <ref name='xsltNewStyleDocument'/>
+      <ref name='xsltFreeStyleDocuments'/>
+      <ref name='xsltDocumentComp'/>
+      <ref name='xsltStylePreCompute'/>
+      <ref name='xsltFreeStylePreComps'/>
+    </type>
+    <type name='xsltTemplatePtr'>
+      <ref name='xsltAddTemplate'/>
+      <ref name='xsltApplyOneTemplate'/>
+      <ref name='xslHandleDebugger'/>
+      <ref name='xsltHandleDebuggerCallback'/>
+      <ref name='xsltAddCallCallback'/>
+      <ref name='xslAddCall'/>
+    </type>
+    <type name='xsltTopLevelFunction'>
+      <ref name='xsltRegisterExtModuleTopLevel'/>
+    </type>
+    <type name='xsltTransformContextPtr'>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltNumberFormat'/>
+      <ref name='xsltGetKey'/>
+      <ref name='xsltInitCtxtKeys'/>
+      <ref name='xsltTestCompMatchList'/>
+      <ref name='xsltGetTemplate'/>
+      <ref name='xsltMatchPattern'/>
+      <ref name='xsltFreeTransformContext'/>
+      <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStripSpaces'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltApplyOneTemplate'/>
+      <ref name='xsltDocumentElem'/>
+      <ref name='xsltSort'/>
+      <ref name='xsltCopy'/>
+      <ref name='xsltText'/>
+      <ref name='xsltElement'/>
+      <ref name='xsltComment'/>
+      <ref name='xsltAttribute'/>
+      <ref name='xsltProcessingInstruction'/>
+      <ref name='xsltCopyOf'/>
+      <ref name='xsltValueOf'/>
+      <ref name='xsltNumber'/>
+      <ref name='xsltApplyImports'/>
+      <ref name='xsltCallTemplate'/>
+      <ref name='xsltApplyTemplates'/>
+      <ref name='xsltChoose'/>
+      <ref name='xsltIf'/>
+      <ref name='xsltForEach'/>
+      <ref name='xsltRegisterAllElement'/>
+      <ref name='xslHandleDebugger'/>
+      <ref name='xsltPrintErrorContext'/>
+      <ref name='xsltMessage'/>
+      <ref name='xsltDoSortFunction'/>
+      <ref name='xsltSaveProfiling'/>
+      <ref name='xsltHandleDebuggerCallback'/>
+      <ref name='xsltEvalXPathPredicate'/>
+      <ref name='xsltEvalTemplateString'/>
+      <ref name='xsltEvalAttrValueTemplate'/>
+      <ref name='xsltEvalXPathString'/>
+      <ref name='xsltTemplateProcess'/>
+      <ref name='xsltAttrListTemplateProcess'/>
+      <ref name='xsltAttrTemplateProcess'/>
+      <ref name='xsltAttrTemplateValueProcess'/>
+      <ref name='xsltEvalGlobalVariables'/>
+      <ref name='xsltEvalUserParams'/>
+      <ref name='xsltQuoteUserParams'/>
+      <ref name='xsltEvalOneUserParam'/>
+      <ref name='xsltQuoteOneUserParam'/>
+      <ref name='xsltParseStylesheetVariable'/>
+      <ref name='xsltParseStylesheetParam'/>
+      <ref name='xsltParseStylesheetCallerParam'/>
+      <ref name='xsltAddStackElemList'/>
+      <ref name='xsltFreeGlobalVariables'/>
+      <ref name='xsltVariableLookup'/>
+      <ref name='xsltExtInitFunction'/>
+      <ref name='xsltExtShutdownFunction'/>
+      <ref name='xsltGetExtData'/>
+      <ref name='xsltShutdownCtxtExts'/>
+      <ref name='xsltExtFunctionLookup'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltRegisterExtFunction'/>
+      <ref name='xsltRegisterExtElement'/>
+      <ref name='xsltInitCtxtExts'/>
+      <ref name='xsltFreeCtxtExts'/>
+      <ref name='xsltNeedElemSpaceHandling'/>
+      <ref name='xsltFindElemSpaceHandling'/>
+      <ref name='xsltFindTemplate'/>
+      <ref name='xsltApplyAttributeSet'/>
+      <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
+      <ref name='xsltCopyNamespace'/>
+      <ref name='xsltCopyNamespaceList'/>
+      <ref name='xsltNewDocument'/>
+      <ref name='xsltLoadDocument'/>
+      <ref name='xsltFindDocument'/>
+      <ref name='xsltFreeDocuments'/>
+      <ref name='xsltDebug'/>
+      <ref name='xsltRegisterExtras'/>
+    </type>
+    <type name='xsltTransformFunction'>
+      <ref name='xsltElemPreCompPtr'/>
+      <ref name='xsltNewElemPreComp'/>
+      <ref name='xsltInitElemPreComp'/>
+      <ref name='xsltRegisterExtModuleElement'/>
+      <ref name='xsltRegisterExtElement'/>
+      <ref name='xsltDocumentComp'/>
+    </type>
+  </functions>
+  <files>
+    <file name='attributes'>
+      <ref name='xsltParseStylesheetAttributeSet'/>
+      <ref name='xsltFreeAttributeSetsHashes'/>
+      <ref name='xsltApplyAttributeSet'/>
+    </file>
+    <file name='documents'>
+      <ref name='xsltNewDocument'/>
+      <ref name='xsltLoadDocument'/>
+      <ref name='xsltFindDocument'/>
+      <ref name='xsltFreeDocuments'/>
+      <ref name='xsltLoadStyleDocument'/>
+      <ref name='xsltNewStyleDocument'/>
+      <ref name='xsltFreeStyleDocuments'/>
+    </file>
+    <file name='extensions'>
+      <ref name='xsltStyleExtInitFunction'/>
+      <ref name='xsltStyleExtShutdownFunction'/>
+      <ref name='xsltExtInitFunction'/>
+      <ref name='xsltExtShutdownFunction'/>
+      <ref name='xsltRegisterExtModule'/>
+      <ref name='xsltRegisterExtModuleFull'/>
+      <ref name='xsltUnregisterExtModule'/>
+      <ref name='xsltGetExtData'/>
+      <ref name='xsltStyleGetExtData'/>
+      <ref name='xsltShutdownCtxtExts'/>
+      <ref name='xsltShutdownExts'/>
+      <ref name='xsltRegisterExtModuleFunction'/>
+      <ref name='xsltExtFunctionLookup'/>
+      <ref name='xsltExtModuleFunctionLookup'/>
+      <ref name='xsltUnregisterExtModuleFunction'/>
+      <ref name='xsltElemPreCompPtr'/>
+      <ref name='xsltNewElemPreComp'/>
+      <ref name='xsltInitElemPreComp'/>
+      <ref name='xsltRegisterExtModuleElement'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltExtModuleElementLookup'/>
+      <ref name='xsltUnregisterExtModuleElement'/>
+      <ref name='void'/>
+      <ref name='xsltRegisterExtModuleTopLevel'/>
+      <ref name='xsltExtModuleTopLevelLookup'/>
+      <ref name='xsltUnregisterExtModuleTopLevel'/>
+      <ref name='xsltRegisterExtFunction'/>
+      <ref name='xsltRegisterExtElement'/>
+      <ref name='xsltRegisterExtPrefix'/>
+      <ref name='xsltCheckExtPrefix'/>
+      <ref name='xsltInitCtxtExts'/>
+      <ref name='xsltFreeCtxtExts'/>
+      <ref name='xsltFreeExts'/>
+      <ref name='xsltPreComputeExtModuleElement'/>
+      <ref name='xsltRegisterTestModule'/>
+    </file>
+    <file name='extra'>
+      <ref name='XSLT_LIBXSLT_NAMESPACE'/>
+      <ref name='XSLT_SAXON_NAMESPACE'/>
+      <ref name='XSLT_XT_NAMESPACE'/>
+      <ref name='XSLT_XALAN_NAMESPACE'/>
+      <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
+      <ref name='xsltFunctionNodeSet'/>
+      <ref name='xsltDebug'/>
+      <ref name='xsltRegisterExtras'/>
+      <ref name='xsltRegisterAllExtras'/>
+    </file>
+    <file name='functions'>
+      <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+      <ref name='xsltXPathFunctionLookup'/>
+      <ref name='xsltDocumentFunction'/>
+      <ref name='xsltKeyFunction'/>
+      <ref name='xsltUnparsedEntityURIFunction'/>
+      <ref name='xsltFormatNumberFunction'/>
+      <ref name='xsltGenerateIdFunction'/>
+      <ref name='xsltSystemPropertyFunction'/>
+      <ref name='xsltElementAvailableFunction'/>
+      <ref name='xsltFunctionAvailableFunction'/>
+      <ref name='xsltRegisterAllFunctions'/>
+    </file>
+    <file name='imports'>
+      <ref name='XSLT_GET_IMPORT_PTR'/>
+      <ref name='XSLT_GET_IMPORT_INT'/>
+      <ref name='xsltParseStylesheetImport'/>
+      <ref name='xsltParseStylesheetInclude'/>
+      <ref name='xsltNextImport'/>
+      <ref name='xsltNeedElemSpaceHandling'/>
+      <ref name='xsltFindElemSpaceHandling'/>
+      <ref name='xsltFindTemplate'/>
+    </file>
+    <file name='keys'>
+      <ref name='xsltAddKey'/>
+      <ref name='xsltGetKey'/>
+      <ref name='xsltInitCtxtKeys'/>
+      <ref name='xsltFreeKeys'/>
+      <ref name='xsltFreeDocumentKeys'/>
+    </file>
+    <file name='libxslt'>
+      <ref name='IN_LIBXSLT'/>
+      <ref name='LIBXSLT_PUBLIC'/>
+    </file>
+    <file name='namespaces'>
+      <ref name='xsltNamespaceAlias'/>
+      <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
+      <ref name='xsltCopyNamespace'/>
+      <ref name='xsltCopyNamespaceList'/>
+      <ref name='xsltFreeNamespaceAliasHashes'/>
+    </file>
+    <file name='numbersInternals'>
+    </file>
+    <file name='pattern'>
+      <ref name='xsltCompMatch'/>
+      <ref name='xsltCompMatchPtr'/>
+      <ref name='xsltCompilePattern'/>
+      <ref name='xsltFreeCompMatchList'/>
+      <ref name='xsltTestCompMatchList'/>
+      <ref name='xsltAddTemplate'/>
+      <ref name='xsltGetTemplate'/>
+      <ref name='xsltFreeTemplateHashes'/>
+      <ref name='xsltCleanupTemplates'/>
+      <ref name='xsltMatchPattern'/>
+    </file>
+    <file name='preproc'>
+      <ref name='xsltExtMarker'/>
+      <ref name='xsltDocumentComp'/>
+      <ref name='xsltStylePreCompute'/>
+      <ref name='xsltFreeStylePreComps'/>
+    </file>
+    <file name='templates'>
+      <ref name='xsltEvalXPathPredicate'/>
+      <ref name='xsltEvalTemplateString'/>
+      <ref name='xsltEvalAttrValueTemplate'/>
+      <ref name='xsltEvalStaticAttrValueTemplate'/>
+      <ref name='xsltEvalXPathString'/>
+      <ref name='xsltTemplateProcess'/>
+      <ref name='xsltAttrListTemplateProcess'/>
+      <ref name='xsltAttrTemplateProcess'/>
+      <ref name='xsltAttrTemplateValueProcess'/>
+    </file>
+    <file name='transform'>
+      <ref name='xsltSetXIncludeDefault'/>
+      <ref name='xsltGetXIncludeDefault'/>
+      <ref name='xsltNewTransformContext'/>
+      <ref name='xsltFreeTransformContext'/>
+      <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStripSpaces'/>
+      <ref name='xsltExtElementLookup'/>
+      <ref name='xsltApplyStylesheet'/>
+      <ref name='xsltProfileStylesheet'/>
+      <ref name='xsltRunStylesheet'/>
+      <ref name='xsltApplyOneTemplate'/>
+      <ref name='xsltDocumentElem'/>
+      <ref name='xsltSort'/>
+      <ref name='xsltCopy'/>
+      <ref name='xsltText'/>
+      <ref name='xsltElement'/>
+      <ref name='xsltComment'/>
+      <ref name='xsltAttribute'/>
+      <ref name='xsltProcessingInstruction'/>
+      <ref name='xsltCopyOf'/>
+      <ref name='xsltValueOf'/>
+      <ref name='xsltNumber'/>
+      <ref name='xsltApplyImports'/>
+      <ref name='xsltCallTemplate'/>
+      <ref name='xsltApplyTemplates'/>
+      <ref name='xsltChoose'/>
+      <ref name='xsltIf'/>
+      <ref name='xsltForEach'/>
+      <ref name='xsltRegisterAllElement'/>
+      <ref name='xslHandleDebugger'/>
+    </file>
+    <file name='variables'>
+      <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+      <ref name='xsltEvalGlobalVariables'/>
+      <ref name='xsltEvalUserParams'/>
+      <ref name='xsltQuoteUserParams'/>
+      <ref name='xsltEvalOneUserParam'/>
+      <ref name='xsltQuoteOneUserParam'/>
+      <ref name='xsltParseGlobalVariable'/>
+      <ref name='xsltParseGlobalParam'/>
+      <ref name='xsltParseStylesheetVariable'/>
+      <ref name='xsltParseStylesheetParam'/>
+      <ref name='xsltParseStylesheetCallerParam'/>
+      <ref name='xsltAddStackElemList'/>
+      <ref name='xsltFreeGlobalVariables'/>
+      <ref name='xsltVariableLookup'/>
+      <ref name='xsltXPathVariableLookup'/>
+    </file>
+    <file name='xslt'>
+      <ref name='XSLT_DEFAULT_VERSION'/>
+      <ref name='XSLT_DEFAULT_VENDOR'/>
+      <ref name='XSLT_DEFAULT_URL'/>
+      <ref name='XSLT_NAMESPACE'/>
+      <ref name='LIBXSLT_PUBLIC'/>
+      <ref name='xsltCleanupGlobals'/>
+    </file>
+    <file name='xsltInternals'>
+      <ref name='XSLT_MAX_SORT'/>
+      <ref name='XSLT_PAT_NO_PRIORITY'/>
+      <ref name='xsltTemplate'/>
+      <ref name='xsltTemplatePtr'/>
+      <ref name='xsltDecimalFormat'/>
+      <ref name='xsltDecimalFormatPtr'/>
+      <ref name='xsltDocument'/>
+      <ref name='xsltDocumentPtr'/>
+      <ref name='xsltTransformContext'/>
+      <ref name='xsltTransformContextPtr'/>
+      <ref name='xsltElemPreComp'/>
+      <ref name='xsltElemPreCompPtr'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltStyleType'/>
+      <ref name='xsltElemPreCompDeallocator'/>
+      <ref name='xsltStylePreComp'/>
+      <ref name='xsltStylePreCompPtr'/>
+      <ref name='xsltStackElem'/>
+      <ref name='xsltStackElemPtr'/>
+      <ref name='xsltStylesheet'/>
+      <ref name='xsltStylesheetPtr'/>
+      <ref name='xsltOutputType'/>
+      <ref name='xsltTransformState'/>
+      <ref name='CHECK_STOPPED'/>
+      <ref name='CHECK_STOPPEDE'/>
+      <ref name='CHECK_STOPPED0'/>
+      <ref name='xsltNewStylesheet'/>
+      <ref name='xsltParseStylesheetFile'/>
+      <ref name='xsltFreeStylesheet'/>
+      <ref name='xsltIsBlank'/>
+      <ref name='xsltFreeStackElemList'/>
+      <ref name='xsltDecimalFormatGetByName'/>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetOutput'/>
+      <ref name='xsltParseStylesheetDoc'/>
+      <ref name='xsltLoadStylesheetPI'/>
+      <ref name='xsltNumberFormat'/>
+      <ref name='xsltFormatNumberConversion'/>
+      <ref name='xsltParseTemplateContent'/>
+    </file>
+    <file name='xsltconfig'>
+      <ref name='LIBXSLT_DOTTED_VERSION'/>
+      <ref name='LIBXSLT_VERSION'/>
+      <ref name='LIBXSLT_VERSION_STRING'/>
+      <ref name='WITH_XSLT_DEBUG'/>
+      <ref name='DEBUG_MEMORY'/>
+      <ref name='DEBUG_MEMORY_LOCATION'/>
+      <ref name='WITH_XSLT_DEBUGGER'/>
+      <ref name='ATTRIBUTE_UNUSED'/>
+      <ref name='LIBXSLT_PUBLIC'/>
+    </file>
+    <file name='xsltutils'>
+      <ref name='XSLT_TODO'/>
+      <ref name='XSLT_STRANGE'/>
+      <ref name='IS_XSLT_ELEM'/>
+      <ref name='IS_XSLT_NAME'/>
+      <ref name='IS_XSLT_REAL_NODE'/>
+      <ref name='xsltGetNsProp'/>
+      <ref name='xsltPrintErrorContext'/>
+      <ref name='xsltMessage'/>
+      <ref name='xsltSetGenericErrorFunc'/>
+      <ref name='xsltSetGenericDebugFunc'/>
+      <ref name='xsltDocumentSortFunction'/>
+      <ref name='xsltDoSortFunction'/>
+      <ref name='xsltGetQNameURI'/>
+      <ref name='xsltSaveResultTo'/>
+      <ref name='xsltSaveResultToFilename'/>
+      <ref name='xsltSaveResultToFile'/>
+      <ref name='xsltSaveResultToFd'/>
+      <ref name='xsltSaveProfiling'/>
+      <ref name='xsltTimestamp'/>
+      <ref name='xsltCalibrateAdjust'/>
+      <ref name='XSLT_TIMESTAMP_TICS_PER_SEC'/>
+      <ref name='xsltDebugStatusCodes'/>
+      <ref name='xsltHandleDebuggerCallback'/>
+      <ref name='xsltAddCallCallback'/>
+      <ref name='xsltDropCallCallback'/>
+      <ref name='xsltSetDebuggerCallbacks'/>
+      <ref name='xslAddCall'/>
+      <ref name='xslDropCall'/>
+    </file>
+    <file name='xsltwin32config'>
+      <ref name='LIBXSLT_DOTTED_VERSION'/>
+      <ref name='LIBXSLT_VERSION'/>
+      <ref name='LIBXSLT_VERSION_STRING'/>
+      <ref name='WITH_XSLT_DEBUG'/>
+      <ref name='DEBUG_MEMORY'/>
+      <ref name='DEBUG_MEMORY_LOCATION'/>
+      <ref name='ATTRIBUTE_UNUSED'/>
+      <ref name='LIBXSLT_PUBLIC'/>
+    </file>
+  </files>
+  <index>
+    <chunk name='chunk0'>
+      <letter name='A'>
+        <word name='Activate'>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='Add'>
+          <ref name='xslAddCall'/>
+        </word>
+        <word name='Apache'>
+          <ref name='XSLT_XALAN_NAMESPACE'/>
+        </word>
+        <word name='Apply'>
+          <ref name='xsltApplyAttributeSet'/>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+      </letter>
+      <letter name='C'>
+        <word name='CDTATA'>
+          <ref name='xsltFindElemSpaceHandling'/>
+        </word>
+        <word name='Check'>
+          <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltIsBlank'/>
+        </word>
+        <word name='Checks'>
+          <ref name='IS_XSLT_ELEM'/>
+          <ref name='IS_XSLT_NAME'/>
+        </word>
+        <word name='Clark'>
+          <ref name='XSLT_XT_NAMESPACE'/>
+        </word>
+        <word name='Clean-up'>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='Cleanup'>
+          <ref name='xsltCleanupTemplates'/>
+        </word>
+        <word name='Compile'>
+          <ref name='xsltCompilePattern'/>
+        </word>
+        <word name='Computes'>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+        <word name='Convert'>
+          <ref name='xsltNumberFormat'/>
+        </word>
+        <word name='Create'>
+          <ref name='xsltNewStylesheet'/>
+          <ref name='xsltNewTransformContext'/>
+        </word>
+        <word name='Creates'>
+          <ref name='xsltNewElemPreComp'/>
+        </word>
+      </letter>
+      <letter name='D'>
+        <word name='DEBUG_MEMORY_LOCATION'>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+        </word>
+        <word name='Data'>
+          <ref name='xsltCompMatch'/>
+          <ref name='xsltDecimalFormat'/>
+          <ref name='xsltDocument'/>
+        </word>
+        <word name='Deallocates'>
+          <ref name='xsltElemPreCompDeallocator'/>
+        </word>
+        <word name='DecimalFormat'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='Determine'>
+          <ref name='xsltMatchPattern'/>
+        </word>
+        <word name='Display'>
+          <ref name='xsltPrintErrorContext'/>
+        </word>
+        <word name='Drop'>
+          <ref name='xslDropCall'/>
+        </word>
+      </letter>
+      <letter name='E'>
+        <word name='Errors'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='Evaluate'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltEvalTemplateString'/>
+        </word>
+      </letter>
+      <letter name='F'>
+        <word name='FILE'>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltSaveProfiling'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='Find'>
+          <ref name='xsltDecimalFormatGetByName'/>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltNextImport'/>
+        </word>
+        <word name='Finds'>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='Free'>
+          <ref name='xsltFreeAttributeSetsHashes'/>
+          <ref name='xsltFreeCompMatchList'/>
+          <ref name='xsltFreeCtxtExts'/>
+          <ref name='xsltFreeDocumentKeys'/>
+          <ref name='xsltFreeDocuments'/>
+          <ref name='xsltFreeExts'/>
+          <ref name='xsltFreeGlobalVariables'/>
+          <ref name='xsltFreeKeys'/>
+          <ref name='xsltFreeNamespaceAliasHashes'/>
+          <ref name='xsltFreeStackElemList'/>
+          <ref name='xsltFreeStyleDocuments'/>
+          <ref name='xsltFreeStylePreComps'/>
+          <ref name='xsltFreeStylesheet'/>
+          <ref name='xsltFreeTemplateHashes'/>
+          <ref name='xsltFreeTransformContext'/>
+        </word>
+        <word name='Function'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+      </letter>
+      <letter name='G'>
+        <word name='GCC'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+        </word>
+      </letter>
+      <letter name='H'>
+        <word name='Handle'>
+          <ref name='xsltGetNamespace'/>
+        </word>
+      </letter>
+      <letter name='I'>
+        <word name='IObuf'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='Implement'>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltElementAvailableFunction'/>
+          <ref name='xsltFormatNumberFunction'/>
+          <ref name='xsltFunctionAvailableFunction'/>
+          <ref name='xsltFunctionNodeSet'/>
+          <ref name='xsltGenerateIdFunction'/>
+          <ref name='xsltKeyFunction'/>
+          <ref name='xsltSystemPropertyFunction'/>
+          <ref name='xsltUnparsedEntityURIFunction'/>
+        </word>
+        <word name='Initialize'>
+          <ref name='xsltInitCtxtExts'/>
+        </word>
+        <word name='Initializes'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+      </letter>
+      <letter name='J'>
+        <word name='JDK'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='James'>
+          <ref name='XSLT_XT_NAMESPACE'/>
+        </word>
+      </letter>
+      <letter name='K'>
+        <word name='Kay'>
+          <ref name='XSLT_SAXON_NAMESPACE'/>
+        </word>
+      </letter>
+      <letter name='L'>
+        <word name='Load'>
+          <ref name='xsltParseStylesheetFile'/>
+        </word>
+        <word name='Looks'>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltExtModuleElementLookup'/>
+          <ref name='xsltExtModuleFunctionLookup'/>
+          <ref name='xsltExtModuleTopLevelLookup'/>
+        </word>
+        <word name='Lookup'>
+          <ref name='xsltGetKey'/>
+        </word>
+      </letter>
+      <letter name='M'>
+        <word name='MSVC'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='MUST'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='Macro'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='CHECK_STOPPEDE'/>
+        </word>
+        <word name='Max'>
+          <ref name='XSLT_MAX_SORT'/>
+        </word>
+        <word name='Michael'>
+          <ref name='XSLT_SAXON_NAMESPACE'/>
+        </word>
+      </letter>
+      <letter name='N'>
+        <word name='NCName'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='NOTE:'>
+          <ref name='xsltApplyStylesheet'/>
+        </word>
+        <word name='Name'>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='Nom'>
+          <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
+        </word>
+      </letter>
+      <letter name='O'>
+        <word name='One'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+      </letter>
+      <letter name='P'>
+        <word name='Parser'>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltElementAvailableFunction'/>
+          <ref name='xsltFormatNumberFunction'/>
+          <ref name='xsltFunctionAvailableFunction'/>
+          <ref name='xsltFunctionNodeSet'/>
+          <ref name='xsltGenerateIdFunction'/>
+          <ref name='xsltKeyFunction'/>
+          <ref name='xsltSystemPropertyFunction'/>
+          <ref name='xsltUnparsedEntityURIFunction'/>
+        </word>
+        <word name='Pre'>
+          <ref name='xsltDocumentComp'/>
+        </word>
+        <word name='Precompute'>
+          <ref name='xsltStylePreCompute'/>
+        </word>
+        <word name='Precomputes'>
+          <ref name='xsltPreComputeExtModuleElement'/>
+        </word>
+        <word name='Process'>
+          <ref name='xsltApplyImports'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltApplyTemplates'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltAttribute'/>
+          <ref name='xsltCallTemplate'/>
+          <ref name='xsltChoose'/>
+          <ref name='xsltComment'/>
+          <ref name='xsltCopy'/>
+          <ref name='xsltCopyOf'/>
+          <ref name='xsltDebug'/>
+          <ref name='xsltDocumentElem'/>
+          <ref name='xsltElement'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltEvalXPathString'/>
+          <ref name='xsltForEach'/>
+          <ref name='xsltIf'/>
+          <ref name='xsltMessage'/>
+          <ref name='xsltNumber'/>
+          <ref name='xsltProcessingInstruction'/>
+          <ref name='xsltTemplateProcess'/>
+          <ref name='xsltText'/>
+          <ref name='xsltValueOf'/>
+        </word>
+      </letter>
+      <letter name='Q'>
+        <word name='QName'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+      </letter>
+      <letter name='R'>
+        <word name='Read'>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='Register'>
+          <ref name='xsltAddTemplate'/>
+          <ref name='xsltNewDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+          <ref name='xsltRegisterExtModule'/>
+          <ref name='xsltRegisterExtModuleFull'/>
+        </word>
+        <word name='Registers'>
+          <ref name='xsltRegisterAllElement'/>
+          <ref name='xsltRegisterAllExtras'/>
+          <ref name='xsltRegisterAllFunctions'/>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+          <ref name='xsltRegisterExtModuleElement'/>
+          <ref name='xsltRegisterExtModuleFunction'/>
+          <ref name='xsltRegisterExtModuleTopLevel'/>
+          <ref name='xsltRegisterExtPrefix'/>
+          <ref name='xsltRegisterExtras'/>
+          <ref name='xsltRegisterTestModule'/>
+        </word>
+        <word name='Retrieve'>
+          <ref name='xsltGetExtData'/>
+          <ref name='xsltStyleGetExtData'/>
+        </word>
+        <word name='Returns'>
+          <ref name='xsltNeedElemSpaceHandling'/>
+        </word>
+      </letter>
+      <letter name='S'>
+        <word name='SAX'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='SAXON'>
+          <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
+        </word>
+        <word name='Save'>
+          <ref name='xsltSaveProfiling'/>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='Saxon'>
+          <ref name='XSLT_SAXON_NAMESPACE'/>
+        </word>
+        <word name='Search'>
+          <ref name='xsltVariableLookup'/>
+        </word>
+        <word name='Set'>
+          <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='Should'>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+        <word name='Shutdown'>
+          <ref name='xsltShutdownCtxtExts'/>
+          <ref name='xsltShutdownExts'/>
+        </word>
+        <word name='Similar'>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='Speed'>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='Strip'>
+          <ref name='xsltApplyStripSpaces'/>
+        </word>
+        <word name='Stylesheet'>
+          <ref name='xsltNewStylesheet'/>
+        </word>
+      </letter>
+      <letter name='T'>
+        <word name='Template'>
+          <ref name='xsltTemplate'/>
+        </word>
+        <word name='Test'>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='This'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='XSLT_LIBXSLT_NAMESPACE'/>
+          <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
+          <ref name='XSLT_SAXON_NAMESPACE'/>
+          <ref name='XSLT_XALAN_NAMESPACE'/>
+          <ref name='XSLT_XT_NAMESPACE'/>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltRegisterExtras'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='TransformContext'>
+          <ref name='xsltNewTransformContext'/>
+        </word>
+        <word name='Try'>
+          <ref name='xsltFindDocument'/>
+          <ref name='xsltLoadDocument'/>
+          <ref name='xsltLoadStyleDocument'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunk name='chunk1'>
+      <letter name='U'>
+        <word name='URL'>
+          <ref name='XSLT_DEFAULT_URL'/>
+          <ref name='xsltParseStylesheetFile'/>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='Unregister'>
+          <ref name='xsltCleanupGlobals'/>
+          <ref name='xsltUnregisterExtModule'/>
+        </word>
+        <word name='Unregisters'>
+          <ref name='xsltUnregisterExtModuleElement'/>
+          <ref name='xsltUnregisterExtModuleFunction'/>
+          <ref name='xsltUnregisterExtModuleTopLevel'/>
+        </word>
+        <word name='Use'>
+          <ref name='DEBUG_MEMORY'/>
+        </word>
+        <word name='Used'>
+          <ref name='xsltCalibrateAdjust'/>
+          <ref name='xsltTimestamp'/>
+        </word>
+      </letter>
+      <letter name='V'>
+        <word name='Variable'>
+          <ref name='xsltVariableLookup'/>
+        </word>
+      </letter>
+      <letter name='W'>
+        <word name='WITH_XSLT_DEBUG_BREAKPOINTS'>
+          <ref name='xslAddCall'/>
+        </word>
+        <word name='Win32'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+      </letter>
+      <letter name='X'>
+        <word name='XALAN'>
+          <ref name='XSLT_XALAN_NAMESPACE'/>
+        </word>
+        <word name='XInclude'>
+          <ref name='xsltGetXIncludeDefault'/>
+          <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='XML'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltNewDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='XPath'>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltElementAvailableFunction'/>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltEvalXPathString'/>
+          <ref name='xsltFormatNumberFunction'/>
+          <ref name='xsltFunctionAvailableFunction'/>
+          <ref name='xsltFunctionNodeSet'/>
+          <ref name='xsltGenerateIdFunction'/>
+          <ref name='xsltKeyFunction'/>
+          <ref name='xsltRegisterAllElement'/>
+          <ref name='xsltRegisterAllFunctions'/>
+          <ref name='xsltSystemPropertyFunction'/>
+          <ref name='xsltUnparsedEntityURIFunction'/>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='XSLT-1'>
+          <ref name='xsltDocumentComp'/>
+          <ref name='xsltDocumentElem'/>
+        </word>
+        <word name='XSLt'>
+          <ref name='IS_XSLT_ELEM'/>
+        </word>
+      </letter>
+      <letter name='a'>
+        <word name='able'>
+          <ref name='WITH_XSLT_DEBUG'/>
+        </word>
+        <word name='access'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='according'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='accordingly'>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltDocumentSortFunction'/>
+        </word>
+        <word name='activate'>
+          <ref name='DEBUG_MEMORY'/>
+        </word>
+        <word name='activated'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+        </word>
+        <word name='actual'>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+        </word>
+        <word name='actually'>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='add'>
+          <ref name='xsltAddKey'/>
+          <ref name='xsltAddStackElemList'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+        </word>
+        <word name='added'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+        </word>
+        <word name='adding'>
+          <ref name='xsltParseStylesheetProcess'/>
+        </word>
+        <word name='against'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='aliases'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltFreeNamespaceAliasHashes'/>
+          <ref name='xsltGetNamespace'/>
+        </word>
+        <word name='all'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+          <ref name='xsltCleanupGlobals'/>
+          <ref name='xsltFreeCompMatchList'/>
+          <ref name='xsltFreeDocuments'/>
+          <ref name='xsltFreeStyleDocuments'/>
+          <ref name='xsltFreeStylePreComps'/>
+          <ref name='xsltInitCtxtKeys'/>
+          <ref name='xsltRegisterAllElement'/>
+          <ref name='xsltRegisterAllFunctions'/>
+        </word>
+        <word name='allocated'>
+          <ref name='xsltFreeCompMatchList'/>
+          <ref name='xsltFreeStackElemList'/>
+          <ref name='xsltFreeStylePreComps'/>
+          <ref name='xsltFreeStylesheet'/>
+          <ref name='xsltFreeTransformContext'/>
+          <ref name='xsltNewStylesheet'/>
+          <ref name='xsltNewTransformContext'/>
+        </word>
+        <word name='allocator'>
+          <ref name='DEBUG_MEMORY'/>
+        </word>
+        <word name='allow'>
+          <ref name='xsltApplyStylesheetUser'/>
+        </word>
+        <word name='also'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='analyzes'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='another'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='any'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='applied'>
+          <ref name='xslAddCall'/>
+        </word>
+        <word name='applies'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='apply'>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltNewDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+        </word>
+        <word name='apply-imports'>
+          <ref name='xsltApplyImports'/>
+        </word>
+        <word name='apply-templates'>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltApplyTemplates'/>
+        </word>
+        <word name='applying'>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='are'>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+        <word name='argument'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='arguments'>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltElementAvailableFunction'/>
+          <ref name='xsltFormatNumberFunction'/>
+          <ref name='xsltFunctionAvailableFunction'/>
+          <ref name='xsltFunctionNodeSet'/>
+          <ref name='xsltGenerateIdFunction'/>
+          <ref name='xsltKeyFunction'/>
+          <ref name='xsltSystemPropertyFunction'/>
+          <ref name='xsltUnparsedEntityURIFunction'/>
+        </word>
+        <word name='array'>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltEvalUserParams'/>
+          <ref name='xsltVariableLookup'/>
+        </word>
+        <word name='arry'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltQuoteUserParams'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='associated'>
+          <ref name='xsltAddTemplate'/>
+          <ref name='xsltDocument'/>
+          <ref name='xsltExtShutdownFunction'/>
+          <ref name='xsltFreeDocumentKeys'/>
+          <ref name='xsltFreeGlobalVariables'/>
+          <ref name='xsltGetExtData'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+          <ref name='xsltRegisterExtModule'/>
+          <ref name='xsltRegisterExtModuleFull'/>
+          <ref name='xsltRegisterExtPrefix'/>
+          <ref name='xsltStyleExtShutdownFunction'/>
+          <ref name='xsltStyleGetExtData'/>
+          <ref name='xsltTransformFunction'/>
+          <ref name='xsltUnregisterExtModule'/>
+        </word>
+        <word name='attached'>
+          <ref name='xsltSort'/>
+        </word>
+        <word name='attempt'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='attribute'>
+          <ref name='IS_XSLT_REAL_NODE'/>
+          <ref name='xsltApplyAttributeSet'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltAttribute'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltFreeAttributeSetsHashes'/>
+          <ref name='xsltGetNsProp'/>
+          <ref name='xsltTemplateProcess'/>
+        </word>
+        <word name='attributes'>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='automatically'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+        </word>
+        <word name='available'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+      </letter>
+      <letter name='b'>
+        <word name='back'>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+        <word name='been'>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+        </word>
+        <word name='before'>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+        <word name='beginning'>
+          <ref name='xsltTimestamp'/>
+        </word>
+        <word name='being'>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='xslAddCall'/>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltPrintErrorContext'/>
+          <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='blank'>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='blanks'>
+          <ref name='xsltIsBlank'/>
+        </word>
+        <word name='blocks'>
+          <ref name='xsltFreeStylePreComps'/>
+        </word>
+        <word name='boolean'>
+          <ref name='xsltElementAvailableFunction'/>
+          <ref name='xsltFunctionAvailableFunction'/>
+        </word>
+        <word name='both'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='braces'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='breakpoint'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='buf'>
+          <ref name='xsltSaveResultTo'/>
+        </word>
+        <word name='buffer'>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltSaveResultTo'/>
+        </word>
+        <word name='build'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='building'>
+          <ref name='xsltParseStylesheetDoc'/>
+        </word>
+        <word name='built-in'>
+          <ref name='xsltRegisterAllExtras'/>
+          <ref name='xsltRegisterExtras'/>
+        </word>
+        <word name='but'>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltGetNsProp'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='byte'>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='bytes'>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunk name='chunk2'>
+      <letter name='c'>
+        <word name='calibration'>
+          <ref name='xsltCalibrateAdjust'/>
+        </word>
+        <word name='call'>
+          <ref name='xslAddCall'/>
+          <ref name='xslDropCall'/>
+        </word>
+        <word name='call-template'>
+          <ref name='xsltCallTemplate'/>
+        </word>
+        <word name='callback'>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltExtModuleElementLookup'/>
+          <ref name='xsltExtModuleTopLevelLookup'/>
+          <ref name='xsltRegisterExtModuleElement'/>
+          <ref name='xsltRegisterExtModuleFunction'/>
+          <ref name='xsltRegisterExtModuleTopLevel'/>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltXPathFunctionLookup'/>
+        </word>
+        <word name='called'>
+          <ref name='xsltExtInitFunction'/>
+          <ref name='xsltExtShutdownFunction'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltStyleExtInitFunction'/>
+          <ref name='xsltStyleExtShutdownFunction'/>
+        </word>
+        <word name='caller'>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltEvalXPathString'/>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='can'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltParseTemplateContent'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='cascading'>
+          <ref name='XSLT_GET_IMPORT_INT'/>
+          <ref name='XSLT_GET_IMPORT_PTR'/>
+        </word>
+        <word name='cases'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='channel'>
+          <ref name='xsltSaveResultTo'/>
+        </word>
+        <word name='chars'>
+          <ref name='xsltIsBlank'/>
+        </word>
+        <word name='check'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='CHECK_STOPPEDE'/>
+          <ref name='IS_XSLT_REAL_NODE'/>
+        </word>
+        <word name='choose'>
+          <ref name='xsltChoose'/>
+        </word>
+        <word name='class:'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='client'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='close'>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+        </word>
+        <word name='code'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='collect'>
+          <ref name='DEBUG_MEMORY'/>
+        </word>
+        <word name='comment'>
+          <ref name='xsltComment'/>
+        </word>
+        <word name='comp'>
+          <ref name='xsltFreeCompMatchList'/>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='compilation'>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='compiled'>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltEvalXPathString'/>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='compiling'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='compression'>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='computations'>
+          <ref name='xsltNewDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+        </word>
+        <word name='compute'>
+          <ref name='xsltParseStylesheetCallerParam'/>
+        </word>
+        <word name='computed'>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltEvalXPathString'/>
+          <ref name='xsltLoadDocument'/>
+          <ref name='xsltLoadStyleDocument'/>
+          <ref name='xsltTemplateProcess'/>
+        </word>
+        <word name='configure'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='configured'>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+        </word>
+        <word name='construct'>
+          <ref name='xsltMessage'/>
+        </word>
+        <word name='constructs'>
+          <ref name='xsltStylePreComp'/>
+        </word>
+        <word name='contain'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='contained'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='container'>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='containing'>
+          <ref name='xsltCompilePattern'/>
+          <ref name='xsltMessage'/>
+        </word>
+        <word name='contains'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='content'>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='content-model'>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='control'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='copy'>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltCopy'/>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+        </word>
+        <word name='copy-of'>
+          <ref name='xsltCopyOf'/>
+        </word>
+        <word name='correct'>
+          <ref name='xsltCalibrateAdjust'/>
+        </word>
+        <word name='corresponding'>
+          <ref name='xsltElemPreComp'/>
+          <ref name='xsltNamespaceAlias'/>
+          <ref name='xsltStylePreComp'/>
+          <ref name='xsltTemplate'/>
+        </word>
+        <word name='create'>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+        </word>
+        <word name='ctx'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='ctxt'>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltFreeTransformContext'/>
+        </word>
+        <word name='ctxt:'>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltEvalUserParams'/>
+          <ref name='xsltQuoteOneUserParam'/>
+          <ref name='xsltQuoteUserParams'/>
+        </word>
+        <word name='cur'>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltAddTemplate'/>
+        </word>
+        <word name='curly'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='current'>
+          <ref name='xslAddCall'/>
+          <ref name='xsltDebug'/>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltDocumentElem'/>
+          <ref name='xsltDocumentSortFunction'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltInitCtxtKeys'/>
+          <ref name='xsltMessage'/>
+          <ref name='xsltPrintErrorContext'/>
+        </word>
+      </letter>
+      <letter name='d'>
+        <word name='data'>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltElemPreComp'/>
+          <ref name='xsltExtShutdownFunction'/>
+          <ref name='xsltFreeCtxtExts'/>
+          <ref name='xsltFreeGlobalVariables'/>
+          <ref name='xsltGetExtData'/>
+          <ref name='xsltInitCtxtExts'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltNumberFormat'/>
+          <ref name='xsltPreComputeExtModuleElement'/>
+          <ref name='xsltStyleExtShutdownFunction'/>
+          <ref name='xsltStyleGetExtData'/>
+          <ref name='xsltStylePreComp'/>
+          <ref name='xsltTimestamp'/>
+        </word>
+        <word name='deallocated'>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltEvalXPathString'/>
+        </word>
+        <word name='deallocator'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='debug'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='xsltDebug'/>
+        </word>
+        <word name='debugger'>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='debugging'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='decalaration'>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+        </word>
+        <word name='decimal'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='decimal-format'>
+          <ref name='xsltDecimalFormat'/>
+          <ref name='xsltDecimalFormatGetByName'/>
+        </word>
+        <word name='declaration'>
+          <ref name='xsltParseGlobalParam'/>
+          <ref name='xsltParseGlobalVariable'/>
+          <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltParseStylesheetParam'/>
+          <ref name='xsltParseStylesheetVariable'/>
+        </word>
+        <word name='declared'>
+          <ref name='xsltCheckExtPrefix'/>
+        </word>
+        <word name='default'>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+          <ref name='XSLT_DEFAULT_VERSION'/>
+          <ref name='xsltGetXIncludeDefault'/>
+          <ref name='xsltRegisterAllElement'/>
+          <ref name='xsltRegisterAllFunctions'/>
+          <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='defined'>
+          <ref name='xslAddCall'/>
+        </word>
+        <word name='definition'>
+          <ref name='xsltAddKey'/>
+        </word>
+        <word name='deprecated'>
+          <ref name='xsltRegisterExtras'/>
+        </word>
+        <word name='derived'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='descriptor'>
+          <ref name='xsltSaveResultToFd'/>
+        </word>
+        <word name='designed'>
+          <ref name='xsltElemPreComp'/>
+        </word>
+        <word name='desired'>
+          <ref name='xsltFindDocument'/>
+        </word>
+        <word name='different'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='directly'>
+          <ref name='xsltSort'/>
+        </word>
+        <word name='dllimport'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='doc'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='documents'>
+          <ref name='xsltFreeDocuments'/>
+          <ref name='xsltFreeStyleDocuments'/>
+        </word>
+        <word name='does'>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+        </word>
+        <word name='doesn'>
+          <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='done'>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltInitCtxtKeys'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='dump'>
+          <ref name='xsltProfileStylesheet'/>
+        </word>
+        <word name='dynamically'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+      </letter>
+      <letter name='e'>
+        <word name='either'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='elem'>
+          <ref name='xsltFreeStackElemList'/>
+        </word>
+        <word name='element-available'>
+          <ref name='xsltElementAvailableFunction'/>
+        </word>
+        <word name='elements'>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltFreeCompMatchList'/>
+          <ref name='xsltParseStylesheetAttributeSet'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+          <ref name='xsltRegisterAllElement'/>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='emitted'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='enables'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='entry'>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='error:'>
+          <ref name='CHECK_STOPPEDE'/>
+        </word>
+        <word name='evaluate'>
+          <ref name='xsltEvalXPathPredicate'/>
+        </word>
+        <word name='evaluated'>
+          <ref name='xsltEvalOneUserParam'/>
+        </word>
+        <word name='everything'>
+          <ref name='xsltFindElemSpaceHandling'/>
+        </word>
+        <word name='example'>
+          <ref name='xsltEvalTemplateString'/>
+        </word>
+        <word name='executed'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='exension'>
+          <ref name='xsltGetExtData'/>
+          <ref name='xsltStyleGetExtData'/>
+        </word>
+        <word name='existing'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='expand'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='exported'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='expressed'>
+          <ref name='XSLT_PAT_NO_PRIORITY'/>
+        </word>
+        <word name='expression'>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltEvalXPathString'/>
+        </word>
+        <word name='expressions'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='extended'>
+          <ref name='xsltElemPreComp'/>
+        </word>
+        <word name='extending'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='extensions'>
+          <ref name='XSLT_LIBXSLT_NAMESPACE'/>
+          <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
+          <ref name='XSLT_SAXON_NAMESPACE'/>
+          <ref name='XSLT_XALAN_NAMESPACE'/>
+          <ref name='XSLT_XT_NAMESPACE'/>
+          <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltFreeExts'/>
+          <ref name='xsltRegisterAllExtras'/>
+          <ref name='xsltRegisterExtras'/>
+        </word>
+        <word name='external'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='extract'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunk name='chunk3'>
+      <letter name='f'>
+        <word name='factor'>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='failure'>
+          <ref name='xsltAddKey'/>
+          <ref name='xsltAddStackElemList'/>
+          <ref name='xsltCompilePattern'/>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+          <ref name='xsltRegisterExtPrefix'/>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='fast'>
+          <ref name='xsltCompilePattern'/>
+        </word>
+        <word name='file'>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='filename'>
+          <ref name='xsltParseStylesheetFile'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='find'>
+          <ref name='xsltDecimalFormatGetByName'/>
+          <ref name='xsltFindDocument'/>
+        </word>
+        <word name='first'>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='flag'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+        </word>
+        <word name='for-each'>
+          <ref name='xsltForEach'/>
+        </word>
+        <word name='force'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='form'>
+          <ref name='xsltCompilePattern'/>
+        </word>
+        <word name='format'>
+          <ref name='xsltFormatNumberConversion'/>
+          <ref name='xsltNumberFormat'/>
+        </word>
+        <word name='format-number'>
+          <ref name='xsltFormatNumberConversion'/>
+          <ref name='xsltFormatNumberFunction'/>
+        </word>
+        <word name='formatting'>
+          <ref name='xsltNumberFormat'/>
+        </word>
+        <word name='found'>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltExtModuleElementLookup'/>
+          <ref name='xsltExtModuleFunctionLookup'/>
+          <ref name='xsltExtModuleTopLevelLookup'/>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltGetNsProp'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltVariableLookup'/>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='free'>
+          <ref name='xsltElemPreCompDeallocator'/>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='freed'>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='from'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='XSLT_GET_IMPORT_INT'/>
+          <ref name='XSLT_GET_IMPORT_PTR'/>
+          <ref name='xsltApplyStripSpaces'/>
+          <ref name='xsltGetKey'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltParseTemplateContent'/>
+          <ref name='xsltTransformFunction'/>
+          <ref name='xsltUnregisterExtModule'/>
+        </word>
+        <word name='function-available'>
+          <ref name='xsltFunctionAvailableFunction'/>
+        </word>
+        <word name='functions'>
+          <ref name='xsltRegisterAllFunctions'/>
+        </word>
+      </letter>
+      <letter name='g'>
+        <word name='gathering'>
+          <ref name='xsltTimestamp'/>
+        </word>
+        <word name='general'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+        </word>
+        <word name='generally'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='generate'>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='generate-id'>
+          <ref name='xsltGenerateIdFunction'/>
+        </word>
+        <word name='generated'>
+          <ref name='xsltCompilePattern'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='generates'>
+          <ref name='xsltCompilePattern'/>
+        </word>
+        <word name='get'>
+          <ref name='xsltEvalXPathString'/>
+        </word>
+        <word name='given'>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltGetExtData'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltStyleGetExtData'/>
+          <ref name='xsltTemplateProcess'/>
+          <ref name='xsltVariableLookup'/>
+        </word>
+        <word name='giving'>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltQuoteOneUserParam'/>
+        </word>
+        <word name='global'>
+          <ref name='xsltCleanupGlobals'/>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltFreeGlobalVariables'/>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+        <word name='goto'>
+          <ref name='CHECK_STOPPEDE'/>
+        </word>
+        <word name='grafted'>
+          <ref name='xsltAttrListTemplateProcess'/>
+        </word>
+      </letter>
+      <letter name='h'>
+        <word name='handle'>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='handler'>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='handles'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+        </word>
+        <word name='handling'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='has'>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='header'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='here'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+        </word>
+        <word name='holding'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+      </letter>
+      <letter name='i'>
+        <word name='ignorable'>
+          <ref name='xsltApplyStripSpaces'/>
+          <ref name='xsltIsBlank'/>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='implementation'>
+          <ref name='xsltCompMatch'/>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+        </word>
+        <word name='implemented'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='implementors'>
+          <ref name='xsltElemPreComp'/>
+        </word>
+        <word name='import'>
+          <ref name='XSLT_GET_IMPORT_INT'/>
+          <ref name='XSLT_GET_IMPORT_PTR'/>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltNextImport'/>
+        </word>
+        <word name='imported'>
+          <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='imports'>
+          <ref name='xsltCleanupTemplates'/>
+        </word>
+        <word name='in-memory'>
+          <ref name='xsltElemPreComp'/>
+          <ref name='xsltStylePreComp'/>
+          <ref name='xsltTemplate'/>
+        </word>
+        <word name='included'>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='includes'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='indicator'>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='information'>
+          <ref name='xsltApplyImports'/>
+          <ref name='xsltApplyTemplates'/>
+          <ref name='xsltAttribute'/>
+          <ref name='xsltCallTemplate'/>
+          <ref name='xsltChoose'/>
+          <ref name='xsltComment'/>
+          <ref name='xsltCopy'/>
+          <ref name='xsltCopyOf'/>
+          <ref name='xsltDocumentElem'/>
+          <ref name='xsltElement'/>
+          <ref name='xsltForEach'/>
+          <ref name='xsltIf'/>
+          <ref name='xsltNumber'/>
+          <ref name='xsltParseStylesheetOutput'/>
+          <ref name='xsltProcessingInstruction'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltText'/>
+          <ref name='xsltTransformFunction'/>
+          <ref name='xsltValueOf'/>
+        </word>
+        <word name='informations'>
+          <ref name='xsltDebug'/>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltNumberFormat'/>
+          <ref name='xsltSaveProfiling'/>
+        </word>
+        <word name='initial'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='initialization'>
+          <ref name='xsltExtInitFunction'/>
+          <ref name='xsltRegisterExtModule'/>
+          <ref name='xsltRegisterExtModuleFull'/>
+          <ref name='xsltStyleExtInitFunction'/>
+        </word>
+        <word name='initialized'>
+          <ref name='xsltInitCtxtExts'/>
+          <ref name='xsltInitCtxtKeys'/>
+          <ref name='xsltNewElemPreComp'/>
+        </word>
+        <word name='initializes'>
+          <ref name='xsltNewElemPreComp'/>
+        </word>
+        <word name='input'>
+          <ref name='xsltApplyStripSpaces'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltInitCtxtKeys'/>
+          <ref name='xsltNewTransformContext'/>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='insignifiant'>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='instead'>
+          <ref name='xsltRegisterExtras'/>
+        </word>
+        <word name='instruction'>
+          <ref name='xsltAddKey'/>
+          <ref name='xsltDebug'/>
+          <ref name='xsltDocumentComp'/>
+          <ref name='xsltDocumentElem'/>
+          <ref name='xsltMessage'/>
+          <ref name='xsltStylePreCompute'/>
+        </word>
+        <word name='intergers'>
+          <ref name='XSLT_GET_IMPORT_INT'/>
+        </word>
+        <word name='interpreter'>
+          <ref name='xsltEvalTemplateString'/>
+        </word>
+        <word name='interpretor'>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='item'>
+          <ref name='xslDropCall'/>
+        </word>
+        <word name='its'>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltFreeGlobalVariables'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltParseGlobalParam'/>
+          <ref name='xsltParseGlobalVariable'/>
+          <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltParseStylesheetParam'/>
+          <ref name='xsltParseStylesheetVariable'/>
+        </word>
+        <word name='itself'>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+      </letter>
+      <letter name='k'>
+        <word name='kept'>
+          <ref name='xsltCompMatch'/>
+        </word>
+        <word name='key'>
+          <ref name='xsltAddKey'/>
+          <ref name='xsltGetKey'/>
+          <ref name='xsltKeyFunction'/>
+          <ref name='xsltNewDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+        </word>
+        <word name='keys'>
+          <ref name='xsltFreeDocumentKeys'/>
+          <ref name='xsltFreeKeys'/>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+      </letter>
+      <letter name='l'>
+        <word name='label'>
+          <ref name='CHECK_STOPPEDE'/>
+        </word>
+        <word name='language'>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='last'>
+          <ref name='xsltNextImport'/>
+        </word>
+        <word name='lead'>
+          <ref name='xsltApplyStylesheet'/>
+        </word>
+        <word name='left'>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+        <word name='level'>
+          <ref name='xsltAddStackElemList'/>
+        </word>
+        <word name='libc'>
+          <ref name='DEBUG_MEMORY'/>
+        </word>
+        <word name='library'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltCleanupGlobals'/>
+          <ref name='xsltRegisterExtModule'/>
+          <ref name='xsltRegisterExtModuleFull'/>
+          <ref name='xsltUnregisterExtModule'/>
+        </word>
+        <word name='libxml'>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+        </word>
+        <word name='libxslt'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+          <ref name='XSLT_LIBXSLT_NAMESPACE'/>
+        </word>
+        <word name='like'>
+          <ref name='LIBXSLT_DOTTED_VERSION'/>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='links'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='list'>
+          <ref name='xsltAddStackElemList'/>
+          <ref name='xsltApplyAttributeSet'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltCompilePattern'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltDocumentSortFunction'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltFreeCompMatchList'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='literal'>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='load'>
+          <ref name='xsltLoadDocument'/>
+          <ref name='xsltLoadStyleDocument'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='loaded'>
+          <ref name='xsltFreeDocuments'/>
+          <ref name='xsltFreeStyleDocuments'/>
+          <ref name='xsltSetXIncludeDefault'/>
+          <ref name='xsltShutdownCtxtExts'/>
+          <ref name='xsltShutdownExts'/>
+        </word>
+        <word name='locate'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='look'>
+          <ref name='xsltGetKey'/>
+          <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='lookup'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunk name='chunk4'>
+      <letter name='m'>
+        <word name='macro'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='XSLT_GET_IMPORT_INT'/>
+          <ref name='XSLT_GET_IMPORT_PTR'/>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+        </word>
+        <word name='made'>
+          <ref name='xsltIsBlank'/>
+        </word>
+        <word name='main'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='match'>
+          <ref name='xsltAddKey'/>
+        </word>
+        <word name='matches'>
+          <ref name='xsltMatchPattern'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='matching'>
+          <ref name='xsltCompilePattern'/>
+        </word>
+        <word name='may'>
+          <ref name='xslAddCall'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltApplyStylesheet'/>
+        </word>
+        <word name='means'>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='mechanism'>
+          <ref name='xsltFreeTemplateHashes'/>
+        </word>
+        <word name='memory'>
+          <ref name='xsltFreeAttributeSetsHashes'/>
+          <ref name='xsltFreeCompMatchList'/>
+          <ref name='xsltFreeExts'/>
+          <ref name='xsltFreeKeys'/>
+          <ref name='xsltFreeNamespaceAliasHashes'/>
+          <ref name='xsltFreeStackElemList'/>
+          <ref name='xsltFreeStylePreComps'/>
+          <ref name='xsltFreeStylesheet'/>
+          <ref name='xsltFreeTemplateHashes'/>
+          <ref name='xsltFreeTransformContext'/>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='message'>
+          <ref name='xsltMessage'/>
+        </word>
+        <word name='messages'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='milliseconds'>
+          <ref name='xsltTimestamp'/>
+        </word>
+        <word name='mode'>
+          <ref name='xsltAddTemplate'/>
+        </word>
+        <word name='modified'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='modules'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+          <ref name='xsltInitCtxtExts'/>
+          <ref name='xsltShutdownCtxtExts'/>
+          <ref name='xsltShutdownExts'/>
+        </word>
+        <word name='must'>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltEvalXPathString'/>
+        </word>
+      </letter>
+      <letter name='n'>
+        <word name='name:'>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltQuoteOneUserParam'/>
+        </word>
+        <word name='named'>
+          <ref name='xsltFindTemplate'/>
+        </word>
+        <word name='names'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltQuoteUserParams'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='namespaces'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltFreeNamespaceAliasHashes'/>
+        </word>
+        <word name='need'>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='needed'>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='needing'>
+          <ref name='xsltParseStylesheetAttributeSet'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+        </word>
+        <word name='needs'>
+          <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='new'>
+          <ref name='xsltAddStackElemList'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltLoadDocument'/>
+          <ref name='xsltLoadStyleDocument'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltNewDocument'/>
+          <ref name='xsltNewElemPreComp'/>
+          <ref name='xsltNewStyleDocument'/>
+          <ref name='xsltNewStylesheet'/>
+          <ref name='xsltNewTransformContext'/>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetFile'/>
+          <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+          <ref name='xsltTemplateProcess'/>
+        </word>
+        <word name='newly'>
+          <ref name='xsltNewStylesheet'/>
+          <ref name='xsltNewTransformContext'/>
+        </word>
+        <word name='next'>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltNextImport'/>
+        </word>
+        <word name='node-set'>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltFunctionNodeSet'/>
+          <ref name='xsltKeyFunction'/>
+        </word>
+        <word name='node-set?'>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltGenerateIdFunction'/>
+        </word>
+        <word name='nodelist'>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+        <word name='nodes'>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltParseTemplateContent'/>
+          <ref name='xsltSort'/>
+        </word>
+        <word name='nodeset'>
+          <ref name='xsltGetKey'/>
+        </word>
+        <word name='non-NULL'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='non-wellformed'>
+          <ref name='xsltApplyStylesheet'/>
+        </word>
+        <word name='nor'>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='not'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltGetNsProp'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltNeedElemSpaceHandling'/>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltVariableLookup'/>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='nothing'>
+          <ref name='LIBXSLT_PUBLIC'/>
+        </word>
+        <word name='null'>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltQuoteOneUserParam'/>
+        </word>
+        <word name='number'>
+          <ref name='LIBXSLT_VERSION_STRING'/>
+          <ref name='XSLT_MAX_SORT'/>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltElementAvailableFunction'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltFormatNumberFunction'/>
+          <ref name='xsltFunctionAvailableFunction'/>
+          <ref name='xsltFunctionNodeSet'/>
+          <ref name='xsltGenerateIdFunction'/>
+          <ref name='xsltInitCtxtExts'/>
+          <ref name='xsltKeyFunction'/>
+          <ref name='xsltNumber'/>
+          <ref name='xsltNumberFormat'/>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSystemPropertyFunction'/>
+          <ref name='xsltTimestamp'/>
+          <ref name='xsltUnparsedEntityURIFunction'/>
+        </word>
+        <word name='number:'>
+          <ref name='LIBXSLT_VERSION'/>
+        </word>
+      </letter>
+      <letter name='o'>
+        <word name='object'>
+          <ref name='xsltDocumentFunction'/>
+          <ref name='xsltKeyFunction'/>
+          <ref name='xsltSystemPropertyFunction'/>
+        </word>
+        <word name='obtained'>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='occcur'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='off'>
+          <ref name='xslDropCall'/>
+        </word>
+        <word name='old'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='once'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='one'>
+          <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltNextImport'/>
+          <ref name='xsltNumberFormat'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='one:'>
+          <ref name='IS_XSLT_REAL_NODE'/>
+        </word>
+        <word name='ones'>
+          <ref name='xsltCleanupTemplates'/>
+        </word>
+        <word name='only'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltExtElementLookup'/>
+        </word>
+        <word name='open'>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+        </word>
+        <word name='order'>
+          <ref name='XSLT_GET_IMPORT_INT'/>
+          <ref name='XSLT_GET_IMPORT_PTR'/>
+          <ref name='xsltDocumentSortFunction'/>
+        </word>
+        <word name='otherwise'>
+          <ref name='xslAddCall'/>
+          <ref name='xsltAddTemplate'/>
+          <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltExtModuleElementLookup'/>
+          <ref name='xsltExtModuleFunctionLookup'/>
+          <ref name='xsltExtModuleTopLevelLookup'/>
+          <ref name='xsltGetXIncludeDefault'/>
+          <ref name='xsltIsBlank'/>
+        </word>
+        <word name='ouput'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='out'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='output'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltParseStylesheetOutput'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltSaveProfiling'/>
+          <ref name='xsltSaveResultTo'/>
+        </word>
+        <word name='own'>
+          <ref name='xsltApplyStylesheetUser'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunk name='chunk5'>
+      <letter name='p'>
+        <word name='param'>
+          <ref name='xsltParseGlobalParam'/>
+          <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltParseStylesheetParam'/>
+        </word>
+        <word name='parameter'>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltQuoteOneUserParam'/>
+        </word>
+        <word name='parameters'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltEvalUserParams'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltQuoteUserParams'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='params'>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+        <word name='params:'>
+          <ref name='xsltEvalUserParams'/>
+          <ref name='xsltQuoteUserParams'/>
+        </word>
+        <word name='parent'>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+        </word>
+        <word name='parse'>
+          <ref name='xsltParseGlobalParam'/>
+          <ref name='xsltParseGlobalVariable'/>
+          <ref name='xsltParseStylesheetAttributeSet'/>
+          <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetFile'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+          <ref name='xsltParseStylesheetOutput'/>
+          <ref name='xsltParseStylesheetParam'/>
+          <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltParseStylesheetVariable'/>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='parsed'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltDocument'/>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltNewDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+          <ref name='xsltNewTransformContext'/>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='parser'>
+          <ref name='xsltFreeTransformContext'/>
+        </word>
+        <word name='parsing'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='part'>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='passed'>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='pattern'>
+          <ref name='XSLT_PAT_NO_PRIORITY'/>
+          <ref name='xsltAddTemplate'/>
+          <ref name='xsltCompMatch'/>
+          <ref name='xsltCompilePattern'/>
+          <ref name='xsltMatchPattern'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='patterns'>
+          <ref name='xsltCompMatch'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='penalty'>
+          <ref name='WITH_XSLT_DEBUG'/>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='pertains'>
+          <ref name='IS_XSLT_ELEM'/>
+        </word>
+        <word name='place'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='point'>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='pointer'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='pointers'>
+          <ref name='XSLT_GET_IMPORT_PTR'/>
+        </word>
+        <word name='popped'>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+        <word name='possibly'>
+          <ref name='xsltCheckExtPrefix'/>
+        </word>
+        <word name='pre-computation'>
+          <ref name='xsltRegisterExtModuleElement'/>
+        </word>
+        <word name='precedence'>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltNextImport'/>
+        </word>
+        <word name='precompiled'>
+          <ref name='xsltCompilePattern'/>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='precomputed'>
+          <ref name='xsltApplyImports'/>
+          <ref name='xsltApplyTemplates'/>
+          <ref name='xsltAttribute'/>
+          <ref name='xsltCallTemplate'/>
+          <ref name='xsltChoose'/>
+          <ref name='xsltComment'/>
+          <ref name='xsltCopy'/>
+          <ref name='xsltCopyOf'/>
+          <ref name='xsltDebug'/>
+          <ref name='xsltDocumentElem'/>
+          <ref name='xsltElemPreComp'/>
+          <ref name='xsltElement'/>
+          <ref name='xsltForEach'/>
+          <ref name='xsltFreeStylePreComps'/>
+          <ref name='xsltIf'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltNumber'/>
+          <ref name='xsltPreComputeExtModuleElement'/>
+          <ref name='xsltProcessingInstruction'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltStylePreComp'/>
+          <ref name='xsltText'/>
+          <ref name='xsltValueOf'/>
+        </word>
+        <word name='predicate'>
+          <ref name='xsltEvalXPathPredicate'/>
+        </word>
+        <word name='prefix'>
+          <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltRegisterExtPrefix'/>
+        </word>
+        <word name='prefixed'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='present'>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='preserve-space'>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltParseStylesheetAttributeSet'/>
+        </word>
+        <word name='preserving'>
+          <ref name='xsltParseStylesheetAttributeSet'/>
+        </word>
+        <word name='printed'>
+          <ref name='xslAddCall'/>
+        </word>
+        <word name='priority'>
+          <ref name='XSLT_PAT_NO_PRIORITY'/>
+        </word>
+        <word name='private'>
+          <ref name='xsltCompMatch'/>
+        </word>
+        <word name='process'>
+          <ref name='xsltApplyImports'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltApplyStripSpaces'/>
+          <ref name='xsltApplyTemplates'/>
+          <ref name='xsltAttribute'/>
+          <ref name='xsltCallTemplate'/>
+          <ref name='xsltChoose'/>
+          <ref name='xsltComment'/>
+          <ref name='xsltCopy'/>
+          <ref name='xsltCopyOf'/>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltDocumentComp'/>
+          <ref name='xsltElement'/>
+          <ref name='xsltExtElementLookup'/>
+          <ref name='xsltForEach'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltIf'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltNumber'/>
+          <ref name='xsltParseTemplateContent'/>
+          <ref name='xsltProcessingInstruction'/>
+          <ref name='xsltRegisterExtras'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltTestCompMatchList'/>
+          <ref name='xsltText'/>
+          <ref name='xsltValueOf'/>
+        </word>
+        <word name='processed'>
+          <ref name='xslAddCall'/>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltPrintErrorContext'/>
+          <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='processing'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='CHECK_STOPPEDE'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltDebug'/>
+          <ref name='xsltDocumentElem'/>
+          <ref name='xsltGetXIncludeDefault'/>
+          <ref name='xsltMessage'/>
+          <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='processing-instruction'>
+          <ref name='xsltProcessingInstruction'/>
+        </word>
+        <word name='processor'>
+          <ref name='XSLT_DEFAULT_URL'/>
+          <ref name='XSLT_DEFAULT_VENDOR'/>
+          <ref name='XSLT_SAXON_NAMESPACE'/>
+          <ref name='XSLT_XALAN_NAMESPACE'/>
+          <ref name='XSLT_XT_NAMESPACE'/>
+        </word>
+        <word name='profile'>
+          <ref name='xsltApplyStylesheetUser'/>
+        </word>
+        <word name='profiling'>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltSaveProfiling'/>
+          <ref name='xsltTimestamp'/>
+        </word>
+        <word name='progressive'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='project'>
+          <ref name='XSLT_XALAN_NAMESPACE'/>
+        </word>
+        <word name='provide'>
+          <ref name='xsltApplyStylesheetUser'/>
+        </word>
+        <word name='provided'>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltDoSortFunction'/>
+        </word>
+        <word name='purpose'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+        </word>
+        <word name='pushed'>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+      </letter>
+      <letter name='q'>
+        <word name='query'>
+          <ref name='xsltGetKey'/>
+        </word>
+      </letter>
+      <letter name='r'>
+        <word name='real'>
+          <ref name='IS_XSLT_REAL_NODE'/>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+        <word name='record'>
+          <ref name='xsltParseGlobalParam'/>
+          <ref name='xsltParseGlobalVariable'/>
+          <ref name='xsltParseStylesheetAttributeSet'/>
+          <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+          <ref name='xsltParseStylesheetOutput'/>
+          <ref name='xsltParseStylesheetParam'/>
+          <ref name='xsltParseStylesheetVariable'/>
+        </word>
+        <word name='referencing'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='register'>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='registered'>
+          <ref name='xsltInitCtxtExts'/>
+        </word>
+        <word name='registering'>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+        </word>
+        <word name='related'>
+          <ref name='xsltParseStylesheetOutput'/>
+        </word>
+        <word name='reorder'>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltDocumentSortFunction'/>
+        </word>
+        <word name='replace'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='replacement'>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltTemplateProcess'/>
+        </word>
+        <word name='replaces'>
+          <ref name='DEBUG_MEMORY'/>
+        </word>
+        <word name='reporting'>
+          <ref name='WITH_XSLT_DEBUG'/>
+        </word>
+        <word name='requested'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='requirement'>
+          <ref name='xsltDoSortFunction'/>
+        </word>
+        <word name='requires'>
+          <ref name='xsltNeedElemSpaceHandling'/>
+        </word>
+        <word name='reset'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='resource'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='respect'>
+          <ref name='xsltFindElemSpaceHandling'/>
+        </word>
+        <word name='result'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltFormatNumberConversion'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='result-prefix'>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='result-tree'>
+          <ref name='xsltFunctionNodeSet'/>
+        </word>
+        <word name='resulting'>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltGetKey'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='results'>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='return'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='xsltAttrTemplateProcess'/>
+          <ref name='xsltAttrTemplateValueProcess'/>
+          <ref name='xsltGetXIncludeDefault'/>
+          <ref name='xsltTemplateProcess'/>
+        </word>
+        <word name='returned'>
+          <ref name='xsltEvalTemplateString'/>
+        </word>
+        <word name='reused'>
+          <ref name='xsltApplyOneTemplate'/>
+        </word>
+        <word name='right'>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+        </word>
+        <word name='rule'>
+          <ref name='xsltFindTemplate'/>
+        </word>
+        <word name='run'>
+          <ref name='WITH_XSLT_DEBUG'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunk name='chunk6'>
+      <letter name='s'>
+        <word name='saving'>
+          <ref name='xsltSaveProfiling'/>
+        </word>
+        <word name='scope'>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='seaches'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='search'>
+          <ref name='xsltExtElementLookup'/>
+        </word>
+        <word name='semantic'>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='set'>
+          <ref name='xsltApplyAttributeSet'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltCleanupGlobals'/>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltDocumentSortFunction'/>
+          <ref name='xsltInitCtxtExts'/>
+          <ref name='xsltShutdownCtxtExts'/>
+          <ref name='xsltShutdownExts'/>
+        </word>
+        <word name='sets'>
+          <ref name='xsltFreeAttributeSetsHashes'/>
+        </word>
+        <word name='setting'>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='sheet'>
+          <ref name='xsltFreeStyleDocuments'/>
+          <ref name='xsltFreeStylesheet'/>
+          <ref name='xsltLoadStyleDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+        </word>
+        <word name='shell'>
+          <ref name='DEBUG_MEMORY'/>
+        </word>
+        <word name='should'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='CHECK_STOPPEDE'/>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltNeedElemSpaceHandling'/>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+          <ref name='xsltSetXIncludeDefault'/>
+          <ref name='xsltSort'/>
+        </word>
+        <word name='shutdown'>
+          <ref name='xsltExtShutdownFunction'/>
+          <ref name='xsltRegisterExtModule'/>
+          <ref name='xsltRegisterExtModuleFull'/>
+          <ref name='xsltStyleExtShutdownFunction'/>
+        </word>
+        <word name='signalled'>
+          <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='signature'>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='simply'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='since'>
+          <ref name='xsltTimestamp'/>
+        </word>
+        <word name='slightly'>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='sort'>
+          <ref name='xsltDoSortFunction'/>
+          <ref name='xsltSort'/>
+        </word>
+        <word name='sorting'>
+          <ref name='xsltDoSortFunction'/>
+        </word>
+        <word name='sorts'>
+          <ref name='xsltDoSortFunction'/>
+        </word>
+        <word name='space'>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltFreeDocuments'/>
+          <ref name='xsltFreeStyleDocuments'/>
+          <ref name='xsltNeedElemSpaceHandling'/>
+        </word>
+        <word name='spaces'>
+          <ref name='xsltApplyStripSpaces'/>
+        </word>
+        <word name='specific'>
+          <ref name='XSLT_LIBXSLT_NAMESPACE'/>
+          <ref name='XSLT_PAT_NO_PRIORITY'/>
+        </word>
+        <word name='specification'>
+          <ref name='XSLT_NAMESPACE'/>
+        </word>
+        <word name='specified'>
+          <ref name='XSLT_MAX_SORT'/>
+        </word>
+        <word name='specify'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='stack'>
+          <ref name='xslAddCall'/>
+          <ref name='xslDropCall'/>
+          <ref name='xsltAddStackElemList'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltFreeStackElemList'/>
+        </word>
+        <word name='starting'>
+          <ref name='xsltEvalGlobalVariables'/>
+        </word>
+        <word name='state'>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltCleanupTemplates'/>
+          <ref name='xsltGetXIncludeDefault'/>
+        </word>
+        <word name='static'>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+        </word>
+        <word name='stderr'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='stopped'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='CHECK_STOPPEDE'/>
+        </word>
+        <word name='store'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='string?'>
+          <ref name='xsltFormatNumberFunction'/>
+        </word>
+        <word name='strip-space'>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+        </word>
+        <word name='stripped'>
+          <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltNeedElemSpaceHandling'/>
+        </word>
+        <word name='stripping'>
+          <ref name='xsltNeedElemSpaceHandling'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+        </word>
+        <word name='struct'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='structure'>
+          <ref name='xsltCompMatch'/>
+          <ref name='xsltDecimalFormat'/>
+          <ref name='xsltDocument'/>
+          <ref name='xsltElemPreComp'/>
+          <ref name='xsltElemPreCompDeallocator'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetFile'/>
+          <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltStylePreComp'/>
+          <ref name='xsltTemplate'/>
+        </word>
+        <word name='structures'>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetProcess'/>
+        </word>
+        <word name='style'>
+          <ref name='xsltFreeStyleDocuments'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltLoadStyleDocument'/>
+          <ref name='xsltNewStyleDocument'/>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='stylesheet-prefix'>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='stylesheets'>
+          <ref name='xsltEvalGlobalVariables'/>
+        </word>
+        <word name='subsequent'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='substituted'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+        </word>
+        <word name='subtree'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='success'>
+          <ref name='xsltAddKey'/>
+          <ref name='xsltAddStackElemList'/>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltEvalUserParams'/>
+          <ref name='xsltQuoteOneUserParam'/>
+          <ref name='xsltQuoteUserParams'/>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+          <ref name='xsltRegisterExtPrefix'/>
+        </word>
+        <word name='successful'>
+          <ref name='xsltRegisterExtModuleElement'/>
+          <ref name='xsltRegisterExtModuleFunction'/>
+          <ref name='xsltRegisterExtModuleTopLevel'/>
+          <ref name='xsltUnregisterExtModuleElement'/>
+          <ref name='xsltUnregisterExtModuleFunction'/>
+          <ref name='xsltUnregisterExtModuleTopLevel'/>
+        </word>
+        <word name='sucess'>
+          <ref name='xslAddCall'/>
+        </word>
+        <word name='sucessful'>
+          <ref name='xsltRegisterExtModule'/>
+          <ref name='xsltRegisterExtModuleFull'/>
+          <ref name='xsltUnregisterExtModule'/>
+        </word>
+        <word name='suggested'>
+          <ref name='xsltGetSpecialNamespace'/>
+        </word>
+        <word name='suitable'>
+          <ref name='xsltCompilePattern'/>
+        </word>
+        <word name='support'>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='supported'>
+          <ref name='XSLT_DEFAULT_VERSION'/>
+        </word>
+        <word name='system-property'>
+          <ref name='xsltSystemPropertyFunction'/>
+        </word>
+      </letter>
+      <letter name='t'>
+        <word name='tables'>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+        <word name='target'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+        </word>
+        <word name='targetted'>
+          <ref name='xsltApplyStylesheetUser'/>
+        </word>
+        <word name='temlate'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='template'>
+          <ref name='xslAddCall'/>
+          <ref name='xsltAddTemplate'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltParseTemplateContent'/>
+          <ref name='xsltTemplateProcess'/>
+        </word>
+        <word name='templates'>
+          <ref name='xsltCleanupTemplates'/>
+        </word>
+        <word name='tenth'>
+          <ref name='xsltTimestamp'/>
+        </word>
+        <word name='terminated'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltEvalUserParams'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltQuoteOneUserParam'/>
+          <ref name='xsltQuoteUserParams'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='test'>
+          <ref name='xsltRegisterTestModule'/>
+        </word>
+        <word name='text'>
+          <ref name='IS_XSLT_REAL_NODE'/>
+          <ref name='xsltText'/>
+        </word>
+        <word name='than'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='that'>
+          <ref name='IS_XSLT_ELEM'/>
+          <ref name='IS_XSLT_REAL_NODE'/>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltNeedElemSpaceHandling'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='them'>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='then'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='there'>
+          <ref name='xsltGetXIncludeDefault'/>
+        </word>
+        <word name='they'>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltEvalAttrValueTemplate'/>
+        </word>
+        <word name='this'>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='XSLT_DEFAULT_URL'/>
+          <ref name='XSLT_DEFAULT_VENDOR'/>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltAddStackElemList'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltExtShutdownFunction'/>
+          <ref name='xsltGetExtData'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltGetTemplate'/>
+          <ref name='xsltRegisterAllElement'/>
+          <ref name='xsltRegisterAllFunctions'/>
+          <ref name='xsltRegisterExtModule'/>
+          <ref name='xsltRegisterExtModuleFull'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltStyleExtShutdownFunction'/>
+          <ref name='xsltStyleGetExtData'/>
+          <ref name='xsltUnregisterExtModule'/>
+        </word>
+        <word name='those'>
+          <ref name='xsltEvalAttrValueTemplate'/>
+        </word>
+        <word name='time'>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltExtInitFunction'/>
+          <ref name='xsltExtShutdownFunction'/>
+          <ref name='xsltStyleExtInitFunction'/>
+          <ref name='xsltStyleExtShutdownFunction'/>
+        </word>
+        <word name='too'>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+        </word>
+        <word name='top-level'>
+          <ref name='xsltExtModuleTopLevelLookup'/>
+          <ref name='xsltRegisterExtModuleTopLevel'/>
+          <ref name='xsltUnregisterExtModuleTopLevel'/>
+        </word>
+        <word name='topmost'>
+          <ref name='xslDropCall'/>
+        </word>
+        <word name='transfer'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='transform'>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltNewElemPreComp'/>
+        </word>
+        <word name='transformations'>
+          <ref name='xsltEvalGlobalVariables'/>
+        </word>
+        <word name='tree'>
+          <ref name='xsltApplyAttributeSet'/>
+          <ref name='xsltApplyImports'/>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltApplyStripSpaces'/>
+          <ref name='xsltApplyTemplates'/>
+          <ref name='xsltAttribute'/>
+          <ref name='xsltCallTemplate'/>
+          <ref name='xsltChoose'/>
+          <ref name='xsltComment'/>
+          <ref name='xsltCopy'/>
+          <ref name='xsltCopyOf'/>
+          <ref name='xsltElement'/>
+          <ref name='xsltEvalTemplateString'/>
+          <ref name='xsltForEach'/>
+          <ref name='xsltIf'/>
+          <ref name='xsltMatchPattern'/>
+          <ref name='xsltNumber'/>
+          <ref name='xsltProcessingInstruction'/>
+          <ref name='xsltSort'/>
+          <ref name='xsltTemplateProcess'/>
+          <ref name='xsltText'/>
+          <ref name='xsltValueOf'/>
+        </word>
+        <word name='tries'>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='true'>
+          <ref name='xsltEvalXPathPredicate'/>
+        </word>
+        <word name='tuples'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltEvalUserParams'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltQuoteUserParams'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunk name='chunk7'>
+      <letter name='u'>
+        <word name='unless'>
+          <ref name='WITH_XSLT_DEBUGGER'/>
+        </word>
+        <word name='unparsed-entity-uri'>
+          <ref name='xsltUnparsedEntityURIFunction'/>
+        </word>
+        <word name='unused'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+        </word>
+        <word name='unwanted'>
+          <ref name='xsltApplyStripSpaces'/>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='use'>
+          <ref name='xsltAddKey'/>
+          <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltRegisterExtras'/>
+        </word>
+        <word name='used'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
+          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+          <ref name='xsltCleanupTemplates'/>
+          <ref name='xsltCompMatch'/>
+          <ref name='xsltFreeAttributeSetsHashes'/>
+          <ref name='xsltFreeDocuments'/>
+          <ref name='xsltFreeExts'/>
+          <ref name='xsltFreeKeys'/>
+          <ref name='xsltFreeNamespaceAliasHashes'/>
+          <ref name='xsltFreeStyleDocuments'/>
+          <ref name='xsltFreeTemplateHashes'/>
+          <ref name='xsltRegisterExtPrefix'/>
+        </word>
+        <word name='useful'>
+          <ref name='WITH_XSLT_DEBUG'/>
+        </word>
+        <word name='usefull'>
+          <ref name='xsltInitElemPreComp'/>
+        </word>
+        <word name='useless'>
+          <ref name='ATTRIBUTE_UNUSED'/>
+        </word>
+        <word name='user'>
+          <ref name='xsltApplyStylesheetUser'/>
+        </word>
+        <word name='uses'>
+          <ref name='xsltFormatNumberConversion'/>
+        </word>
+        <word name='using'>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltEvalXPathString'/>
+        </word>
+      </letter>
+      <letter name='v'>
+        <word name='validating'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='value-of'>
+          <ref name='xsltValueOf'/>
+        </word>
+        <word name='values'>
+          <ref name='xsltApplyStylesheet'/>
+          <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltProfileStylesheet'/>
+          <ref name='xsltQuoteUserParams'/>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+        <word name='variable'>
+          <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltParseGlobalVariable'/>
+          <ref name='xsltParseStylesheetVariable'/>
+          <ref name='xsltVariableLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='variables'>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltCleanupGlobals'/>
+          <ref name='xsltEvalGlobalVariables'/>
+          <ref name='xsltFreeGlobalVariables'/>
+        </word>
+        <word name='varibale'>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='varibales'>
+          <ref name='xsltInitCtxtKeys'/>
+        </word>
+        <word name='vendor'>
+          <ref name='XSLT_DEFAULT_URL'/>
+          <ref name='XSLT_DEFAULT_VENDOR'/>
+        </word>
+        <word name='version'>
+          <ref name='LIBXSLT_DOTTED_VERSION'/>
+          <ref name='LIBXSLT_VERSION'/>
+          <ref name='LIBXSLT_VERSION_STRING'/>
+          <ref name='XSLT_DEFAULT_VERSION'/>
+        </word>
+        <word name='void'>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+      </letter>
+      <letter name='w'>
+        <word name='was'>
+          <ref name='xsltEvalXPathPredicate'/>
+          <ref name='xsltNextImport'/>
+        </word>
+        <word name='well'>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='wether'>
+          <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='when'>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+          <ref name='LIBXSLT_PUBLIC'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltXPathFunctionLookup'/>
+          <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='where'>
+          <ref name='xslHandleDebugger'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+        </word>
+        <word name='whether'>
+          <ref name='xsltEvalStaticAttrValueTemplate'/>
+          <ref name='xsltNeedElemSpaceHandling'/>
+          <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='which'>
+          <ref name='xsltRegisterExtElement'/>
+          <ref name='xsltRegisterExtFunction'/>
+        </word>
+        <word name='while'>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='white-space'>
+          <ref name='xsltNeedElemSpaceHandling'/>
+        </word>
+        <word name='wildcards'>
+          <ref name='xsltFindElemSpaceHandling'/>
+        </word>
+        <word name='will'>
+          <ref name='CHECK_STOPPED'/>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='CHECK_STOPPEDE'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltLoadStylesheetPI'/>
+          <ref name='xsltSetGenericDebugFunc'/>
+          <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='wise'>
+          <ref name='xsltApplyStylesheet'/>
+        </word>
+        <word name='with'>
+          <ref name='CHECK_STOPPED0'/>
+          <ref name='DEBUG_MEMORY'/>
+          <ref name='DEBUG_MEMORY_LOCATION'/>
+          <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltGetNsProp'/>
+          <ref name='xsltGetQNameURI'/>
+          <ref name='xsltInitCtxtExts'/>
+        </word>
+        <word name='within'>
+          <ref name='xsltFindDocument'/>
+          <ref name='xsltLoadDocument'/>
+          <ref name='xsltLoadStyleDocument'/>
+          <ref name='xsltLoadStylesheetPI'/>
+        </word>
+        <word name='without'>
+          <ref name='XSLT_PAT_NO_PRIORITY'/>
+        </word>
+        <word name='wrapped'>
+          <ref name='xsltFindElemSpaceHandling'/>
+        </word>
+        <word name='written'>
+          <ref name='xsltRunStylesheet'/>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+      </letter>
+      <letter name='x'>
+        <word name='xmlAttrPtr'>
+          <ref name='xsltAttrListTemplateProcess'/>
+        </word>
+        <word name='xmlDoc'>
+          <ref name='xsltParseStylesheetDoc'/>
+          <ref name='xsltParseStylesheetProcess'/>
+        </word>
+        <word name='xmlDocPtr'>
+          <ref name='xsltSaveResultTo'/>
+          <ref name='xsltSaveResultToFd'/>
+          <ref name='xsltSaveResultToFile'/>
+          <ref name='xsltSaveResultToFilename'/>
+        </word>
+        <word name='xmlGetNsProp'>
+          <ref name='xsltGetNsProp'/>
+        </word>
+        <word name='xmlNsPtr'>
+          <ref name='xsltCopyNamespace'/>
+          <ref name='xsltCopyNamespaceList'/>
+        </word>
+        <word name='xsl:apply-templates'>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='xsl:comment'>
+          <ref name='xsltEvalTemplateString'/>
+        </word>
+        <word name='xsl:if'>
+          <ref name='xsltTransformFunction'/>
+        </word>
+        <word name='xsl:message'>
+          <ref name='xsltMessage'/>
+        </word>
+        <word name='xsl:namespace-alias'>
+          <ref name='xsltNamespaceAlias'/>
+        </word>
+        <word name='xsl:processing-instruction'>
+          <ref name='xsltEvalTemplateString'/>
+        </word>
+        <word name='xsl:sort'>
+          <ref name='XSLT_MAX_SORT'/>
+          <ref name='xsltSort'/>
+        </word>
+        <word name='xsl:use-attribute-sets'>
+          <ref name='xsltApplyAttributeSet'/>
+        </word>
+        <word name='xslDebugBreak'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='xslDebugStatus'>
+          <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='xslt:text'>
+          <ref name='xsltParseTemplateContent'/>
+        </word>
+        <word name='xsltAddTemplate'>
+          <ref name='xsltFreeTemplateHashes'/>
+        </word>
+        <word name='xsltDocumentPtr'>
+          <ref name='xsltFindDocument'/>
+          <ref name='xsltLoadDocument'/>
+          <ref name='xsltLoadStyleDocument'/>
+        </word>
+        <word name='xsltElemPreComp'>
+          <ref name='xsltElemPreCompDeallocator'/>
+          <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltNewElemPreComp'/>
+        </word>
+        <word name='xsltGetTemplate'>
+          <ref name='xsltFreeTemplateHashes'/>
+        </word>
+        <word name='xsltRegisterAllExtras'>
+          <ref name='xsltRegisterExtras'/>
+        </word>
+        <word name='xsltStylesheetPtr'>
+          <ref name='xsltNewStylesheet'/>
+        </word>
+        <word name='xsltTemplatePtr'>
+          <ref name='xsltFindTemplate'/>
+          <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='xsltTimestamp'>
+          <ref name='xsltCalibrateAdjust'/>
+        </word>
+        <word name='xsltTransformContextPtr'>
+          <ref name='xsltNewTransformContext'/>
+        </word>
+        <word name='xsltpoc'>
+          <ref name='WITH_XSLT_DEBUG'/>
+        </word>
+      </letter>
+      <letter name='y'>
+        <word name='yet'>
+          <ref name='xsltRunStylesheet'/>
+        </word>
+      </letter>
+    </chunk>
+    <chunks>
+      <chunk name='chunk0' start='A' end='T'/>
+      <chunk name='chunk1' start='U' end='b'/>
+      <chunk name='chunk2' start='c' end='e'/>
+      <chunk name='chunk3' start='f' end='l'/>
+      <chunk name='chunk4' start='m' end='o'/>
+      <chunk name='chunk5' start='p' end='r'/>
+      <chunk name='chunk6' start='s' end='t'/>
+    </chunks>
+  </index>
+</apirefs>

@@ -9,6 +9,7 @@
 <!entity imports SYSTEM "sgml/imports.sgml">
 <!entity namespaces SYSTEM "sgml/namespaces.sgml">
 <!entity variables SYSTEM "sgml/variables.sgml">
+<!entity extensions SYSTEM "sgml/extensions.sgml">
 <!entity keys SYSTEM "sgml/keys.sgml">
 <!entity xsltInternals SYSTEM "sgml/xsltInternals.sgml">
 <!entity numbersInternals SYSTEM "sgml/numbersInternals.sgml">
@@ -78,6 +79,7 @@
     &xsltutils;
     &attributes;
     &imports;
+    &extensions;
     &namespaces;
     &variables;
     &keys;

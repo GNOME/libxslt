@@ -123,7 +123,7 @@ NAME="LIBXSLT-VARIABLES"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN3211"
+NAME="AEN4030"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN3211"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN3214"
+NAME="AEN4033"
 ></A
 ><H2
 >Synopsis</H2
@@ -320,7 +320,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3262"
+NAME="AEN4081"
 ></A
 ><H2
 >Description</H2
@@ -330,20 +330,20 @@ NAME="AEN3262"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3265"
+NAME="AEN4084"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3267"
+NAME="AEN4086"
 ></A
 ><H3
 ><A
 NAME="XSLT-REGISTER-VARIABLE-LOOKUP-CAPS"
 ></A
->XSLT_REGISTER_VARIABLE_LOOKUP()</H3
+>&#62;XSLT_REGISTER_VARIABLE_LOOKUP()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -358,13 +358,11 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->registering macro, not general purpose at all but used in different modules</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3273"
+NAME="AEN4091"
 ></A
 ><P
 ></P
@@ -402,13 +400,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3282"
+NAME="AEN4100"
 ></A
 ><H3
 ><A
 NAME="XSLTEVALGLOBALVARIABLES"
 ></A
->xsltEvalGlobalVariables ()</H3
+>&#62;xsltEvalGlobalVariables ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -426,14 +424,11 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Evaluate the global variables of a stylesheet. This need to be
-done on parsed stylesheets before starting to apply transformations</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3289"
+NAME="AEN4106"
 ></A
 ><P
 ></P
@@ -460,7 +455,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -475,7 +470,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->0 in case of success, -1 in case of error</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -486,13 +481,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3302"
+NAME="AEN4119"
 ></A
 ><H3
 ><A
 NAME="XSLTEVALUSERPARAMS"
 ></A
->xsltEvalUserParams ()</H3
+>&#62;xsltEvalUserParams ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -511,30 +506,11 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->:  the XSLT transformation context
-<TT
-CLASS="PARAMETER"
-><I
->params</I
-></TT
->:  a NULL terminated array of parameters name/value tuples</P
-><P
->Evaluate the global variables of a stylesheet. This needs to be
-done on parsed stylesheets before starting to apply transformations.
-Each of the parameters is evaluated as an XPath expression and stored
-in the global variables/parameter hash table.  If you want your
-parameter used literally, use xsltQuoteUserParams.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3312"
+NAME="AEN4125"
 ></A
 ><P
 ></P
@@ -593,7 +569,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->0 in case of success, -1 in case of error</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -604,13 +580,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3329"
+NAME="AEN4142"
 ></A
 ><H3
 ><A
 NAME="XSLTQUOTEUSERPARAMS"
 ></A
->xsltQuoteUserParams ()</H3
+>&#62;xsltQuoteUserParams ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -629,28 +605,11 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->:  the XSLT transformation context
-<TT
-CLASS="PARAMETER"
-><I
->params</I
-></TT
->:  a NULL terminated arry of parameters names/values tuples</P
-><P
->Similar to xsltEvalUserParams, but the values are treated literally and
-are * *not* evaluated as XPath expressions. This should be done on parsed
-stylesheets before starting to apply transformations.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3339"
+NAME="AEN4148"
 ></A
 ><P
 ></P
@@ -709,7 +668,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->0 in case of success, -1 in case of error.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -720,13 +679,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3356"
+NAME="AEN4165"
 ></A
 ><H3
 ><A
 NAME="XSLTEVALONEUSERPARAM"
 ></A
->xsltEvalOneUserParam ()</H3
+>&#62;xsltEvalOneUserParam ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -752,44 +711,11 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->:  the XSLT transformation context
-<TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
->:  a null terminated string giving the name of the parameter
-<TT
-CLASS="PARAMETER"
-><I
->value</I
-></TT
->  a null terminated string giving the XPath expression to be evaluated</P
-><P
->This is normally called from xsltEvalUserParams to process a single
-parameter from a list of parameters.  The <TT
-CLASS="PARAMETER"
-><I
->value</I
-></TT
-> is evaluated as an
-XPath expression and the result is stored in the context's global
-variable/parameter hash table.</P
-><P
->To have a parameter treated literally (not as an XPath expression)
-use xsltQuoteUserParams (or xsltQuoteOneUserParam).  For more
-details see description of xsltProcessOneUserParamInternal.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3371"
+NAME="AEN4173"
 ></A
 ><P
 ></P
@@ -865,7 +791,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->0 in case of success, -1 in case of error.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -876,13 +802,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3392"
+NAME="AEN4194"
 ></A
 ><H3
 ><A
 NAME="XSLTQUOTEONEUSERPARAM"
 ></A
->xsltQuoteOneUserParam ()</H3
+>&#62;xsltQuoteOneUserParam ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -908,39 +834,11 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->:  the XSLT transformation context
-<TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
->:  a null terminated string giving the name of the parameter
-<TT
-CLASS="PARAMETER"
-><I
->value</I
-></TT
->  a null terminated string giving the parameter value</P
-><P
->This is normally called from xsltQuoteUserParams to process a single
-parameter from a list of parameters.  The <TT
-CLASS="PARAMETER"
-><I
->value</I
-></TT
-> is stored in the
-context's global variable/parameter hash table.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3406"
+NAME="AEN4202"
 ></A
 ><P
 ></P
@@ -1016,7 +914,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->0 in case of success, -1 in case of error.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1027,13 +925,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3427"
+NAME="AEN4223"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSEGLOBALVARIABLE"
 ></A
->xsltParseGlobalVariable ()</H3
+>&#62;xsltParseGlobalVariable ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1055,14 +953,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->parse an XSLT transformation variable declaration and record
-its value.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3435"
+NAME="AEN4230"
 ></A
 ><P
 ></P
@@ -1089,7 +984,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1106,7 +1001,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the "variable" element</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1117,13 +1012,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3448"
+NAME="AEN4243"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSEGLOBALPARAM"
 ></A
->xsltParseGlobalParam ()</H3
+>&#62;xsltParseGlobalParam ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1145,14 +1040,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->parse an XSLT transformation param declaration and record
-its value.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3456"
+NAME="AEN4250"
 ></A
 ><P
 ></P
@@ -1179,7 +1071,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1196,7 +1088,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the "param" element</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1207,13 +1099,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3469"
+NAME="AEN4263"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSESTYLESHEETVARIABLE"
 ></A
->xsltParseStylesheetVariable ()</H3
+>&#62;xsltParseStylesheetVariable ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1235,14 +1127,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->parse an XSLT transformation variable declaration and record
-its value.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3477"
+NAME="AEN4270"
 ></A
 ><P
 ></P
@@ -1269,7 +1158,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1286,7 +1175,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the "variable" element</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1297,13 +1186,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3490"
+NAME="AEN4283"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSESTYLESHEETPARAM"
 ></A
->xsltParseStylesheetParam ()</H3
+>&#62;xsltParseStylesheetParam ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1325,14 +1214,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->parse an XSLT transformation param declaration and record
-its value.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3498"
+NAME="AEN4290"
 ></A
 ><P
 ></P
@@ -1359,7 +1245,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1376,7 +1262,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the "param" element</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1387,13 +1273,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3511"
+NAME="AEN4303"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSESTYLESHEETCALLERPARAM"
 ></A
->xsltParseStylesheetCallerParam ()</H3
+>&#62;xsltParseStylesheetCallerParam ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1419,16 +1305,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->parse an XSLT transformation param declaration, compute
-its value but doesn't record it.</P
-><P
->It returns the new xsltStackElemPtr or NULL</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3521"
+NAME="AEN4311"
 ></A
 ><P
 ></P
@@ -1455,7 +1336,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1472,7 +1353,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the "param" element</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1498,13 +1379,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3538"
+NAME="AEN4328"
 ></A
 ><H3
 ><A
 NAME="XSLTADDSTACKELEMLIST"
 ></A
->xsltAddStackElemList ()</H3
+>&#62;xsltAddStackElemList ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1526,13 +1407,11 @@ HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
 ></TR
 ></TABLE
 ><P
->add the new element list at this level of the stack.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3546"
+NAME="AEN4335"
 ></A
 ><P
 ></P
@@ -1559,7 +1438,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  xn XSLT transformation context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1576,7 +1455,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a stack element list</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1591,7 +1470,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->0 in case of success, -1 in case of failure.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1602,13 +1481,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3563"
+NAME="AEN4352"
 ></A
 ><H3
 ><A
 NAME="XSLTFREEGLOBALVARIABLES"
 ></A
->xsltFreeGlobalVariables ()</H3
+>&#62;xsltFreeGlobalVariables ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1626,14 +1505,11 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Free up the data associated to the global variables
-its value.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3570"
+NAME="AEN4358"
 ></A
 ><P
 ></P
@@ -1660,7 +1536,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1671,13 +1547,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3579"
+NAME="AEN4367"
 ></A
 ><H3
 ><A
 NAME="XSLTVARIABLELOOKUP"
 ></A
->xsltVariableLookup ()</H3
+>&#62;xsltVariableLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1706,14 +1582,11 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
->Search in the Variable array of the context for the given
-variable value.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3589"
+NAME="AEN4376"
 ></A
 ><P
 ></P
@@ -1740,7 +1613,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1757,7 +1630,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the variable name</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1774,7 +1647,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the variable namespace URI</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1789,7 +1662,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the value or NULL if not found</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1800,13 +1673,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3610"
+NAME="AEN4397"
 ></A
 ><H3
 ><A
 NAME="XSLTXPATHVARIABLELOOKUP"
 ></A
->xsltXPathVariableLookup ()</H3
+>&#62;xsltXPathVariableLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1832,14 +1705,11 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
->This is the entry point when a varibale is needed by the XPath
-interpretor.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3619"
+NAME="AEN4405"
 ></A
 ><P
 ></P
@@ -1866,7 +1736,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a void * but the the XSLT transformation context actually</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1883,7 +1753,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the variable name</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1900,7 +1770,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the variable namespace URI</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1915,7 +1785,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the value or NULL if not found</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE

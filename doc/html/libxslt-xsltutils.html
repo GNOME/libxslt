@@ -123,7 +123,7 @@ NAME="LIBXSLT-XSLTUTILS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN2010"
+NAME="AEN1925"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN2010"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN2013"
+NAME="AEN1928"
 ></A
 ><H2
 >Synopsis</H2
@@ -340,9 +340,9 @@ void        <A
 HREF="libxslt-xsltutils.html#XSLTCALIBRATEADJUST"
 >xsltCalibrateAdjust</A
 >             (<GTKDOCLINK
-HREF="LONG"
->long</GTKDOCLINK
-> delta);
+HREF="LONG-DELTA"
+>long delta</GTKDOCLINK
+>);
 #define     <A
 HREF="libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS"
 >XSLT_TIMESTAMP_TICS_PER_SEC</A
@@ -404,7 +404,7 @@ HREF="XMLNODEPTR"
 void        <A
 HREF="libxslt-xsltutils.html#XSLDROPCALL"
 >xslDropCall</A
->                     ();</PRE
+>                     (void);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -412,7 +412,7 @@ HREF="libxslt-xsltutils.html#XSLDROPCALL"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2084"
+NAME="AEN1999"
 ></A
 ><H2
 >Description</H2
@@ -422,20 +422,20 @@ NAME="AEN2084"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2087"
+NAME="AEN2002"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2089"
+NAME="AEN2004"
 ></A
 ><H3
 ><A
 NAME="XSLT-TODO-CAPS"
 ></A
->XSLT_TODO</H3
+>&#62;XSLT_TODO</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -455,13 +455,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2094"
+NAME="AEN2009"
 ></A
 ><H3
 ><A
 NAME="XSLT-STRANGE-CAPS"
 ></A
->XSLT_STRANGE</H3
+>&#62;XSLT_STRANGE</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -481,13 +481,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2099"
+NAME="AEN2014"
 ></A
 ><H3
 ><A
 NAME="IS-XSLT-ELEM-CAPS"
 ></A
->IS_XSLT_ELEM()</H3
+>&#62;IS_XSLT_ELEM()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -502,13 +502,11 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Checks that the element pertains to XSLt namespace</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2105"
+NAME="AEN2019"
 ></A
 ><P
 ></P
@@ -546,13 +544,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2114"
+NAME="AEN2028"
 ></A
 ><H3
 ><A
 NAME="IS-XSLT-NAME-CAPS"
 ></A
->IS_XSLT_NAME()</H3
+>&#62;IS_XSLT_NAME()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -567,13 +565,11 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Checks the value of an element in XSLT namespace</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2120"
+NAME="AEN2033"
 ></A
 ><P
 ></P
@@ -628,13 +624,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2133"
+NAME="AEN2046"
 ></A
 ><H3
 ><A
 NAME="IS-XSLT-REAL-NODE-CAPS"
 ></A
->IS_XSLT_REAL_NODE()</H3
+>&#62;IS_XSLT_REAL_NODE()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -649,13 +645,11 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->check that a node is a 'real' one: document, element, text or attribute</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2139"
+NAME="AEN2051"
 ></A
 ><P
 ></P
@@ -693,13 +687,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2148"
+NAME="AEN2060"
 ></A
 ><H3
 ><A
 NAME="XSLTGETNSPROP"
 ></A
->xsltGetNsProp ()</H3
+>&#62;xsltGetNsProp ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -728,27 +722,11 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
->Similar to <GTKDOCLINK
-HREF="XMLGETNSPROP"
->xmlGetNsProp</GTKDOCLINK
->() but with a slightly different semantic</P
-><P
->Search and get the value of an attribute associated to a node
-This attribute has to be anchored in the namespace specified,
-or has no namespace and the element is in that namespace.</P
-><P
->This does the entity substitution.
-This function looks in DTD attribute declaration for <GTKDOCLINK
-HREF="FIXED-CAPS"
->FIXED</GTKDOCLINK
-> or
-default declaration values unless DTD use has been turned off.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2162"
+NAME="AEN2069"
 ></A
 ><P
 ></P
@@ -775,7 +753,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the node</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -792,7 +770,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the attribute name</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -809,7 +787,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the URI of the namespace</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -824,8 +802,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the attribute value or NULL if not found.
-It's up to the caller to free the memory.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -836,13 +813,13 @@ It's up to the caller to free the memory.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2183"
+NAME="AEN2090"
 ></A
 ><H3
 ><A
 NAME="XSLTPRINTERRORCONTEXT"
 ></A
->xsltPrintErrorContext ()</H3
+>&#62;xsltPrintErrorContext ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -868,13 +845,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->Display the context of an error.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2192"
+NAME="AEN2098"
 ></A
 ><P
 ></P
@@ -901,7 +876,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the transformation context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -918,7 +893,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -935,7 +910,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the current node being processed</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -946,13 +921,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2209"
+NAME="AEN2115"
 ></A
 ><H3
 ><A
 NAME="XSLTMESSAGE"
 ></A
->xsltMessage ()</H3
+>&#62;xsltMessage ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -978,13 +953,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->Process and xsl:message construct</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2218"
+NAME="AEN2123"
 ></A
 ><P
 ></P
@@ -1011,7 +984,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  an XSLT processing context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1028,7 +1001,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  The current node</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1045,7 +1018,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  The node containing the message instruction</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1056,13 +1029,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2235"
+NAME="AEN2140"
 ></A
 ><H3
 ><A
 NAME="XSLTSETGENERICERRORFUNC"
 ></A
->xsltSetGenericErrorFunc ()</H3
+>&#62;xsltSetGenericErrorFunc ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1081,44 +1054,11 @@ HREF="XMLGENERICERRORFUNC"
 ></TR
 ></TABLE
 ><P
->Function to reset the handler and the error context for out of
-context error messages.
-This simply means that <TT
-CLASS="PARAMETER"
-><I
->handler</I
-></TT
-> will be called for subsequent
-error messages while not parsing nor validating. And <TT
-CLASS="PARAMETER"
-><I
->ctx</I
-></TT
-> will
-be passed as first argument to <TT
-CLASS="PARAMETER"
-><I
->handler</I
-></TT
->
-One can simply force messages to be emitted to another FILE * than
-stderr by setting <TT
-CLASS="PARAMETER"
-><I
->ctx</I
-></TT
-> to this file handle and <TT
-CLASS="PARAMETER"
-><I
->handler</I
-></TT
-> to NULL.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2247"
+NAME="AEN2146"
 ></A
 ><P
 ></P
@@ -1145,7 +1085,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the new error handling context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1162,7 +1102,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the new handler function</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1173,13 +1113,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2260"
+NAME="AEN2159"
 ></A
 ><H3
 ><A
 NAME="XSLTSETGENERICDEBUGFUNC"
 ></A
->xsltSetGenericDebugFunc ()</H3
+>&#62;xsltSetGenericDebugFunc ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1198,44 +1138,11 @@ HREF="XMLGENERICERRORFUNC"
 ></TR
 ></TABLE
 ><P
->Function to reset the handler and the error context for out of
-context error messages.
-This simply means that <TT
-CLASS="PARAMETER"
-><I
->handler</I
-></TT
-> will be called for subsequent
-error messages while not parsing or validating. And <TT
-CLASS="PARAMETER"
-><I
->ctx</I
-></TT
-> will
-be passed as first argument to <TT
-CLASS="PARAMETER"
-><I
->handler</I
-></TT
->
-One can simply force messages to be emitted to another FILE * than
-stderr by setting <TT
-CLASS="PARAMETER"
-><I
->ctx</I
-></TT
-> to this file handle and <TT
-CLASS="PARAMETER"
-><I
->handler</I
-></TT
-> to NULL.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2272"
+NAME="AEN2165"
 ></A
 ><P
 ></P
@@ -1262,7 +1169,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the new error handling context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1279,7 +1186,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the new handler function</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1290,13 +1197,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2285"
+NAME="AEN2178"
 ></A
 ><H3
 ><A
 NAME="XSLTDOCUMENTSORTFUNCTION"
 ></A
->xsltDocumentSortFunction ()</H3
+>&#62;xsltDocumentSortFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1314,18 +1221,11 @@ HREF="XMLNODESETPTR"
 ></TR
 ></TABLE
 ><P
->reorder the current node list <TT
-CLASS="PARAMETER"
-><I
->list</I
-></TT
-> accordingly to the document order</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2293"
+NAME="AEN2184"
 ></A
 ><P
 ></P
@@ -1352,7 +1252,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the node set</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1363,13 +1263,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2302"
+NAME="AEN2193"
 ></A
 ><H3
 ><A
 NAME="XSLTDOSORTFUNCTION"
 ></A
->xsltDoSortFunction ()</H3
+>&#62;xsltDoSortFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1392,14 +1292,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->reorder the current node list accordingly to the set of sorting
-requirement provided by the arry of nodes.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2310"
+NAME="AEN2200"
 ></A
 ><P
 ></P
@@ -1426,7 +1323,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a XSLT process context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1443,7 +1340,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  array of sort nodes</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1460,7 +1357,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the number of sorts in the array</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1471,13 +1368,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2327"
+NAME="AEN2217"
 ></A
 ><H3
 ><A
 NAME="XSLTGETQNAMEURI"
 ></A
->xsltGetQNameURI ()</H3
+>&#62;xsltGetQNameURI ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1502,35 +1399,11 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
->This function analyzes <TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
->, if the name contains a prefix,
-the function seaches the associated namespace in scope for it.
-It will also replace <TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
-> value with the NCName, the old value being
-freed.
-Errors in the prefix lookup are signalled by setting <TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
-> to NULL.</P
-><P
->NOTE: the namespace returned is a pointer to the place where it is
-defined and hence has the same lifespan as the document holding it.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2340"
+NAME="AEN2225"
 ></A
 ><P
 ></P
@@ -1557,7 +1430,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the node holding the QName</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1574,7 +1447,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  pointer to the initial QName value</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1589,13 +1462,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the namespace URI if there is a prefix, or NULL if <TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
-> is
-not prefixed.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1606,13 +1473,13 @@ not prefixed.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2358"
+NAME="AEN2242"
 ></A
 ><H3
 ><A
 NAME="XSLTSAVERESULTTO"
 ></A
->xsltSaveResultTo ()</H3
+>&#62;xsltSaveResultTo ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1638,29 +1505,11 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
->Save the result <TT
-CLASS="PARAMETER"
-><I
->result</I
-></TT
-> obtained by applying the <TT
-CLASS="PARAMETER"
-><I
->style</I
-></TT
-> stylesheet
-to an I/O output channel <TT
-CLASS="PARAMETER"
-><I
->buf</I
-></TT
-></P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2370"
+NAME="AEN2250"
 ></A
 ><P
 ></P
@@ -1687,7 +1536,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  an output buffer</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1704,7 +1553,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the result xmlDocPtr</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1721,7 +1570,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1736,7 +1585,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of byte written or -1 in case of failure.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1747,13 +1596,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2391"
+NAME="AEN2271"
 ></A
 ><H3
 ><A
 NAME="XSLTSAVERESULTTOFILENAME"
 ></A
->xsltSaveResultToFilename ()</H3
+>&#62;xsltSaveResultToFilename ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1777,29 +1626,11 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
->Save the result <TT
-CLASS="PARAMETER"
-><I
->result</I
-></TT
-> obtained by applying the <TT
-CLASS="PARAMETER"
-><I
->style</I
-></TT
-> stylesheet
-to a file or URL <TT
-CLASS="PARAMETER"
-><I
->URL</I
-></TT
-></P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2402"
+NAME="AEN2278"
 ></A
 ><P
 ></P
@@ -1843,7 +1674,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the result xmlDocPtr</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1860,7 +1691,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1877,7 +1708,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the compression factor (0 - 9 included)</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1892,7 +1723,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of byte written or -1 in case of failure.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1903,13 +1734,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2427"
+NAME="AEN2303"
 ></A
 ><H3
 ><A
 NAME="XSLTSAVERESULTTOFILE"
 ></A
->xsltSaveResultToFile ()</H3
+>&#62;xsltSaveResultToFile ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1935,30 +1766,11 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
->Save the result <TT
-CLASS="PARAMETER"
-><I
->result</I
-></TT
-> obtained by applying the <TT
-CLASS="PARAMETER"
-><I
->style</I
-></TT
-> stylesheet
-to an open FILE * I/O.
-This does not close the FILE <TT
-CLASS="PARAMETER"
-><I
->file</I
-></TT
-></P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2439"
+NAME="AEN2311"
 ></A
 ><P
 ></P
@@ -1985,7 +1797,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a FILE * I/O</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -2002,7 +1814,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the result xmlDocPtr</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -2019,7 +1831,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -2034,7 +1846,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of bytes written or -1 in case of failure.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2045,13 +1857,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2460"
+NAME="AEN2332"
 ></A
 ><H3
 ><A
 NAME="XSLTSAVERESULTTOFD"
 ></A
->xsltSaveResultToFd ()</H3
+>&#62;xsltSaveResultToFd ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2074,25 +1886,11 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
->Save the result <TT
-CLASS="PARAMETER"
-><I
->result</I
-></TT
-> obtained by applying the <TT
-CLASS="PARAMETER"
-><I
->style</I
-></TT
-> stylesheet
-to an open file descriptor
-This does not close the descriptor.</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2470"
+NAME="AEN2339"
 ></A
 ><P
 ></P
@@ -2119,7 +1917,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a file descriptor</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -2136,7 +1934,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the result xmlDocPtr</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -2153,7 +1951,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -2168,7 +1966,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of bytes written or -1 in case of failure.</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2179,13 +1977,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2491"
+NAME="AEN2360"
 ></A
 ><H3
 ><A
 NAME="XSLTSAVEPROFILING"
 ></A
->xsltSaveProfiling ()</H3
+>&#62;xsltSaveProfiling ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2207,18 +2005,11 @@ HREF="FILE-CAPS"
 ></TR
 ></TABLE
 ><P
->Save the profiling informations on <TT
-CLASS="PARAMETER"
-><I
->output</I
-></TT
-></P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2500"
+NAME="AEN2367"
 ></A
 ><P
 ></P
@@ -2245,7 +2036,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  an XSLT context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -2262,7 +2053,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a FILE * for saving the informations</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2273,13 +2064,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2513"
+NAME="AEN2380"
 ></A
 ><H3
 ><A
 NAME="XSLTTIMESTAMP"
 ></A
->xsltTimestamp ()</H3
+>&#62;xsltTimestamp ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2297,13 +2088,11 @@ HREF="LONG"
 ></TR
 ></TABLE
 ><P
->Used for gathering profiling data</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2520"
+NAME="AEN2386"
 ></A
 ><P
 ></P
@@ -2328,8 +2117,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of tenth of milliseconds since the beginning of the
-profiling</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2340,13 +2128,13 @@ profiling</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2529"
+NAME="AEN2395"
 ></A
 ><H3
 ><A
 NAME="XSLTCALIBRATEADJUST"
 ></A
->xsltCalibrateAdjust ()</H3
+>&#62;xsltCalibrateAdjust ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2357,23 +2145,18 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 >void        xsltCalibrateAdjust             (<GTKDOCLINK
-HREF="LONG"
->long</GTKDOCLINK
-> delta);</PRE
+HREF="LONG-DELTA"
+>long delta</GTKDOCLINK
+>);</PRE
 ></TD
 ></TR
 ></TABLE
-><P
->Used for to correct the calibration for <A
-HREF="libxslt-xsltutils.html#XSLTTIMESTAMP"
->xsltTimestamp</A
->()</P
 ><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2537"
+NAME="AEN2401"
 ></A
 ><P
 ></P
@@ -2393,14 +2176,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->delta</I
+>Param1</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a negative dealy value found</TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2411,13 +2194,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2546"
+NAME="AEN2410"
 ></A
 ><H3
 ><A
 NAME="XSLT-TIMESTAMP-TICS-PER-SEC-CAPS"
 ></A
->XSLT_TIMESTAMP_TICS_PER_SEC</H3
+>&#62;XSLT_TIMESTAMP_TICS_PER_SEC</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2437,13 +2220,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2551"
+NAME="AEN2415"
 ></A
 ><H3
 ><A
 NAME="XSLTDEBUGSTATUSCODES"
 ></A
->enum xsltDebugStatusCodes</H3
+>&#62;enum xsltDebugStatusCodes</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2474,13 +2257,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2556"
+NAME="AEN2420"
 ></A
 ><H3
 ><A
 NAME="XSLTHANDLEDEBUGGERCALLBACK"
 ></A
->xsltHandleDebuggerCallback ()</H3
+>&#62;xsltHandleDebuggerCallback ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2514,7 +2297,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2565"
+NAME="AEN2429"
 ></A
 ><P
 ></P
@@ -2603,13 +2386,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2586"
+NAME="AEN2450"
 ></A
 ><H3
 ><A
 NAME="XSLTADDCALLCALLBACK"
 ></A
->xsltAddCallCallback ()</H3
+>&#62;xsltAddCallCallback ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2635,7 +2418,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2593"
+NAME="AEN2457"
 ></A
 ><P
 ></P
@@ -2705,13 +2488,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2610"
+NAME="AEN2474"
 ></A
 ><H3
 ><A
 NAME="XSLTDROPCALLCALLBACK"
 ></A
->xsltDropCallCallback ()</H3
+>&#62;xsltDropCallCallback ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2731,13 +2514,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2615"
+NAME="AEN2479"
 ></A
 ><H3
 ><A
 NAME="XSLTSETDEBUGGERCALLBACKS"
 ></A
->xsltSetDebuggerCallbacks ()</H3
+>&#62;xsltSetDebuggerCallbacks ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2757,7 +2540,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2620"
+NAME="AEN2484"
 ></A
 ><P
 ></P
@@ -2827,13 +2610,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2637"
+NAME="AEN2501"
 ></A
 ><H3
 ><A
 NAME="XSLADDCALL"
 ></A
->xslAddCall ()</H3
+>&#62;xslAddCall ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2855,13 +2638,11 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
->DEPRECATED</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2645"
+NAME="AEN2508"
 ></A
 ><P
 ></P
@@ -2931,13 +2712,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2662"
+NAME="AEN2525"
 ></A
 ><H3
 ><A
 NAME="XSLDROPCALL"
 ></A
->xslDropCall ()</H3
+>&#62;xslDropCall ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2947,12 +2728,10 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xslDropCall                     ();</PRE
+>void        xslDropCall                     (void);</PRE
 ></TD
 ></TR
 ></TABLE
-><P
->DEPRECATED</P
 ><P
 ></P
 ></DIV

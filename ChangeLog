@@ -1,3 +1,10 @@
+Wed Jan 23 23:13:37 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/API*.html doc/parsedecl.py doc/*.xsl parsedecl.py: generated
+	  an index based on comments content similar to libxml2 one
+	  The code need more specific comments.
+	* doc/*: rebuilt the web site with the new references
+
 Mon Jan 21 09:53:45 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.h: roll back the change after more analysis
