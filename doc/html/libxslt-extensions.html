@@ -122,6 +122,8 @@ void        <a href="libxslt-extensions.html#xsltFreeExts">xsltFreeExts</a>     
 <a href="libxslt-xsltInternals.html#xsltElemPreCompPtr">xsltElemPreCompPtr</a> <a href="libxslt-extensions.html#xsltPreComputeExtModuleElement">xsltPreComputeExtModuleElement</a>
                                             (<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style,
                                              <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> inst);
+<GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlHashTablePtr">xmlHashTablePtr</GTKDOCLINK> <a href="libxslt-extensions.html#xsltGetExtInfo">xsltGetExtInfo</a>              (<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style,
+                                             const <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlChar">xmlChar</GTKDOCLINK> *URI);
 void        <a href="libxslt-extensions.html#xsltRegisterTestModule">xsltRegisterTestModule</a>          (void);
 void        <a href="libxslt-extensions.html#xsltDebugDumpExtensions">xsltDebugDumpExtensions</a>         (<GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="FILE-CAPS">FILE</GTKDOCLINK> *output);
 </pre></div><div class="refsect1" lang="en"><h2>Description</h2><p>
@@ -405,6 +407,13 @@ Precomputes an extension module element</p><p>
 </p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i><tt>style</tt></i> :</span></td><td>  the stylesheet
 </td></tr><tr><td><span class="term"><i><tt>inst</tt></i> :</span></td><td>  the element node
 </td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>the precomputed data
+</td></tr></tbody></table></div></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltGetExtInfo"></a>xsltGetExtInfo ()</h3><pre class="programlisting"><GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlHashTablePtr">xmlHashTablePtr</GTKDOCLINK> xsltGetExtInfo              (<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style,
+                                             const <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlChar">xmlChar</GTKDOCLINK> *URI);</pre><p>
+looks up URI in extInfos of the stylesheet</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i><tt>style</tt></i> :</span></td><td>  pointer to a stylesheet
+</td></tr><tr><td><span class="term"><i><tt>URI</tt></i> :</span></td><td>    the namespace URI desired
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>a pointer to the hash table if found, else NULL
 </td></tr></tbody></table></div></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltRegisterTestModule"></a>xsltRegisterTestModule ()</h3><pre class="programlisting">void        xsltRegisterTestModule          (void);</pre><p>
 Registers the test module</p><p>
 

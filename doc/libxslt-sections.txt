@@ -81,6 +81,7 @@ xsltInitCtxtExts
 xsltFreeCtxtExts
 xsltFreeExts
 xsltPreComputeExtModuleElement
+xsltGetExtInfo
 xsltRegisterTestModule
 xsltDebugDumpExtensions
 </SECTION>
@@ -212,6 +213,7 @@ xsltChoose
 xsltIf
 xsltForEach
 xsltRegisterAllElement
+xsltCopyTextString
 xslHandleDebugger
 </SECTION>
 

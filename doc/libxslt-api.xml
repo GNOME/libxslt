@@ -246,6 +246,7 @@
      <exports symbol='xsltComment'/>
      <exports symbol='xsltCopy'/>
      <exports symbol='xsltCopyOf'/>
+     <exports symbol='xsltCopyTextString'/>
      <exports symbol='xsltDocumentElem'/>
      <exports symbol='xsltElement'/>
      <exports symbol='xsltForEach'/>
@@ -284,6 +285,7 @@
      <exports symbol='xsltFreeCtxtExts'/>
      <exports symbol='xsltFreeExts'/>
      <exports symbol='xsltGetExtData'/>
+     <exports symbol='xsltGetExtInfo'/>
      <exports symbol='xsltInitCtxtExts'/>
      <exports symbol='xsltInitElemPreComp'/>
      <exports symbol='xsltNewElemPreComp'/>
@@ -751,7 +753,11 @@ informations are stored'/>
 *'/>
       <field name='tmpRVT' type='xmlDocPtr' info=' list of RVT without persistance'/>
       <field name='persistRVT' type='xmlDocPtr' info=' list of persistant RVTs'/>
-      <field name='ctxtflags' type='int' info=' context processing flags'/>
+      <field name='ctxtflags' type='int' info='* Speed optimization when coalescing text nodes
+*'/>
+      <field name='lasttext' type='const xmlChar *' info=' last text node content'/>
+      <field name='lasttsize' type='unsigned int' info=' last text node size'/>
+      <field name='lasttuse' type='unsigned int' info=' last text node use'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -1016,6 +1022,14 @@ informations are stored'/>
       <arg name='node' type='xmlNodePtr' info='the node in the source tree.'/>
       <arg name='inst' type='xmlNodePtr' info='the xslt copy-of node'/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information'/>
+    </function>
+    <function name='xsltCopyTextString' file='transform'>
+      <info>Create a text node</info>
+      <return type='xmlNodePtr' info='a new xmlNodePtr, or NULL in case of error.'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
+      <arg name='target' type='xmlNodePtr' info='the element where the text will be attached'/>
+      <arg name='string' type='const xmlChar *' info='the text string'/>
+      <arg name='noescape' type='int' info='should disable-escaping be activated for this text node.'/>
     </function>
     <function name='xsltCreateRVT' file='xsltInternals'>
       <info>Create a result value tree</info>
@@ -1372,6 +1386,12 @@ informations are stored'/>
       <return type='void *' info='the pointer or NULL if not present'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context'/>
       <arg name='URI' type='const xmlChar *' info='the URI associated to the exension module'/>
+    </function>
+    <function name='xsltGetExtInfo' file='extensions'>
+      <info>looks up URI in extInfos of the stylesheet</info>
+      <return type='xmlHashTablePtr' info='a pointer to the hash table if found, else NULL'/>
+      <arg name='style' type='xsltStylesheetPtr' info='pointer to a stylesheet'/>
+      <arg name='URI' type='const xmlChar *' info='the namespace URI desired'/>
     </function>
     <function name='xsltGetKey' file='keys'>
       <info>Lookup a key</info>

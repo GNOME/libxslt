@@ -330,6 +330,11 @@ xsltStylesheetPtr style
 xsltStylesheetPtr style,xmlNodePtr inst
 </FUNCTION>
 <FUNCTION>
+<NAME>xsltGetExtInfo</NAME>
+<RETURNS>xmlHashTablePtr  </RETURNS>
+xsltStylesheetPtr style, const xmlChar *URI
+</FUNCTION>
+<FUNCTION>
 <NAME>xsltRegisterTestModule</NAME>
 <RETURNS>void 	</RETURNS>
 void
@@ -818,6 +823,11 @@ xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr
 <NAME>xsltRegisterAllElement</NAME>
 <RETURNS>void 	</RETURNS>
 xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCopyTextString</NAME>
+<RETURNS>xmlNodePtr 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr target,const xmlChar *string,int noescape
 </FUNCTION>
 <FUNCTION>
 <NAME>xslHandleDebugger</NAME>
@@ -1753,6 +1763,13 @@ struct xsltTransformContext {
     xmlDocPtr       tmpRVT;		/* list of RVT without persistance */
     xmlDocPtr       persistRVT;		/* list of persistant RVTs */
     int             ctxtflags;          /* context processing flags */
+
+    /*
+     * Speed optimization when coalescing text nodes
+     */
+    const xmlChar  *lasttext;		/* last text node content */
+    unsigned int    lasttsize;		/* last text node size */
+    unsigned int    lasttuse;		/* last text node use */
 };
 </STRUCT>
 <MACRO>

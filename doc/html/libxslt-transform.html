@@ -141,6 +141,10 @@ void        <a href="libxslt-transform.html#xsltForEach">xsltForEach</a>        
                                              <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> inst,
                                              <a href="libxslt-xsltInternals.html#xsltStylePreCompPtr">xsltStylePreCompPtr</a> comp);
 void        <a href="libxslt-transform.html#xsltRegisterAllElement">xsltRegisterAllElement</a>          (<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+<GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK>  <a href="libxslt-transform.html#xsltCopyTextString">xsltCopyTextString</a>              (<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt,
+                                             <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> target,
+                                             const <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlChar">xmlChar</GTKDOCLINK> *string,
+                                             int noescape);
 void        <a href="libxslt-transform.html#xslHandleDebugger">xslHandleDebugger</a>               (<GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> cur,
                                              <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> node,
                                              <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> templ,
@@ -456,6 +460,17 @@ Process the xslt for-each node on the source node</p><p>
 Registers all default XSLT elements in this context</p><p>
 
 </p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i><tt>ctxt</tt></i> :</span></td><td>  the XPath context
+</td></tr></tbody></table></div></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltCopyTextString"></a>xsltCopyTextString ()</h3><pre class="programlisting"><GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK>  xsltCopyTextString              (<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt,
+                                             <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> target,
+                                             const <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlChar">xmlChar</GTKDOCLINK> *string,
+                                             int noescape);</pre><p>
+Create a text node</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i><tt>ctxt</tt></i> :</span></td><td>  a XSLT process context
+</td></tr><tr><td><span class="term"><i><tt>target</tt></i> :</span></td><td>  the element where the text will be attached
+</td></tr><tr><td><span class="term"><i><tt>string</tt></i> :</span></td><td>  the text string
+</td></tr><tr><td><span class="term"><i><tt>noescape</tt></i> :</span></td><td>  should disable-escaping be activated for this text node.
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a new xmlNodePtr, or NULL in case of error.
 </td></tr></tbody></table></div></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xslHandleDebugger"></a>xslHandleDebugger ()</h3><pre class="programlisting">void        xslHandleDebugger               (<GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> cur,
                                              <GTKDOCLINK xmlns="http://www.w3.org/TR/xhtml1/transitional" HREF="xmlNodePtr">xmlNodePtr</GTKDOCLINK> node,
                                              <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> templ,

@@ -65,6 +65,7 @@
 <ANCHOR id="xsltIf" href="libxslt/libxslt-transform.html#xsltIf">
 <ANCHOR id="xsltForEach" href="libxslt/libxslt-transform.html#xsltForEach">
 <ANCHOR id="xsltRegisterAllElement" href="libxslt/libxslt-transform.html#xsltRegisterAllElement">
+<ANCHOR id="xsltCopyTextString" href="libxslt/libxslt-transform.html#xsltCopyTextString">
 <ANCHOR id="xslHandleDebugger" href="libxslt/libxslt-transform.html#xslHandleDebugger">
 <ANCHOR id="XSLT-TODO-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-TODO-CAPS">
 <ANCHOR id="XSLT-STRANGE-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-STRANGE-CAPS">
@@ -150,6 +151,7 @@
 <ANCHOR id="xsltFreeCtxtExts" href="libxslt/libxslt-extensions.html#xsltFreeCtxtExts">
 <ANCHOR id="xsltFreeExts" href="libxslt/libxslt-extensions.html#xsltFreeExts">
 <ANCHOR id="xsltPreComputeExtModuleElement" href="libxslt/libxslt-extensions.html#xsltPreComputeExtModuleElement">
+<ANCHOR id="xsltGetExtInfo" href="libxslt/libxslt-extensions.html#xsltGetExtInfo">
 <ANCHOR id="xsltRegisterTestModule" href="libxslt/libxslt-extensions.html#xsltRegisterTestModule">
 <ANCHOR id="xsltDebugDumpExtensions" href="libxslt/libxslt-extensions.html#xsltDebugDumpExtensions">
 <ANCHOR id="xsltNamespaceAlias" href="libxslt/libxslt-namespaces.html#xsltNamespaceAlias">
