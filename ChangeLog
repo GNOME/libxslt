@@ -1,4 +1,8 @@
-Wed Apr  9 22:02:17 CEST 2003 Daniel Veillard <daniel@veillard.com>
+Wed Apr 14 18:10:21 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/win32config.h: added HAVE_MATH_H
+	  
+Wed Apr 13 14:04:15 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* win32/Makefile.msvc: fixed compilation with thread-enabled
 	  libxml
