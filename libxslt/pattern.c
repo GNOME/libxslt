@@ -79,6 +79,7 @@ struct _xsltStepOp {
 struct _xsltCompMatch {
     struct _xsltCompMatch *next; /* siblings in the name hash */
     float priority;              /* the priority */
+    const xmlChar *pattern;       /* the pattern */
     const xmlChar *mode;         /* the mode */
     const xmlChar *modeURI;      /* the mode URI */
     xsltTemplatePtr template;    /* the associated template */
@@ -145,6 +146,8 @@ xsltFreeCompMatch(xsltCompMatchPtr comp) {
 
     if (comp == NULL)
 	return;
+    if (comp->pattern != NULL)
+	xmlFree((xmlChar *)comp->pattern);
     if (comp->mode != NULL)
 	xmlFree((xmlChar *)comp->mode);
     if (comp->modeURI != NULL)
@@ -1459,11 +1462,6 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
 	return(NULL);
     }
 
-#ifdef WITH_XSLT_DEBUG_PATTERN
-    xsltGenericDebug(xsltGenericDebugContext,
-		     "xsltCompilePattern : parsing '%s'\n", pattern);
-#endif
-
     ctxt = xsltNewParserContext();
     if (ctxt == NULL)
 	return(NULL);
@@ -1494,10 +1492,17 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
 
 	ctxt->comp = element;
 	ctxt->base = xmlStrndup(&pattern[start], end - start);
+	if (ctxt->base == NULL)
+	    goto error;
 	ctxt->cur = &(ctxt->base)[current - start];
+	element->pattern = ctxt->base;
+
+#ifdef WITH_XSLT_DEBUG_PATTERN
+	xsltGenericDebug(xsltGenericDebugContext,
+			 "xsltCompilePattern : parsing '%s'\n",
+			 element->pattern);
+#endif
 	xsltCompileLocationPathPattern(ctxt);
-	if (ctxt->base)
-	    xmlFree((xmlChar *)ctxt->base);
 	if (ctxt->error)
 	    goto error;
 
@@ -1514,9 +1519,11 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
 	    (element->steps[0].value != NULL) &&
 	    (element->steps[1].op == XSLT_OP_END)) {
 	    element->priority = 0;
+#if 0
 	} else if ((element->steps[0].op == XSLT_OP_ROOT) &&
 		   (element->steps[1].op == XSLT_OP_END)) {
 	    element->priority = 0;
+#endif
 	} else if ((element->steps[0].op == XSLT_OP_PI) &&
 		   (element->steps[0].value != NULL) &&
 		   (element->steps[1].op == XSLT_OP_END)) {
@@ -1544,6 +1551,11 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
 	} else {
 	    element->priority = 0.5;
 	}
+#ifdef WITH_XSLT_DEBUG_PATTERN
+	xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltCompilePattern : parsed %s, default priority %f\n",
+			 element->pattern, element->priority);
+#endif
 	if (pattern[end] == '|')
 	    end++;
 	current = end;
@@ -1587,24 +1599,25 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	        const xmlChar *mode, const xmlChar *modeURI) {
     xsltCompMatchPtr pat, list, *top = NULL, next;
     const xmlChar *name = NULL;
+    float priority;              /* the priority */
 
     if ((style == NULL) || (cur == NULL) || (cur->match == NULL))
 	return(-1);
 
+    priority = cur->priority;
     pat = xsltCompilePattern(cur->match, style->doc, cur->elem);
     while (pat) {
 	next = pat->next;
 	pat->next = NULL;
+	name = NULL;
 	
 	pat->template = cur;
 	if (mode != NULL)
 	    pat->mode = xmlStrdup(mode);
 	if (modeURI != NULL)
 	    pat->modeURI = xmlStrdup(modeURI);
-	if (cur->priority == XSLT_PAT_NO_PRIORITY)
-	    cur->priority = pat->priority;
-	else
-	    pat->priority = cur->priority;
+	if (priority != XSLT_PAT_NO_PRIORITY)
+	    pat->priority = priority;
 
 	/*
 	 * insert it in the hash table list corresponding to its lookup name
@@ -1726,11 +1739,11 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	if (mode)
 	    xsltGenericDebug(xsltGenericDebugContext,
 			 "added pattern : '%s' mode '%s' priority %f\n",
-			     pat->template->match, pat->mode, pat->priority);
+			     pat->pattern, pat->mode, pat->priority);
 	else
 	    xsltGenericDebug(xsltGenericDebugContext,
 			 "added pattern : '%s' priority %f\n",
-			     pat->template->match, pat->priority);
+			     pat->pattern, pat->priority);
 #endif
 
 	pat = next;
@@ -1756,6 +1769,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltTemplatePtr ret = NULL;
     const xmlChar *name = NULL;
     xsltCompMatchPtr list = NULL;
+    float priority;
 
     if ((ctxt == NULL) || (node == NULL))
 	return(NULL);
@@ -1767,6 +1781,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
     while ((curstyle != NULL) && (curstyle != style)) {
+	priority = XSLT_PAT_NO_PRIORITY;
 	/* TODO : handle IDs/keys here ! */
 	if (curstyle->templatesHash != NULL) {
 	    /*
@@ -1813,6 +1828,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (xsltTestCompMatch(ctxt, list, node,
 			          ctxt->mode, ctxt->modeURI)) {
 		ret = list->template;
+		priority = list->priority;
 		break;
 	    }
 	    list = list->next;
@@ -1861,7 +1877,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 	}
 	while ((list != NULL) &&
-	       ((ret == NULL)  || (list->priority > ret->priority))) {
+	       ((ret == NULL)  || (list->priority > priority))) {
 	    if (xsltTestCompMatch(ctxt, list, node,
 			          ctxt->mode, ctxt->modeURI)) {
 		ret = list->template;
@@ -1872,7 +1888,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (node->_private != NULL) {
 	    list = curstyle->keyMatch;
 	    while ((list != NULL) &&
-		   ((ret == NULL)  || (list->priority > ret->priority))) {
+		   ((ret == NULL)  || (list->priority > priority))) {
 		if (xsltTestCompMatch(ctxt, list, node,
 				      ctxt->mode, ctxt->modeURI)) {
 		    ret = list->template;

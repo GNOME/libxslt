@@ -1,3 +1,12 @@
+Sat Jun 23 14:20:01 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c: closing bug #56517, fixed a number of
+	  problems in the patterns compilations, priorities and debug
+	* libxslt/transform.c: improved the template debug message
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-39-* tests/docs/bug-39-*: added a specific
+	  regression test for #56517
+
 Fri Jun 22 16:17:23 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.c: avoid a stupid bug when compiling with

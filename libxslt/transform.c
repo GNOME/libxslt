@@ -890,8 +890,8 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     if (node->type == XML_ATTRIBUTE_NODE) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltProcessOneNode: applying template for attribute %s\n",
-	                 node->name);
+	     "xsltProcessOneNode: applying template '%s' for attribute %s\n",
+	                 template->match, node->name);
 #endif
 	templPush(ctxt, template);
 	xsltApplyOneTemplate(ctxt, node, template->content, 1);
@@ -900,10 +900,12 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	if (node->type == XML_DOCUMENT_NODE)
 	    xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltProcessOneNode: applying template for /\n");
+	     "xsltProcessOneNode: applying template '%s' for /\n",
+	                     template->match);
 	else 
 	    xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltProcessOneNode: applying template for %s\n", node->name);
+	     "xsltProcessOneNode: applying template '%s' for %s\n",
+	                     template->match, node->name);
 #endif
 	oldNode = ctxt->node;
 	ctxt->node = node;
