@@ -1570,6 +1570,8 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	    if (URI != NULL)
 		modeURI = xmlStrdup(URI);
 	}
+	ret->mode = mode;
+	ret->modeURI = modeURI;
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltParseStylesheetTemplate: mode %s\n", mode);
@@ -1624,10 +1626,6 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 error:
     for (;exclPrefixes > 0;exclPrefixes--)
 	exclPrefixPop(style);
-    if (mode != NULL)
-	xmlFree(mode);
-    if (modeURI != NULL)
-	xmlFree(modeURI);
 }
 
 /**

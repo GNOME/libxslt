@@ -271,6 +271,8 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	xmlFree(ctxt->templTab);
     if (ctxt->varsTab != NULL)
 	xmlFree(ctxt->varsTab);
+    if (ctxt->profTab != NULL)
+	xmlFree(ctxt->profTab);
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
     xsltFreeGlobalVariables(ctxt);
