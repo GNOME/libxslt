@@ -252,6 +252,23 @@ xsltNewStylesheet(void) {
 }
 
 /**
+ * xsltFreeStylesheetList:
+ * @sheet:  an XSLT stylesheet list
+ *
+ * Free up the memory allocated by the list @sheet
+ */
+void
+xsltFreeStylesheetList(xsltStylesheetPtr sheet) {
+    xsltStylesheetPtr next;
+
+    while (sheet != NULL) {
+	next = sheet->next;
+	xsltFreeStylesheet(sheet);
+	sheet = next;
+    }
+}
+
+/**
  * xsltFreeStylesheet:
  * @sheet:  an XSLT stylesheet
  *
@@ -281,6 +298,9 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     if (sheet->doctypePublic != NULL) xmlFree(sheet->doctypePublic);
     if (sheet->doctypeSystem != NULL) xmlFree(sheet->doctypeSystem);
     if (sheet->mediaType != NULL) xmlFree(sheet->mediaType);
+
+    if (sheet->imports != NULL)
+	xsltFreeStylesheetList(sheet->imports);
 
     memset(sheet, -1, sizeof(xsltStylesheet));
     xmlFree(sheet);
@@ -977,7 +997,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	if (!xmlStrEqual(prop, (const xmlChar *)"1.0")) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsl:version: only 1.0 features are supported\n");
-	    TODO /* set up compatibility when not XSLT 1.0 */
+	     /* TODO set up compatibility when not XSLT 1.0 */
 	}
 	xmlFree(prop);
     }
@@ -1120,7 +1140,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	if (!xmlStrEqual(prop, (const xmlChar *)"1.0")) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsl:version: only 1.0 features are supported\n");
-	    TODO /* set up compatibility when not XSLT 1.0 */
+	     /* TODO set up compatibility when not XSLT 1.0 */
 	}
 	xmlFree(prop);
 

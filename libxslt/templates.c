@@ -37,6 +37,53 @@
  ************************************************************************/
  
 /**
+ * xsltEvalXPathPredicate:
+ * @ctxt:  the XSLT transformation context
+ * @str:  the XPath expression
+ *
+ * Process the expression using XPath and evaluate the result as
+ * an XPath predicate
+ *
+ * Returns 1 is the predicate was true, 0 otherwise
+ */
+int
+xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, const xmlChar *expr) {
+    int ret;
+    xmlXPathObjectPtr res, tmp;
+    xmlXPathParserContextPtr xpathParserCtxt;
+
+    xpathParserCtxt =
+	xmlXPathNewParserContext(expr, ctxt->xpathCtxt);
+    if (xpathParserCtxt == NULL)
+	return(NULL);
+    ctxt->xpathCtxt->node = ctxt->node;
+    xmlXPathEvalExpr(xpathParserCtxt);
+    res = valuePop(xpathParserCtxt);
+    do {
+        tmp = valuePop(xpathParserCtxt);
+	if (tmp != NULL) {
+	    xmlXPathFreeObject(tmp);
+	}
+    } while (tmp != NULL);
+    if (res != NULL) {
+	ret = xmlXPathEvaluatePredicateResult(xpathParserCtxt, res);
+	xmlXPathFreeObject(res);
+#ifdef DEBUG_TEMPLATES
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltEvalXPathPredicate: %s returns %d\n", expr, ret);
+#endif
+    } else {
+#ifdef DEBUG_TEMPLATES
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltEvalXPathPredicate: %s failed\n", expr);
+#endif
+	ret = 0;
+    }
+    xmlXPathFreeParserContext(xpathParserCtxt);
+    return(ret);
+}
+
+/**
  * xsltEvalXPathString:
  * @ctxt:  the XSLT transformation context
  * @str:  the XPath expression

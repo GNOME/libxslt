@@ -13,7 +13,10 @@ Design:
     informations and cleaned up later ?
   - seems that saving back XSLT stylesheet from a compiled form might
     be a bit ugly ...
-    
+
+Embedding Stylesheets:
+  - example in 2.7 would force to validate
+
 Import:
   -> make sure we use the cascade wherever it's needed
 

@@ -824,10 +824,12 @@ error:
 void
 xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr copy;
+    xmlAttrPtr attrs;
     xmlNodePtr delete = NULL, cur;
     int strip_spaces = -1;
     int nbchild = 0, oldSize;
     int childno = 0, oldPos;
+    xsltTemplatePtr template;
 
     CHECK_STOPPED;
     /*
@@ -839,36 +841,56 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	case XML_ELEMENT_NODE:
 	    break;
 	case XML_TEXT_NODE:
-	    copy = xmlCopyNode(node, 0);
-	    if (copy != NULL) {
-		xmlAddChild(ctxt->insert, copy);
+	    template = xsltGetTemplate(ctxt, node);
+	    if (template) {
+		xmlNodePtr oldNode;
+
+		oldNode = ctxt->node;
+		ctxt->node = node;
+		xsltApplyOneTemplate(ctxt, node, template->content);
+		ctxt->node = oldNode;
 	    } else {
-		xsltGenericError(xsltGenericErrorContext,
-		    "xsltDefaultProcessOneNode: text copy failed\n");
+		copy = xmlCopyNode(node, 0);
+		if (copy != NULL) {
+		    xmlAddChild(ctxt->insert, copy);
+		} else {
+		    xsltGenericError(xsltGenericErrorContext,
+			"xsltDefaultProcessOneNode: text copy failed\n");
+		}
 	    }
 	    return;
 	case XML_ATTRIBUTE_NODE:
 	    if (ctxt->insert->type == XML_ELEMENT_NODE) {
 		    xmlAttrPtr attr = (xmlAttrPtr) node, ret, cur;
-		if (attr->ns != NULL) {
-		    if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
-			(xmlStrncasecmp(attr->ns->prefix,
-					(xmlChar *)"xml", 3))) {
-			ret = xmlCopyProp(ctxt->insert, attr);
-			ret->ns = xsltGetNamespace(ctxt, node, attr->ns,
-						   ctxt->insert);
-		    } 
-		} else
-		    ret = xmlCopyProp(ctxt->insert, attr);
+		template = xsltGetTemplate(ctxt, node);
+		if (template) {
+		    xmlNodePtr oldNode;
 
-		cur = ctxt->insert->properties;
-		if (cur != NULL) {
-		    while (cur->next != NULL)
-			cur = cur->next;
-		    cur->next = ret;
-		    ret->prev = cur;
-		}else
-		    ctxt->insert->properties = ret;
+		    oldNode = ctxt->node;
+		    ctxt->node = node;
+		    xsltApplyOneTemplate(ctxt, node, template->content);
+		    ctxt->node = oldNode;
+		} else {
+		    if (attr->ns != NULL) {
+			if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
+			    (xmlStrncasecmp(attr->ns->prefix,
+					    (xmlChar *)"xml", 3))) {
+			    ret = xmlCopyProp(ctxt->insert, attr);
+			    ret->ns = xsltGetNamespace(ctxt, node, attr->ns,
+						       ctxt->insert);
+			} 
+		    } else
+			ret = xmlCopyProp(ctxt->insert, attr);
+
+		    cur = ctxt->insert->properties;
+		    if (cur != NULL) {
+			while (cur->next != NULL)
+			    cur = cur->next;
+			cur->next = ret;
+			ret->prev = cur;
+		    }else
+			ctxt->insert->properties = ret;
+		}
 	    }
 	    return;
 	default:
@@ -899,6 +921,10 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    case XML_ELEMENT_NODE:
 		nbchild++;
 		break;
+	    case XML_PI_NODE:
+	    case XML_COMMENT_NODE:
+		nbchild++;
+		break;
 	    default:
 #ifdef DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
@@ -921,6 +947,19 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     /*
      * Handling of Elements: second pass, actual processing
      */
+    attrs = node->properties;
+    while (attrs != NULL) {
+	template = xsltGetTemplate(ctxt, (xmlNodePtr) attrs);
+	if (template) {
+	    xmlNodePtr oldNode;
+
+	    oldNode = ctxt->node;
+	    ctxt->node = node;
+	    xsltApplyOneTemplate(ctxt, node, template->content);
+	    ctxt->node = oldNode;
+	}
+	attrs = attrs->next;
+    }
     oldSize = ctxt->xpathCtxt->contextSize;
     oldPos = ctxt->xpathCtxt->proximityPosition;
     cur = node->children;
@@ -936,12 +975,38 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		break;
 	    case XML_TEXT_NODE:
 	    case XML_CDATA_SECTION_NODE:
-		copy = xmlCopyNode(cur, 0);
-		if (copy != NULL) {
-		    xmlAddChild(ctxt->insert, copy);
+		template = xsltGetTemplate(ctxt, cur);
+		if (template) {
+		    xmlNodePtr oldNode;
+
+		    oldNode = ctxt->node;
+		    ctxt->node = cur;
+		    ctxt->xpathCtxt->contextSize = nbchild;
+		    ctxt->xpathCtxt->proximityPosition = childno;
+		    xsltApplyOneTemplate(ctxt, cur, template->content);
+		    ctxt->node = oldNode;
 		} else {
-		    xsltGenericError(xsltGenericErrorContext,
-			"xsltDefaultProcessOneNode: text copy failed\n");
+		    copy = xmlCopyNode(cur, 0);
+		    if (copy != NULL) {
+			xmlAddChild(ctxt->insert, copy);
+		    } else {
+			xsltGenericError(xsltGenericErrorContext,
+			    "xsltDefaultProcessOneNode: text copy failed\n");
+		    }
+		}
+		break;
+	    case XML_PI_NODE:
+	    case XML_COMMENT_NODE:
+		template = xsltGetTemplate(ctxt, cur);
+		if (template) {
+		    xmlNodePtr oldNode;
+
+		    oldNode = ctxt->node;
+		    ctxt->node = cur;
+		    ctxt->xpathCtxt->contextSize = nbchild;
+		    ctxt->xpathCtxt->proximityPosition = childno;
+		    xsltApplyOneTemplate(ctxt, cur, template->content);
+		    ctxt->node = oldNode;
 		}
 		break;
 	    default:

@@ -99,8 +99,6 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     }
 
 error:
-    if (import != NULL)
-	xmlFreeDoc(import);
     if (uriRef != NULL)
 	xmlFree(uriRef);
     if (base != NULL)
@@ -155,8 +153,6 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     style->doc = oldDoc;
 
 error:
-    if (include != NULL)
-	xmlFreeDoc(include);
     if (uriRef != NULL)
 	xmlFree(uriRef);
     if (base != NULL)

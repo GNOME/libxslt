@@ -17,6 +17,8 @@
 extern "C" {
 #endif
 
+int		xsltEvalXPathPredicate		(xsltTransformContextPtr ctxt,
+						 const xmlChar *expr);
 xmlChar *	xsltEvalTemplateString		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 xmlNodePtr parent);

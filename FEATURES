@@ -6,215 +6,237 @@
 Stylesheet Constructs:
 ======================
 
-YES		    xsl:stylesheet
-?			id = id 
-NO			extension-element-prefixes = tokens 
-NO			exclude-result-prefixes = tokens 
-YES			version = number
+YES			    xsl:stylesheet
+?				id = id 
+NO				extension-element-prefixes = tokens 
+NO				exclude-result-prefixes = tokens 
+YES				version = number
 
-YES		    xsl:transform
-?			id = id 
-NO			extension-element-prefixes = tokens 
-NO			exclude-result-prefixes = tokens 
-YES			version = number
+YES			    xsl:transform
+?				id = id 
+NO				extension-element-prefixes = tokens 
+NO				exclude-result-prefixes = tokens 
+YES				version = number
 
 
-YES		    Literal Result Element as Stylesheet
+YES			    Literal Result Element as Stylesheet
 
-NO		    Embedding Stylesheets
+NO			    Embedding Stylesheets
 
 
 Top Level Elements:
 ===================
 
-YES		    xsl:include
-YES			href = uri-reference
+YES			    xsl:include
+YES				href = uri-reference
 
-YES		    xsl:import
-YES			href = uri-reference
+YES			    xsl:import
+YES				href = uri-reference
 
-YES		    xsl:strip-space
-YES			elements = tokens
+YES			    xsl:strip-space
+YES				elements = tokens
 
-YES		    xsl:preserve-space
-YES			elements = tokens
+YES			    xsl:preserve-space
+YES				elements = tokens
 
-YES		    xsl:template
-YES			match = pattern 
-YES			name = qname 
-YES			priority = number 
-NO			mode = qname
+YES			    xsl:template
+YES				match = pattern 
+YES				name = qname 
+YES				priority = number 
+NO				mode = qname
 
-YES		    xsl:namespace-alias
-YES			stylesheet-prefix = prefix | "#default"
-YES			result-prefix = prefix | "#default"
+YES			    xsl:namespace-alias
+YES				stylesheet-prefix = prefix | "#default"
+YES				result-prefix = prefix | "#default"
 
-YES		    xsl:attribute-set
-YES			name = qname 
-NO			use-attribute-sets = qnames
+YES			    xsl:attribute-set
+YES				name = qname 
+NO				use-attribute-sets = qnames
 
-YES		    xsl:variable
-YES			name = qname 
-YES			select = expression
-YES			Content: template
+YES			    xsl:variable
+YES				name = qname 
+YES				select = expression
+YES				Content: template
 
-YES		    xsl:param
-YES			name = qname 
-YES			select = expression
-YES			Content: template
+YES			    xsl:param
+YES				name = qname 
+YES				select = expression
+YES				Content: template
 
-NO		    xsl:key
-NO			name = qname 
-NO			match = pattern 
-NO			use = expression
+NO			    xsl:key
+NO				name = qname 
+NO				match = pattern 
+NO				use = expression
 
-YES		    xsl:output
-YES			method = "xml" | "html" | "text" | qname-but-not-ncname 
-YES			version = nmtoken 
-YES			encoding = string 
-YES			omit-xml-declaration = "yes" | "no"
-YES			standalone = "yes" | "no"
-YES			doctype-public = string 
-YES			doctype-system = string 
-NO			cdata-section-elements = qnames 
-YES			indent = "yes" | "no"
-YES			media-type = string
+YES			    xsl:output
+YES				method = "xml" | "html" | "text" | qname-but-not-ncname 
+YES				version = nmtoken 
+YES				encoding = string 
+YES				omit-xml-declaration = "yes" | "no"
+YES				standalone = "yes" | "no"
+YES				doctype-public = string 
+YES				doctype-system = string 
+NO				cdata-section-elements = qnames 
+YES				indent = "yes" | "no"
+YES				media-type = string
 
 Instructions:
 =============
 
-YES		    xsl:apply-templates
-YES			select = node-set-expression 
-NO			mode = qname
+YES			    xsl:apply-templates
+YES				select = node-set-expression 
+NO				mode = qname
 
-NO		    xsl:apply-imports
+NO			    xsl:apply-imports
 
-YES		    xsl:call-template
-YES			name = qname
+YES			    xsl:call-template
+YES				name = qname
 
-YES		    xsl:element
-YES			name = { qname }
-YES			namespace = { uri-reference }
-YES			use-attribute-sets = qnames
+YES			    xsl:element
+YES				name = { qname }
+YES				namespace = { uri-reference }
+YES				use-attribute-sets = qnames
 
-YES		    xsl:attribute
-YES			name = { qname }
-YES			namespace = { uri-reference }
+YES			    xsl:attribute
+YES				name = { qname }
+YES				namespace = { uri-reference }
 
-YES		    xsl:text
-YES			disable-output-escaping = "yes" | "no"
+YES			    xsl:text
+YES				disable-output-escaping = "yes" | "no"
 
-YES		    xsl:processing-instruction
-YES			name = { ncname }
+YES			    xsl:processing-instruction
+YES				name = { ncname }
 
-YES		    xsl:comment
+YES			    xsl:comment
 
-YES		    xsl:copy
-YES			use-attribute-sets = qnames
+YES			    xsl:copy
+YES				use-attribute-sets = qnames
 
-YES		    xsl:value-of
-YES			select = string-expression 
-NO			disable-output-escaping = "yes" | "no"
+YES			    xsl:value-of
+YES				select = string-expression 
+NO				disable-output-escaping = "yes" | "no"
 
-NO		    xsl:number
-NO			level = "single" | "multiple" | "any"
-NO			count = pattern 
-NO			from = pattern 
-NO			value = number-expression 
-NO			format = { string }
-NO			lang = { nmtoken }
-NO			letter-value = { "alphabetic" | "traditional" }
-NO			grouping-separator = { char }
-NO			grouping-size = { number }
+NO			    xsl:number
+NO				level = "single" | "multiple" | "any"
+NO				count = pattern 
+NO				from = pattern 
+NO				value = number-expression 
+NO				format = { string }
+NO				lang = { nmtoken }
+NO				letter-value = { "alphabetic" | "traditional" }
+NO				grouping-separator = { char }
+NO				grouping-size = { number }
 
-YES		    xsl:for-each
-YES			select = node-set-expression
+YES			    xsl:for-each
+YES				select = node-set-expression
 
-YES		    xsl:if
-YES			test = boolean-expression
+YES			    xsl:if
+YES				test = boolean-expression
 
-YES		    xsl:choose
+YES			    xsl:choose
 
-YES		    xsl:when
-YES			test = boolean-expression
+YES			    xsl:when
+YES				test = boolean-expression
 
-YES		    xsl:otherwise
+YES			    xsl:otherwise
 
-YES		    xsl:sort
-YES			select = string-expression 
-NO			lang = { nmtoken }
-YES			data-type = { "text" | "number" | qname-but-not-ncname }
-YES			order = { "ascending" | "descending" }
-NO			case-order = { "upper-first" | "lower-first" }
+YES			    xsl:sort
+YES				select = string-expression 
+NO				lang = { nmtoken }
+YES				data-type = { "text" | "number" | qname-but-not-ncname }
+YES				order = { "ascending" | "descending" }
+NO				case-order = { "upper-first" | "lower-first" }
 
-YES		    xsl:variable
-YES			name = qname 
-YES			select = expression
-YES			Content: template
+YES			    xsl:variable
+YES				name = qname 
+YES				select = expression
+YES				Content: template
 
-YES		    xsl:param
-YES			name = qname 
-YES			select = expression
-YES			Content: template
+YES			    xsl:param
+YES				name = qname 
+YES				select = expression
+YES				Content: template
 
-YES		    xsl:copy-of
-YES			select = expression
+YES			    xsl:copy-of
+YES				select = expression
 
-YES		    xsl:with-param
-YES			name = qname 
-YES			select = expression
+YES			    xsl:with-param
+YES				name = qname 
+YES				select = expression
 
-NO		    xsl:decimal-format
-NO			name = qname 
-NO			decimal-separator = char 
-NO			grouping-separator = char 
-NO			infinity = string 
-NO			minus-sign = char 
-NO			NaN = string 
-NO			percent = char 
-NO			per-mille = char 
-NO			zero-digit = char 
-NO			digit = char 
-NO			pattern-separator = char
+NO			    xsl:decimal-format
+NO				name = qname 
+NO				decimal-separator = char 
+NO				grouping-separator = char 
+NO				infinity = string 
+NO				minus-sign = char 
+NO				NaN = string 
+NO				percent = char 
+NO				per-mille = char 
+NO				zero-digit = char 
+NO				digit = char 
+NO				pattern-separator = char
 
-YES		    xsl:message
-YES			terminate = "yes" | "no"
+YES			    xsl:message
+YES				terminate = "yes" | "no"
 
-NO		    xsl:fallback
+NO			    xsl:fallback
 
 General:
 ========
 
-YES (w.o import)    Conflict Resolution for Template Rules
+YES			    Conflict Resolution for Template Rules
 
-YES		    Whitespace Stripping
+YES			    Whitespace Stripping
 
-YES		    Built-in Template Rules
-YES		        match="*|/"
-YES			match="text()|@*"
-YES			match="processing-instruction()|comment()"
-YES			Namespace
-NO			Mode
+YES			    Built-in Template Rules
+YES			        match="*|/"
+YES				match="text()|@*"
+YES				match="processing-instruction()|comment()"
+YES				Namespace
+NO				Mode
 
-NO		    Extension Elements
+NO			    Extension Elements
 
-NO		    Extension Functions
+NO			    Extension Functions
 
-YES		    Attribute Value Templates
+YES			    Attribute Value Templates
 
-YES		    Result Tree Fragments
+YES			    Result Tree Fragments
 
 Functions:
 ==========
 
-PARTIAL		    node-set document(object, node-set?)
-NO		    node-set key(string, object)
-YES		    string format-number(number, string, string?)
-YES		    node-set current() 
-YES		    string unparsed-entity-uri(string)
-YES		    string generate-id(node-set?)
-YES		    object system-property(string)
-YES		    boolean element-available(string)
-YES		    boolean function-available(string)
+PARTIAL			    node-set document(object, node-set?)
+NO			    node-set key(string, object)
+YES			    string format-number(number, string, string?)
+YES			    node-set current() 
+YES			    string unparsed-entity-uri(string)
+YES			    string generate-id(node-set?)
+YES			    object system-property(string)
+YES			    boolean element-available(string)
+YES			    boolean function-available(string)
+
+Patterns:
+=========
+
+YES			    para
+YES			    *
+YES			    chapter|appendix
+YES			    olist/item
+YES			    appendix//para
+YES			    /
+YES			    text()
+YES			    processing-instruction()
+YES			    node()
+YES			    id("W11")
+YES			    para[1]
+YES			    *[position()=1 and self::para]
+YES			    para[last()=1]
+YES			    items/item[position()>1]
+YES			    item[position() mod 2 = 1]
+YES			    div[@class="appendix"]//p
+YES			    @class
+YES			    @*
 
 Daniel.Veillard@imag.fr

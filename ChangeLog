@@ -1,3 +1,16 @@
+Sat Feb  3 16:13:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* imports.c: bugfix
+	* pattern.c: lots of changes to make most patterns work
+	* templates.[ch]: added xsltEvalXPathPredicate() for predicate testing
+	* transform.c: cleanup and attribute patterns testing
+	* xslt.c: added xsltFreeStylesheetList() and now cleanup
+	  the imports
+	* tests/REC/test-2.3* tests/REC/test-2.6.2*: more tests
+	* tests/REC/test-5.2-*: 18 pattern tests from the spec, all should
+	  work now.
+
 Fri Feb  2 11:15:24 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES: updated
