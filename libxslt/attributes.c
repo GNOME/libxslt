@@ -617,7 +617,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
         URL = ns->href;
 
     if (fromset) {
-	attr = xmlHasNsProp(ctxt->insert, name, ns);
+	attr = xmlHasNsProp(ctxt->insert, name, ns->href);
 	if (attr != NULL)
 	    return;
     }
