@@ -1,3 +1,12 @@
+Sun Jun 10 21:52:35 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: closed bug #55723, problem was due to
+	  a limitation of xsltGetNamespace() when the insertion point
+	  is the document.
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-35-* tests/docs/bug-35-*: added a specific
+	  regression test for #55723 
+
 Sun Jun 10 13:37:33 HKT 2001 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: fixed problems with document() in

@@ -806,6 +806,10 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	else if (node->type == XML_CDATA_SECTION_NODE)
 	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltProcessOneNode: no template found for CDATA\n");
+	else if (node->type == XML_ATTRIBUTE_NODE)
+	    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltProcessOneNode: no template found for attribute %s\n",
+	                     ((xmlAttrPtr) node)->name);
 	else 
 	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltProcessOneNode: no template found for %s\n", node->name);
@@ -1400,7 +1404,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlChar *ncname = NULL, *name, *namespace;
     xmlChar *prefix = NULL;
     xmlChar *value = NULL;
-    xmlNsPtr ns = NULL;
+    xmlNsPtr ns = NULL, oldns = NULL;
     xmlNodePtr copy;
     xmlNodePtr oldInsert;
 
@@ -1435,6 +1439,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     } else {
 	name = ncname;
     }
+
     if ((comp->ns == NULL) && (comp->has_ns)) {
 	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
 		(const xmlChar *)"namespace", XSLT_NAMESPACE);
@@ -1442,27 +1447,26 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
 		                         ctxt->insert);
 	    xmlFree(namespace);
-	} else {
-	    if (prefix != NULL) {
-		if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
-#ifdef WITH_XSLT_DEBUG_PARSING
-		    xsltGenericDebug(xsltGenericDebugContext,
-			 "xsl:element : xml prefix forbidden\n");
-#endif
-		    goto error;
-		}
-		ns = xmlSearchNs(inst->doc, inst, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"xsl:element : no namespace bound to prefix %s\n", prefix);
-		} else {
-		    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
-		}
-	    }
 	}
     } else if (comp->ns != NULL) {
 	ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
 				     ctxt->insert);
+    }
+    if ((ns == NULL) && (prefix != NULL)) {
+	if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
+#ifdef WITH_XSLT_DEBUG_PARSING
+	    xsltGenericDebug(xsltGenericDebugContext,
+		 "xsl:element : xml prefix forbidden\n");
+#endif
+	    goto error;
+	}
+	oldns = xmlSearchNs(inst->doc, inst, prefix);
+	if (oldns == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsl:element : no namespace bound to prefix %s\n", prefix);
+	} else {
+	    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+	}
     }
 
     copy = xmlNewDocNode(ctxt->output, ns, name, NULL);
@@ -1470,6 +1474,11 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:element : creation of %s failed\n", name);
 	goto error;
+    }
+    if ((ns == NULL) && (oldns != NULL)) {
+	/* very specific case xsltGetNamespace failed */
+        ns = xmlNewNs(copy, oldns->href, oldns->prefix);
+	copy->ns = ns;
     }
     xmlAddChild(ctxt->insert, copy);
     ctxt->insert = copy;

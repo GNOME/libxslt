@@ -23,6 +23,7 @@ YES			    Literal Result Element as Stylesheet
 
 NO			    Embedding Stylesheets
 
+NO                          mediaType
 
 Top Level Elements:
 ===================
