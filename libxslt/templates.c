@@ -438,7 +438,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
     const xmlChar *value;
     xmlNsPtr ns;
     xmlAttrPtr ret;
-    if ((ctxt == NULL) || (cur == NULL))
+    if ((ctxt == NULL) || (cur == NULL) || (target == NULL))
 	return(NULL);
     
     if (cur->type != XML_ATTRIBUTE_NODE)

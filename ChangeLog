@@ -1,3 +1,9 @@
+Thu Dec 23 16:04:47 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c, libxslt/templates.c: fixed a couple of
+	  spots where out-of-memory errors were not detected in time
+	  (bug #153660 on OSF/1)
+	  
 Thu Dec  2 21:10:31 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	*doc/xslt.html, doc/downloads.html: changed the download link

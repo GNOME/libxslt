@@ -712,6 +712,8 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	    return(xsltAddTextString(ctxt, target->last, cur->content, len));
 	}
 	copy = xmlNewTextLen(cur->content, len);
+	if (copy == NULL)
+	    return NULL;
 	if (cur->name == xmlStringTextNoenc)
 	    copy->name = xmlStringTextNoenc;
 	ctxt->lasttext = copy->content;
@@ -1656,7 +1658,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                  cur->content));
             }
 #endif
-            xsltCopyText(ctxt, insert, cur);
+            if (xsltCopyText(ctxt, insert, cur) == NULL)
+		goto error;
         } else if ((cur->type == XML_ELEMENT_NODE) &&
                    (cur->ns != NULL) && (cur->psvi != NULL)) {
             xsltTransformFunction function;
@@ -1716,7 +1719,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
                              "xsltApplyOneTemplate: copy node %s\n",
                              cur->name));
 #endif
-            copy = xsltCopyNode(ctxt, cur, insert);
+            if ((copy = xsltCopyNode(ctxt, cur, insert)) == NULL)
+		goto error;
             /*
              * all the attributes are directly inherited
              */
