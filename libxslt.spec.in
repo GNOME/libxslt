@@ -107,6 +107,7 @@ rm -fr %{buildroot}
 %{_libdir}/lib*.so
 %{_libdir}/*a
 %{_libdir}/*.sh
+%{prefix}/share/aclocal/libxslt.m4
 %{prefix}/include/*
 %{prefix}/bin/xslt-config
 %{_libdir}/pkgconfig/libxslt.pc

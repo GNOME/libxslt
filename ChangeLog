@@ -1,3 +1,8 @@
+Fri Nov  8 17:09:14 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am libxslt.m4 libxslt.spec.in: integrated libxslt.m4
+	  written by Thomas Schraitle (RFE #96485)
+
 Thu Nov  7 11:18:42 MST 2002 John Fleck <jfleck@inkstain.net>
 
 	* doc/xsltproc.xml
