@@ -374,7 +374,11 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
     if (xinclude) {
 	if (timing)
 	    startTimer();
+#if LIBXML_VERSION >= 20603
+	xmlXIncludeProcessFlags(doc, XSLT_PARSE_OPTIONS);
+#else
 	xmlXIncludeProcess(doc);
+#endif
 	if (timing) {
 	    endTimer("XInclude processing %s", filename);
 	}

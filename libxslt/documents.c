@@ -202,7 +202,11 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
     if (ctxt->xinclude != 0) {
 #ifdef LIBXML_XINCLUDE_ENABLED
+#if LIBXML_VERSION >= 20603
+	xmlXIncludeProcessFlags(doc, XSLT_PARSE_OPTIONS);
+#else
 	xmlXIncludeProcess(doc);
+#endif
 #else
 	xsltTransformError(ctxt, NULL, NULL,
 	    "xsltLoadDocument(%s) : XInclude processing not compiled in\n",

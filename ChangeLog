@@ -1,3 +1,9 @@
+Wed Dec 10 16:13:38 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: upp'ed the dependancy to libxml2-2.6.3
+	* libxslt/documents.c xsltproc/xsltproc.c: fixed #127473
+	  by using the new XInclude APIs provided by 2.6.3...
+
 Mon Dec  8 23:34:32 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c, libxslt/xslt.c: modified to assure
