@@ -104,10 +104,10 @@ bug tracking database</a> (make sure to use the "libxslt" module name). I
 look at reports there regularly and it's good to have a reminder when a bug
 is still open. Be sure to specify that the bug is for the package libxslt.</p>
 
-<p>For small problems you can try to get help on IRC, the #xml channel on 
-irc.gnome.org (port 6667) usually have a few person subscribed which may
-help (but there is no garantee and if a real issue is raised it should go
-on the mailing-list for archival).
+<p>For small problems you can try to get help on IRC, the #xml channel on
+irc.gnome.org (port 6667) usually have a few person subscribed which may help
+(but there is no garantee and if a real issue is raised it should go on the
+mailing-list for archival).</p>
 
 <p>There is also a mailing-list <a
 href="mailto:xslt@gnome.org">xslt@gnome.org</a> for libxslt, with an <a
@@ -287,9 +287,33 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
+<h3>1.1.0: Nov 4 2003</h3>
+<ul>
+  <li>Removed DocBook SGML broken support</li>
+  <li>fix xsl:key to work with PIs</li>
+  <li>Makefile and build improvement (Graham Wilson), build cleanup (William
+    Brack), macro fix (Justin Fletcher), build outside of source tree (Roumen
+    Petrov)</li>
+  <li>xsltproc option display fix (Alexey Efimov), --load-trace (Crutcher
+    Dunnavant)</li>
+  <li>Python: never use stdout for error</li>
+  <li>extension memory error fix (Karl Eichwalder)</li>
+  <li>header path fixes (Steve Ball)</li>
+  <li>added saxon:line-number() to libexslt (Brett Kail)</li>
+  <li>Fix some tortuous template problems when using predicates (William
+    Brack)</li>
+  <li>Debugger status patch (Kasimier Buchcik)</li>
+  <li>Use new libxml2-2.6.x APIs for faster processing</li>
+  <li>Make sure xsl:sort is empty</li>
+  <li>Fixed a bug in default processing of attributes</li>
+  <li>Removes the deprecated breakpoint library</li>
+  <li>detect invalid names on templates (William Brack)</li>
+  <li>fix exslt:document (and similar) base handling problem</li>
+</ul>
+
 <h3>1.0.33: Sep 12 2003</h3>
 
-<p>   This is a bugfix only release</p>
+<p>This is a bugfix only release</p>
 <ul>
   <li>error message missing argument (William Brack)</li>
   <li>mode not cascaded in template fallbacks (William Brack)</li>
@@ -986,8 +1010,8 @@ or libxslt wrappers or bindings:</p>
   <li><a href="http://savannah.gnu.org/projects/classpathx/">LibxmlJ</a> is
     an effort to create a 100% JAXP-compatible Java wrapper for libxml2 and
     libxslt as part of GNU ClasspathX project.</li>
-  <li>Patrick McPhee provides Rexx bindings fof libxml2 and libxslt,
-    look for <a href="http://www.interlog.com/~ptjm/software.html">RexxXML</a>.
+  <li>Patrick McPhee provides Rexx bindings fof libxml2 and libxslt, look for
+    <a href="http://www.interlog.com/~ptjm/software.html">RexxXML</a>.</li>
 </ul>
 
 <p>The libxslt Python module depends on the <a

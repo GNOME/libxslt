@@ -8,9 +8,30 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.0.33</version>
-    <last-release> Sep 12 2003</last-release>
+    <version>1.1.0</version>
+    <last-release> Nov 4 2003</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   This is a bugfix only release</changes>
+    <changes>   - Removed DocBook SGML broken support
+   - fix xsl:key to work with PIs
+   - Makefile and build improvement (Graham Wilson), build cleanup (William
+    Brack), macro fix (Justin Fletcher), build outside of source tree (Roumen
+    Petrov)
+   - xsltproc option display fix (Alexey Efimov), --load-trace (Crutcher
+    Dunnavant)
+   - Python: never use stdout for error
+   - extension memory error fix (Karl Eichwalder)
+   - header path fixes (Steve Ball)
+   - added saxon:line-number() to libexslt (Brett Kail)
+   - Fix some tortuous template problems when using predicates (William
+    Brack)
+   - Debugger status patch (Kasimier Buchcik)
+   - Use new libxml2-2.6.x APIs for faster processing
+   - Make sure xsl:sort is empty
+   - Fixed a bug in default processing of attributes
+   - Removes the deprecated breakpoint library
+   - detect invalid names on templates (William Brack)
+   - fix exslt:document (and similar) base handling problem
+
+</changes>
   </product>
 </xsa>

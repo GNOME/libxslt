@@ -10,8 +10,31 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.1.0: Nov 4 2003:
+   - Removed DocBook SGML broken support
+   - fix xsl:key to work with PIs
+   - Makefile and build improvement (Graham Wilson), build cleanup (William
+    Brack), macro fix (Justin Fletcher), build outside of source tree (Roumen
+    Petrov)
+   - xsltproc option display fix (Alexey Efimov), --load-trace (Crutcher
+    Dunnavant)
+   - Python: never use stdout for error
+   - extension memory error fix (Karl Eichwalder)
+   - header path fixes (Steve Ball)
+   - added saxon:line-number() to libexslt (Brett Kail)
+   - Fix some tortuous template problems when using predicates (William
+    Brack)
+   - Debugger status patch (Kasimier Buchcik)
+   - Use new libxml2-2.6.x APIs for faster processing
+   - Make sure xsl:sort is empty
+   - Fixed a bug in default processing of attributes
+   - Removes the deprecated breakpoint library
+   - detect invalid names on templates (William Brack)
+   - fix exslt:document (and similar) base handling problem
+
+
 1.0.33: Sep 12 2003:
-   This is a bugfix only release   - error message missing argument (William Brack)
+This is a bugfix only release   - error message missing argument (William Brack)
    - mode not cascaded in template fallbacks (William Brack)
    - catch redefinition of parameter/variables  (William Brack)
    - multiple keys with same namespace name (William Brack)
