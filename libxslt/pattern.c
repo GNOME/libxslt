@@ -457,8 +457,12 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		}
 		continue;
             case XSLT_OP_PARENT:
-		if ((node->type != XML_ELEMENT_NODE) &&
-		    (node->type != XML_ATTRIBUTE_NODE))
+		if ((node->type == XML_DOCUMENT_NODE) ||
+		    (node->type == XML_HTML_DOCUMENT_NODE) ||
+#ifdef LIBXML_DOCB_ENABLED
+		    (node->type == XML_DOCB_DOCUMENT_NODE) ||
+#endif
+		    (node->type == XML_NAMESPACE_DECL))
 		    return(0);
 		node = node->parent;
 		if (node == NULL)
@@ -491,6 +495,13 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			return(-1);
 		}
 		if (node == NULL)
+		    return(0);
+		if ((node->type == XML_DOCUMENT_NODE) ||
+		    (node->type == XML_HTML_DOCUMENT_NODE) ||
+#ifdef LIBXML_DOCB_ENABLED
+		    (node->type == XML_DOCB_DOCUMENT_NODE) ||
+#endif
+		    (node->type == XML_NAMESPACE_DECL))
 		    return(0);
 		node = node->parent;
 		while (node != NULL) {
