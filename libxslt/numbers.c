@@ -1092,9 +1092,16 @@ OUTPUT_NUMBER:
     number = fabs(number) * (double)format_info.multiplier;
     scale = pow(10.0, (double)(format_info.frac_digits + format_info.frac_hash));
     number = floor((scale * number + 0.5)) / scale;
-    xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
-			    format_info.integer_digits,
-			    format_info.group, (xmlChar)',');
+    if ((self->grouping != NULL) && (self->grouping[0] != 0))
+	xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
+				format_info.integer_digits,
+				format_info.group,
+				(xmlChar) self->grouping[0]);
+    else
+	xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
+				format_info.integer_digits,
+				format_info.group,
+				(xmlChar) ',');
 
     /* Next the fractional part, if required */
     if (format_info.frac_digits + format_info.frac_hash > 0) {

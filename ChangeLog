@@ -1,3 +1,7 @@
+Sun Feb 10 15:10:56 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c: trying to fix #68759
+
 Sat Feb  9 23:17:53 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/Makefile.am: seems some version of automake didn't
