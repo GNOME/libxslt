@@ -960,7 +960,10 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
         case XML_DOCB_DOCUMENT_NODE:
 #endif
 	    break;
-        case XML_TEXT_NODE:
+        case XML_TEXT_NODE: {
+	    int noenc = (node->name == xmlStringTextNoenc);
+	    return(xsltCopyTextString(ctxt, insert, node->content, noenc));
+	    }
         case XML_CDATA_SECTION_NODE:
 	    return(xsltCopyTextString(ctxt, insert, node->content, 0));
         case XML_ATTRIBUTE_NODE:

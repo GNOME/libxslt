@@ -1,3 +1,10 @@
+Sat May  1 10:35:03 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: added code to recognize
+	  disable-output-escaping on certain text nodes (bug 140755)
+	* tests/general/bug-100.out: regenerated to account for change
+	  from next ChangeLog entry (bug 140558)
+
 Wed Apr 28 18:17:24 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltutils.c: suppressed any automatic linefeed after
