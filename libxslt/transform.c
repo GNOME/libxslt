@@ -3725,7 +3725,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
      */
     root = xmlDocGetRootElement(doc);
     if (root != NULL) {
-	if (((long) root->content) >= 0)
+	if (((long) root->content) >= 0 && (xslDebugStatus == XSLT_DEBUG_NONE))
 	    xmlXPathOrderDocElems(doc);
     }
 

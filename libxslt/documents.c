@@ -210,7 +210,8 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
      */
     if (xsltNeedElemSpaceHandling(ctxt))
 	xsltApplyStripSpaces(ctxt, xmlDocGetRootElement(doc));
-    xmlXPathOrderDocElems(doc);
+    if (xslDebugStatus == XSLT_DEBUG_NONE)
+	xmlXPathOrderDocElems(doc);
 
     ret = xsltNewDocument(ctxt, doc);
     return(ret);

@@ -1,3 +1,9 @@
+Sun Jul  6 17:22:35 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/documents.c libxslt/transform.c: applied patch from
+	  Keith Isdale to desactivate node numbering when running under
+	  the debugger.
+
 Sun Jul  6 00:00:31 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/security.c: fix the write checking code when
