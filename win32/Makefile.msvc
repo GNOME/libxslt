@@ -108,6 +108,7 @@ XSLT_OBJS = $(XSLT_INTDIR)\attributes.obj\
 	$(XSLT_INTDIR)\numbers.obj\
 	$(XSLT_INTDIR)\pattern.obj\
 	$(XSLT_INTDIR)\preproc.obj\
+	$(XSLT_INTDIR)\security.obj\
 	$(XSLT_INTDIR)\templates.obj\
 	$(XSLT_INTDIR)\transform.obj\
 	$(XSLT_INTDIR)\variables.obj\
@@ -126,6 +127,7 @@ XSLT_OBJS_A = $(XSLT_INTDIR_A)\attributes.obj\
 	$(XSLT_INTDIR_A)\numbers.obj\
 	$(XSLT_INTDIR_A)\pattern.obj\
 	$(XSLT_INTDIR_A)\preproc.obj\
+	$(XSLT_INTDIR_A)\security.obj\
 	$(XSLT_INTDIR_A)\templates.obj\
 	$(XSLT_INTDIR_A)\transform.obj\
 	$(XSLT_INTDIR_A)\variables.obj\
