@@ -23,6 +23,8 @@ extern int xmlLoadExtDtdDefaultValue;
 static int debug = 0;
 static int repeat = 0;
 static int timing = 0;
+static int novalid = 0;
+static int noout = 0;
 
 int
 main(int argc, char **argv) {
@@ -31,25 +33,48 @@ main(int argc, char **argv) {
     xmlDocPtr doc, res;
     struct timeval begin, end;
 
+    if (argc <= 1) {
+	printf("Usage: %s [options] stylesheet file [file ...]\n", argv[0]);
+	printf("   Options:\n");
+	printf("      --verbose or -v: show logs of what's happening\n");
+	printf("      --timing: display the time used\n");
+	printf("      --repeat: run the transformation 100 times\n");
+	printf("      --debug: dump the tree of the result instead\n");
+	printf("      --novalid: skip the Dtd loading phase\n");
+	printf("      --noout: do not dump the result\n");
+	return(0);
+    }
     /* --repeat : repeat 100 times, for timing or profiling */
     LIBXML_TEST_VERSION
     for (i = 1; i < argc ; i++) {
+#ifdef LIBXML_DEBUG_ENABLED
 	if ((!strcmp(argv[i], "-debug")) || (!strcmp(argv[i], "--debug"))) {
 	    debug++;
-	} else if ((!strcmp(argv[i], "-v")) ||
+	} else 
+#endif
+	if ((!strcmp(argv[i], "-v")) ||
 		   (!strcmp(argv[i], "-verbose")) ||
 		   (!strcmp(argv[i], "--verbose"))) {
 	    xsltSetGenericDebugFunc(stderr, NULL);
 	} else if ((!strcmp(argv[i], "-repeat")) ||
 		   (!strcmp(argv[i], "--repeat"))) {
 	    repeat++;
+	} else if ((!strcmp(argv[i], "-novalid")) ||
+		   (!strcmp(argv[i], "--novalid"))) {
+	    novalid++;
+	} else if ((!strcmp(argv[i], "-noout")) ||
+		   (!strcmp(argv[i], "--noout"))) {
+	    noout++;
 	} else if ((!strcmp(argv[i], "-timing")) ||
 		   (!strcmp(argv[i], "--timing"))) {
 	    timing++;
 	}
     }
     xmlSubstituteEntitiesDefault(1);
-    xmlLoadExtDtdDefaultValue = 1;
+    if (novalid == 0)
+	xmlLoadExtDtdDefaultValue = 1;
+    else
+	xmlLoadExtDtdDefaultValue = 0;
     for (i = 1; i < argc ; i++) {
 	if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
 	    if (timing)
@@ -119,6 +144,9 @@ main(int argc, char **argv) {
 		fprintf(stderr, "no result for %s\n", argv[i]);
 		continue;
 	    }
+	    if (noout)
+		continue;
+
 #ifdef LIBXML_DEBUG_ENABLED
 	    if (debug)
 		xmlDebugDumpDocument(stdout, res);

@@ -99,6 +99,38 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
 }
 
 /**
+ * xsltCheckStackElem:
+ * @ctxt:  xn XSLT transformation context
+ * @name:  the variable name
+ * @nameURI:  the variable namespace URI
+ *
+ * check wether the variable or param is already defined
+ *
+ * Returns 1 if present, 0 if not, -1 in case of failure.
+ */
+int
+xsltCheckStackElem(xsltTransformContextPtr ctxt, const xmlChar *name,
+	           const xmlChar *nameURI) {
+    xsltStackElemPtr cur;
+
+    if ((ctxt == NULL) || (name == NULL))
+	return(-1);
+
+    cur = ctxt->vars;
+    while (cur != NULL) {
+	if (xmlStrEqual(name, cur->name)) {
+	    if (((nameURI == NULL) && (cur->nameURI == NULL)) ||
+		((nameURI != NULL) && (cur->nameURI != NULL) &&
+		 (xmlStrEqual(nameURI, cur->nameURI)))) {
+		return(1);
+	    }
+	}
+	cur = cur->next;
+    }
+    return(0);
+}
+
+/**
  * xsltAddStackElem:
  * @ctxt:  xn XSLT transformation context
  * @elem:  a stack element
@@ -109,10 +141,11 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
  */
 int
 xsltAddStackElem(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
-    xsltStackElemPtr cur;
-
     if ((ctxt == NULL) || (elem == NULL))
 	return(-1);
+
+#if 0
+    xsltStackElemPtr cur;
 
     cur = ctxt->vars;
     while (cur != NULL) {
@@ -127,6 +160,7 @@ xsltAddStackElem(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	}
 	cur = cur->next;
     }
+#endif
 
     elem->next = ctxt->varsTab[ctxt->varsNr - 1];
     ctxt->varsTab[ctxt->varsNr - 1] = elem;
@@ -372,6 +406,18 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
     if (name == NULL)
 	return(-1);
 
+    if (xsltCheckStackElem(ctxt, name, ns_uri) != 0) {
+	if (!param) {
+	    xsltGenericError(xsltGenericErrorContext,
+	    "xsl:variable : redefining %s\n", name);
+	}
+#ifdef DEBUG_VARIABLE
+	else
+	    xsltGenericDebug(xsltGenericDebugContext,
+		     "param %s defined by caller", name);
+#endif
+	return(0);
+    }
 #ifdef DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
 		     "Defineing variable %s", name);

@@ -542,6 +542,52 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 }
 
 /**
+ * xsltText:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt text node
+ *
+ * Process the xslt text node on the source node
+ */
+void
+xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	    xmlNodePtr inst) {
+    xmlNodePtr copy;
+
+    if (inst->children != NULL) {
+	if ((inst->children->type != XML_TEXT_NODE) ||
+	    (inst->children->next != NULL)) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:text has content problem !\n");
+	} else {
+	    xmlChar *prop;
+	    xmlNodePtr text = inst->children;
+	    
+	    copy = xmlNewDocText(ctxt->output, text->content);
+	    prop = xmlGetNsProp(inst,
+		    (const xmlChar *)"disable-output-escaping",
+				XSLT_NAMESPACE);
+	    if (prop != NULL) {
+#ifdef DEBUG_PARSING
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "Disable escaping: %s\n", text->content);
+#endif
+		if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+		    copy->name = xmlStringTextNoenc;
+		} else if (!xmlStrEqual(prop,
+					(const xmlChar *)"no")){
+		    xsltGenericError(xsltGenericErrorContext,
+     "xslt:text: disable-output-escaping allow only yes or no\n");
+
+		}
+		xmlFree(prop);
+	    }
+	    xmlAddChild(ctxt->insert, copy);
+	}
+    }
+}
+
+/**
  * xsltElement:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -558,15 +604,16 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlChar *value = NULL;
     xmlNsPtr ns = NULL;
     xmlNodePtr copy;
+    xmlNodePtr oldInsert;
 
 
     if (ctxt->insert == NULL)
 	return;
-    if (ctxt->insert->children != NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:element : node has already children\n");
-	return;
-    }
+    /*
+     * stack and saves
+     */
+    oldInsert = ctxt->insert;
+
     prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -609,6 +656,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     }
     xmlAddChild(ctxt->insert, copy);
+    ctxt->insert = copy;
     attributes = xsltEvalAttrValueTemplate(ctxt, inst,
 	                               (const xmlChar *)"use-attribute-sets");
     if (attributes != NULL) {
@@ -619,6 +667,8 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     varsPush(ctxt, NULL);
     xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
     xsltFreeStackElemList(varsPop(ctxt));
+
+    ctxt->insert = oldInsert;
 
 error:
     if (prop != NULL)
@@ -1431,9 +1481,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	cur = cur->next;
     }
-    varsPush(ctxt, NULL);
     xsltApplyOneTemplate(ctxt, node, template->content);
-    xsltFreeStackElemList(varsPop(ctxt));
 
     xsltFreeStackElemList(varsPop(ctxt));
     templPop(ctxt);
@@ -1678,6 +1726,12 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     CHECK_STOPPED;
 
+    if (ctxt->templNr >= 50) {
+	xsltGenericError(xsltGenericErrorContext,
+		"xsltApplyOneTemplate: loop found ???\n");
+	return;
+    }
+
     /*
      * stack and saves
      */
@@ -1741,8 +1795,11 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltElement(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "text")) {
-		xsltGenericError(xsltGenericDebugContext,
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltApplyOneTemplate: found xslt:text, not expected\n");
+#endif
+		xsltText(ctxt, node, cur);
 	    } else if (IS_XSLT_NAME(cur, "comment")) {
 		ctxt->insert = insert;
 		xsltComment(ctxt, node, cur);
@@ -1766,10 +1823,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else if (IS_XSLT_NAME(cur, "message")) {
 		xsltMessage(ctxt, node, cur);
 	    } else {
-#ifdef DEBUG_PROCESS
 		xsltGenericError(xsltGenericDebugContext,
 		     "xsltApplyOneTemplate: found xslt:%s\n", cur->name);
-#endif
 		TODO
 	    }
 	    CHECK_STOPPED;

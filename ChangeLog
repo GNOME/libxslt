@@ -1,3 +1,10 @@
+Sun Feb 18 15:44:33 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: added --novalid and --noout as well
+	  as options printing when no args
+	* libxslt/variables.c libxslt/transform.c: trying to get rid
+	  if some variable/params addressing errors.
+
 Sat Feb 17 14:27:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES libxslt/attributes.c: fixed use-attribute-sets
