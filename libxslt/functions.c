@@ -65,6 +65,7 @@
 #define SYMBOL_MINUS             ((xmlChar)'-')
 #define SYMBOL_PERCENT           ((xmlChar)'%')
 #define SYMBOL_PERMILLE          ((xmlChar)'?')
+#define ID_STRING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 static struct _xsltDecimalFormat globalDecimalFormat;
 
@@ -306,14 +307,15 @@ xsltUnparsedEntityURIFunction(xmlXPathParserContextPtr ctxt, int nargs){
      (letter == self->percent) || \
      (letter == self->permille)) \
 
-static xmlChar *
+static xmlXPathError
 PrivateDecimalFormat(xsltDecimalFormatPtr self,
 		     xmlChar *format,
-		     double number)
+		     double number,
+		     xmlChar **result)
 {
+    xmlXPathError status = XPATH_EXPRESSION_OK;
     xmlChar *the_format;
     xmlBufferPtr buffer;
-    xmlChar *result;
     char digit_buffer[2];
     int use_minus;
     int i, j;
@@ -328,6 +330,10 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
     int digit;
 
     buffer = xmlBufferCreate();
+    if (buffer == NULL) {
+	status = XPATH_MEMORY_ERROR;
+	goto DECIMAL_FORMAT_END;
+    }
 
     /* Find positive or negative template */
     the_format = (xmlChar *)xmlStrchr(format,
@@ -381,8 +387,10 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 	    
 	    if (the_format[i] == self->digit) {
 		if (decimal_point) {
-		    if (fraction_zeroes > 0)
-			; /* Error in format */
+		    if (fraction_zeroes > 0) {
+			status = XPATH_EXPR_ERROR;
+			goto DECIMAL_FORMAT_END;
+		    }
 		    fraction_digits++;
 		} else {
 		    integer_digits++;
@@ -393,20 +401,26 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 		if (decimal_point)
 		    fraction_zeroes++;
 		else {
-		    if (integer_digits > 0)
-			; /* Error in format */
+		    if (integer_digits > 0) {
+			status = XPATH_EXPR_ERROR;
+			goto DECIMAL_FORMAT_END;
+		    }
 		    integer_zeroes++;
 		    group++;
 		}
 		
 	    } else if (the_format[i] == self->grouping) {
-		if (decimal_point)
-		    ; /* Error in format */
+		if (decimal_point) {
+		    status = XPATH_EXPR_ERROR;
+		    goto DECIMAL_FORMAT_END;
+		}
 		group = 0;
 		
 	    } else if (the_format[i] == self->decimalPoint) {
-		if (decimal_point)
-		    ; /* Error in format */
+		if (decimal_point) {
+		    status = XPATH_EXPR_ERROR;
+		    goto DECIMAL_FORMAT_END;
+		}
 		decimal_point = TRUE;
 		
 	    } else
@@ -423,9 +437,8 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 	
 	/* Integer part */
 	digit_buffer[1] = (char)0;
-	j = integer_digits + integer_zeroes;
 	divisor = pow(10.0, (double)(integer_digits + integer_zeroes + fraction_digits + fraction_zeroes - 1));
-	for ( ; j > 0; j--) {
+	for (j = integer_digits + integer_zeroes; j > 0; j--) {
 	    digit = (int)(number / divisor);
 	    number -= (double)digit * divisor;
 	    divisor /= 10.0;
@@ -456,10 +469,12 @@ PrivateDecimalFormat(xsltDecimalFormatPtr self,
 	    i++;
 	xmlBufferAdd(buffer, &the_format[i], 1);
     }
-    
-    result = xmlStrdup(xmlBufferContent(buffer));
+
+ DECIMAL_FORMAT_END:
+    if (status == XPATH_EXPRESSION_OK)
+	*result = xmlStrdup(xmlBufferContent(buffer));
     xmlBufferFree(buffer);
-    return result;
+    return status;
 }
 
 void
@@ -468,6 +483,7 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
     xmlXPathObjectPtr numberObj = NULL;
     xmlXPathObjectPtr formatObj = NULL;
     xmlXPathObjectPtr decimalObj = NULL;
+    xmlChar *result;
     
     switch (nargs) {
     case 3:
@@ -485,11 +501,13 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
 	XP_ERROR(XPATH_INVALID_ARITY);
 	return;
     }
-    
-    valuePush(ctxt,
-	      xmlXPathNewString(PrivateDecimalFormat(&globalDecimalFormat,
-						     formatObj->stringval,
-						     numberObj->floatval)));
+
+    if (PrivateDecimalFormat(&globalDecimalFormat,
+			     formatObj->stringval,
+			     numberObj->floatval,
+			     &result) == XPATH_EXPRESSION_OK) {
+	valuePush(ctxt, xmlXPathNewString(result));
+    }
     
     xmlXPathFreeObject(numberObj);
     xmlXPathFreeObject(formatObj);
@@ -507,7 +525,7 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
 void
 xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlNodePtr cur = NULL;
-    unsigned int val;
+    unsigned long val;
     xmlChar str[20];
 
     if (nargs == 0) {
@@ -549,10 +567,10 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
      * Okay this is ugly but should work, use the NodePtr address
      * to forge the ID
      */
-    val = (unsigned int) cur;
-    val >>= 2;
+    val = (unsigned long)((char *)cur - (char *)0);
+    val /= sizeof(xmlNode);
     val |= 0xFFFFFF;
-    sprintf((char *)str, "id%10d", val);
+    sprintf((char *)str, "id%10ld", val);
     valuePush(ctxt, xmlXPathNewString(str));
 }
 
@@ -704,4 +722,17 @@ xsltRegisterAllFunctions(xmlXPathContextPtr ctxt) {
                          xsltElementAvailableFunction);
     xmlXPathRegisterFunc(ctxt, (const xmlChar *)"function-available",
                          xsltFunctionAvailableFunction);
+    
+    globalDecimalFormat.digit = SYMBOL_DIGIT;
+    globalDecimalFormat.patternSeparator = SYMBOL_PATTERN_SEPARATOR;
+    
+    globalDecimalFormat.decimalPoint = SYMBOL_DECIMAL_POINT;
+    globalDecimalFormat.grouping = SYMBOL_GROUPING;
+    globalDecimalFormat.percent = SYMBOL_PERCENT;
+    globalDecimalFormat.permille = SYMBOL_PERMILLE; /* #x2030 */
+    globalDecimalFormat.zeroDigit = SYMBOL_ZERO_DIGIT;
+    
+    globalDecimalFormat.minusSign = '-';
+    globalDecimalFormat.infinity = xmlStrdup(BAD_CAST("")); /* #x221E */
+    globalDecimalFormat.noNumber = xmlStrdup(BAD_CAST("")); /* #xFFFD */
 }
