@@ -1,3 +1,7 @@
+Sat May 25 12:07:45 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.pc.in: fix bug #82970
+
 Fri May 24 15:02:50 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxslt-python-api.xml python/libxslt.c 
