@@ -1,3 +1,8 @@
+Tue Oct 30 19:32:08 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: applied patches from David Härdeman closing
+	  bug #62891
+
 Tue Oct 30 15:25:19 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt/xsltwin32config.h: preparing 1.0.6

@@ -137,12 +137,17 @@ dnl
 dnl The following new parameters were added to offer
 dnl the ability to specify the location of the libxml
 dnl library during linking and compilation.
-dnl Mathieu Lacage 30/03/2000
 dnl
-LIBXML_PREFIX=""
+dnl original work - Mathieu Lacage 30/03/2000
+dnl some tweaking - David Härdeman 30/10/2001
+dnl
+
+LIBXML_CONFIG_PREFIX=""
+LIBXML_SRC=""
+
 AC_ARG_WITH(libxml-prefix,
-        [  --with-libxml-prefix=[PFX]		Specify location of libxml],
-	LIBXML_PREFIX=$withval
+        [  --with-libxml-prefix=[PFX]		Specify location of libxml config],
+	LIBXML_CONFIG_PREFIX=$withval
 )
         
 AC_ARG_WITH(libxml-include-prefix,
@@ -155,54 +160,69 @@ AC_ARG_WITH(libxml-libs-prefix,
         LIBXML_LIBS="-L$withval"
 )
 
+AC_ARG_WITH(libxml-src,
+	[  --with-libxml-src=[DIR]              For libxml thats not installed yet (sets all three above)],
+	LIBXML_SRC="$withval"
+)
 
-dnl No internationalization (yet ?)
-dnl 
-dnl ALL_LINGUAS="it ko fr de es no ga sv pt ja fi cs"
-dnl AM_GNU_GETTEXT
-dnl 
-dnl AC_LINK_FILES($nls_cv_header_libgt, $nls_cv_header_intl)
+dnl
+dnl where is xml2-config
+dnl
+
+AC_SUBST(LIBXML_REQUIRED_VERSION)
+AC_MSG_CHECKING(for libxml libraries >= $LIBXML_REQUIRED_VERSION) 
+if test "x$LIBXML_CONFIG_PREFIX" != "x"
+then
+	XML_CONFIG=${LIBXML_CONFIG_PREFIX}/bin/xml2-config
+else
+	XML_CONFIG=xml2-config
+fi
+
+dnl
+dnl Override other variables if LIBXML_SRC is set
+dnl
+
+if test "x$LIBXML_SRC" != "x"
+then
+	CWD=`pwd`
+	if cd $LIBXML_SRC
+	then
+		SRC_DIR=`pwd`
+		XML_CONFIG=${SRC_DIR}/xml2-config
+		LIBXML_CFLAGS="-I${SRC_DIR}/include"
+		LIBXML_LIBS="-L${SRC_DIR}"
+		cd $CWD
+	else
+		AC_MSG_ERROR([libxml source dir not found (${LIBXML_SRC}), typo?])
+	fi
+fi
+
+dnl
+dnl make sure xml2-config is executable,
+dnl test version and init our variables
+dnl
+
+AC_DEFUN(VERSION_TO_NUMBER,
+[`$1 | sed -e 's/libxml //' | awk 'BEGIN { FS = "."; } { printf "%d", ([$]1 * 1000 + [$]2) * 1000 + [$]3;}'`])
+if ${XML_CONFIG} --libs print > /dev/null 2>&1
+then
+	XMLVERS=`$XML_CONFIG --version`
+	if test VERSION_TO_NUMBER(echo $XMLVERS) -ge VERSION_TO_NUMBER(echo $LIBXML_REQUIRED_VERSION)
+	then
+		LIBXML_LIBS="$LIBXML_LIBS `$XML_CONFIG --libs`"
+		LIBXML_CFLAGS="$LIBXML_CFLAGS `$XML_CONFIG --cflags`"
+		AC_MSG_RESULT($XMLVERS found)
+	else
+		AC_MSG_ERROR(Version $XMLVERS found. You need at least libxml2 $LIBXML_REQUIRED_VERSION for this version of libxslt)
+	fi
+else
+	AC_MSG_ERROR([Could not find libxml2 anywhere, check ftp://xmlsoft.org/.])
+fi
+
 
 AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
-
-dnl
-dnl find libxml
-dnl
-XML_CONFIG="xml2-config"
-AC_SUBST(LIBXML_REQUIRED_VERSION)
-AC_MSG_CHECKING(for libxml libraries >= $LIBXML_REQUIRED_VERSION) 
-if test "x$LIBXML_PREFIX" != "x"
-then
-	if ${LIBXML_PREFIX}/bin/xml2-config --libs print > /dev/null 2>&1
-	then
-		XML_CONFIG=${LIBXML_PREFIX}/bin/xml2-config
-	else
-		XML_CONFIG=xml2-config
-	fi
-fi
-
-AC_DEFUN(VERSION_TO_NUMBER,
-[`$1 | sed -e 's/libxml //' | awk 'BEGIN { FS = "."; } { printf "%d", ([$]1 * 1000 + [$]2) * 1000 + [$]3;}'`])
-
-dnl
-dnl test version and init our variables
-dnl
-if test "x$XML_CONFIG" != "x"
-then
-	vers=VERSION_TO_NUMBER($XML_CONFIG --version)
-	if test "$vers" -ge VERSION_TO_NUMBER(echo $LIBXML_REQUIRED_VERSION)
-	then
-		LIBXML_LIBS="$LIBXML_LIBS `$XML_CONFIG --libs`"
-		LIBXML_CFLAGS="$LIBXML_CFLAGS `$XML_CONFIG --cflags`"
-		AC_MSG_RESULT(found)
-	else
-		AC_MSG_ERROR(You need at least libxml2 $LIBXML_REQUIRED_VERSION for this version of libxslt)
-	fi
-else
-	AC_MSG_ERROR(Could not find libxml2 anywhere, check ftp://xmlsoft.org/.)
-fi
 
 dnl
 dnl In build tree I use a static version with memory debug enabled
