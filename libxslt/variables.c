@@ -807,7 +807,6 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 
     res = xmlHashLookup2(ctxt->globalVars, ncname, href);
     if (res != 0) {
-	xsltFreeStackElem(elem);
 	xsltTransformError(ctxt, style, NULL,
 	    "Global parameter %s already defined\n", ncname);
     }
