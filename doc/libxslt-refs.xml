@@ -941,6 +941,7 @@
     <type name='xsltStylesheetPtr'>
       <ref name='xsltAddKey'/>
       <ref name='xsltFreeKeys'/>
+      <ref name='xsltCompilePattern'/>
       <ref name='xsltAddTemplate'/>
       <ref name='xsltGetTemplate'/>
       <ref name='xsltFreeTemplateHashes'/>
@@ -987,6 +988,7 @@
       <ref name='xsltParseStylesheetProcess'/>
       <ref name='xsltParseStylesheetOutput'/>
       <ref name='xsltParseTemplateContent'/>
+      <ref name='xsltAllocateExtra'/>
     </type>
     <type name='xsltTemplatePtr'>
       <ref name='xsltAddTemplate'/>
@@ -1002,6 +1004,7 @@
     <type name='xsltTransformContextPtr'>
       <ref name='xsltGetKey'/>
       <ref name='xsltInitCtxtKeys'/>
+      <ref name='xsltCompilePattern'/>
       <ref name='xsltTestCompMatchList'/>
       <ref name='xsltGetTemplate'/>
       <ref name='xsltMatchPattern'/>
@@ -1079,6 +1082,7 @@
       <ref name='xsltRegisterExtras'/>
       <ref name='xsltTransformFunction'/>
       <ref name='xsltNumberFormat'/>
+      <ref name='xsltAllocateExtraCtxt'/>
     </type>
     <type name='xsltTransformFunction'>
       <ref name='xsltElemPreCompPtr'/>
@@ -1285,6 +1289,9 @@
     <file name='xsltInternals'>
       <ref name='XSLT_MAX_SORT'/>
       <ref name='XSLT_PAT_NO_PRIORITY'/>
+      <ref name='xsltRuntimeExtra'/>
+      <ref name='xsltRuntimeExtraPtr'/>
+      <ref name='XSLT_RUNTIME_EXTRA'/>
       <ref name='xsltTemplate'/>
       <ref name='xsltTemplatePtr'/>
       <ref name='xsltDecimalFormat'/>
@@ -1322,6 +1329,8 @@
       <ref name='xsltNumberFormat'/>
       <ref name='xsltFormatNumberConversion'/>
       <ref name='xsltParseTemplateContent'/>
+      <ref name='xsltAllocateExtra'/>
+      <ref name='xsltAllocateExtraCtxt'/>
     </file>
     <file name='xsltconfig'>
       <ref name='LIBXSLT_DOTTED_VERSION'/>

@@ -96,6 +96,9 @@
     <file name='xsltInternals'>
      <exports symbol='XSLT_MAX_SORT'/>
      <exports symbol='XSLT_PAT_NO_PRIORITY'/>
+     <exports symbol='xsltRuntimeExtra'/>
+     <exports symbol='xsltRuntimeExtraPtr'/>
+     <exports symbol='XSLT_RUNTIME_EXTRA'/>
      <exports symbol='xsltTemplate'/>
      <exports symbol='xsltTemplatePtr'/>
      <exports symbol='xsltDecimalFormat'/>
@@ -133,6 +136,8 @@
      <exports symbol='xsltNumberFormat'/>
      <exports symbol='xsltFormatNumberConversion'/>
      <exports symbol='xsltParseTemplateContent'/>
+     <exports symbol='xsltAllocateExtra'/>
+     <exports symbol='xsltAllocateExtraCtxt'/>
     </file>
     <file name='libxslt'>
      <exports symbol='IN_LIBXSLT'/>
@@ -405,6 +410,8 @@
     <macro name='XSLT_REGISTER_VARIABLE_LOOKUP' file='variables'>
       <info>registering macro, not general purpose at all but used in different modules</info>
     </macro>
+    <macro name='XSLT_RUNTIME_EXTRA' file='xsltInternals'>
+    </macro>
     <macro name='XSLT_SAXON_NAMESPACE' file='extra'>
       <info>This is Michael Kay&apos;s Saxon processor namespace for extensions</info>
     </macro>
@@ -469,6 +476,14 @@
       <arg name='cur' type='xsltTemplatePtr' info='an XSLT template '/>
       <arg name='mode' type='const xmlChar *' info='the mode name or NULL '/>
       <arg name='modeURI' type='const xmlChar *' info='the mode URI or NULL '/>
+    </function>
+    <function name='xsltAllocateExtra' file='xsltInternals'>
+      <return type='int'/>
+      <arg name='style' type='xsltStylesheetPtr'/>
+    </function>
+    <function name='xsltAllocateExtraCtxt' file='xsltInternals'>
+      <return type='int'/>
+      <arg name='ctxt' type='xsltTransformContextPtr'/>
     </function>
     <function name='xsltApplyAttributeSet' file='attributes'>
       <info>Apply the xsl:use-attribute-sets</info>
@@ -606,6 +621,8 @@
       <arg name='pattern' type='const xmlChar *' info='an XSLT pattern '/>
       <arg name='doc' type='xmlDocPtr' info='the containing document '/>
       <arg name='node' type='xmlNodePtr' info='the containing element '/>
+      <arg name='style' type='xsltStylesheetPtr'/>
+      <arg name='runtime' type='xsltTransformContextPtr'/>
     </function>
     <function name='xsltCopy' file='transform'>
       <info>Process the xslt copy node on the source node</info>
@@ -1354,6 +1371,8 @@
       <arg name='SAX' type='xmlSAXHandlerPtr' info='a SAX handler for progressive callback output (not implemented yet) '/>
       <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet) '/>
     </function>
+    <struct name='xsltRuntimeExtra' file='xsltInternals'/>
+    <typedef name='xsltRuntimeExtraPtr' file='xsltInternals'/>
     <function name='xsltSaveProfiling' file='xsltutils'>
       <info>Save the profiling informations on output</info>
       <return type='void'/>

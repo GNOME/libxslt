@@ -1,3 +1,9 @@
+Sun Feb 10 20:25:28 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxml.c : fixed a small warning.
+	* doc/libxslt-api.xml doc/libxslt-decl.txt doc/libxslt-refs.xml
+	  python/libxsltclass.txt: rebuilt the APIs
+
 Sun Feb 10 20:16:15 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/imports.c libxslt/numbers.c libxslt/pattern.c

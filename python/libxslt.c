@@ -349,7 +349,7 @@ libxslt_xsltCleanup(PyObject *self, PyObject *args) {
  ************************************************************************/
 static PyMethodDef libxsltMethods[] = {
 #include "libxslt-export.c"
-    { NULL, NULL, NULL, NULL }
+    { NULL }
 };
 
 void initlibxsltmod(void) {

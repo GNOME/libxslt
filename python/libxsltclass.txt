@@ -128,6 +128,9 @@ Class transformCtxt()
     quoteOneUserParam()
     variableLookup()
 
+    # functions from module xsltInternals
+    allocateExtraCtxt()
+
     # functions from module xsltutils
     message()
     printErrorContext()
@@ -190,6 +193,7 @@ Class stylesheet()
     parseGlobalVariable()
 
     # functions from module xsltInternals
+    allocateExtra()
     freeStylesheet()
     parseStylesheetOutput()
     parseStylesheetProcess()

@@ -106,7 +106,7 @@ typedef xsltCompMatch *xsltCompMatchPtr;
 <FUNCTION>
 <NAME>xsltCompilePattern</NAME>
 <RETURNS>xsltCompMatchPtr  </RETURNS>
-const xmlChar *pattern,xmlDocPtr doc,xmlNodePtr node
+const xmlChar *pattern,xmlDocPtr doc,xmlNodePtr node,xsltStylesheetPtr style,xsltTransformContextPtr runtime
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltFreeCompMatchList</NAME>
@@ -1075,6 +1075,24 @@ xsltStylesheetPtr style
 #define XSLT_PAT_NO_PRIORITY -12345789
 </MACRO>
 <STRUCT>
+<NAME>xsltRuntimeExtra</NAME>
+</STRUCT>
+<TYPEDEF>
+<NAME>xsltRuntimeExtraPtr</NAME>
+typedef xsltRuntimeExtra *xsltRuntimeExtraPtr;
+</TYPEDEF>
+<STRUCT>
+<NAME>xsltRuntimeExtra</NAME>
+struct xsltRuntimeExtra {
+    void       *info;		/* pointer to the extra data */
+    xmlFreeFunc deallocate;	/* pointer to the deallocation routine */
+};
+</STRUCT>
+<MACRO>
+<NAME>XSLT_RUNTIME_EXTRA</NAME>
+#define XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].info
+</MACRO>
+<STRUCT>
 <NAME>xsltTemplate</NAME>
 </STRUCT>
 <TYPEDEF>
@@ -1392,6 +1410,7 @@ struct xsltStylesheet {
      * Extensions
      */
     xmlHashTablePtr extInfos;	/* the extension data */
+    int		    extrasNr;	/* the number of extras required */
 };
 </STRUCT>
 <ENUM>
@@ -1468,6 +1487,10 @@ struct xsltTransformContext {
     long            *profTab;		/* the profile template stack */
 
     void            *_private;		/* user defined data */
+
+    int              extrasNr;		/* the number of extras used */
+    int              extrasMax;		/* the number of extras allocated */
+    xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
 };
 </STRUCT>
 <MACRO>
@@ -1546,4 +1569,14 @@ xsltDecimalFormatPtr self,xmlChar *format,double number,xmlChar **result
 <NAME>xsltParseTemplateContent</NAME>
 <RETURNS>void 	</RETURNS>
 xsltStylesheetPtr style,xmlNodePtr templ
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAllocateExtra</NAME>
+<RETURNS>int 	</RETURNS>
+xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAllocateExtraCtxt</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt
 </FUNCTION>
