@@ -2568,6 +2568,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
     varsPush(ctxt, NULL);
     xsltProcessOneNode(ctxt, ctxt->node);
     xsltFreeStackElemList(varsPop(ctxt));
+    xsltCleanupTemplates(style);
 
 
     if ((ctxt->type = XSLT_OUTPUT_XML) &&

@@ -44,6 +44,8 @@ xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xsltStylesheetPtr style);
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
+void		xsltCleanupTemplates	(xsltStylesheetPtr style);
+
 #if 0
 int		xsltMatchPattern	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,

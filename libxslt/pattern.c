@@ -289,6 +289,21 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
     comp->steps[comp->nbStep++].op = XSLT_OP_END;
 }
 
+/**
+ * xsltCleanupCompMatch:
+ * @comp:  the compiled match expression
+ *
+ * remove all computation state from the pattern
+ */
+void
+xsltCleanupCompMatch(xsltCompMatchPtr comp) {
+    int i;
+    
+    for (i = 0;i < comp->nbStep;i++) {
+	comp->steps[i].previous = NULL;
+    }
+}
+
 /************************************************************************
  * 									*
  * 		The interpreter for the precompiled patterns		*
@@ -1755,6 +1770,22 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     return(NULL);
 }
 
+/**
+ * xsltCleanupTemplates:
+ * @style: an XSLT stylesheet
+ *
+ * Cleanup the state of the templates used by the stylesheet and
+ * the ones it imports.
+ */
+void
+xsltCleanupTemplates(xsltStylesheetPtr style) {
+    while (style != NULL) {
+	xmlHashScan((xmlHashTablePtr) style->templatesHash,
+		    (xmlHashScanner) xsltCleanupCompMatch, NULL);
+
+	style = xsltNextImport(style);
+    }
+}
 
 /**
  * xsltFreeTemplateHashes:
