@@ -1,3 +1,8 @@
+Sat May 10 14:19:14 EDT 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed a segfault introduced with the RVT
+	  handling change, bug #112703 .
+
 Sat May 10 13:05:21 EDT 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: make sure stylesheet compilation errors

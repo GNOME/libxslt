@@ -3016,6 +3016,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		case XML_TEXT_NODE:
 		    if ((IS_BLANK_NODE(cur)) &&
 			(cur->parent != NULL) &&
+			(cur->parent->type == XML_ELEMENT_NODE) &&
 			(ctxt->style->stripSpaces != NULL)) {
 			const xmlChar *val;
 
