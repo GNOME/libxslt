@@ -8,4 +8,7 @@ EXTRA_DIST = \
     condition.xml docbook.css docbook40.xml figtest.xml foottest.xml \
     fotest.xml func.xml graphics.xml gtest.xml idxbook.xml multilingual.xml \
     qa.xml qa2.xml sectest.xml set.xml table.xml test.xml test.xsl \
-    testmath.xml verbtest.xml
+    verbtest.xml
+    
+# testmath.xml dropped for the moment
+
