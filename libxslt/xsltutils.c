@@ -121,7 +121,11 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
     }
     message = xsltEvalTemplateString(ctxt, node, inst);
     if (message != NULL) {
+	int len = xmlStrlen(message);
+
 	xsltGenericError(xsltGenericErrorContext, (const char *)message);
+	if ((len > 0) && (message[len - 1] != '\n'))
+	    xsltGenericError(xsltGenericErrorContext, "\n");
 	xmlFree(message);
     }
     if (terminate)

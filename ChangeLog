@@ -1,3 +1,9 @@
+Sat Feb 17 14:27:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES libxslt/attributes.c: fixed use-attribute-sets
+	* libxslt/xsltutils.c: add carriage return to xsl:message when
+	  needed
+
 Sat Feb 17 02:25:45 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c: fixed a bug with generate-id()

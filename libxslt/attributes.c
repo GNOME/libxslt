@@ -45,6 +45,8 @@
 #include "templates.h"
 #include "imports.h"
 
+#define DEBUG_ATTRIBUTES
+
 /*
  * TODO: merge attribute sets from different import precedence.
  *       all this should be precomputed just before the transformation
@@ -161,6 +163,62 @@ xsltAddAttrElemList(xsltAttrElemPtr list, xmlNodePtr attr) {
     }
     return(xsltNewAttrElem(attr));
 }
+
+/**
+ * xsltMergeAttrElemList:
+ * @list:  an XSLT AttrElem list
+ * @old:  another XSLT AttrElem list
+ *
+ * Add all the attributes from list @old to list @list,
+ * but drop redefinition of existing values.
+ *
+ * Returns the new list pointer
+ */
+xsltAttrElemPtr
+xsltMergeAttrElemList(xsltAttrElemPtr list, xsltAttrElemPtr old) {
+    xsltAttrElemPtr cur;
+    int add;
+
+    while (old != NULL) {
+
+	/*
+	 * Check taht the attribute is not yet in the list
+	 */
+	cur = list;
+	add = 1;
+	while (cur != NULL) {
+	    if (cur->attr == old->attr) {
+		xsltGenericError(xsltGenericErrorContext,
+	     "xslt:attribute-set : use-attribute-sets recursion detected\n");
+		return(list);
+	    }
+	    if (xmlStrEqual(cur->attr->name, old->attr->name)) {
+		if (cur->attr->ns == old->attr->ns) {
+		    add = 0;
+		    break;
+		}
+		if ((cur->attr->ns != NULL) && (old->attr->ns != NULL) &&
+		    (xmlStrEqual(cur->attr->ns->href, old->attr->ns->href))) {
+		    add = 0;
+		    break;
+		}
+	    }
+	    if (cur->next == NULL)
+		break;
+            cur = cur->next;
+	}
+
+	if (cur == NULL) {
+	    list = xsltNewAttrElem(old->attr);
+	} else if (add) {
+	    cur->next = xsltNewAttrElem(old->attr);
+	}
+
+	old = old->next;
+    }
+    return(list);
+}
+
 /************************************************************************
  *									*
  *			Module interfaces				*
@@ -203,8 +261,13 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	prefix = NULL;
     }
 
-    if (style->attributeSets == NULL)
+    if (style->attributeSets == NULL) {
+#ifdef DEBUG_ATTRIBUTES
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "creating attribute set table\n");
+#endif
 	style->attributeSets = xmlHashCreate(10);
+    }
     if (style->attributeSets == NULL)
 	goto error;
 
@@ -223,7 +286,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		                 list->name);
 		delete = list;
 	    } else {
-#ifdef DEBUG_PARSING
+#ifdef DEBUG_ATTRIBUTES
 		xsltGenericDebug(xsltGenericDebugContext,
 		    "add attribute to list %s\n", ncname);
 #endif
@@ -257,11 +320,28 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	while ((*end != 0) && (!IS_BLANK(*end))) end++;
 	attribute = xmlStrndup(attribute, end - attribute);
 	if (attribute) {
-#ifdef DEBUG_PARSING
+	    xmlChar *ncname2 = NULL;
+	    xmlChar *prefix2 = NULL;
+	    xsltAttrElemPtr values2;
+#ifdef DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
-		"xslt:attribute-set : %s adds use %s\n", ncname);
+		"xslt:attribute-set : %s adds use %s\n", ncname, attribute);
 #endif
-	    TODO /* add use-attribute-sets support to atribute-set */
+	    ncname2 = xmlSplitQName2(attribute, &prefix2);
+	    if (ncname2 == NULL) {
+		ncname2 = attribute;
+		attribute = NULL;
+		prefix = NULL;
+	    }
+	    values2 = xmlHashLookup2(style->attributeSets, ncname2, prefix2);
+	    values = xsltMergeAttrElemList(values, values2);
+
+	    if (attribute != NULL)
+		xmlFree(attribute);
+	    if (ncname2 != NULL)
+		xmlFree(ncname2);
+	    if (prefix2 != NULL)
+		xmlFree(prefix2);
 	}
 	attribute = end;
     }
@@ -272,7 +352,7 @@ done:
      * Update the value
      */
     xmlHashUpdateEntry2(style->attributeSets, ncname, prefix, values, NULL);
-#ifdef DEBUG_PARSING
+#ifdef DEBUG_ATTRIBUTES
     xsltGenericDebug(xsltGenericDebugContext,
 	"updated attribute list %s\n", ncname);
 #endif
@@ -327,7 +407,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
     if ((prefix != NULL) && (xmlStrEqual(prefix, (const xmlChar *)"xmlns"))) {
-#ifdef DEBUG_PARSING
+#ifdef DEBUG_ATTRIBUTES
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xslt:attribute : xmlns prefix forbidden\n");
 #endif
@@ -407,7 +487,7 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	while ((*end != 0) && (!IS_BLANK(*end))) end++;
 	attribute = xmlStrndup(attribute, end - attribute);
 	if (attribute) {
-#ifdef DEBUG_PARSING
+#ifdef DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"apply attribute set %s\n", attribute);
 #endif

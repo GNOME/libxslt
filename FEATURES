@@ -51,7 +51,7 @@ YES				result-prefix = prefix | "#default"
 
 YES			    xsl:attribute-set
 YES				name = qname 
-NO				use-attribute-sets = qnames
+YES				use-attribute-sets = qnames
 
 YES			    xsl:variable
 YES				name = qname 
