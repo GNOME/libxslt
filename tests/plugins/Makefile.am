@@ -24,7 +24,9 @@ test-logall:
 	@echo '##        to $(pkglibdir)'
 
 test tests: $(top_builddir)/xsltproc/xsltproc test-logall install-pkglibLTLIBRARIES
-	@LIBXSLT_PLUGINS_PATH=./plugin $(top_builddir)/xsltproc/xsltproc plugin.xsl plugin.xml > plugin.res
+	@LD_LIBRARY_PATH=$(top_builddir)/libxslt/.libs:$(LD_LIBRARY_PATH) \
+	 LIBXSLT_PLUGINS_PATH=./plugin \
+	 $(top_builddir)/xsltproc/xsltproc plugin.xsl plugin.xml > plugin.res
 	@diff plugin.out plugin.res
 	@rm plugin.res
 

@@ -1,3 +1,8 @@
+Fri Jan 21 12:04:18 HKT 2005 William Brack <wbrack@mmm.com.hk>
+
+	* tests/plugins/Makefile.am: Applied patch 11 (with small
+	  modification) from Joel
+
 Thu Jan 20 21:05:27 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* tests/plugins/Makefile.am tests/plugins/testplugin.c: applied
