@@ -1,3 +1,8 @@
+Thu Mar  1 18:16:58 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt.spec.in: updated to 0.4.0 and 2.3.3
+	* doc/xslt.html: updated
+
 Wed Feb 28 19:24:51 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/extra.[ch] libxslt/transform.[ch] libxslt/xsltInternals.h:
