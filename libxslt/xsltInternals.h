@@ -131,6 +131,12 @@ typedef enum {
     XSLT_OUTPUT_TEXT
 } xsltOutputType;
 
+typedef enum {
+    XSLT_STATE_OK = 0,
+    XSLT_STATE_ERROR,
+    XSLT_STATE_STOPPED
+} xsltTransformState;
+
 typedef struct _xsltTransformContext xsltTransformContext;
 typedef xsltTransformContext *xsltTransformContextPtr;
 struct _xsltTransformContext {
@@ -148,7 +154,12 @@ struct _xsltTransformContext {
     void *variablesHash;		/* hash table or wherever variables
 				   	   informations are stored */
     xmlDocPtr extraDocs;		/* extra docs parsed by document() */
+    xsltTransformState state;		/* the current state */
 };
+
+#define CHECK_STOPPED if (ctxt->state == XSLT_STATE_STOPPED) return;
+#define CHECK_STOPPEDE if (ctxt->state == XSLT_STATE_STOPPED) goto error;
+#define CHECK_STOPPED0 if (ctxt->state == XSLT_STATE_STOPPED) return(0);
 
 /*
  * Functions associated to the internal types

@@ -59,6 +59,9 @@ extern void *xsltGenericErrorContext;
 extern xmlGenericErrorFunc xsltGenericDebug;
 extern void *xsltGenericDebugContext;
 
+void		xsltMessage			(xsltTransformContextPtr ctxt,
+						 xmlNodePtr node,
+						 xmlNodePtr inst);
 void		xsltSetGenericErrorFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
 void		xsltSetGenericDebugFunc		(void *ctx,

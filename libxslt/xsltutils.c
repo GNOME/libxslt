@@ -20,8 +20,52 @@
 #include <libxml/xmlerror.h>
 #include <libxml/xmlIO.h>
 #include "xsltutils.h"
+#include "templates.h"
 #include "xsltInternals.h"
 
+
+/************************************************************************
+ * 									*
+ * 		Handling of XSLT stylesheets messages			*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltMessage:
+ * @ctxt:  an XSLT processing context
+ * @node:  The current node
+ * @inst:  The node containing the message instruction
+ *
+ * Process and xsl:message construct
+ */
+void
+xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
+    xmlChar *prop, *message;
+    int terminate = 0;
+
+    if ((ctxt == NULL) || (inst == NULL))
+	return;
+
+    prop = xmlGetNsProp(inst, (const xmlChar *)"terminate", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+	    terminate = 1;
+	} else if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+	    terminate = 0;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsl:message : terminate expecting 'yes' or 'no'\n");
+	}
+	xmlFree(prop);
+    }
+    message = xsltEvalTemplateString(ctxt, node, inst);
+    if (message != NULL) {
+	xsltGenericError(xsltGenericErrorContext, (const char *)message);
+	xmlFree(message);
+    }
+    if (terminate)
+	ctxt->state = XSLT_STATE_STOPPED;
+}
 
 /************************************************************************
  * 									*

@@ -177,8 +177,8 @@ NO			zero-digit = char
 NO			digit = char 
 NO			pattern-separator = char
 
-NO		    xsl:message
-NO			terminate = "yes" | "no"
+YES		    xsl:message
+YES			terminate = "yes" | "no"
 
 NO		    xsl:fallback
 

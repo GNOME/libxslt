@@ -20,7 +20,7 @@ Import:
 
 Extra functions:
   -> document() should not be a problem since Result Tree Fragments are
-     implemnted
+     implemented
   => started, incomplete
   -> missing key support
 
@@ -32,7 +32,6 @@ Pattern tester:
 
 Pattern scanner:
   -> add error checks on all returns
-  -> handle unions
 
 Error handling:
   -> check the version stuff, design a separate module for error interfacing
@@ -83,6 +82,7 @@ Support for disable-output-escaping="yes":
 
 Pattern scanner:
   -> compute priority
+  -> handle unions
   => done
 
 Pattern tester:

@@ -1,3 +1,9 @@
+Sun Jan 28 21:45:23 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES TODO: updates
+	* libxslt/xsltutils.[ch] libxslt/xsltInternals.h libxslt/xsltutils.h:
+	  added xsl:message
+
 Sun Jan 28 17:25:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES TODO: updates

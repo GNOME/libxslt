@@ -571,6 +571,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr delete = NULL;
     int strip_spaces = -1;
 
+    CHECK_STOPPED;
     switch (node->type) {
 	case XML_DOCUMENT_NODE:
 	case XML_HTML_DOCUMENT_NODE:
@@ -714,6 +715,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     cur = inst->children;
     while (cur != NULL) {
+	CHECK_STOPPEDE;
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "with-param")) {
 		if (has_param == 0) {
@@ -917,6 +919,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldInsert;
     int has_variables = 0;
 
+    CHECK_STOPPED;
     oldInsert = insert = ctxt->insert;
     /*
      * Insert all non-XSLT nodes found in the template
@@ -987,6 +990,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    has_variables = 1;
 		}
 		xsltCallTemplate(ctxt, node, cur);
+	    } else if (IS_XSLT_NAME(cur, "message")) {
 	    } else {
 #ifdef DEBUG_PROCESS
 		xsltGenericError(xsltGenericDebugContext,
@@ -994,6 +998,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		TODO
 	    }
+	    CHECK_STOPPED;
 	    goto skip_children;
 	} else if (cur->type == XML_TEXT_NODE) {
 	    /*
