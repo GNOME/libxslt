@@ -1,3 +1,13 @@
+Mon Jun 25 15:30:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: John Fleck found a typo in usage()
+	* libxslt/xslt.c: avoid warning if version="1.1" is used
+	* libxslt/transform.c: forgot to initialize cur->outputFile
+	* libxslt/functions.c: DOCBOOK_XSL_HACK some versions of DocBook XSL
+	  use the vendor string to detect supporting chunking, this
+	  is a workaround to be considered in the list of decent XSLT
+	  processors <grin/>
+
 Mon Jun 25 12:41:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.[ch] libxslt/xslt.c libxslt/xsltInternals.h:

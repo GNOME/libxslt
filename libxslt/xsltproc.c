@@ -91,7 +91,7 @@ static void usage(const char *name) {
     printf("   Options:\n");
     printf("      --version or -V: show the version of libxml and libxslt used\n");
     printf("      --verbose or -v: show logs of what's happening\n");
-    printf("      --output file or -v file: save to a given file\n");
+    printf("      --output file or -o file: save to a given file\n");
     printf("      --timing: display the time used\n");
     printf("      --repeat: run the transformation 20 times\n");
     printf("      --debug: dump the tree of the result instead\n");

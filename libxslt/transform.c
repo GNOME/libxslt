@@ -224,6 +224,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->document = docu;
     cur->inst = NULL;
     cur->xinclude = xsltDoXIncludeDefault;
+    cur->outputFile = NULL;
     return(cur);
 }
 
