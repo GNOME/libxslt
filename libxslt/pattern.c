@@ -14,6 +14,7 @@
  * TODO: detect [number] at compilation, optimize accordingly
  */
 
+#define IN_LIBXSLT
 #include "libxslt.h"
 
 #include <string.h>

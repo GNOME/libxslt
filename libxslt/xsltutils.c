@@ -9,6 +9,7 @@
  * daniel@veillard.com
  */
 
+#define IN_LIBXSLT
 #include "libxslt.h"
 
 #include <stdio.h>

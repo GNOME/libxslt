@@ -1,3 +1,4 @@
+#define IN_LIBEXSLT
 #include "libexslt/libexslt.h"
 
 #if defined(WIN32) && !defined (__CYGWIN__)
@@ -15,11 +16,11 @@
 #include <libxslt/xsltInternals.h>
 #include <libxslt/extensions.h>
 
-#if HAVE_MATH_H
+#ifdef HAVE_MATH_H
 #include <math.h>
 #endif
 
-#if HAVE_STDLIB_H
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
 
@@ -1043,7 +1044,7 @@ exsltMathRegister (void) {
     xsltRegisterExtModuleFunction ((const xmlChar *) "constant",
 				   EXSLT_MATH_NAMESPACE,
 				   exsltMathConstantFunction);
-#if HAVE_STDLIB_H
+#ifdef HAVE_STDLIB_H
     xsltRegisterExtModuleFunction ((const xmlChar *) "random",
 				   EXSLT_MATH_NAMESPACE,
 				   exsltMathRandomFunction);

@@ -10,6 +10,7 @@
  * Bjorn Reese <breese@users.sourceforge.net> for number formatting
  */
 
+#define IN_LIBXSLT
 #include "libxslt.h"
 
 #include <string.h>

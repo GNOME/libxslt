@@ -10,6 +10,7 @@
  * Bjorn Reese <breese@users.sourceforge.net>
  */
 
+#define IN_LIBXSLT
 #include "libxslt.h"
 
 #include <math.h>

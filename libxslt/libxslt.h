@@ -9,8 +9,6 @@
 #ifndef __XSLT_LIBXSLT_H__
 #define __XSLT_LIBXSLT_H__
 
-#define IN_LIBXSLT
-
 #if defined(WIN32) && !defined (__CYGWIN__)
 #include <win32config.h>
 #else

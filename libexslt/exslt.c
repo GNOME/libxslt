@@ -1,3 +1,4 @@
+#define IN_LIBEXSLT
 #include "libexslt/libexslt.h"
 
 #include <libxml/xmlversion.h>

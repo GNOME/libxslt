@@ -1,3 +1,11 @@
+Mon Mar 18 20:45:27 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.14
+	* doc/*: updated rebuilt
+	* libxslt/*.c libexslt/*.c libxslt/libxslt.h libexslt/libexslt.h:
+	  implemented the IN_LIBXSLT and IN_LIBEXSLT mechanism discussed
+	  with the Windows maintainers
+
 Mon Mar 18 16:22:46 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/Makefile.am python/generator.py python/libxslt.c

@@ -15,6 +15,7 @@
  * implement "other" date/time extension functions
  */
 
+#define IN_LIBEXSLT
 #include "libexslt/libexslt.h"
 
 #include <stdlib.h>
