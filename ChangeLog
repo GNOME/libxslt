@@ -1,3 +1,8 @@
+Mon Feb 24 22:21:09 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing release 1.0.27
+	* doc/*: updated and rebuilt the docs
+
 Mon Feb 24 19:43:15 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/namespaces.c: fixed #106554 for spurious xmlns:nsX=""
