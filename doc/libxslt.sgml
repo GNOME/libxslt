@@ -6,6 +6,10 @@
 <!entity transform SYSTEM "sgml/transform.sgml">
 <!entity xsltInternals SYSTEM "sgml/xsltInternals.sgml">
 <!entity xsltutils SYSTEM "sgml/xsltutils.sgml">
+<!entity attributes SYSTEM "sgml/attributes.sgml">
+<!entity imports SYSTEM "sgml/imports.sgml">
+<!entity namespaces SYSTEM "sgml/namespaces.sgml">
+<!entity variables SYSTEM "sgml/variables.sgml">
 ]>
 
 <book>
@@ -71,6 +75,10 @@
     &transform;
     &xsltInternals;
     &xsltutils;
+    &attributes;
+    &imports;
+    &namespaces;
+    &variables;
   </chapter>
 </book>
 

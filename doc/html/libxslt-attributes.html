@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->transform</TITLE
+>attributes</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.44"><LINK
@@ -12,11 +12,11 @@ REL="UP"
 TITLE="Libxslt Library Reference"
 HREF="libxslt-lib.html"><LINK
 REL="PREVIOUS"
-TITLE="templates"
-HREF="libxslt-templates.html"><LINK
+TITLE="xsltutils"
+HREF="libxslt-xsltutils.html"><LINK
 REL="NEXT"
-TITLE="xsltInternals"
-HREF="libxslt-xsltinternals.html"></HEAD
+TITLE="imports"
+HREF="libxslt-imports.html"></HEAD
 ><BODY
 BGCOLOR="#FFFFFF"
 TEXT="#000000"
@@ -47,7 +47,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-templates.html"
+HREF="libxslt-xsltutils.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -101,7 +101,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
 ><A
-HREF="libxslt-xsltinternals.html"
+HREF="libxslt-imports.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -115,21 +115,21 @@ SIZE="3"
 ></DIV
 ><H1
 ><A
-NAME="LIBXSLT-TRANSFORM"
->transform</A
+NAME="LIBXSLT-ATTRIBUTES"
+>attributes</A
 ></H1
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN681"
+NAME="AEN1456"
 ></A
 ><H2
 >Name</H2
->transform&nbsp;--&nbsp;</DIV
+>attributes&nbsp;--&nbsp;</DIV
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN684"
+NAME="AEN1459"
 ></A
 ><H2
 >Synopsis</H2
@@ -144,24 +144,21 @@ CELLPADDING="6"
 CLASS="SYNOPSIS"
 >&#13;
 
-<GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
->   <A
-HREF="libxslt-transform.html#XSLTAPPLYSTYLESHEET"
->xsltApplyStylesheet</A
->             (<GTKDOCLINK
+void        <A
+HREF="libxslt-attributes.html#XSLTPARSESTYLESHEETATTRIBUTESET"
+>xsltParseStylesheetAttributeSet</A
+> (<GTKDOCLINK
 HREF="XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</GTKDOCLINK
 > style,
                                              <GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
-> doc);
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> cur);
 void        <A
-HREF="libxslt-transform.html#XSLTAPPLYONETEMPLATE"
->xsltApplyOneTemplate</A
->            (<A
+HREF="libxslt-attributes.html#XSLTATTRIBUTE"
+>xsltAttribute</A
+>                   (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
@@ -172,7 +169,33 @@ HREF="XMLNODEPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> list);</PRE
+> inst);
+void        <A
+HREF="libxslt-attributes.html#XSLTFREEATTRIBUTESETSHASHES"
+>xsltFreeAttributeSetsHashes</A
+>     (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> style);
+void        <A
+HREF="libxslt-attributes.html#XSLTAPPLYATTRIBUTESET"
+>xsltApplyAttributeSet</A
+>           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> inst,
+                                             <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *attributes);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -180,7 +203,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN695"
+NAME="AEN1476"
 ></A
 ><H2
 >Description</H2
@@ -190,20 +213,20 @@ NAME="AEN695"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN698"
+NAME="AEN1479"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN700"
+NAME="AEN1481"
 ></A
 ><H3
 ><A
-NAME="XSLTAPPLYSTYLESHEET"
+NAME="XSLTPARSESTYLESHEETATTRIBUTESET"
 ></A
->xsltApplyStylesheet ()</H3
+>xsltParseStylesheetAttributeSet ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -213,23 +236,20 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
->   xsltApplyStylesheet             (<GTKDOCLINK
+>void        xsltParseStylesheetAttributeSet (<GTKDOCLINK
 HREF="XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</GTKDOCLINK
 > style,
                                              <GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
-> doc);</PRE
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> cur);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Apply the stylesheet to the document
-NOTE: This may lead to a non-wellformed output XML wise !</P
+>parse an XSLT stylesheet preserve-space element and record
+elements needing preserving</P
 ><P
 ></P
 ><DIV
@@ -258,7 +278,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a parsed XSLT stylesheet</TD
+>  the XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -268,29 +288,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->doc</I
+>cur</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a parsed XML document</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->the result document or NULL in case of error</TD
+>&#13;</TD
 ></TR
 ></TABLE
 ><P
@@ -300,13 +305,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN726"
+NAME="AEN1502"
 ></A
 ><H3
 ><A
-NAME="XSLTAPPLYONETEMPLATE"
+NAME="XSLTATTRIBUTE"
 ></A
->xsltApplyOneTemplate ()</H3
+>xsltAttribute ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -316,7 +321,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltApplyOneTemplate            (<A
+>void        xsltAttribute                   (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
@@ -327,12 +332,12 @@ HREF="XMLNODEPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> list);</PRE
+> inst);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Process the apply-templates node on the source node</P
+>Process the xslt attribute node on the source node</P
 ><P
 ></P
 ><DIV
@@ -388,14 +393,203 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->list</I
+>inst</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the template replacement nodelist</TD
+>  the xslt attribute node</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1528"
+></A
+><H3
+><A
+NAME="XSLTFREEATTRIBUTESETSHASHES"
+></A
+>xsltFreeAttributeSetsHashes ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltFreeAttributeSetsHashes     (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> style);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Free up the memory used by attribute sets</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> an XSLT stylesheet</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1544"
+></A
+><H3
+><A
+NAME="XSLTAPPLYATTRIBUTESET"
+></A
+>xsltApplyAttributeSet ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltApplyAttributeSet           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> inst,
+                                             <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *attributes);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Apply the xsl:use-attribute-sets</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the XSLT stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the node in the source tree.</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>inst</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the xslt attribute node</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>attributes</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the set list.</TD
 ></TR
 ></TABLE
 ><P
@@ -418,7 +612,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-templates.html"
+HREF="libxslt-xsltutils.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -472,7 +666,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
 ><A
-HREF="libxslt-xsltinternals.html"
+HREF="libxslt-imports.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -490,7 +684,7 @@ ALIGN="left"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->templates</B
+>xsltutils</B
 ></FONT
 ></TD
 ><TD
@@ -500,7 +694,7 @@ ALIGN="right"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->xsltInternals</B
+>imports</B
 ></FONT
 ></TD
 ></TR

@@ -121,7 +121,7 @@ NAME="LIBXSLT-XSLTINTERNALS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN765"
+NAME="AEN757"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +129,7 @@ NAME="AEN765"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN768"
+NAME="AEN760"
 ></A
 ><H2
 >Synopsis</H2
@@ -169,16 +169,16 @@ HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
 >xsltTemplatePtr</A
 >;
 struct      <A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEET"
->xsltStylesheet</A
->;
-typedef     <A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</A
+HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMAT"
+>xsltDecimalFormat</A
 >;
 enum        <A
 HREF="libxslt-xsltinternals.html#XSLTOUTPUTTYPE"
 >xsltOutputType</A
+>;
+enum        <A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMSTATE"
+>xsltTransformState</A
 >;
 struct      <A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXT"
@@ -188,9 +188,21 @@ typedef     <A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 >;
-<A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</A
+#define     <A
+HREF="libxslt-xsltinternals.html#CHECK-STOPPED-CAPS"
+>CHECK_STOPPED</A
+>
+#define     <A
+HREF="libxslt-xsltinternals.html#CHECK-STOPPEDE-CAPS"
+>CHECK_STOPPEDE</A
+>
+#define     <A
+HREF="libxslt-xsltinternals.html#CHECK-STOPPED0-CAPS"
+>CHECK_STOPPED0</A
+>
+<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
 > <A
 HREF="libxslt-xsltinternals.html#XSLTPARSESTYLESHEETFILE"
 >xsltParseStylesheetFile</A
@@ -201,9 +213,9 @@ HREF="XMLCHAR"
 void        <A
 HREF="libxslt-xsltinternals.html#XSLTFREESTYLESHEET"
 >xsltFreeStylesheet</A
->              (<A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</A
+>              (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
 > sheet);
 int         <A
 HREF="libxslt-xsltinternals.html#XSLTISBLANK"
@@ -218,7 +230,32 @@ HREF="libxslt-xsltinternals.html#XSLTFREESTACKELEMLIST"
 >           (<A
 HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
 >xsltStackElemPtr</A
-> elem);</PRE
+> elem);
+<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> <A
+HREF="libxslt-xsltinternals.html#XSLTPARSESTYLESHEETPROCESS"
+>xsltParseStylesheetProcess</A
+>
+                                            (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> ret,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc);
+<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> <A
+HREF="libxslt-xsltinternals.html#XSLTPARSESTYLESHEETDOC"
+>xsltParseStylesheetDoc</A
+>    (<GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -226,7 +263,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN791"
+NAME="AEN793"
 ></A
 ><H2
 >Description</H2
@@ -236,14 +273,14 @@ NAME="AEN791"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN794"
+NAME="AEN796"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN796"
+NAME="AEN798"
 ></A
 ><H3
 ><A
@@ -272,7 +309,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN801"
+NAME="AEN803"
 ></A
 ><H3
 ><A
@@ -307,7 +344,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN806"
+NAME="AEN808"
 ></A
 ><H3
 ><A
@@ -333,7 +370,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN811"
+NAME="AEN813"
 ></A
 ><H3
 ><A
@@ -359,7 +396,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN816"
+NAME="AEN818"
 ></A
 ><H3
 ><A
@@ -394,7 +431,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN821"
+NAME="AEN823"
 ></A
 ><H3
 ><A
@@ -420,13 +457,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN826"
+NAME="AEN828"
 ></A
 ><H3
 ><A
-NAME="XSLTSTYLESHEET"
+NAME="XSLTDECIMALFORMAT"
 ></A
->struct xsltStylesheet</H3
+>struct xsltDecimalFormat</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -436,11 +473,36 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->struct xsltStylesheet {
+>struct xsltDecimalFormat *next; /* chained list */
+    xmlChar *name;
+    /* Used for interpretation of pattern */
+    xmlChar *digit;
+    xmlChar *patternSeparator;
+    /* May appear in result */
+    xmlChar *minusSign;
+    xmlChar *infinity;
+    xmlChar *noNumber; /* Not-a-number */
+    /* Used for interpretation of pattern and may appear in result */
+    xmlChar *decimalPoint;
+    xmlChar *grouping;
+    xmlChar *percent;
+    xmlChar *permille;
+    xmlChar *zeroDigit;
+} xsltDecimalFormat, *xsltDecimalFormatPtr;
+
+/*
+ * The in-memory structure corresponding to an XSLT Stylesheet
+ * NOTE: most of the content is simply linked from the doc tree
+ *       structure, no specific allocation is made.
+ */
+typedef struct _xsltStylesheet xsltStylesheet;
+typedef xsltStylesheet *xsltStylesheetPtr;
+struct _xsltStylesheet {
     /*
      * The stylesheet import relation is kept as a tree
      */
     struct _xsltStylesheet *parent;
+    struct _xsltStylesheet *next;
     struct _xsltStylesheet *imports;
 
     /*
@@ -470,6 +532,16 @@ CLASS="PROGRAMLISTING"
     void *commentMatch;		/* template based on comment() */
     
     /*
+     * Namespace aliases
+     */
+    xmlHashTablePtr nsAliases;	/* the namespace alias hash tables */
+
+    /*
+     * Attribute sets
+     */
+    xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
+
+    /*
      * Output related stuff.
      */
     xmlChar *method;		/* the output method */
@@ -477,6 +549,9 @@ CLASS="PROGRAMLISTING"
     xmlChar *version;		/* version string */
     xmlChar *encoding;		/* encoding string */
     int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
+
+    /* Number formatting */
+    xsltDecimalFormatPtr decimalFormat;
     int standalone;             /* standalone = "yes" | "no" */
     xmlChar *doctypePublic;     /* doctype-public string */
     xmlChar *doctypeSystem;     /* doctype-system string */
@@ -492,33 +567,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN831"
-></A
-><H3
-><A
-NAME="XSLTSTYLESHEETPTR"
-></A
->xsltStylesheetPtr</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->typedef xsltStylesheet *xsltStylesheetPtr;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN836"
+NAME="AEN833"
 ></A
 ><H3
 ><A
@@ -548,7 +597,37 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN841"
+NAME="AEN838"
+></A
+><H3
+><A
+NAME="XSLTTRANSFORMSTATE"
+></A
+>enum xsltTransformState</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef enum {
+    XSLT_STATE_OK = 0,
+    XSLT_STATE_ERROR,
+    XSLT_STATE_STOPPED
+} xsltTransformState;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN843"
 ></A
 ><H3
 ><A
@@ -579,6 +658,7 @@ CLASS="PROGRAMLISTING"
     void *variablesHash;		/* hash table or wherever variables
 				   	   informations are stored */
     xmlDocPtr extraDocs;		/* extra docs parsed by document() */
+    xsltTransformState state;		/* the current state */
 };</PRE
 ></TD
 ></TR
@@ -589,7 +669,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN846"
+NAME="AEN848"
 ></A
 ><H3
 ><A
@@ -615,7 +695,85 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN851"
+NAME="AEN853"
+></A
+><H3
+><A
+NAME="CHECK-STOPPED-CAPS"
+></A
+>CHECK_STOPPED</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define CHECK_STOPPED if (ctxt-&gt;state == XSLT_STATE_STOPPED) return;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN858"
+></A
+><H3
+><A
+NAME="CHECK-STOPPEDE-CAPS"
+></A
+>CHECK_STOPPEDE</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define CHECK_STOPPEDE if (ctxt-&gt;state == XSLT_STATE_STOPPED) goto error;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN863"
+></A
+><H3
+><A
+NAME="CHECK-STOPPED0-CAPS"
+></A
+>CHECK_STOPPED0</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define CHECK_STOPPED0 if (ctxt-&gt;state == XSLT_STATE_STOPPED) return(0);</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN868"
 ></A
 ><H3
 ><A
@@ -631,9 +789,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</A
+><GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
 > xsltParseStylesheetFile   (const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
@@ -696,7 +854,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN872"
+NAME="AEN889"
 ></A
 ><H3
 ><A
@@ -712,9 +870,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltFreeStylesheet              (<A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</A
+>void        xsltFreeStylesheet              (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
 > sheet);</PRE
 ></TD
 ></TR
@@ -764,7 +922,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN889"
+NAME="AEN906"
 ></A
 ><H3
 ><A
@@ -842,7 +1000,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN909"
+NAME="AEN926"
 ></A
 ><H3
 ><A
@@ -901,6 +1059,190 @@ WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
 >  an XSLT stack element</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN943"
+></A
+><H3
+><A
+NAME="XSLTPARSESTYLESHEETPROCESS"
+></A
+>xsltParseStylesheetProcess ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> xsltParseStylesheetProcess
+                                            (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> ret,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc);</PRE
+></TD
+></TR
+></TABLE
+><P
+>parse an XSLT stylesheet adding the associated structures</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ret</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the XSLT stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>doc</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  and xmlDoc parsed XML</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>a new XSLT stylesheet structure.</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN969"
+></A
+><H3
+><A
+NAME="XSLTPARSESTYLESHEETDOC"
+></A
+>xsltParseStylesheetDoc ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> xsltParseStylesheetDoc    (<GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc);</PRE
+></TD
+></TR
+></TABLE
+><P
+>parse an XSLT stylesheet building the associated structures</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>doc</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  and xmlDoc parsed XML</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>a new XSLT stylesheet structure.</TD
 ></TR
 ></TABLE
 ><P

@@ -1288,6 +1288,7 @@ next_pattern:
 		    while (list->next != NULL) {
 			if (list->next->priority <= pat->priority)
 			    break;
+			list = list->next;
 		    }
 		    pat->next = list->next;
 		    list->next = pat;
@@ -1306,6 +1307,7 @@ next_pattern:
 	    while (list->next != NULL) {
 		if (list->next->priority <= pat->priority)
 		    break;
+		list = list->next;
 	    }
 	    pat->next = list->next;
 	    list->next = pat;

@@ -35,6 +35,7 @@ Templates:
 
 Pattern tester:
   -> try to optimize for ID scan and tests.
+  -> support for mode
 
 Pattern scanner:
   -> add error checks on all returns

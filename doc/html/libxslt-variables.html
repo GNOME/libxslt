@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->templates</TITLE
+>variables</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.44"><LINK
@@ -12,11 +12,8 @@ REL="UP"
 TITLE="Libxslt Library Reference"
 HREF="libxslt-lib.html"><LINK
 REL="PREVIOUS"
-TITLE="pattern"
-HREF="libxslt-pattern.html"><LINK
-REL="NEXT"
-TITLE="transform"
-HREF="libxslt-transform.html"></HEAD
+TITLE="namespaces"
+HREF="libxslt-namespaces.html"></HEAD
 ><BODY
 BGCOLOR="#FFFFFF"
 TEXT="#000000"
@@ -47,7 +44,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-pattern.html"
+HREF="libxslt-namespaces.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -100,36 +97,27 @@ SIZE="3"
 WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
-><A
-HREF="libxslt-transform.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
+>&nbsp;</TD
 ></TR
 ></TABLE
 ></DIV
 ><H1
 ><A
-NAME="LIBXSLT-TEMPLATES"
->templates</A
+NAME="LIBXSLT-VARIABLES"
+>variables</A
 ></H1
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN403"
+NAME="AEN1916"
 ></A
 ><H2
 >Name</H2
->templates&nbsp;--&nbsp;</DIV
+>variables&nbsp;--&nbsp;</DIV
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN406"
+NAME="AEN1919"
 ></A
 ><H2
 >Synopsis</H2
@@ -144,87 +132,56 @@ CELLPADDING="6"
 CLASS="SYNOPSIS"
 >&#13;
 
+#define     <A
+HREF="libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS"
+>XSLT_REGISTER_VARIABLE_LOOKUP</A
+>   (ctxt)
 int         <A
-HREF="libxslt-templates.html#XSLTEVALXPATHPREDICATE"
->xsltEvalXPathPredicate</A
->          (<A
+HREF="libxslt-variables.html#XSLTEVALGLOBALVARIABLES"
+>xsltEvalGlobalVariables</A
+>         (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);
-<GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    <A
-HREF="libxslt-templates.html#XSLTEVALTEMPLATESTRING"
->xsltEvalTemplateString</A
->          (<A
+> ctxt);
+void        <A
+HREF="libxslt-variables.html#XSLTPUSHSTACK"
+>xsltPushStack</A
+>                   (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
+> ctxt);
+void        <A
+HREF="libxslt-variables.html#XSLTPOPSTACK"
+>xsltPopStack</A
+>                    (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);
+void        <A
+HREF="libxslt-variables.html#XSLTPARSEGLOBALVARIABLE"
+>xsltParseGlobalVariable</A
+>         (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> style,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node,
+> cur);
+void        <A
+HREF="libxslt-variables.html#XSLTPARSEGLOBALPARAM"
+>xsltParseGlobalParam</A
+>            (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> style,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> parent);
-<GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    <A
-HREF="libxslt-templates.html#XSLTEVALATTRVALUETEMPLATE"
->xsltEvalAttrValueTemplate</A
->       (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *name);
-<GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    <A
-HREF="libxslt-templates.html#XSLTEVALXPATHSTRING"
->xsltEvalXPathString</A
->             (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);
-<GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->* <A
-HREF="libxslt-templates.html#XSLTTEMPLATEPROCESS"
->xsltTemplateProcess</A
->             (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node);
-<GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
->  <A
-HREF="libxslt-templates.html#XSLTATTRLISTTEMPLATEPROCESS"
->xsltAttrListTemplateProcess</A
+> cur);
+void        <A
+HREF="libxslt-variables.html#XSLTPARSESTYLESHEETVARIABLE"
+>xsltParseStylesheetVariable</A
 >     (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
@@ -232,43 +189,82 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> target,
-                                             <GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
 > cur);
-<GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
->  <A
-HREF="libxslt-templates.html#XSLTATTRTEMPLATEPROCESS"
->xsltAttrTemplateProcess</A
->         (<A
+void        <A
+HREF="libxslt-variables.html#XSLTPARSESTYLESHEETPARAM"
+>xsltParseStylesheetParam</A
+>        (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> target,
-                                             <GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
-> attr);
+> cur);
+void        <A
+HREF="libxslt-variables.html#XSLTFREEVARIABLEHASHES"
+>xsltFreeVariableHashes</A
+>          (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);
 <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    <A
-HREF="libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESS"
->xsltAttrTemplateValueProcess</A
->    (<A
+HREF="XMLXPATHOBJECTPTR"
+>xmlXPathObjectPtr</GTKDOCLINK
+> <A
+HREF="libxslt-variables.html#XSLTVARIABLELOOKUP"
+>xsltVariableLookup</A
+>        (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *attr);</PRE
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns_uri);
+int         <A
+HREF="libxslt-variables.html#XSLTREGISTERVARIABLE"
+>xsltRegisterVariable</A
+>            (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns_uri,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *select,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> tree,
+                                             int param);
+<GTKDOCLINK
+HREF="XMLXPATHOBJECTPTR"
+>xmlXPathObjectPtr</GTKDOCLINK
+> <A
+HREF="libxslt-variables.html#XSLTXPATHVARIABLELOOKUP"
+>xsltXPathVariableLookup</A
+>   (void *ctxt,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns_uri);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -276,7 +272,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN444"
+NAME="AEN1958"
 ></A
 ><H2
 >Description</H2
@@ -286,20 +282,20 @@ NAME="AEN444"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN447"
+NAME="AEN1961"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN449"
+NAME="AEN1963"
 ></A
 ><H3
 ><A
-NAME="XSLTEVALXPATHPREDICATE"
+NAME="XSLT-REGISTER-VARIABLE-LOOKUP-CAPS"
 ></A
->xsltEvalXPathPredicate ()</H3
+>XSLT_REGISTER_VARIABLE_LOOKUP()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -309,20 +305,74 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->int         xsltEvalXPathPredicate          (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);</PRE
+>#define     XSLT_REGISTER_VARIABLE_LOOKUP(ctxt)</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Process the expression using XPath and evaluate the result as
-an XPath predicate</P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&#13;</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1977"
+></A
+><H3
+><A
+NAME="XSLTEVALGLOBALVARIABLES"
+></A
+>xsltEvalGlobalVariables ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltEvalGlobalVariables         (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Evaluate the global variables of a stylesheet. This need to be
+done on parsed stylesheets before starting to apply transformations</P
 ><P
 ></P
 ><DIV
@@ -358,23 +408,6 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->expr</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
@@ -383,7 +416,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->1 is the predicate was true, 0 otherwise</TD
+>0 in case of success, -1 in case of error</TD
 ></TR
 ></TABLE
 ><P
@@ -393,13 +426,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN474"
+NAME="AEN1997"
 ></A
 ><H3
 ><A
-NAME="XSLTEVALTEMPLATESTRING"
+NAME="XSLTPUSHSTACK"
 ></A
->xsltEvalTemplateString ()</H3
+>xsltPushStack ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -409,28 +442,15 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    xsltEvalTemplateString          (<A
+>void        xsltPushStack                   (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> parent);</PRE
+> ctxt);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Evaluate a template string value, i.e. the parent list is interpreter
-as template content and the resulting tree string value is returned
-This is needed for example by xsl:comment and xsl:processing-instruction</P
+>Push a new level on the ctxtsheet interprestation stack</P
 ><P
 ></P
 ><DIV
@@ -459,57 +479,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the stylesheet node</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->parent</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the content parent</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->the computed string value or NULL, must be deallocated by the
-caller.</TD
+>  xn XSLT transformation context</TD
 ></TR
 ></TABLE
 ><P
@@ -519,13 +489,13 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN505"
+NAME="AEN2013"
 ></A
 ><H3
 ><A
-NAME="XSLTEVALATTRVALUETEMPLATE"
+NAME="XSLTPOPSTACK"
 ></A
->xsltEvalAttrValueTemplate ()</H3
+>xsltPopStack ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -535,28 +505,15 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    xsltEvalAttrValueTemplate       (<A
+>void        xsltPopStack                    (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *name);</PRE
+> ctxt);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Evaluate a attribute value template, i.e. the attribute value can
-contain expressions contained in curly braces ({}) and those are
-substituted by they computed value.</P
+>Pop a level on the ctxtsheet interprestation stack</P
 ><P
 ></P
 ><DIV
@@ -585,57 +542,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the stylesheet node</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the attribute QName</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->the computed string value or NULL, must be deallocated by the
-caller.</TD
+>  an XSLT transformation context</TD
 ></TR
 ></TABLE
 ><P
@@ -645,13 +552,13 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN536"
+NAME="AEN2029"
 ></A
 ><H3
 ><A
-NAME="XSLTEVALXPATHSTRING"
+NAME="XSLTPARSEGLOBALVARIABLE"
 ></A
->xsltEvalXPathString ()</H3
+>xsltParseGlobalVariable ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -661,231 +568,20 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    xsltEvalXPathString             (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);</PRE
-></TD
-></TR
-></TABLE
-><P
->Process the expression using XPath and get a string</P
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the XSLT transformation context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->expr</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->the computed string value or NULL, must be deallocated by the
-caller.</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN562"
-></A
-><H3
-><A
-NAME="XSLTTEMPLATEPROCESS"
-></A
->xsltTemplateProcess ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->* xsltTemplateProcess             (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
+>void        xsltParseGlobalVariable         (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> style,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node);</PRE
-></TD
-></TR
-></TABLE
-><P
->Process the given node and return the new string value.</P
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the XSLT transformation context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the attribute template node</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->the computed tree replacement</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN588"
-></A
-><H3
-><A
-NAME="XSLTATTRLISTTEMPLATEPROCESS"
-></A
->xsltAttrListTemplateProcess ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
->  xsltAttrListTemplateProcess     (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> target,
-                                             <GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
 > cur);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Do a copy of an attribute list with attribute template processing</P
+>parse an XSLT transformation variable declaration and record
+its value.</P
 ><P
 ></P
 ><DIV
@@ -907,31 +603,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->ctxt</I
+>style</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->target</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the element where the attributes will be grafted</TD
+>  the XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -948,22 +627,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the first attribute</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
-> a new xmlAttrPtr, or NULL in case of error.</TD
+>  the "variable" element</TD
 ></TR
 ></TABLE
 ><P
@@ -973,13 +637,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN619"
+NAME="AEN2050"
 ></A
 ><H3
 ><A
-NAME="XSLTATTRTEMPLATEPROCESS"
+NAME="XSLTPARSEGLOBALPARAM"
 ></A
->xsltAttrTemplateProcess ()</H3
+>xsltParseGlobalParam ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -989,26 +653,105 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
->  xsltAttrTemplateProcess         (<A
+>void        xsltParseGlobalParam            (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> style,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> cur);</PRE
+></TD
+></TR
+></TABLE
+><P
+>parse an XSLT transformation param declaration and record
+its value.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the XSLT stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>cur</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the "param" element</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2071"
+></A
+><H3
+><A
+NAME="XSLTPARSESTYLESHEETVARIABLE"
+></A
+>xsltParseStylesheetVariable ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltParseStylesheetVariable     (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> target,
-                                             <GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
-> attr);</PRE
+> cur);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Process the given attribute and return the new processed copy.</P
+>parse an XSLT transformation variable declaration and record
+its value.</P
 ><P
 ></P
 ><DIV
@@ -1047,46 +790,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->target</I
+>cur</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the result node</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->attr</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->the attribute replacement.</TD
+>  the "variable" element</TD
 ></TR
 ></TABLE
 ><P
@@ -1096,13 +807,161 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN650"
+NAME="AEN2092"
 ></A
 ><H3
 ><A
-NAME="XSLTATTRTEMPLATEVALUEPROCESS"
+NAME="XSLTPARSESTYLESHEETPARAM"
 ></A
->xsltAttrTemplateValueProcess ()</H3
+>xsltParseStylesheetParam ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltParseStylesheetParam        (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> cur);</PRE
+></TD
+></TR
+></TABLE
+><P
+>parse an XSLT transformation param declaration and record
+its value.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the XSLT transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>cur</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the "param" element</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2113"
+></A
+><H3
+><A
+NAME="XSLTFREEVARIABLEHASHES"
+></A
+>xsltFreeVariableHashes ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltFreeVariableHashes          (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Free up the memory used by xsltAddVariable/xsltGetVariable mechanism</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> an XSLT transformation context</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2129"
+></A
+><H3
+><A
+NAME="XSLTVARIABLELOOKUP"
+></A
+>xsltVariableLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1113,21 +972,161 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 ><GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
->*    xsltAttrTemplateValueProcess    (<A
+HREF="XMLXPATHOBJECTPTR"
+>xmlXPathObjectPtr</GTKDOCLINK
+> xsltVariableLookup        (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *attr);</PRE
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns_uri);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Process the given node and return the new string value.</P
+>This is the entry point when a varibale is needed by the XPath
+interpretor.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a void * but the the XSLT transformation context actually</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the variable name</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ns_uri</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the variable namespace URI</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the value or NULL if not found</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2160"
+></A
+><H3
+><A
+NAME="XSLTREGISTERVARIABLE"
+></A
+>xsltRegisterVariable ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltRegisterVariable            (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns_uri,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *select,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> tree,
+                                             int param);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Register a new variable value. If <TT
+CLASS="PARAMETER"
+><I
+>value</I
+></TT
+> is NULL it unregisters
+the variable</P
 ><P
 ></P
 ><DIV
@@ -1166,7 +1165,193 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->attr</I
+>name</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the variable name</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ns_uri</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the variable namespace URI</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>select</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the expression which need to be evaluated to generate a value</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>tree</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the tree if select is NULL</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>param</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  this is a parameter actually</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>0 in case of success, -1 in case of error</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2205"
+></A
+><H3
+><A
+NAME="XSLTXPATHVARIABLELOOKUP"
+></A
+>xsltXPathVariableLookup ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><GTKDOCLINK
+HREF="XMLXPATHOBJECTPTR"
+>xmlXPathObjectPtr</GTKDOCLINK
+> xsltXPathVariableLookup   (void *ctxt,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns_uri);</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ns_uri</I
 ></TT
 >&nbsp;:</TD
 ><TD
@@ -1188,8 +1373,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the computed string value or NULL, must be deallocated by the
-caller.</TD
+>&#13;</TD
 ></TR
 ></TABLE
 ><P
@@ -1212,7 +1396,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-pattern.html"
+HREF="libxslt-namespaces.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -1265,16 +1449,7 @@ SIZE="3"
 WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
-><A
-HREF="libxslt-transform.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -1284,19 +1459,13 @@ ALIGN="left"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->pattern</B
+>namespaces</B
 ></FONT
 ></TD
 ><TD
 COLSPAN="2"
 ALIGN="right"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->transform</B
-></FONT
-></TD
+>&nbsp;</TD
 ></TR
 ></TABLE
 ></DIV
