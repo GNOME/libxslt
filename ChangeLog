@@ -1,3 +1,9 @@
+Sat Jun 29 21:12:14 MDT 2002 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.xml, doc/xsltproc.html/, doc/xsltproc.1
+	updating docs to add reference to UTF-8 requirement for
+	stringparam command line option
+
 Wed Jun 19 13:43:00 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/documents.c libxslt/functions.c libxslt/xsltInternals.h:
