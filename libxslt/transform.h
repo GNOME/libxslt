@@ -67,7 +67,7 @@ void 		xsltValueOf		(xsltTransformContextPtr ctxt,
 					 xsltStylePreCompPtr comp);
 void 		xsltNumber		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr cur,
+					 xmlNodePtr inst,
 					 xsltStylePreCompPtr comp);
 void 		xsltApplyImports	(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,

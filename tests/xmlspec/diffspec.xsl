@@ -44,7 +44,7 @@
 
 <xsl:import href="xmlspec.xsl"/>
 
-<xsl:param name="show.diff.markup">1</xsl:param>
+<xsl:param name="show.diff.markup">0</xsl:param>
 
 <xsl:param name="additional.css">
 <xsl:if test="$show.diff.markup = '1'">
