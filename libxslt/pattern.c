@@ -702,6 +702,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    if (sibling == previous)
 				break;
 			    if ((node->type == XML_ELEMENT_NODE) &&
+				(node->name != NULL) &&
+				(sibling->name != NULL) &&
 				(node->name[0] == sibling->name[0]) &&
 				(xmlStrEqual(node->name, sibling->name))) {
 				if ((select->value2 == NULL) ||
@@ -756,8 +758,10 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 				if (siblings == node) {
 				    len++;
 				    pos = len;
-				} else if ((node->name[0] == siblings->name[0])
-			       && (xmlStrEqual(node->name, siblings->name))) {
+				} else if ((node->name != NULL) &&
+					   (siblings->name != NULL) &&
+				    (node->name[0] == siblings->name[0]) &&
+				    (xmlStrEqual(node->name, siblings->name))) {
 				    if ((select->value2 == NULL) ||
 					((siblings->ns != NULL) &&
 					 (xmlStrEqual(select->value2,
