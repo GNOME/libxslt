@@ -1,3 +1,8 @@
+Thu Nov 21 15:12:33 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* tests/documents/result.xhtml: the XHTML1 serialization change
+	  to libxml2 modifies slightly the result of that test.
+
 Mon Nov 18 11:38:46 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: the python bindings requires libxml2 >= 2.4.25
