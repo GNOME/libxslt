@@ -389,7 +389,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    }
 	    if ((cur != NULL) && (cur->name != NULL)) {
 		xmlOutputBufferWriteString(buf, "<!DOCTYPE ");
-		xmlOutputBufferWriteString(buf, cur->name);
+		xmlOutputBufferWriteString(buf, (const char *) cur->name);
 		if (doctypePublic != NULL) {
 		    if (doctypeSystem != NULL) {
 			xmlOutputBufferWriteString(buf, " PUBLIC ");

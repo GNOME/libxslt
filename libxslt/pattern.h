@@ -15,6 +15,25 @@
 extern "C" {
 #endif
 
+/*
+ * The implementation of patterns is kept private
+ */
+typedef struct _xsltCompMatch xsltCompMatch;
+typedef xsltCompMatch *xsltCompMatchPtr;
+
+/*
+ * Pattern related interfaces
+ */
+
+xsltCompMatchPtr xsltCompilePattern	(const xmlChar *pattern);
+void		 xsltFreeCompMatchList	(xsltCompMatchPtr comp);
+int		 xsltTestCompMatchList	(xsltTransformContextPtr ctxt,
+					 xmlNodePtr node,
+					 xsltCompMatchPtr comp);
+
+/*
+ * Template related interfaces
+ */
 int		xsltAddTemplate		(xsltStylesheetPtr style,
 					 xsltTemplatePtr cur,
 					 const xmlChar *mode,

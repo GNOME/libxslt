@@ -62,8 +62,6 @@ struct _xsltStepOp {
     xmlChar *value3;
 };
 
-typedef struct _xsltCompMatch xsltCompMatch;
-typedef xsltCompMatch *xsltCompMatchPtr;
 struct _xsltCompMatch {
     struct _xsltCompMatch *next; /* siblings in the name hash */
     float priority;              /* the priority */
@@ -94,15 +92,13 @@ struct _xsltParserContext {
 
 /**
  * xsltNewCompMatch:
- * @mode:  the mode name or NULL
- * @modeURI:  the mode URI or NULL
  *
  * Create a new XSLT CompMatch
  *
  * Returns the newly allocated xsltCompMatchPtr or NULL in case of error
  */
 xsltCompMatchPtr
-xsltNewCompMatch(const xmlChar *mode, const xmlChar *modeURI) {
+xsltNewCompMatch(void) {
     xsltCompMatchPtr cur;
 
     cur = (xsltCompMatchPtr) xmlMalloc(sizeof(xsltCompMatch));
@@ -113,8 +109,6 @@ xsltNewCompMatch(const xmlChar *mode, const xmlChar *modeURI) {
     }
     memset(cur, 0, sizeof(xsltCompMatch));
     cur->maxStep = 20;
-    cur->mode = xmlStrdup(mode);
-    cur->modeURI = xmlStrdup(modeURI);
     return(cur);
 }
 
@@ -573,6 +567,32 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	}
     }
     return(1);
+}
+
+/**
+ * xsltTestCompMatchList:
+ * @ctxt:  a XSLT process context
+ * @node: a node
+ * @comp: the precompiled pattern list
+ *
+ * Test wether the node matches one of the patterns in the list
+ *
+ * Returns 1 if it matches, 0 if it doesn't and -1 in case of failure
+ */
+int
+xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	              xsltCompMatchPtr comp) {
+    int ret;
+
+    if ((ctxt == NULL) || (node == NULL))
+	return(-1);
+    while (comp != NULL) {
+	ret = xsltTestCompMatch(ctxt, comp, node, NULL, NULL);
+	if (ret == 1)
+	    return(1);
+	comp = comp->next;
+    }
+    return(0);
 }
 
 /************************************************************************
@@ -1096,22 +1116,17 @@ error:
 /**
  * xsltCompilePattern:
  * @pattern an XSLT pattern
- * @mode:  the mode name or NULL
- * @modeURI:  the mode URI or NULL
  *
- * Compile the XSLT pattern and generates a precompiled form suitable
+ * Compile the XSLT pattern and generates a list of precompiled form suitable
  * for fast matching.
- * Note that the splitting as union of patterns is expected to be handled
- * by the caller
  *
  * [1] Pattern ::= LocationPathPattern | Pattern '|' LocationPathPattern
  *
- * Returns the generated xsltCompMatchPtr or NULL in case of failure
+ * Returns the generated pattern list or NULL in case of failure
  */
 
 xsltCompMatchPtr
-xsltCompilePattern(const xmlChar *pattern, const xmlChar *mode,
-	           const xmlChar *modeURI) {
+xsltCompilePattern(const xmlChar *pattern) {
     xsltParserContextPtr ctxt = NULL;
     xsltCompMatchPtr element, first = NULL, previous = NULL;
     int current, start, end;
@@ -1143,7 +1158,7 @@ xsltCompilePattern(const xmlChar *pattern, const xmlChar *mode,
 			     "xsltCompilePattern : NULL pattern\n");
 	    goto error;
 	}
-	element = xsltNewCompMatch(mode, modeURI);
+	element = xsltNewCompMatch();
 	if (element == NULL) {
 	    goto error;
 	}
@@ -1214,7 +1229,6 @@ error:
     return(NULL);
 }
 
-
 /************************************************************************
  *									*
  *			Module interfaces				*
@@ -1241,12 +1255,16 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
     if ((style == NULL) || (cur == NULL) || (cur->match == NULL))
 	return(-1);
 
-    pat = xsltCompilePattern(cur->match, mode, modeURI);
+    pat = xsltCompilePattern(cur->match);
     while (pat) {
 	next = pat->next;
 	pat->next = NULL;
 	
 	pat->template = cur;
+	if (mode != NULL)
+	    pat->mode = xmlStrdup(mode);
+	if (modeURI != NULL)
+	    pat->modeURI = xmlStrdup(modeURI);
 	if (pat->priority != XSLT_PAT_NO_PRIORITY)
 	    cur->priority = pat->priority;
 	else
@@ -1574,7 +1592,7 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
 }
 
 /**
- * xsltMatchTemplate
+ * xsltMatchPattern
  * @node: a node in the source tree
  * @pattern: an XSLT pattern
  *
@@ -1589,7 +1607,7 @@ xsltMatchPattern(xsltTransformContextPtr context,
     xsltCompMatchPtr first, comp;
 
     if ((context != NULL) && (pattern != NULL)) {
-	first = xsltCompilePattern(pattern, NULL, NULL);
+	first = xsltCompilePattern(pattern);
 	for (comp = first; comp != NULL; comp = comp->next) {
 	    match = xsltTestCompMatch(context, comp, node, NULL, NULL);
 	    if (match)
@@ -1600,3 +1618,4 @@ xsltMatchPattern(xsltTransformContextPtr context,
     }
     return match;
 }
+

@@ -404,7 +404,17 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
     xmlNodePtr ancestor;
     xmlNodePtr preceding;
     xmlXPathParserContextPtr parser;
+    xsltCompMatchPtr countPat;
+    xsltCompMatchPtr fromPat;
 
+    if (count != NULL)
+	countPat = xsltCompilePattern(count);
+    else
+	countPat = NULL;
+    if (from != NULL)
+	fromPat = xsltCompilePattern(from);
+    else
+	fromPat = NULL;
     context->xpathCtxt->node = node;
     parser = xmlXPathNewParserContext(NULL, context->xpathCtxt);
     if (parser) {
@@ -413,7 +423,7 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 	     preceding != NULL;
 	     preceding = xmlXPathNextPreceding(parser, preceding)) {
 	    if ((from != NULL) &&
-		xsltMatchPattern(context, preceding, from)) {
+		xsltTestCompMatchList(context, preceding, fromPat)) {
 		keep_going = FALSE;
 		break; /* for */
 	    }
@@ -423,7 +433,7 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 		    xmlStrEqual(node->name, preceding->name))
 		    cnt++;
 	    } else {
-		if (xsltMatchPattern(context, preceding, count))
+		if (xsltTestCompMatchList(context, preceding, countPat))
 		    cnt++;
 	    }
 	}
@@ -434,7 +444,7 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 		 ancestor != NULL;
 		 ancestor = xmlXPathNextAncestor(parser, ancestor)) {
 		if ((from != NULL) &&
-		    xsltMatchPattern(context, ancestor, from)) {
+		    xsltTestCompMatchList(context, ancestor, fromPat)) {
 		    break; /* for */
 		}
 		if (count == NULL) {
@@ -443,13 +453,15 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			xmlStrEqual(node->name, ancestor->name))
 			cnt++;
 		} else {
-		    if (xsltMatchPattern(context, ancestor, count))
+		    if (xsltTestCompMatchList(context, ancestor, countPat))
 			cnt++;
 		}
 	    }
 	}
 	array[amount++] = (double)cnt;
     }
+    xsltFreeCompMatchList(countPat);
+    xsltFreeCompMatchList(fromPat);
     return amount;
 }
 
@@ -466,7 +478,17 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
     xmlNodePtr ancestor;
     xmlNodePtr preceding;
     xmlXPathParserContextPtr parser;
+    xsltCompMatchPtr countPat;
+    xsltCompMatchPtr fromPat;
 
+    if (count != NULL)
+	countPat = xsltCompilePattern(count);
+    else
+	countPat = NULL;
+    if (from != NULL)
+	fromPat = xsltCompilePattern(from);
+    else
+	fromPat = NULL;
     context->xpathCtxt->node = node;
     parser = xmlXPathNewParserContext(NULL, context->xpathCtxt);
     if (parser) {
@@ -476,23 +498,25 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 	     ancestor = xmlXPathNextAncestor(parser, ancestor)) {
 	    
 	    if ((from != NULL) &&
-		xsltMatchPattern(context, ancestor, from))
+		xsltTestCompMatchList(context, ancestor, fromPat))
 		break; /* for */
 	    
 	    if ((count == NULL) ||
-		xsltMatchPattern(context, ancestor, count)) {
+		xsltTestCompMatchList(context, ancestor, countPat)) {
 		/* count(preceding-sibling::*) */
 		cnt = 0;
 		for (preceding = ancestor;
 		     preceding != NULL;
-		     preceding = xmlXPathNextPrecedingSibling(parser, preceding)) {
+		     preceding = 
+		        xmlXPathNextPrecedingSibling(parser, preceding)) {
 		    if (count == NULL) {
 			if ((preceding->type == ancestor->type) &&
 			    /* FIXME */
 			    xmlStrEqual(preceding->name, ancestor->name))
 			    cnt++;
 		    } else {
-			if (xsltMatchPattern(context, preceding, count))
+			if (xsltTestCompMatchList(context, preceding,
+				                  countPat))
 			    cnt++;
 		    }
 		}
@@ -503,6 +527,8 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 	}
 	xmlXPathFreeParserContext(parser);
     }
+    xsltFreeCompMatchList(countPat);
+    xsltFreeCompMatchList(fromPat);
     return amount;
 }
 
@@ -573,7 +599,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 	
     } else if (data->level) {
 	
-	if (xmlStrEqual(data->level, "single")) {
+	if (xmlStrEqual(data->level, (const xmlChar *) "single")) {
 	    amount = xsltNumberFormatGetMultipleLevel(ctxt,
 						      node,
 						      data->count,
@@ -588,7 +614,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 					      array_amount,
 					      output);
 	    }
-	} else if (xmlStrEqual(data->level, "multiple")) {
+	} else if (xmlStrEqual(data->level, (const xmlChar *) "multiple")) {
 	    double numarray[1024];
 	    int max = sizeof(numarray)/sizeof(numarray[0]);
 	    amount = xsltNumberFormatGetMultipleLevel(ctxt,
@@ -605,7 +631,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 					      array_amount,
 					      output);
 	    }
-	} else if (xmlStrEqual(data->level, "any")) {
+	} else if (xmlStrEqual(data->level, (const xmlChar *) "any")) {
 	    amount = xsltNumberFormatGetAnyLevel(ctxt,
 						 node,
 						 data->count,

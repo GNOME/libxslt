@@ -24,6 +24,9 @@ xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
 void xmlXPathBooleanFunction(xmlXPathParserContextPtr ctxt, int nargs);
 xmlAttrPtr xmlSetNsProp	(xmlNodePtr node, xmlNsPtr ns, const xmlChar *name,
 			 const xmlChar *value);
+xmlNodePtr xmlXPathNextPreceding(xmlXPathParserContextPtr ctxt, xmlNodePtr cur);
+xmlNodePtr xmlXPathNextAncestor(xmlXPathParserContextPtr ctxt, xmlNodePtr cur);
+xmlNodePtr xmlXPathNextPrecedingSibling(xmlXPathParserContextPtr ctxt, xmlNodePtr cur);
 /*********
 void xmlXPathRegisterVariableLookup(xmlXPathContextPtr ctxt,
 	             xmlXPathVariableLookupFunc f, void *data)

@@ -1,3 +1,12 @@
+Thu Feb 15 12:41:44 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.[ch]: exported pattern matching interfaces
+	  for numbers.c and future debug module
+	* libxslt/numbers.c: updated to new interface, should avoid
+	  unnecessary recompilation of patterns.
+	* libxslt/xsltutils.[ch]: cleanup
+	* tests/REC/gmon.out: removed :-)
+
 Wed Feb 14 19:13:33 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* libxslt/numbers.c: implemented level=any
