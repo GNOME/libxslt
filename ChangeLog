@@ -1,3 +1,13 @@
+Thu Nov 20 00:22:14 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c: fixed a bug in the keys selector parsing
+	  #120684 when | is in a predicate or a string.
+	* tests/docs/Makefile.am tests/docs/bug-132.xml
+	  tests/general/Makefile.am tests/docs/bug-132*: added tests
+	  to the regression suite for bug #120684.
+	* Makefile.am: don't package cvs temp files
+	* doc/apibuild.py: update from libxml2 one
+
 Tue Nov 18 13:42:12 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/strings.c: fixed entity problem in exslt:tokenize

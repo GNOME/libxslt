@@ -13,7 +13,7 @@ confexec_DATA = xsltConf.sh
 
 bin_SCRIPTS = xslt-config
 
-dist-hook: libxslt.spec
+dist-hook: cleanup libxslt.spec
 	(cd $(srcdir) ; tar -cf - --exclude CVS win32 vms) | (cd $(distdir); tar xf -)
 
 EXTRA_DIST = xsltConf.sh.in xslt-config.in libxslt.spec libxslt.spec.in \
@@ -49,6 +49,9 @@ valgrind:
 	@echo '## Running the regression tests under Valgrind'
 	@echo '## Go get a cup of coffee it is gonna take a while ...'
 	@(cd tests ; $(MAKE) CHECKER='valgrind -q' tests)
+
+cleanup:
+	-@(find . -name .\#\* -exec rm {} \;)
 
 cleantar:
 	@(rm -f libxslt*.tar.gz)

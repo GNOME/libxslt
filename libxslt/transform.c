@@ -3211,6 +3211,10 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		(list->nodeTab[i]->doc->URL != NULL)) {
 		ctxt->document = xsltFindDocument(ctxt,
 			            list->nodeTab[i]->doc->doc);
+		if (ctxt->document == NULL) {
+		    /* restore the previous context */
+		    ctxt->document = oldCDocPtr;
+		}
 		ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		if ((ctxt->document != NULL) &&
@@ -3577,6 +3581,10 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		(list->nodeTab[i]->doc->URL != NULL)) {
 		ctxt->document = xsltFindDocument(ctxt,
 			            list->nodeTab[i]->doc->doc);
+		if (ctxt->document == NULL) {
+		    /* restore the previous context */
+		    ctxt->document = oldCDocPtr;
+		}
 		ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		if ((ctxt->document != NULL) &&

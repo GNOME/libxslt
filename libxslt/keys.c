@@ -217,6 +217,58 @@ xsltFreeKeys(xsltStylesheetPtr style) {
 }
 
 /**
+ * skipString:
+ * @cur: the current pointer
+ * @end: the current offset
+ *
+ * skip a string delimited by " or '
+ *
+ * Returns the byte after the string or -1 in case of error
+ */
+static int
+skipString(const xmlChar *cur, int end) {
+    xmlChar limit;
+
+    if ((cur == NULL) || (end < 0)) return(-1);
+    if ((cur[end] == '\'') || (cur[end] == '"')) limit = cur[end];
+    else return(end);
+    end++;
+    while (cur[end] != 0) {
+        if (cur[end] == limit)
+	    return(end + 1);
+	end++;
+    }
+    return(-1);
+}
+
+/**
+ * skipPredicate:
+ * @cur: the current pointer
+ * @end: the current offset
+ *
+ * skip a predicate
+ *
+ * Returns the byte after the predicate or -1 in case of error
+ */
+static int
+skipPredicate(const xmlChar *cur, int end) {
+    if ((cur == NULL) || (end < 0)) return(-1);
+    if (cur[end] != '[') return(end);
+    end++;
+    while (cur[end] != 0) {
+        if ((cur[end] == '\'') || (cur[end] == '"')) {
+	    end = skipString(cur, end);
+	    if (end <= 0)
+	        return(-1);
+	}
+        if (cur[end] == ']')
+	    return(end + 1);
+	end++;
+    }
+    return(-1);
+}
+
+/**
  * xsltAddKey:
  * @style: an XSLT stylesheet
  * @name:  the key name or NULL
@@ -260,11 +312,18 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	    current++;
 	end = current;
 	while ((match[end] != 0) && (match[end] != '|')) {
+	    if (match[end] == '[') {
+	        end = skipPredicate(match, end);
+		if (end <= 0)
+		    xsltTransformError(NULL, style, inst,
+		                       "key pattern is malformed: %s",
+				       key->match);
+	    }
 	    end++;
 	}
 	if (current == end) {
 	    xsltTransformError(NULL, style, inst,
-			     "key pattern is empty\n");
+			       "key pattern is empty\n");
 	    if (style != NULL) style->errors++;
 	    goto error;
 	}
