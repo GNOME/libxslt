@@ -1,3 +1,8 @@
+Tue Sep  2 18:22:46 PDT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* transform.c: fixing bug #120684 on crash caused by text between
+	  apply-templates
+
 Tue Sep  2 16:05:37 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/xsltexports.h libexslt/exsltexports.h: defined additional 

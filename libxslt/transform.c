@@ -1131,6 +1131,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		copy = xmlCopyNode(cur, 0);
 		if (copy != NULL) {
 		    xmlAddChild(ctxt->insert, copy);
+		    ctxt->lasttext = NULL;	/* AddChild may truncate buf */
 		} else {
 		    xsltTransformError(ctxt, NULL, node,
 		     "xsltDefaultProcessOneNode: text copy failed\n");
@@ -1311,7 +1312,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xsltStackElemPtr params) {
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
-
+    
     template = xsltGetTemplate(ctxt, node, NULL);
     /*
      * If no template is found, apply the default rule.
