@@ -1,3 +1,10 @@
+Sat Feb  9 19:04:01 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libxslt.spec.in python/Makefile.am python/generator.py
+	  python/libxsl.py python/libxslt.c python/tests/Makefile.am:
+	  Fixed the python Makefiles, corrected a bug showing up on ia64,
+	  changed the name of the python internal module too
+
 Fri Feb  8 17:01:10 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* Copyright Makefile.am configure.in libxslt.spec.in: change the

@@ -1,5 +1,5 @@
-import _libxml
-import _libxslt
+import libxml2mod
+import libxsltmod
 import libxml2
 
 #

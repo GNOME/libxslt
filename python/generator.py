@@ -382,7 +382,7 @@ def print_function_wrapper(name, output, export, include):
     include.write("PyObject * ")
     include.write("libxslt_%s(PyObject *self, PyObject *args);\n" % (name))
 
-    export.write("    { \"%s\", libxslt_%s, METH_VARARGS },\n" % (name, name))
+    export.write("    { \"%s\", libxslt_%s, METH_VARARGS, NULL },\n" % (name, name))
 
     if file == "python":
         # Those have been manually generated
@@ -746,7 +746,7 @@ if function_classes.has_key("None"):
 	    classes.write("    ret = ");
 	else:
 	    classes.write("    ");
-	classes.write("_libxslt.%s(" % name)
+	classes.write("libxsltmod.%s(" % name)
 	n = 0
 	for arg in args:
 	    if n != 0:
@@ -805,7 +805,7 @@ for classname in classes_list:
 		classes.write("        pass\n")
 	    else:
 		classes.write("        if self._o != None:\n")
-		classes.write("            _libxslt.%s(self._o)\n" %
+		classes.write("            libxsltmod.%s(self._o)\n" %
 			      classes_destructors[classname]);
 		classes.write("        self._o = None\n\n");
 	flist = function_classes[classname]
@@ -852,7 +852,7 @@ for classname in classes_list:
 	        classes.write("        ret = ");
 	    else:
 	        classes.write("        ");
-	    classes.write("_libxslt.%s(" % name)
+	    classes.write("libxsltmod.%s(" % name)
 	    n = 0
 	    for arg in args:
 	        if n != 0:

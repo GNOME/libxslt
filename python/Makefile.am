@@ -1,11 +1,15 @@
+# Makefile for libxml2 python library
+AUTOMAKE_OPTIONS = 1.4 foreign
+
 SUBDIRS= . tests
 
-LIBS=-L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt # $(PYTHON_SITE_PACKAGES)/_libxml.so  $(LIBXML_LIBS)
-INCLUDES=-I/usr/include/python$(PYTHON_VERSION) -I$(PYTHON_INCLUDES) $(LIBXML_CFLAGS) -I$(top_srcdir)
-SHCFLAGS=$(INCLUDES) -Wall -fPIC -g
-LINK_FLAGS= -shared
-DOCS_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXML_VERSION)
+INCLUDES = \
+	-I/usr/include/python$(PYTHON_VERSION) \
+	-I$(PYTHON_INCLUDES) \
+	 $(LIBXML_CFLAGS) \
+	-I$(top_srcdir)
 
+DOCS_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXML_VERSION)
 DOCS = TODO libxsltclass.txt
 
 EXTRA_DIST = 			\
@@ -19,37 +23,39 @@ EXTRA_DIST = 			\
 	$(DOCS)
 
 if WITH_PYTHON
-all: _libxslt.so libxslt.py $(PYTHONSODV)
+mylibs = \
+	$(top_builddir)/libxslt/libxslt.la \
+	$(top_builddir)/libexslt/libexslt.la
+
+all: libxsltmod.so libxslt.py $(PYTHONSODV)
+
+LDADD = -lxslt -lexslt
+CFLAGS = -Wall -g
+
+pythondir = $(prefix)/lib/python${PYTHON_VERSION}/site-packages
+python_PROGRAMS = libxsltmod.so
+
+libxsltmod_so_SOURCES =
+libxsltmod_so_LDFLAGS = $(mylibs) $(LIBS) -shared -Wl,-soname,libxsltmod.so
+
+noinst_LTLIBRARIES = libxsltmodule.la
+libxsltmodule_la_SOURCES = libxslt.c types.c libxslt-py.c
+
+libxsltmod.so: $(libxsltmodule_la_OBJECTS)
+	-@rm -f .libs/libxsltmod.so
+	$(LINK) -o $@ $(libxsltmodule_la_OBJECTS) $(libxsltmod_so_LDFLAGS)
+	-@(if [ -r .libs/libxsltmod.so ] ; then cp .libs/libxsltmod.so . ; fi)
+
 
 libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
 	cat $(srcdir)/libxsl.py libxsltclass.py > libxslt.py
 
-_libxslt.so: libxslt.o libxslt-py.o types.o
-	$(CC) $(LINK_FLAGS) libxslt.o libxslt-py.o types.o $(LIBS) -o _libxslt.so
-
-_libxslt.so.dv: libxslt.o libxslt-py.o types.o
-	rm -f _libxslt.so
-	$(CC) $(LINK_FLAGS) -o _libxslt.so libxslt.o libxslt-py.o types.o -L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt # $(HOME)/XML/python/_libxml.so $(HOME)/XML/.libs/libxml2.a
-
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(PYTHON_SITE_PACKAGES)
 	-@INSTALL@ -m 0644 libxslt.py $(DESTDIR)$(PYTHON_SITE_PACKAGES)
-	-@INSTALL@ -m 0755 _libxslt.so $(DESTDIR)$(PYTHON_SITE_PACKAGES)
 	$(mkinstalldirs) $(DESTDIR)$(DOCS_DIR)
 	-@(for doc in $(DOCS) ; \
 	   do @INSTALL@ -m 0644 $$doc $(DESTDIR)$(DOCS_DIR) ; done)
-else
-all: 
-endif
-
-libxslt.o: libxslt.c libxslt-export.c libxslt_wrap.h
-	$(CC) $(SHCFLAGS) -c -o libxslt.o $(srcdir)/libxslt.c
-
-types.o: types.c libxslt_wrap.h
-	$(CC) $(SHCFLAGS) -c -o types.o $(srcdir)/types.c
-
-libxslt-py.o: libxslt-py.c libxslt-py.h libxslt_wrap.h
-	$(CC) $(SHCFLAGS) -c -o libxslt-py.o $(srcdir)/libxslt-py.c
 
 GENERATE = generator.py
 API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml
@@ -61,10 +67,13 @@ GENERATED= $(srcdir)/libxsltclass.py \
 $(GENERATED): $(srcdir)/$(GENERATE) $(API_DESC)
 	cd $(srcdir) && $(PYTHON) $(GENERATE)
 
+else
+all: 
+endif
 tests test: all
 	cd tests && $(MAKE) tests
 
 clean:
-	rm -f $(GENERATED) *.o _libxslt.so *.pyc libxslt.py
+	rm -f $(GENERATED) *.o libxslt.so *.pyc libxslt.py
 
 

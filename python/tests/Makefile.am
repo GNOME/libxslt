@@ -1,4 +1,4 @@
-EXAMPLE_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXML_VERSION)/examples
+EXAMPLE_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXSLT_VERSION)/examples
 
 TESTSPY=	\
     basic.py	\
@@ -11,7 +11,7 @@ XMLS=		\
 EXTRAS=		\
     pyxsltproc.py
 
-EXTRA_DIST = $(TESTSPY) $(XMLS)
+EXTRA_DIST = $(TESTSPY) $(XMLS) $(EXTRAS)
 
 if WITH_PYTHON
 tests: $(TESTSPY)

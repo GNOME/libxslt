@@ -10,6 +10,7 @@ URL: http://xmlsoft.org/XSLT/
 Requires: libxml2 >= @LIBXML_REQUIRED_VERSION@
 BuildRequires: libxml2-devel >= @LIBXML_REQUIRED_VERSION@
 BuildRequires: python python-devel
+BuildRequires: libxml2-python
 Prefix: %{_prefix}
 Docdir: %{_docdir}
 
@@ -130,10 +131,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %doc AUTHORS ChangeLog NEWS README Copyright FEATURES
 %{prefix}/lib/python*/site-packages/libxslt.py
-%{prefix}/lib/python*/site-packages/_libxslt.so
+%{prefix}/lib/python*/site-packages/libxsltmod.so
 %doc python/TODO
 %doc python/libxsltclass.txt
 %doc python/tests/*.py
+%doc python/tests/*.xml
+%doc python/tests/*.xsl
 
 
 %changelog

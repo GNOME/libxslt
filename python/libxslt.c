@@ -349,11 +349,12 @@ libxslt_xsltCleanup(PyObject *self, PyObject *args) {
  ************************************************************************/
 static PyMethodDef libxsltMethods[] = {
 #include "libxslt-export.c"
+    { NULL, NULL, NULL, NULL }
 };
 
-void init_libxslt(void) {
+void initlibxsltmod(void) {
     PyObject *m;
-    m = Py_InitModule("_libxslt", libxsltMethods);
+    m = Py_InitModule("libxsltmod", libxsltMethods);
     /* libxslt_xmlErrorInitialize(); */
     /*
      * Specific XSLT initializations
