@@ -634,8 +634,6 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return(NULL);
     switch (node->type) {
         case XML_ELEMENT_NODE:
-        case XML_TEXT_NODE:
-        case XML_CDATA_SECTION_NODE:
         case XML_ENTITY_REF_NODE:
         case XML_ENTITY_NODE:
         case XML_PI_NODE:
@@ -646,6 +644,9 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
         case XML_DOCB_DOCUMENT_NODE:
 #endif
 	    break;
+        case XML_TEXT_NODE:
+        case XML_CDATA_SECTION_NODE:
+	    return(xsltCopyTextString(ctxt, insert, node->content, 0));
         case XML_ATTRIBUTE_NODE:
 	    return((xmlNodePtr)
 		   xsltCopyProp(ctxt, insert, (xmlAttrPtr) node));

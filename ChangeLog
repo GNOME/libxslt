@@ -1,3 +1,11 @@
+Tue Nov 12 22:35:47 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixes bug #97950 for cdata-section-elements
+	  checks in recursive copies.
+	* tests/docs/Makefile.am tests/docs/bug-96.xml
+	  tests/general/Makefile.am tests/general/bug-96.*: added the
+	  example in the regression tests for this case
+
 Tue Nov 12 19:31:49 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.c: autoconvert key() first arg to string,
