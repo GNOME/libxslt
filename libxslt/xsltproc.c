@@ -220,11 +220,21 @@ main(int argc, char **argv) {
 		gettimeofday(&begin, NULL);
 	    if (repeat) {
 		int j;
-		for (j = 0;j < repeat; j++) {
+		for (j = 1;j < repeat; j++) {
 		    res = xsltApplyStylesheet(cur, doc, params);
 		    xmlFreeDoc(res);
 		    xmlFreeDoc(doc);
-		    doc = xmlParseFile(argv[i]);
+#ifdef LIBXML_HTML_ENABLED
+		    if (html)
+			doc = htmlParseFile(argv[i], NULL);
+		    else
+#endif
+#ifdef LIBXML_HTML_ENABLED
+		    if (docbook)
+			doc = docbParseFile(argv[i], NULL);
+		    else
+#endif
+			doc = xmlParseFile(argv[i]);
 		}
 	    }
 	    res = xsltApplyStylesheet(cur, doc, params);

@@ -24,6 +24,12 @@ EXTRA_DIST =	\
 	bug-17-.xml \
 	bug-18-.xml \
 	bug-19-.xml \
+	bug-20-.xml \
+	bug-21-.xml \
+	bug-22-.xml \
+	bug-23-.xml \
+	bug-24-.xml \
+	bug-25-.xml \
 	character.xml \
 	items.xml
 

@@ -1,3 +1,14 @@
+Tue May  8 16:18:19 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/xslt.html: fixed a link error
+	* libxslt/transform.c libxslt/xsltutils.c: fixed DOCTYPE generation
+	* libxslt/xsltproc.c: cleaned up the --repeat loop
+	* tests/documents/result.xhtml tests/xmlspec/REC-xml-20001006*.html:
+	  fixed the DOCTYPE in tests output
+	* tests/docs/bug-25-.xml tests/doc/Makefile.am 
+	  tests/general/bug-25-.* tests/general/Makefile.am : added a new
+	  test case and fixed the EXTRA_DIST
+
 Mon May  7 22:27:03 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/extra.c: add more debug to xsltDebug

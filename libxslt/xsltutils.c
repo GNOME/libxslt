@@ -503,7 +503,6 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
         return(-1);
     }
 
-    /* TODO: when outputing and having imported stylesheets, apply cascade */
     base = buf->written;
 
     XSLT_GET_IMPORT_PTR(method, style, method)
@@ -545,15 +544,11 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	int standalone;
 	int indent;
 	const xmlChar *version;
-	const xmlChar *doctypePublic;
-	const xmlChar *doctypeSystem;
 
 	XSLT_GET_IMPORT_INT(omitXmlDecl, style, omitXmlDeclaration);
 	XSLT_GET_IMPORT_INT(standalone, style, standalone);
 	XSLT_GET_IMPORT_INT(indent, style, indent);
 	XSLT_GET_IMPORT_PTR(version, style, version)
-	XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
-	XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
 
 	if (omitXmlDecl != 1) {
 	    xmlOutputBufferWriteString(buf, "<?xml version=");
@@ -584,39 +579,6 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 		    break;
 	    }
 	    xmlOutputBufferWriteString(buf, "?>\n");
-	}
-	if ((doctypePublic != NULL) || (doctypeSystem != NULL)) {
-	    xmlNodePtr cur = result->children;
-
-	    while (cur != NULL) {
-		if (cur->type == XML_ELEMENT_NODE)
-		    break;
-		cur = cur->next;
-	    }
-	    if ((cur != NULL) && (cur->name != NULL)) {
-		xmlOutputBufferWriteString(buf, "<!DOCTYPE ");
-		xmlOutputBufferWriteString(buf, (const char *) cur->name);
-		if (doctypePublic != NULL) {
-		    if (doctypeSystem != NULL) {
-			xmlOutputBufferWriteString(buf, " PUBLIC ");
-			xmlBufferWriteQuotedString(buf->buffer,
-				         doctypePublic);
-			xmlOutputBufferWriteString(buf, " ");
-			xmlBufferWriteQuotedString(buf->buffer,
-				         doctypeSystem);
-		    } else {
-			xmlOutputBufferWriteString(buf, " PUBLIC \"-\" ");
-			xmlBufferWriteQuotedString(buf->buffer,
-				         doctypeSystem);
-		    }
-
-		} else {
-		    xmlOutputBufferWriteString(buf, " SYSTEM ");
-		    xmlBufferWriteQuotedString(buf->buffer,
-				     doctypeSystem);
-		}
-		xmlOutputBufferWriteString(buf, ">\n");
-	    }
 	}
 	if (result->children != NULL) {
 	    xmlNodePtr child = result->children;

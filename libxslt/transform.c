@@ -2496,6 +2496,8 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xmlDocPtr res = NULL;
     xsltTransformContextPtr ctxt = NULL;
     xmlNodePtr root;
+    const xmlChar *method;
+    const xmlChar *encoding;
 
     if ((style == NULL) || (doc == NULL))
 	return(NULL);
@@ -2503,19 +2505,25 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltRegisterExtras(ctxt);
     if (ctxt == NULL)
 	return(NULL);
-    if ((style->method != NULL) &&
-	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {
-	if (xmlStrEqual(style->method, (const xmlChar *) "html")) {
+    XSLT_GET_IMPORT_PTR(method, style, method)
+    if ((method != NULL) &&
+	(!xmlStrEqual(method, (const xmlChar *) "xml"))) {
+	const xmlChar *doctypePublic;
+	const xmlChar *doctypeSystem;
+
+	XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
+	XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
+	if (xmlStrEqual(method, (const xmlChar *) "html")) {
 	    ctxt->type = XSLT_OUTPUT_HTML;
-	    res = htmlNewDoc(style->doctypeSystem, style->doctypePublic);
+	    res = htmlNewDoc(doctypeSystem, doctypePublic);
 	    if (res == NULL)
 		goto error;
-	} else if (xmlStrEqual(style->method, (const xmlChar *) "xhtml")) {
+	} else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltGenericError(xsltGenericErrorContext,
 	     "xsltApplyStylesheet: insupported method xhtml, using html\n",
 		             style->method);
 	    ctxt->type = XSLT_OUTPUT_HTML;
-	    res = htmlNewDoc(style->doctypeSystem, style->doctypePublic);
+	    res = htmlNewDoc(doctypeSystem, doctypePublic);
 	    if (res == NULL)
 		goto error;
 	} else if (xmlStrEqual(style->method, (const xmlChar *) "text")) {
@@ -2554,13 +2562,17 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltCleanupTemplates(style);
 
 
-    if ((ctxt->type == XSLT_OUTPUT_XML) &&
-	((style->doctypePublic != NULL) ||
-	 (style->doctypeSystem != NULL))) {
+    if (ctxt->type == XSLT_OUTPUT_XML) {
+	const xmlChar *doctypePublic;
+	const xmlChar *doctypeSystem;
+
+	XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
+	XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
 	root = xmlDocGetRootElement(res);
-	if (root != NULL)
+	if ((root != NULL) &&
+	    ((doctypePublic != NULL) || (doctypeSystem != NULL)))
 	    res->intSubset = xmlCreateIntSubset(res, root->name,
-		         style->doctypePublic, style->doctypeSystem);
+		         doctypePublic, doctypeSystem);
     }
     xmlXPathFreeNodeSet(ctxt->nodeList);
     xsltFreeTransformContext(ctxt);

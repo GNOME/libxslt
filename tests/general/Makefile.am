@@ -23,6 +23,12 @@ EXTRA_DIST = \
     bug-17-.out bug-17-.xsl \
     bug-18-.out bug-18-.xsl \
     bug-19-.out bug-19-.xsl \
+    bug-20-.out bug-20-.xsl \
+    bug-21-.out bug-21-.xsl \
+    bug-22-.out bug-22-.xsl \
+    bug-23-.out bug-23-.xsl \
+    bug-24-.out bug-24-.xsl \
+    bug-25-.out bug-25-.xsl \
     character.out character.xsl \
     character2.out character2.xsl \
     itemschoose.out itemschoose.xsl \
