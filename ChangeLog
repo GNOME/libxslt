@@ -1,3 +1,8 @@
+Fri Oct 17 12:40:37 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: fixed bug 119946
+	* configure.in: enhanced for better devel (me) testing
+
 Wed Oct 15 17:30:43 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: applied a small patch from Troels Walsted Hansen

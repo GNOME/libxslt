@@ -732,11 +732,11 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			while (sibling != NULL) {
 			    if (sibling == previous)
 				break;
-			    if ((node->type == XML_ELEMENT_NODE) &&
-				(node->name != NULL) &&
+			    if ((previous->type == XML_ELEMENT_NODE) &&
+				(previous->name != NULL) &&
 				(sibling->name != NULL) &&
-				(node->name[0] == sibling->name[0]) &&
-				(xmlStrEqual(node->name, sibling->name))) {
+				(previous->name[0] == sibling->name[0]) &&
+				(xmlStrEqual(previous->name, sibling->name))) {
 				if ((select->value2 == NULL) ||
 				    ((sibling->ns != NULL) &&
 				     (xmlStrEqual(select->value2,
