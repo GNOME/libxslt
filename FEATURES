@@ -157,8 +157,8 @@ YES			name = qname
 YES			select = expression
 YES			Content: template
 
-NO		    xsl:copy-of
-NO			select = expression
+YES		    xsl:copy-of
+YES			select = expression
 
 YES		    xsl:with-param
 YES			name = qname 

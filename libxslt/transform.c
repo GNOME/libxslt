@@ -45,7 +45,7 @@
 
 /************************************************************************
  *									*
- *			
+ *			handling of transformation contexts		*
  *									*
  ************************************************************************/
 
@@ -95,6 +95,111 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     xmlFree(ctxt);
 }
 
+/************************************************************************
+ *									*
+ *			Copy of Nodes in an XSLT fashion		*
+ *									*
+ ************************************************************************/
+
+xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
+			xmlNodePtr insert);
+
+/**
+ * xsltCopyNode:
+ * @ctxt:  a XSLT process context
+ * @node:  the element node in the source tree.
+ * @insert:  the parent in the result tree.
+ *
+ * Make a copy of the element node @node
+ * and insert it as last child of @insert
+ *
+ * Returns a pointer to the new node, or NULL in case of error
+ */
+xmlNodePtr
+xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	     xmlNodePtr insert) {
+    xmlNodePtr copy;
+
+    copy = xmlCopyNode(node, 0);
+    copy->doc = ctxt->output;
+    if (copy != NULL) {
+	xmlAddChild(insert, copy);
+	/*
+	 * Add namespaces as they are needed
+	 */
+	if (node->nsDef != NULL)
+	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+	if (node->ns != NULL) {
+	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, insert);
+	}
+    } else {
+	xsltGenericError(xsltGenericErrorContext,
+		"xsltCopyNode: copy %s failed\n", node->name);
+    }
+    return(copy);
+}
+
+/**
+ * xsltCopyTreeList:
+ * @ctxt:  a XSLT process context
+ * @list:  the list of element node in the source tree.
+ * @insert:  the parent in the result tree.
+ *
+ * Make a copy of the full list of tree @list
+ * and insert them as last children of @insert
+ *
+ * Returns a pointer to the new list, or NULL in case of error
+ */
+xmlNodePtr
+xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
+	     xmlNodePtr insert) {
+    xmlNodePtr copy, ret = NULL;
+
+    while (list != NULL) {
+	copy = xsltCopyTree(ctxt, list, insert);
+	if (ret != NULL)
+	    ret = copy;
+	list = list->next;
+    }
+    return(ret);
+}
+
+/**
+ * xsltCopyTree:
+ * @ctxt:  a XSLT process context
+ * @node:  the element node in the source tree.
+ * @insert:  the parent in the result tree.
+ *
+ * Make a copy of the full tree under the element node @node
+ * and insert it as last child of @insert
+ *
+ * Returns a pointer to the new tree, or NULL in case of error
+ */
+xmlNodePtr
+xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	     xmlNodePtr insert) {
+    xmlNodePtr copy;
+
+    copy = xmlCopyNode(node, 0);
+    copy->doc = ctxt->output;
+    if (copy != NULL) {
+	xmlAddChild(insert, copy);
+	/*
+	 * Add namespaces as they are needed
+	 */
+	if (node->nsDef != NULL)
+	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+	if (node->ns != NULL) {
+	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, insert);
+	}
+	if (node->children != NULL)
+	    copy->children = xsltCopyTreeList(ctxt, node->children, copy);
+    } else {
+	xsltGenericError(xsltGenericErrorContext,
+		"xsltCopyTree: copy %s failed\n", node->name);
+    }
+    return(copy);
+}
 /************************************************************************
  *									*
  *			
@@ -413,12 +518,119 @@ error:
 }
 
 /**
+ * xsltCopyOf:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt copy-of node
+ *
+ * Process the xslt copy-of node on the source node
+ */
+void
+xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop;
+    xmlXPathObjectPtr res = NULL, tmp;
+    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    xmlNodePtr copy = NULL;
+    xmlNodeSetPtr list = NULL;
+    int i;
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return;
+
+#ifdef DEBUG_PROCESS
+    xsltGenericDebug(xsltGenericDebugContext,
+	 "xsltCopyOf: select %s\n", prop);
+#endif
+
+    if (ctxt->xpathCtxt == NULL) {
+	xmlXPathInit();
+	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
+	if (ctxt->xpathCtxt == NULL)
+	    goto error;
+	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
+    }
+    xpathParserCtxt =
+	xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
+    if (xpathParserCtxt == NULL)
+	goto error;
+    ctxt->xpathCtxt->node = node;
+    valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
+    xmlXPathEvalExpr(xpathParserCtxt);
+    res = valuePop(xpathParserCtxt);
+    do {
+        tmp = valuePop(xpathParserCtxt);
+	if (tmp != NULL) {
+	    xmlXPathFreeObject(tmp);
+	}
+    } while (tmp != NULL);
+    if (res != NULL) {
+	if ((res->type == XPATH_NODESET) || (res->type == XPATH_XSLT_TREE)) {
+	    list = res->nodesetval;
+	    if (list != NULL) {
+		/* sort the list in document order */
+		xsltDocumentSortFunction(list);
+		/* append everything in this order under ctxt->insert */
+		for (i = 0;i < list->nodeNr;i++) {
+		    if (list->nodeTab[i] == NULL)
+			continue;
+		    if ((list->nodeTab[i]->type == XML_DOCUMENT_NODE) ||
+			(list->nodeTab[i]->type == XML_HTML_DOCUMENT_NODE)) {
+			xsltCopyTreeList(ctxt, list->nodeTab[i]->children,
+				         ctxt->insert);
+		    } else {
+			xsltCopyTree(ctxt, list->nodeTab[i], ctxt->insert);
+		    }
+		}
+	    }
+	} else {
+	    /* convert to a string */
+	    valuePush(xpathParserCtxt, res);
+	    xmlXPathStringFunction(xpathParserCtxt, 1);
+	    res = valuePop(xpathParserCtxt);
+	    if ((res != NULL) && (res->type == XPATH_STRING)) {
+		/* append content as text node */
+		copy = xmlNewText(res->stringval);
+		if (copy != NULL) {
+		    xmlAddChild(ctxt->insert, copy);
+		}
+	    }
+	    do {
+		tmp = valuePop(xpathParserCtxt);
+		if (tmp != NULL) {
+		    xmlXPathFreeObject(tmp);
+		}
+	    } while (tmp != NULL);
+	    if (copy == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+		    "xsltDefaultProcessOneNode: text copy failed\n");
+	    }
+#ifdef DEBUG_PROCESS
+	    else
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "xslcopyOf: result %s\n", res->stringval);
+#endif
+	}
+    }
+
+error:
+    if (xpathParserCtxt != NULL) {
+	xmlXPathFreeParserContext(xpathParserCtxt);
+        xpathParserCtxt = NULL;
+    }
+    if (prop != NULL)
+	xmlFree(prop);
+    if (res != NULL)
+	xmlXPathFreeObject(res);
+}
+
+/**
  * xsltValueOf:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
- * @inst:  the xsltValueOf node
+ * @inst:  the xslt value-of node
  *
- * Process the xsltValueOf node on the source node
+ * Process the xslt value-of node on the source node
  */
 void
 xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
@@ -509,40 +721,6 @@ error:
 	xmlXPathFreeObject(res);
 }
 
-/**
- * xsltCopyNode:
- * @ctxt:  a XSLT process context
- * @node:  the element node in the source tree.
- * @insert:  the parent in the result tree.
- *
- * Make a copy of the element node @node
- * and insert it as last child of @insert
- *
- * Returns a pointer to the new node, or NULL in case of error
- */
-xmlNodePtr
-xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	     xmlNodePtr insert) {
-    xmlNodePtr copy;
-
-    copy = xmlCopyNode(node, 0);
-    copy->doc = ctxt->output;
-    if (copy != NULL) {
-	xmlAddChild(insert, copy);
-	/*
-	 * Add namespaces as they are needed
-	 */
-	if (node->nsDef != NULL)
-	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
-	if (node->ns != NULL) {
-	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, insert);
-	}
-    } else {
-	xsltGenericError(xsltGenericErrorContext,
-		"xsltCopyNode: copy %s failed\n", node->name);
-    }
-    return(copy);
-}
 
 /**
  * xsltDefaultProcessOneNode:
@@ -945,6 +1123,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else if (IS_XSLT_NAME(cur, "value-of")) {
 		ctxt->insert = insert;
 		xsltValueOf(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "copy-of")) {
+		ctxt->insert = insert;
+		xsltCopyOf(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "if")) {
 		ctxt->insert = insert;

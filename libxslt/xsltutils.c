@@ -172,6 +172,36 @@ xsltSetGenericDebugFunc(void *ctx, xmlGenericErrorFunc handler) {
  ************************************************************************/
 
 /**
+ * xsltDocumentSortFunction:
+ * @list:  the node set
+ *
+ * reorder the current node list @list accordingly to the document order
+ */
+void
+xsltDocumentSortFunction(xmlNodeSetPtr list) {
+    int i, j;
+    int len, tst;
+    xmlNodePtr node;
+
+    if (list == NULL)
+	return;
+    len = list->nodeNr;
+    if (len <= 1)
+	return;
+    /* TODO: sort is really not optimized, does it needs to ? */
+    for (i = 0;i < len -1;i++) {
+	for (j = i + 1; j < len; j++) {
+	    tst = xmlXPathCmpNodes(list->nodeTab[i], list->nodeTab[j]);
+	    if (tst == -1) {
+		node = list->nodeTab[i];
+		list->nodeTab[i] = list->nodeTab[j];
+		list->nodeTab[j] = node;
+	    }
+	}
+    }
+}
+
+/**
  * xsltSortFunction:
  * @list:  the node set
  * @results:  the results

@@ -71,6 +71,7 @@ void		xsltSetGenericDebugFunc		(void *ctx,
  * Sorting ... this is definitely a temporary interface !
  */
 
+void		xsltDocumentSortFunction	(xmlNodeSetPtr list);
 void		xsltSortFunction		(xmlNodeSetPtr list,
 						 xmlXPathObjectPtr *results,
 						 int descending,
