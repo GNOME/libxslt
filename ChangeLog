@@ -1,3 +1,7 @@
+Sun Dec 21 12:08:45 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: added the cast needed to fix #129188 warning
+
 Sat Dec 20 23:37:31 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/transform.c: fixed Bug 129624 (erroneous output

@@ -290,7 +290,7 @@ xsltGetXIncludeDefault(void) {
     return(xsltDoXIncludeDefault);
 }
 
-unsigned long xsltDefaultTrace = XSLT_TRACE_ALL;
+unsigned long xsltDefaultTrace = (unsigned long) XSLT_TRACE_ALL;
 
 /**
  * xsltDebugSetDefaultTrace
