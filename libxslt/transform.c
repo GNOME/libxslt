@@ -1243,6 +1243,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 ctxt->insert = insert;
                 info->func(ctxt, node, cur, (xsltElemPreCompPtr) info);
                 ctxt->insert = oldInsert;
+		CHECK_STOPPED;
                 goto skip_children;
             }
 
