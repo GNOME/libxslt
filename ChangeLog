@@ -1,3 +1,8 @@
+Mon Nov 25 14:57:53 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.h: Kir Kolyshkin pointed out it lacked 
+	  xsltInternals.h reference.
+
 Sun Nov 24 15:49:58 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/tests/*.py: enable libxml2 memory debug before
