@@ -208,7 +208,7 @@ Functions:
 ==========
 
 PARTIAL			    node-set document(object, node-set?)
-NO			    node-set key(string, object)
+PARTIAL			    node-set key(string, object)
 YES			    string format-number(number, string, string?)
 YES			    node-set current() 
 YES			    string unparsed-entity-uri(string)

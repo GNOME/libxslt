@@ -36,6 +36,7 @@
 #include "xsltutils.h"
 #include "functions.h"
 #include "numbersInternals.h"
+#include "keys.h"
 
 #define DEBUG_FUNCTION
 
@@ -142,7 +143,64 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 void
 xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    xmlNodeSetPtr nodelist;
+    xmlXPathObjectPtr obj, tmp;
+    xmlChar *key, *value;
+    xsltTransformContextPtr tctxt;
+
+    tctxt = ((xsltTransformContextPtr)ctxt->context->extra);
+
+    if (nargs != 2) {
+        xsltGenericError(xsltGenericErrorContext,
+		"key() : expects one string arg\n");
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+
+    obj = valuePop(ctxt);
+    if ((obj == NULL) ||
+	(ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "generate-id() : invalid arg expecting a string\n");
+	ctxt->error = XPATH_INVALID_TYPE;
+	xmlXPathFreeObject(obj);
+
+	return;
+    }
+    tmp = valuePop(ctxt);
+    key = tmp->stringval;
+
+    /* TODO: find URI when qualified name */
+    
+    if (obj->type == XPATH_NODESET) {
+	TODO /* handle NODE set as 2nd args of key() */
+    } else {
+	/*
+	 * Force conversion of first arg to string
+	 */
+	valuePush(ctxt, obj);
+	xmlXPathStringFunction(ctxt, 1);
+	if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"generate-id() : invalid arg expecting a string\n");
+	    ctxt->error = XPATH_INVALID_TYPE;
+	    xmlXPathFreeObject(obj);
+
+	    return;
+	}
+	obj = valuePop(ctxt);
+	value = obj->stringval;
+
+	nodelist = xsltGetKey(tctxt, key, NULL, value);
+	valuePush(ctxt, xmlXPathWrapNodeSet(
+		        xmlXPathNodeSetMerge(NULL, nodelist)));
+    }
+
+
+    if (obj != NULL)
+	xmlXPathFreeObject(obj);
+    if (tmp != NULL)
+	xmlXPathFreeObject(tmp);
 }
 
 /**
