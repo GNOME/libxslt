@@ -1,3 +1,10 @@
+Wed Mar 30 14:09:19 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: fixed the xinclude problem with document()
+	  as in bug #171893
+	* configure.in tests/Makefile.am tests/xinclude/*: added a new
+	  xinclude directory with the test for this problem
+
 Wed Mar 30 11:59:06 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixed bug 169718 with ancestors in patterns

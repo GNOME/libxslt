@@ -573,6 +573,7 @@ tests/numbers/Makefile
 tests/documents/Makefile
 tests/xmlspec/Makefile
 tests/multiple/Makefile
+tests/xinclude/Makefile
 tests/XSLTMark/Makefile
 tests/docbook/Makefile
 tests/exslt/Makefile

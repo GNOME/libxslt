@@ -395,6 +395,8 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	if (ctxt == NULL)
 	    return;
 	xsltSetCtxtParseOptions(ctxt, options);
+	if (xinclude)
+	    ctxt->xinclude = 1;
 	if (profile) {
 	    res = xsltApplyStylesheetUser(cur, doc, params, NULL,
 		                          stderr, ctxt);
