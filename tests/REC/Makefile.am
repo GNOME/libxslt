@@ -4,7 +4,16 @@ $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = 						\
-    article.xsl bigfont.xsl gmon.out			\
+    article.xsl bigfont.xsl 				\
+    test-10-1.out test-10-1.xml test-10-1.xsl		\
+    test-11.2-1.out test-11.2-1.xml test-11.2-1.xsl	\
+    test-11.2-2.out test-11.2-2.xml test-11.2-2.xsl	\
+    test-11.2-3.out test-11.2-3.xml test-11.2-3.xsl	\
+    test-11.2-4.out test-11.2-4.xml test-11.2-4.xsl	\
+    test-11.2-5.out test-11.2-5.xml test-11.2-5.xsl	\
+    test-11.2-6.out test-11.2-6.xml test-11.2-6.xsl	\
+    test-12.2-1.out test-12.2-1.xml test-12.2-1.xsl	\
+    test-12.2-2.out test-12.2-2.xml test-12.2-2.xsl	\
     test-2.3-1.out test-2.3-1.xml test-2.3-1.xsl	\
     test-2.3-2.out test-2.3-2.xml test-2.3-2.xsl	\
     test-2.5-1.out test-2.5-1.xml test-2.5-1.xsl	\
@@ -45,24 +54,15 @@ EXTRA_DIST = 						\
     test-7.6.1-2.out test-7.6.1-2.xml test-7.6.1-2.xsl	\
     test-7.6.1-3.out test-7.6.1-3.xml test-7.6.1-3.xsl	\
     test-7.6.2-1.out test-7.6.2-1.xml test-7.6.2-1.xsl	\
-    test-7.7-1.out test-7.7-1.xml test-7.7-1.xsl        \
-    test-7.7-2.out test-7.7-2.xml test-7.7-2.xsl        \
-    test-7.7-3.out test-7.7-3.xml test-7.7-3.xsl        \
-    test-7.7-4.out test-7.7-4.xml test-7.7-4.xsl        \
-    test-7.7-5.out test-7.7-5.xml test-7.7-5.xsl        \
+    test-7.7-1.out test-7.7-1.xml test-7.7-1.xsl	\
+    test-7.7-2.out test-7.7-2.xml test-7.7-2.xsl	\
+    test-7.7-3.out test-7.7-3.xml test-7.7-3.xsl	\
+    test-7.7-4.out test-7.7-4.xml test-7.7-4.xsl	\
+    test-7.7-5.out test-7.7-5.xml test-7.7-5.xsl	\
     test-8-1.out test-8-1.xml test-8-1.xsl		\
     test-9.1-1.out test-9.1-1.xml test-9.1-1.xsl	\
     test-9.1-2.out test-9.1-2.xml test-9.1-2.xsl	\
-    test-9.2-1.xsl 					\
-    test-10-1.out test-10-1.xml test-10-1.xsl		\
-    test-11.2-1.out test-11.2-1.xml test-11.2-1.xsl	\
-    test-11.2-2.out test-11.2-2.xml test-11.2-2.xsl	\
-    test-11.2-3.out test-11.2-3.xml test-11.2-3.xsl	\
-    test-11.2-4.out test-11.2-4.xml test-11.2-4.xsl	\
-    test-11.2-5.out test-11.2-5.xml test-11.2-5.xsl	\
-    test-11.2-6.out test-11.2-6.xml test-11.2-6.xsl	\
-    test-12.2-1.out test-12.2-1.xml test-12.2-1.xsl	\
-    test-12.2-2.out test-12.2-2.xml test-12.2-2.xsl
+    test-9.2-1.xsl
 
 all: test
 

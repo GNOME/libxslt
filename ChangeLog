@@ -1,3 +1,7 @@
+Thu Feb 15 18:14:48 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/Makefile.am: updated
+
 Thu Feb 15 17:40:28 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxlst/functions.c: fixed ID generation
