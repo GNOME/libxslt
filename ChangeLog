@@ -1,3 +1,10 @@
+Mon Apr 30 22:31:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/general/bug-8-.out: fixed in libxml xpath
+	* libxslt/templates.[ch] libxslt/pattern.c: fixed an namespace
+	  problem in predicates within a pattern. Spotted another
+	  potential namespace problem
+
 Mon Apr 30 19:29:34 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/preproc.c libxslt/xslt.c libxslt/xsltInternals.h

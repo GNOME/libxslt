@@ -86,6 +86,8 @@ struct _xsltCompMatch {
     /* TODO fix the statically allocated size steps[] */
     int nbStep;
     int maxStep;
+    xmlNsPtr *nsList;		/* the namespaces in scope */
+    int nsNr;			/* the number of namespaces in scope */
     xsltStepOp steps[20];        /* ops for computation */
 };
 
@@ -125,6 +127,8 @@ xsltNewCompMatch(void) {
     }
     memset(cur, 0, sizeof(xsltCompMatch));
     cur->maxStep = 20;
+    cur->nsNr = 0;
+    cur->nsList = NULL;
     return(cur);
 }
 
@@ -145,6 +149,8 @@ xsltFreeCompMatch(xsltCompMatchPtr comp) {
 	xmlFree((xmlChar *)comp->mode);
     if (comp->modeURI != NULL)
 	xmlFree((xmlChar *)comp->modeURI);
+    if (comp->nsList != NULL)
+	xmlFree(comp->nsList);
     for (i = 0;i < comp->nbStep;i++) {
 	op = &comp->steps[i];
 	if (op->value != NULL)
@@ -668,7 +674,18 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    if (step->comp == NULL)
 			goto wrong_index;
 		}
-		if (!xsltEvalXPathPredicate(ctxt, step->comp))
+		if (comp->nsList == NULL) {
+		    int j = 0;
+
+		    comp->nsList = xmlGetNsList(node->doc, node);
+		    if (comp->nsList != NULL) {
+			while (comp->nsList[j] != NULL)
+			    j++;
+		    }
+		    comp->nsNr = j;
+		}
+		if (!xsltEvalXPathPredicate(ctxt, step->comp, comp->nsList,
+			                    comp->nsNr))
 		    goto wrong_index;
 
 		if (pos != 0) {

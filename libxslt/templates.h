@@ -18,7 +18,9 @@ extern "C" {
 #endif
 
 int		xsltEvalXPathPredicate		(xsltTransformContextPtr ctxt,
-						 xmlXPathCompExprPtr comp);
+						 xmlXPathCompExprPtr comp,
+		                                 xmlNsPtr *nsList,
+						 int nsNr);
 xmlChar *	xsltEvalTemplateString		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 xmlNodePtr parent);
@@ -31,8 +33,11 @@ xmlChar *	xsltEvalStaticAttrValueTemplate	(xsltStylesheetPtr style,
 						 const xmlChar *name,
 						 const xmlChar *ns,
 						 int *found);
+
+/* TODO: this is obviously broken ... the namespaces should be passed too ! */
 xmlChar *	xsltEvalXPathString		(xsltTransformContextPtr ctxt,
 						 xmlXPathCompExprPtr comp);
+
 xmlNodePtr *	xsltTemplateProcess		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node);
 xmlAttrPtr	xsltAttrListTemplateProcess	(xsltTransformContextPtr ctxt,
