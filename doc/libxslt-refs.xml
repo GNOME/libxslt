@@ -2053,6 +2053,9 @@
         <word name='Each'>
           <ref name='xsltEvalUserParams'/>
         </word>
+        <word name='Element'>
+          <ref name='_xsltStylesheet'/>
+        </word>
         <word name='Errors'>
           <ref name='xsltGetQNameURI'/>
         </word>
@@ -2197,6 +2200,9 @@
       <letter name='L'>
         <word name='Length'>
           <ref name='xsltSaveResultToString'/>
+        </word>
+        <word name='Literal'>
+          <ref name='_xsltStylesheet'/>
         </word>
         <word name='Load'>
           <ref name='xsltParseStylesheetFile'/>
@@ -2416,6 +2422,7 @@
           <ref name='xsltRegisterTestModule'/>
         </word>
         <word name='Result'>
+          <ref name='_xsltStylesheet'/>
           <ref name='_xsltTransformContext'/>
         </word>
         <word name='Retrieve'>
@@ -2498,6 +2505,7 @@
           <ref name='xsltFormatNumberConversion'/>
         </word>
         <word name='Stylesheet'>
+          <ref name='_xsltStylesheet'/>
           <ref name='xsltNewStylesheet'/>
         </word>
         <word name='Symbol'>
@@ -5431,6 +5439,9 @@
         </word>
         <word name='search'>
           <ref name='xsltExtElementLookup'/>
+        </word>
+        <word name='section'>
+          <ref name='_xsltStylesheet'/>
         </word>
         <word name='security'>
           <ref name='_xsltTransformContext'/>

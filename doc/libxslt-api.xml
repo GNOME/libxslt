@@ -853,7 +853,9 @@ informations are stored'/>
 *'/>
       <field name='nopreproc' type='int' info='* all document text strings were internalized
 *'/>
-      <field name='internalized' type='int' info=''/>
+      <field name='internalized' type='int' info='* Literal Result Element as Stylesheet c.f. section 2.3
+*'/>
+      <field name='literal_result' type='int' info=''/>
     </struct>
     <typedef name='xsltStylesheetPtr' file='xsltInternals' type='xsltStylesheet *'/>
     <struct name='xsltTemplate' file='xsltInternals' type='struct _xsltTemplate'>

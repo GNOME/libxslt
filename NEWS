@@ -10,6 +10,18 @@ ChangeLog.html
 to the CVS at 
 http://cvs.gnome.org/viewcvs/libxslt/
  code base.Those are the public releases made:
+1.1.14: Apr 02 2005:
+   - bug fixes: text node on stylesheet document without a dictionary
+      (William Brack), more checking of XSLT syntax, calling xsltInit() multiple
+      times, mode values interning raised by Mark Vakoc, bug in pattern
+      matching with ancestors, bug in patterna matching with cascading select,
+      xinclude and document() problem, build outside of source tree (Mike
+      Castle)
+   - improvement: added a --nodict mode to xsltproc to check problems for
+      docuemtns without dictionnaries
+
+
+
 1.1.13: Mar 13 2005:
    - build fixes: 64bits cleanup (William Brack), python 2.4 test (William),
       LIBXSLT_VERSION_EXTRA on Windows (William), Windows makefiles fixes

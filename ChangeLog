@@ -1,3 +1,8 @@
+Sat Apr  2 13:34:11 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in NEWS doc/*: preparing release of 1.1.14, updated docs
+	  and rebuilt.
+
 Thu Mar 31 23:50:43 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docbook/result/fo/gdp-handbook.fo tests/general/bug-105.out
