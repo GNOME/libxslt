@@ -46,10 +46,12 @@ typedef xsltRuntimeExtra *xsltRuntimeExtraPtr;
 struct _xsltRuntimeExtra {
     void       *info;		/* pointer to the extra data */
     xmlFreeFunc deallocate;	/* pointer to the deallocation routine */
+    void       *val;		/* data not needing deallocation */
 };
 
-#define XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].info
+#define XSLT_RUNTIME_EXTRA_LST(ctxt, nr) (ctxt)->extras[(nr)].info
 #define XSLT_RUNTIME_EXTRA_FREE(ctxt, nr) (ctxt)->extras[(nr)].deallocate
+#define	XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].val
 
 /**
  * xsltTemplate:
