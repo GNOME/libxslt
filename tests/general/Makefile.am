@@ -213,4 +213,36 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  fi ; \
 	  rm -f result.$$name err.$$name; \
 	  done ; done)
+	@echo '## Running general tests without dictionaries'
+	-@(for i in $(srcdir)/../docs/*.xml ; do \
+	  if [ -d $$i ] ; then continue ; fi ; \
+	  doc=`basename $$i .xml` ; \
+	  for j in $(srcdir)/$$doc*.xsl ; do \
+	  if [ ! -f $$j ] ; then continue ; fi ; \
+	  if [ -d $$j ] ; then continue ; fi ; \
+	  name=`basename $$j .xsl`; \
+	  out=$(srcdir)/"$$name".out; \
+	  err=$(srcdir)/"$$name".err; \
+	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc --nodict $$j $$i \
+	  	> result.$$name 2>err.$$name; \
+	  if [ ! -f $$out ] ; then \
+	  	cp result.$$name $$out ; \
+		if [ -s err.$$name ] ; then \
+			cp err.$$name $$err ; \
+		fi ; \
+	  else \
+	  	diff $$out result.$$name; \
+		if [ -s $$err ] ; then \
+	  		diff $$err err.$$name; \
+		else \
+			diff /dev/null err.$$name; \
+		fi ; \
+	  fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`;\
+	  if [ -n "$$log" ] ; then \
+	  	echo $$name result ; \
+		echo $$log ; \
+	  fi ; \
+	  rm -f result.$$name err.$$name; \
+	  done ; done)
 

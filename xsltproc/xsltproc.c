@@ -82,6 +82,7 @@ static int dumpextensions = 0;
 static int novalid = 0;
 static int nodtdattr = 0;
 static int noout = 0;
+static int nodict = 0;
 #ifdef LIBXML_HTML_ENABLED
 static int html = 0;
 #endif
@@ -604,6 +605,9 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-profile")) ||
                    (!strcmp(argv[i], "--profile"))) {
             profile++;
+        } else if ((!strcmp(argv[i], "-nodict")) ||
+                   (!strcmp(argv[i], "--nodict"))) {
+            nodict++;
         } else if ((!strcmp(argv[i], "-norman")) ||
                    (!strcmp(argv[i], "--norman"))) {
             profile++;
@@ -725,6 +729,8 @@ main(int argc, char **argv)
 	options = XML_PARSE_NOENT | XML_PARSE_NOCDATA;
     else if (nodtdattr)
         options = XML_PARSE_NOENT | XML_PARSE_DTDLOAD | XML_PARSE_NOCDATA;
+    if (nodict != 0)
+        options |= XML_PARSE_NODICT;
 
     /*
      * Register the EXSLT extensions and the test module

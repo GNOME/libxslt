@@ -4053,6 +4053,16 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     else
         ctxt->outputFile = NULL;
 
+    /*
+     * internalize the modes if needed
+     */
+    if (ctxt->dict != NULL) {
+        if (ctxt->mode != NULL)
+	    ctxt->mode = xmlDictLookup(ctxt->dict, ctxt->mode, -1);
+        if (ctxt->modeURI != NULL)
+	    ctxt->modeURI = xmlDictLookup(ctxt->dict, ctxt->modeURI, -1);
+    }
+
     XSLT_GET_IMPORT_PTR(method, style, method)
         XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
         XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)

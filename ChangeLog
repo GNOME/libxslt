@@ -1,3 +1,12 @@
+Tue Mar 29 21:06:11 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: working around Mark Vakoc' reported bug related
+	  to mode internaing
+	* xsltproc/xsltproc.c: adding a --nodict mode to check problems with
+	  document without a dictionnary.
+	* tests/REC/Makefile.am tests/general/Makefile.am: testing without 
+	  dictionnary
+
 Tue Mar 29 15:37:13 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: fix bug #165201 when calling xsltInit() multiple
