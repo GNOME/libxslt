@@ -252,6 +252,7 @@ tests/exslt/common/Makefile
 tests/exslt/functions/Makefile
 tests/exslt/math/Makefile
 tests/exslt/sets/Makefile
+tests/exslt/strings/Makefile
 doc/Makefile
 xslt-config
 libxslt.spec

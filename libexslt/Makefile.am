@@ -17,7 +17,8 @@ libexslt_la_SOURCES =                   \
 	common.c			\
 	math.c				\
 	sets.c				\
-	functions.c
+	functions.c			\
+	strings.c
 
 libexslt_la_LIBADD = $(EXTRA_LIBS)
 libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@

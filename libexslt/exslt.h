@@ -14,11 +14,13 @@ LIBEXSLT_PUBLIC extern const int exsltLibxmlVersion;
 #define EXSLT_MATH_NAMESPACE ((const xmlChar *) "http://exslt.org/math")
 #define EXSLT_SETS_NAMESPACE ((const xmlChar *) "http://exslt.org/sets")
 #define EXSLT_FUNCTIONS_NAMESPACE ((const xmlChar *) "http://exslt.org/functions")
+#define EXSLT_STRINGS_NAMESPACE ((const xmlChar *) "http://exslt.org/strings")
 
 void exsltCommonRegister (void);
 void exsltMathRegister (void);
 void exsltSetsRegister (void);
 void exsltFuncRegister (void);
+void exsltStrRegister (void);
 
 void exsltRegisterAll (void);
 

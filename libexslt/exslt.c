@@ -26,5 +26,6 @@ exsltRegisterAll (void) {
     exsltMathRegister();
     exsltSetsRegister();
     exsltFuncRegister();
+    exsltStrRegister();
 }
 

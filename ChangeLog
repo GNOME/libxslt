@@ -1,3 +1,14 @@
+Mon Sep  3 02:14:58 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/Makefile.am libexslt/exslt.[ch] libexslt/strings.c:
+	  added implementation of EXSLT - Strings.
+	  Currently implemented functins are str:tokenize, str:align
+	  str:concat and str:padding.
+	* configure.in tests/exslt/Makefile.am
+	  tests/exslt/strings/Makefile.am
+	  tests/exslt/strings/tokenize.1.*: added a test for the
+	  str:tokenize function.
+
 Fri Aug 31 13:51:53 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/libxslt.4 libexslt/libexslt.4 libxslt/Makefile.am
