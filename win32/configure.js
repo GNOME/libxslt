@@ -112,6 +112,7 @@ function usage()
 	txt += "  cruntime:   C-runtime compiler option (only msvc) (" + cruntime + ")\n";
 	txt += "  debug:      Build unoptimised debug executables (" + (buildDebug? "yes" : "no")  + ")\n";
 	txt += "  static:     Link xsltproc statically to libxslt (" + (buildStatic? "yes" : "no")  + ")\n";
+	txt += "              Note: automatically enabled if cruntime is not /MD or /MDd\n";
 	txt += "  prefix:     Base directory for the installation (" + buildPrefix + ")\n";
 	txt += "  bindir:     Directory where xsltproc and friends should be installed\n";
 	txt += "              (" + buildBinPrefix + ")\n";
@@ -387,6 +388,14 @@ if (error != 0) {
 	usage();
 	WScript.Quit(error);
 }
+
+// if user choses to link the c-runtime library statically into libxslt
+// with /MT and friends, then we need to enable static linking for xsltproc
+if (cruntime == "/MT" || cruntime == "/MTd" ||
+		cruntime == "/ML" || cruntime == "/MLd") {
+	buildStatic = 1;
+}
+
 dirSep = "\\";
 //if (compiler == "mingw")
 //	dirSep = "/";

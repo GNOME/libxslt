@@ -1,3 +1,7 @@
+Fri Jan 28 01:00:56 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* win32/configure.js: Makefile fixes for Widows from Joel Reed
+
 Sat Jan 22 22:14:26 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c libxslt/preproc.c libxslt/templates.c
