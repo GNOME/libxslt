@@ -63,7 +63,9 @@ EXSLT_A = $(EXSLT_BASENAME)_a.lib
 
 # Places where intermediate files produced by the compiler go
 XSLT_INTDIR = $(XSLT_BASENAME).int
+XSLT_INTDIR_A = $(XSLT_BASENAME)_a.int
 EXSLT_INTDIR = $(EXSLT_BASENAME).int
+EXSLT_INTDIR_A = $(EXSLT_BASENAME)_a.int
 UTILS_INTDIR = utils.int
 
 # The preprocessor and its options.
@@ -79,12 +81,7 @@ CFLAGS = $(CFLAGS) /I$(BASEDIR) /I$(XSLT_SRCDIR) /I$(INCPREFIX)
 LD = link.exe
 LDFLAGS = /nologo
 LDFLAGS = $(LDFLAGS) /LIBPATH:$(BINDIR) /LIBPATH:$(LIBPREFIX)
-LIBS =
-!if "$(STATIC)" == "1"
-LIBS = libxml2_a.lib iconv_a.lib wsock32.lib
-!else
-LIBS = libxml2.lib
-!endif
+LIBS = wsock32.lib
 
 # The archiver and its options.
 AR = lib.exe
@@ -117,6 +114,24 @@ XSLT_OBJS = $(XSLT_INTDIR)\attributes.obj\
 	$(XSLT_INTDIR)\xslt.obj\
 	$(XSLT_INTDIR)\xsltutils.obj
 
+# Static libxslt object files.
+XSLT_OBJS_A = $(XSLT_INTDIR_A)\attributes.obj\
+	$(XSLT_INTDIR_A)\documents.obj\
+	$(XSLT_INTDIR_A)\extensions.obj\
+	$(XSLT_INTDIR_A)\extra.obj\
+	$(XSLT_INTDIR_A)\functions.obj\
+	$(XSLT_INTDIR_A)\imports.obj\
+	$(XSLT_INTDIR_A)\keys.obj\
+	$(XSLT_INTDIR_A)\namespaces.obj\
+	$(XSLT_INTDIR_A)\numbers.obj\
+	$(XSLT_INTDIR_A)\pattern.obj\
+	$(XSLT_INTDIR_A)\preproc.obj\
+	$(XSLT_INTDIR_A)\templates.obj\
+	$(XSLT_INTDIR_A)\transform.obj\
+	$(XSLT_INTDIR_A)\variables.obj\
+	$(XSLT_INTDIR_A)\xslt.obj\
+	$(XSLT_INTDIR_A)\xsltutils.obj
+
 # Libexslt object files.
 EXSLT_OBJS = $(EXSLT_INTDIR)\common.obj\
 	$(EXSLT_INTDIR)\date.obj\
@@ -128,21 +143,38 @@ EXSLT_OBJS = $(EXSLT_INTDIR)\common.obj\
 	$(EXSLT_INTDIR)\strings.obj\
 	$(EXSLT_INTDIR)\dynamic.obj
 
+# Static libexslt object files.
+EXSLT_OBJS_A = $(EXSLT_INTDIR_A)\common.obj\
+	$(EXSLT_INTDIR_A)\date.obj\
+	$(EXSLT_INTDIR_A)\exslt.obj\
+	$(EXSLT_INTDIR_A)\functions.obj\
+	$(EXSLT_INTDIR_A)\math.obj\
+	$(EXSLT_INTDIR_A)\saxon.obj\
+	$(EXSLT_INTDIR_A)\sets.obj\
+	$(EXSLT_INTDIR_A)\strings.obj\
+	$(EXSLT_INTDIR_A)\dynamic.obj
+
 
 # Xsltproc and friends executables.
 UTILS = $(BINDIR)\xsltproc.exe
 
-all : libxslt libexslt utils
+all : libxslt libxslta libexslt libexslta utils
 
-libxslt : $(BINDIR)\$(XSLT_SO) $(BINDIR)\$(XSLT_A)
+libxslt : $(BINDIR)\$(XSLT_SO) 
 
-libexslt : $(BINDIR)\$(EXSLT_SO) $(BINDIR)\$(EXSLT_A)
+libxslta : $(BINDIR)\$(XSLT_A)
+
+libexslt : $(BINDIR)\$(EXSLT_SO) 
+
+libexslta : $(BINDIR)\$(EXSLT_A)
 
 utils : $(UTILS)
 
 clean :
 	if exist $(XSLT_INTDIR) rmdir /S /Q $(XSLT_INTDIR)
+	if exist $(XSLT_INTDIR_A) rmdir /S /Q $(XSLT_INTDIR_A)
 	if exist $(EXSLT_INTDIR) rmdir /S /Q $(EXSLT_INTDIR)
+	if exist $(EXSLT_INTDIR_A) rmdir /S /Q $(EXSLT_INTDIR_A)
 	if exist $(UTILS_INTDIR) rmdir /S /Q $(UTILS_INTDIR)
 	if exist $(BINDIR) rmdir /S /Q $(BINDIR)
 
@@ -181,12 +213,24 @@ $(BINDIR) :
 $(XSLT_INTDIR) :
 	if not exist $(XSLT_INTDIR) mkdir $(XSLT_INTDIR)
 
+# Makes the static libxslt intermediate directory.
+$(XSLT_INTDIR_A) :
+	if not exist $(XSLT_INTDIR_A) mkdir $(XSLT_INTDIR_A)
+
 # An implicit rule for libxslt compilation.
 {$(XSLT_SRCDIR)}.c{$(XSLT_INTDIR)}.obj::
 	$(CC) $(CFLAGS) /Fo$(XSLT_INTDIR)\ /c $<
 
+# An implicit rule for static libxslt compilation.
+{$(XSLT_SRCDIR)}.c{$(XSLT_INTDIR_A)}.obj::
+	$(CC) $(CFLAGS) /D "LIBXML_STATIC" /D "LIBXSLT_STATIC" \
+		/Fo$(XSLT_INTDIR_A)\ /c $<
+
 # Compiles libxslt source. Uses the implicit rule for commands.
 $(XSLT_OBJS) : $(XSLT_INTDIR)
+
+# Compiles static libxslt source. Uses the implicit rule for commands.
+$(XSLT_OBJS_A) : $(XSLT_INTDIR_A)
 
 # Creates the export definition file (DEF) for libxslt.
 $(XSLT_INTDIR)\$(XSLT_DEF) : $(XSLT_INTDIR) $(XSLT_DEF).src
@@ -197,23 +241,35 @@ $(BINDIR)\$(XSLT_SO) : $(BINDIR) $(XSLT_OBJS) $(XSLT_INTDIR)\$(XSLT_DEF)
 	$(LD) $(LDFLAGS) /DLL /DEF:$(XSLT_INTDIR)\$(XSLT_DEF) \
 		/VERSION:$(LIBXSLT_MAJOR_VERSION).$(LIBXSLT_MINOR_VERSION) \
 		/IMPLIB:$(BINDIR)\$(XSLT_IMP) /OUT:$(BINDIR)\$(XSLT_SO) \
-		$(XSLT_OBJS) $(LIBS)
+		$(XSLT_OBJS) $(LIBS) libxml2.lib
 
 # Creates the libxslt archive.
-$(BINDIR)\$(XSLT_A) : $(BINDIR) $(XSLT_OBJS)
-	$(AR) $(ARFLAGS) /OUT:$(BINDIR)\$(XSLT_A) $(XSLT_OBJS)
+$(BINDIR)\$(XSLT_A) : $(BINDIR) $(XSLT_OBJS_A)
+	$(AR) $(ARFLAGS) /OUT:$(BINDIR)\$(XSLT_A) $(XSLT_OBJS_A)
 
 
-# Creates the libxslt intermediate directory.
+# Creates the libexslt intermediate directory.
 $(EXSLT_INTDIR) :
 	if not exist $(EXSLT_INTDIR) mkdir $(EXSLT_INTDIR)
 
+# Creates the static libexslt intermediate directory.
+$(EXSLT_INTDIR_A) :
+	if not exist $(EXSLT_INTDIR_A) mkdir $(EXSLT_INTDIR_A)
+
 # An implicit rule for libexslt compilation.
 {$(EXSLT_SRCDIR)}.c{$(EXSLT_INTDIR)}.obj::
-	$(CC) /D /I$(EXSLT_SRCDIR) $(CFLAGS) /Fo$(EXSLT_INTDIR)\ /c $<
+	$(CC) /I$(EXSLT_SRCDIR) $(CFLAGS) /Fo$(EXSLT_INTDIR)\ /c $<
+
+# An implicit rule for static libexslt compilation.
+{$(EXSLT_SRCDIR)}.c{$(EXSLT_INTDIR_A)}.obj::
+	$(CC) /D "LIBXML_STATIC" /D "LIBXSLT_STATIC" /D "LIBEXSLT_STATIC" \
+		/I$(EXSLT_SRCDIR) $(CFLAGS) /Fo$(EXSLT_INTDIR_A)\ /c $<
 
 # Compiles libxslt source. Uses the implicit rule for commands.
 $(EXSLT_OBJS) : $(EXSLT_INTDIR)
+
+# Compiles libxslt source. Uses the implicit rule for commands.
+$(EXSLT_OBJS_A) : $(EXSLT_INTDIR_A)
 
 # Creates the export definition file (DEF) for libxslt.
 $(EXSLT_INTDIR)\$(EXSLT_DEF) : $(EXSLT_INTDIR) $(EXSLT_DEF).src
@@ -224,30 +280,37 @@ $(BINDIR)\$(EXSLT_SO) : $(BINDIR) $(EXSLT_OBJS) $(EXSLT_INTDIR)\$(EXSLT_DEF) lib
 	$(LD) $(LDFLAGS) /DLL /DEF:$(EXSLT_INTDIR)\$(EXSLT_DEF) \
 		/VERSION:$(LIBEXSLT_MAJOR_VERSION).$(LIBEXSLT_MINOR_VERSION) \
 		/IMPLIB:$(BINDIR)\$(EXSLT_IMP) /OUT:$(BINDIR)\$(EXSLT_SO) \
-		$(EXSLT_OBJS) $(XSLT_IMP) $(LIBS)
+		$(EXSLT_OBJS) $(XSLT_IMP) $(LIBS) libxml2.lib
 
 # Creates the libexslt archive.
-$(BINDIR)\$(EXSLT_A) : $(BINDIR) $(EXSLT_OBJS)
-	$(AR) $(ARFLAGS) /OUT:$(BINDIR)\$(EXSLT_A) $(EXSLT_OBJS)
+$(BINDIR)\$(EXSLT_A) : $(BINDIR) $(EXSLT_OBJS_A)
+	$(AR) $(ARFLAGS) /OUT:$(BINDIR)\$(EXSLT_A) $(EXSLT_OBJS_A)
 
 
 # Creates the utils intermediate directory.
 $(UTILS_INTDIR) :
 	if not exist $(UTILS_INTDIR) mkdir $(UTILS_INTDIR)
 
-# An implicit rule for xmllint and friends.
+# An implicit rule for xsltproc and friends.
+APPLIBS = $(LIBS)
 !if "$(STATIC)" == "1"
+APPLIBS = $(LIBS) libxml2_a.lib
+!if "$(WITH_ICONV)" == "1"
+APPLIBS = $(APPLIBS) iconv.lib
+!endif
 {$(UTILS_SRCDIR)}.c{$(BINDIR)}.exe:
-	$(CC) /D "LIBXSLT_STATIC" /D "LIBEXSLT_STATIC" $(CFLAGS) /Fo$(UTILS_INTDIR)\ /c $< 
-	$(LD) $(LDFLAGS) /OUT:$@ $(XSLT_A) $(EXSLT_A) $(LIBS) $(UTILS_INTDIR)\$(<B).obj
+	$(CC) /D "LIBXML_STATIC" /D "LIBXSLT_STATIC" /D "LIBEXSLT_STATIC" \
+		$(CFLAGS) /Fo$(UTILS_INTDIR)\ /c $< 
+	$(LD) $(LDFLAGS) /OUT:$@ $(XSLT_A) $(EXSLT_A) $(APPLIBS) $(UTILS_INTDIR)\$(<B).obj
 !else
+APPLIBS = $(LIBS) libxml2.lib
 {$(UTILS_SRCDIR)}.c{$(BINDIR)}.exe:
 	$(CC) $(CFLAGS) /Fo$(UTILS_INTDIR)\ /c $< 
-	$(LD) $(LDFLAGS) /OUT:$@ $(XSLT_IMP) $(EXSLT_IMP) $(LIBS) $(UTILS_INTDIR)\$(<B).obj
+	$(LD) $(LDFLAGS) /OUT:$@ $(XSLT_IMP) $(EXSLT_IMP) $(APPLIBS) $(UTILS_INTDIR)\$(<B).obj
 !endif
 
 # Builds xsltproc and friends. Uses the implicit rule for commands.
-$(UTILS) : $(UTILS_INTDIR) $(BINDIR) libxslt libexslt
+$(UTILS) : $(UTILS_INTDIR) $(BINDIR) libxslt libxslta libexslt libexslta
 
 # Source dependences should be autogenerated somehow here, but how to
 # do it? I have no clue.
