@@ -1,3 +1,8 @@
+Tue Oct 12 03:54:44 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/namespaces.c: fixed a bug in namespace lookup exhibited
+	  by the recent namespace tests in libxml2
+
 Thu Oct  7 16:15:15 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed a problem of tree structure raised

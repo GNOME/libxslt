@@ -437,6 +437,9 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 	 * do a standard namespace search for ns in the output doc
 	 */
         ret = xmlSearchNs(out->doc, out, ns->prefix);
+	if ((ret != NULL) && (!xmlStrEqual(ret->href, URI)))
+	    ret = NULL;
+
 	/*
 	 * if the search fails and it's not for the default prefix
 	 * do a search by href
