@@ -122,13 +122,15 @@ static int xsltDoXIncludeDefault = 0;
  */
 void
 xsltSetXIncludeDefault(int xinclude) {
-    xsltDoXIncludeDefault = xinclude;
+    xsltDoXIncludeDefault = (xinclude != 0);
 }
 
 /**
  * xsltGetXIncludeDefault:
  *
- * Returns whether XInclude should be processed on document being loaded
+ * return the default state for XInclude processing
+ *
+ * Returns 0 if there is no processing 1 otherwise
  */
 int
 xsltGetXIncludeDefault(void) {

@@ -122,7 +122,7 @@ NAME="LIBXSLT-FUNCTIONS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN82"
+NAME="AEN103"
 ></A
 ><H2
 >Name</H2
@@ -130,7 +130,7 @@ NAME="AEN82"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN85"
+NAME="AEN106"
 ></A
 ><H2
 >Synopsis</H2
@@ -223,7 +223,7 @@ HREF="XMLXPATHCONTEXTPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN106"
+NAME="AEN127"
 ></A
 ><H2
 >Description</H2
@@ -233,14 +233,14 @@ NAME="AEN106"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN109"
+NAME="AEN130"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN111"
+NAME="AEN132"
 ></A
 ><H3
 ><A
@@ -270,96 +270,6 @@ HREF="DOCUMENT"
 >document</GTKDOCLINK
 >() XSLT function
 node-set document(object, node-set?)</P
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><A
-NAME="AEN119"
-></A
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TBODY
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the XPath Parser context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->nargs</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the number of arguments</TD
-></TR
-></TBODY
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN132"
-></A
-><H3
-><A
-NAME="XSLTKEYFUNCTION"
-></A
->xsltKeyFunction ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->void        xsltKeyFunction                 (<GTKDOCLINK
-HREF="XMLXPATHPARSERCONTEXTPTR"
->xmlXPathParserContextPtr</GTKDOCLINK
-> ctxt,
-                                             int nargs);</PRE
-></TD
-></TR
-></TABLE
-><P
->Implement the <GTKDOCLINK
-HREF="KEY"
->key</GTKDOCLINK
->() XSLT function
-node-set key(string, object)</P
 ><P
 ></P
 ><DIV
@@ -424,9 +334,9 @@ NAME="AEN153"
 ></A
 ><H3
 ><A
-NAME="XSLTUNPARSEDENTITYURIFUNCTION"
+NAME="XSLTKEYFUNCTION"
 ></A
->xsltUnparsedEntityURIFunction ()</H3
+>xsltKeyFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -436,7 +346,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltUnparsedEntityURIFunction   (<GTKDOCLINK
+>void        xsltKeyFunction                 (<GTKDOCLINK
 HREF="XMLXPATHPARSERCONTEXTPTR"
 >xmlXPathParserContextPtr</GTKDOCLINK
 > ctxt,
@@ -445,11 +355,11 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Implement the unparsed-entity-<GTKDOCLINK
-HREF="URI"
->uri</GTKDOCLINK
+>Implement the <GTKDOCLINK
+HREF="KEY"
+>key</GTKDOCLINK
 >() XSLT function
-string unparsed-entity-uri(string)</P
+node-set key(string, object)</P
 ><P
 ></P
 ><DIV
@@ -514,9 +424,9 @@ NAME="AEN174"
 ></A
 ><H3
 ><A
-NAME="XSLTFORMATNUMBERFUNCTION"
+NAME="XSLTUNPARSEDENTITYURIFUNCTION"
 ></A
->xsltFormatNumberFunction ()</H3
+>xsltUnparsedEntityURIFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -526,7 +436,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltFormatNumberFunction        (<GTKDOCLINK
+>void        xsltUnparsedEntityURIFunction   (<GTKDOCLINK
 HREF="XMLXPATHPARSERCONTEXTPTR"
 >xmlXPathParserContextPtr</GTKDOCLINK
 > ctxt,
@@ -535,11 +445,11 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Implement the format-<GTKDOCLINK
-HREF="NUMBER"
->number</GTKDOCLINK
+>Implement the unparsed-entity-<GTKDOCLINK
+HREF="URI"
+>uri</GTKDOCLINK
 >() XSLT function
-string format-number(number, string, string?)</P
+string unparsed-entity-uri(string)</P
 ><P
 ></P
 ><DIV
@@ -604,9 +514,9 @@ NAME="AEN195"
 ></A
 ><H3
 ><A
-NAME="XSLTGENERATEIDFUNCTION"
+NAME="XSLTFORMATNUMBERFUNCTION"
 ></A
->xsltGenerateIdFunction ()</H3
+>xsltFormatNumberFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -616,7 +526,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltGenerateIdFunction          (<GTKDOCLINK
+>void        xsltFormatNumberFunction        (<GTKDOCLINK
 HREF="XMLXPATHPARSERCONTEXTPTR"
 >xmlXPathParserContextPtr</GTKDOCLINK
 > ctxt,
@@ -625,11 +535,11 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Implement the generate-<GTKDOCLINK
-HREF="ID"
->id</GTKDOCLINK
+>Implement the format-<GTKDOCLINK
+HREF="NUMBER"
+>number</GTKDOCLINK
 >() XSLT function
-string generate-id(node-set?)</P
+string format-number(number, string, string?)</P
 ><P
 ></P
 ><DIV
@@ -694,9 +604,9 @@ NAME="AEN216"
 ></A
 ><H3
 ><A
-NAME="XSLTSYSTEMPROPERTYFUNCTION"
+NAME="XSLTGENERATEIDFUNCTION"
 ></A
->xsltSystemPropertyFunction ()</H3
+>xsltGenerateIdFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -706,7 +616,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltSystemPropertyFunction      (<GTKDOCLINK
+>void        xsltGenerateIdFunction          (<GTKDOCLINK
 HREF="XMLXPATHPARSERCONTEXTPTR"
 >xmlXPathParserContextPtr</GTKDOCLINK
 > ctxt,
@@ -715,11 +625,11 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Implement the system-<GTKDOCLINK
-HREF="PROPERTY"
->property</GTKDOCLINK
+>Implement the generate-<GTKDOCLINK
+HREF="ID"
+>id</GTKDOCLINK
 >() XSLT function
-object system-property(string)</P
+string generate-id(node-set?)</P
 ><P
 ></P
 ><DIV
@@ -784,9 +694,9 @@ NAME="AEN237"
 ></A
 ><H3
 ><A
-NAME="XSLTELEMENTAVAILABLEFUNCTION"
+NAME="XSLTSYSTEMPROPERTYFUNCTION"
 ></A
->xsltElementAvailableFunction ()</H3
+>xsltSystemPropertyFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -796,7 +706,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltElementAvailableFunction    (<GTKDOCLINK
+>void        xsltSystemPropertyFunction      (<GTKDOCLINK
 HREF="XMLXPATHPARSERCONTEXTPTR"
 >xmlXPathParserContextPtr</GTKDOCLINK
 > ctxt,
@@ -805,11 +715,11 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Implement the element-<GTKDOCLINK
-HREF="AVAILABLE"
->available</GTKDOCLINK
+>Implement the system-<GTKDOCLINK
+HREF="PROPERTY"
+>property</GTKDOCLINK
 >() XSLT function
-boolean element-available(string)</P
+object system-property(string)</P
 ><P
 ></P
 ><DIV
@@ -874,9 +784,9 @@ NAME="AEN258"
 ></A
 ><H3
 ><A
-NAME="XSLTFUNCTIONAVAILABLEFUNCTION"
+NAME="XSLTELEMENTAVAILABLEFUNCTION"
 ></A
->xsltFunctionAvailableFunction ()</H3
+>xsltElementAvailableFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -886,7 +796,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltFunctionAvailableFunction   (<GTKDOCLINK
+>void        xsltElementAvailableFunction    (<GTKDOCLINK
 HREF="XMLXPATHPARSERCONTEXTPTR"
 >xmlXPathParserContextPtr</GTKDOCLINK
 > ctxt,
@@ -895,11 +805,11 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
->Implement the function-<GTKDOCLINK
+>Implement the element-<GTKDOCLINK
 HREF="AVAILABLE"
 >available</GTKDOCLINK
 >() XSLT function
-boolean function-available(string)</P
+boolean element-available(string)</P
 ><P
 ></P
 ><DIV
@@ -964,6 +874,96 @@ NAME="AEN279"
 ></A
 ><H3
 ><A
+NAME="XSLTFUNCTIONAVAILABLEFUNCTION"
+></A
+>xsltFunctionAvailableFunction ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltFunctionAvailableFunction   (<GTKDOCLINK
+HREF="XMLXPATHPARSERCONTEXTPTR"
+>xmlXPathParserContextPtr</GTKDOCLINK
+> ctxt,
+                                             int nargs);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Implement the function-<GTKDOCLINK
+HREF="AVAILABLE"
+>available</GTKDOCLINK
+>() XSLT function
+boolean function-available(string)</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN287"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the XPath Parser context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>nargs</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the number of arguments</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN300"
+></A
+><H3
+><A
 NAME="XSLTREGISTERALLFUNCTIONS"
 ></A
 >xsltRegisterAllFunctions ()</H3
@@ -990,7 +990,7 @@ HREF="XMLXPATHCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN286"
+NAME="AEN307"
 ></A
 ><P
 ></P

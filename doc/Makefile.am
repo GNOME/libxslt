@@ -13,9 +13,6 @@ HTML_DIR=$(prefix)/doc
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)/html
 
-# htmldir = $(prefix)/html
-# html_DATA = gnome-dev-info.html
-
 scan:
 	gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR) --ignore-headers="acconfig.h config.h"
 
@@ -47,9 +44,11 @@ install-data-local:
 	-@INSTALL@ -m 0644 $(srcdir)/xml.html $(DESTDIR)$(TARGET_DIR)
 	-@INSTALL@ -m 0644 $(srcdir)/html/*.html $(DESTDIR)$(TARGET_DIR)
 	-@INSTALL@ -m 0644 $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR)
+	$(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)/tutorial
+	-@INSTALL@ -m 0644 $(srcdir)/tutorial/* $(DESTDIR)$(TARGET_DIR)/tutorial
 	-(cd $(DESTDIR); gtkdoc-fixxref --module=libxslt --html-dir=$(HTML_DIR))
 
 dist-hook:
-	(cd $(srcdir) ; tar cvf - *.html *.gif html/*.html html/*.sgml) | (cd $(distdir); tar xf -)
+	(cd $(srcdir) ; tar cvf - *.html *.gif html/*.html html/*.sgml tutorial/libxslt*) | (cd $(distdir); tar xf -)
 
 .PHONY : html sgml templates scan

@@ -40,6 +40,8 @@
 #endif
 
 const char *xsltEngineVersion = LIBXSLT_VERSION_STRING;
+const int xsltLibxsltVersion = LIBXSLT_VERSION;
+const int xsltLibxmlVersion = LIBXML_VERSION;
 
 /*
  * Useful macros

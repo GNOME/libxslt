@@ -140,6 +140,10 @@ main(int argc, char **argv) {
 		   (!strcmp(argv[i], "--version"))) {
 	    printf("Using libxml %s and libxslt %s\n",
 		   xmlParserVersion, xsltEngineVersion);
+	    printf("xsltproc was compiled against libxml %d and libxslt %d\n",
+		   LIBXML_VERSION, LIBXSLT_VERSION);
+	    printf("libxslt %d was compiled against libxml %d\n",
+		   xsltLibxsltVersion, xsltLibxmlVersion);
 	} else if ((!strcmp(argv[i], "-repeat")) ||
 		   (!strcmp(argv[i], "--repeat"))) {
 	    if (repeat == 0)

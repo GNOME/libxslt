@@ -1,7 +1,7 @@
 AC_INIT(libxslt/xslt.c)
 
 LIBXSLT_MAJOR_VERSION=0
-LIBXSLT_MINOR_VERSION=11
+LIBXSLT_MINOR_VERSION=12
 LIBXSLT_MICRO_VERSION=0
 PACKAGE=libxslt
 
@@ -126,7 +126,7 @@ dnl
 dnl find libxml
 dnl
 XML_CONFIG="xml2-config"
-AC_MSG_CHECKING(for libxml libraries >= 2.3.10) 
+AC_MSG_CHECKING(for libxml libraries >= 2.3.11) 
 if test "x$LIBXML_PREFIX" != "x"
 then
 	if ${LIBXML_PREFIX}/bin/xml2-config --libs print > /dev/null 2>&1
@@ -143,13 +143,13 @@ dnl
 if test "x$XML_CONFIG" != "x"
 then
 	vers=`$XML_CONFIG --version | sed -e 's/libxml //' | awk 'BEGIN { FS = "."; } { printf "%d", ($1 * 1000 + $2) * 1000 + $3;}'`
-	if test "$vers" -ge 2003010
+	if test "$vers" -ge 2003011
 	then
 		LIBXML_LIBS="`$XML_CONFIG --libs`"
 		LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
 		AC_MSG_RESULT(found)
 	else
-		AC_MSG_ERROR(You need at least libxml2 2.3.10 for this version of libxslt)
+		AC_MSG_ERROR(You need at least libxml2 2.3.11 for this version of libxslt)
 	fi
 else
 	AC_MSG_ERROR(Could not find libxml2 anywhere, check ftp://xmlsoft.org/.)
