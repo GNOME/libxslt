@@ -225,7 +225,7 @@ main(int argc, char **argv) {
 		doc = htmlParseFile(argv[i], NULL);
 	    else
 #endif
-#ifdef LIBXML_HTML_ENABLED
+#ifdef LIBXML_DOCB_ENABLED
 	    if (docbook)
 		doc = docbParseFile(argv[i], NULL);
 	    else
@@ -273,7 +273,7 @@ main(int argc, char **argv) {
 			doc = htmlParseFile(argv[i], NULL);
 		    else
 #endif
-#ifdef LIBXML_HTML_ENABLED
+#ifdef LIBXML_DOCB_ENABLED
 		    if (docbook)
 			doc = docbParseFile(argv[i], NULL);
 		    else

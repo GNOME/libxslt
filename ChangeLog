@@ -1,3 +1,7 @@
+Sat May 12 09:43:10 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: use LIBXML_DOCB_ENABLED, William M. Brack
+
 Fri May 11 19:12:26 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/templates.c libxslt/transform.c: fixed bug #54446
