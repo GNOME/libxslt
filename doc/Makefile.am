@@ -15,36 +15,41 @@ HTML_DIR=$(datadir)/doc
 WIN32_DIR=$(top_srcdir)/win32
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)/html
-PAGES=   API.html bugs.html contribs.html docs.html downloads.html \
-         help.html index.html intro.html news.html xsltproc2.html FAQ.html
+PAGES=   API.html bugs.html contribs.html FAQ.html docs.html \
+         downloads.html help.html index.html intro.html news.html \
+	 xsltproc2.html
 
 EPAGES=	 EXSLT/bugs.html EXSLT/docs.html EXSLT/downloads.html \
 	 EXSLT/help.html EXSLT/index.html EXSLT/intro.html
 
-APIPAGES=APIconstructors.html APIfiles.html \
-	 APIfunctions.html APIsymbols.html APIchunk0.html
+APIPAGES=APIconstructors.html APIfiles.html APIfunctions.html \
+	 APIsymbols.html APIchunk0.html search.templ
 
 EAPIPAGES=EXSLT/APIconstructors.html EXSLT/APIfiles.html \
 	 EXSLT/APIfunctions.html EXSLT/APIsymbols.html EXSLT/APIchunk0.html
 
 EXTRA_DIST = 			\
-	xslt.html		\
+	api.xsl			\
+	apibuild.py		\
 	EXSLT/exslt.html	\
-	libxslt-api.xml		\
-	libxslt-refs.xml		\
 	EXSLT/libexslt-api.xml	\
 	EXSLT/libexslt-refs.xml	\
-	xsltproc.xml		\
-	apibuild.py		\
+	libxslt-api.xml		\
+	libxslt-refs.xml	\
 	libxslt.xsa		\
-	news.xsl
+	newapi.xsl		\
+	news.xsl		\
+	search.xml		\
+	site.xsl		\
+	xslt.html		\
+	xsltproc.xml
 
 man_MANS = xsltproc.1
 
 all:	web ../NEWS libxslt.xsa $(man_MANS)
 
-api:	libxslt-api.xml libxslt-refs.xml $(APIPAGES) html/index.html \
-	$(WIN32_DIR)/libxslt.def.src
+api:	libxslt-api.xml libxslt-refs.xml $(APIPAGES) search.php \
+        html/index.html $(WIN32_DIR)/libxslt.def.src
 
 eapi:	EXSLT/libexslt-api.xml EXSLT/libexslt-refs.xml $(EAPIPAGES) \
 	EXSLT/html/index.html $(WIN32_DIR)/libexslt.def.src
@@ -139,6 +144,17 @@ libxslt-api.xml libxslt-refs.xml EXSLT/libexslt-api.xml \
 xsltproc.1: xsltproc.xml
 	-@(xsltproc --nonet xsltproc.xml)
 
+# Note that in the following, xmllint output is piped to xsltproc
+search.php: $(srcdir)/api.xsl $(srcdir)/site.xsl $(srcdir)/search.templ \
+            $(srcdir)/search.xml $(srcdir)/search.php.inc
+	-@(if test -x $(bindir)/xmllint -a -x $(bindir)/xsltproc; then \
+	   echo "Rebuilding search.php" ; \
+	   $(bindir)/xmllint --xinclude --nonet \
+	                      $(srcdir)/search.xml | \
+	   $(bindir)/xsltproc --nonet - search.templ \
+			      > search.php ; else \
+	   echo "Unable to find xmllint or xsltproc in $(bindir)" ; fi)
+	   
 $(WIN32_DIR)/libxslt.def.src: libxslt-api.xml
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
 	  $(bindir)/xsltproc -o $(WIN32_DIR)/libxslt.def.src \

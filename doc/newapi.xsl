@@ -41,16 +41,30 @@
   <!-- the location of logos for the pages -->
   <xsl:param name="logo_base" select="'../'"/>
 
-  <xsl:variable name="href_base" select="'../'"/>
-
-  <xsl:variable name="html_dir" select="'html/'"/>
-  
   <!-- these override the definition in site.xsl -->
+  <xsl:variable name="href_base" select="'../'"/>
+  <xsl:variable name="html_dir" select="'html/'"/>
   <xsl:variable name="api_base" select="''"/>
+  <xsl:variable name="globaltitle">
+    <xsl:choose>
+      <xsl:when test="$libname='libxslt'">
+        <xsl:value-of select="'The XSLT C library for Gnome'"/>
+     </xsl:when>
+     <xsl:when test="$libname='libxml'">
+	  <xsl:value-of select="'The XML C library for Gnome'"/>
+	</xsl:when>
+	<xsl:when test="$libname='libexslt'">
+	  <xsl:value-of select="'The EXSLT C library for Gnome'"/>
+	</xsl:when>
+     <xsl:otherwise>
+       <xsl:value-of select="'Unknown Library'"/>
+     </xsl:otherwise>
+   </xsl:choose>
+  </xsl:variable>
 
   <!-- The table of content for the HTML API pages -->
   <xsl:variable name="menu_name">API Menu</xsl:variable>
-  <xsl:variable name="apitoc">
+  <xsl:variable name="toc">
     <form action="../search.php"
           enctype="application/x-www-form-urlencoded" method="get">
       <input name="query" type="text" size="20" value=""/>
@@ -58,9 +72,9 @@
     </form>
     <ul><!-- style="margin-left: -1em" -->
       <li><a style="font-weight:bold"
-             href="../index.html">Main Menu</a></li>
+             href="{$href_base}index.html">Main Menu</a></li>
       <li><a style="font-weight:bold" 
-             href="../docs.html">Developer Menu</a></li>
+             href="{$href_base}docs.html">Developer Menu</a></li>
       <!--   Coming soon .....
       <li><a style="font-weight:bold" 
              href="{$href_base}examples/index.html">Code Examples</a></li>
@@ -72,7 +86,7 @@
       -->
     </ul>
   </xsl:variable>
-  <xsl:template name="apitoc">
+  <xsl:template name="toc">
     <table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000">
       <tr>
         <td>
@@ -86,7 +100,7 @@
             </tr>
             <tr>
               <td bgcolor="#fffacd">
-                <xsl:copy-of select="$apitoc"/>
+                <xsl:copy-of select="$toc"/>
               </td>
             </tr>
           </table>

@@ -183,6 +183,19 @@
   <xsl:template match="/">
     <xsl:message>Executing api.xsl</xsl:message>
     <xsl:apply-templates select="$apirefs/apirefs"/>
+    <xsl:if test="$dirname=''">	<!-- template for search only for base dir -->
+      <xsl:message>Generating search template</xsl:message>
+      <xsl:variable name="dummydata">
+        <xsl:element name="insert_php">
+          <xsl:value-of select="'Insert point for php code'"/>
+        </xsl:element>
+      </xsl:variable>
+      <xsl:call-template name="new_page">
+        <xsl:with-param name="filename" select="'search.templ'"/>
+        <xsl:with-param name="title" select="'Search engine'"/>
+        <xsl:with-param name="target" select="$dummydata"/>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>

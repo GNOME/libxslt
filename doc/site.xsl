@@ -13,12 +13,12 @@
   <!-- dirname is used to 'choose' between libxslt and libexslt -->
   <xsl:param name="dirname" select="''"/>
   <!-- libname is the name of the library being documented -->
-  <xsl:param name="libname" select="libxslt"/>
+  <xsl:param name="libname" select="'libxslt'"/>
   <!-- logo_base points to the *.png logos used in headers -->
   <xsl:param name="logo_base" select="''"/>
 
   <!-- href_base gives the location of 'base documentation' files 
-       and is often changed by importing stylesheets -->
+       and can be changed by importing stylesheets -->
   <xsl:variable name="href_base" select="''"/>
 
   <xsl:variable name="home_base">
@@ -31,6 +31,8 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+
+  <xsl:variable name="menu_name" select="'Main Menu'"/>
 
 <!--
  - returns the filename associated to an ID in the original file
@@ -173,7 +175,7 @@
             <tr>
               <td colspan="1" bgcolor="#eecfa1" align="center">
                 <center>
-                  <b>Main Menu</b>
+                  <b><xsl:value-of select="$menu_name"/></b>
                 </center>
               </td>
             </tr>
@@ -394,6 +396,7 @@ A:link, A:visited, A:active { text-decoration: underline }
       <xsl:call-template name="generic_page">
         <xsl:with-param name="title" select="$title"/>
         <xsl:with-param name="target" select="$target"/>
+	  <xsl:with-param name="toc" select="$toc"/>
       </xsl:call-template>
     </xsl:document>
   </xsl:template>

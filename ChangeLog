@@ -1,3 +1,15 @@
+Sat Jan  9 17:04:38 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* doc/search.xml, doc/search.templ, doc/Makefile.am,
+	  doc/search.php.inc: Added new facility to "autogen"
+	  the search script.  Fixed a few more problems with
+	  the API page generation.
+	* doc/site.xsl, doc/api.xsl, doc/newapi.xsl: integrated
+	  the autogeneration of the php script.  Note that from
+	  this point doc/search.php will be include in the
+	  generic "Rebuilt docs".
+	* doc/*: api docs rebuilt.
+	
 Fri Jan  8 08:32:55 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* doc/site.xsl, doc/api.xsl, doc/newapi.xsl, doc/search.php:
