@@ -1,3 +1,8 @@
+Sat Jan 27 11:00:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt.spec.in doc/xslt.html: updating doc and trying to add
+	  it to the RPM.
+
 Fri Jan 26 22:29:34 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* Makefile.am configure.in doc/Makefile.am: added a doc subdir
