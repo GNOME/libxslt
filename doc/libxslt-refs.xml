@@ -71,6 +71,7 @@
     <reference name='xsltCopyNamespaceList' href='html/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST'/>
     <reference name='xsltCopyOf' href='html/libxslt-transform.html#XSLTCOPYOF'/>
     <reference name='xsltDebug' href='html/libxslt-extra.html#XSLTDEBUG'/>
+    <reference name='xsltDebugDumpExtensions' href='html/libxslt-extensions.html#XSLTDEBUGDUMPEXTENSIONS'/>
     <reference name='xsltDebugStatusCodes' href='html/libxslt-xsltutils.html#XSLTDEBUGSTATUSCODES'/>
     <reference name='xsltDecimalFormat' href='html/libxslt-xsltinternals.html#XSLTDECIMALFORMAT'/>
     <reference name='xsltDecimalFormatGetByName' href='html/libxslt-xsltinternals.html#XSLTDECIMALFORMATGETBYNAME'/>
@@ -202,6 +203,7 @@
     <reference name='xsltSaveResultToFd' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD'/>
     <reference name='xsltSaveResultToFile' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE'/>
     <reference name='xsltSaveResultToFilename' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILENAME'/>
+    <reference name='xsltSaveResultToString' href='html/libxslt-xsltutils.html#XSLTSAVERESULTTOSTRING'/>
     <reference name='xsltSetDebuggerCallbacks' href='html/libxslt-xsltutils.html#XSLTSETDEBUGGERCALLBACKS'/>
     <reference name='xsltSetGenericDebugFunc' href='html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC'/>
     <reference name='xsltSetGenericErrorFunc' href='html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC'/>
@@ -329,6 +331,7 @@
     <ref name='xsltCopyNamespaceList'/>
     <ref name='xsltCopyOf'/>
     <ref name='xsltDebug'/>
+    <ref name='xsltDebugDumpExtensions'/>
     <ref name='xsltDebugStatusCodes'/>
     <ref name='xsltDecimalFormat'/>
     <ref name='xsltDecimalFormatGetByName'/>
@@ -460,6 +463,7 @@
     <ref name='xsltSaveResultToFd'/>
     <ref name='xsltSaveResultToFile'/>
     <ref name='xsltSaveResultToFilename'/>
+    <ref name='xsltSaveResultToString'/>
     <ref name='xsltSetDebuggerCallbacks'/>
     <ref name='xsltSetGenericDebugFunc'/>
     <ref name='xsltSetGenericErrorFunc'/>
@@ -1326,8 +1330,9 @@
       <ref name='XSLT_PAT_NO_PRIORITY'/>
       <ref name='xsltRuntimeExtra'/>
       <ref name='xsltRuntimeExtraPtr'/>
-      <ref name='XSLT_RUNTIME_EXTRA'/>
+      <ref name='XSLT_RUNTIME_EXTRA_LST'/>
       <ref name='XSLT_RUNTIME_EXTRA_FREE'/>
+      <ref name='XSLT_RUNTIME_EXTRA'/>
       <ref name='xsltTemplate'/>
       <ref name='xsltTemplatePtr'/>
       <ref name='xsltDecimalFormat'/>
@@ -1510,6 +1515,9 @@
         <word name='Drop'>
           <ref name='xslDropCall'/>
         </word>
+        <word name='Dumps'>
+          <ref name='xsltDebugDumpExtensions'/>
+        </word>
       </letter>
       <letter name='E'>
         <word name='Errors'>
@@ -1527,6 +1535,7 @@
       <letter name='F'>
         <word name='FILE'>
           <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltDebugDumpExtensions'/>
           <ref name='xsltProfileStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
           <ref name='xsltSaveProfiling'/>
@@ -1614,6 +1623,9 @@
         </word>
       </letter>
       <letter name='L'>
+        <word name='Length'>
+          <ref name='xsltSaveResultToString'/>
+        </word>
         <word name='Load'>
           <ref name='xsltParseStylesheetFile'/>
         </word>
@@ -1642,6 +1654,9 @@
         </word>
         <word name='Max'>
           <ref name='XSLT_MAX_SORT'/>
+        </word>
+        <word name='Memory'>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='Michael'>
           <ref name='XSLT_SAXON_NAMESPACE'/>
@@ -1774,6 +1789,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='Saxon'>
           <ref name='XSLT_SAXON_NAMESPACE'/>
@@ -1861,6 +1877,7 @@
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='Unregister'>
           <ref name='xsltCleanupGlobals'/>
@@ -1916,6 +1933,7 @@
           <ref name='xsltProfileStylesheet'/>
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='XPath'>
           <ref name='xsltDocumentFunction'/>
@@ -2014,6 +2032,7 @@
           <ref name='xsltFreeTransformContext'/>
           <ref name='xsltNewStylesheet'/>
           <ref name='xsltNewTransformContext'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='allocator'>
           <ref name='DEBUG_MEMORY'/>
@@ -2062,6 +2081,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='are'>
           <ref name='xslHandleDebugger'/>
@@ -2239,6 +2259,7 @@
         <word name='byte'>
           <ref name='xsltSaveResultTo'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='bytes'>
           <ref name='xsltSaveResultToFd'/>
@@ -2614,6 +2635,7 @@
           <ref name='xsltElementAvailableFunction'/>
         </word>
         <word name='elements'>
+          <ref name='xsltDebugDumpExtensions'/>
           <ref name='xsltExtElementLookup'/>
           <ref name='xsltFreeCompMatchList'/>
           <ref name='xsltParseStylesheetAttributeSet'/>
@@ -2729,6 +2751,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
           <ref name='xsltTestCompMatchList'/>
         </word>
         <word name='fast'>
@@ -2738,6 +2761,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
         </word>
@@ -2820,6 +2844,7 @@
           <ref name='xsltFunctionAvailableFunction'/>
         </word>
         <word name='functions'>
+          <ref name='xsltDebugDumpExtensions'/>
           <ref name='xsltRegisterAllFunctions'/>
         </word>
       </letter>
@@ -2846,6 +2871,7 @@
           <ref name='xsltCompilePattern'/>
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='generates'>
           <ref name='xsltCompilePattern'/>
@@ -3131,6 +3157,7 @@
           <ref name='xsltAttrListTemplateProcess'/>
           <ref name='xsltCompilePattern'/>
           <ref name='xsltCopyNamespaceList'/>
+          <ref name='xsltDebugDumpExtensions'/>
           <ref name='xsltDoSortFunction'/>
           <ref name='xsltDocumentSortFunction'/>
           <ref name='xsltEvalTemplateString'/>
@@ -3371,6 +3398,7 @@
           <ref name='xsltGetNsProp'/>
           <ref name='xsltGetQNameURI'/>
           <ref name='xsltGetTemplate'/>
+          <ref name='xsltLoadDocument'/>
           <ref name='xsltLoadStylesheetPI'/>
           <ref name='xsltNeedElemSpaceHandling'/>
           <ref name='xsltRunStylesheet'/>
@@ -3391,39 +3419,10 @@
           <ref name='xsltEvalOneUserParam'/>
           <ref name='xsltQuoteOneUserParam'/>
         </word>
-        <word name='number'>
-          <ref name='LIBXSLT_VERSION_STRING'/>
-          <ref name='XSLT_MAX_SORT'/>
-          <ref name='xsltAllocateExtra'/>
-          <ref name='xsltAllocateExtraCtxt'/>
-          <ref name='xsltDoSortFunction'/>
-          <ref name='xsltDocumentFunction'/>
-          <ref name='xsltElementAvailableFunction'/>
-          <ref name='xsltEvalXPathPredicate'/>
-          <ref name='xsltFormatNumberFunction'/>
-          <ref name='xsltFunctionAvailableFunction'/>
-          <ref name='xsltFunctionNodeSet'/>
-          <ref name='xsltGenerateIdFunction'/>
-          <ref name='xsltInitCtxtExts'/>
-          <ref name='xsltKeyFunction'/>
-          <ref name='xsltNumber'/>
-          <ref name='xsltNumberFormat'/>
-          <ref name='xsltRunStylesheet'/>
-          <ref name='xsltRunStylesheetUser'/>
-          <ref name='xsltSaveResultTo'/>
-          <ref name='xsltSaveResultToFd'/>
-          <ref name='xsltSaveResultToFile'/>
-          <ref name='xsltSaveResultToFilename'/>
-          <ref name='xsltSystemPropertyFunction'/>
-          <ref name='xsltTimestamp'/>
-          <ref name='xsltUnparsedEntityURIFunction'/>
-        </word>
         <word name='number:'>
           <ref name='LIBXSLT_VERSION'/>
         </word>
       </letter>
-    </chunk>
-    <chunk name='chunk5'>
       <letter name='o'>
         <word name='object'>
           <ref name='xsltDocumentFunction'/>
@@ -3435,6 +3434,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='occcur'>
           <ref name='xslHandleDebugger'/>
@@ -3498,6 +3498,7 @@
         <word name='output'>
           <ref name='xsltApplyStylesheet'/>
           <ref name='xsltApplyStylesheetUser'/>
+          <ref name='xsltDebugDumpExtensions'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltParseStylesheetOutput'/>
@@ -3511,6 +3512,8 @@
           <ref name='xsltApplyStylesheetUser'/>
         </word>
       </letter>
+    </chunk>
+    <chunk name='chunk5'>
       <letter name='p'>
         <word name='param'>
           <ref name='xsltParseGlobalParam'/>
@@ -3619,6 +3622,7 @@
         </word>
         <word name='pointer'>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='pointers'>
           <ref name='XSLT_GET_IMPORT_PTR'/>
@@ -3790,8 +3794,6 @@
           <ref name='xsltApplyOneTemplate'/>
         </word>
       </letter>
-    </chunk>
-    <chunk name='chunk6'>
       <letter name='q'>
         <word name='query'>
           <ref name='xsltGetKey'/>
@@ -3826,6 +3828,7 @@
           <ref name='xsltNamespaceAlias'/>
         </word>
         <word name='registered'>
+          <ref name='xsltDebugDumpExtensions'/>
           <ref name='xsltInitCtxtExts'/>
         </word>
         <word name='related'>
@@ -3883,6 +3886,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='result-prefix'>
           <ref name='xsltNamespaceAlias'/>
@@ -3940,6 +3944,8 @@
           <ref name='xsltAllocateExtraCtxt'/>
         </word>
       </letter>
+    </chunk>
+    <chunk name='chunk6'>
       <letter name='s'>
         <word name='saving'>
           <ref name='xsltSaveProfiling'/>
@@ -4085,6 +4091,9 @@
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
         </word>
+        <word name='stdout'>
+          <ref name='xsltDebugDumpExtensions'/>
+        </word>
         <word name='stopped'>
           <ref name='CHECK_STOPPED'/>
           <ref name='CHECK_STOPPED0'/>
@@ -4139,6 +4148,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='stylesheet-prefix'>
           <ref name='xsltNamespaceAlias'/>
@@ -4202,8 +4212,6 @@
           <ref name='xsltSystemPropertyFunction'/>
         </word>
       </letter>
-    </chunk>
-    <chunk name='chunk7'>
       <letter name='t'>
         <word name='tables'>
           <ref name='xsltInitCtxtKeys'/>
@@ -4253,6 +4261,7 @@
         </word>
         <word name='text'>
           <ref name='IS_XSLT_REAL_NODE'/>
+          <ref name='xsltSaveResultToString'/>
           <ref name='xsltText'/>
         </word>
         <word name='than'>
@@ -4384,6 +4393,8 @@
           <ref name='xsltRunStylesheetUser'/>
         </word>
       </letter>
+    </chunk>
+    <chunk name='chunk7'>
       <letter name='u'>
         <word name='unparsed-entity-uri'>
           <ref name='xsltUnparsedEntityURIFunction'/>
@@ -4407,6 +4418,7 @@
           <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
           <ref name='xsltCleanupTemplates'/>
           <ref name='xsltCompMatch'/>
+          <ref name='xsltDebugDumpExtensions'/>
           <ref name='xsltFreeAttributeSetsHashes'/>
           <ref name='xsltFreeDocuments'/>
           <ref name='xsltFreeExts'/>
@@ -4574,10 +4586,9 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
       </letter>
-    </chunk>
-    <chunk name='chunk8'>
       <letter name='x'>
         <word name='xmlAttrPtr'>
           <ref name='xsltAttrListTemplateProcess'/>
@@ -4591,6 +4602,7 @@
           <ref name='xsltSaveResultToFd'/>
           <ref name='xsltSaveResultToFile'/>
           <ref name='xsltSaveResultToFilename'/>
+          <ref name='xsltSaveResultToString'/>
         </word>
         <word name='xmlGetNsProp'>
           <ref name='xsltGetNsProp'/>
@@ -4687,10 +4699,9 @@
       <chunk name='chunk1' start='U' end='b'/>
       <chunk name='chunk2' start='c' end='e'/>
       <chunk name='chunk3' start='f' end='i'/>
-      <chunk name='chunk4' start='k' end='n'/>
-      <chunk name='chunk5' start='o' end='p'/>
-      <chunk name='chunk6' start='q' end='s'/>
-      <chunk name='chunk7' start='t' end='w'/>
+      <chunk name='chunk4' start='k' end='o'/>
+      <chunk name='chunk5' start='p' end='r'/>
+      <chunk name='chunk6' start='s' end='t'/>
     </chunks>
   </index>
 </apirefs>

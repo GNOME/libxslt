@@ -105,8 +105,9 @@
      <exports symbol='XSLT_PAT_NO_PRIORITY'/>
      <exports symbol='xsltRuntimeExtra'/>
      <exports symbol='xsltRuntimeExtraPtr'/>
-     <exports symbol='XSLT_RUNTIME_EXTRA'/>
+     <exports symbol='XSLT_RUNTIME_EXTRA_LST'/>
      <exports symbol='XSLT_RUNTIME_EXTRA_FREE'/>
+     <exports symbol='XSLT_RUNTIME_EXTRA'/>
      <exports symbol='xsltTemplate'/>
      <exports symbol='xsltTemplatePtr'/>
      <exports symbol='xsltDecimalFormat'/>
@@ -416,6 +417,8 @@
     </macro>
     <macro name='XSLT_RUNTIME_EXTRA_FREE' file='xsltInternals'>
     </macro>
+    <macro name='XSLT_RUNTIME_EXTRA_LST' file='xsltInternals'>
+    </macro>
     <macro name='XSLT_SAXON_NAMESPACE' file='extra'>
       <info>This is Michael Kay&apos;s Saxon processor namespace for extensions.</info>
     </macro>
@@ -669,8 +672,9 @@
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed informations '/>
     </function>
     <function name='xsltDebugDumpExtensions' file='extensions'>
+      <info>Dumps a list of the registered XSLT extension functions and elements</info>
       <return type='void'/>
-      <arg name='output' type='FILE *'/>
+      <arg name='output' type='FILE *' info='the FILE * for the output, if NULL stdout is used '/>
     </function>
     <enum name='xsltDebugStatusCodes' file='xsltutils'/>
     <struct name='xsltDecimalFormat' file='xsltInternals' info='Data structure of decimal-format.'/>
@@ -1082,13 +1086,13 @@
       <arg name='nargs' type='int' info='the number of arguments '/>
     </function>
     <function name='xsltLoadDocument' file='documents'>
-      <info>Try to load a document within the XSLT transformation context</info>
+      <info>Try to load a document (not a stylesheet) within the XSLT transformation context</info>
       <return type='xsltDocumentPtr' info='the new xsltDocumentPtr or NULL in case of error '/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
       <arg name='URI' type='const xmlChar *' info='the computed URI of the document '/>
     </function>
     <function name='xsltLoadStyleDocument' file='documents'>
-      <info>Try to load a document within the XSLT transformation context</info>
+      <info>Try to load a stylesheet document within the XSLT transformation context</info>
       <return type='xsltDocumentPtr' info='the new xsltDocumentPtr or NULL in case of error '/>
       <arg name='style' type='xsltStylesheetPtr' info='an XSLT style sheet '/>
       <arg name='URI' type='const xmlChar *' info='the computed URI of the document '/>
@@ -1442,11 +1446,12 @@
       <arg name='compression' type='int' info='the compression factor (0 - 9 included) '/>
     </function>
     <function name='xsltSaveResultToString' file='xsltutils'>
-      <return type='int'/>
-      <arg name='doc_txt_ptr' type='xmlChar **'/>
-      <arg name='doc_txt_len' type='int *'/>
-      <arg name='result' type='xmlDocPtr'/>
-      <arg name='style' type='xsltStylesheetPtr'/>
+      <info>Save the result result obtained by applying the style stylesheet to a file or URL</info>
+      <return type='int' info='the number of byte written or -1 in case of failure. '/>
+      <arg name='doc_txt_ptr' type='xmlChar **' info='Memory pointer for allocated XML text '/>
+      <arg name='doc_txt_len' type='int *' info='Length of the generated XML text '/>
+      <arg name='result' type='xmlDocPtr' info='the result xmlDocPtr '/>
+      <arg name='style' type='xsltStylesheetPtr' info='the stylesheet '/>
     </function>
     <function name='xsltSetDebuggerCallbacks' file='xsltutils'>
       <return type='int'/>
