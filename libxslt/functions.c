@@ -59,7 +59,7 @@
 void
 xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xsltDocumentPtr doc;
-    xmlXPathObjectPtr obj;
+    xmlXPathObjectPtr obj, obj2=NULL;
     xmlChar *base, *URI;
 
 
@@ -75,10 +75,46 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	ctxt->error = XPATH_INVALID_TYPE;
 	return;
     }
+
+    if (nargs == 2) {
+	if (ctxt->value->type != XPATH_NODESET) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"document() : invalid arg expecting a nodeset\n");
+	    ctxt->error = XPATH_INVALID_TYPE;
+	    return;
+	}
+
+	obj2 = valuePop(ctxt);
+    }
+
     if (ctxt->value->type == XPATH_NODESET) {
-	TODO
-        xsltGenericError(xsltGenericErrorContext,
-		"document() : with node-sets args not yet supported\n");
+	int i;
+	xmlXPathObjectPtr newobj, ret;
+
+	obj = valuePop(ctxt);
+	ret = xmlXPathNewNodeSet(NULL);
+
+	for (i = 0; i < obj->nodesetval->nodeNr; i++) {
+	    valuePush(ctxt,
+		      xmlXPathNewNodeSet(obj->nodesetval->nodeTab[i]));
+	    xmlXPathStringFunction(ctxt, 1);
+	    if (nargs == 2) {
+		valuePush(ctxt, xmlXPathObjectCopy(obj2));
+	    } else {
+		valuePush(ctxt,
+			  xmlXPathNewNodeSet(obj->nodesetval->nodeTab[i]));
+	    }
+	    xsltDocumentFunction(ctxt, 2);
+	    newobj = valuePop(ctxt);
+	    ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
+						   newobj->nodesetval);
+	    xmlXPathFreeObject(newobj);
+	}
+
+	xmlXPathFreeObject(obj);
+	if (obj2 != NULL)
+	    xmlXPathFreeObject(obj2);
+	valuePush(ctxt, ret);
 	return;
     }
     /*
@@ -89,13 +125,22 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	xsltGenericError(xsltGenericErrorContext,
 	    "document() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
+	if (obj2 != NULL)
+	    xmlXPathFreeObject(obj2);
 	return;
     }
     obj = valuePop(ctxt);
     if (obj->stringval == NULL) {
 	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
     } else {
-        base = xmlNodeGetBase(ctxt->context->doc, ctxt->context->node);
+	if (obj2 != NULL) {
+	    /* obj2 should be ordered in document order !!!!! */
+	    base = xmlNodeGetBase(obj2->nodesetval->nodeTab[0]->doc,
+				  obj->nodesetval->nodeTab[0]);
+	} else {
+	    base = xmlNodeGetBase(ctxt->context->doc,
+				  ctxt->context->node);
+	}
 	URI = xmlBuildURI(obj->stringval, base);
 	if (base != NULL)
 	    xmlFree(base);
@@ -123,6 +168,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	}
     }
     xmlXPathFreeObject(obj);
+    if (obj2 != NULL)
+	xmlXPathFreeObject(obj2);
 }
 
 /**
@@ -136,63 +183,103 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 void
 xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlNodeSetPtr nodelist;
-    xmlXPathObjectPtr obj, tmp;
+    xmlXPathObjectPtr obj1, obj2;
     xmlChar *key, *value;
+    const xmlChar *keyURI;
     xsltTransformContextPtr tctxt;
 
     tctxt = ((xsltTransformContextPtr)ctxt->context->extra);
 
     if (nargs != 2) {
         xsltGenericError(xsltGenericErrorContext,
-		"key() : expects one string arg\n");
+		"key() : expects two arguments\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
 
-    obj = valuePop(ctxt);
-    if ((obj == NULL) ||
+    obj2 = valuePop(ctxt);
+    if ((obj2 == NULL) ||
 	(ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
 	xsltGenericError(xsltGenericErrorContext,
-	    "generate-id() : invalid arg expecting a string\n");
+	    "key() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
-	xmlXPathFreeObject(obj);
+	xmlXPathFreeObject(obj2);
 
 	return;
     }
-    tmp = valuePop(ctxt);
-    key = tmp->stringval;
+    obj1 = valuePop(ctxt);
 
-    /* TODO: find URI when qualified name */
-    
-    if (obj->type == XPATH_NODESET) {
-	TODO /* handle NODE set as 2nd args of key() */
+    if (obj2->type == XPATH_NODESET) {
+	int i;
+	xmlXPathObjectPtr newobj, ret;
+
+	ret = xmlXPathNewNodeSet(NULL);
+
+	for (i = 0; i < obj2->nodesetval->nodeNr; i++) {
+	    valuePush(ctxt, xmlXPathObjectCopy(obj1));
+	    valuePush(ctxt,
+		      xmlXPathNewNodeSet(obj2->nodesetval->nodeTab[i]));
+	    xsltKeyFunction(ctxt, 2);
+	    newobj = valuePop(ctxt);
+	    ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
+						   newobj->nodesetval);
+	    xmlXPathFreeObject(newobj);
+	}
+	valuePush(ctxt, ret);
     } else {
+	xmlChar *qname, *prefix;
+
+	/*
+	 * Get the associated namespace URI if qualified name
+	 */
+	qname = obj1->stringval;
+	key = xmlSplitQName2(qname, &prefix);
+	if (key == NULL) {
+	    key = xmlStrdup(obj1->stringval);
+	    keyURI = NULL;
+	    if (prefix != NULL)
+		xmlFree(prefix);
+	} else {
+	    if (prefix != NULL) {
+		keyURI = xmlXPathNsLookup(ctxt->context, prefix);
+		if (keyURI == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"key() : prefix %s is not bound\n", prefix);
+		}
+		xmlFree(prefix);
+	    } else {
+		keyURI = NULL;
+	    }
+	}
+
 	/*
 	 * Force conversion of first arg to string
 	 */
-	valuePush(ctxt, obj);
+	valuePush(ctxt, obj2);
 	xmlXPathStringFunction(ctxt, 1);
 	if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
 	    xsltGenericError(xsltGenericErrorContext,
-		"generate-id() : invalid arg expecting a string\n");
+		"key() : invalid arg expecting a string\n");
 	    ctxt->error = XPATH_INVALID_TYPE;
-	    xmlXPathFreeObject(obj);
+	    xmlXPathFreeObject(obj1);
 
 	    return;
 	}
-	obj = valuePop(ctxt);
-	value = obj->stringval;
+	obj2 = valuePop(ctxt);
+	value = obj2->stringval;
 
-	nodelist = xsltGetKey(tctxt, key, NULL, value);
+	nodelist = xsltGetKey(tctxt, key, keyURI, value);
 	valuePush(ctxt, xmlXPathWrapNodeSet(
 		        xmlXPathNodeSetMerge(NULL, nodelist)));
     }
 
 
-    if (obj != NULL)
-	xmlXPathFreeObject(obj);
-    if (tmp != NULL)
-	xmlXPathFreeObject(tmp);
+    if (obj1 != NULL)
+	xmlXPathFreeObject(obj1);
+    if (obj2 != NULL)
+	xmlXPathFreeObject(obj2);
+    if (key != NULL)
+	xmlFree(key);
 }
 
 /**
@@ -362,7 +449,8 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
 void
 xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlXPathObjectPtr obj;
-    xmlChar *str;
+    xmlChar *prefix, *name;
+    const xmlChar *nsURI;
 
     if (nargs != 1) {
         xsltGenericError(xsltGenericErrorContext,
@@ -372,26 +460,43 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
 	xsltGenericError(xsltGenericErrorContext,
-	    "generate-id() : invalid arg expecting a string\n");
+	    "system-property() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
 	return;
     }
     obj = valuePop(ctxt);
-    str = obj->stringval;
-    if (str == NULL) {
+    if (obj->stringval == NULL) {
 	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
-    } else if (!xmlStrcmp(str, (const xmlChar *)"xsl:version")) {
-	valuePush(ctxt, xmlXPathNewString(
-		(const xmlChar *)XSLT_DEFAULT_VERSION));
-    } else if (!xmlStrcmp(str, (const xmlChar *)"xsl:vendor")) {
-	valuePush(ctxt, xmlXPathNewString(
-		(const xmlChar *)XSLT_DEFAULT_VENDOR));
-    } else if (!xmlStrcmp(str, (const xmlChar *)"xsl:vendor-url")) {
-	valuePush(ctxt, xmlXPathNewString(
-		(const xmlChar *)XSLT_DEFAULT_URL));
     } else {
-	/* TODO cheated with the QName resolution */
-	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+	name = xmlSplitQName2(obj->stringval, &prefix);
+	if (name == NULL) {
+	    name = xmlStrdup(obj->stringval);
+	} else {
+	    nsURI = xmlXPathNsLookup(ctxt->context, prefix);
+	    if (nsURI == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+		    "system-property(): prefix %s is not bound\n", prefix);
+	    }
+	}
+
+	if (!xmlStrcmp(nsURI, XSLT_NAMESPACE)) {
+	    if (!xmlStrcmp(name, (const xmlChar *)"version")) {
+		valuePush(ctxt, xmlXPathNewString(
+		    (const xmlChar *)XSLT_DEFAULT_VERSION));
+	    } else if (!xmlStrcmp(name, (const xmlChar *)"vendor")) {
+		valuePush(ctxt, xmlXPathNewString(
+		    (const xmlChar *)XSLT_DEFAULT_VENDOR));
+	    } else if (!xmlStrcmp(name, (const xmlChar *)"vendor-url")) {
+		valuePush(ctxt, xmlXPathNewString(
+		    (const xmlChar *)XSLT_DEFAULT_URL));
+	    } else {
+		valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+	    }
+	}
+	if (name != NULL)
+	    xmlFree(name);
+	if (prefix != NULL)
+	    xmlFree(prefix);
     }
     xmlXPathFreeObject(obj);
 }
@@ -436,6 +541,8 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 void
 xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlXPathObjectPtr obj;
+    xmlChar *prefix, *name;
+    const xmlChar *nsURI;
 
     if (nargs != 1) {
         xsltGenericError(xsltGenericErrorContext,
@@ -450,8 +557,29 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	return;
     }
     obj = valuePop(ctxt);
+
+    name = xmlSplitQName2(obj->stringval, &prefix);
+    if (name == NULL) {
+	name = xmlStrdup(obj->stringval);
+    } else {
+	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
+	if (nsURI == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"function-available(): prefix %s is not bound\n", prefix);
+	}
+    }
+
+    if (xmlXPathFunctionLookupNS(ctxt->context, name, nsURI) != NULL) {
+	valuePush(ctxt, xmlXPathNewBoolean(1));
+    } else {
+	valuePush(ctxt, xmlXPathNewBoolean(0));
+    }
+
     xmlXPathFreeObject(obj);
-    valuePush(ctxt, xmlXPathNewBoolean(0));
+    if (name != NULL)
+	xmlFree(name);
+    if (prefix != NULL)
+	xmlFree(prefix);
 }
 
 /**

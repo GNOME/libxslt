@@ -1,3 +1,9 @@
+Wed Mar 14 14:21:45 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.c: applied and fixed ptittom@free.fr patch
+	  fixing some of the missing functionnalities in the XSLT
+	  functions implementations.
+	  
 Tue Mar 13 14:38:48 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/Makefile.am: nick@debian.org forwarded a fix
