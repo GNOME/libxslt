@@ -26,29 +26,6 @@ extern "C" {
 #define XSLT_MAX_SORT 5
 
 /*
- * The in-memory structure corresponding to an XSLT Variable
- * or Param
- */
-
-typedef enum {
-    XSLT_ELEM_VARIABLE=1,
-    XSLT_ELEM_PARAM
-} xsltElem;
-
-typedef struct _xsltStackElem xsltStackElem;
-typedef xsltStackElem *xsltStackElemPtr;
-struct _xsltStackElem {
-    struct _xsltStackElem *next;/* chained list */
-    xsltElem type;	/* type of the element */
-    int computed;	/* was the evaluation done */
-    xmlChar *name;	/* the local part of the name QName */
-    xmlChar *nameURI;	/* the URI part of the name QName */
-    xmlChar *select;	/* the eval string */
-    xmlNodePtr tree;	/* the tree if no eval string or the location */
-    xmlXPathObjectPtr value; /* The value if computed */
-};
-
-/*
  * The in-memory structure corresponding to an XSLT Template
  */
 #define XSLT_PAT_NO_PRIORITY -12345789
@@ -186,6 +163,24 @@ struct _xsltStylePreComp {
     xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
     xmlNsPtr *nsList;		/* the namespaces in scope */
     int nsNr;			/* the number of namespaces in scope */
+};
+
+/*
+ * The in-memory structure corresponding to an XSLT Variable
+ * or Param
+ */
+
+typedef struct _xsltStackElem xsltStackElem;
+typedef xsltStackElem *xsltStackElemPtr;
+struct _xsltStackElem {
+    struct _xsltStackElem *next;/* chained list */
+    xsltStylePreCompPtr comp;   /* the compiled form */
+    int computed;	/* was the evaluation done */
+    xmlChar *name;	/* the local part of the name QName */
+    xmlChar *nameURI;	/* the URI part of the name QName */
+    xmlChar *select;	/* the eval string */
+    xmlNodePtr tree;	/* the tree if no eval string or the location */
+    xmlXPathObjectPtr value; /* The value if computed */
 };
 
 /*
@@ -329,6 +324,11 @@ struct _xsltTransformContext {
 
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     xsltTransformState state;		/* the current state */
+
+    /*
+     * Global variables
+     */
+    xmlHashTablePtr   globalVars;	/* the global variables and params */
 };
 
 #define CHECK_STOPPED if (ctxt->state == XSLT_STATE_STOPPED) return;

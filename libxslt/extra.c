@@ -72,12 +72,12 @@ xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 	fprintf(stdout, "#%d\n", i);
 	cur = ctxt->varsTab[j];
 	while (cur != NULL) {
-	    if (cur->type == XSLT_ELEM_VARIABLE)
-		fprintf(stdout, "var ");
-	    else if (cur->type == XSLT_ELEM_PARAM)
-		fprintf(stdout, "param ");
-	    else {
+	    if (cur->comp == NULL) {
 		fprintf(stdout, "corrupted !!!\n");
+	    } else if (cur->comp->type == XSLT_FUNC_PARAM) {
+		fprintf(stdout, "param ");
+	    } else if (cur->comp->type == XSLT_FUNC_VARIABLE) {
+		fprintf(stdout, "var ");
 	    }
 	    if (cur->name != NULL)
 		fprintf(stdout, "%s ", cur->name);

@@ -1,3 +1,9 @@
+Wed May 16 23:00:53 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/extra.c libxslt/transform.c libxslt/variables.[ch]
+	  libxslt/xsltInternals.h: optimizations, cleanup of global
+	  variables handling
+
 Wed May 16 12:29:17 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/extensions.c libxslt/preproc.c libxslt/transform.c

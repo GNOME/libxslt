@@ -63,6 +63,35 @@ xsltNewStackElem(void) {
     cur->select = NULL;
     cur->tree = NULL;
     cur->value = NULL;
+    cur->comp = NULL;
+    return(cur);
+}
+
+/**
+ * xsltCopyStackElem:
+ * @elem:  an XSLT stack element
+ *
+ * Makes a copy of the stack element
+ *
+ * Returns the copy of NULL
+ */
+static xsltStackElemPtr
+xsltCopyStackElem(xsltStackElemPtr elem) {
+    xsltStackElemPtr cur;
+
+    cur = (xsltStackElemPtr) xmlMalloc(sizeof(xsltStackElem));
+    if (cur == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNewStackElem : malloc failed\n");
+	return(NULL);
+    }
+    cur->name = xmlStrdup(elem->name);
+    cur->nameURI = xmlStrdup(elem->nameURI);
+    cur->select = xmlStrdup(elem->select);
+    cur->tree = elem->tree;
+    cur->comp = elem->comp;
+    cur->computed = 0;
+    cur->value = NULL;
     return(cur);
 }
 
@@ -211,7 +240,7 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
      */
     i = ctxt->varsNr - 1;
 
-    for (;i >= 0;i--) {
+    for (;i > 0;i--) {
 	cur = ctxt->varsTab[i];
 	while (cur != NULL) {
 	    if (xmlStrEqual(cur->name, name)) {
@@ -246,14 +275,15 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
  *
  * Evaluate a variable value.
  *
- * Returns 0 in case of success, -1 in case of error
+ * Returns the XPath Object value or NULL in case of error
  */
-static int
+static xmlXPathObjectPtr
 xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	         xsltStylePreCompPtr precomp) {
+    xmlXPathObjectPtr result = NULL;
     int oldProximityPosition, oldContextSize;
     if ((ctxt == NULL) || (elem == NULL))
-	return(-1);
+	return(NULL);
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
@@ -261,7 +291,6 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 #endif
     if (elem->select != NULL) {
 	xmlXPathCompExprPtr comp = NULL;
-	xmlXPathObjectPtr result;
 
 	if ((precomp != NULL) && (precomp->comp != NULL)) {
 	    comp = precomp->comp;
@@ -269,7 +298,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    comp = xmlXPathCompile(elem->select);
 	}
 	if (comp == NULL)
-	    return(-1);
+	    return(NULL);
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
 	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
@@ -284,23 +313,19 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	if (result == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"Evaluating variable %s failed\n", elem->name);
-	} else {
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
+	} else {
 	    if ((xsltGenericDebugContext == stdout) ||
 		(xsltGenericDebugContext == stderr))
 		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
 					result, 0);
 #endif
 #endif
-	    if (elem->value != NULL)
-		xmlXPathFreeObject(elem->value);
-	    elem->value = result;
 	}
-	elem->computed = 1;
     } else {
 	if (elem->tree == NULL) {
-	    elem->value = xmlXPathNewCString("");
+	    result = xmlXPathNewCString("");
 	} else {
 	    /*
 	     * This is a result tree fragment.
@@ -311,7 +336,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    container = xmlNewDocNode(ctxt->output, NULL,
 		                      (const xmlChar *) "fake", NULL);
 	    if (container == NULL)
-		return(-1);
+		return(NULL);
 
 	    oldInsert = ctxt->insert;
 	    oldNode = ctxt->node;
@@ -320,24 +345,125 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    ctxt->insert = oldInsert;
 	    ctxt->node = oldNode;
 
-	    if (elem->value != NULL)
-		xmlXPathFreeObject(elem->value);
-	    elem->value = xmlXPathNewValueTree(container);
-	    if (elem->value == NULL) {
-		elem->value = xmlXPathNewCString("");
+	    result = xmlXPathNewValueTree(container);
+	    if (result == NULL) {
+		result = xmlXPathNewCString("");
 	    }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
 	    if ((xsltGenericDebugContext == stdout) ||
 		(xsltGenericDebugContext == stderr))
 		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
-					elem->value, 0);
+					result, 0);
 #endif
 #endif
 	}
+    }
+    return(result);
+}
+
+/**
+ * xsltEvalGlobalVariable:
+ * @ctxt:  the XSLT transformation context
+ * @elem:  the variable or parameter.
+ *
+ * Evaluate a global variable value.
+ *
+ * Returns the XPath Object value or NULL in case of error
+ */
+static xmlXPathObjectPtr
+xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
+    xmlXPathObjectPtr result = NULL;
+    xsltStylePreCompPtr precomp;
+
+    int oldProximityPosition, oldContextSize;
+    if ((ctxt == NULL) || (elem == NULL))
+	return(NULL);
+    if (elem->computed)
+	return(elem->value);
+
+
+#ifdef WITH_XSLT_DEBUG_VARIABLE
+    xsltGenericDebug(xsltGenericDebugContext,
+	"Evaluating global variable %s\n", elem->name);
+#endif
+
+    precomp = elem->comp;
+    if (elem->select != NULL) {
+	xmlXPathCompExprPtr comp = NULL;
+
+	if ((precomp != NULL) && (precomp->comp != NULL)) {
+	    comp = precomp->comp;
+	} else {
+	    comp = xmlXPathCompile(elem->select);
+	}
+	if (comp == NULL)
+	    return(NULL);
+	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+	oldContextSize = ctxt->xpathCtxt->contextSize;
+	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
+	/* TODO: do we need to propagate the namespaces here ? */
+	ctxt->xpathCtxt->namespaces = NULL;
+	ctxt->xpathCtxt->nsNr = 0;
+	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+	ctxt->xpathCtxt->contextSize = oldContextSize;
+	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+	if ((precomp == NULL) || (precomp->comp == NULL))
+	    xmlXPathFreeCompExpr(comp);
+	if (result == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"Evaluating global variable %s failed\n", elem->name);
+#ifdef WITH_XSLT_DEBUG_VARIABLE
+#ifdef LIBXML_DEBUG_ENABLED
+	} else {
+	    if ((xsltGenericDebugContext == stdout) ||
+		(xsltGenericDebugContext == stderr))
+		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
+					result, 0);
+#endif
+#endif
+	}
+    } else {
+	if (elem->tree == NULL) {
+	    result = xmlXPathNewCString("");
+	} else {
+	    /*
+	     * This is a result tree fragment.
+	     */
+	    xmlNodePtr container;
+	    xmlNodePtr oldInsert, oldNode;
+
+	    container = xmlNewDocNode(ctxt->output, NULL,
+		                      (const xmlChar *) "fake", NULL);
+	    if (container == NULL)
+		return(NULL);
+
+	    oldInsert = ctxt->insert;
+	    oldNode = ctxt->node;
+	    ctxt->insert = container;
+	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, 0);
+	    ctxt->insert = oldInsert;
+	    ctxt->node = oldNode;
+
+	    result = xmlXPathNewValueTree(container);
+	    if (result == NULL) {
+		result = xmlXPathNewCString("");
+	    }
+#ifdef WITH_XSLT_DEBUG_VARIABLE
+#ifdef LIBXML_DEBUG_ENABLED
+	    if ((xsltGenericDebugContext == stdout) ||
+		(xsltGenericDebugContext == stderr))
+		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
+					result, 0);
+#endif
+#endif
+	}
+    }
+    if (result != NULL) {
+	elem->value = result;
 	elem->computed = 1;
     }
-    return(0);
+    return(result);
 }
 
 /**
@@ -359,23 +485,62 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
  
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
-	"Evaluating global variables\n");
+	"Registering global variables\n");
 #endif
     ctxt->node = (xmlNodePtr) ctxt->document->doc;
     ctxt->xpathCtxt->contextSize = 1;
     ctxt->xpathCtxt->proximityPosition = 1;
+
+    /*
+     * Walk the list from the stylesheets and populate the hash table
+     */
     style = ctxt->style;
     while (style != NULL) {
 	elem = style->variables;
 	
+#ifdef WITH_XSLT_DEBUG_VARIABLE
+	if ((style->doc != NULL) && (style->doc->URL != NULL)) {
+
+	    xsltGenericDebug(xsltGenericDebugContext,
+		"Registering global variables from %s\n",
+		             style->doc->URL);
+	}
+#endif
 	while (elem != NULL) {
-	    if (elem->computed == 0)
-		xsltEvalVariable(ctxt, elem, NULL);
+	    xsltStackElemPtr def;
+
+	    /*
+	     * Global variables are stored in the variables pool.
+	     */
+	    def = (xsltStackElemPtr) 
+		    xmlHashLookup2(ctxt->globalVars,
+		                 elem->name, elem->nameURI);
+	    if (def == NULL) {
+		int res;
+
+		def = xsltCopyStackElem(elem);
+		res = xmlHashAddEntry2(ctxt->globalVars,
+				 elem->name, elem->nameURI, def);
+	    } else if ((elem->comp != NULL) &&
+		       (elem->comp->type == XSLT_FUNC_VARIABLE)) {
+		xsltGenericError(xsltGenericErrorContext,
+		    "Global variable %s already defined\n", elem->name);
+	    }
 	    elem = elem->next;
 	}
 
 	style = xsltNextImport(style);
     }
+
+    /*
+     * This part does the actual evaluation
+     */
+    ctxt->node = (xmlNodePtr) ctxt->document->doc;
+    ctxt->xpathCtxt->contextSize = 1;
+    ctxt->xpathCtxt->proximityPosition = 1;
+    xmlHashScan(ctxt->globalVars,
+	        (xmlHashScanner) xsltEvalGlobalVariable, ctxt);
+
     return(0);
 }
 
@@ -386,7 +551,7 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
  * @ns_uri:  the variable namespace URI
  * @select:  the expression which need to be evaluated to generate a value
  * @tree:  the subtree if select is NULL
- * @param:  this is a parameter actually
+ * @comp:  the precompiled value
  * @value:  the string value if available
  *
  * Register a new variable value. If @value is NULL it unregisters
@@ -397,15 +562,18 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 static int
 xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
 		     const xmlChar *ns_uri, const xmlChar *select,
-		     xmlNodePtr tree, int param, const xmlChar *value) {
-    xsltStackElemPtr elem;
+		     xmlNodePtr tree, xsltStylePreCompPtr comp,
+		     const xmlChar *value) {
+    xsltStackElemPtr elem, tmp;
     if (style == NULL)
 	return(-1);
     if (name == NULL)
 	return(-1);
+    if (comp == NULL)
+	return(-1);
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    if (param)
+    if (comp->type == XSLT_FUNC_PARAM)
 	xsltGenericDebug(xsltGenericDebugContext,
 			 "Defining global param %s\n", name);
     else
@@ -415,17 +583,22 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
     elem = xsltNewStackElem();
     if (elem == NULL)
 	return(-1);
-    if (param)
-	elem->type = XSLT_ELEM_PARAM;
-    else
-	elem->type = XSLT_ELEM_VARIABLE;
+    elem->comp = comp;
     elem->name = xmlStrdup(name);
     elem->select = xmlStrdup(select);
     if (ns_uri)
 	elem->nameURI = xmlStrdup(ns_uri);
     elem->tree = tree;
-    elem->next = style->variables;
-    style->variables = elem;
+    tmp = style->variables;
+    if (tmp == NULL) {
+	elem->next = NULL;
+	style->variables = elem;
+    } else {
+	while (tmp->next != NULL)
+	    tmp = tmp->next;
+	elem->next = NULL;
+	tmp->next = elem;
+    }
     if (value != NULL) {
 	elem->computed = 1;
 	elem->value = xmlXPathNewString(value);
@@ -450,6 +623,10 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
     const xmlChar *name;
     const xmlChar *value;
     xmlChar *ncname, *prefix;
+    const xmlChar *href;
+    xmlXPathCompExprPtr comp;
+    xmlXPathObjectPtr result;
+    int oldProximityPosition, oldContextSize;
 
     if (ctxt == NULL)
 	return(-1);
@@ -467,7 +644,11 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Evaluating user parameter %s=%s\n", name, value);
 #endif
+	/*
+	 * Name lookup
+	 */
 	ncname = xmlSplitQName2(name, &prefix);
+	href = NULL;
 	if (ncname != NULL) {
 	    if (prefix != NULL) {
 		xmlNsPtr ns;
@@ -477,20 +658,78 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 		if (ns == NULL) {
 		    xsltGenericError(xsltGenericErrorContext,
 			"user param : no namespace bound to prefix %s\n", prefix);
+		    href = NULL;
 		} else {
-		    xsltRegisterGlobalVariable(style, ncname, ns->href, NULL,
-					       NULL, 1, value);
+		    href = ns->href;
 		}
 		xmlFree(prefix);
 	    } else {
-		xsltRegisterGlobalVariable(style, ncname, NULL, NULL, NULL,
-			                   1, value);
+		href = NULL;
 	    }
 	    xmlFree(ncname);
 	} else {
-	    xsltRegisterGlobalVariable(style, name, NULL, NULL, NULL, 1, value);
+	    href = NULL;
+	    ncname = xmlStrdup(name);
 	}
 
+	/*
+	 * Do the evaluation
+	 */
+        result = NULL;
+	comp = xmlXPathCompile(value);
+	if (comp != NULL) {
+	    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+	    oldContextSize = ctxt->xpathCtxt->contextSize;
+	    ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
+	    /* TODO: do we need to propagate the namespaces here ? */
+	    ctxt->xpathCtxt->namespaces = NULL;
+	    ctxt->xpathCtxt->nsNr = 0;
+	    result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+	    ctxt->xpathCtxt->contextSize = oldContextSize;
+	    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+	    xmlXPathFreeCompExpr(comp);
+	}
+	if (result == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"Evaluating user parameter %s failed\n", name);
+	} else {
+	    xsltStackElemPtr elem;
+	    int res;
+
+#ifdef WITH_XSLT_DEBUG_VARIABLE
+#ifdef LIBXML_DEBUG_ENABLED
+	    if ((xsltGenericDebugContext == stdout) ||
+		(xsltGenericDebugContext == stderr))
+		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
+					result, 0);
+#endif
+#endif
+	    elem = xsltNewStackElem();
+	    if (elem != NULL) {
+		elem->name = xmlStrdup(ncname);
+		if (value != NULL)
+		    elem->select = xmlStrdup(value);
+		else
+		    elem->select = NULL;
+		if (href)
+		    elem->nameURI = xmlStrdup(href);
+		elem->tree = NULL;
+		elem->computed = 1;
+		elem->value = result;
+	    }
+	    /*
+	     * Global parameters are stored in the XPath context
+	     * variables pool.
+	     */
+	    res = xmlHashAddEntry2(ctxt->globalVars,
+			     ncname, href, elem);
+	    if (res != 0) {
+		xsltFreeStackElem(elem);
+		xsltGenericError(xsltGenericErrorContext,
+		    "Global parameter %s already defined\n", ncname);
+	    }
+	}
+	xmlFree(ncname);
     }
 
     return(0);
@@ -499,11 +738,8 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 /**
  * xsltBuildVariable:
  * @ctxt:  the XSLT transformation context
- * @name:  the variable name
- * @ns_uri:  the variable namespace URI
- * @select:  the expression which need to be evaluated to generate a value
+ * @comp:  the precompiled form
  * @tree:  the tree if select is NULL
- * @param:  this is a parameter actually
  *
  * Computes a new variable value.
  *
@@ -511,7 +747,7 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
  */
 static xsltStackElemPtr
 xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
-		  xmlNodePtr tree, int param) {
+		  xmlNodePtr tree) {
     xsltStackElemPtr elem;
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
@@ -525,10 +761,7 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
     elem = xsltNewStackElem();
     if (elem == NULL)
 	return(NULL);
-    if (param)
-	elem->type = XSLT_ELEM_PARAM;
-    else
-	elem->type = XSLT_ELEM_VARIABLE;
+    elem->comp = comp;
     elem->name = xmlStrdup(comp->name);
     if (comp->select != NULL)
 	elem->select = xmlStrdup(comp->select);
@@ -537,7 +770,11 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
     if (comp->ns)
 	elem->nameURI = xmlStrdup(comp->ns);
     elem->tree = tree;
-    xsltEvalVariable(ctxt, elem, comp);
+    if (elem->computed == 0) {
+	elem->value = xsltEvalVariable(ctxt, elem, comp);
+	if (elem->value != NULL)
+	    elem->computed = 1;
+    }
     return(elem);
 }
 
@@ -571,7 +808,7 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 #endif
 	return(0);
     }
-    elem = xsltBuildVariable(ctxt, comp, tree, param);
+    elem = xsltBuildVariable(ctxt, comp, tree);
     xsltAddStackElem(ctxt, elem);
     return(0);
 }
@@ -590,48 +827,28 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 static xmlXPathObjectPtr
 xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 		         const xmlChar *ns_uri) {
-    xsltStylesheetPtr style;
-    xsltStackElemPtr elem = NULL;
+    xsltStackElemPtr elem;
+    xmlXPathObjectPtr ret = NULL;
 
-    style = ctxt->style;
-    while (style != NULL) {
-	elem = style->variables;
-	
-	while (elem != NULL) {
-	    if (xmlStrEqual(elem->name, name)) {
-		if (ns_uri == NULL) {
-		    if (elem->nameURI == NULL)
-			break;
-		} else {
-		    if ((elem->nameURI != NULL) &&
-			(xmlStrEqual(elem->nameURI, ns_uri)))
-			break;
-		}
-
-	    }
-	    elem = elem->next;
-	}
-	if (elem != NULL) break;
-
-	style = xsltNextImport(style);
-    }
-    if (elem == NULL)
+    /*
+     * Lookup the global variables in XPath global variable hash table
+     */
+    if ((ctxt->xpathCtxt == NULL) || (ctxt->globalVars == NULL))
 	return(NULL);
-
-    if (!elem->computed) {
+    elem = (xsltStackElemPtr)
+	    xmlHashLookup2(ctxt->globalVars, name, ns_uri);
+    if (elem == NULL) {
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 	xsltGenericDebug(xsltGenericDebugContext,
-		         "uncomputed global variable %s\n", name);
+			 "global variable not found %s\n", name);
 #endif
-        xsltEvalVariable(ctxt, elem, NULL);
+	return(NULL);
     }
-    if (elem->value != NULL)
-	return(xmlXPathObjectCopy(elem->value));
-#ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-		     "global variable not found %s\n", name);
-#endif
-    return(NULL);
+    if (elem->computed == 0)
+	ret = xsltEvalGlobalVariable(elem, ctxt);
+    else
+	ret = elem->value;
+    return(xmlXPathObjectCopy(ret));
 }
 
 /**
@@ -657,12 +874,13 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     if (elem == NULL) {
 	return(xsltGlobalVariableLookup(ctxt, name, ns_uri));
     }
-    if (!elem->computed) {
+    if (elem->computed == 0) {
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 	xsltGenericDebug(xsltGenericDebugContext,
 		         "uncomputed variable %s\n", name);
 #endif
-        xsltEvalVariable(ctxt, elem, NULL);
+        elem->value = xsltEvalVariable(ctxt, elem, NULL);
+	elem->computed = 1;
     }
     if (elem->value != NULL)
 	return(xmlXPathObjectCopy(elem->value));
@@ -720,7 +938,7 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 	tree = cur;
     }
 
-    elem = xsltBuildVariable(ctxt, comp, tree, 1);
+    elem = xsltBuildVariable(ctxt, comp, tree);
 
     return(elem);
 }
@@ -761,7 +979,7 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
 #endif
 
     xsltRegisterGlobalVariable(style, comp->name, comp->ns, comp->select,
-	                       cur->children, 0, NULL);
+	                       cur->children, comp, NULL);
 }
 
 /**
@@ -800,7 +1018,7 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
 #endif
 
     xsltRegisterGlobalVariable(style, comp->name, comp->ns, comp->select,
-	                       cur->children, 1, NULL);
+	                       cur->children, comp, NULL);
 }
 
 /**
@@ -878,6 +1096,19 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 }
 
 /**
+ * xsltFreeGlobalVariables:
+ * @ctxt:  the XSLT transformation context
+ *
+ * Free up the data associated to the global variables
+ * its value.
+ */
+
+void
+xsltFreeGlobalVariables(xsltTransformContextPtr ctxt) {
+    xmlHashFree(ctxt->globalVars, (xmlHashDeallocator) xsltFreeStackElem);
+}
+
+/**
  * xsltVariableLookup:
  * @ctxt:  a void * but the the XSLT transformation context actually
  * @name:  the variable name
@@ -914,4 +1145,5 @@ xsltXPathVariableLookup(void *ctxt, const xmlChar *name,
 #endif
     return(ret);
 }
+
 

@@ -214,6 +214,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	xmlFree(ctxt->varsTab);
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
+    xsltFreeGlobalVariables(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -2544,6 +2545,8 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     const xmlChar *doctypePublic;
     const xmlChar *doctypeSystem;
     const xmlChar *version;
+    xsltStackElemPtr variables;
+    xsltStackElemPtr vptr;
 
 
     if ((style == NULL) || (doc == NULL))
@@ -2602,12 +2605,14 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     res->charset = XML_CHAR_ENCODING_UTF8;
     if (style->encoding != NULL)
 	res->encoding = xmlStrdup(style->encoding);
+    variables = style->variables;
 
     /*
      * Start.
      */
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
+    ctxt->globalVars = xmlHashCreate(20);
     if (params != NULL)
 	xsltEvalUserParams(ctxt, params);
     xsltEvalGlobalVariables(ctxt);
@@ -2616,6 +2621,27 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltProcessOneNode(ctxt, ctxt->node);
     xsltFreeStackElemList(varsPop(ctxt));
     xsltCleanupTemplates(style);
+
+    /* Now cleanup our variables so stylesheet can be re-used */
+    if (style->variables != variables) {
+	vptr = style->variables;
+	while (vptr->next!=variables)
+	    vptr = vptr->next;
+	vptr->next = NULL;
+	xsltFreeStackElemList(style->variables);
+	style->variables = variables;
+    }
+    vptr = style->variables;
+    while(vptr!=NULL) {
+	if (vptr->computed) {
+	    if (vptr->value != NULL) {
+		xmlXPathFreeObject(vptr->value);
+		vptr->value = NULL;
+		vptr->computed = 0;
+	    }
+	}
+	vptr = vptr->next;
+    }
 
 
     root = xmlDocGetRootElement(res);

@@ -48,9 +48,10 @@ void		xsltParseStylesheetParam	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr cur);
 xsltStackElemPtr xsltParseStylesheetCallerParam	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr cur);
-int		 xsltAddStackElemList		(xsltTransformContextPtr ctxt,
+int		xsltAddStackElemList		(xsltTransformContextPtr ctxt,
 						 xsltStackElemPtr elems);
-void			xsltFreeVariableHashes	(xsltTransformContextPtr ctxt);
+void		xsltFreeVariableHashes		(xsltTransformContextPtr ctxt);
+void		xsltFreeGlobalVariables		(xsltTransformContextPtr ctxt);
 xmlXPathObjectPtr	xsltVariableLookup	(xsltTransformContextPtr ctxt,
 						 const xmlChar *name,
 						 const xmlChar *ns_uri);
