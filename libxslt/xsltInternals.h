@@ -498,6 +498,12 @@ struct _xsltTransformContext {
     void              * errctx;		/* context for the error handler */
 
     xsltSortFunc      sortfunc;		/* a ctxt specific sort routine */
+
+    /*
+     * handling of temporary Result Value Tree
+     */
+    xmlDocPtr       tmpRVT;		/* list of RVT without persistance */
+    xmlDocPtr       persistRVT;		/* list of persistant RVTs */
 };
 
 /**
@@ -556,6 +562,15 @@ void			xsltParseTemplateContent(xsltStylesheetPtr style,
 						 xmlNodePtr templ);
 int			xsltAllocateExtra	(xsltStylesheetPtr style);
 int			xsltAllocateExtraCtxt	(xsltTransformContextPtr ctxt);
+/*
+ * Extra functions for Result Value Trees
+ */
+xmlDocPtr		xsltCreateRVT		(xsltTransformContextPtr ctxt);
+int			xsltRegisterTmpRVT	(xsltTransformContextPtr ctxt,
+						 xmlDocPtr RVT);
+int			xsltRegisterPersistRVT	(xsltTransformContextPtr ctxt,
+						 xmlDocPtr RVT);
+void			xsltFreeRVTs		(xsltTransformContextPtr ctxt);
 #ifdef __cplusplus
 }
 #endif

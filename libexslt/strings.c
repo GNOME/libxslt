@@ -32,12 +32,12 @@
 static void
 exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
 {
+    xsltTransformContextPtr tctxt;
     xmlChar *str, *delimiters, *cur;
     const xmlChar *token, *delimiter;
     xmlNodePtr node;
     xmlDocPtr container;
-
-    xmlXPathObjectPtr ret;
+    xmlXPathObjectPtr ret = NULL;
 
     if ((nargs < 1) || (nargs > 2)) {
         xmlXPathSetArityError(ctxt);
@@ -61,17 +61,19 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
     }
 
     /* Return a result tree fragment */
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    if (tctxt == NULL) {
+        xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+	      "exslt:tokenize : internal error tctxt == NULL\n");
+	goto fail;
+    }
 
-    container = xmlNewDoc(NULL);
+    container = xsltCreateRVT(tctxt);
     if (container != NULL) {
-        container->name =
-            (char *) xmlStrdup(BAD_CAST " fake node libxslt");
-        container->doc = container;
-        ret = xmlXPathNewValueTree((xmlNodePtr) container);
+        xsltRegisterTmpRVT(tctxt, container);
+        ret = xmlXPathNewNodeSet(NULL);
         if (ret != NULL) {
-            /* Tag the subtree for removal once consumed */
-            ret->boolval = 1;
-            ret->type = XPATH_XSLT_TREE;
+            ret->boolval = 0; /* Freeing is not handled there anymore */
             for (cur = str, token = str; *cur != 0; cur++) {
                 for (delimiter = delimiters; *delimiter != 0; delimiter++) {
                     if (*cur == *delimiter) {
@@ -83,6 +85,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                         node = xmlNewChild((xmlNodePtr) container, NULL,
                                            (const xmlChar *) "token",
                                            token);
+			xmlXPathNodeSetAddUnique(ret->nodesetval, node);
                         *cur = *delimiter;
                         token = cur + 1;
                         break;
@@ -92,9 +95,11 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
             node =
                 xmlNewChild((xmlNodePtr) container, NULL,
                             (const xmlChar *) "token", token);
+	    xmlXPathNodeSetAddUnique(ret->nodesetval, node);
         }
     }
 
+fail:
     if (str != NULL)
         xmlFree(str);
     if (delimiters != NULL)

@@ -511,21 +511,30 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	 * one or more child nodes), then the content of the
 	 * func:result element specifies the value.
 	 */
-	xmlNodePtr container, oldInsert;
+	xmlNodePtr oldInsert;
+	xmlDocPtr container;
 
-	container = xmlNewDocNode (ctxt->output, NULL,
-				   (const xmlChar *) "fake", NULL);
+	container = xsltCreateRVT(ctxt);
+	if (container == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "exsltFuncResultElem: out of memory\n");
+	    data->error = 1;
+	    return;
+	}
+	xsltRegisterTmpRVT(ctxt, container);
 	oldInsert = ctxt->insert;
-	ctxt->insert = container;
+	ctxt->insert = (xmlNodePtr) container;
 	xsltApplyOneTemplate (ctxt, ctxt->xpathCtxt->node,
 			      inst->children, NULL, NULL);
 	ctxt->insert = oldInsert;
 
-	ret = xmlXPathNewValueTree(container);
+	ret = xmlXPathNewValueTree((xmlNodePtr) container);
 	if (ret == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 			     "exsltFuncResultElem: ret == NULL\n");
 	    data->error = 1;
+	} else {
+	    ret->boolval = 0; /* Freeing is not handled there anymore */
 	}
     } else {
 	/* If the func:result element has empty content and does not

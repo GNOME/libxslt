@@ -36,6 +36,106 @@
 
 /************************************************************************
  *									*
+ *			Result Value Tree interfaces			*
+ *									*
+ ************************************************************************/
+
+/**
+ * xsltCreateRVT:
+ * @ctxt:  an XSLT transformation context
+ *
+ * Create a result value tree
+ *
+ * Returns the result value tree or NULL in case of error
+ */
+xmlDocPtr
+xsltCreateRVT(xsltTransformContextPtr ctxt)
+{
+    xmlDocPtr container;
+
+    if (ctxt == NULL) return(NULL);
+
+    container = xmlNewDoc(NULL);
+    if (container == NULL)
+	return(NULL);
+
+    container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
+    container->doc = container;
+    container->parent = NULL;
+    return(container);
+}
+
+/**
+ * xsltRegisterTmpRVT:
+ * @ctxt:  an XSLT transformation context
+ * @RVT:  a result value tree
+ *
+ * Register the result value tree for destruction at the end of the context
+ *
+ * Returns 0 in case of success and -1 in case of error.
+ */
+int
+xsltRegisterTmpRVT(xsltTransformContextPtr ctxt, xmlDocPtr RVT)
+{
+    if ((ctxt == NULL) || (RVT == NULL)) return(-1);
+
+    RVT->next = (xmlNodePtr) ctxt->tmpRVT;
+    if (ctxt->tmpRVT != NULL)
+	ctxt->tmpRVT->prev = (xmlNodePtr) RVT;
+    ctxt->tmpRVT = RVT;
+    return(0);
+}
+
+/**
+ * xsltRegisterPersistRVT:
+ * @ctxt:  an XSLT transformation context
+ * @RVT:  a result value tree
+ *
+ * Register the result value tree for destruction at the end of the processing
+ *
+ * Returns 0 in case of success and -1 in case of error.
+ */
+int
+xsltRegisterPersistRVT(xsltTransformContextPtr ctxt, xmlDocPtr RVT)
+{
+    if ((ctxt == NULL) || (RVT == NULL)) return(-1);
+
+    RVT->next = (xmlNodePtr) ctxt->persistRVT;
+    if (ctxt->persistRVT != NULL)
+	ctxt->persistRVT->prev = (xmlNodePtr) RVT;
+    ctxt->persistRVT = RVT;
+    return(0);
+}
+
+/**
+ * xsltFreeRVTs:
+ * @ctxt:  an XSLT transformation context
+ *
+ * Free all the registered result value tree of the transformation
+ */
+void
+xsltFreeRVTs(xsltTransformContextPtr ctxt)
+{
+    xmlDocPtr cur, next;
+
+    if (ctxt == NULL) return;
+
+    cur = ctxt->tmpRVT;
+    while (cur != NULL) {
+        next = (xmlDocPtr) cur->next;
+	xmlFreeDoc(cur);
+	cur = next;
+    }
+    cur = ctxt->persistRVT;
+    while (cur != NULL) {
+        next = (xmlDocPtr) cur->next;
+	xmlFreeDoc(cur);
+	cur = next;
+    }
+}
+
+/************************************************************************
+ *									*
  *			Module interfaces				*
  *									*
  ************************************************************************/
@@ -364,12 +464,13 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    xmlNodePtr oldInsert;
 	    xmlDocPtr  oldoutput;
 
-	    container = xmlNewDoc(NULL);
+	    container = xsltCreateRVT(ctxt);
 	    if (container == NULL)
 		return(NULL);
-	    container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
-	    container->doc = container;
-	    container->parent = NULL;
+	    /*
+	     * Tag the subtree for removal once consumed
+	     */
+	    xsltRegisterTmpRVT(ctxt, container);
 
 	    oldoutput = ctxt->output;
 	    ctxt->output = container;
@@ -383,10 +484,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    if (result == NULL) {
 		result = xmlXPathNewCString("");
 	    } else {
-		/*
-		 * Tag the subtree for removal once consumed
-		 */
-		result->boolval = 1;
+	        result->boolval = 0; /* Freeing is not handled there anymore */
 	    }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
@@ -501,12 +599,13 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    xmlNodePtr oldInsert;
 	    xmlDocPtr  oldoutput;
 
-	    container = xmlNewDoc(NULL);
+	    container = xsltCreateRVT(ctxt);
 	    if (container == NULL)
 		return(NULL);
-	    container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
-	    container->doc = container;
-	    container->parent = NULL;
+	    /*
+	     * Tag the subtree for removal once consumed
+	     */
+	    xsltRegisterTmpRVT(ctxt, container);
 
 	    oldoutput = ctxt->output;
 	    ctxt->output = container;
@@ -520,10 +619,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    if (result == NULL) {
 		result = xmlXPathNewCString("");
 	    } else {
-		/*
-		 * Tag the subtree for removal once consumed
-		 */
-		result->boolval = 1;
+	        result->boolval = 0; /* Freeing is not handled there anymore */
 	    }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED

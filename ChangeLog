@@ -1,3 +1,12 @@
+Wed Apr 30 22:44:49 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c libxslt/variables.c libxslt/xsltInternals.h:
+	  cleaning up Result Value Tree handling
+	* libexslt/functions.c libexslt/strings.c: fixed a pair of
+	  implementations.
+	* tests/exslt/strings/Makefile.am tests/exslt/strings/tokenize.2.*:
+	  added Mark Vakoc test combining for-each and exslt:tokenize
+
 Wed Apr 30 15:23:33 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixing bug #111755 when a template is

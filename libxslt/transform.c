@@ -463,6 +463,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     xsltFreeGlobalVariables(ctxt);
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
+    xsltFreeRVTs(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -1251,18 +1252,6 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
 
-#if 0
-    if (xmlStrEqual(node->name, BAD_CAST " fake node libxslt")) {
-	xmlNodePtr children;
-
-	children = node->children;
-	while (children != NULL) {
-	    xsltProcessOneNode(ctxt, children, params);
-	    children = children->next;
-	}
-	return;
-    }
-#endif
     template = xsltGetTemplate(ctxt, node, NULL);
     /*
      * If no template is found, apply the default rule.
@@ -1336,6 +1325,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldInst = NULL;
     xmlAttrPtr attrs;
     int oldBase;
+    xmlDocPtr tmpRVT = NULL;
 
     int level = 0;
 
@@ -1404,6 +1394,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             start = xsltTimestamp();
             profPush(ctxt, 0);
         }
+	tmpRVT = ctxt->tmpRVT;
+	ctxt->tmpRVT = NULL;
         templPush(ctxt, templ);
 #ifdef WITH_XSLT_DEBUG_PROCESS
         if (templ->name != NULL)
@@ -1694,6 +1686,19 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (templ != NULL) {
         ctxt->varsBase = oldBase;
         templPop(ctxt);
+	/*
+	 * Free up all the unreferenced RVT
+	 */
+	if (ctxt->tmpRVT != NULL) {
+	    xmlDocPtr tmp = ctxt->tmpRVT, next;
+
+            while (tmp != NULL) {
+	        next = (xmlDocPtr) tmp->next;
+		xmlFreeDoc(tmp);
+		tmp = next;
+	    }
+	}
+	ctxt->tmpRVT = tmpRVT;
         if (ctxt->profile) {
             long spent, child, total, end;
 
