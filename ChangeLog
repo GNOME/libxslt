@@ -1,3 +1,8 @@
+Mon Jul 14 13:00:00 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* fixed bug 113520, incorrect result for date:seconds
+	  with change to type casting in libexslt/date.c
+
 Sat Jul 12 20:35:28 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* fixed bug 114764, trouble with globals and RVT's
