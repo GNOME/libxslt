@@ -111,7 +111,7 @@ static xmlChar *strparams[MAX_PARAMETERS + 1];
 static int nbstrparams = 0;
 static const char *output = NULL;
 static int errorno = 0;
-
+static const char *writesubtree = NULL;
 
 /*
  * Internal timing routines to remove the necessity to have unix-specific
@@ -233,6 +233,29 @@ static void endTimer(char *format, ...)
 #endif
 }
 #endif
+
+/*
+ * xsltSubtreeCheck:
+ *
+ * allow writes only on a subtree specified on the command line
+ */
+static int
+xsltSubtreeCheck(xsltSecurityPrefsPtr sec ATTRIBUTE_UNUSED,
+	          xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
+		  const char *value ATTRIBUTE_UNUSED) {
+    int len, ret;
+
+    if (writesubtree == NULL)
+	return(0);
+    if (value == NULL)
+	return(-1);
+
+    len = xmlStrlen(BAD_CAST writesubtree);
+    ret = xmlStrncmp(BAD_CAST writesubtree, BAD_CAST value, len);
+    if (ret == 0)
+	return(1);
+    return(0);
+}
 
 static void
 xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
@@ -381,9 +404,10 @@ static void usage(const char *name) {
     printf("\t       string values must be quoted like \"'string'\"\n or");
     printf("\t       use stringparam to avoid it\n");
     printf("\t--stringparam name value : pass a (parameter, UTF8 string value) pair\n");
-    printf("\t--nonet refuse to fetch DTDs or entities over network\n");
-    printf("\t--nowrite refuse to write to any file or resource\n");
-    printf("\t--nomkdir refuse to create directories\n");
+    printf("\t--nonet : refuse to fetch DTDs or entities over network\n");
+    printf("\t--nowrite : refuse to write to any file or resource\n");
+    printf("\t--nomkdir : refuse to create directories\n");
+    printf("\t--writesubtree path : allow file write only with the path subtree\n");
 #ifdef LIBXML_CATALOG_ENABLED
     printf("\t--catalogs : use SGML catalogs from $SGML_CATALOG_FILES\n");
     printf("\t             otherwise XML Catalogs starting from \n");
@@ -496,6 +520,12 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "--nomkdir"))) {
 	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_CREATE_DIRECTORY,
 		                 xsltSecurityForbid);
+        } else if ((!strcmp(argv[i], "-writesubtree")) ||
+                   (!strcmp(argv[i], "--writesubtree"))) {
+	    i++;
+	    writesubtree = argv[i];
+	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_FILE,
+		                 xsltSubtreeCheck);
 #ifdef LIBXML_CATALOG_ENABLED
         } else if ((!strcmp(argv[i], "-catalogs")) ||
                    (!strcmp(argv[i], "--catalogs"))) {
@@ -603,6 +633,10 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-o")) ||
                    (!strcmp(argv[i], "-output")) ||
                    (!strcmp(argv[i], "--output"))) {
+            i++;
+	    continue;
+        } else if ((!strcmp(argv[i], "-writesubtree")) ||
+                   (!strcmp(argv[i], "--writesubtree"))) {
             i++;
 	    continue;
 	}
