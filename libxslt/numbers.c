@@ -55,14 +55,12 @@ static xsltNumberFormatToken default_token;
  *									*
  ************************************************************************/
 
-#define IS_SPECIAL(self,letter) \
-    (((letter) == (self)->zeroDigit[0]) || \
-     ((letter) == (self)->digit[0]) || \
-     ((letter) == (self)->decimalPoint[0]) || \
-     ((letter) == (self)->grouping[0]) || \
-     ((letter) == (self)->minusSign[0]) || \
-     ((letter) == (self)->percent[0]) || \
-     ((letter) == (self)->permille[0]))
+#define IS_SPECIAL(self,letter)			\
+    (((letter) == (self)->zeroDigit[0])	    ||	\
+     ((letter) == (self)->digit[0])	    ||	\
+     ((letter) == (self)->decimalPoint[0])  ||	\
+     ((letter) == (self)->grouping[0])	    ||	\
+     ((letter) == (self)->patternSeparator[0]))
 
 #define IS_DIGIT_ZERO(x) xsltIsDigitZero(x)
 #define IS_DIGIT_ONE(x) xsltIsDigitZero((x)-1)
@@ -692,6 +690,60 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 	xmlBufferFree(output);
 }
 
+static int
+xsltFormatNumberPreSuffix(xsltDecimalFormatPtr self, xmlChar **format, xsltFormatNumberInfoPtr info)
+{
+    int	count=0;	/* will hold total length of prefix/suffix */
+
+    while (1) {
+	/* prefix / suffix ends at end of string or at first 'special' character */
+	if (**format == 0)
+	    return count;
+	/* if next character 'escaped' just count it */
+	if (**format == SYMBOL_QUOTE) {
+	    if (*++(*format) == 0)
+		return -1;
+	    if (*++(*format) != SYMBOL_QUOTE)
+		return -1;
+	}
+	else if (IS_SPECIAL(self, **format))
+	    return count;
+	/* else treat percent/per-mille as special cases, depending on whether +ve or -ve */
+	else if (!info->is_negative_pattern) {
+	    /* for +ve prefix/suffix, allow only a single occurence of either */
+	    if (**format == self->percent[0]) {
+		if (info->is_multiplier_set)
+		    return -1;
+		info->multiplier = 100;
+		info->is_multiplier_set = TRUE;
+	    } else if (**format == self->permille[0]) {
+		if (info->is_multiplier_set)
+		    return -1;
+		info->multiplier = 1000;
+		info->is_multiplier_set = TRUE;
+	    }
+	} else {
+	    /* for -ve prefix/suffix, allow only single occurence & insist it's previously defined */
+	    if (**format == self->percent[0]) {
+		if (info->is_multiplier_set)
+		    return -1;
+		if (info->multiplier != 100)
+		    return -1;
+		info->is_multiplier_set = TRUE;
+	    } else if (**format == self->permille[0]) {
+		if (info->is_multiplier_set)
+		    return -1;
+		if (info->multiplier != 1000)
+		    return -1;
+		info->is_multiplier_set = TRUE;
+	    }
+	}
+	
+	count++;
+	(*format)++;
+    }
+}
+	    
 /************************************************************************
  *
  * format-number() uses the JDK 1.1 DecimalFormat class:
@@ -734,177 +786,274 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 			   xmlChar **result)
 {
     xmlXPathError status = XPATH_EXPRESSION_OK;
-    xmlChar *the_format;
     xmlBufferPtr buffer;
-    int use_minus;
-    int i, j;
-    int length;
-    int group = INT_MAX;
-    int integer_digits = 0;
-    int fraction_digits = 0;
-    int fraction_hash = 0;
-    int decimal_point;
-    int is_percent;
-    int is_permille;
-    double scale;
+    xmlChar *the_format, *prefix, *suffix, *nprefix, *nsuffix;
+    xmlChar pchar;
+    int	    prefix_length, suffix_length, nprefix_length, nsuffix_length;
+    double  scale;
+    int	    j;
+    xsltFormatNumberInfo format_info;
+    /* delayed_multiplier allows a 'trailing' percent or permille to be treated as suffix */
+    int		delayed_multiplier = 0;
+    /* flag to show no -ve format present for -ve number */
+    char	default_sign = 0;
+    /* flag to show error found, should use default format */
+    char	found_error = 0;
 
     buffer = xmlBufferCreate();
     if (buffer == NULL) {
 	return XPATH_MEMORY_ERROR;
     }
 
-    /* Find positive or negative template */
-    the_format = (xmlChar *)xmlStrchr(format,
-				      self->patternSeparator[0]);
-    if ((the_format != NULL) && (number < 0.0)) {
-	/* Use negative template */
+    format_info.integer_digits = 0;
+    format_info.frac_digits = 0;
+    format_info.frac_hash = 0;
+    format_info.group = -1;
+    format_info.multiplier = 1;
+    format_info.is_multiplier_set = FALSE;
+    format_info.is_negative_pattern = FALSE;
+
+    the_format = format;
+
+    /* First we process the +ve pattern to get percent / permille, as well as main format */
+    prefix = the_format;
+    prefix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
+    if (prefix_length < 0) {
+	found_error = 1;
+	goto OUTPUT_NUMBER;
+    }
+
+    /* Here we process the "number" part of the format.  It gets a little messy because of    */
+    /* the percent/per-mille - if that appears at the end, it may be part of the suffix       */
+    /* instead of part of the number, so the variable delayed_multiplier is used to handle it */
+    while ((*the_format != 0) &&
+	   (*the_format != self->decimalPoint[0]) &&
+	   (*the_format != self->patternSeparator[0])) {
+	
+	if (delayed_multiplier != 0) {
+	    format_info.multiplier = delayed_multiplier;
+	    format_info.is_multiplier_set = TRUE;
+	    delayed_multiplier = 0;
+	}
+	if (*the_format == self->digit[0]) {
+	    if (format_info.integer_digits > 0) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    if (format_info.group >= 0)
+		format_info.group++;
+	} else if (*the_format == self->zeroDigit[0]) {
+	    format_info.integer_digits++;
+	    if (format_info.group >= 0)
+		format_info.group++;
+	} else if (*the_format == self->grouping[0]) {
+	    /* Reset group count */
+	    format_info.group = 0;
+	} else if (*the_format == self->percent[0]) {
+	    if (format_info.is_multiplier_set) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    delayed_multiplier = 100;
+	} else  if (*the_format == self->permille[0]) {
+	    if (format_info.is_multiplier_set) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    delayed_multiplier = 1000;
+	} else
+	    break; /* while */
+	
 	the_format++;
-	use_minus = FALSE;
-    } else {
-	/* Use positive template */
-	if (the_format)
-	    the_format[0] = 0;
-	the_format = format;
-	use_minus = (number < 0.0) ? TRUE : FALSE;
     }
-  
-    /*
-     * Prefix
-     */
-    length = xmlStrlen(the_format);
-    for (i = 0; i < length; i++) {
-	if (IS_SPECIAL(self, the_format[i])) {
-	    break; /* for */
-	} else {
-	    if (the_format[i] == SYMBOL_QUOTE) {
-		/* Quote character */
-		i++;
+
+    /* We have finished the integer part, now work on fraction */
+    if (*the_format == self->decimalPoint[0])
+	the_format++;		/* Skip over the decimal */
+    
+    while (*the_format != 0) {
+	
+	if (*the_format == self->zeroDigit[0]) {
+	    if (format_info.frac_hash != 0) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
 	    }
-	    xmlBufferAdd(buffer, &the_format[i], 1);
+	    format_info.frac_digits++;
+	} else if (*the_format == self->digit[0]) {
+	    format_info.frac_hash++;
+	} else if (*the_format == self->percent[0]) {
+	    if (format_info.is_multiplier_set) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    delayed_multiplier = 100;
+	    the_format++;
+	    continue; /* while */
+	} else if (*the_format == self->permille[0]) {
+	    if (format_info.is_multiplier_set) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    delayed_multiplier = 1000;
+	    the_format++;
+	    continue; /* while */
+	} else if (*the_format != self->grouping[0]) {
+	    break; /* while */
+	}
+	the_format++;
+	if (delayed_multiplier != 0) {
+	    format_info.multiplier = delayed_multiplier;
+	    delayed_multiplier = 0;
+	    format_info.is_multiplier_set = TRUE;
 	}
     }
 
-    /* Handle infinity and not-a-number first */
-    switch (isinf(number)) {
-    case -1:
-	xmlBufferCat(buffer, self->minusSign);
-	/* Intentional fall-through */
-    case 1:
-	xmlBufferCat(buffer, self->infinity);
-	for ( ; i < length; i++) {
-	    if (! IS_SPECIAL(self, the_format[i]))
-		break; /* for */
-	}
-	goto DECIMAL_FORMAT_SUFFIX;
-	
-    default:
-	if (isnan(number)) {
-	    xmlBufferCat(buffer, self->noNumber);
-	    /* Skip until suffix */
-	    for ( ; i < length; i++) {
-		if (! IS_SPECIAL(self, the_format[i]))
-		    break; /* for */
-	    }
-	    goto DECIMAL_FORMAT_SUFFIX;
-	}
-	break;
+    /* If delayed_multiplier is set after processing the "number" part, should be in suffix */
+    if (delayed_multiplier != 0) {
+	the_format--;
+	delayed_multiplier = 0;
     }
-	
-    /*
-     * Parse the number part of the format string
-     */
-    is_percent = (the_format[i] == self->percent[0]) ? TRUE : FALSE;
-    is_permille = (the_format[i] == self->permille[0]) ? TRUE : FALSE;
-    if (is_percent || is_permille)
-	i++;
-    
-    for ( ; i < length; i++) {
-	if (the_format[i] == self->zeroDigit[0]) {
-	    group++;
-	} else if (the_format[i] == self->grouping[0]) {
-	    group = 0; /* Reset count */
-	} else
-	    break; /* for */
-    }
-    for ( ; i < length; i++) {
-	if (the_format[i] == self->digit[0]) {
-	    integer_digits++;
-	    group++;
-	} else if (the_format[i] == self->grouping[0]) {
-	    group = 0; /* Reset count */
-	} else
-	    break; /* for */
-    }
-    decimal_point = (the_format[i] == self->decimalPoint[0]) ? TRUE : FALSE;
-    if (decimal_point) {
-	i++;
-	for ( ; i < length; i++) {
-	    if (the_format[i] == self->digit[0]) {
-		fraction_digits++;
-	    } else
-		break; /* for */
-	}
-	for ( ; i < length; i++) {
-	    if (the_format[i] == self->zeroDigit[0]) {
-		fraction_hash++;
-	    } else
-		break; /* for */
-	}
-    }
-    if (!(is_percent || is_permille)) {
-	is_percent = (the_format[i] == self->percent[0]) ? TRUE : FALSE;
-	is_permille = (the_format[i] == self->permille[0]) ? TRUE : FALSE;
-	if (is_percent || is_permille)
-	    i++;
-    }
-    
-    /*
-     * Format the number
-     */
 
-    if (use_minus)
+    suffix = the_format;
+    suffix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
+    if ( (suffix_length < 0) ||
+	 ((*the_format != 0) && (*the_format != self->patternSeparator[0])) ) {
+	found_error = 1;
+	goto OUTPUT_NUMBER;
+    }
+
+    /* We have processed the +ve prefix, number part and +ve suffix. */
+    /* If the number is -ve, we must substitute the -ve prefix / suffix */
+    if (number < 0) {
+	the_format = (xmlChar *)xmlStrchr(format, self->patternSeparator[0]);
+	if (the_format == NULL) {	/* No -ve pattern present, so use default signing */
+	    default_sign = 1;
+	}
+	else {
+	    /* Flag changes interpretation of percent/permille in -ve pattern */
+	    the_format++;	/* Skip over pattern separator */
+	    format_info.is_negative_pattern = TRUE;
+	    format_info.is_multiplier_set = FALSE;
+
+	    /* First do the -ve prefix */
+	    nprefix = the_format;
+	    nprefix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
+	    if (nprefix_length<0) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+
+	    /* Next skip over the -ve number info */
+	    the_format += prefix_length;
+	    while (*the_format != 0) {
+		if ( (*the_format == (self)->percent[0]) ||
+		     (*the_format == (self)->permille[0]) ) {
+		    if (format_info.is_multiplier_set) {
+			found_error = 1;
+			goto OUTPUT_NUMBER;
+		    }
+		    format_info.is_multiplier_set = TRUE;
+		    delayed_multiplier = 1;
+		}
+		else if (IS_SPECIAL(self, *the_format))
+		    delayed_multiplier = 0;
+		else
+		    break; /* while */
+		the_format++;
+	    }
+	    if (delayed_multiplier != 0) {
+		format_info.is_multiplier_set = FALSE;
+		the_format--;
+	    }
+
+	    /* Finally do the -ve suffix */
+	    if (*the_format != 0) {
+		nsuffix = the_format;
+		nsuffix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
+		if (nsuffix_length < 0) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+		}
+	    }
+	    else
+		nsuffix_length = 0;
+	    if (*the_format != 0) {
+		found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    /* Here's another Java peculiarity:
+	     * if -ve prefix/suffix == +ve ones, discard & use default
+	     */
+	    if ((nprefix_length != prefix_length) || (nsuffix_length != suffix_length) ||
+		((nprefix_length > 0) && (xmlStrncmp(nprefix, prefix, prefix_length) !=0 )) ||
+		((nsuffix_length > 0) && (xmlStrncmp(nsuffix, suffix, suffix_length) !=0 ))) {
+	 	prefix = nprefix;
+		prefix_length = nprefix_length;
+		suffix = nsuffix;
+		suffix_length = nsuffix_length;
+	    } else {
+		default_sign = 1;
+	    }
+	}
+    }
+
+OUTPUT_NUMBER:
+    if (found_error != 0) {
+        xsltGenericError(xsltGenericErrorContext,
+                "xsltFormatNumberConversion : error in format string, using default\n");
+	default_sign = (number < 0.0) ? 1 : 0;
+	prefix_length = suffix_length = 0;
+	format_info.integer_digits = 1;
+	format_info.frac_digits = 1;
+	format_info.frac_hash = 4;
+	format_info.group = -1;
+	format_info.multiplier = 1;
+    }
+
+    /* Ready to output our number.  First see if "default sign" is required */
+    if (default_sign != 0)
 	xmlBufferAdd(buffer, self->minusSign, 1);
 
-    number = fabs(number);
-    if (is_percent)
-	number *= 100.0;
-    else if (is_permille)
-	number *= 1000.0;
-	
-    /* Integer part */
-    scale = pow(10.0, (double)(fraction_digits + fraction_hash));
-    number = (scale * number + 0.5) / scale;
-    xsltNumberFormatDecimal(buffer, floor(number), (xmlChar)'0',
-			    integer_digits, group, (xmlChar)',');
-    
-    if (decimal_point) {
-	xmlBufferAdd(buffer, self->decimalPoint, 1);
-
-	/* Fraction part */
-	number -= floor(number);
-	number *= scale;
-	for (j = fraction_hash; j > 0; j--) {
-	    if (fmod(number, 10.0) >= 1.0)
-		break; /* for */
-	    number /= 10.0;
+    /* Put the prefix into the buffer */
+    for (j = 0; j < prefix_length; j++) {
+	if ((pchar = *prefix++) == SYMBOL_QUOTE) {
+	    pchar = *prefix++;
+	    prefix++;
 	}
-	xsltNumberFormatDecimal(buffer, floor(number), (xmlChar)'0',
-				fraction_digits + j,
-				0, (xmlChar)0);
+	xmlBufferAdd(buffer, &pchar, 1);
     }
-    if (is_percent)
-	xmlBufferAdd(buffer, self->percent, 1);
-    else if (is_permille)
-	xmlBufferAdd(buffer, self->permille, 1);
 
- DECIMAL_FORMAT_SUFFIX:
-    /*
-     * Suffix
-     */
-    for ( ; i < length; i++) {
-	if (the_format[i] == SYMBOL_QUOTE)
-	    i++;
-	xmlBufferAdd(buffer, &the_format[i], 1);
+    /* Next do the integer part of the number */
+    number = fabs(number) * (double)format_info.multiplier;
+    scale = pow(10.0, (double)(format_info.frac_digits + format_info.frac_hash));
+    number = floor((scale * number + 0.5)) / scale;
+    xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
+			    format_info.integer_digits,
+			    format_info.group, (xmlChar)',');
+
+    /* Next the fractional part, if required */
+    if (format_info.frac_digits + format_info.frac_hash > 0) {
+	number -= floor(number);
+	if ((number != 0) || (format_info.frac_digits != 0)) {
+	    xmlBufferAdd(buffer, self->decimalPoint, 1);
+	    number = floor(scale * number + 0.5);
+	    for (j = format_info.frac_hash; j > 0; j--) {
+		if (fmod(number, 10.0) >= 1.0)
+		    break; /* for */
+		number /= 10.0;
+	    }
+	    xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
+				format_info.frac_digits + j,
+				0, (xmlChar)0);
+	}
+    }
+    /* Put the suffix into the buffer */
+    for (j = 0; j < suffix_length; j++) {
+	if ((pchar = *suffix++) == SYMBOL_QUOTE) {
+	    pchar = *suffix++;
+	    suffix++;
+	}
+	xmlBufferAdd(buffer, &pchar, 1);
     }
 
     *result = xmlStrdup(xmlBufferContent(buffer));

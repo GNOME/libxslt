@@ -31,6 +31,16 @@ typedef struct _xsltNumberData {
     xmlNodePtr node;
 } xsltNumberData, *xsltNumberDataPtr;
 
+typedef struct _xsltFormatNumberInfo {
+    int	    integer_digits;	/* Number of '0' in integer part */
+    int	    frac_digits;	/* Number of '0' in fractional part */
+    int	    frac_hash;		/* Number of '#' in fractional part */
+    int	    group;		/* Number of chars per display 'group' */
+    int     multiplier;		/* Scaling for percent or permille */
+    char    is_multiplier_set;	/* Flag to catch multiple occurences of percent/permille */
+    char    is_negative_pattern;/* Flag for processing -ve prefix/suffix */
+} xsltFormatNumberInfo, *xsltFormatNumberInfoPtr;
+
 #ifdef __cplusplus
 }
 #endif
