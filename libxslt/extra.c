@@ -164,7 +164,7 @@ xsltFunctionLocalTime(xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj;
     char *str;
     char digits[5];
-    char result[17];
+    char result[29];
     long int field;
     time_t gmt, lmt;
     struct tm gmt_tm;
@@ -254,13 +254,9 @@ xsltFunctionLocalTime(xmlXPathParserContextPtr ctxt, int nargs) {
     memset(result, 0, sizeof(result)); /* "Thu, 26 Jun 2001" */
                                        /*  0123456789 12345 */
 
-    strncpy(result, str, 3);
-    strcpy(result+3, ", ");
-    strncpy(result+5, str+8, 2);
-    strcpy(result+7, " ");
-    strncpy(result+8, str+4, 3);
-    strcpy(result+11, " ");
-    strncpy(result+12, str+20, 4);
+    strncpy(result, str, 20);
+    strcpy(result+20, "???");          /* tzname doesn't work, fake it */
+    strncpy(result+23, str+19, 5);
 
     /* Ok, now result contains the string I want to send back. */
     valuePush(ctxt, xmlXPathNewString((xmlChar *)result));
