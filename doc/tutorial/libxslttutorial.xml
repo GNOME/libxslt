@@ -78,6 +78,12 @@
       stripped-down version of <application>xsltproc</application> designed to
       illustrate the functionality of <application>libxslt</application>. 
     </para>
+    <para>The full code for <application>xsltproc</application> is in
+      <filename>xsltproc.c</filename> in the <application>libxslt</application>
+      distribution. It also is available <ulink
+      url="http://cvs.gnome.org/lxr/source/libxslt/libxslt/xsltproc.c">on the
+      web</ulink>.
+    </para>
 
     <para>References:
       <itemizedlist>
@@ -187,6 +193,35 @@ res = xsltApplyStylesheet(cur, doc, NULL);
 	<programlisting>
 xsltSaveResultToFile(stdout, res, cur);
 	</programlisting>
+      </para>
+    </sect2>
+
+    <sect2 id="cleanup">
+      <title>Cleanup</title>
+      <para>After you are finished, <application>libxslt</application> and
+	<application>libxml</application> provide functions for deallocating
+      memory.
+      </para>
+
+      <para>
+      
+	  <programlisting>
+	  xsltFreeStylesheet(cur);<co id="cleanupstylesheet" />
+	  xmlFreeDoc(res);<co id="cleanupresults" />
+	  xmlFreeDoc(doc);<co id="cleanupdoc" />
+	  </programlisting>
+	
+	  <calloutlist>
+	    <callout arearefs="cleanupstylesheet">
+	    <para>Free the memory used by your stylesheet.</para>
+	  </callout>
+	  <callout arearefs="cleanupresults">
+	    <para>Free the memory used by the results document.</para>
+	  </callout>
+	  <callout arearefs="cleanupdoc">
+	    <para>Free the memory used by your original document.</para>
+	  </callout>
+	</calloutlist>
       </para>
     </sect2>
 

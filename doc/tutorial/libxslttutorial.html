@@ -41,6 +41,8 @@
 </dt>
 <dt> <a href="#saveresult">Saving the result</a>
 </dt>
+<dt> <a href="#cleanup">Cleanup</a>
+</dt>
 </dl></dd>
 </dl>
 </div>
@@ -98,19 +100,24 @@
       stripped-down version of xsltproc designed to
       illustrate the functionality of libxslt. 
     </p>
+<p>The full code for xsltproc is in
+      <tt>xsltproc.c</tt> in the libxslt
+      distribution. It also is available <a href="http://cvs.gnome.org/lxr/source/libxslt/libxslt/xsltproc.c" target="_top">on the
+      web</a>.
+    </p>
 <p>References:
       <div class="itemizedlist"><ul>
 <li><p>
-<a name="id2691185"></a>
+<a name="id2691214"></a>
 <a href="http://www.w3.org/XML/" target="_top">W3C XML page</a>
 </p></li>
 <li><p>
-<a name="id2691206"></a>
+<a name="id2691235"></a>
 <a href="http://www.w3.org/Style/XSL/" target="_top">W3C
 	  XSL page.</a>
 </p></li>
 <li><p>
-<a name="id2691227"></a>
+<a name="id2691256"></a>
 <a href="http://xmlsoft.org/XSLT/" target="_top">libxslt</a>
 </p></li>
 </ul></div>
@@ -127,11 +134,11 @@
     functions:
       <div class="orderedlist"><ol type="1">
 <li><p>
-<a name="id2691273"></a>parse the input file</p></li>
+<a name="id2691302"></a>parse the input file</p></li>
 <li><p>
-<a name="id2691282"></a>parse the stylesheet</p></li>
+<a name="id2691310"></a>parse the stylesheet</p></li>
 <li><p>
-<a name="id2691290"></a>apply the stylesheet</p></li>
+<a name="id2691319"></a>apply the stylesheet</p></li>
 </ol></div>
     </p>
 <div class="sect2">
@@ -225,6 +232,43 @@ res = xsltApplyStylesheet(cur, doc, NULL);
 	<pre class="programlisting">
 xsltSaveResultToFile(stdout, res, cur);
 	</pre>
+      </p>
+</div>
+<div class="sect2">
+<a name="cleanup"></a>
+<div class="titlepage"><div><h3 class="title">
+<a name="cleanup"></a>
+<span class="title">Cleanup</span>
+</h3></div></div>
+<p>After you are finished, libxslt and
+	libxml provide functions for deallocating
+      memory.
+      </p>
+<p>
+      
+	  <pre class="programlisting">
+	  xsltFreeStylesheet(cur);<a name="cleanupstylesheet"></a><img src="../images/callouts/1.png" alt="1" border="0">
+	  xmlFreeDoc(res);<a name="cleanupresults"></a><img src="../images/callouts/2.png" alt="2" border="0">
+	  xmlFreeDoc(doc);<a name="cleanupdoc"></a><img src="../images/callouts/3.png" alt="3" border="0">
+	  </pre>
+	
+	  <div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left">
+<a href="#cleanupstylesheet"><img src="../images/callouts/1.png" alt="1" border="0"></a> </td>
+<td valign="top" align="left"><p>Free the memory used by your stylesheet.</p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left">
+<a href="#cleanupresults"><img src="../images/callouts/2.png" alt="2" border="0"></a> </td>
+<td valign="top" align="left"><p>Free the memory used by the results document.</p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left">
+<a href="#cleanupdoc"><img src="../images/callouts/3.png" alt="3" border="0"></a> </td>
+<td valign="top" align="left"><p>Free the memory used by your original document.</p></td>
+</tr>
+</table></div>
       </p>
 </div>
 </div>
