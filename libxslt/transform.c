@@ -1170,6 +1170,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
 
+#if 0
     if (xmlStrEqual(node->name, BAD_CAST " fake node libxslt")) {
 	xmlNodePtr children;
 
@@ -1180,6 +1181,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	return;
     }
+#endif
     template = xsltGetTemplate(ctxt, node, NULL);
     /*
      * If no template is found, apply the default rule.

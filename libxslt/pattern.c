@@ -400,6 +400,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 #endif
 		    (node->type == XML_HTML_DOCUMENT_NODE))
 		    continue;
+		if ((node->type == XML_ELEMENT_NODE) && (node->name[0] == ' '))
+		    continue;
 		return(0);
             case XSLT_OP_ELEM:
 		if (node->type != XML_ELEMENT_NODE)
@@ -2041,6 +2043,8 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     */
 	    switch (node->type) {
 		case XML_ELEMENT_NODE:
+		    if (node->name[0] == ' ')
+			break;
 		case XML_ATTRIBUTE_NODE:
 		case XML_PI_NODE:
 		    name = node->name;
@@ -2092,7 +2096,10 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 */
 	switch (node->type) {
 	    case XML_ELEMENT_NODE:
-		list = curstyle->elemMatch;
+		if (node->name[0] == ' ')
+		    list = curstyle->rootMatch;
+		else
+		    list = curstyle->elemMatch;
 		break;
 	    case XML_ATTRIBUTE_NODE:
 		list = curstyle->attrMatch;
