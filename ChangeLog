@@ -1,3 +1,8 @@
+Fri Nov 15 12:35:57 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/Makefile.am python/tests/Makefile.am: trying to fix #98518
+	  when building outside of the source tree
+
 Thu Nov 14 21:39:37 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/generator.py: xpathObjectRet() pertains to the libxml2

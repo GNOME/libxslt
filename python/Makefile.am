@@ -38,8 +38,8 @@ python_LTLIBRARIES = libxsltmod.la
 libxsltmod_la_SOURCES = libxslt.c types.c libxslt-py.c
 libxsltmod_la_LIBADD = $(mylibs) 
 
-libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
-	cat $(srcdir)/libxsl.py libxsltclass.py > libxslt.py
+libxslt.py: $(srcdir)/libxsl.py $(srcdir)/libxsltclass.py
+	cat $(srcdir)/libxsl.py $(srcdir)/libxsltclass.py > libxslt.py
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(libdir)/python${PYTHON_VERSION}/site-packages
