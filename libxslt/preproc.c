@@ -717,13 +717,15 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
     comp->numdata.value = xsltGetNsProp(cur, (const xmlChar *)"value",
 	                                XSLT_NAMESPACE);
     
-    prop = xsltGetNsProp(cur, (const xmlChar *)"format", XSLT_NAMESPACE);
-    if (prop != NULL) {
-	comp->numdata.format = prop;
-    } else {
+    prop = xsltEvalStaticAttrValueTemplate(style, cur,
+			 (const xmlChar *)"format",
+			 XSLT_NAMESPACE, &comp->numdata.has_format);
+    if (comp->numdata.has_format == 0) {
 	comp->numdata.format = xmlStrdup(BAD_CAST(""));
+    } else {
+	comp->numdata.format = prop;
     }
-    
+
     comp->numdata.count = xsltGetNsProp(cur, (const xmlChar *)"count",
 					XSLT_NAMESPACE);
     comp->numdata.from = xsltGetNsProp(cur, (const xmlChar *)"from",

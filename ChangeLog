@@ -1,3 +1,8 @@
+Sun Jul 15 16:01:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/numbers.c libxslt/numbersInternals.h libxslt/preproc.c:
+	  trying to accept AVT for "format" in xsl:number
+
 Fri Jul 13 16:57:08 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* win32/libxslt/libxslt.defs: trying to close #57460 by adding

@@ -29,6 +29,7 @@
 #include <libxml/xpathInternals.h>
 #include "xsltutils.h"
 #include "pattern.h"
+#include "templates.h"
 #include "numbersInternals.h"
 
 #ifndef FALSE
@@ -599,6 +600,15 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
     int array_amount;
     double number;
     xsltNumberFormatToken array[1024];
+
+    if ((data->format == NULL) && (data->has_format != 0)) {
+	data->format = xsltEvalAttrValueTemplate(ctxt, data->node,
+					     (const xmlChar *) "format",
+					     XSLT_NAMESPACE);
+    }
+    if (data->format == NULL) {
+	return;
+    }
 
     output = xmlBufferCreate();
     if (output == NULL)
