@@ -3419,18 +3419,21 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
 	    /* The nodeset is from another document, so must change */
 	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
-	    if ((ctxt->document =
-		  xsltFindDocument(ctxt,list->nodeTab[i]->doc->doc))==NULL) { 
-		xsltTransformError(ctxt, NULL, inst,
-	 		"xsl:for-each : can't find doc\n");
-    		goto error;
-	    }
-	    ctxt->xpathCtxt->node = list->nodeTab[i];
+	    if (list->nodeTab[i]->doc->name != NULL) {
+		ctxt->document = xsltFindDocument(ctxt,
+			            list->nodeTab[i]->doc->doc);
+		ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
-	xsltGenericDebug(xsltGenericDebugContext,
+		if (ctxt->document != NULL) {
+		    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltForEach: Changing document - context doc %s, xpathdoc %s\n",
-	     ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
+		 ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
+		} else {
+		    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltForEach: Changing document - Return tree fragment\n");
+		}
 #endif
+	    }
 	}
 	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement, NULL, NULL);
     }

@@ -1,3 +1,11 @@
+Wed Mar 26 19:08:55 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: forgot to make one change related to
+	  Result Value Tree change, pointed out by Sebastian Rahtz
+	* tests/docs/Makefile.am tests/docs/bug-112.*
+	  tests/general/Makefile.am tests/general/bug-112*: added an
+	  example in the regression tests that bug
+
 Wed Mar 26 01:38:38 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: second part of the patch fixing #108905
