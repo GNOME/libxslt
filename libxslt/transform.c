@@ -1110,6 +1110,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldInst = NULL;
     xmlAttrPtr attrs;
     int oldBase;
+
     int level = 0;
 
 #ifdef WITH_DEBUGGER
@@ -1243,7 +1244,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 ctxt->insert = insert;
                 info->func(ctxt, node, cur, (xsltElemPreCompPtr) info);
                 ctxt->insert = oldInsert;
-		CHECK_STOPPED;
                 goto skip_children;
             }
 
@@ -1270,7 +1270,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                  "xsltApplyOneTemplate: problem with xsl:%s\n",
                                  cur->name);
             }
-            CHECK_STOPPED;
             goto skip_children;
         } else if ((cur->type == XML_TEXT_NODE) ||
                    (cur->type == XML_CDATA_SECTION_NODE)) {
@@ -1413,6 +1412,12 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             }
         }
       skip_children:
+	/*
+	If xslt:message just processed, might have terminate='yes'
+	If so, break out of while to clean up processing.
+	*/
+	if (ctxt->state == XSLT_STATE_STOPPED)
+	    break;
         if (cur->next != NULL) {
             cur = cur->next;
             continue;

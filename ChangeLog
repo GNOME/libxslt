@@ -1,3 +1,8 @@
+Thu Jul  4 16:53:00 HKT 2002 William Brack <wbrack@mmm.com.hk>
+
+	* transform.c further enhancement for bug 84902 (another
+	  path), also cleaned up code slightly
+
 Wed Jul  3 00:50:00 HKT 2002 William Brack <wbrack@mmm.com.hk>
 
 	* transform.c: fixed bug 84902 - message with terminate=yes
