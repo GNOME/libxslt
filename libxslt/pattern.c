@@ -860,7 +860,7 @@ xsltScanLiteral(xsltParserContextPtr ctxt) {
  * xsltScanName:
  * @ctxt:  the XPath Parser context
  *
- * [4] NameChar ::= Letter | Digit | '.' | '-' | '_' | ':' |
+ * [4] NameChar ::= Letter | Digit | '.' | '-' | '_' | 
  *                  CombiningChar | Extender
  *
  * [5] Name ::= (Letter | '_' | ':') (NameChar)*
@@ -883,7 +883,7 @@ xsltScanName(xsltParserContextPtr ctxt) {
 
     while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
            (NXT(len) == '.') || (NXT(len) == '-') ||
-	   (NXT(len) == '_') || (NXT(len) == ':') || 
+	   (NXT(len) == '_') || 
 	   (IS_COMBINING(NXT(len))) ||
 	   (IS_EXTENDER(NXT(len)))) {
 	buf[len] = NXT(len);
@@ -1209,59 +1209,88 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     } else if (CUR == ':') {
 	NEXT;
 	if (NXT(1) != ':') {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
-		    "xsltCompileStepPattern : sequence '::' expected\n");
-	    ctxt->error = 1;
-	    goto error;
-	}
-	NEXT;
-	if (xmlStrEqual(token, (const xmlChar *) "child")) {
-	    name = xsltScanName(ctxt);
-	    if (name == NULL) {
+	    xmlChar *prefix = token;
+	    xmlNsPtr ns;
+
+	    /*
+	     * This is a namespace match
+	     */
+	    token = xsltScanName(ctxt);
+	    ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
+	    if (ns == NULL) {
 		xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
 		xsltGenericError(xsltGenericErrorContext,
-			"xsltCompileStepPattern : QName expected\n");
-		ctxt->error = 1;
-		goto error;
-	    }
-	    URI = xsltGetQNameURI(ctxt->elem, &token);
-	    if (token == NULL) {
+	    "xsltCompileStepPattern : no namespace bound to prefix %s\n",
+				 prefix);
 		ctxt->error = 1;
 		goto error;
 	    } else {
-		name = xmlStrdup(token);
-		if (URI != NULL)
-		    URL = xmlStrdup(URI);
+		URL = xmlStrdup(ns->href);
 	    }
-	    PUSH(XSLT_OP_CHILD, name, URL);
-	} else if (xmlStrEqual(token, (const xmlChar *) "attribute")) {
-	    name = xsltScanName(ctxt);
-	    if (name == NULL) {
-		xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		xsltGenericError(xsltGenericErrorContext,
-			"xsltCompileStepPattern : QName expected\n");
-		ctxt->error = 1;
-		goto error;
-	    }
-	    URI = xsltGetQNameURI(ctxt->elem, &token);
+	    xmlFree(prefix);
 	    if (token == NULL) {
-		ctxt->error = 1;
-		goto error;
+		if (CUR == '*') {
+		    NEXT;
+		    PUSH(XSLT_OP_NS, URL, NULL);
+		} else {
+		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
+		    xsltGenericError(xsltGenericErrorContext,
+			    "xsltCompileStepPattern : Name expected\n");
+		    ctxt->error = 1;
+		    goto error;
+		}
 	    } else {
-		name = xmlStrdup(token);
-		if (URI != NULL)
-		    URL = xmlStrdup(URI);
+		PUSH(XSLT_OP_ELEM, token, URL);
 	    }
-	    PUSH(XSLT_OP_ATTR, name, URL);
 	} else {
-	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-	    xsltGenericError(xsltGenericErrorContext,
-		"xsltCompileStepPattern : 'child' or 'attribute' expected\n");
-	    ctxt->error = 1;
-	    goto error;
+	    NEXT;
+	    if (xmlStrEqual(token, (const xmlChar *) "child")) {
+		name = xsltScanName(ctxt);
+		if (name == NULL) {
+		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
+		    xsltGenericError(xsltGenericErrorContext,
+			    "xsltCompileStepPattern : QName expected\n");
+		    ctxt->error = 1;
+		    goto error;
+		}
+		URI = xsltGetQNameURI(ctxt->elem, &token);
+		if (token == NULL) {
+		    ctxt->error = 1;
+		    goto error;
+		} else {
+		    name = xmlStrdup(token);
+		    if (URI != NULL)
+			URL = xmlStrdup(URI);
+		}
+		PUSH(XSLT_OP_CHILD, name, URL);
+	    } else if (xmlStrEqual(token, (const xmlChar *) "attribute")) {
+		name = xsltScanName(ctxt);
+		if (name == NULL) {
+		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
+		    xsltGenericError(xsltGenericErrorContext,
+			    "xsltCompileStepPattern : QName expected\n");
+		    ctxt->error = 1;
+		    goto error;
+		}
+		URI = xsltGetQNameURI(ctxt->elem, &token);
+		if (token == NULL) {
+		    ctxt->error = 1;
+		    goto error;
+		} else {
+		    name = xmlStrdup(token);
+		    if (URI != NULL)
+			URL = xmlStrdup(URI);
+		}
+		PUSH(XSLT_OP_ATTR, name, URL);
+	    } else {
+		xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
+		xsltGenericError(xsltGenericErrorContext,
+		    "xsltCompileStepPattern : 'child' or 'attribute' expected\n");
+		ctxt->error = 1;
+		goto error;
+	    }
+	    xmlFree(token);
 	}
-	xmlFree(token);
     } else if (CUR == '*') {
 	NEXT;
 	PUSH(XSLT_OP_ALL, token, NULL);
@@ -1631,7 +1660,6 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
         case XSLT_OP_CHILD:
         case XSLT_OP_PARENT:
         case XSLT_OP_ANCESTOR:
-        case XSLT_OP_NS:
 	    name = pat->steps[0].value;
 	    break;
         case XSLT_OP_ROOT:
@@ -1642,6 +1670,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	    break;
         case XSLT_OP_ID:
 	    /* TODO optimize ID !!! */
+        case XSLT_OP_NS:
         case XSLT_OP_ALL:
 	    top = (xsltCompMatchPtr *) &(style->elemMatch);
 	    break;

@@ -1,3 +1,10 @@
+Thu Jul 26 10:20:19 EDT 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixed an ugly problem with namespaces
+	  in templates compilation
+	* tests/namespaces/tst4.*: added a specific testcase
+	* libxslt/transform.c: reenabled debug
+
 Tue Jul 24 17:45:22 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt.spec.in libxslt/xsltwin32config.h:

@@ -51,6 +51,7 @@
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_EXTRA
+#define WITH_XSLT_DEBUG_PROCESS
 #endif
 
 int xsltMaxDepth = 500;
