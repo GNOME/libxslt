@@ -25,7 +25,7 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	  $(top_builddir)/libxslt/xsltproc $$j $$i > result.$$name;\
 	  if [ ! -f $$out ] ; then cp result.$$name $$out ; \
 	  else diff $$out result.$$name ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  rm -f result.$$name ; \
 	  done)
 

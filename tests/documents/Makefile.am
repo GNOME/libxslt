@@ -13,7 +13,7 @@ all: test
 test tests: $(top_builddir)/libxslt/xsltproc
 	@(echo > .memdump)
 	@($(top_builddir)/libxslt/xsltproc $(srcdir)/bredfort.xsl $(srcdir)/index.xml > result ; \
-	diff $(srcdir)/result.xhtml result ; \
-	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	diff $(srcdir)/result.xhtml result; \
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f result)
 

@@ -11,6 +11,6 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	@(echo > .memdump)
 	@($(top_builddir)/libxslt/xsltproc $(srcdir)/doc.xsl $(srcdir)/doc.xml > doc.res ; \
 	diff $(srcdir)/result.xml doc.res ; \
-	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f doc.res)
 

@@ -53,8 +53,8 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	  echo Running $$j on $$i ; \
 	  $(top_builddir)/libxslt/xsltproc $$j $$i > result.$$name;\
 	  if [ ! -f $$out ] ; then cp result.$$name $$out ; \
-	  else diff $$out result.$$name ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	  else diff $$out result.$$name; fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  rm -f result.$$name ; \
 	  done ; done)
 

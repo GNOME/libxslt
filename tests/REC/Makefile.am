@@ -76,7 +76,7 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	  if [ ! -f $(srcdir)/$$name.out ] ; then cp $$name.res $(srcdir)/$$name.out ; \
 	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
 	  else diff $(srcdir)/$$name.out $$name.res ; fi ; fi; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  rm -f $$name.res ; \
 	  done)
 

@@ -11,6 +11,6 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	@(echo > .memdump)
 	@($(top_builddir)/libxslt/xsltproc $(srcdir)/format-number.xsl $(srcdir)/format-number.xml > format-number.res ; \
 	diff $(srcdir)/format-number.out format-number.res ; \
-	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f format-number.res)
 

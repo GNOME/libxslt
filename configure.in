@@ -56,8 +56,8 @@ dnl
 dnl Perl is just needed for generating some data for XSLtmark
 dnl
 
-AC_CHECK_PROG(perl_val, perl, true, false)
-AM_CONDITIONAL(WITH_PERL, $perl_val)
+AC_CHECK_PROG(PERL, perl, perl, false)
+AM_CONDITIONAL(WITH_PERL, test "$PERL" != "false")
 
 dnl
 dnl Debug for DV

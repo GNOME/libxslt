@@ -22,7 +22,7 @@ html: $(top_builddir)/libxslt/xsltproc
 	      diff $$html.noid $$out.noid ; \
 	      rm -f $$html.noid $$out.noid ; \
 	  else mv $$out $$html ; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  rm -f $$out ; done )
 
 dist-hook:

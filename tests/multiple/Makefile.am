@@ -23,11 +23,11 @@ all: test
 test tests: $(top_builddir)/libxslt/xsltproc
 	@(echo > .memdump)
 	@($(top_builddir)/libxslt/xsltproc $(srcdir)/dict.xsl $(srcdir)/dict.xml > dict.res ; \
-	diff $(srcdir)/result.xml dict.res ; \
+	diff $(srcdir)/result.xml dict.res; \
 	for i in $(srcdir)/out/letter*.orig ; do \
-	  diff $$i $(srcdir)/out/`basename $$i .orig`.html ; done ; \
-	diff $(srcdir)/out/titlepage.orig $(srcdir)/out/titlepage.html ; \
-	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	  diff $$i $(srcdir)/out/`basename $$i .orig`.html; done ; \
+	diff $(srcdir)/out/titlepage.orig $(srcdir)/out/titlepage.html; \
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f dict.res)
 
 

@@ -1,3 +1,12 @@
+Sun May 20 20:55:00 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/documents/Makefile.am tests/general/Makefile.am
+	  tests/multiple/Makefile.am tests/namespaces/Makefile.am
+	  tests/numbers/Makefile.am tests/xmlspec/Makefile.am
+	  tests/REC/Makefile.am tests/REC1/Makefile.am tests/REC2/Makefile.am
+	  tests/XSLTMark/Makefile.am tests/docbook/Makefile.am
+	  configure.in: Makefiles cleanup from Joe Orton
+
 Sun May 20 15:20:49 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docbook/result/html/external.html 
