@@ -38,6 +38,7 @@
 #include "documents.h"
 #include "extensions.h"
 #include "preproc.h"
+#include "extra.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PARSING
@@ -118,6 +119,22 @@ PUSH_AND_POP(static, xmlChar *, exclPrefix)
  *			Helper functions				*
  *									*
  ************************************************************************/
+
+/**
+ * xsltInit:
+ *
+ * Initializes the processor (e.g. registers built-in extensions,
+ * etc.)
+ */
+static void
+xsltInit (void) {
+    static int initialized = 0;
+
+    if (initialized == 0) {
+	initialized = 1;
+	xsltRegisterAllExtras();
+    }
+}
 
 /**
  * xsltIsBlank:
@@ -329,6 +346,9 @@ xsltNewStylesheet(void) {
     cur->exclPrefixMax = 0;
     cur->exclPrefixTab = NULL;
     cur->extInfos = NULL;
+
+    xsltInit();
+
     return(cur);
 }
 
@@ -2125,4 +2145,3 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
     }
     return(ret);
 }
-

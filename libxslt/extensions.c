@@ -1343,7 +1343,7 @@ xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst,
 	xsltPrintErrorContext(NULL, NULL, inst);
         xsltGenericError(xsltGenericErrorContext,
 		 "xsltExtElementTest: no transformation context\n");
-        return;
+        return (NULL);
     }
     if (testStyleData == NULL) {
         xsltGenericDebug(xsltGenericDebugContext,
@@ -1351,19 +1351,19 @@ xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst,
 		 " calling xsltStyleGetExtData\n");
 	xsltStyleGetExtData(style, (const xmlChar *) XSLT_DEFAULT_URL);
 	if (testStyleData == NULL) {
-	    xsltPrintErrorContext(NULL, NULL, inst);
+	    xsltPrintErrorContext(NULL, style, inst);
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xsltExtElementPreCompTest: not initialized\n");
 	    style->errors++;
-	    return;
+	    return (NULL);
 	}
     }
     if (inst == NULL) {
-	xsltPrintErrorContext(NULL, NULL, inst);
+	xsltPrintErrorContext(NULL, style, inst);
         xsltGenericError(xsltGenericErrorContext,
 		 "xsltExtElementPreCompTest: no instruction\n");
 	style->errors++;
-        return;
+        return (NULL);
     }
     ret = xsltNewElemPreComp (style, inst, function);
     return (ret);

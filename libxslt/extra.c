@@ -33,6 +33,7 @@
 #include "variables.h"
 #include "transform.h"
 #include "extra.h"
+#include "preproc.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_EXTRA
@@ -268,28 +269,53 @@ xsltFunctionLocalTime(xmlXPathParserContextPtr ctxt, int nargs) {
  * xsltRegisterExtras:
  * @ctxt:  a XSLT process context
  *
+ * Registers the built-in extensions. This function is deprecated, use
+ * xsltRegisterAllExtras instead.
+ */
+void
+xsltRegisterExtras(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED) {
+    xsltRegisterAllExtras();
+}
+
+/**
+ * xsltRegisterAllExtras:
+ *
  * Registers the built-in extensions
  */
 void
-xsltRegisterExtras(xsltTransformContextPtr ctxt) {
-    xsltRegisterExtFunction(ctxt, (const xmlChar *) "node-set",
-	                    XSLT_LIBXSLT_NAMESPACE, xsltFunctionNodeSet);
-    xsltRegisterExtFunction(ctxt, (const xmlChar *) "node-set",
-	                    XSLT_SAXON_NAMESPACE, xsltFunctionNodeSet);
-    xsltRegisterExtFunction(ctxt, (const xmlChar *) "node-set",
-	                    XSLT_XT_NAMESPACE, xsltFunctionNodeSet);
+xsltRegisterAllExtras (void) {
+    xsltRegisterExtModuleFunction((const xmlChar *) "node-set",
+				  XSLT_LIBXSLT_NAMESPACE,
+				  xsltFunctionNodeSet);
+    xsltRegisterExtModuleFunction((const xmlChar *) "node-set",
+				  XSLT_SAXON_NAMESPACE,
+				  xsltFunctionNodeSet);
+    xsltRegisterExtModuleFunction((const xmlChar *) "node-set",
+				  XSLT_XT_NAMESPACE,
+				  xsltFunctionNodeSet);
 #ifdef WITH_LOCALTIME
-    xsltRegisterExtFunction(ctxt, (const xmlChar *) "localTime",
-	                    XSLT_NORM_SAXON_NAMESPACE, xsltFunctionLocalTime);
+    xsltRegisterExtModuleFunction((const xmlChar *) "localTime",
+				  XSLT_NORM_SAXON_NAMESPACE,
+				  xsltFunctionLocalTime);
 #endif
-    xsltRegisterExtElement(ctxt, (const xmlChar *) "debug",
-	                    XSLT_LIBXSLT_NAMESPACE, xsltDebug);
-    xsltRegisterExtElement(ctxt, (const xmlChar *) "output",
-	                    XSLT_SAXON_NAMESPACE, xsltDocumentElem);
-    xsltRegisterExtElement(ctxt, (const xmlChar *) "write",
-	                    XSLT_XALAN_NAMESPACE, xsltDocumentElem);
-    xsltRegisterExtElement(ctxt, (const xmlChar *) "document",
-	                    XSLT_XT_NAMESPACE, xsltDocumentElem);
-    xsltRegisterExtElement(ctxt, (const xmlChar *) "document",
-	                    XSLT_NAMESPACE, xsltDocumentElem);
+    xsltRegisterExtModuleElement((const xmlChar *) "debug",
+				 XSLT_LIBXSLT_NAMESPACE,
+				 NULL,
+				 (xsltTransformFunction) xsltDebug);
+    xsltRegisterExtModuleElement((const xmlChar *) "output",
+				 XSLT_SAXON_NAMESPACE,
+				 xsltDocumentComp,
+				 (xsltTransformFunction) xsltDocumentElem);
+    xsltRegisterExtModuleElement((const xmlChar *) "write",
+				 XSLT_XALAN_NAMESPACE,
+				 xsltDocumentComp,
+				 (xsltTransformFunction) xsltDocumentElem);
+    xsltRegisterExtModuleElement((const xmlChar *) "document",
+				 XSLT_XT_NAMESPACE,
+				 xsltDocumentComp,
+				 (xsltTransformFunction) xsltDocumentElem);
+    xsltRegisterExtModuleElement((const xmlChar *) "document",
+				 XSLT_NAMESPACE,
+				 xsltDocumentComp,
+				 (xsltTransformFunction) xsltDocumentElem);
 }

@@ -76,39 +76,40 @@ xsltNewStylePreComp(xsltStylesheetPtr style, xsltStyleType type) {
     cur->type = type;
     switch (cur->type) {
         case XSLT_FUNC_COPY:
-            cur->func = xsltCopy;break;
+            cur->func = (xsltTransformFunction) xsltCopy;break;
         case XSLT_FUNC_SORT:
-            cur->func = xsltSort;break;
+            cur->func = (xsltTransformFunction) xsltSort;break;
         case XSLT_FUNC_TEXT:
-            cur->func = xsltText;break;
+            cur->func = (xsltTransformFunction) xsltText;break;
         case XSLT_FUNC_ELEMENT:
-            cur->func = xsltElement;break;
+            cur->func = (xsltTransformFunction) xsltElement;break;
         case XSLT_FUNC_ATTRIBUTE:
-            cur->func = xsltAttribute;break;
+            cur->func = (xsltTransformFunction) xsltAttribute;break;
         case XSLT_FUNC_COMMENT:
-            cur->func = xsltComment;break;
+            cur->func = (xsltTransformFunction) xsltComment;break;
         case XSLT_FUNC_PI:
-            cur->func = xsltProcessingInstruction;break;
+            cur->func = (xsltTransformFunction) xsltProcessingInstruction;
+	    break;
         case XSLT_FUNC_COPYOF:
-            cur->func = xsltCopyOf;break;
+            cur->func = (xsltTransformFunction) xsltCopyOf;break;
         case XSLT_FUNC_VALUEOF:
-            cur->func = xsltValueOf;break;
+            cur->func = (xsltTransformFunction) xsltValueOf;break;
         case XSLT_FUNC_NUMBER:
-            cur->func = xsltNumber;break;
+            cur->func = (xsltTransformFunction) xsltNumber;break;
         case XSLT_FUNC_APPLYIMPORTS:
-            cur->func = xsltApplyImports;break;
+            cur->func = (xsltTransformFunction) xsltApplyImports;break;
         case XSLT_FUNC_CALLTEMPLATE:
-            cur->func = xsltCallTemplate;break;
+            cur->func = (xsltTransformFunction) xsltCallTemplate;break;
         case XSLT_FUNC_APPLYTEMPLATES:
-            cur->func = xsltApplyTemplates;break;
+            cur->func = (xsltTransformFunction) xsltApplyTemplates;break;
         case XSLT_FUNC_CHOOSE:
-            cur->func = xsltChoose;break;
+            cur->func = (xsltTransformFunction) xsltChoose;break;
         case XSLT_FUNC_IF:
-            cur->func = xsltIf;break;
+            cur->func = (xsltTransformFunction) xsltIf;break;
         case XSLT_FUNC_FOREACH:
-            cur->func = xsltForEach;break;
+            cur->func = (xsltTransformFunction) xsltForEach;break;
         case XSLT_FUNC_DOCUMENT:
-            cur->func = xsltDocumentElem;break;
+            cur->func = (xsltTransformFunction) xsltDocumentElem;break;
 	case XSLT_FUNC_WITHPARAM:
 	    cur->func = NULL;break;
 	case XSLT_FUNC_PARAM:
@@ -126,7 +127,7 @@ xsltNewStylePreComp(xsltStylesheetPtr style, xsltStyleType type) {
 	}
     }
     cur->next = style->preComps;
-    style->preComps = cur;
+    style->preComps = (xsltElemPreCompPtr) cur;
 
     return(cur);
 }
@@ -195,8 +196,9 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
  *
  * Pre process an XSLT-1.1 document element
  */
-static void
-xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst) {
+xsltElemPreCompPtr
+xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
+		 xsltTransformFunction function ATTRIBUTE_UNUSED) {
     xsltStylePreCompPtr comp;
     xmlChar *filename = NULL;
     xmlChar *base = NULL;
@@ -204,8 +206,7 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 
     comp = xsltNewStylePreComp(style, XSLT_FUNC_DOCUMENT);
     if (comp == NULL)
-	return;
-    inst->_private = comp;
+	return (NULL);
     comp->inst = inst;
     comp->ver11 = 0;
 
@@ -274,6 +275,8 @@ error:
 	xmlFree(base);
     if (filename != NULL)
 	xmlFree(filename);
+
+    return ((xsltElemPreCompPtr) comp);
 }
 
 /************************************************************************
@@ -1206,7 +1209,7 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
  */
 void
 xsltFreeStylePreComps(xsltStylesheetPtr style) {
-    xsltStylePreCompPtr cur, next;
+    xsltElemPreCompPtr cur, next;
 
     if (style == NULL)
 	return;
@@ -1214,9 +1217,9 @@ xsltFreeStylePreComps(xsltStylesheetPtr style) {
     while (cur != NULL) {
 	next = cur->next;
 	if (cur->type == XSLT_FUNC_EXTENSION)
-	    ((xsltElemPreCompPtr)cur)->free(cur);
+	    cur->free(cur);
 	else
-	    xsltFreeStylePreComp(cur);
+	    xsltFreeStylePreComp((xsltStylePreCompPtr) cur);
 	cur = next;
     }
 }
@@ -1321,7 +1324,8 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    /* no computation needed */
 	    return;
 	} else if (IS_XSLT_NAME(inst, "document")) {
-	    xsltDocumentComp(style, inst);
+	    inst->_private = (void *) xsltDocumentComp(style, inst,
+				(xsltTransformFunction) xsltDocumentElem);
 	} else {
 	    xsltPrintErrorContext(NULL, style, inst);
 	    xsltGenericError(xsltGenericDebugContext,
@@ -1332,7 +1336,7 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	 * Add the namespace lookup here, this code can be shared by
 	 * all precomputations.
 	 */
-	cur = inst->_private;
+	cur = (xsltStylePreCompPtr) inst->_private;
 	if (cur != NULL) {
 	    int i = 0;
 
@@ -1344,19 +1348,14 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    cur->nsNr = i;
 	}
     } else {
-	/* FIXME */
-	if (IS_XSLT_NAME(inst, "document")) {
-	    xsltDocumentComp(style, inst);
-	} else {
-	    inst->_private =
-		(void *) xsltPreComputeExtModuleElement(style, inst);
+	inst->_private =
+	    (void *) xsltPreComputeExtModuleElement(style, inst);
 
-	    /*
-	     * Unknown element, maybe registered at the context
-	     * level. Mark it for later recognition.
-	     */
-	    if (inst->_private == NULL)
-		inst->_private = (void *) xsltExtMarker;
-	}
+	/*
+	 * Unknown element, maybe registered at the context
+	 * level. Mark it for later recognition.
+	 */
+	if (inst->_private == NULL)
+	    inst->_private = (void *) xsltExtMarker;
     }
 }

@@ -1085,7 +1085,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
             if (info->func != NULL) {
                 ctxt->insert = insert;
-                info->func(ctxt, node, cur, info);
+                info->func(ctxt, node, cur, (xsltElemPreCompPtr) info);
                 ctxt->insert = oldInsert;
                 goto skip_children;
             }
@@ -3163,7 +3163,6 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if (profile != NULL)
         ctxt->profile = 1;
 
-    xsltRegisterExtras(ctxt);
     if (output != NULL)
         ctxt->outputFile = output;
     else
@@ -3476,37 +3475,53 @@ void
 xsltRegisterAllElement(xsltTransformContextPtr ctxt)
 {
     xsltRegisterExtElement(ctxt, (const xmlChar *) "apply-templates",
-                           XSLT_NAMESPACE, xsltApplyTemplates);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltApplyTemplates);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "apply-imports",
-                           XSLT_NAMESPACE, xsltApplyImports);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltApplyImports);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "call-template",
-                           XSLT_NAMESPACE, xsltCallTemplate);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltCallTemplate);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "element",
-                           XSLT_NAMESPACE, xsltElement);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltElement);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "attribute",
-                           XSLT_NAMESPACE, xsltAttribute);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltAttribute);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "text",
-                           XSLT_NAMESPACE, xsltText);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltText);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "processing-instruction",
-                           XSLT_NAMESPACE, xsltProcessingInstruction);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltProcessingInstruction);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "comment",
-                           XSLT_NAMESPACE, xsltComment);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltComment);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "copy",
-                           XSLT_NAMESPACE, xsltCopy);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltCopy);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "value-of",
-                           XSLT_NAMESPACE, xsltValueOf);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltValueOf);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "number",
-                           XSLT_NAMESPACE, xsltNumber);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltNumber);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "for-each",
-                           XSLT_NAMESPACE, xsltForEach);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltForEach);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "if",
-                           XSLT_NAMESPACE, xsltIf);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltIf);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "choose",
-                           XSLT_NAMESPACE, xsltChoose);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltChoose);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "sort",
-                           XSLT_NAMESPACE, xsltSort);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltSort);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "copy-of",
-                           XSLT_NAMESPACE, xsltCopyOf);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltCopyOf);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "message",
                            XSLT_NAMESPACE,
 			   (xsltTransformFunction) xsltMessage);
@@ -3515,18 +3530,25 @@ xsltRegisterAllElement(xsltTransformContextPtr ctxt)
      * Those don't have callable entry points but are registered anyway
      */
     xsltRegisterExtElement(ctxt, (const xmlChar *) "variable",
-                           XSLT_NAMESPACE, xsltDebug);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "param",
-                           XSLT_NAMESPACE, xsltDebug);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "with-param",
-                           XSLT_NAMESPACE, xsltDebug);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "decimal-format",
-                           XSLT_NAMESPACE, xsltDebug);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "when",
-                           XSLT_NAMESPACE, xsltDebug);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "otherwise",
-                           XSLT_NAMESPACE, xsltDebug);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "fallback",
-                           XSLT_NAMESPACE, xsltDebug);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltDebug);
 
 }

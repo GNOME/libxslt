@@ -1,3 +1,13 @@
+Tue Aug 14 05:01:30 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libxslt/xslt.c libxslt/xsltInternals.h libxslt/transform.c
+	  libxslt/extra.[ch] libxslt/extensions.c libxslt/preproc.[ch]:
+	  fixed compilation warnings due to recent changes to the extension
+	  framework.
+	* libxslt/preproc.[ch] libexslt/common.c
+	  fixed the precomputation of *:document elements
+	* libxslt/functions.h: fixed a compilation warning
+
 Mon Aug 13 11:41:02 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: applied fix suggested by Tom Moog

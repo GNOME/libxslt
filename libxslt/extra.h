@@ -56,14 +56,15 @@ extern "C" {
 
 void		xsltFunctionNodeSet	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-
-void		xsltRegisterExtras	(xsltTransformContextPtr ctxt);
-
-
 void		xsltDebug		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr inst,
 					 xsltStylePreCompPtr comp);
+
+
+void		xsltRegisterExtras	(xsltTransformContextPtr ctxt);
+void		xsltRegisterAllExtras	(void);
+
 #ifdef __cplusplus
 }
 #endif

@@ -7,6 +7,7 @@
 #include <libxslt/extensions.h>
 #include <libxslt/transform.h>
 #include <libxslt/extra.h>
+#include <libxslt/preproc.h>
 
 #include "exslt.h"
 
@@ -68,5 +69,6 @@ exsltCommonRegister (void) {
 				  exsltObjectTypeFunction);
     xsltRegisterExtModuleElement((const xmlChar *) "document",
 				 EXSLT_COMMON_NAMESPACE,
-				 NULL, xsltDocumentElem);
+				 (xsltPreComputeFunction) xsltDocumentComp,
+				 (xsltTransformFunction) xsltDocumentElem);
 }
