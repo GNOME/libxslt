@@ -113,6 +113,7 @@
      <summary>interface for the key matching used in key() and template matches.</summary>
      <description>implementation of the key mechanims. </description>
      <author>Daniel Veillard </author>
+     <exports symbol='NODE_IS_KEYED' type='macro'/>
      <exports symbol='xsltInitCtxtKeys' type='function'/>
      <exports symbol='xsltFreeKeys' type='function'/>
      <exports symbol='xsltGetKey' type='function'/>
@@ -492,6 +493,8 @@
       <info>Check that a node is a &apos;real&apos; one: document, element, text or attribute.</info>
     </macro>
     <macro name='LIBXSLT_PUBLIC' file='xsltexports'>
+    </macro>
+    <macro name='NODE_IS_KEYED' file='keys'>
     </macro>
     <macro name='XSLTCALL' file='xsltexports'>
     </macro>

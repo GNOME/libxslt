@@ -8,6 +8,7 @@
     <reference name='IS_XSLT_NAME' href='html/libxslt-xsltutils.html#IS_XSLT_NAME'/>
     <reference name='IS_XSLT_REAL_NODE' href='html/libxslt-xsltutils.html#IS_XSLT_REAL_NODE'/>
     <reference name='LIBXSLT_PUBLIC' href='html/libxslt-xsltexports.html#LIBXSLT_PUBLIC'/>
+    <reference name='NODE_IS_KEYED' href='html/libxslt-keys.html#NODE_IS_KEYED'/>
     <reference name='XSLTCALL' href='html/libxslt-xsltexports.html#XSLTCALL'/>
     <reference name='XSLTPUBFUN' href='html/libxslt-xsltexports.html#XSLTPUBFUN'/>
     <reference name='XSLTPUBVAR' href='html/libxslt-xsltexports.html#XSLTPUBVAR'/>
@@ -390,6 +391,9 @@
     </letter>
     <letter name='L'>
       <ref name='LIBXSLT_PUBLIC'/>
+    </letter>
+    <letter name='N'>
+      <ref name='NODE_IS_KEYED'/>
     </letter>
     <letter name='X'>
       <ref name='XSLTCALL'/>
@@ -1545,6 +1549,7 @@
       <ref name='xsltParseStylesheetInclude'/>
     </file>
     <file name='keys'>
+      <ref name='NODE_IS_KEYED'/>
       <ref name='xsltAddKey'/>
       <ref name='xsltFreeDocumentKeys'/>
       <ref name='xsltFreeKeys'/>
