@@ -1,0 +1,8 @@
+Makefile
+Makefile.in
+
+*.lo
+xsltproc
+xsltconfig.h
+.libs
+libxslt.la
