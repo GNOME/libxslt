@@ -17,18 +17,19 @@ else:
         try:
             import os
             osname = os.uname()[0]
-            if osname == 'Linux':
+            if osname == 'Linux' or osname == 'SunOS':
                 RTLD_GLOBAL = 0x00100
                 RTLD_NOW = 0x00002
             #
             # is there a better method ?
             #
-            else:
-                print "libxslt could not guess RTLD_GLOBAL and RTLD_NOW " + \
-                      "on this platform: %s" % (osname)
+#            else:
+#                print "libxslt could not guess RTLD_GLOBAL and RTLD_NOW " + \
+#                      "on this platform: %s" % (osname)
         except:
-            print "libxslt could not guess RTLD_GLOBAL and RTLD_NOW " + \
-                  "on this platform: %s" % (osname)
+	     pass
+#            print "libxslt could not guess RTLD_GLOBAL and RTLD_NOW " + \
+#                  "on this platform: %s" % (osname)
 
     if RTLD_GLOBAL != -1 and RTLD_NOW != -1:
         try:

@@ -1,3 +1,11 @@
+Fri Mar 28 12:19:35 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxsl.py: fix bug #109395 as pointed out by Ben Phillips
+	  and avoid some warnings when loading the python modules on non
+	  Linux platforms.
+	* libxslt/transform.c: fix a bug introduced in the document lookup
+	  and exhibited by the keys test.
+
 Wed Mar 26 22:41:00 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-113.*

@@ -3064,7 +3064,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
 	    /* The nodeset is from another document, so must change */
 	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
-	    if (list->nodeTab[i]->doc->name != NULL) {
+	    if ((list->nodeTab[i]->doc->name != NULL) ||
+		(list->nodeTab[i]->doc->URL != NULL)) {
 		ctxt->document = xsltFindDocument(ctxt,
 			            list->nodeTab[i]->doc->doc);
 		ctxt->xpathCtxt->node = list->nodeTab[i];
@@ -3419,7 +3420,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
 	    /* The nodeset is from another document, so must change */
 	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
-	    if (list->nodeTab[i]->doc->name != NULL) {
+	    if ((list->nodeTab[i]->doc->name != NULL) ||
+		(list->nodeTab[i]->doc->URL != NULL)) {
 		ctxt->document = xsltFindDocument(ctxt,
 			            list->nodeTab[i]->doc->doc);
 		ctxt->xpathCtxt->node = list->nodeTab[i];
