@@ -213,6 +213,9 @@
 	<listitem>
 	  <simpara>The input document is DocBook
       <acronym>SGML</acronym>.
+      Do not use the --docbook option of xsltproc to process XML DocBook
+      documents, this option is only intended to provide some (limited) support
+      of the SGML version of DocBook.
     </simpara>
 	</listitem>
       </varlistentry>

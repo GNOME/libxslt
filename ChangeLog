@@ -1,3 +1,9 @@
+Tue Feb  4 17:18:54 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: fixing bug #104096, put
+	  emphasis on the fact that --docbook should not be used
+	  for XML.
+
 Wed Jan 22 16:43:49 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxslt.c: fixed a couple of return error #104150
