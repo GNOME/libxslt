@@ -65,8 +65,6 @@ static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 
 int xsltMaxDepth = 5000;
 
-xmlDictPtr xmlDictCreateSub(xmlDictPtr sub);
-
 /*
  * Useful macros
  */

@@ -455,7 +455,7 @@ static xsltElemPreCompPtr
 exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 		     xsltTransformFunction function) {
     xmlNodePtr test;
-    xmlChar *select;
+    xmlChar *sel;
     exsltFuncResultPreComp *ret;
 
     /*
@@ -525,10 +525,10 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
     /*
      * Precompute the select attribute
      */
-    select = xmlGetNsProp(inst, (const xmlChar *) "select", NULL);
-    if (select != NULL) {
-	ret->select = xmlXPathCompile (select);
-	xmlFree(select);
+    sel = xmlGetNsProp(inst, (const xmlChar *) "select", NULL);
+    if (sel != NULL) {
+	ret->select = xmlXPathCompile (sel);
+	xmlFree(sel);
     }
     /*
      * Precompute the namespace list

@@ -492,16 +492,18 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	/*
 	 * Avoid duplicating namespace declrations on the tree
 	 */
-	if ((node != NULL) && (node->ns != NULL) &&
-            (xmlStrEqual(node->ns->href, cur->href)) &&
-            (xmlStrEqual(node->ns->prefix, cur->prefix))) {
-	    cur = cur->next;
-	    continue;
-	}
-	tmp = xmlSearchNs(node->doc, node, cur->prefix);
-	if ((tmp != NULL) && (xmlStrEqual(tmp->href, cur->href))) {
-	    cur = cur->next;
-	    continue;
+	if (node != NULL) {
+	    if ((node->ns != NULL) &&
+        	(xmlStrEqual(node->ns->href, cur->href)) &&
+        	(xmlStrEqual(node->ns->prefix, cur->prefix))) {
+		cur = cur->next;
+		continue;
+	    }
+	    tmp = xmlSearchNs(node->doc, node, cur->prefix);
+	    if ((tmp != NULL) && (xmlStrEqual(tmp->href, cur->href))) {
+		cur = cur->next;
+		continue;
+	    }
 	}
 	
 	if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {

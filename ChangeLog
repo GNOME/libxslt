@@ -1,3 +1,12 @@
+Sat Oct 23 09:36:12 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/crypto.c, libexslt/functions.c, libxslt/keys.c,
+	  libxslt/numbers.c, libxslt/pattern.c, libxslt/transform.c,
+	  libxslt/variables.c: changed some variable names for warning
+	  cleanup when -ansi flag is not present.
+	* libxslt/namespaces.c: fixed potential NULL pointer reference
+	  pointed out by Dennis Dams (bug 156187)
+
 Mon Oct 18 17:04:27 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.spec.in doc/Makefile.am: fix for RedHat bug #136072
