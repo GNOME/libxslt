@@ -72,34 +72,34 @@
   </functions>
   <files>
     <file name='exslt'>
-      <ref name='exsltDynRegister'/>
-      <ref name='exsltCommonRegister'/>
-      <ref name='exsltRegisterAll'/>
-      <ref name='exsltSetsRegister'/>
-      <ref name='EXSLT_DATE_NAMESPACE'/>
-      <ref name='exsltFuncRegister'/>
-      <ref name='EXSLT_MATH_NAMESPACE'/>
-      <ref name='SAXON_NAMESPACE'/>
-      <ref name='exsltLibxsltVersion'/>
-      <ref name='exsltDateRegister'/>
-      <ref name='exsltSaxonRegister'/>
-      <ref name='exsltLibexsltVersion'/>
-      <ref name='exsltMathRegister'/>
       <ref name='EXSLT_COMMON_NAMESPACE'/>
-      <ref name='exsltStrRegister'/>
-      <ref name='EXSLT_STRINGS_NAMESPACE'/>
-      <ref name='exsltLibraryVersion'/>
-      <ref name='exsltLibxmlVersion'/>
-      <ref name='EXSLT_SETS_NAMESPACE'/>
+      <ref name='EXSLT_DATE_NAMESPACE'/>
       <ref name='EXSLT_DYNAMIC_NAMESPACE'/>
       <ref name='EXSLT_FUNCTIONS_NAMESPACE'/>
+      <ref name='EXSLT_MATH_NAMESPACE'/>
+      <ref name='EXSLT_SETS_NAMESPACE'/>
+      <ref name='EXSLT_STRINGS_NAMESPACE'/>
+      <ref name='SAXON_NAMESPACE'/>
+      <ref name='exsltCommonRegister'/>
+      <ref name='exsltDateRegister'/>
+      <ref name='exsltDynRegister'/>
+      <ref name='exsltFuncRegister'/>
+      <ref name='exsltLibexsltVersion'/>
+      <ref name='exsltLibraryVersion'/>
+      <ref name='exsltLibxmlVersion'/>
+      <ref name='exsltLibxsltVersion'/>
+      <ref name='exsltMathRegister'/>
+      <ref name='exsltRegisterAll'/>
+      <ref name='exsltSaxonRegister'/>
+      <ref name='exsltSetsRegister'/>
+      <ref name='exsltStrRegister'/>
     </file>
     <file name='exsltexports'>
-      <ref name='LIBEXSLT_PUBLIC'/>
-      <ref name='_REENTRANT'/>
       <ref name='EXSLTCALL'/>
       <ref name='EXSLTPUBFUN'/>
       <ref name='EXSLTPUBVAR'/>
+      <ref name='LIBEXSLT_PUBLIC'/>
+      <ref name='_REENTRANT'/>
     </file>
   </files>
   <index>

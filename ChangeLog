@@ -1,3 +1,9 @@
+Tue Jan  6 23:38:47 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* configure.in: fixed Bug130593.
+	* doc/apibuild.py: fixed a couple of sequence problems on
+	  references within APIxxx.html files, rebuild doc/* (and NEWS)
+
 Sun Jan  4 19:06:59 MST 2004 John Fleck <jfleck@inkstain.net>
 
 	* doc/newapi.xsl: change background color of function

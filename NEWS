@@ -10,6 +10,16 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.1.2: Dec 24 2003:
+   - Documentation fixes (John Fleck, William Brack), EXSLT documentation
+    (William Brack)
+   - Windows compilation fixes for MSVC and Mingw (Igor Zlatkovic)
+   - Bug fixes: exslt:date returning NULL strings (William Brack),
+    namespaces output (William Brack),  key and namespace definition problem,
+    passing options down to the document() parser, xsl:number fixes (William
+    Brack)
+
+
 1.1.1: Dec 10 2003:
    - code cleanup (William Brack)
    - Windows: Makefile improvements (Igor Zlatkovic)

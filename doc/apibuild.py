@@ -1666,11 +1666,11 @@ class docBuilder:
 	    module = self.modulename_file(file)
 	    output.write("    <file name='%s'>\n" % (module))
 	    dict = self.headers[file]
-	    ids = dict.functions.keys() + dict.variables.keys() + \
+	    ids = uniq(dict.functions.keys() + dict.variables.keys() + \
 		  dict.macros.keys() + dict.typedefs.keys() + \
-		  dict.structs.keys() + dict.enums.keys()
+		  dict.structs.keys() + dict.enums.keys())
 	    ids.sort()
-	    for id in uniq(ids):
+	    for id in ids:
 		output.write("      <ref name='%s'/>\n" % (id))
 	    output.write("    </file>\n")
         pass
@@ -1699,8 +1699,11 @@ class docBuilder:
 	    output.write("    <type name='%s'>\n" % (type))
 	    ids = funcs[type]
 	    ids.sort()
+	    pid = ''	# not sure why we have dups, but get rid of them!
 	    for id in ids:
-	        output.write("      <ref name='%s'/>\n" % (id))
+	        if id != pid:
+	            output.write("      <ref name='%s'/>\n" % (id))
+		    pid = id
 	    output.write("    </type>\n")
 
     def serialize_xrefs_constructors(self, output):
@@ -1725,6 +1728,7 @@ class docBuilder:
 	        continue
 	    output.write("    <type name='%s'>\n" % (type))
 	    ids = funcs[type]
+	    ids.sort()
 	    for id in ids:
 	        output.write("      <ref name='%s'/>\n" % (id))
 	    output.write("    </type>\n")
@@ -1783,7 +1787,7 @@ class docBuilder:
 	    tokens = index[id];
 	    tokens.sort()
 	    tok = None
-	    for token in index[id]:
+	    for token in tokens:
 		if tok == token:
 		    continue
 		tok = token
