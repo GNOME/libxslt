@@ -289,7 +289,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltKeyDefPtr keyd) {
     int i;
     xmlChar *pattern = NULL;
     xmlNodeSetPtr nodelist = NULL, keylist;
-    xmlXPathObjectPtr res, tmp;
+    xmlXPathObjectPtr res = NULL, tmp;
     xmlChar *str;
     xmlXPathParserContextPtr xpathParserCtxt;
     xsltKeyTablePtr table;

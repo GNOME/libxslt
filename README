@@ -3,7 +3,7 @@
 
 		  http://xmlsoft.org/
 
- Requires libxml2 >= 2.2.12 with XPath support. It won't even compile
+ Requires libxml2 >= 2.3.0 with XPath support. It won't even compile
 otherwise.
  Check the FEATURES file for informations about completeness
  Check the Changelog too to keep track of progresses.

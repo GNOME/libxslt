@@ -909,11 +909,11 @@ skip_children:
 
 void
 xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
-    xmlChar *prop;
-    xmlChar *use;
-    xmlChar *match;
-    xmlChar *name;
-    xmlChar *nameURI;
+    xmlChar *prop = NULL;
+    xmlChar *use = NULL;
+    xmlChar *match = NULL;
+    xmlChar *name = NULL;
+    xmlChar *nameURI = NULL;
 
     if (key == NULL)
 	return;

@@ -10,7 +10,7 @@ Copyright: LGPL
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/XSLT/libxslt-%{ver}.tar.gz
 BuildRoot: /var/tmp/libxslt-%{PACKAGE_VERSION}-root
-Requires: libxml2 >= 2.2.13
+Requires: libxml2 >= 2.3.0
 
 URL: http://xmlsoft.org/
 Docdir: %{prefix}/doc
@@ -18,19 +18,19 @@ Docdir: %{prefix}/doc
 %description
 This C library allows to transform XML files into other XML files
 (or HTML, text, ...) using the standard XSLT stylesheet transformation
-mechanism. To use it you need to have a version of libxml2 >= 2.2.12
+mechanism. To use it you need to have a version of libxml2 >= 2.3.0
 installed.
 
 %package devel
 Summary: Libraries, includes, etc. to develop XML and HTML applications
 Group: Development/Libraries
 Requires: libxslt = %{version}
-Requires: libxml2-devel >= 2.2.13
+Requires: libxml2-devel >= 2.3.0
 
 %description devel
 This C library allows to transform XML files into other XML files
 (or HTML, text, ...) using the standard XSLT stylesheet transformation
-mechanism. To use it you need to have a version of libxml2 >= 2.2.12
+mechanism. To use it you need to have a version of libxml2 >= 2.3.0
 installed.
 
 %changelog
