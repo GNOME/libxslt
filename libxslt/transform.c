@@ -2566,7 +2566,11 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     /*
      * Create the new element
      */
-    copy = xmlNewDocNodeEatName(ctxt->output, NULL, (xmlChar *)name, NULL);
+    if (ctxt->output->dict == ctxt->dict) {
+	copy = xmlNewDocNodeEatName(ctxt->output, NULL, (xmlChar *)name, NULL);
+    } else {
+	copy = xmlNewDocNode(ctxt->output, NULL, (xmlChar *)name, NULL);
+    }
     if (copy == NULL) {
 	xsltTransformError(ctxt, NULL, inst,
 	    "xsl:element : creation of %s failed\n", name);
