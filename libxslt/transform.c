@@ -50,7 +50,7 @@
 #include "preproc.h"
 
 #ifdef WITH_XSLT_DEBUG
-#define WITH_XSLT_DEBUG_PROCESS
+#define WITH_XSLT_DEBUG_EXTRA
 #endif
 
 int xsltMaxDepth = 500;
@@ -1310,8 +1310,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     const xmlChar *doctypeSystem;
     const xmlChar *version;
 
-    if ((ctxt == NULL) || (node == NULL) || (inst == NULL)
-        || (comp == NULL))
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
         return;
 
     if (comp->filename == NULL) {
@@ -1324,6 +1323,10 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
             URL = xsltEvalAttrValueTemplate(ctxt, inst,
                                                  (const xmlChar *) "file",
                                                  XSLT_SAXON_NAMESPACE);
+	    if (URL == NULL)
+		URL = xsltEvalAttrValueTemplate(ctxt, inst,
+                                                 (const xmlChar *) "href",
+                                                 XSLT_SAXON_NAMESPACE);
         } else if (xmlStrEqual(inst->name, (const xmlChar *) "write")) {
 #ifdef WITH_XSLT_DEBUG_EXTRA
             xsltGenericDebug(xsltGenericDebugContext,
@@ -1333,27 +1336,20 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                                  (const xmlChar *)
                                                  "select",
                                                  XSLT_XALAN_NAMESPACE);
+	    if (URL == NULL)
+		URL = xsltEvalAttrValueTemplate(ctxt, inst,
+						     (const xmlChar *)
+						     "file",
+						     XSLT_XALAN_NAMESPACE);
+	    if (URL == NULL)
+		URL = xsltEvalAttrValueTemplate(ctxt, inst,
+						     (const xmlChar *)
+						     "href",
+						     XSLT_XALAN_NAMESPACE);
         } else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
             URL = xsltEvalAttrValueTemplate(ctxt, inst,
                                                  (const xmlChar *) "href",
-                                                 XSLT_XT_NAMESPACE);
-            if (URL == NULL) {
-#ifdef WITH_XSLT_DEBUG_EXTRA
-                xsltGenericDebug(xsltGenericDebugContext,
-                                 "Found xslt11:document construct\n");
-#endif
-                URL = xsltEvalAttrValueTemplate(ctxt, inst,
-                                                     (const xmlChar *)
-                                                     "href",
-                                                     XSLT_NAMESPACE);
-                comp->ver11 = 1;
-            } else {
-#ifdef WITH_XSLT_DEBUG_EXTRA
-                xsltGenericDebug(xsltGenericDebugContext,
-                                 "Found xt:document extension\n");
-#endif
-                comp->ver11 = 0;
-            }
+                                                 NULL);
         }
 
     } else {
@@ -1391,157 +1387,153 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
      * Version described in 1.1 draft allows full parametrization
      * of the output.
      */
-    if (comp->ver11) {
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *) "version",
-                                         XSLT_NAMESPACE);
-        if (prop != NULL) {
-            if (style->version != NULL)
-                xmlFree(style->version);
-            style->version = prop;
-        }
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *) "encoding",
-                                         XSLT_NAMESPACE);
-        if (prop != NULL) {
-            if (style->encoding != NULL)
-                xmlFree(style->encoding);
-            style->encoding = prop;
-        }
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *) "method",
-                                         XSLT_NAMESPACE);
-        if (prop != NULL) {
-	    const xmlChar *URI;
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *) "version",
+				     NULL);
+    if (prop != NULL) {
+	if (style->version != NULL)
+	    xmlFree(style->version);
+	style->version = prop;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *) "encoding",
+				     NULL);
+    if (prop != NULL) {
+	if (style->encoding != NULL)
+	    xmlFree(style->encoding);
+	style->encoding = prop;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *) "method",
+				     NULL);
+    if (prop != NULL) {
+	const xmlChar *URI;
 
-	    if (style->method != NULL)
-		xmlFree(style->method);
-	    style->method = NULL;
-	    if (style->methodURI != NULL)
-		xmlFree(style->methodURI);
-	    style->methodURI = NULL;
+	if (style->method != NULL)
+	    xmlFree(style->method);
+	style->method = NULL;
+	if (style->methodURI != NULL)
+	    xmlFree(style->methodURI);
+	style->methodURI = NULL;
 
-	    URI = xsltGetQNameURI(inst, &prop);
-	    if (prop == NULL) {
-		style->errors++;
-	    } else if (URI == NULL) {
-		if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
-		    (xmlStrEqual(prop, (const xmlChar *) "html")) ||
-		    (xmlStrEqual(prop, (const xmlChar *) "text"))) {
-		    style->method = prop;
-		} else {
-		    xsltGenericError(xsltGenericErrorContext,
-				     "invalid value for method: %s\n", prop);
-		    style->warnings++;
-		}
-	    } else {
+	URI = xsltGetQNameURI(inst, &prop);
+	if (prop == NULL) {
+	    style->errors++;
+	} else if (URI == NULL) {
+	    if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
+		(xmlStrEqual(prop, (const xmlChar *) "html")) ||
+		(xmlStrEqual(prop, (const xmlChar *) "text"))) {
 		style->method = prop;
-		style->methodURI = xmlStrdup(URI);
+	    } else {
+		xsltGenericError(xsltGenericErrorContext,
+				 "invalid value for method: %s\n", prop);
+		style->warnings++;
 	    }
-        }
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *)
-                                         "doctype-system", XSLT_NAMESPACE);
-        if (prop != NULL) {
-            if (style->doctypeSystem != NULL)
-                xmlFree(style->doctypeSystem);
-            style->doctypeSystem = prop;
-        }
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *)
-                                         "doctype-public", XSLT_NAMESPACE);
-        if (prop != NULL) {
-            if (style->doctypePublic != NULL)
-                xmlFree(style->doctypePublic);
-            style->doctypePublic = prop;
-        }
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *) "standalone",
-                                         XSLT_NAMESPACE);
-        if (prop != NULL) {
-            if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
-                style->standalone = 1;
-            } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
-                style->standalone = 0;
-            } else {
-                xsltGenericError(xsltGenericErrorContext,
-                                 "invalid value for standalone: %s\n",
-                                 prop);
-                style->warnings++;
-            }
-            xmlFree(prop);
-        }
+	} else {
+	    style->method = prop;
+	    style->methodURI = xmlStrdup(URI);
+	}
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *)
+				     "doctype-system", NULL);
+    if (prop != NULL) {
+	if (style->doctypeSystem != NULL)
+	    xmlFree(style->doctypeSystem);
+	style->doctypeSystem = prop;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *)
+				     "doctype-public", NULL);
+    if (prop != NULL) {
+	if (style->doctypePublic != NULL)
+	    xmlFree(style->doctypePublic);
+	style->doctypePublic = prop;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *) "standalone",
+				     NULL);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
+	    style->standalone = 1;
+	} else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
+	    style->standalone = 0;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "invalid value for standalone: %s\n",
+			     prop);
+	    style->warnings++;
+	}
+	xmlFree(prop);
+    }
 
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *) "indent",
-                                         XSLT_NAMESPACE);
-        if (prop != NULL) {
-            if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
-                style->indent = 1;
-            } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
-                style->indent = 0;
-            } else {
-                xsltGenericError(xsltGenericErrorContext,
-                                 "invalid value for indent: %s\n", prop);
-                style->warnings++;
-            }
-            xmlFree(prop);
-        }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *) "indent",
+				     NULL);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
+	    style->indent = 1;
+	} else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
+	    style->indent = 0;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "invalid value for indent: %s\n", prop);
+	    style->warnings++;
+	}
+	xmlFree(prop);
+    }
 
-        prop = xsltEvalAttrValueTemplate(ctxt, inst,
-                                         (const xmlChar *)
-                                         "omit-xml-declaration",
-                                         XSLT_NAMESPACE);
-        if (prop != NULL) {
-            if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
-                style->omitXmlDeclaration = 1;
-            } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
-                style->omitXmlDeclaration = 0;
-            } else {
-                xsltGenericError(xsltGenericErrorContext,
-                                 "invalid value for omit-xml-declaration: %s\n",
-                                 prop);
-                style->warnings++;
-            }
-            xmlFree(prop);
-        }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst,
+				     (const xmlChar *)
+				     "omit-xml-declaration",
+				     NULL);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
+	    style->omitXmlDeclaration = 1;
+	} else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
+	    style->omitXmlDeclaration = 0;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "invalid value for omit-xml-declaration: %s\n",
+			     prop);
+	    style->warnings++;
+	}
+	xmlFree(prop);
+    }
 
-        elements = xsltEvalAttrValueTemplate(ctxt, inst,
-                                             (const xmlChar *)
-                                             "cdata-section-elements",
-                                             XSLT_NAMESPACE);
-        if (elements != NULL) {
-            if (style->stripSpaces == NULL)
-                style->stripSpaces = xmlHashCreate(10);
-            if (style->stripSpaces == NULL)
-                return;
+    elements = xsltEvalAttrValueTemplate(ctxt, inst,
+					 (const xmlChar *)
+					 "cdata-section-elements",
+					 NULL);
+    if (elements != NULL) {
+	if (style->stripSpaces == NULL)
+	    style->stripSpaces = xmlHashCreate(10);
+	if (style->stripSpaces == NULL)
+	    return;
 
-            element = elements;
-            while (*element != 0) {
-                while (IS_BLANK(*element))
-                    element++;
-                if (*element == 0)
-                    break;
-                end = element;
-                while ((*end != 0) && (!IS_BLANK(*end)))
-                    end++;
-                element = xmlStrndup(element, end - element);
-                if (element) {
+	element = elements;
+	while (*element != 0) {
+	    while (IS_BLANK(*element))
+		element++;
+	    if (*element == 0)
+		break;
+	    end = element;
+	    while ((*end != 0) && (!IS_BLANK(*end)))
+		end++;
+	    element = xmlStrndup(element, end - element);
+	    if (element) {
 #ifdef WITH_XSLT_DEBUG_PARSING
-                    xsltGenericDebug(xsltGenericDebugContext,
-                                     "add cdata section output element %s\n",
-                                     element);
+		xsltGenericDebug(xsltGenericDebugContext,
+				 "add cdata section output element %s\n",
+				 element);
 #endif
-                    xmlHashAddEntry(style->stripSpaces, element,
-                                    (xmlChar *) "cdata");
-                    xmlFree(element);
-                }
-                element = end;
-            }
-            xmlFree(elements);
-        }
-    } else {
-        xsltParseStylesheetOutput(style, inst);
+		xmlHashAddEntry(style->stripSpaces, element,
+				(xmlChar *) "cdata");
+		xmlFree(element);
+	    }
+	    element = end;
+	}
+	xmlFree(elements);
     }
 
     /*
@@ -1612,7 +1604,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef WITH_XSLT_DEBUG_EXTRA
     } else {
         xsltGenericDebug(xsltGenericDebugContext,
-                         "Wrote %d bytes to %s\n", ret,, filename);
+                         "Wrote %d bytes to %s\n", ret, filename);
 #endif
     }
 

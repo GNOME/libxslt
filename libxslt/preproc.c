@@ -244,9 +244,6 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	}
     }
     if (!comp->has_filename) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsltDocumentComp: could not find the href\n");
-	style->errors++;
 	goto error;
     }
 

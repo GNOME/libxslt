@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>Writing Application and Applet Manuals</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.40">
 <link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation">
@@ -15,9 +15,9 @@
 <tr><th colspan="3" align="center">Writing Application and Applet Manuals</th></tr>
 <tr>
 <td width="20%" align="left">
-<a href="indexs05.html">Prev</a> </td>
-<th width="60%" align="center"> </th>
-<td width="20%" align="right"> <a href="indexs07.html">Next</a>
+<a href="indexs05.html">Prev</a>�</td>
+<th width="60%" align="center">�</th>
+<td width="20%" align="right">�<a href="indexs07.html">Next</a>
 </td>
 </tr>
 </table>
@@ -37,7 +37,7 @@
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2904036"></a>Documentation Availability</h3>
+<a name="id2908956"></a>Documentation Availability</h3>
 <p>
         Applications and applets should not rely on documentation
         which is only available on the internet.  All manuals and
@@ -47,14 +47,14 @@
       </p>
 </div>
 <p> Application manuals should be based on the template in
-    <a href="apa.html#template1" title="Template 1: Application Manual">the section called “Template 1: Application Manual”</a>.  Applet manuals should be based on
-    the templates in <a href="apas17.html" title="Template 2: Applet Manual For GNOME 1.x">the section called “Template 2: Applet Manual For GNOME 1.x”</a> for GNOME
-    versions 1.x and the templates in <a href="apas18.html" title="Template 2: Applet Manual For GNOME 2.x">the section called “Template 2: Applet Manual For GNOME 2.x”</a>
+    <a href="apa.html#template1" title="Template 1: Application Manual">the section called &#x201C;Template 1: Application Manual&#x201D;</a>.  Applet manuals should be based on
+    the templates in <a href="apas17.html" title="Template 2: Applet Manual For GNOME 1.x">the section called &#x201C;Template 2: Applet Manual For GNOME 1.x&#x201D;</a> for GNOME
+    versions 1.x and the templates in <a href="apas18.html" title="Template 2: Applet Manual For GNOME 2.x">the section called &#x201C;Template 2: Applet Manual For GNOME 2.x&#x201D;</a>
     for GNOME versions 2.x.
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2904076"></a>Manuals For Large Applications</h3>
+<a name="id2908997"></a>Manuals For Large Applications</h3>
 <p>
         Manuals for very large applications, such as GNOME Workshop
         components should be a <tt>&lt;book&gt;</tt> (and thus
@@ -66,7 +66,7 @@
 </div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2904192"></a>Applet Manuals in GNOME 2.0</h3>
+<a name="id2909112"></a>Applet Manuals in GNOME 2.0</h3>
 <p>
         Note that applet manuals in GNOME 2.0 are treated in a special
         way.  The manuals for all applets are merged into a single
@@ -82,7 +82,7 @@
       Application manuals should be made available by having a
       &quot;Manual&quot; entry in the Help pull-down menu
       at the top of the 
-      application, as described in <a href="indexs07.html" title="Listing Documents in the Help Menu">the section called “Listing Documents in the Help Menu”</a>.
+      application, as described in <a href="indexs07.html" title="Listing Documents in the Help Menu">the section called &#x201C;Listing Documents in the Help Menu&#x201D;</a>.
       Applets should make their manuals available by
       right-clicking on the applet. 
     </p>
@@ -92,15 +92,15 @@
 <table width="100%" summary="Navigation footer">
 <tr>
 <td width="40%" align="left">
-<a href="indexs05.html">Prev</a> </td>
+<a href="indexs05.html">Prev</a>�</td>
 <td width="20%" align="center"><a href="index.html">Home</a></td>
-<td width="40%" align="right"> <a href="indexs07.html">Next</a>
+<td width="40%" align="right">�<a href="indexs07.html">Next</a>
 </td>
 </tr>
 <tr>
-<td width="40%" align="left">GDP Documentation Conventions  </td>
+<td width="40%" align="left">GDP Documentation Conventions �</td>
 <td width="20%" align="center"><a href="index.html">Up</a></td>
-<td width="40%" align="right"> Listing Documents in the Help Menu</td>
+<td width="40%" align="right">�Listing Documents in the Help Menu</td>
 </tr>
 </table>
 </div>

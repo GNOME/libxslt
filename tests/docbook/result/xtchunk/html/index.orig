@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>The GNOME Handbook of Writing Software Documentation</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.40">
 <link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation">
@@ -12,9 +12,9 @@
 <table width="100%" summary="Navigation header">
 <tr><th colspan="3" align="center">The GNOME Handbook of Writing Software Documentation</th></tr>
 <tr>
-<td width="20%" align="left">Â </td>
-<th width="60%" align="center">Â </th>
-<td width="20%" align="right">Â <a href="indexs02.html">Next</a>
+<td width="20%" align="left"> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a href="indexs02.html">Next</a>
 </td>
 </tr>
 </table>
@@ -29,24 +29,24 @@
 <div class="affiliation">
 <span class="orgname">Red Hat, Inc.<br></span><div class="address">
 <br>
-Â Â Â Â Â Â Â Â Â Â Â Â <tt>&lt;<a href="mailto:dcm@redhat.com">dcm@redhat.com</a>&gt;</tt><br>
-Â Â Â Â Â Â Â Â Â Â </div>
+            <tt>&lt;<a href="mailto:dcm@redhat.com">dcm@redhat.com</a>&gt;</tt><br>
+          </div>
 </div>
 <h3 class="author">Daniel Mueth</h3>
 <div class="affiliation"><div class="address">
 <br>
-Â Â Â Â Â Â Â Â Â Â Â Â <tt>&lt;<a href="mailto:d-mueth@uchicago.edu">d-mueth@uchicago.edu</a>&gt;</tt><br>
-Â Â Â Â Â Â Â Â Â Â </div></div>
+            <tt>&lt;<a href="mailto:d-mueth@uchicago.edu">d-mueth@uchicago.edu</a>&gt;</tt><br>
+          </div></div>
 <h3 class="author">Alexander Kirillov</h3>
 <div class="affiliation"><div class="address">
 <br>
-Â Â Â Â Â Â Â Â Â Â Â Â <tt>&lt;<a href="mailto:kirillov@math.sunysb.edu">kirillov@math.sunysb.edu</a>&gt;</tt><br>
-Â Â Â Â Â Â Â Â Â Â </div></div>
+            <tt>&lt;<a href="mailto:kirillov@math.sunysb.edu">kirillov@math.sunysb.edu</a>&gt;</tt><br>
+          </div></div>
 </div>
 <div><p class="releaseinfo">
       This is a pre-release!
     </p></div>
-<div><p class="copyright">Copyright Â© 2000 Red Hat, Inc., Daniel Mueth, and Alexander Kirillov</p></div>
+<div><p class="copyright">Copyright © 2000 Red Hat, Inc., Daniel Mueth, and Alexander Kirillov</p></div>
 <div><div class="legalnotice">
 <p>
       Permission is granted to copy, distribute and/or modify this
@@ -255,7 +255,7 @@
          interested in joining the GDP team, you should join the
          <a href="http://mail.gnome.org/mailman/listinfo/gnome-doc-list/" target="_top">
          <i>gnome-doc-list mailing list</i> </a>.
-         Read <a href="indexs02.html" title="Getting Started Writing GNOME Documentation">the section called â€œGetting Started Writing GNOME Documentationâ€</a>, for help selecting a
+         Read <a href="indexs02.html" title="Getting Started Writing GNOME Documentation">the section called &#x201C;Getting Started Writing GNOME Documentation&#x201D;</a>, for help selecting a
          project to work on.  Feel free to introduce yourself on the
          gnome-doc-list mailing list and indicate which project you
          intend to work on, or else ask for suggestions of important
@@ -293,8 +293,8 @@
 <a name="notation"></a>Notation and Conventions</h3></div></div>
 <p>
         This Handbook uses the following notation:
-        <div class="informaltable" id="id2781298">
-<a name="id2781298"></a><table border="0">
+        <div class="informaltable" id="id2782069">
+<a name="id2782069"></a><table border="0">
 <colgroup>
 <col>
 <col>
@@ -357,15 +357,15 @@
 <hr>
 <table width="100%" summary="Navigation footer">
 <tr>
-<td width="40%" align="left">Â </td>
-<td width="20%" align="center">Â </td>
-<td width="40%" align="right">Â <a href="indexs02.html">Next</a>
+<td width="40%" align="left"> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> <a href="indexs02.html">Next</a>
 </td>
 </tr>
 <tr>
-<td width="40%" align="left">Â </td>
-<td width="20%" align="center">Â </td>
-<td width="40%" align="right">Â Getting Started Writing GNOME Documentation</td>
+<td width="40%" align="left"> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> Getting Started Writing GNOME Documentation</td>
 </tr>
 </table>
 </div>

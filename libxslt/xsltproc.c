@@ -68,6 +68,11 @@ static int profile = 0;
 static int nonet;
 static xmlExternalEntityLoader defaultLoader = NULL;
 
+static struct timeval begin, end;
+static const char *params[16 + 1];
+static int nbparams = 0;
+static const char *output = NULL;
+
 static xmlParserInputPtr
 xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
                                xmlParserCtxtPtr ctxt) {
@@ -85,6 +90,145 @@ xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
 	return(defaultLoader(URL, ID, ctxt));
     }
     return(NULL);
+}
+
+static void
+xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
+    xmlDocPtr res;
+
+#ifdef LIBXML_XINCLUDE_ENABLED
+    if (xinclude) {
+	if (timing)
+	    gettimeofday(&begin, NULL);
+	xmlXIncludeProcess(doc);
+	if (timing) {
+	    long msec;
+
+	    gettimeofday(&end, NULL);
+	    msec = end.tv_sec - begin.tv_sec;
+	    msec *= 1000;
+	    msec += (end.tv_usec - begin.tv_usec) / 1000;
+	    fprintf(stderr, "XInclude processing %s took %ld ms\n",
+		    filename, msec);
+	}
+    }
+#endif
+    if (timing)
+	gettimeofday(&begin, NULL);
+    if (output == NULL) {
+	if (repeat) {
+	    int j;
+
+	    for (j = 1; j < repeat; j++) {
+		res = xsltApplyStylesheet(cur, doc, params);
+		xmlFreeDoc(res);
+		xmlFreeDoc(doc);
+#ifdef LIBXML_HTML_ENABLED
+		if (html)
+		    doc = htmlParseFile(filename, NULL);
+		else
+#endif
+#ifdef LIBXML_DOCB_ENABLED
+		if (docbook)
+		    doc = docbParseFile(filename, NULL);
+		else
+#endif
+		    doc = xmlParseFile(filename);
+	    }
+	}
+	if (profile) {
+	    res = xsltProfileStylesheet(cur, doc, params, stderr);
+	} else {
+	    res = xsltApplyStylesheet(cur, doc, params);
+	}
+	if (timing) {
+	    long msec;
+
+	    gettimeofday(&end, NULL);
+	    msec = end.tv_sec - begin.tv_sec;
+	    msec *= 1000;
+	    msec += (end.tv_usec - begin.tv_usec) / 1000;
+	    if (repeat)
+		fprintf(stderr,
+			"Applying stylesheet %d times took %ld ms\n",
+			repeat, msec);
+	    else
+		fprintf(stderr,
+			"Applying stylesheet took %ld ms\n", msec);
+	}
+	xmlFreeDoc(doc);
+	if (res == NULL) {
+	    fprintf(stderr, "no result for %s\n", filename);
+	    return;
+	}
+	if (noout) {
+	    xmlFreeDoc(res);
+	    return;
+	}
+#ifdef LIBXML_DEBUG_ENABLED
+	if (debug)
+	    xmlDebugDumpDocument(stdout, res);
+	else {
+#endif
+	    if (cur->methodURI == NULL) {
+		if (timing)
+		    gettimeofday(&begin, NULL);
+		xsltSaveResultToFile(stdout, res, cur);
+		if (timing) {
+		    long msec;
+
+		    gettimeofday(&end, NULL);
+		    msec = end.tv_sec - begin.tv_sec;
+		    msec *= 1000;
+		    msec += (end.tv_usec - begin.tv_usec) / 1000;
+		    fprintf(stderr, "Saving result took %ld ms\n",
+			    msec);
+		}
+	    } else {
+		if (xmlStrEqual
+		    (cur->method, (const xmlChar *) "xhtml")) {
+		    fprintf(stderr, "non standard output xhtml\n");
+		    if (timing)
+			gettimeofday(&begin, NULL);
+		    xsltSaveResultToFile(stdout, res, cur);
+		    if (timing) {
+			long msec;
+
+			gettimeofday(&end, NULL);
+			msec = end.tv_sec - begin.tv_sec;
+			msec *= 1000;
+			msec +=
+			    (end.tv_usec - begin.tv_usec) / 1000;
+			fprintf(stderr,
+				"Saving result took %ld ms\n",
+				msec);
+		    }
+		} else {
+		    fprintf(stderr,
+			    "Unsupported non standard output %s\n",
+			    cur->method);
+		}
+	    }
+#ifdef LIBXML_DEBUG_ENABLED
+	}
+#endif
+
+	xmlFreeDoc(res);
+    } else {
+	xsltRunStylesheet(cur, doc, params, output, NULL, NULL);
+	if (timing) {
+	    long msec;
+
+	    gettimeofday(&end, NULL);
+	    msec = end.tv_sec - begin.tv_sec;
+	    msec *= 1000;
+	    msec += (end.tv_usec - begin.tv_usec) / 1000;
+	    fprintf(stderr,
+		"Running stylesheet and saving result took %ld ms\n",
+		    msec);
+	}
+	xmlFreeDoc(doc);
+    }
 }
 
 static void usage(const char *name) {
@@ -122,18 +266,22 @@ main(int argc, char **argv)
 {
     int i;
     xsltStylesheetPtr cur = NULL;
-    xmlDocPtr doc, res;
-    struct timeval begin, end;
-    const char *params[16 + 1];
-    int nbparams = 0;
-    const char *output = NULL;
+    xmlDocPtr doc, style;
 
     if (argc <= 1) {
         usage(argv[0]);
         return (1);
     }
+
     xmlInitMemory();
-    LIBXML_TEST_VERSION defaultLoader = xmlGetExternalEntityLoader();
+
+    LIBXML_TEST_VERSION
+
+    defaultLoader = xmlGetExternalEntityLoader();
+    if (novalid == 0)           /* TODO XML_DETECT_IDS | XML_COMPLETE_ATTRS */
+        xmlLoadExtDtdDefaultValue = 6;
+    else
+        xmlLoadExtDtdDefaultValue = 0;
     for (i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-"))
             break;
@@ -251,10 +399,6 @@ main(int argc, char **argv)
      */
     xmlSubstituteEntitiesDefault(1);
 
-    if (novalid == 0)           /* TODO XML_DETECT_IDS | XML_COMPLETE_ATTRS */
-        xmlLoadExtDtdDefaultValue = 6;
-    else
-        xmlLoadExtDtdDefaultValue = 0;
     for (i = 1; i < argc; i++) {
         if ((!strcmp(argv[i], "-maxdepth")) ||
             (!strcmp(argv[i], "--maxdepth"))) {
@@ -273,7 +417,7 @@ main(int argc, char **argv)
         if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
             if (timing)
                 gettimeofday(&begin, NULL);
-            cur = xsltParseStylesheetFile((const xmlChar *) argv[i]);
+	    style = xmlParseFile((const char *) argv[i]);
             if (timing) {
                 long msec;
 
@@ -284,13 +428,26 @@ main(int argc, char **argv)
                 fprintf(stderr, "Parsing stylesheet %s took %ld ms\n",
                         argv[i], msec);
             }
-            if (cur != NULL) {
-                if (cur->indent == 1)
-                    xmlIndentTreeOutput = 1;
-                else
-                    xmlIndentTreeOutput = 0;
-                i++;
-            }
+	    if (style == NULL) {
+		fprintf(stderr,  "cannot parse %s\n", argv[i]);
+		cur = NULL;
+	    } else {
+		cur = xsltLoadStylesheetPI(style);
+		if (cur != NULL) {
+		    /* it is an embedded stylesheet */
+		    xsltProcess(style, cur, argv[i]);
+		    xsltFreeStylesheet(cur);
+		    exit(0);
+		}
+		cur = xsltParseStylesheetDoc(style);
+		if (cur != NULL) {
+		    if (cur->indent == 1)
+			xmlIndentTreeOutput = 1;
+		    else
+			xmlIndentTreeOutput = 0;
+		    i++;
+		}
+	    }
             break;
 
         }
@@ -304,6 +461,7 @@ main(int argc, char **argv)
 
     if ((cur != NULL) && (cur->errors == 0)) {
         for (; i < argc; i++) {
+	    doc = NULL;
             if (timing)
                 gettimeofday(&begin, NULL);
 #ifdef LIBXML_HTML_ENABLED
@@ -331,139 +489,7 @@ main(int argc, char **argv)
                 fprintf(stderr, "Parsing document %s took %ld ms\n",
                         argv[i], msec);
             }
-#ifdef LIBXML_XINCLUDE_ENABLED
-            if (xinclude) {
-                if (timing)
-                    gettimeofday(&begin, NULL);
-                xmlXIncludeProcess(doc);
-                if (timing) {
-                    long msec;
-
-                    gettimeofday(&end, NULL);
-                    msec = end.tv_sec - begin.tv_sec;
-                    msec *= 1000;
-                    msec += (end.tv_usec - begin.tv_usec) / 1000;
-                    fprintf(stderr, "XInclude processing %s took %ld ms\n",
-                            argv[i], msec);
-                }
-            }
-#endif
-            if (timing)
-                gettimeofday(&begin, NULL);
-            if (output == NULL) {
-                if (repeat) {
-                    int j;
-
-                    for (j = 1; j < repeat; j++) {
-                        res = xsltApplyStylesheet(cur, doc, params);
-                        xmlFreeDoc(res);
-                        xmlFreeDoc(doc);
-#ifdef LIBXML_HTML_ENABLED
-                        if (html)
-                            doc = htmlParseFile(argv[i], NULL);
-                        else
-#endif
-#ifdef LIBXML_DOCB_ENABLED
-                        if (docbook)
-                            doc = docbParseFile(argv[i], NULL);
-                        else
-#endif
-                            doc = xmlParseFile(argv[i]);
-                    }
-                }
-		if (profile) {
-		    res = xsltProfileStylesheet(cur, doc, params, stderr);
-		} else {
-		    res = xsltApplyStylesheet(cur, doc, params);
-		}
-                if (timing) {
-                    long msec;
-
-                    gettimeofday(&end, NULL);
-                    msec = end.tv_sec - begin.tv_sec;
-                    msec *= 1000;
-                    msec += (end.tv_usec - begin.tv_usec) / 1000;
-                    if (repeat)
-                        fprintf(stderr,
-                                "Applying stylesheet %d times took %ld ms\n",
-                                repeat, msec);
-                    else
-                        fprintf(stderr,
-                                "Applying stylesheet took %ld ms\n", msec);
-                }
-                xmlFreeDoc(doc);
-                if (res == NULL) {
-                    fprintf(stderr, "no result for %s\n", argv[i]);
-                    continue;
-                }
-                if (noout) {
-                    xmlFreeDoc(res);
-                    continue;
-                }
-#ifdef LIBXML_DEBUG_ENABLED
-                if (debug)
-                    xmlDebugDumpDocument(stdout, res);
-                else {
-#endif
-                    if (cur->methodURI == NULL) {
-                        if (timing)
-                            gettimeofday(&begin, NULL);
-                        xsltSaveResultToFile(stdout, res, cur);
-                        if (timing) {
-                            long msec;
-
-                            gettimeofday(&end, NULL);
-                            msec = end.tv_sec - begin.tv_sec;
-                            msec *= 1000;
-                            msec += (end.tv_usec - begin.tv_usec) / 1000;
-                            fprintf(stderr, "Saving result took %ld ms\n",
-                                    msec);
-                        }
-                    } else {
-                        if (xmlStrEqual
-                            (cur->method, (const xmlChar *) "xhtml")) {
-                            fprintf(stderr, "non standard output xhtml\n");
-                            if (timing)
-                                gettimeofday(&begin, NULL);
-                            xsltSaveResultToFile(stdout, res, cur);
-                            if (timing) {
-                                long msec;
-
-                                gettimeofday(&end, NULL);
-                                msec = end.tv_sec - begin.tv_sec;
-                                msec *= 1000;
-                                msec +=
-                                    (end.tv_usec - begin.tv_usec) / 1000;
-                                fprintf(stderr,
-                                        "Saving result took %ld ms\n",
-                                        msec);
-                            }
-                        } else {
-                            fprintf(stderr,
-                                    "Unsupported non standard output %s\n",
-                                    cur->method);
-                        }
-                    }
-#ifdef LIBXML_DEBUG_ENABLED
-                }
-#endif
-
-                xmlFreeDoc(res);
-            } else {
-                xsltRunStylesheet(cur, doc, params, output, NULL, NULL);
-                if (timing) {
-                    long msec;
-
-                    gettimeofday(&end, NULL);
-                    msec = end.tv_sec - begin.tv_sec;
-                    msec *= 1000;
-                    msec += (end.tv_usec - begin.tv_usec) / 1000;
-                    fprintf(stderr,
-			"Running stylesheet and saving result took %ld ms\n",
-                            msec);
-                }
-                xmlFreeDoc(doc);
-            }
+	    xsltProcess(doc, cur, argv[i]);
         }
         xsltFreeStylesheet(cur);
     }

@@ -21,7 +21,7 @@ YES				version = number
 
 YES			    Literal Result Element as Stylesheet
 
-NO			    Embedding Stylesheets
+YES			    Embedding Stylesheets
 
 NO                          mediaType
 

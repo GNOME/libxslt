@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>Referring to Other GNOME Documentation (coming in
     GNOME-2.0)</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.40">
@@ -17,9 +17,9 @@
     GNOME-2.0)</th></tr>
 <tr>
 <td width="20%" align="left">
-<a href="indexs10.html">Prev</a>Â </td>
-<th width="60%" align="center">Â </th>
-<td width="20%" align="right">Â <a href="indexs12.html">Next</a>
+<a href="indexs10.html">Prev</a> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a href="indexs12.html">Next</a>
 </td>
 </tr>
 </table>
@@ -40,15 +40,15 @@
 <table width="100%" summary="Navigation footer">
 <tr>
 <td width="40%" align="left">
-<a href="indexs10.html">Prev</a>Â </td>
+<a href="indexs10.html">Prev</a> </td>
 <td width="20%" align="center"><a href="index.html">Home</a></td>
-<td width="40%" align="right">Â <a href="indexs12.html">Next</a>
+<td width="40%" align="right"> <a href="indexs12.html">Next</a>
 </td>
 </tr>
 <tr>
-<td width="40%" align="left">Writing Context Sensitive Help (coming in GNOME-2.0)Â </td>
+<td width="40%" align="left">Writing Context Sensitive Help (coming in GNOME-2.0) </td>
 <td width="20%" align="center"><a href="index.html">Up</a></td>
-<td width="40%" align="right">Â Basics of Documentation Style</td>
+<td width="40%" align="right"> Basics of Documentation Style</td>
 </tr>
 </table>
 </div>

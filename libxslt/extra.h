@@ -38,6 +38,13 @@ extern "C" {
 #define XSLT_XT_NAMESPACE ((xmlChar *) "http://www.jclark.com/xt")
 
 /**
+ * XSLT_EXSLT_COMMON_NAMESPACE:
+ *
+ * This is EXSLT common namespace http://www.exslt.org/exsl/exsl.html
+ */
+#define XSLT_EXSLT_COMMON_NAMESPACE ((xmlChar *) "http://exslt.org/common")
+
+/**
  * XSLT_XALAN_NAMESPACE:
  *
  * This is the Apache project XALAN processor namespace for extensions

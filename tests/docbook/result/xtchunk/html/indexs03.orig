@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>The GNOME Documentation System</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.40">
 <link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation">
@@ -15,9 +15,9 @@
 <tr><th colspan="3" align="center">The GNOME Documentation System</th></tr>
 <tr>
 <td width="20%" align="left">
-<a href="indexs02.html">Prev</a>¬†</td>
-<th width="60%" align="center">¬†</th>
-<td width="20%" align="right">¬†<a href="indexs04.html">Next</a>
+<a href="indexs02.html">Prev</a>†</td>
+<th width="60%" align="center">†</th>
+<td width="20%" align="right">†<a href="indexs04.html">Next</a>
 </td>
 </tr>
 </table>
@@ -99,7 +99,7 @@
           particular application which explains the various windows
           and features of the application.  Application Manuals
           typically use screenshots (PNG format) for clarity.  Writing
-          application manuals is discussed in more detail in <a href="indexs06.html" title="Writing Application and Applet Manuals">the section called ‚ÄúWriting Application and Applet Manuals‚Äù</a> below.
+          application manuals is discussed in more detail in <a href="indexs06.html" title="Writing Application and Applet Manuals">the section called &#x201C;Writing Application and Applet Manuals&#x201D;</a> below.
         </p>
 </div>
 <div class="sect3">
@@ -115,7 +115,7 @@
           GNOME Help Browser.  The help
           browser should show either the first page of the application
           manual, or else the relevant page thereof. Application help
-          is described in more detail in <a href="indexs08.html" title="Application Help Buttons">the section called ‚ÄúApplication Help Buttons‚Äù</a> below.
+          is described in more detail in <a href="indexs08.html" title="Application Help Buttons">the section called &#x201C;Application Help Buttons&#x201D;</a> below.
         </p>
 </div>
 <div class="sect3">
@@ -129,7 +129,7 @@
           clicking on an icon or by right clicking on the application
           part and selecting &quot;What's This&quot; or whatever is decided on
           at the time.  Context sensitive help is described in more
-          detail in <a href="indexs10.html" title="Writing Context Sensitive Help (coming in GNOME-2.0)">the section called ‚ÄúWriting Context Sensitive Help (coming in GNOME-2.0)‚Äù</a>
+          detail in <a href="indexs10.html" title="Writing Context Sensitive Help (coming in GNOME-2.0)">the section called &#x201C;Writing Context Sensitive Help (coming in GNOME-2.0)&#x201D;</a>
           below.
         </p>
 </div>
@@ -191,15 +191,15 @@
 <table width="100%" summary="Navigation footer">
 <tr>
 <td width="40%" align="left">
-<a href="indexs02.html">Prev</a>¬†</td>
+<a href="indexs02.html">Prev</a>†</td>
 <td width="20%" align="center"><a href="index.html">Home</a></td>
-<td width="40%" align="right">¬†<a href="indexs04.html">Next</a>
+<td width="40%" align="right">†<a href="indexs04.html">Next</a>
 </td>
 </tr>
 <tr>
-<td width="40%" align="left">Getting Started Writing GNOME Documentation¬†</td>
+<td width="40%" align="left">Getting Started Writing GNOME Documentation†</td>
 <td width="20%" align="center"><a href="index.html">Up</a></td>
-<td width="40%" align="right">¬†DocBook Basics </td>
+<td width="40%" align="right">†DocBook Basics </td>
 </tr>
 </table>
 </div>

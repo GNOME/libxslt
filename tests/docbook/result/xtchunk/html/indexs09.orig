@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>Packaging Applet Documentation</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.40">
 <link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation">
@@ -15,9 +15,9 @@
 <tr><th colspan="3" align="center">Packaging Applet Documentation</th></tr>
 <tr>
 <td width="20%" align="left">
-<a href="indexs08.html">Prev</a>¬†</td>
-<th width="60%" align="center">¬†</th>
-<td width="20%" align="right">¬†<a href="indexs10.html">Next</a>
+<a href="indexs08.html">Prev</a>†</td>
+<th width="60%" align="center">†</th>
+<td width="20%" align="right">†<a href="indexs10.html">Next</a>
 </td>
 </tr>
 </table>
@@ -72,7 +72,7 @@
 <a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2904938"></a>Developer Information</h3>
+<a name="id2909858"></a>Developer Information</h3>
 <p>
           This section is for developers.  Documentation authors
           generally do not need to know this material.
@@ -101,7 +101,7 @@ _(&quot;Manual&quot;), &amp;open_manual, NULL);
         You will need to write a simple callback function to open the
         help browser to the appropriate document.  This is done using
         the <tt>gnome_help_file_find_file</tt> function,
-        as described in <a href="indexs08.html" title="Application Help Buttons">the section called ‚ÄúApplication Help Buttons‚Äù</a>.
+        as described in <a href="indexs08.html" title="Application Help Buttons">the section called &#x201C;Application Help Buttons&#x201D;</a>.
       </p>
 <p>
         You will also want to add an About menu
@@ -124,15 +124,15 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 <table width="100%" summary="Navigation footer">
 <tr>
 <td width="40%" align="left">
-<a href="indexs08.html">Prev</a>¬†</td>
+<a href="indexs08.html">Prev</a>†</td>
 <td width="20%" align="center"><a href="index.html">Home</a></td>
-<td width="40%" align="right">¬†<a href="indexs10.html">Next</a>
+<td width="40%" align="right">†<a href="indexs10.html">Next</a>
 </td>
 </tr>
 <tr>
-<td width="40%" align="left">Application Help Buttons¬†</td>
+<td width="40%" align="left">Application Help Buttons†</td>
 <td width="20%" align="center"><a href="index.html">Up</a></td>
-<td width="40%" align="right">¬†Writing Context Sensitive Help (coming in GNOME-2.0)</td>
+<td width="40%" align="right">†Writing Context Sensitive Help (coming in GNOME-2.0)</td>
 </tr>
 </table>
 </div>

@@ -84,4 +84,14 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  rm -f $$name.res ; \
 	  done)
+	@(for i in $(srcdir)/stand*.xml ; do \
+	  name=`basename $$i .xml` ; \
+	  echo $$name.xml ; \
+	  $(top_builddir)/libxslt/xsltproc $(srcdir)/$$name.xml > $$name.res;\
+	  if [ ! -f $(srcdir)/$$name.stand.out ] ; then cp $$name.res $(srcdir)/$$name.stand.out ; \
+	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
+	  else diff $(srcdir)/$$name.stand.out $$name.res ; fi ; fi; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
+	  rm -f $$name.res ; \
+	  done)
 

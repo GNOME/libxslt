@@ -1,3 +1,15 @@
+Tue Jul 10 16:48:43 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES libxslt/xsltproc.c libxslt/transform.c
+	  libxslt/xsltInternals.h: added Embedding Stylesheets
+	* tests/REC/Makefile.am tests/REC/stand-2.7-1.*: added the test
+	  from the REC about it
+	* libxslt/transform.c libxslt/extra.[ch] libxslt/preproc.c:
+	  tried to accomodate the various (and changing) proprietary
+	  ways of implementing chunking.
+	* tests/docbook/result/xtchunk/html: now output is generated in
+	  ISO-8859-1
+
 Mon Jul  9 23:23:50 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: small cleanup

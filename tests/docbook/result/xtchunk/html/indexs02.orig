@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>Getting Started Writing GNOME Documentation</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.40">
 <link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation">
@@ -15,9 +15,9 @@
 <tr><th colspan="3" align="center">Getting Started Writing GNOME Documentation</th></tr>
 <tr>
 <td width="20%" align="left">
-<a href="index.html">Prev</a> </td>
-<th width="60%" align="center"> </th>
-<td width="20%" align="right"> <a href="indexs03.html">Next</a>
+<a href="index.html">Prev</a>�</td>
+<th width="60%" align="center">�</th>
+<td width="20%" align="right">�<a href="indexs03.html">Next</a>
 </td>
 </tr>
 </table>
@@ -86,7 +86,7 @@
         </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2775470"></a>Note</h3>
+<a name="id2780402"></a>Note</h3>
 <p>
           Note that the information in the
           <i>DocTable</i> may not always be up-to-date
@@ -109,7 +109,7 @@
       </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2775555"></a>NOTE</h3>
+<a name="id2780490"></a>NOTE</h3>
 <p>
           To get started writing for the GDP you do not need to rush
           out and learn DocBook - if you feel it is too much to handle
@@ -176,7 +176,7 @@
         </p>
 <div class="itemizedlist"><ul>
 <li style="list-style-type: opencircle"><p>
-<a name="id2775940"></a>
+<a name="id2780864"></a>
               Download <a href="http://www.labs.redhat.com/png/png-support.html" target="_top">the
               GDP DocBook DTD for PNG support</a> and install it
               where you keep your DTD's. (On Red Hat use <tt>/usr/lib/sgml/</tt>.) Note that
@@ -185,7 +185,7 @@
               recommended that you use version 3.1
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2776108"></a>
+<a name="id2781032"></a>
               Add the new DTD to your SGML CATALOG file.  The location
               of your SGML CATALOG file may vary depending upon your
               distribution. (On Red Hat it is usually in
@@ -244,7 +244,7 @@ V1.1//EN&quot;[]&gt;
           and effort in adding and closing tags. You will find the
           psgml package in DocBook Tools, which is the standard set of
           tools for the GDP. You may find out more about DocBook Tools
-          in <a href="indexs02.html#installingdocbook" title="Installing DocBook">the section called “Installing DocBook”</a>.
+          in <a href="indexs02.html#installingdocbook" title="Installing DocBook">the section called &#x201C;Installing DocBook&#x201D;</a>.
         </p>
 </div>
 <div class="sect3">
@@ -284,14 +284,14 @@ V1.1//EN&quot;[]&gt;
         </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2776014"></a>NOTE</h3>
+<a name="id2780938"></a>NOTE</h3>
 <p>
             The html files you get will not look quite the same as the
             documentation distributed with GNOME unless you have the
             custom stylesheets installed on your machine. DocBook
             Tools' default stylesheets will produce a different look
             to your docs. You can read more about the GDP stylesheets
-            in <a href="indexs02.html#gdpstylesheets" title="GDP Stylesheets">the section called “GDP Stylesheets”</a>.
+            in <a href="indexs02.html#gdpstylesheets" title="GDP Stylesheets">the section called &#x201C;GDP Stylesheets&#x201D;</a>.
           </p>
 </div>
 </div>
@@ -355,7 +355,7 @@ V1.1//EN&quot;[]&gt;
         </p>
 <div class="itemizedlist"><ul>
 <li style="list-style-type: disc"><p>
-<a name="id2898255"></a>
+<a name="id2903185"></a>
               <a href="http://www.docbook.org" target="_top">http://www.docbook.org</a>  - Norman
               Walsh's <i>DocBook: The Definitive
               Guide</i>.  Online O'Reilly book on using
@@ -363,14 +363,14 @@ V1.1//EN&quot;[]&gt;
               too formal for a beginner.
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2898311"></a>
+<a name="id2903240"></a>
               <a href="http://www.oswg.org/oswg-nightly/oswg/en_US.ISO_8859-1/articles/DocBook-Intro/docbook-intro/index.html" target="_top">A Practical Introduction to DocBook</a>
               - The Open Source Writers Group's introduction to using
               DocBook. This is an excellent HOW-TO type article on
               getting started.
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2898351"></a>
+<a name="id2903281"></a>
               <a href="http://nis-www.lanl.gov/~rosalia/mydocs/docbook-intro/docbook-intro.html" target="_top">Getting Going with DocBook: Notes for
               Hackers</a> - Mark Galassi's introduction to DocBook
               for hackers. This has to be one of the first
@@ -378,7 +378,7 @@ V1.1//EN&quot;[]&gt;
               was.
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2898391"></a>
+<a name="id2903320"></a>
               <a href="http://www.freebsd.org/tutorials/docproj-primer/" target="_top">
               FreeBSD Documentation Project Primer for New
               Contributors</a> - FreeBSD documentation project
@@ -396,8 +396,8 @@ V1.1//EN&quot;[]&gt;
           documentation authors write correct and consistent DocBook:
         </p>
 <div class="itemizedlist"><ul><li style="list-style-type: disc"><p>
-<a name="id2898457"></a>
-              <a href="indexs04.html" title="DocBook Basics ">the section called “DocBook Basics ”</a> - Descriptions of
+<a name="id2903387"></a>
+              <a href="indexs04.html" title="DocBook Basics ">the section called &#x201C;DocBook Basics &#x201D;</a> - Descriptions of
               commonly used DocBook tags.
             </p></li></ul></div>
 <p>
@@ -426,11 +426,11 @@ V1.1//EN&quot;[]&gt;
 <p>
         Most GNOME documents will have screenshots of the particular
         applet, application, GNOME component, or widget being
-        discussed.  As discussed above in <a href="indexs02.html#gdpdtd" title="GDP DTD (PNG Image Support)">the section called “GDP DTD (PNG Image Support)”</a> you
+        discussed.  As discussed above in <a href="indexs02.html#gdpdtd" title="GDP DTD (PNG Image Support)">the section called &#x201C;GDP DTD (PNG Image Support)&#x201D;</a> you
         will need to install the special GDP DocBook DTD which
         supports PNG images, the format used for all images in GNOME
         documentation. For the basic DocBook structure used to insert
-        images in a document, see <a href="indexs02.html#jadeimages" title="Images in DocBook Tools">the section called “Images in DocBook Tools”</a> above.
+        images in a document, see <a href="indexs02.html#jadeimages" title="Images in DocBook Tools">the section called &#x201C;Images in DocBook Tools&#x201D;</a> above.
       </p>
 <div class="sect3">
 <a name="screenshotappearance"></a><div class="titlepage"><div><h4 class="title">
@@ -492,7 +492,7 @@ V1.1//EN&quot;[]&gt;
           directory with your SGML file for applets, or should be
           kept in a directory called &quot;figs&quot; for application and other
           documentation.  After you use <b>db2html</b> to
-          convert your SGML file to HTML (see <a href="indexs02.html#make-output" title="Creating Something Useful with your Docs">the section called “Creating Something Useful with your Docs”</a>), you will need to copy your
+          convert your SGML file to HTML (see <a href="indexs02.html#make-output" title="Creating Something Useful with your Docs">the section called &#x201C;Creating Something Useful with your Docs&#x201D;</a>), you will need to copy your
           screenshots (either the individual PNG files for applet
           documentation, or the whole &quot;figs&quot; directory for other
           documentation) into the newly created HTML directory.  Note
@@ -500,7 +500,7 @@ V1.1//EN&quot;[]&gt;
           directory is erased and rewritten, so do not store your only
           copy of the screenshots in that directory.  If you wish to
           create PostScript or PDF output, you will need to manually
-          convert the PNG images to EPS as described in <a href="indexs02.html#jadeimages" title="Images in DocBook Tools">the section called “Images in DocBook Tools”</a>, but will not need to copy these
+          convert the PNG images to EPS as described in <a href="indexs02.html#jadeimages" title="Images in DocBook Tools">the section called &#x201C;Images in DocBook Tools&#x201D;</a>, but will not need to copy these
           images from their default location, as they are included
           directly into the output(PostScript of PDF) file.
         </p>
@@ -619,15 +619,15 @@ V1.1//EN&quot;[]&gt;
 <table width="100%" summary="Navigation footer">
 <tr>
 <td width="40%" align="left">
-<a href="index.html">Prev</a> </td>
+<a href="index.html">Prev</a>�</td>
 <td width="20%" align="center"><a href="index.html">Home</a></td>
-<td width="40%" align="right"> <a href="indexs03.html">Next</a>
+<td width="40%" align="right">�<a href="indexs03.html">Next</a>
 </td>
 </tr>
 <tr>
-<td width="40%" align="left">The GNOME Handbook of Writing Software Documentation </td>
+<td width="40%" align="left">The GNOME Handbook of Writing Software Documentation�</td>
 <td width="20%" align="center"><a href="index.html">Up</a></td>
-<td width="40%" align="right"> The GNOME Documentation System</td>
+<td width="40%" align="right">�The GNOME Documentation System</td>
 </tr>
 </table>
 </div>
