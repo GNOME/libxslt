@@ -365,7 +365,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    xmlDocPtr  oldoutput;
 
 	    container = xmlNewDocNode(ctxt->document->doc, NULL,
-			      (const xmlChar *) "fake node libxslt", NULL);
+			      (const xmlChar *) " fake node libxslt", NULL);
 	    if (container == NULL)
 		return(NULL);
 	    container->parent = NULL;
@@ -495,7 +495,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    xmlDocPtr  oldoutput;
 
 	    container = xmlNewDocNode(ctxt->document->doc, NULL,
-			      (const xmlChar *) "fake node libxslt", NULL);
+			      (const xmlChar *) " fake node libxslt", NULL);
 	    if (container == NULL)
 		return(NULL);
 	    container->parent = NULL;

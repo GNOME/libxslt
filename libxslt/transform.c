@@ -806,7 +806,7 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
         case XML_XINCLUDE_END:
             return(NULL);
     }
-    if (xmlStrEqual(node->name, (const xmlChar *) "fake node libxslt")) {
+    if (xmlStrEqual(node->name, (const xmlChar *) " fake node libxslt")) {
 	if (node->children != NULL)
 	    copy = xsltCopyTreeList(ctxt, node->children, insert);
 	else
@@ -1170,7 +1170,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
 
-    if (xmlStrEqual(node->name, BAD_CAST "fake node libxslt")) {
+    if (xmlStrEqual(node->name, BAD_CAST " fake node libxslt")) {
 	xmlNodePtr children;
 
 	children = node->children;
@@ -2155,7 +2155,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    case XML_HTML_DOCUMENT_NODE:
 		break;
 	    case XML_ELEMENT_NODE:
-		if (xmlStrEqual(node->name, BAD_CAST "fake node libxslt"))
+		if (xmlStrEqual(node->name, BAD_CAST " fake node libxslt"))
 		    return;
 
 #ifdef WITH_XSLT_DEBUG_PROCESS

@@ -1,3 +1,11 @@
+Tue Feb  4 18:15:01 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* README: change of policy w.r.t. mails
+	* configure.in: small cleanup
+	* libxslt/transform.c libxslt/xslt.c libxslt/variables.c: fixed
+	  a couple of bugs raised by Eric van der Vlist in #104114
+	* tests/exslt/*/*.out: slight change to the tests
+
 Tue Feb  4 17:18:54 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.1 doc/xsltproc.xml: fixing bug #104096, put

@@ -550,6 +550,9 @@ xsltGetInheritedNsList(xsltStylesheetPtr style,
             while (cur != NULL) {
 		if (xmlStrEqual(cur->href, XSLT_NAMESPACE))
 		    goto skip_ns;
+		if ((cur->prefix != NULL) &&
+		    (xsltCheckExtPrefix(style, cur->prefix)))
+		    goto skip_ns;
 		for (i = 0;i < style->exclPrefixNr;i++) {
 		    if (xmlStrEqual(cur->href, style->exclPrefixTab[i]))
 			goto skip_ns;

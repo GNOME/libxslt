@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<out xmlns:func="http://exslt.org/functions">;
+<out>;
         <true>true</true>;
         <false>false</false>;
         <true>true</true>;
