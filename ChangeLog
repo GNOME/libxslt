@@ -1,3 +1,7 @@
+Wed Oct 10 00:10:01 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* tests/REC/test-7.7-4.out: fixed a typo
+	
 Tue Oct  9 22:59:00 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/saxon.c: fixed a typo and improved handling of
