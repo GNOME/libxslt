@@ -58,11 +58,13 @@
  * @template:  the "strip-space" element
  *
  * parse an XSLT stylesheet strip-space element and record
- * elements needing stripping
+ * elements needing stripping. Returns zero on success and something else
+ * on failure.
  */
 
-void
+int
 xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
+    int ret = -1;
     xmlDocPtr import = NULL;
     xmlChar *base = NULL;
     xmlChar *uriRef = NULL;
@@ -70,7 +72,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     xsltStylesheetPtr res;
 
     if ((cur == NULL) || (style == NULL))
-	return;
+	return (ret);
 
     uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
@@ -102,7 +104,10 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	res->next = style->imports;
 	style->imports = res;
 	style->extrasNr += res->extrasNr;
-    }
+	ret = 0;
+    } else {
+	xmlFreeDoc(import);
+	}
 
 error:
     if (uriRef != NULL)
@@ -111,6 +116,8 @@ error:
 	xmlFree(base);
     if (URI != NULL)
 	xmlFree(URI);
+
+    return (ret);
 }
 
 /**
@@ -119,11 +126,13 @@ error:
  * @template:  the "strip-space" element
  *
  * parse an XSLT stylesheet strip-space element and record
- * elements needing stripping
+ * elements needing stripping. Returns zero on success, something else
+ * on failure.
  */
 
-void
+int
 xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
+    int ret = -1;
     xmlDocPtr oldDoc;
     xmlChar *base = NULL;
     xmlChar *uriRef = NULL;
@@ -131,7 +140,7 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     xsltDocumentPtr include;
 
     if ((cur == NULL) || (style == NULL))
-	return;
+	return (ret);
 
     uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
@@ -160,8 +169,13 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     oldDoc = style->doc;
     style->doc = include->doc;
-    xsltParseStylesheetProcess(style, include->doc);
+    ret = (int)xsltParseStylesheetProcess(style, include->doc);
     style->doc = oldDoc;
+    if (ret == 0) {
+		ret = -1;
+		goto error;
+	}
+    ret = 0;
 
 error:
     if (uriRef != NULL)
@@ -170,6 +184,8 @@ error:
 	xmlFree(base);
     if (URI != NULL)
 	xmlFree(URI);
+
+    return (ret);
 }
 
 /**

@@ -1750,17 +1750,18 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     /*
      * process xsl:import elements
      */
-    while (cur != NULL) {
-	if (IS_BLANK_NODE(cur)) {
-            cur = cur->next;
-	    continue;
+	while (cur != NULL) {
+		if (IS_BLANK_NODE(cur)) {
+			cur = cur->next;
+			continue;
+		}
+		if (IS_XSLT_ELEM(cur) && IS_XSLT_NAME(cur, "import")) {
+			if (xsltParseStylesheetImport(style, cur) != 0)
+				style->errors++;
+		} else
+			break;
+		cur = cur->next;
 	}
-	if (IS_XSLT_ELEM(cur) && IS_XSLT_NAME(cur, "import")) {
-	    xsltParseStylesheetImport(style, cur);
-	} else
-	    break;
-	cur = cur->next;
-    }
     /*
      * process other top-level elements
      */
@@ -1806,38 +1807,39 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	if (IS_XSLT_NAME(cur, "import")) {
 	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
-		"xsltParseStylesheetTop: ignoring misplaced import element\n");
+			"xsltParseStylesheetTop: ignoring misplaced import element\n");
 	    style->errors++;
-        } else if (IS_XSLT_NAME(cur, "include")) {
-	    xsltParseStylesheetInclude(style, cur);
-        } else if (IS_XSLT_NAME(cur, "strip-space")) {
+    } else if (IS_XSLT_NAME(cur, "include")) {
+	    if (xsltParseStylesheetInclude(style, cur) != 0)
+			style->errors++;
+    } else if (IS_XSLT_NAME(cur, "strip-space")) {
 	    xsltParseStylesheetStripSpace(style, cur);
-        } else if (IS_XSLT_NAME(cur, "preserve-space")) {
+    } else if (IS_XSLT_NAME(cur, "preserve-space")) {
 	    xsltParseStylesheetPreserveSpace(style, cur);
-        } else if (IS_XSLT_NAME(cur, "output")) {
+    } else if (IS_XSLT_NAME(cur, "output")) {
 	    xsltParseStylesheetOutput(style, cur);
-        } else if (IS_XSLT_NAME(cur, "key")) {
+    } else if (IS_XSLT_NAME(cur, "key")) {
 	    xsltParseStylesheetKey(style, cur);
-        } else if (IS_XSLT_NAME(cur, "decimal-format")) {
+    } else if (IS_XSLT_NAME(cur, "decimal-format")) {
 	    xsltParseStylesheetDecimalFormat(style, cur);
-        } else if (IS_XSLT_NAME(cur, "attribute-set")) {
+    } else if (IS_XSLT_NAME(cur, "attribute-set")) {
 	    xsltParseStylesheetAttributeSet(style, cur);
-        } else if (IS_XSLT_NAME(cur, "variable")) {
+    } else if (IS_XSLT_NAME(cur, "variable")) {
 	    xsltParseGlobalVariable(style, cur);
-        } else if (IS_XSLT_NAME(cur, "param")) {
+    } else if (IS_XSLT_NAME(cur, "param")) {
 	    xsltParseGlobalParam(style, cur);
-        } else if (IS_XSLT_NAME(cur, "template")) {
+    } else if (IS_XSLT_NAME(cur, "template")) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 	    templates++;
 #endif
 	    xsltParseStylesheetTemplate(style, cur);
-        } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
+    } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
 	    xsltNamespaceAlias(style, cur);
 	} else {
 	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
-		"xsltParseStylesheetTop: ignoring unknown %s element\n",
-		             cur->name);
+			"xsltParseStylesheetTop: ignoring unknown %s element\n",
+			cur->name);
 	    style->warnings++;
 	}
 	cur = cur->next;
@@ -1855,7 +1857,8 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
  *
  * parse an XSLT stylesheet adding the associated structures
  *
- * Returns a new XSLT stylesheet structure.
+ * Returns the value of the 'ret' parameter if everything
+ * went right, NULL if something went amiss.
  */
 
 xsltStylesheetPtr
@@ -1877,8 +1880,6 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	xsltPrintErrorContext(NULL, ret, (xmlNodePtr) doc);
         xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetProcess : empty stylesheet\n");
-	ret->doc = NULL;
-	xsltFreeStylesheet(ret);
 	return(NULL);
     }
     xsltParseStylesheetExcludePrefix(ret, cur);
@@ -1905,8 +1906,6 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	    xsltPrintErrorContext(NULL, ret, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetProcess : document is not a stylesheet\n");
-	    ret->doc = NULL;
-	    xsltFreeStylesheet(ret);
 	    return(NULL);
 	}
 
@@ -1929,8 +1928,6 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	 */
 	template = xsltNewTemplate();
 	if (template == NULL) {
-	    ret->doc = NULL;
-	    xsltFreeStylesheet(ret);
 	    return(NULL);
 	}
 	template->next = ret->templates;
@@ -1972,7 +1969,11 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
     
     ret->doc = doc;
     xsltGatherNamespaces(ret);
-    ret = xsltParseStylesheetProcess(ret, doc);
+	if (xsltParseStylesheetProcess(ret, doc) == NULL) {
+		ret->doc = NULL;
+		xsltFreeStylesheet(ret);
+		ret = NULL;
+	}
 
     return(ret);
 }

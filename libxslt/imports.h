@@ -45,9 +45,9 @@ extern "C" {
 /*
  * Module interfaces
  */
-void			xsltParseStylesheetImport(xsltStylesheetPtr style,
+int			xsltParseStylesheetImport(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
-void			xsltParseStylesheetInclude(xsltStylesheetPtr style,
+int			xsltParseStylesheetInclude(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
 xsltStylesheetPtr	xsltNextImport		 (xsltStylesheetPtr style);
 int			xsltNeedElemSpaceHandling(xsltTransformContextPtr ctxt);
