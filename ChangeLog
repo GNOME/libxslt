@@ -1,3 +1,9 @@
+Fri May 24 15:02:50 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxslt-python-api.xml python/libxslt.c 
+	  python/libxsltclass.txt : tried to fix #79105 by providing a 
+	  specific error registering routine.
+
 Thu May 23 17:28:35 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.[ch] : applied patch from Morus Walter

@@ -18,6 +18,7 @@ registerAllExtras()
 
 # functions from module python
 cleanup()
+registerErrorHandler()
 registerExtModuleFunction()
 
 # functions from module transform

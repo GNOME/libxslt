@@ -253,6 +253,118 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
 
 /************************************************************************
  *									*
+ *			Error message callback				*
+ *									*
+ ************************************************************************/
+
+static PyObject *libxslt_xsltPythonErrorFuncHandler = NULL;
+static PyObject *libxslt_xsltPythonErrorFuncCtxt = NULL;
+
+static void
+libxslt_xsltErrorFuncHandler(ATTRIBUTE_UNUSED void *ctx, const char *msg,
+                           ...)
+{
+    int size;
+    int chars;
+    char *larger;
+    va_list ap;
+    char *str;
+    PyObject *list;
+    PyObject *message;
+    PyObject *result;
+
+#ifdef DEBUG_ERROR
+    printf("libxslt_xsltErrorFuncHandler(%p, %s, ...) called\n", ctx, msg);
+#endif
+
+
+    if (libxslt_xsltPythonErrorFuncHandler == NULL) {
+        va_start(ap, msg);
+        vfprintf(stdout, msg, ap);
+        va_end(ap);
+    } else {
+        str = (char *) xmlMalloc(150);
+        if (str == NULL)
+            return;
+
+        size = 150;
+
+        while (1) {
+            va_start(ap, msg);
+            chars = vsnprintf(str, size, msg, ap);
+            va_end(ap);
+            if ((chars > -1) && (chars < size))
+                break;
+            if (chars > -1)
+                size += chars + 1;
+            else
+                size += 100;
+            if ((larger = (char *) xmlRealloc(str, size)) == NULL) {
+                xmlFree(str);
+                return;
+            }
+            str = larger;
+        }
+
+        list = PyTuple_New(2);
+        PyTuple_SetItem(list, 0, libxslt_xsltPythonErrorFuncCtxt);
+        Py_XINCREF(libxslt_xsltPythonErrorFuncCtxt);
+        message = libxml_charPtrWrap(str);
+        PyTuple_SetItem(list, 1, message);
+        result = PyEval_CallObject(libxslt_xsltPythonErrorFuncHandler, list);
+        Py_XDECREF(list);
+        Py_XDECREF(result);
+    }
+}
+
+static void
+libxslt_xsltErrorInitialize(void)
+{
+#ifdef DEBUG_ERROR
+    printf("libxslt_xsltErrorInitialize() called\n");
+#endif
+    xmlSetGenericErrorFunc(NULL, libxslt_xsltErrorFuncHandler);
+    xsltSetGenericErrorFunc(NULL, libxslt_xsltErrorFuncHandler);
+}
+
+PyObject *
+libxslt_xsltRegisterErrorHandler(ATTRIBUTE_UNUSED PyObject * self,
+                               PyObject * args)
+{
+    PyObject *py_retval;
+    PyObject *pyobj_f;
+    PyObject *pyobj_ctx;
+
+    if (!PyArg_ParseTuple
+        (args, (char *) "OO:xmlRegisterErrorHandler", &pyobj_f,
+         &pyobj_ctx))
+        return (NULL);
+
+#ifdef DEBUG_ERROR
+    printf("libxml_registerXPathFunction(%p, %p) called\n", pyobj_ctx,
+           pyobj_f);
+#endif
+
+    if (libxslt_xsltPythonErrorFuncHandler != NULL) {
+        Py_XDECREF(libxslt_xsltPythonErrorFuncHandler);
+    }
+    if (libxslt_xsltPythonErrorFuncCtxt != NULL) {
+        Py_XDECREF(libxslt_xsltPythonErrorFuncCtxt);
+    }
+
+    Py_XINCREF(pyobj_ctx);
+    Py_XINCREF(pyobj_f);
+
+    /* TODO: check f is a function ! */
+    libxslt_xsltPythonErrorFuncHandler = pyobj_f;
+    libxslt_xsltPythonErrorFuncCtxt = pyobj_ctx;
+
+    py_retval = libxml_intWrap(1);
+    return (py_retval);
+}
+
+/************************************************************************
+ *									*
  *			Integrated cleanup				*
  *									*
  ************************************************************************/
@@ -296,15 +408,12 @@ void initlibxsltmod(void) {
 	return;
     m = Py_InitModule((char *)"libxsltmod", libxsltMethods);
     initialized = 1;
-    /* libxslt_xmlErrorInitialize(); */
     /*
      * Specific XSLT initializations
      */
-    /* xmlInitParser(); */
+    libxslt_xsltErrorInitialize();
     xmlInitMemory();
-    /* LIBXML_TEST_VERSION */
     xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
-    /* xmlDefaultSAXHandlerInit(); */
     xmlDefaultSAXHandler.cdataBlock = NULL;
 }
 
