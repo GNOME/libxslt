@@ -16,6 +16,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
+#include "libexslt/exslt.h"
 #include "libxslt_wrap.h"
 #include "libxslt-py.h"
 

@@ -331,9 +331,7 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
 
 	module = xmlHashLookup(xsltExtensionsHash, URI);
 	if (module != NULL) {
-	    xsltExtDataPtr data;
-
-	    data = xsltStyleGetExtData(style, URI);
+	    xsltStyleGetExtData(style, URI);
 	}
     }
     return(0);

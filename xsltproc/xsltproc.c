@@ -441,16 +441,15 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 
 	xmlFreeDoc(res);
     } else {
-	int ret;
 
 	ctxt = xsltNewTransformContext(cur, doc);
 	if (ctxt == NULL)
 	    return;
 	if (profile) {
-	    ret = xsltRunStylesheetUser(cur, doc, params, output,
+	    xsltRunStylesheetUser(cur, doc, params, output,
 		                        NULL, NULL, stderr, ctxt);
 	} else {
-	    ret = xsltRunStylesheetUser(cur, doc, params, output,
+	    xsltRunStylesheetUser(cur, doc, params, output,
 		                        NULL, NULL, NULL, ctxt);
 	}
 	if (ctxt->state == XSLT_STATE_ERROR)
@@ -644,12 +643,10 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "--stringparam"))) {
 	    const xmlChar *string;
 	    xmlChar *value;
-	    int len;
 
             i++;
             params[nbparams++] = argv[i++];
 	    string = (const xmlChar *) argv[i];
-	    len = xmlStrlen(string);
 	    if (xmlStrchr(string, '"')) {
 		if (xmlStrchr(string, '\'')) {
 		    fprintf(stderr,

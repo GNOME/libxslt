@@ -77,7 +77,7 @@ struct _exsltDateValDate {
     unsigned int	hour	:5;	/* 0 <=  hour   <= 23   */
     unsigned int	min	:6;	/* 0 <=  min    <= 59	*/
     double		sec;
-    int			tz_flag	:1;	/* is tzo explicitely set? */
+    unsigned int	tz_flag	:1;	/* is tzo explicitely set? */
     int			tzo	:11;	/* -1440 <= tzo <= 1440 */
 };
 
@@ -147,8 +147,12 @@ static const unsigned long daysInMonthLeap[12] =
 #define VALID_DATE(dt)						\
 	(VALID_YEAR(dt->year) && VALID_MONTH(dt->mon) && VALID_MDAY(dt))
 
+/*
+    hour and min structure vals are unsigned, so normal macros give
+    warnings on some compilers.
+*/
 #define VALID_TIME(dt)						\
-	(VALID_HOUR(dt->hour) && VALID_MIN(dt->min) &&		\
+	((dt->hour <=23 ) && (dt->min <= 59) &&			\
 	 VALID_SEC(dt->sec) && VALID_TZO(dt->tzo))
 
 #define VALID_DATETIME(dt)					\
