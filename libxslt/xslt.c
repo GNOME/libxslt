@@ -18,6 +18,7 @@
 #include <libxml/tree.h>
 #include <libxml/valid.h>
 #include <libxml/hash.h>
+#include <libxml/uri.h>
 #include <libxml/xmlerror.h>
 #include <libxml/parserInternals.h>
 #include "xslt.h"
@@ -40,6 +41,9 @@
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
+xsltStylesheetPtr xsltParseStylesheetProcess(xsltStylesheetPtr ret,
+	                                     xmlDocPtr doc);
+xsltStylesheetPtr xsltParseStylesheetDoc(xmlDocPtr doc);
 
 /************************************************************************
  *									*
@@ -600,6 +604,121 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 }
 
 /**
+ * xsltParseStylesheetImport:
+ * @style:  the XSLT stylesheet
+ * @template:  the "strip-space" element
+ *
+ * parse an XSLT stylesheet strip-space element and record
+ * elements needing stripping
+ */
+
+void
+xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
+    xmlDocPtr import = NULL;
+    xmlChar *base = NULL;
+    xmlChar *uriRef = NULL;
+    xmlChar *URI = NULL;
+    xsltStylesheetPtr res;
+
+    if ((cur == NULL) || (style == NULL))
+	return;
+
+    uriRef = xmlGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
+    if (uriRef == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:import : missing href attribute\n");
+	goto error;
+    }
+
+    base = xmlNodeGetBase(style->doc, cur);
+    URI = xmlBuildURI(uriRef, base);
+    if (URI == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:import : invalid URI reference %s\n", uriRef);
+	goto error;
+    }
+    import = xmlParseFile((const char *)URI);
+    if (import == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:import : unable to load %s\n", URI);
+	goto error;
+    }
+
+    res = xsltParseStylesheetDoc(import);
+    if (res != NULL) {
+	res->parent = style;
+	res->next = style->imports;
+	style->imports = res;
+    }
+
+error:
+    if (import != NULL)
+	xmlFreeDoc(import);
+    if (uriRef != NULL)
+	xmlFree(uriRef);
+    if (base != NULL)
+	xmlFree(base);
+    if (URI != NULL)
+	xmlFree(URI);
+}
+
+/**
+ * xsltParseStylesheetInclude:
+ * @style:  the XSLT stylesheet
+ * @template:  the "strip-space" element
+ *
+ * parse an XSLT stylesheet strip-space element and record
+ * elements needing stripping
+ */
+
+void
+xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
+    xmlDocPtr include = NULL, oldDoc;
+    xmlChar *base = NULL;
+    xmlChar *uriRef = NULL;
+    xmlChar *URI = NULL;
+
+    if ((cur == NULL) || (style == NULL))
+	return;
+
+    uriRef = xmlGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
+    if (uriRef == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:include : missing href attribute\n");
+	goto error;
+    }
+
+    base = xmlNodeGetBase(style->doc, cur);
+    URI = xmlBuildURI(uriRef, base);
+    if (URI == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:include : invalid URI reference %s\n", uriRef);
+	goto error;
+    }
+    include = xmlParseFile((const char *)URI);
+    if (include == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:include : unable to load %s\n", URI);
+	goto error;
+    }
+
+    oldDoc = style->doc;
+    style->doc = include;
+    xsltParseStylesheetProcess(style, include);
+    style->doc = oldDoc;
+
+error:
+    if (include != NULL)
+	xmlFreeDoc(include);
+    if (uriRef != NULL)
+	xmlFree(uriRef);
+    if (base != NULL)
+	xmlFree(base);
+    if (URI != NULL)
+	xmlFree(URI);
+}
+
+/**
  * xsltParseStylesheetStripSpace:
  * @style:  the XSLT stylesheet
  * @template:  the "strip-space" element
@@ -997,7 +1116,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    continue;
 	}
 	if (IS_XSLT_NAME(cur, "import")) {
-	    TODO /* Handle import */
+	    xsltParseStylesheetImport(style, cur);
 	} else
 	    break;
 	cur = cur->next;
@@ -1016,7 +1135,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetTop: ignoring misplaced import element\n");
         } else if (IS_XSLT_NAME(cur, "include")) {
-	    TODO /* Handle include */
+	    xsltParseStylesheetInclude(style, cur);
         } else if (IS_XSLT_NAME(cur, "strip-space")) {
 	    xsltParseStylesheetStripSpace(style, cur);
         } else if (IS_XSLT_NAME(cur, "preserve-space")) {
@@ -1054,25 +1173,23 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 }
 
 /**
- * xsltParseStylesheetDoc:
+ * xsltParseStylesheetProcess:
+ * @ret:  the XSLT stylesheet
  * @doc:  and xmlDoc parsed XML
  *
- * parse an XSLT stylesheet building the associated structures
+ * parse an XSLT stylesheet adding the associated structures
  *
  * Returns a new XSLT stylesheet structure.
  */
 
 xsltStylesheetPtr
-xsltParseStylesheetDoc(xmlDocPtr doc) {
-    xsltStylesheetPtr ret;
+xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
     xmlNodePtr cur;
 
     if (doc == NULL)
 	return(NULL);
-
-    ret = xsltNewStylesheet();
     if (ret == NULL)
-	return(NULL);
+	return(ret);
     
     /*
      * First steps, remove blank nodes,
@@ -1082,19 +1199,18 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
     cur = xmlDocGetRootElement(doc);
     if (cur == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-		"xsltParseStylesheetDoc : empty stylesheet\n");
+		"xsltParseStylesheetProcess : empty stylesheet\n");
 	xsltFreeStylesheet(ret);
 	return(NULL);
     }
 
-    ret->doc = doc;
     xsltParseRemoveBlanks(ret);
     if ((IS_XSLT_ELEM(cur)) && 
 	((IS_XSLT_NAME(cur, "stylesheet")) ||
 	 (IS_XSLT_NAME(cur, "transform")))) {
 #ifdef DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-		"xsltParseStylesheetDoc : found stylesheet\n");
+		"xsltParseStylesheetProcess : found stylesheet\n");
 #endif
 
 	xsltParseStylesheetTop(ret, cur);
@@ -1108,14 +1224,14 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 	prop = xmlGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
 	if (prop == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
-		"xsltParseStylesheetDoc : document is not a stylesheet\n");
+		"xsltParseStylesheetProcess : document is not a stylesheet\n");
 	    xsltFreeStylesheet(ret);
 	    return(NULL);
 	}
 
 #ifdef DEBUG_PARSING
         xsltGenericDebug(xsltGenericDebugContext,
-		"xsltParseStylesheetDoc : document is stylesheet\n");
+		"xsltParseStylesheetProcess : document is stylesheet\n");
 #endif
 	
 	if (!xmlStrEqual(prop, (const xmlChar *)"1.0")) {
@@ -1143,6 +1259,32 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 	xsltParseTemplateContent(ret, template, (xmlNodePtr) doc);
 	xsltAddTemplate(ret, template);
     }
+
+    return(ret);
+}
+
+/**
+ * xsltParseStylesheetDoc:
+ * @doc:  and xmlDoc parsed XML
+ *
+ * parse an XSLT stylesheet building the associated structures
+ *
+ * Returns a new XSLT stylesheet structure.
+ */
+
+xsltStylesheetPtr
+xsltParseStylesheetDoc(xmlDocPtr doc) {
+    xsltStylesheetPtr ret;
+
+    if (doc == NULL)
+	return(NULL);
+
+    ret = xsltNewStylesheet();
+    if (ret == NULL)
+	return(NULL);
+    
+    ret->doc = doc;
+    xsltParseStylesheetProcess(ret, doc);
 
     return(ret);
 }

@@ -258,7 +258,6 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     len = list->nodeNr;
 
-    /* TODO: process attributes as attribute value templates */
     prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"data-type");
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *) "text"))
@@ -793,7 +792,6 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     while (cur != NULL) {
 	switch (cur->type) {
 	    case XML_TEXT_NODE:
-		/* TODO: check the whitespace stripping rules ! */
 		if ((IS_BLANK_NODE(cur)) &&
 		    (cur->parent != NULL) &&
 		    (ctxt->style->stripSpaces != NULL)) {
@@ -1041,7 +1039,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	while (cur != NULL) {
 	    switch (cur->type) {
 		case XML_TEXT_NODE:
-		    /* TODO: check the whitespace stripping rules ! */
 		    if ((IS_BLANK_NODE(cur)) &&
 			(cur->parent != NULL) &&
 			(ctxt->style->stripSpaces != NULL)) {

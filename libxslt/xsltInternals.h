@@ -94,6 +94,7 @@ struct _xsltStylesheet {
      * The stylesheet import relation is kept as a tree
      */
     struct _xsltStylesheet *parent;
+    struct _xsltStylesheet *next;
     struct _xsltStylesheet *imports;
 
     /*
