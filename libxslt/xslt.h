@@ -48,8 +48,12 @@ extern "C" {
  *
  * Macro used on Windows to tag public identifiers from shared libraries
  */
-#ifndef LIBXSLT_PUBLIC
-#define LIBXSLT_PUBLIC
+#if !defined LIBXSLT_PUBLIC
+#if defined _MSC_VER && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
+#define LIBXSLT_PUBLIC __declspec(dllimport)
+#else
+#define LIBXSLT_PUBLIC 
+#endif
 #endif
 
 /**

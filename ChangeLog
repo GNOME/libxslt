@@ -1,3 +1,10 @@
+Thu Dec 20 14:49:39 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: applied albert portability patch
+	* libxslt/libxslt.h libxslt/xslt.h libxslt/xsltconfig.h.in
+	 libxslt/xsltutils.c libxslt/xsltwin32config.h.in win32/dsp/libxslt.def:
+	 applied Igor patch for Windows
+
 Tue Dec 11 15:27:15 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: fixed a problem with the debuuger interface.

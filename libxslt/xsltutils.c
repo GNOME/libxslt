@@ -41,6 +41,7 @@
 #pragma comment(lib, "ws2_32.lib")
 #define gettimeofday(p1,p2)
 #define HAVE_GETTIMEOFDAY
+#define XSLT_WIN32_PERFORMANCE_COUNTER
 #endif /* _MS_VER */
 #endif /* WIN32 */
 

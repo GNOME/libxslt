@@ -10,7 +10,7 @@
 #ifndef __XML_XSLTWIN32CONFIG_H__
 #define __XML_XSLTWIN32CONFIG_H__
 
-#include <win32config.h>
+#include "win32config.h"
 
 #ifdef __cplusplus
 extern "C" {
