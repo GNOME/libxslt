@@ -1,3 +1,10 @@
+Sat Jan 15 13:54:28 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* tests/plugins/plugin.* tests/Makefile.am libxslt/extensions.c
+	  libxslt/Makefile.am configure.in: Applied another patch from
+	  Joel Reed, fixed a segfault and changed the configure code
+	  a bit to work in my debug environment.
+
 Tue Jan 11 10:50:33 HKT 2005 William Brack <wbrack@mmm.com.hk>
 
 	* configure.in: added python2.4 to the list of accepted

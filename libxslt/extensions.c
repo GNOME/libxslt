@@ -298,8 +298,17 @@ typedef void (*exsltRegisterFunction) (void);
  * xsltExtModuleRegisterDynamic:
  * @URI:  the function or element namespace URI
  *
- * Looks up an extension module to dynamically load
- * based on the namespace URI
+ * Dynamically loads an extension plugin when available.
+ * 
+ * The plugin name is derived from the URI by removing the 
+ * initial protocol designation, e.g. "http://", then converting
+ * the characters ".", "-", "/", and "\" into "_", the removing
+ * any trailing "/", then concatenating LIBXML_MODULE_EXTENSION.
+ * 
+ * Plugins are loaded from the directory specified by the 
+ * environment variable LIBXSLT_PLUGINS_PATH, or if NULL, 
+ * by LIBXSLT_DEFAULT_PLUGINS_PATH() which is determined at
+ * compile time.
  *
  * Returns 0 if successful, -1 in case of error. 
  */
@@ -310,10 +319,12 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
 
     xmlModulePtr m;
     exsltRegisterFunction regfunc;
+    xmlChar *ext_name;
     xmlChar module_filename[PATH_MAX];
-    const xmlChar *extNameBegin = NULL;
-    const xmlChar *extDirectory = NULL;
-    int i, rc, seen_before;
+    const xmlChar *ext_directory = NULL;
+    const xmlChar *protocol = NULL;
+    xmlChar *i, *regfunc_name;
+    int rc, seen_before;
 
     /* check for bad inputs */
     if (URI == NULL)
@@ -331,43 +342,75 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
         return (-1);
     }
 
-    for (i = xmlStrlen(URI); i != 0 && extNameBegin == NULL; --i) {
-        if (URI[i - 1] == '/')
-            extNameBegin = URI + i;
+    /* transform extension namespace into a module name */
+    protocol = xmlStrstr(URI, "://");
+    if (protocol == NULL) {
+        ext_name = xmlStrdup(URI);
+    } else {
+        ext_name = xmlStrdup(protocol + 3);
+    }
+    if (ext_name == NULL) {
+        return (-1);
     }
 
-    if (extNameBegin == NULL || *extNameBegin == '\0')
-        return (-1);
+    i = ext_name;
+    while ('\0' != *i) {
+        if (('/' == *i) || ('\\' == *i) || ('.' == *i) || ('-' == *i))
+            *i = '_';
+        i++;
+    }
+
+    if (*(i - 1) == '_')
+        *i = '\0';
 
     /* determine module directory */
-    extDirectory = getenv(BAD_CAST "LIBXSLT_PLUGINS_PATH");
-    if (NULL == extDirectory)
-        extDirectory = LIBXSLT_DEFAULT_PLUGINS_PATH();
-    if (NULL == extDirectory)
+    ext_directory = getenv(BAD_CAST "LIBXSLT_PLUGINS_PATH");
+    if (NULL == ext_directory)
+        ext_directory = LIBXSLT_DEFAULT_PLUGINS_PATH();
+    if (NULL == ext_directory)
         return (-1);
 
     /* build the module filename, and confirm the module exists */
-    xmlStrPrintf(module_filename, sizeof(module_filename), "%s%s%s",
-                 extDirectory, extNameBegin, LIBXML_MODULE_EXTENSION);
-    if (1 != xmlCheckFilename(module_filename))
+    xmlStrPrintf(module_filename, sizeof(module_filename), "%s/%s%s",
+                 ext_directory, ext_name, LIBXML_MODULE_EXTENSION);
+    if (1 != xmlCheckFilename(module_filename)) {
+        xmlFree(ext_name);
         return (-1);
-
-    m = xmlModuleOpen(module_filename, 0);
-    if (NULL == m)
-        return (-1);
-
-    rc = xmlModuleSymbol(m, "exsltRegisterModule", (void **) &regfunc);
-    if (0 == rc) {
-        (*regfunc) ();
     }
 
-    /* register this module in our hash */
-    xmlHashAddEntry(xsltModuleHash, URI, (void *) m);
+    /* attempt to open the module */
+    m = xmlModuleOpen(module_filename, 0);
+    if (NULL == m) {
+        xmlFree(ext_name);
+        return (-1);
+    }
 
+    /* construct initialization func name */
+    regfunc_name = xmlStrdup(ext_name);
+    regfunc_name = xmlStrcat(regfunc_name, "_init");
+
+    rc = xmlModuleSymbol(m, regfunc_name, (void **) &regfunc);
+    if (0 == rc) {
+        /* call the module's init function */
+        (*regfunc) ();
+
+        /* register this module in our hash */
+        xmlHashAddEntry(xsltModuleHash, URI, (void *) m);
+    } else {
+        /* if regfunc not found unload the module immediately */
+        xmlModuleClose(m);
+    }
+
+    xmlFree(ext_name);
+    xmlFree(regfunc_name);
     return (NULL == regfunc) ? -1 : 0;
 }
 #else
-#define xsltExtModuleRegisterDynamic(b) -1
+static int
+xsltExtModuleRegisterDynamic(const xmlChar * ATTRIBUTE_UNUSED URI)
+{
+  return -1;
+}
 #endif
 
 /************************************************************************

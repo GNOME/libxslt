@@ -12,6 +12,7 @@ all:
 # and (if errors are expected) in *.err
 test tests:
 	@(cur=`pwd` ; for dir in $(SUBDIRS) ; do cd $$dir ; $(MAKE) CHECKER='$(CHECKER)' tests ; cd $$cur ; done)
+	$(MAKE) plugin_tests
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'
@@ -23,3 +24,15 @@ full: tests docbook_tests
 docbook_tests:
 	@(cd docbook ; $(MAKE) full)
 
+if WITH_MODULES
+
+plugin_tests:
+	@echo Running the plugin tests...
+	@(cd plugins && LIBXSLT_PLUGINS_PATH=. $(top_builddir)/../xsltproc/xsltproc plugin.xsl plugin.xml)
+
+else
+
+plugin_tests:
+	@echo Skipping the plugin tests.
+
+endif

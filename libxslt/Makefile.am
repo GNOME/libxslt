@@ -57,5 +57,21 @@ man_MANS = libxslt.3
 
 EXTRA_DIST = $(man_MANS) trio.h triodef.h
 
+
+# somewhat unconventional pkglibdir, but noinst_LTLIBRARIES
+# never build DSOs (afaik). NOTE: must be defined outside the AM_CONDITIONAL
+pkglibdir=$(shell pwd)/../tests/plugins
+
+if WITH_MODULES
+pkglib_LTLIBRARIES = xmlsoft_org_xslt_testplugin.la
+
+xmlsoft_org_xslt_testplugin_la_CFLAGS = -DMODULE_COMPILE $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
+xmlsoft_org_xslt_testplugin_la_SOURCES = testplugin.c
+xmlsoft_org_xslt_testplugin_la_LDFLAGS = -module -avoid-version $(LIBXML_LIBS) $(LIBXSLT_LIBS)
+
+check-local: install-pkglibLTLIBRARIES
+
+endif
+
 xsltproc: all
 	@(cd ../xsltproc ; $(MAKE))
