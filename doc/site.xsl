@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:output method="html" version="4.01" encoding="ISO-8859-1"/>
+  <xsl:output method="xml" encoding="ISO-8859-1" indent="yes"
+      doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+      doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
 <!--
  - returns the filename associated to an ID in the original file
  -->
@@ -65,8 +67,8 @@
  -->
   <xsl:variable name="toc">
     <form action="search.php"
-          enctype="application/x-www-form-urlencoded" method="GET">
-      <input name="query" type="TEXT" size="20" value=""/>
+          enctype="application/x-www-form-urlencoded" method="get">
+      <input name="query" type="text" size="20" value=""/>
       <input name="submit" type="submit" value="Search ..."/>
     </form>
     <ul>
@@ -180,14 +182,14 @@
  - Write the styles in the head
  -->
   <xsl:template name="style">
-    <style type="text/css"><xsl:text disable-output-escaping="yes">&lt;!--</xsl:text>
+    <style type="text/css">
 TD {font-family: Verdana,Arial,Helvetica}
 BODY {font-family: Verdana,Arial,Helvetica; margin-top: 2em; margin-left: 0em; margin-right: 0em}
 H1 {font-family: Verdana,Arial,Helvetica}
 H2 {font-family: Verdana,Arial,Helvetica}
 H3 {font-family: Verdana,Arial,Helvetica}
 A:link, A:visited, A:active { text-decoration: underline }
-<xsl:text disable-output-escaping="yes">--&gt;</xsl:text></style>
+</style>
   </xsl:template>
 <!--
  - Write the title box on top
@@ -270,7 +272,9 @@ A:link, A:visited, A:active { text-decoration: underline }
     <xsl:variable name="title">
       <xsl:value-of select="$header"/>
     </xsl:variable>
-    <xsl:document href="{$filename}" method="html" version="4.01" encoding="ISO-8859-1">
+    <xsl:document href="{$filename}" method="xml" encoding="ISO-8859-1"
+      doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+      doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html>
         <head>
           <xsl:call-template name="style"/>

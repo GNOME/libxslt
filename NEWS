@@ -5,7 +5,6 @@
        http://xmlsoft.org/XSLT/news.html
 
 
-
 CVS only : check the Changelog at 
 http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
@@ -174,7 +173,6 @@ for a really accurate description:
 1.0.11: Feb 8 2002:
    - Change of Licence to the MIT
   Licence
-
    - Added a beta version of the Python bindings, including support to
     extend the engine with functions written in Python
    - A number of bug fixes
@@ -270,7 +268,6 @@ for a really accurate description:
    - a lot of cleanup, a lot of regression tests added or fixed
    - added a documentation for writing
     extensions
-
    - fixed some variable evaluation problems (with William)
    - added profiling of stylesheet execution accessible as the xsltproc
     --profile option
@@ -314,7 +311,6 @@ for a really accurate description:
     too)
    - John Fleck added a
   tutorial
-
    - Fixes for namespace handling when evaluating variables
    - XInclude global flag added to process XInclude on document() if
     requested
@@ -322,8 +318,7 @@ for a really accurate description:
 
 
 0.11.0: June 1 2001:
-Mostly a bug fix release.
-   - integration of catalogs from xsltproc
+Mostly a bug fix release.   - integration of catalogs from xsltproc
    - added --version to xsltproc for bug reporting
    - fixed errors when handling ID in external parsed entities
    - document() should hopefully work correctly but ...
@@ -437,4 +432,3 @@ Mostly a bug fix release.
 
 Daniel Veillard at 
 bugs.html
-
