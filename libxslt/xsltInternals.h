@@ -344,6 +344,7 @@ struct _xsltTransformContext {
      */
     xmlHashTablePtr   extFunctions;	/* the extension functions */
     xmlHashTablePtr   extElements;	/* the extension elements */
+    xmlHashTablePtr   extInfos;		/* the extension data */
 
     const xmlChar *mode;		/* the current mode */
     const xmlChar *modeURI;		/* the current mode URI */

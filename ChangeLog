@@ -1,3 +1,14 @@
+Wed Jul  4 15:15:50 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/extension.[ch] libxslt/extra.[ch] libxslt/xsltInternals.h
+	  libxslt/transform.c libxslt/functions.c: Added the extension API
+	  suggested by Thomas Broyer, this should allow implementation of
+	  EXSLT for example.
+	* libxslt/extra.[ch]: added a fake xsltFunctionLocalTime() in Norm's
+	  CVS extension namespace to avoid complaints, some cleanup
+	* configure.in tests/Makefile.am tests/extensions/*: added a test
+	  for new modules testing both elements and functions registration
+
 Fri Jun 29 23:32:37 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/pattern.c libxslt/preproc.c libxslt/transform.c

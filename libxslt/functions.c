@@ -35,6 +35,7 @@
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "functions.h"
+#include "extensions.h"
 #include "numbersInternals.h"
 #include "keys.h"
 #include "documents.h"
@@ -153,7 +154,9 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	    }
 	    base = xmlNodeGetBase(target->doc, target);
 	} else {
-	    xsltTransformContextPtr tctxt = ctxt->context->extra;
+	    xsltTransformContextPtr tctxt;
+	    
+	    tctxt = xsltXPathGetTransformContext(ctxt);
 	    if ((tctxt != NULL) && (tctxt->inst != NULL)) {
 		base = xmlNodeGetBase(tctxt->inst->doc, tctxt->inst);
 	    } else if ((tctxt != NULL) && (tctxt->style != NULL) &&
@@ -170,7 +173,7 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	} else {
 	    xsltTransformContextPtr tctxt;
 
-	    tctxt = (xsltTransformContextPtr) ctxt->context->extra;
+	    tctxt = xsltXPathGetTransformContext(ctxt);
 	    if (tctxt == NULL) {
 		xsltGenericError(xsltGenericErrorContext,
 			"document() : internal error tctxt == NULL\n");
@@ -208,8 +211,6 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xmlChar *key = NULL, *value;
     const xmlChar *keyURI;
     xsltTransformContextPtr tctxt;
-
-    tctxt = ((xsltTransformContextPtr)ctxt->context->extra);
 
     if (nargs != 2) {
         xsltGenericError(xsltGenericErrorContext,
@@ -292,6 +293,8 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	obj2 = valuePop(ctxt);
 	value = obj2->stringval;
 
+	tctxt = xsltXPathGetTransformContext(ctxt);
+
 	nodelist = xsltGetKey(tctxt, key, keyURI, value);
 	valuePush(ctxt, xmlXPathWrapNodeSet(
 		        xmlXPathNodeSetMerge(NULL, nodelist)));
@@ -366,8 +369,14 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
     xsltStylesheetPtr sheet;
     xsltDecimalFormatPtr formatValues;
     xmlChar *result;
+    xsltTransformContextPtr tctxt;
 
-    sheet = ((xsltTransformContextPtr)ctxt->context->extra)->style;
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    if (tctxt == NULL)
+	return;
+    sheet = tctxt->style;
+    if (sheet == NULL)
+	return;
     formatValues = sheet->decimalFormat;
     
     switch (nargs) {
@@ -503,7 +512,7 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 		xsltStylesheetPtr sheet;
 		xsltTransformContextPtr tctxt;
 
-		tctxt = (xsltTransformContextPtr)ctxt->context->extra;
+		tctxt = xsltXPathGetTransformContext(ctxt);
 		if ((tctxt != NULL) && (tctxt->inst != NULL) &&
 		    (xmlStrEqual(tctxt->inst->name, BAD_CAST "variable")) &&
 		    (tctxt->inst->parent != NULL) &&
@@ -514,7 +523,8 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 		    sheet = NULL;
 		if ((sheet != NULL) && (sheet->doc != NULL) &&
 		    (sheet->doc->URL != NULL) &&
-		    (xmlStrstr(sheet->doc->URL, "chunk") != NULL)) {
+		    (xmlStrstr(sheet->doc->URL,
+			       (const xmlChar *)"chunk") != NULL)) {
 		    valuePush(ctxt, xmlXPathNewString(
 			(const xmlChar *)"libxslt (SAXON 6.2 compatible)"));
 
@@ -646,7 +656,7 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
-    tctxt = (xsltTransformContextPtr) ctxt->context->extra;
+    tctxt = xsltXPathGetTransformContext(ctxt);
     if (tctxt == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 		"current() : internal error tctxt == NULL\n");
@@ -656,6 +666,165 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
 }
 
+/************************************************************************
+ * 									*
+ * 		Test of the extension module API			*
+ * 									*
+ ************************************************************************/
+
+static xmlChar *testData = NULL;
+
+/**
+ * xsltExtFunctionTest:
+ * @ctxt:  the XPath Parser context
+ * @nargs:  the number of arguments
+ *
+ * function libxslt:test() for testing the extensions support.
+ */
+static void
+xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
+{
+    xsltTransformContextPtr tctxt;
+    void *data;
+
+    if (testData == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtFunctionTest: not initialized\n");
+        return;
+    }
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    if (tctxt == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtFunctionTest: failed to get the transformation context\n");
+        return;
+    }
+    data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
+    if (data == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtFunctionTest: failed to get module data\n");
+        return;
+    }
+    if (data != testData) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtFunctionTest: got wrong module data\n");
+        return;
+    }
+#ifdef WITH_XSLT_DEBUG_FUNCTION
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "libxslt:test() called with %d args\n", nargs);
+#endif
+}
+
+/**
+ * xsltExtElementTest:
+ * @ctxt:  an XSLT processing context
+ * @node:  The current node
+ * @inst:  the instruction in the stylesheet
+ * @comp:  precomputed informations
+ *
+ * Process an debug node
+ */
+static void
+xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
+                   xmlNodePtr inst,
+                   xsltStylePreCompPtr comp ATTRIBUTE_UNUSED)
+{
+    xmlNodePtr comment;
+
+    if (testData == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtElementTest: not initialized\n");
+        return;
+    }
+    if (ctxt == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtElementTest: no transformation context\n");
+        return;
+    }
+    if (node == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtElementTest: no current node\n");
+        return;
+    }
+    if (inst == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtElementTest: no instruction\n");
+        return;
+    }
+    if (ctxt->insert == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtElementTest: no insertion point\n");
+        return;
+    }
+    comment =
+        xmlNewComment((const xmlChar *)
+                      "libxslt:test element test worked");
+    xmlAddChild(ctxt->insert, comment);
+}
+
+/**
+ * xsltExtInitTest:
+ * @ctxt:  an XSLT transformation context
+ * @URI:  the namespace URI for the extension
+ *
+ * A function called at initialization time of an XSLT extension module
+ *
+ * Returns a pointer to the module specific data for this transformation
+ */
+static void *
+xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI)
+{
+    if (testData != NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtInitTest: already initialized\n");
+        return (NULL);
+    }
+    testData = (void *) "test data";
+    xsltRegisterExtFunction(ctxt, (const xmlChar *) "test",
+                            (const xmlChar *) XSLT_DEFAULT_URL,
+                            xsltExtFunctionTest);
+    xsltRegisterExtElement(ctxt, (const xmlChar *) "test",
+                            (const xmlChar *) XSLT_DEFAULT_URL,
+                            xsltExtElementTest);
+
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "Registered test module : %s\n", URI);
+    return (testData);
+}
+
+
+/**
+ * xsltExtShutdownTest:
+ * @ctxt:  an XSLT transformation context
+ * @URI:  the namespace URI for the extension
+ * @data:  the data associated to this module
+ *
+ * A function called at shutdown time of an XSLT extension module
+ */
+static void
+xsltExtShutdownTest(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
+                    const xmlChar * URI, void *data)
+{
+    if (testData == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtShutdownTest: not initialized\n");
+        return;
+    }
+    if (data != testData) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltExtShutdownTest: wrong data\n");
+    }
+    testData = NULL;
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "Unregistered test module : %s\n", URI);
+}
+
+/************************************************************************
+ * 									*
+ * 		Registration of XSLT and libxslt functions		*
+ * 									*
+ ************************************************************************/
+
 /**
  * xsltRegisterAllFunctions:
  * @ctxt:  the XPath context
@@ -663,23 +832,27 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
  * Registers all default XSLT functions in this context
  */
 void
-xsltRegisterAllFunctions(xmlXPathContextPtr ctxt) {
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"current",
+xsltRegisterAllFunctions(xmlXPathContextPtr ctxt)
+{
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "current",
                          xsltCurrentFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"document",
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "document",
                          xsltDocumentFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"key",
-                         xsltKeyFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"unparsed-entity-uri",
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "key", xsltKeyFunction);
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "unparsed-entity-uri",
                          xsltUnparsedEntityURIFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"format-number",
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "format-number",
                          xsltFormatNumberFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"generate-id",
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "generate-id",
                          xsltGenerateIdFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"system-property",
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "system-property",
                          xsltSystemPropertyFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"element-available",
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "element-available",
                          xsltElementAvailableFunction);
-    xmlXPathRegisterFunc(ctxt, (const xmlChar *)"function-available",
+    xmlXPathRegisterFunc(ctxt, (const xmlChar *) "function-available",
                          xsltFunctionAvailableFunction);
+
+    xsltRegisterExtModule((const xmlChar *) XSLT_DEFAULT_URL,
+	                  xsltExtInitTest,
+                          xsltExtShutdownTest);
 }

@@ -46,53 +46,55 @@
  *
  * Process an debug node
  */
-void 
+void
 xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
-	  xmlNodePtr inst ATTRIBUTE_UNUSED, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
+          xmlNodePtr inst ATTRIBUTE_UNUSED,
+          xsltStylePreCompPtr comp ATTRIBUTE_UNUSED)
+{
     int i, j;
 
     fprintf(stdout, "Templates:\n");
-    for (i = 0, j = ctxt->templNr - 1;((i < 15) && (j >= 0));i++,j--) {
-	fprintf(stdout, "#%d ", i);
-	if (ctxt->templTab[j]->name != NULL)
-	    fprintf(stdout, "name %s ", ctxt->templTab[j]->name);
-	if (ctxt->templTab[j]->match != NULL)
-	    fprintf(stdout, "name %s ", ctxt->templTab[j]->match);
-	if (ctxt->templTab[j]->mode != NULL)
-	    fprintf(stdout, "name %s ", ctxt->templTab[j]->mode);
-	fprintf(stdout, "\n");
+    for (i = 0, j = ctxt->templNr - 1; ((i < 15) && (j >= 0)); i++, j--) {
+        fprintf(stdout, "#%d ", i);
+        if (ctxt->templTab[j]->name != NULL)
+            fprintf(stdout, "name %s ", ctxt->templTab[j]->name);
+        if (ctxt->templTab[j]->match != NULL)
+            fprintf(stdout, "name %s ", ctxt->templTab[j]->match);
+        if (ctxt->templTab[j]->mode != NULL)
+            fprintf(stdout, "name %s ", ctxt->templTab[j]->mode);
+        fprintf(stdout, "\n");
     }
     fprintf(stdout, "Variables:\n");
-    for (i = 0, j = ctxt->varsNr - 1;((i < 15) && (j >= 0));i++,j--) {
-	xsltStackElemPtr cur;
+    for (i = 0, j = ctxt->varsNr - 1; ((i < 15) && (j >= 0)); i++, j--) {
+        xsltStackElemPtr cur;
 
-	if (ctxt->varsTab[j] == NULL)
-	    continue;
-	fprintf(stdout, "#%d\n", i);
-	cur = ctxt->varsTab[j];
-	while (cur != NULL) {
-	    if (cur->comp == NULL) {
-		fprintf(stdout, "corrupted !!!\n");
-	    } else if (cur->comp->type == XSLT_FUNC_PARAM) {
-		fprintf(stdout, "param ");
-	    } else if (cur->comp->type == XSLT_FUNC_VARIABLE) {
-		fprintf(stdout, "var ");
-	    }
-	    if (cur->name != NULL)
-		fprintf(stdout, "%s ", cur->name);
-	    else
-		fprintf(stdout, "noname !!!!");
+        if (ctxt->varsTab[j] == NULL)
+            continue;
+        fprintf(stdout, "#%d\n", i);
+        cur = ctxt->varsTab[j];
+        while (cur != NULL) {
+            if (cur->comp == NULL) {
+                fprintf(stdout, "corrupted !!!\n");
+            } else if (cur->comp->type == XSLT_FUNC_PARAM) {
+                fprintf(stdout, "param ");
+            } else if (cur->comp->type == XSLT_FUNC_VARIABLE) {
+                fprintf(stdout, "var ");
+            }
+            if (cur->name != NULL)
+                fprintf(stdout, "%s ", cur->name);
+            else
+                fprintf(stdout, "noname !!!!");
 #ifdef LIBXML_DEBUG_ENABLED
-	    if (cur->value != NULL) {
-		xmlXPathDebugDumpObject(stdout, cur->value, 1);
-	    } else {
-		fprintf(stdout, "NULL !!!!");
-	    }
+            if (cur->value != NULL) {
+                xmlXPathDebugDumpObject(stdout, cur->value, 1);
+            } else {
+                fprintf(stdout, "NULL !!!!");
+            }
 #endif
-	    fprintf(stdout, "\n");
-	    cur = cur->next;
-	}
-	
+            fprintf(stdout, "\n");
+            cur = cur->next;
+        }
+
     }
 }
 
@@ -131,6 +133,32 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
 }
 
 /**
+ * xsltFunctionLocalTime:
+ * @ctxt:  the XPath Parser context
+ * @nargs:  the number of arguments
+ *
+ * Implement the localTime XSLT function used by NORM
+ *   string localTime(???)
+ *
+ * This function is available in Norm's extension namespace
+ */
+static void
+xsltFunctionLocalTime(xmlXPathParserContextPtr ctxt, int nargs) {
+    if ((nargs < 0) || (nargs > 1)) {
+        xsltGenericError(xsltGenericErrorContext,
+		"localTime() : invalid number of args %d\n", nargs);
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    /* TODO : Norm's localTime() extension */
+    if (nargs == 1) {
+	xmlXPathStringFunction(ctxt, 1);
+    } else {
+	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+    }
+}
+
+/**
  * xsltRegisterExtras:
  * @ctxt:  a XSLT process context
  *
@@ -144,6 +172,8 @@ xsltRegisterExtras(xsltTransformContextPtr ctxt) {
 	                    XSLT_SAXON_NAMESPACE, xsltFunctionNodeSet);
     xsltRegisterExtFunction(ctxt, (const xmlChar *) "node-set",
 	                    XSLT_XT_NAMESPACE, xsltFunctionNodeSet);
+    xsltRegisterExtFunction(ctxt, (const xmlChar *) "localTime",
+	                    XSLT_NORM_SAXON_NAMESPACE, xsltFunctionLocalTime);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "debug",
 	                    XSLT_LIBXSLT_NAMESPACE, xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "output",

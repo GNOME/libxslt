@@ -36,6 +36,7 @@
 #include <libxslt/xsltInternals.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
+#include <libxslt/extensions.h>
 
 #ifdef WIN32
 #ifdef _MSC_VER
@@ -442,6 +443,7 @@ main(int argc, char **argv)
         }
         xsltFreeStylesheet(cur);
     }
+    xsltUnregisterAllExtModules();
     xmlCleanupParser();
     xmlMemoryDump();
     return (0);

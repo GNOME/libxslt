@@ -2897,7 +2897,6 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltStackElemPtr variables;
     xsltStackElemPtr vptr;
 
-
     if ((style == NULL) || (doc == NULL))
 	return(NULL);
     ctxt = xsltNewTransformContext(style, doc);
@@ -2971,9 +2970,11 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 	xsltEvalUserParams(ctxt, params);
     xsltEvalGlobalVariables(ctxt);
     ctxt->node = (xmlNodePtr) doc;
+    xsltInitCtxtExts(ctxt);
     varsPush(ctxt, NULL);
     xsltProcessOneNode(ctxt, ctxt->node);
     xsltFreeStackElemList(varsPop(ctxt));
+    xsltShutdownCtxtExts(ctxt);
 
     xsltCleanupTemplates(style); /* TODO: <- style should be read only */
 
