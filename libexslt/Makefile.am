@@ -10,7 +10,8 @@ exsltinc_HEADERS =                      \
 	exslt.h				\
 	exsltconfig.h			\
 	exslt.h				\
-	exsltconfig.h
+	exsltconfig.h			\
+	exsltexports.h
 
 libexslt_la_SOURCES =                   \
 	exslt.c				\

@@ -1,3 +1,8 @@
+Mon Aug 25 13:39:40 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/Makefile.am libexslt/Makefile.am: add the new header so they
+	  get included in the distrib
+
 Mon Aug 25 11:56:02 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/*.h libexslt/*.h: exportability taint of the headers.

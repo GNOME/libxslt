@@ -23,7 +23,8 @@ xsltinc_HEADERS = 			\
 	transform.h			\
 	security.h			\
 	xsltInternals.h			\
-	xsltconfig.h
+	xsltconfig.h			\
+	xsltexports.h
 
 libxslt_la_SOURCES = 			\
 	xslt.c				\
