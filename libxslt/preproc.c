@@ -1336,6 +1336,9 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	} else if (IS_XSLT_NAME(inst, "stylesheet")) {
 	    /* no computation needed */
 	    return;
+	} else if (IS_XSLT_NAME(inst, "transform")) {
+	    /* no computation needed */
+	    return;
 	} else if (IS_XSLT_NAME(inst, "key")) {
 	    /* no computation needed */
 	    return;
