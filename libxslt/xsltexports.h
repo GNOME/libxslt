@@ -51,13 +51,13 @@
   #undef XSLTCALL
   #if defined(IN_LIBXSLT) && !defined(LIBXSLT_STATIC)
     #define XSLTPUBFUN __declspec(dllexport)
-    #define XSLTPUBVAR __declspec(dllexport)
+    #define XSLTPUBVAR __declspec(dllexport) extern
   #else
     #define XSLTPUBFUN
     #if !defined(LIBXSLT_STATIC)
       #define XSLTPUBVAR __declspec(dllimport) extern
     #else
-      #define XSLTPUBVAR
+      #define XSLTPUBVAR extern
     #endif
   #endif
   #define XSLTCALL __cdecl

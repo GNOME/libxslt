@@ -51,13 +51,13 @@
   #undef EXSLTCALL
   #if defined(IN_LIBEXSLT) && !defined(LIBEXSLT_STATIC)
     #define EXSLTPUBFUN __declspec(dllexport)
-    #define EXSLTPUBVAR __declspec(dllexport)
+    #define EXSLTPUBVAR __declspec(dllexport) extern
   #else
     #define EXSLTPUBFUN
     #if !defined(LIBEXSLT_STATIC)
       #define EXSLTPUBVAR __declspec(dllimport) extern
     #else
-      #define EXSLTPUBVAR
+      #define EXSLTPUBVAR extern
     #endif
   #endif
   #define EXSLTCALL __cdecl
