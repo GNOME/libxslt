@@ -19,12 +19,9 @@ registerAllExtras()
 # functions from module python
 cleanup()
 registerErrorHandler()
+registerExtModuleElement()
 registerExtModuleFunction()
 registerExtensionClass()
-
-# functions from module transform
-setXIncludeDefault()
-xincludeDefault()
 
 # functions from module xslt
 cleanupGlobals()
@@ -98,6 +95,7 @@ Class transformCtxt()
     shutdownCtxtExts()
 
     # functions from module extra
+    debug()
     registerExtras()
 
     # functions from module imports
@@ -117,11 +115,6 @@ Class transformCtxt()
     attrTemplateValueProcessNode()
     evalAttrValueTemplate()
     evalTemplateString()
-
-    # functions from module transform
-    applyStripSpaces()
-    freeTransformContext()
-    registerAllElement()
 
     # functions from module variables
     evalGlobalVariables()
@@ -195,9 +188,6 @@ Class stylesheet()
     # functions from module python
     applyStylesheet()
     saveResultToString()
-
-    # functions from module transform
-    newTransformContext()
 
     # functions from module variables
     parseGlobalParam()

@@ -34,5 +34,16 @@ typedef struct {
     xsltTransformContextPtr obj;
 } PytransformCtxt_Object;
 
+#define PycompiledStyle_Get(v) (((v) == Py_None) ? NULL : \
+        (((PycompiledStyle_Object *)(v))->obj))
+
+typedef struct {
+    PyObject_HEAD
+    xsltTransformContextPtr obj;
+} PycompiledStyle_Object;
+
+
 PyObject * libxslt_xsltStylesheetPtrWrap(xsltStylesheetPtr ctxt);
 PyObject * libxslt_xsltTransformContextPtrWrap(xsltTransformContextPtr ctxt);
+PyObject * libxslt_xsltStylePreCompPtrWrap(xsltStylePreCompPtr comp);
+PyObject * libxslt_xsltElemPreCompPtrWrap(xsltElemPreCompPtr comp);

@@ -185,6 +185,7 @@ skipped_modules = {
     'list': None,
     'threads': None,
     'xpointer': None,
+    'transform': None,
 }
 skipped_types = {
     'int *': "usually a return type",
@@ -267,6 +268,8 @@ py_types = {
     'FILE *': ('O', "File", "FILEPtr", "FILE *", "libxml_"),
     'xsltTransformContextPtr':  ('O', "transformCtxt", "xsltTransformContextPtr", "xsltTransformContextPtr", "libxslt_"),
     'xsltTransformContext *':  ('O', "transformCtxt", "xsltTransformContextPtr", "xsltTransformContextPtr", "libxslt_"),
+    'xsltStylePreCompPtr':  ('O', "compiledStyle", "xsltStylePreCompPtr", "xsltStylePreCompPtr", "libxslt_"),
+    'xsltStylePreComp *':  ('O', "compiledStyle", "xsltStylePreCompPtr", "xsltStylePreCompPtr", "libxslt_"),
     'xsltStylesheetPtr':  ('O', "stylesheet", "xsltStylesheetPtr", "xsltStylesheetPtr", "libxslt_"),
     'xsltStylesheet *':  ('O', "stylesheet", "xsltStylesheetPtr", "xsltStylesheetPtr", "libxslt_"),
     'xmlXPathContext *':  ('O', "xpathContext", "xmlXPathContextPtr", "xmlXPathContextPtr", "libxslt_"),
