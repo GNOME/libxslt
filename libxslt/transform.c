@@ -1082,6 +1082,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldInst = NULL;
     xmlAttrPtr attrs;
     int oldBase;
+    int level = 0;
 
 #ifdef WITH_DEBUGGER
     int addCallResult = 0;
@@ -1218,7 +1219,19 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             }
 
             if (IS_XSLT_NAME(cur, "variable")) {
-                xsltParseStylesheetVariable(ctxt, cur);
+		if (level != 0) {
+		    /*
+		     * Build a new subframe and skip all the nodes
+		     * at that level.
+		     */
+		    ctxt->insert = insert;
+		    xsltApplyOneTemplate(ctxt, node, cur, NULL, NULL);
+		    while (cur->next != NULL)
+			cur = cur->next;
+		    ctxt->insert = oldInsert;
+		} else {
+		    xsltParseStylesheetVariable(ctxt, cur);
+		}
             } else if (IS_XSLT_NAME(cur, "param")) {
                 xsltParseStylesheetParam(ctxt, cur);
             } else if (IS_XSLT_NAME(cur, "message")) {
@@ -1364,6 +1377,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
         if (cur->children != NULL) {
             if (cur->children->type != XML_ENTITY_DECL) {
                 cur = cur->children;
+		level++;
                 if (copy != NULL)
                     insert = copy;
                 continue;
@@ -1377,6 +1391,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
         do {
             cur = cur->parent;
+	    level--;
             insert = insert->parent;
             if (cur == NULL)
                 break;

@@ -1,3 +1,8 @@
+Mon Feb 11 14:13:07 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed bug #58444, was quite simpler
+	  than expected.
+
 Mon Feb 11 13:27:42 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltInternals.h libxslt/pattern.c: expected to have
