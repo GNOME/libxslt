@@ -1,3 +1,10 @@
+Sun Jun 24 14:40:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
+
+	* Enhanced ApplyTemplates and ForEach to allow multiple
+	documents within a nodelist.
+	* Repaired small bug in xsltDocument function which caused
+	a crash if invalid second argument was provided.
+
 Sat Jun 23 15:44:00 MDT 2001 John Fleck <jfleck@inkstain.net>
 
 	* doc/tutorial/libxslttutorial.xml, libxslttutorial.html
