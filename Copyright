@@ -1,0 +1,15 @@
+This software is made available under 2 possible licences:
+
+   GNU LGPL, see COPYING.LIB
+
+or 
+
+   W3C IPR like licence see IPR
+
+The (W3C) IPR seems more friendlier for commercial application.
+Pick the one you prefer. Note also that though I don't try to
+enforce it I prefer that improvement or bug fixes made to the
+code be provided back, check the http://xmlsoft.org/ page for
+details to contact the authors.
+
+Daniel Veillard, representing the AUTHORS (see enclosed file)

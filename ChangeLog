@@ -1,3 +1,9 @@
+Mon Feb  5 22:02:24 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Copyright IPR Makefile.am: added some wording and a rewrite
+	  of the W3C IPR but without giving Copyright rights to W3C,
+	  should suit everybody
+
 Mon Feb  5 18:58:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES: updated, added mode support for templates

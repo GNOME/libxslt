@@ -9,7 +9,7 @@ confexec_DATA = xsltConf.sh
 bin_SCRIPTS = xslt-config
 
 EXTRA_DIST = xsltConf.sh.in xslt-config.in libxslt.spec libxslt.spec.in \
-             FEATURES TODO COPYING.LIB
+             FEATURES TODO COPYING.LIB Copyright IPR
 
 
 ## We create xsltConf.sh here and not from configure because we want
