@@ -114,7 +114,7 @@ YES				use-attribute-sets = qnames
 
 YES			    xsl:value-of
 YES				select = string-expression 
-NO				disable-output-escaping = "yes" | "no"
+YES				disable-output-escaping = "yes" | "no"
 
 YES			    xsl:number
 PARTIAL				level = "single" | "multiple" | "any"

@@ -1,3 +1,10 @@
+Mon Feb 12 18:30:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/FEATURES libxslt/transform.c: added support for
+	  disable-output-escaping in xsl:copy-of
+	* xmlspec/Makefile.am libxslt/variables.c libxslt/transform.c:
+	  give more debugging info
+
 Sun Feb 11 21:08:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/documents.[ch] libxslt/functions.c libxslt/imports.c

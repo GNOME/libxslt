@@ -324,6 +324,12 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	if (xpathParserCtxt != NULL)
 	    xmlXPathFreeParserContext(xpathParserCtxt);
 	if (result != NULL) {
+#ifdef DEBUG_VARIABLE
+	    if ((xsltGenericDebugContext == stdout) ||
+		(xsltGenericDebugContext == stderr))
+		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
+					result, 0);
+#endif
 	    if (elem->value != NULL)
 		xmlXPathFreeObject(elem->value);
 	    elem->value = result;
@@ -468,7 +474,11 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
 
 #ifdef DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
-		     "Defineing variable %s\n", name);
+		     "Defineing variable %s", name);
+    if (select != NULL)
+	xsltGenericDebug(xsltGenericDebugContext,
+			 " select %s",  select);
+    xsltGenericDebug(xsltGenericDebugContext, "\n");
 #endif
     elem = xsltNewStackElem();
     if (elem == NULL)
@@ -478,7 +488,10 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
     else
 	elem->type = XSLT_ELEM_VARIABLE;
     elem->name = xmlStrdup(name);
-    elem->select = xmlStrdup(select);
+    if (select != NULL)
+	elem->select = xmlStrdup(select);
+    else
+	elem->select = NULL;
     if (ns_uri)
 	elem->nameURI = xmlStrdup(ns_uri);
     elem->tree = tree;
@@ -846,7 +859,7 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     } else {
 	if (cur->children != NULL)
 	    xsltGenericError(xsltGenericErrorContext,
-	    "xsl:variable : content shuld be empty since select is present \n");
+	"xsl:variable : content should be empty since select is present \n");
     }
 
     ncname = xmlSplitQName2(name, &prefix);

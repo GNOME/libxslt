@@ -22,6 +22,7 @@
 #include <libxml/encoding.h>
 #include <libxml/xmlerror.h>
 #include <libxml/xpath.h>
+#include <libxml/parserInternals.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/HTMLtree.h>
 #include "xslt.h"
@@ -642,6 +643,12 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
 
+    prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:copy-of : select is missing\n");
+	goto error;
+    }
 #ifdef DEBUG_PROCESS
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltCopyOf: select %s\n", prop);
@@ -752,9 +759,6 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		 "invalud value %s for disable-output-escaping\n", prop);
 
 	xmlFree(prop);
-	if (disableEscaping) {
-	    TODO /* disable-output-escaping */
-	}
     }
     prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
     if (prop == NULL) {
@@ -785,6 +789,8 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (res->type == XPATH_STRING) {
             copy = xmlNewText(res->stringval);
 	    if (copy != NULL) {
+		if (disableEscaping)
+		    copy->name = xmlStringTextNoenc;
 		xmlAddChild(ctxt->insert, copy);
 	    }
 	}
@@ -947,11 +953,21 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    if (template) {
 		xmlNodePtr oldNode;
 
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltDefaultProcessOneNode: applying template for text %s\n",
+		                 node->content);
+#endif
 		oldNode = ctxt->node;
 		ctxt->node = node;
 		xsltApplyOneTemplate(ctxt, node, template->content);
 		ctxt->node = oldNode;
-	    } else if (ctxt->mode == NULL) {
+	    } else /* if (ctxt->mode == NULL) */ {
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltDefaultProcessOneNode: copy text %s\n",
+		                 node->content);
+#endif
 		copy = xmlCopyNode(node, 0);
 		if (copy != NULL) {
 		    xmlAddChild(ctxt->insert, copy);
@@ -1081,13 +1097,23 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		if (template) {
 		    xmlNodePtr oldNode;
 
+#ifdef DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltDefaultProcessOneNode: applying template for text %s\n",
+				     node->content);
+#endif
 		    oldNode = ctxt->node;
 		    ctxt->node = cur;
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    xsltApplyOneTemplate(ctxt, cur, template->content);
 		    ctxt->node = oldNode;
-		} else if (ctxt->mode == NULL) {
+		} else /* if (ctxt->mode == NULL) */ {
+#ifdef DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltDefaultProcessOneNode: copy text %s\n",
+				     node->content);
+#endif
 		    copy = xmlCopyNode(cur, 0);
 		    if (copy != NULL) {
 			xmlAddChild(ctxt->insert, copy);
@@ -1537,8 +1563,13 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     * element names consists of just xsl:text.
 	     */
 #ifdef DEBUG_PROCESS
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltApplyOneTemplate: copy text %s\n", cur->content);
+	    if (cur->name == xmlStringTextNoenc)
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltApplyOneTemplate: copy unescaped text %s\n",
+		                 cur->content);
+	    else
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltApplyOneTemplate: copy text %s\n", cur->content);
 #endif
 	    copy = xmlCopyNode(cur, 0);
 	    if (copy != NULL) {
