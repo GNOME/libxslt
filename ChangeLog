@@ -1,3 +1,10 @@
+Tue Aug 17 01:01:22 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/documents.c libxslt/documents.h libxslt/imports.c
+	  libxslt/xslt.c libxslt/xsltutils.c: Implemented a hook to
+	  provide document loading as suggested by David Hyatt for
+	  Safari
+
 Mon Aug 16 12:53:55 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: added a call to xmlXPathOrderDocElems

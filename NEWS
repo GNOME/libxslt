@@ -4,7 +4,12 @@
   Note that this is automatically generated from the news webpage at:
        http://xmlsoft.org/XSLT/news.html
 
-Those are the public releases made:
+The change log at 
+ChangeLog.html
+ describes the recents commits
+to the CVS at 
+http://cvs.gnome.org/viewcvs/libxslt/
+ code base.Those are the public releases made:
 1.1.8: July 5 2004:
    - build fixes: Windows runtime options (Oliver Stoeneberg), Windows
     binary package layout (Igor Zlatkovic), libgcrypt version test and link

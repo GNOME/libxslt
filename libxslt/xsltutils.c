@@ -2062,4 +2062,3 @@ xslDropCall(void)
 	xsltDebuggerCurrentCallbacks.drop();
 }
 
-

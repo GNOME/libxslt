@@ -2132,7 +2132,8 @@ xsltParseStylesheetFile(const xmlChar* filename) {
 	}
     }
 
-    doc = xmlReadFile((const char *) filename, NULL, XSLT_PARSE_OPTIONS);
+    doc = xsltDocDefaultLoader(filename, NULL, XSLT_PARSE_OPTIONS,
+                               NULL, XSLT_LOAD_START);
     if (doc == NULL) {
 	xsltTransformError(NULL, NULL, NULL,
 		"xsltParseStylesheetFile : cannot parse %s\n", filename);
