@@ -192,6 +192,7 @@
     <reference name='xsltRegisterExtPrefix' href='html/libxslt-extensions.html#XSLTREGISTEREXTPREFIX'/>
     <reference name='xsltRegisterExtras' href='html/libxslt-extra.html#XSLTREGISTEREXTRAS'/>
     <reference name='xsltRegisterTestModule' href='html/libxslt-extensions.html#XSLTREGISTERTESTMODULE'/>
+    <reference name='xsltResolveStylesheetAttributeSet' href='html/libxslt-attributes.html#XSLTRESOLVESTYLESHEETATTRIBUTESET'/>
     <reference name='xsltRunStylesheet' href='html/libxslt-transform.html#XSLTRUNSTYLESHEET'/>
     <reference name='xsltRuntimeExtra' href='html/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRA'/>
     <reference name='xsltRuntimeExtraPtr' href='html/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRAPTR'/>
@@ -448,6 +449,7 @@
     <ref name='xsltRegisterExtPrefix'/>
     <ref name='xsltRegisterExtras'/>
     <ref name='xsltRegisterTestModule'/>
+    <ref name='xsltResolveStylesheetAttributeSet'/>
     <ref name='xsltRunStylesheet'/>
     <ref name='xsltRuntimeExtra'/>
     <ref name='xsltRuntimeExtraPtr'/>
@@ -957,6 +959,7 @@
     <type name='xsltStylesheetPtr'>
       <ref name='xsltParseStylesheetAttributeSet'/>
       <ref name='xsltFreeAttributeSetsHashes'/>
+      <ref name='xsltResolveStylesheetAttributeSet'/>
       <ref name='xsltLoadStyleDocument'/>
       <ref name='xsltNewStyleDocument'/>
       <ref name='xsltFreeStyleDocuments'/>
@@ -1113,6 +1116,7 @@
       <ref name='xsltParseStylesheetAttributeSet'/>
       <ref name='xsltFreeAttributeSetsHashes'/>
       <ref name='xsltApplyAttributeSet'/>
+      <ref name='xsltResolveStylesheetAttributeSet'/>
     </file>
     <file name='documents'>
       <ref name='xsltNewDocument'/>
@@ -2106,6 +2110,7 @@
           <ref name='xsltEvalStaticAttrValueTemplate'/>
           <ref name='xsltFreeAttributeSetsHashes'/>
           <ref name='xsltGetNsProp'/>
+          <ref name='xsltResolveStylesheetAttributeSet'/>
           <ref name='xsltTemplateProcess'/>
         </word>
         <word name='attributes'>
@@ -2142,6 +2147,9 @@
           <ref name='xsltGetTemplate'/>
           <ref name='xsltPrintErrorContext'/>
           <ref name='xsltSetXIncludeDefault'/>
+        </word>
+        <word name='between'>
+          <ref name='xsltResolveStylesheetAttributeSet'/>
         </word>
         <word name='blank'>
           <ref name='xsltParseTemplateContent'/>
@@ -3763,6 +3771,9 @@
           <ref name='xsltParseStylesheetParam'/>
           <ref name='xsltParseStylesheetVariable'/>
         </word>
+        <word name='references'>
+          <ref name='xsltResolveStylesheetAttributeSet'/>
+        </word>
         <word name='referencing'>
           <ref name='xsltLoadStylesheetPI'/>
         </word>
@@ -3805,6 +3816,9 @@
         <word name='reset'>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
+        </word>
+        <word name='resolve'>
+          <ref name='xsltResolveStylesheetAttributeSet'/>
         </word>
         <word name='resource'>
           <ref name='xsltRunStylesheet'/>
@@ -3906,6 +3920,7 @@
         </word>
         <word name='sets'>
           <ref name='xsltFreeAttributeSetsHashes'/>
+          <ref name='xsltResolveStylesheetAttributeSet'/>
         </word>
         <word name='setting'>
           <ref name='xsltGetQNameURI'/>

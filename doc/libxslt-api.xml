@@ -96,6 +96,7 @@
      <exports symbol='xsltParseStylesheetAttributeSet'/>
      <exports symbol='xsltFreeAttributeSetsHashes'/>
      <exports symbol='xsltApplyAttributeSet'/>
+     <exports symbol='xsltResolveStylesheetAttributeSet'/>
     </file>
     <file name='xsltInternals'>
      <exports symbol='XSLT_MAX_SORT'/>
@@ -1369,6 +1370,11 @@
     <function name='xsltRegisterTestModule' file='extensions'>
       <info>Registers the test module</info>
       <return type='void'/>
+    </function>
+    <function name='xsltResolveStylesheetAttributeSet' file='attributes'>
+      <info>resolve the references between attribute sets.</info>
+      <return type='void'/>
+      <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
     </function>
     <function name='xsltRunStylesheet' file='transform'>
       <info>Apply the stylesheet to the document and generate the output according to output SAX and IObuf. It&apos;s an error to specify both SAX and IObuf. </info>

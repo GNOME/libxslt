@@ -1,3 +1,7 @@
+Mon Apr 15 15:57:28 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/Makefile.am: fixing the equivalent of #75779
+
 Mon Apr 15 14:00:12 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c: fixed bug #78735

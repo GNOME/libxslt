@@ -22,14 +22,15 @@ EXTRA_DIST = 			\
 	libxslt-python-api.xml	\
 	$(DOCS)
 
-libxsltmod_la_LDFLAGS = -module -avoid-version
+libxsltmod_la_LDFLAGS = -module -avoid-version -L$(top_builddir)/libxslt/.libs \
+                        -L$(top_builddir)/libexslt/.libs
 
 if WITH_PYTHON
 mylibs = \
 	$(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la
 
-all: libxslt.py
+all: libxslt.py libxsltmod.la
 
 pythondir = $(prefix)/lib/python${PYTHON_VERSION}/site-packages
 python_LTLIBRARIES = libxsltmod.la

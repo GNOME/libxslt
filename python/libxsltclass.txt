@@ -148,6 +148,7 @@ Class stylesheet()
     # functions from module attributes
     freeAttributeSetsHashes()
     parseStylesheetAttributeSet()
+    resolveStylesheetAttributeSet()
 
     # functions from module documents
     freeStyleDocuments()
