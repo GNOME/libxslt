@@ -1,7 +1,7 @@
 Summary: Library providing the Gnome XSLT engine
 Name: libxslt
 Version: @VERSION@
-Release: test1
+Release: 1
 License: MIT
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/XSLT/libxslt-%{version}.tar.gz
