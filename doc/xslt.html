@@ -201,6 +201,24 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
+<h3>1.0.2: Aug 15 2001</h3>
+<ul>
+  <li>lot of bug fixes, increased the testsuite</li>
+  <li>a large chunk of EXSLT is implemented</li>
+  <li>improvements on the extension framework</li>
+  <li>documentation improvements</li>
+  <li>Windows MSC projects files should be up-to-date</li>
+  <li>handle attributes inherited from the DTD by default</li>
+</ul>
+
+<h3>1.0.1:  July 24 2001</h3>
+<ul>
+  <li>initial EXSLT framework</li>
+  <li>better error reporting</li>
+  <li>fixed the profiler on Windows</li>
+  <li>bug fixes</li>
+</ul>
+
 <h3>1.0.0: July 10 2001</h3>
 <ul>
   <li>a lot of cleanup, a lot of regression tests added or fixed</li>
@@ -387,7 +405,7 @@ for a really accurate description</h3>
     feature complete</li>
 </ul>
 
-<h2><a name="xsltproc">The xsltproc command line tool</h2>
+<h2><a name="xsltproc">The xsltproc command line tool</a></h2>
 
 <p>This program is the simplest way to use libxslt: from the command line. It
 is also used for doing the regression tests of the library.</p>
@@ -418,7 +436,7 @@ Usage: xsltproc [options] stylesheet file [file ...]
       --profile or --norman : dump profiling informations 
 orchis:~ -&gt;</pre>
 
-<h2><a name="API">The programming API</h2>
+<h2><a name="API">The programming API</a></h2>
 
 <p>Okay this section is clearly incomplete. But integrating libxslt into your
 application should be relatively easy. First check the few steps described
