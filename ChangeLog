@@ -1,3 +1,12 @@
+Sun Jan 11 20:10:09 MST 2004 John Fleck <jfleck@inkstain.net>
+
+	* doc/site.xsl
+	* doc/w3c.png
+	* doc/*
+	Test William's new site.xsl improvements by adding the
+	W3C logo icon, rebuild docs, and presto! It shows up
+	everywhere!
+
 Mon Jan 10 08:33:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: Refined wrapper code with large

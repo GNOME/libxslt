@@ -256,6 +256,7 @@ A:link, A:visited, A:active { text-decoration: underline }
         </td>
         <td width="100">
           <a href="http://www.gnome.org/"><img src="{$logo_base}gnome2.png" alt="Gnome2 Logo"/></a>
+          <a href="http://www.w3.org/Status"><img src="{$logo_base}w3c.png" alt="W3C logo"/></a>
           <a href="http://www.redhat.com"><img src="{$logo_base}redhat.gif" alt="Red Hat Logo"/></a>
           <div align="left">
             <a href="http://xmlsoft.org/XSLT/"><img src="{$logo_base}Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo"/></a>
