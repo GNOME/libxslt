@@ -50,6 +50,7 @@ void			xsltParseStylesheetImport(xsltStylesheetPtr style,
 void			xsltParseStylesheetInclude(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
 xsltStylesheetPtr	xsltNextImport		 (xsltStylesheetPtr style);
+int			xsltNeedElemSpaceHandling(xsltTransformContextPtr ctxt);
 int			xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt,
 						  xmlNodePtr node);
 xsltTemplatePtr		xsltFindTemplate	 (xsltTransformContextPtr ctxt,

@@ -706,7 +706,6 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr copy;
     xmlAttrPtr attrs;
     xmlNodePtr delete = NULL, cur;
-    int strip_spaces = -1;
     int nbchild = 0, oldSize;
     int childno = 0, oldPos;
     xsltTemplatePtr template;
@@ -792,18 +791,6 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     while (cur != NULL) {
 	switch (cur->type) {
 	    case XML_TEXT_NODE:
-		if ((IS_BLANK_NODE(cur)) &&
-		    (cur->parent != NULL) &&
-		    (ctxt->style->stripSpaces != NULL)) {
-		    if (strip_spaces == -1)
-			strip_spaces =
-			    xsltFindElemSpaceHandling(ctxt, cur->parent);
-		    if (strip_spaces == 1) {
-			delete = cur;
-			break;
-		    }
-		}
-		/* no break on purpose */
 	    case XML_CDATA_SECTION_NODE:
 	    case XML_DOCUMENT_NODE:
 	    case XML_HTML_DOCUMENT_NODE:
@@ -831,6 +818,16 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    delete = NULL;
 	}
     }
+    if (delete != NULL) {
+#ifdef WITH_XSLT_DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltDefaultProcessOneNode: removing ignorable blank node\n");
+#endif
+	xmlUnlinkNode(delete);
+	xmlFreeNode(delete);
+	delete = NULL;
+    }
+
     /*
      * Handling of Elements: second pass, actual processing
      */
@@ -954,31 +951,6 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xsltStackElemPtr params) {
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
-
-    /*
-     * Cleanup children empty nodes if asked for
-     */
-    if ((IS_XSLT_REAL_NODE(node)) &&
-	(node->children != NULL) &&
-	(xsltFindElemSpaceHandling(ctxt, node))) {
-	xmlNodePtr delete = NULL, cur = node->children;
-
-	while (cur != NULL) {
-	    if (IS_BLANK_NODE(cur))
-		delete = cur;
-	    
-            cur = cur->next;
-	    if (delete != NULL) {
-#ifdef WITH_XSLT_DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltProcessOneNode: removing ignorable blank node\n");
-#endif
-		xmlUnlinkNode(delete);
-		xmlFreeNode(delete);
-		delete = NULL;
-	    }
-	}
-    }
 
     template = xsltGetTemplate(ctxt, node, NULL);
     /*
@@ -3080,6 +3052,81 @@ xsltGetHTMLIDs(const xmlChar *version, const xmlChar **public,
 #endif
 
 /**
+ * xsltApplyStripSpaces:
+ * @ctxt:  a XSLT process context
+ * @root:  the root of the XML tree
+ *
+ * Strip the unwanted ignorable spaces from the input tree
+ */
+static void
+xsltApplyStripSpaces(xsltTransformContextPtr ctxt, xmlNodePtr node) {
+    xmlNodePtr current;
+#ifdef WITH_XSLT_DEBUG_PROCESS
+    int nb = 0;
+#endif
+
+
+    current = node;
+    while (current != NULL) {
+	/*
+	 * Cleanup children empty nodes if asked for
+	 */
+	if ((IS_XSLT_REAL_NODE(current)) &&
+	    (current->children != NULL) &&
+	    (xsltFindElemSpaceHandling(ctxt, current))) {
+	    xmlNodePtr delete = NULL, cur = current->children;
+
+	    while (cur != NULL) {
+		if (IS_BLANK_NODE(cur))
+		    delete = cur;
+		
+		cur = cur->next;
+		if (delete != NULL) {
+		    xmlUnlinkNode(delete);
+		    xmlFreeNode(delete);
+		    delete = NULL;
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		    nb++;
+#endif
+		}
+	    }
+	}
+
+	/*
+	 * Skip to next node in document order.
+	 */
+	if (node->type == XML_ENTITY_REF_NODE) {
+	    /* process deep in entities */
+	    xsltApplyStripSpaces(ctxt, node->children);
+	}
+	if ((current->children != NULL) &&
+            (current->type != XML_ENTITY_REF_NODE)) {
+	    current = current->children;
+	} else if (current->next != NULL) {
+	    current = current->next;
+	} else {
+	    do {
+		current = current->parent;
+		if (current == NULL)
+		    break;
+		if (current == node)
+		    goto done;
+		if (current->next != NULL) {
+		    current = current->next;
+		    break;
+		}
+	    } while (current != NULL);
+	}
+    }
+
+done:
+#ifdef WITH_XSLT_DEBUG_PROCESS
+    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltApplyStripSpaces: removed %d ignorable blank node\n", nb);
+#endif
+}
+
+/**
  * xsltApplyStylesheetInternal:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
@@ -3184,12 +3231,15 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
      * Start the evaluation, evaluate the params, the stylesheets globals
      * and start by processing the top node.
      */
+    if (xsltNeedElemSpaceHandling(ctxt))
+	xsltApplyStripSpaces(ctxt, xmlDocGetRootElement(doc));
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
     if (ctxt->globalVars == NULL)
 	ctxt->globalVars = xmlHashCreate(20);
     if (params != NULL)
         xsltEvalUserParams(ctxt, params);
+
     xsltInitCtxtExts(ctxt);
     xsltEvalGlobalVariables(ctxt);
     ctxt->node = (xmlNodePtr) doc;

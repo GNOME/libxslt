@@ -196,6 +196,30 @@ xsltNextImport(xsltStylesheetPtr cur) {
 }
 
 /**
+ * xsltNeedElemSpaceHandling:
+ * @ctxt:  an XSLT transformation context
+ *
+ * Returns whether that stylesheet requires white-space stripping
+ *
+ * Returns 1 if space should be stripped, 0 if not
+ */
+
+int
+xsltNeedElemSpaceHandling(xsltTransformContextPtr ctxt) {
+    xsltStylesheetPtr style;
+
+    if (ctxt == NULL)
+	return(0);
+    style = ctxt->style;
+    while (style != NULL) {
+	if (style->stripSpaces != NULL)
+	    return(1);
+	style = xsltNextImport(style);
+    }
+    return(0);
+}
+
+/**
  * xsltFindElemSpaceHandling:
  * @ctxt:  an XSLT transformation context
  * @node:  an XML node

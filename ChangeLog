@@ -1,3 +1,11 @@
+Tue Oct  9 12:36:53 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/imports.[ch] libxslt/transform.c libxslt/xslt.c:
+	  rewrote the way strip-space gets applied. Closes bugs #61962
+	* tests/docs/Makefile.am tests/docs/bug-66.xml
+	  tests/general/Makefile.am tests/general/bug-66.*: added a 
+	  specific example in the regression tests
+
 Mon Oct  8 11:27:52 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: Fixing bug #61913

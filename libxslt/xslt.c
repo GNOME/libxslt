@@ -861,7 +861,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 /**
  * xsltParseStylesheetExtPrefix:
  * @style:  the XSLT stylesheet
- * @template:  the "strip-space" prefix
+ * @template:  the "extension-element-prefixes" prefix
  *
  * parse an XSLT stylesheet extension prefix and record
  * prefixes needing stripping
