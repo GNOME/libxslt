@@ -2454,6 +2454,7 @@ error:
  * xsltApplyStylesheet:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
+ * @params:  a NULL terminated arry of parameters names/values tuples
  *
  * Apply the stylesheet to the document
  * NOTE: This may lead to a non-wellformed output XML wise !
@@ -2461,7 +2462,8 @@ error:
  * Returns the result document or NULL in case of error
  */
 xmlDocPtr
-xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
+xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
+	            const char **params) {
     xmlDocPtr res = NULL;
     xsltTransformContextPtr ctxt = NULL;
     xmlNodePtr root;
@@ -2513,6 +2515,8 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
      */
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
+    if (params != NULL)
+	xsltEvalUserParams(ctxt, params);
     xsltEvalGlobalVariables(ctxt);
     ctxt->node = (xmlNodePtr) doc;
     varsPush(ctxt, NULL);

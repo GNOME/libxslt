@@ -32,6 +32,8 @@ main(int argc, char **argv) {
     xsltStylesheetPtr cur = NULL;
     xmlDocPtr doc, res;
     struct timeval begin, end;
+    const char *params[16 + 1];
+    int nbparams = 0;
 
     if (argc <= 1) {
 	printf("Usage: %s [options] stylesheet file [file ...]\n", argv[0]);
@@ -43,6 +45,7 @@ main(int argc, char **argv) {
 	printf("      --novalid: skip the Dtd loading phase\n");
 	printf("      --noout: do not dump the result\n");
 	printf("      --maxdepth val : increase the maximum depth\n");
+	printf("      --param name value\n");
 	return(0);
     }
     /* --repeat : repeat 20 times, for timing or profiling */
@@ -69,6 +72,15 @@ main(int argc, char **argv) {
 	} else if ((!strcmp(argv[i], "-timing")) ||
 		   (!strcmp(argv[i], "--timing"))) {
 	    timing++;
+	} else if ((!strcmp(argv[i], "-param")) ||
+		   (!strcmp(argv[i], "--param"))) {
+	    i++;
+	    params[nbparams++] = argv[i++];
+	    params[nbparams++] = argv[i++];
+	    if (nbparams >= 16) {
+		fprintf(stderr, "too many params\n");
+		return(1);
+	    }
 	} else if ((!strcmp(argv[i], "-maxdepth")) ||
 		   (!strcmp(argv[i], "--maxdepth"))) {
 	    int value;
@@ -79,6 +91,7 @@ main(int argc, char **argv) {
 	    }
 	}
     }
+    params[nbparams] = NULL;
     xmlSubstituteEntitiesDefault(1);
     if (novalid == 0)
 	xmlLoadExtDtdDefaultValue = 1;
@@ -88,6 +101,11 @@ main(int argc, char **argv) {
 	if ((!strcmp(argv[i], "-maxdepth")) ||
 	    (!strcmp(argv[i], "--maxdepth"))) {
 	    i++;
+	    continue;
+	}
+	if ((!strcmp(argv[i], "-param")) ||
+	    (!strcmp(argv[i], "--param"))) {
+	    i += 2;
 	    continue;
 	}
 	if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
@@ -137,13 +155,13 @@ main(int argc, char **argv) {
 	    if (repeat) {
 		int j;
 		for (j = 0;j < 19; j++) {
-		    res = xsltApplyStylesheet(cur, doc);
+		    res = xsltApplyStylesheet(cur, doc, params);
 		    xmlFreeDoc(res);
 		    xmlFreeDoc(doc);
 		    doc = xmlParseFile(argv[i]);
 		}
 	    }
-	    res = xsltApplyStylesheet(cur, doc);
+	    res = xsltApplyStylesheet(cur, doc, params);
 	    if (timing) {
 		long msec;
 		gettimeofday(&end, NULL);

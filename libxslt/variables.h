@@ -34,6 +34,8 @@ extern "C" {
  */
 
 int		xsltEvalGlobalVariables		(xsltTransformContextPtr ctxt);
+int		xsltEvalUserParams		(xsltTransformContextPtr ctxt,
+						 const char **params);
 void		xsltPushStack			(xsltTransformContextPtr ctxt);
 void		xsltPopStack			(xsltTransformContextPtr ctxt);
 void		xsltParseGlobalVariable		(xsltStylesheetPtr style,

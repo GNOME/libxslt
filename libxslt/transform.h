@@ -20,7 +20,8 @@ extern "C" {
  * Interfaces
  */
 xmlDocPtr	xsltApplyStylesheet	(xsltStylesheetPtr style,
-					 xmlDocPtr doc);
+					 xmlDocPtr doc,
+					 const char **params);
 void		xsltApplyOneTemplate	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr list,
