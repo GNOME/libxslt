@@ -191,6 +191,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     }
     docu->main = 1;
     cur->document = docu;
+    cur->inst = NULL;
     return(cur);
 }
 
@@ -849,6 +850,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
     xmlNodePtr oldCurrent = NULL;
+    xmlNodePtr oldInst = NULL;
     xmlAttrPtr attrs;
 
     if (list == NULL)
@@ -868,6 +870,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      * stack and saves
      */
     oldInsert = insert = ctxt->insert;
+    oldInst = ctxt->inst;
     if (real) {
 	oldCurrent = ctxt->node;
 	ctxt->node = node;
@@ -878,6 +881,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */
     cur = list;
     while (cur != NULL) {
+	ctxt->inst = cur;
 	/*
 	 * test, we must have a valid insertion point
 	 */
@@ -888,6 +892,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    if (real)
 		ctxt->node = oldCurrent;
+	    ctxt->inst = oldInst;
 	    return;
 	}
 
@@ -1029,6 +1034,7 @@ skip_children:
     }
     if (real)
 	ctxt->node = oldCurrent;
+    ctxt->inst = oldInst;
 }
 
 
@@ -2608,7 +2614,8 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     variables = style->variables;
 
     /*
-     * Start.
+     * Start the evaluation, evaluate the params, the stylesheets globals
+     * and start by processing the top node.
      */
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
@@ -2620,9 +2627,15 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     varsPush(ctxt, NULL);
     xsltProcessOneNode(ctxt, ctxt->node);
     xsltFreeStackElemList(varsPop(ctxt));
-    xsltCleanupTemplates(style);
 
-    /* Now cleanup our variables so stylesheet can be re-used */
+    xsltCleanupTemplates(style); /* TODO: <- style should be read only */
+
+    /*
+     * Now cleanup our variables so stylesheet can be re-used
+     *
+     * TODO: this is not needed anymore global variables are copied
+     *       and not evaluated directly anymore, keep this as a check
+     */
     if (style->variables != variables) {
 	vptr = style->variables;
 	while (vptr->next!=variables)
@@ -2644,6 +2657,9 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     }
 
 
+    /*
+     * Do some post processing work depending on the generated output
+     */
     root = xmlDocGetRootElement(res);
     if (root != NULL) {
 	/*

@@ -16,8 +16,10 @@
 extern "C" {
 #endif
 
-/*
- * A couple of macros to apply the cascade
+/**
+ * XSLT_GET_IMPORT_PTR:
+ *
+ * a macro to import pointers from the stylesheet cascading order
  */
 #define XSLT_GET_IMPORT_PTR(res, style, name) {			\
     xsltStylesheetPtr st = style;				\
@@ -27,6 +29,11 @@ extern "C" {
 	st = xsltNextImport(st);				\
     }}
 
+/**
+ * XSLT_GET_IMPORT_INT:
+ *
+ * a macro to import intergers from the stylesheet cascading order
+ */
 #define XSLT_GET_IMPORT_INT(res, style, name) {			\
     xsltStylesheetPtr st = style;				\
     res = -1;							\

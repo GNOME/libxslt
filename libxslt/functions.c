@@ -61,8 +61,8 @@
 void
 xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xsltDocumentPtr doc;
-    xmlXPathObjectPtr obj, obj2=NULL;
-    xmlChar *base, *URI;
+    xmlXPathObjectPtr obj, obj2 = NULL;
+    xmlChar *base = NULL, *URI;
 
 
     if ((nargs < 1) || (nargs > 2)) {
@@ -142,9 +142,10 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	    base = xmlNodeGetBase(obj2->nodesetval->nodeTab[0]->doc,
 				  obj->nodesetval->nodeTab[0]);
 	} else {
-	    base = xmlNodeGetBase(
-		((xsltTransformContextPtr)ctxt->context->extra)->style->doc,
-				  ctxt->context->node);
+	    xsltTransformContextPtr tctxt = ctxt->context->extra;
+	    if ((tctxt != NULL) && (tctxt->inst != NULL)) {
+		base = xmlNodeGetBase(tctxt->inst->doc, tctxt->inst);
+	    }
 	}
 	URI = xmlBuildURI(obj->stringval, base);
 	if (base != NULL)

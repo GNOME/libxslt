@@ -15,14 +15,39 @@
 extern "C" {
 #endif
 
-/*
- * Constants.
+/**
+ * XSLT_DEFAULT_VERSION:
+ *
+ * The default version of XSLT supported
  */
 #define XSLT_DEFAULT_VERSION     "1.0"
+
+/**
+ * XSLT_DEFAULT_VENDOR:
+ *
+ * The XSLT "vendor" string for this processor
+ */
 #define XSLT_DEFAULT_VENDOR      "libxslt"
+
+/**
+ * XSLT_DEFAULT_URL:
+ *
+ * The XSLT "vendor" URL for this processor
+ */
 #define XSLT_DEFAULT_URL         "http://xmlsoft.org/XSLT/"
+
+/**
+ * XSLT_NAMESPACE:
+ *
+ * The XSLT specification namespace
+ */
 #define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
 
+/**
+ * xsltMaxDepth:
+ *
+ * This value is used to detect templates loops
+ */
 extern int xsltMaxDepth;
 
 #ifdef __cplusplus

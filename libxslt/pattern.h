@@ -15,8 +15,11 @@
 extern "C" {
 #endif
 
-/*
- * The implementation of patterns is kept private
+/**
+ * xsltCompMatch:
+ *
+ * Data structure used for the implementation of patterns.
+ * It is kept private (in pattern.c)
  */
 typedef struct _xsltCompMatch xsltCompMatch;
 typedef xsltCompMatch *xsltCompMatchPtr;

@@ -1,3 +1,11 @@
+Thu May 17 13:54:48 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.c libxslt/transform.c libxslt/xsltInternals.h:
+	  add ctxt->inst to allow stylesheet element lookup (needed
+	  for document() fix)
+	* libxslt/*.h: tried to generate docs for the structures and
+	  macros
+
 Wed May 16 23:00:53 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/extra.c libxslt/transform.c libxslt/variables.[ch]

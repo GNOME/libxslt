@@ -16,9 +16,32 @@
 extern "C" {
 #endif
 
+/**
+ * XSLT_LIBXSLT_NAMESPACE:
+ *
+ * This is the libxslt namespace for specific extensions
+ */
 #define XSLT_LIBXSLT_NAMESPACE ((xmlChar *) "http://xmlsoft.org/XSLT/namespace")
+
+/**
+ * XSLT_SAXON_NAMESPACE:
+ *
+ * This is Michael Kay's Saxon processor namespace for extensions
+ */
 #define XSLT_SAXON_NAMESPACE ((xmlChar *) "http://icl.com/saxon")
+
+/**
+ * XSLT_XT_NAMESPACE:
+ *
+ * This is James Clark's XT processor namespace for extensions
+ */
 #define XSLT_XT_NAMESPACE ((xmlChar *) "http://www.jclark.com/xt")
+
+/**
+ * XSLT_XALAN_NAMESPACE:
+ *
+ * This is the Apache project XALAN processor namespace for extensions
+ */
 #define XSLT_XALAN_NAMESPACE ((xmlChar *)	\
 	                        "org.apache.xalan.xslt.extensions.Redirect")
 

@@ -20,16 +20,20 @@
 extern "C" {
 #endif
 
-/*
+/**
+ * XSLT_MAX_SORT:
+ *
  * Max number of specified xsl:sort on an element
  */
 #define XSLT_MAX_SORT 5
 
-/*
- * The in-memory structure corresponding to an XSLT Template
- */
 #define XSLT_PAT_NO_PRIORITY -12345789
 
+/**
+ * xsltTemplate:
+ *
+ * The in-memory structure corresponding to an XSLT Template
+ */
 typedef struct _xsltTemplate xsltTemplate;
 typedef xsltTemplate *xsltTemplatePtr;
 struct _xsltTemplate {
@@ -45,10 +49,14 @@ struct _xsltTemplate {
     xmlNodePtr elem;	/* the source element */
 };
 
-/*
+/**
+ * xsltDecimalFormat:
+ *
  * Data structure of decimal-format
  */
-typedef struct _xsltDecimalFormat {
+typedef struct _xsltDecimalFormat xsltDecimalFormat;
+typedef xsltDecimalFormat *xsltDecimalFormatPtr;
+struct _xsltDecimalFormat {
     struct _xsltDecimalFormat *next; /* chained list */
     xmlChar *name;
     /* Used for interpretation of pattern */
@@ -64,10 +72,12 @@ typedef struct _xsltDecimalFormat {
     xmlChar *percent;
     xmlChar *permille;
     xmlChar *zeroDigit;
-} xsltDecimalFormat, *xsltDecimalFormatPtr;
+};
 
-/*
- * Data structure associated to a document
+/**
+ * xsltDocument:
+ *
+ * Data structure associated to a parsed document
  */
 
 typedef struct _xsltDocument xsltDocument;
@@ -79,17 +89,25 @@ struct _xsltDocument {
     void *keys;			/* key tables storage */
 };
 
-/*
+typedef struct _xsltTransformContext xsltTransformContext;
+typedef xsltTransformContext *xsltTransformContextPtr;
+
+/**
+ * xsltStylePreComp:
+ *
  * The in-memory structure corresponding to XSLT stylesheet constructs
  * precomputed data.
  */
 
-typedef struct _xsltTransformContext xsltTransformContext;
-typedef xsltTransformContext *xsltTransformContextPtr;
-
 typedef struct _xsltStylePreComp xsltStylePreComp;
 typedef xsltStylePreComp *xsltStylePreCompPtr;
 
+/**
+ * xsltTransformFunction:
+ *
+ * signature of the function associated to elements part of the
+ * stylesheet language like xsl:if or xsl:apply-templates.
+ */
 typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
 	                               xmlNodePtr node, xmlNodePtr inst,
 			               xsltStylePreCompPtr comp);
@@ -118,6 +136,12 @@ typedef enum {
     XSLT_FUNC_WHEN
 } xsltStyleType;
 
+/**
+ * xsltStylePreComp:
+ *
+ * The in-memory structure corresponding to XSLT stylesheet constructs
+ * precomputed data.
+ */
 struct _xsltStylePreComp {
     struct _xsltStylePreComp *next;/* chained list */
     xsltStyleType type;		/* type of the element */
@@ -329,6 +353,8 @@ struct _xsltTransformContext {
      * Global variables
      */
     xmlHashTablePtr   globalVars;	/* the global variables and params */
+
+    xmlNodePtr inst;			/* the instruction in the stylesheet */
 };
 
 #define CHECK_STOPPED if (ctxt->state == XSLT_STATE_STOPPED) return;

@@ -20,7 +20,9 @@ extern "C" {
 
 
 /*
- * registering macro, not general purpose at all
+ * XSLT_REGISTER_VARIABLE_LOOKUP:
+ *
+ * registering macro, not general purpose at all but used in different modules
  */
 
 #define XSLT_REGISTER_VARIABLE_LOOKUP(ctxt)			\
