@@ -23,6 +23,10 @@
 #define DEBUG_MEMORY_LOCATION
 </MACRO>
 <MACRO>
+<NAME>XSLT_NEED_TRIO</NAME>
+#define XSLT_NEED_TRIO
+</MACRO>
+<MACRO>
 <NAME>WITH_DEBUGGER</NAME>
 #define WITH_DEBUGGER
 </MACRO>
@@ -935,6 +939,11 @@ void
 <NAME>xsltGetNsProp</NAME>
 <RETURNS>xmlChar  *</RETURNS>
 xmlNodePtr node,const xmlChar *name,const xmlChar *nameSpace
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltGetUTF8Char</NAME>
+<RETURNS>int 	</RETURNS>
+const unsigned char *utf,int *len
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltPrintErrorContext</NAME>

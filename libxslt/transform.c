@@ -451,14 +451,12 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
 	    (target->last->name == xmlStringText) &&
-	    (cur->name != xmlStringTextNoenc) &&
-	    (cur->type != XML_CDATA_SECTION_NODE)) {
+	    (cur->name != xmlStringTextNoenc)) {
 	    xmlNodeAddContent(target->last, cur->content);
 	    return(target->last);
 	}
 	copy = xmlNewText(cur->content);
-	if ((cur->name == xmlStringTextNoenc) ||
-	    (cur->type == XML_CDATA_SECTION_NODE))
+	if (cur->name == xmlStringTextNoenc)
 	    copy->name = xmlStringTextNoenc;
     }
     if (copy != NULL) {
