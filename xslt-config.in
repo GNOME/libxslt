@@ -83,7 +83,7 @@ while test $# -gt 0; do
     shift
 done
 
-the_libs="$the_libs -L$libdir -lxslt `@XML_CONFIG@ --libs`"
+the_libs="@XSLT_LIBDIR@ @XSLT_LIBS@"
 the_flags="$the_flags -I$includedir `@XML_CONFIG@ --cflags`"
 
 if $cflags; then

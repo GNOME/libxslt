@@ -1,3 +1,7 @@
+Thu Oct  4 15:49:57 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in xslt-config.in: trying to fix bug #60890
+
 Thu Oct  4 15:28:25 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: applied patch to close bug #60724
