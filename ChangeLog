@@ -1,3 +1,8 @@
+Sat Sep 14 16:17:51 MDT 2002 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.html
+	oops, forgot to update the html version of the man page
+
 Sat Sep 14 16:10:21 MDT 2002 John Fleck <jfleck@inkstain.net>
 
 	* doc/xsltproc.xml
