@@ -940,6 +940,8 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	xsltTransformError(ctxt, style, NULL,
 	    "Global parameter %s already defined\n", name);
     }
+    if (ctxt->globalVars == NULL)
+	ctxt->globalVars = xmlHashCreate(20);
 
     /*
      * do not overwrite variables with parameters from the command line
