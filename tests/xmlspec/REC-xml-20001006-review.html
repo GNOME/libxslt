@@ -114,7 +114,7 @@ Normalization</a><br>    3.4 <a href="#sec-condition-sect">Conditional Sections<
 </p>
 <h3>Appendices</h3>
 <p class="toc">A <a href="#sec-bibliography">References</a><br>    A.1 <a href="#sec-existing-stds">Normative References</a><br>    A.2 <a href="#null">Other References</a><br>B <a href="#CharClasses">Character Classes</a><br>C <a href="#sec-xml-and-sgml">XML and SGML</a> (Non-Normative)<br>D <a href="#sec-entexpand">Expansion of Entity and Character References</a> (Non-Normative)<br>E <a href="#determinism">Deterministic Content Models</a> (Non-Normative)<br>F <a href="#sec-guessing">Autodetection
-of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2667951">Production Notes</a> (Non-Normative)<br>
+of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2668540">Production Notes</a> (Non-Normative)<br>
 </p>
 </div>
 <hr>
@@ -184,24 +184,24 @@ all text and legal notices remain intact.</p>
 <p>The terminology used to describe XML documents is defined in the body of
 this specification. The terms defined in the following list are used in building
 those definitions and in describing the actions of an XML processor: </p><dl>
-<dt class="label"><span class="diff-">may</span></dt>
-<dd><div class="diff-">
+<dt class="label">may</dt>
+<dd>
 <p>[<a name="dt-may" title="May">Definition</a>: Conforming documents and XML processors
 are permitted to but need not behave as described.]</p>
-</div></dd>
-<dt class="label"><span class="diff-">must</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">must</dt>
+<dd>
 <p>[<a name="dt-must" title="Must">Definition</a>: Conforming documents and XML processors
 are required to behave as described; otherwise they are in error. ]</p>
-</div></dd>
-<dt class="label"><span class="diff-">error</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">error</dt>
+<dd>
 <p>[<a name="dt-error" title="Error">Definition</a>: A violation of the rules of this specification;
 results are undefined. Conforming software may detect and report an error
 and may recover from it.]</p>
-</div></dd>
-<dt class="label"><span class="diff-">fatal error</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">fatal error</dt>
+<dd>
 <p>[<a name="dt-fatal" title="Fatal Error">Definition</a>: An error which a conforming <a title="XML Processor" href="#dt-xml-proc">XML processor</a> must detect and report to the application.
 After encountering a fatal error, the processor may continue processing the
 data to search for further errors and may report such errors to the application.
@@ -211,28 +211,28 @@ to the application. Once a fatal error is detected, however, the processor
 must not continue normal processing (i.e., it must not continue to pass character
 data and information about the document's logical structure to the application
 in the normal way).]</p>
-</div></dd>
-<dt class="label"><span class="diff-">at user option</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">at user option</dt>
+<dd>
 <p>[<a name="dt-atuseroption" title="At user option">Definition</a>: Conforming software
 may or must (depending on the modal verb in the sentence) behave as described;
 if it does, it must provide users a means to enable or disable the behavior
 described.]</p>
-</div></dd>
-<dt class="label"><span class="diff-">validity constraint</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">validity constraint</dt>
+<dd>
 <p>[<a name="dt-vc" title="Validity constraint">Definition</a>: A rule which applies to
 all <a title="Validity" href="#dt-valid">valid</a> XML documents. Violations of validity
 constraints are errors; they must, at user option, be reported by <a title="Validating Processor" href="#dt-validating">validating XML processors</a>.]</p>
-</div></dd>
-<dt class="label"><span class="diff-">well-formedness constraint</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">well-formedness constraint</dt>
+<dd>
 <p>[<a name="dt-wfc" title="Well-formedness constraint">Definition</a>: A rule which applies
 to all <a title="Well-Formed" href="#dt-wellformed">well-formed</a> XML documents. Violations
 of well-formedness constraints are <a title="Fatal Error" href="#dt-fatal">fatal errors</a>.]</p>
-</div></dd>
-<dt class="label"><span class="diff-">match</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">match</dt>
+<dd>
 <p>[<a name="dt-match" title="match">Definition</a>: (Of strings or names:) Two strings
 or names being compared must be identical. Characters with multiple possible
 representations in ISO/IEC 10646 (e.g. characters with both precomposed and
@@ -243,20 +243,20 @@ case folding is performed. (Of strings and rules in the grammar:) A string
 matches a grammatical production if it belongs to the language generated by
 that production. (Of content and content models:) An element matches its declaration
 when it conforms in the fashion described in the constraint <a href="#elementvalid"><b>[VC: Element Valid]</b></a>.]</p>
-</div></dd>
-<dt class="label"><span class="diff-">for compatibility</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">for compatibility</dt>
+<dd>
 <p>[<a name="dt-compat" title="For Compatibility">Definition</a>: <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E87">[E87]</a>Marks
 a sentence describing</span> a feature of XML included solely to ensure
 that XML remains compatible with SGML.]</p>
-</div></dd>
-<dt class="label"><span class="diff-">for interoperability</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">for interoperability</dt>
+<dd>
 <p>[<a name="dt-interop" title="For interoperability">Definition</a>: <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E87">[E87]</a>Marks
 a sentence describing</span> a non-binding recommendation included to increase
 the chances that XML documents can be processed by the existing installed
 base of SGML processors which predate the WebSGML Adaptations Annex to ISO 8879.]</p>
-</div></dd>
+</dd>
 </dl><p></p>
 </div>
 </div>
@@ -2814,38 +2814,38 @@ declarations containing </span>encoding declarations:</p>
 entity references, and invocations of unparsed entities might appear and the
 required behavior of an <a title="XML Processor" href="#dt-xml-proc">XML processor</a>
 in each case. The labels in the leftmost column describe the recognition context: </p><dl>
-<dt class="label"><span class="diff-">Reference in Content</span></dt>
-<dd><div class="diff-">
+<dt class="label">Reference in Content</dt>
+<dd>
 <p>as a reference anywhere after the <a title="Start-Tag" href="#dt-stag">start-tag</a>
 and before the <a title="End Tag" href="#dt-etag">end-tag</a> of an element; corresponds
 to the nonterminal <a href="#NT-content">content</a>.</p>
-</div></dd>
-<dt class="label"><span class="diff-">Reference in Attribute Value</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">Reference in Attribute Value</dt>
+<dd>
 <p>as a reference within either the value of an attribute in a <a title="Start-Tag" href="#dt-stag">start-tag</a>,
 or a default value in an <a title="Attribute-List Declaration" href="#dt-attdecl">attribute declaration</a>;
 corresponds to the nonterminal <a href="#NT-AttValue">AttValue</a>.</p>
-</div></dd>
-<dt class="label"><span class="diff-">Occurs as Attribute Value</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">Occurs as Attribute Value</dt>
+<dd>
 <p>as a <a href="#NT-Name">Name</a>, not a reference, appearing either as
 the value of an attribute which has been declared as type <b>ENTITY</b>,
 or as one of the space-separated tokens in the value of an attribute which
 has been declared as type <b>ENTITIES</b>.</p>
-</div></dd>
-<dt class="label"><span class="diff-">Reference in Entity Value</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">Reference in Entity Value</dt>
+<dd>
 <p>as a reference within a parameter or internal entity's <a title="Literal Entity Value" href="#dt-litentval">literal
 entity value</a> in the entity's declaration; corresponds to the nonterminal <a href="#NT-EntityValue">EntityValue</a>.</p>
-</div></dd>
-<dt class="label"><span class="diff-">Reference in DTD</span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">Reference in DTD</dt>
+<dd>
 <div class="diff-chg"><p>
 <a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a>as
 a reference within either the internal or external subsets of the <a title="Document Type Declaration" href="#dt-doctype">DTD</a>, but outside of an <a href="#NT-EntityValue">EntityValue</a>, <a href="#NT-AttValue">AttValue</a>, <a href="#NT-PI">PI</a>, <a href="#NT-Comment">Comment</a>, <a href="#NT-SystemLiteral">SystemLiteral</a>, <a href="#NT-PubidLiteral">PubidLiteral</a>,
 or the contents of an ignored conditional section (see <a href="#sec-condition-sect"><b>3.4 Conditional Sections</b></a>).</p></div>
 <p>.</p>
-</div></dd>
+</dd>
 </dl><p></p>
 <table border="1" frame="border" cellpadding="7"><tbody align="center">
 <tr>
@@ -3240,100 +3240,106 @@ start symbol of a regular language,</span> otherwise with an initial lower
 case letter. Literal strings are quoted.</p>
 <p>Within the expression on the right-hand side of a rule, the following expressions
 are used to match strings of one or more characters: </p><dl>
-<dt class="label"><span class="diff-"><code>#xN</code></span></dt>
-<dd><div class="diff-">
+<dt class="label"><code>#xN</code></dt>
+<dd>
 <p>where <code>N</code> is a hexadecimal integer, the expression matches the
 character in ISO/IEC 10646 whose canonical (UCS-4) code value, when interpreted
 as an unsigned binary number, has the value indicated. The number of leading
 zeros in the <code>#xN</code> form is insignificant; the number of leading
 zeros in the corresponding code value is governed by the character encoding
 in use and is not significant for XML.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>[a-zA-Z]</code>, <code>[#xN-#xN]</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">
+<code>[a-zA-Z]</code>, <code>[#xN-#xN]</code>
+</dt>
+<dd>
 <p>matches any <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a><a href="#NT-Char">Char</a></span> with a value in the range(s) indicated (inclusive).</p>
-</div></dd>
+</dd>
 <dt class="label"><span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E3">[E3]</a><code>[abc]</code>, <code>[#xN#xN#xN]</code></span></dt>
 <dd><div class="diff-add">
 <p>matches any <a href="#NT-Char">Char</a> with a value among the characters
 enumerated. Enumerations and ranges can be mixed in one set of brackets.</p>
 </div></dd>
-<dt class="label"><span class="diff-"><code>[^a-z]</code>, <code>[^#xN-#xN]</code></span></dt>
-<dd><div class="diff-">
+<dt class="label">
+<code>[^a-z]</code>, <code>[^#xN-#xN]</code>
+</dt>
+<dd>
 <p>matches any <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a><a href="#NT-Char">Char</a></span> with a value <em>outside</em> the range
 indicated.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>[^abc]</code>, <code>[^#xN#xN#xN]</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label">
+<code>[^abc]</code>, <code>[^#xN#xN#xN]</code>
+</dt>
+<dd>
 <p>matches any <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a><a href="#NT-Char">Char</a></span> with a value not among the characters given. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E3">[E3]</a>Enumerations
 and ranges of forbidden values can be mixed in one set of brackets.</span>
 </p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>&quot;string&quot;</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>&quot;string&quot;</code></dt>
+<dd>
 <p>matches a literal string <a title="match" href="#dt-match">matching</a> that
 given inside the double quotes.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>'string'</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>'string'</code></dt>
+<dd>
 <p>matches a literal string <a title="match" href="#dt-match">matching</a> that
 given inside the single quotes.</p>
-</div></dd>
+</dd>
 </dl><p> These symbols may be combined to match more complex patterns as follows,
 where <code>A</code> and <code>B</code> represent simple expressions: </p><dl>
-<dt class="label"><span class="diff-">(<code>expression</code>)</span></dt>
-<dd><div class="diff-">
+<dt class="label">(<code>expression</code>)</dt>
+<dd>
 <p>
 <code>expression</code> is treated as a unit and may be combined as described
 in this list.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>A?</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>A?</code></dt>
+<dd>
 <p>matches <code>A</code> or nothing; optional <code>A</code>.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>A B</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>A B</code></dt>
+<dd>
 <p>matches <code>A</code> followed by <code>B</code>. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>This
 operator has higher precedence than alternation; thus <code>A B | C D</code>
 is identical to <code>(A B) | (C D)</code>.</span>
 </p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>A | B</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>A | B</code></dt>
+<dd>
 <p>matches <code>A</code> or <code>B</code> but not both.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>A - B</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>A - B</code></dt>
+<dd>
 <p>matches any string that matches <code>A</code> but does not match <code>B</code>.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>A+</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>A+</code></dt>
+<dd>
 <p>matches one or more occurrences of <code>A</code>.<span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>Concatenation
 has higher precedence than alternation; thus <code>A+ | B+</code> is identical
 to <code>(A+) | (B+)</code>.</span>
 </p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>A*</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>A*</code></dt>
+<dd>
 <p>matches zero or more occurrences of <code>A</code>. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>Concatenation
 has higher precedence than alternation; thus <code>A* | B*</code> is identical
 to <code>(A*) | (B*)</code>.</span>
 </p>
-</div></dd>
+</dd>
 </dl><p> Other notations used in the productions are: </p><dl>
-<dt class="label"><span class="diff-"><code>/* ... */</code></span></dt>
-<dd><div class="diff-">
+<dt class="label"><code>/* ... */</code></dt>
+<dd>
 <p>comment.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>[ wfc: ... ]</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>[ wfc: ... ]</code></dt>
+<dd>
 <p>well-formedness constraint; this identifies by name a constraint on <a title="Well-Formed" href="#dt-wellformed">well-formed</a> documents associated with a production.</p>
-</div></dd>
-<dt class="label"><span class="diff-"><code>[ vc: ... ]</code></span></dt>
-<dd><div class="diff-">
+</dd>
+<dt class="label"><code>[ vc: ... ]</code></dt>
+<dd>
 <p>validity constraint; this identifies by name a constraint on <a title="Validity" href="#dt-valid">valid</a>
 documents associated with a production.</p>
-</div></dd>
+</dd>
 </dl><p></p>
 </div>
 </div>
@@ -4063,7 +4069,7 @@ Contact</i>) </li>
 <div class="diff-add"><div class="div1">
 
 <h2>
-<a name="id2667951"></a>I Production Notes (Non-Normative)</h2>
+<a name="id2668540"></a>I Production Notes (Non-Normative)</h2>
 <p>This Second Edition was encoded in the <a href="http://www.w3.org/XML/1998/06/xmlspec-v21.dtd">XMLspec
 DTD</a> (which has <a href="http://www.w3.org/XML/1998/06/xmlspec-report-v21.htm">documentation</a>
 available). The HTML versions were produced with a combination of the <a href="http://www.w3.org/XML/1998/06/xmlspec.xsl">xmlspec.xsl</a>, <a href="http://www.w3.org/XML/1998/06/diffspec.xsl">diffspec.xsl</a>,

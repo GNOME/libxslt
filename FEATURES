@@ -9,13 +9,13 @@ Stylesheet Constructs:
 YES			    xsl:stylesheet
 ?				id = id 
 YES				extension-element-prefixes = tokens 
-NO				exclude-result-prefixes = tokens 
+YES				exclude-result-prefixes = tokens 
 YES				version = number
 
 YES			    xsl:transform
 ?				id = id 
 YES				extension-element-prefixes = tokens 
-NO				exclude-result-prefixes = tokens 
+YES				exclude-result-prefixes = tokens 
 YES				version = number
 
 

@@ -61,6 +61,53 @@ double xmlXPathStringEvalNumber(const xmlChar *str);
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
+/*
+ * Generic function for accessing stacks in the stylesheet
+ */
+
+#define PUSH_AND_POP(scope, type, name)					\
+scope int name##Push(xsltStylesheetPtr style, type value)	 {	\
+    if (style->name##Max == 0) {					\
+	style->name##Max = 4;						\
+        style->name##Tab = (type *) xmlMalloc(style->name##Max *	\
+	              sizeof(style->name##Tab[0]));			\
+        if (style->name##Tab == NULL) {					\
+	    xmlGenericError(xmlGenericErrorContext,			\
+		    "malloc failed !\n");				\
+	    return(0);							\
+	}								\
+    }									\
+    if (style->name##Nr >= style->name##Max) {				\
+	style->name##Max *= 2;						\
+        style->name##Tab = (type *) xmlRealloc(style->name##Tab,	\
+	             style->name##Max * sizeof(style->name##Tab[0]));	\
+        if (style->name##Tab == NULL) {					\
+	    xmlGenericError(xmlGenericErrorContext,			\
+		    "realloc failed !\n");				\
+	    return(0);							\
+	}								\
+    }									\
+    style->name##Tab[style->name##Nr] = value;				\
+    style->name = value;						\
+    return(style->name##Nr++);						\
+}									\
+scope type name##Pop(xsltStylesheetPtr style)	 {			\
+    type ret;								\
+    if (style->name##Nr <= 0) return(0);				\
+    style->name##Nr--;							\
+    if (style->name##Nr > 0)						\
+	style->name = style->name##Tab[style->name##Nr - 1];		\
+    else								\
+        style->name = NULL;						\
+    ret = style->name##Tab[style->name##Nr];				\
+    style->name##Tab[style->name##Nr] = 0;				\
+    return(ret);							\
+}									\
+
+/*
+ * Those macros actually generate the functions
+ */
+PUSH_AND_POP(static, xmlChar *, exclPrefix)
 
 /************************************************************************
  *									*
@@ -271,6 +318,9 @@ xsltNewStylesheet(void) {
     cur->indent = -1;
     cur->errors = 0;
     cur->warnings = 0;
+    cur->exclPrefixNr = 0;
+    cur->exclPrefixMax = 0;
+    cur->exclPrefixTab = NULL;
     return(cur);
 }
 
@@ -323,6 +373,8 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet)
     if (sheet->nsHash != NULL)
         xmlHashFree(sheet->nsHash, NULL);
 
+    if (sheet->exclPrefixTab != NULL)
+        xmlFree(sheet->exclPrefixTab);
     if (sheet->method != NULL)
         xmlFree(sheet->method);
     if (sheet->methodURI != NULL)
@@ -799,8 +851,71 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 }
 
 /**
+ * xsltParseStylesheetExcludePrefix:
+ * @style:  the XSLT stylesheet
+ * @cur:  the current point in the stylesheet
+ *
+ * parse an XSLT stylesheet exclude prefix and record
+ * namespaces needing stripping
+ *
+ * Returns the number of Excluded prefixes added at that level
+ */
+
+static int
+xsltParseStylesheetExcludePrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
+    int nb = 0;
+    xmlChar *prefixes;
+    xmlChar *prefix, *end;
+
+    if ((cur == NULL) || (style == NULL))
+	return(0);
+
+    prefixes = xsltGetNsProp(cur, (const xmlChar *)"exclude-result-prefixes",
+	                    XSLT_NAMESPACE);
+    if (prefixes == NULL) {
+	return(0);
+    }
+
+    prefix = prefixes;
+    while (*prefix != 0) {
+	while (IS_BLANK(*prefix)) prefix++;
+	if (*prefix == 0)
+	    break;
+        end = prefix;
+	while ((*end != 0) && (!IS_BLANK(*end))) end++;
+	prefix = xmlStrndup(prefix, end - prefix);
+	if (prefix) {
+	    xmlNsPtr ns;
+
+	    if (xmlStrEqual(prefix, (const xmlChar *)"#default"))
+		ns = xmlSearchNs(style->doc, cur, NULL);
+	    else
+		ns = xmlSearchNs(style->doc, cur, prefix);
+	    if (ns == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+	    "xsl:extension-element-prefix : undefined namespace %s\n",
+	                         prefix);
+		style->warnings++;
+	    } else {
+#ifdef WITH_XSLT_DEBUG_PARSING
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "add extension prefix %s\n", prefix);
+#endif
+		exclPrefixPush(style, (xmlChar *) ns->href);
+		nb++;
+	    }
+	    xmlFree(prefix);
+	}
+	prefix = end;
+    }
+    xmlFree(prefixes);
+    return(nb);
+}
+
+/**
  * xsltPrecomputeStylesheet:
  * @style:  the XSLT stylesheet
+ * @cur:  the current child list
  *
  * Clean-up the stylesheet content from unwanted ignorable blank nodes
  * and run the preprocessing of all XSLT constructs.
@@ -808,18 +923,14 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
  * and process xslt:text
  */
 static void
-xsltPrecomputeStylesheet(xsltStylesheetPtr style) {
-    xmlNodePtr cur, delete;
+xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
+    xmlNodePtr delete;
 
     /*
      * This content comes from the stylesheet
      * For stylesheets, the set of whitespace-preserving
      * element names consists of just xsl:text.
      */
-    cur = (xmlNodePtr) style->doc;
-    if (cur == NULL)
-	return;
-    cur = cur->children;
     delete = NULL;
     while (cur != NULL) {
 	if (delete != NULL) {
@@ -831,9 +942,42 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style) {
 	    xmlFreeNode(delete);
 	    delete = NULL;
 	}
-	if ((cur->type == XML_ELEMENT_NODE) && (IS_XSLT_ELEM(cur))) {
-	    xsltStylePreCompute(style, cur);
-	    if (IS_XSLT_NAME(cur, "text")) {
+	if (cur->type == XML_ELEMENT_NODE) {
+	    int exclPrefixes;
+	    xmlChar *prefix;
+
+	    exclPrefixes = xsltParseStylesheetExcludePrefix(style, cur);
+	    if (IS_XSLT_ELEM(cur)) {
+		xsltStylePreCompute(style, cur);
+		if (IS_XSLT_NAME(cur, "text")) {
+		    for (;exclPrefixes > 0;exclPrefixes--)
+			prefix = exclPrefixPop(style);
+		    goto skip_children;
+		}
+	    }
+	    /*
+	     * Remove excluded prefixes
+	     */
+	    if ((cur->ns != NULL) && (style->exclPrefixNr > 0)) {
+		int i;
+
+		for (i = 0;i < style->exclPrefixNr;i++) {
+		    if (xmlStrEqual(cur->ns->href, style->exclPrefixTab[i])) {
+			for (;exclPrefixes > 0;exclPrefixes--)
+			    prefix = exclPrefixPop(style);
+			delete = cur;
+			goto skip_children;
+		    }
+		}
+	    }
+	    /*
+	     * If we have prefixes locally, recurse and pop them up when
+	     * going back
+	     */
+	    if (exclPrefixes > 0) {
+		xsltPrecomputeStylesheet(style, cur->children);
+		for (;exclPrefixes > 0;exclPrefixes--)
+		    prefix = exclPrefixPop(style);
 		goto skip_children;
 	    }
 	} else if (cur->type == XML_TEXT_NODE) {
@@ -1465,8 +1609,9 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	xsltFreeStylesheet(ret);
 	return(NULL);
     }
+    xsltParseStylesheetExcludePrefix(ret, cur);
+    xsltPrecomputeStylesheet(ret, cur);
 
-    xsltPrecomputeStylesheet(ret);
     if ((IS_XSLT_ELEM(cur)) && 
 	((IS_XSLT_NAME(cur, "stylesheet")) ||
 	 (IS_XSLT_NAME(cur, "transform")))) {

@@ -1,3 +1,13 @@
+Fri Jul  6 00:40:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* libxslt/xslt.c libxslt/xsltInternals.h: added exclude-result-prefix
+	  support
+	* tests/REC/Makefile.am tests/REC/test-7.1.1-[23]*: added a couple
+	  of specific tests
+	* tests/xmlspec/REC-xml-20001006-review.html: seems this changed
+	  something there, not visually perceptible
+
 Thu Jul  5 22:49:57 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docbook/result/: the change in libxml affected the

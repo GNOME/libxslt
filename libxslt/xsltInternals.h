@@ -308,6 +308,11 @@ struct _xsltStylesheet {
     xsltStylePreCompPtr preComps;	/* list of precomputed blocks */
     int warnings;		/* number of warnings found at compilation */
     int errors;			/* number of errors found at compilation */
+
+    xmlChar  *exclPrefix;	/* array of excluded prefixes */
+    xmlChar **exclPrefixTab;	/* array of excluded prefixes */
+    int       exclPrefixNr;	/* number of excluded prefixes in scope */
+    int       exclPrefixMax;	/* size of the array */
 };
 
 /*
