@@ -1,3 +1,10 @@
+Sun Oct 20 15:23:28 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* libxslt/win32config.h: mapped vsnprintf to _vsnprintf for the
+	  MS runtime
+	* xsltproc/xsltproc.c: mapped snprintf to _snprintf for the MS
+	  runtime
+	
 Fri Oct 18 13:40:12 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing 1.0.22
