@@ -1,3 +1,8 @@
+Tue Oct 22 20:53:10 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.h: fixed include c.f. bug #96487
+	* config.h.in:  Red Hat 8.0 induced change 
+
 Mon Oct 21 20:56:31 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c libxslt/numbersInternals.h libxslt/xsltutils.[ch]:

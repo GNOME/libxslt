@@ -9,7 +9,7 @@
 #ifndef __XML_XSLT_KEY_H__
 #define __XML_XSLT_KEY_H__
 
-#include "libxml/xpath.h"
+#include <libxml/xpath.h>
 #include "xsltInternals.h"
 
 #ifdef __cplusplus
