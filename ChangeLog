@@ -1,3 +1,14 @@
+Sat Jan 20 23:35:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am libxslt/template.[ch]: added a template
+	  specific module. Added attribute value template, at least in
+	  one spot.
+	* tests/REC2/Makefile.am tests/REC2/svg.xml: the SVG test from
+	  the spec now works too.
+	* libxslt/variables.c: fixed the debug
+	* libxslt/xslt.c: fixed an ugly uninitialized variable
+	* libxslt/transform.c: now using attr template processing
+
 Sat Jan 20 17:59:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/variables.[ch] libxslt/xslt.c

@@ -10,6 +10,8 @@ libxslt_la_SOURCES = 			\
 	xsltutils.h			\
 	pattern.c			\
 	pattern.h			\
+	templates.c			\
+	templates.h			\
 	variables.c			\
 	variables.h			\
 	transform.c			\

@@ -713,7 +713,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     if (top == NULL)
 	return;
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
+    prop = xmlGetNsProp(top, (const xmlChar *)"version", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:version is missing: document may not be a stylesheet\n");

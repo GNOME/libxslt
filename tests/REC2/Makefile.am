@@ -8,6 +8,10 @@ test: $(top_builddir)/libxslt/xsltproc
 	@($(top_builddir)/libxslt/xsltproc vrml.xsl data.xml > vrml.res ; \
 	diff vrml.xml vrml.res ; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
-	rm -f doc.res)
+	rm -f vrml.res)
+	@($(top_builddir)/libxslt/xsltproc svg.xsl data.xml > svg.res ; \
+	diff svg.xml svg.res ; \
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
+	rm -f svg.res)
 
 

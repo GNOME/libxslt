@@ -25,7 +25,7 @@
 #include "xsltutils.h"
 #include "variables.h"
 
-#define DEBUG_VARIABLES
+#define DEBUG_VARIABLE
 
 /*
  * Types are private:
@@ -293,6 +293,10 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
     if (name == NULL)
 	return(-1);
 
+#ifdef DEBUG_VARIABLE
+    xsltGenericDebug(xsltGenericDebugContext,
+		     "Defineing variable %s\n", name);
+#endif
     elem = xsltNewStackElem();
     if (elem == NULL)
 	return(-1);
@@ -310,6 +314,7 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
 						   ctxt->xpathCtxt);
 	if (xpathParserCtxt == NULL)
 	    goto error;
+	ctxt->xpathCtxt->node = ctxt->node;
 	xmlXPathEvalExpr(xpathParserCtxt);
 	result = valuePop(xpathParserCtxt);
 	do {
@@ -369,9 +374,12 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 #endif
 	    TODO /* Variable value computation needed */
     }
-error:
     if (elem->value != NULL)
 	return(xmlXPathObjectCopy(elem->value));
+#ifdef DEBUG_VARIABLE
+    xsltGenericDebug(xsltGenericDebugContext,
+		     "variable not found %s\n", name);
+#endif
     return(NULL);
 }
 
@@ -426,9 +434,8 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     }
 
 #ifdef DEBUG_VARIABLE
-    if (ret != NULL)
-	xsltGenericDebug(xsltGenericDebugContext,
-	    "Parsing variable %s\n", name);
+    xsltGenericDebug(xsltGenericDebugContext,
+	"Parsing variable %s\n", name);
 #endif
 
     select = xmlGetNsProp(cur, (const xmlChar *)"select", XSLT_NAMESPACE);

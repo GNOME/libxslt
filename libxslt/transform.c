@@ -30,6 +30,7 @@
 #include "pattern.h"
 #include "transform.h"
 #include "variables.h"
+#include "templates.h"
 
 #define DEBUG_PROCESS
 
@@ -839,7 +840,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     * TODO: Do the substitution of {} XPath expressions !!!
 	     */
 	    if (cur->properties != NULL)
-		copy->properties = xmlCopyPropList(copy, cur->properties);
+		copy->properties = xsltAttrListTemplateProcess(ctxt,
+			                       copy, cur->properties);
 	}
 
 	/*
