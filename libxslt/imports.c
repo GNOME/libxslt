@@ -114,7 +114,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	goto error;
     }
 
-    res = xsltParseStylesheetDoc(import);
+    res = xsltParseStylesheetImportedDoc(import);
     if (res != NULL) {
 	res->parent = style;
 	res->next = style->imports;

@@ -542,6 +542,7 @@ xsltStylesheetPtr	xsltParseStylesheetProcess(xsltStylesheetPtr ret,
 void			xsltParseStylesheetOutput(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
 xsltStylesheetPtr	xsltParseStylesheetDoc	(xmlDocPtr doc);
+xsltStylesheetPtr	xsltParseStylesheetImportedDoc(xmlDocPtr doc);
 xsltStylesheetPtr	xsltLoadStylesheetPI	(xmlDocPtr doc);
 void 			xsltNumberFormat	(xsltTransformContextPtr ctxt,
 						 xsltNumberDataPtr data,

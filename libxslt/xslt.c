@@ -1945,7 +1945,38 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	template->content = doc->children;
 	xsltAddTemplate(ret, template, NULL, NULL);
     }
-    xsltResolveStylesheetAttributeSet(ret);
+
+    return(ret);
+}
+
+/**
+ * xsltParseStylesheetImportedDoc:
+ * @doc:  and xmlDoc parsed XML
+ *
+ * parse an XSLT stylesheet building the associated structures
+ * except the processing not needed for imported documents.
+ *
+ * Returns a new XSLT stylesheet structure.
+ */
+
+xsltStylesheetPtr
+xsltParseStylesheetImportedDoc(xmlDocPtr doc) {
+    xsltStylesheetPtr ret;
+
+    if (doc == NULL)
+	return(NULL);
+
+    ret = xsltNewStylesheet();
+    if (ret == NULL)
+	return(NULL);
+    
+    ret->doc = doc;
+    xsltGatherNamespaces(ret);
+    if (xsltParseStylesheetProcess(ret, doc) == NULL) {
+	ret->doc = NULL;
+	xsltFreeStylesheet(ret);
+	ret = NULL;
+    }
 
     return(ret);
 }
@@ -1963,20 +1994,11 @@ xsltStylesheetPtr
 xsltParseStylesheetDoc(xmlDocPtr doc) {
     xsltStylesheetPtr ret;
 
-    if (doc == NULL)
-	return(NULL);
-
-    ret = xsltNewStylesheet();
+    ret = xsltParseStylesheetImportedDoc(doc);
     if (ret == NULL)
 	return(NULL);
-    
-    ret->doc = doc;
-    xsltGatherNamespaces(ret);
-	if (xsltParseStylesheetProcess(ret, doc) == NULL) {
-		ret->doc = NULL;
-		xsltFreeStylesheet(ret);
-		ret = NULL;
-	}
+
+    xsltResolveStylesheetAttributeSet(ret);
 
     return(ret);
 }
