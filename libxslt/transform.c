@@ -111,12 +111,12 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlXPathObjectPtr *results = NULL;
     xmlNodeSetPtr list = NULL;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
-    xmlChar *prop;
+    xmlChar *prop = NULL;
     xmlXPathObjectPtr res, tmp;
     const xmlChar *start;
     int descending = 0;
     int number = 0;
-    int len;
+    int len = 0;
     int i;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
@@ -343,8 +343,8 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst) {
     xmlChar *prop;
     int disableEscaping = 0;
-    xmlXPathObjectPtr res, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt;
+    xmlXPathObjectPtr res = NULL, tmp;
+    xmlXPathParserContextPtr xpathParserCtxt = NULL;
     xmlNodePtr copy = NULL;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
@@ -856,7 +856,7 @@ error:
 void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	             xmlNodePtr list) {
-    xmlNodePtr cur, insert, copy;
+    xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
     int has_variables = 0;
 
@@ -1009,9 +1009,9 @@ void
 xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst) {
     xmlChar *prop;
-    xmlXPathObjectPtr res, tmp;
-    xmlXPathParserContextPtr xpathParserCtxt;
-    int doit;
+    xmlXPathObjectPtr res = NULL, tmp;
+    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    int doit = 1;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -1090,10 +1090,10 @@ void
 xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst) {
     xmlChar *prop;
-    xmlXPathObjectPtr res, tmp;
+    xmlXPathObjectPtr res = NULL, tmp;
     xmlNodePtr replacement;
     xmlNodeSetPtr list = NULL, oldlist;
-    xmlXPathParserContextPtr xpathParserCtxt;
+    xmlXPathParserContextPtr xpathParserCtxt = NULL;
     int i, oldProximityPosition, oldContextSize;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
