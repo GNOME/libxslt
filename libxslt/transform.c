@@ -322,9 +322,9 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	}
 	xmlFree(ctxt->extras);
     }
+    xsltFreeGlobalVariables(ctxt);
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
-    xsltFreeGlobalVariables(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -666,6 +666,12 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
     copy->doc = ctxt->output;
     if (copy != NULL) {
 	xmlAddChild(insert, copy);
+	/*
+	 * The node may have been coalesced into another text node.
+	 */
+	if (insert->last != copy)
+	    return(insert->last);
+
 	copy->next = NULL;
 	/*
 	 * Add namespaces as they are needed

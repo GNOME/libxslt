@@ -7,9 +7,13 @@ EXTRA_DIST = format-number.xsl format-number.xml format-number.out
 
 all:
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
-	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/format-number.xsl $(srcdir)/format-number.xml > format-number.res ; \
+	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/format-number.xsl $(srcdir)/format-number.xml > format-number.res ; \
 	diff $(srcdir)/format-number.out format-number.res ; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f format-number.res)

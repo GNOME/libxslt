@@ -1,3 +1,14 @@
+Tue Mar 19 19:42:01 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am tests/Makefile.am tests/*/Makefile.am
+	  tests/*/*/Makefile.am : added "make valgrind" targets
+	  to run the test suite under the debugger control
+	* transform.c: valgrind spotted 2 bugs, one related to
+	  the ordering of the deallocation of the data associated to
+	  a transofrmation, the second in xsltCopyTree when the new
+	  node may have been coalesced with an adjacent text node.
+	  The regression tests now pass cleanly under testgrind.
+
 Mon Mar 18 21:33:38 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/Makefile.am: fixed a stupid bug

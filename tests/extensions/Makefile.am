@@ -10,6 +10,10 @@ EXTRA_DIST = \
 
 all:
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
 	@(for i in $(srcdir)/*.xml ; do \
@@ -21,7 +25,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  name=`basename $$j .xsl`; \
 	  out=$(srcdir)/"$$name".out; \
 	  echo Running $$j on $$i ; \
-	  $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name;\
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name;\
 	  if [ ! -f $$out ] ; then cp result.$$name $$out ; \
 	  else diff $$out result.$$name; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\

@@ -24,6 +24,10 @@ EXTRA_DIST = 						\
 
 all:
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+
 test-current:
 	@(echo > .memdump)
 	@echo \<doc/\> >current.xml
@@ -33,7 +37,7 @@ test-current:
 	@(for i in $(srcdir)/current.xsl ; do \
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then continue ; fi ; \
-	  $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml;\
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml;\
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  done)
 	@rm -f current.xml
@@ -44,7 +48,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc test-current
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then continue ; fi ; \
 	  echo $$name.xml ; \
-	  $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
 	  if [ ! -f $(srcdir)/$$name.out ] ; then cp $$name.res $(srcdir)/$$name.out ; \
 	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
 	  else diff $(srcdir)/$$name.out $$name.res ; fi ; fi; \

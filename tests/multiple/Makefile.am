@@ -30,9 +30,13 @@ GENERATED = \
 
 all:
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
-	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/dict.xsl $(srcdir)/dict.xml > dict.res ; \
+	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/dict.xsl $(srcdir)/dict.xml > dict.res ; \
 	diff $(srcdir)/result.xml dict.res; \
 	for i in $(srcdir)/out/letter*.html $(srcdir)/out/titlepage.html ; do \
 	  orig=$(srcdir)/out/`basename $$i .html`.orig ; \

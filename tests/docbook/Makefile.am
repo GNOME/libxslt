@@ -4,6 +4,10 @@ all:
 
 tests: single xtchunk # Avoid doing the test in normal pass
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+
 $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
@@ -20,7 +24,7 @@ single:
 	  echo -n "$$i : html " ; \
 	  out=$(srcdir)/result/html/`basename $$i .xml`.tst; \
 	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
 	  if [ -f $$html ] ; then \
 	      grep -v id < $$html > $$html.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -33,7 +37,7 @@ single:
 	  out=$(srcdir)/result/fo/`basename $$i .xml`.tst; \
 	  fo=$(srcdir)/result/fo/`basename $$i .xml`.fo; \
 	  msg=$(srcdir)/result/fo/`basename $$i .xml`.msg; \
-	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out 2> $$msg ; \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out 2> $$msg ; \
 	  if [ -f $$fo ] ; then \
 	      grep -v id < $$fo > $$fo.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -45,7 +49,7 @@ single:
 	  echo -n "xhtml " ; \
 	  out=$(srcdir)/result/xhtml/`basename $$i .xml`.tst; \
 	  xhtml=$(srcdir)/result/xhtml/`basename $$i .xml`.xhtml; \
-	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
 	  if [ -f $$xhtml ] ; then \
 	      grep -v id < $$xhtml > $$xhtml.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -62,7 +66,7 @@ xtchunk:
 	@(for i in $(srcdir)/test/gdp-handbook.xml ; do \
 	  echo "Testing HTML chunking on $$i :" ; \
 	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/xsltproc/xsltproc -o $(srcdir)/result/xtchunk/html/gdp-handbook $(srcdir)/html/xtchunk.xsl $$i ; \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc -o $(srcdir)/result/xtchunk/html/gdp-handbook $(srcdir)/html/xtchunk.xsl $$i ; \
 	  for html in $(srcdir)/result/xtchunk/html/*.html ; do \
 	      orig=$(srcdir)/result/xtchunk/html/`basename $$html .html`.orig ;\
 	      if [ -f $$orig ] ; then \
@@ -88,7 +92,7 @@ htmltests: $(top_builddir)/xsltproc/xsltproc
 	  echo $$i ; \
 	  out=$(srcdir)/result/html/`basename $$i .xml`.tst; \
 	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
 	  if [ -f $$html ] ; then \
 	      grep -v id < $$html > $$html.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -108,7 +112,7 @@ fotests: $(top_builddir)/xsltproc/xsltproc
 	  out=$(srcdir)/result/fo/`basename $$i .xml`.tst; \
 	  fo=$(srcdir)/result/fo/`basename $$i .xml`.fo; \
 	  msg=$(srcdir)/result/fo/`basename $$i .xml`.msg; \
-	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out  2> $$msg ; \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out  2> $$msg ; \
 	  if [ -f $$fo ] ; then \
 	      grep -v id < $$fo > $$fo.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -128,7 +132,7 @@ xhtmltests: $(top_builddir)/xsltproc/xsltproc
 	  echo $$i ; \
 	  out=$(srcdir)/result/xhtml/`basename $$i .xml`.tst; \
 	  xhtml=$(srcdir)/result/xhtml/`basename $$i .xml`.xhtml; \
-	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
 	  if [ -f $$xhtml ] ; then \
 	      grep -v id < $$xhtml > $$xhtml.noid ; \
 	      grep -v id < $$out > $$out.noid ; \

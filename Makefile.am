@@ -53,6 +53,11 @@ tests: dummy
 	@(cd tests ; $(MAKE) tests)
 	@(cd python ; $(MAKE) tests)
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	@echo '## Go get a cup of coffee it is gonna take a while ...'
+	@(cd tests ; $(MAKE) CHECKER='valgrind -q' tests)
+
 cleantar:
 	@(rm -f libxslt*.tar.gz)
 

@@ -5,4 +5,9 @@ SUBDIRS=common functions math sets strings date
 all:
 
 test tests:
-	@(cur=`pwd` ; for dir in $(SUBDIRS) ; do cd $$dir ; make tests ; cd $$cur ; done)
+	@(cur=`pwd` ; for dir in $(SUBDIRS) ; do cd $$dir ; $(MAKE) CHECKER='$(CHECKER)' tests ; cd $$cur ; done)
+
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+

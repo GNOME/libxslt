@@ -12,17 +12,21 @@ EXTRA_DIST = bredfort.css index.xml system.xml \
 
 all:
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
-	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/bredfort.xsl $(srcdir)/index.xml > result ; \
+	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/bredfort.xsl $(srcdir)/index.xml > result ; \
 	diff $(srcdir)/result.xhtml result; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f result)
-	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/test.xsl $(srcdir)/test.xml > result ; \
+	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/test.xsl $(srcdir)/test.xml > result ; \
 	diff $(srcdir)/test.result result; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f result)
-	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/message.xsl $(srcdir)/message.xml > result 2>&1 ; \
+	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/message.xsl $(srcdir)/message.xml > result 2>&1 ; \
 	diff $(srcdir)/message.result result; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f result)

@@ -11,6 +11,10 @@ EXTRA_DIST = \
 
 all:
 
+valgrind:
+	@echo '## Running the regression tests under Valgrind'
+	$(MAKE) CHECKER='valgrind -q' tests
+
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
 	@(for i in $(srcdir)/*.xml ; do \
@@ -23,7 +27,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  out=$(srcdir)/"$$name".out; \
 	  err=$(srcdir)/"$$name".err; \
 	  echo Running $$j on $$i ; \
-	  $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name \
+	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name \
 	              2> err.$$name ; \
 	  if [ ! -f $$out ] ; \
 	  then cp result.$$name $$out; cp err.$$name $$err ; \
