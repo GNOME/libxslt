@@ -332,9 +332,63 @@ sounds likely to be more efficient.</p>
 
 <h2><a name="XPath1">XPath interpretation</a></h2>
 
-<p>@@</p>
+<p>The interpreter is implemented by <strong>xmlXPathCompiledEval()</strong>
+which is the front-end to <strong>xmlXPathCompOpEval()</strong> the function
+implementing the evaluation of the expression tree. This evaluation follows
+the KISS aproach again, it's recursive and call
+<strong>xmlXPathNodeCollectAndTest()</strong> to collect nodes set when
+evaluating a <code>COLECT</code> node.</p>
 
-<h2><a name="stack">The stack frame</a></h2>
+<p>An evaluation is done within the framework of an XPath context stored in an
+<strong>xmlXPathContext</strong> structure, in the framework of a
+transformation the context is maintained within the XSLT context. Its content
+follows the requirements from the XPath specification:</p>
+<ul>
+  <li>the current document</li>
+  <li>the current node</li>
+  <li>an hash table of defined variables (but not used by XSLT)</li>
+  <li>an hash table of defined functions</li>
+  <li>the proximity position (the place of the node in the current node
+  list)</li>
+  <li>the context size (the size of the current node list)</li>
+  <li>the arry of namespaces declaration in scope (there is also a namespace
+    hash table but it is not used in the XSLT transformation).</li>
+</ul>
+
+<p>For the purpose of XSLT an <strong>extra</strong> pointer has been added
+allowing to retrieve the XSLT transformation context. When an XPath evaluation
+is about to be performed, an XPath parser context is allocated containing and
+XPath object stack (this is actually an XPath evaluation context, this is a
+remain of the time where there was no separate parsing and evaluation phase in
+the XPath implementation). Here is an overview of the set of contexts
+associated to an XPath evaluation within an XSLT transformation:</p>
+
+<p align="center"><img src="contexts.gif"
+alt="The set of contexts associated "></p>
+
+<p>Clearly this is a bit too complex and confusing and should be refactored at
+the next set of binary incompatible releases of libxml. For example the
+xmlXPathCtxt has a lot of unused parts and should probably be merged with
+xmlXPathParserCtxt.</p>
+
+<h2>Description of XPath Objects</h2>
+
+<p>An XPath expression manipulates XPath objects. XPath defines the default
+types boolean, numbers, strings and node sets. XSLT  adds the result tree
+fragment type which is basically an unmodifiable node set.</p>
+
+<p>Implementation wise, libxml follows again a KISS approach, the
+xmlXPathObject is a structure containing a type description and the various
+possibilities (using an enum could have gained some bytes). In the case of
+node sets (or result tree fragments), it points to a separate xmlNodeSet
+object which contains the list of pointers to the docuemnt nodes:</p>
+
+<p align="center"><img src="object.gif"
+alt="An Node set object pointing to "></p>
+
+<p> </p>
+
+<h2><a name="stack">The variables stack frame</a></h2>
 
 <p>@@</p>
 

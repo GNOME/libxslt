@@ -1,3 +1,8 @@
+Sun May  6 15:03:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/internals.html doc/contexts.* doc/object.*: more work done
+	  on the doc
+
 Sun May  6 00:18:39 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/internals.html: more work done on the doc
