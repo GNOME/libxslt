@@ -28,7 +28,9 @@
 #include "namespaces.h"
 #include "attributes.h"
 
-#define DEBUG_TEMPLATES
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_TEMPLATES
+#endif
 
 /************************************************************************
  *									*
@@ -62,12 +64,12 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt,
     if (res != NULL) {
 	ret = xmlXPathEvalPredicate(ctxt->xpathCtxt, res);
 	xmlXPathFreeObject(res);
-#ifdef DEBUG_TEMPLATES
+#ifdef WITH_XSLT_DEBUG_TEMPLATES
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltEvalXPathPredicate: returns %d\n", ret);
 #endif
     } else {
-#ifdef DEBUG_TEMPLATES
+#ifdef WITH_XSLT_DEBUG_TEMPLATES
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltEvalXPathPredicate: failed\n");
 #endif
@@ -108,7 +110,7 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 	}
 	xmlXPathFreeObject(res);
     }
-#ifdef DEBUG_TEMPLATES
+#ifdef WITH_XSLT_DEBUG_TEMPLATES
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltEvalXPathString: returns %s\n", ret);
 #endif
@@ -249,7 +251,7 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */
 
     ret = xsltAttrTemplateValueProcess(ctxt, expr);
-#ifdef DEBUG_TEMPLATES
+#ifdef WITH_XSLT_DEBUG_TEMPLATES
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltEvalXPathString: %s returns %s\n", expr, ret);
 #endif

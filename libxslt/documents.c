@@ -19,7 +19,9 @@
 #include "documents.h"
 #include "keys.h"
 
-#define DEBUG_DOCUMENTS
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_DOCUMENTS
+#endif
 
 
 /************************************************************************

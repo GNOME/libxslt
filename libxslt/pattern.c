@@ -32,7 +32,9 @@
 #include "keys.h"
 #include "pattern.h"
 
-#define DEBUG_PATTERN
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_PATTERN
+#endif
 
 /*
  * Types are private:
@@ -1358,7 +1360,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc, xmlNodePtr node) {
 	return(NULL);
     }
 
-#ifdef DEBUG_PATTERN
+#ifdef WITH_XSLT_DEBUG_PATTERN
     xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltCompilePattern : parsing '%s'\n", pattern);
 #endif
@@ -1612,7 +1614,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	    xsltFreeCompMatch(pat);
 	    return(-1);
 	}
-#ifdef DEBUG_PATTERN
+#ifdef WITH_XSLT_DEBUG_PATTERN
 	if (mode)
 	    xsltGenericDebug(xsltGenericDebugContext,
 			 "added pattern : '%s' mode '%s' priority %f\n",

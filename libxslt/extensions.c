@@ -23,7 +23,9 @@
 #include "xsltutils.h"
 #include "extensions.h"
 
-#define DEBUG_EXTENSIONS
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_EXTENSIONS
+#endif
 
 typedef struct _xsltExtDef xsltExtDef;
 typedef xsltExtDef *xsltExtDefPtr;

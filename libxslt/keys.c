@@ -27,7 +27,9 @@
 #include "templates.h"
 #include "keys.h"
 
-#define DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_KEYS
+#endif
 
 typedef struct _xsltKeyDef xsltKeyDef;
 typedef xsltKeyDef *xsltKeyDefPtr;
@@ -226,7 +228,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     if ((style == NULL) || (name == NULL) || (match == NULL) || (use == NULL))
 	return(-1);
 
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
     xsltGenericDebug(xsltGenericDebugContext,
 	"Add key %s, match %s, use %s\n", name, match, use);
 #endif
@@ -259,7 +261,7 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
     if ((ctxt == NULL) || (name == NULL) || (value == NULL))
 	return(NULL);
 
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
     xsltGenericDebug(xsltGenericDebugContext,
 	"Get key %s, value %s\n", name, value);
 #endif
@@ -328,21 +330,21 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
 	    nodelist = res->nodesetval;
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
 	    if (nodelist != NULL)
 		xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltInitCtxtKey: %s evaluates to %d nodes\n",
 				 pattern, nodelist->nodeNr);
 #endif
 	} else {
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
 	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltInitCtxtKey: %s is not a node set\n", pattern);
 #endif
 	    goto error;
 	}
     } else {
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltInitCtxtKey: %s evaluation failed\n", pattern);
 #endif
@@ -366,7 +368,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	ctxt->node = nodelist->nodeTab[i];
 	str = xsltEvalXPathString(ctxt, comp);
 	if (str != NULL) {
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
 	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsl:key : node associated to(%s,%s)\n",
 		             keyd->name, str);
@@ -380,7 +382,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	    }
 	    nodelist->nodeTab[i]->_private = keyd;
 	    xmlFree(str);
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
 	} else {
 	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsl:key : use %s failed to return a string\n",
@@ -415,7 +417,7 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr doc) {
 
     if ((ctxt == NULL) || (doc == NULL))
 	return;
-#ifdef DEBUG_KEYS
+#ifdef WITH_XSLT_DEBUG_KEYS
     xsltGenericDebug(xsltGenericDebugContext, "Initializing keys on %s\n",
 		     doc->doc->URL);
 #endif

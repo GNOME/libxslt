@@ -37,7 +37,9 @@
 #include "extra.h"
 #include "imports.h"
 
-#define DEBUG_PREPROC
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_PREPROC
+#endif
 
 
 /************************************************************************
@@ -197,7 +199,7 @@ xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     comp->ver11 = 0;
 
     if (xmlStrEqual(inst->name, (const xmlChar *) "output")) {
-#ifdef DEBUG_EXTRA
+#ifdef WITH_XSLT_DEBUG_EXTRA
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Found saxon:output extension\n");
 #endif
@@ -205,7 +207,7 @@ xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 			 (const xmlChar *)"file",
 			 XSLT_SAXON_NAMESPACE, &comp->has_filename);
     } else if (xmlStrEqual(inst->name, (const xmlChar *) "write")) {
-#ifdef DEBUG_EXTRA
+#ifdef WITH_XSLT_DEBUG_EXTRA
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Found xalan:write extension\n");
 #endif
@@ -217,7 +219,7 @@ xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 			 (const xmlChar *)"href",
 			 XSLT_XT_NAMESPACE, &comp->has_filename);
 	if (filename == NULL) {
-#ifdef DEBUG_EXTRA
+#ifdef WITH_XSLT_DEBUG_EXTRA
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"Found xslt11:document construct\n");
 #endif
@@ -226,7 +228,7 @@ xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 			     XSLT_NAMESPACE, &comp->has_filename);
 	    comp->ver11 = 1;
 	} else {
-#ifdef DEBUG_EXTRA
+#ifdef WITH_XSLT_DEBUG_EXTRA
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"Found xt:document extension\n");
 #endif

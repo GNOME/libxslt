@@ -46,7 +46,9 @@
 #include "imports.h"
 #include "transform.h"
 
-#define DEBUG_ATTRIBUTES
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_ATTRIBUTES
+#endif
 
 /*
  * TODO: merge attribute sets from different import precedence.
@@ -265,7 +267,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     }
 
     if (style->attributeSets == NULL) {
-#ifdef DEBUG_ATTRIBUTES
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "creating attribute set table\n");
 #endif
@@ -289,7 +291,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		                 list->name);
 		delete = list;
 	    } else {
-#ifdef DEBUG_ATTRIBUTES
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 		xsltGenericDebug(xsltGenericDebugContext,
 		    "add attribute to list %s\n", ncname);
 #endif
@@ -326,7 +328,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xmlChar *ncname2 = NULL;
 	    xmlChar *prefix2 = NULL;
 	    xsltAttrElemPtr values2;
-#ifdef DEBUG_ATTRIBUTES
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"xslt:attribute-set : %s adds use %s\n", ncname, attribute);
 #endif
@@ -355,7 +357,7 @@ done:
      * Update the value
      */
     xmlHashUpdateEntry2(style->attributeSets, ncname, prefix, values, NULL);
-#ifdef DEBUG_ATTRIBUTES
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
     xsltGenericDebug(xsltGenericDebugContext,
 	"updated attribute list %s\n", ncname);
 #endif
@@ -401,7 +403,7 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	while ((*end != 0) && (!IS_BLANK(*end))) end++;
 	attribute = xmlStrndup(attribute, end - attribute);
 	if (attribute) {
-#ifdef DEBUG_ATTRIBUTES
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"apply attribute set %s\n", attribute);
 #endif

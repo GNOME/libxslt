@@ -29,9 +29,9 @@ ACT
 PROD
 "/><tr class="
 PROD
-"><td>Orange</td><td>Proj. Rev: 1743250</td><td>Actual Rev: 10695.229999999</td></tr><tr class="
+"><td>Orange</td><td>Proj. Rev: 1743250</td><td>Actual Rev: 10695.23</td></tr><tr class="
 ACT
-"><td>PICK</td><td>Proj. Rev: 1159000</td><td>Act. Rev: 9964.479999999</td></tr><tr><td valign="top"><table><tr class="NR"><td>Non-Recurring</td><td>Number: 229</td><td>Proj. Rev: 0</td><td>Act. Rev: 8300</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>34</td><td>0</td><td>1420</td></tr><tr><td>Almond</td><td>1</td><td>0</td><td>25</td></tr><tr><td>Birch</td><td>8</td><td>0</td><td>300</td></tr><tr><td>Elm</td><td>186</td><td>0</td><td>6555</td></tr><tr class="NR"/></table></td><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 284</td><td>Proj. Rev: 1159000</td><td>Act. Rev: 1664.479999999</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>36</td><td>171000</td><td>221.3</td></tr><tr><td>Elm</td><td>240</td><td>950000</td><td>1412.34</td></tr><tr><td>Birch</td><td>8</td><td>38000</td><td>30.84</td></tr><tr class="RC"/></table></td></tr><tr class="
+"><td>PICK</td><td>Proj. Rev: 1159000</td><td>Act. Rev: 9964.48</td></tr><tr><td valign="top"><table><tr class="NR"><td>Non-Recurring</td><td>Number: 229</td><td>Proj. Rev: 0</td><td>Act. Rev: 8300</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>34</td><td>0</td><td>1420</td></tr><tr><td>Almond</td><td>1</td><td>0</td><td>25</td></tr><tr><td>Birch</td><td>8</td><td>0</td><td>300</td></tr><tr><td>Elm</td><td>186</td><td>0</td><td>6555</td></tr><tr class="NR"/></table></td><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 284</td><td>Proj. Rev: 1159000</td><td>Act. Rev: 1664.48</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>36</td><td>171000</td><td>221.3</td></tr><tr><td>Elm</td><td>240</td><td>950000</td><td>1412.34</td></tr><tr><td>Birch</td><td>8</td><td>38000</td><td>30.84</td></tr><tr class="RC"/></table></td></tr><tr class="
 ACT
 "/><tr class="
 ACT
@@ -39,7 +39,7 @@ ACT
 ACT
 "/><tr class="
 ACT
-"><td>SQUEEZE</td><td>Proj. Rev: 584250</td><td>Act. Rev: 730.749999999</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 123</td><td>Proj. Rev: 584250</td><td>Act. Rev: 730.749999999</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>36</td><td>171000</td><td>221.3</td></tr><tr><td>Elm</td><td>80</td><td>380000</td><td>470.78</td></tr><tr><td>Birch</td><td>4</td><td>19000</td><td>15.42</td></tr><tr><td>Almond</td><td>3</td><td>14250</td><td>23.25</td></tr><tr class="RC"/></table></td></tr><tr class="
+"><td>SQUEEZE</td><td>Proj. Rev: 584250</td><td>Act. Rev: 730.75</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 123</td><td>Proj. Rev: 584250</td><td>Act. Rev: 730.75</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>36</td><td>171000</td><td>221.3</td></tr><tr><td>Elm</td><td>80</td><td>380000</td><td>470.78</td></tr><tr><td>Birch</td><td>4</td><td>19000</td><td>15.42</td></tr><tr><td>Almond</td><td>3</td><td>14250</td><td>23.25</td></tr><tr class="RC"/></table></td></tr><tr class="
 ACT
 "/><tr class="
 PROD
@@ -65,7 +65,7 @@ ACT
 PROD
 "/><tr class="
 PROD
-"><td>Pineapple</td><td>Proj. Rev: 36250</td><td>Actual Rev: 73.129999999</td></tr><tr class="
+"><td>Pineapple</td><td>Proj. Rev: 36250</td><td>Actual Rev: 73.13</td></tr><tr class="
 ACT
 "><td>PICK</td><td>Proj. Rev: 23750</td><td>Act. Rev: 68.75</td></tr><tr><td valign="top"><table><tr class="NR"><td>Non-Recurring</td><td>Number: 1</td><td>Proj. Rev: 0</td><td>Act. Rev: 50</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>1</td><td>0</td><td>50</td></tr><tr class="NR"/></table></td><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 3</td><td>Proj. Rev: 23750</td><td>Act. Rev: 18.75</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>2</td><td>17500</td><td>8.75</td></tr><tr><td>Birch</td><td>1</td><td>6250</td><td>10</td></tr><tr class="RC"/></table></td></tr><tr class="
 ACT
@@ -75,7 +75,7 @@ ACT
 ACT
 "/><tr class="
 ACT
-"><td>SQUEEZE</td><td>Proj. Rev: 12500</td><td>Act. Rev: 4.379999999</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 2</td><td>Proj. Rev: 12500</td><td>Act. Rev: 4.379999999</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Elm</td><td>2</td><td>12500</td><td>4.38</td></tr><tr class="RC"/></table></td></tr><tr class="
+"><td>SQUEEZE</td><td>Proj. Rev: 12500</td><td>Act. Rev: 4.38</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 2</td><td>Proj. Rev: 12500</td><td>Act. Rev: 4.38</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Elm</td><td>2</td><td>12500</td><td>4.38</td></tr><tr class="RC"/></table></td></tr><tr class="
 ACT
 "/><tr class="
 PROD
@@ -89,9 +89,9 @@ ACT
 PROD
 "/><tr class="
 PROD
-"><td>Guava</td><td>Proj. Rev: 14995</td><td>Actual Rev: -19.489999999</td></tr><tr class="
+"><td>Guava</td><td>Proj. Rev: 14995</td><td>Actual Rev: -19.49</td></tr><tr class="
 ACT
-"><td>SQUEEZE</td><td>Proj. Rev: 14995</td><td>Act. Rev: -19.489999999</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 1</td><td>Proj. Rev: 14995</td><td>Act. Rev: -19.489999999</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>1</td><td>14995</td><td>-19.49</td></tr><tr class="RC"/></table></td></tr><tr class="
+"><td>SQUEEZE</td><td>Proj. Rev: 14995</td><td>Act. Rev: -19.49</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 1</td><td>Proj. Rev: 14995</td><td>Act. Rev: -19.49</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Pine</td><td>1</td><td>14995</td><td>-19.49</td></tr><tr class="RC"/></table></td></tr><tr class="
 ACT
 "/><tr class="
 PROD
@@ -105,13 +105,13 @@ ACT
 PROD
 "/><tr class="
 PROD
-"><td>Raisin</td><td>Proj. Rev: 299925</td><td>Actual Rev: 227.949999999</td></tr><tr class="
+"><td>Raisin</td><td>Proj. Rev: 299925</td><td>Actual Rev: 227.95</td></tr><tr class="
 ACT
 "><td>EAT</td><td>Proj. Rev: 0</td><td>Act. Rev: 0</td></tr><tr><td valign="top"><table><tr class="NR"><td>Non-Recurring</td><td>Number: 17</td><td>Proj. Rev: 0</td><td>Act. Rev: 0</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Oak</td><td>17</td><td>0</td><td>0</td></tr><tr class="NR"/></table></td><td valign="top"/></tr><tr class="
 ACT
 "/><tr class="
 ACT
-"><td>SQUEEZE</td><td>Proj. Rev: 299925</td><td>Act. Rev: 227.949999999</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 15</td><td>Proj. Rev: 299925</td><td>Act. Rev: 227.949999999</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Oak</td><td>15</td><td>299925</td><td>227.95</td></tr><tr class="RC"/></table></td></tr><tr class="
+"><td>SQUEEZE</td><td>Proj. Rev: 299925</td><td>Act. Rev: 227.95</td></tr><tr><td valign="top"/><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 15</td><td>Proj. Rev: 299925</td><td>Act. Rev: 227.95</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Oak</td><td>15</td><td>299925</td><td>227.95</td></tr><tr class="RC"/></table></td></tr><tr class="
 ACT
 "/><tr class="
 PROD
@@ -119,7 +119,7 @@ PROD
 PROD
 "><td>Fig</td><td>Proj. Rev: 74990</td><td>Actual Rev: 136.24</td></tr><tr class="
 ACT
-"><td>PICK</td><td>Proj. Rev: 74990</td><td>Act. Rev: 136.24</td></tr><tr><td valign="top"><table><tr class="NR"><td>Non-Recurring</td><td>Number: 1</td><td>Proj. Rev: 0</td><td>Act. Rev: 50</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Oak</td><td>1</td><td>0</td><td>50</td></tr><tr class="NR"/></table></td><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 2</td><td>Proj. Rev: 74990</td><td>Act. Rev: 86.239999999</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Oak</td><td>2</td><td>74990</td><td>86.24</td></tr><tr class="RC"/></table></td></tr><tr class="
+"><td>PICK</td><td>Proj. Rev: 74990</td><td>Act. Rev: 136.24</td></tr><tr><td valign="top"><table><tr class="NR"><td>Non-Recurring</td><td>Number: 1</td><td>Proj. Rev: 0</td><td>Act. Rev: 50</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Oak</td><td>1</td><td>0</td><td>50</td></tr><tr class="NR"/></table></td><td valign="top"><table><tr class="RC"><td>Recurring</td><td>Number: 2</td><td>Proj. Rev: 74990</td><td>Act. Rev: 86.24</td></tr><tr><td>Segment</td><td>Number</td><td>Proj. Rev</td><td>Act. Rev</td></tr><tr><td>Oak</td><td>2</td><td>74990</td><td>86.24</td></tr><tr class="RC"/></table></td></tr><tr class="
 ACT
 "/><tr class="
 PROD

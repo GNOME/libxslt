@@ -28,7 +28,9 @@
 #include "transform.h"
 #include "extra.h"
 
-#define DEBUG_EXTRA
+#ifdef WITH_XSLT_DEBUG
+#define WITH_XSLT_DEBUG_EXTRA
+#endif
 
 /************************************************************************
  * 									*

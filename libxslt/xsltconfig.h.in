@@ -15,6 +15,10 @@
 extern "C" {
 #endif
 
+#if @WITH_XSLT_DEBUG@
+#define WITH_XSLT_DEBUG
+#endif
+
 #if @WITH_MEM_DEBUG@
 #define DEBUG_MEMORY
 #define DEBUG_MEMORY_LOCATION
