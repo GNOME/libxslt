@@ -1,3 +1,8 @@
+Fri Nov 14 18:44:50 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am configure.in libexslt.pc.in libxslt.spec.in: adding
+	  libexslt.pc support
+
 Thu Nov 13 11:54:36 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attributes.c libxslt/documents.c libxslt/transform.c

@@ -58,7 +58,7 @@ rpm: cleantar
 
 
 pkgconfigdir=$(libdir)/pkgconfig
-pkgconfig_DATA = libxslt.pc
+pkgconfig_DATA = libxslt.pc libexslt.pc
 
 m4datadir = $(datadir)/aclocal
 m4data_DATA = libxslt.m4

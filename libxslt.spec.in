@@ -95,6 +95,7 @@ rm -fr %{buildroot}
 %{prefix}/include/*
 %{prefix}/bin/xslt-config
 %{_libdir}/pkgconfig/libxslt.pc
+%{_libdir}/pkgconfig/libexslt.pc
 
 %files python
 %defattr(-, root, root)
