@@ -696,7 +696,11 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 	    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	    oldContextSize = ctxt->xpathCtxt->contextSize;
 	    ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
-	    /* TODO: do we need to propagate the namespaces here ? */
+
+	    /* 
+	     * There is really no in scope namespace for parameters on the
+	     * command line.
+	     */
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
 	    result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);

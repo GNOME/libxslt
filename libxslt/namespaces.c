@@ -235,6 +235,17 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNsPtr p = NULL,q;
     const xmlChar *URI;
 
+    if (cur == NULL)
+	return(NULL);
+    if (cur->type != XML_NAMESPACE_DECL)
+	return(NULL);
+
+    /*
+     * One can add namespaces only on element nodes
+     */
+    if ((node != NULL) && (node->type != XML_ELEMENT_NODE))
+	node = NULL;
+
     while (cur != NULL) {
 	if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {
 	    /* TODO apply cascading */
@@ -253,6 +264,47 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	}
 	cur = cur->next;
+    }
+    return(ret);
+}
+
+/**
+ * xsltCopyNamespace:
+ * @ctxt:  a transformation context
+ * @node:  the target node
+ * @cur:  the namespace node
+ *
+ * Do a copy of an namespace node. If @node is non-NULL the
+ * new namespaces are added automatically. This handles namespaces
+ * aliases
+ *
+ * Returns: a new xmlNsPtr, or NULL in case of error.
+ */
+xmlNsPtr
+xsltCopyNamespace(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	          xmlNsPtr cur) {
+    xmlNsPtr ret = NULL;
+    const xmlChar *URI;
+
+    if (cur == NULL)
+	return(NULL);
+    if (cur->type != XML_NAMESPACE_DECL)
+	return(NULL);
+
+    /*
+     * One can add namespaces only on element nodes
+     */
+    if ((node != NULL) && (node->type != XML_ELEMENT_NODE))
+	node = NULL;
+
+    if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {
+	URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases,
+					      cur->href);
+	if (URI != NULL) {
+	    ret = xmlNewNs(node, URI, cur->prefix);
+	} else {
+	    ret = xmlNewNs(node, cur->href, cur->prefix);
+	}
     }
     return(ret);
 }

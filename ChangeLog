@@ -1,3 +1,15 @@
+Sat Jun 16 23:26:46 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/namespaces.[ch]: added a single namespace def copy
+	  operation xsltCopyNamespace(). cleaned up xsltCopyNamespaceList()
+	* libxslt/transform.c: cleaned up xsltCopyNode to cope with
+	  any kind of input nodes.
+	* libxslt/variables.c: checked and closed the last TODO about
+	  namespace propagation
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-38-* tests/docs/bug-38-*: added a specific
+	  regression test for #56115 
+
 Sat Jun 16 09:27:27 MDT 2001 John Fleck <jfleck@inkstain.net>
 
 	* updating tutorial: adding discussion of freeing memory, image
