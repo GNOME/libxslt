@@ -1,3 +1,7 @@
+Tue Jan  8 13:51:08 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/site.xsl doc/*.html: added a DocBook section docbook.html
+
 Tue Jan  8 12:51:15 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/*.html: updated gdome2 homepage

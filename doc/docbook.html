@@ -10,7 +10,7 @@ H2 {font-size: 14pt; font-family: Verdana,Arial,Helvetica}
 H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
 A:link, A:visited, A:active { text-decoration: underline }
 --></style>
-<title>Downloads</title>
+<title>DocBook</title>
 </head>
 <body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000">
 <table border="0" width="100%" cellpadding="5" cellspacing="0" align="center"><tr>
@@ -19,7 +19,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 </td>
 <td><table border="0" width="90%" cellpadding="2" cellspacing="0" align="center" bgcolor="#000000"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="3" bgcolor="#fffacd"><tr><td align="center">
 <h1>The XSLT C library for Gnome</h1>
-<h2>Downloads</h2>
+<h2>DocBook</h2>
 </td></tr></table></td></tr></table></td>
 </tr></table>
 <table border="0" cellpadding="4" cellspacing="0" width="100%" align="center"><tr><td bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="2" width="100%"><tr>
@@ -63,29 +63,45 @@ A:link, A:visited, A:active { text-decoration: underline }
 </table>
 </td></tr></table></td>
 <td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
-<p>The latest versions of libxslt can be found on <a href="ftp://xmlsoft.org/">xmlsoft.org</a> (<a href="ftp://speakeasy.rpmfind.net/pub/libxml/">Seattle</a>, <a href="ftp://fr.rpmfind.net/pub/libxml/">France</a>) or on the <a href="ftp://ftp.gnome.org/pub/GNOME/MIRRORS.html">Gnome FTP server</a> either
-as a <a href="ftp://ftp.gnome.org/pub/GNOME/stable/sources/libxslt/">source
-archive</a> or <a href="ftp://ftp.gnome.org/pub/GNOME/contrib/redhat/SRPMS/">RPM packages</a>.
-(NOTE that you need the <a href="http://rpmfind.net/linux/RPM/libxml2.html">libxml2</a>, <a href="http://rpmfind.net/linux/RPM/libxml2-devel.html">libxml2-devel</a>, <a href="http://rpmfind.net/linux/RPM/libxslt.html">libxslt</a> and <a href="http://rpmfind.net/linux/RPM/libxslt-devel.html">libxslt-devel</a>
-packages installed to compile applications using libxslt.) <a href="mailto:izlatkovic@daenet.de">Igor  Zlatkovic</a> is now the maintainer
-of the Windows port, <a href="http://www.fh-frankfurt.de/~igor/projects/libxml/index.html">he
-provides binaries</a>. <a href="mailto:Gary.Pennington@sun.com">Gary
-Pennington</a> provides <a href="http://garypennington.net/libxml2/">Solaris
-binaries</a>.</p>
-<p><a name="Contribs">Contribs:</a></p>
-<p>I do accept external contributions, especially if compiling on another
-platform, get in touch with me to upload the package. I will keep them in the
-<a href="ftp://xmlsoft.org/contribs/">contrib directory</a>
-</p>
-<p>Libxslt is also available from CVS:</p>
+<p>
+<a href="http://www.oasis-open.org/committees/docbook/">DocBook</a> is an
+XML/SGML vocabulary particularly well suited to books and papers about
+computer hardware and software.</p>
+<p>xsltproc and libxslt are not specifically dependant on DocBook, but since
+a lot of people use xsltproc and libxml2 for DocBook formatting, here are a
+few pointers and informations which may be helpful:</p>
 <ul>
-<li><p>The <a href="http://cvs.gnome.org/bonsai/rview.cgi?cvsroot=/cvs/gnome&amp;dir=libxslt">Gnome
-    CVS base</a>. Check the <a href="http://developer.gnome.org/tools/cvs.html">Gnome CVS Tools</a>
-    page; the CVS module is <b>libxslt</b>.</p></li>
+<li>The <a href="http://www.oasis-open.org/committees/docbook/">DocBook
+    homepage at Oasis</a> you should find pointers there on all the lastest
+    versions of the DTDs and XSLT stylesheets</li>
 <li>
-<a href="ftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gzftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gzftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gz">daily
-    snapshots from CVS</a>
-     are also provided</li>
+<a href="http://www.docbook.org/">DocBook: The Definitive Guide</a> is
+    the official reference documentation for DocBook.</li>
+<li>Ready to use  set of XML Catalogs and DocBook XML 4.1.2 Dtd for those
+    where their system doesn't provide them natively</li>
+<li>Informations on installing a <a href="http://ourworld.compuserve.com/homepages/hoenicka_markus/cygc2057.html">Windows
+    DocBook processing setup</a> based on Cygwin (using the binaries from the
+    official Windows port should be possible too) </li>
+<li>Alexander Kirillov's page on <a href="http://www.math.sunysb.edu/~kirillov/dbxml/">Using DocBook XML
+    4.1.2</a> (RPM packages)</li>
+</ul>
+<p>Do not use the --docbook option of xsltproc to process XML DocBook
+documents, this option is only intended to provide some (limited) support of
+the SGML version of DocBook.</p>
+<p>Points which are not DocBook specific but still worth mentionning
+again:</p>
+<ul>
+<li>if you think DocBook processing time is too slow, make sure you have
+    XML Catalogs pointing to a local installation of the DTD of DocBook.
+    Check the <a href="http://xmlsoft.org/catalog.html">XML Catalog page</a>
+    to understand more on this subject.</li>
+<li>before processing a new document, use the command
+    <p><code>xmllint --valid --noout path_to_document</code></p>
+<p>to make sure that your input is valid DocBook. And fixes the errors
+    before processing further. Note that XSLT processing may work correctly
+    with some forms of validity errors left, but in general it can give
+    troubles on output.</p>
+</li>
 </ul>
 <p><a href="mailto:daniel@veillard.com">Daniel Veillard</a></p>
 </td></tr></table></td></tr></table></td></tr></table></td>

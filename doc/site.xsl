@@ -43,6 +43,9 @@
       <xsl:when test="$name = '#Internals'">
         <xsl:text>internals.html</xsl:text>
       </xsl:when>
+      <xsl:when test="$name = '#DocBook'">
+        <xsl:text>docbook.html</xsl:text>
+      </xsl:when>
       <xsl:when test="$name = '#FAQ'">
         <xsl:text>FAQ.html</xsl:text>
       </xsl:when>

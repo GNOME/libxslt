@@ -534,6 +534,52 @@ Usage: xsltproc [options] stylesheet file [file ...]
       --profile or --norman : dump profiling informations 
 orchis:~ -&gt;</pre>
 
+<h2><a name="DocBook">DocBook</a></h2>
+
+<p><a href="http://www.oasis-open.org/committees/docbook/">DocBook</a> is an
+XML/SGML vocabulary particularly well suited to books and papers about
+computer hardware and software.</p>
+
+<p>xsltproc and libxslt are not specifically dependant on DocBook, but since
+a lot of people use xsltproc and libxml2 for DocBook formatting, here are a
+few pointers and informations which may be helpful:</p>
+<ul>
+  <li>The <a href="http://www.oasis-open.org/committees/docbook/">DocBook
+    homepage at Oasis</a> you should find pointers there on all the lastest
+    versions of the DTDs and XSLT stylesheets</li>
+  <li><a href="http://www.docbook.org/">DocBook: The Definitive Guide</a> is
+    the official reference documentation for DocBook.</li>
+  <li>Ready to use  set of XML Catalogs and DocBook XML 4.1.2 Dtd for those
+    where their system doesn't provide them natively</li>
+  <li>Informations on installing a <a
+    href="http://ourworld.compuserve.com/homepages/hoenicka_markus/cygc2057.html">Windows
+    DocBook processing setup</a> based on Cygwin (using the binaries from the
+    official Windows port should be possible too) </li>
+  <li>Alexander Kirillov's page on <a
+    href="http://www.math.sunysb.edu/~kirillov/dbxml/">Using DocBook XML
+    4.1.2</a> (RPM packages)</li>
+</ul>
+
+<p>Do not use the --docbook option of xsltproc to process XML DocBook
+documents, this option is only intended to provide some (limited) support of
+the SGML version of DocBook.</p>
+
+<p>Points which are not DocBook specific but still worth mentionning
+again:</p>
+<ul>
+  <li>if you think DocBook processing time is too slow, make sure you have
+    XML Catalogs pointing to a local installation of the DTD of DocBook.
+    Check the <a href="http://xmlsoft.org/catalog.html">XML Catalog page</a>
+    to understand more on this subject.</li>
+  <li>before processing a new document, use the command
+    <p> <code>xmllint --valid --noout path_to_document</code></p>
+    <p>to make sure that your input is valid DocBook. And fixes the errors
+    before processing further. Note that XSLT processing may work correctly
+    with some forms of validity errors left, but in general it can give
+    troubles on output.</p>
+  </li>
+</ul>
+
 <h2><a name="API">The programming API</a></h2>
 
 <p>Okay this section is clearly incomplete. But integrating libxslt into your
