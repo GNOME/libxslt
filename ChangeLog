@@ -1,3 +1,7 @@
+Mon Sep  9 14:06:25 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.spec.in: fixes libary path for x86_64 AMD
+
 Thu Sep  5 10:07:13 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/Makefile.am: applied patch from Christophe Merlet to

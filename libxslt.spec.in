@@ -55,15 +55,15 @@ with XPath functions written in Python.
 # Needed for snapshot releases.
 if [ ! -f configure ]; then
 %ifarch alpha
-  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
+  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir} --libdir=%{_libdir}
 %else
-  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
+  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir} --libdir=%{_libdir}
 %endif
 else
 %ifarch alpha
-  CFLAGS="$RPM_OPT_FLAGS" ./configure --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
+  CFLAGS="$RPM_OPT_FLAGS" ./configure --host=alpha-redhat-linux --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir} --libdir=%{_libdir}
 %else
-  CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir}
+  CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%prefix --sysconfdir="/etc" --mandir=%{_mandir} --libdir=%{_libdir}
 %endif
 fi
 
@@ -79,8 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 install -d $RPM_BUILD_ROOT%{_mandir}/man4
-make prefix=$RPM_BUILD_ROOT%{prefix} mandir=$RPM_BUILD_ROOT%{_mandir} \
-     install
+%makeinstall
+# make prefix=$RPM_BUILD_ROOT%{prefix} mandir=$RPM_BUILD_ROOT%{_mandir} libdir=$RPM_BUILD_ROOT%{_libdir} install
 
 #
 # this is a bit ugly but tries to generate the bindings for all versions
@@ -98,6 +98,7 @@ do
 	      PYTHON_VERSION="$py_version" \
 	      prefix=$RPM_BUILD_ROOT%{prefix} \
 	      mandir=$RPM_BUILD_ROOT%{_mandir} \
+	      libdir=$RPM_BUILD_ROOT%{_libdir} \
 	      install)
     fi
 done
@@ -115,25 +116,25 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/*.html doc/html doc/tutorial doc/*.gif doc/*.png
 %doc %{_mandir}/man1/xsltproc.1*
 
-%{prefix}/lib/lib*.so.*
+%{_libdir}/lib*.so.*
 %{prefix}/bin/xsltproc
 
 %files devel
 %defattr(-, root, root)
 
 %doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
-%{prefix}/lib/lib*.so
-%{prefix}/lib/*a
-%{prefix}/lib/*.sh
+%{_libdir}/lib*.so
+%{_libdir}/*a
+%{_libdir}/*.sh
 %{prefix}/include/*
 %{prefix}/bin/xslt-config
-%{prefix}/lib/pkgconfig/libxslt.pc
+%{_libdir}/pkgconfig/libxslt.pc
 %files python
 %defattr(-, root, root)
 
 %doc AUTHORS ChangeLog NEWS README Copyright FEATURES
-%{prefix}/lib/python*/site-packages/libxslt.py
-%{prefix}/lib/python*/site-packages/libxsltmod.so
+%{_libdir}/python*/site-packages/libxslt.py
+%{_libdir}/python*/site-packages/libxsltmod.so
 %doc python/TODO
 %doc python/libxsltclass.txt
 %doc python/tests/*.py
@@ -142,10 +143,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep  4 2002 Daniel Veillard <veillard@redhat.com>
+
+- library paths fixed for x86-64
+
 * Fri Feb  8 2002 Daniel.Veillard <veillard@redhat.com>
 
 - added the python module
--changed the Licence to MIT
+- changed the Licence to MIT
 
 * Sat Nov 10 2001 Daniel.Veillard <daniel@veillard.com>
 
