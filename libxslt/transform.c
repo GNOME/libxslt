@@ -2025,7 +2025,7 @@ void
 xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     xmlChar *value = NULL;
-    xmlNodePtr comment;
+    xmlNodePtr commentNode;
 
     value = xsltEvalTemplateString(ctxt, node, inst);
     /* TODO: use or generate the compiled form */
@@ -2039,8 +2039,8 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsltComment: content %s\n", value);
 #endif
 
-    comment = xmlNewComment(value);
-    xmlAddChild(ctxt->insert, comment);
+    commentNode = xmlNewComment(value);
+    xmlAddChild(ctxt->insert, commentNode);
 
     if (value != NULL)
 	xmlFree(value);
@@ -3454,8 +3454,8 @@ xsltRunStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
 
     /* unsupported yet */
     if (SAX != NULL) {
-        TODO                    /* xsltRunStylesheet xmlSAXHandlerPtr SAX */
-            return (-1);
+        XSLT_TODO   /* xsltRunStylesheet xmlSAXHandlerPtr SAX */
+	return (-1);
     }
 
     tmp = xsltApplyStylesheetInternal(style, doc, params, output, NULL, NULL);

@@ -1,3 +1,9 @@
+Wed Oct 17 21:20:55 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c libxslt/extensions.c libxslt/preproc.c
+	  libxslt/transform.c libxslt/xsltutils.h: cleanup TODO into
+	  XSLT_TODO
+
 Wed Oct 17 02:46:55 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libxslt/numbers.c: reworked internal representation of

@@ -750,7 +750,7 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
     
     prop = xsltGetNsProp(cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
     if (prop != NULL) {
-	TODO; /* xsl:number lang attribute */
+	XSLT_TODO; /* xsl:number lang attribute */
 	xmlFree(prop);
     }
     
@@ -761,13 +761,13 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xsl:number : letter-value 'alphabetic' not implemented\n");
 	    style->warnings++;
-	    TODO; /* xsl:number letter-value attribute alphabetic */
+	    XSLT_TODO; /* xsl:number letter-value attribute alphabetic */
 	} else if (xmlStrEqual(prop, BAD_CAST("traditional"))) {
 	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xsl:number : letter-value 'traditional' not implemented\n");
 	    style->warnings++;
-	    TODO; /* xsl:number letter-value attribute traditional */
+	    XSLT_TODO; /* xsl:number letter-value attribute traditional */
 	} else {
 	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,

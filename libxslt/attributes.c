@@ -245,7 +245,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
     xmlChar *attributes;
-    xmlChar *attribute, *end;
+    xmlChar *attrib, *endattr;
     xmlNodePtr list;
     xsltAttrElemPtr values;
 
@@ -313,39 +313,39 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	goto done;
     }
 
-    attribute = attributes;
-    while (*attribute != 0) {
-	while (IS_BLANK(*attribute)) attribute++;
-	if (*attribute == 0)
+    attrib = attributes;
+    while (*attrib != 0) {
+	while (IS_BLANK(*attrib)) attrib++;
+	if (*attrib == 0)
 	    break;
-        end = attribute;
-	while ((*end != 0) && (!IS_BLANK(*end))) end++;
-	attribute = xmlStrndup(attribute, end - attribute);
-	if (attribute) {
+        endattr = attrib;
+	while ((*endattr != 0) && (!IS_BLANK(*endattr))) endattr++;
+	attrib = xmlStrndup(attrib, endattr - attrib);
+	if (attrib) {
 	    xmlChar *ncname2 = NULL;
 	    xmlChar *prefix2 = NULL;
 	    xsltAttrElemPtr values2;
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
-		"xsl:attribute-set : %s adds use %s\n", ncname, attribute);
+		"xsl:attribute-set : %s adds use %s\n", ncname, attrib);
 #endif
-	    ncname2 = xmlSplitQName2(attribute, &prefix2);
+	    ncname2 = xmlSplitQName2(attrib, &prefix2);
 	    if (ncname2 == NULL) {
-		ncname2 = attribute;
-		attribute = NULL;
+		ncname2 = attrib;
+		attrib = NULL;
 		prefix = NULL;
 	    }
 	    values2 = xmlHashLookup2(style->attributeSets, ncname2, prefix2);
 	    values = xsltMergeAttrElemList(values, values2);
 
-	    if (attribute != NULL)
-		xmlFree(attribute);
+	    if (attrib != NULL)
+		xmlFree(attrib);
 	    if (ncname2 != NULL)
 		xmlFree(ncname2);
 	    if (prefix2 != NULL)
 		xmlFree(prefix2);
 	}
-	attribute = end;
+	attrib = endattr;
     }
     xmlFree(attributes);
 
@@ -522,7 +522,7 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	              xmlNodePtr inst ATTRIBUTE_UNUSED, xmlChar *attributes) {
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
-    xmlChar *attribute, *end;
+    xmlChar *attrib, *endattr;
     xsltAttrElemPtr values;
     xsltStylesheetPtr style;
 
@@ -530,23 +530,23 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     }
 
-    attribute = attributes;
-    while (*attribute != 0) {
-	while (IS_BLANK(*attribute)) attribute++;
-	if (*attribute == 0)
+    attrib = attributes;
+    while (*attrib != 0) {
+	while (IS_BLANK(*attrib)) attrib++;
+	if (*attrib == 0)
 	    break;
-        end = attribute;
-	while ((*end != 0) && (!IS_BLANK(*end))) end++;
-	attribute = xmlStrndup(attribute, end - attribute);
-	if (attribute) {
+        endattr = attrib;
+	while ((*endattr != 0) && (!IS_BLANK(*endattr))) endattr++;
+	attrib = xmlStrndup(attrib, endattr - attrib);
+	if (attrib) {
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
-		"apply attribute set %s\n", attribute);
+		"apply attribute set %s\n", attrib);
 #endif
-	    ncname = xmlSplitQName2(attribute, &prefix);
+	    ncname = xmlSplitQName2(attrib, &prefix);
 	    if (ncname == NULL) {
-		ncname = attribute;
-		attribute = NULL;
+		ncname = attrib;
+		attrib = NULL;
 		prefix = NULL;
 	    }
 
@@ -562,14 +562,14 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		}
 		style = xsltNextImport(style);
 	    }
-	    if (attribute != NULL)
-		xmlFree(attribute);
+	    if (attrib != NULL)
+		xmlFree(attrib);
 	    if (ncname != NULL)
 		xmlFree(ncname);
 	    if (prefix != NULL)
 		xmlFree(prefix);
 	}
-	attribute = end;
+	attrib = endattr;
     }
 }
 

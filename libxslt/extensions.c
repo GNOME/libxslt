@@ -1383,7 +1383,7 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
                    xmlNodePtr inst,
                    xsltElemPreCompPtr comp ATTRIBUTE_UNUSED)
 {
-    xmlNodePtr comment;
+    xmlNodePtr commentNode;
 
     if (testData == NULL) {
         xsltGenericDebug(xsltGenericDebugContext,
@@ -1421,10 +1421,10 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
                          "xsltExtElementTest: no insertion point\n");
         return;
     }
-    comment =
+    commentNode =
         xmlNewComment((const xmlChar *)
                       "libxslt:test element test worked");
-    xmlAddChild(ctxt->insert, comment);
+    xmlAddChild(ctxt->insert, commentNode);
 }
 
 /**

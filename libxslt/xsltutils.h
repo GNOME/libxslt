@@ -28,7 +28,7 @@ extern "C" {
  *
  * macro to flag unimplemented blocks
  */
-#define TODO 								\
+#define XSLT_TODO 							\
     xsltGenericError(xsltGenericErrorContext,				\
 	    "Unimplemented block at %s:%d\n",				\
             __FILE__, __LINE__);
@@ -38,7 +38,7 @@ extern "C" {
  *
  * macro to flag that a problem was detected internally
  */
-#define STRANGE 							\
+#define XSLT_STRANGE 							\
     xsltGenericError(xsltGenericErrorContext,				\
 	    "Internal error at %s:%d\n",				\
             __FILE__, __LINE__);
