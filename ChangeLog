@@ -1,3 +1,11 @@
+Sun Aug 3 19:46:42 HTK 2003 William Brack <wbrack@mmm.com.hk>
+
+	Fixed bug 116517 - handling of '{' and '}'
+	* templates.c: added checks for escaping and balancing of
+	  curly brackets
+	* tests/general/Makefile.am tests/docs/Makefile.am:
+	  Added test case (bug-126) to regression suite.
+
 Sun Aug 3 15:50:51 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	Fixed bug 117552 - sort with multiple keys

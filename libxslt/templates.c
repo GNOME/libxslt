@@ -247,11 +247,20 @@ xsltAttrTemplateValueProcessNode(xsltTransformContextPtr ctxt,
     cur = str;
     while (*cur != 0) {
 	if (*cur == '{') {
+	    if (*(cur+1) == '{') {	/* escaped '{' */
+	        cur++;
+		ret = xmlStrncat(ret, str, cur - str);
+		cur++;
+		str = cur;
+		continue;
+	    }
 	    ret = xmlStrncat(ret, str, cur - str);
 	    str = cur;
 	    cur++;
 	    while ((*cur != 0) && (*cur != '}')) cur++;
 	    if (*cur == 0) {
+	        xsltTransformError(ctxt, NULL, NULL,
+			"xsltAttrTemplateValueProcessNode: unmatched '{'\n");
 		ret = xmlStrncat(ret, str, cur - str);
 		return(ret);
 	    }
@@ -288,6 +297,17 @@ xsltAttrTemplateValueProcessNode(xsltTransformContextPtr ctxt,
 	    }
 	    cur++;
 	    str = cur;
+	} else if (*cur == '}') {
+	    cur++;
+	    if (*cur == '}') {	/* escaped '}' */
+		ret = xmlStrncat(ret, str, cur - str);
+		cur++;
+		str = cur;
+		continue;
+	    } else {
+	        xsltTransformError(ctxt, NULL, NULL,
+		     "xsltAttrTemplateValueProcessNode: unmatched '}'\n");
+	    }
 	} else
 	    cur++;
     }
