@@ -405,29 +405,31 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	goto error;
 
     for (i = 0;i < nodelist->nodeNr;i++) {
-	ctxt->node = nodelist->nodeTab[i];
-	str = xsltEvalXPathString(ctxt, keyd->usecomp);
-	if (str != NULL) {
+	if (IS_XSLT_REAL_NODE(nodelist->nodeTab[i])) {
+	    ctxt->node = nodelist->nodeTab[i];
+	    str = xsltEvalXPathString(ctxt, keyd->usecomp);
+	    if (str != NULL) {
 #ifdef WITH_XSLT_DEBUG_KEYS
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsl:key : node associated to(%s,%s)\n",
-		             keyd->name, str);
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "xsl:key : node associated to(%s,%s)\n",
+				 keyd->name, str);
 #endif
-	    keylist = xmlHashLookup(table->keys, str);
-	    if (keylist == NULL) {
-		keylist = xmlXPathNodeSetCreate(nodelist->nodeTab[i]);
-		xmlHashAddEntry(table->keys, str, keylist);
+		keylist = xmlHashLookup(table->keys, str);
+		if (keylist == NULL) {
+		    keylist = xmlXPathNodeSetCreate(nodelist->nodeTab[i]);
+		    xmlHashAddEntry(table->keys, str, keylist);
+		} else {
+		    xmlXPathNodeSetAdd(keylist, nodelist->nodeTab[i]);
+		}
+		nodelist->nodeTab[i]->_private = keyd;
+		xmlFree(str);
+#ifdef WITH_XSLT_DEBUG_KEYS
 	    } else {
-		xmlXPathNodeSetAdd(keylist, nodelist->nodeTab[i]);
-	    }
-	    nodelist->nodeTab[i]->_private = keyd;
-	    xmlFree(str);
-#ifdef WITH_XSLT_DEBUG_KEYS
-	} else {
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsl:key : use %s failed to return a string\n",
-		             keyd->use);
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "xsl:key : use %s failed to return a string\n",
+				 keyd->use);
 #endif
+	    }
 	}
     }
 

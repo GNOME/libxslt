@@ -586,6 +586,8 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    return((xmlNodePtr)
 		   xsltCopyProp(ctxt, insert, (xmlAttrPtr) node));
         case XML_NAMESPACE_DECL:
+	    if (insert->type != XML_ELEMENT_NODE)
+		return(NULL);
 	    return((xmlNodePtr)
 		   xsltCopyNamespaceList(ctxt, insert, (xmlNsPtr) node));
 	    
@@ -912,7 +914,8 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     /*
      * Cleanup children empty nodes if asked for
      */
-    if ((node->children != NULL) &&
+    if ((IS_XSLT_REAL_NODE(node)) &&
+	(node->children != NULL) &&
 	(xsltFindElemSpaceHandling(ctxt, node))) {
 	xmlNodePtr delete = NULL, cur = node->children;
 
@@ -2260,7 +2263,8 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    list = res->nodesetval;
 	    if ((list != NULL) && (list->nodeTab != NULL) &&
-		(list->nodeTab[0] != NULL)) {
+		(list->nodeTab[0] != NULL) &&
+		(IS_XSLT_REAL_NODE(list->nodeTab[0]))) {
 		xsltCopyTreeList(ctxt, list->nodeTab[0]->children,
 			         ctxt->insert);
 	    }
@@ -2682,9 +2686,10 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
 	/* For a 'select' nodeset, need to check if document has changed */
-	if ( (list->nodeTab[i]->doc!=NULL) &&
-	     (list->nodeTab[i]->doc->doc!=NULL) &&
-	     (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
+	if ((IS_XSLT_REAL_NODE(list->nodeTab[i])) &&
+	    (list->nodeTab[i]->doc!=NULL) &&
+	    (list->nodeTab[i]->doc->doc!=NULL) &&
+	    (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
 	    /* The nodeset is from another document, so must change */
 	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
 	    if ((ctxt->document =
@@ -2696,7 +2701,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	    ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
-	xsltGenericDebug(xsltGenericDebugContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
 	     ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
 #endif
@@ -3016,9 +3021,10 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
 	/* For a 'select' nodeset, need to check if document has changed */
-	if ( (list->nodeTab[i]->doc!=NULL) &&
-	     (list->nodeTab[i]->doc->doc!=NULL) &&
-	     (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
+	if ((IS_XSLT_REAL_NODE(list->nodeTab[i])) &&
+	    (list->nodeTab[i]->doc!=NULL) &&
+	    (list->nodeTab[i]->doc->doc!=NULL) &&
+	    (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
 	    /* The nodeset is from another document, so must change */
 	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
 	    if ((ctxt->document =

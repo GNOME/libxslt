@@ -189,7 +189,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
     } else {
 	if ((obj2 != NULL) && (obj2->nodesetval != NULL) &&
-	      (obj2->nodesetval->nodeNr > 0)) {
+	    (obj2->nodesetval->nodeNr > 0) &&
+	    IS_XSLT_REAL_NODE(obj2->nodesetval->nodeTab[0])) {
 	    xmlNodePtr target;
 
 	    target = obj2->nodesetval->nodeTab[0];
