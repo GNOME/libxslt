@@ -547,8 +547,10 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "-output")) ||
                    (!strcmp(argv[i], "--output"))) {
             i++;
+#if defined(WIN32) || defined (__CYGWIN__)
 	    output = xmlCanonicPath(argv[i]);
             if (output == NULL)
+#endif
 		output = xmlStrdup(argv[i]);
         } else if ((!strcmp(argv[i], "-V")) ||
                    (!strcmp(argv[i], "-version")) ||

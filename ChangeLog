@@ -1,3 +1,9 @@
+Mon Feb 24 23:49:01 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: had to comment out Igor last change
+	  since it made libxslt-1.0.27 depends on libxml2 newly 
+	  API extension which hasn't propagated yet :-(
+
 Mon Feb 24 22:21:09 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing release 1.0.27
