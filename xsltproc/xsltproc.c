@@ -765,6 +765,7 @@ main(int argc, char **argv)
 		    /* it is an embedded stylesheet */
 		    xsltProcess(style, cur, argv[i]);
 		    xsltFreeStylesheet(cur);
+		    cur = NULL;
 		    goto done;
 		}
 		cur = xsltParseStylesheetDoc(style);

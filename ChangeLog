@@ -1,3 +1,8 @@
+Fri Jan 17 17:43:43 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: fixed a double free of stylesheet
+	  when applied to a standalone stylesheet
+
 Tue Jan 14 16:22:48 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing release 2.0.24
