@@ -23,6 +23,13 @@ alt="Red Hat Logo"></a></p>
   <li><a href="#XSLT">The XSLT processing steps</a></li>
   <li><a href="#XSLT1">The XSLT stylesheet compilation</a></li>
   <li><a href="#XSLT2">The XSLT template compilation</a></li>
+  <li><a href="#processing">The processing itself</a></li>
+  <li><a href="#XPath">XPath expressions compilation</a></li>
+  <li><a href="#XPath1">XPath expression interpretation</a></li>
+  <li><a href="#stack">The stack frame</a></li>
+  <li><a href="#Extension">Extension support</a></li>
+  <li><a href="#Futher">Further reading</a></li>
+  <li><a href="#TODOs">TODOs</a></li>
 </ul>
 
 <h2><a name="Introducti">Introduction</a></h2>
@@ -86,7 +93,7 @@ result.</p>
 complex. Most node types follow the given structure except a few variations
 depending on the node type:</p>
 
-<p align="center"><img src="node.gif" alt="description of a libxml node"> </p>
+<p align="center"><img src="node.gif" alt="description of a libxml node"></p>
 
 <p>Nodes carry a <strong>name</strong> and the node <strong>type</strong>
 indicates the kind of node it represents, the most common ones are:</p>
@@ -122,8 +129,8 @@ used by the application to hold specific data on this node.</p>
 
 <h2><a name="XSLT">The XSLT processing steps</a></h2>
 
-<p> Basically there is a few steps which are clearly decoupled at the
-interface level:</p>
+<p>Basically there is a few steps which are clearly decoupled at the interface
+level:</p>
 <ol>
   <li>parse the stylesheet and generate an DOM tree</li>
   <li>take the stylesheet tree and build a compiled version of it it's the
@@ -172,23 +179,25 @@ structure associated to the <strong>_private</strong> field of the node.</p>
 <p>A couple of notable exceptions to this are XSLT template nodes (more on
 this later) and attribute value templates, if they are actually templates, the
 value cannot be computed at compilation time (some preprocessing could be done
-like isolation and preparsing of the XPath subexpressions but it's not done, 
+like isolation and preparsing of the XPath subexpressions but it's not done,
 yet).</p>
 
 <p>The xsltStylePreComp structure also allow to store the precompiled form of
-an XPath expression which can be associated to an XSLT element.</p>
+an XPath expression which can be associated to an XSLT element (more on this
+later).</p>
 
 <h2><a name="XSLT2">The XSLT template compilation</a></h2>
 
 <p>A proper handling of templates lookup is one of the key of fast XSLT
 processing (given a node in the source document this is the processof finding
 which templates should be applied to this node). Libxslt follows the hint
-suggested in the 5.2 Patterns section of the XSLT Recommendation, i.e. it
-doesn't evaluates it as an XPath expression but tokenize it and compile it as
-a set of rules to be evaluated on a candidate node. There is usually an
-indication of the node name in the last step of this evaluation and this is
-used as a key check for the match. As a result libxslt build a relatively more
-complex set of structures for the templates:</p>
+suggested in the <a href="http://www.w3.org/TR/xslt#patterns">5.2 Patterns</a>
+section of the XSLT Recommendation, i.e. it doesn't evaluates it as an XPath
+expression but tokenize it and compile it as a set of rules to be evaluated on
+a candidate node. There is usually an indication of the node name in the last
+step of this evaluation and this is used as a key check for the match. As a
+result libxslt build a relatively more complex set of structures for the
+templates:</p>
 
 <p align="center"><img src="templates.gif"
 alt="The templates related structure"></p>
@@ -223,6 +232,123 @@ because they are not associated to a name, this is the case for patterns
 applying to the root, any element, any attributes, text nodes, pi nodes, keys
 etc. Those are stored independantly in the stylesheet structure as separate
 linked lists of xsltCompMatch.</p>
+
+<h2><a name="processing">The processing itself</a></h2>
+
+<p>Well the processing is actually defined by the XSLT specification (the
+basis of the algorithm are explained in <a
+href="http://www.w3.org/TR/xslt#section-Introduction">the Introduction</a>
+section). Basically it works by taking the root of the input document and
+applying the following algorithm:</p>
+<ol>
+  <li>finding the template applying to it, basically this is a lookup in the
+    template hash table, walking the hash list until the node satisfies all
+    the steps of the pattern, then checking the appropriate(s) global
+    templates to see if there isn't a higher priority rule to apply</li>
+  <li>If there is no template, apply the default rule (recurse on the
+    children)</li>
+  <li>else  walk the content list of the selected templates, for each of them:
+    <ul>
+      <li>if the node are in the XSLT namespace then the node has a _private
+        field pointing to the preprocessed values,  jump to the specific
+      code</li>
+      <li>if the node is in an extension namespace, lookup the associated
+        behaviour</li>
+      <li>otherwise copy the node.</li>
+    </ul>
+    <p>the closure is usualy done through the XSLT
+    <strong>apply-templates</strong> construct recursing by applying the
+    adequate template on the input node children or on the result of an
+    associated XPath selection lookup</p>
+  </li>
+</ol>
+
+<p>Note that large parts of the input tree may not be processed by a given
+stylesheet and that on the opposite some may be processed multiple times
+(often the case when a Table of Content is built).</p>
+
+<p>The module <code>transform.c</code> is the one implementing most of this
+logic, <strong>xsltApplyStylesheet()</strong> is the entry point, it allocates
+an xsltTransformContext containing the following:</p>
+<ul>
+  <li>a pointer to the stylesheet being processed</li>
+  <li>a stack of templates</li>
+  <li>a stack of variables and parameters</li>
+  <li>an XPath context</li>
+  <li>the template mode</li>
+  <li>current document</li>
+  <li>current input node</li>
+  <li>current selected node list</li>
+  <li>the current insertion points in the output document</li>
+  <li>a couple of hash table for extensions element and functions</li>
+</ul>
+
+<p>then a new document get allocated (HTML or XML depending on the type of
+output), the user parameters and global variables and parameters are
+evaluated. Then <strong>xsltProcessOneNode()</strong> which implements the
+1-2-3 algorithm is called on the root element of the input. Step 1/ is
+implemented by calling <strong>xsltGetTemplate()</strong>, step 2/ is
+implemented by <strong>xsltDefaultProcessOneNode()</strong> and step 3/ is
+implemented by <strong>xsltApplyOneTemplate()</strong>.</p>
+
+<h2><a name="XPath">XPath expression compilation</a></h2>
+
+<p>The XPath support is actually implemented in the libxml module (where it is
+reused by the XPointer implementation). XPath is a relatively classic
+expression language, the only uncommon feature is that it is working on XML
+trees and hence has specific syntax and types to handle them.</p>
+
+<p>XPath expressions are compiled using <strong>xmlXPathCompile()</strong> it
+will take an expression string in input and generate a structure containing
+the parsed expression tree, for example the expression:</p>
+<pre>/doc/chapter[title='Introduction']</pre>
+
+<p>will be compiled as</p>
+<pre>Compiled Expression : 10 elements
+  SORT
+    COLLECT  'child' 'name' 'node' chapter
+      COLLECT  'child' 'name' 'node' doc
+        ROOT
+      PREDICATE
+        SORT
+          EQUAL =
+            COLLECT  'child' 'name' 'node' title
+              NODE
+            ELEM Object is a string : Introduction
+              COLLECT  'child' 'name' 'node' title
+                NODE</pre>
+
+<p>This can be tested using the  <code>testXPath</code>  command (in the
+libxml codebase) using the <code>--tree</code> option</p>
+
+<p>Again, the KISS approach is used, no optimization is done, this could be an
+interesting thing to add (<a
+href="http://www-106.ibm.com/developerworks/library/x-xslt2/?dwzone=x?open&amp;l=132%2ct=gr%2c+p=saxon">Michael
+Kay describes</a> a lot of possible and interesting optimizations done in
+Saxon which would be possible at this level), I'm unsure they would provide
+much gain since the expressions tends to be relatively simple in general and
+stylesheets are still hand generated. Optimizations at the interpretation
+sounds likely to be more efficient.</p>
+
+<h2><a name="XPath1">XPath interpretation</a></h2>
+
+<p>@@</p>
+
+<h2><a name="stack">The stack frame</a></h2>
+
+<p>@@</p>
+
+<h2><a name="Extension">Extension support</a></h2>
+
+<p>@@</p>
+
+<h2><a name="Futher">Futher reading</a></h2>
+
+<p>@@</p>
+
+<h2><a name="TODOs">TODOs</a></h2>
+
+<p>@@</p>
 
 <p></p>
 

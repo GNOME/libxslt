@@ -875,6 +875,9 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 
 	if (IS_XSLT_ELEM(cur)) {
+	    /*
+	     * This is an XSLT node
+	     */
 	    xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
 	    if (info == NULL) {
 		if (IS_XSLT_NAME(cur, "message")) {

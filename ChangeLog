@@ -1,3 +1,7 @@
+Sun May  6 00:18:39 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/internals.html: more work done on the doc
+
 Sat May  5 18:58:13 CEST 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* libxslt/transform.c tests/XSLTMark/xslbench1.out: Another fix
