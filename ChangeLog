@@ -1,3 +1,12 @@
+Tue Nov 12 18:17:24 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/functions.c: applied patch for param visibility from
+	  Shaun McCance.  Changed variable scoping in accordance with
+	  Shaun's suggestions.  This fixed problem reported on the list
+	  by Bernd Lang
+	* tests/exslt/functions/function.8.[xml,xsl,out], Makefile.am:
+	  regression test for above
+	
 Sat Nov  8 13:27:12 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/libexslt.3: applied improvement patch from Jonathan Wakely

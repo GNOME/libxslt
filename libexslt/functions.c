@@ -262,7 +262,8 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj, oldResult, ret;
     exsltFuncData *data;
     exsltFuncFunctionData *func;
-    xmlNodePtr paramNode, oldInsert, fake;
+    xmlNodePtr paramNode, oldInsert, fake, content = NULL;
+    int oldBase;
     xsltStackElemPtr params = NULL, param;
     xsltTransformContextPtr tctxt = xsltXPathGetTransformContext(ctxt);
     int i;
@@ -289,8 +290,10 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
-    if (func->content != NULL)
+    if (func->content != NULL) {
 	paramNode = func->content->prev;
+	content = func->content;
+    }
     else
 	paramNode = NULL;
     if ((paramNode == NULL) && (func->nargs != 0)) {
@@ -299,14 +302,13 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "param == NULL\n");
 	return;
     }
-    /* defaulted params */
-    for (i = func->nargs; (i > nargs) && (paramNode != NULL); i--) {
-	param = xsltParseStylesheetCallerParam (tctxt, paramNode);
-	param->next = params;
-	params = param;
-	paramNode = paramNode->prev;
-    }
+
     /* set params */
+    for (i = func->nargs; (i > nargs) && (paramNode != NULL); i--) {
+	paramNode = paramNode->prev;
+	if (content != NULL)
+	    content = content->prev;
+    }
     while ((i-- > 0) && (paramNode != NULL)) {
 	obj = valuePop(ctxt);
 	/* FIXME: this is a bit hackish */
@@ -327,9 +329,16 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 (const xmlChar *)"fake", NULL);
     oldInsert = tctxt->insert;
     tctxt->insert = fake;
+    /* 
+     * In order to give the function variables a new 'scope' we
+     * change varsBase in the context.
+     */
+    oldBase = tctxt->varsBase;
+    tctxt->varsBase = tctxt->varsNr;
     xsltApplyOneTemplate (tctxt, xmlXPathGetContextNode(ctxt),
-			  func->content, NULL, params);
+			  content, NULL, params);
     tctxt->insert = oldInsert;
+    tctxt->varsBase = oldBase;	/* restore original scope */
     if (params != NULL)
 	xsltFreeStackElemList(params);
 
