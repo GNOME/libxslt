@@ -1,3 +1,8 @@
+Sun Jul 15 15:27:47 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/Makefile.am: account for new source files
+	* libexslt/.cvsignore: added
+
 Sun Jul 15 05:02:50 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/exslt.[hc] libexslt/common.[hc] libexslt/functions.[hc]

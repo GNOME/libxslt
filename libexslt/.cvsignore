@@ -1,0 +1,15 @@
+Makefile
+Makefile.in
+libexslt.la
+exslt.lo
+exslt.o
+common.lo
+common.o
+math.lo
+math.o
+sets.lo
+sets.o
+functions.lo
+functions.o
+utils.lo
+utils.o
