@@ -29,10 +29,13 @@
   <!-- Build keys for all symbols -->
   <xsl:key name="symbols" match="/api/symbols/*" use="@name"/>
 
+  <!--
+    Note that variables declared as "param" may be changed at runtime
+  <-->
   <!-- the name of the library being documented -->
   <xsl:param name="libname">libxslt</xsl:param>
 
-  <!-- the directory for the 'home' files -->
+  <!-- the directory for the 'home' files-->
   <xsl:param name="dirname" select="'../'"/>
 
   <!-- the location of logos for the pages -->
@@ -596,106 +599,64 @@
   <xsl:template match="file">
     <xsl:variable name="name" select="@name"/>
     <xsl:variable name="title">Module <xsl:value-of select="$name"/> from <xsl:value-of select="/api/@name"/></xsl:variable>
-    <xsl:document href="{$html_dir}/{$libname}-{$name}.html" method="xml" encoding="ISO-8859-1"
-      doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-      doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html>
-	  <head>
-	    <xsl:call-template name="style"/>
-	    <xsl:call-template name="docstyle"/>
-	    <title><xsl:value-of select="$title"/></title>
-	  </head>
-	  <body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000">
-	    <xsl:call-template name="titlebox">
-	      <xsl:with-param name="title" select="$title"/>
-	    </xsl:call-template>
-	  <table border="0" cellpadding="4" cellspacing="0" width="100%" align="center">
-	    <tr>
-	      <td bgcolor="#8b7765">
-		<table border="0" cellspacing="0" cellpadding="2" width="100%">
-		  <tr>
-		    <td valign="top" width="200" bgcolor="#8b7765">
-		      <xsl:call-template name="apitoc"/>
-		    </td>
-		    <td valign="top" bgcolor="#8b7765">
-		      <table border="0" cellspacing="0" cellpadding="1" width="100%">
-			<tr>
-			  <td>
-			    <table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000">
-			      <tr>
-				<td>
-				  <table border="0" cellpadding="3" cellspacing="1" width="100%">
-				    <tr>
-				      <td bgcolor="#fffacd">
-	    <xsl:call-template name="navbar"/>
-	    <xsl:call-template name="description"/>
-	    <xsl:choose>
-	      <xsl:when test="deprecated">
-	        <div class="deprecated">
-		  <h2>Table of Contents</h2>
-		  <xsl:apply-templates select="exports" mode="toc"/>
-		  <h2>Description</h2>
-		  <xsl:text>
+    <xsl:variable name="content">
+      <xsl:call-template name="navbar"/>
+      <xsl:call-template name="description"/>
+      <xsl:choose>
+        <xsl:when test="deprecated">
+          <div class="deprecated">
+          <h2>Table of Contents</h2>
+          <xsl:apply-templates select="exports" mode="toc"/>
+            <h2>Description</h2>
+            <xsl:text>
 </xsl:text>
-		  <xsl:apply-templates select="exports"/>
-		</div>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<h2>Table of Contents</h2>
-		<xsl:apply-templates select="exports[@type='macro']" mode="toc">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='enum']" mode="toc">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='typedef']" mode="toc">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='struct']" mode="toc">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='function']" mode="toc">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<h2>Description</h2>
-		<xsl:text>
+          <xsl:apply-templates select="exports"/>
+          </div>
+        </xsl:when>
+        <xsl:otherwise>
+          <h2>Table of Contents</h2>
+          <xsl:apply-templates select="exports[@type='macro']" mode="toc">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='enum']" mode="toc">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='typedef']" mode="toc">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='struct']" mode="toc">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='function']" mode="toc">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <h2>Description</h2>
+          <xsl:text>
 </xsl:text>
-		<xsl:apply-templates select="exports[@type='macro']">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='enum']">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='typedef']">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='struct']">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-		<xsl:apply-templates select="exports[@type='function']">
-		  <xsl:sort select='@symbol'/>
-		</xsl:apply-templates>
-	      </xsl:otherwise>
-	    </xsl:choose>
-					<p><a href="{$href_base}bugs.html">Daniel Veillard</a></p>
-				      </td>
-				    </tr>
-				  </table>
-				</td>
-			      </tr>
-			    </table>
-			  </td>
-			</tr>
-		      </table>
-		    </td>
-		  </tr>
-		</table>
-	      </td>
-	    </tr>
-	  </table>
-	  </body>
-	</html>
-    </xsl:document>
+          <xsl:apply-templates select="exports[@type='macro']">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='enum']">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='typedef']">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='struct']">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="exports[@type='function']">
+            <xsl:sort select='@symbol'/>
+          </xsl:apply-templates>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:call-template name="new_page">
+      <xsl:with-param name="filename"
+          select="concat($html_dir, $libname, '-', $name, '.html')"/>
+      <xsl:with-param name="title" select="$title"/>
+      <xsl:with-param name="target" select="$content"/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="file" mode="toc">
@@ -710,60 +671,17 @@
   <xsl:template name="mainpage">
     <xsl:param name="file" select="concat($html_dir, 'index.html')"/>
     <xsl:variable name="title">Reference Manual for <xsl:value-of select="/api/@name"/></xsl:variable>
-    <xsl:document href="{$file}" method="xml" encoding="ISO-8859-1"
-      doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-      doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html>
-	  <head>
-	    <xsl:call-template name="style"/>
-	    <xsl:call-template name="docstyle"/>
-	    <title><xsl:value-of select="$title"/></title>
-	  </head>
-	  <body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000">
-	    <xsl:call-template name="titlebox">
-	      <xsl:with-param name="title" select="$title"/>
-	    </xsl:call-template>
-	  <table border="0" cellpadding="4" cellspacing="0" width="100%" align="center">
-	    <tr>
-	      <td bgcolor="#8b7765">
-		<table border="0" cellspacing="0" cellpadding="2" width="100%">
-		  <tr>
-		    <td valign="top" width="200" bgcolor="#8b7765">
-		      <xsl:call-template name="apitoc"/>
-		    </td>
-		    <td valign="top" bgcolor="#8b7765">
-		      <table border="0" cellspacing="0" cellpadding="1" width="100%">
-			<tr>
-			  <td>
-			    <table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000">
-			      <tr>
-				<td>
-				  <table border="0" cellpadding="3" cellspacing="1" width="100%">
-				    <tr>
-				      <td bgcolor="#fffacd">
-	    <h2>Table of Contents</h2>
-	    <ul>
-	    <xsl:apply-templates select="/api/files/file" mode="toc"/>
-	    </ul>
-					<p><a href="{$href_base}bugs.html">Daniel Veillard</a></p>
-				      </td>
-				    </tr>
-				  </table>
-				</td>
-			      </tr>
-			    </table>
-			  </td>
-			</tr>
-		      </table>
-		    </td>
-		  </tr>
-		</table>
-	      </td>
-	    </tr>
-	  </table>
-	  </body>
-	</html>
-    </xsl:document>
+    <xsl:variable name="content">
+      <h2>Table of Contents</h2>
+      <ul>
+        <xsl:apply-templates select="/api/files/file" mode="toc"/>
+      </ul>
+    </xsl:variable>
+    <xsl:call-template name="new_page">
+      <xsl:with-param name="filename" select="$file"/>
+      <xsl:with-param name="title" select="$title"/>
+      <xsl:with-param name="target" select="$content"/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="/">

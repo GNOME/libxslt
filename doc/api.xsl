@@ -81,121 +81,55 @@
     </dl>
   </xsl:template>
 
-<!--
-  All of the generated pages use the "generic_page" template for their formatting.
-  The parameters should be self-explanatory.
--->
-  <xsl:template name="generic_page">
-    <xsl:param name="filename"/>  <!-- Output filename -->
-    <xsl:param name="title"/>     <!-- Page title -->
-    <xsl:param name="tempname"/>  <!-- Which template to apply -->
-    <xsl:param name="target"/>    <!-- The nodes to be selected -->
-
-    <xsl:document href="{$filename}" method="xml" encoding="ISO-8859-1"
-      doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-      doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-      <html>
-        <head>
-        <xsl:call-template name="style"/>
-	<xsl:element name="title">
-	  <xsl:value-of select="$title"/>
-	</xsl:element>
-        </head>
-        <body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000">
-          <xsl:call-template name="titlebox">
-	    <xsl:with-param name="title" select="$title"/>
-	  </xsl:call-template>
-          <table border="0" cellpadding="4" cellspacing="0" width="100%" align="center">
-            <tr>
-              <td bgcolor="#8b7765">
-                <table border="0" cellspacing="0" cellpadding="2" width="100%">
-                  <tr>
-                    <td valign="top" width="200" bgcolor="#8b7765">
-                      <xsl:call-template name="develtoc"/>
-                    </td>
-                    <td valign="top" bgcolor="#8b7765">
-                      <table border="0" cellspacing="0" cellpadding="1" width="100%">
-                        <tr>
-                          <td>
-                            <table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000">
-                              <tr>
-                                <td>
-                                  <table border="0" cellpadding="3" cellspacing="1" width="100%">
-                                    <tr>
-                                      <td bgcolor="#fffacd">
-                                        <xsl:choose>
-                                          <xsl:when test="$tempname = 'doref'">
-                                            <xsl:apply-templates mode="reflist" select="$target"/>
-                                          </xsl:when>
-                                          <xsl:when test="$tempname = 'dochunks'">
-                                            <xsl:call-template name="apichunks"/>
-                                            <xsl:apply-templates mode="wordlist"
-                                               select="$target/letter"/>
-                                            <xsl:call-template name="apichunks"/>
-                                          </xsl:when>
-                                        </xsl:choose>
-                                        <p><a href="{$href_base}bugs.html">Daniel Veillard</a></p>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </body>
-      </html>
-    </xsl:document>
-  </xsl:template>
-
   <xsl:template match="constructors">
     <xsl:message>Generating API Constructors</xsl:message>
     <xsl:variable name="title">List of constructors for <xsl:value-of select="$module"/></xsl:variable>
-    <xsl:call-template name="generic_page">
+    <xsl:variable name="doref">
+      <xsl:apply-templates mode="reflist" select="type"/>
+    </xsl:variable>
+    <xsl:call-template name="new_page">
       <xsl:with-param name="filename" select="'APIconstructors.html'"/>
       <xsl:with-param name="title" select="$title"/>
-      <xsl:with-param name="target" select="type"/>
-      <xsl:with-param name="tempname" select="'doref'"/>
+      <xsl:with-param name="target" select="$doref"/>
     </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="files">
     <xsl:message>Generating API List of symbols per file</xsl:message>
     <xsl:variable name="title">List of Symbols per Module for <xsl:value-of select="$module"/></xsl:variable>
-    <xsl:call-template name="generic_page">
+    <xsl:variable name="doref">
+      <xsl:apply-templates mode="reflist" select="file"/>
+    </xsl:variable>
+    <xsl:call-template name="new_page">
       <xsl:with-param name="filename" select="'APIfiles.html'"/>
       <xsl:with-param name="title" select="$title"/>
-      <xsl:with-param name="target" select="file"/>
-      <xsl:with-param name="tempname" select="'doref'"/>
+      <xsl:with-param name="target" select="$doref"/>
     </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="functions">
     <xsl:message>Generating API Functions by Type</xsl:message>
     <xsl:variable name="title">List of function manipulating types in <xsl:value-of select="$module"/></xsl:variable>
-    <xsl:call-template name="generic_page">
+    <xsl:variable name="doref">
+      <xsl:apply-templates mode="reflist" select="type"/>
+    </xsl:variable>
+    <xsl:call-template name="new_page">
       <xsl:with-param name="filename" select="'APIfunctions.html'"/>
       <xsl:with-param name="title" select="$title"/>
-      <xsl:with-param name="target" select="type"/>
-      <xsl:with-param name="tempname" select="'doref'"/>
+      <xsl:with-param name="target" select="$doref"/>
     </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="alpha">
     <xsl:message>Generating API Alphabetic list</xsl:message>
     <xsl:variable name="title">Alphabetic List of Symbols in <xsl:value-of select="$module"/></xsl:variable>
-    <xsl:call-template name="generic_page">
+    <xsl:variable name="doref">
+      <xsl:apply-templates mode="reflist" select="letter"/>
+    </xsl:variable>
+    <xsl:call-template name="new_page">
       <xsl:with-param name="filename" select="'APIsymbols.html'"/>
       <xsl:with-param name="title" select="$title"/>
-      <xsl:with-param name="target" select="letter"/>
-      <xsl:with-param name="tempname" select="'doref'"/>
+      <xsl:with-param name="target" select="$doref"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -220,11 +154,15 @@
     <xsl:variable name="block" select="concat($start, '-', $end)"/>
     <xsl:variable name="target" select="/apirefs/index/chunk[@name = $name]"/>
     <xsl:variable name="title">API Alphabetic Index <xsl:value-of select="$block"/> for <xsl:value-of select="$module"/></xsl:variable>
-    <xsl:call-template name="generic_page">
+    <xsl:variable name="dochunk">
+      <xsl:call-template name="apichunks"/>
+      <xsl:apply-templates mode="wordlist" select="$target/letter"/>
+      <xsl:call-template name="apichunks"/>
+    </xsl:variable>
+    <xsl:call-template name="new_page">
       <xsl:with-param name="filename" select="concat('API', $name, '.html')"/>
       <xsl:with-param name="title" select="$title"/>
-      <xsl:with-param name="target" select="$target"/>
-      <xsl:with-param name="tempname" select="'dochunks'"/>
+      <xsl:with-param name="target" select="$dochunk"/>
     </xsl:call-template>
   </xsl:template>
 

@@ -1,3 +1,10 @@
+Fri Jan  8 08:32:55 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* doc/site.xsl, doc/api.xsl, doc/newapi.xsl, doc/search.php:
+	  Further cleanup, fully implemented common routine for
+	  "generic page" within the docs.
+	* doc/*: api docs rebuilt with enhanced scripts.
+
 Thu Jan  8 06:45:04 MST 2004 John Fleck <jfleck@inkstain.net>
 
 	* doc/xslt.html, doc/bugs.html
