@@ -1,3 +1,7 @@
+Tue Oct 15 12:42:25 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* README: updated the contact informations
+
 Tue Oct 15 11:40:19 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixed the behaviour of node() patter which

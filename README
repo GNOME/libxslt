@@ -1,16 +1,20 @@
 
-                  XSLT support for libxml2
+	      XSLT support for libxml2 (XML toolkit from the GNOME project)
 
-		  http://xmlsoft.org/
+Full documentation is available on-line at
+    http://xmlsoft.org/XSLT/
 
- Requires libxml2 >= 2.3.6 with XPath support. It won't even compile
-otherwise.
- Check the FEATURES file for informations about completeness
- Check the Changelog too to keep track of progresses.
+This code is released under the MIT Licence see the Copyright file.
+ 
+To report bugs, follow the instructions at:
+  http://xmlsoft.org/XSLT/bug.html
 
-   report bugs to xslt@gnome.org or on the bugzilla.gnome.org base.
+A mailing-list xslt@gnome.org is available, to subscribe:
+    http://mail.gnome.org/mailman/listinfo/xslt
+
+The list archive is at:
+    http://mail.gnome.org/archives/xslt/
 
 Daniel Veillard
 
-Daniel.Veillard@imag.fr
 $Id$
