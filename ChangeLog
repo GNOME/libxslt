@@ -1,3 +1,10 @@
+Sat Mar 22 12:01:24 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: fixed bug #108633 reported by
+	  Jerome Pesenti about recursive global variables/param detections
+	* tests/reports/Makefile.am tests/reports/rec*: added regression
+	  tests for the checking of recusion in global/local param/variables.
+
 Fri Mar  7 16:08:24 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c: valgrind pointed out an uninitialized

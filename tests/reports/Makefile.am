@@ -6,7 +6,9 @@ $(top_builddir)/xsltproc/xsltproc:
 EXTRA_DIST = \
 	tst-1.xml tst-1.xsl tst-1.out tst-1.err \
 	tst-2.xml tst-2.xsl tst-2.out tst-2.err \
-	undefvar.xml undefvar.xsl undefvar.out undefvar.err
+	undefvar.xml undefvar.xsl undefvar.out undefvar.err \
+	recglobparam.xsl recglobvar.xsl reclocparam.xsl reclocvar.xsl \
+	recglobparam.xml recglobvar.xml reclocparam.xml reclocvar.xml 
 
 
 all:

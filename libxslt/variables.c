@@ -417,6 +417,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     xmlNodePtr oldInst;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
+    xmlChar *name;
 
     if ((ctxt == NULL) || (elem == NULL))
 	return(NULL);
@@ -435,6 +436,9 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
         xslHandleDebugger(elem->comp->inst, NULL, NULL, ctxt);
 #endif
 
+    name = elem->name;
+    elem->name = BAD_CAST "  being computed ... ";
+
     precomp = elem->comp;
     if (elem->select != NULL) {
 	xmlXPathCompExprPtr comp = NULL;
@@ -444,8 +448,10 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	} else {
 	    comp = xmlXPathCompile(elem->select);
 	}
-	if (comp == NULL)
+	if (comp == NULL) {
+	    elem->name = name;
 	    return(NULL);
+	}
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
 	oldInst = ctxt->inst;
@@ -496,8 +502,10 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 
 	    container = xmlNewDocNode(ctxt->document->doc, NULL,
 			      (const xmlChar *) " fake node libxslt", NULL);
-	    if (container == NULL)
+	    if (container == NULL) {
+		elem->name = name;
 		return(NULL);
+	    }
 	    container->parent = NULL;
 
 	    oldoutput = ctxt->output;
@@ -531,6 +539,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	elem->value = result;
 	elem->computed = 1;
     }
+    elem->name = name;
     return(result);
 }
 
@@ -1110,9 +1119,14 @@ xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 #endif
 	return(NULL);
     }
-    if (elem->computed == 0)
+    if (elem->computed == 0) {
+	if (xmlStrEqual(elem->name, BAD_CAST "  being computed ... ")) {
+	    xsltTransformError(ctxt, NULL, elem->comp->inst,
+		"Recursive definition of %s\n", name);
+	    return(NULL);
+	}
 	ret = xsltEvalGlobalVariable(elem, ctxt);
-    else
+    } else
 	ret = elem->value;
     return(xmlXPathObjectCopy(ret));
 }
