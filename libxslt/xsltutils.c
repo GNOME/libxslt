@@ -1732,6 +1732,31 @@ static xsltDebuggerCallbacks xsltDebuggerCurrentCallbacks = {
 int xslDebugStatus;
 
 /**
+ * xsltSetDebuggerStatus:
+ * @value : the value to be set
+ * 
+ * This function sets the value of xslDebugStatus.
+ */
+void
+xsltSetDebuggerStatus(int value)
+{
+    xslDebugStatus = value;	
+}
+
+/**
+ * xsltGetDebuggerStatus: 
+ * 
+ * Get xslDebugStatus.
+ *
+ * Returns the value of xslDebugStatus.
+ */
+int
+xsltGetDebuggerStatus(void)
+{
+    return(xslDebugStatus);	
+}
+
+/**
  * xsltSetDebuggerCallbacks:
  * @no : number of callbacks
  * @block : the block of callbacks

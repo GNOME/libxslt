@@ -219,6 +219,10 @@ typedef void (*xsltHandleDebuggerCallback) (xmlNodePtr cur, xmlNodePtr node,
 typedef int (*xsltAddCallCallback) (xsltTemplatePtr templ, xmlNodePtr source);
 typedef void (*xsltDropCallCallback) (void);
 
+XSLTPUBFUN void XSLTCALL
+		xsltSetDebuggerStatus		(int value);
+XSLTPUBFUN int XSLTCALL
+		xsltGetDebuggerStatus		(void);
 XSLTPUBFUN int XSLTCALL		
 		xsltSetDebuggerCallbacks	(int no, void *block);
 XSLTPUBFUN int XSLTCALL		

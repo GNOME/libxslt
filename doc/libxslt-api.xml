@@ -94,6 +94,7 @@
      <exports symbol='xsltGenericDebugContext'/>
      <exports symbol='xsltGenericError'/>
      <exports symbol='xsltGenericErrorContext'/>
+     <exports symbol='xsltGetDebuggerStatus'/>
      <exports symbol='xsltGetNsProp'/>
      <exports symbol='xsltGetProfileInformation'/>
      <exports symbol='xsltGetQNameURI'/>
@@ -109,6 +110,7 @@
      <exports symbol='xsltSaveResultToString'/>
      <exports symbol='xsltSetCtxtSortFunc'/>
      <exports symbol='xsltSetDebuggerCallbacks'/>
+     <exports symbol='xsltSetDebuggerStatus'/>
      <exports symbol='xsltSetGenericDebugFunc'/>
      <exports symbol='xsltSetGenericErrorFunc'/>
      <exports symbol='xsltSetSortFunc'/>
@@ -1393,6 +1395,10 @@ informations are stored'/>
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context'/>
       <arg name='nargs' type='int' info='the number of arguments'/>
     </function>
+    <function name='xsltGetDebuggerStatus' file='xsltutils'>
+      <info>Get xslDebugStatus.</info>
+      <return type='int' info='the value of xslDebugStatus.'/>
+    </function>
     <function name='xsltGetDefaultSecurityPrefs' file='security'>
       <info>Get the default security preference application-wide</info>
       <return type='xsltSecurityPrefsPtr' info='the current xsltSecurityPrefsPtr in use or NULL if none'/>
@@ -1960,6 +1966,11 @@ informations are stored'/>
       <return type='int' info='0 in case of success and -1 in case of error'/>
       <arg name='no' type='int' info='number of callbacks'/>
       <arg name='block' type='void *' info='the block of callbacks'/>
+    </function>
+    <function name='xsltSetDebuggerStatus' file='xsltutils'>
+      <info>This function sets the value of xslDebugStatus.</info>
+      <return type='void'/>
+      <arg name='value' type='int' info='the value to be set'/>
     </function>
     <function name='xsltSetDefaultSecurityPrefs' file='security'>
       <info>Set the default security preference application-wide</info>

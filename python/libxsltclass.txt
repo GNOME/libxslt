@@ -36,7 +36,9 @@ parseStylesheetImportedDoc()
 
 # functions from module xsltutils
 calibrateAdjust()
+debuggerStatus()
 nsProp()
+setDebuggerStatus()
 timestamp()
 xslDropCall()
 

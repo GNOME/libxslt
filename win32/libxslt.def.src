@@ -45,6 +45,7 @@ xsltCopy
 xsltCopyNamespace
 xsltCopyNamespaceList
 xsltCopyOf
+xsltCopyTextString
 xsltCreateRVT
 xsltDebug
 xsltDebugDumpExtensions
@@ -98,8 +99,10 @@ xsltFreeTransformContext
 xsltFunctionAvailableFunction
 xsltFunctionNodeSet
 xsltGenerateIdFunction
+xsltGetDebuggerStatus
 xsltGetDefaultSecurityPrefs
 xsltGetExtData
+xsltGetExtInfo
 xsltGetKey
 xsltGetNamespace
 xsltGetNsProp
@@ -130,6 +133,7 @@ xsltNewStyleDocument
 xsltNewStylesheet
 xsltNewTransformContext
 xsltNextImport
+xsltNormalizeCompSteps
 xsltNumber
 xsltNumberFormat
 xsltParseGlobalParam
@@ -181,6 +185,7 @@ xsltSecurityForbid
 xsltSetCtxtSecurityPrefs
 xsltSetCtxtSortFunc
 xsltSetDebuggerCallbacks
+xsltSetDebuggerStatus
 xsltSetDefaultSecurityPrefs
 xsltSetGenericDebugFunc
 xsltSetGenericErrorFunc

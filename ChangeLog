@@ -1,3 +1,9 @@
+Wed Oct 22 13:07:50 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.[ch]: applied patch from Kasimier Buchcik
+	  for xsltGetDebuggerStatus and xsltSetDebuggerStatus
+	* doc/libxslt-api.xml: regenerated the API
+
 Sun Oct 19 23:32:23 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: bump the libxml2 require to 2.6.0 which
