@@ -656,7 +656,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    xmlXPathFreeObject(newlist);
 			    return(-1);
 			}
-			
+			index = 0;
+
 			if ((parent == NULL) || (node->doc == NULL))
 			    nocache = 1;
 			else {
@@ -666,6 +667,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 					     BAD_CAST " fake node libxslt")))
 				nocache = 1;
 			}
+			
 			if (nocache == 0) {
 			    if (list != NULL)
 				xmlXPathFreeObject(list);
@@ -675,6 +677,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 				(void *) list;
 			    XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra) =
 				(void *) doc;
+			    XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra) =
+			        0;
 			    XSLT_RUNTIME_EXTRA_FREE(ctxt, select->lenExtra) =
 				(xmlFreeFunc) xmlXPathFreeObject;
 			} else

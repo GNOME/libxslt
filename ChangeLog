@@ -1,3 +1,8 @@
+Thu Oct 23 15:48:39 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: Fixed problem with cascaded predicates
+	  (more of bug 119946)
+
 Thu Oct 23 15:37:26 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* restored earliest portion of ChangeLog (was corrupted)
