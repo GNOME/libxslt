@@ -1,3 +1,11 @@
+Thu May 23 17:28:35 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.[ch] : applied patch from Morus Walter
+	  adding xsltSaveResultToString()
+	* doc/APIfiles.html doc/APIfunctions.html doc/libxslt-api.xml
+	  doc/libxslt-decl.txt doc/libxslt-refs.xml: this increased the
+	  API with the new function.
+
 Wed May 22 11:50:36 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/function.c: applied a patch from Richard Jinks

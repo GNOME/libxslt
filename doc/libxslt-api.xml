@@ -19,6 +19,7 @@
      <exports symbol='xsltSaveResultToFilename'/>
      <exports symbol='xsltSaveResultToFile'/>
      <exports symbol='xsltSaveResultToFd'/>
+     <exports symbol='xsltSaveResultToString'/>
      <exports symbol='xsltSaveProfiling'/>
      <exports symbol='xsltTimestamp'/>
      <exports symbol='xsltCalibrateAdjust'/>
@@ -1439,6 +1440,13 @@
       <arg name='result' type='xmlDocPtr' info='the result xmlDocPtr '/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet '/>
       <arg name='compression' type='int' info='the compression factor (0 - 9 included) '/>
+    </function>
+    <function name='xsltSaveResultToString' file='xsltutils'>
+      <return type='int'/>
+      <arg name='doc_txt_ptr' type='xmlChar **'/>
+      <arg name='doc_txt_len' type='int *'/>
+      <arg name='result' type='xmlDocPtr'/>
+      <arg name='style' type='xsltStylesheetPtr'/>
     </function>
     <function name='xsltSetDebuggerCallbacks' file='xsltutils'>
       <return type='int'/>

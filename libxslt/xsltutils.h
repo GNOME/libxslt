@@ -142,6 +142,10 @@ int		xsltSaveResultToFile		(FILE *file,
 int		xsltSaveResultToFd		(int fd,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
+int             xsltSaveResultToString          (xmlChar **doc_txt_ptr, 
+                                                 int * doc_txt_len, 
+                                                 xmlDocPtr result, 
+                                                 xsltStylesheetPtr style);
 
 /*
  * Profiling.

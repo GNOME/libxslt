@@ -1049,6 +1049,58 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
     return(ret);
 }
 
+/**
+ * xsltSaveResultToString:
+ * @doc_txt_ptr:  Memory pointer for allocated XML text
+ * @doc_txt_len:  Length of the generated XML text
+ * @result:  the result xmlDocPtr
+ * @style:  the stylesheet
+ * @compression:  the compression factor (0 - 9 included)
+ *
+ * Save the result @result obtained by applying the @style stylesheet
+ * to a file or @URL
+ *
+ * Returns the number of byte written or -1 in case of failure.
+ */
+int
+xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len, 
+		       xmlDocPtr result, xsltStylesheetPtr style) {
+    xmlOutputBufferPtr buf;
+    const xmlChar *encoding;
+    int ret;
+
+    *doc_txt_ptr = NULL;
+    *doc_txt_len = 0;
+    if (result->children == NULL)
+	return(0);
+
+    XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+    if (encoding != NULL) {
+	xmlCharEncodingHandlerPtr encoder;
+
+	encoder = xmlFindCharEncodingHandler((char *)encoding);
+	if ((encoder != NULL) &&
+	    (xmlStrEqual((const xmlChar *)encoder->name,
+			 (const xmlChar *) "UTF-8")))
+	    encoder = NULL;
+	buf = xmlAllocOutputBuffer(encoder);
+    } else {
+	buf = xmlAllocOutputBuffer(NULL);
+    }
+    if (buf == NULL)
+	return(-1);
+    xsltSaveResultTo(buf, result, style);
+    if (buf->conv != NULL) {
+	*doc_txt_len = buf->conv->use;
+	*doc_txt_ptr = xmlStrndup(buf->conv->content, *doc_txt_len);
+    } else {
+	*doc_txt_len = buf->buffer->use;
+	*doc_txt_ptr = xmlStrndup(buf->buffer->content, *doc_txt_len);
+    }
+    (void)xmlOutputBufferClose(buf);
+    return 0;
+}
+
 /************************************************************************
  * 									*
  * 		Generating profiling informations			*

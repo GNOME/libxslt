@@ -1502,6 +1502,11 @@ FILE *file,xmlDocPtr result,xsltStylesheetPtr style
 int fd,xmlDocPtr result,xsltStylesheetPtr style
 </FUNCTION>
 <FUNCTION>
+<NAME>xsltSaveResultToString</NAME>
+<RETURNS>int  </RETURNS>
+xmlChar **doc_txt_ptr,int * doc_txt_len,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
 <NAME>xsltSaveProfiling</NAME>
 <RETURNS>void 	</RETURNS>
 xsltTransformContextPtr ctxt,FILE *output

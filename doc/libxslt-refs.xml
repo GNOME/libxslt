@@ -709,6 +709,7 @@
     </type>
     <type name='int *'>
       <ref name='xsltEvalStaticAttrValueTemplate'/>
+      <ref name='xsltSaveResultToString'/>
     </type>
     <type name='long'>
       <ref name='xsltCalibrateAdjust'/>
@@ -734,6 +735,7 @@
     <type name='xmlChar **'>
       <ref name='xsltFormatNumberConversion'/>
       <ref name='xsltGetQNameURI'/>
+      <ref name='xsltSaveResultToString'/>
     </type>
     <type name='xmlDocPtr'>
       <ref name='xsltNewDocument'/>
@@ -754,6 +756,7 @@
       <ref name='xsltSaveResultToFilename'/>
       <ref name='xsltSaveResultToFile'/>
       <ref name='xsltSaveResultToFd'/>
+      <ref name='xsltSaveResultToString'/>
     </type>
     <type name='xmlGenericErrorFunc'>
       <ref name='xsltSetGenericErrorFunc'/>
@@ -1017,6 +1020,7 @@
       <ref name='xsltSaveResultToFilename'/>
       <ref name='xsltSaveResultToFile'/>
       <ref name='xsltSaveResultToFd'/>
+      <ref name='xsltSaveResultToString'/>
     </type>
     <type name='xsltTemplatePtr'>
       <ref name='xsltAddTemplate'/>
@@ -1393,6 +1397,7 @@
       <ref name='xsltSaveResultToFilename'/>
       <ref name='xsltSaveResultToFile'/>
       <ref name='xsltSaveResultToFd'/>
+      <ref name='xsltSaveResultToString'/>
       <ref name='xsltSaveProfiling'/>
       <ref name='xsltTimestamp'/>
       <ref name='xsltCalibrateAdjust'/>
