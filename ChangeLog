@@ -1,3 +1,8 @@
+Mon Sep 15 07:41:14 PDT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xsltutils.h: Added XML_PI_NODE to the macro
+	  IS_XSLT_REAL_NODE, fixed bug 120644.
+
 Sat Sep 13 02:04:13 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c doc/xsltproc.1 doc/xsltproc.xml
