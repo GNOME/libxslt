@@ -1,3 +1,9 @@
+Mon Jan 21 09:53:45 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.h: roll back the change after more analysis
+	  proper fix is to restore the definition of xmlXPathFuncLookupFunc
+	  int libxml2
+
 Mon Jan 21 09:41:10 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.h: fixed a proble  after some cleanup of libxml2
