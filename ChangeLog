@@ -1,3 +1,9 @@
+2004-02-15  Tomasz Kłoczko <kloczek@pld.org.pl>
+
+	* libxslt.m4: small fix: added missing [] quotation macro name
+	  defined in AC_DEFUN(). Fix is neccessary for aclocal from automake
+	  1.8.x and is backward compatible with older auto tools.
+
 Sun Feb 15 23:01:09 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attrvt.c libxslt/templates.c: removed the two last

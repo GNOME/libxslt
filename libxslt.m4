@@ -11,7 +11,7 @@
 dnl AM_PATH_XSLT([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for XML, and define XML_CFLAGS and XML_LIBS
 dnl
-AC_DEFUN(AM_PATH_XSLT,[ 
+AC_DEFUN([AM_PATH_XSLT],[
 AC_ARG_WITH(xslt-prefix,
             [  --with-xslt-prefix=PFX   Prefix where libxslt is installed (optional)],
             xslt_config_prefix="$withval", xslt_config_prefix="")
