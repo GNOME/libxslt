@@ -32,6 +32,12 @@ EXPORTS
   	xsltRegisterExtElement
   	xsltFreeCtxtExts
   	xsltFreeExts
+	xsltUnregisterAllExtModules
+	xsltGetExtData
+	xsltShutdownCtxtExts
+	xsltXPathGetTransformContext
+	xsltUnregisterExtModule
+	xsltRegisterExtModule
 
 
  	xsltDocumentFunction
@@ -132,7 +138,8 @@ EXPORTS
 	xsltLibxsltVersion
 	xsltEngineVersion
 
-	
+	xsltRunStylesheet
+	xsltLoadStylesheetPI
 	
 
 

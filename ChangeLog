@@ -1,3 +1,7 @@
+Tue Jul 10 17:25:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* win32/libxslt/libxslt.def: added missing functions
+
 Tue Jul 10 16:48:43 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES libxslt/xsltproc.c libxslt/transform.c
