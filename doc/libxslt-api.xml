@@ -1182,13 +1182,13 @@ informations are stored'/>
       <arg name='output' type='FILE *' info='the FILE * for the output, if NULL stdout is used'/>
     </function>
     <function name='xsltDebugGetDefaultTrace' file='xsltutils'>
-      <info></info>
-      <return type='xsltDebugTraceCodes' info=''/>
+      <info>Get the current default debug tracing level mask</info>
+      <return type='xsltDebugTraceCodes' info='the current default debug tracing level mask'/>
     </function>
     <function name='xsltDebugSetDefaultTrace' file='xsltutils'>
-      <info></info>
+      <info>Set the default debug tracing level mask</info>
       <return type='void'/>
-      <arg name='val' type='xsltDebugTraceCodes' info=''/>
+      <arg name='val' type='xsltDebugTraceCodes' info='tracing level mask'/>
     </function>
     <function name='xsltDecimalFormatGetByName' file='xsltInternals'>
       <info>Find decimal-format by name</info>

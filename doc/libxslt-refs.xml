@@ -2087,6 +2087,7 @@
           <ref name='_xsltStylesheet'/>
         </word>
         <word name='Get'>
+          <ref name='xsltDebugGetDefaultTrace'/>
           <ref name='xsltGetDebuggerStatus'/>
           <ref name='xsltGetDefaultSecurityPrefs'/>
         </word>
@@ -2388,6 +2389,7 @@
           <ref name='xsltVariableLookup'/>
         </word>
         <word name='Set'>
+          <ref name='xsltDebugSetDefaultTrace'/>
           <ref name='xsltSetCtxtSecurityPrefs'/>
           <ref name='xsltSetDefaultSecurityPrefs'/>
           <ref name='xsltSetXIncludeDefault'/>
@@ -3193,6 +3195,7 @@
           <ref name='xslAddCall'/>
           <ref name='xsltComputeSortResult'/>
           <ref name='xsltDebug'/>
+          <ref name='xsltDebugGetDefaultTrace'/>
           <ref name='xsltDefaultSortFunction'/>
           <ref name='xsltDoSortFunction'/>
           <ref name='xsltDocumentElem'/>
@@ -3252,6 +3255,8 @@
         <word name='debug'>
           <ref name='_xsltTransformContext'/>
           <ref name='xsltDebug'/>
+          <ref name='xsltDebugGetDefaultTrace'/>
+          <ref name='xsltDebugSetDefaultTrace'/>
         </word>
         <word name='debugger'>
           <ref name='xsltSetDebuggerCallbacks'/>
@@ -3286,6 +3291,8 @@
         </word>
         <word name='default'>
           <ref name='XSLT_DEFAULT_VERSION'/>
+          <ref name='xsltDebugGetDefaultTrace'/>
+          <ref name='xsltDebugSetDefaultTrace'/>
           <ref name='xsltFormatNumberConversion'/>
           <ref name='xsltGetDefaultSecurityPrefs'/>
           <ref name='xsltGetNsProp'/>
@@ -4119,6 +4126,8 @@
         <word name='level'>
           <ref name='_xsltTransformContext'/>
           <ref name='xsltAddStackElemList'/>
+          <ref name='xsltDebugGetDefaultTrace'/>
+          <ref name='xsltDebugSetDefaultTrace'/>
         </word>
         <word name='library'>
           <ref name='xsltCleanupGlobals'/>
@@ -4227,6 +4236,8 @@
         </word>
         <word name='mask'>
           <ref name='_xsltTransformContext'/>
+          <ref name='xsltDebugGetDefaultTrace'/>
+          <ref name='xsltDebugSetDefaultTrace'/>
         </word>
         <word name='match'>
           <ref name='xsltAddKey'/>
@@ -5688,6 +5699,10 @@
         </word>
         <word name='topmost'>
           <ref name='xslDropCall'/>
+        </word>
+        <word name='tracing'>
+          <ref name='xsltDebugGetDefaultTrace'/>
+          <ref name='xsltDebugSetDefaultTrace'/>
         </word>
         <word name='track'>
           <ref name='_xsltStylesheet'/>
