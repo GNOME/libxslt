@@ -1,3 +1,8 @@
+Mon Feb 23 18:01:44 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* NEWS configure.in doc/*: preparing release 1.1.4, updated and
+	  regenerated the documentation
+
 Tue Feb 24 00:37:28 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltutils.c, libxslt/templates.c, libxslt/preproc.c:
