@@ -1,3 +1,8 @@
+Mon Jan 21 09:41:10 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.h: fixed a proble  after some cleanup of libxml2
+	  includes.
+
 Sun Jan 20 14:33:33 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: Fixed RH bug #58124 due to an off-by-one
