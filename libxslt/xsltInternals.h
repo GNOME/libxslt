@@ -52,6 +52,7 @@ typedef struct _xsltTemplate xsltTemplate;
 typedef xsltTemplate *xsltTemplatePtr;
 struct _xsltTemplate {
     struct _xsltTemplate *next;/* chained list sorted by priority */
+    struct _xsltStylesheet *style;/* the containing stylesheet */
     xmlChar *match;	/* the matching string */
     int priority;	/* as given from the stylesheet, not computed */
     xmlChar *name;	/* the local part of the name QName */
@@ -193,6 +194,11 @@ typedef xsltTransformContext *xsltTransformContextPtr;
 struct _xsltTransformContext {
     xsltStylesheetPtr style;		/* the stylesheet used */
     xsltOutputType type;		/* the type of output */
+
+    xsltTemplatePtr  templ;		/* the current template */
+    int              templNr;		/* Nb of templates in the stack */
+    int              templMax;		/* Size of the templtes stack */
+    xsltTemplatePtr *templTab;		/* the template stack */
 
     const xmlChar *mode;		/* the current mode */
     const xmlChar *modeURI;		/* the current mode URI */

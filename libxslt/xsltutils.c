@@ -22,6 +22,7 @@
 #include "xsltutils.h"
 #include "templates.h"
 #include "xsltInternals.h"
+#include "imports.h"
 
 
 /************************************************************************
@@ -293,6 +294,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
     const xmlChar *encoding;
     xmlNodePtr root;
     int base;
+    const xmlChar *method;
 
     if ((buf == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
@@ -307,19 +309,23 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 
     /* TODO: when outputing and having imported stylesheets, apply cascade */
     base = buf->written;
-    encoding = style->encoding;
-    if (style->method == NULL)
+
+    XSLT_GET_IMPORT_PTR(method, style, method)
+    XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+
+    if (method == NULL)
 	root = xmlDocGetRootElement(result);
     else
 	root = NULL;
-    if ((style->method != NULL) &&
-	(xmlStrEqual(style->method, (const xmlChar *) "html"))) {
+
+    if ((method != NULL) &&
+	(xmlStrEqual(method, (const xmlChar *) "html"))) {
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
-    } else if ((style->method != NULL) &&
-	(xmlStrEqual(style->method, (const xmlChar *) "xhtml"))) {
+    } else if ((method != NULL) &&
+	(xmlStrEqual(method, (const xmlChar *) "xhtml"))) {
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
-    } else if ((style->method != NULL) &&
-	       (xmlStrEqual(style->method, (const xmlChar *) "text"))) {
+    } else if ((method != NULL) &&
+	       (xmlStrEqual(method, (const xmlChar *) "text"))) {
 	xmlNodePtr cur;
 
 	cur = result->children;
@@ -329,7 +335,21 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    cur = cur->next;
 	}
     } else {
-	if (style->omitXmlDeclaration != 1) {
+	int omitXmlDecl;
+	int standalone;
+	int indent;
+	const xmlChar *version;
+	const xmlChar *doctypePublic;
+	const xmlChar *doctypeSystem;
+
+	XSLT_GET_IMPORT_INT(omitXmlDecl, style, omitXmlDeclaration);
+	XSLT_GET_IMPORT_INT(standalone, style, standalone);
+	XSLT_GET_IMPORT_INT(indent, style, indent);
+	XSLT_GET_IMPORT_PTR(version, style, version)
+	XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
+	XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
+
+	if (omitXmlDecl != 1) {
 	    xmlOutputBufferWriteString(buf, "<?xml version=");
 	    if (result->version != NULL) 
 		xmlBufferWriteQuotedString(buf->buffer, result->version);
@@ -347,7 +367,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 		xmlOutputBufferWriteString(buf, " encoding=");
 		xmlBufferWriteQuotedString(buf->buffer, (xmlChar *) encoding);
 	    }
-	    switch (style->standalone) {
+	    switch (standalone) {
 		case 0:
 		    xmlOutputBufferWriteString(buf, " standalone=\"no\"");
 		    break;
@@ -359,7 +379,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    }
 	    xmlOutputBufferWriteString(buf, "?>\n");
 	}
-	if ((style->doctypePublic != NULL) || (style->doctypeSystem != NULL)) {
+	if ((doctypePublic != NULL) || (doctypeSystem != NULL)) {
 	    xmlNodePtr cur = result->children;
 
 	    while (cur != NULL) {
@@ -370,24 +390,24 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    if ((cur != NULL) && (cur->name != NULL)) {
 		xmlOutputBufferWriteString(buf, "<!DOCTYPE ");
 		xmlOutputBufferWriteString(buf, cur->name);
-		if (style->doctypePublic != NULL) {
-		    if (style->doctypeSystem != NULL) {
+		if (doctypePublic != NULL) {
+		    if (doctypeSystem != NULL) {
 			xmlOutputBufferWriteString(buf, " PUBLIC ");
 			xmlBufferWriteQuotedString(buf->buffer,
-				         style->doctypePublic);
+				         doctypePublic);
 			xmlOutputBufferWriteString(buf, " ");
 			xmlBufferWriteQuotedString(buf->buffer,
-				         style->doctypeSystem);
+				         doctypeSystem);
 		    } else {
 			xmlOutputBufferWriteString(buf, " PUBLIC \"-\" ");
 			xmlBufferWriteQuotedString(buf->buffer,
-				         style->doctypeSystem);
+				         doctypeSystem);
 		    }
 
 		} else {
 		    xmlOutputBufferWriteString(buf, " SYSTEM ");
 		    xmlBufferWriteQuotedString(buf->buffer,
-				     style->doctypeSystem);
+				     doctypeSystem);
 		}
 		xmlOutputBufferWriteString(buf, ">\n");
 	    }
@@ -396,7 +416,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    xmlNodePtr child = result->children;
 
 	    while (child != NULL) {
-		xmlNodeDumpOutput(buf, result, child, 0, (style->indent == 1),
+		xmlNodeDumpOutput(buf, result, child, 0, (indent == 1),
 			          (const char *) encoding);
 		xmlOutputBufferWriteString(buf, "\n");
 		child = child->next;
@@ -423,15 +443,17 @@ int
 xsltSaveResultToFilename(const char *URL, xmlDocPtr result,
 			 xsltStylesheetPtr style, int compression) {
     xmlOutputBufferPtr buf;
+    const xmlChar *encoding;
     int ret;
 
     if ((URL == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
 
-    if (style->encoding != NULL) {
+    XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+    if (encoding != NULL) {
 	xmlCharEncodingHandlerPtr encoder;
 
-	encoder = xmlFindCharEncodingHandler((char *)style->encoding);
+	encoder = xmlFindCharEncodingHandler((char *)encoding);
 	if ((encoder != NULL) &&
 	    (xmlStrEqual((const xmlChar *)encoder->name,
 			 (const xmlChar *) "UTF-8")))
@@ -462,15 +484,17 @@ xsltSaveResultToFilename(const char *URL, xmlDocPtr result,
 int
 xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
     xmlOutputBufferPtr buf;
+    const xmlChar *encoding;
     int ret;
 
     if ((file == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
 
-    if (style->encoding != NULL) {
+    XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+    if (encoding != NULL) {
 	xmlCharEncodingHandlerPtr encoder;
 
-	encoder = xmlFindCharEncodingHandler((char *)style->encoding);
+	encoder = xmlFindCharEncodingHandler((char *)encoding);
 	if ((encoder != NULL) &&
 	    (xmlStrEqual((const xmlChar *)encoder->name,
 			 (const xmlChar *) "UTF-8")))
@@ -502,15 +526,17 @@ xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
 int
 xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
     xmlOutputBufferPtr buf;
+    const xmlChar *encoding;
     int ret;
 
     if ((fd < 0) || (result == NULL) || (style == NULL))
 	return(-1);
 
-    if (style->encoding != NULL) {
+    XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+    if (encoding != NULL) {
 	xmlCharEncodingHandlerPtr encoder;
 
-	encoder = xmlFindCharEncodingHandler((char *)style->encoding);
+	encoder = xmlFindCharEncodingHandler((char *)encoding);
 	if ((encoder != NULL) &&
 	    (xmlStrEqual((const xmlChar *)encoder->name,
 			 (const xmlChar *) "UTF-8")))

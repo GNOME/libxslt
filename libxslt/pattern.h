@@ -20,7 +20,8 @@ int		xsltAddTemplate		(xsltStylesheetPtr style,
 					 const xmlChar *mode,
 					 const xmlChar *modeURI);
 xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
-					 xmlNodePtr node);
+					 xmlNodePtr node,
+					 xsltStylesheetPtr style);
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
 int		xsltMatchPattern	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,

@@ -16,6 +16,28 @@
 extern "C" {
 #endif
 
+/*
+ * A couple of macros to apply the cascade
+ */
+#define XSLT_GET_IMPORT_PTR(res, style, name) {			\
+    xsltStylesheetPtr st = style;				\
+    res = NULL;							\
+    while (st != NULL) {					\
+	if (st->name != NULL) { res = st->name; break; }	\
+	st = xsltNextImport(st);				\
+    }}
+
+#define XSLT_GET_IMPORT_INT(res, style, name) {			\
+    xsltStylesheetPtr st = style;				\
+    res = -1;							\
+    while (st != NULL) {					\
+	if (st->name != -1) { res = st->name; break; }	\
+	st = xsltNextImport(st);				\
+    }}
+
+/*
+ * Module interfaces
+ */
 void			xsltParseStylesheetImport(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
 void			xsltParseStylesheetInclude(xsltStylesheetPtr style,

@@ -1389,15 +1389,18 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 /**
  * xsltGetTemplate:
  * @ctxt:  a XSLT process context
- * @mode:  the mode name or NULL
+ * @mode:  the mode 
+ * @style:  the current style
  *
- * Finds the template applying to this node
+ * Finds the template applying to this node, if @style is non-NULL
+ * it means one need to look for the next imported template in scope.
  *
  * Returns the xsltTemplatePtr or NULL if not found
  */
 xsltTemplatePtr
-xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
-    xsltStylesheetPtr style;
+xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	        xsltStylesheetPtr style) {
+    xsltStylesheetPtr curstyle;
     xsltTemplatePtr ret = NULL;
     const xmlChar *name = NULL;
     xsltCompMatchPtr list = NULL;
@@ -1405,10 +1408,15 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     if ((ctxt == NULL) || (node == NULL))
 	return(NULL);
 
-    style = ctxt->style;
-    while (style != NULL) {
+    if (style == NULL) {
+	curstyle = ctxt->style;
+    } else {
+	curstyle = xsltNextImport(style);
+    }
+
+    while ((curstyle != NULL) && (curstyle != style)) {
 	/* TODO : handle IDs/keys here ! */
-	if (style->templatesHash != NULL) {
+	if (curstyle->templatesHash != NULL) {
 	    /*
 	     * Use the top name as selector
 	     */
@@ -1445,7 +1453,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    /*
 	     * find the list of appliable expressions based on the name
 	     */
-	    list = (xsltCompMatchPtr) xmlHashLookup3(style->templatesHash,
+	    list = (xsltCompMatchPtr) xmlHashLookup3(curstyle->templatesHash,
 					     name, ctxt->mode, ctxt->modeURI);
 	}
 	while (list != NULL) {
@@ -1463,24 +1471,24 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	 */
 	switch (node->type) {
 	    case XML_ELEMENT_NODE:
-		list = style->elemMatch;
+		list = curstyle->elemMatch;
 		break;
 	    case XML_ATTRIBUTE_NODE:
-		list = style->attrMatch;
+		list = curstyle->attrMatch;
 		break;
 	    case XML_PI_NODE:
-		list = style->piMatch;
+		list = curstyle->piMatch;
 		break;
 	    case XML_DOCUMENT_NODE:
 	    case XML_HTML_DOCUMENT_NODE:
-		list = style->rootMatch;
+		list = curstyle->rootMatch;
 		break;
 	    case XML_TEXT_NODE:
 	    case XML_CDATA_SECTION_NODE:
-		list = style->textMatch;
+		list = curstyle->textMatch;
 		break;
 	    case XML_COMMENT_NODE:
-		list = style->commentMatch;
+		list = curstyle->commentMatch;
 		break;
 	    case XML_ENTITY_REF_NODE:
 	    case XML_ENTITY_NODE:
@@ -1509,7 +1517,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    list = list->next;
 	}
 	if (node->_private != NULL) {
-	    list = style->keyMatch;
+	    list = curstyle->keyMatch;
 	    while ((list != NULL) &&
 		   ((ret == NULL)  || (list->priority > ret->priority))) {
 		if (xsltTestCompMatch(ctxt, list, node,
@@ -1525,9 +1533,9 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    return(ret);
 
 	/*
-	 * Cycle on next stylesheet import.
+	 * Cycle on next curstylesheet import.
 	 */
-	style = xsltNextImport(style);
+	curstyle = xsltNextImport(curstyle);
     }
     return(NULL);
 }

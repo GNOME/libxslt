@@ -30,6 +30,7 @@
 
 #define DEBUG_TEMPLATES
 
+
 /************************************************************************
  *									*
  *			Module interfaces				*
@@ -163,7 +164,7 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = ctxt->insert;
     ctxt->insert = insert;
 
-    xsltApplyOneTemplate(ctxt, node, parent->children);
+    xsltApplyOneTemplate(ctxt, node, NULL, parent->children);
 
     ctxt->insert = oldInsert;
 

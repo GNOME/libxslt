@@ -87,7 +87,7 @@ YES			    xsl:apply-templates
 YES				select = node-set-expression 
 YES				mode = qname
 
-NO			    xsl:apply-imports
+YES			    xsl:apply-imports
 
 YES			    xsl:call-template
 YES				name = qname

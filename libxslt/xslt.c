@@ -1019,6 +1019,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	return;
     ret->next = style->templates;
     style->templates = ret;
+    ret->style = style;
 
     /*
      * Get arguments
