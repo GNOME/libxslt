@@ -28,8 +28,8 @@ xsltproc \- command line xslt processor
          | \fB--html\fR | \fB--docbook\fR | \fB--param \fIname\fR \fIvalue\fR\fR
          | \fB--stringparam \fIname\fR \fIvalue\fR\fR | \fB--nonet\fR | \fB--catalogs\fR
          | \fB--xinclude\fR | \fB--profile\fR | \fB--dumpextensions\fR | \fB--nowrite\fR
-         | \fB--nomkdir\fR] [\fBstylesheet\fR] [\fIfile1\fR] [\fIfile2\fR] [\fI....\fR]
-        
+         | \fB--nomkdir\fR | \fB--writesubtree\fR] [\fBstylesheet\fR] [\fIfile1\fR]
+         [\fIfile2\fR] [\fI....\fR]
 .fi
 
 .SH "INTRODUCTION"
@@ -127,6 +127,10 @@ Refuses to write to any file or resource.
 .TP
 \fB--nomkdir\fR
 Refuses to create directories.
+
+.TP
+\fB--writesubtree\fR \fIpath\fR
+Allow file write only within the \fIpath\fR subtree.
 
 .SH "RETURN VALUES"
 

@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>xsltproc</title><meta name="generator" content="DocBook XSL Stylesheets V1.48"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="refentry"><a name="id2589055"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>xsltproc &#8212; command line xslt processor</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt>xsltproc</tt>  [-V | -v | -o <i><tt>file</tt></i> | --timing | --repeat | --debug | --novalid | --noout | --maxdepth <i><tt>val</tt></i> | --html | --docbook | --param <i><tt>name</tt></i> <i><tt>value</tt></i> | --stringparam <i><tt>name</tt></i> <i><tt>value</tt></i> | --nonet | --catalogs | --xinclude | --profile | --dumpextensions] [<tt><i><tt>stylesheet</tt></i></tt>] [<i><tt>file1</tt></i>] [<i><tt>file2</tt></i>] [<i><tt>....</tt></i>]</p></div></div><div class="refsect1"><a name="introduction"></a><h2>Introduction</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>xsltproc</title><meta name="generator" content="DocBook XSL Stylesheets V1.57.0"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="refentry" lang="en"><a name="id2589410"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>xsltproc &#8212; command line xslt processor</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt>xsltproc</tt>  [[-V] |  [-v] |  [-o <i><tt>file</tt></i>] |  [--timing] |  [--repeat] |  [--debug] |  [--novalid] |  [--noout] |  [--maxdepth <i><tt>val</tt></i>] |  [--html] |  [--docbook] |  [--param <i><tt>name</tt></i> <i><tt>value</tt></i>] |  [--stringparam <i><tt>name</tt></i> <i><tt>value</tt></i>] |  [--nonet] |  [--catalogs] |  [--xinclude] |  [--profile] |  [--dumpextensions] |  [--nowrite] |  [--nomkdir] |  [--writesubtree]] [<tt><i><tt>stylesheet</tt></i></tt>] [<i><tt>file1</tt></i>] [<i><tt>file2</tt></i>] [<i><tt>....</tt></i>]</p></div></div><div class="refsect1" lang="en"><a name="introduction"></a><h2>Introduction</h2><p>
       xsltproc is a command line tool for applying
       XSLT stylesheets to XML
       documents. It is part of libxslt, the XSLT C
@@ -16,7 +16,7 @@
     </p><p>
       By default, output is to stdout. You can specify a file for output using
       the <tt>-o</tt> option.
-    </p></div><div class="refsect1"><a name="options"></a><h2>Command Line Options</h2><div class="variablelist"><dl><dt><span class="term"><tt>-V</tt> or <tt>--version</tt></span></dt><dd>Show the version of
+    </p></div><div class="refsect1" lang="en"><a name="options"></a><h2>Command Line Options</h2><div class="variablelist"><dl><dt><span class="term"><tt>-V</tt> or <tt>--version</tt></span></dt><dd>Show the version of
       libxml and libxslt used.
     </dd><dt><span class="term">
       <tt>-v</tt> or <tt>--verbose</tt></span></dt><dd>Output each step taken
@@ -66,13 +66,12 @@
       <tt>--nonet</tt></span></dt><dd>Do not use the Internet to fetch DTD's or
       entities.
     </dd><dt><span class="term">
-      <tt>--catalogs</tt></span></dt><dd>Use catalogs to resolve the location of
-      external entities. This speeds DTD resolution. By having a
-      catalog file point to a local version of the DTD,
-      xsltproc does not have to use the
-      Internet to fetch the DTD. xsltproc
-      uses the catalog identified by the environmental variable
-      <tt>SGML_CATALOG_FILES</tt>.
+      <tt>--catalogs</tt></span></dt><dd>Use the SGML catalog specified in
+      <tt>SGML_CATALOG_FILES</tt> to resolve the location of
+	    external entities. By default, xsltproc
+	    looks for the catalog specified in
+      <tt>XML_CATALOG_FILES</tt>. If that is not specified, it uses
+      <tt>/etc/xml/catalog</tt>.
     </dd><dt><span class="term">
       <tt>--xinclude</tt></span></dt><dd>Process the input document using the
       Xinclude specification. More details on this can be found in the Xinclude
@@ -83,5 +82,12 @@
       stylesheet. This is useful in optimizing stylesheet performance.
     </dd><dt><span class="term">
       <tt>--dumpextensions</tt></span></dt><dd>Dumps the list of all registered extensions on stdout.
-    </dd></dl></div></div><div class="refsect1"><a name="return"></a><h2>Return values</h2><p>xsltproc's return codes provide information
-    that can be used when calling it from scripts.</p><p>0: normal</p><p>1: no argument</p><p>2: too many parameters</p><p>3: unknown option</p><p>4: failed to parse the stylesheet</p><p>5: error in the stylesheet</p><p>6: error in one of the documents</p><p>7: unsupported xsl:output method</p><p>8: string parameter contains both quote and double-quotes</p><p>9: internal processing error</p><p>10: processing was stopped by a terminating message</p></div><div class="refsect1"><a name="moreinfo"></a><h2>More Information</h2><p>libxml web page: <a href="http://www.xmlsoft.org/" target="_top">http://www.xmlsoft.org/</a></p><p>W3C XSLT page: <a href="http://www.w3.org/TR/xslt" target="_top">http://www.w3.org/TR/xslt</a></p></div></div></body></html>
+    </dd><dt><span class="term">
+      <tt>--nowrite</tt></span></dt><dd>Refuses to write to any file or resource.
+    </dd><dt><span class="term">
+      <tt>--nomkdir</tt></span></dt><dd>Refuses to create directories.
+    </dd><dt><span class="term">
+      <tt>--writesubtree</tt> <i><tt>path</tt></i></span></dt><dd>Allow file write only within the
+	  <i><tt>path</tt></i> subtree.
+    </dd></dl></div></div><div class="refsect1" lang="en"><a name="return"></a><h2>Return values</h2><p>xsltproc's return codes provide information
+    that can be used when calling it from scripts.</p><p>0: normal</p><p>1: no argument</p><p>2: too many parameters</p><p>3: unknown option</p><p>4: failed to parse the stylesheet</p><p>5: error in the stylesheet</p><p>6: error in one of the documents</p><p>7: unsupported xsl:output method</p><p>8: string parameter contains both quote and double-quotes</p><p>9: internal processing error</p><p>10: processing was stopped by a terminating message</p></div><div class="refsect1" lang="en"><a name="moreinfo"></a><h2>More Information</h2><p>libxml web page: <a href="http://www.xmlsoft.org/" target="_top">http://www.xmlsoft.org/</a></p><p>W3C XSLT page: <a href="http://www.w3.org/TR/xslt" target="_top">http://www.w3.org/TR/xslt</a></p></div></div></body></html>
