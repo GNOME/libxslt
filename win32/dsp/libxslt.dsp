@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "libxslt_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /O2 /I "../.." /I "../../libxslt" /I "../../../gnome-xml/include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "IN_LIBXSLT" /D "WITH_DEBUGGER" /FD /c
+# ADD CPP /nologo /MD /W3 /O2 /I "../.." /I "../../libxslt" /I "../../../gnome-xml/include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -78,7 +78,7 @@ SOURCE="$(InputPath)"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "libxslt_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MD /W3 /Gm /Zi /Od /I "../.." /I "../../libxslt" /I "../../../gnome-xml/include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "IN_LIBXSLT" /FD /GZ /c
+# ADD CPP /nologo /MD /W3 /Gm /Zi /Od /I "../.." /I "../../libxslt" /I "../../../gnome-xml/include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
