@@ -1,3 +1,8 @@
+Thu Oct 25 23:05:14 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libxslt/numbers.c: take NaN and infinity attributes of
+	  xsl:decimal-format into account. Closes #62577
+
 Wed Oct 24 13:02:15 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* doc/*.html doc/site.xsl doc/Makefile.am: the web site

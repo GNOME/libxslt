@@ -833,16 +833,26 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     /* flag to show error found, should use default format */
     char	found_error = 0;
 
+    *result = NULL;
     switch (xmlXPathIsInf(number)) {
 	case -1:
-	    *result = xmlStrdup(BAD_CAST "-Infinity");
-	    return(status);
+	    if (self->minusSign == NULL)
+		*result = xmlStrdup(BAD_CAST "-");
+	    else
+		*result = xmlStrdup(self->minusSign);
+	    /* no-break on purpose */
 	case 1:
-	    *result = xmlStrdup(BAD_CAST "Infinity");
+	    if ((self == NULL) || (self->infinity == NULL))
+		*result = xmlStrcat(*result, BAD_CAST "Infinity");
+	    else
+		*result = xmlStrcat(*result, self->infinity);
 	    return(status);
 	default:
 	    if (xmlXPathIsNaN(number)) {
-		*result = xmlStrdup(BAD_CAST "NaN");
+		if ((self == NULL) || (self->noNumber == NULL))
+		    *result = xmlStrdup(BAD_CAST "NaN");
+		else
+		    *result = xmlStrdup(self->noNumber);
 		return(status);
 	    }
     }
