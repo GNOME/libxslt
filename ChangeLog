@@ -1,3 +1,8 @@
+Thu Dec 11 19:50:41 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* win32/Makefile.mingw win32/configure.js: tried to fix mingw
+	  build, no success, it still works halfway.
+
 Thu Dec 11 16:33:41 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* win32/Makefile.* win32/configure.js libxslt/xsltexports.h

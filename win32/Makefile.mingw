@@ -19,9 +19,9 @@ include $(AUTOCONF)
 # ----------------------------------------------------------------
 
 BASEDIR = ..
-XSLT_SRCDIR = $(BASEDIR)/libxslt
-EXSLT_SRCDIR = $(BASEDIR)/libexslt
-UTILS_SRCDIR = $(BASEDIR)/xsltproc
+XSLT_SRCDIR = $(BASEDIR)\libxslt
+EXSLT_SRCDIR = $(BASEDIR)\libexslt
+UTILS_SRCDIR = $(BASEDIR)\xsltproc
 BINDIR = bin.mingw
 
 # Names of various input and output components.
@@ -88,7 +88,7 @@ XSLT_OBJS = $(XSLT_INTDIR)/attributes.o\
 	$(XSLT_INTDIR)/variables.o\
 	$(XSLT_INTDIR)/xslt.o\
 	$(XSLT_INTDIR)/xsltutils.o
-XSLT_SRCS = $(subst .o,.c,$(subst $(XSLT_INTDIR)/,$(XSLT_SRCDIR)/,$(XSLT_OBJS)))
+XSLT_SRCS = $(subst .o,.c,$(subst $(XSLT_INTDIR),$(XSLT_SRCDIR),$(XSLT_OBJS)))
 
 # Static libxslt object files.
 XSLT_OBJS_A = $(XSLT_INTDIR_A)/attributes.o\
@@ -138,13 +138,13 @@ UTILS = $(BINDIR)/xsltproc.exe
 
 all : dep libxslt libxslta libexslt libexslta utils
 
-libxslt : $(BINDIR)/$(XSLT_SO) 
+libxslt : $(BINDIR)\$(XSLT_SO) 
 
-libxslta : $(BINDIR)/$(XSLT_A)
+libxslta : $(BINDIR)\$(XSLT_A)
 
-libexslt : $(BINDIR)/$(EXSLT_SO) 
+libexslt : $(BINDIR)\$(EXSLT_SO) 
 
-libexslta : $(BINDIR)/$(EXSLT_A)
+libexslta : $(BINDIR)\$(EXSLT_A)
 
 utils : $(UTILS)
 
@@ -155,11 +155,13 @@ clean :
 	cmd.exe /C if exist $(EXSLT_INTDIR_A) rmdir /S /Q $(EXSLT_INTDIR_A)
 	cmd.exe /C if exist $(UTILS_INTDIR) rmdir /S /Q $(UTILS_INTDIR)
 	cmd.exe /C if exist $(BINDIR) rmdir /S /Q $(BINDIR)
+	cmd.exe /C if exist depends.mingw del depends.mingw
 
 rebuild : clean all
 
 distclean : clean
 	cmd.exe /C if exist config.* del config.*
+	cmd.exe /C if exist depends.* del depends.*
 	cmd.exe /C if exist Makefile del Makefile
 
 install : all
@@ -185,10 +187,10 @@ bindist : all
 	$(MAKE) PREFIX=$(BDPREFIX) BINPREFIX=$(BDPREFIX)/util install
 	cscript //NoLogo configure.js genreadme $(XSLT_BASENAME) $(BDVERSION) $(BDPREFIX)\readme.txt
 
+
 # Creates the dependency files
 dep :
-	$(CC) $(CFLAGS) -M $(XSLT_SRCS) > depends.mingw
-	$(CC) $(CFLAGS) -M $(EXSLT_SRCS) >> depends.mingw
+	$(CC) $(subst \,/,$(CFLAGS)) -MM $(subst \,/,$(XSLT_SRCS)) $(subst \,/,$(EXSLT_SRCS)) > depends.mingw
 
 
 # Makes the compiler output directory.
@@ -206,7 +208,7 @@ $(XSLT_INTDIR_A) :
 
 # An implicit rule for libxslt compilation.
 $(XSLT_INTDIR)/%.o : $(XSLT_SRCDIR)/%.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 # An implicit rule for static libxslt compilation.
 $(XSLT_INTDIR_A)/%.o : $(XSLT_SRCDIR)/%.c
@@ -222,11 +224,11 @@ $(XSLT_OBJS_A) : $(XSLT_INTDIR_A)
 XSLTSO_LDFLAGS = $(LDFLAGS) -shared -Wl,--dll -Wl,--out-implib,$(BINDIR)/$(XSLT_IMP)
 XSLTSO_LDFLAGS += -Wl,--major-image-version,$(LIBXSLT_MAJOR_VERSION)
 XSLTSO_LDFLAGS += -Wl,--minor-image-version,$(LIBXSLT_MINOR_VERSION)
-$(BINDIR)/$(XSLT_SO) : $(BINDIR) $(XSLT_OBJS)
+$(BINDIR)\$(XSLT_SO) : $(BINDIR) $(XSLT_OBJS) 
 	$(LD) $(XSLTSO_LDFLAGS) -o $(BINDIR)/$(XSLT_SO) $(XSLT_OBJS) $(LIBS) -llibxml2
 
 # Creates the libxslt archive.
-$(BINDIR)/$(XSLT_A) : $(BINDIR) $(XSLT_OBJS_A)
+$(BINDIR)\$(XSLT_A) : $(BINDIR) $(XSLT_OBJS_A)
 	$(AR) $(ARFLAGS) $(BINDIR)/$(XSLT_A) $(XSLT_OBJS_A)
 
 
@@ -257,11 +259,11 @@ $(EXSLT_OBJS_A) : $(EXSLT_INTDIR_A)
 EXSLTSO_LDFLAGS = $(LDFLAGS) -shared -Wl,--dll -Wl,--out-implib,$(BINDIR)/$(EXSLT_IMP)
 EXSLTSO_LDFLAGS += -Wl,--major-image-version,$(LIBEXSLT_MAJOR_VERSION)
 EXSLTSO_LDFLAGS += -Wl,--minor-image-version,$(LIBEXSLT_MINOR_VERSION)
-$(BINDIR)/$(EXSLT_SO) : $(BINDIR) $(EXSLT_OBJS) libxslt
+$(BINDIR)\$(EXSLT_SO) : $(BINDIR) $(EXSLT_OBJS) libxslt
 	$(LD) $(EXSLTSO_LDFLAGS) -o $(BINDIR)/$(EXSLT_SO) $(EXSLT_OBJS) $(LIBS) -l$(XSLT_BASENAME) -llibxml2
 
 # Creates the libexslt archive.
-$(BINDIR)/$(EXSLT_A) : $(BINDIR) $(EXSLT_OBJS_A) libxslta
+$(BINDIR)\$(EXSLT_A) : $(BINDIR) $(EXSLT_OBJS_A) libxslta
 	$(AR) $(ARFLAGS) $(BINDIR)\$(EXSLT_A) $(EXSLT_OBJS_A)
 
 
@@ -291,6 +293,6 @@ endif
 $(UTILS) : $(UTILS_INTDIR) $(BINDIR) libxslt libxslta libexslt libexslta
 
 
-# Source dependencies
+# Source dependencies, just how?
 #-include depends.mingw
 

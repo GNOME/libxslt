@@ -362,8 +362,8 @@ if (error != 0) {
 	WScript.Quit(error);
 }
 dirSep = "\\";
-if (compiler == "mingw")
-	dirSep = "/";
+//if (compiler == "mingw")
+//	dirSep = "/";
 if (buildBinPrefix == "")
 	buildBinPrefix = "$(PREFIX)" + dirSep + "bin";
 if (buildIncPrefix == "")
