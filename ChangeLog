@@ -1,3 +1,8 @@
+Thu Jan  2 23:23:30 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/strings.c: applied patch from Jörg Walter to provide
+	  URI escaping and unescaping functions.
+
 Thu Dec 26 15:43:31 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/strings.c: Alexey Efimov found a typo bug in

@@ -12,6 +12,7 @@
 #include <libxml/xpathInternals.h>
 #include <libxml/parser.h>
 #include <libxml/encoding.h>
+#include <libxml/uri.h>
 
 #include <libxslt/xsltconfig.h>
 #include <libxslt/xsltutils.h>
@@ -105,6 +106,107 @@ error:
 	xmlFree(str);
     if (delimiters != NULL)
 	xmlFree(delimiters);
+}
+
+/**
+ * exsltStrEncodeUriFunction:
+ * @ctxt: an XPath parser context
+ * @nargs: the number of arguments
+ *
+ * URI-Escapes a string
+ */
+static void
+exsltStrEncodeUriFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+    int escape_all = 1, str_len = 0;
+    xmlChar *str = NULL, *ret = NULL, *tmp;
+
+    if ((nargs < 2) || (nargs > 3)) {
+	xmlXPathSetArityError(ctxt);
+	return;
+    }
+
+    if (nargs >= 3) {
+        /* check for UTF-8 if encoding was explicitly given;
+           we don't support anything else yet */
+        tmp = xmlXPathPopString(ctxt);
+        if (xmlUTF8Strlen(tmp) != 5 || xmlStrcmp((const xmlChar *)"UTF-8",tmp)) {
+	    xmlXPathReturnEmptyString(ctxt);
+	    xmlFree(tmp);
+	    return;
+	}
+	xmlFree(tmp);
+    }
+
+    escape_all = xmlXPathPopBoolean(ctxt);
+
+    str = xmlXPathPopString(ctxt);
+    str_len = xmlUTF8Strlen(str);
+
+    if (str_len == 0) {
+	xmlXPathReturnEmptyString(ctxt);
+	xmlFree(str);
+	return;
+    }
+
+    ret = xmlURIEscapeStr(str,(const xmlChar *)(escape_all?"-_.!~*'()":"-_.!~*'();/?:@&=+$,[]"));
+    xmlXPathReturnString(ctxt, ret);
+
+    if (str != NULL)
+	xmlFree(str);
+}
+
+/**
+ * exsltStrDecodeUriFunction:
+ * @ctxt: an XPath parser context
+ * @nargs: the number of arguments
+ *
+ * reverses URI-Escaping of a string
+ */
+static void
+exsltStrDecodeUriFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+    int str_len = 0;
+    xmlChar *str = NULL, *ret = NULL, *tmp;
+
+    if ((nargs < 1) || (nargs > 2)) {
+	xmlXPathSetArityError(ctxt);
+	return;
+    }
+
+    if (nargs >= 2) {
+        /* check for UTF-8 if encoding was explicitly given;
+           we don't support anything else yet */
+        tmp = xmlXPathPopString(ctxt);
+        if (xmlUTF8Strlen(tmp) != 5 || xmlStrcmp((const xmlChar *)"UTF-8",tmp)) {
+	    xmlXPathReturnEmptyString(ctxt);
+	    xmlFree(tmp);
+	    return;
+	}
+	xmlFree(tmp);
+    }
+
+    str = xmlXPathPopString(ctxt);
+    str_len = xmlUTF8Strlen(str);
+
+    if (str_len == 0) {
+	xmlXPathReturnEmptyString(ctxt);
+	xmlFree(str);
+	return;
+    }
+
+    ret = (xmlChar *) xmlURIUnescapeString((const char *)str,0,NULL);
+    if (!xmlCheckUTF8(ret)) {
+	/* FIXME: instead of throwing away the whole URI, we should
+        only discard the invalid sequence(s). How to do that? */
+	xmlXPathReturnEmptyString(ctxt);
+	xmlFree(str);
+	xmlFree(ret);
+	return;
+    }
+    
+    xmlXPathReturnString(ctxt, ret);
+
+    if (str != NULL)
+	xmlFree(str);
 }
 
 /**
@@ -280,6 +382,12 @@ exsltStrRegister (void) {
     xsltRegisterExtModuleFunction ((const xmlChar *) "tokenize",
 				   EXSLT_STRINGS_NAMESPACE,
 				   exsltStrTokenizeFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "encode-uri",
+				   EXSLT_STRINGS_NAMESPACE,
+				   exsltStrEncodeUriFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "decode-uri",
+				   EXSLT_STRINGS_NAMESPACE,
+				   exsltStrDecodeUriFunction);
     xsltRegisterExtModuleFunction ((const xmlChar *) "padding",
 				   EXSLT_STRINGS_NAMESPACE,
 				   exsltStrPaddingFunction);
