@@ -1,3 +1,7 @@
+Sun Jan  7 19:50:02 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.[ch]: started parsing stylesheet xsl:stylesheet
+
 Sun Jan  7 16:11:42 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.[ch] libxslt/xsltInternals.h libxslt/xsltproc.c:
