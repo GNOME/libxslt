@@ -607,8 +607,20 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		break;
 	    case XSLT_OP_PREDICATE: {
 		xmlNodePtr oldNode;
+		xmlDocPtr doc;
 		int oldCS, oldCP;
 		int pos = 0, len = 0;
+		int isRVT;
+
+		doc = node->doc;
+		if ((doc != NULL) &&
+		    (doc->name != NULL) &&
+		    (doc->name[0] == ' ') &&
+		    (xmlStrEqual(BAD_CAST doc->name,
+		    		 BAD_CAST " fake node libxslt")))
+		    isRVT = 1;
+		else
+		    isRVT = 0;
 		/*
 		 * The simple existing predicate code cannot handle
 		 * properly cascaded predicates. If in this situation
@@ -616,7 +628,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		 * if the node is in the result list.
 		 */
 		if (comp->steps[i + 1].op == XSLT_OP_PREDICATE) {
-		    xmlDocPtr prevdoc, doc;
+		    xmlDocPtr prevdoc;
 		    xmlXPathObjectPtr list;
 		    int ix, j;
 		    int nocache = 0;
@@ -628,7 +640,6 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    list = (xmlXPathObjectPtr)
 			XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra);
 		    
-		    doc = node->doc;
 		    if ((list == NULL) || (prevdoc != doc)) {
 			xmlChar *query;
 			xmlXPathObjectPtr newlist;
@@ -658,15 +669,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			}
 			ix = 0;
 
-			if ((parent == NULL) || (node->doc == NULL))
+			if ((parent == NULL) || (node->doc == NULL) || isRVT)
 			    nocache = 1;
-			else {
-			    if ((doc->name != NULL) &&
-				(doc->name[0] == ' ') &&
-				(xmlStrEqual(BAD_CAST doc->name, 
-					     BAD_CAST " fake node libxslt")))
-				nocache = 1;
-			}
 			
 			if (nocache == 0) {
 			    if (list != NULL)
@@ -774,8 +778,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    if (node->doc != NULL) {
 				len = (int)
 				    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra);
-				if ((node->doc->name != NULL) &&
-				    (node->doc->name[0] != ' ')) {
+				if (!isRVT) {
 				    XSLT_RUNTIME_EXTRA(ctxt,
 					sel->previousExtra) = node;
 				    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
@@ -828,7 +831,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			 * If the node is in a Value Tree we cannot
 			 * cache it !
 			 */
-			if ((node->doc != NULL) && (nocache == 0)) {
+			if ((!isRVT) && (node->doc != NULL) &&
+			    (nocache == 0)) {
 			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra) =
 				node;
 			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
@@ -879,9 +883,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			     * If the node is in a Value Tree we cannot
 			     * cache it !
 			     */
-			    if ((node->doc != NULL) &&
-			        (node->doc->name != NULL) &&
-				(node->doc->name[0] != ' ')) {
+			    if ((node->doc != NULL) && !isRVT) {
 				len = (int)
 				    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra);
 				XSLT_RUNTIME_EXTRA(ctxt,
@@ -925,7 +927,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			 * If the node is in a Value Tree we cannot
 			 * cache it !
 			 */
-			if ((node->doc != NULL) && (nocache == 0)) {
+			if ((node->doc != NULL) && (nocache == 0) && !isRVT) {
 			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra) =
 				node;
 			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =

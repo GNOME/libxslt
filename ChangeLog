@@ -1,3 +1,10 @@
+Tue Nov 30 10:53:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: more on RVT's in XPath predicates, this
+	  time for bug 159726.  Cleaned up the logic a little, hopefully
+	  now covers all setting of XSLT_RUNTIME_EXTRA.
+	* tests/general/bug-158.xsl: corrected a typo
+
 Thu Nov 25 22:24:03 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/variables.c, libxslt/xsltInternals.h: backed out the
