@@ -4,7 +4,8 @@
 >transform</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.59"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="Gnome XSLT Library Reference Manual"
 HREF="book1.html"><LINK
@@ -199,6 +200,17 @@ HREF="FILE-CAPS"
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > userCtxt);
+void        <A
+HREF="libxslt-transform.html#XSLTAPPLYSTRIPSPACES"
+>xsltApplyStripSpaces</A
+>            (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node);
 <A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION"
 >xsltTransformFunction</A
@@ -632,7 +644,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1119"
+NAME="AEN1122"
 ></A
 ><H2
 >Description</H2
@@ -642,14 +654,14 @@ NAME="AEN1119"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1122"
+NAME="AEN1125"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1124"
+NAME="AEN1127"
 ></A
 ><H3
 ><A
@@ -676,7 +688,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1130"
+NAME="AEN1133"
 ></A
 ><P
 ></P
@@ -714,7 +726,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1139"
+NAME="AEN1142"
 ></A
 ><H3
 ><A
@@ -741,7 +753,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1145"
+NAME="AEN1148"
 ></A
 ><P
 ></P
@@ -777,7 +789,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1154"
+NAME="AEN1157"
 ></A
 ><H3
 ><A
@@ -815,7 +827,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1163"
+NAME="AEN1166"
 ></A
 ><P
 ></P
@@ -885,7 +897,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1180"
+NAME="AEN1183"
 ></A
 ><H3
 ><A
@@ -920,7 +932,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1188"
+NAME="AEN1191"
 ></A
 ><P
 ></P
@@ -958,7 +970,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1197"
+NAME="AEN1200"
 ></A
 ><H3
 ><A
@@ -1006,7 +1018,7 @@ its own transformation context.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1208"
+NAME="AEN1211"
 ></A
 ><P
 ></P
@@ -1144,7 +1156,96 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1241"
+NAME="AEN1244"
+></A
+><H3
+><A
+NAME="XSLTAPPLYSTRIPSPACES"
+></A
+>xsltApplyStripSpaces ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltApplyStripSpaces            (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Strip the unwanted ignorable spaces from the input tree</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN1252"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a XSLT process context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1265"
 ></A
 ><H3
 ><A
@@ -1191,7 +1292,7 @@ module elements.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1252"
+NAME="AEN1276"
 ></A
 ><P
 ></P
@@ -1278,7 +1379,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1273"
+NAME="AEN1297"
 ></A
 ><H3
 ><A
@@ -1317,7 +1418,7 @@ NOTE: This may lead to a non-wellformed output XML wise !</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1282"
+NAME="AEN1306"
 ></A
 ><P
 ></P
@@ -1404,7 +1505,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1303"
+NAME="AEN1327"
 ></A
 ><H3
 ><A
@@ -1447,7 +1548,7 @@ the given output.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1313"
+NAME="AEN1337"
 ></A
 ><P
 ></P
@@ -1551,7 +1652,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1338"
+NAME="AEN1362"
 ></A
 ><H3
 ><A
@@ -1630,7 +1731,7 @@ since the interface uses only UTF8</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1354"
+NAME="AEN1378"
 ></A
 ><P
 ></P
@@ -1769,7 +1870,7 @@ error.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1387"
+NAME="AEN1411"
 ></A
 ><H3
 ><A
@@ -1817,7 +1918,7 @@ caller to handle them back (they may be reused).</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1398"
+NAME="AEN1422"
 ></A
 ><P
 ></P
@@ -1923,7 +2024,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1423"
+NAME="AEN1447"
 ></A
 ><H3
 ><A
@@ -1965,7 +2066,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1433"
+NAME="AEN1457"
 ></A
 ><P
 ></P
@@ -2054,7 +2155,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1454"
+NAME="AEN1478"
 ></A
 ><H3
 ><A
@@ -2097,7 +2198,7 @@ called directly</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1464"
+NAME="AEN1488"
 ></A
 ><P
 ></P
@@ -2186,7 +2287,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1485"
+NAME="AEN1509"
 ></A
 ><H3
 ><A
@@ -2228,7 +2329,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1495"
+NAME="AEN1519"
 ></A
 ><P
 ></P
@@ -2317,7 +2418,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1516"
+NAME="AEN1540"
 ></A
 ><H3
 ><A
@@ -2359,7 +2460,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1526"
+NAME="AEN1550"
 ></A
 ><P
 ></P
@@ -2448,7 +2549,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1547"
+NAME="AEN1571"
 ></A
 ><H3
 ><A
@@ -2490,7 +2591,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1557"
+NAME="AEN1581"
 ></A
 ><P
 ></P
@@ -2579,7 +2680,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1578"
+NAME="AEN1602"
 ></A
 ><H3
 ><A
@@ -2621,7 +2722,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1588"
+NAME="AEN1612"
 ></A
 ><P
 ></P
@@ -2710,7 +2811,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1609"
+NAME="AEN1633"
 ></A
 ><H3
 ><A
@@ -2752,7 +2853,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1619"
+NAME="AEN1643"
 ></A
 ><P
 ></P
@@ -2841,7 +2942,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1640"
+NAME="AEN1664"
 ></A
 ><H3
 ><A
@@ -2883,7 +2984,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1650"
+NAME="AEN1674"
 ></A
 ><P
 ></P
@@ -2972,7 +3073,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1671"
+NAME="AEN1695"
 ></A
 ><H3
 ><A
@@ -3014,7 +3115,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1681"
+NAME="AEN1705"
 ></A
 ><P
 ></P
@@ -3103,7 +3204,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1702"
+NAME="AEN1726"
 ></A
 ><H3
 ><A
@@ -3145,7 +3246,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1712"
+NAME="AEN1736"
 ></A
 ><P
 ></P
@@ -3234,7 +3335,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1733"
+NAME="AEN1757"
 ></A
 ><H3
 ><A
@@ -3276,7 +3377,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1743"
+NAME="AEN1767"
 ></A
 ><P
 ></P
@@ -3365,7 +3466,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1764"
+NAME="AEN1788"
 ></A
 ><H3
 ><A
@@ -3407,7 +3508,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1774"
+NAME="AEN1798"
 ></A
 ><P
 ></P
@@ -3496,7 +3597,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1795"
+NAME="AEN1819"
 ></A
 ><H3
 ><A
@@ -3538,7 +3639,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1805"
+NAME="AEN1829"
 ></A
 ><P
 ></P
@@ -3627,7 +3728,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1826"
+NAME="AEN1850"
 ></A
 ><H3
 ><A
@@ -3669,7 +3770,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1836"
+NAME="AEN1860"
 ></A
 ><P
 ></P
@@ -3758,7 +3859,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1857"
+NAME="AEN1881"
 ></A
 ><H3
 ><A
@@ -3800,7 +3901,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1867"
+NAME="AEN1891"
 ></A
 ><P
 ></P
@@ -3889,7 +3990,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1888"
+NAME="AEN1912"
 ></A
 ><H3
 ><A
@@ -3931,7 +4032,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1898"
+NAME="AEN1922"
 ></A
 ><P
 ></P
@@ -4020,7 +4121,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1919"
+NAME="AEN1943"
 ></A
 ><H3
 ><A
@@ -4062,7 +4163,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1929"
+NAME="AEN1953"
 ></A
 ><P
 ></P
@@ -4151,7 +4252,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1950"
+NAME="AEN1974"
 ></A
 ><H3
 ><A
@@ -4181,7 +4282,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1957"
+NAME="AEN1981"
 ></A
 ><P
 ></P

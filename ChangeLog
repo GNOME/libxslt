@@ -1,3 +1,8 @@
+Wed Oct 10 11:58:41 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: releasing 1.0.5
+	* doc/xslt.html doc/html/*: updated and rebuilt the docs
+
 Wed Oct 10 00:10:01 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* tests/REC/test-7.7-4.out: fixed a typo
