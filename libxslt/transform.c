@@ -348,6 +348,17 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     memset(cur, 0, sizeof(xsltTransformContext));
 
     /*
+     * setup of the dictionnary must be done early as some of the
+     * processing later like key handling may need it.
+     */
+    cur->dict = xmlDictCreateSub(style->dict);
+    cur->internalized = ((style->internalized) && (cur->dict != NULL));
+#ifdef WITH_XSLT_DEBUG
+    xsltGenericDebug(xsltGenericDebugContext,
+	     "Creating sub-dictionary from stylesheet for transformation\n");
+#endif
+
+    /*
      * initialize the template stack
      */
     cur->templTab = (xsltTemplatePtr *)
@@ -463,13 +474,6 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->sec = xsltGetDefaultSecurityPrefs();
     cur->debugStatus = xslDebugStatus;
     cur->traceCode = (unsigned long*) &xsltDefaultTrace;
-
-    cur->dict = xmlDictCreateSub(style->dict);
-    cur->internalized = ((style->internalized) && (cur->dict != NULL));
-#ifdef WITH_XSLT_DEBUG
-    xsltGenericDebug(xsltGenericDebugContext,
-	     "Creating sub-dictionary from stylesheet for transformation\n");
-#endif
 
     return(cur);
 }

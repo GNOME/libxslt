@@ -22,6 +22,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/parserInternals.h>
+#include <libxml/dict.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -250,6 +251,8 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
  *
  * Locate an element in the stack based on its name.
  */
+static int stack_addr = 0;
+static int stack_cmp = 0;
 static xsltStackElemPtr
 xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	        const xmlChar *nameURI) {
@@ -271,11 +274,13 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    if (cur->name == name) {
 		if (nameURI == NULL) {
 		    if (cur->nameURI == NULL) {
+		        stack_addr++;
 			return(cur);
 		    }
 		} else {
 		    if ((cur->nameURI != NULL) &&
 			(cur->nameURI == nameURI)) {
+		        stack_addr++;
 			return(cur);
 		    }
 		}
@@ -285,47 +290,28 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	}
     }
 
-#if 0
-    if ((xmlDictOwns(ctxt->dict, name) <= 0) ||
-        ((nameURI != NULL) && (xmlDictOwns(ctxt->dict, nameURI) <= 0))) {
-	/*
-	 * Redo the lookup with string compares
-	 */
-	for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
-	    cur = ctxt->varsTab[i-1];
-	    while (cur != NULL) {
-		if (xmlStrEqual(cur->name, name)) {
-		    if (nameURI == NULL) {
-			if (cur->nameURI == NULL) {
-			    return(cur);
-			}
-		    } else {
-			if ((cur->nameURI != NULL) &&
-			    (xmlStrEqual(cur->nameURI, nameURI))) {
-			    return(cur);
-			}
-		    }
-
-		}
-		cur = cur->next;
-	    }
-	}
-    }
-#else
     /*
-     * Redo the lookup with string compares
+     * Redo the lookup with interned string compares
+     * to avoid string compares.
      */
+    name = xmlDictLookup(ctxt->dict, name, -1);
+    if (nameURI != NULL)
+        nameURI = xmlDictLookup(ctxt->dict, nameURI, -1);
+    else
+        nameURI = NULL;
     for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
 	cur = ctxt->varsTab[i-1];
 	while (cur != NULL) {
-	    if (xmlStrEqual(cur->name, name)) {
+	    if (cur->name == name) {
 		if (nameURI == NULL) {
 		    if (cur->nameURI == NULL) {
+		        stack_cmp++;
 			return(cur);
 		    }
 		} else {
 		    if ((cur->nameURI != NULL) &&
-			(xmlStrEqual(cur->nameURI, nameURI))) {
+			(cur->nameURI == nameURI)) {
+		        stack_cmp++;
 			return(cur);
 		    }
 		}
@@ -334,7 +320,7 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    cur = cur->next;
 	}
     }
-#endif
+
     return(NULL);
 }
 

@@ -483,7 +483,7 @@ dnl
 dnl In build tree I use a static version with memory debug enabled
 dnl
 if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
-    if test "`uname -i`" != "x86_64" ;
+    if test "`uname -i`" != "x86_64" -a -e $HOME/XML/.libs/libxml2.a ;
     then
 	LIBXML_LIBS="$HOME/XML/.libs/libxml2.a -lpthread -lz"
     fi

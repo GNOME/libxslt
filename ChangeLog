@@ -1,3 +1,10 @@
+Sat Jan 22 19:17:13 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: small fix for local setup
+	* libxslt/transform.c libxslt/variables.c : speeding up some
+	  variable lookup. In the process dug out something nasty about
+	  ctxt->dict creation and key initialization order.
+
 Sat Jan 22 16:28:27 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/templates.c libxslt/transform.c libxslt/xslt.c
