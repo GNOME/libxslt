@@ -1,3 +1,10 @@
+Wed Aug 18 00:22:00 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: implemented --nodtdattr to avoid defaulting
+	  DTD attributes, RFE 150311 . Also cleanup the code from all
+	  libxml2 pre 2.6.0 specific code since we are using 
+	  LIBXML_REQUIRED_VERSION=2.6.8 in configure.in
+
 Tue Aug 17 01:01:22 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/documents.c libxslt/documents.h libxslt/imports.c
