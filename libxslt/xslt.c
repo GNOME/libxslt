@@ -123,6 +123,11 @@ void
 xsltFreeTemplate(xsltTemplatePtr template) {
     if (template == NULL)
 	return;
+    if (template->match) xmlFree(template->match);
+    if (template->name) xmlFree(template->name);
+    if (template->nameURI) xmlFree(template->nameURI);
+    if (template->mode) xmlFree(template->mode);
+    if (template->modeURI) xmlFree(template->modeURI);
     memset(template, -1, sizeof(xsltTemplate));
     xmlFree(template);
 }
@@ -178,6 +183,8 @@ void
 xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     if (sheet == NULL)
 	return;
+
+    xsltFreeTemplateHashes(sheet);
     xsltFreeTemplateList(sheet->templates);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);

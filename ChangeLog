@@ -1,3 +1,9 @@
+Thu Jan 11 21:10:59 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.[ch] Makefile.am: started adding the
+	  transformation module
+	* pattern.[ch] xslt.c: more work...
+
 Thu Jan 11 14:02:03 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/pattern.c: started adding xsltTestCompMatch()

@@ -8,6 +8,8 @@ libxslt_la_SOURCES = 			\
 	xslt.h				\
 	pattern.c			\
 	pattern.h			\
+	transform.c			\
+	transform.h			\
 	xsltInternals.h
 
 

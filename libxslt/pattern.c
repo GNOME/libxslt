@@ -73,6 +73,7 @@ typedef xsltCompMatch *xsltCompMatchPtr;
 struct _xsltCompMatch {
     struct _xsltCompMatch *next; /* siblings in the name hash */
     int priority;                /* the priority */
+    xsltTemplatePtr template;    /* the associated template */
 
     /* TODO fix the statically allocated size */
     int nbStep;
@@ -125,8 +126,18 @@ xsltNewCompMatch(void) {
  */
 void
 xsltFreeCompMatch(xsltCompMatchPtr comp) {
+    xsltStepOpPtr op;
+    int i;
+
     if (comp == NULL)
 	return;
+    for (i = 0;i < comp->nbStep;i++) {
+	op = &comp->steps[i];
+	if (op->value != NULL)
+	    xmlFree(op->value);
+	if (op->value2 != NULL)
+	    xmlFree(op->value2);
+    }
     memset(comp, -1, sizeof(xsltCompMatch));
     xmlFree(comp);
 }
@@ -680,6 +691,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
     pat = xsltCompilePattern(cur->match);
     if (pat == NULL)
 	return(-1);
+    pat->template = cur;
     if (cur->priority != XSLT_PAT_NO_PRIORITY)
 	pat->priority = cur->priority;
 
@@ -746,14 +758,14 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
 	     */
 	    if (list->priority <= pat->priority) {
 		pat->next = list;
-		xmlHashAddEntry(style->templatesHash, name, pat);
+		xmlHashUpdateEntry(style->templatesHash, name, pat, NULL);
 #ifdef DEBUG_PARSING
 		xsltGenericError(xsltGenericErrorContext,
 			"xsltAddTemplate: added head hash for %s\n", name);
 #endif
 	    } else {
 		while (list->next != NULL) {
-		    if (list->next->priority < pat->priority)
+		    if (list->next->priority <= pat->priority)
 			break;
 		}
 		pat->next = list->next;
@@ -775,6 +787,83 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
  */
 xsltTemplatePtr
 xsltGetTemplate(xsltStylesheetPtr style, xmlNodePtr node) {
+    const xmlChar *name;
+    xsltCompMatchPtr list;
+
+    if ((style == NULL) || (node == NULL))
+	return(NULL);
+
+    /* TODO : handle IDs/keys here ! */
+    if (style->templatesHash == NULL)
+	return(NULL);
+
+    /*
+     * Use a name as selector
+     */
+    switch (node->type) {
+        case XML_ELEMENT_NODE:
+        case XML_ATTRIBUTE_NODE:
+        case XML_PI_NODE:
+	    name = node->name;
+	    break;
+        case XML_DOCUMENT_NODE:
+        case XML_HTML_DOCUMENT_NODE:
+	    name = (const xmlChar *)"/";
+	    break;
+        case XML_TEXT_NODE:
+        case XML_CDATA_SECTION_NODE:
+        case XML_ENTITY_REF_NODE:
+        case XML_ENTITY_NODE:
+        case XML_COMMENT_NODE:
+        case XML_DOCUMENT_TYPE_NODE:
+        case XML_DOCUMENT_FRAG_NODE:
+        case XML_NOTATION_NODE:
+        case XML_DTD_NODE:
+        case XML_ELEMENT_DECL:
+        case XML_ATTRIBUTE_DECL:
+        case XML_ENTITY_DECL:
+        case XML_NAMESPACE_DECL:
+        case XML_XINCLUDE_START:
+        case XML_XINCLUDE_END:
+	    return(NULL);
+	default:
+	    return(NULL);
+
+    }
+    if (name == NULL)
+	return(NULL);
+
+    /*
+     * find the list of appliable expressions based on the name
+     */
+    list = (xsltCompMatchPtr) xmlHashLookup(style->templatesHash, name);
+    if (list == NULL) {
+#ifdef DEBUG_MATCHING
+	xsltGenericError(xsltGenericErrorContext,
+		"xsltGetTemplate: empty set for %s\n", name);
+#endif
+	return(NULL);
+    }
+    while (list != NULL) {
+	if (xsltTestCompMatch(list, node))
+	    return(list->template);
+	list = list->next;
+    }
+
     return(NULL);
+}
+
+
+/**
+ * xsltFreeTemplateHashes:
+ * @style: an XSLT stylesheet
+ *
+ * Free up the memory used by xsltAddTemplate/xsltGetTemplate mechanism
+ */
+void
+xsltFreeTemplateHashes(xsltStylesheetPtr style) {
+    if (style->templatesHash != NULL)
+	xmlHashFree((xmlHashTablePtr) style->templatesHash,
+		    (xmlHashDeallocator) xsltFreeCompMatchList);
 }
 
