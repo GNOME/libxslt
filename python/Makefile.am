@@ -8,7 +8,7 @@ INCLUDES = \
 	 $(LIBXML_CFLAGS) \
 	-I$(top_srcdir)
 
-DOCS_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXML_VERSION)
+DOCS_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXSLT_VERSION)
 # libxsltclass.txt is generated
 DOCS = TODO
 
