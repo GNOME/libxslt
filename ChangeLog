@@ -1,3 +1,9 @@
+Fri Jan  4 22:13:40 MST 2002 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.xml, xsltproc.1 - updating man page to reflect
+	increased number of parameteres, changed license, cleaned up some
+	places where it looked junky because of stylesheet issues
+
 Fri Jan  4 15:50:25 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: increased the max number of parameters
