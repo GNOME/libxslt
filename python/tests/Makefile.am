@@ -2,6 +2,7 @@ EXAMPLE_DIR = $(datadir)/doc/libxslt-python-$(LIBXSLT_VERSION)/examples
 
 TESTSPY=	\
     basic.py	\
+    exslt.py	\
     extfunc.py
 
 XMLS=		\

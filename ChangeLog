@@ -1,3 +1,9 @@
+Sat Nov 16 23:23:41 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxslt.c: make sure to register EXSLT for the bindings
+	* python/tests/Makefile.am python/tests/exslt.py: add a specific test
+	* xsltproc/xsltproc.c: minor cleanup
+
 Fri Nov 15 12:35:57 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/Makefile.am python/tests/Makefile.am: trying to fix #98518

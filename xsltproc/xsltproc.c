@@ -172,7 +172,6 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
     }
     for (i = 0;i < nbpaths;i++) {
 	xmlChar *newURL;
-	int len;
 
 	newURL = xmlStrdup((const xmlChar *) paths[i]);
 	newURL = xmlStrcat(newURL, (const xmlChar *) "/");

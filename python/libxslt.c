@@ -458,6 +458,10 @@ void initlibxsltmod(void) {
     xmlInitMemory();
     xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
     xmlDefaultSAXHandler.cdataBlock = NULL;
+    /*
+     * Register the EXSLT extensions and the test module
+     */
+    exsltRegisterAll();
 }
 
 
