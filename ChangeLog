@@ -1,3 +1,12 @@
+Mon Aug 27 08:27:21 MDT 2001 John Fleck <jfleck@inkstain.net>
+
+	* adding doc/xsltproc.html - html generated from xsltproc.xml,
+	update doc/xslt.html with link to xsltproc.html
+
+Mon Aug 27 08:21:47 MDT 2001 John Fleck <jfleck@inkstain.net>
+
+	* adding doc/xsltproc.xml - user manual for xsltproc
+	
 Sun Aug 26 20:52:02 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c libxslt/xslt.c: removed a couple of
