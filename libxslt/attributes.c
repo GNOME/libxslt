@@ -619,22 +619,21 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if ((fromset) && (ns != NULL))
         URL = ns->href;
-    if ((fromset == 0) || (!xmlHasNsProp(ctxt->insert, name, URL))) {
-        value = xsltEvalTemplateString(ctxt, node, inst);
-        if (value == NULL) {
-            if (ns) {
-                attr = xmlSetNsProp(ctxt->insert, ns, name,
-                                    (const xmlChar *) "");
-            } else {
-                attr =
-                    xmlSetProp(ctxt->insert, name, (const xmlChar *) "");
-            }
+
+    value = xsltEvalTemplateString(ctxt, node, inst);
+    if (value == NULL) {
+        if (ns) {
+            attr = xmlSetNsProp(ctxt->insert, ns, name,
+                                (const xmlChar *) "");
         } else {
-            if (ns) {
-                attr = xmlSetNsProp(ctxt->insert, ns, name, value);
-            } else {
-                attr = xmlSetProp(ctxt->insert, name, value);
-            }
+            attr =
+                xmlSetProp(ctxt->insert, name, (const xmlChar *) "");
+        }
+    } else {
+        if (ns) {
+            attr = xmlSetNsProp(ctxt->insert, ns, name, value);
+        } else {
+            attr = xmlSetProp(ctxt->insert, name, value);
         }
     }
 

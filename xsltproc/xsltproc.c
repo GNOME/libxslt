@@ -376,10 +376,10 @@ static void usage(const char *name) {
     printf("\t--docbook: the input document is SGML docbook\n");
 #endif
     printf("\t--param name value : pass a (parameter,value) pair\n");
-    printf("\t       value is an XPath expression.\n");
+    printf("\t       value is an UTF8 XPath expression.\n");
     printf("\t       string values must be quoted like \"'string'\"\n or");
     printf("\t       use stringparam to avoid it\n");
-    printf("\t--stringparam name value : pass a (parameter,string value) pair\n");
+    printf("\t--stringparam name value : pass a (parameter, UTF8 string value) pair\n");
     printf("\t--nonet refuse to fetch DTDs or entities over network\n");
 #ifdef LIBXML_CATALOG_ENABLED
     printf("\t--catalogs : use SGML catalogs from $SGML_CATALOG_FILES\n");
