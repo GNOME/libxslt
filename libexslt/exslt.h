@@ -5,6 +5,10 @@
 #include <libxml/tree.h>
 #include "exsltconfig.h"
 
+#ifdef _cplusplus
+extern "C" {
+#endif
+
 LIBEXSLT_PUBLIC extern const char *exsltLibraryVersion;
 LIBEXSLT_PUBLIC extern const int exsltLibexsltVersion;
 LIBEXSLT_PUBLIC extern const int exsltLibxsltVersion;
@@ -28,5 +32,8 @@ void LIBEXSLT_PUBLIC exsltSaxonRegister (void);
 
 void LIBEXSLT_PUBLIC exsltRegisterAll (void);
 
+#ifdef _cplusplus
+}
+#endif
 #endif /* __EXSLT_H__ */
 
