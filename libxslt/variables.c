@@ -501,7 +501,7 @@ xmlXPathObjectPtr
 xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 		         const xmlChar *ns_uri) {
     xsltStylesheetPtr style;
-    xsltStackElemPtr elem;
+    xsltStackElemPtr elem = NULL;
 
     style = ctxt->style;
     /* TODO: handle the stylesheet cascade */

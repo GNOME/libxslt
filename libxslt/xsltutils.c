@@ -375,7 +375,17 @@ xsltSaveResultToFilename(const char *URL, xmlDocPtr result,
     if ((URL == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
 
-    buf = xmlOutputBufferCreateFilename(URL, NULL, compression);
+    if (style->encoding != NULL) {
+	xmlCharEncodingHandlerPtr encoder;
+
+	encoder = xmlFindCharEncodingHandler((char *)style->encoding);
+	if ((encoder != NULL) &&
+	    (xmlStrEqual(encoder->name, (const xmlChar *) "UTF-8")))
+	    encoder = NULL;
+	buf = xmlOutputBufferCreateFilename(URL, encoder, compression);
+    } else {
+	buf = xmlOutputBufferCreateFilename(URL, NULL, compression);
+    }
     if (buf == NULL)
 	return(-1);
     xsltSaveResultTo(buf, result, style);
@@ -403,7 +413,18 @@ xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
     if ((file == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
 
-    buf = xmlOutputBufferCreateFile(file, NULL);
+    if (style->encoding != NULL) {
+	xmlCharEncodingHandlerPtr encoder;
+
+	encoder = xmlFindCharEncodingHandler((char *)style->encoding);
+	if ((encoder != NULL) &&
+	    (xmlStrEqual(encoder->name, (const xmlChar *) "UTF-8")))
+	    encoder = NULL;
+	buf = xmlOutputBufferCreateFile(file, encoder);
+    } else {
+	buf = xmlOutputBufferCreateFile(file, NULL);
+    }
+
     if (buf == NULL)
 	return(-1);
     xsltSaveResultTo(buf, result, style);
@@ -431,7 +452,17 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
     if ((fd < 0) || (result == NULL) || (style == NULL))
 	return(-1);
 
-    buf = xmlOutputBufferCreateFd(fd, NULL);
+    if (style->encoding != NULL) {
+	xmlCharEncodingHandlerPtr encoder;
+
+	encoder = xmlFindCharEncodingHandler((char *)style->encoding);
+	if ((encoder != NULL) &&
+	    (xmlStrEqual(encoder->name, (const xmlChar *) "UTF-8")))
+	    encoder = NULL;
+	buf = xmlOutputBufferCreateFd(fd, encoder);
+    } else {
+	buf = xmlOutputBufferCreateFd(fd, NULL);
+    }
     if (buf == NULL)
 	return(-1);
     xsltSaveResultTo(buf, result, style);

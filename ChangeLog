@@ -1,3 +1,16 @@
+Mon Feb  5 18:58:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated, added mode support for templates
+	* pattern.[ch] transform.c xslt.c xsltInternals.h: added mode
+	  support for templates
+	* templates.c variables.c: simple fixes
+	* xslt.c: added a separate DEBUG_BLANKS debug class disabled
+	* xsltproc.c: added option -timing
+	* xsltutils.c: seem I forgot to add encoding support in output...
+	* configure.in tests/Makefile.am tests/xmlspec/*: added a test
+	  consisting of reformatting the XML REC with the xmlspec XSLT,
+	  heavy !
+
 Mon Feb  5 18:43:37 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* FEATURES: updated

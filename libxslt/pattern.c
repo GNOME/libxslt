@@ -24,6 +24,7 @@
 #include "xsltutils.h"
 #include "imports.h"
 #include "templates.h"
+#include "pattern.h"
 
 /* #define DEBUG_PARSING */
 
@@ -63,7 +64,9 @@ typedef struct _xsltCompMatch xsltCompMatch;
 typedef xsltCompMatch *xsltCompMatchPtr;
 struct _xsltCompMatch {
     struct _xsltCompMatch *next; /* siblings in the name hash */
-    float priority;                /* the priority */
+    float priority;              /* the priority */
+    const xmlChar *mode;         /* the mode */
+    const xmlChar *modeURI;      /* the mode URI */
     xsltTemplatePtr template;    /* the associated template */
 
     /* TODO fix the statically allocated size steps[] */
@@ -89,13 +92,15 @@ struct _xsltParserContext {
 
 /**
  * xsltNewCompMatch:
+ * @mode:  the mode name or NULL
+ * @modeURI:  the mode URI or NULL
  *
  * Create a new XSLT CompMatch
  *
  * Returns the newly allocated xsltCompMatchPtr or NULL in case of error
  */
 xsltCompMatchPtr
-xsltNewCompMatch(void) {
+xsltNewCompMatch(const xmlChar *mode, const xmlChar *modeURI) {
     xsltCompMatchPtr cur;
 
     cur = (xsltCompMatchPtr) xmlMalloc(sizeof(xsltCompMatch));
@@ -106,6 +111,8 @@ xsltNewCompMatch(void) {
     }
     memset(cur, 0, sizeof(xsltCompMatch));
     cur->maxStep = 20;
+    cur->mode = xmlStrdup(mode);
+    cur->modeURI = xmlStrdup(modeURI);
     return(cur);
 }
 
@@ -122,6 +129,10 @@ xsltFreeCompMatch(xsltCompMatchPtr comp) {
 
     if (comp == NULL)
 	return;
+    if (comp->mode != NULL)
+	xmlFree((xmlChar *)comp->mode);
+    if (comp->modeURI != NULL)
+	xmlFree((xmlChar *)comp->modeURI);
     for (i = 0;i < comp->nbStep;i++) {
 	op = &comp->steps[i];
 	if (op->value != NULL)
@@ -278,6 +289,8 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
  * @ctxt:  a XSLT process context
  * @comp: the precompiled pattern
  * @node: a node
+ * @mode:  the mode name or NULL
+ * @modeURI:  the mode URI or NULL
  *
  * Test wether the node matches the pattern
  *
@@ -285,7 +298,8 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
  */
 int
 xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
-	          xmlNodePtr node) {
+	          xmlNodePtr node, const xmlChar *mode,
+		  const xmlChar *modeURI) {
     int i;
     xsltStepOpPtr step, select = NULL;
 
@@ -293,6 +307,25 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
         xsltGenericError(xsltGenericErrorContext,
 		"xsltTestCompMatch: null arg\n");
         return(-1);
+    }
+    if (mode != NULL) {
+	if (comp->mode == NULL)
+	    return(0);
+	if ((comp->mode != mode) && (!xmlStrEqual(comp->mode, mode)))
+	    return(0);
+    } else {
+	if (comp->mode != NULL)
+	    return(0);
+    }
+    if (modeURI != NULL) {
+	if (comp->modeURI == NULL)
+	    return(0);
+	if ((comp->modeURI != modeURI) &&
+	    (!xmlStrEqual(comp->modeURI, modeURI)))
+	    return(0);
+    } else {
+	if (comp->modeURI != NULL)
+	    return(0);
     }
     for (i = 0;i < comp->nbStep;i++) {
 	step = &comp->steps[i];
@@ -442,6 +475,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		 * Depending on the last selection, one may need to
 		 * recompute contextSize and proximityPosition.
 		 */
+		oldCS = ctxt->xpathCtxt->contextSize;
+		oldCP = ctxt->xpathCtxt->proximityPosition;
 		if ((select != NULL) &&
 		    (select->op == XSLT_OP_ELEM) &&
 		    (select->value != NULL) &&
@@ -451,8 +486,6 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    /* TODO: cache those informations ?!? */
 		    xmlNodePtr siblings = node->parent->children;
 
-		    oldCS = ctxt->xpathCtxt->contextSize;
-		    oldCP = ctxt->xpathCtxt->proximityPosition;
 		    while (siblings != NULL) {
 			if (siblings->type == XML_ELEMENT_NODE) {
 			    if (siblings == node) {
@@ -1046,6 +1079,8 @@ error:
 /**
  * xsltCompilePattern:
  * @pattern an XSLT pattern
+ * @mode:  the mode name or NULL
+ * @modeURI:  the mode URI or NULL
  *
  * Compile the XSLT pattern and generates a precompiled form suitable
  * for fast matching.
@@ -1058,7 +1093,8 @@ error:
  */
 
 xsltCompMatchPtr
-xsltCompilePattern(const xmlChar *pattern) {
+xsltCompilePattern(const xmlChar *pattern, const xmlChar *mode,
+	           const xmlChar *modeURI) {
     xsltParserContextPtr ctxt;
     xsltCompMatchPtr ret;
     const xmlChar *cur;
@@ -1084,7 +1120,7 @@ xsltCompilePattern(const xmlChar *pattern) {
     ctxt = xsltNewParserContext();
     if (ctxt == NULL)
 	return(NULL);
-    ret = xsltNewCompMatch();
+    ret = xsltNewCompMatch(mode, modeURI);
     if (ret == NULL) {
 	xsltFreeParserContext(ctxt);
 	return(NULL);
@@ -1149,14 +1185,17 @@ error:
  * xsltAddTemplate:
  * @style: an XSLT stylesheet
  * @cur: an XSLT template
+ * @mode:  the mode name or NULL
+ * @modeURI:  the mode URI or NULL
  *
  * Register the XSLT pattern associated to @cur
  *
  * Returns -1 in case of error, 0 otherwise
  */
 int
-xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
-    xsltCompMatchPtr pat, list, *top;
+xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
+	        const xmlChar *mode, const xmlChar *modeURI) {
+    xsltCompMatchPtr pat, list, *top = NULL;
     const xmlChar *name = NULL;
     xmlChar *p, *pattern, tmp;
 
@@ -1181,7 +1220,7 @@ next_pattern:
 
     tmp = *p;
     *p = 0;
-    pat = xsltCompilePattern(pattern);
+    pat = xsltCompilePattern(pattern, mode, modeURI);
     *p = tmp;
     if (tmp != 0)
 	p++;
@@ -1249,7 +1288,7 @@ next_pattern:
     }
     if (name != NULL) {
 	if (style->templatesHash == NULL) {
-	    style->templatesHash = xmlHashCreate(0);
+	    style->templatesHash = xmlHashCreate(1024);
 	    if (style->templatesHash == NULL) {
 		xsltFreeCompMatch(pat);
 		return(-1);
@@ -1258,15 +1297,17 @@ next_pattern:
 	    xsltGenericDebug(xsltGenericDebugContext,
 		    "xsltAddTemplate: created template hash\n");
 #endif
-	    xmlHashAddEntry(style->templatesHash, name, pat);
+	    xmlHashAddEntry3(style->templatesHash, name, mode, modeURI, pat);
 #ifdef DEBUG_PARSING
 	    xsltGenericDebug(xsltGenericDebugContext,
 		    "xsltAddTemplate: added new hash %s\n", name);
 #endif
 	} else {
-	    list = (xsltCompMatchPtr) xmlHashLookup(style->templatesHash, name);
+	    list = (xsltCompMatchPtr) xmlHashLookup3(style->templatesHash,
+		                      name, mode, modeURI);
 	    if (list == NULL) {
-		xmlHashAddEntry(style->templatesHash, name, pat);
+		xmlHashAddEntry3(style->templatesHash, name,
+			         mode, modeURI, pat);
 #ifdef DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
 			"xsltAddTemplate: added new hash %s\n", name);
@@ -1279,7 +1320,8 @@ next_pattern:
 		 */
 		if (list->priority <= pat->priority) {
 		    pat->next = list;
-		    xmlHashUpdateEntry(style->templatesHash, name, pat, NULL);
+		    xmlHashUpdateEntry3(style->templatesHash, name,
+			                mode, modeURI, pat, NULL);
 #ifdef DEBUG_PARSING
 		    xsltGenericDebug(xsltGenericDebugContext,
 			    "xsltAddTemplate: added head hash for %s\n", name);
@@ -1326,7 +1368,7 @@ next_pattern:
 /**
  * xsltGetTemplate:
  * @ctxt:  a XSLT process context
- * @node: an XML Node
+ * @mode:  the mode name or NULL
  *
  * Finds the template applying to this node
  *
@@ -1382,10 +1424,12 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    /*
 	     * find the list of appliable expressions based on the name
 	     */
-	    list = (xsltCompMatchPtr) xmlHashLookup(style->templatesHash, name);
+	    list = (xsltCompMatchPtr) xmlHashLookup3(style->templatesHash,
+					     name, ctxt->mode, ctxt->modeURI);
 	}
 	while (list != NULL) {
-	    if (xsltTestCompMatch(ctxt, list, node)) {
+	    if (xsltTestCompMatch(ctxt, list, node,
+			          ctxt->mode, ctxt->modeURI)) {
 		ret = list->template;
 		break;
 	    }
@@ -1436,7 +1480,8 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	}
 	while ((list != NULL) &&
 	       ((ret == NULL)  || (list->priority > ret->priority))) {
-	    if (xsltTestCompMatch(ctxt, list, node)) {
+	    if (xsltTestCompMatch(ctxt, list, node,
+			          ctxt->mode, ctxt->modeURI)) {
 		ret = list->template;
 		break;
 	    }

@@ -646,7 +646,6 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (xpathParserCtxt == NULL)
 	goto error;
     ctxt->xpathCtxt->node = node;
-    valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
     xmlXPathEvalExpr(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);
     do {
@@ -767,7 +766,6 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (xpathParserCtxt == NULL)
 	goto error;
     ctxt->xpathCtxt->node = node;
-    valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
     xmlXPathEvalExpr(xpathParserCtxt);
     xmlXPathStringFunction(xpathParserCtxt, 1);
     res = valuePop(xpathParserCtxt);
@@ -906,7 +904,7 @@ xsltNumber(xsltTransformContextPtr ctxt,
     
     prop = xmlGetNsProp(cur, (const xmlChar *)"grouping-size", XSLT_NAMESPACE);
     if (prop != NULL) {
-	sscanf(prop, "%d", &numdata.digitsPerGroup);
+	sscanf((char *)prop, "%d", &numdata.digitsPerGroup);
 	xmlFree(prop);
     } else {
 	numdata.groupingCharacter = 0;
@@ -969,7 +967,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		ctxt->node = node;
 		xsltApplyOneTemplate(ctxt, node, template->content);
 		ctxt->node = oldNode;
-	    } else {
+	    } else if (ctxt->mode == NULL) {
 		copy = xmlCopyNode(node, 0);
 		if (copy != NULL) {
 		    xmlAddChild(ctxt->insert, copy);
@@ -990,7 +988,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->node = node;
 		    xsltApplyOneTemplate(ctxt, node, template->content);
 		    ctxt->node = oldNode;
-		} else {
+		} else if (ctxt->mode == NULL) {
 		    if (attr->ns != NULL) {
 			if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
 			    (xmlStrncasecmp(attr->ns->prefix,
@@ -1105,7 +1103,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    xsltApplyOneTemplate(ctxt, cur, template->content);
 		    ctxt->node = oldNode;
-		} else {
+		} else if (ctxt->mode == NULL) {
 		    copy = xmlCopyNode(cur, 0);
 		    if (copy != NULL) {
 			xmlAddChild(ctxt->insert, copy);
@@ -1240,6 +1238,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodeSetPtr list = NULL, oldlist;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
     int i, oldProximityPosition, oldContextSize;
+    xmlChar *mode, *modeURI;
+    const xmlChar *oldmode, *oldmodeURI;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -1248,6 +1248,52 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltApplyTemplates: node: %s\n", node->name);
 #endif
+
+    /*
+     * Get mode if any
+     */
+    oldmode = ctxt->mode;
+    oldmodeURI = ctxt->modeURI;
+    prop = xmlGetNsProp(inst, (const xmlChar *)"mode", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	xmlChar *prefix = NULL;
+
+	mode = xmlSplitQName2(prop, &prefix);
+	if (mode != NULL) {
+	    if (prefix != NULL) {
+		xmlNsPtr ns;
+
+		ns = xmlSearchNs(inst->doc, inst, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		    xmlFree(prefix);
+		    xmlFree(mode);
+		    mode = prop;
+		} else {
+		    modeURI = xmlStrdup(ns->href);
+		    xmlFree(prefix);
+		    xmlFree(prop);
+		}
+	    } else {
+		xmlFree(prop);
+		modeURI = NULL;
+	    }
+	} else {
+	    mode = prop;
+	    modeURI = NULL;
+	}
+#ifdef DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltApplyTemplates: mode %s\n", mode);
+#endif
+    } else {
+	mode = NULL;
+	modeURI = NULL;
+    }
+    ctxt->mode = mode;
+    ctxt->modeURI = modeURI;
+
     prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
     if (prop != NULL) {
 #ifdef DEBUG_PROCESS
@@ -1262,7 +1308,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (xpathParserCtxt == NULL)
 	    goto error;
 	ctxt->xpathCtxt->node = node;
-	valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
 	xmlXPathEvalExpr(xpathParserCtxt);
 	res = valuePop(xpathParserCtxt);
 	do {
@@ -1369,6 +1414,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 
 error:
+    ctxt->mode = oldmode;
+    ctxt->modeURI = oldmodeURI;
     if (xpathParserCtxt != NULL)
 	xmlXPathFreeParserContext(xpathParserCtxt);
     if (prop != NULL)
@@ -1377,6 +1424,10 @@ error:
 	xmlXPathFreeObject(res);
     if (list != NULL)
 	xmlXPathFreeNodeSet(list);
+    if (mode != NULL)
+	xmlFree(mode);
+    if (modeURI != NULL)
+	xmlFree(modeURI);
 }
 
 
@@ -1476,11 +1527,13 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		}
 		xsltParseStylesheetParam(ctxt, cur);
 	    } else if (IS_XSLT_NAME(cur, "call-template")) {
+		ctxt->insert = insert;
 		if (has_variables == 0) {
 		    xsltPushStack(ctxt);
 		    has_variables = 1;
 		}
 		xsltCallTemplate(ctxt, node, cur);
+		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "message")) {
 		xsltMessage(ctxt, node, cur);
 	    } else {
@@ -1621,7 +1674,6 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (xpathParserCtxt == NULL)
 	    goto error;
 	ctxt->xpathCtxt->node = node;
-	valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
 	xmlXPathEvalExpr(xpathParserCtxt);
 	xmlXPathBooleanFunction(xpathParserCtxt, 1);
 	res = valuePop(xpathParserCtxt);
@@ -1721,7 +1773,6 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (xpathParserCtxt == NULL)
 	goto error;
     ctxt->xpathCtxt->node = node;
-    valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
     xmlXPathEvalExpr(xpathParserCtxt);
     xmlXPathBooleanFunction(xpathParserCtxt, 1);
     res = valuePop(xpathParserCtxt);
@@ -1749,7 +1800,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	"xsltIf: test evaluate to %d\n", doit);
 #endif
     if (doit) {
-	xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+	xsltApplyOneTemplate(ctxt, node, inst->children);
     }
 
 error:
@@ -1797,7 +1848,6 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (xpathParserCtxt == NULL)
 	goto error;
     ctxt->xpathCtxt->node = node;
-    valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
     xmlXPathEvalExpr(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);
     do {

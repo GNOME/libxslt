@@ -31,6 +31,7 @@
 #include "imports.h"
 
 #define DEBUG_PARSING
+/* #define DEBUG_BLANKS */
 
 /*
  * Useful macros
@@ -694,7 +695,7 @@ xsltParseRemoveBlanks(xsltStylesheetPtr style) {
     delete = NULL;
     while (cur != NULL) {
 	if (delete != NULL) {
-#ifdef DEBUG_PARSING
+#ifdef DEBUG_BLANKS
 	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltParseRemoveBlanks: removing ignorable blank node\n");
 #endif
@@ -780,9 +781,9 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
     delete = NULL;
     while (cur != NULL) {
 	if (delete != NULL) {
-#ifdef DEBUG_PARSING
+#ifdef DEBUG_BLANKS
 	    xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltParseStylesheetTemplate: removing text\n");
+	     "xsltParseTemplateContent: removing text\n");
 #endif
 	    xmlUnlinkNode(delete);
 	    xmlFreeNode(delete);
@@ -803,6 +804,10 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 				(const xmlChar *)"disable-output-escaping",
 				            XSLT_NAMESPACE);
 			if (prop != NULL) {
+#ifdef DEBUG_PARSING
+			    xsltGenericDebug(xsltGenericDebugContext,
+				 "Disable escaping: %s\n", text->content);
+#endif
 			    if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
 				text->name = xmlStringTextNoenc;
 			    } else if (!xmlStrEqual(prop,
@@ -904,6 +909,8 @@ void
 xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltTemplatePtr ret;
     xmlChar *prop;
+    xmlChar *mode;
+    xmlChar *modeURI;
 
     if (template == NULL)
 	return;
@@ -920,6 +927,43 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     /*
      * Get arguments
      */
+    prop = xmlGetNsProp(template, (const xmlChar *)"mode", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	xmlChar *prefix = NULL;
+
+	mode = xmlSplitQName2(prop, &prefix);
+	if (mode != NULL) {
+	    if (prefix != NULL) {
+		xmlNsPtr ns;
+
+		ns = xmlSearchNs(template->doc, template, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		    xmlFree(prefix);
+		    xmlFree(mode);
+		    mode = prop;
+		} else {
+		    modeURI = xmlStrdup(ns->href);
+		    xmlFree(prefix);
+		    xmlFree(prop);
+		}
+	    } else {
+		xmlFree(prop);
+		modeURI = NULL;
+	    }
+	} else {
+	    mode = prop;
+	    modeURI = NULL;
+	}
+#ifdef DEBUG_PARSING
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xslt:template: mode %s\n", mode);
+#endif
+    } else {
+	mode = NULL;
+	modeURI = NULL;
+    }
     prop = xmlGetNsProp(template, (const xmlChar *)"match", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (ret->match != NULL) xmlFree(ret->match);
@@ -967,7 +1011,12 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
      * parse the content and register the pattern
      */
     xsltParseTemplateContent(style, ret, template);
-    xsltAddTemplate(style, ret);
+    xsltAddTemplate(style, ret, mode, modeURI);
+
+    if (mode != NULL)
+	xmlFree(mode);
+    if (modeURI != NULL)
+	xmlFree(modeURI);
 }
 
 /**
@@ -1160,7 +1209,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	 * parse the content and register the pattern
 	 */
 	xsltParseTemplateContent(ret, template, (xmlNodePtr) doc);
-	xsltAddTemplate(ret, template);
+	xsltAddTemplate(ret, template, NULL, NULL);
     }
 
     return(ret);

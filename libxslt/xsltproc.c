@@ -7,6 +7,8 @@
  */
 
 #include <string.h>
+#include <sys/time.h>
+#include <unistd.h>
 #include <libxml/xmlversion.h>
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
@@ -16,14 +18,18 @@
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 
+extern int xmlLoadExtDtdDefaultValue;
+
 static int debug = 0;
 static int repeat = 0;
+static int timing = 0;
 
 int
 main(int argc, char **argv) {
     int i;
     xsltStylesheetPtr cur = NULL;
     xmlDocPtr doc, res;
+    struct timeval begin, end;
 
     /* --repeat : repeat 100 times, for timing or profiling */
     LIBXML_TEST_VERSION
@@ -37,12 +43,27 @@ main(int argc, char **argv) {
 	} else if ((!strcmp(argv[i], "-repeat")) ||
 		   (!strcmp(argv[i], "--repeat"))) {
 	    repeat++;
+	} else if ((!strcmp(argv[i], "-timing")) ||
+		   (!strcmp(argv[i], "--timing"))) {
+	    timing++;
 	}
     }
     xmlSubstituteEntitiesDefault(1);
+    xmlLoadExtDtdDefaultValue = 1;
     for (i = 1; i < argc ; i++) {
 	if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
+	    if (timing)
+		gettimeofday(&begin, NULL);
 	    cur = xsltParseStylesheetFile((const xmlChar *)argv[i]);
+	    if (timing) {
+		long msec;
+		gettimeofday(&end, NULL);
+		msec = end.tv_sec - begin.tv_sec;
+		msec *= 1000;
+		msec += (end.tv_usec - begin.tv_usec) / 1000;
+		fprintf(stderr, "Parsing stylesheet %s took %ld ms\n",
+			argv[i], msec);
+	    }
 	    if (cur != NULL) {
 		if (cur->indent == 1)
 		    xmlIndentTreeOutput = 1;
@@ -56,10 +77,21 @@ main(int argc, char **argv) {
     }
     if (cur != NULL) {
 	for (;i < argc ; i++) {
+	    if (timing)
+		gettimeofday(&begin, NULL);
 	    doc = xmlParseFile(argv[i]);
 	    if (doc == NULL) {
 		fprintf(stderr, "unable to parse %s\n", argv[i]);
 		continue;
+	    }
+	    if (timing) {
+		long msec;
+		gettimeofday(&end, NULL);
+		msec = end.tv_sec - begin.tv_sec;
+		msec *= 1000;
+		msec += (end.tv_usec - begin.tv_usec) / 1000;
+		fprintf(stderr, "Parsing document %s took %ld ms\n",
+			argv[i], msec);
 	    }
 	    if (repeat) {
 		int j;
@@ -70,19 +102,41 @@ main(int argc, char **argv) {
 		    doc = xmlParseFile(argv[i]);
 		}
 	    }
+	    if (timing)
+		gettimeofday(&begin, NULL);
 	    res = xsltApplyStylesheet(cur, doc);
+	    if (timing) {
+		long msec;
+		gettimeofday(&end, NULL);
+		msec = end.tv_sec - begin.tv_sec;
+		msec *= 1000;
+		msec += (end.tv_usec - begin.tv_usec) / 1000;
+		fprintf(stderr, "Applying stylesheet took %ld ms\n",
+			msec);
+	    }
 	    xmlFreeDoc(doc);
 	    if (res == NULL) {
 		fprintf(stderr, "no result for %s\n", argv[i]);
 		continue;
 	    }
 	    if (cur->methodURI == NULL) {
+		if (timing)
+		    gettimeofday(&begin, NULL);
 #ifdef LIBXML_DEBUG_ENABLED
 		if (debug)
 		    xmlDebugDumpDocument(stdout, res);
 		else
 #endif
 		    xsltSaveResultToFile(stdout, res, cur);
+		if (timing) {
+		    long msec;
+		    gettimeofday(&end, NULL);
+		    msec = end.tv_sec - begin.tv_sec;
+		    msec *= 1000;
+		    msec += (end.tv_usec - begin.tv_usec) / 1000;
+		    fprintf(stderr, "Saving result took %ld ms\n",
+			    msec);
+		}
 	    }
 
 	    xmlFreeDoc(res);

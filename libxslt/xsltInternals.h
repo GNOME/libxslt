@@ -173,6 +173,9 @@ struct _xsltTransformContext {
     xsltStylesheetPtr style;		/* the stylesheet used */
     xsltOutputType type;		/* the type of output */
 
+    const xmlChar *mode;		/* the current mode */
+    const xmlChar *modeURI;		/* the current mode URI */
+
     xmlDocPtr doc;			/* the current doc */
     xmlNodePtr node;			/* the current node */
     xmlNodeSetPtr nodeList;		/* the current node list */

@@ -55,7 +55,7 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, const xmlChar *expr) {
     xpathParserCtxt =
 	xmlXPathNewParserContext(expr, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
-	return(NULL);
+	return(0);
     ctxt->xpathCtxt->node = ctxt->node;
     xmlXPathEvalExpr(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);

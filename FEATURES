@@ -43,7 +43,7 @@ YES			    xsl:template
 YES				match = pattern 
 YES				name = qname 
 YES				priority = number 
-NO				mode = qname
+YES				mode = qname
 
 YES			    xsl:namespace-alias
 YES				stylesheet-prefix = prefix | "#default"
@@ -85,7 +85,7 @@ Instructions:
 
 YES			    xsl:apply-templates
 YES				select = node-set-expression 
-NO				mode = qname
+YES				mode = qname
 
 NO			    xsl:apply-imports
 

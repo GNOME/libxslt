@@ -16,7 +16,9 @@ extern "C" {
 #endif
 
 int		xsltAddTemplate		(xsltStylesheetPtr style,
-					 xsltTemplatePtr cur);
+					 xsltTemplatePtr cur,
+					 const xmlChar *mode,
+					 const xmlChar *modeURI);
 xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node);
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
