@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <title>Writing extensions for XSLT C library for Gnome</title>
@@ -38,6 +40,7 @@ href="http://mail.gnome.org/archives/xslt/">http://mail.gnome.org/archives/xslt/
   <li><a href="#Registerin2">Registering an extension element</a></li>
   <li><a href="#Implementi1">Implementing an extension element</a></li>
   <li><a href="#Example">Example for extension elements</a></li>
+  <li><a href="#shutdown">The shutdown of a module</a></li>
   <li><a href="#Future">Future work</a></li>
 </ul>
 
@@ -49,7 +52,7 @@ XSLT library for use with <a href="http://xmlsoft.org/XSLT/">libxslt</a>, the
 href="http://www.gnome.org/">Gnome</a> project.</p>
 
 <p>Before starting reading this document it is highly recommended to get
-familiar with <a href="internals.html">the libxslt internals</a>. </p>
+familiar with <a href="internals.html">the libxslt internals</a>.</p>
 
 <p>Note: this documentation is by definition incomplete and I am not good at
 spelling, grammar, so patches and suggestions are <a
@@ -72,7 +75,7 @@ have a resource there for this to work).</p>
 
 <p>libxslt provides a few extensions itself, either in libxslt namespace
 "http://xmlsoft.org/XSLT/" or in other namepsace for well known extensions
-provided by other XSLT processors like Saxon, Xalan or XT. </p>
+provided by other XSLT processors like Saxon, Xalan or XT.</p>
 
 <h2><a name="Keep">Extension modules</a></h2>
 
@@ -80,7 +83,7 @@ provided by other XSLT processors like Saxon, Xalan or XT. </p>
 coming from a given source are using the same namespace name defining in
 practice a group of extensions providing elements, functions or both. From
 libxslt point of view those are considered as an "extension module", and most
-of the APIs work at a module point of view. </p>
+of the APIs work at a module point of view.</p>
 
 <p>Registration of new functions or elements are bound to the activation of
 the module, this is currently done by declaring the namespace as an extension
@@ -113,17 +116,12 @@ with the application and to call a registration function:</p>
 
 <p>which also defines the type for the initialization and shutdown
 functions</p>
-<ul>
-  <li><br>
-  </li>
-  <li></li>
-</ul>
 
 <h2><a name="libxml">Loading a module</a></h2>
 
 <p>Once the module URI has been registered and if the XSLT processor detects
 that a given stylesheet need the functionalities of an extended module, this
-one is initialized. </p>
+one is initialized.</p>
 
 <p>The xsltExtInitFunction type defines the interface for an initialization
 function:</p>
@@ -296,8 +294,8 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
                            xsltTransformFunction function);</pre>
 
 <p>It is similar to the mechanism used to register an extension function,
-except that the signature of an extension element implementation is different.
-</p>
+except that the signature of an extension element implementation is
+different.</p>
 
 <p>The registration is bound to a single transformation instance referred by
 ctxt, name is the UTF8 encoded name for the NCName of the element, and URI is
@@ -335,7 +333,7 @@ value is <code>NULL</code> by default (it could be added and associated to the
 instruction in <code>inst-&gt;_private</code>).</p>
 
 <p>The same functions are available from a function implementing an extension
-element as in an extension function, including 
+element as in an extension function, including
 <code>xsltGetExtData()</code>.</p>
 
 <p>The goal of extension element being usually to enrich the generated output,
@@ -396,6 +394,28 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
                       "libxslt:test element test worked");
     xmlAddChild(ctxt-&gt;insert, comment);
 }</pre>
+
+<h2><a name="shutdown">The shutdown of a module</a></h2>
+
+<p>When the XSLT processor ends a transformation, the shutdown function (if it
+exists) of all the modules initialized are called.The xsltExtShutdownFunction
+type defines the interface for a shutdown function:</p>
+<pre>/**
+ * xsltExtShutdownFunction:
+ * @ctxt:  an XSLT transformation context
+ * @URI:  the namespace URI for the extension
+ * @data:  the data associated to this module
+ *
+ * A function called at shutdown time of an XSLT extension module
+ */
+typedef void (*xsltExtShutdownFunction) (xsltTransformContextPtr ctxt,
+                                         const xmlChar *URI,
+                                         void *data);</pre>
+
+<p>this is really similar to a module initialization function except a third
+argument is passed, it's the value that was returned by the initialization
+function. This allow to deallocate resources from the module for example close
+the connection to the database to keep the same example.</p>
 
 <h2><a name="Future">Future work</a></h2>
 
