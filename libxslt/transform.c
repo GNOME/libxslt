@@ -225,6 +225,45 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			xmlNodePtr insert);
 
 /**
+ * xsltCopyPropList:
+ * @ctxt:  a XSLT process context
+ * @target:  the element where the attributes will be grafted
+ * @cur:  the first attribute
+ *
+ * Do a copy of an attribute list.
+ *
+ * Returns: a new xmlAttrPtr, or NULL in case of error.
+ */
+xmlAttrPtr
+xsltCopyPropList(xsltTransformContextPtr ctxt, xmlNodePtr target,
+	         xmlAttrPtr cur) {
+    xmlAttrPtr ret = NULL;
+    xmlAttrPtr p = NULL,q;
+    xmlNsPtr ns;
+
+    while (cur != NULL) {
+	if (cur->ns != NULL) {
+	    ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
+	} else {
+	    ns = NULL;
+	}
+        q = xmlCopyProp(target, cur);
+	if (q != NULL) {
+	    q->ns = ns;
+	    if (p == NULL) {
+		ret = p = q;
+	    } else {
+		p->next = q;
+		q->prev = p;
+		p = q;
+	    }
+	}
+	cur = cur->next;
+    }
+    return(ret);
+}
+
+/**
  * xsltCopyNode:
  * @ctxt:  a XSLT process context
  * @node:  the element node in the source tree.
@@ -241,8 +280,8 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr copy;
 
     copy = xmlCopyNode(node, 0);
-    copy->doc = ctxt->output;
     if (copy != NULL) {
+	copy->doc = ctxt->output;
 	xmlAddChild(insert, copy);
 	if (node->type == XML_ELEMENT_NODE) {
 	    /*
@@ -321,6 +360,9 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (node->ns != NULL) {
 	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, insert);
 	}
+	if (node->properties != NULL)
+	    copy->properties = xsltCopyPropList(ctxt, copy,
+					       node->properties);
 	if (node->children != NULL)
 	    xsltCopyTreeList(ctxt, node->children, copy);
     } else {
@@ -1627,7 +1669,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     } while (tmp != NULL);
     if (res != NULL) {
-	if ((res->type == XPATH_NODESET) || (res->type == XPATH_XSLT_TREE)) {
+	if (res->type == XPATH_NODESET) {
 	    list = res->nodesetval;
 	    if (list != NULL) {
 		/* sort the list in document order */
@@ -1644,6 +1686,13 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			xsltCopyTree(ctxt, list->nodeTab[i], ctxt->insert);
 		    }
 		}
+	    }
+	} else if (res->type == XPATH_XSLT_TREE) {
+	    list = res->nodesetval;
+	    if ((list != NULL) && (list->nodeTab != NULL) &&
+		(list->nodeTab[0] != NULL)) {
+		xsltCopyTreeList(ctxt, list->nodeTab[0]->children,
+			         ctxt->insert);
 	    }
 	} else {
 	    /* convert to a string */

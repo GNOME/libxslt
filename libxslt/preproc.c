@@ -682,7 +682,6 @@ xsltCallTemplateComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:call-template : name is missing\n");
-	goto error;
     } else {
 
 	ncname = xmlSplitQName2(prop, &prefix);
@@ -711,7 +710,6 @@ xsltCallTemplateComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 
     /* TODO: with-param could be optimized too */
 
-error:
     if (prop != NULL)
         xmlFree(prop);
     if (ncname != NULL)

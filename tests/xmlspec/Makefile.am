@@ -10,9 +10,10 @@ all: test
 
 test tests: $(top_builddir)/libxslt/xsltproc
 	@(rm -f .memdump ; touch .memdump)
-	@($(top_builddir)/libxslt/xsltproc -timing -v REC-xml-2e.xsl REC-xml-20001006.xml > REC-xml-20001006.html 2> debug ; \
+	@($(top_builddir)/libxslt/xsltproc -v -timing REC-xml-2e.xsl REC-xml-20001006.xml > REC-xml-20001006.out 2> debug ; \
+	diff $(srcdir)/REC-xml-20001006.html REC-xml-20001006.out ; \
 	grep implemented debug | sort | uniq -c ; \
 	grep " ms$$" debug ; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
-	rm -f doc.res)
+	rm -f REC-xml-20001006.out)
 
