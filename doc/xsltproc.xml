@@ -52,6 +52,7 @@
 	<arg>--dumpextensions</arg>
 	<arg>--nowrite</arg>
 	<arg>--nomkdir</arg>
+	<arg>--writesubtree</arg>
       </group>
       <arg><option><replaceable>stylesheet</replaceable></option></arg>
       <arg><replaceable>file1</replaceable></arg>
@@ -314,6 +315,16 @@
       <option>--nomkdir</option></term>
 	<listitem>
 	  <simpara>Refuses to create directories.
+    </simpara>
+	</listitem>
+      </varlistentry>
+    
+      <varlistentry>
+	<term>
+      <option>--writesubtree</option> <replaceable>path</replaceable></term>
+	<listitem>
+	  <simpara>Allow file write only within the
+	  <replaceable>path</replaceable> subtree.
     </simpara>
 	</listitem>
       </varlistentry>

@@ -1372,30 +1372,31 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 xmlNsPtr ns, ret;
 
                 for (i = 0; i < ctxt->templ->inheritedNsNr; i++) {
+		    const xmlChar *URI = NULL;
+		    xsltStylesheetPtr style;
                     ns = ctxt->templ->inheritedNs[i];
-                    if (ctxt->style->nsAliases != NULL) {
-                        const xmlChar *URI;
+		    style = ctxt->style;
+		    while (style != NULL) {
+		      if (style->nsAliases != NULL)
+			URI = (const xmlChar *) 
+			  xmlHashLookup(style->nsAliases, ns->href);
+		      if (URI != NULL)
+			break;
+		      
+		      style = xsltNextImport(style);
+		    }
 
-                        URI = (const xmlChar *)
-                            xmlHashLookup(ctxt->style->nsAliases,
-                                          ns->href);
-                        if (URI == NULL) {
-                            ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-                            if ((ret == NULL) ||
-                                (!xmlStrEqual(ret->href, ns->href)))
-                                xmlNewNs(copy, ns->href, ns->prefix);
-                        } else if (!xmlStrEqual(URI, XSLT_NAMESPACE)) {
-                            ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-                            if ((ret == NULL) ||
-                                (!xmlStrEqual(ret->href, URI)))
-                                xmlNewNs(copy, URI, ns->prefix);
-                        }
-                    } else {
-                        ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-                        if ((ret == NULL) ||
-                            (!xmlStrEqual(ret->href, ns->href)))
-                            xmlNewNs(copy, ns->href, ns->prefix);
-                    }
+		    if (URI == NULL) {
+		      ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+		      if ((ret == NULL) ||
+			  (!xmlStrEqual(ret->href, ns->href)))
+			xmlNewNs(copy, ns->href, ns->prefix);
+		    } else if (!xmlStrEqual(URI, XSLT_NAMESPACE)) {
+		      ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+		      if ((ret == NULL) ||
+			  (!xmlStrEqual(ret->href, URI)))
+			xmlNewNs(copy, URI, ns->prefix);
+		    }
                 }
 		if (copy->ns != NULL) {
 		    /*

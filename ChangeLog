@@ -1,3 +1,9 @@
+Thu Nov 14 15:10:13 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: applied patch from Brian McCauley fixing #95493 
+	* doc/xsltproc.xml: fixing #95510 missing description of --writesubtree
+	* README: fix the bug page URL
+
 Thu Nov 14 10:03:12 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.c: make sure the fixup for key() reported
