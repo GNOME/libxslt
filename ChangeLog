@@ -1,3 +1,9 @@
+Mon Jan 15 15:31:41 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* transform.c, xslt.c, xsltproc.c: lots of fixes, added
+	  support of xslt:if and xslt:attribute, need libxml2 interfaces
+	  present only in CVS.
+
 Sat Jan 13 23:26:21 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* test/Makefile.am test/REC*/Makefile.am: added first test

@@ -29,7 +29,7 @@
 #include "pattern.h"
 #include "transform.h"
 
-/* #define DEBUG_PROCESS */
+#define DEBUG_PROCESS
 
 /*
  * To cleanup
@@ -143,6 +143,92 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
 void xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	         xmlNodePtr inst);
+void xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst);
+
+/**
+ * xsltAttribute:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt attribute node
+ *
+ * Process the xslt attribute node on the source node
+ */
+void
+xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop = NULL;
+    xmlChar *ncname = NULL;
+    xmlChar *prefix = NULL;
+    xmlChar *value = NULL;
+    xmlNsPtr ns = NULL;
+    xmlAttrPtr attr;
+
+
+    if (ctxt->insert == NULL)
+	return;
+    if (ctxt->insert->children != NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:attribute : node has already children\n");
+	return;
+    }
+    prop = xmlGetNsProp(inst, (const xmlChar *)"namespace", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	/* TODO: attribute value template */
+	TODO
+	xmlFree(prop);
+	return;
+    }
+    prop = xmlGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:attribute : name is missing\n");
+	goto error;
+    }
+
+    ncname = xmlSplitQName2(prop, &prefix);
+    if (ncname == NULL) {
+	ncname = prop;
+	prop = NULL;
+	prefix = NULL;
+    }
+    if (xmlStrEqual(ncname, (const xmlChar *) "xmlns")) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:attribute : xmlns forbidden\n");
+	goto error;
+    }
+    if ((prefix != NULL) && (ns == NULL)) {
+	ns = xmlSearchNs(ctxt->insert->doc, ctxt->insert, prefix);
+	if (ns == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"no namespace bound to prefix %s\n", prefix);
+	}
+    }
+
+    value = xmlNodeListGetString(inst->doc, inst->children, 1);
+    if (value == NULL) {
+	if (ns)
+	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href,
+		                (const xmlChar *)"");
+	else
+	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
+    } else {
+	/* TODO: attribute value template */
+	if (ns)
+	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href, value);
+	else
+	    attr = xmlSetProp(ctxt->insert, ncname, value);
+    }
+
+error:
+    if (prop != NULL)
+        xmlFree(prop);
+    if (ncname != NULL)
+        xmlFree(ncname);
+    if (prefix != NULL)
+        xmlFree(prefix);
+    if (value != NULL)
+        xmlFree(value);
+}
 
 /**
  * xsltValueOf:
@@ -469,9 +555,17 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltValueOf(ctxt, node, cur);
 		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "if")) {
+		ctxt->insert = insert;
+		xsltIf(ctxt, node, cur);
+		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "for-each")) {
 		ctxt->insert = insert;
 		xsltForEach(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "attribute")) {
+		ctxt->insert = insert;
+		xsltAttribute(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else {
 #ifdef DEBUG_PROCESS
@@ -548,6 +642,86 @@ skip_children:
 	    }
 	} while (cur != NULL);
     }
+}
+
+/**
+ * xsltIf:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt if node
+ *
+ * Process the xslt if node on the source node
+ */
+void
+xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop;
+    xmlXPathObjectPtr res, tmp;
+    xmlXPathParserContextPtr xpathParserCtxt;
+    int doit;
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return;
+
+    prop = xmlGetNsProp(inst, (const xmlChar *)"test", XSLT_NAMESPACE);
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsltIf: test is not defined\n");
+	return;
+    }
+#ifdef DEBUG_PROCESS
+    xsltGenericError(xsltGenericErrorContext,
+	 "xsltIf: test %s\n", prop);
+#endif
+
+    if (ctxt->xpathCtxt == NULL) {
+	xmlXPathInit();
+	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
+	if (ctxt->xpathCtxt == NULL)
+	    goto error;
+    }
+    xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
+    if (xpathParserCtxt == NULL)
+	goto error;
+    ctxt->xpathCtxt->node = node;
+    valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
+    xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathBooleanFunction(xpathParserCtxt, 1);
+    res = valuePop(xpathParserCtxt);
+    do {
+        tmp = valuePop(xpathParserCtxt);
+	if (tmp != NULL) {
+	    xmlXPathFreeObject(tmp);
+	}
+    } while (tmp != NULL);
+
+    if (res != NULL) {
+	if (res->type == XPATH_BOOLEAN)
+	    doit = res->boolval;
+	else {
+#ifdef DEBUG_PROCESS
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsltIf: test didn't evaluate to a boolean\n");
+#endif
+	    goto error;
+	}
+    }
+
+#ifdef DEBUG_PROCESS
+    xsltGenericError(xsltGenericErrorContext,
+	"xsltIf: test evaluate to %d\n", doit);
+#endif
+    if (doit) {
+	xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+    }
+
+error:
+    if (xpathParserCtxt != NULL)
+	xmlXPathFreeParserContext(xpathParserCtxt);
+    if (prop != NULL)
+	xmlFree(prop);
+    if (res != NULL)
+	xmlXPathFreeObject(res);
 }
 
 /**
@@ -702,8 +876,9 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
 		goto error;
 	} else if (xmlStrEqual(style->method, (const xmlChar *) "text")) {
 	    ctxt->type = XSLT_OUTPUT_TEXT;
-	    TODO
-	    goto error;
+	    res = xmlNewDoc(style->version);
+	    if (res == NULL)
+		goto error;
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
 			     "xsltApplyStylesheet: insupported method %s\n",

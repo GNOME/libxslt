@@ -467,80 +467,21 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 }
 
 /**
- * xsltParseStylesheetTemplate:
+ * xsltParseTemplateContent:
  * @style:  the XSLT stylesheet
- * @template:  the "template" element
+ * @ret:  the "template" structure
+ * @template:  the container node (can be a document for literal results)
  *
- * parse an XSLT stylesheet template building the associated structures
+ * parse an XSLT template element content
+ * Clean-up the template content from unwanted ignorable blank nodes
+ * and process xslt:text
  */
 
 void
-xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
-    xsltTemplatePtr ret;
+xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
+	                 xmlNodePtr template) {
     xmlNodePtr cur, delete;
-    xmlChar *prop;
-
-    if (template == NULL)
-	return;
-
-
     /*
-     * Create and link the structure
-     */
-    ret = xsltNewTemplate();
-    if (ret == NULL)
-	return;
-    ret->next = style->templates;
-    style->templates = ret;
-
-    /*
-     * Get arguments
-     */
-    prop = xmlGetNsProp(template, (const xmlChar *)"match", XSLT_NAMESPACE);
-    if (prop != NULL) {
-	if (ret->match != NULL) xmlFree(ret->match);
-	ret->match  = prop;
-    }
-
-    prop = xmlGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);
-    if (prop != NULL) {
-	xmlChar *ncname;
-	xmlChar *prefix = NULL;
-
-	if (ret->name != NULL) xmlFree(ret->name);
-	ret->name = NULL;
-	if (ret->nameURI != NULL) xmlFree(ret->nameURI);
-	ret->nameURI = NULL;
-
-	ncname = xmlSplitQName2(prop, &prefix);
-	if (ncname != NULL) {
-	    if (prefix != NULL) {
-		xmlNsPtr ns;
-
-		ns = xmlSearchNs(cur->doc, cur, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"no namespace bound to prefix %s\n", prefix);
-		    xmlFree(prefix);
-		    xmlFree(ncname);
-		    ret->name = prop;
-		} else {
-		    ret->nameURI = xmlStrdup(ns->href);
-		    ret->name = ncname;
-		    xmlFree(prefix);
-		    xmlFree(prop);
-		}
-	    } else {
-		ret->name = ncname;
-		xmlFree(prop);
-	    }
-	} else {
-	    ret->name  = prop;
-	}
-    }
-
-    /*
-     * Clean-up the template content from unwanted ignorable blank nodes
      * This content comes from the stylesheet
      * For stylesheets, the set of whitespace-preserving
      * element names consists of just xsl:text.
@@ -558,8 +499,21 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	    delete = NULL;
 	}
 	if (IS_XSLT_ELEM(cur)) {
-	    if (IS_XSLT_NAME(cur, "text"))
+	    if (IS_XSLT_NAME(cur, "text")) {
+		if (cur->children != NULL) {
+		    if ((cur->children->type != XML_TEXT_NODE) ||
+			(cur->children->next != NULL)) {
+			xsltGenericError(xsltGenericErrorContext,
+	     "xsltParseStylesheetTemplate: xslt:text content problem\n");
+		    } else {
+			xmlNodePtr text = cur->children;
+			xmlUnlinkNode(text);
+			xmlAddPrevSibling(cur, text);
+		    }
+		}
+		delete = cur;
 		goto skip_children;
+	    }
 	} else if (cur->type == XML_TEXT_NODE) {
 	    if (IS_BLANK_NODE(cur)) {
 		delete = cur;
@@ -596,6 +550,15 @@ skip_children:
 		break;
 	    }
 	} while (cur != NULL);
+    }
+    if (delete != NULL) {
+#ifdef DEBUG_PARSING
+	xsltGenericError(xsltGenericErrorContext,
+	 "xsltParseStylesheetTemplate: removing ignorable blank node\n");
+#endif
+	xmlUnlinkNode(delete);
+	xmlFreeNode(delete);
+	delete = NULL;
     }
 
     /*
@@ -651,10 +614,83 @@ skip_children:
     }
 
     ret->content = template->children;
+}
+
+/**
+ * xsltParseStylesheetTemplate:
+ * @style:  the XSLT stylesheet
+ * @template:  the "template" element
+ *
+ * parse an XSLT stylesheet template building the associated structures
+ */
+
+void
+xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
+    xsltTemplatePtr ret;
+    xmlChar *prop;
+
+    if (template == NULL)
+	return;
 
     /*
-     * Register pattern
+     * Create and link the structure
      */
+    ret = xsltNewTemplate();
+    if (ret == NULL)
+	return;
+    ret->next = style->templates;
+    style->templates = ret;
+
+    /*
+     * Get arguments
+     */
+    prop = xmlGetNsProp(template, (const xmlChar *)"match", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (ret->match != NULL) xmlFree(ret->match);
+	ret->match  = prop;
+    }
+
+    prop = xmlGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	xmlChar *ncname;
+	xmlChar *prefix = NULL;
+
+	if (ret->name != NULL) xmlFree(ret->name);
+	ret->name = NULL;
+	if (ret->nameURI != NULL) xmlFree(ret->nameURI);
+	ret->nameURI = NULL;
+
+	ncname = xmlSplitQName2(prop, &prefix);
+	if (ncname != NULL) {
+	    if (prefix != NULL) {
+		xmlNsPtr ns;
+
+		ns = xmlSearchNs(template->doc, template, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		    xmlFree(prefix);
+		    xmlFree(ncname);
+		    ret->name = prop;
+		} else {
+		    ret->nameURI = xmlStrdup(ns->href);
+		    ret->name = ncname;
+		    xmlFree(prefix);
+		    xmlFree(prop);
+		}
+	    } else {
+		ret->name = ncname;
+		xmlFree(prop);
+	    }
+	} else {
+	    ret->name  = prop;
+	}
+    }
+
+    /*
+     * parse the content and register the pattern
+     */
+    xsltParseTemplateContent(style, ret, template);
     xsltAddTemplate(style, ret);
 }
 
@@ -794,14 +830,45 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 
 	xsltParseStylesheetTop(ret, cur);
     } else {
+	xmlChar *prop;
+	xsltTemplatePtr template;
+
 	/*
-	 * the document itself is the template.
+	 * the document itself might be the template, check xsl:version
 	 */
+	prop = xmlGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
+	if (prop == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsltParseStylesheetDoc : document is not a stylesheet\n");
+	    xsltFreeStylesheet(ret);
+	    return(NULL);
+	}
+
 #ifdef DEBUG_PARSING
         xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetDoc : document is stylesheet\n");
 #endif
-	TODO
+	
+	/* TODO: check the version */
+	xmlFree(prop);
+
+	/*
+	 * Create and link the template
+	 */
+	template = xsltNewTemplate();
+	if (template == NULL) {
+	    xsltFreeStylesheet(ret);
+	    return(NULL);
+	}
+	template->next = ret->templates;
+	ret->templates = template;
+	template->match = xmlStrdup((const xmlChar *)"/");
+
+	/*
+	 * parse the content and register the pattern
+	 */
+	xsltParseTemplateContent(ret, template, (xmlNodePtr) doc);
+	xsltAddTemplate(ret, template);
     }
 
     return(ret);

@@ -32,7 +32,7 @@ main(int argc, char **argv) {
 	if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
 	    cur = xsltParseStylesheetFile((const xmlChar *)argv[i]);
 	    if (cur != NULL) {
-		if (cur->indent)
+		if (cur->indent == 1)
 		    xmlIndentTreeOutput = 1;
 		else
 		    xmlIndentTreeOutput = 0;
