@@ -919,10 +919,10 @@ error:
  */
 static exsltDateValPtr
 exsltDateParseDuration (const xmlChar *duration) {
-    const xmlChar *cur     = duration;
+    const xmlChar  *cur = duration;
     exsltDateValPtr dur;
     int isneg = 0;
-    int seq   = 0;
+    unsigned int seq = 0;
 
     if (duration == NULL)
 	return NULL;
@@ -944,7 +944,7 @@ exsltDateParseDuration (const xmlChar *duration) {
         double         num;
         int            num_type = 0;  /* -1 = invalid, 0 = int, 1 = floating */
         const xmlChar  desig[] = {'Y', 'M', 'D', 'H', 'M', 'S'};
-        const double   mult[]  = { 0.0, 0.0, 86400.0, 3600.0, 60.0, 1.0, 0.0};
+        const double   multi[] = { 0.0, 0.0, 86400.0, 3600.0, 60.0, 1.0, 0.0};
 
         /* input string should be empty or invalid date/time item */
         if (seq >= sizeof(desig))
@@ -971,7 +971,7 @@ exsltDateParseDuration (const xmlChar *duration) {
             if (*cur == desig[seq]) {
 
                 /* verify numeric type; only seconds can be float */
-                if ((num_type != 0) && (seq < (sizeof(desig-1))))
+                if ((num_type != 0) && (seq < (sizeof(desig)-1)))
                     goto error;
 
                 switch (seq) {
@@ -983,7 +983,7 @@ exsltDateParseDuration (const xmlChar *duration) {
                         break;
                     default:
                         /* convert to seconds using multiplier */
-                        dur->value.dur.sec += num * mult[seq];
+                        dur->value.dur.sec += num * multi[seq];
                         seq++;
                         break;
                 }

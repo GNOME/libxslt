@@ -20,13 +20,19 @@ EXTRA_DIST = 						\
 	gyearmonth.1.out gyearmonth.1.xml gyearmonth.1.xsl	\
 	gyearmonth.2.out gyearmonth.2.xml gyearmonth.2.xsl	\
 	time.1.out	time.1.xml	time.1.xsl	\
-	time.2.out	time.2.xml	time.2.xsl
+	time.2.out	time.2.xml	time.2.xsl	\
+	add.1.out	add.1.xml	add.1.xsl	\
+	add.2.out	add.2.xml	add.2.xsl	\
+	add-duration.1.out add-duration.1.xml add-duration.1.xsl \
+	add-duration.2.out add-duration.2.xml add-duration.2.xsl \
+	difference.1.out difference.1.xml difference.1.xsl	\
+	difference.2.out difference.2.xml difference.2.xsl	\
+	duration.1.out	duration.1.xml	duration.1.xsl	\
+	duration.2.out	duration.2.xml	duration.2.xsl	\
+	seconds.1.out	seconds.1.xml	seconds.1.xsl	\
+	seconds.2.out	seconds.2.xml	seconds.2.xsl
 
 all:
-
-valgrind:
-	@echo '## Running the regression tests under Valgrind'
-	$(MAKE) CHECKER='valgrind -q' tests
 
 test-current:
 	@(echo > .memdump)
@@ -37,7 +43,7 @@ test-current:
 	@(for i in $(srcdir)/current.xsl ; do \
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then continue ; fi ; \
-	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml;\
+	  $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml;\
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  done)
 	@rm -f current.xml
@@ -48,7 +54,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc test-current
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then continue ; fi ; \
 	  echo $$name.xml ; \
-	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
+	  $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
 	  if [ ! -f $(srcdir)/$$name.out ] ; then cp $$name.res $(srcdir)/$$name.out ; \
 	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
 	  else diff $(srcdir)/$$name.out $$name.res ; fi ; fi; \
