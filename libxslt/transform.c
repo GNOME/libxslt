@@ -293,7 +293,8 @@ xsltGetXIncludeDefault(void) {
 unsigned long xsltDefaultTrace = (unsigned long) XSLT_TRACE_ALL;
 
 /**
- * xsltDebugSetDefaultTrace
+ * xsltDebugSetDefaultTrace:
+ * @val: tracing level mask
  *
  * Set the default debug tracing level mask
  */
@@ -302,7 +303,9 @@ void xsltDebugSetDefaultTrace(xsltDebugTraceCodes val) {
 }
 
 /**
- * xsltDebugGetDefaultTrace
+ * xsltDebugGetDefaultTrace:
+ *
+ * Get the current default debug tracing level mask
  *
  * Returns the current default debug tracing level mask
  */

@@ -1,3 +1,9 @@
+Fri Jan  2 21:42:49 MST 2004 John Fleck <jfleck@inkstain.net>
+
+	* libxslt/transform.c: fix bad doc comment formatting on 
+	xsltDebugSetDefaultTrace and xsltDebugGetDefaultTrace
+	* doc/*: rebuild docs
+
 Wed Dec 24 15:15:52 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/*: prepared release of libxslt-1.1.2
