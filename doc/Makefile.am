@@ -12,8 +12,15 @@ DOC_SOURCE_DIR=..
 HTML_DIR=@HTML_DIR@
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)/html
+PAGES= API.html bugs.html contribs.html docs.html downloads.html \
+       help.html index.html intro.html news.html xsltproc2.html
 
 man_MANS = xsltproc.1
+
+all : $(PAGES)
+
+$(PAGES): xslt.html site.xsl
+	../xsltproc/xsltproc --html site.xsl xslt.html > index.html
 
 scan:
 	gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR) --ignore-headers="acconfig.h config.h win32config.h"
@@ -51,6 +58,6 @@ install-data-local:
 	-(cd $(DESTDIR); gtkdoc-fixxref --module=libxslt --html-dir=$(HTML_DIR))
 
 dist-hook:
-	(cd $(srcdir) ; tar cvf - *.1 *.html *.gif html/*.html html/*.sgml tutorial/libxslt*) | (cd $(distdir); tar xf -)
+	(cd $(srcdir) ; tar cvf - *.1 *.html site.xsl *.gif html/*.html html/*.sgml tutorial/libxslt*) | (cd $(distdir); tar xf -)
 
 .PHONY : html sgml templates scan

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
@@ -86,7 +86,7 @@
         </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2780566"></a>Note</h3>
+<a name="id2780473"></a>Note</h3>
 <p>
           Note that the information in the
           <i>DocTable</i> may not always be up-to-date
@@ -109,7 +109,7 @@
       </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2780654"></a>NOTE</h3>
+<a name="id2780561"></a>NOTE</h3>
 <p>
           To get started writing for the GDP you do not need to rush
           out and learn DocBook - if you feel it is too much to handle
@@ -176,7 +176,7 @@
         </p>
 <div class="itemizedlist"><ul>
 <li style="list-style-type: opencircle"><p>
-<a name="id2781065"></a>
+<a name="id2780972"></a>
               Download <a href="http://www.labs.redhat.com/png/png-support.html" target="_top">the
               GDP DocBook DTD for PNG support</a> and install it
               where you keep your DTD's. (On Red Hat use <tt>/usr/lib/sgml/</tt>.) Note that
@@ -185,7 +185,7 @@
               recommended that you use version 3.1
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2781244"></a>
+<a name="id2781151"></a>
               Add the new DTD to your SGML CATALOG file.  The location
               of your SGML CATALOG file may vary depending upon your
               distribution. (On Red Hat it is usually in
@@ -284,7 +284,7 @@ V1.1//EN&quot;[]&gt;
         </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2903240"></a>NOTE</h3>
+<a name="id2903154"></a>NOTE</h3>
 <p>
             The html files you get will not look quite the same as the
             documentation distributed with GNOME unless you have the
@@ -355,7 +355,7 @@ V1.1//EN&quot;[]&gt;
         </p>
 <div class="itemizedlist"><ul>
 <li style="list-style-type: disc"><p>
-<a name="id2903528"></a>
+<a name="id2903440"></a>
               <a href="http://www.docbook.org" target="_top">http://www.docbook.org</a>  - Norman
               Walsh's <i>DocBook: The Definitive
               Guide</i>.  Online O'Reilly book on using
@@ -363,14 +363,14 @@ V1.1//EN&quot;[]&gt;
               too formal for a beginner.
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2903583"></a>
+<a name="id2903496"></a>
               <a href="http://www.oswg.org/oswg-nightly/oswg/en_US.ISO_8859-1/articles/DocBook-Intro/docbook-intro/index.html" target="_top">A Practical Introduction to DocBook</a>
               - The Open Source Writers Group's introduction to using
               DocBook. This is an excellent HOW-TO type article on
               getting started.
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2903624"></a>
+<a name="id2903536"></a>
               <a href="http://nis-www.lanl.gov/~rosalia/mydocs/docbook-intro/docbook-intro.html" target="_top">Getting Going with DocBook: Notes for
               Hackers</a> - Mark Galassi's introduction to DocBook
               for hackers. This has to be one of the first
@@ -378,7 +378,7 @@ V1.1//EN&quot;[]&gt;
               was.
             </p></li>
 <li style="list-style-type: disc"><p>
-<a name="id2903663"></a>
+<a name="id2903576"></a>
               <a href="http://www.freebsd.org/tutorials/docproj-primer/" target="_top">
               FreeBSD Documentation Project Primer for New
               Contributors</a> - FreeBSD documentation project
@@ -396,7 +396,7 @@ V1.1//EN&quot;[]&gt;
           documentation authors write correct and consistent DocBook:
         </p>
 <div class="itemizedlist"><ul><li style="list-style-type: disc"><p>
-<a name="id2903730"></a>
+<a name="id2903642"></a>
               <a href="indexs04.html" title="DocBook Basics ">the section called &#8220;DocBook Basics &#8221;</a> - Descriptions of
               commonly used DocBook tags.
             </p></li></ul></div>

@@ -165,7 +165,8 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
     if (message != NULL) {
 	int len = xmlStrlen(message);
 
-	xsltGenericError(xsltGenericErrorContext, (const char *)message);
+	xsltGenericError(xsltGenericErrorContext, "%s",
+		         (const char *)message);
 	if ((len > 0) && (message[len - 1] != '\n'))
 	    xsltGenericError(xsltGenericErrorContext, "\n");
 	xmlFree(message);
@@ -766,7 +767,9 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 
     if ((buf == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
-    if (result->children == NULL)
+    if ((result->children == NULL) ||
+	((result->children->type == XML_DTD_NODE) &&
+	 (result->children->next == NULL)))
 	return(0);
 
     if ((style->methodURI != NULL) &&

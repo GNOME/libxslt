@@ -54,6 +54,13 @@
 #define WITH_XSLT_DEBUG_PROCESS
 #endif
 
+#define XSLT_GENERATE_HTML_DOCTYPE
+#ifdef XSLT_GENERATE_HTML_DOCTYPE
+static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
+			  const xmlChar **systemID);
+#endif
+
+
 int xsltMaxDepth = 500;
 
 /*
@@ -3024,15 +3031,15 @@ static xsltHTMLVersion xsltHTMLVersions[] = {
 /**
  * xsltGetHTMLIDs:
  * @version:  the version string
- * @public:  used to return the public ID
- * @system:  used to return the system ID
+ * @publicID:  used to return the public ID
+ * @systemID:  used to return the system ID
  *
  * Returns -1 if not found, 0 otherwise and the system and public
  *         Identifier for this given verion of HTML
  */
 static int
-xsltGetHTMLIDs(const xmlChar *version, const xmlChar **public,
-	            const xmlChar **system) {
+xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
+	            const xmlChar **systemID) {
     unsigned int i;
     if (version == NULL)
 	return(-1);
@@ -3040,10 +3047,10 @@ xsltGetHTMLIDs(const xmlChar *version, const xmlChar **public,
 	 i++) {
 	if (!xmlStrcasecmp(version,
 		           (const xmlChar *) xsltHTMLVersions[i].version)) {
-	    if (public != NULL)
-		*public = (const xmlChar *) xsltHTMLVersions[i].public;
-	    if (system != NULL)
-		*system = (const xmlChar *) xsltHTMLVersions[i].system;
+	    if (publicID != NULL)
+		*publicID = (const xmlChar *) xsltHTMLVersions[i].public;
+	    if (systemID != NULL)
+		*systemID = (const xmlChar *) xsltHTMLVersions[i].system;
 	    return(0);
 	}
     }
@@ -3183,15 +3190,31 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             (!xmlStrEqual(method, (const xmlChar *) "xml"))) {
         if (xmlStrEqual(method, (const xmlChar *) "html")) {
             ctxt->type = XSLT_OUTPUT_HTML;
-            if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+            if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
                 res = htmlNewDoc(doctypeSystem, doctypePublic);
-            else {
-                if (version == NULL)
-                    version = (const xmlChar *) "4.0";
+	    } else {
+                if (version == NULL) {
+		    xmlDtdPtr dtd;
+
+		    res = htmlNewDoc(NULL, NULL);
+		    /*
+		     * Make sure no DTD node is generated in this case
+		     */
+		    if (res != NULL) {
+			dtd = xmlGetIntSubset(res);
+			if (dtd != NULL) {
+			    xmlUnlinkNode((xmlNodePtr) dtd);
+			    xmlFreeDtd(dtd);
+			}
+			res->intSubset = NULL;
+			res->extSubset = NULL;
+		    }
+		} else {
 #ifdef XSLT_GENERATE_HTML_DOCTYPE
-                xsltGetHTMLIDs(version, &doctypePublic, &doctypeSystem);
+		    xsltGetHTMLIDs(version, &doctypePublic, &doctypeSystem);
 #endif
-                res = htmlNewDoc(doctypeSystem, doctypePublic);
+		    res = htmlNewDoc(doctypeSystem, doctypePublic);
+		}
             }
             if (res == NULL)
                 goto error;
@@ -3306,20 +3329,19 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                     res->intSubset = xmlCreateIntSubset(res, root->name,
                                                         doctypePublic,
                                                         doctypeSystem);
+		if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
+		    res = htmlNewDoc(doctypeSystem, doctypePublic);
 #ifdef XSLT_GENERATE_HTML_DOCTYPE
-                else {
-                    if (version == NULL)
-                        version = (const xmlChar *) "4.0";
+		} else if (version != NULL) {
                     xsltGetHTMLIDs(version, &doctypePublic,
                                    &doctypeSystem);
-                    if (((doctypePublic != NULL)
-                         || (doctypeSystem != NULL)))
+                    if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
                         res->intSubset =
                             xmlCreateIntSubset(res, root->name,
                                                doctypePublic,
                                                doctypeSystem);
-                }
 #endif
+                }
             }
 
         }

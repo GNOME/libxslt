@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
@@ -28,7 +28,7 @@
 <a name="applicationhelpbuttons"></a>Application Help Buttons</h2></div></div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2910407"></a>Developer Information</h3>
+<a name="id2910330"></a>Developer Information</h3>
 <p>
         This section is for developers.  Documentation authors
         generally do not need to know this material.
@@ -61,7 +61,7 @@ if (tmp) {
     </pre>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2910544"></a>NOTE</h3>
+<a name="id2910468"></a>NOTE</h3>
 <p>
         The example above is in the C language, please refer to other
         documentation or forums for other GNOME language bindings.

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
@@ -37,7 +37,7 @@
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2909768"></a>Documentation Availability</h3>
+<a name="id2909692"></a>Documentation Availability</h3>
 <p>
         Applications and applets should not rely on documentation
         which is only available on the internet.  All manuals and
@@ -54,7 +54,7 @@
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2909809"></a>Manuals For Large Applications</h3>
+<a name="id2909732"></a>Manuals For Large Applications</h3>
 <p>
         Manuals for very large applications, such as GNOME Workshop
         components should be a <tt>&lt;book&gt;</tt> (and thus
@@ -66,7 +66,7 @@
 </div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2909924"></a>Applet Manuals in GNOME 2.0</h3>
+<a name="id2909847"></a>Applet Manuals in GNOME 2.0</h3>
 <p>
         Note that applet manuals in GNOME 2.0 are treated in a special
         way.  The manuals for all applets are merged into a single

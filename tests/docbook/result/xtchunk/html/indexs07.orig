@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
@@ -28,7 +28,7 @@
 <a name="listingdocsinhelpmenu"></a>Listing Documents in the Help Menu</h2></div></div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2910047"></a>Developer Information</h3>
+<a name="id2909970"></a>Developer Information</h3>
 <p>
         This section is for developers.  Documentation authors
         generally do not need to know this material.
@@ -66,7 +66,7 @@ function-reference.html Gnumeric function reference
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2910238"></a>Note</h3>
+<a name="id2910161"></a>Note</h3>
 <p>
        If the help files are not present in the correct directory, the
        menu items will NOT appear when the program is run. 

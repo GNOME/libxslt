@@ -1,3 +1,19 @@
+Wed Oct 24 13:02:15 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* doc/*.html doc/site.xsl doc/Makefile.am: the web site
+	  is now extracted from the xslt.html flat file using
+	  the site stylesheet ... eat your own dogfood !
+	* libxslt/transform.c libxslt/xsltutils.c: fixed the 
+	  HTML output to not generate a DOCTYPE if it should not
+	  i.e. no identifier nor version specified in the xsl:output
+	* tests/multiple/out/*.orig tests/general/bug-11-.out 
+	  tests/general/bug-33-.out tests/general/bug-52.out
+	  tests/docbook/result/xtchunk/html/*.orig
+	  tests/docbook/result/html/gdp-handbook.html
+	  tests/XSLTMark/*.out: fixing xsl:output with method=html
+	  resulted in a number of small changes in the regression tests
+	  output
+
 Fri Oct 19 16:46:06 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/*.c libexslt/exsltconfig.h.in: moved the 
