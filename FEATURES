@@ -117,7 +117,7 @@ YES				select = string-expression
 YES				disable-output-escaping = "yes" | "no"
 
 YES			    xsl:number
-PARTIAL				level = "single" | "multiple" | "any"
+YES				level = "single" | "multiple" | "any"
 YES				count = pattern 
 YES				from = pattern 
 YES				value = number-expression 
