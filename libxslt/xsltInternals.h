@@ -141,6 +141,7 @@ struct _xsltDocument {
     int main;			/* is this the main document */
     xmlDocPtr doc;		/* the parsed document */
     void *keys;			/* key tables storage */
+    struct _xsltDocument *includes; /* subsidiary includes */
 };
 
 typedef struct _xsltTransformContext xsltTransformContext;
@@ -414,6 +415,11 @@ struct _xsltStylesheet {
      */
     xmlHashTablePtr extInfos;	/* the extension data */
     int		    extrasNr;	/* the number of extras required */
+
+    /*
+     * For keeping track of nested includes
+     */
+    xsltDocumentPtr includes;	/* points to last nested include */
 };
 
 /*

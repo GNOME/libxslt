@@ -1,3 +1,11 @@
+Wed Nov 26 09:49:11 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/imports.c, libxslt/xsltInternals.h: Changed to
+	  detect recursion in xslt:include (bug #127687).
+	* tests/XSLTMark/reverser.out,
+	* test/docbook/result/xhtml/gdp-handbook.xhtml: results changed
+	  because of fix of bug #127877 in libxml2 (quotes in text)
+
 Mon Nov 24 07:32:38 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xslt.c, libxslt/imports.c, libxslt/parserInternals.h:
