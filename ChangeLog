@@ -1,3 +1,15 @@
+Wed Apr  6 23:58:12 CEST 2005 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libexslt/exslt.c libexslt/libexslt.h: Windows build cleanups,
+	  removed obsolete checks
+	* libxslt/libxslt.h libxslt/win32config.h libxslt/xsltutils.h: 
+	  Windows build cleanups, removed obsolete checks
+	* win32/configure.js: removed obsolete copy operations
+	* win32/Makefile.*: make install cleanup
+	* xsltproc/xsltproc.c: Windows build cleanup, removed obsolete 
+	  macro definitions
+	* .cvsignore: added Eclipse project files
+
 Sat Apr  2 13:34:11 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in NEWS doc/*: preparing release of 1.1.14, updated docs
