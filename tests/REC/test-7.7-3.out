@@ -12,12 +12,12 @@
         More text here.
       
         
-<fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">1.1 First Chapter, First Section, First Subsection</fo:block>
+<fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">1.1 1 First Chapter, First Section, First Subsection</fo:block>
 
       
       
         
-<fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">1.1 First Chapter, First Section, Second Subsection</fo:block>
+<fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">1.1 2 First Chapter, First Section, Second Subsection</fo:block>
 
       
     

@@ -38,8 +38,16 @@
 
 #define SYMBOL_QUOTE             ((xmlChar)'\'')
 
+typedef struct _xsltNumberFormatToken {
+    xmlChar token;
+    int width;
+    xmlChar *filling;
+} xsltNumberFormatToken, *xsltNumberFormatTokenPtr;
+
 static char alpha_upper_list[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static char alpha_lower_list[] = "abcdefghijklmnopqrstuvwxyz";
+static xsltNumberFormatToken default_token;
+
 
 /************************************************************************
  *									*
@@ -237,12 +245,6 @@ xsltNumberFormatRoman(xmlBufferPtr buffer,
     }
 }
 
-typedef struct _xsltNumberFormatToken {
-    xmlChar token;
-    int width;
-    xmlChar *filling;
-} xsltNumberFormatToken, *xsltNumberFormatTokenPtr;
-
 static int
 xsltNumberFormatTokenize(xmlChar *format,
 			 xsltNumberFormatTokenPtr array,
@@ -252,6 +254,10 @@ xsltNumberFormatTokenize(xmlChar *format,
     int cnt;
     int j;
 
+    default_token.token = (xmlChar)'0';
+    default_token.width = 1;
+    default_token.filling = BAD_CAST(".");
+    
     for (cnt = 0; cnt < array_max; cnt++) {
 	if (format[index] == 0) {
 	    break; /* for */
@@ -330,12 +336,20 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
     int minmax;
     double number;
     xsltNumberFormatTokenPtr token;
+    int is_last_default_token = 0;
 
     minmax = (array_max >= numbers_max) ? numbers_max : array_max;
-    for (i = 0; i < minmax; i++) {
+    for (i = 0; i < numbers_max; i++) {
 	/* Insert number */
 	number = numbers[(numbers_max - 1) - i];
-	token = &(*array)[i];
+	if (i < array_max) {
+	  token = &(*array)[i];
+	} else if (array_max > 0) {
+	  token = &(*array)[array_max - 1];
+	} else {
+	  token = &default_token;
+	  is_last_default_token = (i >= numbers_max - 1);
+	}
 	
 	switch (isinf(number)) {
 	case -1:
@@ -389,7 +403,7 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 
 	}
 
-	if (token->filling)
+	if ((token->filling != NULL) && !is_last_default_token)
 	    xmlBufferCat(buffer, token->filling);
     }
 }
@@ -503,7 +517,7 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
     if (parser) {
 	/* ancestor-or-self::*[count] */
 	for (ancestor = node;
-	     ancestor != NULL;
+	     (ancestor != NULL) && (ancestor->type != XML_DOCUMENT_NODE);
 	     ancestor = xmlXPathNextAncestor(parser, ancestor)) {
 	    
 	    if ((from != NULL) &&

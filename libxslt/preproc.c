@@ -606,7 +606,7 @@ xsltNumberComp(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     if (prop != NULL) {
 	comp->numdata.format = prop;
     } else {
-	comp->numdata.format = xmlStrdup(BAD_CAST("1"));
+	comp->numdata.format = xmlStrdup(BAD_CAST(""));
     }
     
     comp->numdata.count = xmlGetNsProp(cur, (const xmlChar *)"count",
