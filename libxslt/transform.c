@@ -715,9 +715,9 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	if ((node->type == XML_ELEMENT_NODE) ||
 	     (node->type == XML_ATTRIBUTE_NODE)) {
-	    if (node->ns != NULL)
+	    if (node->ns != NULL) {
 		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
-	    else if ((insert != NULL) && (insert->type == XML_ELEMENT_NODE) &&
+	    } else if ((insert != NULL) && (insert->type == XML_ELEMENT_NODE) &&
 		     (insert->ns != NULL)) {
 		xmlNsPtr defaultNs;
 
@@ -814,7 +814,8 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
         case XML_XINCLUDE_END:
             return(NULL);
     }
-    if (xmlStrEqual(node->name, (const xmlChar *) " fake node libxslt")) {
+    if ((node->name != NULL) && (node->name[0] == ' ') &&
+	(xmlStrEqual(node->name, (const xmlChar *) " fake node libxslt"))) {
 	if (node->children != NULL)
 	    copy = xsltCopyTreeList(ctxt, node->children, insert);
 	else
@@ -822,8 +823,8 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return(copy);
     }
     copy = xmlCopyNode(node, 0);
-    copy->doc = ctxt->output;
     if (copy != NULL) {
+	copy->doc = ctxt->output;
 	xmlAddChild(insert, copy);
 	/*
 	 * The node may have been coalesced into another text node.

@@ -103,6 +103,7 @@ EXTRA_DIST =	\
 	bug-101.xml \
 	bug-102.xml \
 	bug-103.xml \
+	bug-104.xml \
 	character.xml \
 	array.xml \
 	items.xml

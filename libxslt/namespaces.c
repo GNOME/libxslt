@@ -207,8 +207,16 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 	(out->parent->ns != NULL) &&
 	(xmlStrEqual(out->parent->ns->href, URI)))
 	ret = out->parent->ns;
-    else
-	ret = xmlSearchNsByHref(out->doc, out, URI);
+    else {
+	if (ns->prefix != NULL) {
+	    ret = xmlSearchNs(out->doc, out, ns->prefix);
+	    if ((ret == NULL) || (!xmlStrEqual(ns->href, URI))) {
+		ret = xmlSearchNsByHref(out->doc, out, URI);
+	    }
+	} else {
+	    ret = xmlSearchNsByHref(out->doc, out, URI);
+	}
+    }
 
     if (ret == NULL) {
 	if (out->type == XML_ELEMENT_NODE)

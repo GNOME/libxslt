@@ -1,3 +1,11 @@
+Sun Feb 23 14:25:13 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/namespaces.c libxslt/transform.c: fixed bug #106789 from
+	  James Clark and a bit of cleanup
+	* tests/docs/Makefile.am tests/docs/bug-104.xml
+	  tests/general/Makefile.am tests/general/bug-104*: added the
+	  example in the regression tests for this case
+
 Fri Feb 21 17:07:59 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.spec.in: fixed RH#84801 wrong prereqs in the spec file
