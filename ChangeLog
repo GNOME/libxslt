@@ -1,3 +1,8 @@
+Mon May 27 23:24:57 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.18
+	* doc/*: recompiled the API and web site
+
 Mon May 27 19:14:46 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/namespaces.c libxslt/transform.c: fix bug #81099 about

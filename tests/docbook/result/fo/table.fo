@@ -84,29 +84,29 @@
   <fo:page-sequence id="ch1" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
     <fo:static-content flow-name="xsl-region-before">
       <fo:block text-align="center">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">Chapter 1. test</fo:block>
+        <fo:block font-size="10pt">Chapter 1. test</fo:block>
       </fo:block>
     </fo:static-content>
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+      <fo:block>
+        <fo:block margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
           <fo:block keep-with-next.within-column="always" hyphenate="false">Chapter 1. test</fo:block>
         </fo:block>
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">How many &#xB0; can you &#xA9;.</fo:block>
-      <fo:table-and-caption id="id2762713" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2781474" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
         <fo:table table-layout="fixed">
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="proportional-column-width(1.5)+2in"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="proportional-column-width(2)+4pt"/>
+          <fo:table-column column-number="1"/>
+          <fo:table-column column-number="2" column-width="proportional-column-width(1.5)+2in"/>
+          <fo:table-column column-number="3" column-width="proportional-column-width(2)+4pt"/>
           <fo:table-body border-top="0.5pt solid black " border-bottom="0.5pt solid black ">
             <fo:table-row>
               <fo:table-cell>
@@ -217,14 +217,14 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2758137" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2824334" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
         <fo:table table-layout="fixed">
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="proportional-column-width(1.5)"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="proportional-column-width(2)"/>
+          <fo:table-column column-number="1"/>
+          <fo:table-column column-number="2" column-width="proportional-column-width(1.5)"/>
+          <fo:table-column column-number="3" column-width="proportional-column-width(2)"/>
           <fo:table-body>
             <fo:table-row>
               <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
@@ -335,14 +335,14 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2806528" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2784072" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
         <fo:table>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1" column-width="2in"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="2in"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="3in"/>
+          <fo:table-column column-number="1" column-width="2in"/>
+          <fo:table-column column-number="2" column-width="2in"/>
+          <fo:table-column column-number="3" column-width="3in"/>
           <fo:table-body>
             <fo:table-row>
               <fo:table-cell>
@@ -453,14 +453,14 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2761246" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2787721" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
         <fo:table>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="2in"/>
-          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="3in"/>
+          <fo:table-column column-number="1"/>
+          <fo:table-column column-number="2" column-width="2in"/>
+          <fo:table-column column-number="3" column-width="3in"/>
           <fo:table-body>
             <fo:table-row>
               <fo:table-cell>

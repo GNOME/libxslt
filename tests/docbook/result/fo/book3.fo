@@ -83,30 +83,30 @@
   </fo:layout-master-set>
   <fo:page-sequence id="book" hyphenate="true" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
+      <fo:block>
+        <fo:block font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
           <fo:block keep-with-next.within-column="always" hyphenate="false">Book Title</fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="17.28pt" text-align="center" keep-with-next="always" space-before="2in">Some Corporation</fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="17.28pt" text-align="center" space-before="10.8pt" keep-with-next="always">Norman Walsh</fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="14.4pt" font-weight="bold" font-family="Helvetica">
+        <fo:block font-family="Helvetica" font-weight="bold" font-size="17.28pt" text-align="center" keep-with-next="always" space-before="2in">Some Corporation</fo:block>
+        <fo:block font-family="Helvetica" font-weight="bold" font-size="17.28pt" text-align="center" space-before="10.8pt" keep-with-next="always">Norman Walsh</fo:block>
+        <fo:block break-after="page"/>
+        <fo:block font-size="14.4pt" font-weight="bold" font-family="Helvetica">
           <fo:block>Book Title</fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">
+        <fo:block font-size="10pt">
           <fo:block>by Some Corporation</fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">
+        <fo:block font-size="10pt">
           <fo:block>by Norman Walsh</fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">Copyright &#xA9; 1998 Norman Walsh</fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="8pt">
+        <fo:block font-size="10pt">Copyright &#xA9; 1998 Norman Walsh</fo:block>
+        <fo:block font-size="8pt">
           <fo:block>
-            <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always">Legal Notice</fo:block>
+            <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Legal Notice</fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is a test document. You can do what you will with it.</fo:block>
           </fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="8pt">
+        <fo:block font-size="8pt">
           <fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is a second legal notice.  But it's not noteworthy.
   Some more text. Some more text. Some more text. Some more text. 
@@ -119,15 +119,15 @@
   </fo:block>
           </fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
+        <fo:block break-after="page"/>
       </fo:block>
     </fo:flow>
   </fo:page-sequence>
   <fo:page-sequence hyphenate="true" format="i" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
       <fo:block space-before.minimum="0.5em" space-before.optimum="1em" space-before.maximum="2em" space-after.minimum="0.5em" space-after.optimum="1em" space-after.maximum="2em">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
+        <fo:block>
+          <fo:block space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
         </fo:block>
         <fo:block text-align-last="justify" end-indent="2pc" last-line-end-indent="-2pc">
           <fo:inline keep-with-next.within-line="always"> A Test Bibliography</fo:inline>
@@ -143,7 +143,7 @@
         </fo:block>
         <fo:block text-align-last="justify" end-indent="2pc" last-line-end-indent="-2pc">
           <fo:inline keep-with-next.within-line="always"> Index</fo:inline>
-          <fo:inline keep-together.within-line="always"> <fo:leader leader-pattern="dots" keep-with-next.within-line="always"/> <fo:basic-link internal-destination="id2760762"><fo:page-number-citation ref-id="id2760762"/></fo:basic-link></fo:inline>
+          <fo:inline keep-together.within-line="always"> <fo:leader leader-pattern="dots" keep-with-next.within-line="always"/> <fo:basic-link internal-destination="id2779208"><fo:page-number-citation ref-id="id2779208"/></fo:basic-link></fo:inline>
         </fo:block>
       </fo:block>
     </fo:flow>
@@ -151,12 +151,12 @@
   <fo:page-sequence id="bib1" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+      <fo:block>
+        <fo:block margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
           <fo:block keep-with-next.within-column="always" hyphenate="false">A Test Bibliography</fo:block>
         </fo:block>
       </fo:block>
@@ -164,7 +164,7 @@
 a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block>
       <fo:block>
         <fo:block font-size="16pt" font-weight="bold">Books</fo:block>
-        <fo:block id="id2855983" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2784988" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[AhoSethiUllman96] </fo:inline>
           <fo:inline>Alfred V. Aho,Ravi Sethi, and Jeffrey D. Ullman. </fo:inline>
           <fo:inline><fo:inline font-style="italic">Compilers, Principles, Techniques, and Tools</fo:inline>. </fo:inline>
@@ -191,7 +191,7 @@ a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block
     <fo:inline>O'Reilly &amp; Associates, Inc.</fo:inline> and
     <fo:inline>The World Wide Web Consortium</fo:inline>.
     <fo:inline>Winter, 1996</fo:inline></fo:inline>.</fo:block>
-        <fo:block id="id2761388" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2786280" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[Abbrev] </fo:inline>
           <fo:inline><fo:inline font-style="italic">A Really Full BiblioEntry</fo:inline>. </fo:inline>
           <fo:inline>Subtitle. </fo:inline>
@@ -268,12 +268,12 @@ USA. </fo:inline>
   <fo:page-sequence id="gloss" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+      <fo:block>
+        <fo:block margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
           <fo:block keep-with-next.within-column="always" hyphenate="false">Example Glossary</fo:block>
         </fo:block>
       </fo:block>
@@ -293,7 +293,7 @@ USA. </fo:inline>
       </fo:list-block>
       <fo:block font-size="16pt" font-weight="bold">S</fo:block>
       <fo:list-block provisional-distance-between-starts="2in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2760228" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2778673" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>SGML</fo:block>
           </fo:list-item-label>
@@ -318,12 +318,12 @@ USA. </fo:inline>
   <fo:page-sequence id="index" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+      <fo:block>
+        <fo:block margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
           <fo:block keep-with-next.within-column="always" hyphenate="false">Index</fo:block>
         </fo:block>
       </fo:block>
@@ -331,15 +331,15 @@ USA. </fo:inline>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:inline font-weight="bold" keep-with-next.within-line="always" padding-end="1em">a formal para</fo:inline>this is a formal paragraph.</fo:block>
     </fo:flow>
   </fo:page-sequence>
-  <fo:page-sequence id="id2760762" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2779208" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+      <fo:block>
+        <fo:block margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
           <fo:block keep-with-next.within-column="always" hyphenate="false">Index</fo:block>
         </fo:block>
       </fo:block>

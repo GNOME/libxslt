@@ -84,26 +84,26 @@
   <fo:page-sequence id="index" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" text-align="center" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
+      <fo:block>
+        <fo:block text-align="center" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
           <fo:block keep-with-next.within-column="always" hyphenate="false">The GNOME Handbook of Writing Software Documentation</fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">David Mason<fo:block><fo:block>Red Hat, Inc.</fo:block><fo:block wrap-option="no-wrap" text-align="start" linefeed-treatment="preserve" white-space-collapse="false" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
+        <fo:block>David Mason<fo:block><fo:block>Red Hat, Inc.</fo:block><fo:block wrap-option="no-wrap" text-align="start" linefeed-treatment="preserve" white-space-collapse="false" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
             <fo:inline font-family="Courier">&lt;dcm@redhat.com&gt;</fo:inline>
           </fo:block></fo:block>Daniel Mueth<fo:block><fo:block wrap-option="no-wrap" text-align="start" linefeed-treatment="preserve" white-space-collapse="false" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
             <fo:inline font-family="Courier">&lt;d-mueth@uchicago.edu&gt;</fo:inline>
           </fo:block></fo:block>Alexander Kirillov<fo:block><fo:block wrap-option="no-wrap" text-align="start" linefeed-treatment="preserve" white-space-collapse="false" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
             <fo:inline font-family="Courier">&lt;kirillov@math.sunysb.edu&gt;</fo:inline>
           </fo:block></fo:block></fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block>
       This is a pre-release!
     </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Copyright &#xA9; 2000 Red Hat, Inc., Daniel Mueth, and Alexander Kirillov</fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block>Copyright &#xA9; 2000 Red Hat, Inc., Daniel Mueth, and Alexander Kirillov</fo:block>
+        <fo:block>
           <fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
       Permission is granted to copy, distribute and/or modify this
@@ -125,7 +125,7 @@
      </fo:block>
           </fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block>
           <fo:table table-layout="fixed">
             <fo:table-column column-number="1" column-width="33%"/>
             <fo:table-column column-number="2" column-width="33%"/>
@@ -156,24 +156,24 @@
         </fo:block>
       </fo:block>
       <fo:block id="intro">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Introduction</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="gdp">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">The GNOME Documentation Project</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
           <fo:block id="goals">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Goals</fo:block>
                 </fo:block>
@@ -204,8 +204,8 @@
         </fo:block>
           </fo:block>
           <fo:block id="joining">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Joining the GDP</fo:block>
                 </fo:block>
@@ -231,8 +231,8 @@
        </fo:block>
           </fo:block>
           <fo:block id="collaborating">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Collaborating with the GDP</fo:block>
                 </fo:block>
@@ -257,8 +257,8 @@
           </fo:block>
         </fo:block>
         <fo:block id="notation">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Notation and Conventions</fo:block>
               </fo:block>
@@ -266,20 +266,20 @@
           </fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         This Handbook uses the following notation:
-        <fo:table><fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/><fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2"/><fo:table-body><fo:table-row><fo:table-cell><fo:block><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">/usr/bin</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
+        <fo:table><fo:table-column column-number="1"/><fo:table-column column-number="2"/><fo:table-body><fo:table-row><fo:table-cell><fo:block><fo:inline font-family="Courier">/usr/bin</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
                   Directory
-                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">foo.sgml</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
+                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline font-family="Courier">foo.sgml</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
                   Filename
-                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-weight="bold">command</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
+                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline font-weight="bold">command</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
                   Command or text that would be typed.
-                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-weight="bold"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">replaceable</fo:inline></fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
+                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline font-weight="bold"><fo:inline font-style="italic" font-family="Courier">replaceable</fo:inline></fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>
                   &quot;Variable&quot; text that can be replaced.
-                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">Program or Doc Code</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>Program or document code</fo:block></fo:table-cell></fo:table-row></fo:table-body></fo:table>
+                </fo:block></fo:table-cell></fo:table-row><fo:table-row><fo:table-cell><fo:block><fo:inline font-family="Courier">Program or Doc Code</fo:inline></fo:block></fo:table-cell><fo:table-cell><fo:block>Program or document code</fo:block></fo:table-cell></fo:table-row></fo:table-body></fo:table>
       </fo:block>
         </fo:block>
         <fo:block id="about">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">About This Handbook</fo:block>
               </fo:block>
@@ -302,24 +302,24 @@
         </fo:block>
       </fo:block>
       <fo:block id="gettingstarted">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Getting Started Writing GNOME Documentation</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="selecting">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Selecting A Document</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
           <fo:block id="know">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Document Something You Know</fo:block>
                 </fo:block>
@@ -351,8 +351,8 @@
         </fo:block>
           </fo:block>
           <fo:block id="doctable">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">The GNOME Documentation Status Table</fo:block>
                 </fo:block>
@@ -382,7 +382,7 @@
           people to make announcements and suggestions and to discuss
           issues in the comments section.
         </fo:block>
-            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2778354">
+            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2778549">
               <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Note</fo:block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           Note that the information in the
@@ -395,8 +395,8 @@
           </fo:block>
         </fo:block>
         <fo:block id="docbook">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Installing and Using DocBook</fo:block>
               </fo:block>
@@ -409,7 +409,7 @@
         source nature of SGML. To contribute to the GDP you should
         learn to use DocBook.
       </fo:block>
-          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2778442">
+          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2778637">
             <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           To get started writing for the GDP you do not need to rush
@@ -422,8 +422,8 @@
         </fo:block>
           </fo:block>
           <fo:block id="installingdocbook">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Installing DocBook</fo:block>
                 </fo:block>
@@ -444,8 +444,8 @@
         </fo:block>
           </fo:block>
           <fo:block id="gdpstylesheets">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">GDP Stylesheets</fo:block>
                 </fo:block>
@@ -466,8 +466,8 @@
         </fo:block>
           </fo:block>
           <fo:block id="gdpdtd">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">GDP DTD (PNG Image Support)</fo:block>
                 </fo:block>
@@ -490,8 +490,8 @@
           DTD's.  To install the GDP custom DTD with PNG image support
           by hand:
         </fo:block>
-            <fo:list-block id="id2778818" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2778830" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2779050" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2779062" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -506,7 +506,7 @@
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2778991" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2779384" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -554,8 +554,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="editors">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Editors</fo:block>
                 </fo:block>
@@ -581,8 +581,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="make-output">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Creating Something Useful with your Docs</fo:block>
                 </fo:block>
@@ -620,7 +620,7 @@ V1.1//EN&quot;[]&gt;
           mydocument.sgml</fo:inline>, after which you can print out or
           view the resulting .ps file.  
         </fo:block>
-            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2778910">
+            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2779261">
               <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             The html files you get will not look quite the same as the
@@ -633,8 +633,8 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
           </fo:block>
           <fo:block id="jadeimages">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Images in DocBook Tools</fo:block>
                 </fo:block>
@@ -688,8 +688,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="moredocbookinfo">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Learning DocBook</fo:block>
                 </fo:block>
@@ -700,8 +700,8 @@ V1.1//EN&quot;[]&gt;
           The following resources on the web are useful for learning
           DocBook:
         </fo:block>
-            <fo:list-block id="id2901550" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2901547" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2901758" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2901756" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -715,7 +715,7 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2901602" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2901811" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -728,7 +728,7 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2901643" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2901851" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -742,7 +742,7 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2901682" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2901891" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -766,8 +766,8 @@ V1.1//EN&quot;[]&gt;
           The following sections of this document are designed to help
           documentation authors write correct and consistent DocBook:
         </fo:block>
-            <fo:list-block id="id2901752" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2901749" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2901960" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2901957" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -787,8 +787,8 @@ V1.1//EN&quot;[]&gt;
           </fo:block>
         </fo:block>
         <fo:block id="gdptemplates">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">GDP Document Templates</fo:block>
               </fo:block>
@@ -805,8 +805,8 @@ V1.1//EN&quot;[]&gt;
       </fo:block>
         </fo:block>
         <fo:block id="screenshots">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Screenshots</fo:block>
               </fo:block>
@@ -822,8 +822,8 @@ V1.1//EN&quot;[]&gt;
         images in a document, see <fo:basic-link internal-destination="jadeimages">the section called &#x201C;Images in DocBook Tools&#x201D;</fo:basic-link> above.
       </fo:block>
           <fo:block id="screenshotappearance">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Screenshot Appearance</fo:block>
                 </fo:block>
@@ -853,8 +853,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="screenshottools">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Screenshot Tools</fo:block>
                 </fo:block>
@@ -884,8 +884,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="screenshotfiles">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Screenshot Files</fo:block>
                 </fo:block>
@@ -911,8 +911,8 @@ V1.1//EN&quot;[]&gt;
           </fo:block>
         </fo:block>
         <fo:block id="applicationbugs">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Application Bugs</fo:block>
               </fo:block>
@@ -934,8 +934,8 @@ V1.1//EN&quot;[]&gt;
       </fo:block>
         </fo:block>
         <fo:block id="cvs">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Using CVS</fo:block>
               </fo:block>
@@ -957,8 +957,8 @@ V1.1//EN&quot;[]&gt;
         may commit modified files directly to CVS.
       </fo:block>
           <fo:block id="anonymouscvs">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Anonymous CVS</fo:block>
                 </fo:block>
@@ -980,8 +980,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="logincvs">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Login CVS</fo:block>
                 </fo:block>
@@ -992,33 +992,33 @@ V1.1//EN&quot;[]&gt;
         modifications to CVS.  Be sure to read the following section
         on CVS etiquette before making any commits to CVS.  To log in
         to the CVS server as user
-        <fo:inline font-weight="bold"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">username</fo:inline></fo:inline> with a
+        <fo:inline font-weight="bold"><fo:inline font-style="italic" font-family="Courier">username</fo:inline></fo:inline> with a
         password, you must first set your CVSROOT shell variable with
         <fo:inline font-weight="bold"> export
-        CVSROOT=':pserver:<fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">username</fo:inline>@cvs.gnome.org:/cvs/gnome'</fo:inline>.
+        CVSROOT=':pserver:<fo:inline font-style="italic" font-family="Courier">username</fo:inline>@cvs.gnome.org:/cvs/gnome'</fo:inline>.
         Log in with <fo:inline font-weight="bold">cvs login</fo:inline> and enter your
         password. You may check out and update modules as described
         above for anonymous CVS access.  As a login CVS user, you may
         also check modified versions of a file into the CVS server.
         To check
-        <fo:inline font-weight="bold"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">filename</fo:inline></fo:inline> into
+        <fo:inline font-weight="bold"><fo:inline font-style="italic" font-family="Courier">filename</fo:inline></fo:inline> into
         the CVS server, type <fo:inline font-weight="bold">cvs -z3 commit
-        <fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">filename</fo:inline></fo:inline>. You will be
+        <fo:inline font-style="italic" font-family="Courier">filename</fo:inline></fo:inline>. You will be
         given a vi editor window to type in a brief log entry,
         summarizing your changes.  The default editor can be changed
         using the <fo:inline font-family="Courier">EDITOR</fo:inline> environment variable or
-        with the <fo:inline font-weight="bold"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">-e</fo:inline></fo:inline> option. You
+        with the <fo:inline font-weight="bold"><fo:inline font-family="Courier">-e</fo:inline></fo:inline> option. You
         may also check in any modifications to files in the working
         directory and subdirectories using <fo:inline font-weight="bold">cvs -z3
         commit</fo:inline>.  To
         add a new file to the CVS server, use <fo:inline font-weight="bold">cvs -z3 add
-        <fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">filename</fo:inline></fo:inline>, followed by the
+        <fo:inline font-style="italic" font-family="Courier">filename</fo:inline></fo:inline>, followed by the
         commit command.
         </fo:block>
           </fo:block>
           <fo:block id="cvsetiquette">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">CVS Etiquette</fo:block>
                 </fo:block>
@@ -1044,16 +1044,16 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
       </fo:block>
       <fo:block id="gnomedocsystem">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">The GNOME Documentation System</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="gnomehelpbrowser">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">The GNOME Help Browser</fo:block>
               </fo:block>
@@ -1077,8 +1077,8 @@ V1.1//EN&quot;[]&gt;
       </fo:block>
         </fo:block>
         <fo:block id="gnomehelpbrowser2">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">The GNOME Help Browser (GNOME-2.0)</fo:block>
               </fo:block>
@@ -1105,8 +1105,8 @@ V1.1//EN&quot;[]&gt;
       channel on irc.gnome.org.  </fo:block>
         </fo:block>
         <fo:block id="gnomehelponthefly">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Dynamic Document Synthesis(GNOME-2.0)</fo:block>
               </fo:block>
@@ -1128,16 +1128,16 @@ V1.1//EN&quot;[]&gt;
       </fo:block>
         </fo:block>
         <fo:block id="gnomehelpcomponents">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">The GNOME Documentation Components</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
           <fo:block id="applicationmanualsintro">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Application Manuals</fo:block>
                 </fo:block>
@@ -1153,8 +1153,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="applicationhelpintro">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Application Help</fo:block>
                 </fo:block>
@@ -1174,8 +1174,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="contextsensitivehelpintro">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Application Context Sensitive Help (coming in
         GNOME-2.0)</fo:block>
@@ -1194,8 +1194,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="userguide">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">The GNOME User Guide</fo:block>
                 </fo:block>
@@ -1213,8 +1213,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="userdocs">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">User Documents</fo:block>
                 </fo:block>
@@ -1230,8 +1230,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="developerdocs">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Developer Documents</fo:block>
                 </fo:block>
@@ -1250,8 +1250,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="projectdocs">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Project Documents</fo:block>
                 </fo:block>
@@ -1267,16 +1267,16 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
       </fo:block>
       <fo:block id="docbookbasics">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">DocBook Basics </fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="introtodocbook">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Introduction to DocBook</fo:block>
               </fo:block>
@@ -1356,8 +1356,8 @@ V1.1//EN&quot;[]&gt;
       </fo:block>
         </fo:block>
         <fo:block id="xml">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">XML and SGML</fo:block>
               </fo:block>
@@ -1373,8 +1373,8 @@ V1.1//EN&quot;[]&gt;
       advised</fo:inline> that the documentation writers conform to XML
       syntax rules. Here are most important differences:
       </fo:block>
-          <fo:list-block id="id2904247" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-            <fo:list-item id="id2904253" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-block id="id2904455" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2904462" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline> <fo:inline font-style="italic">Minimization</fo:inline></fo:inline>
@@ -1385,8 +1385,8 @@ V1.1//EN&quot;[]&gt;
 	      It is possible with some implementations of SGML to use
 	      minimizations to close elements in a document by using
 	      &lt;/&gt;, for example:
-	      <fo:inline font-family="Courier"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">&lt;title&gt;</fo:inline>The
-		Title<fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">&lt;/&gt;</fo:inline></fo:inline>. This is not
+	      <fo:inline font-family="Courier"><fo:inline font-family="Courier">&lt;title&gt;</fo:inline>The
+		Title<fo:inline font-family="Courier">&lt;/&gt;</fo:inline></fo:inline>. This is not
               allowed in XML. You can use <fo:inline font-weight="bold">sgmlnorm</fo:inline> command,
               included in DocBook Tools package, to expand minimized tags;
               if you are using Emacs with psgml
@@ -1395,7 +1395,7 @@ V1.1//EN&quot;[]&gt;
          </fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2904386" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2904594" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline> <fo:inline font-style="italic">Self-closing tags</fo:inline></fo:inline>
@@ -1406,16 +1406,16 @@ V1.1//EN&quot;[]&gt;
             Also, in SGML some tags are allowed not to have closing
             tags.  For example, it is legal for
             <fo:inline font-family="Courier">&lt;xref&gt;</fo:inline> not to have a closing tag: 
-            <fo:inline font-family="Courier"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">&lt;xref 
+            <fo:inline font-family="Courier"><fo:inline font-family="Courier">&lt;xref 
                    linkend=&quot;someid&quot;&gt;</fo:inline></fo:inline>. In
             XML, it is illegal; instead, you should use  
-            <fo:inline font-family="Courier"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Courier">&lt;xref 
+            <fo:inline font-family="Courier"><fo:inline font-family="Courier">&lt;xref 
                    linkend=&quot;someid&quot;/&gt;</fo:inline></fo:inline> (note the
             slash!).
           </fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2904469" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2904676" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline> <fo:inline font-style="italic">Case sensitive tags</fo:inline></fo:inline>
@@ -1435,16 +1435,16 @@ V1.1//EN&quot;[]&gt;
           </fo:list-block>
         </fo:block>
         <fo:block id="structure">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> Structure Elements</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
           <fo:block id="section">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Sections and paragraphs</fo:block>
                 </fo:block>
@@ -1473,8 +1473,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="notes">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Notes, Warnings, And Tips</fo:block>
                 </fo:block>
@@ -1510,8 +1510,8 @@ V1.1//EN&quot;[]&gt;
         </fo:block>
           </fo:block>
           <fo:block id="figures">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> Screenshots and other figures</fo:block>
                 </fo:block>
@@ -1537,7 +1537,7 @@ V1.1//EN&quot;[]&gt;
           
           <fo:block id="shot1" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em" space-after.minimum="1em" space-after.optimum="1.5em" space-after.maximum="2em" keep-with-previous.within-column="always"><fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Screenshot</fo:block><fo:block><fo:block><fo:external-graphic src="url(file:figures/example_screenshot)" content-width="auto" content-height="auto" width="auto" height="auto"/></fo:block></fo:block></fo:block>
         </fo:block>
-            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2904997">
+            <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905204">
               <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             Notice in this example that the screenshot file name does
@@ -1547,8 +1547,8 @@ V1.1//EN&quot;[]&gt;
             </fo:block>
           </fo:block>
           <fo:block id="listing">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Program listings and terminal session</fo:block>
                 </fo:block>
@@ -1599,7 +1599,7 @@ make: *** No rule to make target `love'.  Stop.
           Note the use of tags <fo:inline font-family="Courier">&lt;prompt&gt;</fo:inline> and
           <fo:inline font-family="Courier">&lt;userinput&gt;</fo:inline> for marking system prompt
           and commands entered by user.
-          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905241"><fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block><fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2905448"><fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block><fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               Note that both <fo:inline font-family="Courier">&lt;programlisting&gt;</fo:inline>
               and <fo:inline font-family="Courier">&lt;screen&gt;</fo:inline> preserve linebreaks,
               but interpret SGML tags (unlike LaTeX
@@ -1610,8 +1610,8 @@ make: *** No rule to make target `love'.  Stop.
         </fo:block>
           </fo:block>
           <fo:block id="lists">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> Lists</fo:block>
                 </fo:block>
@@ -1623,8 +1623,8 @@ make: *** No rule to make target `love'.  Stop.
 	  <fo:inline font-family="Courier">&lt;orderedlist&gt;</fo:inline>, and 
 	  <fo:inline font-family="Courier">&lt;variablelist&gt;</fo:inline>.
 	</fo:block>
-            <fo:list-block id="id2905354" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-              <fo:list-item id="id2905360" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2905560" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2905567" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline> <fo:inline font-family="Courier">&lt;itemizedlist&gt;</fo:inline></fo:inline>
@@ -1663,8 +1663,8 @@ make: *** No rule to make target `love'.  Stop.
 		</fo:block>
 		and output:
                 </fo:block>
-                  <fo:list-block id="id2905419" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-                    <fo:list-item id="id2905398" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                  <fo:list-block id="id2905626" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+                    <fo:list-item id="id2905605" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                       <fo:list-item-label end-indent="label-end()">
                         <fo:block>&#x2022;</fo:block>
                       </fo:list-item-label>
@@ -1676,7 +1676,7 @@ make: *** No rule to make target `love'.  Stop.
 		    </fo:block>
                       </fo:list-item-body>
                     </fo:list-item>
-                    <fo:list-item id="id2905471" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                    <fo:list-item id="id2905678" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                       <fo:list-item-label end-indent="label-end()">
                         <fo:block>&#x2022;</fo:block>
                       </fo:list-item-label>
@@ -1689,7 +1689,7 @@ make: *** No rule to make target `love'.  Stop.
 		    </fo:block>
                       </fo:list-item-body>
                     </fo:list-item>
-                    <fo:list-item id="id2905503" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                    <fo:list-item id="id2905710" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                       <fo:list-item-label end-indent="label-end()">
                         <fo:block>&#x2022;</fo:block>
                       </fo:list-item-label>
@@ -1718,7 +1718,7 @@ make: *** No rule to make target `love'.  Stop.
 	      </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2905680" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2905886" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline> <fo:inline font-family="Courier">&lt;orderedlist&gt;</fo:inline></fo:inline>
@@ -1741,7 +1741,7 @@ make: *** No rule to make target `love'.  Stop.
 	      </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2905779" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2905985" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline> <fo:inline font-family="Courier">&lt;variablelist&gt;</fo:inline></fo:inline>
@@ -1797,23 +1797,23 @@ make: *** No rule to make target `love'.  Stop.
           </fo:block>
         </fo:block>
         <fo:block id="inline">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Inline Elements</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
           <fo:block id="gui">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">GUI elements</fo:block>
                 </fo:block>
               </fo:block>
             </fo:block>
-            <fo:list-block id="id2905955" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2905962" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2906161" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2906167" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1824,7 +1824,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2905987" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906193" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1839,7 +1839,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906036" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906242" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1850,7 +1850,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906062" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906268" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1860,7 +1860,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906086" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906292" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1871,7 +1871,7 @@ make: *** No rule to make target `love'.  Stop.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906111" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906317" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1897,8 +1897,8 @@ make: *** No rule to make target `love'.  Stop.
         </fo:block>
           </fo:block>
           <fo:block id="links">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Links and references</fo:block>
                 </fo:block>
@@ -1939,8 +1939,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </fo:block>
           </fo:block>
           <fo:block id="filenames">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Filenames, commands, and other
         computer-related things</fo:block>
@@ -1951,8 +1951,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           Here are some tags used to describe operating system-related
           things:  
         </fo:block>
-            <fo:list-block id="id2906509" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2906515" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2906715" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2906721" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1966,7 +1966,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906570" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906776" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1980,7 +1980,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906631" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906837" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -1994,7 +1994,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906686" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906892" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2006,7 +2006,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906727" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906933" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2020,7 +2020,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2906782" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2906988" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2032,15 +2032,15 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
               foo.sgml
               <fo:inline font-family="Courier">&lt;/replaceable&gt;</fo:inline><fo:inline font-family="Courier">&lt;/command&gt;</fo:inline>
               produces: <fo:inline font-weight="bold">db2html
-              <fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">foo.sgml</fo:inline></fo:inline>.
+              <fo:inline font-style="italic" font-family="Courier">foo.sgml</fo:inline></fo:inline>.
             </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
             </fo:list-block>
           </fo:block>
           <fo:block id="keys">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Keyboard input</fo:block>
                 </fo:block>
@@ -2092,8 +2092,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </fo:block>
           </fo:block>
           <fo:block id="email">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">E-mail addresses</fo:block>
                 </fo:block>
@@ -2112,8 +2112,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </fo:block>
           </fo:block>
           <fo:block id="specsymb">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> Special symbols </fo:block>
                 </fo:block>
@@ -2131,8 +2131,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
 	  here is partial list of most commonly used enitites:
 	</fo:block>
-            <fo:list-block id="id2907253" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-              <fo:list-item id="id2907259" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2907459" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+              <fo:list-item id="id2907465" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2142,7 +2142,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2907278" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2907484" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2152,7 +2152,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2907297" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2907503" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2162,7 +2162,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2907316" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2907522" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2172,7 +2172,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	  </fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2907335" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2907544" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>&#x2022;</fo:block>
                 </fo:list-item-label>
@@ -2195,24 +2195,24 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </fo:block>
       </fo:block>
       <fo:block id="conventions">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">GDP Documentation Conventions </fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="conventionsalldocs">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Conventions for All GDP Documentation</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
           <fo:block id="xmlcomp">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> XML compatibility </fo:block>
                 </fo:block>
@@ -2225,8 +2225,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	</fo:block>
           </fo:block>
           <fo:block id="authorsnames">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> Authors' names</fo:block>
                 </fo:block>
@@ -2242,16 +2242,16 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           </fo:block>
         </fo:block>
         <fo:block id="conventionsappdocs">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Conventions for Application Documentation</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
           <fo:block id="applicationversionid">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Application Version Identification</fo:block>
                 </fo:block>
@@ -2272,8 +2272,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </fo:block>
           </fo:block>
           <fo:block id="license">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> Copyright information </fo:block>
                 </fo:block>
@@ -2290,8 +2290,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	</fo:block>
           </fo:block>
           <fo:block id="license2">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Software license</fo:block>
                 </fo:block>
@@ -2304,8 +2304,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
        </fo:block>
           </fo:block>
           <fo:block id="bugtraq">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block>
+              <fo:block margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
                   <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em"> Bug reporting</fo:block>
                 </fo:block>
@@ -2320,8 +2320,8 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </fo:block>
       </fo:block>
       <fo:block id="writingapplicationmanuals">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Writing Application and Applet Manuals</fo:block>
             </fo:block>
@@ -2336,7 +2336,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
       PNG format only) when appropriate.  They should also describe
       each feature and preference option available.
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2907799">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908005">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Documentation Availability</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         Applications and applets should not rely on documentation
@@ -2352,7 +2352,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
     versions 1.x and the templates in <fo:basic-link internal-destination="template2-2x">the section called &#x201C;Template 2: Applet Manual For GNOME 2.x&#x201D;</fo:basic-link>
     for GNOME versions 2.x.
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2907839">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908045">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Manuals For Large Applications</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         Manuals for very large applications, such as GNOME Workshop
@@ -2363,7 +2363,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         <fo:inline font-family="Courier">&lt;sect1&gt;</fo:inline>).
       </fo:block>
         </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2907954">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908160">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Applet Manuals in GNOME 2.0</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         Note that applet manuals in GNOME 2.0 are treated in a special
@@ -2386,14 +2386,14 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
     </fo:block>
       </fo:block>
       <fo:block id="listingdocsinhelpmenu">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Listing Documents in the Help Menu</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908079">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908284">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Developer Information</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         This section is for developers.  Documentation authors
@@ -2424,13 +2424,13 @@ function-reference.html Gnumeric function reference
       </fo:block>
       When the application is installed, the
       <fo:inline font-family="Courier">topic.dat</fo:inline> file should be placed in the
-      <fo:inline font-family="Courier">$prefix/share/gnome/help/<fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">appname</fo:inline>/C/</fo:inline> directory
+      <fo:inline font-family="Courier">$prefix/share/gnome/help/<fo:inline font-style="italic" font-family="Courier">appname</fo:inline>/C/</fo:inline> directory
       where <fo:inline font-style="italic" font-family="Courier">appname</fo:inline> is replaced by the
       application's name.  The application documentation (converted
       from SGML into HTML with <fo:inline font-weight="bold">db2html</fo:inline>) should be
       placed in this directory too.
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908268">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908474">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Note</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
        If the help files are not present in the correct directory, the
@@ -2463,14 +2463,14 @@ GnomeUIInfo helpmenu[] = {
     </fo:block>
       </fo:block>
       <fo:block id="applicationhelpbuttons">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Application Help Buttons</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908437">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908643">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Developer Information</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         This section is for developers.  Documentation authors
@@ -2502,7 +2502,7 @@ if (tmp) {
   g_free(tmp);
 }
     </fo:block>
-        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908575">
+        <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908781">
           <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">NOTE</fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
         The example above is in the C language, please refer to other
@@ -2511,16 +2511,16 @@ if (tmp) {
         </fo:block>
       </fo:block>
       <fo:block id="packagingappletdocs">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Packaging Applet Documentation</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="appletfiles">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Applet Documentation Files</fo:block>
               </fo:block>
@@ -2565,14 +2565,14 @@ if (tmp) {
       </fo:block>
         </fo:block>
         <fo:block id="appletmenu">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Adding Documentation to an Applet Menu</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
-          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2908826">
+          <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2909032">
             <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Developer Information</fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           This section is for developers.  Documentation authors
@@ -2621,8 +2621,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         </fo:block>
       </fo:block>
       <fo:block id="writingcontextsensitivehelp">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Writing Context Sensitive Help (coming in GNOME-2.0)</fo:block>
             </fo:block>
@@ -2664,8 +2664,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     </fo:block>
       </fo:block>
       <fo:block id="referring">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Referring to Other GNOME Documentation (coming in
     GNOME-2.0)</fo:block>
@@ -2679,8 +2679,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
     </fo:block>
       </fo:block>
       <fo:block id="basics">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Basics of Documentation Style</fo:block>
             </fo:block>
@@ -2709,8 +2709,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
        features at random.  
     </fo:block>
         <fo:block id="styleplanning">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Planning</fo:block>
               </fo:block>
@@ -2730,8 +2730,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="balance">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Achieving a Balanced Style</fo:block>
               </fo:block>
@@ -2740,7 +2740,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"> 
          Just as you need to juggle expert and novice readers,
          you'll have to juggle a number of other extremes as you write:
-         <fo:list-block id="id2909371" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em"><fo:list-item id="id2909377" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+         <fo:list-block id="id2909577" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em"><fo:list-item id="id2909582" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               Documents should be complete, yet concise.  You should
               describe every feature, but you'll have decide how much
               detail is really necessary.  It's not, for example,
@@ -2750,7 +2750,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               you spend fewer words on the obvious, you can spend more
               time clarifying the ambiguous labels and explaining
               items that are more complex.
-            </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2909404" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+            </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2909610" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               Be engaging and friendly, yet professional. Games
               documents may be less formal than productivity
               application documents (people don't
@@ -2759,14 +2759,14 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               maintain a standard of style which holds the reader's
               interest without resorting to jokes and untranslatable
               allusions or puns.
-           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2909443" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2909649" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               Examples, tips, notes, and screenshots are useful to
               break up long stretches of text, but too many can get in
               the way, and make your documents too choppy to read.
               It's good to provide a screenshot of any dialog windows
               a user might run into, but if a dialog box has several
               tabs, it's not usually necessary to have one for each.
-           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2909467" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
+           </fo:block></fo:list-item-body></fo:list-item><fo:list-item id="id2909673" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:list-item-label end-indent="label-end()"><fo:block>&#x2022;</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>
               The GDP strives to have all of its documentation conform
               to certain standards of style and content, but every
               document (and every writer) is different.  You will need
@@ -2778,8 +2778,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
        </fo:block>
         </fo:block>
         <fo:block id="stylestructure">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Structure</fo:block>
               </fo:block>
@@ -2816,8 +2816,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="stylegrammar">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Grammar and Spelling</fo:block>
               </fo:block>
@@ -2849,16 +2849,16 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         </fo:block>
       </fo:block>
       <fo:block id="teamwork">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Teamwork</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="teamworkgdp">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Working With The GDP Team</fo:block>
               </fo:block>
@@ -2889,8 +2889,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="teamworkdevelopers">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Working With Developers</fo:block>
               </fo:block>
@@ -2910,16 +2910,16 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         </fo:block>
       </fo:block>
       <fo:block id="finishing">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Finishing A Document</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="editting">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Editing The Document</fo:block>
               </fo:block>
@@ -2933,8 +2933,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="submitting">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Submitting The Document</fo:block>
               </fo:block>
@@ -2962,16 +2962,16 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         </fo:block>
       </fo:block>
       <fo:block id="resources">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+        <fo:block>
+          <fo:block margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
               <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Resources</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
         <fo:block id="resourcesweb">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Resources On The Web</fo:block>
               </fo:block>
@@ -2992,8 +2992,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="resourcesbooks">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Books</fo:block>
               </fo:block>
@@ -3008,8 +3008,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="mailinglists">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Mailing Lists</fo:block>
               </fo:block>
@@ -3024,8 +3024,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="irc">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">IRC</fo:block>
               </fo:block>
@@ -3043,8 +3043,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       <fo:block id="templates">
         <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Document Templates</fo:block>
         <fo:block id="template1">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Template 1: Application Manual</fo:block>
               </fo:block>
@@ -3789,8 +3789,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="template2-1x">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Template 2: Applet Manual For GNOME 1.x</fo:block>
               </fo:block>
@@ -3803,11 +3803,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         Documentation Templates</fo:basic-link><fo:inline hyphenate="false"> [http://developer.gnome.org/projects/gdp/templates.html]</fo:inline>.  Note that the template
         consists of two files; the first file calls the second as an
         entity. You should name the first file
-        <fo:inline font-family="Courier"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">appletname</fo:inline>-applet.sgml</fo:inline>
+        <fo:inline font-family="Courier"><fo:inline font-style="italic" font-family="Courier">appletname</fo:inline>-applet.sgml</fo:inline>
         and the second file should be named
-        <fo:inline font-family="Courier"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">appletname</fo:inline>.sgml</fo:inline>,
+        <fo:inline font-family="Courier"><fo:inline font-style="italic" font-family="Courier">appletname</fo:inline>.sgml</fo:inline>,
         where
-        <fo:inline font-family="Courier"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">appletname</fo:inline></fo:inline> is
+        <fo:inline font-family="Courier"><fo:inline font-style="italic" font-family="Courier">appletname</fo:inline></fo:inline> is
         the name of the applet.
         <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
 
@@ -4121,8 +4121,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       </fo:block>
         </fo:block>
         <fo:block id="template2-2x">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+          <fo:block>
+            <fo:block margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
                 <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Template 2: Applet Manual For GNOME 2.x</fo:block>
               </fo:block>
@@ -4142,7 +4142,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         You can name the first file whatever you like, such as
         <fo:inline font-family="Courier">gnome-applets.sgml</fo:inline>.  Name the second file
         according to the applet's name:
-        <fo:inline font-family="Courier"><fo:inline xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-family="Courier">appletname</fo:inline>-applet.sgml</fo:inline>.
+        <fo:inline font-family="Courier"><fo:inline font-style="italic" font-family="Courier">appletname</fo:inline>-applet.sgml</fo:inline>.
         Make sure you update the entity
         at the top of the shell document to reflect the new name of
         the applet document.

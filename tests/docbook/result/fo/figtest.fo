@@ -81,15 +81,15 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2758732" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2602101" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" text-align="center" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
+      <fo:block>
+        <fo:block text-align="center" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
           <fo:block keep-with-next.within-column="always" hyphenate="false">Article Test Document Title</fo:block>
         </fo:block>
       </fo:block>
@@ -100,16 +100,16 @@ containing a &#x201C;nested quotation and another &#x2018;nested
 quotation&#x2019;&#x201D;&#x2019;&#x201D;.
 </fo:block>
       <fo:block id="testfig1" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em" space-after.minimum="1em" space-after.optimum="1.5em" space-after.maximum="2em" keep-with-previous.within-column="always">
-        <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always">Test Figure</fo:block>
-        <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt">This is a
+        <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Test Figure</fo:block>
+        <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">This is a
   ProgramListing
 </fo:block>
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This para contains an xref to a figure: <fo:basic-link internal-destination="testfig1">Figure 1. Test Figure</fo:basic-link>.
 </fo:block>
       <fo:block id="testfig2" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em" space-after.minimum="1em" space-after.optimum="1.5em" space-after.maximum="2em" keep-with-previous.within-column="always">
-        <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always">Test Figure2</fo:block>
-        <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt">A Second
+        <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Test Figure2</fo:block>
+        <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">A Second
   Test Figure
 </fo:block>
       </fo:block>
@@ -117,8 +117,8 @@ quotation&#x2019;&#x201D;&#x2019;&#x201D;.
 figure. And an xref:  <fo:basic-link internal-destination="testfig2">Figure 2. Test Figure2</fo:basic-link>.
 </fo:block>
       <fo:block id="testfig3" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em" space-after.minimum="1em" space-after.optimum="1.5em" space-after.maximum="2em" keep-with-previous.within-column="always">
-        <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always">Test Figure</fo:block>
-        <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt">This is a
+        <fo:block font-weight="bold" font-size="12pt" hyphenate="false" keep-with-next.within-column="always" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Test Figure</fo:block>
+        <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">This is a
   ProgramListing
 </fo:block>
       </fo:block>

@@ -83,23 +83,23 @@
   </fo:layout-master-set>
   <fo:page-sequence id="book" hyphenate="true" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
+      <fo:block>
+        <fo:block font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
           <fo:block keep-with-next.within-column="always" hyphenate="false">Test Book</fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="14.4pt" font-weight="bold" font-family="Helvetica">
+        <fo:block break-after="page"/>
+        <fo:block font-size="14.4pt" font-weight="bold" font-family="Helvetica">
           <fo:block>Test Book</fo:block>
         </fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
+        <fo:block break-after="page"/>
       </fo:block>
     </fo:flow>
   </fo:page-sequence>
   <fo:page-sequence hyphenate="true" format="i" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
       <fo:block space-before.minimum="0.5em" space-before.optimum="1em" space-before.maximum="2em" space-after.minimum="0.5em" space-after.optimum="1em" space-after.maximum="2em">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
+        <fo:block>
+          <fo:block space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
         </fo:block>
         <fo:block text-align-last="justify" end-indent="2pc" last-line-end-indent="-2pc">
           <fo:inline keep-with-next.within-line="always"> A Test Bibliography</fo:inline>
@@ -111,12 +111,12 @@
   <fo:page-sequence id="bib1" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
-        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+        <fo:page-number/>
       </fo:block>
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
-      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+      <fo:block>
+        <fo:block margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
           <fo:block keep-with-next.within-column="always" hyphenate="false">A Test Bibliography</fo:block>
         </fo:block>
       </fo:block>
@@ -124,7 +124,7 @@
 a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block>
       <fo:block>
         <fo:block font-size="16pt" font-weight="bold">Books</fo:block>
-        <fo:block id="id2806591" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2824256" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[AhoSethiUllman96] </fo:inline>
           <fo:inline>Alfred V. Aho,Ravi Sethi, and Jeffrey D. Ullman. </fo:inline>
           <fo:inline><fo:inline font-style="italic">Compilers, Principles, Techniques, and Tools</fo:inline>. </fo:inline>
@@ -158,7 +158,7 @@ a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block
     <fo:inline>O'Reilly &amp; Associates, Inc.</fo:inline> and
     <fo:inline>The World Wide Web Consortium</fo:inline>.
     <fo:inline>Winter, 1996</fo:inline></fo:inline>.</fo:block>
-        <fo:block id="id2762878" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2783860" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[Abbrev] </fo:inline>
           <fo:inline><fo:inline font-style="italic">A Really Full BiblioEntry</fo:inline>. </fo:inline>
           <fo:inline>Subtitle. </fo:inline>
