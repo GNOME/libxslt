@@ -1,3 +1,13 @@
+Mon Feb  5 18:43:37 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* FEATURES: updated
+	* numbers.c: handles actual number formatting for both xsl:number
+	  and the format-number extension function.
+	* function.c: formatting moved to numbers.c
+	* transform.c: added xsl:number
+	* xslt.c: minor memory leak removed
+	* Makefile.am: added numbers.c and numbersInternals.h
+
 Sat Feb  3 21:49:36 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* TODO: updated
