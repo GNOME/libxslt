@@ -1,3 +1,8 @@
+Sun Apr 28 17:47:17 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: tried to fix a problem in
+	  xsltProcessUserParamInternal reported by Babak Vahedipour-Kunze
+
 Fri Apr 26 08:15:30 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/date.c: applied another patch from Charles Bozeman to

@@ -767,10 +767,12 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 		href = ns->href;
 	    }
 	    xmlFree(prefix);
+	    prefix = NULL;
 	} else {
 	    href = NULL;
 	}
 	xmlFree(ncname);
+	ncname = NULL;
     } else {
 	href = NULL;
 	ncname = xmlStrdup(name);
