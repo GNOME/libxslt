@@ -1,3 +1,10 @@
+Fri Jul 18 13:13:52 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/strings.c: applied patch from Shaun McCance to implement
+	  exslt:split c.f. #117752
+	* tests/exslt/strings/Makefile.am tests/exslt/strings/split.1.*:
+	  added the test to the regression suite.
+
 Thu Jul 17 10:35:22 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c: quick fix for an HP-UX compilation problem,

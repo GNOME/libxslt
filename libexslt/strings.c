@@ -26,8 +26,8 @@
  * @ctxt: an XPath parser context
  * @nargs: the number of arguments
  *
- * Splits up a string and returns a node set of token elements, each
- * containing one token from the string. 
+ * Splits up a string on the characters of the delimiter string and returns a
+ * node set of token elements, each containing one token from the string. 
  */
 static void
 exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
@@ -104,6 +104,110 @@ fail:
         xmlFree(str);
     if (delimiters != NULL)
         xmlFree(delimiters);
+    if (ret != NULL)
+        valuePush(ctxt, ret);
+    else
+        valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+}
+
+/**
+ * exsltStrSplitFunction:
+ * @ctxt: an XPath parser context
+ * @nargs: the number of arguments
+ *
+ * Splits up a string on a delimiting string and returns a node set of token
+ * elements, each containing one token from the string. 
+ */
+static void
+exsltStrSplitFunction(xmlXPathParserContextPtr ctxt, int nargs) {
+    xsltTransformContextPtr tctxt;
+    xmlChar *str, *delimiter, *cur;
+    const xmlChar *token;
+    xmlNodePtr node;
+    xmlDocPtr container;
+    xmlXPathObjectPtr ret = NULL;
+    int delimiterLength;
+
+    if ((nargs < 1) || (nargs > 2)) {
+        xmlXPathSetArityError(ctxt);
+        return;
+    }
+
+    if (nargs == 2) {
+        delimiter = xmlXPathPopString(ctxt);
+        if (xmlXPathCheckError(ctxt))
+            return;
+    } else {
+        delimiter = xmlStrdup((const xmlChar *) " ");
+    }
+    if (delimiter == NULL)
+        return;
+    delimiterLength = xmlStrlen (delimiter);
+
+    str = xmlXPathPopString(ctxt);
+    if (xmlXPathCheckError(ctxt) || (str == NULL)) {
+        xmlFree(delimiter);
+        return;
+    }
+
+    /* Return a result tree fragment */
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    if (tctxt == NULL) {
+        xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+	      "exslt:tokenize : internal error tctxt == NULL\n");
+	goto fail;
+    }
+
+    container = xsltCreateRVT(tctxt);
+    if (container != NULL) {
+        xsltRegisterTmpRVT(tctxt, container);
+        ret = xmlXPathNewNodeSet(NULL);
+        if (ret != NULL) {
+            ret->boolval = 0; /* Freeing is not handled there anymore */
+            for (cur = str, token = str; *cur != 0; cur++) {
+		if (delimiterLength == 0) {
+		    if (cur != token) {
+			xmlChar tmp = *cur;
+			*cur = 0;
+			node = xmlNewChild((xmlNodePtr) container, NULL,
+					   (const xmlChar *) "token",
+					   token);
+			xmlXPathNodeSetAddUnique(ret->nodesetval, node);
+			*cur = tmp;
+			token++;
+		    }
+		}
+		else if (!xmlStrncasecmp(cur, delimiter, delimiterLength)) {
+		    if (cur == token) {
+			/* discard empty tokens */
+			cur = cur + delimiterLength - 1;
+			token = cur + 1;
+			continue;
+		    }
+		    *cur = 0;
+		    node = xmlNewChild((xmlNodePtr) container, NULL,
+				       (const xmlChar *) "token",
+				       token);
+		    xmlXPathNodeSetAddUnique(ret->nodesetval, node);
+		    *cur = *delimiter;
+		    cur = cur + delimiterLength - 1;
+		    token = cur + 1;
+                }
+            }
+	    if (token != cur) {
+		node =
+		    xmlNewChild((xmlNodePtr) container, NULL,
+				(const xmlChar *) "token", token);
+		xmlXPathNodeSetAddUnique(ret->nodesetval, node);
+	    }
+        }
+    }
+
+fail:
+    if (str != NULL)
+        xmlFree(str);
+    if (delimiter != NULL)
+        xmlFree(delimiter);
     if (ret != NULL)
         valuePush(ctxt, ret);
     else
@@ -384,6 +488,9 @@ exsltStrRegister (void) {
     xsltRegisterExtModuleFunction ((const xmlChar *) "tokenize",
 				   EXSLT_STRINGS_NAMESPACE,
 				   exsltStrTokenizeFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "split",
+				   EXSLT_STRINGS_NAMESPACE,
+				   exsltStrSplitFunction);
     xsltRegisterExtModuleFunction ((const xmlChar *) "encode-uri",
 				   EXSLT_STRINGS_NAMESPACE,
 				   exsltStrEncodeUriFunction);

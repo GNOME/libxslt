@@ -5,7 +5,8 @@ $(top_builddir)/xsltproc/xsltproc:
 
 EXTRA_DIST = 						\
 	tokenize.1.xml tokenize.1.xsl tokenize.1.out	\
-	tokenize.2.xml tokenize.2.xsl tokenize.2.out
+	tokenize.2.xml tokenize.2.xsl tokenize.2.out	\
+	split.1.xml split.1.xsl split.1.out
 
 all:
 
