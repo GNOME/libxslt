@@ -387,39 +387,28 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
     context->xpathCtxt->node = node;
     parser = xmlXPathNewParserContext(NULL, context->xpathCtxt);
     if (parser) {
-	/* self */
-	if ((countPat != NULL) &&
-	    xsltTestCompMatchList(context, node, countPat)) {
-	    cnt++;
-	}
-
 	/* preceding */
-	if (keep_going) {
-	    for (preceding = xmlXPathNextPreceding(parser, node);
-		 preceding != NULL;
-		 preceding = xmlXPathNextPreceding(parser, preceding)) {
-		if ((from != NULL) &&
-		    xsltTestCompMatchList(context, preceding, fromPat)) {
-		    keep_going = FALSE;
-		    break; /* for */
-		}
-		if (count == NULL) {
-		    if ((node->type == preceding->type) &&
-			/*
-			 * FIXME: must use expanded-name instead of
-			 * local name
-			 * */
-			xmlStrEqual(node->name, preceding->name))
-			cnt++;
-		} else {
-		    if (xsltTestCompMatchList(context, preceding, countPat))
-			cnt++;
-		}
+	for (preceding = xmlXPathNextPreceding(parser, node);
+	     preceding != NULL;
+	     preceding = xmlXPathNextPreceding(parser, preceding)) {
+	    if ((from != NULL) &&
+		xsltTestCompMatchList(context, preceding, fromPat)) {
+		keep_going = FALSE;
+		break; /* for */
+	    }
+	    if (count == NULL) {
+		if ((node->type == preceding->type) &&
+		    /* FIXME: must use expanded-name instead of local name */
+		    xmlStrEqual(node->name, preceding->name))
+		    cnt++;
+	    } else {
+		if (xsltTestCompMatchList(context, preceding, countPat))
+		    cnt++;
 	    }
 	}
 
-	/* ancestor */
 	if (keep_going) {
+	    /* ancestor-or-self */
 	    for (ancestor = node;
 		 ancestor != NULL;
 		 ancestor = xmlXPathNextAncestor(parser, ancestor)) {
