@@ -1,3 +1,8 @@
+Sun Apr 28 17:53:23 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* win32/dsp/*.dsp: Removed obsolete macros
+	* win32/dsp/*.def: Updated export definitions
+	
 Sun Apr 28 17:47:17 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: tried to fix a problem in
