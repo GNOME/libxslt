@@ -237,6 +237,7 @@
     <reference name='xsltGetNsProp' href='html/libxslt-xsltutils.html#xsltGetNsProp'/>
     <reference name='xsltGetProfileInformation' href='html/libxslt-xsltutils.html#xsltGetProfileInformation'/>
     <reference name='xsltGetQNameURI' href='html/libxslt-xsltutils.html#xsltGetQNameURI'/>
+    <reference name='xsltGetQNameURI2' href='html/libxslt-xsltutils.html#xsltGetQNameURI2'/>
     <reference name='xsltGetSecurityPrefs' href='html/libxslt-security.html#xsltGetSecurityPrefs'/>
     <reference name='xsltGetSpecialNamespace' href='html/libxslt-namespaces.html#xsltGetSpecialNamespace'/>
     <reference name='xsltGetTemplate' href='html/libxslt-pattern.html#xsltGetTemplate'/>
@@ -628,6 +629,7 @@
       <ref name='xsltGetNsProp'/>
       <ref name='xsltGetProfileInformation'/>
       <ref name='xsltGetQNameURI'/>
+      <ref name='xsltGetQNameURI2'/>
       <ref name='xsltGetSecurityPrefs'/>
       <ref name='xsltGetSpecialNamespace'/>
       <ref name='xsltGetTemplate'/>
@@ -775,6 +777,7 @@
       <ref name='xsltEvalStaticAttrValueTemplate'/>
       <ref name='xsltGetCNsProp'/>
       <ref name='xsltGetQNameURI'/>
+      <ref name='xsltGetQNameURI2'/>
       <ref name='xsltSplitQName'/>
     </type>
     <type name='long'>
@@ -984,6 +987,7 @@
       <ref name='xsltXPathVariableLookup'/>
     </type>
     <type name='const xmlChar **'>
+      <ref name='xsltGetQNameURI2'/>
       <ref name='xsltSplitQName'/>
     </type>
     <type name='double'>
@@ -1094,6 +1098,7 @@
       <ref name='xsltGetNamespace'/>
       <ref name='xsltGetNsProp'/>
       <ref name='xsltGetQNameURI'/>
+      <ref name='xsltGetQNameURI2'/>
       <ref name='xsltGetSpecialNamespace'/>
       <ref name='xsltGetTemplate'/>
       <ref name='xsltHandleDebuggerCallback'/>
@@ -1293,6 +1298,7 @@
       <ref name='xsltFreeTemplateHashes'/>
       <ref name='xsltGetCNsProp'/>
       <ref name='xsltGetExtInfo'/>
+      <ref name='xsltGetQNameURI2'/>
       <ref name='xsltGetTemplate'/>
       <ref name='xsltInitElemPreComp'/>
       <ref name='xsltLoadStyleDocument'/>
@@ -1849,6 +1855,7 @@
       <ref name='xsltGetNsProp'/>
       <ref name='xsltGetProfileInformation'/>
       <ref name='xsltGetQNameURI'/>
+      <ref name='xsltGetQNameURI2'/>
       <ref name='xsltGetUTF8Char'/>
       <ref name='xsltHandleDebuggerCallback'/>
       <ref name='xsltMessage'/>
@@ -2311,6 +2318,7 @@
           <ref name='_xsltTemplate'/>
           <ref name='xsltEvalAttrValueTemplate'/>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetQNameURI2'/>
           <ref name='xsltSplitQName'/>
         </word>
         <word name='QNames'>
@@ -2932,6 +2940,7 @@
           <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltGetCNsProp'/>
           <ref name='xsltGetNsProp'/>
+          <ref name='xsltGetQNameURI2'/>
           <ref name='xsltLoadStylesheetPI'/>
           <ref name='xsltParseStylesheetCallerParam'/>
           <ref name='xsltQuoteUserParams'/>
@@ -3384,6 +3393,9 @@
         <word name='detected'>
           <ref name='XSLT_STRANGE'/>
         </word>
+        <word name='dictionary'>
+          <ref name='xsltGetQNameURI2'/>
+        </word>
         <word name='dictionnary'>
           <ref name='xsltGetCNsProp'/>
           <ref name='xsltSplitQName'/>
@@ -3511,6 +3523,7 @@
           <ref name='xsltGetNsProp'/>
         </word>
         <word name='entry'>
+          <ref name='xsltGetQNameURI2'/>
           <ref name='xsltNormalizeCompSteps'/>
           <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathVariableLookup'/>
@@ -3927,6 +3940,7 @@
         <word name='holding'>
           <ref name='_xsltTransformContext'/>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetQNameURI2'/>
         </word>
         <word name='hosting'>
           <ref name='xsltAttrTemplateValueProcessNode'/>
@@ -4038,6 +4052,7 @@
         </word>
         <word name='initial'>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetQNameURI2'/>
         </word>
         <word name='initialization'>
           <ref name='xsltExtInitFunction'/>
@@ -4837,6 +4852,7 @@
           <ref name='xsltGetExtData'/>
           <ref name='xsltGetExtInfo'/>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetQNameURI2'/>
           <ref name='xsltGetUTF8Char'/>
           <ref name='xsltNewSecurityPrefs'/>
           <ref name='xsltNormalizeCompSteps'/>
@@ -4925,12 +4941,14 @@
           <ref name='xsltFormatNumberConversion'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetQNameURI2'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltRegisterExtPrefix'/>
           <ref name='xsltSplitQName'/>
         </word>
         <word name='prefixed'>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetQNameURI2'/>
         </word>
         <word name='prefixes'>
           <ref name='_xsltStylesheet'/>
@@ -5344,6 +5362,9 @@
         <word name='signalled'>
           <ref name='xsltGetQNameURI'/>
         </word>
+        <word name='similar'>
+          <ref name='xsltGetQNameURI2'/>
+        </word>
         <word name='simply'>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
@@ -5739,6 +5760,7 @@
         <word name='there'>
           <ref name='xsltAllocateExtraCtxt'/>
           <ref name='xsltGetQNameURI'/>
+          <ref name='xsltGetQNameURI2'/>
           <ref name='xsltGetXIncludeDefault'/>
         </word>
         <word name='they'>
@@ -5910,34 +5932,6 @@
           <ref name='xsltSortFunc'/>
           <ref name='xsltTransformError'/>
         </word>
-        <word name='used'>
-          <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
-          <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
-          <ref name='XSLT_RUNTIME_EXTRA'/>
-          <ref name='XSLT_RUNTIME_EXTRA_FREE'/>
-          <ref name='XSLT_RUNTIME_EXTRA_LST'/>
-          <ref name='_xsltTransformContext'/>
-          <ref name='xsltCleanupTemplates'/>
-          <ref name='xsltDebugDumpExtensions'/>
-          <ref name='xsltDoSortFunction'/>
-          <ref name='xsltEvalUserParams'/>
-          <ref name='xsltFormatNumberConversion'/>
-          <ref name='xsltFreeAttributeSetsHashes'/>
-          <ref name='xsltFreeDocuments'/>
-          <ref name='xsltFreeExts'/>
-          <ref name='xsltFreeKeys'/>
-          <ref name='xsltFreeNamespaceAliasHashes'/>
-          <ref name='xsltFreeStyleDocuments'/>
-          <ref name='xsltFreeTemplateHashes'/>
-          <ref name='xsltGetUTF8Char'/>
-          <ref name='xsltRegisterExtPrefix'/>
-          <ref name='xsltRunStylesheet'/>
-          <ref name='xsltRunStylesheetUser'/>
-          <ref name='xsltSecurityAllow'/>
-          <ref name='xsltSecurityForbid'/>
-          <ref name='xsltSetSortFunc'/>
-          <ref name='xsltTransformError'/>
-        </word>
         <word name='useful'>
           <ref name='xsltXPathGetTransformContext'/>
         </word>
@@ -5965,8 +5959,6 @@
           <ref name='xsltSetCtxtParseOptions'/>
         </word>
       </letter>
-    </chunk>
-    <chunk name='chunk9'>
       <letter name='v'>
         <word name='validating'>
           <ref name='xsltSetGenericDebugFunc'/>
@@ -6027,6 +6019,8 @@
           <ref name='xsltXPathVariableLookup'/>
         </word>
       </letter>
+    </chunk>
+    <chunk name='chunk9'>
       <letter name='w'>
         <word name='want'>
           <ref name='xsltEvalUserParams'/>
@@ -6053,6 +6047,7 @@
         <word name='when'>
           <ref name='XSLT_PARSE_OPTIONS'/>
           <ref name='_xsltTransformContext'/>
+          <ref name='xsltGetQNameURI2'/>
           <ref name='xsltInitElemPreComp'/>
           <ref name='xsltSetCtxtParseOptions'/>
           <ref name='xsltXPathFunctionLookup'/>
@@ -6257,6 +6252,9 @@
           <ref name='xsltEvalOneUserParam'/>
           <ref name='xsltQuoteUserParams'/>
         </word>
+        <word name='xsltGetQNameURI'>
+          <ref name='xsltGetQNameURI2'/>
+        </word>
         <word name='xsltGetTemplate'>
           <ref name='xsltFreeTemplateHashes'/>
         </word>
@@ -6331,8 +6329,8 @@
       <chunk name='chunk5' start='j' end='n'/>
       <chunk name='chunk6' start='o' end='p'/>
       <chunk name='chunk7' start='q' end='s'/>
-      <chunk name='chunk8' start='t' end='u'/>
-      <chunk name='chunk9' start='v' end='z'/>
+      <chunk name='chunk8' start='t' end='v'/>
+      <chunk name='chunk9' start='w' end='z'/>
     </chunks>
   </index>
 </apirefs>

@@ -436,10 +436,11 @@
      <exports symbol='xsltSaveResultToFile' type='function'/>
      <exports symbol='xsltSetGenericErrorFunc' type='function'/>
      <exports symbol='xsltSetDebuggerCallbacks' type='function'/>
-     <exports symbol='xsltCalibrateAdjust' type='function'/>
+     <exports symbol='xsltSaveResultTo' type='function'/>
+     <exports symbol='xsltTransformError' type='function'/>
      <exports symbol='xslAddCall' type='function'/>
      <exports symbol='xsltDocumentSortFunction' type='function'/>
-     <exports symbol='xsltTransformError' type='function'/>
+     <exports symbol='xsltGetQNameURI2' type='function'/>
      <exports symbol='xsltComputeSortResult' type='function'/>
      <exports symbol='xsltPrintErrorContext' type='function'/>
      <exports symbol='xsltGetUTF8Char' type='function'/>
@@ -450,7 +451,7 @@
      <exports symbol='xsltGetCNsProp' type='function'/>
      <exports symbol='xsltGetQNameURI' type='function'/>
      <exports symbol='xsltAddCallCallback' type='function'/>
-     <exports symbol='xsltSaveResultTo' type='function'/>
+     <exports symbol='xsltCalibrateAdjust' type='function'/>
      <exports symbol='xsltSaveProfiling' type='function'/>
      <exports symbol='xsltSaveResultToString' type='function'/>
      <exports symbol='xsltSplitQName' type='function'/>
@@ -1612,6 +1613,13 @@ informations are stored'/>
       <return type='const xmlChar *' info='the namespace URI if there is a prefix, or NULL if @name is not prefixed.'/>
       <arg name='node' type='xmlNodePtr' info='the node holding the QName'/>
       <arg name='name' type='xmlChar **' info='pointer to the initial QName value'/>
+    </function>
+    <function name='xsltGetQNameURI2' file='xsltutils'>
+      <info>This function is similar to xsltGetQNameURI, but is used when @name is a dictionary entry.</info>
+      <return type='const xmlChar *' info='the namespace URI if there is a prefix, or NULL if @name is not prefixed.'/>
+      <arg name='style' type='xsltStylesheetPtr' info='stylesheet pointer'/>
+      <arg name='node' type='xmlNodePtr' info='the node holding the QName'/>
+      <arg name='name' type='const xmlChar **' info='pointer to the initial QName value'/>
     </function>
     <function name='xsltGetSecurityPrefs' file='security'>
       <info>Lookup the security option to get the callback checking function</info>

@@ -1,3 +1,9 @@
+Wed Mar 10 19:27:39 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* doc/search.php.incl: minor addition for later version of php
+	  requiring $HTTP_GET_VARS.
+	  doc/*: rebuilt the docs
+
 Wed Mar 10 17:14:13 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/strings.c: modified the 'tokenize' routine to work with

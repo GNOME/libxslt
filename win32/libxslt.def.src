@@ -114,6 +114,7 @@ xsltGetNamespace
 xsltGetNsProp
 xsltGetProfileInformation
 xsltGetQNameURI
+xsltGetQNameURI2
 xsltGetSecurityPrefs
 xsltGetSpecialNamespace
 xsltGetTemplate

@@ -1,4 +1,6 @@
 <?php
+    $query = $HTTP_GET_VARS[ "query" ];
+    $scope = $HTTP_GET_VARS[ "scope" ];
     // We handle only the first argument so far
     $query = $_GET['query'];
     $query = ltrim ($query);
