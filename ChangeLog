@@ -1,3 +1,11 @@
+Tue Sep 18 11:48:20 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xslt.c: fixed bug #60624
+	* libxslt/xsltutils.c: improver the error context reporting
+	* tests/reports/Makefile.am tests/reports/tst-2.*: added a
+	  specific regression test
+	* xsltproc/xsltproc: free the stylesheet if it contained an error.
+
 Mon Sep 17 14:45:48 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: fixed a problem with global var override

@@ -618,8 +618,9 @@ main(int argc, char **argv)
             }
 	    xsltProcess(doc, cur, argv[i]);
         }
-        xsltFreeStylesheet(cur);
     }
+    if (cur != NULL)
+        xsltFreeStylesheet(cur);
 done:
     xsltCleanupGlobals();
     xmlCleanupParser();

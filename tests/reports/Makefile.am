@@ -4,7 +4,8 @@ $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
 EXTRA_DIST = \
-	tst-1.xml tst-1.xsl tst-1.out tst-1.err
+	tst-1.xml tst-1.xsl tst-1.out tst-1.err \
+	tst-2.xml tst-2.xsl tst-2.out tst-2.err
 
 
 all: test
@@ -14,7 +15,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	@(for i in $(srcdir)/*.xml ; do \
 	  if [ -d $$i ] ; then continue ; fi ; \
 	  doc=`basename $$i .xml` ; \
-	  for j in $(srcdir)/$$doc*.xsl ; do \
+	  for j in $(srcdir)/$$doc.xsl ; do \
 	  if [ ! -f $$j ] ; then continue ; fi ; \
 	  if [ -d $$j ] ; then continue ; fi ; \
 	  name=`basename $$j .xsl`; \

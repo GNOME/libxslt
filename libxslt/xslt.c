@@ -1693,6 +1693,16 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    cur = cur->next;
 	    continue;
 	}
+	if (cur->type == XML_TEXT_NODE) {
+	    if (cur->content != NULL) {
+		xsltPrintErrorContext(NULL, style, cur);
+		xsltGenericError(xsltGenericErrorContext,
+		    "misplaced text element: '%s'\n", cur->content);
+	    }
+	    style->errors++;
+            cur = cur->next;
+	    continue;
+	}
 	if ((cur->type == XML_ELEMENT_NODE) && (cur->ns == NULL)) {
 	    xsltGenericError(xsltGenericErrorContext,
 		     "Found a top-level element %s with null namespace URI\n",
@@ -1701,7 +1711,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    cur = cur->next;
 	    continue;
 	}
-	if (!(IS_XSLT_ELEM(cur))) {
+	if ((cur->type == XML_ELEMENT_NODE) && (!(IS_XSLT_ELEM(cur)))) {
 	    xsltTopLevelFunction function;
 
 	    function = xsltExtModuleTopLevelLookup(cur->name,
