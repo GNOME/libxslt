@@ -1,3 +1,8 @@
+Mon Jan 14 12:20:33 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c: the xsl:number implementation incorrectly
+	  cached the format string in some case. Fixes bug #65391
+
 Mon Jan 14 10:35:27 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: fixed a couple of cut and paste errors in the

@@ -612,11 +612,13 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
     int amount, i;
     double number;
     xsltFormat tokens;
+    int tempformat = 0;
 
     if ((data->format == NULL) && (data->has_format != 0)) {
 	data->format = xsltEvalAttrValueTemplate(ctxt, data->node,
 					     (const xmlChar *) "format",
 					     XSLT_NAMESPACE);
+	tempformat = 1;
     }
     if (data->format == NULL) {
 	return;
@@ -712,7 +714,12 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 	    xmlFree(tokens.tokens[i].separator);
     }
     
- XSLT_NUMBER_FORMAT_END:
+XSLT_NUMBER_FORMAT_END:
+    if (tempformat == 1) {
+	/* The format need to be recomputed each time */
+	xmlFree(data->format);
+	data->format = NULL;
+    }
     if (output != NULL)
 	xmlBufferFree(output);
 }
