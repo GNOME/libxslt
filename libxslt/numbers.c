@@ -730,6 +730,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     int decimal_point;
     int is_percent;
     int is_permille;
+    double scale;
 
     buffer = xmlBufferCreate();
     if (buffer == NULL) {
@@ -855,6 +856,8 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	number *= 1000.0;
 	
     /* Integer part */
+    scale = pow(10.0, (double)(fraction_digits + fraction_hash));
+    number = (scale * number + 0.5) / scale;
     xsltNumberFormatDecimal(buffer, floor(number), (xmlChar)'0',
 			    integer_digits, group, (xmlChar)',');
     
@@ -863,14 +866,13 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 
 	/* Fraction part */
 	number -= floor(number);
-	number = number * pow(10.0, (double)(fraction_digits + fraction_hash));
+	number *= scale;
 	for (j = fraction_hash; j > 0; j--) {
 	    if (fmod(number, 10.0) >= 1.0)
 		break; /* for */
 	    number /= 10.0;
 	}
-	number = floor(0.5 + number);
-	xsltNumberFormatDecimal(buffer, number, (xmlChar)'0',
+	xsltNumberFormatDecimal(buffer, floor(number), (xmlChar)'0',
 				fraction_digits + j,
 				0, (xmlChar)0);
     }

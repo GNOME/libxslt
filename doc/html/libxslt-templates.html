@@ -151,10 +151,10 @@ HREF="libxslt-templates.html#XSLTEVALXPATHPREDICATE"
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);
+                                             <GTKDOCLINK
+HREF="XMLXPATHCOMPEXPRPTR"
+>xmlXPathCompExprPtr</GTKDOCLINK
+> comp);
 <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
@@ -190,7 +190,11 @@ HREF="XMLNODEPTR"
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *name);
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns);
 <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
@@ -209,6 +213,10 @@ HREF="XMLNODEPTR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns,
                                              int *found);
 <GTKDOCLINK
 HREF="XMLCHAR"
@@ -220,10 +228,10 @@ HREF="libxslt-templates.html#XSLTEVALXPATHSTRING"
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);
+                                             <GTKDOCLINK
+HREF="XMLXPATHCOMPEXPRPTR"
+>xmlXPathCompExprPtr</GTKDOCLINK
+> comp);
 <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
@@ -295,7 +303,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN628"
+NAME="AEN630"
 ></A
 ><H2
 >Description</H2
@@ -305,14 +313,14 @@ NAME="AEN628"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN631"
+NAME="AEN633"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN633"
+NAME="AEN635"
 ></A
 ><H3
 ><A
@@ -332,10 +340,10 @@ CLASS="PROGRAMLISTING"
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);</PRE
+                                             <GTKDOCLINK
+HREF="XMLXPATHCOMPEXPRPTR"
+>xmlXPathCompExprPtr</GTKDOCLINK
+> comp);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -380,14 +388,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->expr</I
+>comp</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath compiled expression</TD
 ></TR
 ><TR
 ><TD
@@ -412,7 +420,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN658"
+NAME="AEN660"
 ></A
 ><H3
 ><A
@@ -538,7 +546,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN689"
+NAME="AEN691"
 ></A
 ><H3
 ><A
@@ -568,7 +576,11 @@ HREF="XMLNODEPTR"
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *name);</PRE
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -645,6 +657,23 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ns</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the attribute namespace URI</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
@@ -664,7 +693,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN720"
+NAME="AEN727"
 ></A
 ><H3
 ><A
@@ -695,6 +724,10 @@ HREF="XMLNODEPTR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *ns,
                                              int *found);</PRE
 ></TD
 ></TR
@@ -764,7 +797,24 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the attribute QName</TD
+>  the attribute Name</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ns</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -807,7 +857,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN755"
+NAME="AEN767"
 ></A
 ><H3
 ><A
@@ -830,10 +880,10 @@ HREF="XMLCHAR"
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *expr);</PRE
+                                             <GTKDOCLINK
+HREF="XMLXPATHCOMPEXPRPTR"
+>xmlXPathCompExprPtr</GTKDOCLINK
+> comp);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -877,14 +927,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->expr</I
+>comp</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the compiled XPath expression</TD
 ></TR
 ><TR
 ><TD
@@ -910,7 +960,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN781"
+NAME="AEN793"
 ></A
 ><H3
 ><A
@@ -1012,7 +1062,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN807"
+NAME="AEN819"
 ></A
 ><H3
 ><A
@@ -1135,7 +1185,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN838"
+NAME="AEN850"
 ></A
 ><H3
 ><A
@@ -1258,7 +1308,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN869"
+NAME="AEN881"
 ></A
 ><H3
 ><A

@@ -1,3 +1,8 @@
+Thu Mar 22 22:52:48 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in: 0.6.0 yet another release
+	* doc/xslt.html doc/html/*: updated the docs
+
 Wed Mar 21 23:19:11 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltInternals.h libxslt/xslt.c libxslt/transform.c
