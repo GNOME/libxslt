@@ -1,3 +1,8 @@
+Sun Sep 29 20:02:25 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* win32/Makefile.msvc: introduced double-run compilation.
+	* win32/configure.js: introduced double-run compilation.
+
 Thu Sep 26 20:08:50 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing 1.0.21
