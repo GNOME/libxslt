@@ -114,7 +114,7 @@ Normalization</a><br>    3.4 <a href="#sec-condition-sect">Conditional Sections<
 </p>
 <h3>Appendices</h3>
 <p class="toc">A <a href="#sec-bibliography">References</a><br>    A.1 <a href="#sec-existing-stds">Normative References</a><br>    A.2 <a href="#null">Other References</a><br>B <a href="#CharClasses">Character Classes</a><br>C <a href="#sec-xml-and-sgml">XML and SGML</a> (Non-Normative)<br>D <a href="#sec-entexpand">Expansion of Entity and Character References</a> (Non-Normative)<br>E <a href="#determinism">Deterministic Content Models</a> (Non-Normative)<br>F <a href="#sec-guessing">Autodetection
-of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2668540">Production Notes</a> (Non-Normative)<br>
+of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2675479">Production Notes</a> (Non-Normative)<br>
 </p>
 </div>
 <hr>
@@ -2106,30 +2106,30 @@ is declared <b>NMTOKENS</b> and to those of the right columns if <code>a</code>
 is declared <b>CDATA</b>.</p>
 <table border="1" frame="border">
 <thead><tr>
-<th>Attribute specification</th>
-<th>a is NMTOKENS</th>
-<th>a is CDATA</th>
+<th colspan="1" rowspan="1">Attribute specification</th>
+<th colspan="1" rowspan="1">a is NMTOKENS</th>
+<th colspan="1" rowspan="1">a is CDATA</th>
 </tr></thead>
 <tbody>
 <tr>
-<td><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=&quot;
+<td colspan="1" rowspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=&quot;
 
 xyz&quot;</pre></td></tr></table></td>
-<td><code>x y z</code></td>
-<td><code>#x20 #x20 x y z</code></td>
+<td colspan="1" rowspan="1"><code>x y z</code></td>
+<td colspan="1" rowspan="1"><code>#x20 #x20 x y z</code></td>
 </tr>
 <tr>
-<td><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=&quot;&amp;d;&amp;d;A&amp;a;&amp;a;B&amp;da;&quot;</pre></td></tr></table></td>
-<td><code>A
+<td colspan="1" rowspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=&quot;&amp;d;&amp;d;A&amp;a;&amp;a;B&amp;da;&quot;</pre></td></tr></table></td>
+<td colspan="1" rowspan="1"><code>A
 #x20 B</code></td>
-<td><code>#x20 #x20 A #x20 #x20 B #x20 #x20</code></td>
+<td colspan="1" rowspan="1"><code>#x20 #x20 A #x20 #x20 B #x20 #x20</code></td>
 </tr>
 <tr>
-<td><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=
+<td colspan="1" rowspan="1"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>a=
 &quot;&amp;#xd;&amp;#xd;A&amp;#xa;&amp;#xa;B&amp;#xd;&amp;#xa;&quot;</pre></td></tr></table></td>
-<td><code>#xD
+<td colspan="1" rowspan="1"><code>#xD
 #xD A #xA #xA B #xD #xA</code></td>
-<td><code>#xD #xD A #xA #xA B #xD #xD</code></td>
+<td colspan="1" rowspan="1"><code>#xD #xD A #xA #xA B #xD #xD</code></td>
 </tr>
 </tbody>
 </table>
@@ -2850,67 +2850,67 @@ or the contents of an ignored conditional section (see <a href="#sec-condition-s
 <table border="1" frame="border" cellpadding="7"><tbody align="center">
 <tr>
 <td rowspan="2" colspan="1"></td>
-<td colspan="4" align="center" valign="bottom">Entity
+<td rowspan="1" colspan="4" align="center" valign="bottom">Entity
 Type</td>
-<td rowspan="2" align="center">Character</td>
+<td colspan="1" rowspan="2" align="center">Character</td>
 </tr>
 <tr align="center" valign="bottom">
-<td>Parameter</td>
-<td>Internal General</td>
-<td>External Parsed
+<td colspan="1" rowspan="1">Parameter</td>
+<td colspan="1" rowspan="1">Internal General</td>
+<td colspan="1" rowspan="1">External Parsed
 General</td>
-<td>Unparsed</td>
+<td colspan="1" rowspan="1">Unparsed</td>
 </tr>
 <tr align="center" valign="middle">
-<td align="right">Reference
+<td colspan="1" rowspan="1" align="right">Reference
 in Content</td>
-<td><a href="#not-recognized"><cite>Not recognized</cite></a></td>
-<td><a href="#included"><cite>Included</cite></a></td>
-<td><a href="#include-if-valid"><cite>Included
+<td colspan="1" rowspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#include-if-valid"><cite>Included
 if validating</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td><a href="#included"><cite>Included</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td>
 </tr>
 <tr align="center" valign="middle">
-<td align="right">Reference in Attribute Value</td>
-<td><a href="#not-recognized"><cite>Not recognized</cite></a></td>
-<td><a href="#inliteral"><cite>Included
+<td colspan="1" rowspan="1" align="right">Reference in Attribute Value</td>
+<td colspan="1" rowspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#inliteral"><cite>Included
 in literal</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a><div class="diff-chg"><a href="#forbidden"><cite>Forbidden</cite></a></div>
 </td>
-<td><a href="#included"><cite>Included</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td>
 </tr>
 <tr align="center" valign="middle">
-<td align="right">Occurs as Attribute
+<td colspan="1" rowspan="1" align="right">Occurs as Attribute
 Value</td>
-<td><a href="#not-recognized"><cite>Not recognized</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td>
+<td colspan="1" rowspan="1"><a href="#not-recognized"><cite>Not recognized</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a><div class="diff-chg"><a href="#forbidden"><cite>Forbidden</cite></a></div>
 </td>
-<td><a href="#notify"><cite>Notify</cite></a></td>
-<td>
+<td colspan="1" rowspan="1"><a href="#notify"><cite>Notify</cite></a></td>
+<td colspan="1" rowspan="1">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a><div class="diff-chg"><a href="#not-recognized"><cite>Not recognized</cite></a></div>
 </td>
 </tr>
 <tr align="center" valign="middle">
-<td align="right">Reference in EntityValue</td>
-<td><a href="#inliteral"><cite>Included in literal</cite></a></td>
-<td><a href="#bypass"><cite>Bypassed</cite></a></td>
-<td><a href="#bypass"><cite>Bypassed</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td><a href="#included"><cite>Included</cite></a></td>
+<td colspan="1" rowspan="1" align="right">Reference in EntityValue</td>
+<td colspan="1" rowspan="1"><a href="#inliteral"><cite>Included in literal</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#bypass"><cite>Bypassed</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#bypass"><cite>Bypassed</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#included"><cite>Included</cite></a></td>
 </tr>
 <tr align="center" valign="middle">
-<td align="right">Reference in DTD</td>
-<td><a href="#as-PE"><cite>Included
+<td colspan="1" rowspan="1" align="right">Reference in DTD</td>
+<td colspan="1" rowspan="1"><a href="#as-PE"><cite>Included
 as PE</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
-<td><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
+<td colspan="1" rowspan="1"><a href="#forbidden"><cite>Forbidden</cite></a></td>
 </tr>
 </tbody></table>
 <div class="div3">
@@ -3827,75 +3827,75 @@ required of UTF-16 data streams is &quot;<code>#xFEFF</code>&quot;. <span class=
 <div class="diff-add"><p>With a Byte Order Mark:</p></div>
 <div class="diff-add"><table border="1" frame="border"><tbody>
 <tr>
-<td><code>00 00 FE
+<td colspan="1" rowspan="1"><code>00 00 FE
 FF</code></td>
-<td>UCS-4, big-endian machine (1234 order)</td>
+<td colspan="1" rowspan="1">UCS-4, big-endian machine (1234 order)</td>
 </tr>
 <tr>
-<td><code>FF
+<td colspan="1" rowspan="1"><code>FF
 FE 00 00</code></td>
-<td>UCS-4, little-endian machine (4321 order)</td>
+<td colspan="1" rowspan="1">UCS-4, little-endian machine (4321 order)</td>
 </tr>
 <tr>
-<td><code>00 00 FF FE</code></td>
-<td>UCS-4, unusual octet order (2143)</td>
+<td colspan="1" rowspan="1"><code>00 00 FF FE</code></td>
+<td colspan="1" rowspan="1">UCS-4, unusual octet order (2143)</td>
 </tr>
 <tr>
-<td><code>FE FF 00 00</code></td>
-<td>UCS-4, unusual octet order (3412)</td>
+<td colspan="1" rowspan="1"><code>FE FF 00 00</code></td>
+<td colspan="1" rowspan="1">UCS-4, unusual octet order (3412)</td>
 </tr>
 <tr>
-<td><code>FE FF ## ##</code></td>
-<td>UTF-16, big-endian</td>
+<td colspan="1" rowspan="1"><code>FE FF ## ##</code></td>
+<td colspan="1" rowspan="1">UTF-16, big-endian</td>
 </tr>
 <tr>
-<td><code>FF FE ## ##</code></td>
-<td>UTF-16, little-endian</td>
+<td colspan="1" rowspan="1"><code>FF FE ## ##</code></td>
+<td colspan="1" rowspan="1">UTF-16, little-endian</td>
 </tr>
 <tr>
-<td><code>EF BB BF</code></td>
-<td>UTF-8</td>
+<td colspan="1" rowspan="1"><code>EF BB BF</code></td>
+<td colspan="1" rowspan="1">UTF-8</td>
 </tr>
 </tbody></table></div>
 <div class="diff-add"><p>Without a Byte Order Mark:</p></div>
 <div class="diff-add"><table border="1" frame="border"><tbody>
 <tr>
-<td><code>00 00 00 3C</code></td>
-<td rowspan="4">UCS-4 or other encoding with a 32-bit code unit and ASCII
+<td colspan="1" rowspan="1"><code>00 00 00 3C</code></td>
+<td colspan="1" rowspan="4">UCS-4 or other encoding with a 32-bit code unit and ASCII
 characters encoded as ASCII values, in respectively big-endian (1234), little-endian
 (4321) and two unusual byte orders (2143 and 3412). The encoding declaration
 must be read to determine which of UCS-4 or other supported 32-bit encodings
 applies.</td>
 </tr>
 <tr>
-<td><code>3C 00 00 00</code></td>
+<td colspan="1" rowspan="1"><code>3C 00 00 00</code></td>
 
 </tr>
 <tr>
-<td><code>00 00 3C 00</code></td>
+<td colspan="1" rowspan="1"><code>00 00 3C 00</code></td>
 
 </tr>
 <tr>
-<td><code>00 3C 00 00</code></td>
+<td colspan="1" rowspan="1"><code>00 3C 00 00</code></td>
 
 </tr>
 <tr>
-<td><code>00 3C 00 3F</code></td>
-<td>UTF-16BE or big-endian ISO-10646-UCS-2
+<td colspan="1" rowspan="1"><code>00 3C 00 3F</code></td>
+<td colspan="1" rowspan="1">UTF-16BE or big-endian ISO-10646-UCS-2
 or other encoding with a 16-bit code unit in big-endian order and ASCII characters
 encoded as ASCII values (the encoding declaration must be read to determine
 which)</td>
 </tr>
 <tr>
-<td><code>3C 00 3F 00</code></td>
-<td>UTF-16LE or little-endian
+<td colspan="1" rowspan="1"><code>3C 00 3F 00</code></td>
+<td colspan="1" rowspan="1">UTF-16LE or little-endian
 ISO-10646-UCS-2 or other encoding with a 16-bit code unit in little-endian
 order and ASCII characters encoded as ASCII values (the encoding declaration
 must be read to determine which)</td>
 </tr>
 <tr>
-<td><code>3C 3F 78 6D</code></td>
-<td>UTF-8, ISO 646, ASCII, some part of ISO 8859, Shift-JIS, EUC, or any other
+<td colspan="1" rowspan="1"><code>3C 3F 78 6D</code></td>
+<td colspan="1" rowspan="1">UTF-8, ISO 646, ASCII, some part of ISO 8859, Shift-JIS, EUC, or any other
 7-bit, 8-bit, or mixed-width encoding which ensures that the characters of
 ASCII have their normal positions, width, and values; the actual encoding
 declaration must be read to detect which of these applies, but since all of
@@ -3903,14 +3903,14 @@ these encodings use the same bit patterns for the relevant ASCII characters,
 the encoding declaration itself may be read reliably</td>
 </tr>
 <tr>
-<td><code>4C
+<td colspan="1" rowspan="1"><code>4C
 6F A7 94</code></td>
-<td>EBCDIC (in some flavor; the full encoding declaration
+<td colspan="1" rowspan="1">EBCDIC (in some flavor; the full encoding declaration
 must be read to tell which code page is in use)</td>
 </tr>
 <tr>
-<td>Other</td>
-<td>UTF-8 without an encoding declaration, or else the data stream is mislabeled
+<td colspan="1" rowspan="1">Other</td>
+<td colspan="1" rowspan="1">UTF-8 without an encoding declaration, or else the data stream is mislabeled
 (lacking a required encoding declaration), corrupt, fragmentary, or enclosed
 in a wrapper of some kind</td>
 </tr>
@@ -4069,7 +4069,7 @@ Contact</i>) </li>
 <div class="diff-add"><div class="div1">
 
 <h2>
-<a name="id2668540"></a>I Production Notes (Non-Normative)</h2>
+<a name="id2675479"></a>I Production Notes (Non-Normative)</h2>
 <p>This Second Edition was encoded in the <a href="http://www.w3.org/XML/1998/06/xmlspec-v21.dtd">XMLspec
 DTD</a> (which has <a href="http://www.w3.org/XML/1998/06/xmlspec-report-v21.htm">documentation</a>
 available). The HTML versions were produced with a combination of the <a href="http://www.w3.org/XML/1998/06/xmlspec.xsl">xmlspec.xsl</a>, <a href="http://www.w3.org/XML/1998/06/diffspec.xsl">diffspec.xsl</a>,

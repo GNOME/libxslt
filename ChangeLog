@@ -1,3 +1,14 @@
+Tue Aug  7 03:11:31 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: for heriting defaulted atts from the DTD
+	* tests/docs/Makefile.am tests/docs/bug-52.xml tests/docs/bug-53.xml
+	  tests/general/Makefile.am tests/general/bug-52.*
+	  tests/general/bug-53.*: Added a few new tests for recently fixed
+	  stuff in libxml
+	* tests/xmlspec/REC-xml-20001006-review.html
+	  tests/xmlspec/REC-xml-20001006.html: inheriting default attrs from
+	  DTD changed the result by adding extra attributes to the HTML output
+
 2001-08-06  Peter Williams  <peterw@ximian.com>
 
 	* libexslt/Makefile.am, xsltproc/Makefile.am: Fixes for compiling

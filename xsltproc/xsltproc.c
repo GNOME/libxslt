@@ -284,8 +284,8 @@ main(int argc, char **argv)
     defaultLoader = xmlGetExternalEntityLoader();
     xmlLineNumbersDefault(1);
 
-    if (novalid == 0)           /* TODO XML_DETECT_IDS | XML_COMPLETE_ATTRS */
-        xmlLoadExtDtdDefaultValue = 6;
+    if (novalid == 0)
+        xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
     else
         xmlLoadExtDtdDefaultValue = 0;
     for (i = 1; i < argc; i++) {
