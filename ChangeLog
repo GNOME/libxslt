@@ -1,3 +1,8 @@
+Fri Nov 14 23:59:08 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c: applied fix from Bjorn Reese to close
+	  number formatting bug #126994
+
 Fri Nov 14 18:44:50 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am configure.in libexslt.pc.in libxslt.spec.in: adding

@@ -779,7 +779,9 @@ informations are stored'/>
 *'/>
       <field name='lasttext' type='const xmlChar *' info=' last text node content'/>
       <field name='lasttsize' type='unsigned int' info=' last text node size'/>
-      <field name='lasttuse' type='unsigned int' info=' last text node use'/>
+      <field name='lasttuse' type='unsigned int' info='* Per Context Debugging
+*'/>
+      <field name='debugStatus' type='int' info=' the context level debug status'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>

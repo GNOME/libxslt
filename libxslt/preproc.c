@@ -771,6 +771,7 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
     prop = xsltGetNsProp(cur, (const xmlChar *)"grouping-separator",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
+        comp->numdata.groupingCharacterLen = xmlStrlen(prop);
 	comp->numdata.groupingCharacter =
 	    xsltGetUTF8Char(prop, &(comp->numdata.groupingCharacterLen));
 	xmlFree(prop);
