@@ -41,6 +41,8 @@
 
 #define DEBUG_PROCESS
 
+int xsltMaxDepth = 250;
+
 /*
  * Useful macros
  */
@@ -1726,9 +1728,12 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     CHECK_STOPPED;
 
-    if (ctxt->templNr >= 50) {
+    if (ctxt->templNr >= xsltMaxDepth) {
 	xsltGenericError(xsltGenericErrorContext,
 		"xsltApplyOneTemplate: loop found ???\n");
+	xsltGenericError(xsltGenericErrorContext,
+		"try increasing xsltMaxDepth (--maxdepth)\n");
+	xsltDebug(ctxt, node);
 	return;
     }
 

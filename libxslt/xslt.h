@@ -23,6 +23,8 @@ extern "C" {
 #define XSLT_DEFAULT_URL         "http://xmlsoft.org/XSLT/"
 #define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
 
+extern int xsltMaxDepth;
+
 #ifdef __cplusplus
 }
 #endif

@@ -42,6 +42,7 @@ main(int argc, char **argv) {
 	printf("      --debug: dump the tree of the result instead\n");
 	printf("      --novalid: skip the Dtd loading phase\n");
 	printf("      --noout: do not dump the result\n");
+	printf("      --maxdepth val : increase the maximum depth\n");
 	return(0);
     }
     /* --repeat : repeat 100 times, for timing or profiling */
@@ -68,6 +69,14 @@ main(int argc, char **argv) {
 	} else if ((!strcmp(argv[i], "-timing")) ||
 		   (!strcmp(argv[i], "--timing"))) {
 	    timing++;
+	} else if ((!strcmp(argv[i], "-maxdepth")) ||
+		   (!strcmp(argv[i], "--maxdepth"))) {
+	    int value;
+	    i++;
+	    if (sscanf(argv[i], "%d", &value) == 1) {
+		if (value > 0)
+		    xsltMaxDepth = value;
+	    }
 	}
     }
     xmlSubstituteEntitiesDefault(1);
@@ -76,6 +85,11 @@ main(int argc, char **argv) {
     else
 	xmlLoadExtDtdDefaultValue = 0;
     for (i = 1; i < argc ; i++) {
+	if ((!strcmp(argv[i], "-maxdepth")) ||
+	    (!strcmp(argv[i], "--maxdepth"))) {
+	    i++;
+	    continue;
+	}
 	if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
 	    if (timing)
 		gettimeofday(&begin, NULL);

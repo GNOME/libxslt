@@ -1,3 +1,8 @@
+Sun Feb 18 16:39:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.h libxslt/transform.c: defined and exported xsltMaxDepth
+	* libxslt/xsltproc.c : added --maxdepth
+
 Sun Feb 18 15:44:33 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: added --novalid and --noout as well
