@@ -545,7 +545,7 @@ classes_type = {
 }
 
 converter_type = {
-    "xmlXPathObjectPtr": "xpathObjectRet(%s)",
+    "xmlXPathObjectPtr": "libxml2.xpathObjectRet(%s)",
 }
 
 primary_classes = ["xpathParserContext", "xpathContext", "transformCtxt", "stylesheet"]

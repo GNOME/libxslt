@@ -1,3 +1,8 @@
+Thu Nov 14 21:39:37 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/generator.py: xpathObjectRet() pertains to the libxml2
+	  module, add the namespace.
+
 Thu Nov 14 18:48:00 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libxslt/win32config.h: cleanup
