@@ -84,7 +84,7 @@
         irc.gnome.org is another option for contacting GDP members.
        </p></div></div><div class="sect2"><a name="notation"></a><div class="titlepage"><div><h3 class="title"><a name="notation"></a>Notation and Conventions</h3></div></div><p>
         This Handbook uses the following notation:
-        <div class="informaltable" id="id2782088"><a name="id2782088"></a><table border="0"><colgroup><col><col></colgroup><tbody><tr><td><tt>/usr/bin</tt></td><td>
+        <div class="informaltable" id="id2801086"><a name="id2801086"></a><table border="0"><colgroup><col><col></colgroup><tbody><tr><td><tt>/usr/bin</tt></td><td>
                   Directory
                 </td></tr><tr><td><tt>foo.sgml</tt></td><td>
                   Filename

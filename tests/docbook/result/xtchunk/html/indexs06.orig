@@ -7,7 +7,7 @@
       each window or panel presented to the user using screenshots (in
       PNG format only) when appropriate.  They should also describe
       each feature and preference option available.
-    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2909692"></a>Documentation Availability</h3><p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2930434"></a>Documentation Availability</h3><p>
         Applications and applets should not rely on documentation
         which is only available on the internet.  All manuals and
         other documentation should be packaged with the application or
@@ -18,14 +18,14 @@
     the templates in <a href="apas02.html" title="Template 2: Applet Manual For GNOME 1.x">the section called &#8220;Template 2: Applet Manual For GNOME 1.x&#8221;</a> for GNOME
     versions 1.x and the templates in <a href="apas03.html" title="Template 2: Applet Manual For GNOME 2.x">the section called &#8220;Template 2: Applet Manual For GNOME 2.x&#8221;</a>
     for GNOME versions 2.x.
-    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2909732"></a>Manuals For Large Applications</h3><p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2930474"></a>Manuals For Large Applications</h3><p>
         Manuals for very large applications, such as GNOME Workshop
         components should be a <tt>&lt;book&gt;</tt> (and thus
         use <tt>&lt;chapter&gt;</tt> for each primary section)
         , instead of <tt>&lt;article&gt;</tt> which most
         applications use(with each primary section being a
         <tt>&lt;sect1&gt;</tt>).
-      </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2909847"></a>Applet Manuals in GNOME 2.0</h3><p>
+      </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2930589"></a>Applet Manuals in GNOME 2.0</h3><p>
         Note that applet manuals in GNOME 2.0 are treated in a special
         way.  The manuals for all applets are merged into a single
         virtual document by Nautilus.  For this reason, the header

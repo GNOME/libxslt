@@ -1,3 +1,10 @@
+Mon Apr 15 00:01:07 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-83.xml
+	  tests/general/Makefile.am tests/general/bug-83.*: added a 
+	  specific example for bug #78662 in the regression tests
+	* tests/docbook/: this also changed a couple of DocBook results
+	
 Sun Apr 14 15:32:23 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: trying to kill #77827 IEEE conformance on alphas

@@ -80,17 +80,17 @@ function inact(imgName)
 </HEAD>
 <BODY background="TFI Technology Products_files/WaterMark.gif" bgColor="#ffffff" bgProperties="fixed"><TABLE border="0" cellPadding="0" cellSpacing="0" height="516" width="125"><TBODY>
 <TR><TD colSpan="2" height="95">
-<MAP name="FrontPageMap0"><AREA href="http://www.tfi-technology.com/index.htm"></MAP><IMG alt="TFI Technology Products" border="0" height="97" src="TFI Technology Products_files/ProductsBanner.gif" useMap="#FrontPageMap0" width="569">
+<MAP name="FrontPageMap0"><AREA href="http://www.tfi-technology.com/index.htm"></MAP><IMG alt="TFI Technology Products" border="0" height="97" src="TFI%20Technology%20Products_files/ProductsBanner.gif" useMap="#FrontPageMap0" width="569">
 </TD></TR>
 <TR>
 <TD align="left" height="450" vAlign="top" width="100"><TABLE border="0" cellPadding="4" cellSpacing="0" width="100%"><TBODY>
 <TR>
 <TD height="223" vAlign="top" width="6%">  
-                    <P><IMG align="middle" height="120" src="TFI Technology Products_files/vbarsm.gif" width="3"></P>
+                    <P><IMG align="middle" height="120" src="TFI%20Technology%20Products_files/vbarsm.gif" width="3"></P>
 </TD>
 <TD background="TFI Technology Products_files/bar2.gif" height="223" vAlign="top" width="94%">  
                     <P>
-<A href="http://www.tfi-technology.com/products.htm" onmouseout="inact('Products')" onmouseover="act('Products')"><IMG align="middle" alt="Products" border="0" height="20" hspace="0" name="Products" src="TFI Technology Products_files/productssm.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/downloads.htm" onmouseout="inact('Downloads')" onmouseover="act('Downloads')"><IMG align="middle" alt="Downloads" border="0" height="20" hspace="0" name="Downloads" src="TFI Technology Products_files/downloadssm.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/buynow.htm" onmouseout="inact('BuyNow')" onmouseover="act('BuyNow')"><IMG align="middle" alt="Buy Now" border="0" height="20" hspace="0" name="BuyNow" src="TFI Technology Products_files/buynowsm.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/about.htm" onmouseout="inact('About')" onmouseover="act('About')"><IMG align="middle" alt="About TFI" border="0" height="20" hspace="0" name="About" src="TFI Technology Products_files/abouttfism.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/newsroom.htm" onmouseout="inact('Newswire')" onmouseover="act('Newswire')"><IMG align="middle" alt="News Room" border="0" height="20" hspace="0" name="Newswire" src="TFI Technology Products_files/newswiresm.gif" width="95"></A>
+<A href="http://www.tfi-technology.com/products.htm" onmouseout="inact('Products')" onmouseover="act('Products')"><IMG align="middle" alt="Products" border="0" height="20" hspace="0" name="Products" src="TFI%20Technology%20Products_files/productssm.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/downloads.htm" onmouseout="inact('Downloads')" onmouseover="act('Downloads')"><IMG align="middle" alt="Downloads" border="0" height="20" hspace="0" name="Downloads" src="TFI%20Technology%20Products_files/downloadssm.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/buynow.htm" onmouseout="inact('BuyNow')" onmouseover="act('BuyNow')"><IMG align="middle" alt="Buy Now" border="0" height="20" hspace="0" name="BuyNow" src="TFI%20Technology%20Products_files/buynowsm.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/about.htm" onmouseout="inact('About')" onmouseover="act('About')"><IMG align="middle" alt="About TFI" border="0" height="20" hspace="0" name="About" src="TFI%20Technology%20Products_files/abouttfism.gif" width="95"><BR></A><A href="http://www.tfi-technology.com/newsroom.htm" onmouseout="inact('Newswire')" onmouseover="act('Newswire')"><IMG align="middle" alt="News Room" border="0" height="20" hspace="0" name="Newswire" src="TFI%20Technology%20Products_files/newswiresm.gif" width="95"></A>
 </P>
 </TD>
 </TR>
@@ -130,7 +130,7 @@ function inact(imgName)
 		<TD>Row4 - Text2</TD>
 	</TR>
 </TABLE></CENTER>
-<P align="left"><IMG alt="hbar.gif (979 bytes)" height="8" src="TFI Technology Products_files/hbar.gif" width="458"></P>
+<P align="left"><IMG alt="hbar.gif (979 bytes)" height="8" src="TFI%20Technology%20Products_files/hbar.gif" width="458"></P>
 </TD>
 </TR>
 </TBODY></TABLE></BODY>
