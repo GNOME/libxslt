@@ -62,15 +62,13 @@ templates: scan
 	-gtkdoc-mktmpl --module=libxslt
 #	gtkdoc-mktmpl --module=libexslt
 
-sgml:
+xml:
+	if test -d xml ; then rm xml/* ; else mkdir xml ; fi
 	-gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --output-format=xml --main-sgml-file=$(DOC_MAIN_XML_FILE)
 
 html:
 	if ! test -d html ; then mkdir html ; fi
 	-cd html && gtkdoc-mkhtml libxslt ../$(DOC_MAIN_XML_FILE)
-
-xml:
-	if test -d xml ; then rm xml/* ; else mkdir xml ; fi
 	   
 libxslt-api.xml libexslt-api.xml: apibuild.py ../libxslt/*.h ../libxslt/*.c ../libexslt/*.h ../libexslt/*.c
 	-(./apibuild.py)
@@ -81,14 +79,14 @@ clean-local:
 	rm -f *~ *.bak *.hierarchy *.signals *-unused.txt
 
 maintainer-clean-local: clean
-	rm -rf sgml html libxslt-decl-list.txt libxslt-decl.txt 
+	rm -rf libxslt-decl-list.txt libxslt-decl.txt 
 
 libxslt-decl-list.txt : templates
 
 libxslt-sections.txt : scan
 	cp libxslt-decl-list.txt libxslt-sections.txt
 
-rebuild: libxslt-sections.txt templates sgml html
+rebuild: libxslt-sections.txt templates xml html
 
 install-data-local: 
 	$(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)
@@ -101,6 +99,6 @@ install-data-local:
 	-(cd $(DESTDIR); gtkdoc-fixxref --module=libxslt --html-dir=$(HTML_DIR))
 
 dist-hook:
-	(cd $(srcdir) ; tar cvf - *.1 *.html site.xsl news.xsl xsa.xsl *.gif html/*.html html/*.sgml tutorial/libxslt*) | (cd $(distdir); tar xf -)
+	(cd $(srcdir) ; tar cvf - *.1 *.html site.xsl news.xsl xsa.xsl *.gif html/*.html html/*.png tutorial/libxslt*) | (cd $(distdir); tar xf -)
 
-.PHONY : html sgml templates scan
+.PHONY : html xml templates scan
