@@ -67,14 +67,14 @@ EXTRA_DIST = 						\
 all: test
 
 test tests: $(top_builddir)/libxslt/xsltproc
-	@(rm -f .memdump ; touch .memdump)
-	@(for i in *.xsl ; do \
+	@(echo > .memdump)
+	@(for i in $(srcdir)/*.xsl ; do \
 	  name=`basename $$i .xsl` ; \
-	  if [ ! -f $$name.xml ] ; then continue ; fi ; \
+	  if [ ! -f $(srcdir)/$$name.xml ] ; then continue ; fi ; \
 	  echo $$name.xml ; \
-	  $(top_builddir)/libxslt/xsltproc $$name.xsl $$name.xml > $$name.res;\
-	  if [ ! -f $$name.out ] ; then cp $$name.res $$name.out ; \
-	  else diff $$name.out $$name.res ; fi ; \
+	  $(top_builddir)/libxslt/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
+	  if [ ! -f $(srcdir)/$$name.out ] ; then cp $$name.res $(srcdir)/$$name.out ; \
+	  else diff $(srcdir)/$$name.out $$name.res ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	  rm -f $$name.res ; \
 	  done)
