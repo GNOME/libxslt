@@ -445,6 +445,16 @@ then
     with_plugins=yes
 fi
 
+AC_MSG_CHECKING([whether shared libraries will be built (required for plugins)])
+if test "$enable_shared" = "no" -a "$with_plugins" = "yes"; then
+	 AC_MSG_RESULT(no)
+	 AC_MSG_WARN([Disabling plugin support.])
+	 AC_MSG_WARN([Plugins require that shared libraries be built.])
+	 with_plugins=no
+else
+	 AC_MSG_RESULT(yes)
+fi
+
 if test "$with_plugins" = "yes" ; then
   AC_MSG_CHECKING([libxml2 module support])
   WITH_MODULES="`$XML_CONFIG --modules`"
