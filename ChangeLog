@@ -1,3 +1,7 @@
+Lun Jul 30 05:47:43 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/functions.c: fixed memory leaks
+	
 Sun Jul 29 08:37:59 EDT 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/functions.c libxslt/extensions.[ch] libxslt/extensions.h

@@ -18,15 +18,15 @@
 
 typedef struct _exsltFuncFunctionData exsltFuncFunctionData;
 struct _exsltFuncFunctionData {
-    int nargs;
-    xmlNodePtr content;
+    int nargs;			/* number of arguments to the function */
+    xmlNodePtr content;		/* the func:fuction template content */
 };
 
 typedef struct _exsltFuncData exsltFuncData;
 struct _exsltFuncData {
-    xmlHashTablePtr funcs;
-    xmlXPathObjectPtr result;
-    int error;
+    xmlHashTablePtr funcs;	/* pointer to the stylesheet module data */
+    xmlXPathObjectPtr result;	/* returned by func:result */
+    int error;			/* did an error occur? */
 };
 
 
@@ -133,7 +133,7 @@ static void
 exsltFuncStyleShutdown (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 			const xmlChar *URI ATTRIBUTE_UNUSED,
 			xmlHashTablePtr data) {
-    xmlHashFree(data, NULL);
+    xmlHashFree(data, (xmlHashDeallocator) xmlFree);
 }
 
 /**
@@ -241,6 +241,8 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xsltApplyOneTemplate (tctxt, xmlXPathGetContextNode(ctxt),
 			  func->content, NULL, params);
     tctxt->insert = oldInsert;
+    if (params != NULL)
+	xsltFreeStackElemList(params);
 
     if (data->error != 0)
 	return;
@@ -262,8 +264,10 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "{%s}%s: cannot write to result tree while "
 			 "executing a function\n",
 			 ctxt->context->functionURI, ctxt->context->function);
+	xmlFreeNode(fake);
 	return;
     }
+    xmlFreeNode(fake);
     valuePush(ctxt, ret);
 }
 
@@ -429,9 +433,11 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 			     "func:result content must be empty if it"
 			     " has a select attribute\n");
 	    data->error = 1;
+	    xmlFree(select);
 	    return;
 	}
 	ret = xmlXPathEvalExpression(select, ctxt->xpathCtxt);
+	xmlFree(select);
 	if (ret == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 			     "exsltFuncResultElem: ret == NULL\n");
