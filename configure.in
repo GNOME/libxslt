@@ -114,10 +114,10 @@ AC_CHECK_FUNC(isinf, , AC_CHECK_LIB(m, isinf,
 AC_CHECK_FUNC(pow, , AC_CHECK_LIB(m, pow,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_POW)]))
 
-AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, pow,
+AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_FLOOR)]))
 
-AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, pow,
+AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, fabs,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
 AC_CHECK_FUNCS(gettimeofday)
 AC_CHECK_FUNCS(mktime localtime asctime time gmtime)

@@ -1,3 +1,9 @@
+Mon Jan 14 10:35:27 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: fixed a couple of cut and paste errors in the
+	  math functions detection
+	* libxslt.spec.in: added missing file entry for libxslt.pc
+
 Tue Jan  8 21:04:17 MST 2002 John Fleck <jfleck@inkstain.net>
 
 	* doc/xsltproc.xml, doc/xsltproc.1, doc/xsltproc.html
