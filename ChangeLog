@@ -1,3 +1,8 @@
+Thu Dec 26 15:43:31 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/strings.c: Alexey Efimov found a typo bug in
+	  exsltStrPaddingFunction()
+
 Mon Dec 23 15:43:59 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxslt.c: patch from Stéphane Bidoul for Python 2.1
