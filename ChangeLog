@@ -1,3 +1,8 @@
+Thu Sep 25 11:46:40 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.h libxslt/extra.h: fix some header paths
+	  as pointed by Steve Ball
+
 Wed Sep 24 23:31:45 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c: applied patch from Karl Eichwalder

@@ -9,7 +9,7 @@
 #ifndef __XML_XSLT_EXTENSION_H__
 #define __XML_XSLT_EXTENSION_H__
 
-#include "libxml/xpath.h"
+#include <libxml/xpath.h>
 #include "xsltexports.h"
 #include "xsltInternals.h"
 
