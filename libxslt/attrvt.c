@@ -161,7 +161,7 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
     xsltGenericDebug(xsltGenericDebugContext,
 		    "Found AVT %s: %s\n", attr->name, str);
 #endif
-    if (attr->_private != NULL) {
+    if (attr->psvi != NULL) {
 #ifdef WITH_XSLT_DEBUG_AVT
 	xsltGenericDebug(xsltGenericDebugContext,
 			"AVT %s: already compiled\n");
@@ -170,7 +170,7 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
     }
     avt = xsltNewAttrVT(style);
     if (avt == NULL) return;
-    attr->_private = avt;
+    attr->psvi = avt;
 
     avt->nsList = xmlGetNsList(attr->doc, attr->parent);
     if (avt->nsList != NULL) {

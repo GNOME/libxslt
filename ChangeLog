@@ -1,3 +1,8 @@
+Thu Feb 26 15:17:52 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attrvt.c libxslt/templates.c: use the psvi field of
+	  the attribute instead of the _private one to compile AVT infos
+
 Thu Feb 26 14:53:16 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-144.xml
