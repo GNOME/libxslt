@@ -1,3 +1,8 @@
+Tue Aug 14 20:51:09 MDT 2001 John Fleck <jfleck@inkstain.net>
+
+	* doc/xslt.html updated xsltproc description with the many new
+	  command line options Daniel has added, cleaned up some spelling
+
 Tue Aug 14 18:41:02 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extra.c libxslt/keys.c libxslt/templates.c 

@@ -24,8 +24,8 @@ alt="Red Hat Logo"></a></p>
   <li><a href="#help">how to help</a></li>
   <li><a href="#Downloads">Downloads</a></li>
   <li><a href="#News">News</a></li>
-  <li><a href="#XML">The xsltproc command line tool</a></li>
-  <li><a href="#XSLT">The programming API</a></li>
+  <li><a href="#xsltproc">The xsltproc command line tool</a></li>
+  <li><a href="#API">The programming API</a></li>
 </ul>
 
 <p>External documents:</p>
@@ -43,7 +43,7 @@ alt="Red Hat Logo"></a></p>
 <h2><a name="Introducti">Introduction</a></h2>
 
 <p>This document describes <a href="http://xmlsoft.org/XSLT/">libxslt</a>,
-the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developped for the
+the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developed for the
 <a href="http://www.gnome.org/">Gnome</a> project.</p>
 
 <p>Here are some key points about libxslt:</p>
@@ -115,14 +115,14 @@ FAQ</a>, and buy Michael Kay "XSLT Programmer's Reference" book published by
     version</a>, and that the problem still shows up in those</li>
   <li>check the <a href="http://mail.gnome.org/archives/xslt/">list
     archives</a> to see if the problem was reported already, in this case
-    there is probably a fix available, similary check the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxml&amp;product=libxslt&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=NEEDINFO&amp;bug_status=REOPENED&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailcc1=1&amp;emaillongdesc1=1&amp;email2=&amp;emailtype2=substring&amp;emailassigned_to2=1&amp;emailreporter2=1&amp;emailcc2=1&amp;emaillongdesc2=1&amp;changedin=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;short_desc=&amp;short_desc_type=substring&amp;long_desc=&amp;long_desc_type=substring&amp;bug_file_loc=&amp;bug_file_loc_type=substring&amp;status_whiteboard=&amp;status_whiteboard_type=substring&amp;keywords=&amp;keywords_type=anywords&amp;op_sys_details=&amp;op_sys_details_type=substring&amp;version_details=&amp;version_details_type=substring&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time&amp;form_name=query">registered
+    there is probably a fix available, similarly check the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxml&amp;product=libxslt&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=NEEDINFO&amp;bug_status=REOPENED&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailcc1=1&amp;emaillongdesc1=1&amp;email2=&amp;emailtype2=substring&amp;emailassigned_to2=1&amp;emailreporter2=1&amp;emailcc2=1&amp;emaillongdesc2=1&amp;changedin=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;short_desc=&amp;short_desc_type=substring&amp;long_desc=&amp;long_desc_type=substring&amp;bug_file_loc=&amp;bug_file_loc_type=substring&amp;status_whiteboard=&amp;status_whiteboard_type=substring&amp;keywords=&amp;keywords_type=anywords&amp;op_sys_details=&amp;op_sys_details_type=substring&amp;version_details=&amp;version_details_type=substring&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time&amp;form_name=query">registered
     open bugs</a></li>
   <li>make sure you can reproduce the bug with xsltproc, a very useful thing
-    to do is run the transformation with -v argument and redirrect the
+    to do is run the transformation with -v argument and redirect the
     standard error to a file, then search in this file for the transformation
     logs just preceding the possible problem</li>
   <li>Please send the command showing the error as well as the input and
-    stylesheet (as an attachement)</li>
+    stylesheet (as an attachment)</li>
 </ul>
 
 <p>Of course, bugs reports with a suggested patch for fixing them will
@@ -148,7 +148,7 @@ database:</a>:</p>
   <li>provide the diffs when you port libxslt to a new platform. They may not
     be integrated in all cases but help pinpointing portability problems
   and</li>
-  <li>provice documentation fixes (either as patches to the code comments or
+  <li>provide documentation fixes (either as patches to the code comments or
     as HTML diffs).</li>
   <li>provide new documentations pieces (translations, examples, etc ...)</li>
   <li>Check the TODO file and try to close one of the items</li>
@@ -207,7 +207,7 @@ for a really accurate description</h3>
   <li>added a documentation for <a href="extensions.html">writing
     extensions</a></li>
   <li>fixed some variable evaluation problems (with William)</li>
-  <li>added profiling of stylesheed excution accessible as the xsltproc
+  <li>added profiling of stylesheet execution accessible as the xsltproc
     --profile option</li>
   <li>fixed element-available() and the implementation of the various
     chunking methods present, Norm Walsh provided a lot of feedback</li>
@@ -223,7 +223,7 @@ for a really accurate description</h3>
   <li>completion of the little XSLT-1.0 features left unimplemented</li>
   <li>Added and implemented the extension API suggested by Thomas Broyer</li>
   <li>the Windows MSC environment should be complete</li>
-  <li>tested and optimized with a really large document (DocBook Definitve
+  <li>tested and optimized with a really large document (DocBook Definitive
     Guide) libxml/libxslt should really be faster on serious workloads</li>
 </ul>
 
@@ -277,7 +277,7 @@ for a really accurate description</h3>
   <li>force all XPath expression to be compiled at stylesheet parsing time,
     even if unused ...</li>
   <li>Fixed HTML default output detection</li>
-  <li>Fixed double attibute generation #54446</li>
+  <li>Fixed double attribute generation #54446</li>
   <li>Fixed {{ handling in attributes #54451</li>
   <li>More tests and speedups for DocBook document transformations</li>
   <li>Fixed a really bad race like bug in xsltCopyTreeList()</li>
@@ -292,11 +292,11 @@ for a really accurate description</h3>
 <h3>0.9.0: May 3 2001</h3>
 <ul>
   <li>lot of various bugfixes, extended the regression suite</li>
-  <li>xsltproc shoudl work with multiple params</li>
+  <li>xsltproc should work with multiple params</li>
   <li>added an option to use xsltproc with HTML input</li>
   <li>improved the stylesheet compilation, processing of complex stylesheets
     should be faster</li>
-  <li>using the same stylesheet for concurent processing on multithreaded
+  <li>using the same stylesheet for concurrent processing on multithreaded
     programs should work now</li>
   <li>fixed another batch of namespace handling problems</li>
   <li>Implemented multiple level of sorting</li>
@@ -326,7 +326,7 @@ for a really accurate description</h3>
 <ul>
   <li>another beta</li>
   <li>requires 2.3.5, which provide XPath expression compilation support</li>
-  <li>document() extension should fonction properly</li>
+  <li>document() extension should function properly</li>
   <li>fixed a number or reported bugs</li>
 </ul>
 
@@ -387,7 +387,7 @@ for a really accurate description</h3>
     feature complete</li>
 </ul>
 
-<h2>The xsltproc command line tool tool</h2>
+<h2><a name="xsltproc">The xsltproc command line tool</h2>
 
 <p>This program is the simplest way to use libxslt: from the command line. It
 is also used for doing the regression tests of the library.</p>
@@ -399,7 +399,9 @@ more options available:</p>
 <pre>orchis:~ -&gt; xsltproc
 Usage: xsltproc [options] stylesheet file [file ...]
    Options:
+      --version or -V: show the version of libxml and libxslt used
       --verbose or -v: show logs of what's happening
+      --output file or -o file: save to a given file
       --timing: display the time used
       --repeat: run the transformation 20 times
       --debug: dump the tree of the result instead
@@ -407,13 +409,19 @@ Usage: xsltproc [options] stylesheet file [file ...]
       --noout: do not dump the result
       --maxdepth val : increase the maximum depth
       --html: the input document is(are) an HTML file(s)
-      --param name value
+      --docbook: the input document is SGML docbook
+      --param name value : pass a (parameter,value) pair
+      --nonet refuse to fetch DTDs or entities over network
+      --warnnet warn against fetching over the network
+      --catalogs : use the catalogs from $SGML_CATALOG_FILES
+      --xinclude : do XInclude processing on document intput
+      --profile or --norman : dump profiling informations 
 orchis:~ -&gt;</pre>
 
-<h2>The programming API</h2>
+<h2><a name="API">The programming API</h2>
 
 <p>Okay this section is clearly incomplete. But integrating libxslt into your
-application should be realatively easy. First check the few steps described
+application should be relatively easy. First check the few steps described
 below, then for more detailed informations, look at the<a
 href="html/libxslt-lib.html"> generated pages</a> for the API and the source
 of libxslt/xsltproc.c  and the  <a
@@ -441,7 +449,7 @@ input documents.</p>
 <ul>
   <li>Bjorn Reese is the author of the number support and worked on the
     XSLTMark support</li>
-  <li>William Brack was an early adopted, contibuted a number of patches and
+  <li>William Brack was an early adopted, contributed a number of patches and
     spent quite some time debugging non-trivial problems in early versions of
     libxslt</li>
   <li><a href="mailto:izlatkovic@daenet.de">Igor  Zlatkovic</a>
@@ -455,7 +463,7 @@ input documents.</p>
   <li><a
     href="http://mail.gnome.org/archives/xml/2001-March/msg00014.html">Matt
     Sergeant</a>
-     developped <a href="http://axkit.org/download/">XML::LibXSLT</a>, a perl
+     developed <a href="http://axkit.org/download/">XML::LibXSLT</a>, a perl
     wrapper for libxml2/libxslt as part of the <a
     href="http://axkit.com/">AxKit XML application server</a></li>
   <li>there is a module for <a
