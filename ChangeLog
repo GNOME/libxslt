@@ -1,3 +1,10 @@
+Tue Mar 23 13:13:56 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: prepare release of 1.1.5, made a hard dependancy
+	  to libxml2 2.6.8 due to the dictionnary reference counting change
+	* doc/*: updated and rebuilt the doc.
+	* tests/namespaces/Makefile.am: fixed a build problem (tst5 ?)
+
 Mon Mar 22 20:25:41 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltconfig.h.in: small fix for OpenVMS

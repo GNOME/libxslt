@@ -291,6 +291,19 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
+<h3>1.1.5: Mar 23 2004</h3>
+<ul>
+  <li>performance: use dictionnary lookup for variables</li>
+  <li>remove use of _private from source documents</li>
+  <li>cleanup of "make tests" output</li>
+  <li>bugfixes: AVT in local variables, use localtime_r to avoid thread
+    troubles (William), dictionary handling bug (William), limited number of
+    stubstitutions in AVT (William), tokenize fix for UTF-8 (William),
+    superfluous namespace (William), xsltproc error code on
+    &lt;xsl:message&gt; halt, OpenVMS fix, dictionnary reference counting
+    change.</li>
+</ul>
+
 <h3>1.1.4: Feb 23 2004</h3>
 <ul>
   <li>bugfixes: attributes without doc (Mariano Suárez-Alvarez), problem with
