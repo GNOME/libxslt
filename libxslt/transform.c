@@ -473,8 +473,8 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
  *									*
  ************************************************************************/
 
-xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
-			xmlNodePtr insert);
+xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt,
+                        xmlNodePtr node, xmlNodePtr insert, int literal);
 
 /**
  * xsltCopyTextString:
@@ -738,19 +738,22 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @list:  the list of element nodes in the source tree.
  * @insert:  the parent in the result tree.
+ * @literal:  is this a literal result element list
  *
  * Make a copy of the full list of tree @list
  * and insert it as last children of @insert
+ * For literal result element, some of the namespaces may not be copied
+ * over according to section 7.1 .
  *
  * Returns a pointer to the new list, or NULL in case of error
  */
 static xmlNodePtr
 xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
-	     xmlNodePtr insert) {
+	     xmlNodePtr insert, int literal) {
     xmlNodePtr copy, ret = NULL;
 
     while (list != NULL) {
-	copy = xsltCopyTree(ctxt, list, insert);
+	copy = xsltCopyTree(ctxt, list, insert, literal);
 	if (copy != NULL) {
 	    if (ret == NULL) {
 		ret = copy;
@@ -762,19 +765,74 @@ xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
 }
 
 /**
+ * xsltCopyNamespaceListInternal:
+ * @node:  the target node
+ * @cur:  the first namespace
+ *
+ * Do a copy of an namespace list. If @node is non-NULL the
+ * new namespaces are added automatically.
+ *
+ * Returns: a new xmlNsPtr, or NULL in case of error.
+ */
+static xmlNsPtr
+xsltCopyNamespaceListInternal(xmlNodePtr node, xmlNsPtr cur) {
+    xmlNsPtr ret = NULL;
+    xmlNsPtr p = NULL,q;
+
+    if (cur == NULL)
+	return(NULL);
+    if (cur->type != XML_NAMESPACE_DECL)
+	return(NULL);
+
+    /*
+     * One can add namespaces only on element nodes
+     */
+    if ((node != NULL) && (node->type != XML_ELEMENT_NODE))
+	node = NULL;
+
+    while (cur != NULL) {
+	if (cur->type != XML_NAMESPACE_DECL)
+	    break;
+
+	/*
+	 * Avoid duplicating namespace declrations on the tree
+	 */
+	if ((node != NULL) && (node->ns != NULL) &&
+            (xmlStrEqual(node->ns->href, cur->href)) &&
+            (xmlStrEqual(node->ns->prefix, cur->prefix))) {
+	    cur = cur->next;
+	    continue;
+	}
+	
+	q = xmlNewNs(node, cur->href, cur->prefix);
+	if (p == NULL) {
+	    ret = p = q;
+	} else if (q != NULL) {
+	    p->next = q;
+	    p = q;
+	}
+	cur = cur->next;
+    }
+    return(ret);
+}
+
+/**
  * xsltCopyTree:
  * @ctxt:  a XSLT process context
  * @node:  the element node in the source tree.
  * @insert:  the parent in the result tree.
+ * @literal:  is this a literal result element list
  *
  * Make a copy of the full tree under the element node @node
  * and insert it as last child of @insert
+ * For literal result element, some of the namespaces may not be copied
+ * over according to section 7.1 .
  *
  * Returns a pointer to the new tree, or NULL in case of error
  */
 xmlNodePtr
 xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	     xmlNodePtr insert) {
+		     xmlNodePtr insert, int literal) {
     xmlNodePtr copy;
 
     if (node == NULL)
@@ -817,7 +875,7 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((node->name != NULL) && (node->name[0] == ' ') &&
 	(xmlStrEqual(node->name, (const xmlChar *) " fake node libxslt"))) {
 	if (node->children != NULL)
-	    copy = xsltCopyTreeList(ctxt, node->children, insert);
+	    copy = xsltCopyTreeList(ctxt, node->children, insert, 0);
 	else
 	    copy = NULL;
 	return(copy);
@@ -849,13 +907,17 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    xmlNewNs(copy, BAD_CAST "", NULL);
 	    }
 	}
-	if (node->nsDef != NULL)
-	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+	if (node->nsDef != NULL) {
+	    if (literal)
+	        xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+	    else
+	        xsltCopyNamespaceListInternal(copy, node->nsDef);
+	}
 	if (node->properties != NULL)
 	    copy->properties = xsltCopyPropList(ctxt, copy,
 					       node->properties);
 	if (node->children != NULL)
-	    xsltCopyTreeList(ctxt, node->children, copy);
+	    xsltCopyTreeList(ctxt, node->children, copy, literal);
     } else {
 	xsltTransformError(ctxt, NULL, node,
 		"xsltCopyTree: copy %s failed\n", node->name);
@@ -2601,12 +2663,12 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    if ((list->nodeTab[i]->type == XML_DOCUMENT_NODE) ||
 			(list->nodeTab[i]->type == XML_HTML_DOCUMENT_NODE)) {
 			xsltCopyTreeList(ctxt, list->nodeTab[i]->children,
-				         ctxt->insert);
+				         ctxt->insert, 0);
 		    } else if (list->nodeTab[i]->type == XML_ATTRIBUTE_NODE) {
 			xsltCopyProp(ctxt, ctxt->insert, 
 				     (xmlAttrPtr) list->nodeTab[i]);
 		    } else {
-			xsltCopyTree(ctxt, list->nodeTab[i], ctxt->insert);
+			xsltCopyTree(ctxt, list->nodeTab[i], ctxt->insert, 0);
 		    }
 		}
 	    }
@@ -2620,7 +2682,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		(list->nodeTab[0] != NULL) &&
 		(IS_XSLT_REAL_NODE(list->nodeTab[0]))) {
 		xsltCopyTreeList(ctxt, list->nodeTab[0]->children,
-			         ctxt->insert);
+			         ctxt->insert, 0);
 	    }
 	} else {
 	    /* convert to a string */

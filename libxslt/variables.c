@@ -812,24 +812,23 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	    "Global parameter %s already defined\n", ncname);
     }
 
+    /*
+     * do not overwrite variables with parameters from the command line
+     */
     while (style != NULL) {
         elem = ctxt->style->variables;
 	while (elem != NULL) {
 	    if ((elem->comp != NULL) &&
-	        (elem->comp->type == XSLT_FUNC_PARAM) &&
+	        (elem->comp->type == XSLT_FUNC_VARIABLE) &&
 		(xmlStrEqual(elem->name, ncname)) &&
-		(xmlStrEqual(elem->nameURI, href)))
-		goto found;
+		(xmlStrEqual(elem->nameURI, href))) {
+		xmlFree(ncname);
+		return(0);
+	    }
             elem = elem->next;
 	}
         style = xsltNextImport(style);
     }
-    /*
-     * the parameter was not registered in the stylesheet(s), ignore it.
-     */
-    xmlFree(ncname);
-    return(0);
-found:
     style = ctxt->style;
     elem = NULL;
 

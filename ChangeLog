@@ -1,3 +1,15 @@
+Wed Apr 23 14:25:46 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fix bug #110577 namespace in copy-of
+	  don't obbey the same rules as for literal reusl elements.
+	* tests/docs/Makefile.am tests/docs/bug-118.*
+	  tests/general/Makefile.am tests/general/bug-118*: added the
+	  example in the regression tests for that bug.
+	* libxslt/variables.c: fixed a bug introduced in fixing #110020
+	* tests/docs/Makefile.am tests/docs/bug-11[67].*
+	  tests/general/Makefile.am tests/general/bug-11[67]*: added 2
+	  regression tests one still exposing a mem leak (Mark Vadoc).
+
 Tue Apr 22 16:01:25 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fix a memory related segfault on a
