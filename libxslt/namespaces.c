@@ -446,11 +446,18 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 	 */
 	if ((ret == NULL) && (ns->prefix != NULL))
 	    ret = xmlSearchNsByHref(out->doc, out, URI);
-	}
+    }
 
-    if (ret == NULL) {	/* if no success and an element node, create the ns */
-	if (out->type == XML_ELEMENT_NODE)
-	    ret = xmlNewNs(out, URI, ns->prefix);
+    /*
+     * For an element node, if we don't find it, or it's the default
+     * and this element already defines a default (bug 165560), we need to
+     * create it.
+     */
+    if (out->type == XML_ELEMENT_NODE) {
+	if ((ret == NULL) || ((ret->prefix == NULL) && (out->ns == NULL) &&
+	    (out->nsDef != NULL) && (!xmlStrEqual(URI, out->nsDef->href)))) {
+	        ret = xmlNewNs(out, URI, ns->prefix);
+	}
     }
     return(ret);
 }
