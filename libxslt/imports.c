@@ -189,6 +189,7 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     xsltStylesheetPtr result;
     xsltDocumentPtr include;
     xsltDocumentPtr docptr;
+    int oldNopreproc;
 
     if ((cur == NULL) || (style == NULL))
 	return (ret);
@@ -234,7 +235,11 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     /* chain to stylesheet for recursion checking */
     include->includes = style->includes;
     style->includes = include;
+    oldNopreproc = style->nopreproc;
+    style->nopreproc = include->preproc;
     result = xsltParseStylesheetProcess(style, include->doc);
+    style->nopreproc = oldNopreproc;
+    include->preproc = 1;
     style->includes = include->includes;
     style->doc = oldDoc;
     if (result == NULL) {

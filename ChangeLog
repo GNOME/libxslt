@@ -1,3 +1,8 @@
+Mon Sep  6 14:27:38 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/imports.c, libxslt/xslt.c, libxslt/xsltInternals.h:
+	  fixed 2 problems with xsl:include (bug #151795)
+
 Tue Aug 31 15:45:42 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* NEWS configure.in doc/*: Release of libxslt-1.1.10

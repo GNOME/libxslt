@@ -1739,11 +1739,16 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     prop = xsltGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop != NULL) {
         const xmlChar *URI;
+	xsltTemplatePtr cur;
 
-	if (ret->name != NULL) xmlFree(ret->name);
-	ret->name = NULL;
-	if (ret->nameURI != NULL) xmlFree(ret->nameURI);
-	ret->nameURI = NULL;
+	if (ret->name != NULL) {
+	    xmlFree(ret->name);
+	    ret->name = NULL;
+	}
+	if (ret->nameURI != NULL) {
+	    xmlFree(ret->nameURI);
+	    ret->nameURI = NULL;
+	}
 
 	URI = xsltGetQNameURI(template, &prop);
 	if (prop == NULL) {
@@ -1761,6 +1766,16 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 		ret->nameURI = xmlStrdup(URI);
 	    else
 		ret->nameURI = NULL;
+	    cur = ret->next;
+	    while (cur != NULL) {
+	        if (xmlStrEqual(cur->name, prop)) {
+		    xsltTransformError(NULL, style, template,
+		        "xsl:template: error duplicate name '%s'\n", prop);
+		    style->errors++;
+		    goto error;
+		}
+		cur = cur->next;
+	    }
 	}
     }
 
@@ -1959,7 +1974,8 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	return(NULL);
     }
     xsltParseStylesheetExcludePrefix(ret, cur);
-    xsltPrecomputeStylesheet(ret, cur);
+    if (!ret->nopreproc)
+	xsltPrecomputeStylesheet(ret, cur);
 
     if ((IS_XSLT_ELEM(cur)) && 
 	((IS_XSLT_NAME(cur, "stylesheet")) ||
