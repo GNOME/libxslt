@@ -13,7 +13,8 @@ xsltproc_LDADD = $(LDADDS)
 DEPS = $(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la 
 
-LDADDS = $(top_builddir)/libxslt/libxslt.la \
+LDADDS = @STATIC_BINARIES@ \
+         $(top_builddir)/libxslt/libxslt.la \
          $(top_builddir)/libexslt/libexslt.la \
 	@LIBXML_LIBS@ $(EXTRA_LIBS)
 

@@ -27,6 +27,8 @@ man_MANS = xsltproc.1
 
 all : $(PAGES)
 
+tests:
+
 web: $(PAGES) $(APIPAGES)
 
 $(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl

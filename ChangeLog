@@ -1,3 +1,8 @@
+Tue Feb 25 16:19:45 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/Makefile.am xsltproc/Makefile.am: some cleanup
+	  for Python checks, makefile cleanup, and convenience changes
+
 Mon Feb 24 23:49:01 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: had to comment out Igor last change
