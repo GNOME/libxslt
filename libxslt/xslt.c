@@ -943,6 +943,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 		    xmlFree(prefix);
 		    xmlFree(mode);
 		    mode = prop;
+		    modeURI = NULL;
 		} else {
 		    modeURI = xmlStrdup(ns->href);
 		    xmlFree(prefix);

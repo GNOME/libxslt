@@ -1,3 +1,8 @@
+Tue Feb  6 10:56:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xslt.c: chased some reported
+	  unitinitialized variables.
+
 Tue Feb  6 10:55:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/numbers/Makefile.am: fixed the EXTRA stuff

@@ -414,7 +414,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 				 "xsl:copy: attribute %s\n", node->name);
 #endif
 		if (ctxt->insert->type == XML_ELEMENT_NODE) {
-		    xmlAttrPtr attr = (xmlAttrPtr) node, ret, cur;
+		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, cur;
 		    if (attr->ns != NULL) {
 			if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
 			    (xmlStrncasecmp(attr->ns->prefix,
@@ -626,7 +626,7 @@ error:
 void
 xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst) {
-    xmlChar *prop;
+    xmlChar *prop = NULL;
     xmlXPathObjectPtr res = NULL, tmp;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
     xmlNodePtr copy = NULL;
@@ -979,7 +979,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    return;
 	case XML_ATTRIBUTE_NODE:
 	    if (ctxt->insert->type == XML_ELEMENT_NODE) {
-		    xmlAttrPtr attr = (xmlAttrPtr) node, ret, cur;
+		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, cur;
 		template = xsltGetTemplate(ctxt, node);
 		if (template) {
 		    xmlNodePtr oldNode;
@@ -1270,6 +1270,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    xmlFree(prefix);
 		    xmlFree(mode);
 		    mode = prop;
+		    modeURI = NULL;
 		} else {
 		    modeURI = xmlStrdup(ns->href);
 		    xmlFree(prefix);
@@ -1632,7 +1633,7 @@ skip_children:
 void
 xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst) {
-    xmlChar *prop;
+    xmlChar *prop = NULL;
     xmlXPathObjectPtr res = NULL, tmp;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
     xmlNodePtr replacement, when;
