@@ -1,3 +1,8 @@
+Sun Oct 20 23:20:37 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/types.c: fixed bugs when passing result value tree
+	  to Python functions.
+
 Sun Oct 20 15:23:28 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libxslt/win32config.h: mapped vsnprintf to _vsnprintf for the

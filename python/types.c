@@ -342,13 +342,37 @@ libxml_xmlXPathObjectPtrWrap(xmlXPathObjectPtr obj)
         return (Py_None);
     }
     switch (obj->type) {
-        case XPATH_XSLT_TREE:
-            /* TODO !!!! Allocation problems */
+        case XPATH_XSLT_TREE: {
+            if ((obj->nodesetval == NULL) ||
+		(obj->nodesetval->nodeNr == 0) ||
+		(obj->nodesetval->nodeTab == NULL)) {
+                ret = PyList_New(0);
+	    } else {
+		int i, len = 0;
+		xmlNodePtr node;
+
+		node = obj->nodesetval->nodeTab[0]->children;
+		while (node != NULL) {
+		    len++;
+		    node = node->next;
+		}
+		ret = PyList_New(len);
+		node = obj->nodesetval->nodeTab[0]->children;
+		for (i = 0;i < len;i++) {
+                    PyList_SetItem(ret, i, libxml_xmlNodePtrWrap(node));
+		    node = node->next;
+		}
+	    }
+	    /*
+	     * Return now, do not free the object passed down
+	     */
+	    return (ret);
+	}
         case XPATH_NODESET:
             if ((obj->nodesetval == NULL)
-                || (obj->nodesetval->nodeNr == 0))
+                || (obj->nodesetval->nodeNr == 0)) {
                 ret = PyList_New(0);
-            else {
+	    } else {
                 int i;
                 xmlNodePtr node;
 
@@ -467,5 +491,59 @@ libxml_xmlCatalogPtrWrap(xmlCatalogPtr catal)
     ret =
         PyCObject_FromVoidPtrAndDesc((void *) catal,
                                      (char *) "xmlCatalogPtr", NULL);
+    return (ret);
+}
+
+PyObject *
+libxml_xmlOutputBufferPtrWrap(xmlOutputBufferPtr buffer)
+{
+    PyObject *ret;
+
+#ifdef DEBUG
+    printf("libxml_xmlOutputBufferPtrWrap: buffer = %p\n", buffer);
+#endif
+    if (buffer == NULL) {
+        Py_INCREF(Py_None);
+        return (Py_None);
+    }
+    ret =
+        PyCObject_FromVoidPtrAndDesc((void *) buffer,
+                                     (char *) "xmlOutputBufferPtr", NULL);
+    return (ret);
+}
+
+PyObject *
+libxml_xmlParserInputBufferPtrWrap(xmlParserInputBufferPtr buffer)
+{
+    PyObject *ret;
+
+#ifdef DEBUG
+    printf("libxml_xmlParserInputBufferPtrWrap: buffer = %p\n", buffer);
+#endif
+    if (buffer == NULL) {
+        Py_INCREF(Py_None);
+        return (Py_None);
+    }
+    ret =
+        PyCObject_FromVoidPtrAndDesc((void *) buffer,
+                                     (char *) "xmlParserInputBufferPtr", NULL);
+    return (ret);
+}
+
+PyObject *
+libxml_xmlRegexpPtrWrap(xmlRegexpPtr regexp)
+{
+    PyObject *ret;
+
+#ifdef DEBUG
+    printf("libxml_xmlRegexpPtrWrap: regexp = %p\n", regexp);
+#endif
+    if (regexp == NULL) {
+        Py_INCREF(Py_None);
+        return (Py_None);
+    }
+    ret =
+        PyCObject_FromVoidPtrAndDesc((void *) regexp,
+                                     (char *) "xmlRegexpPtr", NULL);
     return (ret);
 }
