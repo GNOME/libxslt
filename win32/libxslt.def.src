@@ -169,6 +169,24 @@ EXPORTS
 	xsltFreeStylePreComps
 
 
+/* security.h
+   --------------------------------------------------------------------- */
+   /* Module interfaces */
+   xsltNewSecurityPrefs
+   xsltFreeSecurityPrefs
+   xsltSetSecurityPrefs
+   xsltGetSecurityPrefs
+   xsltSetDefaultSecurityPrefs
+   xsltGetDefaultSecurityPrefs
+   xsltSetCtxtSecurityPrefs
+   xsltSecurityAllow
+   xsltSecurityForbid
+
+   /* internal interfaces */
+   xsltCheckWrite
+   xsltCheckRead
+
+
 /* templates.h
    --------------------------------------------------------------------- */
 	xsltEvalXPathPredicate
