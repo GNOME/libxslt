@@ -205,9 +205,9 @@
 <dd><dl>
 <dt> <a href="apa.html#template1">Template 1: Application Manual</a>
 </dt>
-<dt> <a href="apas17.html">Template 2: Applet Manual For GNOME 1.x</a>
+<dt> <a href="apas02.html">Template 2: Applet Manual For GNOME 1.x</a>
 </dt>
-<dt> <a href="apas18.html">Template 2: Applet Manual For GNOME 2.x</a>
+<dt> <a href="apas03.html">Template 2: Applet Manual For GNOME 2.x</a>
 </dt>
 </dl></dd>
 </dl>
@@ -293,8 +293,8 @@
 <a name="notation"></a>Notation and Conventions</h3></div></div>
 <p>
         This Handbook uses the following notation:
-        <div class="informaltable" id="id2781469">
-<a name="id2781469"></a><table border="0">
+        <div class="informaltable" id="id2782184">
+<a name="id2782184"></a><table border="0">
 <colgroup>
 <col>
 <col>

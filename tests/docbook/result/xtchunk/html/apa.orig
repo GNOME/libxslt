@@ -7,7 +7,7 @@
 <link rel="home" href="index.html" title="The GNOME Handbook of Writing Software Documentation">
 <link rel="up" href="index.html" title="The GNOME Handbook of Writing Software Documentation">
 <link rel="previous" href="indexs15.html" title="Resources">
-<link rel="next" href="apas17.html" title="Template 2: Applet Manual For GNOME 1.x">
+<link rel="next" href="apas02.html" title="Template 2: Applet Manual For GNOME 1.x">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <div class="navheader">
@@ -17,7 +17,7 @@
 <td width="20%" align="left">
 <a href="indexs15.html">Prev</a> </td>
 <th width="60%" align="center"> </th>
-<td width="20%" align="right"> <a href="apas17.html">Next</a>
+<td width="20%" align="right"> <a href="apas02.html">Next</a>
 </td>
 </tr>
 </table>
@@ -775,7 +775,7 @@
 <td width="40%" align="left">
 <a href="indexs15.html">Prev</a> </td>
 <td width="20%" align="center"><a href="index.html">Home</a></td>
-<td width="40%" align="right"> <a href="apas17.html">Next</a>
+<td width="40%" align="right"> <a href="apas02.html">Next</a>
 </td>
 </tr>
 <tr>

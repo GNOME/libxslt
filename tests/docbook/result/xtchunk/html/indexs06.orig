@@ -37,7 +37,7 @@
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2909053"></a>Documentation Availability</h3>
+<a name="id2909768"></a>Documentation Availability</h3>
 <p>
         Applications and applets should not rely on documentation
         which is only available on the internet.  All manuals and
@@ -48,13 +48,13 @@
 </div>
 <p> Application manuals should be based on the template in
     <a href="apa.html#template1" title="Template 1: Application Manual">the section called &#8220;Template 1: Application Manual&#8221;</a>.  Applet manuals should be based on
-    the templates in <a href="apas17.html" title="Template 2: Applet Manual For GNOME 1.x">the section called &#8220;Template 2: Applet Manual For GNOME 1.x&#8221;</a> for GNOME
-    versions 1.x and the templates in <a href="apas18.html" title="Template 2: Applet Manual For GNOME 2.x">the section called &#8220;Template 2: Applet Manual For GNOME 2.x&#8221;</a>
+    the templates in <a href="apas02.html" title="Template 2: Applet Manual For GNOME 1.x">the section called &#8220;Template 2: Applet Manual For GNOME 1.x&#8221;</a> for GNOME
+    versions 1.x and the templates in <a href="apas03.html" title="Template 2: Applet Manual For GNOME 2.x">the section called &#8220;Template 2: Applet Manual For GNOME 2.x&#8221;</a>
     for GNOME versions 2.x.
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2909093"></a>Manuals For Large Applications</h3>
+<a name="id2909809"></a>Manuals For Large Applications</h3>
 <p>
         Manuals for very large applications, such as GNOME Workshop
         components should be a <tt>&lt;book&gt;</tt> (and thus
@@ -66,7 +66,7 @@
 </div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2909208"></a>Applet Manuals in GNOME 2.0</h3>
+<a name="id2909924"></a>Applet Manuals in GNOME 2.0</h3>
 <p>
         Note that applet manuals in GNOME 2.0 are treated in a special
         way.  The manuals for all applets are merged into a single

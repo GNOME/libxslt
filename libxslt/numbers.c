@@ -369,69 +369,73 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 {
     int amount = 0;
     int cnt = 0;
-    int keep_going = TRUE;
-    xmlNodePtr ancestor;
-    xmlNodePtr preceding;
-    xmlXPathParserContextPtr parser;
-    xsltCompMatchPtr countPat;
-    xsltCompMatchPtr fromPat;
+    xmlNodePtr cur;
+    xsltCompMatchPtr countPat = NULL;
+    xsltCompMatchPtr fromPat = NULL;
 
     if (count != NULL)
 	countPat = xsltCompilePattern(count, doc, elem);
-    else
-	countPat = NULL;
     if (from != NULL)
 	fromPat = xsltCompilePattern(from, doc, elem);
-    else
-	fromPat = NULL;
-    context->xpathCtxt->node = node;
-    parser = xmlXPathNewParserContext(NULL, context->xpathCtxt);
-    if (parser) {
-	/* preceding */
-	for (preceding = xmlXPathNextPreceding(parser, node);
-	     preceding != NULL;
-	     preceding = xmlXPathNextPreceding(parser, preceding)) {
-	    if ((from != NULL) &&
-		xsltTestCompMatchList(context, preceding, fromPat)) {
-		keep_going = FALSE;
-		break; /* for */
-	    }
-	    if (count == NULL) {
-		if ((node->type == preceding->type) &&
-		    /* FIXME: must use expanded-name instead of local name */
-		    xmlStrEqual(node->name, preceding->name))
-		    cnt++;
-	    } else {
-		if (xsltTestCompMatchList(context, preceding, countPat))
-		    cnt++;
-	    }
+	
+    /* select the starting node */
+    switch (node->type) {
+	case XML_ELEMENT_NODE:
+	    cur = node;
+	    break;
+	case XML_ATTRIBUTE_NODE:
+	    cur = ((xmlAttrPtr) node)->parent;
+	    break;
+	case XML_TEXT_NODE:
+	case XML_PI_NODE:
+	case XML_COMMENT_NODE:
+	    cur = node->parent;
+	    break;
+	default:
+	    cur = NULL;
+	    break;
+    }
+
+    while (cur != NULL) {
+	/* process current node */
+	if (count == NULL) {
+	    if ((node->type == cur->type) &&
+		/* FIXME: must use expanded-name instead of local name */
+		xmlStrEqual(node->name, cur->name))
+		cnt++;
+	} else {
+	    if (xsltTestCompMatchList(context, cur, countPat))
+		cnt++;
+	}
+	if ((from != NULL) &&
+	    xsltTestCompMatchList(context, cur, fromPat)) {
+	    break; /* while */
 	}
 
-	if (keep_going) {
-	    /* ancestor-or-self */
-	    for (ancestor = node;
-		 ancestor != NULL;
-		 ancestor = xmlXPathNextAncestor(parser, ancestor)) {
-		if ((from != NULL) &&
-		    xsltTestCompMatchList(context, ancestor, fromPat)) {
-		    break; /* for */
-		}
-		if (count == NULL) {
-		    if ((node->type == ancestor->type) &&
-			/* FIXME */
-			xmlStrEqual(node->name, ancestor->name))
-			cnt++;
-		} else {
-		    if (xsltTestCompMatchList(context, ancestor, countPat))
-			cnt++;
-		}
-	    }
+	/* Skip to next preceding or ancestor */
+	if ((cur->type == XML_DOCUMENT_NODE) ||
+#ifdef LIBXML_DOCB_ENABLED
+            (cur->type == XML_DOCB_DOCUMENT_NODE) ||
+#endif
+            (cur->type == XML_HTML_DOCUMENT_NODE))
+	    break; /* while */
+
+	while ((cur->prev != NULL) && (cur->prev->type == XML_DTD_NODE))
+	    cur = cur->prev;
+	if (cur->prev != NULL) {
+	    for (cur = cur->prev; cur->last != NULL; cur = cur->last);
+	} else {
+	    cur = cur->parent;
 	}
-	array[amount++] = (double)cnt;
-	xmlXPathFreeParserContext(parser);
+
     }
-    xsltFreeCompMatchList(countPat);
-    xsltFreeCompMatchList(fromPat);
+
+    array[amount++] = (double) cnt;
+
+    if (countPat != NULL)
+	xsltFreeCompMatchList(countPat);
+    if (fromPat != NULL)
+	xsltFreeCompMatchList(fromPat);
     return(amount);
 }
 
