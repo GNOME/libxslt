@@ -73,6 +73,10 @@
 #endif
 #endif /* WIN32 */
 
+#ifdef HAVE_SYS_TIMEB_H
+#include <sys/timeb.h>
+#endif
+
 #ifndef HAVE_STAT
 #  ifdef HAVE__STAT
      /* MS C library seems to define stat and _stat. The definition

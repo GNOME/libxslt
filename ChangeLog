@@ -1,3 +1,9 @@
+Thu May 15 16:26:34 EDT 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: fixing portability bug #113002 on HP-UX
+	* configure.in libxslt.spec.in python/Makefile.am: cleanup
+	  of --with-python like for libxml2
+
 Thu May 15 11:45:00 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltutils.c: fixing bug #112995, a problem with
