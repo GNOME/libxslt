@@ -566,12 +566,12 @@
       <ref name='xsltParseStylesheetCallerParam'/>
     </type>
     <type name='xsltStylesheetPtr'>
+      <ref name='xsltNextImport'/>
       <ref name='xsltNewStylesheet'/>
       <ref name='xsltParseStylesheetFile'/>
       <ref name='xsltParseStylesheetProcess'/>
       <ref name='xsltParseStylesheetDoc'/>
       <ref name='xsltLoadStylesheetPI'/>
-      <ref name='xsltNextImport'/>
     </type>
     <type name='xsltTemplatePtr'>
       <ref name='xsltGetTemplate'/>
@@ -686,8 +686,8 @@
       <ref name='xsltLoadStyleDocument'/>
     </type>
     <type name='const xmlChar*'>
-      <ref name='xsltParseStylesheetFile'/>
       <ref name='xsltAttrTemplateValueProcess'/>
+      <ref name='xsltParseStylesheetFile'/>
     </type>
     <type name='double'>
       <ref name='xsltFormatNumberConversion'/>
@@ -711,19 +711,16 @@
       <ref name='xsltAttrTemplateProcess'/>
     </type>
     <type name='xmlChar *'>
+      <ref name='xsltApplyAttributeSet'/>
       <ref name='xsltIsBlank'/>
       <ref name='xsltDecimalFormatGetByName'/>
       <ref name='xsltFormatNumberConversion'/>
-      <ref name='xsltApplyAttributeSet'/>
     </type>
     <type name='xmlChar **'>
-      <ref name='xsltFormatNumberConversion'/>
       <ref name='xsltGetQNameURI'/>
+      <ref name='xsltFormatNumberConversion'/>
     </type>
     <type name='xmlDocPtr'>
-      <ref name='xsltParseStylesheetProcess'/>
-      <ref name='xsltParseStylesheetDoc'/>
-      <ref name='xsltLoadStylesheetPI'/>
       <ref name='xsltCompilePattern'/>
       <ref name='xsltMatchPattern'/>
       <ref name='xsltNewTransformContext'/>
@@ -738,17 +735,15 @@
       <ref name='xsltNewDocument'/>
       <ref name='xsltFindDocument'/>
       <ref name='xsltNewStyleDocument'/>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetDoc'/>
+      <ref name='xsltLoadStylesheetPI'/>
     </type>
     <type name='xmlGenericErrorFunc'>
       <ref name='xsltSetGenericErrorFunc'/>
       <ref name='xsltSetGenericDebugFunc'/>
     </type>
     <type name='xmlNodePtr'>
-      <ref name='xsltTransformFunction'/>
-      <ref name='xsltTransformFunction'/>
-      <ref name='xsltParseStylesheetOutput'/>
-      <ref name='xsltNumberFormat'/>
-      <ref name='xsltParseTemplateContent'/>
       <ref name='xsltAddKey'/>
       <ref name='xsltCompilePattern'/>
       <ref name='xsltTestCompMatchList'/>
@@ -837,6 +832,11 @@
       <ref name='xsltDebug'/>
       <ref name='xsltDocumentComp'/>
       <ref name='xsltStylePreCompute'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltParseStylesheetOutput'/>
+      <ref name='xsltNumberFormat'/>
+      <ref name='xsltParseTemplateContent'/>
     </type>
     <type name='xmlNodePtr *'>
       <ref name='xsltDoSortFunction'/>
@@ -897,9 +897,9 @@
       <ref name='xsltInitElemPreComp'/>
     </type>
     <type name='xsltElemPreCompPtr'>
+      <ref name='xsltInitElemPreComp'/>
       <ref name='xsltTransformFunction'/>
       <ref name='xsltElemPreCompDeallocator'/>
-      <ref name='xsltInitElemPreComp'/>
     </type>
     <type name='xsltExtInitFunction'>
       <ref name='xsltRegisterExtModule'/>
@@ -916,9 +916,9 @@
       <ref name='xsltRegisterExtModuleElement'/>
     </type>
     <type name='xsltStackElemPtr'>
-      <ref name='xsltFreeStackElemList'/>
       <ref name='xsltApplyOneTemplate'/>
       <ref name='xsltAddStackElemList'/>
+      <ref name='xsltFreeStackElemList'/>
     </type>
     <type name='xsltStyleExtInitFunction'>
       <ref name='xsltRegisterExtModuleFull'/>
@@ -947,11 +947,6 @@
       <ref name='xsltDebug'/>
     </type>
     <type name='xsltStylesheetPtr'>
-      <ref name='xsltFreeStylesheet'/>
-      <ref name='xsltDecimalFormatGetByName'/>
-      <ref name='xsltParseStylesheetProcess'/>
-      <ref name='xsltParseStylesheetOutput'/>
-      <ref name='xsltParseTemplateContent'/>
       <ref name='xsltAddKey'/>
       <ref name='xsltFreeKeys'/>
       <ref name='xsltAddTemplate'/>
@@ -994,6 +989,11 @@
       <ref name='xsltDocumentComp'/>
       <ref name='xsltStylePreCompute'/>
       <ref name='xsltFreeStylePreComps'/>
+      <ref name='xsltFreeStylesheet'/>
+      <ref name='xsltDecimalFormatGetByName'/>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetOutput'/>
+      <ref name='xsltParseTemplateContent'/>
     </type>
     <type name='xsltTemplatePtr'>
       <ref name='xsltAddTemplate'/>
@@ -1007,8 +1007,6 @@
       <ref name='xsltRegisterExtModuleTopLevel'/>
     </type>
     <type name='xsltTransformContextPtr'>
-      <ref name='xsltTransformFunction'/>
-      <ref name='xsltNumberFormat'/>
       <ref name='xsltGetKey'/>
       <ref name='xsltInitCtxtKeys'/>
       <ref name='xsltTestCompMatchList'/>
@@ -1086,6 +1084,8 @@
       <ref name='xsltFreeDocuments'/>
       <ref name='xsltDebug'/>
       <ref name='xsltRegisterExtras'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltNumberFormat'/>
     </type>
     <type name='xsltTransformFunction'>
       <ref name='xsltElemPreCompPtr'/>

@@ -227,11 +227,23 @@ libxslt_xsltRegisterExtModuleFunction(PyObject *self, PyObject *args) {
 	py_retval = libxml_intWrap(-1);
 	return(py_retval);
     }
+    Py_XINCREF(pyobj_f);
 
     ret = xsltRegisterExtModuleFunction(name, ns_uri, 
 	                                     libxslt_xmlXPathFuncCallback);
     py_retval = libxml_intWrap((int) ret);
     return(py_retval);
+}
+
+void
+deallocateCallback(void *payload, xmlChar *name) {
+    PyObject *function = (PyObject *) payload;
+
+#ifdef DEBUG_XPATH
+    printf("deallocateCallback(%s) called\n", name);
+#endif
+
+    Py_XDECREF(function);
 }
 
 /************************************************************************
@@ -250,14 +262,49 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
     PyObject *pyobj_doc;
     PyObject *pyobj_params;
     const char **params;
+    int len = 0, i = 0, j;
+    PyObject *name;
+    PyObject *value;
 
     if (!PyArg_ParseTuple(args, "OOO:xsltApplyStylesheet", &pyobj_style, &pyobj_doc, &pyobj_params))
         return(NULL);
 
     if (pyobj_params != Py_None) {
-	printf("libxslt_xsltApplyStylesheet: parameters not yet supported\n");
-	Py_INCREF(Py_None);
-	return(Py_None);
+	if (PyDict_Check(pyobj_params)) {
+	    len = PyDict_Size(pyobj_params);
+	    if (len > 0) {
+		params = (const char **) xmlMalloc((len + 1) * 2 *
+			                           sizeof(char *));
+		if (params == NULL) {
+		    printf("libxslt_xsltApplyStylesheet: out of memory\n");
+		    Py_INCREF(Py_None);
+		    return(Py_None);
+		}
+		j = 0;
+		while (PyDict_Next(pyobj_params, &i, &name, &value)) {
+		    const char *tmp;
+		    int size;
+
+		    tmp = PyString_AS_STRING(name);
+		    size = PyString_GET_SIZE(name);
+		    params[j * 2] = xmlCharStrndup(tmp, size);
+		    if (PyString_Check(value)) {
+			tmp = PyString_AS_STRING(value);
+			size = PyString_GET_SIZE(value);
+			params[(j * 2) + 1] = xmlCharStrndup(tmp, size);
+		    } else {
+			params[(j * 2) + 1] = NULL;
+		    }
+		    j = j + 1;
+		}
+		params[j * 2] = NULL;
+		params[(j * 2) + 1] = NULL;
+	    }
+	} else {
+	    printf("libxslt_xsltApplyStylesheet: parameters not a dict\n");
+	    Py_INCREF(Py_None);
+	    return(Py_None);
+	}
     } else {
 	params = NULL;
     }
@@ -266,7 +313,32 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
 
     c_retval = xsltApplyStylesheet(style, doc, params);
     py_retval = libxml_xmlDocPtrWrap((xmlDocPtr) c_retval);
+    if (len > 0) {
+	for (i = 0;i < 2 * len;i++) {
+	    if (params[i] != NULL)
+		xmlFree((char *)params[i]);
+	}
+	xmlFree(params);
+    }
     return(py_retval);
+}
+
+/************************************************************************
+ *									*
+ *			Integrated cleanup				*
+ *									*
+ ************************************************************************/
+
+PyObject *
+libxslt_xsltCleanup(PyObject *self, PyObject *args) {
+
+    if (libxslt_extModuleFunctions != NULL) {
+	xmlHashFree(libxslt_extModuleFunctions, deallocateCallback);
+    }
+    xsltCleanupGlobals();
+    xmlCleanupParser();
+    Py_INCREF(Py_None);
+    return(Py_None);
 }
 
 /************************************************************************

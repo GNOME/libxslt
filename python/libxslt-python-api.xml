@@ -19,6 +19,10 @@
       <arg name='URI' type='xmlChar *' info='the namespace or NULL'/>
       <arg name='f' type='pythonObject' info='the python function'/>
     </function>
+    <function name='xsltCleanup' file='python'>
+      <info>Cleanup all libxslt and libxml2 memory allocated</info>
+      <return type='void'/>
+    </function>
   <!--
     <function name='xsltRegisterXPathFunction' file='python'>
       <info>Register a Python written function to the XPath interpreter</info>

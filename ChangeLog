@@ -1,3 +1,11 @@
+Wed Feb  6 23:34:10 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxsl.py python/libxslt-python-api.xml python/libxslt.c
+	  python/libxsltclass.txt: added libxslt_xsltCleanup() added parameters
+	  to libxslt_xsltApplyStylesheet() removed the memleaks left and
+	  fixed an import order.
+	* python/tests/basic.py python/tests/extfunc.py: updated the tests
+
 Wed Feb  6 19:46:09 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxlst.c python/libxslt-python-api.xml 

@@ -18,14 +18,15 @@ styledoc = libxml2.parseDoc("""
   xmlns:foo='http://example.com/foo'
   xsl:exclude-result-prefixes='foo'>
 
+  <xsl:param name='bar'>failure</xsl:param>
   <xsl:template match='/'>
-    <article><xsl:value-of select='foo:foo(\"foo\")'/></article>
+    <article><xsl:value-of select='foo:foo($bar)'/></article>
   </xsl:template>
 </xsl:stylesheet>
 """)
 style = libxslt.parseStylesheetDoc(styledoc)
 doc = libxml2.parseDoc("<doc/>")
-result = style.applyStylesheet(doc, None)
+result = style.applyStylesheet(doc, { "bar": "'success'" })
 style = None
 doc.freeDoc()
 
@@ -33,15 +34,14 @@ root = result.children
 if root.name != "article":
     print "Unexpected root node name"
     sys.exit(1)
-if root.content != "FOO":
+if root.content != "SUCCESS":
     print "Unexpected root node content, extension function failed"
     sys.exit(1)
 
 result.freeDoc()
 
 # Memory debug specific
-libxslt.cleanupGlobals()
-libxml2.cleanupParser()
+libxslt.cleanup()
 if libxml2.debugMemory(1) == 0:
     print "OK"
 else:

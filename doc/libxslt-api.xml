@@ -31,15 +31,6 @@
      <exports symbol='xslAddCall'/>
      <exports symbol='xslDropCall'/>
     </file>
-    <file name='documents'>
-     <exports symbol='xsltNewDocument'/>
-     <exports symbol='xsltLoadDocument'/>
-     <exports symbol='xsltFindDocument'/>
-     <exports symbol='xsltFreeDocuments'/>
-     <exports symbol='xsltLoadStyleDocument'/>
-     <exports symbol='xsltNewStyleDocument'/>
-     <exports symbol='xsltFreeStyleDocuments'/>
-    </file>
     <file name='attributes'>
      <exports symbol='xsltParseStylesheetAttributeSet'/>
      <exports symbol='xsltFreeAttributeSetsHashes'/>
@@ -102,42 +93,6 @@
      <exports symbol='xsltFindElemSpaceHandling'/>
      <exports symbol='xsltFindTemplate'/>
     </file>
-    <file name='libxslt'>
-     <exports symbol='IN_LIBXSLT'/>
-     <exports symbol='LIBXSLT_PUBLIC'/>
-    </file>
-    <file name='transform'>
-     <exports symbol='xsltSetXIncludeDefault'/>
-     <exports symbol='xsltGetXIncludeDefault'/>
-     <exports symbol='xsltNewTransformContext'/>
-     <exports symbol='xsltFreeTransformContext'/>
-     <exports symbol='xsltApplyStylesheetUser'/>
-     <exports symbol='xsltApplyStripSpaces'/>
-     <exports symbol='xsltExtElementLookup'/>
-     <exports symbol='xsltApplyStylesheet'/>
-     <exports symbol='xsltProfileStylesheet'/>
-     <exports symbol='xsltRunStylesheet'/>
-     <exports symbol='xsltApplyOneTemplate'/>
-     <exports symbol='xsltDocumentElem'/>
-     <exports symbol='xsltSort'/>
-     <exports symbol='xsltCopy'/>
-     <exports symbol='xsltText'/>
-     <exports symbol='xsltElement'/>
-     <exports symbol='xsltComment'/>
-     <exports symbol='xsltAttribute'/>
-     <exports symbol='xsltProcessingInstruction'/>
-     <exports symbol='xsltCopyOf'/>
-     <exports symbol='xsltValueOf'/>
-     <exports symbol='xsltNumber'/>
-     <exports symbol='xsltApplyImports'/>
-     <exports symbol='xsltCallTemplate'/>
-     <exports symbol='xsltApplyTemplates'/>
-     <exports symbol='xsltChoose'/>
-     <exports symbol='xsltIf'/>
-     <exports symbol='xsltForEach'/>
-     <exports symbol='xsltRegisterAllElement'/>
-     <exports symbol='xslHandleDebugger'/>
-    </file>
     <file name='xsltInternals'>
      <exports symbol='XSLT_MAX_SORT'/>
      <exports symbol='XSLT_PAT_NO_PRIORITY'/>
@@ -178,6 +133,51 @@
      <exports symbol='xsltNumberFormat'/>
      <exports symbol='xsltFormatNumberConversion'/>
      <exports symbol='xsltParseTemplateContent'/>
+    </file>
+    <file name='libxslt'>
+     <exports symbol='IN_LIBXSLT'/>
+     <exports symbol='LIBXSLT_PUBLIC'/>
+    </file>
+    <file name='transform'>
+     <exports symbol='xsltSetXIncludeDefault'/>
+     <exports symbol='xsltGetXIncludeDefault'/>
+     <exports symbol='xsltNewTransformContext'/>
+     <exports symbol='xsltFreeTransformContext'/>
+     <exports symbol='xsltApplyStylesheetUser'/>
+     <exports symbol='xsltApplyStripSpaces'/>
+     <exports symbol='xsltExtElementLookup'/>
+     <exports symbol='xsltApplyStylesheet'/>
+     <exports symbol='xsltProfileStylesheet'/>
+     <exports symbol='xsltRunStylesheet'/>
+     <exports symbol='xsltApplyOneTemplate'/>
+     <exports symbol='xsltDocumentElem'/>
+     <exports symbol='xsltSort'/>
+     <exports symbol='xsltCopy'/>
+     <exports symbol='xsltText'/>
+     <exports symbol='xsltElement'/>
+     <exports symbol='xsltComment'/>
+     <exports symbol='xsltAttribute'/>
+     <exports symbol='xsltProcessingInstruction'/>
+     <exports symbol='xsltCopyOf'/>
+     <exports symbol='xsltValueOf'/>
+     <exports symbol='xsltNumber'/>
+     <exports symbol='xsltApplyImports'/>
+     <exports symbol='xsltCallTemplate'/>
+     <exports symbol='xsltApplyTemplates'/>
+     <exports symbol='xsltChoose'/>
+     <exports symbol='xsltIf'/>
+     <exports symbol='xsltForEach'/>
+     <exports symbol='xsltRegisterAllElement'/>
+     <exports symbol='xslHandleDebugger'/>
+    </file>
+    <file name='documents'>
+     <exports symbol='xsltNewDocument'/>
+     <exports symbol='xsltLoadDocument'/>
+     <exports symbol='xsltFindDocument'/>
+     <exports symbol='xsltFreeDocuments'/>
+     <exports symbol='xsltLoadStyleDocument'/>
+     <exports symbol='xsltNewStyleDocument'/>
+     <exports symbol='xsltFreeStyleDocuments'/>
     </file>
     <file name='extra'>
      <exports symbol='XSLT_LIBXSLT_NAMESPACE'/>
@@ -703,12 +703,7 @@
       <return type='void'/>
       <arg name='comp' type='xsltElemPreCompPtr' info='the xsltElemPreComp to free up '/>
     </functype>
-    <function name='xsltElemPreCompPtr' file='extensions'>
-      <return type='typedef'/>
-      <arg name='style' type='*xsltPreComputeFunction) (xsltStylesheetPtr'/>
-      <arg name='inst' type='xmlNodePtr'/>
-      <arg name='function' type='xsltTransformFunction'/>
-    </function>
+    <typedef name='xsltElemPreCompPtr' file='xsltInternals'/>
     <function name='xsltElement' file='transform'>
       <info>Process the xslt element node on the source node</info>
       <return type='void'/>

@@ -16,8 +16,7 @@ doc.freeDoc()
 result.freeDoc()
 
 # Memory debug specific
-libxslt.cleanupGlobals()
-libxml2.cleanupParser()
+libxslt.cleanup()
 if libxml2.debugMemory(1) == 0:
     print "OK"
 else:
