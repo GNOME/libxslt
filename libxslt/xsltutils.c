@@ -17,6 +17,7 @@
 #include <libxml/xmlversion.h>
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
+#include <libxml/HTMLtree.h>
 #include <libxml/xmlerror.h>
 #include <libxml/xmlIO.h>
 #include "xsltutils.h"
@@ -313,9 +314,19 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 
     if ((method != NULL) &&
 	(xmlStrEqual(method, (const xmlChar *) "html"))) {
+	if (encoding != NULL) {
+	    htmlSetMetaEncoding(result, (const xmlChar *) encoding);
+	} else {
+	    htmlSetMetaEncoding(result, (const xmlChar *) "UTF-8");
+	}
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
     } else if ((method != NULL) &&
 	(xmlStrEqual(method, (const xmlChar *) "xhtml"))) {
+	if (encoding != NULL) {
+	    htmlSetMetaEncoding(result, (const xmlChar *) encoding);
+	} else {
+	    htmlSetMetaEncoding(result, (const xmlChar *) "UTF-8");
+	}
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
     } else if ((method != NULL) &&
 	       (xmlStrEqual(method, (const xmlChar *) "text"))) {

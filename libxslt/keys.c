@@ -296,7 +296,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     xmlChar *str;
     xmlXPathCompExprPtr comp;
     xsltKeyTablePtr table;
-
+    int	position;
 
     /*
      * Prepare the search
@@ -318,7 +318,9 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     ctxt->document = doc;
     ctxt->node = (xmlNodePtr) doc->doc;
     ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
+    position = ctxt->xpathCtxt->proximityPosition;
     res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+    ctxt->xpathCtxt->proximityPosition = position;
     xmlXPathFreeCompExpr(comp);
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {

@@ -244,6 +244,7 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
  */
 static int
 xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
+int	oldProximityPosition, oldContextSize;
     if ((ctxt == NULL) || (elem == NULL))
 	return(-1);
 
@@ -259,11 +260,15 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	if (comp == NULL)
 	    return(-1);
 	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
+	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+	oldContextSize = ctxt->xpathCtxt->contextSize;
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+	ctxt->xpathCtxt->contextSize = oldContextSize;
+	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
-		"Evaluating global variable %s failed\n");
+		"Evaluating variable %s failed\n", elem->name);
 	} else {
 #ifdef DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
@@ -385,10 +390,10 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
 #ifdef DEBUG_VARIABLE
     if (param)
 	xsltGenericDebug(xsltGenericDebugContext,
-			 "Defineing global param %s\n", name);
+			 "Defining global param %s\n", name);
     else
 	xsltGenericDebug(xsltGenericDebugContext,
-			 "Defineing global variable %s\n", name);
+			 "Defining global variable %s\n", name);
 #endif
     elem = xsltNewStackElem();
     if (elem == NULL)

@@ -174,6 +174,8 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
 	xmlFree(cur);
 	return(NULL);
     }
+    cur->xpathCtxt->proximityPosition = 0;
+    cur->xpathCtxt->contextSize = 0;
     XSLT_REGISTER_VARIABLE_LOOKUP(cur);
     cur->xpathCtxt->nsHash = style->nsHash;
     docu = xsltNewDocument(cur, doc);
@@ -464,9 +466,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		oldNode = ctxt->node;
 		ctxt->node = node;
 		templPush(ctxt, template);
-		varsPush(ctxt, NULL);
 		xsltApplyOneTemplate(ctxt, node, template->content, 1);
-		xsltFreeStackElemList(varsPop(ctxt));
 		templPop(ctxt);
 		ctxt->node = oldNode;
 	    } else /* if (ctxt->mode == NULL) */ {
@@ -497,9 +497,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		oldNode = ctxt->node;
 		ctxt->node = node;
 		templPush(ctxt, template);
-		varsPush(ctxt, NULL);
 		xsltApplyOneTemplate(ctxt, node, template->content, 1);
-		xsltFreeStackElemList(varsPop(ctxt));
 		templPop(ctxt);
 		ctxt->node = oldNode;
 	    } else /* if (ctxt->mode == NULL) */ {
@@ -531,9 +529,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    oldNode = ctxt->node;
 		    ctxt->node = node;
 		    templPush(ctxt, template);
-		    varsPush(ctxt, NULL);
 		    xsltApplyOneTemplate(ctxt, node, template->content, 1);
-		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		} else if (ctxt->mode == NULL) {
@@ -585,8 +581,6 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    case XML_DOCUMENT_NODE:
 	    case XML_HTML_DOCUMENT_NODE:
 	    case XML_ELEMENT_NODE:
-		nbchild++;
-		break;
 	    case XML_PI_NODE:
 	    case XML_COMMENT_NODE:
 		nbchild++;
@@ -622,9 +616,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    oldNode = ctxt->node;
 	    ctxt->node = node;
 	    templPush(ctxt, template);
-	    varsPush(ctxt, NULL);
 	    xsltApplyOneTemplate(ctxt, node, template->content, 1);
-	    xsltFreeStackElemList(varsPop(ctxt));
 	    templPop(ctxt);
 	    ctxt->node = oldNode;
 	}
@@ -641,7 +633,9 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    case XML_ELEMENT_NODE:
 		ctxt->xpathCtxt->contextSize = nbchild;
 		ctxt->xpathCtxt->proximityPosition = childno;
+		varsPush( ctxt, NULL );
 		xsltProcessOneNode(ctxt, cur);
+		xsltFreeStackElemList( varsPop(ctxt) );
 		break;
 	    case XML_CDATA_SECTION_NODE:
 		template = xsltGetTemplate(ctxt, node, NULL);
@@ -656,9 +650,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    oldNode = ctxt->node;
 		    ctxt->node = node;
 		    templPush(ctxt, template);
-		    varsPush(ctxt, NULL);
 		    xsltApplyOneTemplate(ctxt, node, template->content, 1);
-		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		} else /* if (ctxt->mode == NULL) */ {
@@ -691,9 +683,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    templPush(ctxt, template);
-		    varsPush(ctxt, NULL);
 		    xsltApplyOneTemplate(ctxt, cur, template->content, 1);
-		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		} else /* if (ctxt->mode == NULL) */ {
@@ -726,9 +716,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    templPush(ctxt, template);
-		    varsPush(ctxt, NULL);
 		    xsltApplyOneTemplate(ctxt, cur, template->content, 1);
-		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		}
@@ -808,9 +796,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	                 node->name);
 #endif
 	templPush(ctxt, template);
-	varsPush(ctxt, NULL);
 	xsltApplyOneTemplate(ctxt, node, template->content, 1);
-	xsltFreeStackElemList(varsPop(ctxt));
 	templPop(ctxt);
     } else {
 #ifdef DEBUG_PROCESS
@@ -824,9 +810,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	oldNode = ctxt->node;
 	ctxt->node = node;
 	templPush(ctxt, template);
-	varsPush(ctxt, NULL);
 	xsltApplyOneTemplate(ctxt, node, template->content, 1);
-	xsltFreeStackElemList(varsPop(ctxt));
 	templPop(ctxt);
 	ctxt->node = oldNode;
     }
@@ -1735,6 +1719,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr copy = NULL;
     xmlNodeSetPtr list = NULL;
     int i;
+    int oldProximityPosition, oldContextSize;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -1751,8 +1736,12 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 "xsltCopyOf: select %s\n", comp->select);
 #endif
 
+    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+    oldContextSize = ctxt->xpathCtxt->contextSize;
     ctxt->xpathCtxt->node = node;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
+    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+    ctxt->xpathCtxt->contextSize = oldContextSize;
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
 	    list = res->nodesetval;
@@ -1794,7 +1783,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	    if (copy == NULL) {
 		xsltGenericError(xsltGenericErrorContext,
-		    "xsltDefaultProcessOneNode: text copy failed\n");
+		    "xsltCopyOf: text copy failed\n");
 	    }
 #ifdef DEBUG_PROCESS
 	    else
@@ -1822,6 +1811,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr copy = NULL;
+    int oldProximityPosition, oldContextSize;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
 	return;
@@ -1839,8 +1829,12 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 "xsltValueOf: select %s\n", comp->select);
 #endif
 
+    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+    oldContextSize = ctxt->xpathCtxt->contextSize;
     ctxt->xpathCtxt->node = node;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
+    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+    ctxt->xpathCtxt->contextSize = oldContextSize;
     if (res != NULL) {
 	if (res->type != XPATH_STRING)
 	    res = xmlXPathConvertString(res);
@@ -1961,8 +1955,10 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "with-param")) {
 		param = xsltParseStylesheetCallerParam(ctxt, cur);
-		param->next = params;
-		params = param;
+		if (param != NULL) {
+		    param->next = params;
+		    params = param;
+		}
 	    } else {
 		xsltGenericError(xsltGenericDebugContext,
 		     "xslt:call-template: misplaced xslt:%s\n", cur->name);
@@ -1997,7 +1993,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int i, oldProximityPosition, oldContextSize;
     const xmlChar *oldmode, *oldmodeURI;
     int have_sort=0;
-    xsltStackElemPtr params = NULL, param, lastParam = NULL;
+    xsltStackElemPtr params = NULL, param, tmp, p;
 
 
     if (comp == NULL) {
@@ -2032,8 +2028,12 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsltApplyTemplates: select %s\n", comp->select);
 #endif
 
+	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+	oldContextSize = ctxt->xpathCtxt->contextSize;
 	ctxt->xpathCtxt->node = node;
 	res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
+	ctxt->xpathCtxt->contextSize = oldContextSize;
+	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	if (res != NULL) {
 	    if (res->type == XPATH_NODESET) {
 		list = res->nodesetval;
@@ -2117,9 +2117,10 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
         if (IS_XSLT_ELEM(cur)) {
             if (IS_XSLT_NAME(cur, "with-param")) {
                 param = xsltParseStylesheetCallerParam(ctxt, cur);
-                param->next = params;
-                params = param;
-                if (lastParam==NULL) lastParam = params;
+		if (param != NULL) {
+		    param->next = params;
+		    params = param;
+		}
 	    } else if (IS_XSLT_NAME(cur, "sort")) {
 		if (!have_sort) {
 		    have_sort = 1;
@@ -2141,12 +2142,25 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
-	varsPush(ctxt,params);
+	varsPush(ctxt, params);
 	xsltProcessOneNode(ctxt, list->nodeTab[i]);
-	varsPop(ctxt);
-	if (lastParam != NULL) {
-	    xsltFreeStackElemList(lastParam->next);
-	    lastParam->next = NULL;
+	tmp = varsPop(ctxt);
+	/*
+	 * Free other parameter and variables which may have been
+	 * added to the set defined in the caller.
+	 */
+	if (params == NULL) {
+	    xsltFreeStackElemList(tmp);
+	} else if (tmp != params) {
+            p = tmp;
+	    while ((p != NULL) && (p->next != params))
+		p = p->next;
+	    if (p == NULL) {
+		xsltFreeStackElemList(tmp);
+	    } else {
+		p->next = NULL;
+		xsltFreeStackElemList(tmp);
+	    }
 	}
     }
     xsltFreeStackElemList(params);	/* free the parameter list */
@@ -2181,6 +2195,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement, when;
     int doit = 1;
+    int oldProximityPosition, oldContextSize;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -2218,9 +2233,13 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	xpathComp = xmlXPathCompile(prop);
 	if (xpathComp == NULL)
 	    goto error;
-	ctxt->xpathCtxt->node = node;
-	res = xmlXPathCompiledEval(xpathComp, ctxt->xpathCtxt);
+	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+	oldContextSize = ctxt->xpathCtxt->contextSize;
+  	ctxt->xpathCtxt->node = node;
+  	res = xmlXPathCompiledEval(xpathComp, ctxt->xpathCtxt);
 	xmlXPathFreeCompExpr(xpathComp);
+	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+	ctxt->xpathCtxt->contextSize = oldContextSize;
 	if (res != NULL) {
 	    if (res->type != XPATH_BOOLEAN)
 		res = xmlXPathConvertBoolean(res);
@@ -2291,6 +2310,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlXPathObjectPtr res = NULL;
     int doit = 1;
+    int oldContextSize, oldProximityPosition;
 
     if (comp == NULL) {
 	xsltStylePreCompute(ctxt, inst);
@@ -2312,8 +2332,12 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 "xsltIf: test %s\n", comp->test);
 #endif
 
+    oldContextSize = ctxt->xpathCtxt->contextSize;
+    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
     ctxt->xpathCtxt->node = node;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
+    ctxt->xpathCtxt->contextSize = oldContextSize;
+    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     if (res != NULL) {
 	if (res->type != XPATH_BOOLEAN)
 	    res = xmlXPathConvertBoolean(res);
@@ -2383,7 +2407,11 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 
     ctxt->xpathCtxt->node = node;
+    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+    oldContextSize = ctxt->xpathCtxt->contextSize;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
+    ctxt->xpathCtxt->contextSize = oldContextSize;
+    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     if (res != NULL) {
 	if (res->type == XPATH_NODESET)
 	    list = res->nodesetval;

@@ -1,3 +1,18 @@
+Mon Apr  2 17:00:39 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in tests/Makefile.am tests/XSLTMark/* tests/multiple:
+	  added the XSLTMark in the regression tests as well as multiple
+	  output test from Ankh
+	* libxslt/functions.c libxslt/keys.c libxslt/transform.c
+	  libxslt/variables.c libxslt/xsltutils.c: applied William M. Brack
+	  patches and fixed a memory leak
+	* tests/docbook/result/html/*.html : updated the results after
+	  William's patch
+	* tests/xmlspec/REC-xml-20001006-review.html 
+	  tests/xmlspec/REC-xml-20001006.html: libxml now don't invent
+	  an HTML doctype when serializing HTML result, but adds the
+	  encoding in ALT
+
 Thu Mar 29 10:24:42 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c: applied fix to xsltApplyTemplates from

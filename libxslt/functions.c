@@ -138,7 +138,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	    base = xmlNodeGetBase(obj2->nodesetval->nodeTab[0]->doc,
 				  obj->nodesetval->nodeTab[0]);
 	} else {
-	    base = xmlNodeGetBase(ctxt->context->doc,
+	    base = xmlNodeGetBase(
+		((xsltTransformContextPtr)ctxt->context->extra)->style->doc,
 				  ctxt->context->node);
 	}
 	URI = xmlBuildURI(obj->stringval, base);
