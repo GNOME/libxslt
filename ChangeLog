@@ -1,3 +1,8 @@
+Mon Oct 18 17:04:27 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.spec.in doc/Makefile.am: fix for RedHat bug #136072
+	  to include EXSLT doc in libxslt package.
+
 Thu Oct 14 22:43:22 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* configure.in, config.h.in, libexslt/date.c: changed date.c to use
