@@ -150,12 +150,7 @@ exclPrefixPop(xsltStylesheetPtr style)
  */
 static void
 xsltInit (void) {
-    static int initialized = 0;
-
-    if (initialized == 0) {
-	initialized = 1;
-	xsltRegisterAllExtras();
-    }
+    xsltRegisterAllExtras();
 }
 
 /**
