@@ -62,9 +62,15 @@ double xmlXPathStringEvalNumber(const xmlChar *str);
  * Useful macros
  */
 
+#ifdef  IS_BLANK
+#undef	IS_BLANK
+#endif
 #define IS_BLANK(c) (((c) == 0x20) || ((c) == 0x09) || ((c) == 0xA) ||	\
                      ((c) == 0x0D))
 
+#ifdef	IS_BLANK_NODE
+#undef	IS_BLANK_NODE
+#endif
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
