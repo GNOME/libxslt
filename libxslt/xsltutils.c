@@ -1126,7 +1126,6 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
 		       xmlDocPtr result, xsltStylesheetPtr style) {
     xmlOutputBufferPtr buf;
     const xmlChar *encoding;
-    int ret;
 
     *doc_txt_ptr = NULL;
     *doc_txt_len = 0;
