@@ -1,3 +1,11 @@
+Fri Oct 24 00:49:05 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libxslt.spec.in: doing some testing and raising
+	  the build requirement to 2.5.10 
+	* libexslt/Makefile.am configure.in: applied patch from Graham Wilson
+	  for linking the exslt lib with the lib being build instead of the
+	  installed one
+
 Thu Oct 23 15:48:39 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: Fixed problem with cascaded predicates

@@ -25,10 +25,8 @@ libexslt_la_SOURCES =                   \
 	libexslt.h			\
 	dynamic.c
 
-# The following DOES NOT WORK reliably. Sorry no prelinking to uninstalled
-# yet libraries.
-# libexslt_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
-libexslt_la_LIBADD = $(INSTALLED_XSLT_LIB) $(EXTRA_LIBS)
+# The following DOES NOT WORK reliably.
+libexslt_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
 libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@
 
 man_MANS = libexslt.3

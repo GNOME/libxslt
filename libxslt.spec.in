@@ -1,14 +1,14 @@
 Summary: Library providing the Gnome XSLT engine
 Name: libxslt
 Version: @VERSION@
-Release: 1
+Release: test1
 License: MIT
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/XSLT/libxslt-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 URL: http://xmlsoft.org/XSLT/
-Requires: libxml2 >= 2.5.6
-BuildRequires: libxml2-devel >= 2.5.6
+Requires: libxml2 >= 2.5.10
+BuildRequires: libxml2-devel >= 2.5.10
 BuildRequires: python python-devel
 BuildRequires: libxml2-python
 Prefix: %{_prefix}
