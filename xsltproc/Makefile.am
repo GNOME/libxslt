@@ -1,6 +1,6 @@
-INCLUDES = -I$(top_srcdir) -I$(top_builddir)/libxslt -I$(top_builddir)/libexslt -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
-	 $(LIBXML_CFLAGS) $(CFLAGS)
-
+INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
+           -I$(top_builddir) -I$(top_builddir)/libxslt \
+	   -I$(top_builddir)/libexslt $(LIBXML_CFLAGS) $(CFLAGS)
 
 bin_PROGRAMS = xsltproc
 

@@ -1,3 +1,12 @@
+Wed Aug 15 15:19:14 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am config.h.in configure.in libxslt/xsltwin32config.h:
+	  release of 1.0.2
+	* tests/docs/Makefile.am libexslt/Makefile.am
+	  tests/documents/Makefile.am tests/general/Makefile.am
+	  xsltproc/Makefile.am: cleaning of Makefiles pointed out
+	  by make distcheck
+
 Wed Aug 15 13:54:41 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.h libxslt/transform.c: a bit of cleanup
