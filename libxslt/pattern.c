@@ -611,6 +611,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			xmlChar *query;
 			xmlXPathObjectPtr newlist;
 			xmlNodePtr parent = node->parent;
+			xmlDocPtr olddoc;
+			xmlNodePtr oldnode;
 
 			if (comp->pattern[0] == '/')
 			    query = xmlStrdup(comp->pattern);
@@ -618,7 +620,13 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    query = xmlStrdup((const xmlChar *)"//");
 			    query = xmlStrcat(query, comp->pattern);
 			}
+			oldnode = ctxt->xpathCtxt->node;
+			olddoc = ctxt->xpathCtxt->doc;
+			ctxt->xpathCtxt->node = node;
+			ctxt->xpathCtxt->doc = doc;
 			newlist = xmlXPathEval(query, ctxt->xpathCtxt);
+			ctxt->xpathCtxt->node = oldnode;
+			ctxt->xpathCtxt->doc = olddoc;
 			xmlFree(query);
 			if (newlist == NULL)
 			    return(-1);

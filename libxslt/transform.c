@@ -3064,18 +3064,27 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
 	    /* The nodeset is from another document, so must change */
 	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
-	    if ((ctxt->document =
-		  xsltFindDocument(ctxt,list->nodeTab[i]->doc->doc))==NULL) { 
-		xsltTransformError(ctxt, NULL, inst,
-	 		"xsl:apply-templates : can't find doc\n");
-    		goto error;
-	    }
-	    ctxt->xpathCtxt->node = list->nodeTab[i];
+	    if (list->nodeTab[i]->doc->type != XML_ELEMENT_NODE) {
+		if ((ctxt->document = xsltFindDocument(ctxt,
+				       list->nodeTab[i]->doc->doc))==NULL) { 
+		    xsltTransformError(ctxt, NULL, inst,
+			    "xsl:apply-templates : can't find doc\n");
+		    goto error;
+		}
+		ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
-	    xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
-	     ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
+		xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
+		 ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
 #endif
+	    } else {
+		ctxt->xpathCtxt->node = list->nodeTab[i];
+		ctxt->document = NULL;
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltApplyTemplates: Changing document - Return tree fragment\n");
+#endif
+	    }
 	}
 	xsltProcessOneNode(ctxt, list->nodeTab[i], params);
     }
@@ -3833,7 +3842,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if ((res != NULL) && (ctxt != NULL) && (output != NULL)) {
 	int ret;
 
-	ret = xsltCheckWrite(userCtxt->sec, userCtxt, output);
+	ret = xsltCheckWrite(userCtxt->sec, userCtxt, (const xmlChar *) output);
 	if (ret == 0) {
 	    xsltTransformError(ctxt, NULL, NULL,
 		     "xsltApplyStylesheet: forbidden to save to %s\n",

@@ -364,14 +364,15 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    xmlNodePtr oldInsert;
 	    xmlDocPtr  oldoutput;
 
-	    container = xmlNewDocNode(ctxt->document->doc, NULL,
+	    container = xmlNewDocNode(NULL, NULL,
 			      (const xmlChar *) " fake node libxslt", NULL);
 	    if (container == NULL)
 		return(NULL);
+	    container->doc = (xmlDocPtr) container;
 	    container->parent = NULL;
 
 	    oldoutput = ctxt->output;
-	    ctxt->output = NULL;
+	    ctxt->output = (xmlDocPtr) container;
 	    oldInsert = ctxt->insert;
 	    ctxt->insert = container;
 	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, NULL, NULL);
@@ -500,16 +501,17 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    xmlNodePtr oldInsert;
 	    xmlDocPtr  oldoutput;
 
-	    container = xmlNewDocNode(ctxt->document->doc, NULL,
+	    container = xmlNewDocNode(NULL , NULL,
 			      (const xmlChar *) " fake node libxslt", NULL);
 	    if (container == NULL) {
 		elem->name = name;
 		return(NULL);
 	    }
+	    container->doc = (xmlDocPtr) container;
 	    container->parent = NULL;
 
 	    oldoutput = ctxt->output;
-	    ctxt->output = NULL;
+	    ctxt->output = (xmlDocPtr) container;
 	    oldInsert = ctxt->insert;
 	    ctxt->insert = container;
 	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, NULL, NULL);

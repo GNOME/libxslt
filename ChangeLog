@@ -1,3 +1,14 @@
+Mon Mar 24 15:01:07 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c libxslt/transform.c libxslt/variables.c:
+	  Finally fixed bug #75813, processing or Result Value Tree 
+	  converted into node-sets should be a bit more sensible now.
+	* tests/exslt/common/node-set.2.out: the associated fix in libxml2
+	  fixes this regression test, there is 4 nodes, not 3
+	* tests/docs/Makefile.am tests/docs/bug-111.*
+	  tests/general/Makefile.am tests/general/bug-111*: added an
+	  example in the regression tests for bug #75813
+	
 Sun Mar 23 13:09:17 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-110.*
