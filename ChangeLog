@@ -1,3 +1,12 @@
+Thu Oct 17 15:25:46 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c: fixing bug #95826 the attribute was reset
+	  with the inherited stylesheet value.
+	* tests/docs/Makefile.am tests/docs/bug-93.xml
+	  tests/general/Makefile.am tests/general/bug-93-inc.*
+	  tests/general/bug-93.*: added the example in the regression
+	  tests for this case
+	
 Tue Oct 15 18:02:37 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltInternals.h libxslt/xsltutils.[ch]: added the

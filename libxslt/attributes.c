@@ -616,6 +616,11 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((fromset) && (ns != NULL))
         URL = ns->href;
 
+    if (fromset) {
+	attr = xmlHasNsProp(ctxt->insert, name, ns);
+	if (attr != NULL)
+	    return;
+    }
     value = xsltEvalTemplateString(ctxt, node, inst);
     if (value == NULL) {
         if (ns) {
