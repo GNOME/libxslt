@@ -559,9 +559,18 @@ few pointers and informations which may be helpful:</p>
     versions of the DTDs and XSLT stylesheets</li>
   <li><a href="http://www.docbook.org/">DocBook: The Definitive Guide</a>
      is the official reference documentation for DocBook.</li>
-  <li>Ready to use <a href="ftp://xmlsoft.org/test/dbk412catalog.tar.gz">set
-    of XML Catalogs and DocBook XML 4.1.2 Dtd</a> for those where their
-    system doesn't provide them natively</li>
+  <li>Here is a <a href="../../XML/doc/buildDocBookCatalog">shell script</a>
+    to generate XML Catalogs for DocBook 4.1.2 . If it can write to the
+    /etc/xml/ directory, it will set-up /etc/xml/catalog and /etc/xml/docbook
+    based on the resources found on the system. Otherwise it will just create
+    ~/xmlcatalog and ~/dbkxmlcatalog and doing:
+    <p><code>export XMLCATALOG=$HOME/xmlcatalog</code></p>
+    <p>should allow to process DocBook documentations without requiring
+    network accesses for the DTd or stylesheets</p>
+  </li>
+  <li>I have uploaded <a href="ftp://xmlsoft.org/test/dbk412catalog.tar.gz">a
+    small tarball</a> containing XML Catalogs for DocBook 4.1.2 which seems
+    to work fine for me too</li>
   <li>Informations on installing a <a
     href="http://ourworld.compuserve.com/homepages/hoenicka_markus/cygc2057.html">Windows
     DocBook processing setup</a> based on Cygwin (using the binaries from the
@@ -573,7 +582,7 @@ few pointers and informations which may be helpful:</p>
     conversion script</a></li>
   <li>Linux Documentation Project <a
     href="http://www.linuxdoc.org/HOWTO/mini/DocBook-Install/">
-    DocBook-Install-mini-HOWTO</a> </li>
+    DocBook-Install-mini-HOWTO</a></li>
 </ul>
 
 <p>Do not use the --docbook option of xsltproc to process XML DocBook
