@@ -124,7 +124,7 @@
 a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block>
       <fo:block>
         <fo:block font-size="16pt" font-weight="bold">Books</fo:block>
-        <fo:block id="id2763475" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2763906" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[AhoSethiUllman96] </fo:inline>
           <fo:inline>Alfred V. Aho,Ravi Sethi, and Jeffrey D. Ullman. </fo:inline>
           <fo:inline><fo:inline font-style="italic">Compilers, Principles, Techniques, and Tools</fo:inline>. </fo:inline>
@@ -158,7 +158,7 @@ a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block
     <fo:inline>O'Reilly &amp; Associates, Inc.</fo:inline> and
     <fo:inline>The World Wide Web Consortium</fo:inline>.
     <fo:inline>Winter, 1996</fo:inline></fo:inline>.</fo:block>
-        <fo:block id="id2761625" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2762062" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[Abbrev] </fo:inline>
           <fo:inline><fo:inline font-style="italic">A Really Full BiblioEntry</fo:inline>. </fo:inline>
           <fo:inline>Subtitle. </fo:inline>

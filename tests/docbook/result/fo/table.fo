@@ -99,7 +99,7 @@
         </fo:block>
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">How many &#xB0; can you &#xA9;.</fo:block>
-      <fo:table-and-caption id="id2761566" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2761895" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
@@ -217,7 +217,7 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2805304" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2869139" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
@@ -335,7 +335,7 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2759615" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2763846" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
@@ -453,7 +453,7 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2759988" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2760418" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>

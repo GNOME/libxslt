@@ -143,7 +143,7 @@
         </fo:block>
         <fo:block text-align-last="justify" end-indent="2pc" last-line-end-indent="-2pc">
           <fo:inline keep-with-next.within-line="always"> Index</fo:inline>
-          <fo:inline keep-together.within-line="always"> <fo:leader leader-pattern="dots" keep-with-next.within-line="always"/> <fo:basic-link internal-destination="id2759254"><fo:page-number-citation ref-id="id2759254"/></fo:basic-link></fo:inline>
+          <fo:inline keep-together.within-line="always"> <fo:leader leader-pattern="dots" keep-with-next.within-line="always"/> <fo:basic-link internal-destination="id2759764"><fo:page-number-citation ref-id="id2759764"/></fo:basic-link></fo:inline>
         </fo:block>
       </fo:block>
     </fo:flow>
@@ -164,7 +164,7 @@
 a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block>
       <fo:block>
         <fo:block font-size="16pt" font-weight="bold">Books</fo:block>
-        <fo:block id="id2854695" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2762338" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[AhoSethiUllman96] </fo:inline>
           <fo:inline>Alfred V. Aho,Ravi Sethi, and Jeffrey D. Ullman. </fo:inline>
           <fo:inline><fo:inline font-style="italic">Compilers, Principles, Techniques, and Tools</fo:inline>. </fo:inline>
@@ -191,7 +191,7 @@ a lot of tweaking.  It probably doesn't conform to any specific style.</fo:block
     <fo:inline>O'Reilly &amp; Associates, Inc.</fo:inline> and
     <fo:inline>The World Wide Web Consortium</fo:inline>.
     <fo:inline>Winter, 1996</fo:inline></fo:inline>.</fo:block>
-        <fo:block id="id2764479" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:block id="id2764160" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:inline>[Abbrev] </fo:inline>
           <fo:inline><fo:inline font-style="italic">A Really Full BiblioEntry</fo:inline>. </fo:inline>
           <fo:inline>Subtitle. </fo:inline>
@@ -293,7 +293,7 @@ USA. </fo:inline>
       </fo:list-block>
       <fo:block font-size="16pt" font-weight="bold">S</fo:block>
       <fo:list-block provisional-distance-between-starts="2in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2758720" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2759230" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>SGML</fo:block>
           </fo:list-item-label>
@@ -331,7 +331,7 @@ USA. </fo:inline>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em"><fo:inline font-weight="bold" keep-with-next.within-line="always" padding-end="1em">a formal para</fo:inline>this is a formal paragraph.</fo:block>
     </fo:flow>
   </fo:page-sequence>
-  <fo:page-sequence id="id2759254" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2759764" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>

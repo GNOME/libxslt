@@ -1,3 +1,8 @@
+Mon Sep 10 22:52:44 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c tests/docbook/result/fo/*: applied fix from
+	  #60143 and rebuilt the FO test outputs
+
 Mon Sep 10 19:38:54 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attributes.c libxslt/transform.c: fixed bug #59757

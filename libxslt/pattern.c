@@ -381,7 +381,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
             case XSLT_OP_ROOT:
 		if ((node->type == XML_DOCUMENT_NODE) ||
 #ifdef LIBXML_DOCB_ENABLED
-		    (node->type != XML_DOCB_DOCUMENT_NODE) ||
+		    (node->type == XML_DOCB_DOCUMENT_NODE) ||
 #endif
 		    (node->type == XML_HTML_DOCUMENT_NODE))
 		    continue;
@@ -759,6 +759,9 @@ wrong_index:
 		switch (node->type) {
 		    case XML_DOCUMENT_NODE:
 		    case XML_HTML_DOCUMENT_NODE:
+#ifdef LIBXML_DOCB_ENABLED
+		    case XML_DOCB_DOCUMENT_NODE:
+#endif
 		    case XML_ELEMENT_NODE:
 		    case XML_CDATA_SECTION_NODE:
 		    case XML_PI_NODE:
