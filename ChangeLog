@@ -1,3 +1,13 @@
+Mon Sep 23 10:14:38 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am: set-up DIST_SUBDIRS to avoid the same problem Jacob
+	  reported for libxml2
+
+Fri Sep 20 14:06:45 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am configure.in: trying to fix the same problem as
+	  #88412 by bypassing all the python subdir if python ain't detected
+
 Fri Sep 20 10:55:03 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/templates.c: fixed a problem reported by Mark Vakoc

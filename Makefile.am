@@ -6,7 +6,7 @@ SUBDIRS = \
   	libexslt \
   	xsltproc \
   	doc \
-	python \
+	@PYTHON_SUBDIR@ \
   	tests
 else
 SUBDIRS = \
@@ -14,9 +14,11 @@ SUBDIRS = \
 	libexslt \
 	xsltproc \
 	doc \
-	python \
+	@PYTHON_SUBDIR@ \
 	tests
 endif
+
+DIST_SUBDIRS = libxslt libexslt xsltproc python doc tests breakpoint
 
 confexecdir=$(libdir)
 confexec_DATA = xsltConf.sh
@@ -51,7 +53,7 @@ dummy:
 
 tests: dummy
 	@(cd tests ; $(MAKE) tests)
-	@(cd python ; $(MAKE) tests)
+	@(if [ "@PYTHON_SUBDIR@" != "" ] ; then cd python ; $(MAKE) tests ; fi)
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'
