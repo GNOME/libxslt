@@ -1,3 +1,11 @@
+Wed Aug 14 13:35:04 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.c: recovering to the old (somewhat) broken
+	  implementation of document('') when there is no base for the
+	  source document or it can't be realoaded (e.g. when the sytlesheet
+	  was loaded from a memory string). Matt Sergeant insisted on this
+	  one :-)
+
 Tue Aug 13 11:21:44 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: applied another patch from Nathan Myers about
