@@ -1,0 +1,1140 @@
+<?xml version="1.0"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-blank" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-blank" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="simple1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before extent="12pt"/>
+      <fo:region-after extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="left1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-left" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-left" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="right1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="10pc">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-right" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-right" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="first1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-first" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-first" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="simple2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before extent="12pt"/>
+      <fo:region-after extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="left2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-left" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-left" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="right2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="10pc">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-right" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-right" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="first2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="1in">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-first" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-first" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:page-sequence-master master-name="titlepage1">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="first1"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="oneside1">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="simple1"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="twoside1">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="blank" blank-or-not-blank="blank"/>
+        <fo:conditional-page-master-reference master-name="right1" odd-or-even="odd"/>
+        <fo:conditional-page-master-reference master-name="left1" odd-or-even="even"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="titlepage2">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="first2"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="oneside2">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="simple2"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="twoside2">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="blank" blank-or-not-blank="blank"/>
+        <fo:conditional-page-master-reference master-name="right2" odd-or-even="odd"/>
+        <fo:conditional-page-master-reference master-name="left2" odd-or-even="even"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+  </fo:layout-master-set>
+  <fo:page-sequence id="id2787333" hyphenate="true" master-name="titlepage1" language="en">
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
+          <fo:block>Multilingual Test Document</fo:block>
+        </fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="14.4pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Multilingual Test Document</fo:block>
+        </fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence hyphenate="true" format="i" master-name="titlepage1" language="en">
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
+        </fo:block>
+        <fo:block>1.Catalan<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="cachap"/></fo:block>
+        <fo:block>2.Czech<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="cschap"/></fo:block>
+        <fo:block>3.Danish<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="dachap"/></fo:block>
+        <fo:block>4.Spanish<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="eschap"/></fo:block>
+        <fo:block>5.Finnish<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="fichap"/></fo:block>
+        <fo:block>6.French<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="frchap"/></fo:block>
+        <fo:block>7.Italian<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="itchap"/></fo:block>
+        <fo:block>8.German<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="dechap"/></fo:block>
+        <fo:block>9.Greek<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="elchap"/></fo:block>
+        <fo:block>10.English<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="enchap"/></fo:block>
+        <fo:block>11.Japanese<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="jachap"/></fo:block>
+        <fo:block>12.Romanian<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="rochap"/></fo:block>
+        <fo:block>13.Russian<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="ruchap"/></fo:block>
+        <fo:block>14.Norsk<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="nochap"/></fo:block>
+        <fo:block>15.Dutch<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="nlchap"/></fo:block>
+        <fo:block>16.Polish<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="plchap"/></fo:block>
+        <fo:block>17.Portuguese<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="ptchap"/></fo:block>
+        <fo:block>18.Portuguese (Brazilian)<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="ptbrchap"/></fo:block>
+        <fo:block>19.Slovak<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="skchap"/></fo:block>
+        <fo:block>20.Swedish<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="svchap"/></fo:block>
+        <fo:block>Bibliography<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="bibl"/></fo:block>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="cachap" hyphenate="true" master-name="oneside1" language="ca" initial-page-number="1">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">1. Catalan</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Cap&#xED;tol 1. Catalan</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Catalan, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="cschap" hyphenate="true" master-name="oneside1" language="cs">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">2. Czech</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Kapitola 2. Czech</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">Pozn&#xE1;mka</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Czech, if I knew any.
+&#x201E;Quote test.&#x201C;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="dachap" hyphenate="true" master-name="oneside1" language="da">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">3. Danish</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Kapitel 3. Danish</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTE</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Danish, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="eschap" hyphenate="true" master-name="oneside1" language="es">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">4. Spanish</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Cap&#xED;tulo 4. Spanish</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Spanish, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="fichap" hyphenate="true" master-name="oneside1" language="fi">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">5. Finnish</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Luku 5. Finnish</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">HUOMAA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Finnish, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="frchap" hyphenate="true" master-name="oneside1" language="fr">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">6. French</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Chapitre 6. French</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">Note</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in French, if I knew any.
+&#xAB;Quote test.&#xBB;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="itchap" hyphenate="true" master-name="oneside1" language="it">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">7. Italian</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Capitolo 7. Italian</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Italian, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="dechap" hyphenate="true" master-name="oneside1" language="de">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">8. German</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Kapitel 8. German</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">Anmerkung</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in German, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="elchap" hyphenate="true" master-name="oneside1" language="el">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">9. Greek</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9. Greek</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">&#xD3;&#xC7;&#xCC;&#xC5;&#xC9;&#xD9;&#xD3;&#xC7;</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Greek, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="enchap" hyphenate="true" master-name="oneside1" language="en">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">10. English</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Chapter 10. English</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">Note</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph is in English.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="jachap" hyphenate="true" master-name="oneside1" language="ja">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">11. Japanese</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>&#x7AE0; 11. Japanese</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">&#x6CE8;&#x610F;</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Japanese, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="rochap" hyphenate="true" master-name="oneside1" language="ro">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">12. Romanian</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Cap. 12. Romanian</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOT&#xC3;</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Romanian, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="ruchap" hyphenate="true" master-name="oneside1" language="ru">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">13. Russian</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>&#x413;&#x43B;&#x430;&#x432;&#x430; 13. Russian</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">&#x417;&#x410;&#x41C;&#x415;&#x427;&#x410;&#x41D;&#x418;&#x415;</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Russian, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="nochap" hyphenate="true" master-name="oneside1" language="no">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">14. Norsk</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Kapittel 14. Norsk</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTAT</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Norsk, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="nlchap" hyphenate="true" master-name="oneside1" language="nl">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">15. Dutch</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Hoofdstuk 15. Dutch</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">N.B.</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Dutch, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="plchap" hyphenate="true" master-name="oneside1" language="pl">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">16. Polish</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Rozdzia&#xB3; 16. Polish</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTATKA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Polish, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="ptchap" hyphenate="true" master-name="oneside1" language="pt">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">17. Portuguese</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Cap&#xED;tulo 17. Portuguese</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Portugeuse, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="ptbrchap" hyphenate="true" master-name="oneside1" language="pt_br">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">18. Portuguese (Brazilian)</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Cap&#xED;tulo 18. Portuguese (Brazilian)</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOTA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Brazilian Portugeuse, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="skchap" hyphenate="true" master-name="oneside1" language="sk">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">19. Slovak</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Kapitola 19. Slovak</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">POZN&#xC1;MKA</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Slovak, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="svchap" hyphenate="true" master-name="oneside1" language="sv">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">20. Swedish</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Kapitel 20. Swedish</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in">
+        <fo:block font-size="14pt" font-weight="bold" keep-with-next="true">NOT</fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+This paragraph would be in Swedish, if I knew any.
+&#x201C;Quote test.&#x201D;
+</fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+See <fo:basic-link internal-destination="cachap">Cap&#xED;tol 1., <fo:inline font-style="italic">Catalan</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="cschap">Kapitola 2., <fo:inline font-style="italic">Czech</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dachap">Kapitel 3., <fo:inline font-style="italic">Danish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="dechap">Kapitel 8., <fo:inline font-style="italic">German</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="elchap">&#xCA;&#xE5;&#xF6;&#xDC;&#xEB;&#xE1;&#xE9;&#xEF; 9., <fo:inline font-style="italic">Greek</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="enchap">Chapter 10., <fo:inline font-style="italic">English</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="eschap">Cap&#xED;tulo 4., <fo:inline font-style="italic">Spanish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="fichap">Luku 5., <fo:inline font-style="italic">Finnish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="frchap">Chapitre 6., <fo:inline font-style="italic">French</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="itchap">Capitolo 7., <fo:inline font-style="italic">Italian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="jachap">&#x7AE0; 11., <fo:inline font-style="italic">Japanese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nlchap">Hoofdstuk 15., <fo:inline font-style="italic">Dutch</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="nochap">Kapittel 14., <fo:inline font-style="italic">Norsk</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="plchap">Rozdzia&#xB3; 16., <fo:inline font-style="italic">Polish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptchap">Cap&#xED;tulo 17., <fo:inline font-style="italic">Portuguese</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ptbrchap">Cap&#xED;tulo 18., <fo:inline font-style="italic">Portuguese (Brazilian)</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="rochap">Cap. 12., <fo:inline font-style="italic">Romanian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="ruchap">&#x413;&#x43B;&#x430;&#x432;&#x430; 13., <fo:inline font-style="italic">Russian</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="skchap">Kapitola 19., <fo:inline font-style="italic">Slovak</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="svchap">Kapitel 20., <fo:inline font-style="italic">Swedish</fo:inline></fo:basic-link>.
+See <fo:basic-link internal-destination="bibl">&#x201C;Bibliography&#x201D;</fo:basic-link>.
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="bibl" hyphenate="true" master-name="oneside1" language="en">
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+          <fo:block>Bibliography</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block id="id2855649">
+        <fo:inline>[AhoSethiUllman96] </fo:inline>
+        <fo:inline>Alfred V. Aho, Ravi Sethi, and Jeffrey D. Ullman. </fo:inline>
+        <fo:inline><fo:inline font-style="italic">Compilers, Principles, Techniques, and Tools</fo:inline>. </fo:inline>
+        <fo:inline>
+          <fo:inline>Addison-Wesley Publishing Company. </fo:inline>
+        </fo:inline>
+        <fo:inline>Copyright &#xA9; 1996 Bell Telephone Laboratories, Inc.. </fo:inline>
+        <fo:inline>0-201-10088-6. </fo:inline>
+        <fo:inline>James T. DeWolf. </fo:inline>
+        <fo:inline>
+          <fo:inline><fo:inline font-style="italic">Computer Science</fo:inline>. </fo:inline>
+          <fo:inline>Michael A. Harrison. </fo:inline>
+          <fo:inline>
+            <fo:inline>Addison-Wesley Publishing Company. </fo:inline>
+          </fo:inline>
+        </fo:inline>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>

@@ -1,3 +1,12 @@
+Tue Jun 19 16:13:49 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/docbook/Makefile.am: added XHTML and XSL FO to the
+	  regression tests
+	* tests/docbook/xhtml/*: added XHTML stylesheets
+	* tests/docbook/fo/*: added XSL FO stylesheets
+	* tests/docbook/result/xhtml/*: added XHTML results
+	* tests/docbook/result/fo/*: added XSL FO results
+
 Tue Jun 19 00:20:32 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* HACKING: fixed, added William

@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-blank" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-blank" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="simple1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before extent="12pt"/>
+      <fo:region-after extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="left1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-left" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-left" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="right1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="10pc">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-right" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-right" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="first1" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="1in">
+      <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-first" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-first" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="simple2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before extent="12pt"/>
+      <fo:region-after extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="left2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-left" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-left" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="right2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="10pc">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-right" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-right" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="first2" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="1in" margin-right="1in">
+      <fo:region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+      <fo:region-before region-name="xsl-region-before-first" extent="12pt"/>
+      <fo:region-after region-name="xsl-region-after-first" extent="12pt"/>
+    </fo:simple-page-master>
+    <fo:page-sequence-master master-name="titlepage1">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="first1"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="oneside1">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="simple1"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="twoside1">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="blank" blank-or-not-blank="blank"/>
+        <fo:conditional-page-master-reference master-name="right1" odd-or-even="odd"/>
+        <fo:conditional-page-master-reference master-name="left1" odd-or-even="even"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="titlepage2">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="first2"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="oneside2">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="simple2"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="twoside2">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-name="blank" blank-or-not-blank="blank"/>
+        <fo:conditional-page-master-reference master-name="right2" odd-or-even="odd"/>
+        <fo:conditional-page-master-reference master-name="left2" odd-or-even="even"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+  </fo:layout-master-set>
+  <fo:page-sequence id="id2599920" hyphenate="true" master-name="titlepage1" language="en">
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
+          <fo:block>Book Test Index Document Title</fo:block>
+        </fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="20.736pt" text-align="center" space-before="15.552pt">Book Subtitle</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="12pt" text-align="center" space-before="2in">
+          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="17.28pt" text-align="center" space-before="10.8pt" keep-with-next="always">Norman Walsh</fo:block>
+        </fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="14.4pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Book Test Index Document Title: Book Subtitle</fo:block>
+        </fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">
+          <fo:block>by Norman Walsh</fo:block>
+        </fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence hyphenate="true" format="i" master-name="titlepage1" language="en">
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
+        </fo:block>
+        <fo:block>Foreword<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="id2742237"/></fo:block>
+        <fo:block>1.First Chapter<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="chapter"/></fo:block>
+        <fo:block start-indent="2pc">
+          <fo:block>First Sect1<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="id2741936"/></fo:block>
+        </fo:block>
+        <fo:block>2.Second Chapter<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="ch2"/></fo:block>
+        <fo:block>A.First Appendix<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="id2744855"/></fo:block>
+        <fo:block>Index<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="id2746232"/></fo:block>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="id2742237" hyphenate="true" format="i" master-name="oneside1" language="en">
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+          <fo:block>Foreword</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is a test paragraph<fo:wrapper id="id2742255"><!--paragraph, test--></fo:wrapper>.</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="chapter" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">1. First Chapter</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Chapter 1. First Chapter</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Paragraph<fo:wrapper id="id2741922"><!--paragraph--></fo:wrapper>.</fo:block>
+      <fo:block id="id2741936">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+            <fo:block keep-with-next="always">
+              <fo:block font-size="16pt" font-weight="bold" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">First Sect1</fo:block>
+            </fo:block>
+          </fo:block>
+        </fo:block>
+        <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Another paragraph<fo:wrapper id="id2741954"><!--paragraph, another--></fo:wrapper>.</fo:block>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="ch2" hyphenate="true" master-name="oneside1" language="en">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">2. Second Chapter</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Chapter 2. Second Chapter</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is a test paragraph.
+<fo:wrapper id="id2862949"><!--the ap1--></fo:wrapper>
+<fo:wrapper id="id2862974"><!--the ap1--></fo:wrapper>
+<fo:wrapper id="id2862957"><!--ap2--></fo:wrapper>
+
+<fo:wrapper id="id2836717"><!--bp1, bp1bs1--></fo:wrapper>
+<fo:wrapper id="id2836740"><!--bp2--></fo:wrapper>
+
+<fo:wrapper id="id2836756"><!--cp1, cp1cs1, cp1cs1ct1--></fo:wrapper>
+
+<fo:wrapper id="id2744746"><!--cp2--></fo:wrapper>
+<fo:wrapper id="id2744762"><!--cp2see, cp2seesec--></fo:wrapper>
+
+<fo:wrapper id="id2744792"><!--dp1, dp1ds1--></fo:wrapper>
+<fo:wrapper id="id2744816"><!--dp1, dp1ds2--></fo:wrapper>
+<fo:wrapper id="id2744839"><!--dp2--></fo:wrapper></fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="id2744855" hyphenate="true" master-name="oneside1" language="en">
+    <fo:static-content flow-name="xsl-region-before">
+      <fo:block text-align="center">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">A. First Appendix</fo:block>
+      </fo:block>
+    </fo:static-content>
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
+          <fo:block>Appendix A. First Appendix</fo:block>
+        </fo:block>
+      </fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.
+<fo:wrapper id="id2744873"><!--ap1--></fo:wrapper>
+<fo:wrapper id="id2744889"><!--ap2--></fo:wrapper>
+
+<fo:wrapper id="id2744905"><!--bp1, bp1bs1--></fo:wrapper>
+<fo:wrapper id="id2744928"><!--bp2--></fo:wrapper>
+
+<fo:wrapper id="id2744944"><!--cp1, cp1cs1, cp1cs1ct1--></fo:wrapper>
+<fo:wrapper id="id2744975"><!--cp2--></fo:wrapper>
+
+<fo:wrapper id="id2744991"><!--dp1, dp1ds1--></fo:wrapper>
+<fo:wrapper id="id2745015"><!--dp1, dp1ds2--></fo:wrapper>
+<fo:wrapper id="id2745038"><!--dp2--></fo:wrapper>
+
+<fo:wrapper id="id2746173"><!--1 digit test--></fo:wrapper>
+<fo:wrapper id="id2746189"><!--[square bracket test]--></fo:wrapper>
+<fo:wrapper id="id2746205"><!--2 digit test--></fo:wrapper>
+</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+  <fo:page-sequence id="id2746232" hyphenate="true" master-name="oneside1" language="en">
+    <fo:static-content flow-name="xsl-region-after">
+      <fo:block text-align="center" font-size="10pt">
+        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+      </fo:block>
+    </fo:static-content>
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-family="Helvetica" font-weight="bold">
+          <fo:block/>
+        </fo:block>
+      </fo:block>
+      <fo:block>
+        <fo:block font-size="16pt" font-weight="bold" keep-with-next="always" space-before="1em">Symbols</fo:block>
+        <fo:block>
+          <fo:block>1 digit test, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2746173"/></fo:block>
+          <fo:block>2 digit test, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2746205"/></fo:block>
+          <fo:block>[square bracket test], <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2746189"/></fo:block>
+        </fo:block>
+        <fo:block>
+          <fo:block font-size="16pt" font-weight="bold" keep-with-next="always" space-before="1em">A</fo:block>
+          <fo:block>
+            <fo:block>the ap1, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2862949"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744873"/></fo:block>
+            <fo:block start-indent="1pc">
+              <fo:block>
+                <fo:block>see also ap2</fo:block>
+              </fo:block>
+            </fo:block>
+            <fo:block>ap2, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2862957"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744889"/></fo:block>
+          </fo:block>
+        </fo:block>
+        <fo:block>
+          <fo:block font-size="16pt" font-weight="bold" keep-with-next="always" space-before="1em">B</fo:block>
+          <fo:block>
+            <fo:block>bp1</fo:block>
+            <fo:block start-indent="1pc">
+              <fo:block>
+                <fo:block>bp1bs1, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2836717"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744905"/></fo:block>
+              </fo:block>
+            </fo:block>
+            <fo:block>bp2, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2836740"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744928"/></fo:block>
+          </fo:block>
+        </fo:block>
+        <fo:block>
+          <fo:block font-size="16pt" font-weight="bold" keep-with-next="always" space-before="1em">C</fo:block>
+          <fo:block>
+            <fo:block>chapter zone, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="chapter"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="ch2"/></fo:block>
+            <fo:block>cp1</fo:block>
+            <fo:block start-indent="1pc">
+              <fo:block>
+                <fo:block>cp1cs1</fo:block>
+                <fo:block start-indent="2pc">
+                  <fo:block>
+                    <fo:block>cp1cs1ct1, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2836756"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744944"/></fo:block>
+                  </fo:block>
+                </fo:block>
+              </fo:block>
+            </fo:block>
+            <fo:block>cp2, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744746"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744975"/></fo:block>
+            <fo:block>cp2see</fo:block>
+            <fo:block start-indent="1pc">
+              <fo:block>
+                <fo:block>cp2seesec</fo:block>
+                <fo:block start-indent="2pc">
+                  <fo:block>
+                    <fo:block>cp2</fo:block>
+                  </fo:block>
+                </fo:block>
+              </fo:block>
+            </fo:block>
+          </fo:block>
+        </fo:block>
+        <fo:block>
+          <fo:block font-size="16pt" font-weight="bold" keep-with-next="always" space-before="1em">D</fo:block>
+          <fo:block>
+            <fo:block>dp1</fo:block>
+            <fo:block start-indent="1pc">
+              <fo:block>
+                <fo:block>dp1ds1, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744792"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744991"/></fo:block>
+                <fo:block>dp1ds2, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744816"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2745015"/></fo:block>
+              </fo:block>
+            </fo:block>
+            <fo:block>dp2, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2744839"/>, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2745038"/></fo:block>
+          </fo:block>
+        </fo:block>
+        <fo:block>
+          <fo:block font-size="16pt" font-weight="bold" keep-with-next="always" space-before="1em">P</fo:block>
+          <fo:block>
+            <fo:block>paragraph, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2741922"/></fo:block>
+            <fo:block start-indent="1pc">
+              <fo:block>
+                <fo:block>another, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2741954"/></fo:block>
+                <fo:block>test, <fo:page-number-citation xmlns:fo="http://www.w3.org/1999/XSL/Format" ref-id="id2742255"/></fo:block>
+              </fo:block>
+            </fo:block>
+          </fo:block>
+        </fo:block>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>
