@@ -57,7 +57,7 @@ static xsltNumberFormatToken default_token;
      ((letter) == (self)->patternSeparator[0]))
 
 #define IS_DIGIT_ZERO(x) xsltIsDigitZero(x)
-#define IS_DIGIT_ONE(x) xsltIsDigitZero((x)-1)
+#define IS_DIGIT_ONE(x) xsltIsDigitZero((xmlChar)(x)-1)
 
 static int
 xsltIsDigitZero(xmlChar ch)

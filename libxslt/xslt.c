@@ -1587,7 +1587,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     prop = xsltGetNsProp(template, (const xmlChar *)"priority", XSLT_NAMESPACE);
     if (prop != NULL) {
 	priority = xmlXPathStringEvalNumber(prop);
-	ret->priority = priority;
+	ret->priority = (float) priority;
 	xmlFree(prop);
     }
 

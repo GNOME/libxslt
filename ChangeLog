@@ -1,3 +1,8 @@
+Sun Aug 26 20:52:02 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c libxslt/xslt.c: removed a couple of
+	  warning raised by the Windows compiler (Chris Poblete)
+
 Fri Aug 24 01:15:24 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.h libxslt/preproc.c libxslt/transform.c:
