@@ -311,7 +311,6 @@ struct _xsltStackElem {
     const xmlChar *select;	/* the eval string */
     xmlNodePtr tree;		/* the tree if no eval string or the location */
     xmlXPathObjectPtr value;	/* The value if computed */
-    xmlDocPtr doc;		/* The document used to compute the value */
 };
 
 /*
@@ -552,6 +551,11 @@ struct _xsltTransformContext {
      * dictionnary: shared between stylesheet, context and documents.
      */
     xmlDictPtr dict;
+    /*
+     * temporary storage for doc ptr, currently only used for
+     * global var evaluation
+     */
+   xmlDocPtr		tmpDoc;
 };
 
 /**

@@ -1,3 +1,11 @@
+Thu Nov 25 22:24:03 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/variables.c, libxslt/xsltInternals.h: backed out the
+	  last change and re-did it the "right way" (bug 158372).
+	* tests/general/bug-158.*, tests/general/Makefile.am,
+	  tests/docs/bug-158.*, tests/general/Makefile.am: added test
+	  case for this bug
+
 Wed Nov 24 10:51:51 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/variables.c, libxslt/xsltInternals.h: enhanced the

@@ -563,6 +563,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     xmlXPathObjectPtr result = NULL;
     xsltStylePreCompPtr precomp;
     int oldProximityPosition, oldContextSize;
+    xmlDocPtr oldDoc;
     xmlNodePtr oldInst;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
@@ -570,8 +571,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 
     if ((ctxt == NULL) || (elem == NULL))
 	return(NULL);
-    /* For pre-computation, need to correlate with the current document */
-    if ((elem->computed) && (elem->doc == ctxt->xpathCtxt->doc))
+    if (elem->computed)
 	return(elem->value);
 
 
@@ -579,12 +579,6 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
 	"Evaluating global variable %s\n", elem->name));
 #endif
-
-    /* If document has changed, destroy the old value */
-    if (elem->value != NULL) {
-        xmlXPathFreeObject(elem->value);
-	elem->value = NULL;
-    }
 
 #ifdef WITH_DEBUGGER
     if ((ctxt->debugStatus != XSLT_DEBUG_NONE) &&
@@ -608,11 +602,13 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    elem->name = name;
 	    return(NULL);
 	}
+	oldDoc = ctxt->xpathCtxt->doc;
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
 	oldInst = ctxt->inst;
 	oldNsNr = ctxt->xpathCtxt->nsNr;
 	oldNamespaces = ctxt->xpathCtxt->namespaces;
+	
 	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
 	    ctxt->xpathCtxt->namespaces = precomp->nsList;
@@ -622,8 +618,11 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
 	}
-	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
+	ctxt->xpathCtxt->doc = ctxt->tmpDoc;
+	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->tmpDoc;
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+
+	ctxt->xpathCtxt->doc = oldDoc;
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	ctxt->inst = oldInst;
@@ -694,7 +693,6 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     if (result != NULL) {
 	elem->value = result;
 	elem->computed = 1;
-	elem->doc = ctxt->xpathCtxt->doc;
     }
     elem->name = name;
     return(result);
@@ -722,6 +720,7 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 	"Registering global variables\n"));
 #endif
 
+    ctxt->tmpDoc = ctxt->document->doc;
     ctxt->node = (xmlNodePtr) ctxt->document->doc;
     ctxt->xpathCtxt->contextSize = 1;
     ctxt->xpathCtxt->proximityPosition = 1;
