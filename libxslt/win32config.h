@@ -68,6 +68,9 @@ static int isnan (double d) {
 #endif /* _MSC_VER */
 
 #include <direct.h>
+#if defined(_MSC_VER)
+#define mkdir(p,m) (_mkdir(p))
+#endif
 
 #define HAVE_SYS_STAT_H
 #define HAVE__STAT
