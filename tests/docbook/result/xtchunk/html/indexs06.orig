@@ -37,7 +37,7 @@
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2908273"></a>Documentation Availability</h3>
+<a name="id2904036"></a>Documentation Availability</h3>
 <p>
         Applications and applets should not rely on documentation
         which is only available on the internet.  All manuals and
@@ -54,7 +54,7 @@
     </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2908313"></a>Manuals For Large Applications</h3>
+<a name="id2904076"></a>Manuals For Large Applications</h3>
 <p>
         Manuals for very large applications, such as GNOME Workshop
         components should be a <tt>&lt;book&gt;</tt> (and thus
@@ -66,7 +66,7 @@
 </div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2908428"></a>Applet Manuals in GNOME 2.0</h3>
+<a name="id2904192"></a>Applet Manuals in GNOME 2.0</h3>
 <p>
         Note that applet manuals in GNOME 2.0 are treated in a special
         way.  The manuals for all applets are merged into a single

@@ -117,10 +117,10 @@
       </p>
 <div class="variablelist"><dl>
 <dt>
-<a name="id2904986"></a><span class="term"> <i>Minimization</i></span>
+<a name="id2900749"></a><span class="term"> <i>Minimization</i></span>
 </dt>
 <dd><p>
-<a name="id2905004"></a>
+<a name="id2900768"></a>
 	      It is possible with some implementations of SGML to use
 	      minimizations to close elements in a document by using
 	      &lt;/&gt;, for example:
@@ -133,10 +133,10 @@
           Modify-&gt;Normalize.
          </p></dd>
 <dt>
-<a name="id2905087"></a><span class="term"> <i>Self-closing tags</i></span>
+<a name="id2900851"></a><span class="term"> <i>Self-closing tags</i></span>
 </dt>
 <dd><p>
-<a name="id2905107"></a>
+<a name="id2900870"></a>
             Also, in SGML some tags are allowed not to have closing
             tags.  For example, it is legal for
             <tt>&lt;xref&gt;</tt> not to have a closing tag: 
@@ -148,10 +148,10 @@
             slash!).
           </p></dd>
 <dt>
-<a name="id2905160"></a><span class="term"> <i>Case sensitive tags</i></span>
+<a name="id2900923"></a><span class="term"> <i>Case sensitive tags</i></span>
 </dt>
 <dd><p>
-<a name="id2905180"></a>
+<a name="id2900943"></a>
 	      In XML, unlike SGML, tags are case-senstive
 	      <tt>&lt;title&gt;</tt> and
 	      <tt>&lt;TITLE&gt;</tt> are different tags!
@@ -252,7 +252,7 @@
         </p>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2905651"></a>NOTE</h3>
+<a name="id2901414"></a>NOTE</h3>
 <p>
             Notice in this example that the screenshot file name does
             not include the file type extension -- to find out
@@ -310,7 +310,7 @@ make: *** No rule to make target `love'.  Stop.
           and commands entered by user.
           <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2905863"></a>NOTE</h3>
+<a name="id2901627"></a>NOTE</h3>
 <p>
               Note that both <tt>&lt;programlisting&gt;</tt>
               and <tt>&lt;screen&gt;</tt> preserve linebreaks,
@@ -333,11 +333,11 @@ make: *** No rule to make target `love'.  Stop.
 	</p>
 <div class="variablelist"><dl>
 <dt>
-<a name="id2905982"></a><span class="term"> <tt>&lt;itemizedlist&gt;</tt></span>
+<a name="id2901746"></a><span class="term"> <tt>&lt;itemizedlist&gt;</tt></span>
 </dt>
 <dd>
 <p>
-<a name="id2906002"></a> 
+<a name="id2901765"></a> 
 		This is the simplest unnumbered list, parallel to
 	    <tt>&lt;ul&gt;</tt> in HTML. Here is an example: 
 		<pre class="programlisting">
@@ -371,20 +371,20 @@ make: *** No rule to make target `love'.  Stop.
                 </p>
 <div class="itemizedlist"><ul>
 <li><p>
-<a name="id2906020"></a>
+<a name="id2901783"></a>
 		      Show backup files --
 		      This will show any backup file that might be on
 		      your system.
 		    </p></li>
 <li><p>
-<a name="id2906082"></a>
+<a name="id2901846"></a>
 		      Show hidden files --
 		      This will show all &quot;dot files&quot; or files that
 		      begin with a dot.  This files typically include
 		      configuration files and directories.
 		    </p></li>
 <li><p>
-<a name="id2906109"></a>
+<a name="id2901873"></a>
 		      Mix files and directories
 		      -- This option will display files and
 		      directories in the order you sort them instead
@@ -407,10 +407,10 @@ make: *** No rule to make target `love'.  Stop.
 	      </p>
 </dd>
 <dt>
-<a name="id2906276"></a><span class="term"> <tt>&lt;orderedlist&gt;</tt></span>
+<a name="id2902039"></a><span class="term"> <tt>&lt;orderedlist&gt;</tt></span>
 </dt>
 <dd><p>
-<a name="id2906294"></a>
+<a name="id2902057"></a>
 		This list is completely analogous to
 		<tt>&lt;itemizedlist&gt;</tt> and has the same
 		syntax, but  it produces numbered list. By default,
@@ -425,10 +425,10 @@ make: *** No rule to make target `love'.  Stop.
 		<tt>lowerroman</tt>.
 	      </p></dd>
 <dt>
-<a name="id2906374"></a><span class="term"> <tt>&lt;variablelist&gt;</tt></span>
+<a name="id2902137"></a><span class="term"> <tt>&lt;variablelist&gt;</tt></span>
 </dt>
 <dd><p>
-<a name="id2906394"></a> This list is used when each entry is
+<a name="id2902157"></a> This list is used when each entry is
 	    rather long, so it should be formatted as a block of text
 	    with some subtitle, like a small subsection.  The
 	    <tt>&lt;variablelist&gt;</tt> is more complicated
@@ -482,12 +482,12 @@ make: *** No rule to make target `love'.  Stop.
 <a name="gui"></a>GUI elements</h4></div></div>
 <div class="itemizedlist"><ul>
 <li><p>
-<a name="id2906551"></a>
+<a name="id2902315"></a>
               <tt>&lt;guibutton&gt;</tt> -- used for
               buttons, including checkbuttons and radio buttons
             </p></li>
 <li><p>
-<a name="id2906577"></a>
+<a name="id2902340"></a>
               <tt>&lt;guimenu&gt;</tt>, 
               <tt>&lt;guisubmenu&gt;</tt> --used for 
 	      top-level menus and submenus
@@ -496,21 +496,21 @@ make: *** No rule to make target `love'.  Stop.
               &lt;guimenu&gt;Main Menu&lt;/guimenu&gt;</tt>
             </p></li>
 <li><p>
-<a name="id2906621"></a>
+<a name="id2902384"></a>
               <tt>&lt;guimenuitem&gt;</tt>--an entry in a
               menu
             </p></li>
 <li><p>
-<a name="id2906647"></a>
+<a name="id2902410"></a>
               <tt>&lt;guiicon&gt;</tt>--an icon
             </p></li>
 <li><p>
-<a name="id2906671"></a>
+<a name="id2902434"></a>
               <tt>&lt;guilabel&gt;</tt>--for items which have
               labels, like tabs, or bounding boxes. 
             </p></li>
 <li><p>
-<a name="id2906696"></a>
+<a name="id2902459"></a>
               <tt>&lt;interface&gt;</tt>-- for most everything
               else... a window, a dialog box, the Panel, etc.
             </p></li>
@@ -575,7 +575,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         </p>
 <div class="itemizedlist"><ul>
 <li><p>
-<a name="id2907053"></a>  <tt>&lt;filename&gt;</tt> -- used
+<a name="id2902816"></a>  <tt>&lt;filename&gt;</tt> -- used
               for filenames,
               e.g.<tt>&lt;filename&gt;</tt>
                     foo.sgml
@@ -583,7 +583,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
               produces: <tt>foo.sgml</tt>.
             </p></li>
 <li><p>
-<a name="id2907102"></a>  <tt>&lt;filename
+<a name="id2902866"></a>  <tt>&lt;filename
               class=&quot;directory&quot;&gt;</tt> -- used for
               directories, e.g.<tt>&lt;filename
               class=&quot;directory&quot;&gt;</tt>/usr/bin
@@ -591,7 +591,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
               produces: <tt>/usr/bin</tt>.
             </p></li>
 <li><p>
-<a name="id2907159"></a>
+<a name="id2902922"></a>
               <tt>&lt;application&gt;</tt> -- used for
               application names,
               e.g. <tt>&lt;application&gt;</tt>Gnumeric
@@ -599,13 +599,13 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
               Gnumeric.
             </p></li>
 <li><p>
-<a name="id2907209"></a>
+<a name="id2902972"></a>
 	      <tt>&lt;envar&gt;</tt> -- used for
 	      environment variables, e.g. 
               <tt>&lt;envar&gt;</tt>PATH<tt>&lt;/envar&gt;</tt>. 
             </p></li>
 <li><p>
-<a name="id2907250"></a>
+<a name="id2903013"></a>
               <tt>&lt;command&gt;</tt> -- used for
               commands entered on command line, e.g.
               <tt>&lt;command&gt;</tt>make install
@@ -613,7 +613,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
               <b>make install</b>.
             </p></li>
 <li><p>
-<a name="id2907299"></a>
+<a name="id2903063"></a>
               <tt>&lt;replaceable&gt;</tt> -- used for
               replaceable text, e.g.
               <tt>&lt;command&gt;</tt>db2html<tt>&lt;replaceable&gt;</tt>
@@ -704,23 +704,23 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	</p>
 <div class="itemizedlist"><ul>
 <li><p>
-<a name="id2907739"></a>
+<a name="id2903502"></a>
              <tt>&amp;amp;</tt> -- ampersend (&amp;)
 	  </p></li>
 <li><p>
-<a name="id2907758"></a>
+<a name="id2903521"></a>
              <tt>&amp;lt;</tt> -- left angle bracket (&lt;)
 	  </p></li>
 <li><p>
-<a name="id2907777"></a>
+<a name="id2903540"></a>
              <tt>&amp;copy;</tt> -- copyright sign (©)
 	  </p></li>
 <li><p>
-<a name="id2907796"></a>
+<a name="id2903559"></a>
              <tt>&amp;mdash;</tt> -- long dash (--)
 	  </p></li>
 <li><p>
-<a name="id2907815"></a>
+<a name="id2903578"></a>
              <tt>&amp;hellip;</tt> -- ellipsis (...)
 	  </p></li>
 </ul></div>

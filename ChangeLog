@@ -1,3 +1,9 @@
+Thu Jul  5 22:49:57 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/docbook/result/: the change in libxml affected the
+	  output of the Docbook tests (of course it was detected on
+	  a DocBook example)
+
 Thu Jul  5 15:11:58 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES: updated

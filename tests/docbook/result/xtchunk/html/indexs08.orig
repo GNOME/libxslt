@@ -28,7 +28,7 @@
 <a name="applicationhelpbuttons"></a>Application Help Buttons</h2></div></div>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2908827"></a>Developer Information</h3>
+<a name="id2904591"></a>Developer Information</h3>
 <p>
         This section is for developers.  Documentation authors
         generally do not need to know this material.
@@ -61,7 +61,7 @@ if (tmp) {
     </pre>
 <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">
-<a name="id2908933"></a>NOTE</h3>
+<a name="id2904697"></a>NOTE</h3>
 <p>
         The example above is in the C language, please refer to other
         documentation or forums for other GNOME language bindings.

@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2771355" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2752647" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
@@ -138,8 +138,8 @@ This article is just a test. This article is just a test.
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This para contains an <fo:basic-link internal-destination="testfig2">link</fo:basic-link> to a 
 figure.
 </fo:block>
-      <fo:list-block id="id2757963" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-        <fo:list-item id="id2757969" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2754498" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+        <fo:list-item id="id2754505" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -147,7 +147,7 @@ figure.
             <fo:block>Test item.</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2757980" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2754515" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -155,7 +155,7 @@ figure.
             <fo:block>Test item.</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2757990" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2754526" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -164,8 +164,8 @@ figure.
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>
-      <fo:list-block id="id2758002" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="2em" provisional-label-separation="0.2em">
-        <fo:list-item id="id2758008" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2754538" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="2em" provisional-label-separation="0.2em">
+        <fo:list-item id="id2754544" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>1.</fo:block>
           </fo:list-item-label>
@@ -173,7 +173,7 @@ figure.
             <fo:block>Test item.</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2758019" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2754554" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>2.</fo:block>
           </fo:list-item-label>
@@ -181,7 +181,7 @@ figure.
             <fo:block>Test item.</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2758029" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2754564" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>3.</fo:block>
           </fo:list-item-label>
@@ -196,7 +196,7 @@ This article is just a test. This article is just a test.
 This article is just a test. This article is just a test. 
 This article is just a test. This article is just a test. 
 </fo:block>
-      <fo:block id="id2758054">
+      <fo:block id="id2754590">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
             <fo:block keep-with-next.within-column="always">
@@ -204,7 +204,7 @@ This article is just a test. This article is just a test.
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:block id="id2758066">
+        <fo:block id="id2754601">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
@@ -212,7 +212,7 @@ This article is just a test. This article is just a test.
               </fo:block>
             </fo:block>
           </fo:block>
-          <fo:block id="id2758078">
+          <fo:block id="id2754613">
             <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
               <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
@@ -220,7 +220,7 @@ This article is just a test. This article is just a test.
                 </fo:block>
               </fo:block>
             </fo:block>
-            <fo:block id="id2758089">
+            <fo:block id="id2754624">
               <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
                 <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                   <fo:block keep-with-next.within-column="always">
@@ -228,7 +228,7 @@ This article is just a test. This article is just a test.
                   </fo:block>
                 </fo:block>
               </fo:block>
-              <fo:block id="id2758101">
+              <fo:block id="id2754636">
                 <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
                   <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                     <fo:block keep-with-next.within-column="always">
@@ -236,7 +236,7 @@ This article is just a test. This article is just a test.
                     </fo:block>
                   </fo:block>
                 </fo:block>
-                <fo:block id="id2758131">
+                <fo:block id="id2754666">
                   <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
                     <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                       <fo:block keep-with-next.within-column="always">
@@ -244,7 +244,7 @@ This article is just a test. This article is just a test.
                       </fo:block>
                     </fo:block>
                   </fo:block>
-                  <fo:block id="id2758143">
+                  <fo:block id="id2754678">
                     <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
                       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                         <fo:block keep-with-next.within-column="always">
@@ -265,7 +265,7 @@ This article is just a test. This article is just a test.
           </fo:block>
         </fo:block>
       </fo:block>
-      <fo:block id="id2758179">
+      <fo:block id="id2754714">
         <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Appendix</fo:block>
         <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
       </fo:block>
