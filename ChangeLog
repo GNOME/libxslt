@@ -1,3 +1,10 @@
+Mon Mar  4 12:01:34 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.c: patch from Charles Bozeman for the exslt date
+	  extension
+	* configure.in tests/exslt/Makefile.am tests/exslt/date/*: added
+	  the associated regression test provided by Charles
+
 Fri Mar  1 10:17:26 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/preproc.c: Fixed #73088 with the associated patch

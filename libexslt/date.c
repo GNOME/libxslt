@@ -100,17 +100,20 @@ struct _exsltDate {
 #define VALID_DAY(day)          ((day >= 1) && (day <= 31))
 #define VALID_HOUR(hr)          ((hr >= 0) && (hr <= 23))
 #define VALID_MIN(min)          ((min >= 0) && (min <= 59))
-#define VALID_SEC(sec)          ((sec >= 0) && (sec <= 59))
+#define VALID_SEC(sec)          ((sec >= 0) && (sec < 60))
 #define VALID_TZO(tzo)          ((tzo > -1440) && (tzo < 1440))
 #define IS_LEAP(y)						\
 	(((y % 4 == 0) && (y % 100 != 0)) || (y % 400 == 0))
 
 static const int daysInMonth[12] =
+	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+static const int daysInMonthLeap[12] =
 	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 #define VALID_MDAY(dt)						\
-	(((dt->mon == 2) && !IS_LEAP(dt->year) && (dt->day <= 28)) ||\
-	 (dt->day <= daysInMonth[dt->mon - 1]))
+	(IS_LEAP(dt->year) ?					\
+	           (dt->day <= daysInMonthLeap[dt->mon - 1]) :	\
+	           (dt->day <= daysInMonth[dt->mon - 1]))
 
 #define VALID_DATE(dt)						\
 	(VALID_YEAR(dt->year) && VALID_MONTH(dt->mon) && VALID_MDAY(dt))
@@ -132,9 +135,6 @@ static const int dayInLeapYearByMonth[12] =
         ((IS_LEAP(year) ?					\
                 dayInLeapYearByMonth[month - 1] :		\
                 dayInYearByMonth[month - 1]) + day)
-
-#define DAY_IN_WEEK(yday, yr)					\
-	(((yr-1)+((yr-1)/4)-((yr-1)/100)+((yr-1)/400)+yday) % 7)
 
 /**
  * _exsltDateParseGYear:
@@ -272,11 +272,11 @@ _exsltDateParseGYear (exsltDatePtr dt, const xmlChar **str) {
 #define PARSE_FLOAT(num, cur, invalid)				\
 	PARSE_2_DIGITS(num, cur, invalid);			\
 	if (!invalid && (*cur == '.')) {			\
+	    double mult = 1;				        \
 	    cur++;						\
 	    if ((*cur < '0') || (*cur > '9'))			\
 		invalid = 1;					\
-	    while ((*cur < '0') || (*cur > '9')) {		\
-		static double mult = 1;				\
+	    while ((*cur >= '0') && (*cur <= '9')) {		\
 		mult /= 10;					\
 		num += (*cur - '0') * mult;			\
 		cur++;						\
@@ -294,8 +294,14 @@ _exsltDateParseGYear (exsltDatePtr dt, const xmlChar **str) {
  */
 #define FORMAT_FLOAT(num, cur)					\
 	{							\
-	    int tmp = (int) num;				\
-	    FORMAT_2_DIGITS(tmp, cur);				\
+            xmlChar *sav, *str;                                 \
+            if (num < 10.0)                                     \
+                *cur++ = '0';                                   \
+            str = xmlXPathCastNumberToString(num);              \
+            sav = str;                                          \
+            while (*str != 0)                                   \
+                *cur++ = *str++;                                \
+            xmlFree(sav);                                       \
 	}
 
 /**
@@ -596,7 +602,7 @@ exsltDateCreateDate (void) {
     ret = (exsltDatePtr) xmlMalloc(sizeof(exsltDate));
     if (ret == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-			 "exsltDateNewDate: out of memory\n");
+			 "exsltDateCreateDate: out of memory\n");
 	return (NULL);
     }
     memset (ret, 0, sizeof(exsltDate));
@@ -654,9 +660,9 @@ exsltDateCurrent (void) {
     /* determine the time zone offset from local to gm time */
     gmTm         = gmtime(&secs);
     ret->tz_flag = 0;
-    ret->tzo     = -(((ret->day - gmTm->tm_mday) * 1440) +
-                     ((ret->hour - gmTm->tm_hour) * 60) +
-                     (ret->min - gmTm->tm_min));
+    ret->tzo     = (((ret->day * 1440) + (ret->hour * 60) + ret->min) -
+                    ((gmTm->tm_mday * 1440) + (gmTm->tm_hour * 60) +
+                      gmTm->tm_min));
 
     return ret;
 }
@@ -1229,6 +1235,34 @@ exsltDateMonthAbbreviation (const xmlChar *dateTime) {
 }
 
 /**
+ * _exsltDayInWeek:
+ * @yday: year day (1-366)
+ * @yr: year
+ *
+ * Determine the day-in-week from @yday and @yr. 0001-01-01 was
+ * a Monday so all other days are calculated from there. Take the 
+ * number of years since (or before) add the number of leap years and
+ * the day-in-year and mod by 7. This is a function  because negative
+ * years must be handled a little differently and there is no zero year.
+ *
+ * Returns day in week (Sunday = 0)
+ */
+static int
+_exsltDateDayInWeek(int yday, long yr)
+{
+    int ret;
+
+    if (yr < 0) {
+        ret = ((yr + (((yr+1)/4)-((yr+1)/100)+((yr+1)/400)) + yday) % 7);
+        if (ret < 0) 
+            ret += 7;
+    } else
+        ret = (((yr-1) + (((yr-1)/4)-((yr-1)/100)+((yr-1)/400)) + yday) % 7);
+
+    return ret;
+}
+
+/**
  * exsltDateWeekInYear:
  * @dateTime: a date/time string
  *
@@ -1271,8 +1305,12 @@ exsltDateWeekInYear (const xmlChar *dateTime) {
     }
 
     fdiy = DAY_IN_YEAR(1, 1, dt->year);
-    /* 0=Mon, 1=Tue, etc. */
-    fdiw = (DAY_IN_WEEK(fdiy, dt->year) + 6) % 7;
+    
+    /*
+     * Determine day-in-week (0=Sun, 1=Mon, etc.) then adjust so Monday
+     * is the first day-in-week
+     */
+    fdiw = (_exsltDateDayInWeek(fdiy, dt->year) + 6) % 7;
 
     ret = DAY_IN_YEAR(dt->day, dt->mon, dt->year) / 7;
 
@@ -1328,11 +1366,11 @@ exsltDateWeekInMonth (const xmlChar *dateTime) {
     }
 
     fdiy = DAY_IN_YEAR(1, dt->mon, dt->year);
-    /* 0=Mon, 1=Tue, etc. */
-    fdiw = DAY_IN_WEEK(fdiy, dt->year);
-
-    /* adjust the fdiw value so that Sunday is last-day-in-week */
-    fdiw = (fdiw != 0 ? (fdiw - 1) : 6);
+    /*
+     * Determine day-in-week (0=Sun, 1=Mon, etc.) then adjust so Monday
+     * is the first day-in-week
+     */
+    fdiw = (_exsltDateDayInWeek(fdiy, dt->year) + 6) % 7;
 
     ret = ((dt->day + fdiw) / 7) + 1;
 
@@ -1526,7 +1564,8 @@ exsltDateDayInWeek (const xmlChar *dateTime) {
     }
 
     diy = DAY_IN_YEAR(dt->day, dt->mon, dt->year);
-    ret = (double) DAY_IN_WEEK(diy, dt->year) + 1;
+
+    ret = (double) _exsltDateDayInWeek(diy, dt->year) + 1;
 
     exsltDateFreeDate(dt);
 

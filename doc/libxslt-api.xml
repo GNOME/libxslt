@@ -576,7 +576,7 @@
     <function name='xsltCalibrateAdjust' file='xsltutils'>
       <info>Used for to correct the calibration for xsltTimestamp()</info>
       <return type='void'/>
-      <arg name='delta' type='long'/>
+      <arg name='delta' type='long' info='a negative dealy value found '/>
     </function>
     <function name='xsltCallTemplate' file='transform'>
       <info>Process the xslt call-template node on the source node</info>

@@ -2417,6 +2417,9 @@
         <word name='deallocator'>
           <ref name='xsltInitElemPreComp'/>
         </word>
+        <word name='dealy'>
+          <ref name='xsltCalibrateAdjust'/>
+        </word>
         <word name='debug'>
           <ref name='DEBUG_MEMORY'/>
           <ref name='WITH_XSLT_DEBUG'/>
@@ -2686,6 +2689,7 @@
           <ref name='xsltNumberFormat'/>
         </word>
         <word name='found'>
+          <ref name='xsltCalibrateAdjust'/>
           <ref name='xsltExtElementLookup'/>
           <ref name='xsltExtModuleElementLookup'/>
           <ref name='xsltExtModuleFunctionLookup'/>
@@ -3181,6 +3185,9 @@
         </word>
         <word name='needs'>
           <ref name='xsltGetTemplate'/>
+        </word>
+        <word name='negative'>
+          <ref name='xsltCalibrateAdjust'/>
         </word>
         <word name='new'>
           <ref name='xsltAddStackElemList'/>

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS=common functions math sets strings
+SUBDIRS=common functions math sets strings date
 
 all:
 
