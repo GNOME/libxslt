@@ -37,7 +37,8 @@ void xmlXPathBooleanFunction(xmlXPathParserContextPtr ctxt, int nargs);
             __FILE__, __LINE__);
 
 #define IS_XSLT_ELEM(n)							\
-    ((n)->ns != NULL) && (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE))
+    (((n) != NULL) && ((n)->ns != NULL) &&				\
+     (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
 
 #define IS_XSLT_NAME(n, val)						\
     (xmlStrEqual((n)->name, (const xmlChar *) (val)))
@@ -55,6 +56,15 @@ void		xsltSetGenericErrorFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
 void		xsltSetGenericDebugFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
+
+/*
+ * Sorting ... this is definitely a temporary interface !
+ */
+
+void		xsltSortFunction		(xmlNodeSetPtr list,
+						 xmlXPathObjectPtr *results,
+						 int descending,
+						 int number);
 #ifdef __cplusplus
 }
 #endif

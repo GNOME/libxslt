@@ -34,3 +34,9 @@ Error handling:
 Support Attribute value templates:
   -> starts to be urgent. Design it in flexible ways but try to optimize
      to handle most of it at the stylesheet parse time ...
+
+Sorting:
+  -> add support for imbricated sorts
+  -> add lang and case-order
+  -> add foreign sorting functions (interfaces ?).
+

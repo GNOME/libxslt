@@ -10,12 +10,13 @@ AM_MAINTAINER_MODE
 dnl
 dnl Debug for DV
 dnl
-if test "${LOGNAME}" = "veillard" ; then
+if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
     if test "${with_mem_debug}" = "" ; then
 	with_mem_debug="yes"
     fi
     CFLAGS="-Wall -g -pedantic"
 fi
+
 AC_ARG_WITH(mem_debug, [  --with-mem-debug        Add the memory debugging module (off)])
 if test "$with_mem_debug" = "yes" ; then
     echo Enabling memory debug support

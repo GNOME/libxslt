@@ -1,3 +1,11 @@
+Wed Jan 17 17:45:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO: guess what, it's growing :-(
+	* configure.in: setup hacking values when compiling in my
+	  own environment.
+	* libxslt/transform.c libxslt/xsltutils.[hc]: added a first
+	  very rudimentary version of xsl:sort
+
 Wed Jan 17 14:25:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* TODO: more stuff

@@ -118,3 +118,59 @@ xsltSetGenericDebugFunc(void *ctx, xmlGenericErrorFunc handler) {
 	xsltGenericDebug = xsltGenericDebugDefaultFunc;
 }
 
+/************************************************************************
+ * 									*
+ * 				Sorting					*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltSortFunction:
+ * @list:  the node set
+ * @results:  the results
+ * @descending:  direction of order
+ * @number:  the type of the result
+ *
+ * reorder the current node list @list accordingly to the values
+ * present in the array of results @results
+ */
+void	
+xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
+		 int descending, int number) {
+    int i, j;
+    int len, tst;
+    xmlNodePtr node;
+    xmlXPathObjectPtr tmp;
+
+    if ((list == NULL) || (results == NULL))
+	return;
+    len = list->nodeNr;
+    if (len <= 1)
+	return;
+    /* TODO: sort is really not optimized, does it needs to ? */
+    for (i = 0;i < len -1;i++) {
+	for (j = i + 1; j < len; j++) {
+	    if (results[i] == NULL)
+		tst = 0;
+	    else if (results[j] == NULL)
+		tst = 1;
+	    else if (number) {
+		tst = (results[i]->floatval > results[j]->floatval);
+		if (descending)
+		    tst = !tst;
+	    } else {
+		tst = xmlStrcmp(results[i]->stringval, results[j]->stringval);
+		if (descending)
+		    tst = !tst;
+	    }
+	    if (tst) {
+		tmp = results[i];
+		results[i] = results[j];
+		results[j] = tmp;
+		node = list->nodeTab[i];
+		list->nodeTab[i] = list->nodeTab[j];
+		list->nodeTab[j] = node;
+	    }
+	}
+    }
+}

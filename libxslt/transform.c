@@ -559,7 +559,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = oldInsert;
 	    } else {
 #ifdef DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
+		xsltGenericError(xsltGenericDebugContext,
 		     "xsltApplyOneTemplate: found xslt:%s\n", cur->name);
 #endif
 		TODO
@@ -715,6 +715,141 @@ error:
 }
 
 /**
+ * xsltSort:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt sort node
+ *
+ * Process the xslt sort node on the source node
+ */
+void
+xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlXPathObjectPtr *results = NULL;
+    xmlNodeSetPtr list = NULL;
+    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    xmlChar *prop;
+    xmlXPathObjectPtr res, tmp;
+    const xmlChar *start;
+    int descending = 0;
+    int number = 0;
+    int len;
+    int i;
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return;
+
+    list = ctxt->nodeList;
+    if ((list == NULL) || (list->nodeNr <= 1))
+	goto error; /* nothing to do */
+
+    len = list->nodeNr;
+
+    prop = xmlGetNsProp(inst, (const xmlChar *)"data-type", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *) "text"))
+	    number = 0;
+	else if (xmlStrEqual(prop, (const xmlChar *) "number"))
+	    number = 1;
+	else {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsltSort: no support for data-type = %s\n", prop);
+	    goto error;
+	}
+	xmlFree(prop);
+    }
+    prop = xmlGetNsProp(inst, (const xmlChar *)"order", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *) "ascending"))
+	    descending = 0;
+	else if (xmlStrEqual(prop, (const xmlChar *) "descending"))
+	    descending = 1;
+	else {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsltSort: invalid value %s for order\n", prop);
+	    goto error;
+	}
+	xmlFree(prop);
+    }
+    /* TODO: xsl:sort lang attribute */
+    /* TODO: xsl:sort order attribute */
+    /* TODO: xsl:sort case-order attribute */
+
+    prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsltSort: select is not defined\n");
+	return;
+    }
+
+    xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
+    if (xpathParserCtxt == NULL)
+	goto error;
+    results = xmlMalloc(len * sizeof(xmlXPathObjectPtr));
+    if (results == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsltSort: memory allocation failure\n");
+	goto error;
+    }
+
+    start = xpathParserCtxt->cur;
+    for (i = 0;i < len;i++) {
+	xpathParserCtxt->cur = start;
+	node = ctxt->node = list->nodeTab[i];
+	ctxt->xpathCtxt->proximityPosition = i + 1;
+	valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
+	xmlXPathEvalExpr(xpathParserCtxt);
+	xmlXPathStringFunction(xpathParserCtxt, 1);
+	if (number)
+	    xmlXPathNumberFunction(xpathParserCtxt, 1);
+	res = valuePop(xpathParserCtxt);
+	do {
+	    tmp = valuePop(xpathParserCtxt);
+	    if (tmp != NULL) {
+		xmlXPathFreeObject(tmp);
+	    }
+	} while (tmp != NULL);
+
+	if (res != NULL) {
+	    if (number) {
+		if (res->type == XPATH_NUMBER) {
+		    results[i] = res;
+		} else {
+#ifdef DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"xsltSort: select didn't evaluate to a number\n");
+#endif
+		    results[i] = NULL;
+		}
+	    } else {
+		if (res->type == XPATH_STRING) {
+		    results[i] = res;
+		} else {
+#ifdef DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"xsltSort: select didn't evaluate to a string\n");
+#endif
+		    results[i] = NULL;
+		}
+	    }
+	}
+    }
+
+    xsltSortFunction(list, &results[0], descending, number);
+
+error:
+    if (xpathParserCtxt != NULL)
+	xmlXPathFreeParserContext(xpathParserCtxt);
+    if (prop != NULL)
+	xmlFree(prop);
+    if (results != NULL) {
+	for (i = 0;i < len;i++)
+	    xmlXPathFreeObject(results[i]);
+	xmlFree(results);
+    }
+}
+
+/**
  * xsltForEach:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -782,14 +917,22 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltGenericDebug(xsltGenericDebugContext,
 	"xsltForEach: select evaluate to %d nodes\n", list->nodeNr);
 #endif
-    /* TODO: handle and skip the xsl:sort */
-    replacement = inst->children;
 
     oldlist = ctxt->nodeList;
     ctxt->nodeList = list;
     oldContextSize = ctxt->xpathCtxt->contextSize;
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
     ctxt->xpathCtxt->contextSize = list->nodeNr;
+
+    /* 
+     * handle and skip the xsl:sort
+     */
+    replacement = inst->children;
+    while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
+	xsltSort(ctxt, node, replacement);
+	replacement = replacement->next;
+    }
+
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
