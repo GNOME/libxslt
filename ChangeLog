@@ -1,3 +1,13 @@
+Sun Mar 13 20:08:34 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* NEWS configure.in doc/*: preparing 1.1.13, updated and rebuilt
+	  the docs.
+	* tests/plugins/Makefile.am xsltproc/Makefile.am: trying to fix
+	  some build problems.
+	* libxslt.spec.in: adding a build require and a require for 
+	  libgcrypt-devel, c.f. Red Hat bug #133211
+	* libxslt/xsltInternals.h: as for libxml2, XML_CAST_FPTR was wrong.
+
 Wed Feb 23 19:25:13 HKT 2005 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: fixed a problem with '//' and

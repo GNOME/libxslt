@@ -2157,6 +2157,9 @@
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
         </word>
+        <word name='ISO'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='Implement'>
           <ref name='xsltDocumentFunction'/>
           <ref name='xsltElementAvailableFunction'/>
@@ -2604,6 +2607,9 @@
           <ref name='xsltRunStylesheetUser'/>
           <ref name='xsltSaveResultToString'/>
         </word>
+        <word name='XML_CAST_FPTR'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='XSLT-1'>
           <ref name='xsltDocumentComp'/>
           <ref name='xsltDocumentElem'/>
@@ -2676,6 +2682,9 @@
           <ref name='xsltFreeNamespaceAliasHashes'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltGetPlainNamespace'/>
+        </word>
+        <word name='aliasing'>
+          <ref name='XML_CAST_FPTR'/>
         </word>
         <word name='all'>
           <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
@@ -2981,6 +2990,9 @@
         </word>
         <word name='breakpoint'>
           <ref name='xslHandleDebugger'/>
+        </word>
+        <word name='broke'>
+          <ref name='XML_CAST_FPTR'/>
         </word>
         <word name='buffer'>
           <ref name='xsltRunStylesheet'/>
@@ -3431,6 +3443,7 @@
           <ref name='xsltSetXIncludeDefault'/>
         </word>
         <word name='define'>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='XSLT_RUNTIME_EXTRA'/>
         </word>
         <word name='defined'>
@@ -3502,6 +3515,9 @@
         </word>
         <word name='disable-escaping'>
           <ref name='xsltCopyTextString'/>
+        </word>
+        <word name='disabled'>
+          <ref name='XML_CAST_FPTR'/>
         </word>
         <word name='discard'>
           <ref name='xsltGetUTF8Char'/>
@@ -3835,6 +3851,9 @@
           <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathVariableLookup'/>
         </word>
+        <word name='fptr'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='fraction'>
           <ref name='xsltFormatNumberConversion'/>
         </word>
@@ -3898,6 +3917,9 @@
           <ref name='xsltTimestamp'/>
         </word>
         <word name='gcc'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
+        <word name='gcc4'>
           <ref name='XML_CAST_FPTR'/>
         </word>
         <word name='general'>
@@ -4418,6 +4440,7 @@
       </letter>
       <letter name='m'>
         <word name='macro'>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='XSLT_GET_IMPORT_INT'/>
           <ref name='XSLT_GET_IMPORT_PTR'/>
           <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
@@ -4678,6 +4701,9 @@
         <word name='normally'>
           <ref name='xsltEvalOneUserParam'/>
           <ref name='xsltQuoteOneUserParam'/>
+        </word>
+        <word name='now'>
+          <ref name='XML_CAST_FPTR'/>
         </word>
         <word name='null'>
           <ref name='xsltEvalOneUserParam'/>
@@ -5357,6 +5383,9 @@
         <word name='rule'>
           <ref name='xsltFindTemplate'/>
         </word>
+        <word name='rules'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='run'>
           <ref name='_xsltTransformContext'/>
         </word>
@@ -5375,6 +5404,9 @@
         </word>
       </letter>
       <letter name='s'>
+        <word name='s390'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='same'>
           <ref name='xsltGetQNameURI'/>
         </word>
@@ -6138,11 +6170,17 @@
         <word name='version='>
           <ref name='xsltGetProfileInformation'/>
         </word>
+        <word name='violated'>
+          <ref name='XML_CAST_FPTR'/>
+        </word>
         <word name='void'>
+          <ref name='XML_CAST_FPTR'/>
           <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathVariableLookup'/>
         </word>
       </letter>
+    </chunk>
+    <chunk name='chunk9'>
       <letter name='w'>
         <word name='want'>
           <ref name='xsltEvalUserParams'/>
@@ -6279,8 +6317,6 @@
           <ref name='xsltSaveResultToString'/>
         </word>
       </letter>
-    </chunk>
-    <chunk name='chunk9'>
       <letter name='x'>
         <word name='xmlAttrPtr'>
           <ref name='xsltAttrListTemplateProcess'/>
@@ -6474,8 +6510,8 @@
       <chunk name='chunk5' start='i' end='m'/>
       <chunk name='chunk6' start='n' end='p'/>
       <chunk name='chunk7' start='q' end='s'/>
-      <chunk name='chunk8' start='t' end='w'/>
-      <chunk name='chunk9' start='x' end='z'/>
+      <chunk name='chunk8' start='t' end='v'/>
+      <chunk name='chunk9' start='w' end='z'/>
     </chunks>
   </index>
 </apirefs>

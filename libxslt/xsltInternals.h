@@ -607,8 +607,13 @@ struct _xsltTransformContext {
  * Macro to do a casting from an object pointer to a
  * function pointer without encountering a warning from
  * gcc
+ *
+ * #define XML_CAST_FPTR(fptr) (*(void **)(&fptr))
+ * This macro violated ISO C aliasing rules (gcc4 on s390 broke)
+ * so it is disabled now
  */
-#define XML_CAST_FPTR(fptr) (*(void **)(&fptr))
+
+#define XML_CAST_FPTR(fptr) fptr
 #endif
 /*
  * Functions associated to the internal types

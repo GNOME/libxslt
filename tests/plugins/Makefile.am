@@ -9,11 +9,12 @@ $(top_builddir)/xsltproc/xsltproc:
 
 EXTRA_DIST = plugin.out	plugin.xml plugin.xsl
 
-pkglib_LTLIBRARIES = xmlsoft_org_xslt_testplugin.la
+noinst_LTLIBRARIES = xmlsoft_org_xslt_testplugin.la
 
 xmlsoft_org_xslt_testplugin_la_CFLAGS = -DMODULE_COMPILE $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
 xmlsoft_org_xslt_testplugin_la_SOURCES = testplugin.c
-xmlsoft_org_xslt_testplugin_la_LDFLAGS = -module -avoid-version $(LIBXML_LIBS) $(XSLT_LIBS)
+xmlsoft_org_xslt_testplugin_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
+xmlsoft_org_xslt_testplugin_la_LDFLAGS = -module -avoid-version 
 
 all:
 

@@ -10,6 +10,26 @@ ChangeLog.html
 to the CVS at 
 http://cvs.gnome.org/viewcvs/libxslt/
  code base.Those are the public releases made:
+1.1.13: Mar 13 2005:
+   - build fixes: 64bits cleanup (William Brack), python 2.4 test (William),
+      LIBXSLT_VERSION_EXTRA on Windows (William), Windows makefiles fixes
+      (Joel Reed), libgcrypt-devel requires for RPM spec.
+  
+   - bug fixes: exslt day-of-week-in-month (Sal Paradise), xsl:call-template
+      should not change the current template rule (William Brack), evaluation
+      of global variables (William Brack), RVT's in XPath predicates (William),
+      namespace URI on template names (Mark Vakoc), stat() for Windows patch
+      (Aleksey Gurtovoy), pattern expression fixes (William Brack), out of
+      memory detection misses (William), parserOptions propagation (William),
+      exclude-result-prefixes fix (William), // patten fix (William).
+  
+   - extensions: module support (Joel Reed), dictionnary based speedups 
+      trying to get rid of xmlStrEqual as much as possible.
+  
+   - documentation: added Wiki (Joel Reed)
+
+
+
 1.1.12: Oct 29 2004:
    - build fixes: warnings removal (William).
    - bug fixes: attribute document pointer fix (Mark Vakoc), exslt date

@@ -510,7 +510,7 @@
     <macro name='UNDEFINED_DEFAULT_NS' file='namespaces'>
     </macro>
     <macro name='XML_CAST_FPTR' file='xsltInternals'>
-      <info>Macro to do a casting from an object pointer to a function pointer without encountering a warning from gcc</info>
+      <info>Macro to do a casting from an object pointer to a function pointer without encountering a warning from gcc  #define XML_CAST_FPTR(fptr) (*(void **)(&amp;fptr)) This macro violated ISO C aliasing rules (gcc4 on s390 broke) so it is disabled now</info>
       <arg name='fptr' info='pointer to a function'/>
     </macro>
     <macro name='XSLTCALL' file='xsltexports'>

@@ -8,15 +8,18 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.11</version>
-    <last-release> Sep 29 2004</last-release>
+    <version>1.1.12</version>
+    <last-release> Oct 29 2004</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - bug fixes: xsl:include problems (William Brack), UTF8 number pattern
-    (William), date-time validation (William), namespace fix (William),
-    various Exslt date fixes (William), error callback fixes, leak with
-    namespaced global variable, attempt to fix a weird problem #153137
-   - improvements: exslt:date-sum tests (Derek Poon)
-   - documentation: second tutorial by Panagiotis Lourida
+    <changes>   - build fixes: warnings removal (William).
+   - bug fixes: attribute document pointer fix (Mark Vakoc), exslt date
+    negative periods (William Brack), generated tree structure fixes,
+    namespace lookup fix, use reentrant gmtime_r (William Brack),
+    exslt:funtion namespace fix (William), potential NULL pointer reference
+    (Dennis Dams, William), force string interning on generated
+  documents.
+   - documentation: update of the second tutorial (Panagiotis Louridas), add
+    exslt doc in rpm packages, fix the xsltproc man page.
 
 </changes>
   </product>
