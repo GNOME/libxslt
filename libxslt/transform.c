@@ -433,6 +433,12 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
      * Initialize the registered external modules
      */
     xsltInitCtxtExts(cur);
+    /*
+     * Setup document element ordering for later efficiencies
+     * (bug 133289)
+     */
+    if (xslDebugStatus == XSLT_DEBUG_NONE)
+        xmlXPathOrderDocElems(doc);
     docu = xsltNewDocument(cur, doc);
     if (docu == NULL) {
 	xsltTransformError(cur, NULL, (xmlNodePtr)doc,

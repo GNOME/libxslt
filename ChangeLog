@@ -1,4 +1,9 @@
-Sat Aug 14 21:49:48 PDT 2004 William Brack <wbrack@mmm.comlhk>
+Mon Aug 16 12:53:55 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: added a call to xmlXPathOrderDocElems
+	  in xmlNewTransformContext for the principal document (bug 133289)
+
+Sat Aug 14 21:49:48 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/namespaces.[ch], transform.c, xslt.c, xsltInternals.h:
 	  fixed handling of #default in namespace-alias for default
