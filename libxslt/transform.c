@@ -2975,7 +2975,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		case XML_CDATA_SECTION_NODE:
 		case XML_PI_NODE:
 		case XML_COMMENT_NODE:
-		    xmlXPathNodeSetAdd(list, cur);
+		    xmlXPathNodeSetAddUnique(list, cur);
 		    break;
 		case XML_DTD_NODE:
 		    /* Unlink the DTD, it's still reachable
@@ -3634,6 +3634,15 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 	if (doc->last == cur)
 	    doc->last = cur->prev;
 	cur->prev = cur->next = NULL;
+    }
+
+    /*
+     * Check for XPath document order availability
+     */
+    root = xmlDocGetRootElement(doc);
+    if (root != NULL) {
+	if (((long) root->content) >= 0)
+	    xmlXPathOrderDocElems(doc);
     }
 
     if (userCtxt != NULL)

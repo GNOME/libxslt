@@ -1,3 +1,11 @@
+Wed Mar 26 01:38:38 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: second part of the patch fixing #108905
+	  performances problems, ask for computation of document order on
+	  the document transformed and avoid inefficiencies building large
+	  nodesets of unique nodes.
+	* configure.in: fix a trouble with libtool in my debug environment.
+
 Mon Mar 24 22:30:00 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c libxslt/transform.c libxslt/variables.c:
