@@ -236,6 +236,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	   const xmlChar *use, xmlNodePtr inst) {
     xsltKeyDefPtr key;
     xmlChar *pattern = NULL;
+    int current, end, start;
 
     if ((style == NULL) || (name == NULL) || (match == NULL) || (use == NULL))
 	return(-1);
@@ -250,12 +251,48 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     key->use = xmlStrdup(use);
     key->inst = inst;
 
-    if (key->match[0] != '/') {
-	pattern = xmlStrdup((xmlChar *)"//");
-	pattern = xmlStrcat(pattern, key->match);
-    } else {
-	pattern = xmlStrdup(key->match);
+    /*
+     * Split the | and register it as as many keys
+     */
+    current = end = 0;
+    while (match[current] != 0) {
+	start = current;
+	while (IS_BLANK(match[current]))
+	    current++;
+	end = current;
+	while ((match[end] != 0) && (match[end] != '|')) {
+	    end++;
+	}
+	if (current == end) {
+	    xsltPrintErrorContext(NULL, style, inst);
+	    xsltGenericError(xsltGenericErrorContext,
+			     "key pattern is empty\n");
+	    style->errors++;
+	    goto error;
+	}
+	if (match[start] != '/') {
+	    pattern = xmlStrcat(pattern, (xmlChar *)"//");
+	    if (pattern == NULL) {
+		style->errors++;
+		goto error;
+	    }
+	}
+	pattern = xmlStrncat(pattern, &match[start], end - start);
+	if (pattern == NULL) {
+	    style->errors++;
+	    goto error;
+	}
+
+	if (match[end] == '|') {
+	    pattern = xmlStrcat(pattern, (xmlChar *)"|");
+	    end++;
+	}
+	current = end;
     }
+#ifdef WITH_XSLT_DEBUG_KEYS
+    xsltGenericDebug(xsltGenericDebugContext,
+	"   resulting pattern %s\n", pattern);
+#endif
     key->comp = xmlXPathCompile(pattern);
     if (key->comp == NULL) {
 	xsltPrintErrorContext(NULL, style, inst);
@@ -274,6 +311,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     }
     key->next = style->keys;
     style->keys = key;
+error:
     if (pattern != NULL)
 	xmlFree(pattern);
     return(0);

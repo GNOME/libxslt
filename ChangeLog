@@ -1,3 +1,11 @@
+Wed Jan 30 12:35:28 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c: Bob Stayton pointed out a problem when
+	  using unions in key match patterns.
+	* tests/docs/Makefile.am tests/docs/bug-70.xml
+	  tests/general/Makefile.am tests/general/bug-70.*: added a 
+	  specific example in the regression tests
+	
 Sun Jan 27 13:54:10 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: avoid a problem with Sun's Workshop CC,
