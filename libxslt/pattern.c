@@ -1536,7 +1536,7 @@ parse_predicate:
 	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileStepPattern : ']' expected\n");
 	    ctxt->error = 1;
-	    goto error;
+	    return;
         }
 	ret = xmlStrndup(q, CUR_PTR - q);
 	PUSH(XSLT_OP_PREDICATE, ret, NULL);

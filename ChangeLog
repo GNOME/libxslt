@@ -1,3 +1,8 @@
+Tue Apr 22 16:01:25 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fix a memory related segfault on a
+	  pattern compilation error #110189
+
 Tue Apr 22 15:45:25 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: fixing bug #110020 on global parameter
