@@ -2242,8 +2242,16 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     }
     if (generateDefault == 1) {
-        ns = xmlNewNs(copy, comp->ns, NULL);
-	copy->ns = ns;
+	xmlNsPtr defaultNs = NULL;
+
+	if ((ctxt->insert != NULL) && (ctxt->insert->type == XML_ELEMENT_NODE))
+	    defaultNs = xmlSearchNs(ctxt->insert->doc, ctxt->insert, NULL);
+	if ((defaultNs == NULL) || (!xmlStrEqual(defaultNs->href, comp->ns))) {
+	    ns = xmlNewNs(copy, comp->ns, NULL);
+	    copy->ns = ns;
+	} else {
+	    copy->ns = defaultNs;
+	}
     } else if ((ns == NULL) && (oldns != NULL)) {
 	/* very specific case xsltGetNamespace failed */
         ns = xmlNewNs(copy, oldns->href, oldns->prefix);
