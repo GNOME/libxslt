@@ -1,3 +1,8 @@
+Thu Sep 18 11:32:20 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxslt.c: don't output errors to stdout by default
+	  use stderr instead.
+
 Thu Sep 18 11:28:43 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.c libxslt/numbers.c: small fixes w.r.t.

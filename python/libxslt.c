@@ -572,7 +572,7 @@ libxslt_xsltErrorFuncHandler(ATTRIBUTE_UNUSED void *ctx, const char *msg,
 
     if (libxslt_xsltPythonErrorFuncHandler == NULL) {
         va_start(ap, msg);
-        vfprintf(stdout, msg, ap);
+        vfprintf(stderr, msg, ap);
         va_end(ap);
     } else {
         str = (char *) xmlMalloc(150);
