@@ -1,3 +1,9 @@
+Sun Aug  3 21:34:44 EDT 2003 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-127.*
+	  tests/general/Makefile.am tests/general/bug-127*: added the
+	  test from bug #118763 to the regression suite.
+
 Sun Aug  3 17:40:13 EDT 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: minor change, avoid wasting CPU cycles
