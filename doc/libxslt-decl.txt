@@ -1,14 +1,14 @@
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.18"
+#define LIBXSLT_DOTTED_VERSION "1.0.19"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10018
+#define LIBXSLT_VERSION 10019
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10018"
+#define LIBXSLT_VERSION_STRING "10019"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -1306,6 +1306,8 @@ struct xsltTransformContext {
     int              extrasNr;		/* the number of extras used */
     int              extrasMax;		/* the number of extras allocated */
     xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
+
+    xsltDocumentPtr  styleList;		/* the stylesheet docs list */
 };
 </STRUCT>
 <MACRO>
@@ -1573,15 +1575,15 @@ void
 </FUNCTION>
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.18"
+#define LIBXSLT_DOTTED_VERSION "1.0.19"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10018
+#define LIBXSLT_VERSION 10019
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10018"
+#define LIBXSLT_VERSION_STRING "10019"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>

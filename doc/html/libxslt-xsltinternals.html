@@ -4,7 +4,7 @@
 >xsltInternals</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
 "><LINK
 REL="HOME"
 TITLE="Gnome XSLT Library Reference Manual"
@@ -105,13 +105,11 @@ ALIGN="right"
 ></DIV
 ><H1
 ><A
-NAME="LIBXSLT-XSLTINTERNALS"
->xsltInternals</A
-></H1
+NAME="LIBXSLT-XSLTINTERNALS">xsltInternals</H1
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN4981"
+NAME="AEN5048"
 ></A
 ><H2
 >Name</H2
@@ -119,9 +117,7 @@ NAME="AEN4981"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN4984"
-></A
-><H2
+NAME="AEN5051"><H2
 >Synopsis</H2
 ><TABLE
 BORDER="0"
@@ -440,7 +436,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN5067"
+NAME="AEN5134"
 ></A
 ><H2
 >Description</H2
@@ -450,14 +446,14 @@ NAME="AEN5067"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN5070"
+NAME="AEN5137"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5072"
+NAME="AEN5139"
 ></A
 ><H3
 ><A
@@ -485,7 +481,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5078"
+NAME="AEN5145"
 ></A
 ><H3
 ><A
@@ -513,7 +509,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5084"
+NAME="AEN5151"
 ></A
 ><H3
 ><A
@@ -544,7 +540,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5090"
+NAME="AEN5157"
 ></A
 ><H3
 ><A
@@ -570,7 +566,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5095"
+NAME="AEN5162"
 ></A
 ><H3
 ><A
@@ -595,9 +591,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5100"
-></A
-><P
+NAME="AEN5167"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -650,7 +644,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5113"
+NAME="AEN5180"
 ></A
 ><H3
 ><A
@@ -675,9 +669,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5118"
-></A
-><P
+NAME="AEN5185"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -730,7 +722,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5131"
+NAME="AEN5198"
 ></A
 ><H3
 ><A
@@ -776,7 +768,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5137"
+NAME="AEN5204"
 ></A
 ><H3
 ><A
@@ -802,7 +794,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5142"
+NAME="AEN5209"
 ></A
 ><H3
 ><A
@@ -846,7 +838,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5148"
+NAME="AEN5215"
 ></A
 ><H3
 ><A
@@ -872,7 +864,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5153"
+NAME="AEN5220"
 ></A
 ><H3
 ><A
@@ -905,7 +897,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5159"
+NAME="AEN5226"
 ></A
 ><H3
 ><A
@@ -931,7 +923,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5164"
+NAME="AEN5231"
 ></A
 ><H3
 ><A
@@ -1007,6 +999,8 @@ CLASS="PROGRAMLISTING"
     int              extrasNr;		/* the number of extras used */
     int              extrasMax;		/* the number of extras allocated */
     xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
+
+    xsltDocumentPtr  styleList;		/* the stylesheet docs list */
 };</PRE
 ></TD
 ></TR
@@ -1017,7 +1011,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5169"
+NAME="AEN5236"
 ></A
 ><H3
 ><A
@@ -1043,7 +1037,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5174"
+NAME="AEN5241"
 ></A
 ><H3
 ><A
@@ -1080,7 +1074,7 @@ designed to be extended by extension implementors.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5180"
+NAME="AEN5247"
 ></A
 ><H3
 ><A
@@ -1106,7 +1100,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5185"
+NAME="AEN5252"
 ></A
 ><H3
 ><A
@@ -1149,9 +1143,7 @@ stylesheet language like xsl:if or xsl:apply-templates.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5195"
-></A
-><P
+NAME="AEN5262"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1238,7 +1230,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5216"
+NAME="AEN5283"
 ></A
 ><H3
 ><A
@@ -1287,7 +1279,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5221"
+NAME="AEN5288"
 ></A
 ><H3
 ><A
@@ -1320,9 +1312,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5229"
-></A
-><P
+NAME="AEN5296"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1361,7 +1351,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5239"
+NAME="AEN5306"
 ></A
 ><H3
 ><A
@@ -1435,7 +1425,7 @@ precomputed data.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5245"
+NAME="AEN5312"
 ></A
 ><H3
 ><A
@@ -1461,7 +1451,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5250"
+NAME="AEN5317"
 ></A
 ><H3
 ><A
@@ -1496,7 +1486,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5255"
+NAME="AEN5322"
 ></A
 ><H3
 ><A
@@ -1522,7 +1512,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5260"
+NAME="AEN5327"
 ></A
 ><H3
 ><A
@@ -1646,7 +1636,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5265"
+NAME="AEN5332"
 ></A
 ><H3
 ><A
@@ -1672,7 +1662,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5270"
+NAME="AEN5337"
 ></A
 ><H3
 ><A
@@ -1702,7 +1692,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5275"
+NAME="AEN5342"
 ></A
 ><H3
 ><A
@@ -1732,7 +1722,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5280"
+NAME="AEN5347"
 ></A
 ><H3
 ><A
@@ -1761,7 +1751,7 @@ Will return from the function.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5286"
+NAME="AEN5353"
 ></A
 ><H3
 ><A
@@ -1790,7 +1780,7 @@ Will goto the error: label.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5292"
+NAME="AEN5359"
 ></A
 ><H3
 ><A
@@ -1819,7 +1809,7 @@ Will return from the function with a 0 value.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5298"
+NAME="AEN5365"
 ></A
 ><H3
 ><A
@@ -1849,9 +1839,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5305"
-></A
-><P
+NAME="AEN5372"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1866,9 +1854,12 @@ CLASS="CALSTABLE"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -1885,7 +1876,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5314"
+NAME="AEN5381"
 ></A
 ><H3
 ><A
@@ -1918,9 +1909,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5322"
-></A
-><P
+NAME="AEN5389"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1952,9 +1941,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -1971,7 +1963,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5335"
+NAME="AEN5402"
 ></A
 ><H3
 ><A
@@ -2006,9 +1998,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5343"
-></A
-><P
+NAME="AEN5410"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2044,7 +2034,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5352"
+NAME="AEN5419"
 ></A
 ><H3
 ><A
@@ -2074,9 +2064,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5359"
-></A
-><P
+NAME="AEN5426"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2108,9 +2096,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -2127,7 +2118,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5372"
+NAME="AEN5439"
 ></A
 ><H3
 ><A
@@ -2162,9 +2153,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5380"
-></A
-><P
+NAME="AEN5447"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2200,7 +2189,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5389"
+NAME="AEN5456"
 ></A
 ><H3
 ><A
@@ -2238,9 +2227,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5398"
-></A
-><P
+NAME="AEN5465"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2289,9 +2276,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -2308,7 +2298,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5415"
+NAME="AEN5482"
 ></A
 ><H3
 ><A
@@ -2346,9 +2336,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5424"
-></A
-><P
+NAME="AEN5491"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2397,15 +2385,19 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->a new XSLT stylesheet structure.</TD
+>the value of the 'ret' parameter if everything
+went right, NULL if something went amiss.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2416,7 +2408,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5441"
+NAME="AEN5508"
 ></A
 ><H3
 ><A
@@ -2451,9 +2443,7 @@ information related to the stylesheet output</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5449"
-></A
-><P
+NAME="AEN5516"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2506,7 +2496,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5462"
+NAME="AEN5529"
 ></A
 ><H3
 ><A
@@ -2539,9 +2529,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5470"
-></A
-><P
+NAME="AEN5537"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2573,9 +2561,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -2592,7 +2583,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5483"
+NAME="AEN5550"
 ></A
 ><H3
 ><A
@@ -2636,9 +2627,7 @@ transformation is done.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5492"
-></A
-><P
+NAME="AEN5559"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2670,9 +2659,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -2689,7 +2681,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5505"
+NAME="AEN5572"
 ></A
 ><H3
 ><A
@@ -2727,9 +2719,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5514"
-></A
-><P
+NAME="AEN5581"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2799,7 +2789,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5531"
+NAME="AEN5598"
 ></A
 ><H3
 ><A
@@ -2878,9 +2868,7 @@ X      any other characters can be used in the prefix or suffix
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5549"
-></A
-><P
+NAME="AEN5616"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2963,9 +2951,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -2982,7 +2973,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5574"
+NAME="AEN5641"
 ></A
 ><H3
 ><A
@@ -3018,9 +3009,7 @@ and process xslt:text</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5582"
-></A
-><P
+NAME="AEN5649"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -3073,7 +3062,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5595"
+NAME="AEN5662"
 ></A
 ><H3
 ><A
@@ -3104,9 +3093,7 @@ the stylesheet and return its number</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5602"
-></A
-><P
+NAME="AEN5669"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -3138,9 +3125,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"
@@ -3157,7 +3147,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5615"
+NAME="AEN5682"
 ></A
 ><H3
 ><A
@@ -3189,9 +3179,7 @@ This make sure there is a slot ready in the transformation context</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5622"
-></A
-><P
+NAME="AEN5689"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -3223,9 +3211,12 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
+></SPAN
 > :</TD
 ><TD
 WIDTH="80%"

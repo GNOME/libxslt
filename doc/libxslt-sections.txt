@@ -81,6 +81,7 @@ xsltFreeCtxtExts
 xsltFreeExts
 xsltPreComputeExtModuleElement
 xsltRegisterTestModule
+xsltDebugDumpExtensions
 </SECTION>
 
 <SECTION>
@@ -305,6 +306,7 @@ xsltSaveResultTo
 xsltSaveResultToFilename
 xsltSaveResultToFile
 xsltSaveResultToFd
+xsltSaveResultToString
 xsltSaveProfiling
 xsltTimestamp
 xsltCalibrateAdjust

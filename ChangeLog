@@ -1,3 +1,8 @@
+Sat Jul  6 22:00:08 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.19
+	* doc/* : rebuilt the docs
+
 Sat Jul  6 17:51:14 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed bug #83749 about namespace generated
