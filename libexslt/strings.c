@@ -79,6 +79,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                     if (*cur == *delimiter) {
                         if (cur == token) {
                             /* discard empty tokens */
+                            token = cur + 1;
                             break;
                         }
                         *cur = 0;
@@ -92,10 +93,12 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                     }
                 }
             }
-            node =
-                xmlNewChild((xmlNodePtr) container, NULL,
-                            (const xmlChar *) "token", token);
-	    xmlXPathNodeSetAddUnique(ret->nodesetval, node);
+            if (token != cur) {
+                node =
+                    xmlNewChild((xmlNodePtr) container, NULL,
+                                (const xmlChar *) "token", token);
+	        xmlXPathNodeSetAddUnique(ret->nodesetval, node);
+            }
         }
     }
 

@@ -1,3 +1,10 @@
+Thu Jul 24 19:38:56 IST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/strings.c: applied patch from Shaun McCance to fix bug
+	  #117616 about EXST str:tokenize.
+	* tests/exslt/strings/Makefile.am tests/exslt/strings/tokenize.3.*:
+	  added the test in the regression suite.
+
 Wed Jul 23 21:57:39 IST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: applying a patch based on #117377
