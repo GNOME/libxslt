@@ -171,7 +171,7 @@ if test "$with_python" != "no" ; then
     then
         PYTHON_VERSION=`$PYTHON -c "import sys; print sys.version[[0:3]]"`
 	echo Found Python version $PYTHON_VERSION
-	LIBXML2_PYTHON=`python -c "try : import libxml2 ; print 1
+	LIBXML2_PYTHON=`$PYTHON -c "try : import libxml2 ; print 1
 except: print 0"`
 	if test "$LIBXML2_PYTHON" = "1"
 	then
