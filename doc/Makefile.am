@@ -14,7 +14,7 @@ HTML_DIR=$(prefix)/doc
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)/html
 
 scan:
-	gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR) --ignore-headers="acconfig.h config.h"
+	gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR) --ignore-headers="acconfig.h config.h win32config.h"
 
 templates: scan
 	gtkdoc-mktmpl --module=libxslt
