@@ -2750,17 +2750,22 @@ exsltDateSumFunction (xmlXPathParserContextPtr ctxt, int nargs)
 
     if ((ns == NULL) || (ns->nodeNr == 0)) {
 	xmlXPathReturnEmptyString (ctxt);
+	if (ns != NULL)
+	    xmlXPathFreeNodeSet (ns);
 	return;
     }
 
     total = exsltDateCreateDate (XS_DURATION);
-    if (total == NULL)
+    if (total == NULL) {
+        xmlXPathFreeNodeSet (ns);
         return;
+    }
 
     for (i = 0; i < ns->nodeNr; i++) {
 
 	tmp = xmlXPathCastNodeToString (ns->nodeTab[i]);
 	if (tmp == NULL) {
+	    xmlXPathFreeNodeSet (ns);
 	    exsltDateFreeDate (total);
 	    return;
 	}
@@ -2769,6 +2774,7 @@ exsltDateSumFunction (xmlXPathParserContextPtr ctxt, int nargs)
 	if (x == NULL) {
 	    xmlFree (tmp);
 	    exsltDateFreeDate (total);
+	    xmlXPathFreeNodeSet (ns);
 	    xmlXPathReturnEmptyString (ctxt);
 	    return;
 	}
