@@ -1,3 +1,9 @@
+Sat Dec 20 16:22:11 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: fixed several routines to assure empty
+	  string returned (rather than a string object with a null
+	  string pointer) (Bug 129561)
+
 Mon Dec 16 00:30:47 PST 2003 William Brack <wbrack@mmm.com.hk>
 
 	* doc/Makefile.am doc/site.xsl doc/api.xsl doc/newapi.xsl

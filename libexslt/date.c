@@ -2879,7 +2879,10 @@ exsltDateDateTimeFunction (xmlXPathParserContextPtr ctxt, int nargs)
     }
 
     ret = exsltDateDateTime();
-    xmlXPathReturnString(ctxt, ret);
+    if (ret == NULL)
+        xmlXPathReturnEmptyString(ctxt);
+    else
+        xmlXPathReturnString(ctxt, ret);
 }
 #endif
 
@@ -3351,7 +3354,10 @@ exsltDateAddFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlFree(ystr);
     xmlFree(xstr);
 
-    xmlXPathReturnString(ctxt, ret);
+    if (ret == NULL)
+        xmlXPathReturnEmptyString(ctxt);
+    else
+	xmlXPathReturnString(ctxt, ret);
 }
 
 /**
@@ -3384,7 +3390,10 @@ exsltDateAddDurationFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlFree(ystr);
     xmlFree(xstr);
 
-    xmlXPathReturnString(ctxt, ret);
+    if (ret == NULL)
+        xmlXPathReturnEmptyString(ctxt);
+    else
+	xmlXPathReturnString(ctxt, ret);
 }
 
 /**
@@ -3417,7 +3426,10 @@ exsltDateDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlFree(ystr);
     xmlFree(xstr);
 
-    xmlXPathReturnString(ctxt, ret);
+    if (ret == NULL)
+        xmlXPathReturnEmptyString(ctxt);
+    else
+	xmlXPathReturnString(ctxt, ret);
 }
 
 /**
