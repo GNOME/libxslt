@@ -5,5 +5,5 @@
     boolean;
     node-set;
     RTF;
-    ;                    
+    external;                    
   </out>

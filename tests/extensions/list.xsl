@@ -69,7 +69,7 @@
 </xsl:if>
 <xsl:if test="element-available('libxslt:debug')">libxslt:debug available
 </xsl:if>
-<xsl:text> === 9 Extension functions:
+<xsl:text> === 6 Extension functions:
 </xsl:text>
 <xsl:if test="function-available('libxslt:node-set')">libxslt:node-set() available
 </xsl:if>
@@ -77,15 +77,9 @@
 </xsl:if>
 <xsl:if test="function-available('xt:node-set')">xt:node-set() available
 </xsl:if>
-<xsl:if test="function-available('libxslt:evaluate')">libxslt:evaluate() available
-</xsl:if>
 <xsl:if test="function-available('saxon:evaluate')">saxon:evaluate() available
 </xsl:if>
-<xsl:if test="function-available('libxslt:expression')">libxslt:expression() available
-</xsl:if>
 <xsl:if test="function-available('saxon:expression')">saxon:expression() available
-</xsl:if>
-<xsl:if test="function-available('libxslt:eval')">libxslt:eval() available
 </xsl:if>
 <xsl:if test="function-available('saxon:eval')">saxon:eval() available
 </xsl:if>

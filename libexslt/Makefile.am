@@ -19,7 +19,8 @@ libexslt_la_SOURCES =                   \
 	sets.c				\
 	functions.c			\
 	strings.c			\
-	date.c
+	date.c				\
+	saxon.c
 
 libexslt_la_LIBADD = $(EXTRA_LIBS)
 libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@

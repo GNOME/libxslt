@@ -16,6 +16,7 @@ LIBEXSLT_PUBLIC extern const int exsltLibxmlVersion;
 #define EXSLT_FUNCTIONS_NAMESPACE ((const xmlChar *) "http://exslt.org/functions")
 #define EXSLT_STRINGS_NAMESPACE ((const xmlChar *) "http://exslt.org/strings")
 #define EXSLT_DATE_NAMESPACE ((const xmlChar *) "http://exslt.org/dates-and-times")
+#define SAXON_NAMESPACE ((const xmlChar *) "http://icl.com/saxon")
 
 void exsltCommonRegister (void);
 void exsltMathRegister (void);
@@ -23,6 +24,7 @@ void exsltSetsRegister (void);
 void exsltFuncRegister (void);
 void exsltStrRegister (void);
 void exsltDateRegister (void);
+void exsltSaxonRegister (void);
 
 void exsltRegisterAll (void);
 

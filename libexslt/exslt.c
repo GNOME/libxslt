@@ -28,5 +28,6 @@ exsltRegisterAll (void) {
     exsltFuncRegister();
     exsltStrRegister();
     exsltDateRegister();
+    exsltSaxonRegister();
 }
 
