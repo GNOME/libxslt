@@ -1489,7 +1489,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlChar *element, *end;
     xmlDocPtr res = NULL;
     xmlDocPtr oldOutput;
-    xmlNodePtr oldInsert;
+    xmlNodePtr oldInsert, root;
     const char *oldOutputFile;
     xsltOutputType oldType;
     xmlChar *URL = NULL;
@@ -1801,6 +1801,60 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
     xsltApplyOneTemplate(ctxt, node, inst->children, NULL, NULL);
+
+    /*
+     * Do some post processing work depending on the generated output
+     */
+    root = xmlDocGetRootElement(res);
+    if (root != NULL) {
+        /*
+         * Apply the default selection of the method
+         */
+        if ((method == NULL) &&
+            (root->ns == NULL) &&
+            (!xmlStrcasecmp(root->name, (const xmlChar *) "html"))) {
+            xmlNodePtr tmp;
+
+            tmp = res->children;
+            while ((tmp != NULL) && (tmp != root)) {
+                if (tmp->type == XML_ELEMENT_NODE)
+                    break;
+                if ((tmp->type == XML_TEXT_NODE) && (!xmlIsBlankNode(tmp)))
+                    break;
+		tmp = tmp->next;
+            }
+            if (tmp == root) {
+                ctxt->type = XSLT_OUTPUT_HTML;
+                res->type = XML_HTML_DOCUMENT_NODE;
+                if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+                    res->intSubset = xmlCreateIntSubset(res, root->name,
+                                                        doctypePublic,
+                                                        doctypeSystem);
+		if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
+		    res = htmlNewDoc(doctypeSystem, doctypePublic);
+#ifdef XSLT_GENERATE_HTML_DOCTYPE
+		} else if (version != NULL) {
+                    xsltGetHTMLIDs(version, &doctypePublic,
+                                   &doctypeSystem);
+                    if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+                        res->intSubset =
+                            xmlCreateIntSubset(res, root->name,
+                                               doctypePublic,
+                                               doctypeSystem);
+#endif
+                }
+            }
+
+        }
+        if (ctxt->type == XSLT_OUTPUT_XML) {
+            XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
+                XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
+                if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+                res->intSubset = xmlCreateIntSubset(res, root->name,
+                                                    doctypePublic,
+                                                    doctypeSystem);
+        }
+    }
 
     /*
      * Save the result
