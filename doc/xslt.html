@@ -177,13 +177,13 @@ href="ftp://ftp.gnome.org/pub/GNOME/MIRRORS.html">Gnome FTP server</a> either
 as a <a href="ftp://ftp.gnome.org/pub/GNOME/stable/sources/libxslt/">source
 archive</a> or <a
 href="ftp://ftp.gnome.org/pub/GNOME/stable/redhat/SRPMS/libxslt/">source</a>
-or <a href="ftp://ftp.gnome.org/pub/GNOME/stable/redhat/i386/libxslt/">i386</a>
-RPM packages,
-Antonin Sprinzl also provides <a href="ftp://gd.tuwien.ac.at/pub/libxml/">a
-mirror in Austria</a>. (NOTE that you need the <a
-href="http://rpmfind.net/linux/RPM/libxml2.html">libxml2</a>, <a
-href="http://rpmfind.net/linux/RPM/libxml2-devel.html">libxml2-devel</a>, <a
-href="http://rpmfind.net/linux/RPM/libxslt.html">libxslt</a> and <a
+or <a
+href="ftp://ftp.gnome.org/pub/GNOME/stable/redhat/i386/libxslt/">i386</a> RPM
+packages, Antonin Sprinzl also provides <a
+href="ftp://gd.tuwien.ac.at/pub/libxml/">a mirror in Austria</a>. (NOTE that
+you need the <a href="http://rpmfind.net/linux/RPM/libxml2.html">libxml2</a>,
+<a href="http://rpmfind.net/linux/RPM/libxml2-devel.html">libxml2-devel</a>,
+<a href="http://rpmfind.net/linux/RPM/libxslt.html">libxslt</a> and <a
 href="http://rpmfind.net/linux/RPM/libxslt-devel.html">libxslt-devel</a>
 packages installed to compile applications using libxslt.) <a
 href="mailto:igor@stud.fh-frankfurt.de">Igor  Zlatkovic</a> is now the
@@ -235,6 +235,19 @@ platform, get in touch with me to upload the package. I will keep them in the
 <h3>CVS only : check the <a
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
+
+<h3>1.0.18: May 27 2002</h3>
+<ul>
+  <li>a number of bug fixes: attributes, extra namespace declarations
+    (DocBook), xsl:include crash (Igor), documentation (Christian Cornelssen,
+    Charles Bozeman and Geert Kloosterman),  element-available (Richard
+    Jinks) </li>
+  <li>xsltproc can now list teh registered extensions thanks to Mark
+  Vakoc</li>
+  <li>there is a new API to save directly to a string
+    xsltSaveResultToString() by Morus Walter</li>
+  <li>specific error registration function for the python API</li>
+</ul>
 
 <h3>1.0.17: April 29 2002</h3>
 <ul>
