@@ -1,3 +1,9 @@
+Thu Mar  7 17:01:21 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c: fixed bug #73791 related to extension
+	  function declared in included stylesheets
+	* tests/exslt/functions/function.7.*: added specific test
+
 Thu Mar  7 15:20:32 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-75.xml

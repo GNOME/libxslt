@@ -406,17 +406,28 @@ xsltFreeCtxtExts(xsltTransformContextPtr ctxt) {
  */
 void *
 xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI) {
-    xsltExtDataPtr data;
+    xsltExtDataPtr data = NULL;
+    xsltStylesheetPtr tmp;
+
 
     if ((style == NULL) || (URI == NULL))
         return (NULL);
-    if (style->extInfos == NULL) {
-	style->extInfos = xmlHashCreate(10);
-	if (style->extInfos == NULL)
-	    return(NULL);
-	data = NULL;
-    } else {
-	data = (xsltExtDataPtr) xmlHashLookup(style->extInfos, URI);
+
+    tmp = style;
+    while (tmp != NULL) {
+	if (tmp->extInfos != NULL) {
+	    data = (xsltExtDataPtr) xmlHashLookup(tmp->extInfos, URI);
+	    if (data != NULL)
+		break;
+	}
+        tmp = xsltNextImport(tmp);
+    }
+    if (data == NULL) {
+	if (style->extInfos == NULL) {
+	    style->extInfos = xmlHashCreate(10);
+	    if (style->extInfos == NULL)
+		return(NULL);
+	}
     }
     if (data == NULL) {
 	void *extData;

@@ -311,6 +311,7 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
     if ((style == NULL) || (inst == NULL))
 	return;
 
+
     {
 	xmlChar *qname;
 
