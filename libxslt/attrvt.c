@@ -38,6 +38,7 @@ typedef xsltAttrVT *xsltAttrVTPtr;
 struct _xsltAttrVT {
     struct _xsltAttrVT *next; /* next xsltAttrVT */
     int nb_seg;		/* Number of segments */
+    int max_seg;	/* max capacity before re-alloc needed */
     int strstart;	/* is the start a string */
     /*
      * the namespaces in scope
@@ -72,8 +73,13 @@ xsltNewAttrVT(xsltStylesheetPtr style) {
     memset(cur, 0, sizeof(xsltAttrVT));
 
     cur->nb_seg = 0;
+    cur->max_seg = MAX_AVT_SEG;
     cur->strstart = 0;
     cur->next = style->attVTs;
+    /*
+     * Note: this pointer may be changed by a re-alloc within xsltCompileAttr,
+     * so that code may change the stylesheet pointer also!
+     */
     style->attVTs = (xsltAttrVTPtr) cur;
 
     return(cur);
@@ -124,6 +130,32 @@ xsltFreeAVTList(void *avt) {
 	xsltFreeAttrVT(cur);
 	cur = next;
     }
+}
+/**
+ * xsltSetAttrVTsegment:
+ * @ avt: pointer to an xsltAttrVT structure
+ * @ val: the value to be set to the next available segment
+ *
+ * Within xsltCompileAttr there are several places where a value
+ * needs to be added to the 'segments' array within the xsltAttrVT
+ * structure, and at each place the allocated size may have to be
+ * re-allocated.  This routine takes care of that situation.
+ *
+ * Returns the avt pointer, which may have been changed by a re-alloc
+ */
+static xsltAttrVTPtr
+xsltSetAttrVTsegment(xsltAttrVTPtr avt, void *val) {
+    if (avt->nb_seg >= avt->max_seg) {
+	avt = (xsltAttrVTPtr) xmlRealloc(avt, sizeof(xsltAttrVT) +
+	    		avt->max_seg * sizeof(void *));
+	if (avt == NULL) {
+	    return NULL;
+	}
+	memset(&avt->segments[avt->nb_seg], 0, MAX_AVT_SEG*sizeof(void *));
+	avt->max_seg += MAX_AVT_SEG;
+    }
+    avt->segments[avt->nb_seg++] = val;
+    return avt;
 }
 
 /**
@@ -200,7 +232,8 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 		str = cur;
 		if (avt->nb_seg == 0)
 		    avt->strstart = 1;
-		avt->segments[avt->nb_seg++] = (void *) ret;
+		if ((avt=xsltSetAttrVTsegment(avt, (void *) ret)) == NULL)
+		    goto error;
 		ret = NULL;
 		lastavt = 0;
 	    }
@@ -231,9 +264,12 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 		}
 		if (avt->nb_seg == 0)
 		    avt->strstart = 0;
-		if (lastavt == 1)
-		    avt->segments[avt->nb_seg++] = NULL;
-		avt->segments[avt->nb_seg++] = (void *) comp;
+		if (lastavt == 1) {
+		    if ((avt=xsltSetAttrVTsegment(avt, NULL)) == NULL)
+		        goto error;
+		}
+		if ((avt=xsltSetAttrVTsegment(avt, (void *) comp))==NULL)
+		    goto error;
 		lastavt = 1;
 		xmlFree(expr);
 		expr = NULL;
@@ -260,11 +296,27 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 	str = cur;
 	if (avt->nb_seg == 0)
 	    avt->strstart = 1;
-	avt->segments[avt->nb_seg++] = (void *) ret;
+	if ((avt=xsltSetAttrVTsegment(avt, (void *) ret)) == NULL)
+	    goto error;
 	ret = NULL;
     }
 
 error:
+    if (avt == NULL) {
+        xsltTransformError(NULL, style, attr->parent,
+		"xsltCompileAttr: malloc problem\n");
+    } else {
+        if (attr->psvi != avt) {  /* may have changed from realloc */
+            attr->psvi = avt;
+	    /*
+	     * This is a "hack", but I can't see any clean method of
+	     * doing it.  If a re-alloc has taken place, then the pointer
+	     * for this AVT may have changed.  style->attVTs was set by
+	     * xsltNewAttrVT, so it needs to be re-set to the new value!
+	     */
+	    style->attVTs = avt;
+	}
+    }
     if (ret != NULL)
 	xmlFree(ret);
     if (expr != NULL)

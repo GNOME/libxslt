@@ -1,3 +1,10 @@
+Tue Mar  9 23:44:31 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/attrvt.c: added coding to allow growing the
+	  AVT structure when a large number of segments are present
+	  (bug 136624)
+	* libxslt/keys.c: fixed a compilation warning (no logic change)
+
 Sat Mar  6 23:42:47 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* tests/docbook/Makefile.am: small fix to typo

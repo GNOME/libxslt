@@ -660,9 +660,9 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 			}
                         case XML_DOCUMENT_NODE:
                         case XML_HTML_DOCUMENT_NODE: {
-			    xmlDocPtr doc = (xmlDocPtr) 
+			    xmlDocPtr kdoc = (xmlDocPtr) 
 			                    nodelist->nodeTab[i]->psvi;
-			    doc->psvi = keyd;
+			    kdoc->psvi = keyd;
 			    break;
 			}
 			default:
