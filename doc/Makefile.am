@@ -27,7 +27,7 @@ APIPAGES=APIconstructors.html APIfiles.html APIfunctions.html \
 
 man_MANS = xsltproc.1
 
-all : $(PAGES) $(top_srcdir)/NEWS libxslt.xsa
+all : $(PAGES) $(top_srcdir)/NEWS libxslt.xsa $(man_MANS)
 
 tests:
 
@@ -48,6 +48,9 @@ libxslt.xsa: $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html
 $(APIPAGES): libxslt-refs.xml site.xsl api.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
 	  $(bindir)/xsltproc --html $(srcdir)/api.xsl $(srcdir)/xslt.html ; fi );
+
+xsltproc.1: xsltproc.xml
+	-@(xsltproc xsltproc.xml)
 
 scan:
 	-gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --ignore-headers="acconfig.h config.h win32config.h"

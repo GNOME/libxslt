@@ -1,3 +1,8 @@
+Fri Apr 25 15:26:26 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am doc/xsltproc.1 doc/xsltproc.xml: automated the
+	  generation of the man page
+
 Wed Apr 23 23:27:44 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/sets.c: fixed a bug introduced in the last commit
