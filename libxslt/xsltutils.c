@@ -399,7 +399,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     comp = sort->_private;
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:sort : compilation failed\n");
+	     "xsl:sort : compilation failed\n");
 	return(NULL);
     }
 
