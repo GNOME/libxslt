@@ -1,3 +1,8 @@
+Tue Mar  6 09:52:13 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/variables.c: William M. Brack found a serious bug
+	  with imports and global variables ...
+
 Mon Mar  5 21:51:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/pattern.[ch] libxslt/transform.c: added 

@@ -536,6 +536,7 @@ xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    }
 	    elem = elem->next;
 	}
+	if (elem != NULL) break;
 
 	style = xsltNextImport(style);
     }
