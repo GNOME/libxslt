@@ -284,6 +284,25 @@ LIBXSLT_PUBLIC
 </SECTION>
 
 <SECTION>
+<FILE>security</FILE>
+xsltSecurityPrefs
+xsltSecurityPrefsPtr
+xsltSecurityOption
+xsltSecurityCheck
+xsltNewSecurityPrefs
+xsltFreeSecurityPrefs
+xsltSetSecurityPrefs
+xsltGetSecurityPrefs
+xsltSetDefaultSecurityPrefs
+xsltGetDefaultSecurityPrefs
+xsltSetCtxtSecurityPrefs
+xsltSecurityAllow
+xsltSecurityForbid
+xsltCheckWrite
+xsltCheckRead
+</SECTION>
+
+<SECTION>
 <FILE>xsltInternals</FILE>
 XSLT_MAX_SORT
 XSLT_PAT_NO_PRIORITY

@@ -50,6 +50,7 @@
 #include "extensions.h"
 #include "extra.h"
 #include "preproc.h"
+#include "security.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_EXTRA
@@ -290,6 +291,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->inst = NULL;
     cur->xinclude = xsltDoXIncludeDefault;
     cur->outputFile = NULL;
+    cur->sec = xsltGetDefaultSecurityPrefs();
     return(cur);
 }
 
@@ -1526,7 +1528,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @inst:  the instruction in the stylesheet
  * @comp:  precomputed information
  *
- * Process an XSLT-1.1 document element
+ * Process an EXSLT/XSLT-1.1 document element
  */
 void
 xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
@@ -1620,6 +1622,18 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			 URL);
 	xmlFree(URL);
 	return;
+    }
+    if (ctxt->sec != NULL) {
+	ret = xsltCheckWrite(ctxt->sec, ctxt, filename);
+	if (ret == 0) {
+	    xsltPrintErrorContext(ctxt, NULL, inst);
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsltDocumentElem: write rights for %s denied\n",
+			     filename);
+	    xmlFree(URL);
+	    xmlFree(filename);
+	    return;
+	}
     }
 
     oldOutputFile = ctxt->outputFile;

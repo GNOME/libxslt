@@ -21,6 +21,7 @@
 #include "transform.h"
 #include "imports.h"
 #include "keys.h"
+#include "security.h"
 
 #ifdef LIBXML_XINCLUDE_ENABLED
 #include <libxml/xinclude.h>
@@ -164,6 +165,22 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 	return(NULL);
 
     /*
+     * Security framework check
+     */
+    if (ctxt->sec != NULL) {
+	int res;
+	
+	res = xsltCheckRead(ctxt->sec, ctxt, URI);
+	if (res == 0) {
+	    xsltPrintErrorContext(ctxt, NULL, NULL);
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsltLoadDocument: read rights for %s denied\n",
+			     URI);
+	    return(NULL);
+	}
+    }
+
+    /*
      * Walk the context list to find the document if preparsed
      */
     ret = ctxt->docList;
@@ -211,9 +228,27 @@ xsltDocumentPtr
 xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
     xsltDocumentPtr ret;
     xmlDocPtr doc;
+    xsltSecurityPrefsPtr sec;
 
     if ((style == NULL) || (URI == NULL))
 	return(NULL);
+
+    /*
+     * Security framework check
+     */
+    sec = xsltGetDefaultSecurityPrefs();
+    if (sec != NULL) {
+	int res;
+
+	res = xsltCheckRead(sec, NULL, URI);
+	if (res == 0) {
+	    xsltPrintErrorContext(NULL, NULL, NULL);
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsltLoadStyleDocument: read rights for %s denied\n",
+			     URI);
+	    return(NULL);
+	}
+    }
 
     /*
      * Walk the context list to find the document if preparsed

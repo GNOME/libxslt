@@ -28,6 +28,7 @@ xsltproc \- command line xslt processor
          | \fB--html\fR | \fB--docbook\fR | \fB--param \fIname\fR \fIvalue\fR\fR
          | \fB--stringparam \fIname\fR \fIvalue\fR\fR | \fB--nonet\fR | \fB--catalogs\fR
          | \fB--xinclude\fR | \fB--profile\fR | \fB--dumpextensions\fR] [\fBstylesheet\fR]
+         | \fB--nowrite\fR | \fB--nomkdir\fR
          [\fIfile1\fR] [\fIfile2\fR] [\fI....\fR]
 .fi
 
@@ -118,6 +119,14 @@ Output profiling information detailing the amount of time spent in each part of 
 .TP
 \fB--dumpextensions\fR
 Dumps the list of all registered extensions on stdout.
+
+.TP
+\fB--nowrite\fR
+Refuses to write to any file or resource.
+
+.TP
+\fB--nomkdir\fR
+Refuses to create directories.
 
 .SH "RETURN VALUES"
 

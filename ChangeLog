@@ -1,3 +1,15 @@
+Thu Oct 10 17:16:52 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/security.[ch] libxslt/Makefile.am: new module with
+	  runtime security checks, it will also check and do directory
+	  creation when allowed
+	* libxslt/documents.c libxslt/imports.c libxslt/transform.c
+	  libxslt/xslt.c libxslt/xsltInternals.h: plug-in the new
+	  security infrastructure probes at file reading or file creation
+	* xsltproc/xsltproc.c: plugged the security module there too,
+	  added the new options --nowrite and --nomkdir
+	* doc/*: updated the man page and regenerated.
+
 Wed Oct  9 18:37:56 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/*: updated the doc XSLT to add the search, added the search

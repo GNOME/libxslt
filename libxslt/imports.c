@@ -43,6 +43,7 @@
 #include "xsltutils.h"
 #include "imports.h"
 #include "documents.h"
+#include "security.h"
 
 
 
@@ -70,6 +71,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlChar *uriRef = NULL;
     xmlChar *URI = NULL;
     xsltStylesheetPtr res;
+    xsltSecurityPrefsPtr sec;
 
     if ((cur == NULL) || (style == NULL))
 	return (ret);
@@ -90,6 +92,24 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    "xsl:import : invalid URI reference %s\n", uriRef);
 	goto error;
     }
+
+    /*
+     * Security framework check
+     */
+    sec = xsltGetDefaultSecurityPrefs();
+    if (sec != NULL) {
+	int res;
+
+	res = xsltCheckRead(sec, NULL, URI);
+	if (res == 0) {
+	    xsltPrintErrorContext(NULL, NULL, NULL);
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsl:import: read rights for %s denied\n",
+			     URI);
+	    goto error;
+	}
+    }
+
     import = xmlParseFile((const char *)URI);
     if (import == NULL) {
 	xsltPrintErrorContext(NULL, style, cur);

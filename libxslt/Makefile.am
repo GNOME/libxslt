@@ -21,6 +21,7 @@ xsltinc_HEADERS = 			\
 	documents.h			\
 	preproc.h			\
 	transform.h			\
+	security.h			\
 	xsltInternals.h			\
 	xsltconfig.h
 
@@ -41,6 +42,7 @@ libxslt_la_SOURCES = 			\
 	documents.c			\
 	preproc.c			\
 	transform.c			\
+	security.c			\
 	win32config.h			\
 	xsltwin32config.h		\
 	xsltwin32config.h.in		\

@@ -40,6 +40,7 @@
 #include "extensions.h"
 #include "preproc.h"
 #include "extra.h"
+#include "security.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PARSING
@@ -1992,6 +1993,7 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 
 xsltStylesheetPtr
 xsltParseStylesheetFile(const xmlChar* filename) {
+    xsltSecurityPrefsPtr sec;
     xsltStylesheetPtr ret;
     xmlDocPtr doc;
     
@@ -2003,6 +2005,23 @@ xsltParseStylesheetFile(const xmlChar* filename) {
     xsltGenericDebug(xsltGenericDebugContext,
 	    "xsltParseStylesheetFile : parse %s\n", filename);
 #endif
+
+    /*
+     * Security framework check
+     */
+    sec = xsltGetDefaultSecurityPrefs();
+    if (sec != NULL) {
+	int res;
+
+	res = xsltCheckRead(sec, NULL, filename);
+	if (res == 0) {
+	    xsltPrintErrorContext(NULL, NULL, NULL);
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsltParseStylesheetFile: read rights for %s denied\n",
+			     filename);
+	    return(NULL);
+	}
+    }
 
     doc = xmlParseFile((const char *) filename);
     if (doc == NULL) {

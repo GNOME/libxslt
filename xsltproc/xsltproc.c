@@ -49,6 +49,7 @@
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 #include <libxslt/extensions.h>
+#include <libxslt/security.h>
 
 #include <libexslt/exsltconfig.h>
 
@@ -381,6 +382,8 @@ static void usage(const char *name) {
     printf("\t       use stringparam to avoid it\n");
     printf("\t--stringparam name value : pass a (parameter, UTF8 string value) pair\n");
     printf("\t--nonet refuse to fetch DTDs or entities over network\n");
+    printf("\t--nowrite refuse to write to any file or resource\n");
+    printf("\t--nomkdir refuse to create directories\n");
 #ifdef LIBXML_CATALOG_ENABLED
     printf("\t--catalogs : use SGML catalogs from $SGML_CATALOG_FILES\n");
     printf("\t             otherwise XML Catalogs starting from \n");
@@ -400,6 +403,7 @@ main(int argc, char **argv)
     int i;
     xsltStylesheetPtr cur = NULL;
     xmlDocPtr doc, style;
+    xsltSecurityPrefsPtr sec = NULL;
 
     if (argc <= 1) {
         usage(argv[0]);
@@ -411,6 +415,8 @@ main(int argc, char **argv)
     LIBXML_TEST_VERSION
 
     xmlLineNumbersDefault(1);
+    sec = xsltNewSecurityPrefs();
+    xsltSetDefaultSecurityPrefs(sec);
 
     for (i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-"))
@@ -478,6 +484,18 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-nonet")) ||
                    (!strcmp(argv[i], "--nonet"))) {
             xmlSetExternalEntityLoader(xmlNoNetExternalEntityLoader);
+        } else if ((!strcmp(argv[i], "-nowrite")) ||
+                   (!strcmp(argv[i], "--nowrite"))) {
+	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_FILE,
+		                 xsltSecurityForbid);
+	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_CREATE_DIRECTORY,
+		                 xsltSecurityForbid);
+	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_NETWORK,
+		                 xsltSecurityForbid);
+        } else if ((!strcmp(argv[i], "-nomkdir")) ||
+                   (!strcmp(argv[i], "--nomkdir"))) {
+	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_CREATE_DIRECTORY,
+		                 xsltSecurityForbid);
 #ifdef LIBXML_CATALOG_ENABLED
         } else if ((!strcmp(argv[i], "-catalogs")) ||
                    (!strcmp(argv[i], "--catalogs"))) {
@@ -679,6 +697,7 @@ done:
 #if 0
     xmlMemoryDump();
 #endif
+    xsltFreeSecurityPrefs(sec);
     return(errorno);
 }
 

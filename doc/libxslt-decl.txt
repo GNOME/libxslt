@@ -1087,6 +1087,85 @@ void
 <NAME>LIBXSLT_PUBLIC</NAME>
 #define LIBXSLT_PUBLIC 
 </MACRO>
+<STRUCT>
+<NAME>xsltSecurityPrefs</NAME>
+</STRUCT>
+<TYPEDEF>
+<NAME>xsltSecurityPrefsPtr</NAME>
+typedef xsltSecurityPrefs *xsltSecurityPrefsPtr;
+</TYPEDEF>
+<ENUM>
+<NAME>xsltSecurityOption</NAME>
+typedef enum {
+    XSLT_SECPREF_READ_FILE = 1,
+    XSLT_SECPREF_WRITE_FILE,
+    XSLT_SECPREF_CREATE_DIRECTORY,
+    XSLT_SECPREF_READ_NETWORK,
+    XSLT_SECPREF_WRITE_NETWORK
+} xsltSecurityOption;
+</ENUM>
+<USER_FUNCTION>
+<NAME>xsltSecurityCheck</NAME>
+<RETURNS>int </RETURNS>
+xsltSecurityPrefsPtr sec,
+					 xsltTransformContextPtr ctxt,
+					 const char *value
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>xsltNewSecurityPrefs</NAME>
+<RETURNS>xsltSecurityPrefsPtr 	</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFreeSecurityPrefs</NAME>
+<RETURNS>void 	</RETURNS>
+xsltSecurityPrefsPtr sec
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetSecurityPrefs</NAME>
+<RETURNS>int 	</RETURNS>
+xsltSecurityPrefsPtr sec,xsltSecurityOption option,xsltSecurityCheck func
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltGetSecurityPrefs</NAME>
+<RETURNS>xsltSecurityCheck 	</RETURNS>
+xsltSecurityPrefsPtr sec,xsltSecurityOption option
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetDefaultSecurityPrefs</NAME>
+<RETURNS>void 	</RETURNS>
+xsltSecurityPrefsPtr sec
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltGetDefaultSecurityPrefs</NAME>
+<RETURNS>xsltSecurityPrefsPtr 	</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetCtxtSecurityPrefs</NAME>
+<RETURNS>int 	</RETURNS>
+xsltSecurityPrefsPtr sec,xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSecurityAllow</NAME>
+<RETURNS>int 	</RETURNS>
+xsltSecurityPrefsPtr sec,xsltTransformContextPtr ctxt,const char *value
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSecurityForbid</NAME>
+<RETURNS>int 	</RETURNS>
+xsltSecurityPrefsPtr sec,xsltTransformContextPtr ctxt,const char *value
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCheckWrite</NAME>
+<RETURNS>int 	</RETURNS>
+xsltSecurityPrefsPtr sec,xsltTransformContextPtr ctxt,const xmlChar *URL
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCheckRead</NAME>
+<RETURNS>int 	</RETURNS>
+xsltSecurityPrefsPtr sec,xsltTransformContextPtr ctxt,const xmlChar *URL
+</FUNCTION>
 <MACRO>
 <NAME>XSLT_MAX_SORT</NAME>
 #define XSLT_MAX_SORT 5
@@ -1525,6 +1604,7 @@ struct xsltTransformContext {
     xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
 
     xsltDocumentPtr  styleList;		/* the stylesheet docs list */
+    void                 * sec;		/* the security preferences if any */
 };
 </STRUCT>
 <MACRO>

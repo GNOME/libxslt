@@ -455,6 +455,7 @@ struct _xsltTransformContext {
     xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
 
     xsltDocumentPtr  styleList;		/* the stylesheet docs list */
+    void                 * sec;		/* the security preferences if any */
 };
 
 /**

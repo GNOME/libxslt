@@ -50,6 +50,8 @@
 	<arg>--xinclude</arg>
 	<arg>--profile</arg>
 	<arg>--dumpextensions</arg>
+	<arg>--nowrite</arg>
+	<arg>--nomkdir</arg>
       </group>
       <arg><option><replaceable>stylesheet</replaceable></option></arg>
       <arg><replaceable>file1</replaceable></arg>
@@ -299,6 +301,24 @@
 	</listitem>
       </varlistentry>
 
+      <varlistentry>
+	<term>
+      <option>--nowrite</option></term>
+	<listitem>
+	  <simpara>Refuses to write to any file or resource.
+    </simpara>
+	</listitem>
+      </varlistentry>
+    
+      <varlistentry>
+	<term>
+      <option>--nomkdir</option></term>
+	<listitem>
+	  <simpara>Refuses to create directories.
+    </simpara>
+	</listitem>
+      </varlistentry>
+    
     
     </variablelist>
   </refsect1>
