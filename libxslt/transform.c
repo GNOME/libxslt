@@ -1961,6 +1961,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (comp->templ == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xslt:call-template : template %s not found\n", comp->name);
+	    return;
 	}
     }
 

@@ -1,3 +1,8 @@
+Mon May 28 12:54:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: William M. Brack found a small bug
+	  when call-template didn't find the template.
+
 Sat May 26 17:08:19 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c: fixed handling of PI and comments
