@@ -3700,6 +3700,70 @@ xsltApplyStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc,
 }
 
 /**
+ * xsltRunStylesheetUser:
+ * @style:  a parsed XSLT stylesheet
+ * @doc:  a parsed XML document
+ * @params:  a NULL terminated arry of parameters names/values tuples
+ * @output:  the URL/filename ot the generated resource if available
+ * @SAX:  a SAX handler for progressive callback output (not implemented yet)
+ * @IObuf:  an output buffer for progressive output (not implemented yet)
+ * @profile:  profile FILE * output or NULL
+ * @userCtxt:  user provided transform context
+ *
+ * Apply the stylesheet to the document and generate the output according
+ * to @output @SAX and @IObuf. It's an error to specify both @SAX and @IObuf.
+ *
+ * NOTE: This may lead to a non-wellformed output XML wise !
+ * NOTE: This may also result in multiple files being generated
+ * NOTE: using IObuf, the result encoding used will be the one used for
+ *       creating the output buffer, use the following macro to read it
+ *       from the stylesheet
+ *       XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+ * NOTE: using SAX, any encoding specified in the stylesheet will be lost
+ *       since the interface uses only UTF8
+ *
+ * Returns the number of by written to the main resource or -1 in case of
+ *         error.
+ */
+int
+xsltRunStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc,
+                  const char **params, const char *output,
+                  xmlSAXHandlerPtr SAX, xmlOutputBufferPtr IObuf,
+		  FILE * profile, xsltTransformContextPtr userCtxt)
+{
+    xmlDocPtr tmp;
+    int ret;
+
+    if ((output == NULL) && (SAX == NULL) && (IObuf == NULL))
+        return (-1);
+    if ((SAX != NULL) && (IObuf != NULL))
+        return (-1);
+
+    /* unsupported yet */
+    if (SAX != NULL) {
+        XSLT_TODO   /* xsltRunStylesheet xmlSAXHandlerPtr SAX */
+	return (-1);
+    }
+
+    tmp = xsltApplyStylesheetInternal(style, doc, params, output, profile,
+	                              userCtxt);
+    if (tmp == NULL) {
+	xsltPrintErrorContext(NULL, NULL, (xmlNodePtr) doc);
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltRunStylesheet : run failed\n");
+        return (-1);
+    }
+    if (IObuf != NULL) {
+        /* TODO: incomplete, IObuf output not progressive */
+        ret = xsltSaveResultTo(IObuf, tmp, style);
+    } else {
+        ret = xsltSaveResultToFilename(output, tmp, style, 0);
+    }
+    xmlFreeDoc(tmp);
+    return (ret);
+}
+
+/**
  * xsltRunStylesheet:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
@@ -3728,35 +3792,8 @@ xsltRunStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
                   const char **params, const char *output,
                   xmlSAXHandlerPtr SAX, xmlOutputBufferPtr IObuf)
 {
-    xmlDocPtr tmp;
-    int ret;
-
-    if ((output == NULL) && (SAX == NULL) && (IObuf == NULL))
-        return (-1);
-    if ((SAX != NULL) && (IObuf != NULL))
-        return (-1);
-
-    /* unsupported yet */
-    if (SAX != NULL) {
-        XSLT_TODO   /* xsltRunStylesheet xmlSAXHandlerPtr SAX */
-	return (-1);
-    }
-
-    tmp = xsltApplyStylesheetInternal(style, doc, params, output, NULL, NULL);
-    if (tmp == NULL) {
-	xsltPrintErrorContext(NULL, NULL, (xmlNodePtr) doc);
-        xsltGenericError(xsltGenericErrorContext,
-                         "xsltRunStylesheet : run failed\n");
-        return (-1);
-    }
-    if (IObuf != NULL) {
-        /* TODO: incomplete, IObuf output not progressive */
-        ret = xsltSaveResultTo(IObuf, tmp, style);
-    } else {
-        ret = xsltSaveResultToFilename(output, tmp, style, 0);
-    }
-    xmlFreeDoc(tmp);
-    return (ret);
+    return(xsltRunStylesheetUser(style, doc, params, output, SAX, IObuf,
+		                 NULL, NULL));
 }
 
 /**

@@ -439,7 +439,7 @@ xsltGetSAS(xsltStylesheetPtr style, const xmlChar *name, const xmlChar *ns) {
 static void
 xsltResolveSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
 	               const xmlChar *name, const xmlChar *ns,
-		       const xmlChar *ignored) {
+		       ATTRIBUTE_UNUSED const xmlChar *ignored) {
     xsltAttrElemPtr tmp;
     xsltAttrElemPtr refs;
 

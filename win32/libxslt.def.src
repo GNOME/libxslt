@@ -200,6 +200,7 @@ EXPORTS
 	xsltApplyStylesheet
 	xsltProfileStylesheet
 	xsltRunStylesheet
+	xsltRunStylesheetUser
 	xsltApplyOneTemplate
 	xsltDocumentElem
 	xsltSort

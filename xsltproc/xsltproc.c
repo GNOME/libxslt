@@ -331,7 +331,21 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 
 	xmlFreeDoc(res);
     } else {
-	xsltRunStylesheet(cur, doc, params, output, NULL, NULL);
+	int ret;
+
+	ctxt = xsltNewTransformContext(cur, doc);
+	if (ctxt == NULL)
+	    return;
+	if (profile) {
+	    ret = xsltRunStylesheetUser(cur, doc, params, output,
+		                        NULL, NULL, stderr, ctxt);
+	} else {
+	    ret = xsltRunStylesheetUser(cur, doc, params, output,
+		                        NULL, NULL, NULL, ctxt);
+	}
+	if (ctxt->state == XSLT_STATE_ERROR)
+	    errorno = 9;
+	xsltFreeTransformContext(ctxt);
 	if (timing)
 	    endTimer("Running stylesheet and saving result");
 	xmlFreeDoc(doc);
