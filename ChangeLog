@@ -1,3 +1,10 @@
+Sat Jan 13 23:26:21 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* test/Makefile.am test/REC*/Makefile.am: added first test
+	* libxslt/pattern.c libxslt/transform.c libxslt/xslt.c:
+	  cleanup of nodes at reading of stylesheet, added support
+	  for xsl:for-each and fixed a few recursion bugs
+
 Fri Jan 12 22:33:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* pattern.c, xslt.c: removed debug

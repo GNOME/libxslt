@@ -571,8 +571,8 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	NEXT;
 	SKIP_BLANKS;
 	PUSH(XSLT_OP_ROOT, NULL, NULL);
-	PUSH(XSLT_OP_PARENT, NULL, NULL);
 	if ((CUR != 0) || (CUR == '|')) {
+	    PUSH(XSLT_OP_PARENT, NULL, NULL);
 	    xsltCompileRelativePathPattern(ctxt, NULL);
 	}
     } else {

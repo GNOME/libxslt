@@ -24,6 +24,7 @@ xsltConf.sh: xsltConf.sh.in Makefile
 	       < $(srcdir)/xsltConf.sh.in > xsltConf.tmp \
 	&& mv xsltConf.tmp xsltConf.sh
 
-
+test:
+	@(cd tests ; make test)
 
 

@@ -477,7 +477,7 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 void
 xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltTemplatePtr ret;
-    xmlNodePtr cur;
+    xmlNodePtr cur, delete;
     xmlChar *prop;
 
     if (template == NULL)
@@ -537,6 +537,65 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	} else {
 	    ret->name  = prop;
 	}
+    }
+
+    /*
+     * Clean-up the template content from unwanted ignorable blank nodes
+     * This content comes from the stylesheet
+     * For stylesheets, the set of whitespace-preserving
+     * element names consists of just xsl:text.
+     */
+    cur = template->children;
+    delete = NULL;
+    while (cur != NULL) {
+	if (delete != NULL) {
+#ifdef DEBUG_PARSING
+	    xsltGenericError(xsltGenericErrorContext,
+	     "xsltParseStylesheetTemplate: removing ignorable blank node\n");
+#endif
+	    xmlUnlinkNode(delete);
+	    xmlFreeNode(delete);
+	    delete = NULL;
+	}
+	if (IS_XSLT_ELEM(cur)) {
+	    if (IS_XSLT_NAME(cur, "text"))
+		goto skip_children;
+	} else if (cur->type == XML_TEXT_NODE) {
+	    if (IS_BLANK_NODE(cur)) {
+		delete = cur;
+	    }
+	} else if (cur->type != XML_ELEMENT_NODE) {
+	    delete = cur;
+	}
+
+	/*
+	 * Skip to next node
+	 */
+	if (cur->children != NULL) {
+	    if (cur->children->type != XML_ENTITY_DECL) {
+		cur = cur->children;
+		continue;
+	    }
+	}
+skip_children:
+	if (cur->next != NULL) {
+	    cur = cur->next;
+	    continue;
+	}
+	
+	do {
+	    cur = cur->parent;
+	    if (cur == NULL)
+		break;
+	    if (cur == template) {
+		cur = NULL;
+		break;
+	    }
+	    if (cur->next != NULL) {
+		cur = cur->next;
+		break;
+	    }
+	} while (cur != NULL);
     }
 
     /*
@@ -726,22 +785,24 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 	return(NULL);
     }
 
+    ret->doc = doc;
     if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "stylesheet"))) {
 #ifdef DEBUG_PARSING
 	xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetDoc : found stylesheet\n");
 #endif
+
+	xsltParseStylesheetTop(ret, cur);
     } else {
-
-	TODO /* lookup the stylesheet element down in the tree */
+	/*
+	 * the document itself is the template.
+	 */
+#ifdef DEBUG_PARSING
         xsltGenericError(xsltGenericErrorContext,
-		"xsltParseStylesheetDoc : root is not stylesheet\n");
-	xsltFreeStylesheet(ret);
-	return(NULL);
+		"xsltParseStylesheetDoc : document is stylesheet\n");
+#endif
+	TODO
     }
-    ret->doc = doc;
-
-    xsltParseStylesheetTop(ret, cur);
 
     return(ret);
 }

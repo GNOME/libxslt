@@ -120,5 +120,7 @@ Makefile
 libxslt/Makefile
 libxslt/xsltconfig.h
 tests/Makefile
+tests/REC1/Makefile
+tests/REC2/Makefile
 xslt-config
 ])
