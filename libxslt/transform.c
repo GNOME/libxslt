@@ -954,6 +954,13 @@ xsltNumber(xsltTransformContextPtr ctxt,
 	numdata.groupingCharacter = 0;
     }
 
+    /* Set default values */
+    if (numdata.value == NULL) {
+	if (numdata.level == NULL) {
+	    numdata.level = xmlStrdup(BAD_CAST("single"));
+	}
+    }
+    
     xsltNumberFormat(ctxt, &numdata, node);
 
     if (numdata.level != NULL)

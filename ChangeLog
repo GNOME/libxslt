@@ -1,3 +1,9 @@
+Wed Feb 14 19:13:33 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* libxslt/numbers.c: implemented level=any
+	* libxslt/transform.c: corrected some default values
+	* tests/REC/test-7.7-*.*: added
+
 Wed Feb 14 18:07:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/pattern.c: priorities were horribly broken, hope it's

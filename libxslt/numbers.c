@@ -398,9 +398,59 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			    double *array,
 			    int max)
 {
-    /* preceding | ancestor-or-self */
-    TODO;
-    return 0;
+    int amount = 0;
+    int cnt = 0;
+    int keep_going = TRUE;
+    xmlNodePtr ancestor;
+    xmlNodePtr preceding;
+    xmlXPathParserContextPtr parser;
+
+    context->xpathCtxt->node = node;
+    parser = xmlXPathNewParserContext(NULL, context->xpathCtxt);
+    if (parser) {
+	/* preceding */
+	for (preceding = xmlXPathNextPreceding(parser, node);
+	     preceding != NULL;
+	     preceding = xmlXPathNextPreceding(parser, preceding)) {
+	    if ((from != NULL) &&
+		xsltMatchPattern(context, preceding, from)) {
+		keep_going = FALSE;
+		break; /* for */
+	    }
+	    if (count == NULL) {
+		if ((node->type == preceding->type) &&
+		    /* FIXME: must use expanded-name instead of local name */
+		    xmlStrEqual(node->name, preceding->name))
+		    cnt++;
+	    } else {
+		if (xsltMatchPattern(context, preceding, count))
+		    cnt++;
+	    }
+	}
+
+	if (keep_going) {
+	    /* ancestor-or-self */
+	    for (ancestor = node;
+		 ancestor != NULL;
+		 ancestor = xmlXPathNextAncestor(parser, ancestor)) {
+		if ((from != NULL) &&
+		    xsltMatchPattern(context, ancestor, from)) {
+		    break; /* for */
+		}
+		if (count == NULL) {
+		    if ((node->type == ancestor->type) &&
+			/* FIXME */
+			xmlStrEqual(node->name, ancestor->name))
+			cnt++;
+		} else {
+		    if (xsltMatchPattern(context, ancestor, count))
+			cnt++;
+		}
+	    }
+	}
+	array[amount++] = (double)cnt;
+    }
+    return amount;
 }
 
 static int
@@ -437,7 +487,9 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 		     preceding != NULL;
 		     preceding = xmlXPathNextPrecedingSibling(parser, preceding)) {
 		    if (count == NULL) {
-			if (preceding->type == ancestor->type)
+			if ((preceding->type == ancestor->type) &&
+			    /* FIXME */
+			    xmlStrEqual(preceding->name, ancestor->name))
 			    cnt++;
 		    } else {
 			if (xsltMatchPattern(context, preceding, count))
@@ -554,18 +606,16 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 					      output);
 	    }
 	} else if (xmlStrEqual(data->level, "any")) {
-	    double numarray[1024];
-	    int max = sizeof(numarray)/sizeof(numarray[0]);
 	    amount = xsltNumberFormatGetAnyLevel(ctxt,
 						 node,
 						 data->count,
 						 data->from,
-						 numarray,
-						 max);
+						 &number,
+						 1);
 	    if (amount > 0) {
 		xsltNumberFormatInsertNumbers(data,
-					      numarray,
-					      amount,
+					      &number,
+					      1,
 					      &array,
 					      array_amount,
 					      output);
