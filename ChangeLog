@@ -1,5 +1,10 @@
 Wed Apr  9 22:02:17 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
+	* win32/Makefile.msvc: fixed compilation with thread-enabled
+	  libxml
+	  
+Wed Apr  9 22:02:17 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
 	* libexslt/strings.c: applied patch from Mark Vakoc fixing a problem
 	  with RTF in libexslt
 
