@@ -40,6 +40,13 @@ extern "C" {
 #define LIBXSLT_VERSION_STRING "10108"
 
 /**
+ * LIBXSLT_VERSION_EXTRA
+ *
+ * extra version information, used to show a CVS compilation
+ */
+#define LIBXML_VERSION_EXTRA "-CVS931"
+
+/**
  * WITH_XSLT_DEBUG:
  *
  * Activate the compilation of the debug reporting. Speed penalty

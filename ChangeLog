@@ -1,3 +1,11 @@
+Wed Aug 18 14:27:18 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* configure.in libxslt/xsltconfig.h.in libxslt/xslt.c
+	  libxslt/xsltwin32config.* libexslt/exsltconfig.h.in
+	  libexslt/exslt.c: added some code to include the CVS
+	  ChangeLog version in the version strings available for
+	  printing (e.g. by xsltproc)
+
 Wed Aug 18 00:22:00 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: implemented --nodtdattr to avoid defaulting

@@ -47,7 +47,7 @@
 /* #define WITH_XSLT_DEBUG_BLANKS */
 #endif
 
-const char *xsltEngineVersion = LIBXSLT_VERSION_STRING;
+const char *xsltEngineVersion = LIBXSLT_VERSION_STRING LIBXSLT_VERSION_EXTRA;
 const int xsltLibxsltVersion = LIBXSLT_VERSION;
 const int xsltLibxmlVersion = LIBXML_VERSION;
 
