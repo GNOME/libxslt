@@ -1,3 +1,8 @@
+Wed Oct  9 14:27:17 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/index.py: the indexer version of the XSLT part of the
+	  xmlsoft site + archives
+
 Sun Sep 29 20:02:25 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/Makefile.msvc: introduced double-run compilation.
