@@ -1,3 +1,8 @@
+Mon Oct  1 17:18:32 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltwin32config.h.in win32/dsp/libexslt_*.dsp: applied
+	  patches from Igor for Windows.
+
 Tue Sep 18 11:48:20 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: fixed bug #60624

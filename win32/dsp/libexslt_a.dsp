@@ -91,6 +91,10 @@ SOURCE=..\..\libexslt\common.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\libexslt\date.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\libexslt\exslt.c
 # End Source File
 # Begin Source File
@@ -104,6 +108,10 @@ SOURCE=..\..\libexslt\math.c
 # Begin Source File
 
 SOURCE=..\..\libexslt\sets.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\libexslt\strings.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
