@@ -591,6 +591,15 @@ xsltInitCtxtExt (xsltExtDataPtr styleData, xsltInitExtCtxt *ctxt,
         return;
     }
 
+    ctxtData = (xsltExtDataPtr) xmlHashLookup(ctxt->ctxt->extInfos, URI);
+    if (ctxtData != NULL) {
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+			 "xsltInitCtxtExt: already initialized\n");
+#endif
+        return;
+    }
+
     extData = module->initFunc(ctxt->ctxt, URI);
     if (extData == NULL) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS

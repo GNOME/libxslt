@@ -1,3 +1,8 @@
+Wed Apr 23 17:00:16 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	*  libxslt/extensions.c: patch from Vasily Tchekalkin fixing
+	   bug #111420 about double initialization of extension contexts
+
 Wed Apr 23 14:25:46 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fix bug #110577 namespace in copy-of
