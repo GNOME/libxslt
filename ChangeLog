@@ -1,3 +1,8 @@
+Tue Apr 30 18:06:14 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: don't allow adding an attribute to
+	  a document node
+
 Mon Apr 29 19:00:22 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt/xsltwin32config.h: preparing 1.0.17

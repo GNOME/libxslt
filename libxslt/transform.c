@@ -478,6 +478,8 @@ xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr target,
 
     if (attr == NULL)
 	return(NULL);
+    if (target->type != XML_ELEMENT_NODE)
+	return(NULL);
 
     if (attr->ns != NULL) {
 	ns = xsltGetNamespace(ctxt, attr->parent, attr->ns, target);
