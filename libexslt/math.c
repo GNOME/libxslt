@@ -68,12 +68,19 @@ static void
 exsltMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns;
     double ret;
+    void *user = NULL;
 
     if (nargs != 1) {
 	xsltGenericError(xsltGenericErrorContext,
 			 "math:min: invalid number of arguments\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
+    }
+    /* We need to delay the freeing of value->user */
+    if ((ctxt->value != NULL) && (ctxt->value->boolval != 0)) {
+        user = ctxt->value->user;
+	ctxt->value->boolval = 0;
+	ctxt->value->user = NULL;
     }
     ns = xmlXPathPopNodeSet(ctxt);
     if (xmlXPathCheckError(ctxt))
@@ -82,6 +89,8 @@ exsltMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     ret = exsltMathMin(ns);
 
     xmlXPathFreeNodeSet(ns);
+    if (user != NULL)
+        xmlFreeNodeList((xmlNodePtr)user);
 
     xmlXPathReturnNumber(ctxt, ret);
 }
@@ -128,10 +137,18 @@ static void
 exsltMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns;
     double ret;
+    void *user = NULL;
 
     if (nargs != 1) {
 	xmlXPathSetArityError(ctxt);
 	return;
+    }
+
+    /* We need to delay the freeing of value->user */
+    if ((ctxt->value != NULL) && (ctxt->value->boolval != 0)) {
+	user = ctxt->value->user;
+	ctxt->value->boolval = 0;
+	ctxt->value->user = 0;
     }
     ns = xmlXPathPopNodeSet(ctxt);
     if (xmlXPathCheckError(ctxt))
@@ -141,6 +158,8 @@ exsltMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 
     xmlXPathFreeNodeSet(ns);
 
+    if (user != NULL)
+        xmlFreeNodeList((xmlNodePtr)user);
     xmlXPathReturnNumber(ctxt, ret);
 }
 
@@ -198,12 +217,19 @@ exsltMathHighest (xmlNodeSetPtr ns) {
 static void
 exsltMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
+    void *user = NULL;
 
     if (nargs != 1) {
 	xmlXPathSetArityError(ctxt);
 	return;
     }
 
+    /* We need to delay the freeing of value->user */
+    if ((ctxt->value != NULL) && ctxt->value->boolval != 0) {
+        user = ctxt->value->user;
+	ctxt->value->boolval = 0;
+	ctxt->value->user = NULL;
+    }
     ns = xmlXPathPopNodeSet(ctxt);
     if (xmlXPathCheckError(ctxt))
 	return;
@@ -211,6 +237,8 @@ exsltMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     ret = exsltMathHighest(ns);
 
     xmlXPathFreeNodeSet(ns);
+    if (user != NULL)
+        xmlFreeNodeList((xmlNodePtr)user);
 
     xmlXPathReturnNodeSet(ctxt, ret);
 }
@@ -269,12 +297,20 @@ exsltMathLowest (xmlNodeSetPtr ns) {
 static void
 exsltMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
+    void *user = NULL;
+    
 
     if (nargs != 1) {
 	xmlXPathSetArityError(ctxt);
 	return;
     }
 
+    /* We need to delay the freeing of value->user */
+    if ((ctxt->value != NULL) && (ctxt->value->boolval != 0)) {
+        user = ctxt->value->user;
+	ctxt->value->boolval = 0;
+	ctxt->value->user = NULL;
+    }
     ns = xmlXPathPopNodeSet(ctxt);
     if (xmlXPathCheckError(ctxt))
 	return;
@@ -282,6 +318,8 @@ exsltMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     ret = exsltMathLowest(ns);
 
     xmlXPathFreeNodeSet(ns);
+    if (user != NULL)
+        xmlFreeNodeList((xmlNodePtr)user);
 
     xmlXPathReturnNodeSet(ctxt, ret);
 }

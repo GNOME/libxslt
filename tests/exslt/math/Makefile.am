@@ -11,6 +11,7 @@ EXTRA_DIST = 						\
 	lowest.2.out   lowest.2.xml   lowest.2.xsl	\
 	max.1.out      max.1.xml      max.1.xsl		\
 	max.2.out      max.2.xml      max.2.xsl		\
+	max.3.out      max.3.xml      max.3.xsl		\
 	max.5.out      max.5.xml      max.5.xsl		\
 	power.1.out   power.1.xml    power.1.xsl	\
 	min.1.out      min.1.xml      min.1.xsl		\
