@@ -1,4 +1,6 @@
 ## Process this file with automake to produce Makefile.in
+EXTRA_DIST = 			\
+	libxslt-api.xml
 
 # The name of the module.
 DOC_MODULE=libxslt-$(VERSION)

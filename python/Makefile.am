@@ -26,6 +26,14 @@ libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
 
 _libxslt.so: libxslt.o libxslt-py.o types.o
 	$(CC) $(LINK_FLAGS) libxslt.o libxslt-py.o types.o $(LIBS) -o _libxslt.so
+
+install-data-local:
+	$(mkinstalldirs) $(DESTDIR)$(PYTHON_SITE_PACKAGES)
+	-@INSTALL@ -m 0644 libxslt.py $(DESTDIR)$(PYTHON_SITE_PACKAGES)
+	-@INSTALL@ -m 0755 _libxslt.so $(DESTDIR)$(PYTHON_SITE_PACKAGES)
+	$(mkinstalldirs) $(DESTDIR)$(DOCS_DIR)
+	-@(for doc in $(DOCS) ; \
+	   do @INSTALL@ -m 0644 $$doc $(DESTDIR)$(DOCS_DIR) ; done)
 else
 all: 
 endif
@@ -55,11 +63,4 @@ tests: all
 clean:
 	rm -f $(GENERATED) *.o _libxslt.so *.pyc libxslt.py
 
-install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(PYTHON_SITE_PACKAGES)
-	-@INSTALL@ -m 0644 libxslt.py $(DESTDIR)$(PYTHON_SITE_PACKAGES)
-	-@INSTALL@ -m 0755 _libxslt.so $(DESTDIR)$(PYTHON_SITE_PACKAGES)
-	$(mkinstalldirs) $(DESTDIR)$(DOCS_DIR)
-	-@(for doc in $(DOCS) ; \
-	   do @INSTALL@ -m 0644 $$doc $(DESTDIR)$(DOCS_DIR) ; done)
 

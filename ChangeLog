@@ -1,3 +1,8 @@
+Tue Feb  5 17:35:00 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/Makefile.am: do not install outside of prefix,
+	  make sure the API get shipped.
+
 Mon Feb  4 19:47:32 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.[ch] doc/libxslt-api.xml doc/libxslt-refs.xml:
