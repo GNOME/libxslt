@@ -1,3 +1,8 @@
+Sun Nov 17 18:12:20 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.23
+	* doc/*: rebuilding the docs
+
 Sat Nov 16 23:23:41 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxslt.c: make sure to register EXSLT for the bindings
