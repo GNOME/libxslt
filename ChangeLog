@@ -1,3 +1,8 @@
+Sun Jan 28 08:41:10 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt.spec.in: changes needed for libxml2-devel
+	  changes
+
 Sat Jan 27 11:00:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt.spec.in doc/xslt.html: updating doc and trying to add
