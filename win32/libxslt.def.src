@@ -24,6 +24,7 @@ EXPORTS
 	xsltParseStylesheetAttributeSet
 	xsltFreeAttributeSetsHashes
 	xsltApplyAttributeSet
+	xsltResolveStylesheetAttributeSet
 
 
 /* documents.h
@@ -293,7 +294,7 @@ EXPORTS
 	xsltAllocateExtraCtxt
 
 
-/* xsltInternals.h
+/* xsltutils.h
    --------------------------------------------------------------------- */
 	/* Our own version of namespaced atributes lookup. */
 	xsltGetNsProp
@@ -307,6 +308,8 @@ EXPORTS
 	xsltMessage
 	xsltSetGenericErrorFunc
 	xsltSetGenericDebugFunc
+	xsltSetTransformErrorFunc
+	xsltTransformError
 
 	/* Sorting. */
 	xsltDocumentSortFunction
@@ -320,6 +323,7 @@ EXPORTS
 	xsltSaveResultToFilename
 	xsltSaveResultToFile
 	xsltSaveResultToFd
+	xsltSaveResultToString
 
 	/* Profiling. */
 	xsltSaveProfiling
