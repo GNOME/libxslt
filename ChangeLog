@@ -1,3 +1,11 @@
+Sun May  2 23:47:43 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/imports.c: added comments and function header,
+	  improved logic of routine just added.
+	* tests/general/bug-147*, tests/docs/bug-147.xml,
+	  tests/general/Makefile.am, tests/docs/Makefile.am: added
+	  regression test for bug 141279
+
 Sun May  2 12:47:32 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/imports.c: enhanced normalization of comp steps

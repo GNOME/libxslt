@@ -52,13 +52,22 @@
  *			Module interfaces				*
  *									*
  ************************************************************************/
+/**
+ * xsltFixImportedCompSteps:
+ * @master: the "master" stylesheet
+ * @style: the stylesheet being imported by the master
+ *
+ * normalize the comp steps for the stylesheet being imported
+ * by the master, together with any imports within that. 
+ *
+ */
 static void xsltFixImportedCompSteps(xsltStylesheetPtr master, 
 			xsltStylesheetPtr style) {
     xsltStylesheetPtr res;
-    for (res = style; res != NULL; res = res->imports)
-	xmlHashScan(res->templatesHash,
+    xmlHashScan(style->templatesHash,
 	            (xmlHashScanner) xsltNormalizeCompSteps, master);
-    master->extrasNr += style->extrasNr;
+    for (res = style->imports; res != NULL; res = res->next)
+	xsltFixImportedCompSteps(master, res);
 }
 
 /**
@@ -143,6 +152,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	res->next = style->imports;
 	style->imports = res;
 	xsltFixImportedCompSteps(style, res);
+	style->extrasNr += res->extrasNr;
 	ret = 0;
     } else {
 	xmlFreeDoc(import);
