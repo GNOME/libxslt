@@ -74,7 +74,7 @@ CPPFLAGS = /nologo
 
 # The compiler and its options.
 CC = cl.exe
-CFLAGS = /nologo /D "WIN32" /D "_WINDOWS" /D "_MBCS" /W3 /MD
+CFLAGS = /nologo /D "WIN32" /D "_WINDOWS" /D "_MBCS" /W3 /MD /D "_REENTRANT"
 CFLAGS = $(CFLAGS) /I$(BASEDIR) /I$(XSLT_SRCDIR) /I$(INCPREFIX)
 
 # The linker and its options.
