@@ -650,10 +650,10 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
     } else {
         name = ncname;
     }
-    if (!xmlStrncasecmp(prefix, (xmlChar *) "xml", 3)) {
+    if (!xmlStrncasecmp(prefix, (xmlChar *) "xmlns", 5)) {
 #ifdef WITH_XSLT_DEBUG_PARSING
         xsltGenericDebug(xsltGenericDebugContext,
-                         "xsltAttribute: xml prefix forbidden\n");
+                         "xsltAttribute: xmlns prefix forbidden\n");
 #endif
         goto error;
     }
