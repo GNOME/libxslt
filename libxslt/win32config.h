@@ -77,7 +77,7 @@ static int isnan (double d) {
 #define HAVE__STAT
 #define HAVE_STRING_H
 
-#include <libxml/xmlwin32version.h>
+#include <libxml/xmlversion.h>
 
 #if !defined LIBXSLT_PUBLIC
 #if defined _MSC_VER && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
