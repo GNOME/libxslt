@@ -2323,6 +2323,13 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		copy = xmlNewComment(node->content);
 		xmlAddChild(ctxt->insert, copy);
 		break;
+	    case XML_NAMESPACE_DECL:
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+				 "xsltCopy: namespace declaration\n");
+#endif
+                xsltCopyNamespace(ctxt, ctxt->insert, node);
+		break;
 	    default:
 		break;
 
