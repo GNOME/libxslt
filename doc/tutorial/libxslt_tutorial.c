@@ -90,6 +90,8 @@ main(int argc, char **argv) {
 	xmlFreeDoc(res);
 	xmlFreeDoc(doc);
 
+        xsltCleanupGlobals();
+        xmlCleanupParser();
 	return(0);
 
 }

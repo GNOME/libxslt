@@ -1,3 +1,10 @@
+Wed Aug 29 22:58:58 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* doc/tutorial/libxslt_tutorial.c doc/tutorial/libxslttutorial.html
+	  doc/tutorial/libxslttutorial.xml: added global variables cleanups
+	  to the example.
+	* tests/documents/Makefile.am: mjcox pointed to some missing files
+
 Wed Aug 29 15:32:52 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/common.c: fixed a bug in exsltNodeSetFunction
