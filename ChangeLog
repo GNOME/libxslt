@@ -1,3 +1,14 @@
+Fri Mar 12 13:07:03 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/namespaces.c: added additional check to prevent
+	  superfluous namespace href's being generated on elements
+	  (bug 136914)
+	* tests/namespaces/Makefile.am, tests/namespaces/tst5.x[ms]l:
+	  added new test for bug 136914
+	* tests/namespaces, tests/extensions/ tests/reports: fixed
+	  error in "enhanced" Makefile.am, removed superfluous .err files
+	  from cvs
+
 Wed Mar 10 19:27:39 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* doc/search.php.incl: minor addition for later version of php

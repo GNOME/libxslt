@@ -157,7 +157,7 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
 	(out->parent->ns != NULL) &&
 	(xmlStrEqual(out->parent->ns->href, URI)))
 	ret = out->parent->ns;
-    else
+    else 
 	ret = xmlSearchNsByHref(out->doc, out, URI);
 
     if ((ret == NULL) || (ret->prefix == NULL)) {
@@ -167,6 +167,11 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
 		ret = xmlSearchNs(out->doc, out, (xmlChar *)nprefix);
 	    } while (ret != NULL);
 	    prefix = (const xmlChar *) &nprefix[0];
+	} else if ((ret != NULL) && (ret->prefix == NULL)) {
+	    /* found ns but no prefix - search for the prefix */
+	    ret = xmlSearchNs(out->doc, out, prefix);
+	    if (ret != NULL)
+	        return(ret);	/* found it */
 	}
 	if (out->type == XML_ELEMENT_NODE)
 	    ret = xmlNewNs(out, URI, prefix);

@@ -17,10 +17,10 @@ valgrind:
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@echo '## Running extensions tests'
 	@(echo > .memdump)
-	-@(for i in $(srcdir)/../docs/*.xml ; do \
+	-@(for i in $(srcdir)/*.xml ; do \
 	  if [ -d $$i ] ; then continue ; fi ; \
 	  doc=`basename $$i .xml` ; \
-	  for j in $(srcdir)/$$doc*.xsl ; do \
+	  j=$(srcdir)/$$doc*.xsl ; \
 	  if [ ! -f $$j ] ; then continue ; fi ; \
 	  if [ -d $$j ] ; then continue ; fi ; \
 	  name=`basename $$j .xsl`; \
@@ -47,5 +47,5 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 		echo $$log ; \
 	  fi ; \
 	  rm -f result.$$name err.$$name; \
-	  done ; done)
+	  done)
 

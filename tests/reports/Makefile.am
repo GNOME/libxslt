@@ -4,11 +4,10 @@ $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
 EXTRA_DIST = \
+	cmdlineparams.xml cmdlineparams.xsl cmdlineparams.out \
 	tst-1.xml tst-1.xsl tst-1.out tst-1.err \
 	tst-2.xml tst-2.xsl tst-2.out tst-2.err \
 	undefvar.xml undefvar.xsl undefvar.out undefvar.err \
-	cmdlineparams.xml cmdlineparams.xsl cmdlineparams.out \
-	cmdlineparams.err \
 	recglobparam.xsl recglobvar.xsl reclocparam.xsl reclocvar.xsl \
 	recglobparam.xml recglobvar.xml reclocparam.xml reclocvar.xml 
 
