@@ -1,3 +1,8 @@
+Tue Jan 11 10:50:33 HKT 2005 William Brack <wbrack@mmm.com.hk>
+
+	* configure.in: added python2.4 to the list of accepted
+	  versions (bug 163274)
+
 Sun Jan  9 17:04:23 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c: oops previous patch could break build
