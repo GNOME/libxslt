@@ -1,3 +1,11 @@
+Mon Apr 21 12:22:31 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/math.c: applied patch from Charles Bozeman fixing
+	  the math power function where args were inverted #110996
+	* tests/exslt/math/Makefile.am tests/exslt/math/power.1.*:
+	  added the test to the regraession for #110996
+	* libexslt/sets.c: avoid a problem with nodesets.
+
 Wed Apr 14 18:10:21 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/win32config.h: added HAVE_MATH_H

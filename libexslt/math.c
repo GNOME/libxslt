@@ -609,12 +609,12 @@ exsltMathPowerFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	xmlXPathSetArityError(ctxt);
 	return;
     }
-    base = xmlXPathPopNumber(ctxt);
+    ret = xmlXPathPopNumber(ctxt);
     if (xmlXPathCheckError(ctxt))
 	return;
 
     /* power */
-    ret = xmlXPathPopNumber(ctxt);
+    base = xmlXPathPopNumber(ctxt);
     if (xmlXPathCheckError(ctxt))
 	return;
 

@@ -113,7 +113,8 @@ exsltSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     /* !!! must be sorted !!! */
     ret = xmlXPathDistinctSorted(ns);
 
-    xmlXPathFreeNodeSet(ns);
+	if (ret != ns)
+		xmlXPathFreeNodeSet(ns);
 
     xmlXPathReturnNodeSet(ctxt, ret);
 }

@@ -398,7 +398,7 @@ dnl
 dnl In build tree I use a static version with memory debug enabled
 dnl
 if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
-    LIBXML_LIBS="../../XML/.libs/libxml2.a -lz"
+    LIBXML_LIBS="../../XML/.libs/libxml2.a -lpthread -lz"
     DV_LINK="1"
     XSLTPROCDV="xsltproc.dv"
     INSTALLED_XSLT_LIB=""
