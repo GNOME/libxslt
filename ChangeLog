@@ -1,6 +1,7 @@
 Fri Jul  6 01:43:51 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in libxslt/xsltwin32config.h: released 0.14.0
+	* doc/xslt.html: added 0.14.0 release
 
 Fri Jul  6 01:00:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
