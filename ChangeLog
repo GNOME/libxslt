@@ -1,3 +1,10 @@
+Wed May 23 13:25:37 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: added --xinclude in the option list,
+	  patch from Raphael Hertzog
+	* test/docbook/Makefile.am: force at least the gdp-handbook.xml
+	  test in the normal testsuite
+
 Wed May 23 00:05:19 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/variables.c: Mark Vakoc found a bug in variable eval

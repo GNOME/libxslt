@@ -99,6 +99,9 @@ static void usage(const char *name) {
 #ifdef LIBXML_CATALOG_ENABLED
     printf("      --catalogs : use the catalogs from $SGML_CATALOG_FILES\n");
 #endif
+#ifdef LIBXML_XINCLUDE_ENABLED
+    printf("      --xinclude : do XInclude processing on document intput\n");
+#endif
 }
 
 int
@@ -211,8 +214,8 @@ main(int argc, char **argv) {
     }
     params[nbparams] = NULL;
     xmlSubstituteEntitiesDefault(1);
-    if (novalid == 0)
-	xmlLoadExtDtdDefaultValue = 1;
+    if (novalid == 0) /* TODO XML_DETECT_IDS | XML_COMPLETE_ATTRS */
+	xmlLoadExtDtdDefaultValue = 6;
     else
 	xmlLoadExtDtdDefaultValue = 0;
     for (i = 1; i < argc ; i++) {
