@@ -318,6 +318,7 @@
     <para>7: unsupported xsl:output method</para>
     <para>8: string parameter contains both quote and double-quotes</para>
     <para>9: internal processing error</para>
+    <para>10: processing was stopped by a terminating message</para>
   </refsect1>
 
 

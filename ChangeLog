@@ -1,3 +1,8 @@
+Thu May  2 11:08:22 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c libxslt/xsltutils.c doc/xsltproc.xml:
+	  fixed some return code problems raised by Thomas Mauch
+
 Tue Apr 30 18:06:14 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: don't allow adding an attribute to

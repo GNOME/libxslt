@@ -161,6 +161,7 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsl:message : terminate expecting 'yes' or 'no'\n");
+	    ctxt->state = XSLT_STATE_ERROR;
 	}
 	xmlFree(prop);
     }

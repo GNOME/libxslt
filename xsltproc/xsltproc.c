@@ -282,6 +282,8 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	}
 	if (ctxt->state == XSLT_STATE_ERROR)
 	    errorno = 9;
+	if (ctxt->state == XSLT_STATE_STOPPED)
+	    errorno = 10;
 	xsltFreeTransformContext(ctxt);
 	if (timing) {
 	    if (repeat)
@@ -605,6 +607,10 @@ main(int argc, char **argv)
 		}
 		cur = xsltParseStylesheetDoc(style);
 		if (cur != NULL) {
+		    if (cur->errors != 0) {
+			errorno = 5;
+			goto done;
+		    }
 		    if (cur->indent == 1)
 			xmlIndentTreeOutput = 1;
 		    else
