@@ -207,6 +207,11 @@ XSLTPUBFUN const xmlChar * XSLTCALL
     		xsltGetQNameURI			(xmlNodePtr node,
 						 xmlChar **name);
 
+XSLTPUBFUN const xmlChar * XSLTCALL
+		xsltGetQNameURI2		(xsltStylesheetPtr style,
+						 xmlNodePtr node,
+						 const xmlChar **name);
+
 /*
  * Output, reuse libxml I/O buffers.
  */

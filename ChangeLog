@@ -1,3 +1,9 @@
+Thu Mar  4 23:02:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xsltutils.h, libxslt/xsltutils.c, libxslt/preproc.c:
+	  fixed problem with dictionary handling (bug 135938).
+	* doc/EXSLT/*: fixed a few more "href_base" files.
+
 Wed Mar  3 21:33:33 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* doc/*, doc/html/*, doc/EXSLT/*: rebuilt the docs to fix
