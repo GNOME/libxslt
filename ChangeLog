@@ -1,3 +1,11 @@
+Sat Jun 16 00:32:39 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/variables.c: fixed bug #56267, namespaces must
+	  be propagated when evaluating local variables.
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-37-* tests/docs/bug-37-*: added a specific
+	  regression test for #56267 
+
 Fri Jun 15 18:29:29 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/keys.c: avoid a possibility of an uninitialized variable
