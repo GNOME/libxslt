@@ -94,7 +94,7 @@ AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor,
 AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, fabs,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
 AC_CHECK_FUNCS(gettimeofday)
-AC_CHECK_FUNCS(mktime localtime asctime time gmtime ftime)
+AC_CHECK_FUNCS(mktime localtime localtime_r asctime time gmtime ftime)
 
 dnl Checking the standard string functions availability
 AC_CHECK_FUNCS(printf sprintf fprintf snprintf vfprintf vsprintf vsnprintf sscanf,,

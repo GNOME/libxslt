@@ -28,6 +28,10 @@
 #include "config.h"
 #endif
 
+#if HAVE_LOCALTIME_R	/* _POSIX_SOURCE required by gnu libc */
+#define _POSIX_SOURCE
+#endif
+
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
@@ -41,12 +45,12 @@
 
 #include <string.h>
 
-#ifdef HAVE_TIME_H
-#include <time.h>
-#endif
-
 #ifdef HAVE_MATH_H
 #include <math.h>
+#endif
+
+#ifdef HAVE_TIME_H
+#include <time.h>
 #endif
 
 /*
@@ -106,7 +110,8 @@ struct _exsltDateVal {
  *								*
  ****************************************************************/
 
-#if defined(HAVE_TIME_H) && defined(HAVE_LOCALTIME)		\
+#if defined(HAVE_TIME_H) 					\
+    && (defined(HAVE_LOCALTIME) || defined(HAVE_LOCALTIME_R))	\
     && defined(HAVE_TIME) && defined(HAVE_GMTIME)
 #define WITH_TIME
 #endif
@@ -728,6 +733,9 @@ static exsltDateValPtr
 exsltDateCurrent (void) {
     struct tm *localTm, *gmTm;
     time_t secs;
+#if HAVE_LOCALTIME_R
+    struct tm localTmS;
+#endif
     exsltDateValPtr ret;
 
     ret = exsltDateCreateDate(XS_DATETIME);
@@ -736,7 +744,12 @@ exsltDateCurrent (void) {
 
     /* get current time */
     secs    = time(NULL);
+#if HAVE_LOCALTIME_R
+    localtime_r(&secs, &localTmS);
+    localTm = &localTmS;
+#else
     localTm = localtime(&secs);
+#endif
 
     /* get real year, not years since 1900 */
     ret->value.date.year = localTm->tm_year + 1900;

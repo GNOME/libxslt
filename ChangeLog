@@ -1,3 +1,9 @@
+Fri Feb 27 01:04:47 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* configure.in, config.h.in: added test for localtime_r
+	* libexslt/date.c: added usage of localtime_r if present on
+	  system (bug 129983, suggested by Vasily Tchekalkin)
+
 Thu Feb 26 16:59:45 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c libxslt/pattern.c: removed the last use
