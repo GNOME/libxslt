@@ -373,7 +373,7 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
  * @mode:  the mode name or NULL
  * @modeURI:  the mode URI or NULL
  *
- * Test wether the node matches the pattern
+ * Test whether the node matches the pattern
  *
  * Returns 1 if it matches, 0 if it doesn't and -1 in case of failure
  */
@@ -525,9 +525,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    step = &comp->steps[i];
 		    if (step->op == XSLT_OP_ROOT)
 			return(1);
-		    if (step->op != XSLT_OP_ELEM)
+		    if ((step->op != XSLT_OP_ELEM) && (step->op != XSLT_OP_ALL))
 			return(0);
-		    if (step->value == NULL)
+		    if ((step->value == NULL) && (step->op != XSLT_OP_ALL))
 			return(-1);
 		}
 		if (node == NULL)
@@ -540,6 +540,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    (node->type == XML_NAMESPACE_DECL))
 		    return(0);
 		node = node->parent;
+		if (step->value == NULL)
+		    continue;
 		while (node != NULL) {
 		    if (node == NULL)
 			return(0);
@@ -1000,7 +1002,7 @@ wrong_index:
  * @node: a node
  * @comp: the precompiled pattern list
  *
- * Test wether the node matches one of the patterns in the list
+ * Test whether the node matches one of the patterns in the list
  *
  * Returns 1 if it matches, 0 if it doesn't and -1 in case of failure
  */
@@ -1613,7 +1615,7 @@ xsltCompileRelativePathPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    PUSH(XSLT_OP_PARENT, NULL, NULL);
 	    NEXT;
 	    SKIP_BLANKS;
-	    if ((CUR != 0) || (CUR == '|')) {
+	    if ((CUR != 0) && (CUR != '|')) {
 		xsltCompileRelativePathPattern(ctxt, NULL);
 	    }
 	} else {
@@ -1657,7 +1659,7 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	NEXT;
 	SKIP_BLANKS;
 	PUSH(XSLT_OP_ROOT, NULL, NULL);
-	if ((CUR != 0) || (CUR == '|')) {
+	if ((CUR != 0) && (CUR != '|')) {
 	    PUSH(XSLT_OP_PARENT, NULL, NULL);
 	    xsltCompileRelativePathPattern(ctxt, NULL);
 	}
@@ -2113,7 +2115,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	if (name != NULL) {
 	    /*
-	     * find the list of appliable expressions based on the name
+	     * find the list of applicable expressions based on the name
 	     */
 	    list = (xsltCompMatchPtr) xmlHashLookup3(curstyle->templatesHash,
 					     name, ctxt->mode, ctxt->modeURI);

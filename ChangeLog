@@ -1,3 +1,9 @@
+Tue Dec 27 17:50:10 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: fixed a problem with the expression
+	  "*//name" (bug 162265), also a small problem with the '|'
+	  operator.
+
 Thu Dec 23 16:04:47 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c, libxslt/templates.c: fixed a couple of
