@@ -30,4 +30,8 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	diff $(srcdir)/message.result result; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f result)
+	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/fragment.xsl $(srcdir)/fragment.xml > result 2>&1 ; \
+	diff $(srcdir)/fragment.result result; \
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
+	rm -f result)
 

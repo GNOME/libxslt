@@ -1,3 +1,10 @@
+Tue Jan 14 14:23:47 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.c: fixed #101502 by applying and cleaning up
+	  the associated patch from Daniel Stodden.
+	* tests/documents/Makefile.am tests/documents/fragment*: added a
+	  specific test.
+
 Mon Jan 13 23:25:59 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c libxslt/transform.c: fixing bug #101602

@@ -32,6 +32,7 @@
 #include <libxml/xpathInternals.h>
 #include <libxml/parserInternals.h>
 #include <libxml/uri.h>
+#include <libxml/xpointer.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -97,6 +98,112 @@ xsltXPathFunctionLookup (xmlXPathContextPtr ctxt,
  *									*
  ************************************************************************/
 
+static void
+xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
+{
+    xsltTransformContextPtr tctxt;
+    xmlURIPtr uri;
+    xmlChar *fragment;
+    xsltDocumentPtr xsltdoc;
+    xmlDocPtr doc;
+    xmlXPathContextPtr xptrctxt;
+    xmlXPathObjectPtr object;
+
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    if (tctxt == NULL) {
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+			   "document() : internal error tctxt == NULL\n");
+	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+	return;
+    } 
+	
+    uri = xmlParseURI((const char *) URI);
+    if (uri == NULL) {
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+			   "document() : failed to parse URI\n");
+	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+	return;
+    } 
+    
+    /*
+     * check for and remove fragment identifier
+     */
+    fragment = uri->fragment;
+    if (fragment != NULL) {
+	uri->fragment = NULL;
+	URI = xmlSaveUri(uri);
+	xsltdoc = xsltLoadDocument(tctxt, URI);
+	xmlFree(URI);
+    } else
+	xsltdoc = xsltLoadDocument(tctxt, URI);
+    xmlFreeURI(uri);
+    
+    if (xsltdoc == NULL) {
+	if ((URI == NULL) ||
+	    (URI[0] = '#') ||
+	    (xmlStrEqual(tctxt->style->doc->URL, URI))) {
+	    doc = tctxt->style->doc;
+	} else {
+	    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+
+	    if (fragment != NULL)
+		xmlFree(fragment);
+
+	    return;
+	}
+    }
+    doc = xsltdoc->doc;
+
+    if ( fragment == NULL ) {
+	valuePush(ctxt,
+		  xmlXPathNewNodeSet((xmlNodePtr) doc));
+	return;
+    }
+	
+    /* use XPointer of HTML location for fragment ID */
+    
+    xptrctxt = xmlXPtrNewContext(doc, NULL, NULL);
+    if (xptrctxt == NULL) {
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+			   "document() : internal error xptrctxt == NULL\n");
+	goto out_fragment;
+    }
+
+    object = xmlXPtrEval(fragment, xptrctxt);
+    xmlFree(fragment);
+    xmlXPathFreeContext(xptrctxt);
+
+    if (object == NULL)
+	goto out_fragment;
+	
+    switch (object->type) {
+    case XPATH_NODESET:
+	break;
+    case XPATH_UNDEFINED:
+    case XPATH_BOOLEAN:
+    case XPATH_NUMBER:
+    case XPATH_STRING:
+    case XPATH_POINT:
+    case XPATH_USERS:
+    case XPATH_XSLT_TREE:
+    case XPATH_RANGE:
+    case XPATH_LOCATIONSET:
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+			   "document() : XPointer does not select a node set: #%s\n", 
+			   fragment);
+	goto out_object;
+    }
+    
+    valuePush(ctxt, object);
+    return;
+
+out_object:
+    xmlXPathFreeObject(object);
+
+out_fragment:
+    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+}
+
 /**
  * xsltDocumentFunction:
  * @ctxt:  the XPath Parser context
@@ -108,7 +215,6 @@ xsltXPathFunctionLookup (xmlXPathContextPtr ctxt,
 void
 xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
 {
-    xsltDocumentPtr doc;
     xmlXPathObjectPtr obj, obj2 = NULL;
     xmlChar *base = NULL, *URI;
 
@@ -215,32 +321,9 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
         if (URI == NULL) {
             valuePush(ctxt, xmlXPathNewNodeSet(NULL));
         } else {
-            xsltTransformContextPtr tctxt;
-
-            tctxt = xsltXPathGetTransformContext(ctxt);
-            if (tctxt == NULL) {
-                xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
-                                 "document() : internal error tctxt == NULL\n");
-                valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-            } else {
-                doc = xsltLoadDocument(tctxt, URI);
-                if (doc == NULL) {
-		    if ((xmlStrEqual(URI, BAD_CAST "")) ||
-			(xmlStrEqual(tctxt->style->doc->URL, URI))) {
-			valuePush(ctxt, xmlXPathNewNodeSet(
-				    (xmlNodePtr)tctxt->style->doc));
-		    } else {
-			valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-		    }
-		} else {
-                    /* TODO: use XPointer of HTML location for fragment ID */
-                    /* pbm #xxx can lead to location sets, not nodesets :-) */
-                    valuePush(ctxt,
-                              xmlXPathNewNodeSet((xmlNodePtr) doc->doc));
-                }
-            }
-            xmlFree(URI);
-        }
+	    xsltDocumentFunctionLoadDocument( ctxt, URI );
+	    xmlFree(URI);
+	}
     }
     xmlXPathFreeObject(obj);
     if (obj2 != NULL)
