@@ -9,14 +9,16 @@
  * Daniel.Veillard@imag.fr
  */
 
+#include "xsltconfig.h"
+
 #include <string.h>
 
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlerror.h>
-#include <libxslt/xslt.h>
-#include <libxslt/xsltInternals.h>
+#include "xslt.h"
+#include "xsltInternals.h"
 
 #define DEBUG_PARSING
 
@@ -123,7 +125,7 @@ void
 xsltFreeTemplateList(xsltTemplatePtr template) {
     xsltTemplatePtr cur;
 
-    while (template == NULL) {
+    while (template != NULL) {
 	cur = template;
 	template = template->next;
 	xsltFreeTemplate(cur);
@@ -202,21 +204,48 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
      * Find and handle the params
      */
     while (cur != NULL) {
+	/*
+	 * Remove Blank nodes found at this level.
+	 */
 	if (IS_BLANK_NODE(cur)) {
+	    xmlNodePtr blank = cur;
+
             cur = cur->next;
+	    xmlUnlinkNode(blank);
+	    xmlFreeNode(blank);
 	    continue;
 	}
-	if (!(IS_XSLT_ELEM(cur))) {
-#ifdef DEBUG_PARSING
-	    xsltGenericError(xsltGenericErrorContext,
-		    "xsltParseStylesheetTop : found foreign element %s\n",
-		    cur->name);
-#endif
-            cur = cur->next;
-	    continue;
-	}
-	if (xmlStrEqual(cur->name, "param")) {
+	if ((IS_XSLT_ELEM(cur)) && (xmlStrEqual(cur->name, "param"))) {
 	    TODO /* Handle param */
+	} else
+	    break;
+	cur = cur->next;
+    }
+
+    /*
+     * Browse the remaining of the template
+     */
+    while (cur != NULL) {
+	/*
+	 * Remove Blank nodes found at this level.
+	 */
+	if (IS_BLANK_NODE(cur)) {
+	    xmlNodePtr blank = cur;
+
+            cur = cur->next;
+	    xmlUnlinkNode(blank);
+	    xmlFreeNode(blank);
+	    continue;
+	}
+	if ((IS_XSLT_ELEM(cur)) && (xmlStrEqual(cur->name, "param"))) {
+	    xmlNodePtr param = cur;
+
+            cur = cur->next;
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsltParseStylesheetTop: ignoring misplaced param element\n");
+	    xmlUnlinkNode(param);
+	    xmlFreeNode(param);
+	    continue;
 	} else
 	    break;
 	cur = cur->next;

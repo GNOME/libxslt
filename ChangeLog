@@ -1,3 +1,9 @@
+Mon Jan  8 19:55:18 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c : small cleanup
+	* configure.in libxslt/xsltconfig.h.in: add memory debug and
+	  mechanism for compile-time options
+
 Sun Jan  7 22:53:12 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.[ch]: started parsing templates

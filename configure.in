@@ -8,6 +8,24 @@ AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 AM_MAINTAINER_MODE
 
 dnl
+dnl Debug for DV
+dnl
+if test "${LOGNAME}" = "veillard" ; then
+    if test "${with_mem_debug}" = "" ; then
+	with_mem_debug="yes"
+    fi
+    CFLAGS="-Wall -g -pedantic"
+fi
+AC_ARG_WITH(mem_debug, [  --with-mem-debug        Add the memory debugging module (off)])
+if test "$with_mem_debug" = "yes" ; then
+    echo Enabling memory debug support
+    WITH_MEM_DEBUG=1
+else    
+    WITH_MEM_DEBUG=0
+fi
+AC_SUBST(WITH_MEM_DEBUG)
+
+dnl
 dnl The following new parameters were added to offer
 dnl the ability to specify the location of the libxml
 dnl library during linking and compilation.
@@ -100,6 +118,7 @@ AC_SUBST(XSLT_LIBS)
 AC_OUTPUT([
 Makefile
 libxslt/Makefile
+libxslt/xsltconfig.h
 tests/Makefile
 xslt-config
 ])

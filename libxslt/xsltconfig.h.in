@@ -1,0 +1,27 @@
+/*
+ * xsltconfig.h: compile-time version informations for the XSLT engine
+ *
+ * See Copyright for the status of this software.
+ *
+ * Daniel.Veillard@w3.org
+ */
+
+#ifndef __XML_XSLTCONFIG_H__
+#define __XML_XSLTCONFIG_H__
+
+#include "config.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#if @WITH_MEM_DEBUG@
+#define DEBUG_MEMORY
+#define DEBUG_MEMORY_LOCATION
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __XML_XSLTCONFIG_H__ */
