@@ -787,9 +787,10 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 {
     xmlXPathError status = XPATH_EXPRESSION_OK;
     xmlBufferPtr buffer;
-    xmlChar *the_format, *prefix, *suffix, *nprefix, *nsuffix;
+    xmlChar *the_format, *prefix = NULL, *suffix = NULL;
+    xmlChar *nprefix, *nsuffix = NULL;
     xmlChar pchar;
-    int	    prefix_length, suffix_length, nprefix_length, nsuffix_length;
+    int	    prefix_length, suffix_length = 0, nprefix_length, nsuffix_length;
     double  scale;
     int	    j;
     xsltFormatNumberInfo format_info;

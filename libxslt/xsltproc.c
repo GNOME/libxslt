@@ -67,9 +67,10 @@ main(int argc, char **argv) {
 	printf("      --docbook: the input document is SGML docbook\n");
 #endif
 	printf("      --param name value\n");
+	printf("      --debug-mem use libxml memory debugging\n");
 	return(0);
     }
-    /* --repeat : repeat 20 times, for timing or profiling */
+    xmlInitMemory();
     LIBXML_TEST_VERSION
     for (i = 1; i < argc ; i++) {
 #ifdef LIBXML_DEBUG_ENABLED

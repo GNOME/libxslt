@@ -48,12 +48,12 @@
  * Process an debug node
  */
 void 
-xsltDebug(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED, xmlNodePtr node ATTRIBUTE_UNUSED,
+xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 	  xmlNodePtr inst ATTRIBUTE_UNUSED, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     int i, j;
 
     fprintf(stdout, "Templates:\n");
-    for (i = 0, j = ctxt->templNr - 1;((i < 5) && (j >= 0));i++,j--) {
+    for (i = 0, j = ctxt->templNr - 1;((i < 15) && (j >= 0));i++,j--) {
 	fprintf(stdout, "#%d ", i);
 	if (ctxt->templTab[j]->name != NULL)
 	    fprintf(stdout, "name %s ", ctxt->templTab[j]->name);
@@ -64,7 +64,7 @@ xsltDebug(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED, xmlNodePtr node ATTRIBU
 	fprintf(stdout, "\n");
     }
     fprintf(stdout, "Variables:\n");
-    for (i = 0, j = ctxt->varsNr - 1;((i < 10) && (j >= 0));i++,j--) {
+    for (i = 0, j = ctxt->varsNr - 1;((i < 15) && (j >= 0));i++,j--) {
 	xsltStackElemPtr cur;
 
 	if (ctxt->varsTab[j] == NULL)

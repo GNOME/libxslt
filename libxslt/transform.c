@@ -349,17 +349,13 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 static xmlNodePtr
 xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
 	     xmlNodePtr insert) {
-    xmlNodePtr copy, ret = NULL, last = NULL;
+    xmlNodePtr copy, ret = NULL;
 
     while (list != NULL) {
 	copy = xsltCopyTree(ctxt, list, insert);
 	if (copy != NULL) {
 	    if (ret == NULL) {
 		ret = copy;
-		last = ret;
-	    } else {
-		last->next = copy;
-		last = copy;
 	    }
 	}
 	list = list->next;
@@ -387,6 +383,7 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
     copy->doc = ctxt->output;
     if (copy != NULL) {
 	xmlAddChild(insert, copy);
+	copy->next = NULL;
 	/*
 	 * Add namespaces as they are needed
 	 */
@@ -1710,6 +1707,10 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->contextSize = oldContextSize;
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
+#ifdef WITH_XSLT_DEBUG_PROCESS
+	    xsltGenericDebug(xsltGenericDebugContext,
+		 "xslcopyOf: result is a node set\n");
+#endif
 	    list = res->nodesetval;
 	    if (list != NULL) {
 		/* sort the list in document order */
@@ -1731,6 +1732,10 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		}
 	    }
 	} else if (res->type == XPATH_XSLT_TREE) {
+#ifdef WITH_XSLT_DEBUG_PROCESS
+	    xsltGenericDebug(xsltGenericDebugContext,
+		 "xslcopyOf: result is a result tree fragment\n");
+#endif
 	    list = res->nodesetval;
 	    if ((list != NULL) && (list->nodeTab != NULL) &&
 		(list->nodeTab[0] != NULL)) {
