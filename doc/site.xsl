@@ -132,6 +132,7 @@
       </xsl:choose>
 
       <li><a href="html/index.html" style="font-weight:bold">API Menu</a></li>
+      <li><a href="ChangeLog.html">ChangeLog</a></li>
     </ul>
   </xsl:variable>
 
