@@ -194,7 +194,6 @@ xsltParseDocument(const xmlChar *URI, xmlDictPtr dict, int options) {
 
     if (pctxt->wellFormed) {
         doc = pctxt->myDoc;
-	xmlDictReference(pctxt->dict);
     }
     else {
         doc = NULL;

@@ -1,3 +1,10 @@
+Mon Mar 22 20:25:41 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltconfig.h.in: small fix for OpenVMS
+	* libxslt/documents.c: fixed a leak associated to the change
+	  in reference counting when running the XML parser and using
+	  the document() function.
+
 Wed Mar 17 18:49:55 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* xsltproc/xsltproc.c: added check for state XSLT_STATE_STOPPED
