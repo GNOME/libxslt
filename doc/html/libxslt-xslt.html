@@ -176,7 +176,11 @@ HREF="libxslt-xslt.html#XSLTLIBXSLTVERSION"
 extern      const int <A
 HREF="libxslt-xslt.html#XSLTLIBXMLVERSION"
 >xsltLibxmlVersion</A
->;</PRE
+>;
+void        <A
+HREF="libxslt-xslt.html#XSLTCLEANUPGLOBALS"
+>xsltCleanupGlobals</A
+>              (void);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -184,7 +188,7 @@ HREF="libxslt-xslt.html#XSLTLIBXMLVERSION"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN45"
+NAME="AEN46"
 ></A
 ><H2
 >Description</H2
@@ -194,14 +198,14 @@ NAME="AEN45"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN48"
+NAME="AEN49"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN50"
+NAME="AEN51"
 ></A
 ><H3
 ><A
@@ -222,12 +226,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The default version of XSLT supported</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN55"
+NAME="AEN57"
 ></A
 ><H3
 ><A
@@ -248,12 +254,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The XSLT "vendor" string for this processor</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN60"
+NAME="AEN63"
 ></A
 ><H3
 ><A
@@ -274,12 +282,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The XSLT "vendor" URL for this processor</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN65"
+NAME="AEN69"
 ></A
 ><H3
 ><A
@@ -300,12 +310,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The XSLT specification namespace</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN70"
+NAME="AEN75"
 ></A
 ><H3
 ><A
@@ -326,12 +338,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>This value is used to detect templates loops</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN75"
+NAME="AEN81"
 ></A
 ><H3
 ><A
@@ -352,12 +366,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The version string for libxslt</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN80"
+NAME="AEN87"
 ></A
 ><H3
 ><A
@@ -378,12 +394,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The version of libxslt compiled</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN85"
+NAME="AEN93"
 ></A
 ><H3
 ><A
@@ -403,6 +421,36 @@ CLASS="PROGRAMLISTING"
 ></TD
 ></TR
 ></TABLE
+><P
+>The version of libxml libxslt was compiled against</P
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN99"
+></A
+><H3
+><A
+NAME="XSLTCLEANUPGLOBALS"
+></A
+>xsltCleanupGlobals ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltCleanupGlobals              (void);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Unregister all global variables set up by the XSLT library</P
 ><P
 ></P
 ></DIV

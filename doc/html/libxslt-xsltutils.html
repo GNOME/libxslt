@@ -122,7 +122,7 @@ NAME="LIBXSLT-XSLTUTILS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN1767"
+NAME="AEN1971"
 ></A
 ><H2
 >Name</H2
@@ -130,7 +130,7 @@ NAME="AEN1767"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN1770"
+NAME="AEN1974"
 ></A
 ><H2
 >Synopsis</H2
@@ -161,6 +161,10 @@ HREF="libxslt-xsltutils.html#IS-XSLT-ELEM-CAPS"
 HREF="libxslt-xsltutils.html#IS-XSLT-NAME-CAPS"
 >IS_XSLT_NAME</A
 >                    (n, val)
+#define     <A
+HREF="libxslt-xsltutils.html#IS-XSLT-REAL-NODE-CAPS"
+>IS_XSLT_REAL_NODE</A
+>               (n)
 <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
@@ -179,22 +183,6 @@ HREF="XMLCHAR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *nameSpace);
-extern      xmlGenericErrorFunc <A
-HREF="libxslt-xsltutils.html#XSLTGENERICERROR"
->xsltGenericError</A
->;
-extern      void *<A
-HREF="libxslt-xsltutils.html#XSLTGENERICERRORCONTEXT"
->xsltGenericErrorContext</A
->;
-extern      xmlGenericErrorFunc <A
-HREF="libxslt-xsltutils.html#XSLTGENERICDEBUG"
->xsltGenericDebug</A
->;
-extern      void *<A
-HREF="libxslt-xsltutils.html#XSLTGENERICDEBUGCONTEXT"
->xsltGenericDebugContext</A
->;
 void        <A
 HREF="libxslt-xsltutils.html#XSLTPRINTERRORCONTEXT"
 >xsltPrintErrorContext</A
@@ -365,7 +353,7 @@ HREF="libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1829"
+NAME="AEN2030"
 ></A
 ><H2
 >Description</H2
@@ -375,14 +363,14 @@ NAME="AEN1829"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1832"
+NAME="AEN2033"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1834"
+NAME="AEN2035"
 ></A
 ><H3
 ><A
@@ -403,12 +391,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>macro to flag unimplemented blocks</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1839"
+NAME="AEN2041"
 ></A
 ><H3
 ><A
@@ -429,12 +419,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>macro to flag that a problem was detected internally</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1844"
+NAME="AEN2047"
 ></A
 ><H3
 ><A
@@ -455,11 +447,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Checks that the element pertains to XSLt namespace</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1849"
+NAME="AEN2053"
 ></A
 ><P
 ></P
@@ -497,7 +491,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1858"
+NAME="AEN2062"
 ></A
 ><H3
 ><A
@@ -518,11 +512,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Checks the value of an element in XSLT namespace</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1863"
+NAME="AEN2068"
 ></A
 ><P
 ></P
@@ -577,7 +573,72 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1876"
+NAME="AEN2081"
+></A
+><H3
+><A
+NAME="IS-XSLT-REAL-NODE-CAPS"
+></A
+>IS_XSLT_REAL_NODE()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define     IS_XSLT_REAL_NODE(n)</PRE
+></TD
+></TR
+></TABLE
+><P
+>check that a node is a 'real' one: document, element, text or attribute</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN2087"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>n</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2096"
 ></A
 ><H3
 ><A
@@ -632,7 +693,7 @@ default declaration values unless DTD use has been turned off.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1890"
+NAME="AEN2110"
 ></A
 ><P
 ></P
@@ -720,111 +781,7 @@ It's up to the caller to free the memory.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1911"
-></A
-><H3
-><A
-NAME="XSLTGENERICERROR"
-></A
->xsltGenericError</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->extern xmlGenericErrorFunc xsltGenericError;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1916"
-></A
-><H3
-><A
-NAME="XSLTGENERICERRORCONTEXT"
-></A
->xsltGenericErrorContext</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->extern void *xsltGenericErrorContext;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1921"
-></A
-><H3
-><A
-NAME="XSLTGENERICDEBUG"
-></A
->xsltGenericDebug</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->extern xmlGenericErrorFunc xsltGenericDebug;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1926"
-></A
-><H3
-><A
-NAME="XSLTGENERICDEBUGCONTEXT"
-></A
->xsltGenericDebugContext</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->extern void *xsltGenericDebugContext;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1931"
+NAME="AEN2131"
 ></A
 ><H3
 ><A
@@ -862,7 +819,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1940"
+NAME="AEN2140"
 ></A
 ><P
 ></P
@@ -934,7 +891,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1957"
+NAME="AEN2157"
 ></A
 ><H3
 ><A
@@ -972,7 +929,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1966"
+NAME="AEN2166"
 ></A
 ><P
 ></P
@@ -1044,7 +1001,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1983"
+NAME="AEN2183"
 ></A
 ><H3
 ><A
@@ -1106,7 +1063,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1995"
+NAME="AEN2195"
 ></A
 ><P
 ></P
@@ -1161,7 +1118,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2008"
+NAME="AEN2208"
 ></A
 ><H3
 ><A
@@ -1223,7 +1180,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2020"
+NAME="AEN2220"
 ></A
 ><P
 ></P
@@ -1278,7 +1235,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2033"
+NAME="AEN2233"
 ></A
 ><H3
 ><A
@@ -1313,7 +1270,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2041"
+NAME="AEN2241"
 ></A
 ><P
 ></P
@@ -1351,7 +1308,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2050"
+NAME="AEN2250"
 ></A
 ><H3
 ><A
@@ -1387,7 +1344,7 @@ requirement provided by the arry of nodes.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2058"
+NAME="AEN2258"
 ></A
 ><P
 ></P
@@ -1459,7 +1416,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2075"
+NAME="AEN2275"
 ></A
 ><H3
 ><A
@@ -1518,7 +1475,7 @@ defined and hence has the same lifespan as the document holding it.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2088"
+NAME="AEN2288"
 ></A
 ><P
 ></P
@@ -1594,7 +1551,7 @@ not prefixed.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2106"
+NAME="AEN2306"
 ></A
 ><H3
 ><A
@@ -1648,7 +1605,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2118"
+NAME="AEN2318"
 ></A
 ><P
 ></P
@@ -1735,7 +1692,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2139"
+NAME="AEN2339"
 ></A
 ><H3
 ><A
@@ -1787,7 +1744,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2150"
+NAME="AEN2350"
 ></A
 ><P
 ></P
@@ -1891,7 +1848,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2175"
+NAME="AEN2375"
 ></A
 ><H3
 ><A
@@ -1946,7 +1903,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2187"
+NAME="AEN2387"
 ></A
 ><P
 ></P
@@ -2033,7 +1990,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2208"
+NAME="AEN2408"
 ></A
 ><H3
 ><A
@@ -2080,7 +2037,7 @@ This does not close the descriptor.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2218"
+NAME="AEN2418"
 ></A
 ><P
 ></P
@@ -2167,7 +2124,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2239"
+NAME="AEN2439"
 ></A
 ><H3
 ><A
@@ -2206,7 +2163,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2248"
+NAME="AEN2448"
 ></A
 ><P
 ></P
@@ -2261,7 +2218,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2261"
+NAME="AEN2461"
 ></A
 ><H3
 ><A
@@ -2291,7 +2248,7 @@ HREF="LONG"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2268"
+NAME="AEN2468"
 ></A
 ><P
 ></P
@@ -2328,7 +2285,7 @@ profiling</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2277"
+NAME="AEN2477"
 ></A
 ><H3
 ><A
@@ -2361,7 +2318,7 @@ HREF="libxslt-xsltutils.html#XSLTTIMESTAMP"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2285"
+NAME="AEN2485"
 ></A
 ><P
 ></P
@@ -2399,7 +2356,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2294"
+NAME="AEN2494"
 ></A
 ><H3
 ><A
