@@ -1,3 +1,7 @@
+Wed Aug 15 13:54:41 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.h libxslt/transform.c: a bit of cleanup
+
 Wed Aug 15 12:06:43 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/common.c libexslt/math.c libxslt/Makefile.am
