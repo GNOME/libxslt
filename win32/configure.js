@@ -138,22 +138,22 @@ function discoverVersion()
 	while (cf.AtEndOfStream != true) {
 		ln = cf.ReadLine();
 		s = new String(ln);
-		if (s.search(/^LIBXSLT_MAJOR_VERSION/) != -1) {
+		if (s.search(/^LIBXSLT_MAJOR_VERSION=/) != -1) {
 			vf.WriteLine(s);
 			verMajorXslt = s.substring(s.indexOf("=") + 1, s.length)
-		} else if(s.search(/^LIBXSLT_MINOR_VERSION/) != -1) {
+		} else if(s.search(/^LIBXSLT_MINOR_VERSION=/) != -1) {
 			vf.WriteLine(s);
 			verMinorXslt = s.substring(s.indexOf("=") + 1, s.length)
-		} else if(s.search(/^LIBXSLT_MICRO_VERSION/) != -1) {
+		} else if(s.search(/^LIBXSLT_MICRO_VERSION=/) != -1) {
 			vf.WriteLine(s);
 			verMicroXslt = s.substring(s.indexOf("=") + 1, s.length)
-		} else if (s.search(/^LIBEXSLT_MAJOR_VERSION/) != -1) {
+		} else if (s.search(/^LIBEXSLT_MAJOR_VERSION=/) != -1) {
 			vf.WriteLine(s);
 			verMajorExslt = s.substring(s.indexOf("=") + 1, s.length)
-		} else if(s.search(/^LIBEXSLT_MINOR_VERSION/) != -1) {
+		} else if(s.search(/^LIBEXSLT_MINOR_VERSION=/) != -1) {
 			vf.WriteLine(s);
 			verMinorExslt = s.substring(s.indexOf("=") + 1, s.length)
-		} else if(s.search(/^LIBEXSLT_MICRO_VERSION/) != -1) {
+		} else if(s.search(/^LIBEXSLT_MICRO_VERSION=/) != -1) {
 			vf.WriteLine(s);
 			verMicroExslt = s.substring(s.indexOf("=") + 1, s.length)
 		}
