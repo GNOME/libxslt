@@ -279,7 +279,7 @@ xsltDocumentSortFunction(xmlNodeSetPtr list) {
 void	
 xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
 		 int descending, int number) {
-    int i, j;
+    int i, j, incr;
     int len, tst;
     xmlNodePtr node;
     xmlXPathObjectPtr tmp;
@@ -289,30 +289,37 @@ xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
     len = list->nodeNr;
     if (len <= 1)
 	return;
-    /* TODO: sort is really not optimized, does it needs to ? */
-    for (i = 0;i < len -1;i++) {
-	for (j = i + 1; j < len; j++) {
+
+    /* Shell's sort of node-set */
+    for (incr = len / 2; incr > 0; incr /= 2) {
+	for (i = incr; i < len; i++) {
+	    j = i - incr;
 	    if (results[i] == NULL)
-		tst = 0;
-	    else if (results[j] == NULL)
-		tst = 1;
-	    else if (number) {
-		tst = (results[i]->floatval > results[j]->floatval);
-		if (descending)
-		    tst = !tst;
-	    } else {
-		tst = (xmlStrcmp(results[i]->stringval,
-			         results[j]->stringval)) > 0; 
-		if (descending)
-		    tst = !tst;
-	    }
-	    if (tst) {
-		tmp = results[i];
-		results[i] = results[j];
-		results[j] = tmp;
-		node = list->nodeTab[i];
-		list->nodeTab[i] = list->nodeTab[j];
-		list->nodeTab[j] = node;
+		continue;
+	    
+	    while (j >= 0) {
+		if (results[j] == NULL)
+		    tst = 1;
+		else if (number) {
+		    tst = (results[j]->floatval > results[j + incr]->floatval);
+		    if (descending)
+			tst = !tst;
+		} else {
+		    tst = (xmlStrcmp(results[j]->stringval,
+				     results[j + incr]->stringval)) > 0; 
+		    if (descending)
+			tst = !tst;
+		}
+		if (tst) {
+		    tmp = results[j];
+		    results[j] = results[j + incr];
+		    results[j + incr] = tmp;
+		    node = list->nodeTab[j];
+		    list->nodeTab[j] = list->nodeTab[j + incr];
+		    list->nodeTab[j + incr] = node;
+		    j -= incr;
+		} else
+		    break;
 	    }
 	}
     }
