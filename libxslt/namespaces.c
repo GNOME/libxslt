@@ -219,7 +219,7 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
     else {
 	if (ns->prefix != NULL) {
 	    ret = xmlSearchNs(out->doc, out, ns->prefix);
-	    if ((ret == NULL) || (!xmlStrEqual(ns->href, URI))) {
+	    if ((ret == NULL) || (!xmlStrEqual(ret->href, URI))) {
 		ret = xmlSearchNsByHref(out->doc, out, URI);
 	    }
 	} else {
