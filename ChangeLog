@@ -1,3 +1,12 @@
+Tue Oct  9 22:59:00 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/saxon.c: fixed a typo and improved handling of
+	  non-XPath-expression arguments.
+	* libexslt/strings.c: fixed a bug in tokenize: function was using
+	  tctxt->output instead of tctxt->document->doc.
+	* libxslt/transform.c: fixed a bug in xsltDefaultProcessOneNode
+	  which was using variable "node" instead of "cur"
+
 Tue Oct  9 19:51:48 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libxslt/extra.[ch]: removed older SAXON extensions

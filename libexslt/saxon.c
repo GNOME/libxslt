@@ -2,6 +2,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/parser.h>
+#include <libxml/hash.h>
 
 #include <libxslt/xsltconfig.h>
 #include <libxslt/xsltutils.h>
@@ -82,18 +83,23 @@ exsltSaxonExpressionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    hash = (xmlHashTablePtr) xsltGetExtData(tctxt->style,
+    hash = (xmlHashTablePtr) xsltGetExtData(tctxt,
 					    ctxt->context->functionURI);
 
     ret = xmlHashLookup(hash, arg);
-    if (ret != NULL)
-	goto done;
 
-    ret = xmlXPathCompile(arg);
+    if (ret == NULL) {
+	 ret = xmlXPathCompile(arg);
+	 if (ret == NULL) {
+	      xmlFree(arg);
+	      xsltGenericError(xsltGenericErrorContext,
+			"{%s}:%s: argument is not an XPath expression\n",
+			ctxt->context->functionURI, ctxt->context->function);
+	      return;
+	 }
+	 xmlHashAddEntry(hash, arg, (void *) ret);
+    }
 
-    xmlHashAddEntry(hash, arg, (void *) ret);
-
-done:
     xmlFree(arg);
 
     xmlXPathReturnExternal(ctxt, ret);

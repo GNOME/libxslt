@@ -854,26 +854,26 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		xsltProcessOneNode(ctxt, cur, NULL);
 		break;
 	    case XML_CDATA_SECTION_NODE:
-		template = xsltGetTemplate(ctxt, node, NULL);
+		template = xsltGetTemplate(ctxt, cur, NULL);
 		if (template) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltDefaultProcessOneNode: applying template for CDATA %s\n",
-				     node->content);
+				     cur->content);
 #endif
-		    xsltApplyOneTemplate(ctxt, node, template->content,
+		    xsltApplyOneTemplate(ctxt, cur, template->content,
 			                 template, NULL);
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltDefaultProcessOneNode: copy CDATA %s\n",
-				     node->content);
+				     cur->content);
 #endif
-		    copy = xmlNewDocText(ctxt->output, node->content);
+		    copy = xmlNewDocText(ctxt->output, cur->content);
 		    if (copy != NULL) {
 			xmlAddChild(ctxt->insert, copy);
 		    } else {
-			xsltPrintErrorContext(ctxt, NULL, node);
+			xsltPrintErrorContext(ctxt, NULL, cur);
 			xsltGenericError(xsltGenericErrorContext,
 			    "xsltDefaultProcessOneNode: cdata copy failed\n");
 		    }
@@ -885,7 +885,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltDefaultProcessOneNode: applying template for text %s\n",
-				     node->content);
+				     cur->content);
 #endif
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
@@ -905,7 +905,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    if (copy != NULL) {
 			xmlAddChild(ctxt->insert, copy);
 		    } else {
-			xsltPrintErrorContext(ctxt, NULL, node);
+			xsltPrintErrorContext(ctxt, NULL, cur);
 			xsltGenericError(xsltGenericErrorContext,
 			    "xsltDefaultProcessOneNode: text copy failed\n");
 		    }

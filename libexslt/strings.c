@@ -48,7 +48,7 @@ exsltStrTokenizeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    doc = xsltXPathGetTransformContext(ctxt)->output;
+    doc = xsltXPathGetTransformContext(ctxt)->document->doc;
     ret = xmlXPathNewNodeSet (NULL);
     if (ret != NULL) {
 	ret->boolval = 1;
@@ -87,7 +87,7 @@ exsltStrTokenizeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathNodeSetAdd (ret->nodesetval, node);
 
     valuePush (ctxt, ret);
-    ret = NULL;		/* hack not to free ret later */
+    ret = NULL;		/* hack to prevent freeing ret later */
 
 error:
     if (ret != NULL)
