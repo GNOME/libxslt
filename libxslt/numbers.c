@@ -20,7 +20,6 @@
 #include <libxml/parserInternals.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
-#include <libxml/trionan.h>
 #include "xsltutils.h"
 #include "pattern.h"
 #include "templates.h"
@@ -301,7 +300,7 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 	  is_last_default_token = (i >= numbers_max - 1);
 	}
 	
-	switch (trio_isinf(number)) {
+	switch (xmlXPathIsInf(number)) {
 	case -1:
 	    xmlBufferCCat(buffer, "-Infinity");
 	    break;
@@ -309,7 +308,7 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 	    xmlBufferCCat(buffer, "Infinity");
 	    break;
 	default:
-	    if (trio_isnan(number)) {
+	    if (xmlXPathIsNaN(number)) {
 		xmlBufferCCat(buffer, "NaN");
 	    } else {
 

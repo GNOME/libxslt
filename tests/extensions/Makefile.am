@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../xsltproc ; make xsltproc)
+	@(cd ../../xsltproc ;  xsltproc)
 
 EXTRA_DIST = \
     module.xml module.xsl module.out \

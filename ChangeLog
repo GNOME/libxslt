@@ -1,3 +1,9 @@
+Tue Aug 21 13:10:03 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/math.c libxslt/numbers.c: use xmlXPathIsNaN() and
+	  xmlXPathIsInf()
+	* libxslt/pattern.c: tag a potential threading problem.
+
 Tue Aug 21 11:18:45 CEST 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* libxslt/numbers.c libexslt/math.c: Re-worked NaN and Inf

@@ -1,7 +1,6 @@
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
-#include <libxml/trionan.h>
 
 #include <libxslt/xsltconfig.h>
 #include <libxslt/xsltutils.h>
@@ -29,11 +28,11 @@ exsltMathMin (xmlNodeSetPtr ns) {
     if ((ns == NULL) || (ns->nodeNr == 0))
 	return(xmlXPathNAN);
     ret = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (trio_isnan(ret))
+    if (xmlXPathIsNaN(ret))
 	return(xmlXPathNAN);
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (trio_isnan(cur))
+	if (xmlXPathIsNaN(cur))
 	    return(xmlXPathNAN);
 	if (cur < ret)
 	    ret = cur;
@@ -90,11 +89,11 @@ exsltMathMax (xmlNodeSetPtr ns) {
     if ((ns == NULL) || (ns->nodeNr == 0))
 	return(xmlXPathNAN);
     ret = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (trio_isnan(ret))
+    if (xmlXPathIsNaN(ret))
 	return(xmlXPathNAN);
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (trio_isnan(cur))
+	if (xmlXPathIsNaN(cur))
 	    return(xmlXPathNAN);
 	if (cur > ret)
 	    ret = cur;
@@ -149,14 +148,14 @@ exsltMathHighest (xmlNodeSetPtr ns) {
 	return(ret);
 
     max = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (trio_isnan(max))
+    if (xmlXPathIsNaN(max))
 	return(ret);
     else
 	xmlXPathNodeSetAddUnique(ret, ns->nodeTab[0]);
 
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (trio_isnan(cur)) {
+	if (xmlXPathIsNaN(cur)) {
 	    xmlXPathEmptyNodeSet(ret);
 	    return(ret);
 	}
@@ -220,14 +219,14 @@ exsltMathLowest (xmlNodeSetPtr ns) {
 	return(ret);
 
     min = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (trio_isnan(min))
+    if (xmlXPathIsNaN(min))
 	return(ret);
     else
 	xmlXPathNodeSetAddUnique(ret, ns->nodeTab[0]);
 
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (trio_isnan(cur)) {
+	if (xmlXPathIsNaN(cur)) {
 	    xmlXPathEmptyNodeSet(ret);
 	    return(ret);
 	}

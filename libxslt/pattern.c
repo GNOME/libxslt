@@ -556,6 +556,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		/*
 		 * Depending on the last selection, one may need to
 		 * recompute contextSize and proximityPosition.
+		 *
+		 * TODO: make this thread safe !
 		 */
 		oldCS = ctxt->xpathCtxt->contextSize;
 		oldCP = ctxt->xpathCtxt->proximityPosition;
