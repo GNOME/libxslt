@@ -62,19 +62,11 @@ static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 #endif
 
 #ifdef WITH_DEBUGGER
-
-/* -- breakpoint code --- */
 #include "../breakpoint/breakpoint.h"
-
 int xslDebugStatus;
-
-/* -------- end ---------- */
 #endif
 
-
-
-
-int xsltMaxDepth = 500;
+int xsltMaxDepth = 5000;
 
 /*
  * Useful macros

@@ -21,10 +21,13 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  if [ -d $$j ] ; then continue ; fi ; \
 	  name="`basename $$j .xsl`"; \
 	  out=$(srcdir)/"$$name".out; \
+	  err=$(srcdir)/"$$name".err; \
 	  echo $$j ; \
-	  $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name;\
+	  $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name 2>err.$$name;\
 	  if [ ! -f $$out ] ; then cp result.$$name $$out ; \
 	  else diff $$out result.$$name ; fi ; \
+	  if [ ! -f $$err ] ; then cp err.$$name $$err ; \
+	  else diff $$err err.$$name ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  rm -f result.$$name ; \
 	  done)

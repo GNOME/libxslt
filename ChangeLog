@@ -1,3 +1,11 @@
+Thu Nov 22 19:08:23 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extra.c: fixed xsltDebug() to output with the normal
+	  error routines
+	* tests/namespaces/*: updated the tests to separate stdout and
+	  stderr
+	* libxslt/transform.c: increasing xsltMaxDepth to 5000
+
 Thu Nov 22 12:09:56 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libexslt/Makefile.am: more Makefile fixups

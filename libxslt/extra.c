@@ -61,45 +61,50 @@ xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 {
     int i, j;
 
-    fprintf(stdout, "Templates:\n");
+    xsltGenericError(xsltGenericErrorContext, "Templates:\n");
     for (i = 0, j = ctxt->templNr - 1; ((i < 15) && (j >= 0)); i++, j--) {
-        fprintf(stdout, "#%d ", i);
+        xsltGenericError(xsltGenericErrorContext, "#%d ", i);
         if (ctxt->templTab[j]->name != NULL)
-            fprintf(stdout, "name %s ", ctxt->templTab[j]->name);
+            xsltGenericError(xsltGenericErrorContext, "name %s ",
+                             ctxt->templTab[j]->name);
         if (ctxt->templTab[j]->match != NULL)
-            fprintf(stdout, "name %s ", ctxt->templTab[j]->match);
+            xsltGenericError(xsltGenericErrorContext, "name %s ",
+                             ctxt->templTab[j]->match);
         if (ctxt->templTab[j]->mode != NULL)
-            fprintf(stdout, "name %s ", ctxt->templTab[j]->mode);
-        fprintf(stdout, "\n");
+            xsltGenericError(xsltGenericErrorContext, "name %s ",
+                             ctxt->templTab[j]->mode);
+        xsltGenericError(xsltGenericErrorContext, "\n");
     }
-    fprintf(stdout, "Variables:\n");
+    xsltGenericError(xsltGenericErrorContext, "Variables:\n");
     for (i = 0, j = ctxt->varsNr - 1; ((i < 15) && (j >= 0)); i++, j--) {
         xsltStackElemPtr cur;
 
         if (ctxt->varsTab[j] == NULL)
             continue;
-        fprintf(stdout, "#%d\n", i);
+        xsltGenericError(xsltGenericErrorContext, "#%d\n", i);
         cur = ctxt->varsTab[j];
         while (cur != NULL) {
             if (cur->comp == NULL) {
-                fprintf(stdout, "corrupted !!!\n");
+                xsltGenericError(xsltGenericErrorContext,
+                                 "corrupted !!!\n");
             } else if (cur->comp->type == XSLT_FUNC_PARAM) {
-                fprintf(stdout, "param ");
+                xsltGenericError(xsltGenericErrorContext, "param ");
             } else if (cur->comp->type == XSLT_FUNC_VARIABLE) {
-                fprintf(stdout, "var ");
+                xsltGenericError(xsltGenericErrorContext, "var ");
             }
             if (cur->name != NULL)
-                fprintf(stdout, "%s ", cur->name);
+                xsltGenericError(xsltGenericErrorContext, "%s ",
+                                 cur->name);
             else
-                fprintf(stdout, "noname !!!!");
+                xsltGenericError(xsltGenericErrorContext, "noname !!!!");
 #ifdef LIBXML_DEBUG_ENABLED
             if (cur->value != NULL) {
                 xmlXPathDebugDumpObject(stdout, cur->value, 1);
             } else {
-                fprintf(stdout, "NULL !!!!");
+                xsltGenericError(xsltGenericErrorContext, "NULL !!!!");
             }
 #endif
-            fprintf(stdout, "\n");
+            xsltGenericError(xsltGenericErrorContext, "\n");
             cur = cur->next;
         }
 
