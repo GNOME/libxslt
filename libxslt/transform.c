@@ -115,7 +115,7 @@ templPush(xsltTransformContextPtr ctxt, xsltTemplatePtr value)
     return (ctxt->templNr++);
 }
 /**
- * varsPop:
+ * templPop:
  * @ctxt: the transformation context
  *
  * Pop a template value from the stack

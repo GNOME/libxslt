@@ -1,3 +1,10 @@
+Wed Sep 24 23:31:45 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c: applied patch from Karl Eichwalder
+	  apparently the xmlFree was introducting a memory error
+	  on x86_64, though not reproduced.
+	* libxslt/transform.c: patch from Shaun McCance fixing a comment.
+
 Thu Sep 18 11:32:20 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxslt.c: don't output errors to stdout by default

@@ -701,8 +701,6 @@ xsltShutdownCtxtExt(xsltExtDataPtr data, xsltTransformContextPtr ctxt,
                      "Shutting down module : %s\n", URI);
 #endif
     module->shutdownFunc(ctxt, URI, data->extData);
-    xmlHashRemoveEntry(ctxt->extInfos, URI,
-                       (xmlHashDeallocator) xsltFreeExtData);
 }
 
 /**
