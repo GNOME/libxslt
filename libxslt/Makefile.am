@@ -20,6 +20,7 @@ xsltinc_HEADERS = 			\
 	imports.h			\
 	attributes.h			\
 	documents.h			\
+	preproc.h			\
 	transform.h			\
 	xsltInternals.h
 
@@ -38,6 +39,7 @@ libxslt_la_SOURCES = 			\
 	imports.c			\
 	attributes.c			\
 	documents.c			\
+	preproc.c			\
 	transform.c
 
 

@@ -11,7 +11,6 @@
 #define __XML_XSLT_NUMBERSINTERNALS_H__
 
 #include <libxml/tree.h>
-#include "xsltInternals.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,10 +30,6 @@ typedef struct _xsltNumberData {
     xmlDocPtr doc;
     xmlNodePtr node;
 } xsltNumberData, *xsltNumberDataPtr;
-
-xmlXPathError xsltFormatNumberConversion(xsltDecimalFormatPtr, xmlChar *,
-					 double, xmlChar **);
-void xsltNumberFormat(xsltTransformContextPtr, xsltNumberDataPtr, xmlNodePtr);
 
 #ifdef __cplusplus
 }

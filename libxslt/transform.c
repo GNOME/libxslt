@@ -47,6 +47,7 @@
 #include "documents.h"
 #include "extensions.h"
 #include "extra.h"
+#include "preproc.h"
 
 #define DEBUG_PROCESS
 
@@ -209,6 +210,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	xmlFree(ctxt->varsTab);
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
+    xsltFreeStylePreComps(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -836,6 +838,96 @@ error:
     if (value != NULL)
         xmlFree(value);
 }
+
+/**
+ * xsltAttribute:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt attribute node
+ *
+ * Process the xslt attribute node on the source node
+ */
+void
+xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop = NULL;
+    xmlChar *ncname = NULL;
+    xmlChar *prefix = NULL;
+    xmlChar *value = NULL;
+    xmlNsPtr ns = NULL;
+    xmlAttrPtr attr;
+
+
+    if (ctxt->insert == NULL)
+	return;
+    if (ctxt->insert->children != NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:attribute : node has already children\n");
+	return;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:attribute : name is missing\n");
+	goto error;
+    }
+
+    ncname = xmlSplitQName2(prop, &prefix);
+    if (ncname == NULL) {
+	ncname = prop;
+	prop = NULL;
+	prefix = NULL;
+    }
+
+    if ((prefix != NULL) && (xmlStrEqual(prefix, (const xmlChar *)"xmlns"))) {
+#ifdef DEBUG_ATTRIBUTES
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xslt:attribute : xmlns prefix forbidden\n");
+#endif
+	goto error;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
+    if (prop != NULL) {
+	ns = xsltGetSpecialNamespace(ctxt, inst, prop, prefix, ctxt->insert);
+    } else {
+	if (prefix != NULL) {
+	    ns = xmlSearchNs(inst->doc, inst, prefix);
+	    if (ns == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+		    "no namespace bound to prefix %s\n", prefix);
+	    } else {
+		ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+	    }
+	}
+    }
+    
+
+    value = xsltEvalTemplateString(ctxt, node, inst);
+    if (value == NULL) {
+	if (ns) {
+	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, 
+		                (const xmlChar *)"");
+	} else
+	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
+    } else {
+	if (ns) {
+	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, value);
+	} else
+	    attr = xmlSetProp(ctxt->insert, ncname, value);
+	
+    }
+
+error:
+    if (prop != NULL)
+        xmlFree(prop);
+    if (ncname != NULL)
+        xmlFree(ncname);
+    if (prefix != NULL)
+        xmlFree(prefix);
+    if (value != NULL)
+        xmlFree(value);
+}
+
 
 /**
  * xsltComment:
@@ -1951,8 +2043,37 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    return;
 	}
 
-	if (IS_XSLT_ELEM(cur)) {
-	    if (IS_XSLT_NAME(cur, "apply-templates")) {
+	if (cur->_private != NULL) {
+	    xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
+	    if (info->func != NULL) {
+		ctxt->insert = insert;
+		info->func(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+	    } else {
+		xsltGenericError(xsltGenericDebugContext,
+		 "xsltApplyOneTemplate: %s has _private without function\n",
+		                 cur->name);
+	    }
+	    goto skip_children;
+	} else if (IS_XSLT_ELEM(cur)) {
+	    xsltStylePreCompute(ctxt, cur);
+	    if (cur->_private != NULL) {
+		xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
+		if (info->func != NULL) {
+		    ctxt->insert = insert;
+		    info->func(ctxt, node, cur);
+		    ctxt->insert = oldInsert;
+		} else {
+		    xsltGenericError(xsltGenericDebugContext,
+		     "xsltApplyOneTemplate: %s has _private without function\n",
+				     cur->name);
+		}
+		goto skip_children;
+	    }
+
+	    if (IS_XSLT_NAME(cur, "variable")) {
+		xsltParseStylesheetVariable(ctxt, cur);
+	    } else if (IS_XSLT_NAME(cur, "apply-templates")) {
 		ctxt->insert = insert;
 		xsltApplyTemplates(ctxt, node, cur);
 		ctxt->insert = oldInsert;
@@ -2010,8 +2131,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltProcessingInstruction(ctxt, node, cur);
 		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "variable")) {
-		xsltParseStylesheetVariable(ctxt, cur);
 	    } else if (IS_XSLT_NAME(cur, "param")) {
 		xsltParseStylesheetParam(ctxt, cur);
 	    } else if (IS_XSLT_NAME(cur, "call-template")) {

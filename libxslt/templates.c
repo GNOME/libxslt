@@ -267,6 +267,43 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 }
 
 /**
+ * xsltEvalStaticAttrValueTemplate:
+ * @ctxt:  the XSLT transformation context
+ * @node:  the stylesheet node
+ * @name:  the attribute QName
+ * @found:  indicator whether the attribute is present
+ *
+ * Check if an attribute value template has a static value, i.e. the
+ * attribute value does not contain expressions contained in curly braces ({})
+ *
+ * Returns the static string value or NULL, must be deallocated by the
+ *    caller.
+ */
+xmlChar *
+xsltEvalStaticAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	                        const xmlChar *name, int *found) {
+    const xmlChar *ret;
+    xmlChar *expr;
+
+    if ((ctxt == NULL) || (node == NULL) || (name == NULL))
+	return(NULL);
+
+    expr = xmlGetNsProp(node, name, XSLT_NAMESPACE);
+    if (expr == NULL) {
+	*found = 0;
+	return(NULL);
+    }
+    *found = 1;
+
+    ret = xmlStrchr(expr, '{');
+    if (ret != NULL) {
+	xmlFree(expr);
+	return(NULL);
+    }
+    return(expr);
+}
+
+/**
  * xsltAttrTemplateProcess:
  * @ctxt:  the XSLT transformation context
  * @target:  the result node

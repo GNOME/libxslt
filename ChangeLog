@@ -1,3 +1,10 @@
+Tue Mar  6 19:03:21 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/preproc.[ch] Makefile.am templates.[ch] transform.[ch]
+	  xsltInternals.h: started working on optimizing stylesheet
+	  element parsing. Just builds the extra informations so far.
+	* xsltutils.h: added a missing XPath decl
+
 Tue Mar  6 09:52:13 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/variables.c: William M. Brack found a serious bug
