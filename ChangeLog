@@ -1,3 +1,9 @@
+Sun Jan 10 23:33:21 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: Added coding to create a xsltDocument
+	  wrapper for an RVT, in order to produce the applicable
+	  keys (Bug 130922)
+
 Sat Jan  9 17:04:38 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* doc/search.xml, doc/search.templ, doc/Makefile.am,

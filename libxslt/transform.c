@@ -3048,7 +3048,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int nbsorts = 0;
     xmlNodePtr sorts[XSLT_MAX_SORT];
     xmlDocPtr oldXDocPtr;
-    xsltDocumentPtr oldCDocPtr;
+    xsltDocumentPtr oldCDocPtr, tmpDocPtr, newDocPtr = NULL;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
 
@@ -3109,6 +3109,24 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (res->type == XPATH_NODESET) {
 		list = res->nodesetval;
 		res->nodesetval = NULL;
+		/*
+		 In order to take care of potential keys we need to
+		 do some extra work in the case of an RVT converted
+		 into a nodeset (e.g. exslt:node-set())
+	        */
+		if ((list != NULL) && (ctxt->document->keys != NULL)) {
+		    if ((list->nodeNr != 0) &&
+		        (xmlStrEqual((xmlChar *)list->nodeTab[0]->doc->name,
+			   (const xmlChar *) " fake node libxslt")) &&
+			(list->nodeTab[0]->doc->parent == NULL)) {
+		        newDocPtr = xsltNewDocument(ctxt, 
+			       list->nodeTab[0]->doc);
+		        if (newDocPtr == NULL) {
+		        }
+			list->nodeTab[0]->parent = (xmlNodePtr)newDocPtr;
+			ctxt->document = newDocPtr;
+		    }
+		}
 	     } else {
 		list = NULL;
 	     }
@@ -3293,8 +3311,21 @@ error:
     ctxt->node = oldNode;
     ctxt->mode = oldMode;
     ctxt->modeURI = oldModeURI;
-    if (list != NULL)
+    if (list != NULL) {
+        /*
+	  If we created a "pseudo-document" we must free it now
+	*/
+	if (newDocPtr != NULL) {
+	    tmpDocPtr = (xsltDocumentPtr)&ctxt->docList;
+	    while (tmpDocPtr->next != newDocPtr)
+	        tmpDocPtr = tmpDocPtr->next;
+	    tmpDocPtr->next = newDocPtr->next;
+	    newDocPtr->doc->parent = NULL;
+	    xsltFreeDocumentKeys(newDocPtr);
+	    xmlFree(newDocPtr);
+	}
 	xmlXPathFreeNodeSet(list);
+    }
     /*
      * res must be deallocated after list
      */
