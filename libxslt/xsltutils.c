@@ -1392,7 +1392,8 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 		xmlNodeDumpOutput(buf, result, child, 0, (indent == 1),
 			          (const char *) encoding);
 		if ((child->type == XML_DTD_NODE) ||
-		    (child->type == XML_COMMENT_NODE))
+		    ((child->type == XML_COMMENT_NODE) &&
+		     (child->next != NULL)))
 		    xmlOutputBufferWriteString(buf, "\n");
 		child = child->next;
 	    }

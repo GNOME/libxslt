@@ -1,3 +1,8 @@
+Wed Apr 28 18:17:24 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xsltutils.c: suppressed any automatic linefeed after
+	  a comment following the document root element (bug 140558)
+
 Thu Apr 22 08:38:35 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fix a problem where we updated an
