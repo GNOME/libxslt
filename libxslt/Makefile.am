@@ -22,7 +22,8 @@ xsltinc_HEADERS = 			\
 	documents.h			\
 	preproc.h			\
 	transform.h			\
-	xsltInternals.h
+	xsltInternals.h			\
+	xsltconfig.h
 
 libxslt_la_SOURCES = 			\
 	xslt.c				\

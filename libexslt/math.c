@@ -2,6 +2,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
+#include <libxslt/xsltconfig.h>
 #include <libxslt/xsltutils.h>
 #include <libxslt/xsltInternals.h>
 #include <libxslt/extensions.h>
