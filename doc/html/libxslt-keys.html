@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->namespaces</TITLE
+>keys</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.44"><LINK
@@ -12,11 +12,11 @@ REL="UP"
 TITLE="Libxslt Library Reference"
 HREF="libxslt-lib.html"><LINK
 REL="PREVIOUS"
-TITLE="imports"
-HREF="libxslt-imports.html"><LINK
-REL="NEXT"
 TITLE="variables"
-HREF="libxslt-variables.html"></HEAD
+HREF="libxslt-variables.html"><LINK
+REL="NEXT"
+TITLE="xsltInternals"
+HREF="libxslt-xsltinternals.html"></HEAD
 ><BODY
 BGCOLOR="#FFFFFF"
 TEXT="#000000"
@@ -47,7 +47,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-imports.html"
+HREF="libxslt-variables.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -101,7 +101,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
 ><A
-HREF="libxslt-variables.html"
+HREF="libxslt-xsltinternals.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -115,21 +115,21 @@ SIZE="3"
 ></DIV
 ><H1
 ><A
-NAME="LIBXSLT-NAMESPACES"
->namespaces</A
+NAME="LIBXSLT-KEYS"
+>keys</A
 ></H1
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN1506"
+NAME="AEN2013"
 ></A
 ><H2
 >Name</H2
->namespaces&nbsp;--&nbsp;</DIV
+>keys&nbsp;--&nbsp;</DIV
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN1509"
+NAME="AEN2016"
 ></A
 ><H2
 >Synopsis</H2
@@ -144,90 +144,72 @@ CELLPADDING="6"
 CLASS="SYNOPSIS"
 >&#13;
 
-void        <A
-HREF="libxslt-namespaces.html#XSLTNAMESPACEALIAS"
->xsltNamespaceAlias</A
->              (<GTKDOCLINK
+int         <A
+HREF="libxslt-keys.html#XSLTADDKEY"
+>xsltAddKey</A
+>                      (<GTKDOCLINK
 HREF="XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</GTKDOCLINK
 > style,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node);
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *nameURI,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *match,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *use);
 <GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
->    <A
-HREF="libxslt-namespaces.html#XSLTGETNAMESPACE"
->xsltGetNamespace</A
+HREF="XMLNODESETPTR"
+>xmlNodeSetPtr</GTKDOCLINK
+> <A
+HREF="libxslt-keys.html#XSLTGETKEY"
+>xsltGetKey</A
+>                    (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *nameURI,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *value);
+void        <A
+HREF="libxslt-keys.html#XSLTINITCTXTKEYS"
+>xsltInitCtxtKeys</A
 >                (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur,
-                                             <GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
-> ns,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> out);
-<GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
->    <A
-HREF="libxslt-namespaces.html#XSLTGETSPECIALNAMESPACE"
->xsltGetSpecialNamespace</A
->         (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *URI,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *prefix,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> out);
-<GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
->    <A
-HREF="libxslt-namespaces.html#XSLTCOPYNAMESPACELIST"
->xsltCopyNamespaceList</A
->           (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
-> cur);
+> ctxt);
 void        <A
-HREF="libxslt-namespaces.html#XSLTFREENAMESPACEALIASHASHES"
->xsltFreeNamespaceAliasHashes</A
->    (<GTKDOCLINK
+HREF="libxslt-keys.html#XSLTFREEKEYS"
+>xsltFreeKeys</A
+>                    (<GTKDOCLINK
 HREF="XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</GTKDOCLINK
-> style);</PRE
+> style);
+void        <A
+HREF="libxslt-keys.html#XSLTFREECTXTKEYS"
+>xsltFreeCtxtKeys</A
+>                (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -235,7 +217,7 @@ HREF="XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1535"
+NAME="AEN2037"
 ></A
 ><H2
 >Description</H2
@@ -245,20 +227,20 @@ NAME="AEN1535"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1538"
+NAME="AEN2040"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1540"
+NAME="AEN2042"
 ></A
 ><H3
 ><A
-NAME="XSLTNAMESPACEALIAS"
+NAME="XSLTADDKEY"
 ></A
->xsltNamespaceAlias ()</H3
+>xsltAddKey ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -268,20 +250,31 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltNamespaceAlias              (<GTKDOCLINK
+>int         xsltAddKey                      (<GTKDOCLINK
 HREF="XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</GTKDOCLINK
 > style,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node);</PRE
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *nameURI,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *match,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *use);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Read the stylesheet-prefix and result-prefix attributes, register
-them as well as the corresponding namespace.</P
+>add a key definition to a stylesheet</P
 ><P
 ></P
 ><DIV
@@ -310,7 +303,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT stylesheet</TD
+> an XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -320,94 +313,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->node</I
+>name</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the xsl:namespace-alias node</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1561"
-></A
-><H3
-><A
-NAME="XSLTGETNAMESPACE"
-></A
->xsltGetNamespace ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
->    xsltGetNamespace                (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur,
-                                             <GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
-> ns,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> out);</PRE
-></TD
-></TR
-></TABLE
-><P
->Find the right namespace value for this prefix, if needed create
-and add a new namespace decalaration on the node
-Handle namespace aliases</P
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  a transformation context</TD
+>  the key name or NULL</TD
 ></TR
 ><TR
 ><TD
@@ -417,14 +330,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->cur</I
+>nameURI</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the input node</TD
+>  the name URI or NULL</TD
 ></TR
 ><TR
 ><TD
@@ -434,14 +347,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->ns</I
+>match</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the namespace</TD
+>  the match value</TD
 ></TR
 ><TR
 ><TD
@@ -451,14 +364,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->out</I
+>use</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the output node (or its parent)</TD
+>  the use value</TD
 ></TR
 ><TR
 ><TD
@@ -473,7 +386,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the namespace node to use or NULL</TD
+>0 in case of success, and -1 in case of failure.</TD
 ></TR
 ></TABLE
 ><P
@@ -483,13 +396,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1597"
+NAME="AEN2082"
 ></A
 ><H3
 ><A
-NAME="XSLTGETSPECIALNAMESPACE"
+NAME="XSLTGETKEY"
 ></A
->xsltGetSpecialNamespace ()</H3
+>xsltGetKey ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -500,31 +413,29 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 ><GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
->    xsltGetSpecialNamespace         (<A
+HREF="XMLNODESETPTR"
+>xmlNodeSetPtr</GTKDOCLINK
+> xsltGetKey                    (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur,
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *URI,
+> *name,
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *prefix,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> out);</PRE
+> *nameURI,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *value);</PRE
 ></TD
 ></TR
 ></TABLE
+><P
+>Lookup a key</P
 ><P
 ></P
 ><DIV
@@ -553,7 +464,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -563,14 +474,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->cur</I
+>name</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the key name or NULL</TD
 ></TR
 ><TR
 ><TD
@@ -580,14 +491,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->URI</I
+>nameURI</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the name URI or NULL</TD
 ></TR
 ><TR
 ><TD
@@ -597,31 +508,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->prefix</I
+>value</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->out</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
+>  the key value to look for</TD
 ></TR
 ><TR
 ><TD
@@ -636,7 +530,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&#13;</TD
+>the nodeset resulting from the query or NULL</TD
 ></TR
 ></TABLE
 ><P
@@ -646,13 +540,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1637"
+NAME="AEN2118"
 ></A
 ><H3
 ><A
-NAME="XSLTCOPYNAMESPACELIST"
+NAME="XSLTINITCTXTKEYS"
 ></A
->xsltCopyNamespaceList ()</H3
+>xsltInitCtxtKeys ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -662,33 +556,16 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
->    xsltCopyNamespaceList           (<A
+>void        xsltInitCtxtKeys                (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
-> cur);</PRE
+> ctxt);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Do a copy of an namespace list. If <TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
-> is non-NULL the
-new namespaces are added automatically. This handles namespaces
-aliases</P
+>Computes all the keys tables for the current input document.
+Should be done before global varibales are initialized.</P
 ><P
 ></P
 ><DIV
@@ -717,56 +594,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a transformation context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the target node</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->cur</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  the first namespace</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
-> a new xmlNsPtr, or NULL in case of error.</TD
+> an XSLT transformation context</TD
 ></TR
 ></TABLE
 ><P
@@ -776,13 +604,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1669"
+NAME="AEN2134"
 ></A
 ><H3
 ><A
-NAME="XSLTFREENAMESPACEALIASHASHES"
+NAME="XSLTFREEKEYS"
 ></A
->xsltFreeNamespaceAliasHashes ()</H3
+>xsltFreeKeys ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -792,7 +620,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltFreeNamespaceAliasHashes    (<GTKDOCLINK
+>void        xsltFreeKeys                    (<GTKDOCLINK
 HREF="XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</GTKDOCLINK
 > style);</PRE
@@ -800,7 +628,7 @@ HREF="XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
->Free up the memory used by namespaces aliases</P
+>Free up the memory used by XSLT keys in a stylesheet</P
 ><P
 ></P
 ><DIV
@@ -836,6 +664,69 @@ VALIGN="TOP"
 ></P
 ></DIV
 ></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2150"
+></A
+><H3
+><A
+NAME="XSLTFREECTXTKEYS"
+></A
+>xsltFreeCtxtKeys ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltFreeCtxtKeys                (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Free up all the space used by the key tables</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> an XSLT transformation context</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -852,7 +743,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-imports.html"
+HREF="libxslt-variables.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -906,7 +797,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
 ><A
-HREF="libxslt-variables.html"
+HREF="libxslt-xsltinternals.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -924,7 +815,7 @@ ALIGN="left"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->imports</B
+>variables</B
 ></FONT
 ></TD
 ><TD
@@ -934,7 +825,7 @@ ALIGN="right"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->variables</B
+>xsltInternals</B
 ></FONT
 ></TD
 ></TR

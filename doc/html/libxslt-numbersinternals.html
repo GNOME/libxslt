@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->transform</TITLE
+>numbersInternals</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.44"><LINK
@@ -12,11 +12,8 @@ REL="UP"
 TITLE="Libxslt Library Reference"
 HREF="libxslt-lib.html"><LINK
 REL="PREVIOUS"
-TITLE="templates"
-HREF="libxslt-templates.html"><LINK
-REL="NEXT"
-TITLE="xsltutils"
-HREF="libxslt-xsltutils.html"></HEAD
+TITLE="xsltInternals"
+HREF="libxslt-xsltinternals.html"></HEAD
 ><BODY
 BGCOLOR="#FFFFFF"
 TEXT="#000000"
@@ -47,7 +44,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-templates.html"
+HREF="libxslt-xsltinternals.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -100,36 +97,27 @@ SIZE="3"
 WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
-><A
-HREF="libxslt-xsltutils.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
+>&nbsp;</TD
 ></TR
 ></TABLE
 ></DIV
 ><H1
 ><A
-NAME="LIBXSLT-TRANSFORM"
->transform</A
+NAME="LIBXSLT-NUMBERSINTERNALS"
+>numbersInternals</A
 ></H1
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN693"
+NAME="AEN2439"
 ></A
 ><H2
 >Name</H2
->transform&nbsp;--&nbsp;</DIV
+>numbersInternals&nbsp;--&nbsp;</DIV
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN696"
+NAME="AEN2442"
 ></A
 ><H2
 >Synopsis</H2
@@ -145,34 +133,42 @@ CLASS="SYNOPSIS"
 >&#13;
 
 <GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
->   <A
-HREF="libxslt-transform.html#XSLTAPPLYSTYLESHEET"
->xsltApplyStylesheet</A
->             (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
-> style,
+HREF="XMLXPATHERROR"
+>xmlXPathError</GTKDOCLINK
+> <A
+HREF="libxslt-numbersinternals.html#XSLTFORMATNUMBERCONVERSION"
+>xsltFormatNumberConversion</A
+>    (<GTKDOCLINK
+HREF="XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</GTKDOCLINK
+>,
                                              <GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
-> doc);
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+>*,
+                                             <GTKDOCLINK
+HREF="DOUBLE"
+>double</GTKDOCLINK
+>,
+                                             <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+>**);
 void        <A
-HREF="libxslt-transform.html#XSLTAPPLYONETEMPLATE"
->xsltApplyOneTemplate</A
->            (<A
+HREF="libxslt-numbersinternals.html#XSLTNUMBERFORMAT"
+>xsltNumberFormat</A
+>                (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
+>,
+                                             <GTKDOCLINK
+HREF="XSLTNUMBERDATAPTR"
+>xsltNumberDataPtr</GTKDOCLINK
+>,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> list);</PRE
+>);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -180,7 +176,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN707"
+NAME="AEN2455"
 ></A
 ><H2
 >Description</H2
@@ -190,20 +186,20 @@ NAME="AEN707"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN710"
+NAME="AEN2458"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN712"
+NAME="AEN2460"
 ></A
 ><H3
 ><A
-NAME="XSLTAPPLYSTYLESHEET"
+NAME="XSLTFORMATNUMBERCONVERSION"
 ></A
->xsltApplyStylesheet ()</H3
+>xsltFormatNumberConversion ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -214,22 +210,27 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 ><GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
->   xsltApplyStylesheet             (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
-> style,
+HREF="XMLXPATHERROR"
+>xmlXPathError</GTKDOCLINK
+> xsltFormatNumberConversion    (<GTKDOCLINK
+HREF="XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</GTKDOCLINK
+>,
                                              <GTKDOCLINK
-HREF="XMLDOCPTR"
->xmlDocPtr</GTKDOCLINK
-> doc);</PRE
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+>*,
+                                             <GTKDOCLINK
+HREF="DOUBLE"
+>double</GTKDOCLINK
+>,
+                                             <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+>**);</PRE
 ></TD
 ></TR
 ></TABLE
-><P
->Apply the stylesheet to the document
-NOTE: This may lead to a non-wellformed output XML wise !</P
 ><P
 ></P
 ><DIV
@@ -251,14 +252,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->style</I
+>Param1</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a parsed XSLT stylesheet</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -268,14 +269,48 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->doc</I
+>Param2</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a parsed XML document</TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>Param3</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>Param4</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -290,7 +325,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the result document or NULL in case of error</TD
+>&#13;</TD
 ></TR
 ></TABLE
 ><P
@@ -300,13 +335,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN738"
+NAME="AEN2495"
 ></A
 ><H3
 ><A
-NAME="XSLTAPPLYONETEMPLATE"
+NAME="XSLTNUMBERFORMAT"
 ></A
->xsltApplyOneTemplate ()</H3
+>xsltNumberFormat ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -316,23 +351,21 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltApplyOneTemplate            (<A
+>void        xsltNumberFormat                (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt,
+>,
+                                             <GTKDOCLINK
+HREF="XSLTNUMBERDATAPTR"
+>xsltNumberDataPtr</GTKDOCLINK
+>,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> list);</PRE
+>);</PRE
 ></TD
 ></TR
 ></TABLE
-><P
->Process the apply-templates node on the source node</P
 ><P
 ></P
 ><DIV
@@ -354,14 +387,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->ctxt</I
+>Param1</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  a XSLT process context</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -371,14 +404,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->node</I
+>Param2</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the node in the source tree.</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -388,14 +421,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->list</I
+>Param3</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the template replacement nodelist</TD
+>&#13;</TD
 ></TR
 ></TABLE
 ><P
@@ -418,7 +451,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-templates.html"
+HREF="libxslt-xsltinternals.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -471,16 +504,7 @@ SIZE="3"
 WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
-><A
-HREF="libxslt-xsltutils.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -490,19 +514,13 @@ ALIGN="left"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->templates</B
+>xsltInternals</B
 ></FONT
 ></TD
 ><TD
 COLSPAN="2"
 ALIGN="right"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->xsltutils</B
-></FONT
-></TD
+>&nbsp;</TD
 ></TR
 ></TABLE
 ></DIV

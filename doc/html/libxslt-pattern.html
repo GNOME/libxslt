@@ -154,7 +154,15 @@ HREF="XSLTSTYLESHEETPTR"
                                              <A
 HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
 >xsltTemplatePtr</A
-> cur);
+> cur,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *mode,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *modeURI);
 <A
 HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
 >xsltTemplatePtr</A
@@ -183,7 +191,7 @@ HREF="XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN325"
+NAME="AEN327"
 ></A
 ><H2
 >Description</H2
@@ -193,14 +201,14 @@ NAME="AEN325"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN328"
+NAME="AEN330"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN330"
+NAME="AEN332"
 ></A
 ><H3
 ><A
@@ -223,7 +231,15 @@ HREF="XSLTSTYLESHEETPTR"
                                              <A
 HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
 >xsltTemplatePtr</A
-> cur);</PRE
+> cur,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *mode,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *modeURI);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -286,6 +302,40 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the mode name or NULL</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>modeURI</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the mode URI or NULL</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
@@ -304,7 +354,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN356"
+NAME="AEN368"
 ></A
 ><H3
 ><A
@@ -381,7 +431,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
-> an XML Node</TD
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -406,7 +456,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN382"
+NAME="AEN394"
 ></A
 ><H3
 ><A

@@ -12,11 +12,11 @@ REL="UP"
 TITLE="Libxslt Library Reference"
 HREF="libxslt-lib.html"><LINK
 REL="PREVIOUS"
-TITLE="transform"
-HREF="libxslt-transform.html"><LINK
+TITLE="keys"
+HREF="libxslt-keys.html"><LINK
 REL="NEXT"
-TITLE="xsltutils"
-HREF="libxslt-xsltutils.html"></HEAD
+TITLE="numbersInternals"
+HREF="libxslt-numbersinternals.html"></HEAD
 ><BODY
 BGCOLOR="#FFFFFF"
 TEXT="#000000"
@@ -47,7 +47,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-transform.html"
+HREF="libxslt-keys.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -101,7 +101,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
 ><A
-HREF="libxslt-xsltutils.html"
+HREF="libxslt-numbersinternals.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -121,7 +121,7 @@ NAME="LIBXSLT-XSLTINTERNALS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN757"
+NAME="AEN2171"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +129,7 @@ NAME="AEN757"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN760"
+NAME="AEN2174"
 ></A
 ><H2
 >Synopsis</H2
@@ -232,6 +232,21 @@ HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
 >xsltStackElemPtr</A
 > elem);
 <GTKDOCLINK
+HREF="XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</GTKDOCLINK
+> <A
+HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMATGETBYNAME"
+>xsltDecimalFormatGetByName</A
+>
+                                            (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> sheet,
+                                             <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name);
+<GTKDOCLINK
 HREF="XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</GTKDOCLINK
 > <A
@@ -263,7 +278,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN793"
+NAME="AEN2211"
 ></A
 ><H2
 >Description</H2
@@ -273,14 +288,14 @@ NAME="AEN793"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN796"
+NAME="AEN2214"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN798"
+NAME="AEN2216"
 ></A
 ><H3
 ><A
@@ -309,7 +324,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN803"
+NAME="AEN2221"
 ></A
 ><H3
 ><A
@@ -344,7 +359,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN808"
+NAME="AEN2226"
 ></A
 ><H3
 ><A
@@ -370,7 +385,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN813"
+NAME="AEN2231"
 ></A
 ><H3
 ><A
@@ -396,7 +411,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN818"
+NAME="AEN2236"
 ></A
 ><H3
 ><A
@@ -431,7 +446,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN823"
+NAME="AEN2241"
 ></A
 ><H3
 ><A
@@ -457,7 +472,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN828"
+NAME="AEN2246"
 ></A
 ><H3
 ><A
@@ -524,6 +539,7 @@ struct _xsltStylesheet {
     void *templatesHash;	/* hash table or wherever compiled templates
 				   informations are stored */
     void *rootMatch;		/* template based on / */
+    void *keyMatch;		/* template based on key() */
     void *elemMatch;		/* template based on * */
     void *attrMatch;		/* template based on @* */
     void *parentMatch;		/* template based on .. */
@@ -540,6 +556,11 @@ struct _xsltStylesheet {
      * Attribute sets
      */
     xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
+
+    /*
+     * Key definitions
+     */
+    void *keys;				/* key definitions */
 
     /*
      * Output related stuff.
@@ -567,7 +588,7 @@ struct _xsltStylesheet {
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN833"
+NAME="AEN2251"
 ></A
 ><H3
 ><A
@@ -597,7 +618,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN838"
+NAME="AEN2256"
 ></A
 ><H3
 ><A
@@ -627,7 +648,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN843"
+NAME="AEN2261"
 ></A
 ><H3
 ><A
@@ -647,6 +668,9 @@ CLASS="PROGRAMLISTING"
     xsltStylesheetPtr style;		/* the stylesheet used */
     xsltOutputType type;		/* the type of output */
 
+    const xmlChar *mode;		/* the current mode */
+    const xmlChar *modeURI;		/* the current mode URI */
+
     xmlDocPtr doc;			/* the current doc */
     xmlNodePtr node;			/* the current node */
     xmlNodeSetPtr nodeList;		/* the current node list */
@@ -657,6 +681,7 @@ CLASS="PROGRAMLISTING"
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     void *variablesHash;		/* hash table or wherever variables
 				   	   informations are stored */
+    void *keys;				/* key tables storage */
     xmlDocPtr extraDocs;		/* extra docs parsed by document() */
     xsltTransformState state;		/* the current state */
 };</PRE
@@ -669,7 +694,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN848"
+NAME="AEN2266"
 ></A
 ><H3
 ><A
@@ -695,7 +720,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN853"
+NAME="AEN2271"
 ></A
 ><H3
 ><A
@@ -721,7 +746,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN858"
+NAME="AEN2276"
 ></A
 ><H3
 ><A
@@ -747,7 +772,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN863"
+NAME="AEN2281"
 ></A
 ><H3
 ><A
@@ -773,7 +798,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN868"
+NAME="AEN2286"
 ></A
 ><H3
 ><A
@@ -854,7 +879,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN889"
+NAME="AEN2307"
 ></A
 ><H3
 ><A
@@ -922,7 +947,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN906"
+NAME="AEN2324"
 ></A
 ><H3
 ><A
@@ -1000,7 +1025,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN926"
+NAME="AEN2344"
 ></A
 ><H3
 ><A
@@ -1068,7 +1093,110 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN943"
+NAME="AEN2361"
+></A
+><H3
+><A
+NAME="XSLTDECIMALFORMATGETBYNAME"
+></A
+>xsltDecimalFormatGetByName ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><GTKDOCLINK
+HREF="XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</GTKDOCLINK
+> xsltDecimalFormatGetByName
+                                            (<GTKDOCLINK
+HREF="XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</GTKDOCLINK
+> sheet,
+                                             <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Find decimal-format by name</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>sheet</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> the XSLT stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> the decimal-format name to find</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&#13;</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2387"
 ></A
 ><H3
 ><A
@@ -1171,7 +1299,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN969"
+NAME="AEN2413"
 ></A
 ><H3
 ><A
@@ -1265,7 +1393,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="left"
 ><A
-HREF="libxslt-transform.html"
+HREF="libxslt-keys.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -1319,7 +1447,7 @@ WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
 ><A
-HREF="libxslt-xsltutils.html"
+HREF="libxslt-numbersinternals.html"
 ><FONT
 COLOR="#FFFFFF"
 SIZE="3"
@@ -1337,7 +1465,7 @@ ALIGN="left"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->transform</B
+>keys</B
 ></FONT
 ></TD
 ><TD
@@ -1347,7 +1475,7 @@ ALIGN="right"
 COLOR="#FFFFFF"
 SIZE="3"
 ><B
->xsltutils</B
+>numbersInternals</B
 ></FONT
 ></TD
 ></TR

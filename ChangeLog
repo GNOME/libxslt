@@ -1,3 +1,7 @@
+Thu Feb  8 12:51:00 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/libxslt.sgml doc/html/*.html: updated and rebuilt the doc list
+
 Thu Feb  8 12:36:23 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* README configure.in libxslt.spec.in: bumped to 0.1.0, getting
