@@ -38,7 +38,7 @@ Group: Development/Libraries
 Requires: libxslt = %{version}
 Requires: libxml2 >= @LIBXML_REQUIRED_VERSION@
 Requires: libxml2-python >= @LIBXML_REQUIRED_VERSION@
-Requires: python
+Requires: %{_libdir}/python%(echo `python -c "import sys; print sys.version[0:3]"`)
 
 %description python
 The libxslt-python package contains a module that permits applications

@@ -1,3 +1,8 @@
+Tue Jul  6 18:43:37 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.spec.in: better python dependancy Red hat bug #126364
+	  by Robert Scheck
+
 Tue Jul  6 21:35:44 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* tests/namespaces/Makefile.am: added extra2.err, tst5.xml,
