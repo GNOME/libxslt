@@ -56,12 +56,6 @@ extern "C" {
 
 void		xsltFunctionNodeSet	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void		xsltFunctionEvaluate	(xmlXPathParserContextPtr ctxt,
-					 int nargs);
-void		xsltFunctionExpression	(xmlXPathParserContextPtr ctxt,
-					 int nargs);
-void		xsltFunctionEval	(xmlXPathParserContextPtr ctxt,
-					 int nargs);
 void		xsltDebug		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr inst,

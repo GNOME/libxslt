@@ -1,3 +1,10 @@
+Tue Oct  9 19:51:48 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libxslt/extra.[ch]: removed older SAXON extensions
+	  implementations from Darren Graves.
+	* libexslt/date.c: applied patch from Charlie Bozeman to fix
+	  a bug with time zone offset on Linux.
+
 Tue Oct  9 13:02:46 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/documents.c libxslt/extra.c libxslt/transform.[ch]:

@@ -85,10 +85,7 @@ struct _exsltDate {
 #define IS_TZO_CHAR(c)						\
 	((c == 0) || (c == 'Z') || (c == '+') || (c == '-'))
 
-#define TZO_SECS(tm)		(tm->tm_isdst > 0 ? 3600 : 0)
-
 #define VALID_YEAR(yr)          (yr != 0)
-/* months are stored as 0 - 11 */
 #define VALID_MONTH(mon)        ((mon >= 1) && (mon <= 12))
 /* VALID_DAY should only be used when month is unknown */
 #define VALID_DAY(day)          ((day >= 1) && (day <= 31))
@@ -621,12 +618,12 @@ exsltDateFreeDate (exsltDatePtr date) {
 static exsltDatePtr
 exsltDateCurrent (void) {
     struct tm *localTm, *gmTm;
-    time_t tzSecs, secs;
+    time_t secs;
     exsltDatePtr ret;
 
     ret = exsltDateCreateDate();
     if (ret == NULL)
-	return NULL;
+        return NULL;
 
     /* get current time */
     secs    = time(NULL);
@@ -637,19 +634,20 @@ exsltDateCurrent (void) {
     /* get real year, not years since 1900 */
     ret->year = localTm->tm_year + 1900;
 
-    ret->mon = localTm->tm_mon + 1;
-    ret->day = localTm->tm_mday;
+    ret->mon  = localTm->tm_mon + 1;
+    ret->day  = localTm->tm_mday;
     ret->hour = localTm->tm_hour;
-    ret->min = localTm->tm_min;
+    ret->min  = localTm->tm_min;
 
     /* floating point seconds */
-    ret->sec         = (double) localTm->tm_sec;
+    ret->sec  = (double) localTm->tm_sec;
 
     /* determine the time zone offset from local to gm time */
     gmTm         = gmtime(&secs);
-    tzSecs       = mktime(gmTm) - secs;
     ret->tz_flag = 0;
-    ret->tzo = -(tzSecs - TZO_SECS(localTm)) / 60;
+    ret->tzo     = -(((ret->day - gmTm->tm_mday) * 1440) +
+                     ((ret->hour - gmTm->tm_hour) * 60) +
+                     (ret->min - gmTm->tm_min));
 
     return ret;
 }
