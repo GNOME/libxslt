@@ -762,6 +762,13 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
         }
         xmlFree(elements);
     }
+
+    prop = xsltGetNsProp(cur, (const xmlChar *) "media-type", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	if (style->mediaType)
+	    xmlFree(style->mediaType);
+	style->mediaType = prop;
+    }
 }
 
 /**
