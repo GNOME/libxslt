@@ -63,10 +63,10 @@ YES				name = qname
 YES				select = expression
 YES				Content: template
 
-NO			    xsl:key
-NO				name = qname 
-NO				match = pattern 
-NO				use = expression
+YES			    xsl:key
+YES				name = qname 
+YES				match = pattern 
+YES				use = expression
 
 YES			    xsl:output
 YES				method = "xml" | "html" | "text" | qname-but-not-ncname 
@@ -238,5 +238,6 @@ YES			    item[position() mod 2 = 1]
 YES			    div[@class="appendix"]//p
 YES			    @class
 YES			    @*
+NO			    key('a','b')
 
 Daniel.Veillard@imag.fr

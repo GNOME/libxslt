@@ -29,6 +29,7 @@
 #include "attributes.h"
 #include "xsltutils.h"
 #include "imports.h"
+#include "keys.h"
 
 #define DEBUG_PARSING
 /* #define DEBUG_BLANKS */
@@ -280,6 +281,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     if (sheet == NULL)
 	return;
 
+    xsltFreeKeys(sheet);
     xsltFreeTemplateHashes(sheet);
     xsltFreeDecimalFormatList(sheet);
     xsltFreeTemplateList(sheet->templates);
@@ -898,6 +900,98 @@ skip_children:
 }
 
 /**
+ * xsltParseStylesheetKey:
+ * @style:  the XSLT stylesheet
+ * @key:  the "key" element
+ *
+ * parse an XSLT stylesheet key definition and register it
+ */
+
+void
+xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
+    xmlChar *prop;
+    xmlChar *use;
+    xmlChar *match;
+    xmlChar *name;
+    xmlChar *nameURI;
+
+    if (key == NULL)
+	return;
+
+    /*
+     * Get arguments
+     */
+    prop = xmlGetNsProp(key, (const xmlChar *)"name", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	xmlChar *prefix = NULL;
+
+	name = xmlSplitQName2(prop, &prefix);
+	if (name != NULL) {
+	    if (prefix != NULL) {
+		xmlNsPtr ns;
+
+		ns = xmlSearchNs(key->doc, key, prefix);
+		if (ns == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"no namespace bound to prefix %s\n", prefix);
+		    xmlFree(prefix);
+		    xmlFree(name);
+		    name = prop;
+		    nameURI = NULL;
+		} else {
+		    nameURI = xmlStrdup(ns->href);
+		    xmlFree(prefix);
+		    xmlFree(prop);
+		}
+	    } else {
+		xmlFree(prop);
+		nameURI = NULL;
+	    }
+	} else {
+	    name = prop;
+	    nameURI = NULL;
+	}
+#ifdef DEBUG_PARSING
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xslt:key: name %s\n", name);
+#endif
+    } else {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:key : error missing name\n");
+	goto error;
+    }
+
+    match = xmlGetNsProp(key, (const xmlChar *)"match", XSLT_NAMESPACE);
+    if (match == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:key : error missing match\n");
+	goto error;
+    }
+
+    use = xmlGetNsProp(key, (const xmlChar *)"use", XSLT_NAMESPACE);
+    if (use == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:key : error missing use\n");
+	goto error;
+    }
+
+    /*
+     * register the key
+     */
+    xsltAddKey(style, name, nameURI, match, use);
+
+error:
+    if (use != NULL)
+	xmlFree(use);
+    if (match != NULL)
+	xmlFree(match);
+    if (name != NULL)
+	xmlFree(name);
+    if (nameURI != NULL)
+	xmlFree(nameURI);
+}
+
+/**
  * xsltParseStylesheetTemplate:
  * @style:  the XSLT stylesheet
  * @template:  the "template" element
@@ -1096,7 +1190,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
         } else if (IS_XSLT_NAME(cur, "output")) {
 	    xsltParseStylesheetOutput(style, cur);
         } else if (IS_XSLT_NAME(cur, "key")) {
-	    TODO /* Handle key */
+	    xsltParseStylesheetKey(style, cur);
         } else if (IS_XSLT_NAME(cur, "decimal-format")) {
 	    xsltParseStylesheetDecimalFormat(style, cur);
         } else if (IS_XSLT_NAME(cur, "attribute-set")) {

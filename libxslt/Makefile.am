@@ -11,6 +11,7 @@ xsltinc_HEADERS = 			\
 	pattern.h			\
 	templates.h			\
 	variables.h			\
+	keys.h				\
 	numbersInternals.h		\
 	functions.h			\
 	namespaces.h			\
@@ -25,6 +26,7 @@ libxslt_la_SOURCES = 			\
 	pattern.c			\
 	templates.c			\
 	variables.c			\
+	keys.c				\
 	numbers.c			\
 	functions.c			\
 	namespaces.c			\

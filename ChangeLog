@@ -1,3 +1,12 @@
+Wed Feb  7 19:46:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* libxslt/Makefile.am libxslt/keys.[ch] libxslt/xslt.c
+	  libxslt/transform.c libxslt/xsltInternals.h: started adding key
+	  support
+	* libxslt/xsltutils.c: warning cleanup
+	* libxslt/pattern.h: fixed soopid cut'n paste prob
+
 Tue Feb  6 10:56:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/xslt.c: chased some reported

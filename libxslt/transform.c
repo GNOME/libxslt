@@ -35,6 +35,7 @@
 #include "attributes.h"
 #include "templates.h"
 #include "imports.h"
+#include "keys.h"
 
 #define DEBUG_PROCESS
 
@@ -110,6 +111,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     if (ctxt->xpathCtxt != NULL)
 	xmlXPathFreeContext(ctxt->xpathCtxt);
     xsltFreeVariableHashes(ctxt);
+    xsltFreeCtxtKeys(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -1985,6 +1987,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
     if (ctxt == NULL)
 	return(NULL);
     ctxt->style = style;
+    xsltInitCtxtKeys(ctxt);
     xsltEvalGlobalVariables(ctxt);
     if ((style->method != NULL) &&
 	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {

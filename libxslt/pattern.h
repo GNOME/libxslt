@@ -7,7 +7,7 @@
  */
 
 #ifndef __XML_XSLT_PATTERN_H__
-#define __XML_XSLT_H__
+#define __XML_XSLT_PATTERN_H__
 
 #include "xsltInternals.h"
 
@@ -26,5 +26,5 @@ void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
 }
 #endif
 
-#endif /* __XML_XSLT_H__ */
+#endif /* __XML_XSLT_PATTERN_H__ */
 

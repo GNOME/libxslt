@@ -134,6 +134,11 @@ struct _xsltStylesheet {
     xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
 
     /*
+     * Key definitions
+     */
+    void *keys;				/* key definitions */
+
+    /*
      * Output related stuff.
      */
     xmlChar *method;		/* the output method */
@@ -186,6 +191,7 @@ struct _xsltTransformContext {
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     void *variablesHash;		/* hash table or wherever variables
 				   	   informations are stored */
+    void *keys;				/* key tables storage */
     xmlDocPtr extraDocs;		/* extra docs parsed by document() */
     xsltTransformState state;		/* the current state */
 };

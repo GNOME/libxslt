@@ -26,6 +26,7 @@
 #include "xsltutils.h"
 #include "variables.h"
 #include "transform.h"
+#include "imports.h"
 
 #define DEBUG_VARIABLE
 
@@ -504,8 +505,7 @@ xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     xsltStackElemPtr elem = NULL;
 
     style = ctxt->style;
-    /* TODO: handle the stylesheet cascade */
-    if (style != NULL) {
+    while (style != NULL) {
 	elem = style->variables;
 	
 	while (elem != NULL) {
@@ -523,6 +523,8 @@ xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    }
 	    elem = elem->next;
 	}
+
+	style = xsltNextImport(style);
     }
     if (elem == NULL)
 	return(NULL);
