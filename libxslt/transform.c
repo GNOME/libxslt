@@ -793,18 +793,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    return;
 	}
 
-	/*
-	 * Cleanup of ignorable blank node detected
-	 */
-	if (delete != NULL) {
-#ifdef DEBUG_PROCESS
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltApplyOneTemplate: removing ignorable blank node\n");
-#endif
-	    xmlUnlinkNode(delete);
-	    xmlFreeNode(delete);
-	    delete = NULL;
-	}
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "apply-templates")) {
 		ctxt->insert = insert;
@@ -844,20 +832,16 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     * For stylesheets, the set of whitespace-preserving
 	     * element names consists of just xsl:text.
 	     */
-	    if (!(IS_BLANK_NODE(cur))) {
 #ifdef DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: copy text %s\n", cur->content);
+	    xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltApplyOneTemplate: copy text %s\n", cur->content);
 #endif
-		copy = xmlCopyNode(cur, 0);
-		if (copy != NULL) {
-		    xmlAddChild(insert, copy);
-		} else {
-		    xsltGenericError(xsltGenericErrorContext,
-			    "xsltApplyOneTemplate: text copy failed\n");
-		}
+	    copy = xmlCopyNode(cur, 0);
+	    if (copy != NULL) {
+		xmlAddChild(insert, copy);
 	    } else {
-		delete = cur;
+		xsltGenericError(xsltGenericErrorContext,
+			"xsltApplyOneTemplate: text copy failed\n");
 	    }
 	} else if (cur->type == XML_ELEMENT_NODE) {
 #ifdef DEBUG_PROCESS

@@ -1,4 +1,9 @@
-Wed Jan 17 20:15:40 CET 2001
+Wed Jan 17 21:03:01 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xslt.c: avoiding some problems
+	  with blank node stripping when not allowed.
+
+Wed Jan 17 20:15:40 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c: modified apply-templates processing
 	  added select and sort support support.

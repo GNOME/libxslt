@@ -491,7 +491,9 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 	    }
 	} else if (cur->type == XML_TEXT_NODE) {
 	    if (IS_BLANK_NODE(cur)) {
-		delete = cur;
+		if (xmlNodeGetSpacePreserve(cur) != 1) {
+		    delete = cur;
+		}
 	    }
 	} else if (cur->type != XML_ELEMENT_NODE) {
 	    delete = cur;
