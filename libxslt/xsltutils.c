@@ -885,7 +885,6 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    while (child != NULL) {
 		xmlNodeDumpOutput(buf, result, child, 0, (indent == 1),
 			          (const char *) encoding);
-		xmlOutputBufferWriteString(buf, "\n");
 		child = child->next;
 	    }
 	}

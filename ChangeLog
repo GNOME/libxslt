@@ -1,3 +1,8 @@
+Wed Aug  1 13:21:18 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.c: avoid extra \n when serializing top
+	  text nodes.
+
 Wed Aug  1 10:37:50 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extra.c: one more revision on Norm's localTime() function
