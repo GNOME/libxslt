@@ -45,6 +45,13 @@ const int xsltLibxsltVersion = LIBXSLT_VERSION;
 const int xsltLibxmlVersion = LIBXML_VERSION;
 
 /*
+ * Harmless but avoiding a problem when compiling against a
+ * libxml <= 2.3.11 without LIBXML_DEBUG_ENABLED
+ */
+#ifndef LIBXML_DEBUG_ENABLED
+double xmlXPathStringEvalNumber(const xmlChar *str);
+#endif
+/*
  * Useful macros
  */
 

@@ -1,3 +1,8 @@
+Fri Jun 22 16:17:23 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c: avoid a stupid bug when compiling with
+	  libxml < 2.3.11 and without LIBXML_DEBUG_ENABLED
+
 Fri Jun 22 00:11:18 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/numbers.c: fix of a small bug
