@@ -917,7 +917,11 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    if (xmlStrEqual(element, (const xmlChar *)"*")) {
 		style->stripAll = -1;
 	    } else {
-		xmlHashAddEntry(style->stripSpaces, element,
+		const xmlChar *URI;
+
+                URI = xsltGetQNameURI(cur, &element);
+
+		xmlHashAddEntry2(style->stripSpaces, element, URI,
 				(xmlChar *) "preserve");
 	    }
 	    xmlFree(element);
@@ -1032,7 +1036,11 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    if (xmlStrEqual(element, (const xmlChar *)"*")) {
 		style->stripAll = 1;
 	    } else {
-		xmlHashAddEntry(style->stripSpaces, element,
+		const xmlChar *URI;
+
+                URI = xsltGetQNameURI(cur, &element);
+
+		xmlHashAddEntry2(style->stripSpaces, element, URI,
 			        (xmlChar *) "strip");
 	    }
 	    xmlFree(element);

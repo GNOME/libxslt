@@ -273,6 +273,30 @@ else
 fi
 
 dnl
+dnl imported from libxml2, c.f. #77827 
+dnl
+if test "${GCC}" != "yes" ; then
+    case "${host}" in
+          *-*-hpux* )
+	       CFLAGS="${CFLAGS} -Wp,-H30000"
+	       ;;
+          *-dec-osf* )
+               CFLAGS="${CFLAGS} -ieee"
+               ;;
+    esac
+else
+    CFLAGS="${CFLAGS} -Wall"
+    case "${host}" in
+          alpha*-*-linux* )
+	       CFLAGS="${CFLAGS} -mieee"
+	       ;;
+	  alpha*-*-osf* )
+	       CFLAGS="${CFLAGS} -mieee"
+	       ;;
+    esac
+fi
+
+dnl
 dnl Override other variables if LIBXML_SRC is set
 dnl
 

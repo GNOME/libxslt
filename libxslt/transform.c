@@ -1749,13 +1749,17 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		end++;
 	    element = xmlStrndup(element, end - element);
 	    if (element) {
+		const xmlChar *URI;
+
 #ifdef WITH_XSLT_DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
 				 "add cdata section output element %s\n",
 				 element);
 #endif
-		xmlHashAddEntry(style->stripSpaces, element,
-				(xmlChar *) "cdata");
+                URI = xsltGetQNameURI(inst, &element);
+
+		xmlHashAddEntry2(style->stripSpaces, element, URI,
+			        (xmlChar *) "cdata");
 		xmlFree(element);
 	    }
 	    element = end;
@@ -2734,9 +2738,16 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			(ctxt->style->stripSpaces != NULL)) {
 			const xmlChar *val;
 
-			val = (const xmlChar *)
-			      xmlHashLookup(ctxt->style->stripSpaces,
-					    cur->parent->name);
+			if (cur->parent->ns != NULL) {
+			    val = (const xmlChar *)
+				  xmlHashLookup2(ctxt->style->stripSpaces,
+						 cur->parent->name,
+						 cur->parent->ns->href);
+			} else {
+			    val = (const xmlChar *)
+				  xmlHashLookup2(ctxt->style->stripSpaces,
+						 cur->parent->name, NULL);
+			}
 			if ((val != NULL) &&
 			    (xmlStrEqual(val, (xmlChar *) "strip"))) {
 			    delete = cur;

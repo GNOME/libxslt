@@ -1,3 +1,12 @@
+Sun Apr 14 15:32:23 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: trying to kill #77827 IEEE conformance on alphas
+	* libxslt/imports.c libxslt/transform.c libxslt/xslt.c: fixing
+	  bug #78211
+	* tests/docs/Makefile.am tests/docs/bug-82.xml
+	  tests/general/Makefile.am tests/general/bug-82.*: added a 
+	  specific example for bug #78211 in the regression tests
+
 Wed Apr 10 20:35:54 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: applied patch from Mark Vakoc

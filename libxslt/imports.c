@@ -242,9 +242,13 @@ xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	return(0);
     style = ctxt->style;
     while (style != NULL) {
-	/* TODO: add namespaces support */
-	val = (const xmlChar *)
-	      xmlHashLookup(style->stripSpaces, node->name);
+	if (node->ns != NULL) {
+	    val = (const xmlChar *)
+	      xmlHashLookup2(style->stripSpaces, node->name, node->ns->href);
+	} else {
+	    val = (const xmlChar *)
+		  xmlHashLookup2(style->stripSpaces, node->name, NULL);
+	}
 	if (val != NULL) {
 	    if (xmlStrEqual(val, (xmlChar *) "strip"))
 		return(1);
