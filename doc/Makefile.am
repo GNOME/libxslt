@@ -19,6 +19,9 @@ DOC_SOURCE_DIR=..
 
 HTML_DIR=$(datadir)/doc
 
+# A file in win32 depends upon two of the doc files
+WIN32_DIR=$(top_srcdir)/win32
+
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)/html
 PAGES= API.html bugs.html contribs.html docs.html downloads.html \
        help.html index.html intro.html news.html xsltproc2.html FAQ.html
@@ -73,7 +76,17 @@ html:
 libxslt-api.xml libexslt-api.xml: apibuild.py ../libxslt/*.h ../libxslt/*.c ../libexslt/*.h ../libexslt/*.c
 	-(./apibuild.py)
 
-api: libxslt-api.xml libxslt-refs.xml
+$(WIN32_DIR)/libxslt.def.src: libxslt-api.xml
+	-@(if [ -x $(bindir)/xsltproc ] ; then \
+	  $(bindir)/xsltproc -o $(WIN32_DIR)/libxslt.def.src \
+	  --nonet $(WIN32_DIR)/defgen.xsl libxslt-api.xml ; fi )
+
+$(WIN32_DIR)/libexslt.def.src: libexslt-api.xml
+	-@(if [ -x $(bindir)/xsltproc ] ; then \
+	  $(bindir)/xsltproc -o $(WIN32_DIR)/libexslt.def.src \
+	  --nonet $(WIN32_DIR)/defgen.xsl libexslt-api.xml ; fi )
+
+api: libxslt-api.xml libxslt-refs.xml $(WIN32_DIR)/libxslt.def.src $(WIN32_DIR)/libexslt.def.src
 
 clean-local:
 	rm -f *~ *.bak *.hierarchy *.signals *-unused.txt

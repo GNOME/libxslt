@@ -234,6 +234,52 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
 }
 
 /**
+ * xsltStackLookup:
+ * @ctxt:  an XSLT transformation context
+ * @name:  the local part of the name
+ * @nameURI:  the URI part of the name
+ *
+ * Locate an element in the stack based on its name.
+ */
+static xsltStackElemPtr
+xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
+	        const xmlChar *nameURI) {
+    xsltStackElemPtr ret = NULL;
+    int i;
+    xsltStackElemPtr cur;
+
+    if ((ctxt == NULL) || (name == NULL) || (ctxt->varsNr == 0))
+	return(NULL);
+
+    /*
+     * Do the lookup from the top of the stack, but
+     * don't use params being computed in a call-param
+     */
+    ;
+
+    for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
+	cur = ctxt->varsTab[i-1];
+	while (cur != NULL) {
+	    if (xmlStrEqual(cur->name, name)) {
+		if (nameURI == NULL) {
+		    if (cur->nameURI == NULL) {
+			return(cur);
+		    }
+		} else {
+		    if ((cur->nameURI != NULL) &&
+			(xmlStrEqual(cur->nameURI, nameURI))) {
+			return(cur);
+		    }
+		}
+
+	    }
+	    cur = cur->next;
+	}
+    }
+    return(ret);
+}
+
+/**
  * xsltCheckStackElem:
  * @ctxt:  xn XSLT transformation context
  * @name:  the variable name
@@ -252,24 +298,17 @@ xsltCheckStackElem(xsltTransformContextPtr ctxt, const xmlChar *name,
     if ((ctxt == NULL) || (name == NULL))
 	return(-1);
 
-    cur = ctxt->vars;
-    while (cur != NULL) {
-	if (xmlStrEqual(name, cur->name)) {
-	    if (((nameURI == NULL) && (cur->nameURI == NULL)) ||
-		((nameURI != NULL) && (cur->nameURI != NULL) &&
-		 (xmlStrEqual(nameURI, cur->nameURI)))) {
-		if ((cur->comp != NULL) &&
-		    (cur->comp->type == XSLT_FUNC_WITHPARAM))
-		    return(3);
-		if ((cur->comp != NULL) &&
-		    (cur->comp->type == XSLT_FUNC_PARAM))
-		    return(2);
-		return(1);
-	    }
-	}
-	cur = cur->next;
+    cur = xsltStackLookup(ctxt, name, nameURI);
+    if (cur == NULL)
+        return(0);
+    if (cur->comp != NULL) {
+        if (cur->comp->type == XSLT_FUNC_WITHPARAM)
+	    return(3);
+	else if (cur->comp->type == XSLT_FUNC_PARAM)
+	    return(2);
     }
-    return(0);
+    
+    return(1);
 }
 
 /**
@@ -320,52 +359,6 @@ xsltAddStackElemList(xsltTransformContextPtr ctxt, xsltStackElemPtr elems) {
 	ctxt->vars = elems;
     }
     return(0);
-}
-
-/**
- * xsltStackLookup:
- * @ctxt:  an XSLT transformation context
- * @name:  the local part of the name
- * @nameURI:  the URI part of the name
- *
- * Locate an element in the stack based on its name.
- */
-static xsltStackElemPtr
-xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
-	        const xmlChar *nameURI) {
-    xsltStackElemPtr ret = NULL;
-    int i;
-    xsltStackElemPtr cur;
-
-    if ((ctxt == NULL) || (name == NULL) || (ctxt->varsNr == 0))
-	return(NULL);
-
-    /*
-     * Do the lookup from the top of the stack, but
-     * don't use params being computed in a call-param
-     */
-    ;
-
-    for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
-	cur = ctxt->varsTab[i-1];
-	while (cur != NULL) {
-	    if (xmlStrEqual(cur->name, name)) {
-		if (nameURI == NULL) {
-		    if (cur->nameURI == NULL) {
-			return(cur);
-		    }
-		} else {
-		    if ((cur->nameURI != NULL) &&
-			(xmlStrEqual(cur->nameURI, nameURI))) {
-			return(cur);
-		    }
-		}
-
-	    }
-	    cur = cur->next;
-	}
-    }
-    return(ret);
 }
 
 /************************************************************************

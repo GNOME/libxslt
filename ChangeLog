@@ -1,3 +1,12 @@
+Thu Aug 15 13:00:02 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* variables.c: fixed bug 119699 (missing error on shadowed
+	  variable)
+	* autogen.sh: removed dependency on automake-1.4, updated
+	  links for fetching auto* tools
+	* doc/Makefile.am: added check for automatic regeneration of
+	  win32/*.def.src when api xml files are updated.
+
 Thu Aug 14 23:15:14 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* transform.c: fixed bug 114563 (params not passed when

@@ -10,26 +10,26 @@ DIE=0
 
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
 	echo
-	echo "You must have autoconf installed to compile gnome-xml."
+	echo "You must have autoconf installed to compile libxslt."
 	echo "Download the appropriate package for your distribution,"
-	echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
+	echo "or see http://www.gnu.org/software/autoconf"
 	DIE=1
 }
 
 (libtool --version) < /dev/null > /dev/null 2>&1 || {
 	echo
-	echo "You must have libtool installed to compile gnome-xml."
-	echo "Get ftp://alpha.gnu.org/gnu/libtool-1.0h.tar.gz"
-	echo "(or a newer version if it is available)"
+	echo "You must have libtool installed to compile libxslt."
+	echo "Download the appropriate package for your distribution,"
+	echo "or see http://www.gnu.org/software/libtool"
 	DIE=1
 }
 
-(automake-1.4 --version) < /dev/null > /dev/null 2>&1 || {
+(automake --version) < /dev/null > /dev/null 2>&1 || {
 	echo
-	echo "You must have automake installed to compile gnome-xml."
-	echo "Get ftp://ftp.cygnus.com/pub/home/tromey/automake-1.2d.tar.gz"
-	echo "(or a newer version if it is available)"
 	DIE=1
+	echo "You must have automake installed to compile libxslt."
+	echo "Download the appropriate package for your distribution,"
+	echo "or see http://www.gnu.org/software/automake"
 }
 
 if test "$DIE" -eq 1; then
@@ -37,7 +37,7 @@ if test "$DIE" -eq 1; then
 fi
 
 test -f libxslt/xslt.h  || {
-	echo "You must run this script in the top-level gdome directory"
+	echo "You must run this script in the top-level libxslt directory"
 	exit 1
 }
 
@@ -49,9 +49,9 @@ fi
 echo "Running libtoolize..."
 libtoolize --copy --force
 echo "Running aclocal..."
-aclocal-1.4 $ACLOCAL_FLAGS
+aclocal $ACLOCAL_FLAGS
 echo "Running automake..."
-automake-1.4 --add-missing
+automake --add-missing
 echo "Running autoconf..."
 autoconf
 
@@ -62,10 +62,8 @@ if test x$OBJ_DIR != x; then
     cd "$OBJ_DIR"
 fi
 
-conf_flags="--enable-maintainer-mode --enable-compile-warnings" #--enable-iso-c
-
-echo Running configure $conf_flags "$@" ...
-$srcdir/configure $conf_flags "$@"
+echo Running configure "$@" ...
+$srcdir/configure "$@"
 
 echo 
 echo "Now type 'make' to compile libxslt."
