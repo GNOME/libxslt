@@ -41,6 +41,7 @@
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "imports.h"
+#include "documents.h"
 
 
 
@@ -118,10 +119,11 @@ error:
 
 void
 xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
-    xmlDocPtr include = NULL, oldDoc;
+    xmlDocPtr oldDoc;
     xmlChar *base = NULL;
     xmlChar *uriRef = NULL;
     xmlChar *URI = NULL;
+    xsltDocumentPtr include;
 
     if ((cur == NULL) || (style == NULL))
 	return;
@@ -140,7 +142,8 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    "xsl:include : invalid URI reference %s\n", uriRef);
 	goto error;
     }
-    include = xmlParseFile((const char *)URI);
+
+    include = xsltLoadStyleDocument(style, URI);
     if (include == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:include : unable to load %s\n", URI);
@@ -148,8 +151,8 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     }
 
     oldDoc = style->doc;
-    style->doc = include;
-    xsltParseStylesheetProcess(style, include);
+    style->doc = include->doc;
+    xsltParseStylesheetProcess(style, include->doc);
     style->doc = oldDoc;
 
 error:

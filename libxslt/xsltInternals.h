@@ -83,6 +83,19 @@ typedef struct _xsltDecimalFormat {
 } xsltDecimalFormat, *xsltDecimalFormatPtr;
 
 /*
+ * Data structure associated to a document
+ */
+
+typedef struct _xsltDocument xsltDocument;
+typedef xsltDocument *xsltDocumentPtr;
+struct _xsltDocument {
+    struct _xsltDocument *next;	/* documents are kept in a chained list */
+    int main;			/* is this the main document */
+    xmlDocPtr doc;		/* the parsed document */
+    void *keys;			/* key tables storage */
+};
+
+/*
  * The in-memory structure corresponding to an XSLT Stylesheet
  * NOTE: most of the content is simply linked from the doc tree
  *       structure, no specific allocation is made.
@@ -96,6 +109,8 @@ struct _xsltStylesheet {
     struct _xsltStylesheet *parent;
     struct _xsltStylesheet *next;
     struct _xsltStylesheet *imports;
+
+    xsltDocumentPtr docList;		/* the include document list */
 
     /*
      * General data on the style sheet document
@@ -157,19 +172,6 @@ struct _xsltStylesheet {
     xmlChar *mediaType;		/* media-type string */
 };
 
-
-/*
- * Data structure associated to a document
- */
-
-typedef struct _xsltDocument xsltDocument;
-typedef xsltDocument *xsltDocumentPtr;
-struct _xsltDocument {
-    struct _xsltDocument *next;	/* documents are kept in a chained list */
-    int main;			/* is this the main document */
-    xmlDocPtr doc;		/* the parsed document */
-    void *keys;			/* key tables storage */
-};
 
 /*
  * The in-memory structure corresponding to an XSLT Transformation

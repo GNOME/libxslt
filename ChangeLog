@@ -1,3 +1,14 @@
+Sun Feb 11 21:08:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/documents.[ch] libxslt/functions.c libxslt/imports.c
+	  libxslt/xslt.c libxslt/xsltInternals.h: changed teh way to store
+	  Includes, more document changes
+	* libxslt/xsltutils.c: fix the output of doctype and what is or
+	  is not HTML
+	* tests/REC/*.out tests/REC2/html.xml : changed output accordingly
+	* tests/Makefile.am tests/documents/* : added a new test from Stric
+	  exercising document() among other things
+
 Sun Feb 11 17:24:03 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* FEATURES libxslt/transform.c libxslt/numbers.c: partial support

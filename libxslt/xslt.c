@@ -30,6 +30,7 @@
 #include "xsltutils.h"
 #include "imports.h"
 #include "keys.h"
+#include "documents.h"
 
 #define DEBUG_PARSING
 /* #define DEBUG_BLANKS */
@@ -287,6 +288,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     xsltFreeTemplateList(sheet->templates);
     xsltFreeAttributeSetsHashes(sheet);
     xsltFreeNamespaceAliasHashes(sheet);
+    xsltFreeStyleDocuments(sheet);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
     if (sheet->variables != NULL)

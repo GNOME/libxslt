@@ -293,10 +293,8 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	root = xmlDocGetRootElement(result);
     else
 	root = NULL;
-    if (((style->method != NULL) &&
-	 (xmlStrEqual(style->method, (const xmlChar *) "html"))) ||
-	((root != NULL) &&
-	 (xmlStrEqual(root->name, (const xmlChar *) "html")))){
+    if ((style->method != NULL) &&
+	(xmlStrEqual(style->method, (const xmlChar *) "html"))) {
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
     } else if ((style->method != NULL) &&
 	       (xmlStrEqual(style->method, (const xmlChar *) "text"))) {
@@ -338,6 +336,39 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 		    break;
 	    }
 	    xmlOutputBufferWriteString(buf, "?>\n");
+	}
+	if ((style->doctypePublic != NULL) || (style->doctypeSystem != NULL)) {
+	    xmlNodePtr cur = result->children;
+
+	    while (cur != NULL) {
+		if (cur->type == XML_ELEMENT_NODE)
+		    break;
+		cur = cur->next;
+	    }
+	    if ((cur != NULL) && (cur->name != NULL)) {
+		xmlOutputBufferWriteString(buf, "<!DOCTYPE ");
+		xmlOutputBufferWriteString(buf, cur->name);
+		if (style->doctypePublic != NULL) {
+		    if (style->doctypeSystem != NULL) {
+			xmlOutputBufferWriteString(buf, " PUBLIC ");
+			xmlBufferWriteQuotedString(buf->buffer,
+				         style->doctypePublic);
+			xmlOutputBufferWriteString(buf, " ");
+			xmlBufferWriteQuotedString(buf->buffer,
+				         style->doctypeSystem);
+		    } else {
+			xmlOutputBufferWriteString(buf, " PUBLIC \"-\" ");
+			xmlBufferWriteQuotedString(buf->buffer,
+				         style->doctypeSystem);
+		    }
+
+		} else {
+		    xmlOutputBufferWriteString(buf, " SYSTEM ");
+		    xmlBufferWriteQuotedString(buf->buffer,
+				     style->doctypeSystem);
+		}
+		xmlOutputBufferWriteString(buf, ">\n");
+	    }
 	}
 	if (result->children != NULL) {
 	    xmlNodePtr child = result->children;

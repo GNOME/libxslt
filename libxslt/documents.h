@@ -22,6 +22,11 @@ xsltDocumentPtr	xsltLoadDocument	(xsltTransformContextPtr ctxt,
 					 const xmlChar *URI);
 void		xsltFreeDocuments	(xsltTransformContextPtr ctxt);
 
+xsltDocumentPtr	xsltLoadStyleDocument	(xsltStylesheetPtr style,
+					 const xmlChar *URI);
+xsltDocumentPtr	xsltNewStyleDocument	(xsltStylesheetPtr style,
+					 xmlDocPtr doc);
+void		xsltFreeStyleDocuments	(xsltStylesheetPtr style);
 #ifdef __cplusplus
 }
 #endif

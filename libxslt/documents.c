@@ -30,7 +30,7 @@
 
 /**
  * xsltNewDocument:
- * @ctxt: an XSLT transformation context
+ * @ctxt: an XSLT transformation context (or NULL)
  * @doc:  a parsed XML document
  *
  * Register a new document, apply key computations
@@ -47,10 +47,59 @@ xsltNewDocument(xsltTransformContextPtr ctxt, xmlDocPtr doc) {
     }
     memset(cur, 0, sizeof(xsltDocument));
     cur->doc = doc;
-    cur->next = ctxt->docList;
-    ctxt->docList = cur;
-    xsltInitCtxtKeys(ctxt, cur);
+    if (ctxt != NULL) {
+	cur->next = ctxt->docList;
+	ctxt->docList = cur;
+	xsltInitCtxtKeys(ctxt, cur);
+    }
     return(cur);
+}
+
+/**
+ * xsltNewStyleDocument:
+ * @style: an XSLT style sheet
+ * @doc:  a parsed XML document
+ *
+ * Register a new document, apply key computations
+ */
+xsltDocumentPtr	
+xsltNewStyleDocument(xsltStylesheetPtr style, xmlDocPtr doc) {
+    xsltDocumentPtr cur;
+
+    cur = (xsltDocumentPtr) xmlMalloc(sizeof(xsltDocument));
+    if (cur == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNewStyleDocument : malloc failed\n");
+	return(NULL);
+    }
+    memset(cur, 0, sizeof(xsltDocument));
+    cur->doc = doc;
+    if (style != NULL) {
+	cur->next = style->docList;
+	style->docList = cur;
+    }
+    return(cur);
+}
+
+/**
+ * xsltFreeStyleDocuments:
+ * @style: an XSLT style sheet
+ *
+ * Free up all the space used by the loaded documents
+ */
+void	
+xsltFreeStyleDocuments(xsltStylesheetPtr style) {
+    xsltDocumentPtr doc, cur;
+
+    cur = style->docList;
+    while (cur != NULL) {
+	doc = cur;
+	cur = cur->next;
+	xsltFreeDocumentKeys(doc);
+	if (!doc->main)
+	    xmlFreeDoc(doc->doc);
+        xmlFree(doc);
+    }
 }
 
 /**
@@ -63,7 +112,7 @@ void
 xsltFreeDocuments(xsltTransformContextPtr ctxt) {
     xsltDocumentPtr doc, cur;
 
-    cur = ctxt->document;
+    cur = ctxt->docList;
     while (cur != NULL) {
 	doc = cur;
 	cur = cur->next;
@@ -108,6 +157,42 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 	return(NULL);
 
     ret = xsltNewDocument(ctxt, doc);
+    return(ret);
+}
+
+/**
+ * xsltLoadStyleDocument:
+ * @style: an XSLT style sheet
+ * @URI:  the computed URI of the document
+ *
+ * Try to load a document within the XSLT transformation context
+ *
+ * Returns the new xsltDocumentPtr or NULL in case of error
+ */
+xsltDocumentPtr	
+xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
+    xsltDocumentPtr ret;
+    xmlDocPtr doc;
+
+    if ((style == NULL) || (URI == NULL))
+	return(NULL);
+
+    /*
+     * Walk the context list to find the document if preparsed
+     */
+    ret = style->docList;
+    while (ret != NULL) {
+	if ((ret->doc != NULL) && (ret->doc->URL != NULL) &&
+	    (xmlStrEqual(ret->doc->URL, URI)))
+	    return(ret);
+	ret = ret->next;
+    }
+
+    doc = xmlParseFile((const char *) URI);
+    if (doc == NULL)
+	return(NULL);
+
+    ret = xsltNewStyleDocument(style, doc);
     return(ret);
 }
 

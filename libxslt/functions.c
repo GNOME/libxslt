@@ -119,6 +119,7 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 		    valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) doc->doc));
 		}
 	    }
+	    xmlFree(URI);
 	}
     }
     xmlXPathFreeObject(obj);
