@@ -30,7 +30,7 @@ mylibs = \
 	$(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la
 
-all: libxslt.py libxsltmod.la
+all-local: libxslt.py
 
 pythondir = $(prefix)/lib/python${PYTHON_VERSION}/site-packages
 python_LTLIBRARIES = libxsltmod.la
@@ -55,8 +55,11 @@ GENERATED= $(srcdir)/libxsltclass.py \
 	   $(srcdir)/libxslt-py.c \
 	   $(srcdir)/libxslt-py.h
 
-$(GENERATED): $(srcdir)/$(GENERATE) $(API_DESC)
+$(GENERATED): gen_prog
+
+gen_prog:  $(srcdir)/$(GENERATE) $(API_DESC)
 	cd $(srcdir) && $(PYTHON) $(GENERATE)
+	touch gen_prog
 
 $(libxsltmod_la_OBJECTS): $(GENERATED)
 
@@ -67,5 +70,5 @@ tests test: all
 	cd tests && $(MAKE) tests
 
 clean:
-	rm -f $(GENERATED) *.o libxslt.so *.pyc libxslt.py
+	rm -f $(GENERATED) *.o libxslt.so *.pyc libxslt.py gen_prog
 

@@ -606,7 +606,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    index = (int)
 			XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra);
 		    list = (xmlXPathObjectPtr)
-			XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra);
+			XSLT_RUNTIME_EXTRA_LST(ctxt, select->lenExtra);
 		    
 		    doc = node->doc;
 		    if ((list == NULL) || (prevdoc != doc)) {
@@ -644,7 +644,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 				xmlXPathFreeObject(list);
 			    list = newlist;
 
-			    XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra) =
+			    XSLT_RUNTIME_EXTRA_LST(ctxt, select->lenExtra) =
 				(void *) list;
 			    XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra) =
 				(void *) doc;
