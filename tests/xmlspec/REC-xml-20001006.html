@@ -49,8 +49,7 @@ of Illinois at Chicago and Text Encoding Initiative <a href="mailto:cmsmcq@uic.e
 Inc. <a href="mailto:elm@east.sun.com">&lt;eve.maler@east.sun.com&gt;</a> - Second Edition</dd>
 </dl>
 <p class="copyright">
-<a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2000 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a>
-<sup>®</sup> (<a href="http://www.lcs.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.inria.fr/"><abbr lang="fr" title="Institut National de Recherche en Informatique et Automatique">INRIA</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>, <a href="http://www.w3.org/Consortium/Legal/copyright-documents-19990405">document use</a>, and <a href="http://www.w3.org/Consortium/Legal/copyright-software-19980720">software licensing</a> rules apply.</p>
+<a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2000 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.lcs.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.inria.fr/"><abbr lang="fr" title="Institut National de Recherche en Informatique et Automatique">INRIA</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>, <a href="http://www.w3.org/Consortium/Legal/copyright-documents-19990405">document use</a>, and <a href="http://www.w3.org/Consortium/Legal/copyright-software-19980720">software licensing</a> rules apply.</p>
 </div>
 <hr>
 <div id="abstract">
@@ -93,70 +92,12 @@ be contacted at <a href="mailto:cmsmcq@w3.org">cmsmcq@w3.org</a>.</p>
 </div>
 <div class="toc">
 <h2><a name="contents">Table of Contents</a></h2>
-<p class="toc">1 <a href="#sec-intro">Introduction</a>
-<br>    1.1 <a href="#sec-origin-goals">Origin and Goals</a>
-<br>    1.2 <a href="#sec-terminology">Terminology</a>
-<br>2 <a href="#sec-documents">Documents</a>
-<br>    2.1 <a href="#sec-well-formed">Well-Formed XML Documents</a>
-<br>    2.2 <a href="#charsets">Characters</a>
-<br>    2.3 <a href="#sec-common-syn">Common Syntactic Constructs</a>
-<br>    2.4 <a href="#syntax">Character Data and Markup</a>
-<br>    2.5 <a href="#sec-comments">Comments</a>
-<br>    2.6 <a href="#sec-pi">Processing Instructions</a>
-<br>    2.7 <a href="#sec-cdata-sect">CDATA Sections</a>
-<br>    2.8 <a href="#sec-prolog-dtd">Prolog and Document Type Declaration</a>
-<br>    2.9 <a href="#sec-rmd">Standalone Document Declaration</a>
-<br>    2.10 <a href="#sec-white-space">White Space Handling</a>
-<br>    2.11 <a href="#sec-line-ends">End-of-Line Handling</a>
-<br>    2.12 <a href="#sec-lang-tag">Language Identification</a>
-<br>3 <a href="#sec-logical-struct">Logical Structures</a>
-<br>    3.1 <a href="#sec-starttags">Start-Tags, End-Tags, and Empty-Element Tags</a>
-<br>    3.2 <a href="#elemdecls">Element Type Declarations</a>
-<br>        3.2.1 <a href="#sec-element-content">Element Content</a>
-<br>        3.2.2 <a href="#sec-mixed-content">Mixed Content</a>
-<br>    3.3 <a href="#attdecls">Attribute-List Declarations</a>
-<br>        3.3.1 <a href="#sec-attribute-types">Attribute Types</a>
-<br>        3.3.2 <a href="#sec-attr-defaults">Attribute Defaults</a>
-<br>        3.3.3 <a href="#AVNormalize">Attribute-Value
-Normalization</a>
-<br>    3.4 <a href="#sec-condition-sect">Conditional Sections</a>
-<br>4 <a href="#sec-physical-struct">Physical Structures</a>
-<br>    4.1 <a href="#sec-references">Character and Entity References</a>
-<br>    4.2 <a href="#sec-entity-decl">Entity Declarations</a>
-<br>        4.2.1 <a href="#sec-internal-ent">Internal Entities</a>
-<br>        4.2.2 <a href="#sec-external-ent">External Entities</a>
-<br>    4.3 <a href="#TextEntities">Parsed Entities</a>
-<br>        4.3.1 <a href="#sec-TextDecl">The Text Declaration</a>
-<br>        4.3.2 <a href="#wf-entities">Well-Formed Parsed Entities</a>
-<br>        4.3.3 <a href="#charencoding">Character Encoding in Entities</a>
-<br>    4.4 <a href="#entproc">XML Processor Treatment of Entities and References</a>
-<br>        4.4.1 <a href="#not-recognized">Not Recognized</a>
-<br>        4.4.2 <a href="#included">Included</a>
-<br>        4.4.3 <a href="#include-if-valid">Included If Validating</a>
-<br>        4.4.4 <a href="#forbidden">Forbidden</a>
-<br>        4.4.5 <a href="#inliteral">Included in Literal</a>
-<br>        4.4.6 <a href="#notify">Notify</a>
-<br>        4.4.7 <a href="#bypass">Bypassed</a>
-<br>        4.4.8 <a href="#as-PE">Included as PE</a>
-<br>    4.5 <a href="#intern-replacement">Construction of Internal Entity Replacement Text</a>
-<br>    4.6 <a href="#sec-predefined-ent">Predefined Entities</a>
-<br>    4.7 <a href="#Notations">Notation Declarations</a>
-<br>    4.8 <a href="#sec-doc-entity">Document Entity</a>
-<br>5 <a href="#sec-conformance">Conformance</a>
-<br>    5.1 <a href="#proc-types">Validating and Non-Validating Processors</a>
-<br>    5.2 <a href="#safe-behavior">Using XML Processors</a>
-<br>6 <a href="#sec-notation">Notation</a>
-<br>
+<p class="toc">1 <a href="#sec-intro">Introduction</a><br>    1.1 <a href="#sec-origin-goals">Origin and Goals</a><br>    1.2 <a href="#sec-terminology">Terminology</a><br>2 <a href="#sec-documents">Documents</a><br>    2.1 <a href="#sec-well-formed">Well-Formed XML Documents</a><br>    2.2 <a href="#charsets">Characters</a><br>    2.3 <a href="#sec-common-syn">Common Syntactic Constructs</a><br>    2.4 <a href="#syntax">Character Data and Markup</a><br>    2.5 <a href="#sec-comments">Comments</a><br>    2.6 <a href="#sec-pi">Processing Instructions</a><br>    2.7 <a href="#sec-cdata-sect">CDATA Sections</a><br>    2.8 <a href="#sec-prolog-dtd">Prolog and Document Type Declaration</a><br>    2.9 <a href="#sec-rmd">Standalone Document Declaration</a><br>    2.10 <a href="#sec-white-space">White Space Handling</a><br>    2.11 <a href="#sec-line-ends">End-of-Line Handling</a><br>    2.12 <a href="#sec-lang-tag">Language Identification</a><br>3 <a href="#sec-logical-struct">Logical Structures</a><br>    3.1 <a href="#sec-starttags">Start-Tags, End-Tags, and Empty-Element Tags</a><br>    3.2 <a href="#elemdecls">Element Type Declarations</a><br>        3.2.1 <a href="#sec-element-content">Element Content</a><br>        3.2.2 <a href="#sec-mixed-content">Mixed Content</a><br>    3.3 <a href="#attdecls">Attribute-List Declarations</a><br>        3.3.1 <a href="#sec-attribute-types">Attribute Types</a><br>        3.3.2 <a href="#sec-attr-defaults">Attribute Defaults</a><br>        3.3.3 <a href="#AVNormalize">Attribute-Value
+Normalization</a><br>    3.4 <a href="#sec-condition-sect">Conditional Sections</a><br>4 <a href="#sec-physical-struct">Physical Structures</a><br>    4.1 <a href="#sec-references">Character and Entity References</a><br>    4.2 <a href="#sec-entity-decl">Entity Declarations</a><br>        4.2.1 <a href="#sec-internal-ent">Internal Entities</a><br>        4.2.2 <a href="#sec-external-ent">External Entities</a><br>    4.3 <a href="#TextEntities">Parsed Entities</a><br>        4.3.1 <a href="#sec-TextDecl">The Text Declaration</a><br>        4.3.2 <a href="#wf-entities">Well-Formed Parsed Entities</a><br>        4.3.3 <a href="#charencoding">Character Encoding in Entities</a><br>    4.4 <a href="#entproc">XML Processor Treatment of Entities and References</a><br>        4.4.1 <a href="#not-recognized">Not Recognized</a><br>        4.4.2 <a href="#included">Included</a><br>        4.4.3 <a href="#include-if-valid">Included If Validating</a><br>        4.4.4 <a href="#forbidden">Forbidden</a><br>        4.4.5 <a href="#inliteral">Included in Literal</a><br>        4.4.6 <a href="#notify">Notify</a><br>        4.4.7 <a href="#bypass">Bypassed</a><br>        4.4.8 <a href="#as-PE">Included as PE</a><br>    4.5 <a href="#intern-replacement">Construction of Internal Entity Replacement Text</a><br>    4.6 <a href="#sec-predefined-ent">Predefined Entities</a><br>    4.7 <a href="#Notations">Notation Declarations</a><br>    4.8 <a href="#sec-doc-entity">Document Entity</a><br>5 <a href="#sec-conformance">Conformance</a><br>    5.1 <a href="#proc-types">Validating and Non-Validating Processors</a><br>    5.2 <a href="#safe-behavior">Using XML Processors</a><br>6 <a href="#sec-notation">Notation</a><br>
 </p>
 <h3>Appendices</h3>
-<p class="toc">A <a href="#sec-bibliography">References</a>
-<br>    A.1 <a href="#sec-existing-stds">Normative References</a>
-<br>    A.2 <a href="#null">Other References</a>
-<br>B <a href="#CharClasses">Character Classes</a>
-<br>C <a href="#sec-xml-and-sgml">XML and SGML</a> (Non-Normative)<br>D <a href="#sec-entexpand">Expansion of Entity and Character References</a> (Non-Normative)<br>E <a href="#determinism">Deterministic Content Models</a> (Non-Normative)<br>F <a href="#sec-guessing">Autodetection
-of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a>
-<br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a>
-<br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2664223">Production Notes</a> (Non-Normative)<br>
+<p class="toc">A <a href="#sec-bibliography">References</a><br>    A.1 <a href="#sec-existing-stds">Normative References</a><br>    A.2 <a href="#null">Other References</a><br>B <a href="#CharClasses">Character Classes</a><br>C <a href="#sec-xml-and-sgml">XML and SGML</a> (Non-Normative)<br>D <a href="#sec-entexpand">Expansion of Entity and Character References</a> (Non-Normative)<br>E <a href="#determinism">Deterministic Content Models</a> (Non-Normative)<br>F <a href="#sec-guessing">Autodetection
+of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2667951">Production Notes</a> (Non-Normative)<br>
 </p>
 </div>
 <hr>
@@ -342,8 +283,7 @@ which is referenced directly or indirectly within the document is <a title="Well
 <a name="NT-document"></a>[1]   </td>
 <td><code>document</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-prolog">prolog</a> <a href="#NT-element">element</a> <a href="#NT-Misc">Misc</a>*</code></td>
+<td><code><a href="#NT-prolog">prolog</a> <a href="#NT-element">element</a> <a href="#NT-Misc">Misc</a>*</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody></table>
 <p>Matching the <a href="#NT-document">document</a> production implies that:</p>
@@ -394,8 +334,7 @@ also D21 in section 3.6 of <a href="#Unicode3">[Unicode3]</a>), is discouraged.]
 <td><code>Char</code></td>
 <td>   ::=   </td>
 <td><code>#x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/* any Unicode character, excluding the surrogate blocks, FFFE, and FFFF. */</i></td>
+<xsltdebug></xsltdebug><td><i>/* any Unicode character, excluding the surrogate blocks, FFFE, and FFFF. */</i></td>
 </tr>
 </tbody></table>
 <p>The mechanism for encoding character code points into bit patterns may
@@ -453,10 +392,8 @@ characters.</p>
 <a name="NT-NameChar"></a>[4]   </td>
 <td><code>NameChar</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Letter">Letter</a> | <a href="#NT-Digit">Digit</a>
-| '.' | '-' | '_' | ':' | <a href="#NT-CombiningChar">CombiningChar</a> | <a href="#NT-Extender">Extender</a>
-</code></td>
+<td><code><a href="#NT-Letter">Letter</a> | <a href="#NT-Digit">Digit</a>
+| '.' | '-' | '_' | ':' | <a href="#NT-CombiningChar">CombiningChar</a> | <a href="#NT-Extender">Extender</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -472,8 +409,7 @@ characters.</p>
 <a name="NT-Names"></a>[6]   </td>
 <td><code>Names</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Name">Name</a>)*</code></td>
+<td><code><a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Name">Name</a>)*</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -489,8 +425,7 @@ characters.</p>
 <a name="NT-Nmtokens"></a>[8]   </td>
 <td><code>Nmtokens</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Nmtoken">Nmtoken</a> (<a href="#NT-S">S</a> <a href="#NT-Nmtoken">Nmtoken</a>)*</code></td>
+<td><code><a href="#NT-Nmtoken">Nmtoken</a> (<a href="#NT-S">S</a> <a href="#NT-Nmtoken">Nmtoken</a>)*</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 </table>
@@ -671,8 +606,7 @@ following example is <em>not</em> well-formed.</p>
 <a name="NT-PITarget"></a>[17]   </td>
 <td><code>PITarget</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Name">Name</a> - (('X' | 'x') ('M' |
+<td><code><a href="#NT-Name">Name</a> - (('X' | 'x') ('M' |
 'm') ('L' | 'l'))</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
@@ -703,9 +637,7 @@ and end with the string &quot;<code>]]&gt;</code>&quot;:]</p>
 <a name="NT-CDSect"></a>[18]   </td>
 <td><code>CDSect</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-CDStart">CDStart</a> <a href="#NT-CData">CData</a> <a href="#NT-CDEnd">CDEnd</a>
-</code></td>
+<td><code><a href="#NT-CDStart">CDStart</a> <a href="#NT-CData">CData</a> <a href="#NT-CDEnd">CDEnd</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -780,8 +712,7 @@ in the document.</p>
 <a name="NT-prolog"></a>[22]   </td>
 <td><code>prolog</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-XMLDecl">XMLDecl</a>? <a href="#NT-Misc">Misc</a>*
+<td><code><a href="#NT-XMLDecl">XMLDecl</a>? <a href="#NT-Misc">Misc</a>*
 (<a href="#NT-doctypedecl">doctypedecl</a> <a href="#NT-Misc">Misc</a>*)?</code></td>
 <xsltdebug></xsltdebug>
 </tr>
@@ -798,11 +729,9 @@ in the document.</p>
 <a name="NT-VersionInfo"></a>[24]   </td>
 <td><code>VersionInfo</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a> 'version' <a href="#NT-Eq">Eq</a>
+<td><code><a href="#NT-S">S</a> 'version' <a href="#NT-Eq">Eq</a>
 (&quot;'&quot; <a href="#NT-VersionNum">VersionNum</a> &quot;'&quot; | '&quot;' <a href="#NT-VersionNum">VersionNum</a>
-'&quot;')<i>/*  */</i>
-</code></td>
+'&quot;')<i>/*  */</i></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -810,8 +739,7 @@ in the document.</p>
 <a name="NT-Eq"></a>[25]   </td>
 <td><code>Eq</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a>? '=' <a href="#NT-S">S</a>?</code></td>
+<td><code><a href="#NT-S">S</a>? '=' <a href="#NT-S">S</a>?</code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -827,10 +755,8 @@ in the document.</p>
 <a name="NT-Misc"></a>[27]   </td>
 <td><code>Misc</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Comment">Comment</a> | <a href="#NT-PI">PI</a>
-| <a href="#NT-S">S</a>
-</code></td>
+<td><code><a href="#NT-Comment">Comment</a> | <a href="#NT-PI">PI</a>
+| <a href="#NT-S">S</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 </tbody></table>
@@ -860,8 +786,7 @@ information, see <a href="#sec-physical-struct"><b>4 Physical Structures</b></a>
 (<a href="#NT-S">S</a> <a href="#NT-ExternalID">ExternalID</a>)? <a href="#NT-S">S</a>?
 ('[' (<a href="#NT-markupdecl">markupdecl</a> | <a href="#NT-DeclSep">DeclSep</a>)*
 ']' <a href="#NT-S">S</a>?)? '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-roottype">[VC: Root Element Type]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-roottype">[VC: Root Element Type]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -883,11 +808,8 @@ Subset]</a></td>
 <a name="NT-DeclSep"></a>[28]   </td>
 <td><code>DeclSep</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-PEReference">PEReference</a> | <a href="#NT-S">S</a>
-</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#PE-between-Decls">[WFC: PE
+<td><code><a href="#NT-PEReference">PEReference</a> | <a href="#NT-S">S</a></code></td>
+<xsltdebug></xsltdebug><td><a href="#PE-between-Decls">[WFC: PE
 Between Declarations]</a></td>
 </tr>
 <tr valign="baseline">
@@ -902,11 +824,9 @@ Between Declarations]</a></td>
 <a name="NT-markupdecl"></a>[29]   </td>
 <td><code>markupdecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-elementdecl">elementdecl</a> | <a href="#NT-AttlistDecl">AttlistDecl</a> | <a href="#NT-EntityDecl">EntityDecl</a>
+<td><code><a href="#NT-elementdecl">elementdecl</a> | <a href="#NT-AttlistDecl">AttlistDecl</a> | <a href="#NT-EntityDecl">EntityDecl</a>
 | <a href="#NT-NotationDecl">NotationDecl</a> | <a href="#NT-PI">PI</a> | <a href="#NT-Comment">Comment</a> </code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-PEinMarkupDecl">[VC: Proper Declaration/PE Nesting]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-PEinMarkupDecl">[VC: Proper Declaration/PE Nesting]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -932,16 +852,14 @@ They are also recognized in entity value literals. The use of parameter entities
 in the internal subset is restricted as described below.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-roottype"></a>
-<b>Validity constraint: Root Element Type</b>
+<a name="vc-roottype"></a><b>Validity constraint: Root Element Type</b>
 </p>
 <p>The <a href="#NT-Name">Name</a>
 in the document type declaration must match the element type of the <a title="Root Element" href="#dt-root">root element</a>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-PEinMarkupDecl"></a>
-<b>Validity constraint: Proper Declaration/PE Nesting</b>
+<a name="vc-PEinMarkupDecl"></a><b>Validity constraint: Proper Declaration/PE Nesting</b>
 </p>
 <p>Parameter-entity <a title="Replacement Text" href="#dt-repltext">replacement text</a>
 must be properly nested with markup declarations. That is to say, if either
@@ -951,8 +869,7 @@ reference</a>, both must be contained in the same replacement text.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="wfc-PEinInternalSubset"></a>
-<b>Well-formedness constraint: PEs in Internal Subset</b>
+<a name="wfc-PEinInternalSubset"></a><b>Well-formedness constraint: PEs in Internal Subset</b>
 </p>
 <p>In
 the internal DTD subset, <a title="Parameter-entity reference" href="#dt-PERef">parameter-entity references</a>
@@ -962,16 +879,14 @@ or to the external subset.)</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="ExtSubset"></a>
-<b>Well-formedness constraint: External
+<a name="ExtSubset"></a><b>Well-formedness constraint: External
 Subset</b>
 </p>
 <p>The external subset, if any, must match the production for <a href="#NT-extSubset">extSubset</a>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="PE-between-Decls"></a>
-<b>Well-formedness constraint: PE
+<a name="PE-between-Decls"></a><b>Well-formedness constraint: PE
 Between Declarations</b>
 </p>
 <p>The replacement text of a parameter entity reference
@@ -992,9 +907,7 @@ allowed in the internal subset.</p>
 <a name="NT-extSubset"></a>[30]   </td>
 <td><code>extSubset</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-extSubsetDecl">extSubsetDecl</a>
-</code></td>
+<td><code><a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-extSubsetDecl">extSubsetDecl</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -1003,8 +916,7 @@ allowed in the internal subset.</p>
 <td><code>extSubsetDecl</code></td>
 <td>   ::=   </td>
 <td><code>( <a href="#NT-markupdecl">markupdecl</a> | <a href="#NT-conditionalSect">conditionalSect</a> | <a href="#NT-DeclSep">DeclSep</a>)*</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/*  */</i></td>
+<xsltdebug></xsltdebug><td><i>/*  */</i></td>
 </tr>
 </tbody></table>
 <p>The external subset and external parameter entities also differ from the
@@ -1052,8 +964,7 @@ them).]</p>
 <td>   ::=   </td>
 <td><code> <a href="#NT-S">S</a> 'standalone' <a href="#NT-Eq">Eq</a>
 ((&quot;'&quot; ('yes' | 'no') &quot;'&quot;) | ('&quot;' ('yes' | 'no') '&quot;')) </code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-check-rmd">[VC: Standalone Document Declaration]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-check-rmd">[VC: Standalone Document Declaration]</a></td>
 </tr>
 </tbody></table>
 <p>In a standalone document declaration, the value &quot;yes&quot; indicates
@@ -1072,8 +983,7 @@ algorithmically to a standalone document, which may be desirable for some
 network delivery applications.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-check-rmd"></a>
-<b>Validity constraint: Standalone Document Declaration</b>
+<a name="vc-check-rmd"></a><b>Validity constraint: Standalone Document Declaration</b>
 </p>
 <p>The
 standalone document declaration must have the value &quot;no&quot; if
@@ -1236,8 +1146,7 @@ and a <a title="Attribute Value" href="#dt-attrval">value</a>.</p>
 <td></td>
 <td></td>
 <td></td>
-<td><code>| <a href="#NT-STag">STag</a> <a href="#NT-content">content</a> <a href="#NT-ETag">ETag</a>
-</code></td>
+<td><code>| <a href="#NT-STag">STag</a> <a href="#NT-content">content</a> <a href="#NT-ETag">ETag</a></code></td>
 <td><a href="#GIMatch">[WFC: Element Type Match]</a></td>
 </tr>
 <tr valign="baseline">
@@ -1254,16 +1163,14 @@ a match to <code>(('X'|'x')('M'|'m')('L'|'l'))</code> are reserved for standardi
 in this or future versions of this specification.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="GIMatch"></a>
-<b>Well-formedness constraint: Element Type Match</b>
+<a name="GIMatch"></a><b>Well-formedness constraint: Element Type Match</b>
 </p>
 <p>The <a href="#NT-Name">Name</a>
 in an element's end-tag must match the element type in the start-tag.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="elementvalid"></a>
-<b>Validity constraint: Element Valid</b>
+<a name="elementvalid"></a><b>Validity constraint: Element Valid</b>
 </p>
 <p>An element is valid
 if there is a declaration matching <a href="#NT-elementdecl">elementdecl</a>
@@ -1301,19 +1208,15 @@ XML element is marked by a <b>start-tag</b>.]</p>
 <td><code>STag</code></td>
 <td>   ::=   </td>
 <td><code>'&lt;' <a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Attribute">Attribute</a>)* <a href="#NT-S">S</a>? '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
+<xsltdebug></xsltdebug><td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
 </tr>
 <tr valign="baseline">
 <td>
 <a name="NT-Attribute"></a>[41]   </td>
 <td><code>Attribute</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Name">Name</a> <a href="#NT-Eq">Eq</a> <a href="#NT-AttValue">AttValue</a>
-</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#ValueType">[VC: Attribute Value Type]</a></td>
+<td><code><a href="#NT-Name">Name</a> <a href="#NT-Eq">Eq</a> <a href="#NT-AttValue">AttValue</a></code></td>
+<xsltdebug></xsltdebug><td><a href="#ValueType">[VC: Attribute Value Type]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1339,16 +1242,14 @@ that the order of attribute specifications in a start-tag or empty-element
 tag is not significant.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="uniqattspec"></a>
-<b>Well-formedness constraint: Unique Att Spec</b>
+<a name="uniqattspec"></a><b>Well-formedness constraint: Unique Att Spec</b>
 </p>
 <p>No attribute name
 may appear more than once in the same start-tag or empty-element tag.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="ValueType"></a>
-<b>Validity constraint: Attribute Value Type</b>
+<a name="ValueType"></a><b>Validity constraint: Attribute Value Type</b>
 </p>
 <p>The attribute must
 have been declared; the value must be of the type declared for it. (For attribute
@@ -1356,16 +1257,14 @@ types, see <a href="#attdecls"><b>3.3 Attribute-List Declarations</b></a>.)</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="NoExternalRefs"></a>
-<b>Well-formedness constraint: No External Entity References</b>
+<a name="NoExternalRefs"></a><b>Well-formedness constraint: No External Entity References</b>
 </p>
 <p>Attribute
 values cannot contain direct or indirect entity references to external entities.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="CleanAttrVals"></a>
-<b>Well-formedness constraint: No <code>&lt;</code> in Attribute Values</b>
+<a name="CleanAttrVals"></a><b>Well-formedness constraint: No <code>&lt;</code> in Attribute Values</b>
 </p>
 <p>The <a title="Replacement Text" href="#dt-repltext">replacement text</a> of any entity
 referred to directly or indirectly in an attribute value must not contain a <code>&lt;</code>.</p>
@@ -1400,12 +1299,10 @@ between the start-tag and end-tag is called the element's <b>content</b>:]</p>
 <a name="NT-content"></a>[43]   </td>
 <td><code>content</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-CharData">CharData</a>? ((<a href="#NT-element">element</a>
+<td><code><a href="#NT-CharData">CharData</a>? ((<a href="#NT-element">element</a>
 | <a href="#NT-Reference">Reference</a> | <a href="#NT-CDSect">CDSect</a>
 | <a href="#NT-PI">PI</a> | <a href="#NT-Comment">Comment</a>) <a href="#NT-CharData">CharData</a>?)*</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/*  */</i></td>
+<xsltdebug></xsltdebug><td><i>/*  */</i></td>
 </tr>
 </tbody></table>
 <p>[<a name="dt-empty" title="Empty">Definition</a>: An element
@@ -1422,8 +1319,7 @@ tag</b> takes a special form:]</p>
 <td><code>EmptyElemTag</code></td>
 <td>   ::=   </td>
 <td><code>'&lt;' <a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Attribute">Attribute</a>)* <a href="#NT-S">S</a>? '/&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
+<xsltdebug></xsltdebug><td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
 </tr>
 </tbody></table>
 <p>Empty-element tags may be used for any element which has no content, whether
@@ -1460,8 +1356,7 @@ type declaration</b> takes the form:]</p>
 <td>   ::=   </td>
 <td><code>'&lt;!ELEMENT' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> <a href="#NT-contentspec">contentspec</a> <a href="#NT-S">S</a>?
 '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#EDUnique">[VC: Unique Element Type Declaration]</a></td>
+<xsltdebug></xsltdebug><td><a href="#EDUnique">[VC: Unique Element Type Declaration]</a></td>
 </tr>
 <tr valign="baseline">
 <td>
@@ -1476,8 +1371,7 @@ type declaration</b> takes the form:]</p>
 <p>where the <a href="#NT-Name">Name</a> gives the element type being declared.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="EDUnique"></a>
-<b>Validity constraint: Unique Element Type Declaration</b>
+<a name="EDUnique"></a><b>Validity constraint: Unique Element Type Declaration</b>
 </p>
 <p>No element
 type may be declared more than once.</p>
@@ -1527,8 +1421,7 @@ content particles:</p>
 <td><code>choice</code></td>
 <td>   ::=   </td>
 <td><code>'(' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> ( <a href="#NT-S">S</a>? '|' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> )+ <a href="#NT-S">S</a>? ')'</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/*  */</i></td>
+<xsltdebug></xsltdebug><td><i>/*  */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1550,8 +1443,7 @@ content particles:</p>
 <td><code>seq</code></td>
 <td>   ::=   </td>
 <td><code>'(' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> ( <a href="#NT-S">S</a>? ',' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> )* <a href="#NT-S">S</a>? ')'</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/*  */</i></td>
+<xsltdebug></xsltdebug><td><i>/*  */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1583,8 +1475,7 @@ more information, see <a href="#determinism"><b>E Deterministic Content Models</
 
 <div class="constraint">
 <p class="prefix">
-<a name="vc-PEinGroup"></a>
-<b>Validity constraint: Proper Group/PE Nesting</b>
+<a name="vc-PEinGroup"></a><b>Validity constraint: Proper Group/PE Nesting</b>
 </p>
 <p>Parameter-entity <a title="Replacement Text" href="#dt-repltext">replacement text</a> must be properly nested with parenthesized
 groups. That is to say, if either of the opening or closing parentheses in
@@ -1645,8 +1536,7 @@ keyword <b>#PCDATA</b> derives historically from the term &quot;parsed
 character data.&quot;</p>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-MixedChildrenUnique"></a>
-<b>Validity constraint: No Duplicate Types</b>
+<a name="vc-MixedChildrenUnique"></a><b>Validity constraint: No Duplicate Types</b>
 </p>
 <p>The
 same name must not appear more than once in a single mixed-content declaration.</p>
@@ -1694,9 +1584,7 @@ of each attribute associated with a given element type:]</p>
 <a name="NT-AttDef"></a>[53]   </td>
 <td><code>AttDef</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> <a href="#NT-AttType">AttType</a> <a href="#NT-S">S</a> <a href="#NT-DefaultDecl">DefaultDecl</a>
-</code></td>
+<td><code><a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> <a href="#NT-AttType">AttType</a> <a href="#NT-S">S</a> <a href="#NT-DefaultDecl">DefaultDecl</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 </table>
@@ -1733,8 +1621,7 @@ value has been normalized as described in <a href="#attdecls"><b>3.3 Attribute-L
 <a name="NT-AttType"></a>[54]   </td>
 <td><code>AttType</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-StringType">StringType</a> | <a href="#NT-TokenizedType">TokenizedType</a>
+<td><code><a href="#NT-StringType">StringType</a> | <a href="#NT-TokenizedType">TokenizedType</a>
 | <a href="#NT-EnumeratedType">EnumeratedType</a> </code></td>
 <xsltdebug></xsltdebug>
 </tr>
@@ -1752,8 +1639,7 @@ value has been normalized as described in <a href="#attdecls"><b>3.3 Attribute-L
 <td><code>TokenizedType</code></td>
 <td>   ::=   </td>
 <td><code>'ID'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#id">[VC: ID]</a></td>
+<xsltdebug></xsltdebug><td><a href="#id">[VC: ID]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1814,8 +1700,7 @@ value has been normalized as described in <a href="#attdecls"><b>3.3 Attribute-L
 </tbody></table>
 <div class="constraint">
 <p class="prefix">
-<a name="id"></a>
-<b>Validity constraint: ID</b>
+<a name="id"></a><b>Validity constraint: ID</b>
 </p>
 <p>Values of type <b>ID</b> must match the <a href="#NT-Name">Name</a> production. A name must not appear more than once
 in an XML document as a value of this type; i.e., ID values must uniquely
@@ -1823,24 +1708,21 @@ identify the elements which bear them.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="one-id-per-el"></a>
-<b>Validity constraint: One ID per Element Type</b>
+<a name="one-id-per-el"></a><b>Validity constraint: One ID per Element Type</b>
 </p>
 <p>No element
 type may have more than one ID attribute specified.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="id-default"></a>
-<b>Validity constraint: ID Attribute Default</b>
+<a name="id-default"></a><b>Validity constraint: ID Attribute Default</b>
 </p>
 <p>An ID attribute
 must have a declared default of <b>#IMPLIED</b> or <b>#REQUIRED</b>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="idref"></a>
-<b>Validity constraint: IDREF</b>
+<a name="idref"></a><b>Validity constraint: IDREF</b>
 </p>
 <p>Values of type <b>IDREF</b> must
 match the <a href="#NT-Name">Name</a> production, and values of type <b>IDREFS</b>
@@ -1850,8 +1732,7 @@ i.e. <b>IDREF</b> values must match the value of some ID attribute.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="entname"></a>
-<b>Validity constraint: Entity Name</b>
+<a name="entname"></a><b>Validity constraint: Entity Name</b>
 </p>
 <p>Values of type <b>ENTITY</b>
 must match the <a href="#NT-Name">Name</a> production, values of type <b>ENTITIES</b>
@@ -1861,8 +1742,7 @@ declared in the <a title="Document Type Declaration" href="#dt-doctype">DTD</a>.
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="nmtok"></a>
-<b>Validity constraint: Name Token</b>
+<a name="nmtok"></a><b>Validity constraint: Name Token</b>
 </p>
 <p>Values of type <b>NMTOKEN</b>
 must match the <a href="#NT-Nmtoken">Nmtoken</a> production; values of type <b>NMTOKENS</b>
@@ -1879,8 +1759,7 @@ provided in the declaration]. There are two kinds of enumerated types:</p>
 <a name="NT-EnumeratedType"></a>[57]   </td>
 <td><code>EnumeratedType</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-NotationType">NotationType</a>
+<td><code><a href="#NT-NotationType">NotationType</a>
 | <a href="#NT-Enumeration">Enumeration</a> </code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
@@ -1891,8 +1770,7 @@ provided in the declaration]. There are two kinds of enumerated types:</p>
 <td><code>NotationType</code></td>
 <td>   ::=   </td>
 <td><code>'NOTATION' <a href="#NT-S">S</a> '(' <a href="#NT-S">S</a>? <a href="#NT-Name">Name</a> (<a href="#NT-S">S</a>? '|' <a href="#NT-S">S</a>? <a href="#NT-Name">Name</a>)* <a href="#NT-S">S</a>? ')' </code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#notatn">[VC: Notation Attributes]</a></td>
+<xsltdebug></xsltdebug><td><a href="#notatn">[VC: Notation Attributes]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1918,8 +1796,7 @@ Notation on Empty Element]</a></td>
 <td>   ::=   </td>
 <td><code>'(' <a href="#NT-S">S</a>? <a href="#NT-Nmtoken">Nmtoken</a>
 (<a href="#NT-S">S</a>? '|' <a href="#NT-S">S</a>? <a href="#NT-Nmtoken">Nmtoken</a>)* <a href="#NT-S">S</a>? ')'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#enum">[VC: Enumeration]</a></td>
+<xsltdebug></xsltdebug><td><a href="#enum">[VC: Enumeration]</a></td>
 </tr></tbody>
 </table>
 <p>A <b>NOTATION</b> attribute identifies a <a title="Notation" href="#dt-notation">notation</a>,
@@ -1927,8 +1804,7 @@ declared in the DTD with associated system and/or public identifiers, to be
 used in interpreting the element to which the attribute is attached.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="notatn"></a>
-<b>Validity constraint: Notation Attributes</b>
+<a name="notatn"></a><b>Validity constraint: Notation Attributes</b>
 </p>
 <p>Values of this type
 must match one of the <a href="#Notations"><cite>notation</cite></a> names
@@ -1937,8 +1813,7 @@ declared.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="OneNotationPer"></a>
-<b>Validity constraint: One
+<a name="OneNotationPer"></a><b>Validity constraint: One
 Notation Per Element Type</b>
 </p>
 <p>No element type may have more than one <b>NOTATION</b>
@@ -1946,8 +1821,7 @@ attribute specified.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="NoNotationEmpty"></a>
-<b>Validity constraint: No
+<a name="NoNotationEmpty"></a><b>Validity constraint: No
 Notation on Empty Element</b>
 </p>
 <p>
@@ -1957,8 +1831,7 @@ declared <b>EMPTY</b>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="enum"></a>
-<b>Validity constraint: Enumeration</b>
+<a name="enum"></a><b>Validity constraint: Enumeration</b>
 </p>
 <p>Values of this type must match
 one of the <a href="#NT-Nmtoken">Nmtoken</a> tokens in the declaration.</p>
@@ -2024,8 +1897,7 @@ an omitted attribute, it is to behave as though the attribute were present
 with the declared default value.]</p>
 <div class="constraint">
 <p class="prefix">
-<a name="RequiredAttr"></a>
-<b>Validity constraint: Required Attribute</b>
+<a name="RequiredAttr"></a><b>Validity constraint: Required Attribute</b>
 </p>
 <p>If the default
 declaration is the keyword <b>#REQUIRED</b>, then the attribute must be
@@ -2033,8 +1905,7 @@ specified for all elements of the type in the attribute-list declaration.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="defattrvalid"></a>
-<b>Validity constraint: Attribute Default Legal</b>
+<a name="defattrvalid"></a><b>Validity constraint: Attribute Default Legal</b>
 </p>
 <p>The declared
 default value must meet the lexical constraints of the declared attribute
@@ -2042,8 +1913,7 @@ type.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="FixedAttr"></a>
-<b>Validity constraint: Fixed Attribute Default</b>
+<a name="FixedAttr"></a><b>Validity constraint: Fixed Attribute Default</b>
 </p>
 <p>If an attribute
 has a default value declared with the <b>#FIXED</b> keyword, instances of
@@ -2165,8 +2035,7 @@ the logical structure of the DTD based on the keyword which governs them.]</p>
 <a name="NT-conditionalSect"></a>[61]   </td>
 <td><code>conditionalSect</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-includeSect">includeSect</a> | <a href="#NT-ignoreSect">ignoreSect</a> </code></td>
+<td><code><a href="#NT-includeSect">includeSect</a> | <a href="#NT-ignoreSect">ignoreSect</a> </code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2176,8 +2045,7 @@ the logical structure of the DTD based on the keyword which governs them.]</p>
 <td>   ::=   </td>
 <td><code>'&lt;![' S? 'INCLUDE' S? '[' <a href="#NT-extSubsetDecl">extSubsetDecl</a>
 ']]&gt;' </code></td>
-<xsltdebug></xsltdebug>
-<td><i>/*  */</i></td>
+<xsltdebug></xsltdebug><td><i>/*  */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2194,8 +2062,7 @@ Conditional Section/PE Nesting]</a></td>
 <td>   ::=   </td>
 <td><code>'&lt;![' S? 'IGNORE' S? '[' <a href="#NT-ignoreSectContents">ignoreSectContents</a>*
 ']]&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/*  */</i></td>
+<xsltdebug></xsltdebug><td><i>/*  */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2210,8 +2077,7 @@ Conditional Section/PE Nesting]</a></td>
 <a name="NT-ignoreSectContents"></a>[64]   </td>
 <td><code>ignoreSectContents</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Ignore">Ignore</a> ('&lt;![' <a href="#NT-ignoreSectContents">ignoreSectContents</a> ']]&gt;' <a href="#NT-Ignore">Ignore</a>)*</code></td>
+<td><code><a href="#NT-Ignore">Ignore</a> ('&lt;![' <a href="#NT-ignoreSectContents">ignoreSectContents</a> ']]&gt;' <a href="#NT-Ignore">Ignore</a>)*</code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2219,16 +2085,14 @@ Conditional Section/PE Nesting]</a></td>
 <a name="NT-Ignore"></a>[65]   </td>
 <td><code>Ignore</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Char">Char</a>* - (<a href="#NT-Char">Char</a>*
+<td><code><a href="#NT-Char">Char</a>* - (<a href="#NT-Char">Char</a>*
 ('&lt;![' | ']]&gt;') <a href="#NT-Char">Char</a>*) </code></td>
 <xsltdebug></xsltdebug>
 </tr>
 </tbody></table>
 <div class="constraint">
 <p class="prefix">
-<a name="condsec-nesting"></a>
-<b>Validity constraint: Proper
+<a name="condsec-nesting"></a><b>Validity constraint: Proper
 Conditional Section/PE Nesting</b>
 </p>
 <p>If any of the &quot;<code>&lt;![</code>&quot;,
@@ -2330,8 +2194,7 @@ set, for example one not directly accessible from available input devices.]</p>
 </tbody></table>
 <div class="constraint">
 <p class="prefix">
-<a name="wf-Legalchar"></a>
-<b>Well-formedness constraint: Legal Character</b>
+<a name="wf-Legalchar"></a><b>Well-formedness constraint: Legal Character</b>
 </p>
 <p>Characters referred
 to using character references must match the production for <a title="" href="#NT-Char">Char</a>.</p>
@@ -2353,9 +2216,7 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 <a name="NT-Reference"></a>[67]   </td>
 <td><code>Reference</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-EntityRef">EntityRef</a> | <a href="#NT-CharRef">CharRef</a>
-</code></td>
+<td><code><a href="#NT-EntityRef">EntityRef</a> | <a href="#NT-CharRef">CharRef</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody>
@@ -2365,8 +2226,7 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 <td><code>EntityRef</code></td>
 <td>   ::=   </td>
 <td><code>'&amp;' <a href="#NT-Name">Name</a> ';'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#wf-entdeclared">[WFC: Entity Declared]</a></td>
+<xsltdebug></xsltdebug><td><a href="#wf-entdeclared">[WFC: Entity Declared]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2397,8 +2257,7 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 <td><code>PEReference</code></td>
 <td>   ::=   </td>
 <td><code>'%' <a href="#NT-Name">Name</a> ';'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-entdeclared">[VC: Entity Declared]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-entdeclared">[VC: Entity Declared]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2418,8 +2277,7 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 </table>
 <div class="constraint">
 <p class="prefix">
-<a name="wf-entdeclared"></a>
-<b>Well-formedness constraint: Entity Declared</b>
+<a name="wf-entdeclared"></a><b>Well-formedness constraint: Entity Declared</b>
 </p>
 <p>In a document
 without any DTD, a document with only an internal DTD subset which contains
@@ -2443,8 +2301,7 @@ if <a href="#sec-rmd"><cite>standalone='yes'</cite></a>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-entdeclared"></a>
-<b>Validity constraint: Entity Declared</b>
+<a name="vc-entdeclared"></a><b>Validity constraint: Entity Declared</b>
 </p>
 <p>In a document with
 an external subset or external parameter entities with &quot;<code>standalone='no'</code>&quot;,
@@ -2463,8 +2320,7 @@ to that general entity.</p>
 
 <div class="constraint">
 <p class="prefix">
-<a name="textent"></a>
-<b>Well-formedness constraint: Parsed Entity</b>
+<a name="textent"></a><b>Well-formedness constraint: Parsed Entity</b>
 </p>
 <p>An entity reference must
 not contain the name of an <a title="Unparsed Entity" href="#dt-unparsed">unparsed entity</a>.
@@ -2473,16 +2329,14 @@ values</a> declared to be of type <b>ENTITY</b> or <b>ENTITIES</b>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="norecursion"></a>
-<b>Well-formedness constraint: No Recursion</b>
+<a name="norecursion"></a><b>Well-formedness constraint: No Recursion</b>
 </p>
 <p>A parsed entity must
 not contain a recursive reference to itself, either directly or indirectly.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="indtd"></a>
-<b>Well-formedness constraint: In DTD</b>
+<a name="indtd"></a><b>Well-formedness constraint: In DTD</b>
 </p>
 <p>Parameter-entity references may
 only appear in the <a title="Document Type Declaration" href="#dt-doctype">DTD</a>.</p>
@@ -2512,9 +2366,7 @@ thus:]</p>
 <a name="NT-EntityDecl"></a>[70]   </td>
 <td><code>EntityDecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-GEDecl">GEDecl</a> | <a href="#NT-PEDecl">PEDecl</a>
-</code></td>
+<td><code><a href="#NT-GEDecl">GEDecl</a> | <a href="#NT-PEDecl">PEDecl</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2539,8 +2391,7 @@ thus:]</p>
 <a name="NT-EntityDef"></a>[73]   </td>
 <td><code>EntityDef</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-EntityValue">EntityValue</a> | (<a href="#NT-ExternalID">ExternalID</a> <a href="#NT-NDataDecl">NDataDecl</a>?)</code></td>
+<td><code><a href="#NT-EntityValue">EntityValue</a> | (<a href="#NT-ExternalID">ExternalID</a> <a href="#NT-NDataDecl">NDataDecl</a>?)</code></td>
 <xsltdebug></xsltdebug>
 </tr>
 
@@ -2549,9 +2400,7 @@ thus:]</p>
 <a name="NT-PEDef"></a>[74]   </td>
 <td><code>PEDef</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-EntityValue">EntityValue</a> | <a href="#NT-ExternalID">ExternalID</a>
-</code></td>
+<td><code><a href="#NT-EntityValue">EntityValue</a> | <a href="#NT-ExternalID">ExternalID</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 </tbody></table>
@@ -2590,8 +2439,7 @@ it is an <b>external entity</b>, declared as follows:]</p>
 <a name="NT-ExternalID"></a>[75]   </td>
 <td><code>ExternalID</code></td>
 <td>   ::=   </td>
-<td><code>'SYSTEM' <a href="#NT-S">S</a> <a href="#NT-SystemLiteral">SystemLiteral</a>
-</code></td>
+<td><code>'SYSTEM' <a href="#NT-S">S</a> <a href="#NT-SystemLiteral">SystemLiteral</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2606,18 +2454,14 @@ it is an <b>external entity</b>, declared as follows:]</p>
 <a name="NT-NDataDecl"></a>[76]   </td>
 <td><code>NDataDecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a> 'NDATA' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a>
-</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#not-declared">[VC: Notation Declared]</a></td>
+<td><code><a href="#NT-S">S</a> 'NDATA' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a></code></td>
+<xsltdebug></xsltdebug><td><a href="#not-declared">[VC: Notation Declared]</a></td>
 </tr></tbody>
 </table>
 <p>If the <a href="#NT-NDataDecl">NDataDecl</a> is present, this is a general <a title="Unparsed Entity" href="#dt-unparsed">unparsed entity</a>; otherwise it is a parsed entity.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="not-declared"></a>
-<b>Validity constraint: Notation Declared</b>
+<a name="not-declared"></a><b>Validity constraint: Notation Declared</b>
 </p>
 <p>The <a href="#NT-Name">Name</a>
 must match the declared name of a <a title="Notation" href="#dt-notation">notation</a>.</p>
@@ -2648,8 +2492,7 @@ must be escaped as follows:</p>
 <li><p>Each disallowed character is converted to UTF-8 <a href="#rfc2279">[IETF RFC 2279]</a>
 as one or more bytes.</p></li>
 <li><p>Any octets corresponding to a disallowed character are escaped with
-the URI escaping mechanism (that is, converted to <code>%</code>
-<var>HH</var>,
+the URI escaping mechanism (that is, converted to <code>%</code><var>HH</var>,
 where HH is the hexadecimal notation of the byte value).</p></li>
 <li>
 <p>The original character is replaced by the resulting character sequence.</p>
@@ -2716,9 +2559,7 @@ external parameter entities are well-formed by definition.</p>
 <a name="NT-extParsedEnt"></a>[78]   </td>
 <td><code>extParsedEnt</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-content">content</a>
-</code></td>
+<td><code><a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-content">content</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody></table>
 <p>An internal general parsed entity is well-formed if its replacement text
@@ -2763,8 +2604,7 @@ an encoding declaration:</p>
 <a name="NT-EncodingDecl"></a>[80]   </td>
 <td><code>EncodingDecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a> 'encoding' <a href="#NT-Eq">Eq</a>
+<td><code><a href="#NT-S">S</a> 'encoding' <a href="#NT-Eq">Eq</a>
 ('&quot;' <a href="#NT-EncName">EncName</a> '&quot;' | &quot;'&quot; <a href="#NT-EncName">EncName</a>
 &quot;'&quot; ) </code></td>
 <xsltdebug></xsltdebug>
@@ -2775,8 +2615,7 @@ an encoding declaration:</p>
 <td><code>EncName</code></td>
 <td>   ::=   </td>
 <td><code>[A-Za-z] ([A-Za-z0-9._] | '-')*</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/* Encoding
+<xsltdebug></xsltdebug><td><i>/* Encoding
 name contains only Latin characters */</i></td>
 </tr></tbody>
 </table>
@@ -2787,8 +2626,7 @@ The <a href="#NT-EncName">EncName</a> is the name of the encoding used.</p>
 <p>In an encoding declaration, the values &quot;<code>UTF-8</code>&quot;, &quot;<code>UTF-16</code>&quot;, &quot;<code>ISO-10646-UCS-2</code>&quot;, and &quot;<code>ISO-10646-UCS-4</code>&quot; should be used
 for the various encodings and transformations of Unicode / ISO/IEC 10646,
 the values &quot;<code>ISO-8859-1</code>&quot;, &quot;<code>ISO-8859-2</code>&quot;,
-... &quot;<code>ISO-8859-</code>
-<var>n</var>&quot; (where <var>n</var>
+... &quot;<code>ISO-8859-</code><var>n</var>&quot; (where <var>n</var>
 is the part number) should be used for the parts of ISO 8859, and
 the values &quot;<code>ISO-2022-JP</code>&quot;, &quot;<code>Shift_JIS</code>&quot;,
 and &quot;<code>EUC-JP</code>&quot; should be used for the various encoded
@@ -3123,8 +2961,7 @@ application capable of processing data in the given notation.]</p>
 <td><code>NotationDecl</code></td>
 <td>   ::=   </td>
 <td><code>'&lt;!NOTATION' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> (<a href="#NT-ExternalID">ExternalID</a> | <a href="#NT-PublicID">PublicID</a>) <a href="#NT-S">S</a>? '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#UniqueNotationName">[VC: Unique
+<xsltdebug></xsltdebug><td><a href="#UniqueNotationName">[VC: Unique
 Notation Name]</a></td>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -3138,8 +2975,7 @@ Notation Name]</a></td>
 </table>
 <div class="constraint">
 <p class="prefix">
-<a name="UniqueNotationName"></a>
-<b>Validity constraint: Unique
+<a name="UniqueNotationName"></a><b>Validity constraint: Unique
 Notation Name</b>
 </p>
 <p>Only one notation declaration can declare a given <a href="#NT-Name">Name</a>.</p>
@@ -3523,9 +3359,7 @@ distinguished.</p>
 <a name="NT-Letter"></a>[84]   </td>
 <td><code>Letter</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-BaseChar">BaseChar</a> | <a href="#NT-Ideographic">Ideographic</a>
-</code></td>
+<td><code><a href="#NT-BaseChar">BaseChar</a> | <a href="#NT-Ideographic">Ideographic</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -4029,7 +3863,7 @@ Contact</i>) </li>
 <div class="div1">
 
 <h2>
-<a name="id2664223"></a>I Production Notes (Non-Normative)</h2>
+<a name="id2667951"></a>I Production Notes (Non-Normative)</h2>
 <p>This Second Edition was encoded in the <a href="http://www.w3.org/XML/1998/06/xmlspec-v21.dtd">XMLspec
 DTD</a> (which has <a href="http://www.w3.org/XML/1998/06/xmlspec-report-v21.htm">documentation</a>
 available). The HTML versions were produced with a combination of the <a href="http://www.w3.org/XML/1998/06/xmlspec.xsl">xmlspec.xsl</a>, <a href="http://www.w3.org/XML/1998/06/diffspec.xsl">diffspec.xsl</a>,

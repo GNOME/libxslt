@@ -58,14 +58,12 @@ review version</a> with color-coded revision indicators)</dd>
 <dd>Jean Paoli, Microsoft <a href="mailto:jeanpa@microsoft.com">&lt;jeanpa@microsoft.com&gt;</a>
 </dd>
 <dd><span class="diff-chg">C. M. Sperberg-McQueen, University
-of Illinois at Chicago and Text Encoding Initiative <a href="mailto:cmsmcq@uic.edu">&lt;cmsmcq@uic.edu&gt;</a>
-</span></dd>
+of Illinois at Chicago and Text Encoding Initiative <a href="mailto:cmsmcq@uic.edu">&lt;cmsmcq@uic.edu&gt;</a></span></dd>
 <dd><span class="diff-add">Eve Maler, Sun Microsystems,
 Inc. <a href="mailto:elm@east.sun.com">&lt;eve.maler@east.sun.com&gt;</a> - Second Edition</span></dd>
 </dl>
 <p class="copyright">
-<a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2000 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a>
-<sup>®</sup> (<a href="http://www.lcs.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.inria.fr/"><abbr lang="fr" title="Institut National de Recherche en Informatique et Automatique">INRIA</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>, <a href="http://www.w3.org/Consortium/Legal/copyright-documents-19990405">document use</a>, and <a href="http://www.w3.org/Consortium/Legal/copyright-software-19980720">software licensing</a> rules apply.</p>
+<a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2000 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.lcs.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.inria.fr/"><abbr lang="fr" title="Institut National de Recherche en Informatique et Automatique">INRIA</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>, <a href="http://www.w3.org/Consortium/Legal/copyright-documents-19990405">document use</a>, and <a href="http://www.w3.org/Consortium/Legal/copyright-software-19980720">software licensing</a> rules apply.</p>
 </div>
 <hr>
 <div id="abstract">
@@ -87,8 +85,7 @@ enhances the functionality and interoperability of the Web.</p>
 <p>This document specifies a syntax created by subsetting an existing, widely
 used international text processing standard (Standard Generalized Markup Language,
 ISO 8879:1986(E) as amended and corrected) for use on the World Wide Web.
-It is a product of the W3C XML Activity, details of which can be found at <a href="http://www.w3.org/XML/">http://www.w3.org/XML</a>. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E100">[E100]</a>
+It is a product of the W3C XML Activity, details of which can be found at <a href="http://www.w3.org/XML/">http://www.w3.org/XML</a>. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E100">[E100]</a>
 The English version of this specification is the only normative version. However,
 for translations of this document, see <a href="http://www.w3.org/XML/#trans">http://www.w3.org/XML/#trans</a>. </span>A
 list of current W3C Recommendations and other technical documents can be found
@@ -102,9 +99,7 @@ it merely incorporates the changes dictated by the first-edition errata (availab
 at <a href="http://www.w3.org/XML/xml-19980210-errata">http://www.w3.org/XML/xml-19980210-errata</a>)
 as a convenience to readers. The errata list for this second edition is available
 at <a href="http://www.w3.org/XML/xml-V10-2e-errata">http://www.w3.org/XML/xml-V10-2e-errata</a>.</p></div>
-<p>Please report errors in this document to <a href="mailto:xml-editor@w3.org">xml-editor@w3.org</a>
-<span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E101">[E101]</a>; <a href="http://lists.w3.org/Archives/Public/xml-editor">archives</a> are available</span>.</p>
+<p>Please report errors in this document to <a href="mailto:xml-editor@w3.org">xml-editor@w3.org</a><span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E101">[E101]</a>; <a href="http://lists.w3.org/Archives/Public/xml-editor">archives</a> are available</span>.</p>
 <div class="diff-add"><div class="note">
 <p class="prefix"><b>Note:</b></p>
 <p>C. M. Sperberg-McQueen's affiliation has changed since the publication
@@ -114,70 +109,12 @@ be contacted at <a href="mailto:cmsmcq@w3.org">cmsmcq@w3.org</a>.</p>
 </div>
 <div class="toc">
 <h2><a name="contents">Table of Contents</a></h2>
-<p class="toc">1 <a href="#sec-intro">Introduction</a>
-<br>    1.1 <a href="#sec-origin-goals">Origin and Goals</a>
-<br>    1.2 <a href="#sec-terminology">Terminology</a>
-<br>2 <a href="#sec-documents">Documents</a>
-<br>    2.1 <a href="#sec-well-formed">Well-Formed XML Documents</a>
-<br>    2.2 <a href="#charsets">Characters</a>
-<br>    2.3 <a href="#sec-common-syn">Common Syntactic Constructs</a>
-<br>    2.4 <a href="#syntax">Character Data and Markup</a>
-<br>    2.5 <a href="#sec-comments">Comments</a>
-<br>    2.6 <a href="#sec-pi">Processing Instructions</a>
-<br>    2.7 <a href="#sec-cdata-sect">CDATA Sections</a>
-<br>    2.8 <a href="#sec-prolog-dtd">Prolog and Document Type Declaration</a>
-<br>    2.9 <a href="#sec-rmd">Standalone Document Declaration</a>
-<br>    2.10 <a href="#sec-white-space">White Space Handling</a>
-<br>    2.11 <a href="#sec-line-ends">End-of-Line Handling</a>
-<br>    2.12 <a href="#sec-lang-tag">Language Identification</a>
-<br>3 <a href="#sec-logical-struct">Logical Structures</a>
-<br>    3.1 <a href="#sec-starttags">Start-Tags, End-Tags, and Empty-Element Tags</a>
-<br>    3.2 <a href="#elemdecls">Element Type Declarations</a>
-<br>        3.2.1 <a href="#sec-element-content">Element Content</a>
-<br>        3.2.2 <a href="#sec-mixed-content">Mixed Content</a>
-<br>    3.3 <a href="#attdecls">Attribute-List Declarations</a>
-<br>        3.3.1 <a href="#sec-attribute-types">Attribute Types</a>
-<br>        3.3.2 <a href="#sec-attr-defaults">Attribute Defaults</a>
-<br>        3.3.3 <a href="#AVNormalize">Attribute-Value
-Normalization</a>
-<br>    3.4 <a href="#sec-condition-sect">Conditional Sections</a>
-<br>4 <a href="#sec-physical-struct">Physical Structures</a>
-<br>    4.1 <a href="#sec-references">Character and Entity References</a>
-<br>    4.2 <a href="#sec-entity-decl">Entity Declarations</a>
-<br>        4.2.1 <a href="#sec-internal-ent">Internal Entities</a>
-<br>        4.2.2 <a href="#sec-external-ent">External Entities</a>
-<br>    4.3 <a href="#TextEntities">Parsed Entities</a>
-<br>        4.3.1 <a href="#sec-TextDecl">The Text Declaration</a>
-<br>        4.3.2 <a href="#wf-entities">Well-Formed Parsed Entities</a>
-<br>        4.3.3 <a href="#charencoding">Character Encoding in Entities</a>
-<br>    4.4 <a href="#entproc">XML Processor Treatment of Entities and References</a>
-<br>        4.4.1 <a href="#not-recognized">Not Recognized</a>
-<br>        4.4.2 <a href="#included">Included</a>
-<br>        4.4.3 <a href="#include-if-valid">Included If Validating</a>
-<br>        4.4.4 <a href="#forbidden">Forbidden</a>
-<br>        4.4.5 <a href="#inliteral">Included in Literal</a>
-<br>        4.4.6 <a href="#notify">Notify</a>
-<br>        4.4.7 <a href="#bypass">Bypassed</a>
-<br>        4.4.8 <a href="#as-PE">Included as PE</a>
-<br>    4.5 <a href="#intern-replacement">Construction of Internal Entity Replacement Text</a>
-<br>    4.6 <a href="#sec-predefined-ent">Predefined Entities</a>
-<br>    4.7 <a href="#Notations">Notation Declarations</a>
-<br>    4.8 <a href="#sec-doc-entity">Document Entity</a>
-<br>5 <a href="#sec-conformance">Conformance</a>
-<br>    5.1 <a href="#proc-types">Validating and Non-Validating Processors</a>
-<br>    5.2 <a href="#safe-behavior">Using XML Processors</a>
-<br>6 <a href="#sec-notation">Notation</a>
-<br>
+<p class="toc">1 <a href="#sec-intro">Introduction</a><br>    1.1 <a href="#sec-origin-goals">Origin and Goals</a><br>    1.2 <a href="#sec-terminology">Terminology</a><br>2 <a href="#sec-documents">Documents</a><br>    2.1 <a href="#sec-well-formed">Well-Formed XML Documents</a><br>    2.2 <a href="#charsets">Characters</a><br>    2.3 <a href="#sec-common-syn">Common Syntactic Constructs</a><br>    2.4 <a href="#syntax">Character Data and Markup</a><br>    2.5 <a href="#sec-comments">Comments</a><br>    2.6 <a href="#sec-pi">Processing Instructions</a><br>    2.7 <a href="#sec-cdata-sect">CDATA Sections</a><br>    2.8 <a href="#sec-prolog-dtd">Prolog and Document Type Declaration</a><br>    2.9 <a href="#sec-rmd">Standalone Document Declaration</a><br>    2.10 <a href="#sec-white-space">White Space Handling</a><br>    2.11 <a href="#sec-line-ends">End-of-Line Handling</a><br>    2.12 <a href="#sec-lang-tag">Language Identification</a><br>3 <a href="#sec-logical-struct">Logical Structures</a><br>    3.1 <a href="#sec-starttags">Start-Tags, End-Tags, and Empty-Element Tags</a><br>    3.2 <a href="#elemdecls">Element Type Declarations</a><br>        3.2.1 <a href="#sec-element-content">Element Content</a><br>        3.2.2 <a href="#sec-mixed-content">Mixed Content</a><br>    3.3 <a href="#attdecls">Attribute-List Declarations</a><br>        3.3.1 <a href="#sec-attribute-types">Attribute Types</a><br>        3.3.2 <a href="#sec-attr-defaults">Attribute Defaults</a><br>        3.3.3 <a href="#AVNormalize">Attribute-Value
+Normalization</a><br>    3.4 <a href="#sec-condition-sect">Conditional Sections</a><br>4 <a href="#sec-physical-struct">Physical Structures</a><br>    4.1 <a href="#sec-references">Character and Entity References</a><br>    4.2 <a href="#sec-entity-decl">Entity Declarations</a><br>        4.2.1 <a href="#sec-internal-ent">Internal Entities</a><br>        4.2.2 <a href="#sec-external-ent">External Entities</a><br>    4.3 <a href="#TextEntities">Parsed Entities</a><br>        4.3.1 <a href="#sec-TextDecl">The Text Declaration</a><br>        4.3.2 <a href="#wf-entities">Well-Formed Parsed Entities</a><br>        4.3.3 <a href="#charencoding">Character Encoding in Entities</a><br>    4.4 <a href="#entproc">XML Processor Treatment of Entities and References</a><br>        4.4.1 <a href="#not-recognized">Not Recognized</a><br>        4.4.2 <a href="#included">Included</a><br>        4.4.3 <a href="#include-if-valid">Included If Validating</a><br>        4.4.4 <a href="#forbidden">Forbidden</a><br>        4.4.5 <a href="#inliteral">Included in Literal</a><br>        4.4.6 <a href="#notify">Notify</a><br>        4.4.7 <a href="#bypass">Bypassed</a><br>        4.4.8 <a href="#as-PE">Included as PE</a><br>    4.5 <a href="#intern-replacement">Construction of Internal Entity Replacement Text</a><br>    4.6 <a href="#sec-predefined-ent">Predefined Entities</a><br>    4.7 <a href="#Notations">Notation Declarations</a><br>    4.8 <a href="#sec-doc-entity">Document Entity</a><br>5 <a href="#sec-conformance">Conformance</a><br>    5.1 <a href="#proc-types">Validating and Non-Validating Processors</a><br>    5.2 <a href="#safe-behavior">Using XML Processors</a><br>6 <a href="#sec-notation">Notation</a><br>
 </p>
 <h3>Appendices</h3>
-<p class="toc">A <a href="#sec-bibliography">References</a>
-<br>    A.1 <a href="#sec-existing-stds">Normative References</a>
-<br>    A.2 <a href="#null">Other References</a>
-<br>B <a href="#CharClasses">Character Classes</a>
-<br>C <a href="#sec-xml-and-sgml">XML and SGML</a> (Non-Normative)<br>D <a href="#sec-entexpand">Expansion of Entity and Character References</a> (Non-Normative)<br>E <a href="#determinism">Deterministic Content Models</a> (Non-Normative)<br>F <a href="#sec-guessing">Autodetection
-of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a>
-<br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a>
-<br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2664223">Production Notes</a> (Non-Normative)<br>
+<p class="toc">A <a href="#sec-bibliography">References</a><br>    A.1 <a href="#sec-existing-stds">Normative References</a><br>    A.2 <a href="#null">Other References</a><br>B <a href="#CharClasses">Character Classes</a><br>C <a href="#sec-xml-and-sgml">XML and SGML</a> (Non-Normative)<br>D <a href="#sec-entexpand">Expansion of Entity and Character References</a> (Non-Normative)<br>E <a href="#determinism">Deterministic Content Models</a> (Non-Normative)<br>F <a href="#sec-guessing">Autodetection
+of Character Encodings</a> (Non-Normative)<br>    F.1 <a href="#sec-guessing-no-ext-info">Detection Without External Encoding Information</a><br>    F.2 <a href="#sec-guessing-with-ext-info">Priorities in the Presence of External Encoding Information</a><br>G <a href="#sec-xml-wg">W3C XML Working Group</a> (Non-Normative)<br>H <a href="#sec-core-wg">W3C XML Core Group</a> (Non-Normative)<br>I <a href="#id2667951">Production Notes</a> (Non-Normative)<br>
 </p>
 </div>
 <hr>
@@ -300,8 +237,7 @@ of well-formedness constraints are <a title="Fatal Error" href="#dt-fatal">fatal
 or names being compared must be identical. Characters with multiple possible
 representations in ISO/IEC 10646 (e.g. characters with both precomposed and
 base+diacritic forms) match only if they have the same representation in both
-strings. <span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E85">[E85]</a>At
+strings. <span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E85">[E85]</a>At
 user option, processors may normalize such characters to some canonical form. </span>No
 case folding is performed. (Of strings and rules in the grammar:) A string
 matches a grammatical production if it belongs to the language generated by
@@ -310,15 +246,13 @@ when it conforms in the fashion described in the constraint <a href="#elementval
 </div></dd>
 <dt class="label"><span class="diff-">for compatibility</span></dt>
 <dd><div class="diff-">
-<p>[<a name="dt-compat" title="For Compatibility">Definition</a>: <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E87">[E87]</a>Marks
+<p>[<a name="dt-compat" title="For Compatibility">Definition</a>: <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E87">[E87]</a>Marks
 a sentence describing</span> a feature of XML included solely to ensure
 that XML remains compatible with SGML.]</p>
 </div></dd>
 <dt class="label"><span class="diff-">for interoperability</span></dt>
 <dd><div class="diff-">
-<p>[<a name="dt-interop" title="For interoperability">Definition</a>: <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E87">[E87]</a>Marks
+<p>[<a name="dt-interop" title="For interoperability">Definition</a>: <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E87">[E87]</a>Marks
 a sentence describing</span> a non-binding recommendation included to increase
 the chances that XML documents can be processed by the existing installed
 base of SGML processors which predate the WebSGML Adaptations Annex to ISO 8879.]</p>
@@ -367,8 +301,7 @@ which is referenced directly or indirectly within the document is <a title="Well
 <a name="NT-document"></a>[1]   </td>
 <td><code>document</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-prolog">prolog</a> <a href="#NT-element">element</a> <a href="#NT-Misc">Misc</a>*</code></td>
+<td><code><a href="#NT-prolog">prolog</a> <a href="#NT-element">element</a> <a href="#NT-Misc">Misc</a>*</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody></table>
 <p>Matching the <a href="#NT-document">document</a> production implies that:</p>
@@ -379,8 +312,7 @@ which is referenced directly or indirectly within the document is <a title="Well
 
 <li><p>[<a name="dt-root" title="Root Element">Definition</a>: There is exactly one element,
 called the <b>root</b>, or document element, no part of which appears
-in the <a title="Content" href="#dt-content">content</a> of any other element.] <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E17">[E17]</a>For
+in the <a title="Content" href="#dt-content">content</a> of any other element.] <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E17">[E17]</a>For
 all other elements, if the <a title="Start-Tag" href="#dt-stag">start-tag</a> is in
 the content of another element, the <a title="End Tag" href="#dt-etag">end-tag</a>
 is in the content of the same element.</span> More simply stated, the elements,
@@ -400,20 +332,16 @@ a <b>child</b> of <code>P</code>.]</p>
 <p>[<a name="dt-text" title="Text">Definition</a>: A parsed entity contains <b>text</b>,
 a sequence of <a title="Character" href="#dt-character">characters</a>, which may
 represent markup or character data.] [<a name="dt-character" title="Character">Definition</a>: A <b>character</b>
-is an atomic unit of text as specified by ISO/IEC 10646 <a href="#ISO10646">[ISO/IEC 10646]</a> <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>(see
+is an atomic unit of text as specified by ISO/IEC 10646 <a href="#ISO10646">[ISO/IEC 10646]</a> <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>(see
 also <a href="#ISO10646-2000">[ISO/IEC 10646-2000]</a>)</span>. Legal characters are tab, carriage
-return, line feed, and the legal <span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E35">[E35]</a>graphic </span>characters
-of Unicode and ISO/IEC 10646. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E69">[E69]</a>The
+return, line feed, and the legal <span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E35">[E35]</a>graphic </span>characters
+of Unicode and ISO/IEC 10646. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E69">[E69]</a>The
 versions of these standards cited in <a href="#sec-existing-stds"><b>A.1 Normative References</b></a> were
 current at the time this document was prepared. New characters may be added
 to these standards by amendments or new editions. Consequently, XML processors
 must accept any character in the range specified for <a href="#NT-Char">Char</a>.</span>
 The use of &quot;compatibility characters&quot;, as defined in section
-6.8 of <a href="#Unicode">[Unicode]</a> <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>(see
+6.8 of <a href="#Unicode">[Unicode]</a> <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>(see
 also D21 in section 3.6 of <a href="#Unicode3">[Unicode3]</a>)</span>, is discouraged.]</p>
 
 <h5>Character Range</h5>
@@ -424,8 +352,7 @@ also D21 in section 3.6 of <a href="#Unicode3">[Unicode3]</a>)</span>, is discou
 <td><code>Char</code></td>
 <td>   ::=   </td>
 <td><code>#x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/* any Unicode character, excluding the surrogate blocks, FFFE, and FFFF. */</i></td>
+<xsltdebug></xsltdebug><td><i>/* any Unicode character, excluding the surrogate blocks, FFFE, and FFFF. */</i></td>
 </tr>
 </tbody></table>
 <p>The mechanism for encoding character code points into bit patterns may
@@ -455,8 +382,7 @@ characters, carriage returns, line feeds, or tabs.</p>
 </tr>
 </tbody></table>
 <p>Characters are classified for convenience as letters, digits, or other
-characters. <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E30">[E30]</a>A
+characters. <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E30">[E30]</a>A
 letter consists of an alphabetic or syllabic base character or an ideographic
 character.</span> Full definitions of the specific characters in each class
 are given in <a href="#CharClasses"><b>B Character Classes</b></a>.</p>
@@ -485,10 +411,8 @@ characters.</p>
 <a name="NT-NameChar"></a>[4]   </td>
 <td><code>NameChar</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Letter">Letter</a> | <a href="#NT-Digit">Digit</a>
-| '.' | '-' | '_' | ':' | <a href="#NT-CombiningChar">CombiningChar</a> | <a href="#NT-Extender">Extender</a>
-</code></td>
+<td><code><a href="#NT-Letter">Letter</a> | <a href="#NT-Digit">Digit</a>
+| '.' | '-' | '_' | ':' | <a href="#NT-CombiningChar">CombiningChar</a> | <a href="#NT-Extender">Extender</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -504,8 +428,7 @@ characters.</p>
 <a name="NT-Names"></a>[6]   </td>
 <td><code>Names</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Name">Name</a>)*</code></td>
+<td><code><a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Name">Name</a>)*</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -521,8 +444,7 @@ characters.</p>
 <a name="NT-Nmtokens"></a>[8]   </td>
 <td><code>Nmtokens</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Nmtoken">Nmtoken</a> (<a href="#NT-S">S</a> <a href="#NT-Nmtoken">Nmtoken</a>)*</code></td>
+<td><code><a href="#NT-Nmtoken">Nmtoken</a> (<a href="#NT-S">S</a> <a href="#NT-Nmtoken">Nmtoken</a>)*</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 </table>
@@ -614,9 +536,7 @@ error.</p>
 <p>
 <a title="Text" href="#dt-text">Text</a> consists of intermingled <a title="Character Data" href="#dt-chardata">character data</a> and markup. [<a name="dt-markup" title="Markup">Definition</a>: <b>Markup</b> takes the form of <a title="Start-Tag" href="#dt-stag">start-tags</a>, <a title="End Tag" href="#dt-etag">end-tags</a>, <a title="Empty" href="#dt-empty">empty-element tags</a>, <a title="Entity Reference" href="#dt-entref">entity references</a>, <a title="Character Reference" href="#dt-charref">character
 references</a>, <a title="Comment" href="#dt-comment">comments</a>, <a title="CDATA Section" href="#dt-cdsection">CDATA section</a> delimiters, <a title="Document Type Declaration" href="#dt-doctype">document
-type declarations</a>, <a title="Processing instruction" href="#dt-pi">processing instructions</a>, <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E89">[E89]</a>
-<a href="#NT-XMLDecl">XML declarations</a>, <a href="#NT-TextDecl">text declarations</a>,
+type declarations</a>, <a title="Processing instruction" href="#dt-pi">processing instructions</a>, <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E89">[E89]</a><a href="#NT-XMLDecl">XML declarations</a>, <a href="#NT-TextDecl">text declarations</a>,
 and any white space that is at the top level of the document entity (that
 is, outside the document element and not inside any other markup).</span>]</p>
 <p>[<a name="dt-chardata" title="Character Data">Definition</a>: All text that is not markup
@@ -624,8 +544,7 @@ constitutes the <b>character data</b> of the document.]</p>
 <p>The ampersand character (&amp;) and the left angle bracket (&lt;) may appear
 in their literal form <em>only</em> when used as markup delimiters, or
 within a <a title="Comment" href="#dt-comment">comment</a>, a <a title="Processing instruction" href="#dt-pi">processing
-instruction</a>, or a <a title="CDATA Section" href="#dt-cdsection">CDATA section</a>.<span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E18">[E18]</a>They
+instruction</a>, or a <a title="CDATA Section" href="#dt-cdsection">CDATA section</a>.<span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E18">[E18]</a>They
 are also legal within the <a title="Literal Entity Value" href="#dt-litentval">literal entity value</a>
 of an internal entity declaration; see <a href="#wf-entities"><b>4.3.2 Well-Formed Parsed Entities</b></a>.</span> 
 If they are needed elsewhere, they must be <a title="escape" href="#dt-escape">escaped</a>
@@ -666,8 +585,7 @@ allowed by the grammar. They are not part of the document's <a title="Character 
 data</a>; an XML processor may, but need not, make it possible for an
 application to retrieve the text of comments. <a title="For Compatibility" href="#dt-compat">For
 compatibility</a>, the string &quot;<code>--</code>&quot; (double-hyphen)
-must not occur within comments.] <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E63">[E63]</a>Parameter
+must not occur within comments.] <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E63">[E63]</a>Parameter
 entity references are not recognized within comments.</span>
 </p>
 
@@ -712,8 +630,7 @@ following example is <em>not</em> well-formed.</p></div>
 <a name="NT-PITarget"></a>[17]   </td>
 <td><code>PITarget</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Name">Name</a> - (('X' | 'x') ('M' |
+<td><code><a href="#NT-Name">Name</a> - (('X' | 'x') ('M' |
 'm') ('L' | 'l'))</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
@@ -724,8 +641,7 @@ with a target (<a href="#NT-PITarget">PITarget</a>) used to identify the applica
 to which the instruction is directed. The target names &quot;<code>XML</code>&quot;, &quot;<code>xml</code>&quot;,
 and so on are reserved for standardization in this or future versions of this
 specification. The XML <a title="Notation" href="#dt-notation">Notation</a> mechanism
-may be used for formal declaration of PI targets. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E63">[E63]</a>Parameter
+may be used for formal declaration of PI targets. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E63">[E63]</a>Parameter
 entity references are not recognized within processing instructions.</span>
 </p>
 </div>
@@ -746,9 +662,7 @@ and end with the string &quot;<code>]]&gt;</code>&quot;:]</p>
 <a name="NT-CDSect"></a>[18]   </td>
 <td><code>CDSect</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-CDStart">CDStart</a> <a href="#NT-CData">CData</a> <a href="#NT-CDEnd">CDEnd</a>
-</code></td>
+<td><code><a href="#NT-CDStart">CDStart</a> <a href="#NT-CData">CData</a> <a href="#NT-CDEnd">CDEnd</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -789,8 +703,7 @@ and &quot;<code>&lt;/greeting&gt;</code>&quot; are recognized as <a title="Chara
 
 <h3>
 <a name="sec-prolog-dtd"></a>2.8 Prolog and Document Type Declaration</h3>
-<p>[<a name="dt-xmldecl" title="XML Declaration">Definition</a>: XML documents <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E107">[E107]</a>should</span>
+<p>[<a name="dt-xmldecl" title="XML Declaration">Definition</a>: XML documents <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E107">[E107]</a>should</span>
 begin with an <b>XML declaration</b> which specifies the version of
 XML being used.] For example, the following is a complete XML document, <a title="Well-Formed" href="#dt-wellformed">well-formed</a> but not <a title="Validity" href="#dt-valid">valid</a>:</p>
 <table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>&lt;?xml version=&quot;1.0&quot;?&gt; &lt;greeting&gt;Hello, world!&lt;/greeting&gt; </pre></td></tr></table>
@@ -824,8 +737,7 @@ in the document.</p>
 <a name="NT-prolog"></a>[22]   </td>
 <td><code>prolog</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-XMLDecl">XMLDecl</a>? <a href="#NT-Misc">Misc</a>*
+<td><code><a href="#NT-XMLDecl">XMLDecl</a>? <a href="#NT-Misc">Misc</a>*
 (<a href="#NT-doctypedecl">doctypedecl</a> <a href="#NT-Misc">Misc</a>*)?</code></td>
 <xsltdebug></xsltdebug>
 </tr>
@@ -842,11 +754,9 @@ in the document.</p>
 <a name="NT-VersionInfo"></a>[24]   </td>
 <td class="diff-chg"><code>VersionInfo</code></td>
 <td class="diff-chg">   ::=   </td>
-<td class="diff-chg"><code>
-<a href="#NT-S">S</a> 'version' <a href="#NT-Eq">Eq</a>
+<td class="diff-chg"><code><a href="#NT-S">S</a> 'version' <a href="#NT-Eq">Eq</a>
 (&quot;'&quot; <a href="#NT-VersionNum">VersionNum</a> &quot;'&quot; | '&quot;' <a href="#NT-VersionNum">VersionNum</a>
-'&quot;')<i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E15">[E15]</a> */</i>
-</code></td>
+'&quot;')<i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E15">[E15]</a> */</i></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -854,8 +764,7 @@ in the document.</p>
 <a name="NT-Eq"></a>[25]   </td>
 <td><code>Eq</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a>? '=' <a href="#NT-S">S</a>?</code></td>
+<td><code><a href="#NT-S">S</a>? '=' <a href="#NT-S">S</a>?</code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -871,10 +780,8 @@ in the document.</p>
 <a name="NT-Misc"></a>[27]   </td>
 <td><code>Misc</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Comment">Comment</a> | <a href="#NT-PI">PI</a>
-| <a href="#NT-S">S</a>
-</code></td>
+<td><code><a href="#NT-Comment">Comment</a> | <a href="#NT-PI">PI</a>
+| <a href="#NT-S">S</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 </tbody></table>
@@ -890,8 +797,7 @@ is an <a title="Element Type declaration" href="#dt-eldecl">element type declara
 declaration</a>, or a <a title="Notation Declaration" href="#dt-notdecl">notation declaration</a>.]
 These declarations may be contained in whole or in part within <a title="Parameter entity" href="#dt-PE">parameter
 entities</a>, as described in the well-formedness and validity constraints
-below. For <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E14">[E14]</a>further</span>
+below. For <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E14">[E14]</a>further</span>
 information, see <a href="#sec-physical-struct"><b>4 Physical Structures</b></a>.</p>
 
 <h5>Document Type Definition</h5>
@@ -905,8 +811,7 @@ information, see <a href="#sec-physical-struct"><b>4 Physical Structures</b></a>
 (<a href="#NT-S">S</a> <a href="#NT-ExternalID">ExternalID</a>)? <a href="#NT-S">S</a>?
 ('[' (<a href="#NT-markupdecl">markupdecl</a> | <a href="#NT-DeclSep">DeclSep</a>)*
 ']' <a href="#NT-S">S</a>?)? '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-roottype">[VC: Root Element Type]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-roottype">[VC: Root Element Type]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -928,11 +833,8 @@ Subset]</a></td>
 <a name="NT-DeclSep"></a>[28]   </td>
 <td class="diff-add"><code>DeclSep</code></td>
 <td class="diff-add">   ::=   </td>
-<td class="diff-add"><code>
-<a href="#NT-PEReference">PEReference</a> | <a href="#NT-S">S</a>
-</code></td>
-<xsltdebug></xsltdebug>
-<td class="diff-add"><a href="#PE-between-Decls">[WFC: PE
+<td class="diff-add"><code><a href="#NT-PEReference">PEReference</a> | <a href="#NT-S">S</a></code></td>
+<xsltdebug></xsltdebug><td class="diff-add"><a href="#PE-between-Decls">[WFC: PE
 Between Declarations]</a></td>
 </tr>
 <tr valign="baseline">
@@ -947,11 +849,9 @@ Between Declarations]</a></td>
 <a name="NT-markupdecl"></a>[29]   </td>
 <td><code>markupdecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-elementdecl">elementdecl</a> | <a href="#NT-AttlistDecl">AttlistDecl</a> | <a href="#NT-EntityDecl">EntityDecl</a>
+<td><code><a href="#NT-elementdecl">elementdecl</a> | <a href="#NT-AttlistDecl">AttlistDecl</a> | <a href="#NT-EntityDecl">EntityDecl</a>
 | <a href="#NT-NotationDecl">NotationDecl</a> | <a href="#NT-PI">PI</a> | <a href="#NT-Comment">Comment</a> </code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-PEinMarkupDecl">[VC: Proper Declaration/PE Nesting]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-PEinMarkupDecl">[VC: Proper Declaration/PE Nesting]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -979,16 +879,14 @@ They are also recognized in entity value literals. The use of parameter entities
 in the internal subset is restricted as described below.</p></div>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-roottype"></a>
-<b>Validity constraint: Root Element Type</b>
+<a name="vc-roottype"></a><b>Validity constraint: Root Element Type</b>
 </p>
 <p>The <a href="#NT-Name">Name</a>
 in the document type declaration must match the element type of the <a title="Root Element" href="#dt-root">root element</a>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-PEinMarkupDecl"></a>
-<b>Validity constraint: Proper Declaration/PE Nesting</b>
+<a name="vc-PEinMarkupDecl"></a><b>Validity constraint: Proper Declaration/PE Nesting</b>
 </p>
 <p>Parameter-entity <a title="Replacement Text" href="#dt-repltext">replacement text</a>
 must be properly nested with markup declarations. That is to say, if either
@@ -998,8 +896,7 @@ reference</a>, both must be contained in the same replacement text.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="wfc-PEinInternalSubset"></a>
-<b>Well-formedness constraint: PEs in Internal Subset</b>
+<a name="wfc-PEinInternalSubset"></a><b>Well-formedness constraint: PEs in Internal Subset</b>
 </p>
 <p>In
 the internal DTD subset, <a title="Parameter-entity reference" href="#dt-PERef">parameter-entity references</a>
@@ -1009,29 +906,24 @@ or to the external subset.)</p>
 </div>
 <div class="diff-add"><div class="constraint">
 <p class="prefix">
-<a name="ExtSubset"></a>
-<b>Well-formedness constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>External
+<a name="ExtSubset"></a><b>Well-formedness constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>External
 Subset</b>
 </p>
 <p>The external subset, if any, must match the production for <a href="#NT-extSubset">extSubset</a>.</p>
 </div></div>
 <div class="diff-add"><div class="constraint">
 <p class="prefix">
-<a name="PE-between-Decls"></a>
-<b>Well-formedness constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>PE
+<a name="PE-between-Decls"></a><b>Well-formedness constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>PE
 Between Declarations</b>
 </p>
 <p>The replacement text of a parameter entity reference
 in a <a href="#NT-DeclSep">DeclSep</a> must match the production <a href="#NT-extSubsetDecl">extSubsetDecl</a>.</p>
 </div></div>
 <p>Like the internal subset, the external subset and any external parameter
-entities <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>referenced
-in a <a href="#NT-DeclSep">DeclSep</a>
-</span> must consist of a series of
+entities <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>referenced
+in a <a href="#NT-DeclSep">DeclSep</a></span> must consist of a series of
 complete markup declarations of the types allowed by the non-terminal symbol <a href="#NT-markupdecl">markupdecl</a>, interspersed with white space or <a title="Parameter-entity reference" href="#dt-PERef">parameter-entity references</a>. However, portions of
-the contents of the external subset or of <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>these </span>
+the contents of the external subset or of <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>these </span>
 external parameter entities may conditionally be ignored by using the <a title="conditional section" href="#dt-cond-section">conditional section</a> construct; this is not
 allowed in the internal subset.</p>
 
@@ -1042,9 +934,7 @@ allowed in the internal subset.</p>
 <a name="NT-extSubset"></a>[30]   </td>
 <td><code>extSubset</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-extSubsetDecl">extSubsetDecl</a>
-</code></td>
+<td><code><a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-extSubsetDecl">extSubsetDecl</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -1053,8 +943,7 @@ allowed in the internal subset.</p>
 <td class="diff-chg"><code>extSubsetDecl</code></td>
 <td class="diff-chg">   ::=   </td>
 <td class="diff-chg"><code>( <a href="#NT-markupdecl">markupdecl</a> | <a href="#NT-conditionalSect">conditionalSect</a> | <a href="#NT-DeclSep">DeclSep</a>)*</code></td>
-<xsltdebug></xsltdebug>
-<td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a> */</i></td>
+<xsltdebug></xsltdebug><td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a> */</i></td>
 </tr>
 </tbody></table>
 <p>The external subset and external parameter entities also differ from the
@@ -1064,8 +953,7 @@ not only <em>between</em> markup declarations.</p>
 <p>An example of an XML document with a document type declaration:</p>
 <table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>&lt;?xml version=&quot;1.0&quot;?&gt; &lt;!DOCTYPE greeting SYSTEM &quot;hello.dtd&quot;&gt; &lt;greeting&gt;Hello, world!&lt;/greeting&gt; </pre></td></tr></table>
 <p>The <a title="System Identifier" href="#dt-sysid">system identifier</a> &quot;<code>hello.dtd</code>&quot;
-gives the <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E78">[E78]</a>address
+gives the <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E78">[E78]</a>address
 (a URI reference)</span> of a DTD for the document.</p>
 <p>The declarations can also be given locally, as in this example:</p>
 <table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
@@ -1087,9 +975,7 @@ an <a title="XML Processor" href="#dt-xml-proc">XML processor</a> to an applicat
 are attribute defaults and entity declarations. The standalone document declaration,
 which may appear as a component of the XML declaration, signals whether or
 not there are such declarations which appear external to the <a title="Document Entity" href="#dt-docent">document
-entity</a>
-<span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E64">[E64]</a>
+entity</a><span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E64">[E64]</a>
 or in parameter entities. [<a name="dt-extmkpdecl" title="External Markup Declaration">Definition</a>: An <b>external
 markup declaration</b> is defined as a markup declaration occurring in
 the external subset or in a parameter entity (external or internal, the latter
@@ -1106,15 +992,11 @@ them).]</span>
 <td>   ::=   </td>
 <td><code> <a href="#NT-S">S</a> 'standalone' <a href="#NT-Eq">Eq</a>
 ((&quot;'&quot; ('yes' | 'no') &quot;'&quot;) | ('&quot;' ('yes' | 'no') '&quot;')) </code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-check-rmd">[VC: Standalone Document Declaration]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-check-rmd">[VC: Standalone Document Declaration]</a></td>
 </tr>
 </tbody></table>
 <p>In a standalone document declaration, the value &quot;yes&quot; indicates
-that there are no <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E64">[E64]</a>
-<a title="External Markup Declaration" href="#dt-extmkpdecl">external markup declarations</a>
-</span> which
+that there are no <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E64">[E64]</a><a title="External Markup Declaration" href="#dt-extmkpdecl">external markup declarations</a></span> which
 affect the information passed from the XML processor to the application. The
 value &quot;no&quot; indicates that there are or may be such external
 markup declarations. Note that the standalone document declaration only denotes
@@ -1129,8 +1011,7 @@ algorithmically to a standalone document, which may be desirable for some
 network delivery applications.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-check-rmd"></a>
-<b>Validity constraint: Standalone Document Declaration</b>
+<a name="vc-check-rmd"></a><b>Validity constraint: Standalone Document Declaration</b>
 </p>
 <p>The
 standalone document declaration must have the value &quot;no&quot; if
@@ -1160,8 +1041,7 @@ if white space occurs directly within any instance of those types.</p></li>
 <h3>
 <a name="sec-white-space"></a>2.10 White Space Handling</h3>
 <p>In editing XML documents, it is often convenient to use &quot;white space&quot;
-(spaces, tabs, and blank lines<span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E39">[E39]</a>,
+(spaces, tabs, and blank lines<span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E39">[E39]</a>,
 denoted by the nonterminal <a href="#NT-S">S</a> in this specification</span>)
 to set apart the markup for greater readability. Such white space is typically
 not intended for inclusion in the delivered version of the document. On the
@@ -1177,8 +1057,7 @@ may be attached to an element to signal an intention that in that element,
 white space should be preserved by applications. In valid documents, this
 attribute, like any other, must be <a title="Attribute-List Declaration" href="#dt-attdecl">declared</a>
 if it is used. When declared, it must be given as an <a title="Enumerated Attribute Values" href="#dt-enumerated">enumerated
-type</a> whose <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E81">[E81]</a>values
+type</a> whose <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E81">[E81]</a>values
 are one or both of</span> &quot;default&quot; and &quot;preserve&quot;.
 For example:</p>
 <div class="diff-chg"><table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td class="diff-chg"><pre>&lt;!ATTLIST poem  xml:space (default|preserve) 'preserve'&gt;
@@ -1229,8 +1108,7 @@ language in which the content is written. A special <a title="Attribute" href="#
 named <code>xml:lang</code> may be inserted in documents to specify the language
 used in the contents and attribute values of any element in an XML document.
 In valid documents, this attribute, like any other, must be <a title="Attribute-List Declaration" href="#dt-attdecl">declared</a>
-if it is used. <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E73">[E73]</a>The
+if it is used. <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E73">[E73]</a>The
 values of the attribute are language identifiers as defined by <a href="#RFC1766">[IETF RFC 1766]</a>, <cite>Tags
 for the Identification of Languages</cite>, or its successor on the IETF
 Standards Track.</span>
@@ -1238,13 +1116,9 @@ Standards Track.</span>
 <div class="diff-add"><div class="note">
 <p class="prefix"><b>Note:</b></p>
 <p>
-<a href="http://www.w3.org/XML/xml-19980210-errata#E73">[E73]</a>
-<a href="#RFC1766">[IETF RFC 1766]</a> tags are constructed from two-letter language codes as defined
+<a href="http://www.w3.org/XML/xml-19980210-errata#E73">[E73]</a><a href="#RFC1766">[IETF RFC 1766]</a> tags are constructed from two-letter language codes as defined
 by <a href="#ISO639">[ISO 639]</a>, from two-letter country codes as defined by <a href="#ISO3166">[ISO 3166]</a>, or from language identifiers registered with the Internet
-Assigned Numbers Authority <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E58">[E58]</a>
-<span class="diff-chg"><a href="#IANA-LANGCODES">[IANA-LANGCODES]</a></span>
-</span>. It is expected that the successor
+Assigned Numbers Authority <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E58">[E58]</a><span class="diff-chg"><a href="#IANA-LANGCODES">[IANA-LANGCODES]</a></span></span>. It is expected that the successor
 to <a href="#RFC1766">[IETF RFC 1766]</a> will introduce three-letter language codes for
 languages not presently covered by <a href="#ISO639">[ISO 639]</a>.</p>
 </div></div>
@@ -1259,8 +1133,7 @@ languages not presently covered by <a href="#ISO639">[ISO 639]</a>.</p>
 <a name="NT-LanguageID"></a>[33]   </td>
 <td class="diff-del"><code>LanguageID</code></td>
 <td class="diff-del">   ::=   </td>
-<td class="diff-del"><code>
-<a href="#NT-Langcode">Langcode</a> ('-' <a href="#NT-Subcode">Subcode</a>)*</code></td>
+<td class="diff-del"><code><a href="#NT-Langcode">Langcode</a> ('-' <a href="#NT-Subcode">Subcode</a>)*</code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -1268,10 +1141,8 @@ languages not presently covered by <a href="#ISO639">[ISO 639]</a>.</p>
 <a name="NT-Langcode"></a>[34]   </td>
 <td class="diff-del"><code>Langcode</code></td>
 <td class="diff-del">   ::=   </td>
-<td class="diff-del"><code>
-<a href="#NT-ISO639Code">ISO639Code</a> | <a href="#NT-IanaCode">IanaCode</a>
-| <a href="#NT-UserCode">UserCode</a>
-</code></td>
+<td class="diff-del"><code><a href="#NT-ISO639Code">ISO639Code</a> | <a href="#NT-IanaCode">IanaCode</a>
+| <a href="#NT-UserCode">UserCode</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -1387,8 +1258,7 @@ and a <a title="Attribute Value" href="#dt-attrval">value</a>.</p>
 <td></td>
 <td></td>
 <td></td>
-<td><code>| <a href="#NT-STag">STag</a> <a href="#NT-content">content</a> <a href="#NT-ETag">ETag</a>
-</code></td>
+<td><code>| <a href="#NT-STag">STag</a> <a href="#NT-content">content</a> <a href="#NT-ETag">ETag</a></code></td>
 <td><a href="#GIMatch">[WFC: Element Type Match]</a></td>
 </tr>
 <tr valign="baseline">
@@ -1405,16 +1275,14 @@ a match to <code>(('X'|'x')('M'|'m')('L'|'l'))</code> are reserved for standardi
 in this or future versions of this specification.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="GIMatch"></a>
-<b>Well-formedness constraint: Element Type Match</b>
+<a name="GIMatch"></a><b>Well-formedness constraint: Element Type Match</b>
 </p>
 <p>The <a href="#NT-Name">Name</a>
 in an element's end-tag must match the element type in the start-tag.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="elementvalid"></a>
-<b>Validity constraint: Element Valid</b>
+<a name="elementvalid"></a><b>Validity constraint: Element Valid</b>
 </p>
 <p>An element is valid
 if there is a declaration matching <a href="#NT-elementdecl">elementdecl</a>
@@ -1426,8 +1294,7 @@ the following holds:</p>
 sequence of <a title="Parent/Child" href="#dt-parentchild">child elements</a> belongs
 to the language generated by the regular expression in the content model,
 with optional white space (characters matching the nonterminal <a href="#NT-S">S</a>)
-between <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E59">[E59]</a>the
+between <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E59">[E59]</a>the
 start-tag and the first child element, between child elements, or between
 the last child element and the end-tag. Note that a CDATA section containing
 only white space does not match the nonterminal <a href="#NT-S">S</a>, and
@@ -1454,19 +1321,15 @@ XML element is marked by a <b>start-tag</b>.]</p>
 <td><code>STag</code></td>
 <td>   ::=   </td>
 <td><code>'&lt;' <a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Attribute">Attribute</a>)* <a href="#NT-S">S</a>? '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
+<xsltdebug></xsltdebug><td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
 </tr>
 <tr valign="baseline">
 <td>
 <a name="NT-Attribute"></a>[41]   </td>
 <td><code>Attribute</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Name">Name</a> <a href="#NT-Eq">Eq</a> <a href="#NT-AttValue">AttValue</a>
-</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#ValueType">[VC: Attribute Value Type]</a></td>
+<td><code><a href="#NT-Name">Name</a> <a href="#NT-Eq">Eq</a> <a href="#NT-AttValue">AttValue</a></code></td>
+<xsltdebug></xsltdebug><td><a href="#ValueType">[VC: Attribute Value Type]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1487,23 +1350,20 @@ XML element is marked by a <b>start-tag</b>.]</p>
 pairs are referred to as the <b>attribute specifications</b> of the
 element], [<a name="dt-attrname" title="Attribute Name">Definition</a>: with the <a href="#NT-Name">Name</a> in each pair referred to as the <b>attribute name</b>]
 and [<a name="dt-attrval" title="Attribute Value">Definition</a>: the content of the <a href="#NT-AttValue">AttValue</a> (the text between the <code>'</code> or <code>&quot;</code>
-delimiters) as the <b>attribute value</b>.]<span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E46">[E46]</a>Note
+delimiters) as the <b>attribute value</b>.]<span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E46">[E46]</a>Note
 that the order of attribute specifications in a start-tag or empty-element
 tag is not significant.</span>
 </p>
 <div class="constraint">
 <p class="prefix">
-<a name="uniqattspec"></a>
-<b>Well-formedness constraint: Unique Att Spec</b>
+<a name="uniqattspec"></a><b>Well-formedness constraint: Unique Att Spec</b>
 </p>
 <p>No attribute name
 may appear more than once in the same start-tag or empty-element tag.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="ValueType"></a>
-<b>Validity constraint: Attribute Value Type</b>
+<a name="ValueType"></a><b>Validity constraint: Attribute Value Type</b>
 </p>
 <p>The attribute must
 have been declared; the value must be of the type declared for it. (For attribute
@@ -1511,20 +1371,17 @@ types, see <a href="#attdecls"><b>3.3 Attribute-List Declarations</b></a>.)</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="NoExternalRefs"></a>
-<b>Well-formedness constraint: No External Entity References</b>
+<a name="NoExternalRefs"></a><b>Well-formedness constraint: No External Entity References</b>
 </p>
 <p>Attribute
 values cannot contain direct or indirect entity references to external entities.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="CleanAttrVals"></a>
-<b>Well-formedness constraint: No <code>&lt;</code> in Attribute Values</b>
+<a name="CleanAttrVals"></a><b>Well-formedness constraint: No <code>&lt;</code> in Attribute Values</b>
 </p>
 <p>The <a title="Replacement Text" href="#dt-repltext">replacement text</a> of any entity
-referred to directly or indirectly in an attribute value <span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E83">[E83]</a>(other
+referred to directly or indirectly in an attribute value <span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E83">[E83]</a>(other
 than &quot;<code>&amp;lt;</code>&quot;) </span>must not contain a <code>&lt;</code>.</p>
 </div>
 <p>An example of a start-tag:</p>
@@ -1557,12 +1414,10 @@ between the start-tag and end-tag is called the element's <b>content</b>:]</p>
 <a name="NT-content"></a>[43]   </td>
 <td class="diff-chg"><code>content</code></td>
 <td class="diff-chg">   ::=   </td>
-<td class="diff-chg"><code>
-<a href="#NT-CharData">CharData</a>? ((<a href="#NT-element">element</a>
+<td class="diff-chg"><code><a href="#NT-CharData">CharData</a>? ((<a href="#NT-element">element</a>
 | <a href="#NT-Reference">Reference</a> | <a href="#NT-CDSect">CDSect</a>
 | <a href="#NT-PI">PI</a> | <a href="#NT-Comment">Comment</a>) <a href="#NT-CharData">CharData</a>?)*</code></td>
-<xsltdebug></xsltdebug>
-<td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E71">[E71]</a> */</i></td>
+<xsltdebug></xsltdebug><td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E71">[E71]</a> */</i></td>
 </tr>
 </tbody></table>
 <p>
@@ -1580,14 +1435,12 @@ tag</b> takes a special form:]</p>
 <td><code>EmptyElemTag</code></td>
 <td>   ::=   </td>
 <td><code>'&lt;' <a href="#NT-Name">Name</a> (<a href="#NT-S">S</a> <a href="#NT-Attribute">Attribute</a>)* <a href="#NT-S">S</a>? '/&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
+<xsltdebug></xsltdebug><td><a href="#uniqattspec">[WFC: Unique Att Spec]</a></td>
 </tr>
 </tbody></table>
 <p>Empty-element tags may be used for any element which has no content, whether
 or not it is declared using the keyword <b>EMPTY</b>. <a title="For interoperability" href="#dt-interop">For
-interoperability</a>, the empty-element tag <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E45">[E45]</a>should
+interoperability</a>, the empty-element tag <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E45">[E45]</a>should
 be used, and should only be used,</span> for elements which are declared
 EMPTY.</p>
 <p>Examples of empty elements:</p>
@@ -1619,8 +1472,7 @@ type declaration</b> takes the form:]</p>
 <td>   ::=   </td>
 <td><code>'&lt;!ELEMENT' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> <a href="#NT-contentspec">contentspec</a> <a href="#NT-S">S</a>?
 '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#EDUnique">[VC: Unique Element Type Declaration]</a></td>
+<xsltdebug></xsltdebug><td><a href="#EDUnique">[VC: Unique Element Type Declaration]</a></td>
 </tr>
 <tr valign="baseline">
 <td>
@@ -1635,8 +1487,7 @@ type declaration</b> takes the form:]</p>
 <p>where the <a href="#NT-Name">Name</a> gives the element type being declared.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="EDUnique"></a>
-<b>Validity constraint: Unique Element Type Declaration</b>
+<a name="EDUnique"></a><b>Validity constraint: Unique Element Type Declaration</b>
 </p>
 <p>No element
 type may be declared more than once.</p>
@@ -1653,11 +1504,8 @@ type may be declared more than once.</p>
 <p>[<a name="dt-elemcontent" title="Element content">Definition</a>: An element <a title="Start-Tag" href="#dt-stag">type</a> has <b>element content</b> when elements
 of that type must contain only <a title="Parent/Child" href="#dt-parentchild">child</a>
 elements (no character data), optionally separated by white space (characters
-matching the nonterminal <a href="#NT-S">S</a>).][<a name="dt-content-model" title="Content model">Definition</a>: In this case, the constraint includes a <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E55">[E55]</a>
-<b>content
-model</b>
-</span>, a simple grammar governing the allowed types of the
+matching the nonterminal <a href="#NT-S">S</a>).][<a name="dt-content-model" title="Content model">Definition</a>: In this case, the constraint includes a <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E55">[E55]</a><b>content
+model</b></span>, a simple grammar governing the allowed types of the
 child elements and the order in which they are allowed to appear.]
 The grammar is built on content particles (<a href="#NT-cp">cp</a>s), which
 consist of names, choice lists of content particles, or sequence lists of
@@ -1689,8 +1537,7 @@ content particles:</p>
 <td class="diff-chg"><code>choice</code></td>
 <td class="diff-chg">   ::=   </td>
 <td class="diff-chg"><code>'(' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> ( <a href="#NT-S">S</a>? '|' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> )+ <a href="#NT-S">S</a>? ')'</code></td>
-<xsltdebug></xsltdebug>
-<td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E50">[E50]</a> */</i></td>
+<xsltdebug></xsltdebug><td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E50">[E50]</a> */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1712,8 +1559,7 @@ content particles:</p>
 <td class="diff-chg"><code>seq</code></td>
 <td class="diff-chg">   ::=   </td>
 <td class="diff-chg"><code>'(' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> ( <a href="#NT-S">S</a>? ',' <a href="#NT-S">S</a>? <a href="#NT-cp">cp</a> )* <a href="#NT-S">S</a>? ')'</code></td>
-<xsltdebug></xsltdebug>
-<td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E52">[E52]</a> */</i></td>
+<xsltdebug></xsltdebug><td class="diff-chg"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E52">[E52]</a> */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1745,18 +1591,15 @@ more information, see <a href="#determinism"><b>E Deterministic Content Models</
 
 <div class="constraint">
 <p class="prefix">
-<a name="vc-PEinGroup"></a>
-<b>Validity constraint: Proper Group/PE Nesting</b>
+<a name="vc-PEinGroup"></a><b>Validity constraint: Proper Group/PE Nesting</b>
 </p>
-<p>Parameter-entity <a title="Replacement Text" href="#dt-repltext">replacement text</a> must be properly nested with <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E11">[E11]</a>parenthesized</span>
+<p>Parameter-entity <a title="Replacement Text" href="#dt-repltext">replacement text</a> must be properly nested with <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E11">[E11]</a>parenthesized</span>
 groups. That is to say, if either of the opening or closing parentheses in
 a <a href="#NT-choice">choice</a>, <a href="#NT-seq">seq</a>, or <a href="#NT-Mixed">Mixed</a>
 construct is contained in the replacement text for a <a title="Parameter-entity reference" href="#dt-PERef">parameter
 entity</a>, both must be contained in the same replacement text.</p>
 <div class="diff-chg"><p>
-<a href="http://www.w3.org/XML/xml-19980210-errata#E19">[E19]</a>
-<a title="For interoperability" href="#dt-interop">For interoperability</a>, if a parameter-entity reference
+<a href="http://www.w3.org/XML/xml-19980210-errata#E19">[E19]</a><a title="For interoperability" href="#dt-interop">For interoperability</a>, if a parameter-entity reference
 appears in a <a href="#NT-choice">choice</a>, <a href="#NT-seq">seq</a>, or <a href="#NT-Mixed">Mixed</a> construct, its replacement text should contain at
 least one non-blank character, and neither the first nor last non-blank character
 of the replacement text should be a connector (<code>|</code> or <code>,</code>).</p></div>
@@ -1804,15 +1647,13 @@ but not their order or their number of occurrences:</p>
 </tr>
 </tbody></table>
 <p>where the <a href="#NT-Name">Name</a>s give the types of elements that
-may appear as children. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E10">[E10]</a>The
+may appear as children. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E10">[E10]</a>The
 keyword <b>#PCDATA</b> derives historically from the term &quot;parsed
 character data.&quot;</span>
 </p>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-MixedChildrenUnique"></a>
-<b>Validity constraint: No Duplicate Types</b>
+<a name="vc-MixedChildrenUnique"></a><b>Validity constraint: No Duplicate Types</b>
 </p>
 <p>The
 same name must not appear more than once in a single mixed-content declaration.</p>
@@ -1860,9 +1701,7 @@ of each attribute associated with a given element type:]</p>
 <a name="NT-AttDef"></a>[53]   </td>
 <td><code>AttDef</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> <a href="#NT-AttType">AttType</a> <a href="#NT-S">S</a> <a href="#NT-DefaultDecl">DefaultDecl</a>
-</code></td>
+<td><code><a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> <a href="#NT-AttType">AttType</a> <a href="#NT-S">S</a> <a href="#NT-DefaultDecl">DefaultDecl</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 </table>
@@ -1874,9 +1713,7 @@ rule is the name of the attribute.</p>
 <p>When more than one <a href="#NT-AttlistDecl">AttlistDecl</a> is provided
 for a given element type, the contents of all those provided are merged. When
 more than one definition is provided for the same attribute of a given element
-type, the first declaration is binding and later declarations are ignored. <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E9">[E9]</a>
-<a title="For interoperability" href="#dt-interop">For interoperability,</a> writers of DTDs may choose
+type, the first declaration is binding and later declarations are ignored. <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E9">[E9]</a><a title="For interoperability" href="#dt-interop">For interoperability,</a> writers of DTDs may choose
 to provide at most one attribute-list declaration for a given element type,
 at most one attribute definition for a given attribute name in an attribute-list
 declaration, and at least one attribute definition in each attribute-list
@@ -1890,8 +1727,7 @@ for a given attribute, but this is not an error.</p>
 <a name="sec-attribute-types"></a>3.3.1 Attribute Types</h4>
 <p>XML attribute types are of three kinds: a string type, a set of tokenized
 types, and enumerated types. The string type may take any literal string as
-a value; the tokenized types have varying lexical and semantic constraints<span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E8">[E8]</a>.
+a value; the tokenized types have varying lexical and semantic constraints<span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E8">[E8]</a>.
 The validity constraints noted in the grammar are applied after the attribute
 value has been normalized as described in <a href="#attdecls"><b>3.3 Attribute-List Declarations</b></a>.</span>
 </p>
@@ -1903,8 +1739,7 @@ value has been normalized as described in <a href="#attdecls"><b>3.3 Attribute-L
 <a name="NT-AttType"></a>[54]   </td>
 <td><code>AttType</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-StringType">StringType</a> | <a href="#NT-TokenizedType">TokenizedType</a>
+<td><code><a href="#NT-StringType">StringType</a> | <a href="#NT-TokenizedType">TokenizedType</a>
 | <a href="#NT-EnumeratedType">EnumeratedType</a> </code></td>
 <xsltdebug></xsltdebug>
 </tr>
@@ -1922,8 +1757,7 @@ value has been normalized as described in <a href="#attdecls"><b>3.3 Attribute-L
 <td><code>TokenizedType</code></td>
 <td>   ::=   </td>
 <td><code>'ID'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#id">[VC: ID]</a></td>
+<xsltdebug></xsltdebug><td><a href="#id">[VC: ID]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -1984,8 +1818,7 @@ value has been normalized as described in <a href="#attdecls"><b>3.3 Attribute-L
 </tbody></table>
 <div class="constraint">
 <p class="prefix">
-<a name="id"></a>
-<b>Validity constraint: ID</b>
+<a name="id"></a><b>Validity constraint: ID</b>
 </p>
 <p>Values of type <b>ID</b> must match the <a href="#NT-Name">Name</a> production. A name must not appear more than once
 in an XML document as a value of this type; i.e., ID values must uniquely
@@ -1993,24 +1826,21 @@ identify the elements which bear them.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="one-id-per-el"></a>
-<b>Validity constraint: One ID per Element Type</b>
+<a name="one-id-per-el"></a><b>Validity constraint: One ID per Element Type</b>
 </p>
 <p>No element
 type may have more than one ID attribute specified.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="id-default"></a>
-<b>Validity constraint: ID Attribute Default</b>
+<a name="id-default"></a><b>Validity constraint: ID Attribute Default</b>
 </p>
 <p>An ID attribute
 must have a declared default of <b>#IMPLIED</b> or <b>#REQUIRED</b>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="idref"></a>
-<b>Validity constraint: IDREF</b>
+<a name="idref"></a><b>Validity constraint: IDREF</b>
 </p>
 <p>Values of type <b>IDREF</b> must
 match the <a href="#NT-Name">Name</a> production, and values of type <b>IDREFS</b>
@@ -2020,8 +1850,7 @@ i.e. <b>IDREF</b> values must match the value of some ID attribute.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="entname"></a>
-<b>Validity constraint: Entity Name</b>
+<a name="entname"></a><b>Validity constraint: Entity Name</b>
 </p>
 <p>Values of type <b>ENTITY</b>
 must match the <a href="#NT-Name">Name</a> production, values of type <b>ENTITIES</b>
@@ -2031,8 +1860,7 @@ declared in the <a title="Document Type Declaration" href="#dt-doctype">DTD</a>.
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="nmtok"></a>
-<b>Validity constraint: Name Token</b>
+<a name="nmtok"></a><b>Validity constraint: Name Token</b>
 </p>
 <p>Values of type <b>NMTOKEN</b>
 must match the <a href="#NT-Nmtoken">Nmtoken</a> production; values of type <b>NMTOKENS</b>
@@ -2049,8 +1877,7 @@ provided in the declaration]. There are two kinds of enumerated types:</p>
 <a name="NT-EnumeratedType"></a>[57]   </td>
 <td><code>EnumeratedType</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-NotationType">NotationType</a>
+<td><code><a href="#NT-NotationType">NotationType</a>
 | <a href="#NT-Enumeration">Enumeration</a> </code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
@@ -2061,8 +1888,7 @@ provided in the declaration]. There are two kinds of enumerated types:</p>
 <td><code>NotationType</code></td>
 <td>   ::=   </td>
 <td><code>'NOTATION' <a href="#NT-S">S</a> '(' <a href="#NT-S">S</a>? <a href="#NT-Name">Name</a> (<a href="#NT-S">S</a>? '|' <a href="#NT-S">S</a>? <a href="#NT-Name">Name</a>)* <a href="#NT-S">S</a>? ')' </code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#notatn">[VC: Notation Attributes]</a></td>
+<xsltdebug></xsltdebug><td><a href="#notatn">[VC: Notation Attributes]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2088,8 +1914,7 @@ Notation on Empty Element]</a></td>
 <td>   ::=   </td>
 <td><code>'(' <a href="#NT-S">S</a>? <a href="#NT-Nmtoken">Nmtoken</a>
 (<a href="#NT-S">S</a>? '|' <a href="#NT-S">S</a>? <a href="#NT-Nmtoken">Nmtoken</a>)* <a href="#NT-S">S</a>? ')'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#enum">[VC: Enumeration]</a></td>
+<xsltdebug></xsltdebug><td><a href="#enum">[VC: Enumeration]</a></td>
 </tr></tbody>
 </table>
 <p>A <b>NOTATION</b> attribute identifies a <a title="Notation" href="#dt-notation">notation</a>,
@@ -2097,8 +1922,7 @@ declared in the DTD with associated system and/or public identifiers, to be
 used in interpreting the element to which the attribute is attached.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="notatn"></a>
-<b>Validity constraint: Notation Attributes</b>
+<a name="notatn"></a><b>Validity constraint: Notation Attributes</b>
 </p>
 <p>Values of this type
 must match one of the <a href="#Notations"><cite>notation</cite></a> names
@@ -2107,8 +1931,7 @@ declared.</p>
 </div>
 <div class="diff-add"><div class="constraint">
 <p class="prefix">
-<a name="OneNotationPer"></a>
-<b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E7">[E7]</a>One
+<a name="OneNotationPer"></a><b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E7">[E7]</a>One
 Notation Per Element Type</b>
 </p>
 <p>No element type may have more than one <b>NOTATION</b>
@@ -2116,8 +1939,7 @@ attribute specified.</p>
 </div></div>
 <div class="diff-add"><div class="constraint">
 <p class="prefix">
-<a name="NoNotationEmpty"></a>
-<b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E68">[E68]</a>No
+<a name="NoNotationEmpty"></a><b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E68">[E68]</a>No
 Notation on Empty Element</b>
 </p>
 <p>
@@ -2127,8 +1949,7 @@ declared <b>EMPTY</b>.</p>
 </div></div>
 <div class="constraint">
 <p class="prefix">
-<a name="enum"></a>
-<b>Validity constraint: Enumeration</b>
+<a name="enum"></a><b>Validity constraint: Enumeration</b>
 </p>
 <p>Values of this type must match
 one of the <a href="#NT-Nmtoken">Nmtoken</a> tokens in the declaration.</p>
@@ -2194,8 +2015,7 @@ an omitted attribute, it is to behave as though the attribute were present
 with the declared default value.]</p>
 <div class="constraint">
 <p class="prefix">
-<a name="RequiredAttr"></a>
-<b>Validity constraint: Required Attribute</b>
+<a name="RequiredAttr"></a><b>Validity constraint: Required Attribute</b>
 </p>
 <p>If the default
 declaration is the keyword <b>#REQUIRED</b>, then the attribute must be
@@ -2203,8 +2023,7 @@ specified for all elements of the type in the attribute-list declaration.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="defattrvalid"></a>
-<b>Validity constraint: Attribute Default Legal</b>
+<a name="defattrvalid"></a><b>Validity constraint: Attribute Default Legal</b>
 </p>
 <p>The declared
 default value must meet the lexical constraints of the declared attribute
@@ -2212,8 +2031,7 @@ type.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="FixedAttr"></a>
-<b>Validity constraint: Fixed Attribute Default</b>
+<a name="FixedAttr"></a><b>Validity constraint: Fixed Attribute Default</b>
 </p>
 <p>If an attribute
 has a default value declared with the <b>#FIXED</b> keyword, instances of
@@ -2275,8 +2093,7 @@ an entity reference whose replacement text contains a white space character;
 being recursively processed, the white space character is replaced with a
 space character (#x20) in the normalized value.</p>
 <p>All attributes for which no declaration has been read should be treated
-by a non-validating <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>processor</span>
+by a non-validating <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>processor</span>
 as if declared <b>CDATA</b>.</p>
 <p>Following are examples of attribute normalization. Given the following
 declarations:</p>
@@ -2336,8 +2153,7 @@ the logical structure of the DTD based on the keyword which governs them.]</p>
 <a name="NT-conditionalSect"></a>[61]   </td>
 <td><code>conditionalSect</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-includeSect">includeSect</a> | <a href="#NT-ignoreSect">ignoreSect</a> </code></td>
+<td><code><a href="#NT-includeSect">includeSect</a> | <a href="#NT-ignoreSect">ignoreSect</a> </code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2347,8 +2163,7 @@ the logical structure of the DTD based on the keyword which governs them.]</p>
 <td>   ::=   </td>
 <td><code>'&lt;![' S? 'INCLUDE' S? '[' <a href="#NT-extSubsetDecl">extSubsetDecl</a>
 ']]&gt;' </code></td>
-<xsltdebug></xsltdebug>
-<td><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a> */</i></td>
+<xsltdebug></xsltdebug><td><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a> */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2365,8 +2180,7 @@ Conditional Section/PE Nesting]</a></td>
 <td>   ::=   </td>
 <td><code>'&lt;![' S? 'IGNORE' S? '[' <a href="#NT-ignoreSectContents">ignoreSectContents</a>*
 ']]&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a> */</i></td>
+<xsltdebug></xsltdebug><td><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a> */</i></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2381,8 +2195,7 @@ Conditional Section/PE Nesting]</a></td>
 <a name="NT-ignoreSectContents"></a>[64]   </td>
 <td><code>ignoreSectContents</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Ignore">Ignore</a> ('&lt;![' <a href="#NT-ignoreSectContents">ignoreSectContents</a> ']]&gt;' <a href="#NT-Ignore">Ignore</a>)*</code></td>
+<td><code><a href="#NT-Ignore">Ignore</a> ('&lt;![' <a href="#NT-ignoreSectContents">ignoreSectContents</a> ']]&gt;' <a href="#NT-Ignore">Ignore</a>)*</code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2390,16 +2203,14 @@ Conditional Section/PE Nesting]</a></td>
 <a name="NT-Ignore"></a>[65]   </td>
 <td><code>Ignore</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-Char">Char</a>* - (<a href="#NT-Char">Char</a>*
+<td><code><a href="#NT-Char">Char</a>* - (<a href="#NT-Char">Char</a>*
 ('&lt;![' | ']]&gt;') <a href="#NT-Char">Char</a>*) </code></td>
 <xsltdebug></xsltdebug>
 </tr>
 </tbody></table>
 <div class="diff-add"><div class="constraint">
 <p class="prefix">
-<a name="condsec-nesting"></a>
-<b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a>Proper
+<a name="condsec-nesting"></a><b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a>Proper
 Conditional Section/PE Nesting</b>
 </p>
 <p>If any of the &quot;<code>&lt;![</code>&quot;,
@@ -2413,8 +2224,7 @@ conditional sections, intermingled with white space.</p>
 <p>If the keyword of the conditional section is <b>INCLUDE</b>, then the
 contents of the conditional section are part of the DTD. If the keyword of
 the conditional section is <b>IGNORE</b>, then the contents of the conditional
-section are not logically part of the DTD. <span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a>Note that
+section are not logically part of the DTD. <span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E90">[E90]</a>Note that
 for reliable parsing, the contents of even ignored conditional sections must
 be read in order to detect nested conditional sections and ensure that the
 end of the outermost (ignored) conditional section is properly detected.</span>
@@ -2449,13 +2259,11 @@ decides whether to include or ignore the conditional section.</p>
 <h2>
 <a name="sec-physical-struct"></a>4 Physical Structures</h2>
 <p>[<a name="dt-entity" title="Entity">Definition</a>: An XML document may consist of one
-or many storage units. <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E6">[E6]</a>These
+or many storage units. <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E6">[E6]</a>These
 are called <b>entities</b>; they all have <b>content</b> and are
 all (except for the <a title="Document Entity" href="#dt-docent">document entity</a> and
 the <a title="Document Type Declaration" href="#dt-doctype">external DTD subset</a>) identified by
-entity <b>name</b>
-</span>.] Each XML document has one entity
+entity <b>name</b></span>.] Each XML document has one entity
 called the <a title="Document Entity" href="#dt-docent">document entity</a>, which serves
 as the starting point for the <a title="XML Processor" href="#dt-xml-proc">XML processor</a>
 and may contain the whole document.</p>
@@ -2465,8 +2273,7 @@ text</a>; this <a title="Text" href="#dt-text">text</a> is considered an
 integral part of the document.]</p>
 <p>[<a name="dt-unparsed" title="Unparsed Entity">Definition</a>: An <b>unparsed entity</b>
 is a resource whose contents may or may not be <a title="Text" href="#dt-text">text</a>,
-and if text, <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E25">[E25]</a>may
+and if text, <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E25">[E25]</a>may
 be other than</span> XML. Each unparsed entity has an associated <a title="Notation" href="#dt-notation">notation</a>, identified by name. Beyond a requirement
 that an XML processor make the identifiers for the entity and notation available
 to the application, XML places no constraints on the contents of unparsed
@@ -2476,11 +2283,8 @@ by name, given in the value of <b>ENTITY</b> or <b>ENTITIES</b> attributes.</p>
 <p>[<a name="gen-entity" title="general entity">Definition</a>: <b>General entities</b>
 are entities for use within the document content. In this specification, general
 entities are sometimes referred to with the unqualified term <em>entity</em>
-when this leads to no ambiguity.] [<a name="dt-PE" title="Parameter entity">Definition</a>: <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E53">[E53]</a>
-<b>Parameter
-entities</b>
-</span> are parsed entities for use within the DTD.]
+when this leads to no ambiguity.] [<a name="dt-PE" title="Parameter entity">Definition</a>: <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E53">[E53]</a><b>Parameter
+entities</b></span> are parsed entities for use within the DTD.]
 These two types of entities use different forms of reference and are recognized
 in different contexts. Furthermore, they occupy different namespaces; a parameter
 entity and a general entity with the same name are two distinct entities.</p>
@@ -2512,8 +2316,7 @@ set, for example one not directly accessible from available input devices.]</p>
 </tbody></table>
 <div class="constraint">
 <p class="prefix">
-<a name="wf-Legalchar"></a>
-<b>Well-formedness constraint: Legal Character</b>
+<a name="wf-Legalchar"></a><b>Well-formedness constraint: Legal Character</b>
 </p>
 <p>Characters referred
 to using character references must match the production for <a title="" href="#NT-Char">Char</a>.</p>
@@ -2535,9 +2338,7 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 <a name="NT-Reference"></a>[67]   </td>
 <td><code>Reference</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-EntityRef">EntityRef</a> | <a href="#NT-CharRef">CharRef</a>
-</code></td>
+<td><code><a href="#NT-EntityRef">EntityRef</a> | <a href="#NT-CharRef">CharRef</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody>
@@ -2547,8 +2348,7 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 <td><code>EntityRef</code></td>
 <td>   ::=   </td>
 <td><code>'&amp;' <a href="#NT-Name">Name</a> ';'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#wf-entdeclared">[WFC: Entity Declared]</a></td>
+<xsltdebug></xsltdebug><td><a href="#wf-entdeclared">[WFC: Entity Declared]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2579,8 +2379,7 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 <td><code>PEReference</code></td>
 <td>   ::=   </td>
 <td><code>'%' <a href="#NT-Name">Name</a> ';'</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#vc-entdeclared">[VC: Entity Declared]</a></td>
+<xsltdebug></xsltdebug><td><a href="#vc-entdeclared">[VC: Entity Declared]</a></td>
 </tr>
 <tr valign="baseline">
 <td></td>
@@ -2600,13 +2399,11 @@ use percent-sign (<code>%</code>) and semicolon (<code>;</code>) as delimiters.]
 </table>
 <div class="constraint">
 <p class="prefix">
-<a name="wf-entdeclared"></a>
-<b>Well-formedness constraint: Entity Declared</b>
+<a name="wf-entdeclared"></a><b>Well-formedness constraint: Entity Declared</b>
 </p>
 <p>In a document
 without any DTD, a document with only an internal DTD subset which contains
-no parameter entity references, or a document with &quot;<code>standalone='yes'</code>&quot;, <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E34">[E34]</a>for
+no parameter entity references, or a document with &quot;<code>standalone='yes'</code>&quot;, <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E34">[E34]</a>for
 an entity reference that does not occur within the external subset or a parameter
 entity, the <a href="#NT-Name">Name</a> given in the entity reference must <a title="match" href="#dt-match">match</a> that in an <a href="#sec-entity-decl"><cite>entity
 declaration</cite></a> that does not occur within the external subset or a
@@ -2615,8 +2412,7 @@ any of the following entities: <code>amp</code>,
 <code>lt</code>,
 <code>gt</code>,
 <code>apos</code>,
-<code>quot</code>. <span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E29">[E29]</a>The declaration
+<code>quot</code>. <span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E29">[E29]</a>The declaration
 of a parameter entity must precede any reference to it. Similarly, </span>The
 declaration of a general entity must precede any reference to it which appears
 in a default value in an attribute-list declaration.</p>
@@ -2628,8 +2424,7 @@ if <a href="#sec-rmd"><cite>standalone='yes'</cite></a>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="vc-entdeclared"></a>
-<b>Validity constraint: Entity Declared</b>
+<a name="vc-entdeclared"></a><b>Validity constraint: Entity Declared</b>
 </p>
 <p>In a document with
 an external subset or external parameter entities with &quot;<code>standalone='no'</code>&quot;,
@@ -2641,8 +2436,7 @@ the entities <code>amp</code>,
 <code>apos</code>,
 <code>quot</code>, in the form specified in <a href="#sec-predefined-ent"><b>4.6 Predefined Entities</b></a>.
 The declaration of a parameter entity must precede any reference to it. Similarly,
-the declaration of a general entity must precede any <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E92">[E92]</a>attribute-list
+the declaration of a general entity must precede any <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E92">[E92]</a>attribute-list
 declaration containing a default value with a direct or indirect reference
 to that general entity.</span>
 </p>
@@ -2650,8 +2444,7 @@ to that general entity.</span>
 
 <div class="constraint">
 <p class="prefix">
-<a name="textent"></a>
-<b>Well-formedness constraint: Parsed Entity</b>
+<a name="textent"></a><b>Well-formedness constraint: Parsed Entity</b>
 </p>
 <p>An entity reference must
 not contain the name of an <a title="Unparsed Entity" href="#dt-unparsed">unparsed entity</a>.
@@ -2660,16 +2453,14 @@ values</a> declared to be of type <b>ENTITY</b> or <b>ENTITIES</b>.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="norecursion"></a>
-<b>Well-formedness constraint: No Recursion</b>
+<a name="norecursion"></a><b>Well-formedness constraint: No Recursion</b>
 </p>
 <p>A parsed entity must
 not contain a recursive reference to itself, either directly or indirectly.</p>
 </div>
 <div class="constraint">
 <p class="prefix">
-<a name="indtd"></a>
-<b>Well-formedness constraint: In DTD</b>
+<a name="indtd"></a><b>Well-formedness constraint: In DTD</b>
 </p>
 <p>Parameter-entity references may
 only appear in the <a title="Document Type Declaration" href="#dt-doctype">DTD</a>.</p>
@@ -2699,9 +2490,7 @@ thus:]</p>
 <a name="NT-EntityDecl"></a>[70]   </td>
 <td><code>EntityDecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-GEDecl">GEDecl</a> | <a href="#NT-PEDecl">PEDecl</a>
-</code></td>
+<td><code><a href="#NT-GEDecl">GEDecl</a> | <a href="#NT-PEDecl">PEDecl</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2726,8 +2515,7 @@ thus:]</p>
 <a name="NT-EntityDef"></a>[73]   </td>
 <td><code>EntityDef</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-EntityValue">EntityValue</a> | (<a href="#NT-ExternalID">ExternalID</a> <a href="#NT-NDataDecl">NDataDecl</a>?)</code></td>
+<td><code><a href="#NT-EntityValue">EntityValue</a> | (<a href="#NT-ExternalID">ExternalID</a> <a href="#NT-NDataDecl">NDataDecl</a>?)</code></td>
 <xsltdebug></xsltdebug>
 </tr>
 
@@ -2736,9 +2524,7 @@ thus:]</p>
 <a name="NT-PEDef"></a>[74]   </td>
 <td><code>PEDef</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-EntityValue">EntityValue</a> | <a href="#NT-ExternalID">ExternalID</a>
-</code></td>
+<td><code><a href="#NT-EntityValue">EntityValue</a> | <a href="#NT-ExternalID">ExternalID</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 </tbody></table>
@@ -2777,8 +2563,7 @@ it is an <b>external entity</b>, declared as follows:]</p>
 <a name="NT-ExternalID"></a>[75]   </td>
 <td><code>ExternalID</code></td>
 <td>   ::=   </td>
-<td><code>'SYSTEM' <a href="#NT-S">S</a> <a href="#NT-SystemLiteral">SystemLiteral</a>
-</code></td>
+<td><code>'SYSTEM' <a href="#NT-S">S</a> <a href="#NT-SystemLiteral">SystemLiteral</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -2793,29 +2578,22 @@ it is an <b>external entity</b>, declared as follows:]</p>
 <a name="NT-NDataDecl"></a>[76]   </td>
 <td><code>NDataDecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a> 'NDATA' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a>
-</code></td>
-<xsltdebug></xsltdebug>
-<td><a href="#not-declared">[VC: Notation Declared]</a></td>
+<td><code><a href="#NT-S">S</a> 'NDATA' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a></code></td>
+<xsltdebug></xsltdebug><td><a href="#not-declared">[VC: Notation Declared]</a></td>
 </tr></tbody>
 </table>
 <p>If the <a href="#NT-NDataDecl">NDataDecl</a> is present, this is a general <a title="Unparsed Entity" href="#dt-unparsed">unparsed entity</a>; otherwise it is a parsed entity.</p>
 <div class="constraint">
 <p class="prefix">
-<a name="not-declared"></a>
-<b>Validity constraint: Notation Declared</b>
+<a name="not-declared"></a><b>Validity constraint: Notation Declared</b>
 </p>
 <p>The <a href="#NT-Name">Name</a>
 must match the declared name of a <a title="Notation" href="#dt-notation">notation</a>.</p>
 </div>
 <p>
 <span class="diff-chg">[<a name="dt-sysid" title="System Identifier">Definition</a>: The <a href="#NT-SystemLiteral">SystemLiteral</a> is called the entity's <b>system
-identifier</b>. It is a <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E88">[E88]</a>URI
-reference</span>
-<span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E66">[E66]</a>
+identifier</b>. It is a <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E88">[E88]</a>URI
+reference</span><span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E66">[E66]</a>
 (as defined in <a href="#rfc2396">[IETF RFC 2396]</a>, updated by <a href="#rfc2732">[IETF RFC 2732]</a>)</span>, <a href="http://www.w3.org/XML/xml-19980210-errata#E76">[E76]</a>meant
 to be dereferenced to obtain input for the XML processor to construct the
 entity's replacement text.] It is an error for a fragment identifier
@@ -2840,8 +2618,7 @@ must be escaped as follows:</p></div>
 <li><p>Each disallowed character is converted to UTF-8 <a href="#rfc2279">[IETF RFC 2279]</a>
 as one or more bytes.</p></li>
 <li><p>Any octets corresponding to a disallowed character are escaped with
-the URI escaping mechanism (that is, converted to <code>%</code>
-<var>HH</var>,
+the URI escaping mechanism (that is, converted to <code>%</code><var>HH</var>,
 where HH is the hexadecimal notation of the byte value).</p></li>
 <li>
 <p>The original character is replaced by the resulting character sequence.</p>
@@ -2850,10 +2627,8 @@ where HH is the hexadecimal notation of the byte value).</p></li>
 <p>[<a name="dt-pubid" title="Public identifier">Definition</a>:  In addition to a system
 identifier, an external identifier may include a <b>public identifier</b>.]
 An XML processor attempting to retrieve the entity's content may use the public
-identifier to try to generate an alternative <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E88">[E88]</a>URI reference</span>.
-If the processor is unable to do so, it must use the <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E88">[E88]</a>URI
+identifier to try to generate an alternative <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E88">[E88]</a>URI reference</span>.
+If the processor is unable to do so, it must use the <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E88">[E88]</a>URI
 reference</span> specified in the system literal. Before a match is attempted,
 all strings of white space in the public identifier must be normalized to
 single space characters (#x20), and leading and trailing white space must
@@ -2877,8 +2652,7 @@ be removed.</p>
 
 <h4>
 <a name="sec-TextDecl"></a>4.3.1 The Text Declaration</h4>
-<p>External parsed entities <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E107">[E107]</a>should</span> each begin with a <b>text declaration</b>.</p>
+<p>External parsed entities <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E107">[E107]</a>should</span> each begin with a <b>text declaration</b>.</p>
 
 <h5>Text Declaration</h5>
 <table class="scrap" summary="Scrap"><tbody>
@@ -2893,8 +2667,7 @@ be removed.</p>
 </tbody></table>
 <p>The text declaration must be provided literally, not by reference to a
 parsed entity. No text declaration may appear at any position other than the
-beginning of an external parsed entity. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E94">[E94]</a>The text declaration
+beginning of an external parsed entity. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E94">[E94]</a>The text declaration
 in an external parsed entity is not considered part of its <a title="Replacement Text" href="#dt-repltext">replacement
 text</a>.</span>
 </p>
@@ -2904,8 +2677,7 @@ text</a>.</span>
 <h4>
 <a name="wf-entities"></a>4.3.2 Well-Formed Parsed Entities</h4>
 <p>The document entity is well-formed if it matches the production labeled <a href="#NT-document">document</a>. An external general parsed entity is well-formed
-if it matches the production labeled <a href="#NT-extParsedEnt">extParsedEnt</a>. <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>All
+if it matches the production labeled <a href="#NT-extParsedEnt">extParsedEnt</a>. <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a>All
 external parameter entities are well-formed by definition.</span>
 </p>
 
@@ -2916,9 +2688,7 @@ external parameter entities are well-formed by definition.</span>
 <a name="NT-extParsedEnt"></a>[78]   </td>
 <td><code>extParsedEnt</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-content">content</a>
-</code></td>
+<td><code><a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-content">content</a></code></td>
 <xsltdebug></xsltdebug>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -2926,11 +2696,8 @@ external parameter entities are well-formed by definition.</span>
 <a name="NT-extPE"></a>[79]   </td>
 <td class="diff-del"><code>extPE</code></td>
 <td class="diff-del">   ::=   </td>
-<td class="diff-del"><code>
-<a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-extSubsetDecl">extSubsetDecl</a>
-</code></td>
-<xsltdebug></xsltdebug>
-<td class="diff-del"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a> */</i></td>
+<td class="diff-del"><code><a href="#NT-TextDecl">TextDecl</a>? <a href="#NT-extSubsetDecl">extSubsetDecl</a></code></td>
+<xsltdebug></xsltdebug><td class="diff-del"><i>/* <a href="http://www.w3.org/XML/xml-19980210-errata#E109">[E109]</a> */</i></td>
 </tr></tbody>
 </table>
 <p>An internal general parsed entity is well-formed if its replacement text
@@ -2946,20 +2713,16 @@ can begin in one entity and end in another.</p>
 <h4>
 <a name="charencoding"></a>4.3.3 Character Encoding in Entities</h4>
 <p>Each external parsed entity in an XML document may use a different encoding
-for its characters. All XML processors must be able to read entities in <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E56">[E56]</a>both
-the UTF-8 and UTF-16 encodings.</span> <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E77">[E77]</a>The terms &quot;UTF-8&quot;
+for its characters. All XML processors must be able to read entities in <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E56">[E56]</a>both
+the UTF-8 and UTF-16 encodings.</span> <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E77">[E77]</a>The terms &quot;UTF-8&quot;
 and &quot;UTF-16&quot; in this specification do not apply to character
 encodings with any other labels, even if the encodings or labels are very
 similar to UTF-8 or UTF-16.</span>
 </p>
 <p>Entities encoded in UTF-16 must begin with the Byte Order Mark described
-by <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>Annex
+by <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>Annex
 F of <a href="#ISO10646">[ISO/IEC 10646]</a>, Annex H of <a href="#ISO10646-2000">[ISO/IEC 10646-2000]</a>, section
-2.4 of <a href="#Unicode">[Unicode]</a>, and section 2.7 of <a href="#Unicode3">[Unicode3]</a>
-</span>
+2.4 of <a href="#Unicode">[Unicode]</a>, and section 2.7 of <a href="#Unicode3">[Unicode3]</a></span>
 (the ZERO WIDTH NO-BREAK SPACE character, #xFEFF). This is an encoding signature,
 not part of either the markup or the character data of the XML document. XML
 processors must be able to use this character to differentiate between UTF-8
@@ -2967,8 +2730,7 @@ and UTF-16 encoded documents.</p>
 <p>Although an XML processor is required to read only entities in the UTF-8
 and UTF-16 encodings, it is recognized that other encodings are used around
 the world, and it may be desired for XML processors to read entities that
-use them. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E47">[E47]</a>In
+use them. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E47">[E47]</a>In
 the absence of external character encoding information (such as MIME headers),</span>
 parsed entities which are stored in an encoding other than UTF-8 or UTF-16
 must begin with a text declaration <span class="diff-add">(see <a href="#sec-TextDecl"><b>4.3.1 The Text Declaration</b></a>) </span>containing
@@ -2981,8 +2743,7 @@ an encoding declaration:</p>
 <a name="NT-EncodingDecl"></a>[80]   </td>
 <td><code>EncodingDecl</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-S">S</a> 'encoding' <a href="#NT-Eq">Eq</a>
+<td><code><a href="#NT-S">S</a> 'encoding' <a href="#NT-Eq">Eq</a>
 ('&quot;' <a href="#NT-EncName">EncName</a> '&quot;' | &quot;'&quot; <a href="#NT-EncName">EncName</a>
 &quot;'&quot; ) </code></td>
 <xsltdebug></xsltdebug>
@@ -2993,8 +2754,7 @@ an encoding declaration:</p>
 <td><code>EncName</code></td>
 <td>   ::=   </td>
 <td><code>[A-Za-z] ([A-Za-z0-9._] | '-')*</code></td>
-<xsltdebug></xsltdebug>
-<td><i>/* Encoding
+<xsltdebug></xsltdebug><td><i>/* Encoding
 name contains only Latin characters */</i></td>
 </tr></tbody>
 </table>
@@ -3005,19 +2765,13 @@ The <a href="#NT-EncName">EncName</a> is the name of the encoding used.</p>
 <p>In an encoding declaration, the values &quot;<code>UTF-8</code>&quot;, &quot;<code>UTF-16</code>&quot;, &quot;<code>ISO-10646-UCS-2</code>&quot;, and &quot;<code>ISO-10646-UCS-4</code>&quot; should be used
 for the various encodings and transformations of Unicode / ISO/IEC 10646,
 the values &quot;<code>ISO-8859-1</code>&quot;, &quot;<code>ISO-8859-2</code>&quot;,
-... <a href="http://www.w3.org/XML/xml-19980210-errata#E106">[E106]</a>
-<span class="diff-chg">&quot;<code>ISO-8859-</code>
-<var>n</var>&quot; (where <var>n</var>
+... <a href="http://www.w3.org/XML/xml-19980210-errata#E106">[E106]</a><span class="diff-chg">&quot;<code>ISO-8859-</code><var>n</var>&quot; (where <var>n</var>
 is the part number)</span> should be used for the parts of ISO 8859, and
 the values &quot;<code>ISO-2022-JP</code>&quot;, &quot;<code>Shift_JIS</code>&quot;,
 and &quot;<code>EUC-JP</code>&quot; should be used for the various encoded
-forms of JIS X-0208-1997. <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E57">[E57]</a>It
+forms of JIS X-0208-1997. <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E57">[E57]</a>It
 is recommended that character encodings registered (as <em>charset</em>s)
-with the Internet Assigned Numbers Authority <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E58">[E58]</a>
-<a href="#IANA">[IANA-CHARSETS]</a>
-</span>,
+with the Internet Assigned Numbers Authority <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E58">[E58]</a><a href="#IANA">[IANA-CHARSETS]</a></span>,
 other than those just listed, be referred to using their registered names;
 other encodings should use names starting with an &quot;x-&quot; prefix.
 XML processors should match character encoding names in a case-insensitive
@@ -3028,8 +2782,7 @@ required to support all IANA-registered encodings).</span>
 <p>In the absence of information provided by an external transport protocol
 (e.g. HTTP or MIME), it is an <a title="Error" href="#dt-error">error</a> for
 an entity including an encoding declaration to be presented to the XML processor
-in an encoding other than that named in the declaration, <span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E5">[E5]</a>for
+in an encoding other than that named in the declaration, <span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E5">[E5]</a>for
 an encoding declaration to occur other than at the beginning of an external
 entity, </span>or for an entity which begins with neither a Byte Order Mark
 nor an encoding declaration to use an encoding other than UTF-8. Note that
@@ -3037,20 +2790,17 @@ since ASCII is a subset of UTF-8, ordinary ASCII entities do not strictly
 need an encoding declaration.</p>
 <div class="diff-add"><p>
 <a href="http://www.w3.org/XML/xml-19980210-errata#E5">[E5]</a>It
-is <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E36">[E36]</a>a
+is <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E36">[E36]</a>a
 fatal</span> error for a <a href="#NT-TextDecl">TextDecl</a> to occur other
 than at the beginning of an external entity.</p></div>
 <p>It is a <a title="Fatal Error" href="#dt-fatal">fatal error</a> when an XML processor
-encounters an entity with an encoding that it is unable to process. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E79">[E79]</a>It
+encounters an entity with an encoding that it is unable to process. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E79">[E79]</a>It
 is a fatal error if an XML entity is determined (via default, encoding declaration,
 or higher-level protocol) to be in a certain encoding but contains octet sequences
 that are not legal in that encoding. It is also a fatal error if an XML entity
 contains no encoding declaration and its content is not legal UTF-8 or UTF-16.</span>
 </p>
-<p>Examples of <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E23">[E23]</a>text
+<p>Examples of <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E23">[E23]</a>text
 declarations containing </span>encoding declarations:</p>
 <table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>&lt;?xml encoding='UTF-8'?&gt;
 &lt;?xml encoding='EUC-JP'?&gt;</pre></td></tr></table>
@@ -3128,8 +2878,7 @@ if validating</cite></a></td>
 in literal</cite></a></td>
 <td><a href="#forbidden"><cite>Forbidden</cite></a></td>
 <td>
-<a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a>
-<div class="diff-chg"><a href="#forbidden"><cite>Forbidden</cite></a></div>
+<a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a><div class="diff-chg"><a href="#forbidden"><cite>Forbidden</cite></a></div>
 </td>
 <td><a href="#included"><cite>Included</cite></a></td>
 </tr>
@@ -3139,13 +2888,11 @@ Value</td>
 <td><a href="#not-recognized"><cite>Not recognized</cite></a></td>
 <td><a href="#forbidden"><cite>Forbidden</cite></a></td>
 <td>
-<a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a>
-<div class="diff-chg"><a href="#forbidden"><cite>Forbidden</cite></a></div>
+<a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a><div class="diff-chg"><a href="#forbidden"><cite>Forbidden</cite></a></div>
 </td>
 <td><a href="#notify"><cite>Notify</cite></a></td>
 <td>
-<a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a>
-<div class="diff-chg"><a href="#not-recognized"><cite>Not recognized</cite></a></div>
+<a href="http://www.w3.org/XML/xml-19980210-errata#E51">[E51]</a><div class="diff-chg"><a href="#not-recognized"><cite>Not recognized</cite></a></div>
 </td>
 </tr>
 <tr align="center" valign="middle">
@@ -3186,8 +2933,7 @@ and processed, in place of the reference itself, as though it were part of
 the document at the location the reference was recognized.] The replacement
 text may contain both <a title="Character Data" href="#dt-chardata">character data</a>
 and (except for parameter entities) <a title="Markup" href="#dt-markup">markup</a>,
-which must be recognized in the usual way<span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E65">[E65]</a>, except that
+which must be recognized in the usual way<span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E65">[E65]</a>, except that
 the replacement text of entities used to escape markup delimiters (the entities <code>amp</code>,
 <code>lt</code>,
 <code>gt</code>,
@@ -3208,8 +2954,7 @@ to <a title="Validity" href="#dt-valid">validate</a> the document, the processor
 must <a title="Include" href="#dt-include">include</a> its replacement text. If
 the entity is external, and the processor is not attempting to validate the
 XML document, the processor <a title="May" href="#dt-may">may</a>, but need
-not, include the entity's replacement text. If a non-validating <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>processor</span>
+not, include the entity's replacement text. If a non-validating <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>processor</span>
 does not include the replacement text, it must inform the application that
 it recognized, but did not read, the entity.</p>
 <p>This rule is based on the recognition that the automatic inclusion provided
@@ -3279,8 +3024,7 @@ reference is recognized in the DTD and included, its <a title="Replacement Text"
 text</a> is enlarged by the attachment of one leading and one following
 space (#x20) character; the intent is to constrain the replacement text of
 parameter entities to contain an integral number of grammatical tokens in
-the DTD. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E96">[E96]</a>This
+the DTD. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E96">[E96]</a>This
 behavior does not apply to parameter entity references within entity values;
 these are described in <a href="#inliteral"><b>4.4.5 Included in Literal</b></a>.</span>
 </p>
@@ -3335,12 +3079,10 @@ may be used to escape <code>&lt;</code> and <code>&amp;</code> when they occur
 in character data.]</p>
 <p>All XML processors must recognize these entities whether they are declared
 or not. <a title="For interoperability" href="#dt-interop">For interoperability</a>, valid XML
-documents should declare these entities, like any others, before using them. <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E80">[E80]</a>If
+documents should declare these entities, like any others, before using them. <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E80">[E80]</a>If
 the entities <code>lt</code> or <code>amp</code> are declared, they must be
 declared as internal entities whose replacement text is a character reference
-to the <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E103">[E103]</a>respective
+to the <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E103">[E103]</a>respective
 character (less-than sign or ampersand)</span> being escaped; the double
 escaping is required for these entities so that references to them produce
 a well-formed result. If the entities <code>gt</code>, <code>apos</code>,
@@ -3380,8 +3122,7 @@ application capable of processing data in the given notation.]</p>
 <td><code>NotationDecl</code></td>
 <td>   ::=   </td>
 <td><code>'&lt;!NOTATION' <a href="#NT-S">S</a> <a href="#NT-Name">Name</a> <a href="#NT-S">S</a> (<a href="#NT-ExternalID">ExternalID</a> | <a href="#NT-PublicID">PublicID</a>) <a href="#NT-S">S</a>? '&gt;'</code></td>
-<xsltdebug></xsltdebug>
-<td class="diff-add"><a href="#UniqueNotationName">[VC: Unique
+<xsltdebug></xsltdebug><td class="diff-add"><a href="#UniqueNotationName">[VC: Unique
 Notation Name]</a></td>
 </tr></tbody>
 <tbody><tr valign="baseline">
@@ -3395,8 +3136,7 @@ Notation Name]</a></td>
 </table>
 <div class="diff-add"><div class="constraint">
 <p class="prefix">
-<a name="UniqueNotationName"></a>
-<b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E22">[E22]</a>Unique
+<a name="UniqueNotationName"></a><b>Validity constraint: <a href="http://www.w3.org/XML/xml-19980210-errata#E22">[E22]</a>Unique
 Notation Name</b>
 </p>
 <p>Only one notation declaration can declare a given <a href="#NT-Name">Name</a>.</p>
@@ -3437,8 +3177,7 @@ two classes: validating and non-validating.</p>
 this specification's well-formedness constraints in the content of the <a title="Document Entity" href="#dt-docent">document entity</a> and any other <a title="Text Entity" href="#dt-parsedent">parsed
 entities</a> that they read.</p>
 <p>[<a name="dt-validating" title="Validating Processor">Definition</a>: <b>Validating
-processors</b> must<span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E21">[E21]</a>,
+processors</b> must<span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E21">[E21]</a>,
 at user option,</span> report violations of the constraints expressed by
 the declarations in the <a title="Document Type Declaration" href="#dt-doctype">DTD</a>, and failures
 to fulfill the validity constraints given in this specification.]
@@ -3453,8 +3192,7 @@ they do <em>not</em> read; that is to say, they must use the information
 in those declarations to <a href="#AVNormalize"><cite>normalize</cite></a>
 attribute values, <a href="#included"><cite>include</cite></a> the replacement
 text of internal entities, and supply <a href="#sec-attr-defaults"><cite>default
-attribute values</cite></a>.] <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E33">[E33]</a>Except when <code>standalone=&quot;yes&quot;</code>, </span>they
+attribute values</cite></a>.] <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E33">[E33]</a>Except when <code>standalone=&quot;yes&quot;</code>, </span>they
 must not <a title="Process Declarations" href="#dt-use-mdecl">process</a> <a title="entity declaration" href="#dt-entdecl">entity
 declarations</a> or <a title="Attribute-List Declaration" href="#dt-attdecl">attribute-list declarations</a>
 encountered after a reference to a parameter entity that is not read, since
@@ -3497,8 +3235,7 @@ external entities should use validating XML processors.</p>
 Extended Backus-Naur Form (EBNF) notation. Each rule in the grammar defines
 one symbol, in the form</p>
 <table class="eg" cellpadding="5" border="1" bgcolor="#99ffff" width="100%" summary="Example"><tr><td><pre>symbol ::= expression</pre></td></tr></table>
-<p>Symbols are written with an initial capital letter if they are <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E42">[E42]</a>the
+<p>Symbols are written with an initial capital letter if they are <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E42">[E42]</a>the
 start symbol of a regular language,</span> otherwise with an initial lower
 case letter. Literal strings are quoted.</p>
 <p>Within the expression on the right-hand side of a rule, the following expressions
@@ -3512,42 +3249,23 @@ zeros in the <code>#xN</code> form is insignificant; the number of leading
 zeros in the corresponding code value is governed by the character encoding
 in use and is not significant for XML.</p>
 </div></dd>
-<dt class="label"><span class="diff-">
-<code>[a-zA-Z]</code>, <code>[#xN-#xN]</code>
-</span></dt>
+<dt class="label"><span class="diff-"><code>[a-zA-Z]</code>, <code>[#xN-#xN]</code></span></dt>
 <dd><div class="diff-">
-<p>matches any <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a>
-<a href="#NT-Char">Char</a>
-</span> with a value in the range(s) indicated (inclusive).</p>
+<p>matches any <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a><a href="#NT-Char">Char</a></span> with a value in the range(s) indicated (inclusive).</p>
 </div></dd>
-<dt class="label"><span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E3">[E3]</a>
-<code>[abc]</code>, <code>[#xN#xN#xN]</code>
-</span></dt>
+<dt class="label"><span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E3">[E3]</a><code>[abc]</code>, <code>[#xN#xN#xN]</code></span></dt>
 <dd><div class="diff-add">
 <p>matches any <a href="#NT-Char">Char</a> with a value among the characters
 enumerated. Enumerations and ranges can be mixed in one set of brackets.</p>
 </div></dd>
-<dt class="label"><span class="diff-">
-<code>[^a-z]</code>, <code>[^#xN-#xN]</code>
-</span></dt>
+<dt class="label"><span class="diff-"><code>[^a-z]</code>, <code>[^#xN-#xN]</code></span></dt>
 <dd><div class="diff-">
-<p>matches any <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a>
-<a href="#NT-Char">Char</a>
-</span> with a value <em>outside</em> the range
+<p>matches any <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a><a href="#NT-Char">Char</a></span> with a value <em>outside</em> the range
 indicated.</p>
 </div></dd>
-<dt class="label"><span class="diff-">
-<code>[^abc]</code>, <code>[^#xN#xN#xN]</code>
-</span></dt>
+<dt class="label"><span class="diff-"><code>[^abc]</code>, <code>[^#xN#xN#xN]</code></span></dt>
 <dd><div class="diff-">
-<p>matches any <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a>
-<a href="#NT-Char">Char</a>
-</span> with a value not among the characters given. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E3">[E3]</a>Enumerations
+<p>matches any <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E93">[E93]</a><a href="#NT-Char">Char</a></span> with a value not among the characters given. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E3">[E3]</a>Enumerations
 and ranges of forbidden values can be mixed in one set of brackets.</span>
 </p>
 </div></dd>
@@ -3575,8 +3293,7 @@ in this list.</p>
 </div></dd>
 <dt class="label"><span class="diff-"><code>A B</code></span></dt>
 <dd><div class="diff-">
-<p>matches <code>A</code> followed by <code>B</code>. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>This
+<p>matches <code>A</code> followed by <code>B</code>. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>This
 operator has higher precedence than alternation; thus <code>A B | C D</code>
 is identical to <code>(A B) | (C D)</code>.</span>
 </p>
@@ -3591,16 +3308,14 @@ is identical to <code>(A B) | (C D)</code>.</span>
 </div></dd>
 <dt class="label"><span class="diff-"><code>A+</code></span></dt>
 <dd><div class="diff-">
-<p>matches one or more occurrences of <code>A</code>.<span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>Concatenation
+<p>matches one or more occurrences of <code>A</code>.<span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>Concatenation
 has higher precedence than alternation; thus <code>A+ | B+</code> is identical
 to <code>(A+) | (B+)</code>.</span>
 </p>
 </div></dd>
 <dt class="label"><span class="diff-"><code>A*</code></span></dt>
 <dd><div class="diff-">
-<p>matches zero or more occurrences of <code>A</code>. <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>Concatenation
+<p>matches zero or more occurrences of <code>A</code>. <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E20">[E20]</a>Concatenation
 has higher precedence than alternation; thus <code>A* | B*</code> is identical
 to <code>(A*) | (B*)</code>.</span>
 </p>
@@ -3634,8 +3349,7 @@ documents associated with a production.</p>
 <h3>
 <a name="sec-existing-stds"></a>A.1 Normative References</h3>
 <dl>
-<dt class="label"><span class="diff-chg">
-<a name="IANA"></a>IANA-CHARSETS</span></dt>
+<dt class="label"><span class="diff-chg"><a name="IANA"></a>IANA-CHARSETS</span></dt>
 <dd><div class="diff-chg">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E58">[E58]</a>(Internet
 Assigned Numbers Authority) <cite>Official Names for Character Sets</cite>,
@@ -3645,15 +3359,13 @@ ed. Keld Simonsen et al. See <a href="ftp://ftp.isi.edu/in-notes/iana/assignment
 <dd>IETF
 (Internet Engineering Task Force). <cite>RFC 1766: Tags for the Identification
 of Languages</cite>, ed. H. Alvestrand. 1995.  (See <a href="http://www.ietf.org/rfc/rfc1766.txt">http://www.ietf.org/rfc/rfc1766.txt</a>.)</dd>
-<dt class="label"><span class="diff-del">
-<a name="ISO639-old"></a>ISO 639</span></dt>
+<dt class="label"><span class="diff-del"><a name="ISO639-old"></a>ISO 639</span></dt>
 <dd><div class="diff-del">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E38">[E38]</a>
 (International Organization for Standardization). <cite>ISO 639:1988 (E).
 Code for the representation of names of languages.</cite> [Geneva]: International
 Organization for Standardization, 1988.</div></dd>
-<dt class="label"><span class="diff-del">
-<a name="ISO3166-old"></a>ISO 3166</span></dt>
+<dt class="label"><span class="diff-del"><a name="ISO3166-old"></a>ISO 3166</span></dt>
 <dd><div class="diff-del">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E38">[E38]</a>
 (International Organization for Standardization). <cite>ISO 3166-1:1997
@@ -3667,8 +3379,7 @@ Standardization). <cite>ISO/IEC 10646-1993 (E). Information technology --
 Universal Multiple-Octet Coded Character Set (UCS) -- Part 1: Architecture
 and Basic Multilingual Plane.</cite> [Geneva]: International Organization
 for Standardization, 1993 (plus amendments AM 1 through AM 7).</dd>
-<dt class="label"><span class="diff-add">
-<a name="ISO10646-2000"></a>ISO/IEC 10646-2000</span></dt>
+<dt class="label"><span class="diff-add"><a name="ISO10646-2000"></a>ISO/IEC 10646-2000</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a> ISO (International
 Organization for Standardization). <cite>ISO/IEC 10646-1:2000. Information
@@ -3680,8 +3391,7 @@ Organization for Standardization, 2000.</div></dd>
 <dd>The Unicode Consortium. <em>The Unicode
 Standard, Version 2.0.</em> Reading, Mass.: Addison-Wesley Developers Press,
 1996.</dd>
-<dt class="label"><span class="diff-add">
-<a name="Unicode3"></a>Unicode3</span></dt>
+<dt class="label"><span class="diff-add"><a name="Unicode3"></a>Unicode3</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>
 The Unicode Consortium. <em>The Unicode Standard, Version 3.0.</em> Reading,
@@ -3704,14 +3414,12 @@ Reading: Addison-Wesley, 1986, rpt. corr. 1988.</dd>
 <dd> Berners-Lee, T., R. Fielding,
 and L. Masinter. <cite>Uniform Resource Identifiers (URI): Generic Syntax
 and Semantics</cite>. 1997. (Work in progress; see updates to RFC1738.)</dd>
-<dt class="label"><span class="diff-chg">
-<a name="ABK"></a>Brüggemann-Klein</span></dt>
+<dt class="label"><span class="diff-chg"><a name="ABK"></a>Brüggemann-Klein</span></dt>
 <dd><div class="diff-chg">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E2">[E2]</a>Brüggemann-Klein,
 Anne. Formal Models in Document Processing. Habilitationsschrift. Faculty
 of Mathematics at the University of Freiburg, 1993. (See <a href="ftp://ftp.informatik.uni-freiburg.de/documents/papers/brueggem/habil.ps">ftp://ftp.informatik.uni-freiburg.de/documents/papers/brueggem/habil.ps</a>.)</div></dd>
-<dt class="label"><span class="diff-chg">
-<a name="ABKDW"></a>Brüggemann-Klein and Wood</span></dt>
+<dt class="label"><span class="diff-chg"><a name="ABKDW"></a>Brüggemann-Klein and Wood</span></dt>
 <dd><div class="diff-chg">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E2">[E2]</a>Brüggemann-Klein,
 Anne, and Derick Wood. <cite>Deterministic Regular Languages</cite>.
@@ -3723,19 +3431,16 @@ February 1998.</div></dd>
 <dt class="label">
 <a name="Clark"></a>Clark</dt>
 <dd>James Clark. Comparison of SGML and XML. See <a href="http://www.w3.org/TR/NOTE-sgml-xml-971215">http://www.w3.org/TR/NOTE-sgml-xml-971215</a>. </dd>
-<dt class="label"><span class="diff-add">
-<a name="IANA-LANGCODES"></a>IANA-LANGCODES</span></dt>
+<dt class="label"><span class="diff-add"><a name="IANA-LANGCODES"></a>IANA-LANGCODES</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E58">[E58]</a>(Internet
 Assigned Numbers Authority) <cite>Registry of Language Tags</cite>,
 ed. Keld Simonsen et al.  (See <a href="http://www.isi.edu/in-notes/iana/assignments/languages/">http://www.isi.edu/in-notes/iana/assignments/languages/</a>.)</div></dd>
-<dt class="label"><span class="diff-del">
-<a name="RFC1738"></a>IETF RFC1738</span></dt>
+<dt class="label"><span class="diff-del"><a name="RFC1738"></a>IETF RFC1738</span></dt>
 <dd><div class="diff-del">IETF
 (Internet Engineering Task Force). <cite>RFC 1738: Uniform Resource Locators
 (URL)</cite>, ed. T. Berners-Lee, L. Masinter, M. McCahill. 1994.   (See <a href="http://www.ietf.org/rfc/rfc1738.txt">http://www.ietf.org/rfc/rfc1738.txt</a>.)</div></dd>
-<dt class="label"><span class="diff-del">
-<a name="RFC1808"></a>IETF RFC1808</span></dt>
+<dt class="label"><span class="diff-del"><a name="RFC1808"></a>IETF RFC1808</span></dt>
 <dd><div class="diff-del">IETF
 (Internet Engineering Task Force). <cite>RFC 1808: Relative Uniform Resource
 Locators</cite>, ed. R. Fielding. 1995.   (See <a href="http://www.ietf.org/rfc/rfc1808.txt">http://www.ietf.org/rfc/rfc1808.txt</a>.)</div></dd>
@@ -3744,47 +3449,40 @@ Locators</cite>, ed. R. Fielding. 1995.   (See <a href="http://www.ietf.org/rfc/
 <dd>IETF
 (Internet Engineering Task Force). <em>RFC 2141: URN Syntax</em>, ed.
 R. Moats. 1997.   (See <a href="http://www.ietf.org/rfc/rfc2141.txt">http://www.ietf.org/rfc/rfc2141.txt</a>.)</dd>
-<dt class="label"><span class="diff-add">
-<a name="rfc2279"></a>IETF RFC 2279</span></dt>
+<dt class="label"><span class="diff-add"><a name="rfc2279"></a>IETF RFC 2279</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E78">[E78]</a>IETF
 (Internet Engineering Task Force). <cite>RFC 2279: UTF-8, a transformation
 format of ISO 10646</cite>, <span class="diff-add">ed. F. Yergeau, </span>1998.  (See <a href="http://www.ietf.org/rfc/rfc2279.txt">http://www.ietf.org/rfc/rfc2279.txt</a>.)</div></dd>
-<dt class="label"><span class="diff-add">
-<a name="rfc2376"></a>IETF RFC 2376</span></dt>
+<dt class="label"><span class="diff-add"><a name="rfc2376"></a>IETF RFC 2376</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E48">[E48]</a>IETF
 (Internet Engineering Task Force). <cite>RFC 2376: XML Media Types</cite>.
 ed. E. Whitehead, M. Murata. 1998.  (See <a href="http://www.ietf.org/rfc/rfc2376.txt">http://www.ietf.org/rfc/rfc2376.txt</a>.)</div></dd>
-<dt class="label"><span class="diff-add">
-<a name="rfc2396"></a>IETF RFC 2396</span></dt>
+<dt class="label"><span class="diff-add"><a name="rfc2396"></a>IETF RFC 2396</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E66">[E66]</a>IETF
 (Internet Engineering Task Force). <cite>RFC 2396: Uniform Resource Identifiers
 (URI): Generic Syntax</cite>. T. Berners-Lee, R. Fielding, L. Masinter.
 1998.  (See <a href="http://www.ietf.org/rfc/rfc2396.txt">http://www.ietf.org/rfc/rfc2396.txt</a>.)</div></dd>
-<dt class="label"><span class="diff-add">
-<a name="rfc2732"></a>IETF RFC 2732</span></dt>
+<dt class="label"><span class="diff-add"><a name="rfc2732"></a>IETF RFC 2732</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E66">[E66]</a>IETF
 (Internet Engineering Task Force). <cite>RFC 2732: Format for Literal
 IPv6 Addresses in URL's</cite>. R. Hinden, B. Carpenter, L. Masinter.
 1999.  (See <a href="http://www.ietf.org/rfc/rfc2732.txt">http://www.ietf.org/rfc/rfc2732.txt</a>.)</div></dd>
-<dt class="label"><span class="diff-add">
-<a name="rfc2781"></a>IETF RFC 2781</span></dt>
+<dt class="label"><span class="diff-add"><a name="rfc2781"></a>IETF RFC 2781</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E77">[E77]</a>
 IETF (Internet Engineering Task Force). <em>RFC 2781: UTF-16, an encoding
 of ISO 10646</em>, ed. P. Hoffman, F. Yergeau. 2000.  (See <a href="http://www.ietf.org/rfc/rfc2781.txt">http://www.ietf.org/rfc/rfc2781.txt</a>.)</div></dd>
-<dt class="label"><span class="diff-add">
-<a name="ISO639"></a>ISO 639</span></dt>
+<dt class="label"><span class="diff-add"><a name="ISO639"></a>ISO 639</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E38">[E38]</a>
 (International Organization for Standardization). <cite>ISO 639:1988 (E).
 Code for the representation of names of languages.</cite> [Geneva]: International
 Organization for Standardization, 1988.</div></dd>
-<dt class="label"><span class="diff-add">
-<a name="ISO3166"></a>ISO 3166</span></dt>
+<dt class="label"><span class="diff-add"><a name="ISO3166"></a>ISO 3166</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E38">[E38]</a>
 (International Organization for Standardization). <cite>ISO 3166-1:1997
@@ -3804,15 +3502,13 @@ Standardization). <cite>ISO/IEC 10744-1992 (E). Information technology --
 Hypermedia/Time-based Structuring Language (HyTime). </cite> [Geneva]:
 International Organization for Standardization, 1992. <em>Extended Facilities
 Annexe.</em> [Geneva]: International Organization for Standardization, 1996. </dd>
-<dt class="label"><span class="diff-add">
-<a name="websgml"></a>WEBSGML</span></dt>
+<dt class="label"><span class="diff-add"><a name="websgml"></a>WEBSGML</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E43">[E43]</a>ISO
 (International Organization for Standardization). <cite>ISO 8879:1986
 TC2. Information technology -- Document Description and Processing Languages. </cite>
 [Geneva]: International Organization for Standardization, 1998.  (See <a href="http://www.sgmlsource.com/8879rev/n0029.htm">http://www.sgmlsource.com/8879rev/n0029.htm</a>.)</div></dd>
-<dt class="label"><span class="diff-add">
-<a name="xml-names"></a>XML Names</span></dt>
+<dt class="label"><span class="diff-add"><a name="xml-names"></a>XML Names</span></dt>
 <dd><div class="diff-add">
 <a href="http://www.w3.org/XML/xml-19980210-errata#E98">[E98]</a>Tim Bray,
 Dave Hollander, and Andrew Layman, editors. <cite>Namespaces in XML</cite>.
@@ -3826,11 +3522,9 @@ Textuality, Hewlett-Packard, and Microsoft. World Wide Web Consortium, 1999.  (S
 <a name="CharClasses"></a>B Character Classes</h2>
 <p>Following the characteristics defined in the Unicode standard, characters
 are classed as base characters (among others, these contain the alphabetic
-characters of the Latin alphabet<span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E84">[E84]</a>, without
+characters of the Latin alphabet<span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E84">[E84]</a>, without
 diacritics</span>), ideographic characters, and combining characters (among
-others, this class contains most diacritics)<span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E30">[E30]</a>; these classes
+others, this class contains most diacritics)<span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E30">[E30]</a>; these classes
 combine to form the class of letters.</span> Digits and extenders are also
 distinguished.</p>
 
@@ -3841,9 +3535,7 @@ distinguished.</p>
 <a name="NT-Letter"></a>[84]   </td>
 <td><code>Letter</code></td>
 <td>   ::=   </td>
-<td><code>
-<a href="#NT-BaseChar">BaseChar</a> | <a href="#NT-Ideographic">Ideographic</a>
-</code></td>
+<td><code><a href="#NT-BaseChar">BaseChar</a> | <a href="#NT-Ideographic">Ideographic</a></code></td>
 <xsltdebug></xsltdebug>
 </tr>
 <tr valign="baseline">
@@ -3964,8 +3656,7 @@ distinguished.</p>
 <xsltdebug></xsltdebug>
 </tr>
 </tbody></table>
-<p>The character classes defined here can be derived from the Unicode <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>2.0</span>
+<p>The character classes defined here can be derived from the Unicode <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>2.0</span>
 character database as follows:</p>
 <ul>
 <li><p>Name start characters must have one of the categories Ll, Lu, Lo,
@@ -3981,8 +3672,7 @@ allowed.</p></li>
 <li><p>The following characters are treated as name-start characters rather
 than name characters, because the property file classifies them as Alphabetic:
 [#x02BB-#x02C1], #x0559, #x06E5, #x06E6.</p></li>
-<li><p>Characters #x20DD-#x20E0 are excluded (in accordance with Unicode <span class="diff-add">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>2.0</span>,
+<li><p>Characters #x20DD-#x20E0 are excluded (in accordance with Unicode <span class="diff-add"><a href="http://www.w3.org/XML/xml-19980210-errata#E67">[E67]</a>2.0</span>,
 section 5.14).</p></li>
 <li><p>Character #x00B7 is classified as an extender, because the property
 list so identifies it.</p></li>
@@ -3999,8 +3689,7 @@ its canonical equivalent.</p></li>
 <h2>
 <a name="sec-xml-and-sgml"></a>C XML and SGML (Non-Normative)</h2>
 <p>
-<span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E43">[E43]</a>XML
+<span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E43">[E43]</a>XML
 is designed to be a subset of SGML, in that every XML document should also
 be a conforming SGML document.</span> For a detailed comparison of the additional
 restrictions that XML places on documents beyond those of SGML, see <a href="#Clark">[Clark]</a>.</p>
@@ -4071,21 +3760,18 @@ shows a error-prone method.</em>
 <h2>
 <a name="determinism"></a>E Deterministic Content Models (Non-Normative)</h2>
 <p>
-<span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E102">[E102]</a>As
+<span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E102">[E102]</a>As
 noted in <a href="#sec-element-content"><b>3.2.1 Element Content</b></a>, it is required that content
 models in element type declarations be deterministic. This requirement is <a title="For Compatibility" href="#dt-compat">for compatibility</a> with SGML (which calls deterministic
 content models &quot;unambiguous&quot;);</span> XML processors built
 using SGML systems may flag non-deterministic content models as errors.</p>
 <p>For example, the content model <code>((b, c) | (b, d))</code> is non-deterministic,
-because given an initial <code>b</code> the <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>XML processor</span>
+because given an initial <code>b</code> the <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>XML processor</span>
 cannot know which <code>b</code> in the model is being matched without looking
 ahead to see which element follows the <code>b</code>. In this case, the two references
 to <code>b</code> can be collapsed into a single reference, making the model read <code>(b,
 (c | d))</code>. An initial <code>b</code> now clearly matches only a single name
-in the content model. The <span class="diff-chg">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>processor</span> doesn't need to look ahead to see what follows; either <code>c</code> or <code>d</code>
+in the content model. The <span class="diff-chg"><a href="http://www.w3.org/XML/xml-19980210-errata#E95">[E95]</a>processor</span> doesn't need to look ahead to see what follows; either <code>c</code> or <code>d</code>
 would be accepted.</p>
 <p>More formally: a finite state automaton may be constructed from the content
 model using the standard algorithms, e.g. algorithm 3.5 in section 3.9 of
@@ -4102,8 +3788,7 @@ Brüggemann-Klein 1991 <a href="#ABK">[Brüggemann-Klein]</a>.</p>
 <div class="div1">
 
 <h2>
-<a name="sec-guessing"></a>F <a href="http://www.w3.org/XML/xml-19980210-errata#E105">[E105]</a>
-<a href="http://www.w3.org/XML/xml-19980210-errata#E48">[E48]</a>Autodetection
+<a name="sec-guessing"></a>F <a href="http://www.w3.org/XML/xml-19980210-errata#E105">[E105]</a><a href="http://www.w3.org/XML/xml-19980210-errata#E48">[E48]</a>Autodetection
 of Character Encodings (Non-Normative)</h2>
 <p>The XML encoding declaration functions as an internal label on each entity,
 indicating which character encoding is in use. Before an XML processor can
@@ -4246,8 +3931,7 @@ declaration allows reasonably reliable in-band labeling of character encodings,
 even when external sources of information at the operating-system or transport-protocol
 level are unreliable. <span class="diff-del">Note that since external parsed entities
 in UTF-16 may begin with any character, this autodetection does not always
-work. Also, </span>
-<span class="diff-add">Character encodings such as UTF-7
+work. Also, </span><span class="diff-add">Character encodings such as UTF-7
 that make overloaded usage of ASCII-valued bytes may fail to be reliably detected.</span>
 </p>
 <p>Once the processor has detected the character encoding in use, it can act
@@ -4275,8 +3959,7 @@ In the interests of interoperability, however, the following rule is recommended
 </p>
 <ul>
 <li>
-<p>If an XML entity is in a file, the Byte-Order Mark and encoding declaration <span class="diff-del">PI </span>are used (if present) to determine the character encoding.<span class="diff-del">
-<a href="http://www.w3.org/XML/xml-19980210-errata#E74">[E74]</a>
+<p>If an XML entity is in a file, the Byte-Order Mark and encoding declaration <span class="diff-del">PI </span>are used (if present) to determine the character encoding.<span class="diff-del"><a href="http://www.w3.org/XML/xml-19980210-errata#E74">[E74]</a>
 All other heuristics and sources of information are solely for error recovery.</span>
 </p>
 </li>
@@ -4380,7 +4063,7 @@ Contact</i>) </li>
 <div class="diff-add"><div class="div1">
 
 <h2>
-<a name="id2664223"></a>I Production Notes (Non-Normative)</h2>
+<a name="id2667951"></a>I Production Notes (Non-Normative)</h2>
 <p>This Second Edition was encoded in the <a href="http://www.w3.org/XML/1998/06/xmlspec-v21.dtd">XMLspec
 DTD</a> (which has <a href="http://www.w3.org/XML/1998/06/xmlspec-report-v21.htm">documentation</a>
 available). The HTML versions were produced with a combination of the <a href="http://www.w3.org/XML/1998/06/xmlspec.xsl">xmlspec.xsl</a>, <a href="http://www.w3.org/XML/1998/06/diffspec.xsl">diffspec.xsl</a>,

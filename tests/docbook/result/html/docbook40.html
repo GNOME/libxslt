@@ -5,15 +5,14 @@
 <title>DocBook V4.0 Example Document</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.29">
 </head>
-<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" id="id2599497">
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" id="id2599532">
 <div class="titlepage">
 <div><h1 class="title">
-<a name="id2599497"></a>DocBook V4.0 Example Document</h1></div>
+<a name="id2599532"></a>DocBook V4.0 Example Document</h1></div>
 <div><h3 class="author">Norman Walsh</h3></div>
 <div><div class="abstract">
 <p>
-<a name="id2848487"></a>
-<b>Abstract</b>
+<a name="id2848522"></a><b>Abstract</b>
 </p>
 <p>This document demonstrates the new tags in DocBook V4.0.</p>
 <p>The focus of this document is to present examples of new elements,
@@ -25,31 +24,27 @@ included.</p>
 <div class="toc">
 <p><b>Table of Contents</b></p>
 <dl>
-<dt>1. <a href="#id2848513">Block-level Markup</a>
+<dt>1. <a href="#id2848547">Block-level Markup</a>
 </dt>
-<dt>2. <a href="#id2755891">Inline markup</a>
+<dt>2. <a href="#id2755926">Inline markup</a>
 </dt>
 </dl>
 </div>
-<div id="id2848513" class="chapter">
+<div id="id2848547" class="chapter">
 <div class="titlepage"><div><h2 class="title">
-<a name="id2848513"></a>Chapter 1. Block-level Markup</h2></div></div>
+<a name="id2848547"></a>Chapter 1. Block-level Markup</h2></div></div>
 <p>There's a new simple-alternative for <tt>msgentry</tt>:
 <tt>simplemsgentry</tt>.</p>
 <div class="simplemsgentry">
-<a name="id2750982"></a>
-<p>The text of a message</p>
+<a name="id2751017"></a><p>The text of a message</p>
 <div class="msgexplan">
-<a name="id2848570"></a>
-<p>An explanation of the message.</p>
+<a name="id2848605"></a><p>An explanation of the message.</p>
 </div>
 </div>
 <div class="simplemsgentry">
-<a name="id2874703"></a>
-<p>The text of a message</p>
+<a name="id2874737"></a><p>The text of a message</p>
 <div class="msgexplan">
-<a name="id2874719"></a>
-<p>An explanation of the message.</p>
+<a name="id2874754"></a><p>An explanation of the message.</p>
 </div>
 </div>
 <p>Longer descriptions are possible in a <tt>revhistory</tt>:
@@ -74,22 +69,22 @@ included.</p>
 <p><b>Itemized List</b></p>
 <ul>
 <li><p>
-<a name="id2757366"></a>First thing</p></li>
+<a name="id2757400"></a>First thing</p></li>
 <li><p>
-<a name="id2757376"></a>Second thing</p></li>
+<a name="id2757411"></a>Second thing</p></li>
 <li><p>
-<a name="id2757387"></a>Third thing</p></li>
+<a name="id2757421"></a>Third thing</p></li>
 </ul>
 </div>
 <div class="itemizedlist">
 <p><b>Ordered List</b></p>
 <ul>
 <li><p>
-<a name="id2757411"></a>First thing</p></li>
+<a name="id2757445"></a>First thing</p></li>
 <li><p>
-<a name="id2757421"></a>Second thing</p></li>
+<a name="id2757456"></a>Second thing</p></li>
 <li><p>
-<a name="id2757432"></a>Third thing</p></li>
+<a name="id2757466"></a>Third thing</p></li>
 </ul>
 </div>
 <p>Linespecific environments can indicate line numbering:</p>
@@ -101,32 +96,15 @@ included.</p>
 </pre>
 <p>Added <tt>classsynopsis</tt> for documenting
 object-oriented programming language classes. Here's one example:</p>
-<pre class="classsynopsis"> <span class="ooclass">
-<span class="modifier">public </span>
-<span class="classname">TextFileWriter</span>
-</span> extends <span class="ooclass"><span class="classname">HandlerBase</span></span> {
+<pre class="classsynopsis"> <span class="ooclass"><span class="modifier">public </span><span class="classname">TextFileWriter</span></span> extends <span class="ooclass"><span class="classname">HandlerBase</span></span> {
 
-<div class="fieldsynopsis">  <span class="modifier">private </span>
-<span class="type">Writer </span>
-<span class="varname">writer </span>;</div><div class="fieldsynopsis">  <span class="modifier">public </span>
-<span class="type">String </span>
-<span class="varname">writerName </span>
-<span class="initializer">= &quot;MyWriter&quot;</span>;</div><div class="methodsynopsis">  <span class="modifier">static </span>
-<span class="modifier">public </span>
-<span class="void">void </span>
-<span class="methodname">write</span>(<span class="methodparam">
-<span class="type">ResultTreeFragment </span>
-<span class="parameter">frag</span>
-</span>,
-                           <span class="methodparam">
-<span class="type">String </span>
-<span class="parameter">file</span>
-</span>)
+<div class="fieldsynopsis">  <span class="modifier">private </span><span class="type">Writer </span><span class="varname">writer </span>;</div><div class="fieldsynopsis">  <span class="modifier">public </span><span class="type">String </span><span class="varname">writerName </span><span class="initializer">= &quot;MyWriter&quot;</span>;</div><div class="methodsynopsis">  <span class="modifier">static </span><span class="modifier">public </span><span class="void">void </span><span class="methodname">write</span>(<span class="methodparam"><span class="type">ResultTreeFragment </span><span class="parameter">frag</span></span>,
+                           <span class="methodparam"><span class="type">String </span><span class="parameter">file</span></span>)
     throws <span class="exceptionname">SAXException</span>;</div>}</pre>
 </div>
-<div id="id2755891" class="chapter">
+<div id="id2755926" class="chapter">
 <div class="titlepage"><div><h2 class="title">
-<a name="id2755891"></a>Chapter 2. Inline markup</h2></div></div>
+<a name="id2755926"></a>Chapter 2. Inline markup</h2></div></div>
 <p>The <tt>sgmltag</tt> element has new
 class attribute values:
 <tt>xmlpi</tt> and
