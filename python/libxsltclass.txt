@@ -207,6 +207,7 @@ Class stylesheet()
     parseTemplateContent()
 
     # functions from module xsltutils
+    printErrorContext()
     saveResultToFd()
     saveResultToFile()
     saveResultToFilename()

@@ -71,7 +71,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
         if (ret != NULL) {
             /* Tag the subtree for removal once consumed */
             ret->boolval = 1;
-            ret->type = XPATH_NODESET;
+            ret->type = XPATH_XSLT_TREE;
             for (cur = str, token = str; *cur != 0; cur++) {
                 for (delimiter = delimiters; *delimiter != 0; delimiter++) {
                     if (*cur == *delimiter) {

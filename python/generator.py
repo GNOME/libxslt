@@ -741,8 +741,6 @@ def buildWrappers():
 		func = nameFixup(name, classe, type, file)
 		info = (2, func, name, ret, args, file)
 		function_classes[classe].append(info)
-	    if found == 1:
-		break
 	if found == 1:
 	    continue
 	if name[0:8] == "xmlXPath":
