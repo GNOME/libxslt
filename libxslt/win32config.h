@@ -5,6 +5,10 @@
 #define HAVE_STDLIB_H
 #define HAVE_MALLOC_H
 #define HAVE_TIME_H
+#define HAVE_LOCALTIME
+#define HAVE_GMTIME
+#define HAVE_TIME
+
 #define HAVE_FCNTL_H
 
 #include <io.h>
@@ -67,6 +71,7 @@ static int isnan (double d) {
 
 #define HAVE_SYS_STAT_H
 #define HAVE__STAT
+#define HAVE_STRING_H
 
 #include <libxml/xmlwin32version.h>
 

@@ -50,7 +50,7 @@
  * fragment or external object.
  */
 
-void
+static void
 exsltDynEvaluateFunction(xmlXPathParserContextPtr ctxt, int nargs) {
 	xmlChar *str = NULL;
 	xmlXPathObjectPtr ret = NULL;
@@ -82,6 +82,7 @@ exsltDynEvaluateFunction(xmlXPathParserContextPtr ctxt, int nargs) {
 	xmlFree(str);
 	return;
 }
+
 /**
  * exsltDynRegister:
  *

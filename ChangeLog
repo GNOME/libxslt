@@ -1,3 +1,8 @@
+Fri May 31 09:33:09 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/dynamic.c: turned a function static
+	* libxslt/win32config.h: applied patch from Mark Vadoc
+
 Thu May 30 23:35:47 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* win32/Makefile.msvc libexslt/Makefile.am libexslt/date.c
