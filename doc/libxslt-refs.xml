@@ -725,6 +725,7 @@
       <ref name='xsltParseStylesheetDoc'/>
       <ref name='xsltLoadStylesheetPI'/>
       <ref name='xsltCompilePattern'/>
+      <ref name='xsltMatchPattern'/>
       <ref name='xsltNewTransformContext'/>
       <ref name='xsltApplyStylesheetUser'/>
       <ref name='xsltApplyStylesheet'/>
@@ -752,6 +753,7 @@
       <ref name='xsltCompilePattern'/>
       <ref name='xsltTestCompMatchList'/>
       <ref name='xsltGetTemplate'/>
+      <ref name='xsltMatchPattern'/>
       <ref name='xsltMatchPattern'/>
       <ref name='xsltApplyStripSpaces'/>
       <ref name='xsltApplyOneTemplate'/>

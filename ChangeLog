@@ -1,3 +1,16 @@
+Mon Feb  4 19:47:32 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.[ch] doc/libxslt-api.xml doc/libxslt-refs.xml:
+	  reactivated xsltMatchPattern() since this is really something
+	  one may want to have access to in an extension function.
+	* Makefile.am configure.in python/Makefile.am python/generator.py
+	  python/libxml_wrap.h python/libxsl.py python/libxslt-python-api.xml
+	  python/libxslt.c python/libxslt_wrap.h python/libxsltclass.txt
+	  python/types.c: started working on the python bindings, borrowed
+	  most of the work done for libxml2, most of the generator code
+	  is similar. Commit at the point where this compiles cleanly and
+	  "import libxslt" doesn't yield any missing entry point.
+
 Wed Jan 30 12:46:41 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: patch from Charles Bozeman to support

@@ -1081,6 +1081,8 @@
       <arg name='ctxt' type='xsltTransformContextPtr'/>
       <arg name='node' type='xmlNodePtr' info='a node in the source tree '/>
       <arg name='pattern' type='const xmlChar *' info='an XSLT pattern '/>
+      <arg name='ctxtdoc' type='xmlDocPtr'/>
+      <arg name='ctxtnode' type='xmlNodePtr'/>
     </function>
     <function name='xsltMessage' file='xsltutils'>
       <info>Process and xsl:message construct</info>

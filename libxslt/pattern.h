@@ -49,11 +49,11 @@ xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
 void		xsltCleanupTemplates	(xsltStylesheetPtr style);
 
-#if 0
 int		xsltMatchPattern	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
-					 const xmlChar *pattern);
-#endif
+					 const xmlChar *pattern,
+					 xmlDocPtr ctxtdoc,
+					 xmlNodePtr ctxtnode);
 #ifdef __cplusplus
 }
 #endif

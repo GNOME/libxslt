@@ -5,15 +5,17 @@ SUBDIRS = \
 	breakpoint \
   	libexslt \
   	xsltproc \
-  	tests \
-  	doc
+  	doc \
+	python \
+  	tests
 else
 SUBDIRS = \
 	libxslt \
 	libexslt \
 	xsltproc \
-	tests \
-	doc
+	doc \
+	python \
+	tests
 endif
 
 confexecdir=$(libdir)
