@@ -64,6 +64,7 @@
 #include <time.h>
 #define HAVE_STDARG_H
 #include <stdarg.h>
+#define snprintf _snprintf
 #endif /* _MS_VER */
 #else /* WIN32 */
 #if defined(HAVE_SYS_TIME_H)
