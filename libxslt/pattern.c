@@ -18,10 +18,16 @@
 #include <libxml/valid.h>
 #include <libxml/hash.h>
 #include <libxml/xmlerror.h>
+#include <libxml/parserInternals.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 
 #define DEBUG_PARSING
+
+#define TODO 								\
+    xsltGenericError(xsltGenericErrorContext,				\
+	    "Unimplemented block at %s:%d\n",				\
+            __FILE__, __LINE__);
 
 /*
  * To cleanup
@@ -72,6 +78,14 @@ struct _xsltCompMatch {
     xsltStepOp steps[20];        /* ops for computation */
 };
 
+typedef struct _xsltParserContext xsltParserContext;
+typedef xsltParserContext *xsltParserContextPtr;
+struct _xsltParserContext {
+    const xmlChar *cur;			/* the current char being parsed */
+    const xmlChar *base;		/* the full expression */
+    int error;				/* error code */
+    xsltCompMatchPtr comp;		/* the result */
+};
 
 /************************************************************************
  * 									*
@@ -130,6 +144,41 @@ xsltFreeCompMatchList(xsltCompMatchPtr comp) {
 	comp = comp->next;
 	xsltFreeCompMatch(cur);
     }
+}
+
+/**
+ * xsltNewParserContext:
+ *
+ * Create a new XSLT ParserContext
+ *
+ * Returns the newly allocated xsltParserContextPtr or NULL in case of error
+ */
+xsltParserContextPtr
+xsltNewParserContext(void) {
+    xsltParserContextPtr cur;
+
+    cur = (xsltParserContextPtr) xmlMalloc(sizeof(xsltParserContext));
+    if (cur == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNewParserContext : malloc failed\n");
+	return(NULL);
+    }
+    memset(cur, 0, sizeof(xsltParserContext));
+    return(cur);
+}
+
+/**
+ * xsltFreeParserContext:
+ * @comp:  an XSLT comp
+ *
+ * Free up the memory allocated by @comp
+ */
+void
+xsltFreeParserContext(xsltParserContextPtr comp) {
+    if (comp == NULL)
+	return;
+    memset(comp, -1, sizeof(xsltParserContext));
+    xmlFree(comp);
 }
 
 /**
@@ -200,35 +249,236 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
  *									*
  ************************************************************************/
 
-#define IS_BLANK(c) (((c) == 0x20) || ((c) == 0x09) || ((c) == 0xA) ||	\
-                     ((c) == 0x0D))
+#define CUR (*ctxt->cur)
+#define SKIP(val) ctxt->cur += (val)
+#define NXT(val) ctxt->cur[(val)]
+#define CUR_PTR ctxt->cur
 
-#define SKIP_BLANKS while (IS_BLANK(*cur)) cur++;
+#define SKIP_BLANKS 							\
+    while (IS_BLANK(CUR)) NEXT
 
-#define CUR (*(cur))
-#define NXT (*(cur + 1))
-#define NEXT cur++
+#define CURRENT (*ctxt->cur)
+#define NEXT ((*ctxt->cur) ?  ctxt->cur++: ctxt->cur)
 
-#define PUSH(comp, step) 						\
-    if (xsltCompMatchAddOp((comp), (xsltOp) step)) goto error;
 
-#define PUSHSTR(comp, step)						\
-    if (xsltCompMatchAddValue((comp), (xmlChar *) step)) goto error;
+#define PUSH(step) 						\
+    if (xsltCompMatchAddOp(ctxt->comp, (xsltOp) step)) goto error;
 
+#define PUSHSTR(step)						\
+    if (xsltCompMatchAddValue(ctxt->comp, (xmlChar *) step)) goto error;
+
+/**
+ * xsltScanName:
+ * @ctxt:  the XPath Parser context
+ *
+ * Trickery: parse an XML name but without consuming the input flow
+ * Needed to avoid insanity in the parser state.
+ *
+ * [4] NameChar ::= Letter | Digit | '.' | '-' | '_' | ':' |
+ *                  CombiningChar | Extender
+ *
+ * [5] Name ::= (Letter | '_' | ':') (NameChar)*
+ *
+ * [6] Names ::= Name (S Name)*
+ *
+ * Returns the Name parsed or NULL
+ */
+
+xmlChar *
+xsltScanName(xsltParserContextPtr ctxt) {
+    xmlChar buf[XML_MAX_NAMELEN];
+    int len = 0;
+
+    SKIP_BLANKS;
+    if (!IS_LETTER(CUR) && (CUR != '_') &&
+        (CUR != ':')) {
+	return(NULL);
+    }
+
+    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
+           (NXT(len) == '.') || (NXT(len) == '-') ||
+	   (NXT(len) == '_') || (NXT(len) == ':') || 
+	   (IS_COMBINING(NXT(len))) ||
+	   (IS_EXTENDER(NXT(len)))) {
+	buf[len] = NXT(len);
+	len++;
+	if (len >= XML_MAX_NAMELEN) {
+	    xmlGenericError(xmlGenericErrorContext, 
+	       "xmlScanName: reached XML_MAX_NAMELEN limit\n");
+	    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
+		   (NXT(len) == '.') || (NXT(len) == '-') ||
+		   (NXT(len) == '_') || (NXT(len) == ':') || 
+		   (IS_COMBINING(NXT(len))) ||
+		   (IS_EXTENDER(NXT(len))))
+		 len++;
+	    break;
+	}
+    }
+    SKIP(len);
+    return(xmlStrndup(buf, len));
+}
 /*
  * Compile the XSLT LocationPathPattern
- * [2] LocationPathPattern ::= '/' RelativePathPattern?
- *                           | IdKeyPattern (('/' | '//') RelativePathPattern)?
- *                           | '//'? RelativePathPattern
  * [3] IdKeyPattern ::= 'id' '(' Literal ')'
  *                    | 'key' '(' Literal ',' Literal ')'
- * [4] RelativePathPattern ::= StepPattern
- *                           | RelativePathPattern '/' StepPattern
- *                           | RelativePathPattern '//' StepPattern
+ */
+
+/**
+ * xsltCompileStepPattern:
+ * @comp:  the compilation context
+ * @token:  a posible precompiled name
+ *
+ * Compile the XSLT StepPattern and generates a precompiled
+ * form suitable for fast matching.
+ *
  * [5] StepPattern ::= ChildOrAttributeAxisSpecifier NodeTest Predicate* 
  * [6] ChildOrAttributeAxisSpecifier ::= AbbreviatedAxisSpecifier
  *                                     | ('child' | 'attribute') '::'
+ * from XPath
+ * [7]  NodeTest ::= NameTest
+ *                 | NodeType '(' ')'
+ *                 | 'processing-instruction' '(' Literal ')'
+ * [8] Predicate ::= '[' PredicateExpr ']'
+ * [9] PredicateExpr ::= Expr
+ * [13] AbbreviatedAxisSpecifier ::= '@'?
+ * [37] NameTest ::= '*' | NCName ':' '*' | QName
  */
+
+void
+xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
+    SKIP_BLANKS;
+    if ((token == NULL) && (CUR == '@')) {
+	token = xsltScanName(ctxt);
+	if (token == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		    "xsltCompilePattern : Name expected\n");
+	    ctxt->error = 1;
+	    return;
+	}
+    }
+    if (token == NULL)
+	token = xsltScanName(ctxt);
+    if (token == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+		"xsltCompilePattern : Name expected\n");
+        ctxt->error = 1;
+	return;
+    }
+    SKIP_BLANKS;
+    if (CUR == '(') {
+	TODO;
+	/* if (xmlStrEqual(token, "processing-instruction")) */
+    } else if (CUR == ':') {
+	TODO;
+    } else if (CUR == '*') {
+	TODO;
+    } else {
+	PUSH(XSLT_OP_ELEM);
+	PUSHSTR(token);
+    }
+    SKIP_BLANKS;
+    while (CUR == '[') {
+	TODO;
+    }
+    return;
+error:
+    ctxt->error = 1;
+}
+
+/**
+ * xsltCompileRelativePathPattern:
+ * @comp:  the compilation context
+ * @token:  a posible precompiled name
+ *
+ * Compile the XSLT RelativePathPattern and generates a precompiled
+ * form suitable for fast matching.
+ *
+ * [4] RelativePathPattern ::= StepPattern
+ *                           | RelativePathPattern '/' StepPattern
+ *                           | RelativePathPattern '//' StepPattern
+ */
+void
+xsltCompileRelativePathPattern(xsltParserContextPtr ctxt, xmlChar *token) {
+    xsltCompileStepPattern(ctxt, token);
+    if (ctxt->error)
+	goto error;
+    SKIP_BLANKS;
+    while ((CUR != 0) && (CUR != '|')) {
+	if ((CUR == '/') && (NXT(1) == '/')) {
+	    PUSH(XSLT_OP_ANCESTOR);
+	    NEXT;
+	    NEXT;
+	    SKIP_BLANKS;
+	    xsltCompileStepPattern(ctxt, NULL);
+	} else if (CUR == '/') {
+	    PUSH(XSLT_OP_PARENT);
+	    NEXT;
+	    SKIP_BLANKS;
+	    if ((CUR != 0) || (CUR == '|')) {
+		xsltCompileRelativePathPattern(ctxt, NULL);
+	    }
+	} else {
+	    ctxt->error = 1;
+	}
+	if (ctxt->error)
+	    goto error;
+	SKIP_BLANKS;
+    }
+error:
+    return;
+}
+
+/**
+ * xsltCompileLocationPathPattern:
+ * @comp:  the compilation context
+ *
+ * Compile the XSLT LocationPathPattern and generates a precompiled
+ * form suitable for fast matching.
+ *
+ * [2] LocationPathPattern ::= '/' RelativePathPattern?
+ *                           | IdKeyPattern (('/' | '//') RelativePathPattern)?
+ *                           | '//'? RelativePathPattern
+ */
+void
+xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
+    SKIP_BLANKS;
+    if ((CUR == '/') && (NXT(1) == '/')) {
+	/*
+	 * since we reverse the query
+	 * a leading // can be safely ignored
+	 */
+	NEXT;
+	NEXT;
+	xsltCompileRelativePathPattern(ctxt, NULL);
+    } else if (CUR == '/') {
+	/*
+	 * We need to find root as the parent
+	 */
+	NEXT;
+	SKIP_BLANKS;
+	PUSH(XSLT_OP_ROOT);
+	PUSH(XSLT_OP_PARENT);
+	if ((CUR != 0) || (CUR == '|')) {
+	    xsltCompileRelativePathPattern(ctxt, NULL);
+	}
+    } else {
+	xmlChar *name;
+	name = xsltScanName(ctxt);
+	if (name == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		    "xsltCompilePattern : Name expected\n");
+	    ctxt->error = 1;
+	    return;
+	}
+	SKIP_BLANKS;
+	if (CUR == '(') {
+	    TODO
+	}
+	xsltCompileRelativePathPattern(ctxt, name);
+    }
+error:
+    return;
+}
 
 /**
  * xsltCompilePattern:
@@ -236,13 +486,17 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
  *
  * Compile the XSLT pattern and generates a precompiled form suitable
  * for fast matching.
+ * Note that the splitting as union of patterns is expected to be handled
+ * by the caller
  *
  * [1] Pattern ::= LocationPathPattern | Pattern '|' LocationPathPattern
+ *
  * Returns the generated xsltCompMatchPtr or NULL in case of failure
  */
 
 xsltCompMatchPtr
 xsltCompilePattern(const xmlChar *pattern) {
+    xsltParserContextPtr ctxt;
     xsltCompMatchPtr ret;
     const xmlChar *cur;
 
@@ -258,29 +512,38 @@ xsltCompilePattern(const xmlChar *pattern) {
 #endif
 
     cur = pattern;
-    SKIP_BLANKS;
+    while (IS_BLANK(*cur)) cur++;
     if (*cur == 0) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltCompilePattern : NULL pattern\n");
 	return(NULL);
     }
-    ret = xsltNewCompMatch();
-    if (ret == NULL)
+    ctxt = xsltNewParserContext();
+    if (ctxt == NULL)
 	return(NULL);
-
-    if ((CUR == '/') && (NXT == '/')) {
-    } else if (CUR == '/') {
-	PUSH(ret, XSLT_OP_ROOT);
+    ret = xsltNewCompMatch();
+    if (ret == NULL) {
+	xsltFreeParserContext(ctxt);
+	return(NULL);
     }
+
+    ctxt->comp = ret;
+    ctxt->base = pattern;
+    ctxt->cur = cur;
+    xsltCompileLocationPathPattern(ctxt);
+    if (ctxt->error)
+	goto error;
 
     /*
      * Reverse for faster interpretation.
      */
     xsltReverseCompMatch(ret);
 
+    xsltFreeParserContext(ctxt);
     return(ret);
 
 error:
+    xsltFreeParserContext(ctxt);
     xsltFreeCompMatch(ret);
     return(NULL);
 

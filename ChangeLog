@@ -1,3 +1,7 @@
+Wed Jan 10 20:44:30 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c: more work on parsing selectors
+
 Wed Jan 10 16:29:41 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt*: completeted the structures
