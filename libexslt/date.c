@@ -119,7 +119,8 @@ struct _exsltDateVal {
 
 #if defined(HAVE_TIME_H) 					\
     && (defined(HAVE_LOCALTIME) || defined(HAVE_LOCALTIME_R))	\
-    && defined(HAVE_TIME) && defined(HAVE_GMTIME)
+    && (defined(HAVE_GMTIME) || defined(HAVE_GMTIME_R))		\
+    && defined(HAVE_TIME)
 #define WITH_TIME
 #endif
 
@@ -748,6 +749,9 @@ exsltDateCurrent (void)
 #if HAVE_LOCALTIME_R
     struct tm localTmS;
 #endif
+#if HAVE_GMTIME_R
+    struct tm gmTmS;
+#endif
     exsltDateValPtr ret;
 
     ret = exsltDateCreateDate(XS_DATETIME);
@@ -775,7 +779,12 @@ exsltDateCurrent (void)
     ret->value.date.sec  = (double) localTm->tm_sec;
 
     /* determine the time zone offset from local to gm time */
+#if HAVE_GMTIME_R
+    gmtime_r(&secs, &gmTmS);
+    gmTm = &gmTmS;
+#else
     gmTm = gmtime(&secs);
+#endif
     ret->value.date.tz_flag = 0;
     ret->value.date.tzo = (((ret->value.date.day * 1440) +
                             (ret->value.date.hour * 60) +
