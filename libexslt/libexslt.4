@@ -1,0 +1,86 @@
+.TH libexslt 4 "30 August 2001"
+.SH NAME
+libexslt \- extension library for XSLT
+.SH DESCRIPTION
+The 
+.I libexslt
+library is used to do provide extenstions to XSLT functions.
+These extenstions come from the EXSLT project (http://exslt.org/)
+.LP
+.SH CALLING
+To make use of these functions XSLT, these need to be declared with the
+proper name space
+.SH SUPPORTED FUNCTIONS
+.B COMMON
+.TP 2.2i
+Namespace: http://exslt.org/common
+.TP 2.2i
+.B node-set()
+convert the given RTF into a node-set
+.TP
+.B object-type()
+returns the type of the given argument
+.TP
+.B document()
+Create multiple output documents. See http://exslt.org/exsl/elements/document/index.html
+.TP 2.2o
+
+.B MATH
+.TP 2.2i
+Namespace: http://exslt/math
+.TP 2.2i
+For a description see http://exslt.org/math/index.html
+.TP 2.2i
+.B min()
+.TP
+.B max()
+.TP
+.B highest()
+.TP
+.B lowest()
+.TP 2.2o
+
+.B SETS
+.TP 2.2i
+Namespace http://exslt.org/sets
+.TP 2.2i
+For a description see http://exslt.org/set/index.html
+.TP 2.2i
+.B difference()
+.TP
+.B intersection()
+.TP
+.B distinct()
+.TP
+.B has-same-node()
+.TP
+.B leading()
+.TP
+.B trailing()
+.TP 2.2o
+
+.B FUNCTIONS
+.TP 2.2i
+Namespace http://exslt.org/functions
+.TP 2.2i
+For a description see http://exslt.org/func/index.html
+.TP 2.2i
+.B function()
+.TP
+.B result()
+.TP 2.2o
+.SH FILES
+.TP 2.2i
+.B /usr/lib/libxslt_0.0.0/libexslt.a
+static library
+.TP
+.B /usr/lib/libxslt_0.0.0/libexslt.so
+sharable library
+.SH AUTHORS
+Manual page by Heiko W. Rupp (hwr@pilhuhn.de)
+.SH SEE ALSO
+.IR libxslt (4), 
+.IR libxml (4), 
+.IR xsltproc (1), 
+.IR xmllint (1)
+.\" end of manual page

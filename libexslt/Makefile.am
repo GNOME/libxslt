@@ -22,3 +22,6 @@ libexslt_la_SOURCES =                   \
 libexslt_la_LIBADD = $(EXTRA_LIBS)
 libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@
 
+man_MANS = libexslt.4
+
+EXTRA_DIST = $(man_MANS)
