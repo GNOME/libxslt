@@ -522,14 +522,16 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
             case XSLT_OP_ANCESTOR:
 		/* TODO: implement coalescing of ANCESTOR/NODE ops */
 		if (step->value == NULL) {
-		    i++;
-		    step = &comp->steps[i];
+		    step = &comp->steps[i+1];
 		    if (step->op == XSLT_OP_ROOT)
 			return(1);
-		    if ((step->op != XSLT_OP_ELEM) && (step->op != XSLT_OP_ALL))
+		    /* added NS, ID and KEY as a result of bug 168208 */
+		    if ((step->op != XSLT_OP_ELEM) && 
+				(step->op != XSLT_OP_ALL) && 
+				(step->op != XSLT_OP_NS) &&
+				(step->op != XSLT_OP_ID) &&
+				(step->op != XSLT_OP_KEY))
 			return(0);
-		    if ((step->value == NULL) && (step->op != XSLT_OP_ALL))
-			return(-1);
 		}
 		if (node == NULL)
 		    return(0);
@@ -541,6 +543,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    (node->type == XML_NAMESPACE_DECL))
 		    return(0);
 		node = node->parent;
+		if ((step->op != XSLT_OP_ELEM) && step->op != XSLT_OP_ALL)
+			continue;
+		i++;
 		if (step->value == NULL)
 		    continue;
 		while (node != NULL) {

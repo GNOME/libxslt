@@ -1,3 +1,8 @@
+Wed Feb 23 19:25:13 HKT 2005 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: fixed a problem with '//' and
+	  namespaces (bug 168208)
+
 Mon Feb 14 23:10:21 HKT 2005 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/namespaces.c: fixed a problem with
