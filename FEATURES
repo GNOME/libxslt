@@ -45,9 +45,9 @@ YES			name = qname
 YES			priority = number 
 NO			mode = qname
 
-NO		    xsl:namespace-alias
-NO			stylesheet-prefix = prefix | "#default"
-NO			result-prefix = prefix | "#default"
+YES		    xsl:namespace-alias
+YES			stylesheet-prefix = prefix | "#default"
+YES			result-prefix = prefix | "#default"
 
 NO		    xsl:attribute-set
 NO			name = qname 
@@ -99,7 +99,7 @@ NO			use-attribute-sets = qnames
 
 YES		    xsl:attribute
 YES			name = { qname }
-YES			namespace = { uri-reference }
+NO			namespace = { uri-reference }
 
 YES		    xsl:text
 YES			disable-output-escaping = "yes" | "no"
@@ -193,7 +193,7 @@ YES		    Built-in Template Rules
 YES		        match="*|/"
 YES			match="text()|@*"
 YES			match="processing-instruction()|comment()"
-NO			Namespace
+YES			Namespace
 NO			Mode
 
 NO		    Extension Elements

@@ -25,6 +25,7 @@
 #include "functions.h"
 #include "templates.h"
 #include "transform.h"
+#include "namespaces.h"
 
 #define DEBUG_TEMPLATES
 
@@ -264,23 +265,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
     if (ret == NULL) return(NULL);
     ret->parent = target;
     
-    if ((cur->ns != NULL) && (target != NULL)) {
-	if ((target != NULL) && (target->ns != NULL) &&
-	    (xmlStrEqual(target->ns->href, cur->ns->href))) {
-	    ret->ns = target->ns;
-	} else {
-	    xmlNsPtr ns;
-
-	    ns = xmlSearchNsByHref(ctxt->output, target, cur->ns->href);
-	    if (ns != NULL) {
-		ret->ns = ns;
-	    } else {
-		ns = xmlNewNs(target, cur->ns->href, cur->ns->prefix);
-		ret->ns = ns;
-	    }
-	}
-    } else
-        ret->ns = NULL;
+    ret->ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
 
     if (cur->children != NULL) {
 	xmlChar *in = xmlNodeListGetString(ctxt->doc, cur->children, 1);

@@ -102,6 +102,11 @@ struct _xsltStylesheet {
     void *commentMatch;		/* template based on comment() */
     
     /*
+     * Namespace aliases
+     */
+    xmlHashTablePtr nsAliases;	/* the namespace alias hash tables */
+
+    /*
      * Output related stuff.
      */
     xmlChar *method;		/* the output method */

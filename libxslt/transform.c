@@ -30,6 +30,7 @@
 #include "pattern.h"
 #include "transform.h"
 #include "variables.h"
+#include "namespaces.h"
 #include "templates.h"
 
 #define DEBUG_PROCESS
@@ -349,12 +350,6 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xslt:attribute : node has already children\n");
 	return;
     }
-    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
-    if (prop != NULL) {
-	TODO /* xsl:attribute namespace */
-	xmlFree(prop);
-	return;
-    }
     prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -373,13 +368,23 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xslt:attribute : xmlns forbidden\n");
 	goto error;
     }
-    if ((prefix != NULL) && (ns == NULL)) {
-	ns = xmlSearchNs(ctxt->insert->doc, ctxt->insert, prefix);
-	if (ns == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-		"no namespace bound to prefix %s\n", prefix);
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
+    if (prop != NULL) {
+	TODO /* xsl:attribute namespace */
+	xmlFree(prop);
+	return;
+    } else {
+	if (prefix != NULL) {
+	    ns = xmlSearchNs(inst->doc, inst, prefix);
+	    if (ns == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+		    "no namespace bound to prefix %s\n", prefix);
+	    } else {
+		ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+	    }
 	}
     }
+    
 
     value = xsltEvalTemplateString(ctxt, node, inst);
     if (value == NULL) {
@@ -528,34 +533,9 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 * Add namespaces as they are needed
 	 */
 	if (node->nsDef != NULL)
-	    copy->nsDef = xmlCopyNamespaceList(node->nsDef);
+	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
 	if (node->ns != NULL) {
-	    /*
-	     * optimization, if the namespace is already the
-	     * on on the parent node, reuse it directly
-	     *
-	     * TODO: check possible mess with xmlCopyNamespaceList
-	     */
-	    if ((insert->type == XML_ELEMENT_NODE) &&
-		(insert->ns != NULL) && 
-		(xmlStrEqual(insert->ns->href, node->ns->href))) {
-		copy->ns = insert->ns;
-	    } else {
-		xmlNsPtr ns;
-
-		/*
-		 * Look in the output tree if the namespace is
-		 * already in scope.
-		 */
-		ns = xmlSearchNsByHref(ctxt->output, copy,
-				       node->ns->href);
-		if (ns != NULL)
-		    copy->ns = ns;
-		else {
-		    ns = xmlNewNs(copy, node->ns->href,
-				  node->ns->prefix);
-		}
-	    }
+	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, insert);
 	}
     } else {
 	xsltGenericError(xsltGenericErrorContext,
@@ -697,7 +677,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlChar *prefix = NULL;
     xmlNsPtr ns = NULL;
     xsltTemplatePtr template;
-    xmlNodePtr cur;
+    xmlNodePtr cur = NULL;
     int has_param = 0;
 
 

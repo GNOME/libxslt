@@ -24,6 +24,7 @@
 #include "xsltInternals.h"
 #include "pattern.h"
 #include "variables.h"
+#include "namespaces.h"
 #include "xsltutils.h"
 
 #define DEBUG_PARSING
@@ -784,7 +785,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 #endif
 	    xsltParseStylesheetTemplate(style, cur);
         } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
-	    TODO /* Handle namespace-alias */
+	    xsltNamespaceAlias(style, cur);
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetTop: ignoring unknown %s element\n",

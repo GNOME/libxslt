@@ -1,3 +1,11 @@
+Sun Jan 28 17:25:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES TODO: updates
+	* libxslt/namespaces.[ch] libxslt/templates.c libxslt/transform.c
+	  libxslt/xslt.c libxslt/xsltInternals.h: added support for
+	  namespace aliases and cleaned up the overall namespace related
+	  code. This materialize as a new module.
+
 Sun Jan 28 08:41:10 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in libxslt.spec.in: changes needed for libxml2-devel
