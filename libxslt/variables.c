@@ -515,12 +515,12 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 	
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 	if ((style->doc != NULL) && (style->doc->URL != NULL)) {
-
 	    xsltGenericDebug(xsltGenericDebugContext,
-		"Registering global variables from %s\n",
+			     "Registering global variables from %s\n",
 		             style->doc->URL);
 	}
 #endif
+
 	while (elem != NULL) {
 	    xsltStackElemPtr def;
 
@@ -595,6 +595,7 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
 	xsltGenericDebug(xsltGenericDebugContext,
 			 "Defining global variable %s\n", name);
 #endif
+
     elem = xsltNewStackElem();
     if (elem == NULL)
 	return(-1);
@@ -659,6 +660,7 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Evaluating user parameter %s=%s\n", name, value);
 #endif
+
 	/*
 	 * Name lookup
 	 */
@@ -672,7 +674,7 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 			         prefix);
 		if (ns == NULL) {
 		    xsltGenericError(xsltGenericErrorContext,
-			"user param : no namespace bound to prefix %s\n", prefix);
+		    "user param : no namespace bound to prefix %s\n", prefix);
 		    href = NULL;
 		} else {
 		    href = ns->href;
@@ -723,6 +725,7 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 					result, 0);
 #endif
 #endif
+
 	    elem = xsltNewStackElem();
 	    if (elem != NULL) {
 		elem->name = xmlStrdup(ncname);
@@ -777,6 +780,7 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 			 " select %s", comp->select);
     xsltGenericDebug(xsltGenericDebugContext, "\n");
 #endif
+
     elem = xsltNewStackElem();
     if (elem == NULL)
 	return(NULL);
@@ -941,11 +945,11 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 	    "xsl:param : missing name attribute\n");
 	return(NULL);
     }
+
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
 	    "Handling param %s\n", comp->name);
 #endif
-
 
     if (comp->select == NULL) {
 	tree = cur->children;

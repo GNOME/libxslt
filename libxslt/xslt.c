@@ -21,6 +21,7 @@
 #include <libxml/uri.h>
 #include <libxml/xmlerror.h>
 #include <libxml/parserInternals.h>
+#include <libxml/xpathInternals.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "pattern.h"

@@ -165,7 +165,7 @@ xsltNumberFormatAlpha(xmlBufferPtr buffer,
     *(--pointer) = 0;
     alpha_list = (is_upper) ? alpha_upper_list : alpha_lower_list;
     
-    for (i = 1; i < (int)sizeof(buffer); i++) {
+    for (i = 1; i < (int)sizeof(temp_string); i++) {
 	number--;
 	*(--pointer) = alpha_list[((int)fmod(number, alpha_size))];
 	number /= alpha_size;

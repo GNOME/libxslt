@@ -799,11 +799,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    if (cur->type == XML_PI_NODE)
 			xsltGenericDebug(xsltGenericDebugContext,
-			 "xsltDefaultProcessOneNode: template found for PI %s\n",
+		     "xsltDefaultProcessOneNode: template found for PI %s\n",
 			                 cur->name);
 		    else if (cur->type == XML_COMMENT_NODE)
 			xsltGenericDebug(xsltGenericDebugContext,
-			 "xsltDefaultProcessOneNode: template found for comment\n");
+		     "xsltDefaultProcessOneNode: template found for comment\n");
 #endif
 		    oldNode = ctxt->node;
 		    ctxt->node = cur;
@@ -1245,8 +1245,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (ret < 0) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltDocumentElem: unable to save to %s\n", filename);
-    } else {
 #ifdef WITH_XSLT_DEBUG_EXTRA
+    } else {
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Wrote %d bytes to %s\n", ret, , filename);
 #endif
@@ -2278,7 +2278,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (newdoc) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
+     "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
 	     newCDocPtr->doc->URL, newXDocPtr->URL);
 #endif
 

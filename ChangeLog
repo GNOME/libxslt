@@ -1,3 +1,9 @@
+Fri Jun 22 00:11:18 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/numbers.c: fix of a small bug
+	* libxslt/transform.c libxslt/variables.c libxslt/xslt.c: cleanups
+	  while bug-hunting
+
 Tue Jun 19 16:13:49 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docbook/Makefile.am: added XHTML and XSL FO to the
