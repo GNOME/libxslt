@@ -1,3 +1,8 @@
+Wed May  2 14:04:34 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xslt.c: fixed xsl:text processing
+	  there can be multiple text and CDATA child
+
 Wed May  2 10:55:56 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/multiple/makefile.am: fixing #54015

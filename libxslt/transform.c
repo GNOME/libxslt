@@ -877,9 +877,13 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (IS_XSLT_ELEM(cur)) {
 	    xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
 	    if (info == NULL) {
-		xsltGenericError(xsltGenericDebugContext,
-		 "xsltApplyOneTemplate: %s was not compiled\n",
-				 cur->name);
+		if (IS_XSLT_NAME(cur, "message")) {
+		    xsltMessage(ctxt, node, cur);
+		} else {
+		    xsltGenericError(xsltGenericDebugContext,
+		     "xsltApplyOneTemplate: %s was not compiled\n",
+				     cur->name);
+		}
 		goto skip_children;
 	    }
 	    
@@ -1388,17 +1392,18 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 void
 xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xmlNodePtr copy;
+    if ((inst->children != NULL) && (comp != NULL)) {
+	xmlNodePtr text = inst->children;
+	xmlNodePtr copy;
 
-    if (inst->children != NULL) {
-	if (((inst->children->type != XML_TEXT_NODE) &&
-	     (inst->children->type != XML_CDATA_SECTION_NODE)) ||
-	    (inst->children->next != NULL)) {
-	    xsltGenericError(xsltGenericErrorContext,
-		 "xslt:text has content problem !\n");
-	} else {
-	    xmlNodePtr text = inst->children;
-	    
+	while (text != NULL) {
+	    if (((text->type != XML_TEXT_NODE) &&
+		 (text->type != XML_CDATA_SECTION_NODE)) ||
+		(text->next != NULL)) {
+		xsltGenericError(xsltGenericErrorContext,
+				 "xslt:text content problem\n");
+		break;
+	    }
 	    copy = xmlNewDocText(ctxt->output, text->content);
 	    if (comp->noescape) {
 #ifdef WITH_XSLT_DEBUG_PARSING
@@ -1408,6 +1413,7 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 		copy->name = xmlStringTextNoenc;
 	    }
 	    xmlAddChild(ctxt->insert, copy);
+	    text = text->next;
 	}
     }
 }

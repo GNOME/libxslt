@@ -976,37 +976,55 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "text")) {
 		if (cur->children != NULL) {
-		    if (((cur->children->type != XML_TEXT_NODE) &&
-			 (cur->children->type != XML_CDATA_SECTION_NODE)) ||
-			(cur->children->next != NULL)) {
-			xsltGenericError(xsltGenericErrorContext,
-	     "xsltParseTemplateContent: xslt:text content problem\n");
-			style->errors++;
-		    } else {
-			xmlChar *prop;
-			xmlNodePtr text = cur->children;
+		    xmlChar *prop;
+		    xmlNodePtr text = cur->children, next;
+		    int noesc = 0;
 			
-			prop = xmlGetNsProp(cur,
-				(const xmlChar *)"disable-output-escaping",
-				            XSLT_NAMESPACE);
-			if (prop != NULL) {
+		    prop = xmlGetNsProp(cur,
+			    (const xmlChar *)"disable-output-escaping",
+					XSLT_NAMESPACE);
+		    if (prop != NULL) {
 #ifdef WITH_XSLT_DEBUG_PARSING
-			    xsltGenericDebug(xsltGenericDebugContext,
-				 "Disable escaping: %s\n", text->content);
+			xsltGenericDebug(xsltGenericDebugContext,
+			     "Disable escaping: %s\n", text->content);
 #endif
-			    if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
-				text->name = xmlStringTextNoenc;
-			    } else if (!xmlStrEqual(prop,
-					            (const xmlChar *)"no")){
-				xsltGenericError(xsltGenericErrorContext,
-		 "xslt:text: disable-output-escaping allow only yes or no\n");
-				style->warnings++;
+			if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+			    noesc = 1;
+			} else if (!xmlStrEqual(prop,
+						(const xmlChar *)"no")){
+			    xsltGenericError(xsltGenericErrorContext,
+	     "xslt:text: disable-output-escaping allow only yes or no\n");
+			    style->warnings++;
 
-			    }
-			    xmlFree(prop);
 			}
-			xmlUnlinkNode(text);
-			xmlAddPrevSibling(cur, text);
+			xmlFree(prop);
+		    }
+
+		    while (text != NULL) {
+			if (((text->type != XML_TEXT_NODE) &&
+			     (text->type != XML_CDATA_SECTION_NODE)) ||
+			    (text->next != NULL)) {
+			    xsltGenericError(xsltGenericErrorContext,
+		 "xsltParseTemplateContent: xslt:text content problem\n");
+			    style->errors++;
+			    break;
+			}
+			if (noesc)
+			    text->name = xmlStringTextNoenc;
+			text = text->next;
+		    }
+
+		    /*
+		     * replace xsl:text by the list of childs
+		     */
+		    if (text == NULL) {
+			text = cur->children;
+			while (text != NULL) {
+			    next = text->next;
+			    xmlUnlinkNode(text);
+			    xmlAddPrevSibling(cur, text);
+			    text = next;
+			}
 		    }
 		}
 		delete = cur;
