@@ -1,3 +1,13 @@
+Fri Jul  5 16:30:02 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c libxslt/xsltutils.c: applied a patch from
+	  Ken Neighbors to implement/fix sorting orders
+	* tests/docbook/result/*/gdp-handbook.* 
+	  tests/docbook/result/xtchunk/html/*.orig
+	  tests/general/bug-12-.out tests/general/bug-63.out:
+	  cleaned up the result of "make tests" following some changes
+	  in namespace axis order and serialization rules in libxml2
+
 Thu Jul  4 16:53:00 HKT 2002 William Brack <wbrack@mmm.com.hk>
 
 	* transform.c further enhancement for bug 84902 (another

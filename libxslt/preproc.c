@@ -316,7 +316,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    xsltPrintErrorContext(NULL, style, inst);
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xsltSortComp: no support for data-type = %s\n", comp->stype);
-	    comp->number = -1;
+	    comp->number = 0; /* use default */
 	    style->warnings++;
 	}
     }
@@ -332,7 +332,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    xsltPrintErrorContext(NULL, style, inst);
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xsltSortComp: invalid value %s for order\n", comp->order);
-	    comp->descending = -1;
+	    comp->descending = 0; /* use default */
 	    style->warnings++;
 	}
     }

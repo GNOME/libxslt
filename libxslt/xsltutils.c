@@ -605,6 +605,7 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     xmlNodePtr node;
     xmlXPathObjectPtr tmp;
     xsltStylePreCompPtr comp;
+    int tempstype[XSLT_MAX_SORT], temporder[XSLT_MAX_SORT];
 
     if ((ctxt == NULL) || (sorts == NULL) || (nbsorts <= 0) ||
 	(nbsorts >= XSLT_MAX_SORT))
@@ -619,6 +620,52 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     if ((list == NULL) || (list->nodeNr <= 1))
 	return; /* nothing to do */
 
+    for (j = 0; j < nbsorts; j++) {
+	comp = sorts[j]->_private;
+	tempstype[j] = 0;
+	if ((comp->stype == NULL) && (comp->has_stype != 0)) {
+	    comp->stype =
+		xsltEvalAttrValueTemplate(ctxt, sorts[j],
+					  (const xmlChar *) "data-type",
+					  XSLT_NAMESPACE);
+	    if (comp->stype != NULL) {
+		tempstype[j] = 1;
+		if (xmlStrEqual(comp->stype, (const xmlChar *) "text"))
+		    comp->number = 0;
+		else if (xmlStrEqual(comp->stype, (const xmlChar *) "number"))
+		    comp->number = 1;
+		else {
+		    xsltPrintErrorContext(ctxt, NULL, sorts[j]);
+		    xsltGenericError(xsltGenericErrorContext,
+			  "xsltDoSortFunction: no support for data-type = %s\n",
+				     comp->stype);
+		    comp->number = 0; /* use default */
+		}
+	    }
+	}
+	temporder[j] = 0;
+	if ((comp->order == NULL) && (comp->has_order != 0)) {
+	    comp->order = xsltEvalAttrValueTemplate(ctxt, sorts[j],
+						    (const xmlChar *) "order",
+						    XSLT_NAMESPACE);
+	    if (comp->order != NULL) {
+		temporder[j] = 1;
+		if (xmlStrEqual(comp->order, (const xmlChar *) "ascending"))
+		    comp->descending = 0;
+		else if (xmlStrEqual(comp->order,
+				     (const xmlChar *) "descending"))
+		    comp->descending = 1;
+		else {
+		    xsltPrintErrorContext(ctxt, NULL, sorts[j]);
+		    xsltGenericError(xsltGenericErrorContext,
+			     "xsltDoSortFunction: invalid value %s for order\n",
+				     comp->order);
+		    comp->descending = 0; /* use default */
+		}
+	    }
+	}
+    }
+
     len = list->nodeNr;
 
     resultsTab[0] = xsltComputeSortResult(ctxt, sorts[0]);
@@ -627,6 +674,7 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 
     results = resultsTab[0];
 
+    comp = sorts[0]->_private;
     descending = comp->descending;
     number = comp->number;
     if (results == NULL)
@@ -738,6 +786,17 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     }
 
     for (j = 0; j < nbsorts; j++) {
+	comp = sorts[j]->_private;
+	if (tempstype[j] == 1) {
+	    /* The data-type needs to be recomputed each time */
+	    xmlFree(comp->stype);
+	    comp->stype = NULL;
+	}
+	if (temporder[j] == 1) {
+	    /* The order needs to be recomputed each time */
+	    xmlFree(comp->order);
+	    comp->order = NULL;
+	}
 	if (resultsTab[j] != NULL) {
 	    for (i = 0;i < len;i++)
 		xmlXPathFreeObject(resultsTab[j][i]);
