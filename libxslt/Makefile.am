@@ -16,7 +16,7 @@ libxslt_la_SOURCES = 			\
 noinst_PROGRAMS = xsltproc
 
 DEPS = $(top_builddir)/libxslt/libxslt.la
-LDADDS = $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS)
+LDADDS = -L. $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS)
 
 xsltproc_SOURCES = xsltproc.c
 xsltproc_LDFLAGS =

@@ -9,16 +9,47 @@
  * Daniel.Veillard@imag.fr
  */
 
+#include <string.h>
+
+#include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
+#include <libxml/xmlerror.h>
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
+
+/*
+ * There is no XSLT specific error reporting module yet
+ */
+#define xsltGenericError xmlGenericError
+#define xsltGenericErrorContext xmlGenericErrorContext
 
 /************************************************************************
  *									*
  *		Routines to handle XSLT data structures			*
  *									*
  ************************************************************************/
+
+/**
+ * xsltNewStylesheet:
+ *
+ * Create a new XSLT Stylesheet
+ *
+ * Returns the newly allocated xsltStylesheetPtr or NULL in case of error
+ */
+xsltStylesheetPtr
+xsltNewStylesheet(void) {
+    xsltStylesheetPtr cur;
+
+    cur = (xsltStylesheetPtr) xmlMalloc(sizeof(xsltStylesheet));
+    if (cur == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNewStylesheet : malloc failed\n");
+	return(NULL);
+    }
+    memset(cur, 0, sizeof(xsltStylesheet));
+    return(cur);
+}
 
 /**
  * xsltFreeStylesheet:
@@ -28,6 +59,12 @@
  */
 void
 xsltFreeStylesheet(xsltStylesheetPtr sheet) {
+    if (sheet == NULL)
+	return;
+    if (sheet->doc != NULL)
+	xmlFreeDoc(sheet->doc);
+    memset(sheet, -1, sizeof(xsltStylesheet));
+    xmlFree(sheet);
 }
 
 /************************************************************************
@@ -48,6 +85,24 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
 xsltStylesheetPtr
 xsltParseStylesheetFile(const xmlChar* filename) {
     xsltStylesheetPtr ret;
+    xmlDocPtr doc;
+
+    if (filename == NULL)
+	return(NULL);
+
+    doc = xmlParseFile(filename);
+    if (doc == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltParseStylesheetFile : cannot parse %s\n", filename);
+	return(NULL);
+    }
+    ret = xsltNewStylesheet();
+    if (ret == NULL) {
+	xmlFreeDoc(doc);
+	return(NULL);
+    }
+
+    ret->doc = doc;
 
     return(ret);
 }

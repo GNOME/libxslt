@@ -6,6 +6,8 @@
  * Daniel.Veillard@imag.fr
  */
 
+#include <string.h>
+#include <libxml/xmlmemory.h>
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
 
@@ -13,8 +15,7 @@ static int debug = 0;
 
 int
 main(int argc, char **argv) {
-    int i, count;
-    int files = 0;
+    int i;
     xsltStylesheetPtr cur;
 
     LIBXML_TEST_VERSION

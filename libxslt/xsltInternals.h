@@ -21,12 +21,14 @@ extern "C" {
 typedef struct _xsltStylesheet xsltStylesheet;
 typedef xsltStylesheet *xsltStylesheetPtr;
 struct _xsltStylesheet {
+    xmlDocPtr doc;	/* the parsed XML stylesheet */
 };
 
 /*
  * Functions associated to the internal types
  */
 xsltStylesheetPtr	xsltParseStylesheetFile	(const xmlChar* filename);
+void			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
 
 #ifdef __cplusplus
 }

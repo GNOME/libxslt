@@ -1,3 +1,8 @@
+Sun Jan  7 16:11:42 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.[ch] libxslt/xsltInternals.h libxslt/xsltproc.c:
+	  very early coding
+
 Sun Jan  7 15:10:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in Makefile.am AUTHORS NEWS autogen.sh config.h.in
