@@ -101,6 +101,7 @@ static int profile = 0;
 static const char *params[16 + 1];
 static int nbparams = 0;
 static const char *output = NULL;
+static int errorno = 0;
 
 /*
  * Internal timing routines to remove the necessity to have unix-specific
@@ -277,6 +278,7 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 		    fprintf(stderr,
 			    "Unsupported non standard output %s\n",
 			    cur->method);
+		    errorno = 7;
 		}
 	    }
 #ifdef LIBXML_DEBUG_ENABLED
@@ -437,7 +439,7 @@ main(int argc, char **argv)
             params[nbparams++] = argv[i];
             if (nbparams >= 16) {
                 fprintf(stderr, "too many params\n");
-                return (1);
+                return (2);
             }
         } else if ((!strcmp(argv[i], "-maxdepth")) ||
                    (!strcmp(argv[i], "--maxdepth"))) {
@@ -451,7 +453,7 @@ main(int argc, char **argv)
         } else {
             fprintf(stderr, "Unknown option %s\n", argv[i]);
             usage(argv[0]);
-            return (1);
+            return (3);
         }
     }
     params[nbparams] = NULL;
@@ -491,6 +493,7 @@ main(int argc, char **argv)
 	    if (style == NULL) {
 		fprintf(stderr,  "cannot parse %s\n", argv[i]);
 		cur = NULL;
+		errorno = 4;
 	    } else {
 		cur = xsltLoadStylesheetPI(style);
 		if (cur != NULL) {
@@ -508,6 +511,7 @@ main(int argc, char **argv)
 		    i++;
 		} else {
 		    xmlFreeDoc(style);
+		    errorno = 5;
 		    goto done;
 		}
 	    }
@@ -540,6 +544,7 @@ main(int argc, char **argv)
                 doc = xmlParseFile(argv[i]);
             if (doc == NULL) {
                 fprintf(stderr, "unable to parse %s\n", argv[i]);
+		errorno = 6;
                 continue;
             }
             if (timing)
@@ -553,6 +558,6 @@ done:
     xsltCleanupGlobals();
     xmlCleanupParser();
     xmlMemoryDump();
-    return (0);
+    return(errorno);
 }
 

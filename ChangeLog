@@ -1,3 +1,8 @@
+Mon Nov 26 21:45:07 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: return useful code signaling error conditions
+	  closing #56649 (RH)
+
 Mon Nov 26 13:14:14 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt/xsltwin32config.h: preparing release of 1.0.8
