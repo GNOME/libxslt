@@ -84,6 +84,7 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltEvalXPathPredicate: failed\n");
 #endif
+	ctxt->state = XSLT_STATE_STOPPED;
 	ret = 0;
     }
     ctxt->xpathCtxt->nsNr = oldNsNr;
@@ -140,6 +141,8 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 		 "xpath : string() function didn't return a String\n");
 	}
 	xmlXPathFreeObject(res);
+    } else {
+	ctxt->state = XSLT_STATE_STOPPED;
     }
 #ifdef WITH_XSLT_DEBUG_TEMPLATES
     xsltGenericDebug(xsltGenericDebugContext,

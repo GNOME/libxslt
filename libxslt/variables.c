@@ -337,6 +337,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    xsltPrintErrorContext(ctxt, NULL, precomp->inst);
 	    xsltGenericError(xsltGenericErrorContext,
 		"Evaluating variable %s failed\n", elem->name);
+	    ctxt->state = XSLT_STATE_STOPPED;
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
 	} else {
@@ -370,6 +371,11 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    result = xmlXPathNewValueTree(container);
 	    if (result == NULL) {
 		result = xmlXPathNewCString("");
+	    } else {
+		/*
+		 * Tag the subtree for removal once consumed
+		 */
+		result->boolval = 1;
 	    }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
@@ -451,6 +457,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    xsltPrintErrorContext(ctxt, NULL, precomp->inst);
 	    xsltGenericError(xsltGenericErrorContext,
 		"Evaluating global variable %s failed\n", elem->name);
+	    ctxt->state = XSLT_STATE_STOPPED;
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
 	} else {
@@ -484,6 +491,11 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    result = xmlXPathNewValueTree(container);
 	    if (result == NULL) {
 		result = xmlXPathNewCString("");
+	    } else {
+		/*
+		 * Tag the subtree for removal once consumed
+		 */
+		result->boolval = 1;
 	    }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
@@ -743,6 +755,7 @@ xsltEvalUserParams(xsltTransformContextPtr ctxt, const char **params) {
 	    xsltPrintErrorContext(ctxt, style, NULL);
 	    xsltGenericError(xsltGenericErrorContext,
 		"Evaluating user parameter %s failed\n", name);
+	    ctxt->state = XSLT_STATE_STOPPED;
 	} else {
 	    xsltStackElemPtr elem;
 	    int res;

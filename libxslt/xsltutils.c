@@ -552,6 +552,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
 		}
 	    }
 	} else {
+	    ctxt->state = XSLT_STATE_STOPPED;
 	    results[i] = NULL;
 	}
     }

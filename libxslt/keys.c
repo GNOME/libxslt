@@ -391,6 +391,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltInitCtxtKey: %s evaluation failed\n", keyd->match);
 #endif
+	ctxt->state = XSLT_STATE_STOPPED;
 	goto error;
     }
 

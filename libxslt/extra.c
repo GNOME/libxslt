@@ -142,7 +142,6 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
     }
     if (ctxt->value->type == XPATH_XSLT_TREE) {
 	ctxt->value->type = XPATH_NODESET;
-	ctxt->value->boolval = 1;
     }
 }
 

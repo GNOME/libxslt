@@ -2288,6 +2288,8 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltCopyTextString(ctxt, ctxt->insert, res->stringval);
 	    }
 	}
+    } else {
+	ctxt->state = XSLT_STATE_STOPPED;
     }
 
     if (res != NULL)
@@ -2350,6 +2352,8 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xmlAddChild(ctxt->insert, copy);
 	    }
 	}
+    } else {
+	ctxt->state = XSLT_STATE_STOPPED;
     }
     if (copy == NULL) {
 	xsltPrintErrorContext(ctxt, NULL, inst);
@@ -2585,6 +2589,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     } else {
 		list = NULL;
 	     }
+	} else {
+	    ctxt->state = XSLT_STATE_STOPPED;
 	}
 	if (list == NULL) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -2817,6 +2823,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		goto error;
 	    }
+	} else {
+	    ctxt->state = XSLT_STATE_STOPPED;
 	}
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -2916,6 +2924,8 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    goto error;
 	}
+    } else {
+	ctxt->state = XSLT_STATE_STOPPED;
     }
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -2986,6 +2996,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (res != NULL) {
 	if (res->type == XPATH_NODESET)
 	    list = res->nodesetval;
+    } else {
+	ctxt->state = XSLT_STATE_STOPPED;
     }
     if (list == NULL) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
