@@ -1,3 +1,8 @@
+Wed Dec  5 18:43:45 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* breakpoint/Makefile.am breakpoint/deprecated.c: replaced
+	  the whole module with just the entry points.
+
 Fri Nov 30 18:59:50 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: Nik Clayton found a bug introduced in
