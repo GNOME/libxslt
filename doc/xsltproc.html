@@ -1,127 +1,80 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html>
-<head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
-<title>xsltproc</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.41">
-</head>
-<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="refentry">
-<h1 class="title">
-<a name="id2589653"></a>xsltproc</h1>
-<div class="refnamediv">
-<a name="id2708033"></a><h2>Name</h2>xsltproc &#x2014; command line xslt processor</div>
-<div class="refsynopsisdiv">
-<a name="id2708046"></a><h2>Synopsis</h2>
-<div class="cmdsynopsis" id="id2708049">
-<a name="id2708049"></a><tt>xsltproc</tt>  [-V | -v | -o <i><tt>file</tt></i> | --timing | --repeat | --debug | --novalid | --noout | --maxdepth <i><tt>val</tt></i> | --html | --docbook | --param <i><tt>name</tt></i> <i><tt>value</tt></i> | --nonet | --warnnet | --catalogs | --xinclude | --profile] [<tt><i><tt>stylesheet</tt></i></tt>] [<i><tt>file1</tt></i>] [<i><tt>file2</tt></i>] [<i><tt>....</tt></i>]</div>
-</div>
-<div class="refsect1">
-<a name="introduction"></a><h2>
-<a name="introduction"></a>Introduction</h2>
-<p>
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type"><title>xsltproc</title><meta name="generator" content="DocBook XSL Stylesheets V1.41"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="refentry"><h1 class="title"><a name="id2589399"></a>xsltproc</h1><div class="refnamediv"><a name="id2709332"></a><h2>Name</h2>xsltproc &#8212; command line xslt processor</div><div class="refsynopsisdiv"><a name="id2709344"></a><h2>Synopsis</h2><div class="cmdsynopsis" id="id2589405"><a name="id2589405"></a><tt>xsltproc</tt>  [-V | -v | -o <i><tt>file</tt></i> | --timing | --repeat | --debug | --novalid | --noout | --maxdepth <i><tt>val</tt></i> | --html | --docbook | --param <i><tt>name</tt></i> <i><tt>value</tt></i> | --nonet | --warnnet | --catalogs | --xinclude | --profile] [<tt><i><tt>stylesheet</tt></i></tt>] [<i><tt>file1</tt></i>] [<i><tt>file2</tt></i>] [<i><tt>....</tt></i>]</div></div><div class="refsect1"><a name="introduction"></a><h2><a name="introduction"></a>Introduction</h2><p>
       xsltproc is a command line tool for applying
       XSLT stylesheets to XML
       documents. It is part of libxslt, the XSLT C
       library for GNOME. While it was developed as part of the GNOME project, it
       can operate independently of the GNOME desktop.
-   </p>
-<p>
+   </p><p>
       xsltproc is invoked from the command line with
       the name of the stylesheet to be used followed by the name of the file or
       files to which the stylesheet is to be applied.
-    </p>
-<p>
+    </p><p>
       If a stylesheet is included in an XML document with a
       Stylesheet Processing Instruction, no stylesheet need be named at the
       command line. xsltproc will automatically
       detect the included stylesheet and use it.
-    </p>
-<p>
+    </p><p>
       By default, output is to stdout. You can specify a file for output using
       the <tt>-o</tt> option.
-    </p>
-</div>
-<div class="refsect1">
-<a name="options"></a><h2>
-<a name="options"></a>Options</h2>
-<p>
+    </p></div><div class="refsect1"><a name="options"></a><h2><a name="options"></a>Options</h2><p>
       <tt>-V</tt> or <tt>--version</tt> - Show the version of
       libxml and libxslt used.
-    </p>
-<p>
+    </p><p>
       <tt>-v</tt> or <tt>--verbose</tt> - Output each step taken
       by xsltproc in processing the stylesheet and the document.
-    </p>
-<p>
+    </p><p>
       <tt>-o</tt> or <tt>--output</tt>
       <i><tt>file</tt></i> - Direct output to the file named
       <i><tt>file</tt></i>. For multiple outputs, also known as
       &quot;chunking&quot;, <tt>-o</tt> <tt>directory/</tt> directs the
       output files to a specified directory. The directory must already exist.
-    </p>
-<p>
+    </p><p>
       <tt>--timing</tt> - Display the time used for parsing the
       stylesheet, parsing the document and applying the stylesheet and saving
       the result. Displayed in milliseconds.
-    </p>
-<p>
+    </p><p>
       <tt>--repeat</tt> - Run the transformation 20 times. Used for
       timing tests.
-    </p>
-<p>
+    </p><p>
       <tt>--debug</tt> - Output an XML tree of the
       transformed document for debugging purposes.
-    </p>
-<p>
+    </p><p>
       <tt>--novalid</tt> - Skip loading the document's DTD.
-    </p>
-<p>
+    </p><p>
       <tt>--noout</tt> - Do not output the result.
-    </p>
-<p>
+    </p><p>
       <tt>--maxdepth</tt> <i><tt>value</tt></i> - Adjust the
       maximum depth of the template stack before
       libxslt concludes it is in an infinite
       loop. The default is 500.
-    </p>
-<p>
+    </p><p>
       <tt>--html</tt> - The input document is an HTML
       file.
-    </p>
-<p>
+    </p><p>
       <tt>--docbook</tt> - The input document is DocBook
       SGML.
-    </p>
-<p>
+    </p><p>
       <tt>--param</tt> <i><tt>name</tt></i>
       <i><tt>value</tt></i> - Pass a parameter of name
       <i><tt>name</tt></i> and value
       <i><tt>value</tt></i> to the stylesheet. You may pass multiple
       name/value pairs up to a maximum of 8.
 
-      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2708378"></a>Note</h3>
-<p>
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2707986"></a>Note</h3><p>
 	  If the value being passed is a string rather than a node identifier,
 	  it must be escaped in quotes, as follows:
-	</p>
-<p>
+	</p><p>
 	  xsltproc --param rootid '&quot;introduction&quot;'
 	  <i><tt>stylesheet</tt></i> <i><tt>file</tt></i>
 
-	</p>
-</div>
-    </p>
-<p>
+	</p></div>
+    </p><p>
       <tt>--nonet</tt> - Do not use the Internet to fetch DTD's or
       entities.
-    </p>
-<p>
+    </p><p>
       <tt>--warnnet</tt> - Output notification when DTD's or entities
       are fetched over the Internet.
-    </p>
-<p>
+    </p><p>
       <tt>--catalogs</tt> - Use catalogs to resolve the location of
       external entities. This speeds DTD resolution. By having a
       catalog file point to a local version of the DTD,
@@ -129,31 +82,13 @@
       Internet to fetch the DTD. xsltproc
       uses the catalog identified by the environmental variable
       <tt>SGML_CATALOG_FILES</tt>.
-    </p>
-<p>
+    </p><p>
       <tt>--xinclude</tt> - Process the input document using the
       Xinclude specification. More details on this can be found in the Xinclude
       specification: <a href="http://www.w3.org/TR/xinclude/" target="_top">http://www.w3.org/TR/xinclude/</a>
-    </p>
-<p>
+    </p><p>
       <tt>--profile</tt> or <tt>--norman</tt> - Output profiling
       information detailing the amount of time spent in each part of the
       stylesheet. This is useful in optimizing stylesheet performance.
-    </p>
-</div>
-<div class="refsect1">
-<a name="moreinfo"></a><h2>
-<a name="moreinfo"></a>More Information</h2>
-<p>
-      <div class="itemizedlist"><ul>
-<li><p>
-<a name="id2708506"></a>libxml web page: <a href="http://www.xmlsoft.org/" target="_top">http://www.xmlsoft.org/</a>
-</p></li>
-<li><p>
-<a name="id2708525"></a>W3C XSLT page: <a href="http://www.w3.org/TR/xslt" target="_top">http://www.w3.org/TR/xslt</a>
-</p></li>
-</ul></div>
-    </p>
-</div>
-</div></body>
-</html>
+    </p></div><div class="refsect1"><a name="return"></a><h2><a name="return"></a>Return values</h2><p>xsltproc's return codes provide information
+    that can be used when calling it from scripts.</p><p>0: normal</p><p>1: no argument</p><p>2: too many parameters</p><p>3: unknown option</p><p>4: failed to parse the stylesheet</p><p>5: error in the stylesheet</p><p>6: error in one of the documents</p><p>7: unsuppoted xsl:output method</p></div><div class="refsect1"><a name="moreinfo"></a><h2><a name="moreinfo"></a>More Information</h2><p>libxml web page: <a href="http://www.xmlsoft.org/" target="_top">http://www.xmlsoft.org/</a></p><p>W3C XSLT page: <a href="http://www.w3.org/TR/xslt" target="_top">http://www.w3.org/TR/xslt</a></p></div></div></body></html>

@@ -1,3 +1,9 @@
+Tue Nov 27 21:15:43 MST 2001 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.xml, xsltproc.1, xsltproc.html - documenting new
+	xsltproc return codes, per
+	https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=56649 
+
 Tue Nov 27 22:16:50 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: Marc Tardif provided a patch to use as

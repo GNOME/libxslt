@@ -217,17 +217,30 @@
     </para>
   </refsect1>
 
+  <refsect1 id="return">
+    <title>Return values</title>
+    <para><application>xsltproc</application>'s return codes provide information
+    that can be used when calling it from scripts.</para>
+
+    <para>0: normal</para>
+    <para>1: no argument</para>
+    <para>2: too many parameters</para>
+    <para>3: unknown option</para>
+    <para>4: failed to parse the stylesheet</para>
+    <para>5: error in the stylesheet</para>
+    <para>6: error in one of the documents</para>
+    <para>7: unsuppoted xsl:output method</para>
+  </refsect1>
+
+
+
   <refsect1 id="moreinfo">
     <title>More Information</title>
-    <para>
-      <itemizedlist>
-	<listitem>
+    
 	  <para><application>libxml web page: </application><ulink url="http://www.xmlsoft.org/">http://www.xmlsoft.org/</ulink></para>
-	</listitem>
-	<listitem>
+	
 	  <para>W3C <acronym>XSLT page: </acronym><ulink url="http://www.w3.org/TR/xslt">http://www.w3.org/TR/xslt</ulink></para>
-	</listitem>
-      </itemizedlist>
-    </para>
+	
+  
   </refsect1>
 </refentry>
