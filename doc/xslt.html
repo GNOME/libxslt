@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <title>The XML C library for Gnome</title>
@@ -42,17 +44,21 @@ href="http://www.gnome.org/">Gnome</a> project.</p>
   <li>This library is released under the <a
     href="http://www.gnu.org/copyleft/lesser.html">GNU LGPL</a>. If you are
     not happy with this, drop me a mail.</li>
+  <li>Though not designed primarily with performances in mind, libxslt seems
+    to be a relatively fast processor.</li>
 </ul>
 
 <h2><a name="Documentat">Documentation</a></h2>
 
-<p>There are some on-line resources about using libxml:</p>
+<p>There are some on-line resources about using libxslt:</p>
 <ol>
   <li>Check the <a href="html/libxslt-lib.html#LIBXSLT-LIB">API
     documentation</a> automatically extracted from code comments (using <a
     href="http://cvs.gnome.org/bonsai/rview.cgi?cvsroot=/cvs/gnome&amp;dir=gtk-doc">gtk
     doc</a>).</li>
   <li>Look at the <a href="/messages/">mailing-list archive</a>.</li>
+  <li>Of course since libxslt is based on libxml, it's a good idea to at least
+    read <a href="http://xmlsoft.org/">libxml description</a></li>
 </ol>
 
 <h2><a name="Reporting">Reporting bugs and getting help</a></h2>
@@ -144,7 +150,7 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
-<h3>0.3.0: Feb 24 2000</h3>
+<h3>0.3.0: Feb 24 2001</h3>
 <ul>
   <li>third beta test, released at the same time of libxml2-2.3.2</li>
   <li>lot of bug fixes</li>
@@ -152,7 +158,7 @@ for a really accurate description</h3>
   <li>added DocBook XSL based testsuite</li>
 </ul>
 
-<h3>0.2.0: Feb 15 2000</h3>
+<h3>0.2.0: Feb 15 2001</h3>
 <ul>
   <li>second beta version, released at the same time as libxml2-2.3.1</li>
   <li>getting close to feature completion, lot of bug fixes, some in the HTML
@@ -165,13 +171,13 @@ for a really accurate description</h3>
     key() and document() is not complete</li>
 </ul>
 
-<h3>0.1.0: Feb 8 2000</h3>
+<h3>0.1.0: Feb 8 2001</h3>
 <ul>
   <li>first beta version, released at the same time as libxml2-2.3.0</li>
   <li>lots of bug fixes, first "testing" version, but incomplete</li>
 </ul>
 
-<h3>0.0.1: Jan 25 2000</h3>
+<h3>0.0.1: Jan 25 2001</h3>
 <ul>
   <li>first alpha version released at the same time as libxml2-2.2.12</li>
   <li>Framework in place, should work on simple examples, but far from being
@@ -187,10 +193,13 @@ the processing is redirected on the standard output.</p>
 
 <h2>The programming API</h2>
 
-<p>@@TODO</p>
+<p>Okay this section is clearly incomplete. But integrating libxslt into your
+application should be realitively easy. First check the few steps described
+below, then for more detailed informations, look at the<a
+href="libxslt-lib.html"> generated pages</a> for the API and the source of
+xsltproc.c .</p>
 
-<p>check the<a href="libxslt-lib.html"> generated pages</a> and the source of
-xsltproc.c, basically done in a few steps:</p>
+<p>Basically doing an XSLT transformation can be done in a few steps:</p>
 <ol>
   <li>configure the parser for XSLT:
     <p>xmlSubstituteEntitiesDefault(1);</p>
@@ -204,8 +213,9 @@ xsltproc.c, basically done in a few steps:</p>
 </ol>
 
 <p>Steps 2,3, and 5 will probably need to be changed depending on you
-processing needs and environment for example if reading/saving from/to
-memory</p>
+processing needs and environment for example if reading/saving from/to memory,
+or if you want to apply XInclude processing to the stylesheet or input
+documents.</p>
 
 <h2><a name="Contributi">Contributions</a></h2>
 <ul>
