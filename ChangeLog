@@ -1,3 +1,9 @@
+Thu Jan 29 14:08:31 PST 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c, libxslt/attributes.c: added
+	  validation of QName for xsl:element and xsl:attribute
+	  (Bug 132531)
+
 Fri Jan 23 18:52:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: changed priority of template patterns

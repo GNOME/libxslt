@@ -644,6 +644,11 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
         name = comp->name;
     }
 
+    if (xmlValidateQName(name, 0)) {
+        xsltTransformError(ctxt, NULL, inst,
+			"xsl:attribute : invalid QName\n");
+	/* we fall through to catch any further errors, if possible */
+    }
     ncname = xmlSplitQName2(name, &prefix);
     if (ncname == NULL) {
         prefix = NULL;

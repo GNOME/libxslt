@@ -2533,6 +2533,11 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	name = comp->name;
     }
 
+    if (xmlValidateQName(name, 0)) {
+	xsltTransformError(ctxt, NULL, inst,
+		"xsl:element : invalid name\n");
+	/* we fall through to catch any other errors if possible */
+    }
     ncname = xmlSplitQName2(name, &prefix);
     if (ncname == NULL) {
 	prefix = NULL;
