@@ -1,3 +1,7 @@
+Tue Apr 10 20:05:00 CEST 2001 Fatih Demir <kabalak@gtranslator.org>
+
+	* .cvsignore & doc/.cvsignore: Added CVS ignore files.
+
 Tue Apr 10 12:10:25 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in: released 0.7.0
