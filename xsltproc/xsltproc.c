@@ -506,6 +506,9 @@ main(int argc, char **argv)
         xsltFreeStylesheet(cur);
     }
     xsltUnregisterAllExtModules();
+    xsltUnregisterAllExtModuleFunction();
+    xsltUnregisterAllExtModuleElement();
+    xsltUnregisterAllExtModuleTopLevel();
     xmlCleanupParser();
     xmlMemoryDump();
     return (0);

@@ -944,6 +944,17 @@ xsltUnregisterExtModuleFunction (const xmlChar *name,
 }
 
 /**
+ * xsltUnregisterAllExtModuleFunction:
+ *
+ * Unregisters all extension module function
+ */
+void
+xsltUnregisterAllExtModuleFunction (void) {
+    xmlHashFree(xsltFunctionsHash, NULL);
+    xsltFunctionsHash = NULL;
+}
+
+/**
  * xsltRegisterExtModuleElement:
  * @name:  the element name
  * @URI:  the element namespace URI
@@ -1073,6 +1084,17 @@ xsltUnregisterExtModuleElement (const xmlChar *name,
 }
 
 /**
+ * xsltUnregisterAllExtModuleElement:
+ *
+ * Unregisters all extension module element
+ */
+void
+xsltUnregisterAllExtModuleElement (void) {
+    xmlHashFree(xsltElementsHash, (xmlHashDeallocator) xsltFreeExtElement);
+    xsltElementsHash = NULL;
+}
+
+/**
  * xsltRegisterExtModuleTopLevel:
  * @name:  the top-level element name
  * @URI:  the top-level element namespace URI
@@ -1133,6 +1155,17 @@ xsltUnregisterExtModuleTopLevel (const xmlChar *name,
 	return(-1);
 
     return xmlHashRemoveEntry2 (xsltTopLevelsHash, name, URI, NULL);
+}
+
+/**
+ * xsltUnregisterAllExtModuleTopLevel:
+ *
+ * Unregisters all extension module function
+ */
+void
+xsltUnregisterAllExtModuleTopLevel (void) {
+    xmlHashFree(xsltTopLevelsHash, NULL);
+    xsltTopLevelsHash = NULL;
 }
 
 
