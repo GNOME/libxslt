@@ -1966,7 +1966,8 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 
 /**
  * xsltParseStylesheetImportedDoc:
- * @doc:  and xmlDoc parsed XML
+ * @doc:  an xmlDoc parsed XML
+ * @style: pointer to parent stylesheet
  *
  * parse an XSLT stylesheet building the associated structures
  * except the processing not needed for imported documents.
@@ -1975,7 +1976,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
  */
 
 xsltStylesheetPtr
-xsltParseStylesheetImportedDoc(xmlDocPtr doc) {
+xsltParseStylesheetImportedDoc(xmlDocPtr doc, xsltStylesheetPtr style) {
     xsltStylesheetPtr ret;
 
     if (doc == NULL)
@@ -1986,6 +1987,7 @@ xsltParseStylesheetImportedDoc(xmlDocPtr doc) {
 	return(NULL);
     
     ret->doc = doc;
+    ret->parent = style;	/* needed to prevent loops */
     xsltGatherNamespaces(ret);
     if (xsltParseStylesheetProcess(ret, doc) == NULL) {
 	ret->doc = NULL;
@@ -2016,7 +2018,7 @@ xsltStylesheetPtr
 xsltParseStylesheetDoc(xmlDocPtr doc) {
     xsltStylesheetPtr ret;
 
-    ret = xsltParseStylesheetImportedDoc(doc);
+    ret = xsltParseStylesheetImportedDoc(doc, NULL);
     if (ret == NULL)
 	return(NULL);
 

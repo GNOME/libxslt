@@ -1,3 +1,11 @@
+Mon Nov 24 07:32:38 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xslt.c, libxslt/imports.c, libxslt/parserInternals.h:
+	  Changed to detect recursion in xslt:import (bug #127687).
+	* doc/libxslt-api.xml, python/libxsltclass.txt: regenerated to
+	  include change to xsltParseStylesheetImportedDoc parameters for
+	  above.
+
 Sat Nov 22 13:04:59 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c libxslt/templates.c libxslt/transform.c

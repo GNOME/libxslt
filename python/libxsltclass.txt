@@ -32,7 +32,6 @@ loadStylesheetPI()
 newStylesheet()
 parseStylesheetDoc()
 parseStylesheetFile()
-parseStylesheetImportedDoc()
 
 # functions from module xsltutils
 calibrateAdjust()
@@ -179,10 +178,6 @@ Class stylesheet()
     freeNamespaceAliasHashes()
     namespaceAlias()
 
-    # functions from module pattern
-    cleanupTemplates()
-    freeTemplateHashes()
-
     # functions from module preproc
     freeStylePreComps()
     stylePreCompute()
@@ -198,6 +193,7 @@ Class stylesheet()
     # functions from module xsltInternals
     allocateExtra()
     freeStylesheet()
+    parseStylesheetImportedDoc()
     parseStylesheetOutput()
     parseStylesheetProcess()
     parseTemplateContent()

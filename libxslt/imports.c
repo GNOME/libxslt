@@ -91,6 +91,18 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	goto error;
     }
 
+    res = style;
+    while (res != NULL) {
+        if (res->doc == NULL)
+	    break;
+	if (xmlStrEqual(res->doc->URL, URI)) {
+	    xsltTransformError(NULL, style, cur,
+	       "xsl:import : recursion detected on imported URL %s\n", URI);
+	    goto error;
+	}
+	res = res->parent;
+    }
+
     /*
      * Security framework check
      */
@@ -118,9 +130,8 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	goto error;
     }
 
-    res = xsltParseStylesheetImportedDoc(import);
+    res = xsltParseStylesheetImportedDoc(import, style);
     if (res != NULL) {
-	res->parent = style;
 	res->next = style->imports;
 	style->imports = res;
 	xmlHashScan(res->templatesHash, 

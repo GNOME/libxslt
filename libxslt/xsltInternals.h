@@ -572,7 +572,8 @@ XSLTPUBFUN void XSLTCALL
 XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
 			xsltParseStylesheetDoc	(xmlDocPtr doc);
 XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
-			xsltParseStylesheetImportedDoc(xmlDocPtr doc);
+			xsltParseStylesheetImportedDoc(xmlDocPtr doc,
+						xsltStylesheetPtr style);
 XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
 			xsltLoadStylesheetPI	(xmlDocPtr doc);
 XSLTPUBFUN void XSLTCALL 			
