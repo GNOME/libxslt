@@ -1,3 +1,9 @@
+Mon Aug 25 11:56:02 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/*.h libexslt/*.h: exportability taint of the headers.
+	* libxslt/xsltexports.h libexslt/exsltexports.h: new files,
+	  contain the export defs.
+
 Tue Aug 19 00:38:46 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/Makefile.am libxslt/libxslt.h libxslt/numbersInternals.h
