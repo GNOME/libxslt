@@ -1,3 +1,8 @@
+Sun Mar  4 19:03:27 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: applied patch from William M. Brack
+	  to support with-param in xsltApplyTemplates().
+
 Sun Mar  4 17:53:13 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* libxslt/pattern.c: fixed the compilation of patterns which

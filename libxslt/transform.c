@@ -1672,12 +1672,13 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlChar *prop = NULL;
     xmlNodePtr cur, delete = NULL;
     xmlXPathObjectPtr res = NULL, tmp;
-    xmlNodePtr replacement;
     xmlNodeSetPtr list = NULL, oldlist;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
     int i, oldProximityPosition, oldContextSize;
     xmlChar *mode, *modeURI;
     const xmlChar *oldmode, *oldmodeURI;
+    int have_sort=0;
+    xsltStackElemPtr params = NULL, param, lastParam = NULL;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -1830,24 +1831,47 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->contextSize = list->nodeNr;
 
     /* 
-     * handle and skip the xsl:sort
+     * handle (or skip) the xsl:sort and xsl:with-param
      */
-    replacement = inst->children;
-    if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
-	xsltSort(ctxt, node, replacement);
-	replacement = replacement->next;
-	while (IS_XSLT_ELEM(replacement) &&
-	       (IS_XSLT_NAME(replacement, "sort"))) {
-	    TODO /* imbricated sorts */
-	    replacement = replacement->next;
-	}
+    cur = inst->children;
+    while (cur!=NULL) {
+        if (ctxt->state == XSLT_STATE_STOPPED) break;
+        if (IS_XSLT_ELEM(cur)) {
+            if (IS_XSLT_NAME(cur, "with-param")) {
+                param = xsltParseStylesheetCallerParam(ctxt, cur);
+                param->next = params;
+                params = param;
+                if (lastParam==NULL) lastParam = params;
+	    } else if (IS_XSLT_NAME(cur, "sort")) {
+		if (!have_sort) {
+		    have_sort = 1;
+		    xsltSort(ctxt, node, cur);
+		} else {
+		    TODO /* imbricated sorts */
+		}
+	    } else {
+		xsltGenericError(xsltGenericDebugContext,
+		    "xslt:call-template: misplaced xslt:%s\n", cur->name);
+	    }
+        } else {
+            xsltGenericError(xsltGenericDebugContext,
+                 "xslt:call-template: misplaced %s element\n", cur->name);
+        }
+        cur = cur->next;
     }
 
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
+	varsPush(ctxt,params);
 	xsltProcessOneNode(ctxt, list->nodeTab[i]);
+	varsPop(ctxt);
+	if (lastParam != NULL) {
+	    xsltFreeStackElemList(lastParam->next);
+	    lastParam->next = NULL;
+	}
     }
+    xsltFreeStackElemList(params);	/* free the parameter list */
     ctxt->nodeList = oldlist;
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
