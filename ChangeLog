@@ -1,3 +1,11 @@
+Wed Feb 25 17:02:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* tests/general/Makefile.am, tests/general/bug-142.xsl,
+	  tests/general/bug-142.out, tests/docs/Makefile.am,
+	  tests/general/bug-142.xml: added test for language
+	  attribute which previously triggered a memory leak
+	  (from list report by Mike Hommey)
+
 Mon Feb 23 18:01:44 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* NEWS configure.in doc/*: preparing release 1.1.4, updated and
