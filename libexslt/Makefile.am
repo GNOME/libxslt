@@ -3,7 +3,6 @@ INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
 	   -I$(top_builddir)/libexslt $(LIBXML_CFLAGS) $(CFLAGS)
 
 AM_CFLAGS = $(LIBGCRYPT_CFLAGS)
-AM_LDFLAGS = $(LIBGCRYPT_LIBS)
 
 lib_LTLIBRARIES = libexslt.la
 
@@ -29,9 +28,8 @@ libexslt_la_SOURCES =                   \
 	libexslt.h			\
 	dynamic.c
 
-# The following DOES NOT WORK reliably.
 libexslt_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
-libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@
+libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@ $(LIBGCRYPT_LIBS)
 
 man_MANS = libexslt.3
 

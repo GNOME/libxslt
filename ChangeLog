@@ -1,3 +1,16 @@
+Sun Jul  4 21:42:48 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/Makefile.am: implemented change from Joel Reed for
+	  automake-1.4 compatibility.
+	* libexslt/crypto.c: reformatted source to remove an overly
+	  generous supply of tabs.  Added a #include for sys/select to
+	  fix a compilation error caused by the gcrypt include file's
+	  usage of 'fd_set'.  Made some minor changes to fix
+	  some warning messages (no change to the logic).
+	* configure.in, config.h.in: added test for presence of
+	  sys/select.h.
+	  Added test for libgcrypt version > 1.1.41 (bug 145245)
+	  
 Sat Jul  3 17:52:27 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* doc/xslt.html, doc/extensions.html: corrected the URI for libxslt

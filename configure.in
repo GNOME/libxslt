@@ -1,4 +1,8 @@
+dnl Process this file with autoconf to produce a configuration script.
+AC_PREREQ(2.2)
 AC_INIT(libxslt/xslt.c)
+AM_CONFIG_HEADER(config.h)
+AC_CANONICAL_HOST
 
 dnl
 dnl libxslt is the main part of the package
@@ -44,9 +48,9 @@ AC_SUBST(LIBEXSLT_VERSION_NUMBER)
 
 VERSION=${LIBXSLT_VERSION}
 
-AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
-AM_MAINTAINER_MODE
+
+# AM_MAINTAINER_MODE
 
 AC_ARG_WITH(html-dir, [  --with-html-dir=PATH path to installed docs ])
 
@@ -67,8 +71,13 @@ dnl
 
 AC_ISC_POSIX
 AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_CPP
+AC_PATH_PROG(RM, rm, /bin/rm)
+AC_PATH_PROG(MV, mv, /bin/mv)
+AC_PATH_PROG(TAR, tar, /bin/tar)
+
 AC_STDC_HEADERS
-AC_ARG_PROGRAM
 AM_PROG_LIBTOOL
 
 dnl
@@ -77,7 +86,7 @@ dnl
 
 AC_CHECK_HEADERS(sys/types.h sys/time.h stdlib.h unistd.h string.h)
 AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h ansidecl.h)
-AC_CHECK_HEADERS(sys/timeb.h time.h sys/stat.h stdarg.h)
+AC_CHECK_HEADERS(sys/timeb.h time.h sys/stat.h sys/select.h stdarg.h)
 AC_CHECK_FUNCS(stat _stat)
 AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_ISNAN)]))
@@ -110,6 +119,13 @@ else
     WITH_TRIO=0
 fi
 AC_SUBST(WITH_TRIO)
+
+dnl
+dnl Some packages need to be checked against version numbers so we
+dnl define a function here for later use
+dnl
+AC_DEFUN(VERSION_TO_NUMBER,
+[`$1 | sed -e 's/libxml //' | awk 'BEGIN { FS = "."; } { printf "%d", ([$]1 * 1000 + [$]2) * 1000 + [$]3;}'`])
 
 dnl
 dnl Perl is just needed for generating some data for XSLtmark
@@ -204,10 +220,18 @@ dnl check for gcrypt
 dnl
 AC_PATH_PROG(LIBGCRYPT_CONFIG, libgcrypt-config, no)
 if test "$LIBGCRYPT_CONFIG" != "no" ; then
-	 LIBGCRYPT_CFLAGS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --cflags`
-  LIBGCRYPT_LIBS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --libs`
-	 AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
-  AC_MSG_NOTICE([Crypto extensions will be available.])
+  LIBGCRYPT_VERSION=`$LIBGCRYPT_CONFIG --version`
+  if test VERSION_TO_NUMBER(echo $LIBGCRYPT_VERSION) -lt VERSION_TO_NUMBER(echo "1.1.42")
+  then
+    LIBGCRYPT_CFLAGS=""
+    LIBGCRYPT_LIBS=""
+    AC_MSG_NOTICE([gcrypt library version < 1.1.42 - Crypto extensions will not be available.])
+  else
+    LIBGCRYPT_CFLAGS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --cflags`
+    LIBGCRYPT_LIBS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --libs`
+    AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
+    AC_MSG_NOTICE([Crypto extensions will be available.])
+  fi
 else
   LIBGCRYPT_CFLAGS=""
   LIBGCRYPT_LIBS=""
@@ -358,8 +382,6 @@ dnl make sure xml2-config is executable,
 dnl test version and init our variables
 dnl
 
-AC_DEFUN(VERSION_TO_NUMBER,
-[`$1 | sed -e 's/libxml //' | awk 'BEGIN { FS = "."; } { printf "%d", ([$]1 * 1000 + [$]2) * 1000 + [$]3;}'`])
 if ${XML_CONFIG} --libs print > /dev/null 2>&1
 then
 	XMLVERS=`$XML_CONFIG --version`
