@@ -6,7 +6,7 @@
 # Owen Taylor     97-11-3
 #
 # Modified to work with libxslt by Thomas Schraitle 2002/10/25
-#
+# Fixed by Edward Rudd 2004/05/12
 
 dnl AM_PATH_XSLT([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for XML, and define XML_CFLAGS and XML_LIBS
@@ -20,7 +20,7 @@ AC_ARG_WITH(xslt-exec-prefix,
             xslt_config_exec_prefix="$withval", xslt_config_exec_prefix="")
 AC_ARG_ENABLE(xslttest,
               [  --disable-xslttest       Do not try to compile and run a test LIBXSLT program],,
-              enable_xslttest=no)
+              enable_xslttest=yes)
 
   if test x$xslt_config_exec_prefix != x ; then
      xslt_config_args="$xslt_config_args --exec-prefix=$xslt_config_exec_prefix"
@@ -64,6 +64,7 @@ dnl
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <libxslt/xsltconfig.h>
 #include <libxslt/xslt.h>
 int 
 main()
@@ -106,8 +107,8 @@ main()
   /* Less than ideal -- doesn't provide us with return value feedback, 
    * only exits if there's a serious mismatch between header and library.
    */
-    /* copied from LIBXXML_TEST_VERSION; */
-    xmlCheckVersion(LIBXSLT_VERSION_STRING);
+    /* copied from LIBXML_TEST_VERSION; */
+    xmlCheckVersion(LIBXML_VERSION);
 
     /* Test that the library is greater than our minimum version */
     if ((xslt_major_version > major) ||

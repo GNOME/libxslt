@@ -1,3 +1,8 @@
+Sun May 16 16:36:38 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.m4: applied patch from Edward Rudd to fix the problems
+	  raised in bug #142429
+	  
 Sun May 16 11:01:52 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: fixed a weird namespace bug #141532
