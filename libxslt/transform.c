@@ -544,11 +544,30 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 
 		    current = ctxt->insert->properties;
 		    if (current != NULL) {
-			while (current->next != NULL)
+			if ((xmlStrEqual(current->name, ret->name)) &&
+			    (current->ns == ret->ns)) {
+			    xmlNodePtr tmp;
+			    tmp = current->children;
+			    current->children = ret->children;
+			    ret->children = tmp;
+			    xmlFreeProp(ret);
+			    return;
+			}
+			while (current->next != NULL) {
 			    current = current->next;
+			    if ((xmlStrEqual(current->name, ret->name)) &&
+				(current->ns == ret->ns)) {
+				xmlNodePtr tmp;
+				tmp = current->children;
+				current->children = ret->children;
+				ret->children = tmp;
+				xmlFreeProp(ret);
+				return;
+			    }
+			}
 			current->next = ret;
 			ret->prev = current;
-		    }else
+		    } else
 			ctxt->insert->properties = ret;
 		}
 	    }
@@ -972,13 +991,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (cur->properties != NULL) {
 		attrs = xsltAttrListTemplateProcess(ctxt, copy,
 			                            cur->properties);
-		if (copy->properties != NULL) {
-		    xmlAttrPtr current = copy->properties;
-		    while (current->next != NULL)
-			current = current->next;
-		    current->next = attrs;
-		} else
-		    copy->properties = attrs;
 	    }
 	}
 
@@ -2497,7 +2509,6 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltTransformContextPtr ctxt = NULL;
     xmlNodePtr root;
     const xmlChar *method;
-    const xmlChar *encoding;
 
     if ((style == NULL) || (doc == NULL))
 	return(NULL);

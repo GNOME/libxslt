@@ -1,3 +1,12 @@
+Fri May 11 19:12:26 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/templates.c libxslt/transform.c: fixed bug #54446
+	  about attribute being generated twice. Fixed a number of related
+	  bugs on attributes handling.
+	* tests/REC/test-7.1.4.out: this changed an attribute generation
+	  order
+	* tests/docs/bug-27-.xml tests/general/bug-27-.*: added test
+
 Fri May 11 17:08:14 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/templates.c: fixed bug #54451 on escaped curly brackets

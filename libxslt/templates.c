@@ -315,6 +315,7 @@ xsltEvalStaticAttrValueTemplate(xsltStylesheetPtr style, xmlNodePtr node,
 xmlAttrPtr
 xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	                xmlAttrPtr cur) {
+    xmlNsPtr ns;
     xmlAttrPtr ret;
     if ((ctxt == NULL) || (cur == NULL))
 	return(NULL);
@@ -335,14 +336,10 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	}
 	return(NULL);
     }
-    ret = xmlNewDocProp(ctxt->output, cur->name, NULL);
-    if (ret == NULL) return(NULL);
-    ret->parent = target;
-    
     if (cur->ns != NULL)
-	ret->ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
+	ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
     else
-	ret->ns = NULL;
+	ns = NULL;
 
     if (cur->children != NULL) {
 	xmlChar *in = xmlNodeListGetString(ctxt->document->doc,
@@ -351,19 +348,16 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 
 	/* TODO: optimize if no template value was detected */
 	if (in != NULL) {
-	    xmlNodePtr child;
-
             out = xsltAttrTemplateValueProcess(ctxt, in);
-	    child = xmlNewDocText(ctxt->output, out);
-	    xmlAddChild((xmlNodePtr) ret, child);
+	    ret = xmlSetNsProp(target, ns, cur->name, out);
 	    if (out != NULL)
 		xmlFree(out);
 	    xmlFree(in);
 	} else
-	    ret->children = NULL;
+	    ret = xmlSetNsProp(target, ns, cur->name, (const xmlChar *)"");
        
     } else 
-	ret->children = NULL;
+	ret = xmlSetNsProp(target, ns, cur->name, (const xmlChar *)"");
     return(ret);
 }
 
@@ -382,7 +376,7 @@ xmlAttrPtr
 xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt, 
 	                    xmlNodePtr target, xmlAttrPtr cur) {
     xmlAttrPtr ret = NULL;
-    xmlAttrPtr p = NULL,q;
+    xmlAttrPtr q;
     xmlNodePtr oldInsert;
 
     oldInsert = ctxt->insert;
@@ -392,12 +386,8 @@ xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt,
 	if (q != NULL) {
 	    q->parent = target;
 	    q->doc = ctxt->output;
-	    if (p == NULL) {
-		ret = p = q;
-	    } else {
-		p->next = q;
-		q->prev = p;
-		p = q;
+	    if (ret == NULL) {
+		ret = q;
 	    }
 	}
 	cur = cur->next;
