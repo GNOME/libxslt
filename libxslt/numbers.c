@@ -774,6 +774,20 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     /* flag to show error found, should use default format */
     char	found_error = 0;
 
+    switch (xmlXPathIsInf(number)) {
+	case -1:
+	    *result = xmlStrdup(BAD_CAST "-Infinity");
+	    return(status);
+	case 1:
+	    *result = xmlStrdup(BAD_CAST "Infinity");
+	    return(status);
+	default:
+	    if (xmlXPathIsNaN(number)) {
+		*result = xmlStrdup(BAD_CAST "NaN");
+		return(status);
+	    }
+    }
+
     buffer = xmlBufferCreate();
     if (buffer == NULL) {
 	return XPATH_MEMORY_ERROR;
