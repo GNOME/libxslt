@@ -1,3 +1,7 @@
+Sat Jan  5 19:32:17 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* win32/dsp: Windows/MSVC project files update from Igor Zlatkovic
+
 Fri Jan  4 22:13:40 MST 2002 John Fleck <jfleck@inkstain.net>
 
 	* doc/xsltproc.xml, xsltproc.1 - updating man page to reflect
