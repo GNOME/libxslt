@@ -1,3 +1,8 @@
+Sun Jun 17 17:42:33 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltutils.[ch]: fixed xsltGetNsProp, i always forget
+	  'namespace' is a reserved C++ identifier
+
 Sun Jun 17 17:08:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/xslt.html: adding 0.12.0 release

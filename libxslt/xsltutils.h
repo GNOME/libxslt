@@ -59,7 +59,7 @@ extern "C" {
  */
 xmlChar *	 xsltGetNsProp			(xmlNodePtr node,
 						 const xmlChar *name,
-						 const xmlChar *namespace);
+						 const xmlChar *nameSpace);
 
 /*
  * XSLT specific error and debug reporting functions

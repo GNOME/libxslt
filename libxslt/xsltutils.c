@@ -35,7 +35,7 @@
  * xsltGetNsProp:
  * @node:  the node
  * @name:  the attribute name
- * @namespace:  the URI of the namespace
+ * @nameSpace:  the URI of the namespace
  *
  * Similar to xmlGetNsProp() but with a slightly different semantic
  *
@@ -51,7 +51,7 @@
  *     It's up to the caller to free the memory.
  */
 xmlChar *
-xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *namespace) {
+xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *nameSpace) {
     xmlAttrPtr prop;
     xmlDocPtr doc;
     xmlNsPtr ns;
@@ -60,7 +60,7 @@ xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *namespace) {
 	return(NULL);
 
     prop = node->properties;
-    if (namespace == NULL)
+    if (nameSpace == NULL)
 	return(xmlGetProp(node, name));
     while (prop != NULL) {
 	/*
@@ -70,9 +70,9 @@ xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *namespace) {
 	 */
         if ((xmlStrEqual(prop->name, name)) &&
 	    (((prop->ns == NULL) && (node->ns != NULL) &&
-	      (xmlStrEqual(node->ns->href, namespace))) ||
+	      (xmlStrEqual(node->ns->href, nameSpace))) ||
 	     ((prop->ns != NULL) &&
-	      (xmlStrEqual(prop->ns->href, namespace))))) {
+	      (xmlStrEqual(prop->ns->href, nameSpace))))) {
 	    xmlChar *ret;
 
 	    ret = xmlNodeListGetString(node->doc, prop->children, 1);
@@ -100,7 +100,7 @@ xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *namespace) {
 		 * The DTD declaration only allows a prefix search
 		 */
 		ns = xmlSearchNs(doc, node, attrDecl->prefix);
-		if ((ns != NULL) && (xmlStrEqual(ns->href, namespace)))
+		if ((ns != NULL) && (xmlStrEqual(ns->href, nameSpace)))
 		    return(xmlStrdup(attrDecl->defaultValue));
 	    }
 	}
