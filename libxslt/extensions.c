@@ -1587,3 +1587,37 @@ xsltCleanupGlobals(void)
     xsltUnregisterAllExtModuleTopLevel();
 }
 
+static void
+xsltDebugDumpExtensionsCallback(void* function, FILE *output, const xmlChar* name, const xmlChar* URI, const xmlChar* not_used) {
+	if (!name||!URI)
+		return;
+	fprintf(output,"{%s}%s\n",URI,name);
+}
+
+/**
+ * xsltDebugDumpExtensions:
+ * @output:  the FILE * for the output, if NULL stdout is used
+ *
+ * Dumps a list of the registered XSLT extension functions and elements
+ */
+void
+xsltDebugDumpExtensions(FILE * output)
+{
+	if (output == NULL)
+		output = stdout;
+    fprintf(output,"Registered XSLT Extensions\n--------------------------\n");
+	if (!xsltFunctionsHash)
+		fprintf(output,"No registered extension functions\n");
+	else {
+		fprintf(output,"Registered Extension Functions:\n");
+		xmlHashScanFull(xsltFunctionsHash,(xmlHashScannerFull)xsltDebugDumpExtensionsCallback,output);
+ 	}
+	if (!xsltElementsHash)
+		fprintf(output,"\nNo registered extension elements\n");
+	else {
+		fprintf(output,"\nRegistered Extension Elements:\n");
+		xmlHashScanFull(xsltElementsHash,(xmlHashScannerFull)xsltDebugDumpExtensionsCallback,output);
+ 	}
+
+}
+

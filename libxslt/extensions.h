@@ -186,6 +186,8 @@ xsltElemPreCompPtr xsltPreComputeExtModuleElement(xsltStylesheetPtr style,
  * Test module http://xmlsoft.org/XSLT/
  */
 void	xsltRegisterTestModule		(void);
+void	xsltDebugDumpExtensions(FILE * output);
+
 
 #ifdef __cplusplus
 }

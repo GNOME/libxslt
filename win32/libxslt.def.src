@@ -83,6 +83,7 @@ EXPORTS
 
 	/* Test module http://xmlsoft.org/XSLT/ */
 	xsltRegisterTestModule
+	xsltDebugDumpExtensions
 
 
 /* extra.h

@@ -91,6 +91,7 @@
      <exports symbol='xsltFreeExts'/>
      <exports symbol='xsltPreComputeExtModuleElement'/>
      <exports symbol='xsltRegisterTestModule'/>
+     <exports symbol='xsltDebugDumpExtensions'/>
     </file>
     <file name='attributes'>
      <exports symbol='xsltParseStylesheetAttributeSet'/>
@@ -666,6 +667,10 @@
       <arg name='inst' type='xmlNodePtr' info='the instruction in the stylesheet '/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed informations '/>
     </function>
+    <function name='xsltDebugDumpExtensions' file='extensions'>
+      <return type='void'/>
+      <arg name='output' type='FILE *'/>
+    </function>
     <enum name='xsltDebugStatusCodes' file='xsltutils'/>
     <struct name='xsltDecimalFormat' file='xsltInternals' info='Data structure of decimal-format.'/>
     <function name='xsltDecimalFormatGetByName' file='xsltInternals'>
@@ -1204,14 +1209,14 @@
       <arg name='filename' type='const xmlChar*' info='the filename/URL to the stylesheet '/>
     </function>
     <function name='xsltParseStylesheetImport' file='imports'>
-      <info>parse an XSLT stylesheet strip-space element and record elements needing stripping</info>
-      <return type='void'/>
+      <info>parse an XSLT stylesheet strip-space element and record elements needing stripping. Returns zero on success and something else on failure.</info>
+      <return type='int'/>
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
       <arg name='cur' type='xmlNodePtr'/>
     </function>
     <function name='xsltParseStylesheetInclude' file='imports'>
-      <info>parse an XSLT stylesheet strip-space element and record elements needing stripping</info>
-      <return type='void'/>
+      <info>parse an XSLT stylesheet strip-space element and record elements needing stripping. Returns zero on success, something else on failure.</info>
+      <return type='int'/>
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
       <arg name='cur' type='xmlNodePtr'/>
     </function>
@@ -1229,7 +1234,7 @@
     </function>
     <function name='xsltParseStylesheetProcess' file='xsltInternals'>
       <info>parse an XSLT stylesheet adding the associated structures</info>
-      <return type='xsltStylesheetPtr' info='a new XSLT stylesheet structure. '/>
+      <return type='xsltStylesheetPtr' info='the value of the &apos;ret&apos; parameter if everything went right, NULL if something went amiss. '/>
       <arg name='ret' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
       <arg name='doc' type='xmlDocPtr' info='and xmlDoc parsed XML '/>
     </function>

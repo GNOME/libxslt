@@ -607,6 +607,7 @@
   </constructors>
   <functions>
     <type name='FILE *'>
+      <ref name='xsltDebugDumpExtensions'/>
       <ref name='xsltApplyStylesheetUser'/>
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltRunStylesheetUser'/>
@@ -1173,6 +1174,7 @@
       <ref name='xsltFreeExts'/>
       <ref name='xsltPreComputeExtModuleElement'/>
       <ref name='xsltRegisterTestModule'/>
+      <ref name='xsltDebugDumpExtensions'/>
     </file>
     <file name='extra'>
       <ref name='XSLT_LIBXSLT_NAMESPACE'/>
@@ -1748,6 +1750,8 @@
         </word>
         <word name='Returns'>
           <ref name='xsltNeedElemSpaceHandling'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
           <ref name='xsltXPathGetTransformContext'/>
         </word>
       </letter>
@@ -2014,6 +2018,9 @@
         </word>
         <word name='also'>
           <ref name='xsltGetQNameURI'/>
+        </word>
+        <word name='amiss'>
+          <ref name='xsltParseStylesheetProcess'/>
         </word>
         <word name='analyzes'>
           <ref name='xsltGetQNameURI'/>
@@ -2610,6 +2617,10 @@
           <ref name='xsltRegisterAllElement'/>
           <ref name='xsltTransformFunction'/>
         </word>
+        <word name='else'>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+        </word>
         <word name='emitted'>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
@@ -2632,6 +2643,7 @@
         </word>
         <word name='everything'>
           <ref name='xsltFindElemSpaceHandling'/>
+          <ref name='xsltParseStylesheetProcess'/>
         </word>
         <word name='example'>
           <ref name='xsltEvalTemplateString'/>
@@ -2703,6 +2715,8 @@
           <ref name='xsltAddKey'/>
           <ref name='xsltAddStackElemList'/>
           <ref name='xsltCompilePattern'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
           <ref name='xsltRegisterExtElement'/>
           <ref name='xsltRegisterExtFunction'/>
           <ref name='xsltRegisterExtPrefix'/>
@@ -3298,7 +3312,6 @@
           <ref name='xsltNewTransformContext'/>
           <ref name='xsltParseStylesheetDoc'/>
           <ref name='xsltParseStylesheetFile'/>
-          <ref name='xsltParseStylesheetProcess'/>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
           <ref name='xsltTemplateProcess'/>
@@ -3501,6 +3514,7 @@
         </word>
         <word name='parameter'>
           <ref name='xsltEvalOneUserParam'/>
+          <ref name='xsltParseStylesheetProcess'/>
           <ref name='xsltQuoteOneUserParam'/>
         </word>
         <word name='parameters'>
@@ -3879,6 +3893,9 @@
         <word name='results'>
           <ref name='xsltParseTemplateContent'/>
         </word>
+        <word name='ret'>
+          <ref name='xsltParseStylesheetProcess'/>
+        </word>
         <word name='retrieve'>
           <ref name='xsltXPathGetTransformContext'/>
         </word>
@@ -3901,6 +3918,7 @@
         <word name='right'>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
+          <ref name='xsltParseStylesheetProcess'/>
         </word>
         <word name='rule'>
           <ref name='xsltFindTemplate'/>
@@ -4000,6 +4018,11 @@
           <ref name='xsltAllocateExtra'/>
           <ref name='xsltAllocateExtraCtxt'/>
         </word>
+        <word name='something'>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
+          <ref name='xsltParseStylesheetProcess'/>
+        </word>
         <word name='sort'>
           <ref name='xsltDoSortFunction'/>
           <ref name='xsltSort'/>
@@ -4095,7 +4118,6 @@
           <ref name='xsltLoadStylesheetPI'/>
           <ref name='xsltParseStylesheetDoc'/>
           <ref name='xsltParseStylesheetFile'/>
-          <ref name='xsltParseStylesheetProcess'/>
           <ref name='xsltStylePreComp'/>
           <ref name='xsltTemplate'/>
         </word>
@@ -4135,6 +4157,8 @@
           <ref name='xsltEvalGlobalVariables'/>
           <ref name='xsltEvalOneUserParam'/>
           <ref name='xsltEvalUserParams'/>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
           <ref name='xsltQuoteOneUserParam'/>
           <ref name='xsltQuoteUserParams'/>
           <ref name='xsltRegisterExtElement'/>
@@ -4468,6 +4492,9 @@
         <word name='well'>
           <ref name='xsltNamespaceAlias'/>
         </word>
+        <word name='went'>
+          <ref name='xsltParseStylesheetProcess'/>
+        </word>
         <word name='wether'>
           <ref name='xsltTestCompMatchList'/>
         </word>
@@ -4641,6 +4668,12 @@
         <word name='yet'>
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
+        </word>
+      </letter>
+      <letter name='z'>
+        <word name='zero'>
+          <ref name='xsltParseStylesheetImport'/>
+          <ref name='xsltParseStylesheetInclude'/>
         </word>
       </letter>
     </chunk>

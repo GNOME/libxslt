@@ -326,6 +326,11 @@ xsltStylesheetPtr style,xmlNodePtr inst
 <RETURNS>void 	</RETURNS>
 void
 </FUNCTION>
+<FUNCTION>
+<NAME>xsltDebugDumpExtensions</NAME>
+<RETURNS>void 	</RETURNS>
+FILE * output
+</FUNCTION>
 <MACRO>
 <NAME>XSLT_REGISTER_FUNCTION_LOOKUP</NAME>
 #define XSLT_REGISTER_FUNCTION_LOOKUP(ctxt)			\
@@ -405,12 +410,12 @@ xmlXPathContextPtr ctxt
 </MACRO>
 <FUNCTION>
 <NAME>xsltParseStylesheetImport</NAME>
-<RETURNS>void 	</RETURNS>
+<RETURNS>int 	</RETURNS>
 xsltStylesheetPtr style,xmlNodePtr cur
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltParseStylesheetInclude</NAME>
-<RETURNS>void 	</RETURNS>
+<RETURNS>int 	</RETURNS>
 xsltStylesheetPtr style,xmlNodePtr cur
 </FUNCTION>
 <FUNCTION>

@@ -88,6 +88,7 @@ xmlParserInputPtr xmlNoNetExternalEntityLoader(const char *URL,
 static int debug = 0;
 static int repeat = 0;
 static int timing = 0;
+static int dumpextensions = 0;
 static int novalid = 0;
 static int noout = 0;
 #ifdef LIBXML_DOCB_ENABLED
@@ -236,6 +237,7 @@ static void
 xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
     xmlDocPtr res;
     xsltTransformContextPtr ctxt;
+   
 
 #ifdef LIBXML_XINCLUDE_ENABLED
     if (xinclude) {
@@ -363,6 +365,7 @@ static void usage(const char *name) {
     printf("\t--timing: display the time used\n");
     printf("\t--repeat: run the transformation 20 times\n");
     printf("\t--debug: dump the tree of the result instead\n");
+    printf("\t--dumpextensions: dump the registered extension elements and functions to stdout\n");
     printf("\t--novalid skip the Dtd loading phase\n");
     printf("\t--noout: do not dump the result\n");
     printf("\t--maxdepth val : increase the maximum depth\n");
@@ -542,7 +545,11 @@ main(int argc, char **argv)
                 if (value > 0)
                     xsltMaxDepth = value;
             }
-        } else {
+        } else if ((!strcmp(argv[i],"-dumpextensions"))||
+			(!strcmp(argv[i],"--dumpextensions"))) {
+		dumpextensions++;
+		
+	} else {
             fprintf(stderr, "Unknown option %s\n", argv[i]);
             usage(argv[0]);
             return (3);
@@ -587,6 +594,9 @@ main(int argc, char **argv)
             i += 2;
             continue;
         }
+    if (dumpextensions) 
+	xsltDebugDumpExtensions(NULL);
+
         if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
             if (timing)
                 startTimer();

@@ -6,6 +6,7 @@
 
 
 # functions from module extensions
+debugDumpExtensions()
 registerTestModule()
 unregisterExtModule()
 unregisterExtModuleElement()

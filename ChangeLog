@@ -1,3 +1,10 @@
+Thu May 16 19:31:35 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.[ch]  xsltproc/xsltproc.c win32/libxslt.def.src:
+	  Applied Mark Vakoc patch to show registered extensions in xsltproc
+	* doc/*: rebuilt the API, docs and website
+	* python/libxsltclass.txt: this added an entry point
+
 Wed May 15 00:20:10 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libxslt/xslt.c: xsl:include crash fix

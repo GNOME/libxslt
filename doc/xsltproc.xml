@@ -50,6 +50,7 @@
 	<arg>--catalogs</arg>
 	<arg>--xinclude</arg>
 	<arg>--profile</arg>
+	<arg>--dumpextensions</arg>
       </group>
       <arg><option><replaceable>stylesheet</replaceable></option></arg>
       <arg><replaceable>file1</replaceable></arg>
@@ -300,6 +301,17 @@
     </simpara>
 	</listitem>
       </varlistentry>
+
+      <varlistentry>
+	<term>
+      <option>--dumpextensions</option></term>
+	<listitem>
+	  <simpara>Dumps the list of all registered extensions on stdout.
+    </simpara>
+	</listitem>
+      </varlistentry>
+
+    
     </variablelist>
   </refsect1>
 
