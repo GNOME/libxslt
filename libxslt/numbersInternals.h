@@ -36,6 +36,10 @@ struct _xsltNumberData {
     int groupingCharacterLen;
     xmlDocPtr doc;
     xmlNodePtr node;
+
+    /*
+     * accelerators
+     */
 };
 
 /**

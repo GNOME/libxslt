@@ -1,4 +1,10 @@
-Mod Aug 18 14:42:12 HKT 2003 William Brack <wbrack@mmm.com.hk>
+Tue Aug 19 00:38:46 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/Makefile.am libxslt/libxslt.h libxslt/numbersInternals.h
+	  libexslt/*.c configure.in: applied patch from Mikhail Grushinskiy
+	  for compilation with MingW compiler on Windows.
+
+Mon Aug 18 14:42:12 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* keys.c: enhanced xsltInitCtxtKey to take care of multiple
 	  instances of a key with the same namespace:name, reported

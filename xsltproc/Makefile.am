@@ -16,7 +16,8 @@ DEPS = $(top_builddir)/libxslt/libxslt.la \
 LDADDS = @STATIC_BINARIES@ \
          $(top_builddir)/libxslt/libxslt.la \
          $(top_builddir)/libexslt/libexslt.la \
-	@LIBXML_LIBS@ $(EXTRA_LIBS)
+	@LIBXML_LIBS@ $(EXTRA_LIBS) @WIN32_EXTRA_LIBADD@
 
 xsltproc.dv: xsltproc.o
 	$(CC) $(CFLAGS) -o xsltproc xsltproc.o ../libexslt/.libs/libexslt.a ../libxslt/.libs/libxslt.a @LIBXML_LIBS@ $(EXTRA_LIBS)
+

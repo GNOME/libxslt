@@ -9,13 +9,13 @@
 #ifndef __XSLT_LIBXSLT_H__
 #define __XSLT_LIBXSLT_H__
 
-#if defined(WIN32) && !defined (__CYGWIN__)
+#if defined(WIN32) && !defined (__CYGWIN__) && !defined (__MINGW32__)
 #include <win32config.h>
 #else
 #include "config.h"
 #endif
 
-#if defined(WIN32) && !defined(__CYGWIN__)
+#if defined(WIN32) && !defined(__CYGWIN__) && !defined (__MINGW32__)
 #include "xsltwin32config.h"
 #else
 #include "xsltconfig.h"
