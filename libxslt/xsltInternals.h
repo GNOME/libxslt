@@ -95,8 +95,8 @@ struct _xsltTemplate {
     float priority;	/* as given from the stylesheet, not computed */
     xmlChar *name;	/* the local part of the name QName */
     xmlChar *nameURI;	/* the URI part of the name QName */
-    xmlChar *mode;	/* the local part of the mode QName */
-    xmlChar *modeURI;	/* the URI part of the mode QName */
+    const xmlChar *mode;/* the local part of the mode QName */
+    const xmlChar *modeURI;/* the URI part of the mode QName */
     xmlNodePtr content;	/* the template replacement value */
     xmlNodePtr elem;	/* the source element */
 

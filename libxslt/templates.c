@@ -506,7 +506,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	    } else if ((ctxt->internalized) && (target != NULL) &&
 	               (target->doc != NULL) &&
 		       (target->doc->dict == ctxt->dict)) {
-		text->content = value;
+		text->content = (xmlChar *) value;
 	    } else {
 		text->content = xmlStrdup(value);
 	    }

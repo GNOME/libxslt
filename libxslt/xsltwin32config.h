@@ -44,7 +44,7 @@ extern "C" {
  *
  * extra version information, used to show a CVS compilation
  */
-#define LIBXSLT_VERSION_EXTRA "-CVS990"
+#define LIBXSLT_VERSION_EXTRA "-CVS991"
 
 /**
  * WITH_XSLT_DEBUG:

@@ -869,9 +869,9 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
 	} else {
-	    comp->mode = prop;
+	    comp->mode = xmlDictLookup(style->dict, prop, -1);
 	    if (URI != NULL) {
-		comp->modeURI = xmlStrdup(URI);
+		comp->modeURI = xmlDictLookup(style->dict, URI, -1);
 	    } else {
 		comp->modeURI = NULL;
 	    }

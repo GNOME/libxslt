@@ -1,3 +1,11 @@
+Sat Jan 22 22:14:26 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c libxslt/preproc.c libxslt/templates.c
+	  libxslt/xslt.c libxslt/xsltInternals.h: chasing xmlStrEqual
+	  calls and removed them when comparing mode and modeURI for
+	  templates by interning those strings when compiling the
+	  stylesheets.
+
 Sat Jan 22 19:17:13 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: small fix for local setup

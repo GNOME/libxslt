@@ -151,10 +151,6 @@ xsltFreeCompMatch(xsltCompMatchPtr comp) {
 	return;
     if (comp->pattern != NULL)
 	xmlFree((xmlChar *)comp->pattern);
-    if (comp->mode != NULL)
-	xmlFree((xmlChar *)comp->mode);
-    if (comp->modeURI != NULL)
-	xmlFree((xmlChar *)comp->modeURI);
     if (comp->nsList != NULL)
 	xmlFree(comp->nsList);
     for (i = 0;i < comp->nbStep;i++) {
@@ -392,7 +388,10 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
     if (mode != NULL) {
 	if (comp->mode == NULL)
 	    return(0);
-	if ((comp->mode != mode) && (!xmlStrEqual(comp->mode, mode)))
+	/*
+	 * both mode strings must be interned on the stylesheet dictionary
+	 */
+	if (comp->mode != mode)
 	    return(0);
     } else {
 	if (comp->mode != NULL)
@@ -401,8 +400,10 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
     if (modeURI != NULL) {
 	if (comp->modeURI == NULL)
 	    return(0);
-	if ((comp->modeURI != modeURI) &&
-	    (!xmlStrEqual(comp->modeURI, modeURI)))
+	/*
+	 * both modeURI strings must be interned on the stylesheet dictionary
+	 */
+	if (comp->modeURI != modeURI)
 	    return(0);
     } else {
 	if (comp->modeURI != NULL)
@@ -1908,9 +1909,9 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	
 	pat->template = cur;
 	if (mode != NULL)
-	    pat->mode = xmlStrdup(mode);
+	    pat->mode = xmlDictLookup(style->dict, mode, -1);
 	if (modeURI != NULL)
-	    pat->modeURI = xmlStrdup(modeURI);
+	    pat->modeURI = xmlDictLookup(style->dict, modeURI, -1);
 	if (priority != XSLT_PAT_NO_PRIORITY)
 	    pat->priority = priority;
 

@@ -319,8 +319,10 @@ xsltFreeTemplate(xsltTemplatePtr template) {
     if (template->match) xmlFree(template->match);
     if (template->name) xmlFree(template->name);
     if (template->nameURI) xmlFree(template->nameURI);
+/*
     if (template->mode) xmlFree(template->mode);
     if (template->modeURI) xmlFree(template->modeURI);
+ */
     if (template->inheritedNs) xmlFree(template->inheritedNs);
     memset(template, -1, sizeof(xsltTemplate));
     xmlFree(template);
@@ -1780,15 +1782,14 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	    if (URI != NULL)
 		modeURI = xmlStrdup(URI);
 	}
-	ret->mode = mode;
-	ret->modeURI = modeURI;
+	ret->mode = xmlDictLookup(style->dict, mode, -1);
+	ret->modeURI = xmlDictLookup(style->dict, modeURI, -1);
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltParseStylesheetTemplate: mode %s\n", mode);
 #endif
-    } else {
-	mode = NULL;
-	modeURI = NULL;
+        if (mode != NULL) xmlFree(mode);
+	if (modeURI != NULL) xmlFree(modeURI);
     }
     prop = xsltGetNsProp(template, (const xmlChar *)"match", XSLT_NAMESPACE);
     if (prop != NULL) {
@@ -1855,7 +1856,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltParseTemplateContent(style, template);
     ret->elem = template;
     ret->content = template->children;
-    xsltAddTemplate(style, ret, mode, modeURI);
+    xsltAddTemplate(style, ret, ret->mode, ret->modeURI);
 
 error:
     for (;exclPrefixes > 0;exclPrefixes--)
