@@ -27,66 +27,6 @@
 
 /************************************************************************
  * 									*
- * 		Handling of XSLT debugging				*
- * 									*
- ************************************************************************/
-
-/**
- * xsltDebug:
- * @ctxt:  an XSLT processing context
- * @node:  The current node
- *
- * Process an debug node
- */
-void 
-xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node) {
-    int i, j;
-
-    fprintf(stderr, "Templates:\n");
-    for (i = 0, j = ctxt->templNr - 1;((i < 5) && (j >= 0));i++,j--) {
-	fprintf(stderr, "#%d ", i);
-	if (ctxt->templTab[j]->name != NULL)
-	    fprintf(stderr, "name %s ", ctxt->templTab[j]->name);
-	if (ctxt->templTab[j]->match != NULL)
-	    fprintf(stderr, "name %s ", ctxt->templTab[j]->match);
-	if (ctxt->templTab[j]->mode != NULL)
-	    fprintf(stderr, "name %s ", ctxt->templTab[j]->mode);
-	fprintf(stderr, "\n");
-    }
-    fprintf(stderr, "Variables:\n");
-    for (i = 0, j = ctxt->varsNr - 1;((i < 10) && (j >= 0));i++,j--) {
-	xsltStackElemPtr cur;
-
-	if (ctxt->varsTab[j] == NULL)
-	    continue;
-	fprintf(stderr, "#%d\n", i);
-	cur = ctxt->varsTab[j];
-	while (cur != NULL) {
-	    if (cur->type == XSLT_ELEM_VARIABLE)
-		fprintf(stderr, "var ");
-	    else if (cur->type == XSLT_ELEM_PARAM)
-		fprintf(stderr, "param ");
-	    else {
-		fprintf(stderr, "corrupted !!!\n");
-	    }
-	    if (cur->name != NULL)
-		fprintf(stderr, "%s ", cur->name);
-	    else
-		fprintf(stderr, "noname !!!!");
-	    if (cur->value != NULL) {
-		xmlXPathDebugDumpObject(stderr, cur->value, 1);
-	    } else {
-		fprintf(stderr, "NULL !!!!");
-	    }
-	    fprintf(stderr, "\n");
-	    cur = cur->next;
-	}
-	
-    }
-}
-
-/************************************************************************
- * 									*
  * 		Handling of XSLT stylesheets messages			*
  * 									*
  ************************************************************************/

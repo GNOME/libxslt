@@ -39,6 +39,7 @@
 #include "keys.h"
 #include "documents.h"
 #include "extensions.h"
+#include "extra.h"
 
 #define DEBUG_PROCESS
 
@@ -1754,7 +1755,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		"xsltApplyOneTemplate: loop found ???\n");
 	xsltGenericError(xsltGenericErrorContext,
 		"try increasing xsltMaxDepth (--maxdepth)\n");
-	xsltDebug(ctxt, node);
+	xsltDebug(ctxt, node, list);
 	return;
     }
 
@@ -1882,9 +1883,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltGenericError(xsltGenericErrorContext,
 			"xsltApplyOneTemplate: text copy failed\n");
 	    }
-	} else if ((cur->type == XML_ELEMENT_NODE) &&
-		   (xmlStrEqual(cur->name, (const xmlChar *)"xsltdebug"))) {
-	    xsltDebug(ctxt, cur);
 	} else if ((cur->type == XML_ELEMENT_NODE) && 
 		   (cur->ns != NULL) && (cur->_private != NULL)) {
 	    xsltTransformFunction function;
@@ -2345,6 +2343,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
     if ((style == NULL) || (doc == NULL))
 	return(NULL);
     ctxt = xsltNewTransformContext(style, doc);
+    xsltRegisterExtras(ctxt);
     if (ctxt == NULL)
 	return(NULL);
     if ((style->method != NULL) &&

@@ -95,9 +95,6 @@ int		xsltSaveResultToFile		(FILE *file,
 int		xsltSaveResultToFd		(int fd,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
-
-void		xsltDebug			(xsltTransformContextPtr ctxt,
-						 xmlNodePtr node);
 #ifdef __cplusplus
 }
 #endif

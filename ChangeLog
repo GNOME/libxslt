@@ -1,3 +1,16 @@
+Wed Feb 28 00:03:44 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/extensions.c: fixed stoopid bug
+	* libxslt/Makefile.am libxslt/extra.[ch]: added a new module
+	  carrying extensions to the specification. Added node-set()
+	  for existing saxon and xt namespaces and debug() in libxslt
+	  namespace (http://xmlsoft.org/XSLT/namespace)
+	* libxslt/xsltutils.[ch] transform.c: moved xsltDebug to extra.c
+	  plus cleanup.
+	* configure.in tests/Makefile.am tests/namespaces: added some
+	  namespaces tests, including a test calling the extra debugging
+	  function in libxslt namespace, worked first time !!!
+
 Tue Feb 27 16:15:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.c: extension prefix support for the full stylesheet

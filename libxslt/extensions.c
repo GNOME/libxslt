@@ -206,9 +206,9 @@ xsltRegisterExtElement(xsltTransformContextPtr ctxt, const xmlChar *name,
  */
 void
 xsltFreeCtxtExts(xsltTransformContextPtr ctxt) {
-    if (ctxt->extElements == NULL)
+    if (ctxt->extElements != NULL)
 	xmlHashFree(ctxt->extElements, NULL);
-    if (ctxt->extFunctions == NULL)
+    if (ctxt->extFunctions != NULL)
 	xmlHashFree(ctxt->extFunctions, NULL);
 }
 

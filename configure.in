@@ -149,6 +149,7 @@ tests/REC1/Makefile
 tests/REC2/Makefile
 tests/REC/Makefile
 tests/general/Makefile
+tests/namespaces/Makefile
 tests/numbers/Makefile
 tests/documents/Makefile
 tests/xmlspec/Makefile
