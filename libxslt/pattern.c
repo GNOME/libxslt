@@ -1270,22 +1270,24 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	    ctxt->error = 1;
 	    return;
 	}
-	SKIP_BLANKS;
-	if (CUR == '(') {
-	    xsltCompileIdKeyPattern(ctxt, name, 1);
-	    if ((CUR == '/') && (NXT(1) == '/')) {
-		PUSH(XSLT_OP_ANCESTOR, NULL, NULL);
-		NEXT;
-		NEXT;
-		SKIP_BLANKS;
-		xsltCompileRelativePathPattern(ctxt, NULL);
-	    } else if (CUR == '/') {
-		PUSH(XSLT_OP_PARENT, NULL, NULL);
-		NEXT;
-		SKIP_BLANKS;
-		xsltCompileRelativePathPattern(ctxt, NULL);
+	if (!xmlXPathIsNodeType(name)) {
+	    SKIP_BLANKS;
+	    if (CUR == '(') {
+		xsltCompileIdKeyPattern(ctxt, name, 1);
+		if ((CUR == '/') && (NXT(1) == '/')) {
+		    PUSH(XSLT_OP_ANCESTOR, NULL, NULL);
+		    NEXT;
+		    NEXT;
+		    SKIP_BLANKS;
+		    xsltCompileRelativePathPattern(ctxt, NULL);
+		} else if (CUR == '/') {
+		    PUSH(XSLT_OP_PARENT, NULL, NULL);
+		    NEXT;
+		    SKIP_BLANKS;
+		    xsltCompileRelativePathPattern(ctxt, NULL);
+		}
+		return;
 	    }
-	    return;
 	}
 	xsltCompileRelativePathPattern(ctxt, name);
     }

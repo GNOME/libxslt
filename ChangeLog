@@ -1,3 +1,8 @@
+Sun Mar  4 13:21:16 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* libxslt/pattern.c: fixed the compilation of patterns which
+	  contains XPath NodeTypes.
+
 Sat Mar  3 20:56:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c: save ctxt->node after for-each
