@@ -87,7 +87,7 @@ main(int argc, char **argv) {
 		   (!strcmp(argv[i], "--param"))) {
 	    i++;
 	    params[nbparams++] = argv[i++];
-	    params[nbparams++] = argv[i++];
+	    params[nbparams++] = argv[i];
 	    if (nbparams >= 16) {
 		fprintf(stderr, "too many params\n");
 		return(1);

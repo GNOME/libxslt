@@ -1,3 +1,7 @@
+Wed Apr 25 12:42:48 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c : Renaud Chaillat provided a fix for #53535
+
 Sun Apr 22 22:47:44 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in: updated to 0.8.0
