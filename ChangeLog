@@ -1,3 +1,9 @@
+Wed Jan 19 10:08:55 HKT 2005 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xsltwin32config.h, libxslt/xsltwin32config.h.in:
+	  fixed a small error in LIBXSLT_VERSION_EXTRA pointed out
+	  by Michael.Hewarth on the mailing list
+	 
 Wed Jan 19 13:58:16 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: patch #9 from Joel Reed
