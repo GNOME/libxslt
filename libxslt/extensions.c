@@ -1377,14 +1377,14 @@ xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst,
 	if (testStyleData == NULL) {
 	    xsltTransformError(NULL, style, inst,
 		 "xsltExtElementPreCompTest: not initialized\n");
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    return (NULL);
 	}
     }
     if (inst == NULL) {
 	xsltTransformError(NULL, style, inst,
 		 "xsltExtElementPreCompTest: no instruction\n");
-	style->errors++;
+	if (style != NULL) style->errors++;
         return (NULL);
     }
     ret = xsltNewElemPreComp (style, inst, function);

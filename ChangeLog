@@ -1,3 +1,10 @@
+Fri Feb  7 14:18:40 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c libxslt/keys.c libxslt/pattern.c
+	  libxslt/preproc.c libxslt/transform.c libxslt/variables.c
+	  libxslt/xslt.c: tried to fix 105387 and all similar cases
+	  in the library sources.
+
 Wed Feb  5 16:04:10 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* doc/* configure.in: preparing for release of 1.0.25

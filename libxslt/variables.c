@@ -600,7 +600,7 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 		    (elem->comp->inst->doc == def->comp->inst->doc)) {
 		    xsltTransformError(ctxt, style, elem->comp->inst,
 			"Global variable %s already defined\n", elem->name);
-		    style->errors++;
+		    if (style != NULL) style->errors++;
 		}
 	    }
 	    elem = elem->next;
@@ -680,7 +680,7 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
 		 (xmlStrEqual(elem->nameURI, tmp->nameURI)))) {
 		xsltTransformError(NULL, style, comp->inst,
 		"redefinition of global variable %s\n", elem->name);
-		style->errors++;
+		if (style != NULL) style->errors++;
 	    }
 	    if (tmp->next == NULL)
 	        break;

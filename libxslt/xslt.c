@@ -655,7 +655,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 
 	URI = xsltGetQNameURI(cur, &prop);
 	if (prop == NULL) {
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	} else if (URI == NULL) {
             if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
                 (xmlStrEqual(prop, (const xmlChar *) "html")) ||
@@ -664,7 +664,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
             } else {
 		xsltTransformError(NULL, style, cur,
                                  "invalid value for method: %s\n", prop);
-                style->warnings++;
+                if (style != NULL) style->warnings++;
             }
 	} else {
 	    style->method = prop;
@@ -700,7 +700,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
         } else {
 	    xsltTransformError(NULL, style, cur,
                              "invalid value for standalone: %s\n", prop);
-            style->warnings++;
+            if (style != NULL) style->warnings++;
         }
         xmlFree(prop);
     }
@@ -714,7 +714,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
         } else {
 	    xsltTransformError(NULL, style, cur,
                              "invalid value for indent: %s\n", prop);
-            style->warnings++;
+            if (style != NULL) style->warnings++;
         }
         xmlFree(prop);
     }
@@ -730,7 +730,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 	    xsltTransformError(NULL, style, cur,
                              "invalid value for omit-xml-declaration: %s\n",
                              prop);
-            style->warnings++;
+            if (style != NULL) style->warnings++;
         }
         xmlFree(prop);
     }
@@ -764,7 +764,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 
 		URI = xsltGetQNameURI(cur, &element);
 		if (element == NULL) {
-		    style->errors++;
+		    if (style != NULL) style->errors++;
 		} else {
 		    xmlHashAddEntry2(style->cdataSection, element, URI,
 			             (void *) "cdata");
@@ -810,14 +810,14 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr style, xmlNodePtr cur)
 	if (format != NULL) {
 	    xsltTransformError(NULL, style, cur,
 	 "xsltParseStylestyleDecimalFormat: %s already exists\n", prop);
-	    style->warnings++;
+	    if (style != NULL) style->warnings++;
 	    return;
 	}
 	format = xsltNewDecimalFormat(prop);
 	if (format == NULL) {
 	    xsltTransformError(NULL, style, cur,
      "xsltParseStylestyleDecimalFormat: failed creating new decimal-format\n");
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    return;
 	}
 	/* Append new decimal-format structure */
@@ -912,7 +912,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     if (elements == NULL) {
 	xsltTransformError(NULL, style, cur,
 	    "xsltParseStylesheetPreserveSpace: missing elements attribute\n");
-	style->warnings++;
+	if (style != NULL) style->warnings++;
 	return;
     }
 
@@ -993,7 +993,7 @@ xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
 		xsltTransformError(NULL, style, cur,
 	    "xsl:extension-element-prefix : undefined namespace %s\n",
 	                         prefix);
-		style->warnings++;
+		if (style != NULL) style->warnings++;
 	    } else {
 #ifdef WITH_XSLT_DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
@@ -1029,7 +1029,7 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     if (elements == NULL) {
 	xsltTransformError(NULL, style, cur,
 	    "xsltParseStylesheetStripSpace: missing elements attribute\n");
-	style->warnings++;
+	if (style != NULL) style->warnings++;
 	return;
     }
 
@@ -1113,7 +1113,7 @@ xsltParseStylesheetExcludePrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
 		xsltTransformError(NULL, style, cur,
 	    "xsl:exclude-result-prefixes : undefined namespace %s\n",
 	                         prefix);
-		style->warnings++;
+		if (style != NULL) style->warnings++;
 	    } else {
 #ifdef WITH_XSLT_DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
@@ -1305,7 +1305,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 			if (style->nsHash == NULL) {
 			    xsltTransformError(NULL, style, cur,
 		 "xsltGatherNamespaces: failed to create hash table\n");
-			    style->errors++;
+			    if (style != NULL) style->errors++;
 			    return;
 			}
 		    }
@@ -1313,7 +1313,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 		    if ((URI != NULL) && (!xmlStrEqual(URI, ns->href))) {
 			xsltTransformError(NULL, style, cur,
 	     "Namespaces prefix %s used for multiple namespaces\n");
-			style->warnings++;
+			if (style != NULL) style->warnings++;
 		    } else if (URI == NULL) {
 			xmlHashUpdateEntry(style->nsHash, ns->prefix,
 			    (void *) ns->href, (xmlHashDeallocator)xmlFree);
@@ -1409,7 +1409,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 						(const xmlChar *)"no")){
 			    xsltTransformError(NULL, style, cur,
 	     "xsl:text: disable-output-escaping allows only yes or no\n");
-			    style->warnings++;
+			    if (style != NULL) style->warnings++;
 
 			}
 			xmlFree(prop);
@@ -1424,7 +1424,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 			     (text->type != XML_CDATA_SECTION_NODE)) {
 			    xsltTransformError(NULL, style, cur,
 		 "xsltParseTemplateContent: xslt:text content problem\n");
-			    style->errors++;
+			    if (style != NULL) style->errors++;
 			    break;
 			}
 			if (noesc)
@@ -1516,7 +1516,7 @@ skip_children:
             cur = cur->next;
 	    xsltTransformError(NULL, style, cur,
 		"xsltParseTemplateContent: ignoring misplaced param element\n");
-	    style->warnings++;
+	    if (style != NULL) style->warnings++;
 	    xmlUnlinkNode(param);
 	    xmlFreeNode(param);
 	    continue;
@@ -1554,7 +1554,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
 
 	URI = xsltGetQNameURI(key, &prop);
 	if (prop == NULL) {
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    goto error;
 	} else {
 	    name = prop;
@@ -1568,7 +1568,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     } else {
 	xsltTransformError(NULL, style, key,
 	    "xsl:key : error missing name\n");
-	style->errors++;
+	if (style != NULL) style->errors++;
 	goto error;
     }
 
@@ -1576,7 +1576,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     if (match == NULL) {
 	xsltTransformError(NULL, style, key,
 	    "xsl:key : error missing match\n");
-	style->errors++;
+	if (style != NULL) style->errors++;
 	goto error;
     }
 
@@ -1584,7 +1584,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     if (use == NULL) {
 	xsltTransformError(NULL, style, key,
 	    "xsl:key : error missing use\n");
-	style->errors++;
+	if (style != NULL) style->errors++;
 	goto error;
     }
 
@@ -1654,7 +1654,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 
 	URI = xsltGetQNameURI(template, &prop);
 	if (prop == NULL) {
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    goto error;
 	} else {
 	    mode = prop;
@@ -1695,7 +1695,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 
 	URI = xsltGetQNameURI(template, &prop);
 	if (prop == NULL) {
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    goto error;
 	} else {
 	    ret->name = prop;
@@ -1742,14 +1742,14 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     if (prop == NULL) {
 	xsltTransformError(NULL, style, top,
 	    "xsl:version is missing: document may not be a stylesheet\n");
-	style->warnings++;
+	if (style != NULL) style->warnings++;
     } else {
 	if ((!xmlStrEqual(prop, (const xmlChar *)"1.0")) &&
             (!xmlStrEqual(prop, (const xmlChar *)"1.1"))) {
 	    xsltTransformError(NULL, style, top,
 		"xsl:version: only 1.0 features are supported\n");
 	     /* TODO set up compatibility when not XSLT 1.0 */
-	    style->warnings++;
+	    if (style != NULL) style->warnings++;
 	}
 	xmlFree(prop);
     }
@@ -1768,7 +1768,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    }
 	    if (IS_XSLT_ELEM(cur) && IS_XSLT_NAME(cur, "import")) {
 		    if (xsltParseStylesheetImport(style, cur) != 0)
-			    style->errors++;
+			    if (style != NULL) style->errors++;
 	    } else
 		    break;
 	    cur = cur->next;
@@ -1787,7 +1787,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 		xsltTransformError(NULL, style, cur,
 		    "misplaced text element: '%s'\n", cur->content);
 	    }
-	    style->errors++;
+	    if (style != NULL) style->errors++;
             cur = cur->next;
 	    continue;
 	}
@@ -1795,7 +1795,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    xsltGenericError(xsltGenericErrorContext,
 		     "Found a top-level element %s with null namespace URI\n",
 		     cur->name);
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    cur = cur->next;
 	    continue;
 	}
@@ -1818,10 +1818,10 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	if (IS_XSLT_NAME(cur, "import")) {
 	    xsltTransformError(NULL, style, cur,
 			"xsltParseStylesheetTop: ignoring misplaced import element\n");
-	    style->errors++;
+	    if (style != NULL) style->errors++;
     } else if (IS_XSLT_NAME(cur, "include")) {
 	    if (xsltParseStylesheetInclude(style, cur) != 0)
-			style->errors++;
+		if (style != NULL) style->errors++;
     } else if (IS_XSLT_NAME(cur, "strip-space")) {
 	    xsltParseStylesheetStripSpace(style, cur);
     } else if (IS_XSLT_NAME(cur, "preserve-space")) {
@@ -1849,7 +1849,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    xsltTransformError(NULL, style, cur,
 			"xsltParseStylesheetTop: ignoring unknown %s element\n",
 			cur->name);
-	    style->warnings++;
+	    if (style != NULL) style->warnings++;
 	}
 	cur = cur->next;
     }

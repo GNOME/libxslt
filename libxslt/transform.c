@@ -1843,7 +1843,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 	URI = xsltGetQNameURI(inst, &prop);
 	if (prop == NULL) {
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	} else if (URI == NULL) {
 	    if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
 		(xmlStrEqual(prop, (const xmlChar *) "html")) ||
@@ -1852,7 +1852,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else {
 		xsltTransformError(ctxt, NULL, inst,
 				 "invalid value for method: %s\n", prop);
-		style->warnings++;
+		if (style != NULL) style->warnings++;
 	    }
 	} else {
 	    style->method = prop;
@@ -1887,7 +1887,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltTransformError(ctxt, NULL, inst,
 			     "invalid value for standalone: %s\n",
 			     prop);
-	    style->warnings++;
+	    if (style != NULL) style->warnings++;
 	}
 	xmlFree(prop);
     }
@@ -1903,7 +1903,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	} else {
 	    xsltTransformError(ctxt, NULL, inst,
 			     "invalid value for indent: %s\n", prop);
-	    style->warnings++;
+	    if (style != NULL) style->warnings++;
 	}
 	xmlFree(prop);
     }
@@ -1921,7 +1921,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltTransformError(ctxt, NULL, inst,
 			     "invalid value for omit-xml-declaration: %s\n",
 			     prop);
-	    style->warnings++;
+	    if (style != NULL) style->warnings++;
 	}
 	xmlFree(prop);
     }

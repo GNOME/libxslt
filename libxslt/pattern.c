@@ -1756,7 +1756,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	    xsltTransformError(NULL, style, node,
 			     "xsltCompilePattern : failed to compile '%s'\n",
 			     element->pattern);
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    goto error;
 	}
 
@@ -1817,7 +1817,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
     if (end == 0) {
 	xsltTransformError(NULL, style, node,
 			 "xsltCompilePattern : NULL pattern\n");
-	style->errors++;
+	if (style != NULL) style->errors++;
 	goto error;
     }
 

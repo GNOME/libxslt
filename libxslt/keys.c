@@ -265,19 +265,19 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	if (current == end) {
 	    xsltTransformError(NULL, style, inst,
 			     "key pattern is empty\n");
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    goto error;
 	}
 	if (match[start] != '/') {
 	    pattern = xmlStrcat(pattern, (xmlChar *)"//");
 	    if (pattern == NULL) {
-		style->errors++;
+		if (style != NULL) style->errors++;
 		goto error;
 	    }
 	}
 	pattern = xmlStrncat(pattern, &match[start], end - start);
 	if (pattern == NULL) {
-	    style->errors++;
+	    if (style != NULL) style->errors++;
 	    goto error;
 	}
 
@@ -296,14 +296,14 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	xsltTransformError(NULL, style, inst,
 		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         pattern);
-	style->errors++;
+	if (style != NULL) style->errors++;
     }
     key->usecomp = xmlXPathCompile(use);
     if (key->usecomp == NULL) {
 	xsltTransformError(NULL, style, inst,
 		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         use);
-	style->errors++;
+	if (style != NULL) style->errors++;
     }
     key->next = style->keys;
     style->keys = key;
