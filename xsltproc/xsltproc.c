@@ -547,7 +547,7 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "-output")) ||
                    (!strcmp(argv[i], "--output"))) {
             i++;
-#if defined(WIN32)
+#if defined(WIN32) || defined (__CYGWIN__)
 	    output = xmlNormalizeWindowsPath(argv[i]);
             if (output == NULL)
 		output = xmlStrdup(argv[i]);
@@ -826,7 +826,7 @@ done:
         xsltFreeStylesheet(cur);
     for (i = 0;i < nbstrparams;i++)
 	xmlFree(strparams[i]);
-#if defined(WIN32)
+#if defined(WIN32) || defined (__CYGWIN__)
     if (output != NULL)
 	xmlFree(output);
 #endif

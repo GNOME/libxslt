@@ -1,3 +1,7 @@
+Fri Jan 10 10:34:23 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: final touch to #102800 fix
+
 Thu Jan  9 18:17:40 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: tried to fix #102800 for good. Reenabled
