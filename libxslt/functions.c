@@ -37,6 +37,7 @@
 #include "functions.h"
 #include "numbersInternals.h"
 #include "keys.h"
+#include "documents.h"
 
 #define DEBUG_FUNCTION
 
@@ -57,7 +58,7 @@
  */
 void
 xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    xmlDocPtr doc;
+    xsltDocumentPtr doc;
     xmlXPathObjectPtr obj;
     xmlChar *base, *URI;
 
@@ -101,31 +102,21 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
         if (URI == NULL) {
 	    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
 	} else {
-	    doc = xmlParseDoc(URI);
-	    if (doc == NULL)
-		valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-	    else {
-		xsltTransformContextPtr tctxt;
+	    xsltTransformContextPtr tctxt;
 
-		/*
-		 * link it to the context for cleanup when done
-		 */
-		tctxt = (xsltTransformContextPtr) ctxt->context->extra;
-		if (tctxt == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
+	    tctxt = (xsltTransformContextPtr) ctxt->context->extra;
+	    if (tctxt == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
 			"document() : internal error tctxt == NULL\n");
-		    xmlFreeDoc(doc);
+		valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+	    } else {
+		doc = xsltLoadDocument(tctxt, URI);
+		if (doc == NULL)
 		    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-		} else {
-		    /*
-		     * Keep a link from the context to be able to deallocate
-		     */
-		    doc->next = (xmlNodePtr) tctxt->extraDocs;
-		    tctxt->extraDocs = doc;
-
+		else {
 		    /* TODO: use XPointer of HTML location for fragment ID */
 		    /* pbm #xxx can lead to location sets, not nodesets :-) */
-                    valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) doc));
+		    valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) doc->doc));
 		}
 	    }
 	}

@@ -1,3 +1,14 @@
+Fri Feb  9 15:49:19 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am libxslt/documents.[ch]: added a new module
+	  to deal with documents
+	* libxslt/functions.c: fixed document() to return the same set
+	  for teh same URL
+	* libxslt/keys.[ch] libxslt/templates.c libxslt/transform.c
+	  libxslt/variables.c libxslt/xsltInternals.h: keys are really
+	  associated to loaded documents, not to the transformation
+	  context, made the change, this impacted a number of modules
+
 Thu Feb  8 12:51:00 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/libxslt.sgml doc/html/*.html: updated and rebuilt the doc list

@@ -263,7 +263,7 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	"Get key %s, value %s\n", name, value);
 #endif
 
-    table = (xsltKeyTablePtr) ctxt->keys;
+    table = (xsltKeyTablePtr) ctxt->document->keys;
     while (table != NULL) {
 	if (xmlStrEqual(table->name, name) &&
 	    (((nameURI == NULL) && (table->nameURI == NULL)) ||
@@ -280,12 +280,14 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 /**
  * xsltInitCtxtKey:
  * @ctxt: an XSLT transformation context
+ * @doc:  an XSLT document
  * @keyd: the key definition
  *
  * Computes the key tables this key and for the current input document.
  */
 void
-xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltKeyDefPtr keyd) {
+xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
+	        xsltKeyDefPtr keyd) {
     int i;
     xmlChar *pattern = NULL;
     xmlNodeSetPtr nodelist = NULL, keylist;
@@ -312,8 +314,9 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltKeyDefPtr keyd) {
 	xmlXPathNewParserContext(pattern, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
 	goto error;
-    ctxt->node = (xmlNodePtr) ctxt->doc;
-    ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->doc;
+    ctxt->document = doc;
+    ctxt->node = (xmlNodePtr) doc->doc;
+    ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
     xmlXPathEvalExpr(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);
     do {
@@ -382,8 +385,8 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltKeyDefPtr keyd) {
 	}
     }
 
-    table->next = ctxt->keys;
-    ctxt->keys = table;
+    table->next = doc->keys;
+    doc->keys = table;
 
 error:
     if (res != NULL)
@@ -396,41 +399,34 @@ error:
 
 /**
  * xsltInitCtxtKeys:
- * @ctxt: an XSLT transformation context
+ * @ctxt:  an XSLT transformation context
+ * @doc:  an XSLT document
  *
  * Computes all the keys tables for the current input document.
  * Should be done before global varibales are initialized.
  */
 void
-xsltInitCtxtKeys(xsltTransformContextPtr ctxt) {
+xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr doc) {
     xsltStylesheetPtr style;
     xsltKeyDefPtr keyd;
 
-    if (ctxt == NULL)
+    if ((ctxt == NULL) || (doc == NULL))
 	return;
+#ifdef DEBUG_KEYS
+    xsltGenericDebug(xsltGenericDebugContext, "Initializing keys on %s\n",
+		     doc->doc->URL);
+#endif
     style = ctxt->style;
     while (style != NULL) {
 	keyd = (xsltKeyDefPtr) style->keys;
 	while (keyd != NULL) {
-	    xsltInitCtxtKey(ctxt, keyd);
+	    xsltInitCtxtKey(ctxt, doc, keyd);
 
 	    keyd = keyd->next;
 	}
 
 	style = xsltNextImport(style);
     }
-}
-
-/**
- * xsltFreeCtxtKeys:
- * @ctxt: an XSLT transformation context
- *
- * Free up all the space used by the key tables
- */
-void	
-xsltFreeCtxtKeys(xsltTransformContextPtr ctxt) {
-    if (ctxt->keys)
-	xsltFreeKeyTableList((xsltKeyTablePtr) ctxt->keys);
 }
 
 /*
@@ -454,3 +450,16 @@ xsltIsKey(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	return(1);
     return(0);
 }
+
+/*
+ * xsltFreeDocumentKeys:
+ * @doc: a XSLT document
+ *
+ * Free the keys associated to a document
+ */
+void	
+xsltFreeDocumentKeys(xsltDocumentPtr doc) {
+    if (doc != NULL)
+        xsltFreeKeyTableList(doc->keys);
+}
+

@@ -17,6 +17,7 @@ xsltinc_HEADERS = 			\
 	namespaces.h			\
 	imports.h			\
 	attributes.h			\
+	documents.h			\
 	transform.h			\
 	xsltInternals.h
 
@@ -32,6 +33,7 @@ libxslt_la_SOURCES = 			\
 	namespaces.c			\
 	imports.c			\
 	attributes.c			\
+	documents.c			\
 	transform.c
 
 

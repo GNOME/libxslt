@@ -291,7 +291,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	if (xmlStrEqual(cur->name, (const xmlChar *)"use-attribute-sets")) {
 	    xmlChar *in;
 
-	    in = xmlNodeListGetString(ctxt->doc, cur->children, 1);
+	    in = xmlNodeListGetString(ctxt->document->doc, cur->children, 1);
 	    if (in != NULL) {
 		xsltApplyAttributeSet(ctxt, ctxt->node, NULL, in);
 		xmlFree(in);
@@ -309,7 +309,8 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	ret->ns = NULL;
 
     if (cur->children != NULL) {
-	xmlChar *in = xmlNodeListGetString(ctxt->doc, cur->children, 1);
+	xmlChar *in = xmlNodeListGetString(ctxt->document->doc,
+		                           cur->children, 1);
 	xmlChar *out;
 
 	/* TODO: optimize if no template value was detected */

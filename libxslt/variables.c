@@ -379,7 +379,7 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
     xsltGenericDebug(xsltGenericDebugContext,
 	"Evaluating global variables\n");
 #endif
-    ctxt->node = (xmlNodePtr) ctxt->doc;
+    ctxt->node = (xmlNodePtr) ctxt->document->doc;
     style = ctxt->style;
     /* TODO: handle the stylesheet cascade */
     if (style != NULL) {

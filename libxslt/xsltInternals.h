@@ -159,6 +159,19 @@ struct _xsltStylesheet {
 
 
 /*
+ * Data structure associated to a document
+ */
+
+typedef struct _xsltDocument xsltDocument;
+typedef xsltDocument *xsltDocumentPtr;
+struct _xsltDocument {
+    struct _xsltDocument *next;	/* documents are kept in a chained list */
+    int main;			/* is this the main document */
+    xmlDocPtr doc;		/* the parsed document */
+    void *keys;			/* key tables storage */
+};
+
+/*
  * The in-memory structure corresponding to an XSLT Transformation
  */
 typedef enum {
@@ -182,7 +195,9 @@ struct _xsltTransformContext {
     const xmlChar *mode;		/* the current mode */
     const xmlChar *modeURI;		/* the current mode URI */
 
-    xmlDocPtr doc;			/* the current doc */
+    xsltDocumentPtr docList;		/* the document list */
+
+    xsltDocumentPtr document;		/* the current document */
     xmlNodePtr node;			/* the current node */
     xmlNodeSetPtr nodeList;		/* the current node list */
 
@@ -192,8 +207,6 @@ struct _xsltTransformContext {
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     void *variablesHash;		/* hash table or wherever variables
 				   	   informations are stored */
-    void *keys;				/* key tables storage */
-    xmlDocPtr extraDocs;		/* extra docs parsed by document() */
     xsltTransformState state;		/* the current state */
 };
 

@@ -25,9 +25,11 @@ xmlNodeSetPtr	xsltGetKey		(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *nameURI,
 					 const xmlChar *value);
-void		xsltInitCtxtKeys	(xsltTransformContextPtr ctxt);
+void		xsltInitCtxtKeys	(xsltTransformContextPtr ctxt,
+					 xsltDocumentPtr doc);
 void		xsltFreeKeys		(xsltStylesheetPtr style);
-void		xsltFreeCtxtKeys	(xsltTransformContextPtr ctxt);
+void		xsltFreeDocumentKeys	(xsltDocumentPtr doc);
+
 #ifdef __cplusplus
 }
 #endif

@@ -36,6 +36,7 @@
 #include "templates.h"
 #include "imports.h"
 #include "keys.h"
+#include "documents.h"
 
 #define DEBUG_PROCESS
 
@@ -60,6 +61,7 @@
 
 /**
  * xsltNewTransformContext:
+ * @style:  a parsed XSLT stylesheet
  * @doc:  the input document
  *
  * Create a new XSLT TransformContext
@@ -67,8 +69,9 @@
  * Returns the newly allocated xsltTransformContextPtr or NULL in case of error
  */
 xsltTransformContextPtr
-xsltNewTransformContext(xmlDocPtr doc) {
+xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     xsltTransformContextPtr cur;
+    xsltDocumentPtr docu;
 
     cur = (xsltTransformContextPtr) xmlMalloc(sizeof(xsltTransformContext));
     if (cur == NULL) {
@@ -77,8 +80,8 @@ xsltNewTransformContext(xmlDocPtr doc) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltTransformContext));
+    cur->style = style;
     xmlXPathInit();
-    cur->doc = doc;
     cur->xpathCtxt = xmlXPathNewContext(doc);
     if (cur->xpathCtxt == NULL) {
         xsltGenericError(xsltGenericErrorContext,
@@ -87,6 +90,15 @@ xsltNewTransformContext(xmlDocPtr doc) {
 	return(NULL);
     }
     XSLT_REGISTER_VARIABLE_LOOKUP(cur);
+    docu = xsltNewDocument(cur, doc);
+    if (docu == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNewTransformContext : xsltNewDocument failed\n");
+	xmlFree(cur);
+	return(NULL);
+    }
+    docu->main = 1;
+    cur->document = docu;
     return(cur);
 }
 
@@ -98,20 +110,12 @@ xsltNewTransformContext(xmlDocPtr doc) {
  */
 void
 xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
-    xmlDocPtr doc, next;
-
     if (ctxt == NULL)
 	return;
-    doc = ctxt->extraDocs;
-    while (doc != NULL) {
-	next = (xmlDocPtr) doc->next;
-	xmlFreeDoc(doc);
-	doc = next;
-    }
     if (ctxt->xpathCtxt != NULL)
 	xmlXPathFreeContext(ctxt->xpathCtxt);
     xsltFreeVariableHashes(ctxt);
-    xsltFreeCtxtKeys(ctxt);
+    xsltFreeDocuments(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -1983,11 +1987,9 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
 
     if ((style == NULL) || (doc == NULL))
 	return(NULL);
-    ctxt = xsltNewTransformContext(doc);
+    ctxt = xsltNewTransformContext(style, doc);
     if (ctxt == NULL)
 	return(NULL);
-    ctxt->style = style;
-    xsltInitCtxtKeys(ctxt);
     xsltEvalGlobalVariables(ctxt);
     if ((style->method != NULL) &&
 	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {
