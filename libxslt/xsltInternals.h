@@ -77,6 +77,7 @@ struct _xsltStylesheet {
  */
 xsltStylesheetPtr	xsltParseStylesheetFile	(const xmlChar* filename);
 void			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
+int			xsltIsBlank		(xmlChar *str);
 
 #ifdef __cplusplus
 }
