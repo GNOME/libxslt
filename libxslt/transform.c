@@ -125,11 +125,13 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     copy->doc = ctxt->output;
     if (copy != NULL) {
 	xmlAddChild(insert, copy);
-	/*
-	 * Add namespaces as they are needed
-	 */
-	if (node->nsDef != NULL)
-	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+	if (node->type == XML_ELEMENT_NODE) {
+	    /*
+	     * Add namespaces as they are needed
+	     */
+	    if (node->nsDef != NULL)
+		xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+	}
 	if (node->ns != NULL) {
 	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
 	}
@@ -362,21 +364,65 @@ void
 xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst) {
     xmlChar *prop;
-    xmlNodePtr copy;
+    xmlNodePtr copy, oldInsert;
 
-    if ((node->type != XML_DOCUMENT_NODE) &&
-	(node->type != XML_HTML_DOCUMENT_NODE)) {
-	copy = xsltCopyNode(ctxt, node, ctxt->insert);
-	if (node->type == XML_ELEMENT_NODE) {
-	    prop = xmlGetNsProp(inst, (const xmlChar *)"use-attribute-sets",
-				XSLT_NAMESPACE);
-	    if (prop != NULL) {
-		TODO /* xsl:copy use-attribute-sets */
+    oldInsert = ctxt->insert;
+    if (ctxt->insert != NULL) {
+	switch (node->type) {
+	    case XML_DOCUMENT_NODE:
+	    case XML_HTML_DOCUMENT_NODE:
+		break;
+	    case XML_ELEMENT_NODE:
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+				 "xsl:copy: node %s\n", node->name);
+#endif
+		copy = xsltCopyNode(ctxt, node, ctxt->insert);
+		ctxt->insert = copy;
+		prop = xmlGetNsProp(inst, (const xmlChar *)"use-attribute-sets",
+				    XSLT_NAMESPACE);
+		if (prop != NULL) {
+		    xsltApplyAttributeSet(ctxt, node, inst, prop);
+		    xmlFree(prop);
+		}
+		break;
+	    case XML_ATTRIBUTE_NODE: {
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+				 "xsl:copy: attribute %s\n", node->name);
+#endif
+		if (ctxt->insert->type == XML_ELEMENT_NODE) {
+		    xmlAttrPtr attr = (xmlAttrPtr) node, ret, cur;
+		    if (attr->ns != NULL) {
+			if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
+			    (xmlStrncasecmp(attr->ns->prefix,
+					    (xmlChar *)"xml", 3))) {
+			    ret = xmlCopyProp(ctxt->insert, attr);
+			    ret->ns = xsltGetNamespace(ctxt, node, attr->ns,
+						       ctxt->insert);
+			} 
+		    } else
+			ret = xmlCopyProp(ctxt->insert, attr);
+
+		    cur = ctxt->insert->properties;
+		    if (cur != NULL) {
+			while (cur->next != NULL)
+			    cur = cur->next;
+			cur->next = ret;
+			ret->prev = cur;
+		    }else
+			ctxt->insert->properties = ret;
+		}
+		break;
 	    }
+	    default:
+		break;
+
 	}
     }
 
     xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+    ctxt->insert = oldInsert;
 }
 
 /**
@@ -706,6 +752,30 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    "xsltDefaultProcessOneNode: text copy failed\n");
 	    }
 	    return;
+	case XML_ATTRIBUTE_NODE:
+	    if (ctxt->insert->type == XML_ELEMENT_NODE) {
+		    xmlAttrPtr attr = (xmlAttrPtr) node, ret, cur;
+		if (attr->ns != NULL) {
+		    if ((!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) &&
+			(xmlStrncasecmp(attr->ns->prefix,
+					(xmlChar *)"xml", 3))) {
+			ret = xmlCopyProp(ctxt->insert, attr);
+			ret->ns = xsltGetNamespace(ctxt, node, attr->ns,
+						   ctxt->insert);
+		    } 
+		} else
+		    ret = xmlCopyProp(ctxt->insert, attr);
+
+		cur = ctxt->insert->properties;
+		if (cur != NULL) {
+		    while (cur->next != NULL)
+			cur = cur->next;
+		    cur->next = ret;
+		    ret->prev = cur;
+		}else
+		    ctxt->insert->properties = ret;
+	    }
+	    return;
 	default:
 	    return;
     }
@@ -1023,6 +1093,7 @@ error:
     if (list != NULL)
 	xmlXPathFreeNodeSet(list);
 }
+
 
 /**
  * xsltApplyOneTemplate:
@@ -1415,14 +1486,34 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltProcessOneNode: no template found for %s\n", node->name);
 #endif
+	oldNode = ctxt->node;
+	ctxt->node = node;
 	xsltDefaultProcessOneNode(ctxt, node);
+	ctxt->node = oldNode;
 	return;
     }
 
-    oldNode = ctxt->node;
-    ctxt->node = node;
-    xsltApplyOneTemplate(ctxt, node, template->content);
-    ctxt->node = oldNode;
+    if (node->type == XML_ATTRIBUTE_NODE) {
+#ifdef DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltProcessOneNode: applying template for attribute %s\n",
+	                 node->name);
+#endif
+	xsltApplyOneTemplate(ctxt, node, template->content);
+    } else {
+#ifdef DEBUG_PROCESS
+	if (node->type == XML_DOCUMENT_NODE)
+	    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltProcessOneNode: applying template for /\n");
+	else 
+	    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltProcessOneNode: applying template for %s\n", node->name);
+#endif
+	oldNode = ctxt->node;
+	ctxt->node = node;
+	xsltApplyOneTemplate(ctxt, node, template->content);
+	ctxt->node = oldNode;
+    }
 }
 
 /**

@@ -696,6 +696,8 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	return;
     }
 error:
+    if (name != NULL)
+	xmlFree(name);
     if (lit != NULL)
 	xmlFree(lit);
     if (lit2 != NULL)
@@ -729,6 +731,12 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 
     SKIP_BLANKS;
     if ((token == NULL) && (CUR == '@')) {
+	NEXT;
+	if (CUR == '*') {
+	    NEXT;
+	    PUSH(XSLT_OP_ATTR, NULL, NULL);
+	    return;
+	}
 	token = xsltScanName(ctxt);
 	if (token == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
@@ -908,12 +916,14 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	}
     } else if (CUR == '*') {
 	xsltCompileRelativePathPattern(ctxt, NULL);
+    } else if (CUR == '@') {
+	xsltCompileRelativePathPattern(ctxt, NULL);
     } else {
 	xmlChar *name;
 	name = xsltScanName(ctxt);
 	if (name == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
-		    "xsltCompilePattern : Name expected\n");
+		    "xsltCompileLocationPathPattern : Name expected\n");
 	    ctxt->error = 1;
 	    return;
 	}

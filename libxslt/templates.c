@@ -266,17 +266,17 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 		xsltApplyAttributeSet(ctxt, ctxt->node, NULL, in);
 		xmlFree(in);
 	    }
-	    return(NULL);
-
 	}
+	return(NULL);
     }
-    /* TODO: check for replacement namespaces */
-
     ret = xmlNewDocProp(ctxt->output, cur->name, NULL);
     if (ret == NULL) return(NULL);
     ret->parent = target;
     
-    ret->ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
+    if (cur->ns != NULL)
+	ret->ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
+    else
+	ret->ns = NULL;
 
     if (cur->children != NULL) {
 	xmlChar *in = xmlNodeListGetString(ctxt->doc, cur->children, 1);
