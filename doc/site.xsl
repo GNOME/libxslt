@@ -1,9 +1,24 @@
 <?xml version="1.0"?>
+<!--
+  This stylesheet is imported by the other stylesheets (e.g. newapi.xsl
+  and api.xsl).  For flexibility, it depends upon a global param
+  which is normally defined in the importing stylesheet.  This is:
+   href_base	The most superior documentation directory (e.g. XML/)
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output method="xml" encoding="ISO-8859-1" indent="yes"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
 
+  <!-- dirname is used to 'choose' between libxslt and libexslt -->
+  <xsl:param name="dirname" select="''"/>
+  <!-- libname is the name of the library being documented -->
+  <xsl:param name="libname" select="libxslt"/>
+  <!-- logo_base points to the *.png logos used in headers -->
+  <xsl:param name="logo_base" select="''"/>
+
+  <!-- href_base gives the location of 'base documentation' files 
+       and is often changed by importing stylesheets -->
   <xsl:variable name="href_base" select="''"/>
   
 <!--
@@ -91,7 +106,18 @@
           </xsl:element>
         </li>
       </xsl:for-each>
-      <li><a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a></li>
+
+      <xsl:choose>
+        <xsl:when test="$dirname != ''">
+	  <li><a href="{$href_base}index.html" style="font-weight:bold">libxslt</a></li>
+	</xsl:when>
+	<xsl:otherwise>
+	  <li><a href="EXSLT/index.html" style="font-weight:bold">libexslt</a></li>
+          <li><a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a></li>
+	</xsl:otherwise>
+      </xsl:choose>
+
+      <li><a href="html/index.html" style="font-weight:bold">API Menu</a></li>
     </ul>
   </xsl:variable>
   <xsl:variable name="api">
@@ -105,8 +131,12 @@
   </xsl:variable>
   <xsl:variable name="related">
     <ul>
+      <xsl:choose>
+        <xsl:when test="$dirname = ''">
       <li><a href="{$href_base}tutorial/libxslttutorial.html">Tutorial</a></li>
       <li><a href="{$href_base}xsltproc.html">Man page for xsltproc</a></li>
+        </xsl:when>
+      </xsl:choose>
       <li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li>
       <li><a href="http://xmlsoft.org/">XML libxml</a></li>
       <li><a href="http://phd.cs.unibo.it/gdome2/">DOM gdome2</a></li>
@@ -202,13 +232,13 @@ A:link, A:visited, A:active { text-decoration: underline }
     <table border="0" width="100%" cellpadding="5" cellspacing="0" align="center">
     <tr>
     <td width="120">
-    <a href="http://swpat.ffii.org/"><img src="{$href_base}epatents.png" alt="Action against software patents"/></a>
+    <a href="http://swpat.ffii.org/"><img src="{$logo_base}epatents.png" alt="Action against software patents"/></a>
     </td>
     <td width="100">
-    <a href="http://www.gnome.org/"><img src="{$href_base}gnome2.png" alt="Gnome2 Logo"/></a>
-    <a href="http://www.redhat.com"><img src="{$href_base}redhat.gif" alt="Red Hat Logo"/></a>
+    <a href="http://www.gnome.org/"><img src="{$logo_base}gnome2.png" alt="Gnome2 Logo"/></a>
+    <a href="http://www.redhat.com"><img src="{$logo_base}redhat.gif" alt="Red Hat Logo"/></a>
     <div align="left">
-    <a href="http://xmlsoft.org/XSLT/"><img src="{$href_base}Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo"/></a>
+    <a href="http://xmlsoft.org/XSLT/"><img src="{$logo_base}Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo"/></a>
     </div>
     </td>
     <td>
@@ -278,7 +308,7 @@ A:link, A:visited, A:active { text-decoration: underline }
     <xsl:variable name="title">
       <xsl:value-of select="$header"/>
     </xsl:variable>
-    <xsl:document href="{$filename}" method="xml" encoding="ISO-8859-1"
+    <xsl:document href="{$dirname}{$filename}" method="xml" encoding="ISO-8859-1"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html>
@@ -344,7 +374,7 @@ A:link, A:visited, A:active { text-decoration: underline }
     <xsl:variable name="rest2" select="./h2[position()&gt;1]"/>
     <body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000">
       <xsl:call-template name="titlebox">
-        <xsl:with-param name="title" select="'libxslt'"/>
+        <xsl:with-param name="title" select="$libname"/>
       </xsl:call-template>
       <table border="0" cellpadding="4" cellspacing="0" width="100%" align="center">
         <tr>

@@ -1181,12 +1181,12 @@ informations are stored'/>
     </function>
     <function name='xsltDebugGetDefaultTrace' file='xsltutils'>
       <info></info>
-      <return type='xsltDebugTraceCodes' info='the current default debug tracing level mask'/>
+      <return type='xsltDebugTraceCodes' info=''/>
     </function>
     <function name='xsltDebugSetDefaultTrace' file='xsltutils'>
-      <info>Set the default debug tracing level mask</info>
+      <info></info>
       <return type='void'/>
-      <arg name='val' type='xsltDebugTraceCodes' info='an xsltDebugTraceCodes value'/>
+      <arg name='val' type='xsltDebugTraceCodes' info=''/>
     </function>
     <function name='xsltDecimalFormatGetByName' file='xsltInternals'>
       <info>Find decimal-format by name</info>

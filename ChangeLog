@@ -1,3 +1,9 @@
+Mon Dec 16 00:30:47 PST 2003 William Brack <wbrack@mmm.com.hk>
+
+	* doc/Makefile.am doc/site.xsl doc/api.xsl doc/newapi.xsl
+	  doc/xslt.html doc/apibuild.py doc/EXSLT doc/EXSLT/exslt.html:
+	  enhanced documentation to include exslt; rebuilt docs
+	  
 Mon Dec 15 20:33:52 MST 2003 John Fleck <jfleck@inkstain.net>
 
 	* libxslt/xsltutils.h

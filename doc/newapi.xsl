@@ -4,6 +4,12 @@
   xsltproc newapi.xsl libxslt-api.xml
 
   Daniel Veillard
+
+  Note: This stylesheet was adapted from the original (written for libxml2)
+	by William Brack, who is fully responsible for any mistakes or
+	problems.  The major enhancement is changing all references to the
+	library and to the output directory into references to global
+	parameters ('libdir' and 'html_dir' respectively).
 -->
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -23,9 +29,21 @@
   <!-- Build keys for all symbols -->
   <xsl:key name="symbols" match="/api/symbols/*" use="@name"/>
 
-  <!-- the target directory for the HTML output -->
-  <xsl:variable name="htmldir">html</xsl:variable>
-  <xsl:variable name="href_base">../</xsl:variable>
+  <!-- the name of the library being documented -->
+  <xsl:param name="libname">libxslt</xsl:param>
+
+  <!-- the directory for the 'home' files -->
+  <xsl:param name="dirname" select="'../'"/>
+
+  <!-- the location of logos for the pages -->
+  <xsl:param name="logo_base" select="'../'"/>
+
+  <xsl:variable name="href_base" select="'../'"/>
+
+  <xsl:variable name="html_dir" select="'html/'"/>
+  
+  <!-- these override the definition in site.xsl -->
+  <xsl:variable name="api_base" select="''"/>
 
   <!-- The table of content for the HTML API pages -->
   <xsl:variable name="menu_name">API Menu</xsl:variable>
@@ -37,9 +55,9 @@
     </form>
     <ul><!-- style="margin-left: -1em" -->
       <li><a style="font-weight:bold"
-             href="{$href_base}index.html">Main Menu</a></li>
+             href="../index.html">Main Menu</a></li>
       <li><a style="font-weight:bold" 
-             href="{$href_base}docs.html">Developer Menu</a></li>
+             href="../docs.html">Developer Menu</a></li>
       <!--   Coming soon .....
       <li><a style="font-weight:bold" 
              href="{$href_base}examples/index.html">Code Examples</a></li>
@@ -115,16 +133,16 @@
            cellpadding="2" cellspacing="2">
       <tr valign="middle">
         <xsl:if test="$previous">
-          <td><a accesskey="p" href="libxslt-{$previous/@name}.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></img></a></td>
-	  <th align="left"><a href="libxslt-{$previous/@name}.html"><xsl:value-of select="$previous/@name"/></a></th>
+          <td><a accesskey="p" href="{$libname}-{$previous/@name}.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></img></a></td>
+	  <th align="left"><a href="{$libname}-{$previous/@name}.html"><xsl:value-of select="$previous/@name"/></a></th>
 	</xsl:if>
         <td><a accesskey="u" href="index.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></img></a></td>
 	<th align="left"><a href="index.html">API documentation</a></th>
         <td><a accesskey="h" href="../index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></img></a></td>
-        <th align="center"><a href="../index.html">The XSLT C library for Gnome</a></th>
+        <th align="center"><a href="../index.html">Home</a></th>
         <xsl:if test="$next">
-	  <th align="right"><a href="libxslt-{$next/@name}.html"><xsl:value-of select="$next/@name"/></a></th>
-          <td><a accesskey="n" href="libxslt-{$next/@name}.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></img></a></td>
+	  <th align="right"><a href="{$libname}-{$next/@name}.html"><xsl:value-of select="$next/@name"/></a></th>
+          <td><a accesskey="n" href="{$libname}-{$next/@name}.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></img></a></td>
         </xsl:if>
       </tr>
     </table>
@@ -138,7 +156,7 @@
     <xsl:variable name="ref" select="key('symbols', $token)"/>
     <xsl:choose>
       <xsl:when test="$ref">
-        <a href="libxslt-{$ref/@file}.html#{$ref/@name}"><xsl:value-of select="$token"/></a>
+        <a href="{$libname}-{$ref/@file}.html#{$ref/@name}"><xsl:value-of select="$token"/></a>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$token"/>
@@ -578,7 +596,7 @@
   <xsl:template match="file">
     <xsl:variable name="name" select="@name"/>
     <xsl:variable name="title">Module <xsl:value-of select="$name"/> from <xsl:value-of select="/api/@name"/></xsl:variable>
-    <xsl:document href="{$htmldir}/libxslt-{$name}.html" method="xml" encoding="ISO-8859-1"
+    <xsl:document href="{$html_dir}/{$libname}-{$name}.html" method="xml" encoding="ISO-8859-1"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html>
@@ -683,14 +701,14 @@
   <xsl:template match="file" mode="toc">
     <xsl:variable name="name" select="@name"/>
     <li>
-      <a href="libxslt-{$name}.html"><xsl:value-of select="$name"/></a>
+      <a href="{$libname}-{$name}.html"><xsl:value-of select="$name"/></a>
       <xsl:text>: </xsl:text>
       <xsl:value-of select="summary"/>
     </li>
   </xsl:template>
 
   <xsl:template name="mainpage">
-    <xsl:param name="file" select="concat($htmldir, '/index.html')"/>
+    <xsl:param name="file" select="concat($html_dir, 'index.html')"/>
     <xsl:variable name="title">Reference Manual for <xsl:value-of select="/api/@name"/></xsl:variable>
     <xsl:document href="{$file}" method="xml" encoding="ISO-8859-1"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -749,13 +767,17 @@
   </xsl:template>
 
   <xsl:template match="/">
+    <xsl:message>Processing library <xsl:value-of select="$libname"
+      />, output directory is <xsl:value-of select="$html_dir"
+      /></xsl:message>
     <!-- Save the main index.html as well as a couple of copies -->
     <xsl:call-template name="mainpage"/>
     <xsl:call-template name="mainpage">
-      <xsl:with-param name="file" select="concat($htmldir, '/book1.html')"/>
+      <xsl:with-param name="file" select="concat($html_dir, '/book1.html')"/>
     </xsl:call-template>
     <xsl:call-template name="mainpage">
-      <xsl:with-param name="file" select="concat($htmldir, '/libxslt-lib.html')"/>
+      <xsl:with-param name="file" select="concat($html_dir, '/',
+	    $libname, '-lib.html')"/>
     </xsl:call-template>
     <!-- now build the file for each of the modules -->
     <xsl:apply-templates select="/api/files/file"/>

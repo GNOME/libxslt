@@ -203,7 +203,7 @@ dnl
 dnl Debug for DV (-Wunreachable-code)
 dnl
 if [[ "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ]] || \
-   [[ "${LOGNAME}" = "bill" -a "`pwd`" = "/home/bill/gnomecvs/libxslt" ]]
+   [[ "${LOGNAME}" = "bill" -a "`pwd`" = "/home/bill/gnomecvs/xsltest" ]]
    then
     if test "${with_mem_debug}" = "" ; then
 	with_mem_debug="yes"

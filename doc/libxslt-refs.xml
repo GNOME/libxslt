@@ -766,24 +766,24 @@
       <ref name='xsltStyleExtInitFunction'/>
     </type>
     <type name='xmlAttrPtr'>
-      <ref name='xsltAttrListTemplateProcess'/>
       <ref name='xsltAttrTemplateProcess'/>
+      <ref name='xsltAttrListTemplateProcess'/>
     </type>
     <type name='xmlChar *'>
       <ref name='xsltAttrTemplateValueProcess'/>
       <ref name='xsltEvalAttrValueTemplate'/>
       <ref name='xsltEvalTemplateString'/>
-      <ref name='xsltGetNsProp'/>
       <ref name='xsltAttrTemplateValueProcessNode'/>
       <ref name='xsltEvalXPathString'/>
       <ref name='xsltEvalXPathStringNs'/>
+      <ref name='xsltGetNsProp'/>
       <ref name='xsltEvalStaticAttrValueTemplate'/>
     </type>
     <type name='xmlDocPtr'>
       <ref name='xsltCreateRVT'/>
+      <ref name='xsltApplyStylesheet'/>
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltApplyStylesheetUser'/>
-      <ref name='xsltApplyStylesheet'/>
       <ref name='xsltGetProfileInformation'/>
     </type>
     <type name='xmlHashTablePtr'>
@@ -800,17 +800,17 @@
     </type>
     <type name='xmlNsPtr'>
       <ref name='xsltCopyNamespace'/>
-      <ref name='xsltGetSpecialNamespace'/>
       <ref name='xsltGetNamespace'/>
       <ref name='xsltCopyNamespaceList'/>
+      <ref name='xsltGetSpecialNamespace'/>
     </type>
     <type name='xmlXPathError'>
       <ref name='xsltFormatNumberConversion'/>
     </type>
     <type name='xmlXPathFunction'>
       <ref name='xsltExtFunctionLookup'/>
-      <ref name='xsltXPathFunctionLookup'/>
       <ref name='xsltExtModuleFunctionLookup'/>
+      <ref name='xsltXPathFunctionLookup'/>
     </type>
     <type name='xmlXPathObjectPtr'>
       <ref name='xsltXPathVariableLookup'/>
@@ -848,8 +848,8 @@
       <ref name='xsltGetSecurityPrefs'/>
     </type>
     <type name='xsltSecurityPrefsPtr'>
-      <ref name='xsltGetDefaultSecurityPrefs'/>
       <ref name='xsltNewSecurityPrefs'/>
+      <ref name='xsltGetDefaultSecurityPrefs'/>
     </type>
     <type name='xsltStackElemPtr'>
       <ref name='xsltParseStylesheetCallerParam'/>
@@ -2381,7 +2381,6 @@
           <ref name='xsltVariableLookup'/>
         </word>
         <word name='Set'>
-          <ref name='xsltDebugSetDefaultTrace'/>
           <ref name='xsltSetCtxtSecurityPrefs'/>
           <ref name='xsltSetDefaultSecurityPrefs'/>
           <ref name='xsltSetXIncludeDefault'/>
@@ -3184,7 +3183,6 @@
           <ref name='xslAddCall'/>
           <ref name='xsltComputeSortResult'/>
           <ref name='xsltDebug'/>
-          <ref name='xsltDebugGetDefaultTrace'/>
           <ref name='xsltDefaultSortFunction'/>
           <ref name='xsltDoSortFunction'/>
           <ref name='xsltDocumentElem'/>
@@ -3244,8 +3242,6 @@
         <word name='debug'>
           <ref name='_xsltTransformContext'/>
           <ref name='xsltDebug'/>
-          <ref name='xsltDebugGetDefaultTrace'/>
-          <ref name='xsltDebugSetDefaultTrace'/>
         </word>
         <word name='debugger'>
           <ref name='xsltSetDebuggerCallbacks'/>
@@ -3280,8 +3276,6 @@
         </word>
         <word name='default'>
           <ref name='XSLT_DEFAULT_VERSION'/>
-          <ref name='xsltDebugGetDefaultTrace'/>
-          <ref name='xsltDebugSetDefaultTrace'/>
           <ref name='xsltFormatNumberConversion'/>
           <ref name='xsltGetDefaultSecurityPrefs'/>
           <ref name='xsltGetNsProp'/>
@@ -4111,8 +4105,6 @@
         <word name='level'>
           <ref name='_xsltTransformContext'/>
           <ref name='xsltAddStackElemList'/>
-          <ref name='xsltDebugGetDefaultTrace'/>
-          <ref name='xsltDebugSetDefaultTrace'/>
         </word>
         <word name='library'>
           <ref name='xsltCleanupGlobals'/>
@@ -4219,8 +4211,6 @@
         </word>
         <word name='mask'>
           <ref name='_xsltTransformContext'/>
-          <ref name='xsltDebugGetDefaultTrace'/>
-          <ref name='xsltDebugSetDefaultTrace'/>
         </word>
         <word name='match'>
           <ref name='xsltAddKey'/>
@@ -5674,10 +5664,6 @@
         <word name='topmost'>
           <ref name='xslDropCall'/>
         </word>
-        <word name='tracing'>
-          <ref name='xsltDebugGetDefaultTrace'/>
-          <ref name='xsltDebugSetDefaultTrace'/>
-        </word>
         <word name='track'>
           <ref name='_xsltStylesheet'/>
         </word>
@@ -6099,9 +6085,6 @@
         <word name='xsltAddTemplate'>
           <ref name='xsltFreeTemplateHashes'/>
         </word>
-        <word name='xsltDebugTraceCodes'>
-          <ref name='xsltDebugSetDefaultTrace'/>
-        </word>
         <word name='xsltDecimalFormatPtr'>
           <ref name='xsltDecimalFormatGetByName'/>
         </word>
@@ -6193,6 +6176,7 @@
       <chunk name='chunk6' start='o' end='p'/>
       <chunk name='chunk7' start='q' end='s'/>
       <chunk name='chunk8' start='t' end='u'/>
+      <chunk name='chunk9' start='v' end='z'/>
     </chunks>
   </index>
 </apirefs>

@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<!--
-  this stylesheet builds the API*.html , it works based on the api
-  reference file defined in the first 'document' below below.
+<!-- this stylesheet builds the API*.html , it works based on libxml2-refs.xml
   -->
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -17,14 +15,20 @@
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
 
+  <xsl:param name="libname" select="'libxslt'"/>
+  <xsl:param name="dirname" select="''"/>
+  <xsl:param name="logo_base" select="'../'"/> 
+
+  <!-- href_base controls URI's in site.xsl as well as this stylesheet -->
   <xsl:variable name="href_base" select="''"/>
-  <xsl:variable name="apirefs" select="document('libxslt-refs.xml')"/>
+
+  <xsl:variable name="apirefs" select="document(concat($dirname, $libname, '-refs.xml'))"/>
   <xsl:variable name="module" select="$apirefs/apirefs/@name"/>
   <xsl:key name="refhref" match="reference" use="@name"/>
 
   <xsl:template match="ref" mode="anchor">
     <xsl:variable name="name" select="@name"/>
-    <xsl:for-each select="document('libxslt-refs.xml')">
+    <xsl:for-each select="document(concat($dirname, $libname, '-refs.xml'))">
 	<a href="{key('refhref', $name)/@href}"><xsl:value-of select="$name"/></a><br/>
     </xsl:for-each>
   </xsl:template>
@@ -390,6 +394,7 @@
   </xsl:template>
 
   <xsl:template match="/">
+    <xsl:message>Executing api.xsl</xsl:message>
     <xsl:apply-templates select="$apirefs/apirefs"/>
   </xsl:template>
 
