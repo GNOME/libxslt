@@ -1,3 +1,7 @@
+Thu Dec 20 14:54:27 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.pc.in configure.in: added pkg-config file from Rodrigo Moya
+
 Thu Dec 20 14:49:39 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: applied albert portability patch

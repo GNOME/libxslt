@@ -56,3 +56,5 @@ cleantar:
 rpm: cleantar dist
 	rpm -ta libxslt*.tar.gz
 
+pkgconfigdir=$(libdir)/pkgconfig
+pkgconfig_DATA = libxslt.pc
