@@ -15,9 +15,6 @@ unregisterExtModuleTopLevel()
 # functions from module extra
 registerAllExtras()
 
-# functions from module functions
-registerAllFunctions()
-
 # functions from module python
 cleanup()
 registerExtModuleFunction()
@@ -46,6 +43,28 @@ xslDropCall()
 # Set of classes of the module
 #
 
+
+
+Class xpathParserContext(libxml2.xpathParserContext)
+
+    # functions from module extra
+    functionNodeSet()
+
+    # functions from module functions
+    documentFunction()
+    elementAvailableFunction()
+    formatNumberFunction()
+    functionAvailableFunction()
+    generateIdFunction()
+    keyFunction()
+    systemPropertyFunction()
+    unparsedEntityURIFunction()
+
+
+Class xpathContext(libxml2.xpathContext)
+
+    # functions from module functions
+    registerAllFunctions()
 Class transformCtxt()
 
     # functions from module attributes
@@ -98,6 +117,7 @@ Class transformCtxt()
     # functions from module xsltutils
     message()
     printErrorContext()
+    saveProfiling()
 Class stylesheet()
 
     # functions from module attributes
@@ -152,4 +172,5 @@ Class stylesheet()
 
     # functions from module xsltutils
     saveResultToFd()
+    saveResultToFile()
     saveResultToFilename()

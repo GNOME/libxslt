@@ -114,7 +114,7 @@ static int errorno = 0;
  */
 
 #if defined(HAVE_GETTIMEOFDAY)
-static struct timeval begin, end;
+static struct timeval begin, endtime;
 /*
  * startTimer: call where you want to start timing
  */
@@ -132,10 +132,10 @@ static void endTimer(const char *format, ...)
     long msec;
     va_list ap;
 
-    gettimeofday(&end, NULL);
-    msec = end.tv_sec - begin.tv_sec;
+    gettimeofday(&endtime, NULL);
+    msec = endtime.tv_sec - begin.tv_sec;
     msec *= 1000;
-    msec += (end.tv_usec - begin.tv_usec) / 1000;
+    msec += (endtime.tv_usec - begin.tv_usec) / 1000;
 
 #ifndef HAVE_STDARG_H
 #error "endTimer required stdarg functions"
@@ -153,7 +153,7 @@ static void endTimer(const char *format, ...)
  * that.
  */
 
-clock_t begin, end;
+clock_t begin, endtime;
 static void startTimer(void)
 {
     begin=clock();
@@ -163,8 +163,8 @@ static void endTimer(char *format, ...)
     long msec;
     va_list ap;
 
-    end=clock();
-    msec = ((end-begin) * 1000) / CLOCKS_PER_SEC;
+    endtime=clock();
+    msec = ((endtime-begin) * 1000) / CLOCKS_PER_SEC;
 
 #ifndef HAVE_STDARG_H
 #error "endTimer required stdarg functions"
@@ -533,6 +533,11 @@ main(int argc, char **argv)
 	    continue;
 	}
         if ((!strcmp(argv[i], "-param")) || (!strcmp(argv[i], "--param"))) {
+            i += 2;
+            continue;
+        }
+        if ((!strcmp(argv[i], "-stringparam")) ||
+            (!strcmp(argv[i], "--stringparam"))) {
             i += 2;
             continue;
         }

@@ -258,15 +258,18 @@ py_types = {
     'htmlNode *':  ('O', "xmlNode", "xmlNodePtr", "xmlNodePtr", "libxml_"),
     'const htmlNode *':  ('O', "xmlNode", "xmlNodePtr", "xmlNodePtr", "libxml_"),
     'xmlXPathContextPtr':  ('O', "xmlXPathContext", "xmlXPathContextPtr", "xmlXPathContextPtr", "libxml_"),
-    'xmlXPathContext *':  ('O', "xpathContext", "xmlXPathContextPtr", "xmlXPathContextPtr", "libxml_"),
+    'xmlXPathParserContextPtr':  ('O', "xmlXPathParserContext", "xmlXPathParserContextPtr", "xmlXPathParserContextPtr", "libxml_"),
     'xmlParserCtxtPtr': ('O', "parserCtxt", "xmlParserCtxtPtr", "xmlParserCtxtPtr", "libxml_"),
     'xmlParserCtxt *': ('O', "parserCtxt", "xmlParserCtxtPtr", "xmlParserCtxtPtr", "libxml_"),
     'htmlParserCtxtPtr': ('O', "parserCtxt", "xmlParserCtxtPtr", "xmlParserCtxtPtr", "libxml_"),
     'htmlParserCtxt *': ('O', "parserCtxt", "xmlParserCtxtPtr", "xmlParserCtxtPtr", "libxml_"),
+    'xmlCatalogPtr': ('O', "catalog", "xmlCatalogPtr", "xmlCatalogPtr"),
+    'FILE *': ('O', "File", "FILEPtr", "FILE *", "libxml_"),
     'xsltTransformContextPtr':  ('O', "transformCtxt", "xsltTransformContextPtr", "xsltTransformContextPtr", "libxslt_"),
     'xsltTransformContext *':  ('O', "transformCtxt", "xsltTransformContextPtr", "xsltTransformContextPtr", "libxslt_"),
     'xsltStylesheetPtr':  ('O', "stylesheet", "xsltStylesheetPtr", "xsltStylesheetPtr", "libxslt_"),
     'xsltStylesheet *':  ('O', "stylesheet", "xsltStylesheetPtr", "xsltStylesheetPtr", "libxslt_"),
+    'xmlXPathContext *':  ('O', "xpathContext", "xmlXPathContextPtr", "xmlXPathContextPtr", "libxslt_"),
 }
 
 py_return_types = {
@@ -461,7 +464,10 @@ wrapper.close()
 
 print "Generated %d wrapper functions, %d failed, %d skipped\n" % (nb_wrap,
 							  failed, skipped);
-print "Missing type converters: %s" % (unknown_types.keys())
+print "Missing type converters:"
+for type in unknown_types.keys():
+    print "%s:%d " % (type, len(unknown_types[type])),
+print
 
 #######################################################################
 #
@@ -493,9 +499,9 @@ libxml2_classes_type = {
     "xmlElement *": ("._o", "xmlElement(_obj=%s)", "xmlElement"),
     "xmlAttributePtr": ("._o", "xmlAttribute(_obj=%s)", "xmlAttribute"),
     "xmlAttribute *": ("._o", "xmlAttribute(_obj=%s)", "xmlAttribute"),
-    "xmlXPathContextPtr": ("._o", "xpathContext(_obj=%s)", "xpathContext"),
     "xmlParserCtxtPtr": ("._o", "parserCtxt(_obj=%s)", "parserCtxt"),
     "xmlParserCtxt *": ("._o", "parserCtxt(_obj=%s)", "parserCtxt"),
+    "xmlCatalogPtr": ("._o", "catalog(_obj=%s)", "catalog"),
 }
 
 classes_type = {
@@ -503,15 +509,21 @@ classes_type = {
     "xsltTransformContext *": ("._o", "transformCtxt(_obj=%s)", "transformCtxt"),
     "xsltStylesheetPtr": ("._o", "stylesheet(_obj=%s)", "stylesheet"),
     "xsltStylesheet *": ("._o", "stylesheet(_obj=%s)", "stylesheet"),
+    "xmlXPathContextPtr": ("._o", "xpathContext(_obj=%s)", "xpathContext"),
+    "xmlXPathContext *": ("._o", "xpathContext(_obj=%s)", "xpathContext"),
+    "xmlXPathParserContextPtr": ("._o", "xpathParserContext(_obj=%s)", "xpathParserContext"),
+    "xmlXPathParserContext *": ("._o", "xpathParserContext(_obj=%s)", "xpathParserContext"),
 }
 
 converter_type = {
     "xmlXPathObjectPtr": "xpathObjectRet(%s)",
 }
 
-primary_classes = ["transformCtxt", "stylesheet"]
+primary_classes = ["xpathParserContext", "xpathContext", "transformCtxt", "stylesheet"]
 
 classes_ancestor = {
+    "xpathContext" : "libxml2.xpathContext",
+    "xpathParserContext" : "libxml2.xpathParserContext",
 }
 classes_destructors = {
     "stylesheet": "xsltFreeStylesheet",
@@ -737,7 +749,7 @@ if function_classes.has_key("None"):
 		classes.write("\n");
 	    elif libxml2_classes_type.has_key(ret[0]):
 		classes.write("    if ret == None: return None\n");
-		classes.write("    return ");
+		classes.write("    return libxml2.");
 		classes.write(libxml2_classes_type[ret[0]][1] % ("ret"));
 		classes.write("\n");
 	    else:
@@ -847,7 +859,7 @@ for classname in classes_list:
 		    classes.write("\n");
 	        elif libxml2_classes_type.has_key(ret[0]):
 		    classes.write("        if ret == None: return None\n");
-		    classes.write("        return ");
+		    classes.write("        return libxml2.");
 		    classes.write(libxml2_classes_type[ret[0]][1] % ("ret"));
 		    classes.write("\n");
 	        elif converter_type.has_key(ret[0]):

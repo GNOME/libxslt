@@ -261,7 +261,7 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
     xmlDocPtr doc;
     PyObject *pyobj_doc;
     PyObject *pyobj_params;
-    const char **params;
+    const char **params = NULL;
     int len = 0, i = 0, j;
     PyObject *name;
     PyObject *value;
@@ -305,20 +305,20 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
 	    Py_INCREF(Py_None);
 	    return(Py_None);
 	}
-    } else {
-	params = NULL;
     }
     style = (xsltStylesheetPtr) Pystylesheet_Get(pyobj_style);
     doc = (xmlDocPtr) PyxmlNode_Get(pyobj_doc);
 
     c_retval = xsltApplyStylesheet(style, doc, params);
     py_retval = libxml_xmlDocPtrWrap((xmlDocPtr) c_retval);
-    if (len > 0) {
-	for (i = 0;i < 2 * len;i++) {
-	    if (params[i] != NULL)
-		xmlFree((char *)params[i]);
+    if (params != NULL) {
+	if (len > 0) {
+	    for (i = 0;i < 2 * len;i++) {
+		if (params[i] != NULL)
+		    xmlFree((char *)params[i]);
+	    }
+	    xmlFree(params);
 	}
-	xmlFree(params);
     }
     return(py_retval);
 }
@@ -354,5 +354,14 @@ void init_libxslt(void) {
     PyObject *m;
     m = Py_InitModule("_libxslt", libxsltMethods);
     /* libxslt_xmlErrorInitialize(); */
+    /*
+     * Specific XSLT initializations
+     */
+    /* xmlInitParser(); */
+    xmlInitMemory();
+    /* LIBXML_TEST_VERSION */
+    xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
+    /* xmlDefaultSAXHandlerInit(); */
+    xmlDefaultSAXHandler.cdataBlock = NULL;
 }
 

@@ -1,6 +1,6 @@
 import _libxml
 import _libxslt
-from libxml2 import *
+import libxml2
 
 #
 # Everything below this point is automatically generated

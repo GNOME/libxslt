@@ -1,3 +1,14 @@
+Thu Feb  7 17:59:27 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: small fix
+	* Makefile.am: cleanup
+	* python/tests/Makefile.am: avoid a problem with $(TESTS)
+	* python/generator.py python/libxml_wrap.h python/libxsl.py
+	  python/libxslt.c python/libxsltclass.txt: augmented the
+	  wrappers
+	* python/tests/pyxsltproc.py: rewrote xsltproc on top of the
+	  libxslt-python API to get an estimate of what is missing
+
 Wed Feb  6 23:34:10 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxsl.py python/libxslt-python-api.xml python/libxslt.c

@@ -1,6 +1,6 @@
 EXAMPLE_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXML_VERSION)/examples
 
-TESTS=		\
+TESTSPY=	\
     basic.py	\
     extfunc.py
 
@@ -8,12 +8,15 @@ XMLS=		\
     test.xml	\
     test.xsl
 
-EXTRA_DIST = $(TESTS) $(XMLS)
+EXTRAS=		\
+    pyxsltproc.py
+
+EXTRA_DIST = $(TESTSPY) $(XMLS)
 
 if WITH_PYTHON
-tests: $(TESTS)
+tests: $(TESTSPY)
 	-@(PYTHONPATH=".." ; export PYTHONPATH; \
-	   for test in $(TESTS) ; do echo "-- $$test" ; $(PYTHON) $$test ; done)
+	   for test in $(TESTSPY) ; do echo "-- $$test" ; $(PYTHON) $$test ; done)
 else
 tests:
 endif
@@ -23,6 +26,6 @@ clean:
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(EXAMPLE_DIR)
-	-(for test in $(TESTS) $(XMLS); \
+	-(for test in $(TESTSPY) $(XMLS); \
 	  do @INSTALL@ -m 0644 $$test $(DESTDIR)$(EXAMPLE_DIR) ; done)
 

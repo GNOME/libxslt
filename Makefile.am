@@ -56,8 +56,9 @@ tests: dummy
 cleantar:
 	@(rm -f libxslt*.tar.gz)
 
-rpm: cleantar dist
-	rpm -ta libxslt*.tar.gz
+rpm: cleantar
+	@(unset CDPATH ; $(MAKE) dist && rpm -ta $(distdir).tar.gz)
+
 
 pkgconfigdir=$(libdir)/pkgconfig
 pkgconfig_DATA = libxslt.pc
