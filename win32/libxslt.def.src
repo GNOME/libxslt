@@ -1,346 +1,211 @@
-/* win32/libxslt.def.src
-   Pseudo-source used to create a .DEF file for proper dynamic linkage. 
-   
-   Assuming you use Microsoft's C compiler, you run a
-   
-       cl /EP libxslt.def.src > libxslt.def
-       
-   in order to get the right .DEF file. Basically, all you do is
-   preprocess this file using a C/C++ preprocessor and the right
-   .DEF file should come out. 
-   
-   Should you need a function which does not seem to be exported
-   from the libxslt.dll, its name is most certainly missing here.
-   Add the name of the offending function to this file and rebuild.
-
-   21.03.2002, Igor Zlatkovic (igor@zlatkovic.com)
-*/
-
 LIBRARY libxslt
 EXPORTS
-
-/* attributes.h
-   --------------------------------------------------------------------- */
-	xsltParseStylesheetAttributeSet
-	xsltFreeAttributeSetsHashes
-	xsltApplyAttributeSet
-	xsltResolveStylesheetAttributeSet
-
-
-/* documents.h
-   --------------------------------------------------------------------- */
- 	xsltNewDocument
- 	xsltLoadDocument
- 	xsltFindDocument
-	xsltFreeDocuments
- 	xsltLoadStyleDocument
- 	xsltNewStyleDocument
- 	xsltFreeStyleDocuments
-
-
-/* extensions.h
-   --------------------------------------------------------------------- */
-	xsltRegisterExtModule
-	xsltRegisterExtModuleFull
-	xsltUnregisterExtModule
-	xsltGetExtData
-	xsltStyleGetExtData
-	xsltShutdownCtxtExts
-	xsltShutdownExts
-	xsltXPathGetTransformContext
-
-	/* extension functions */
-	xsltRegisterExtModuleFunction
-	// xsltExtFunctionLookup
-	xsltExtModuleFunctionLookup
-	xsltUnregisterExtModuleFunction
-
-	/* extension elements */
-	xsltNewElemPreComp
-	xsltInitElemPreComp
-	xsltRegisterExtModuleElement
-	xsltExtElementLookup
-	xsltExtModuleElementLookup
-	xsltExtModuleElementPreComputeLookup
-	xsltUnregisterExtModuleElement
-
-	/* top-level elements */
-	xsltRegisterExtModuleTopLevel
-	xsltExtModuleTopLevelLookup
-	xsltUnregisterExtModuleTopLevel
-	
-	/* These 2 functions are deprecated for use within modules. */
-	xsltRegisterExtFunction
-	xsltRegisterExtElement
-	
-	/* Extension Prefix handling API.
-	   Those are used by the XSLT (pre)processor. */
-	xsltRegisterExtPrefix
-	xsltCheckExtPrefix
-	xsltInitCtxtExts
-	xsltFreeCtxtExts
-	xsltFreeExts
-	xsltPreComputeExtModuleElement
-
-	/* Test module http://xmlsoft.org/XSLT/ */
-	xsltRegisterTestModule
-	xsltDebugDumpExtensions
-
-
-/* extra.h
-   --------------------------------------------------------------------- */
-	xsltFunctionNodeSet
-	xsltDebug
-	xsltRegisterExtras
-	xsltRegisterAllExtras
-
-
-/* functions.h
-   --------------------------------------------------------------------- */
-	/* Interfaces for the functions implementations. */
- 	xsltDocumentFunction
- 	xsltKeyFunction
- 	xsltUnparsedEntityURIFunction
- 	xsltFormatNumberFunction
- 	xsltGenerateIdFunction
- 	xsltSystemPropertyFunction
- 	xsltElementAvailableFunction
- 	xsltFunctionAvailableFunction
- 	
-	/* And the registration */
-	xsltRegisterAllFunctions
-
-
-/* imports.h
-   --------------------------------------------------------------------- */
-	/* Module interfaces */
-	xsltParseStylesheetImport
-	xsltParseStylesheetInclude
-	xsltNextImport
-	xsltNeedElemSpaceHandling
-	xsltFindElemSpaceHandling
-	xsltFindTemplate
-
-
-/* keys.h
-   --------------------------------------------------------------------- */
-	xsltAddKey
-	xsltGetKey
-	xsltInitCtxtKeys
-	xsltFreeKeys
-	xsltFreeDocumentKeys
-
-
-/* namespaces.h
-   --------------------------------------------------------------------- */
-	xsltNamespaceAlias
-	xsltGetNamespace
-	xsltGetSpecialNamespace
-	xsltCopyNamespace
-	xsltCopyNamespaceList
-	xsltFreeNamespaceAliasHashes
-
-
-/* numberInternals.h
-   --------------------------------------------------------------------- */
-	/*** No functions exported from this file ***/
-
-
-/* pattern.h
-   --------------------------------------------------------------------- */
-	/* Pattern related interfaces. */
-	xsltCompilePattern
-	xsltFreeCompMatchList
-	xsltTestCompMatchList
-
-	/* Template related interfaces. */
-	xsltAddTemplate
-	xsltGetTemplate
-	xsltFreeTemplateHashes
-	xsltCleanupTemplates
-	#if 0
-		xsltMatchPattern
-	#endif
-
-
-/* preproc.h
-   --------------------------------------------------------------------- */
-	xsltDocumentComp
-	xsltStylePreCompute
-	xsltFreeStylePreComps
-
-
-/* security.h
-   --------------------------------------------------------------------- */
-   /* Module interfaces */
-   xsltNewSecurityPrefs
-   xsltFreeSecurityPrefs
-   xsltSetSecurityPrefs
-   xsltGetSecurityPrefs
-   xsltSetDefaultSecurityPrefs
-   xsltGetDefaultSecurityPrefs
-   xsltSetCtxtSecurityPrefs
-   xsltSecurityAllow
-   xsltSecurityForbid
-
-   /* internal interfaces */
-   xsltCheckWrite
-   xsltCheckRead
-
-
-/* templates.h
-   --------------------------------------------------------------------- */
-	xsltEvalXPathPredicate
-	xsltEvalTemplateString
-	xsltEvalAttrValueTemplate
-	xsltEvalStaticAttrValueTemplate
-
-	/* TODO: this is obviously broken ... the namespaces should be passed too ! */
-	xsltEvalXPathString
-	xsltTemplateProcess
-	xsltAttrListTemplateProcess
-	xsltAttrTemplateProcess
-	xsltAttrTemplateValueProcess
-	xsltAttrTemplateValueProcessNode
-
-
-/* transform.h
-   --------------------------------------------------------------------- */
-	/* XInclude default processing. */
-	xsltSetXIncludeDefault
-	xsltGetXIncludeDefault
-	
-	/* Export context to users. */
-	xsltNewTransformContext
-	xsltFreeTransformContext
-	xsltApplyStylesheetUser
-
-	/* Private Interfaces. */
-	xsltApplyStripSpaces
-	xsltExtElementLookup
-	xsltApplyStylesheet
-	xsltProfileStylesheet
-	xsltRunStylesheet
-	xsltRunStylesheetUser
-	xsltApplyOneTemplate
-	xsltDocumentElem
-	xsltSort
-	xsltCopy
-	xsltText
-	xsltElement
-	xsltComment
-	xsltAttribute
-	xsltProcessingInstruction
-	xsltCopyOf
-	xsltValueOf
-	xsltNumber
-	xsltApplyImports
-	xsltCallTemplate
-	xsltApplyTemplates
-	xsltChoose
-	xsltIf
-	xsltForEach
-	xsltRegisterAllElement
-
-	/* Hook for the debugger if activated. */
-	xslHandleDebugger
-
-	xsltCopyTree
-
-
-/* variables.h
-   --------------------------------------------------------------------- */
-	/* Interfaces for the variable module. */
-	xsltEvalGlobalVariables
-	xsltEvalUserParams
-	xsltQuoteUserParams
-	xsltEvalOneUserParam
-	xsltQuoteOneUserParam
-	xsltParseGlobalVariable
-	xsltParseGlobalParam
-	xsltParseStylesheetVariable
-	xsltParseStylesheetParam
-	xsltParseStylesheetCallerParam
-	xsltAddStackElemList
-	xsltFreeGlobalVariables
-	xsltVariableLookup
-	xsltXPathVariableLookup
-
-
-/* xslt.h
-   --------------------------------------------------------------------- */
-	xsltMaxDepth DATA
-	xsltEngineVersion DATA
-	xsltLibxsltVersion DATA
-	xsltLibxmlVersion DATA
-	xsltCleanupGlobals
-
-
-/* xsltInternals.h
-   --------------------------------------------------------------------- */
-	/* Functions associated to the internal types */
-	// xsltDecimalFormatGetByName
-	xsltNewStylesheet
-	xsltParseStylesheetFile
-	xsltFreeStylesheet
-	xsltIsBlank
-	xsltFreeStackElemList
-	xsltDecimalFormatGetByName
-	xsltParseStylesheetProcess
-	xsltParseStylesheetOutput
-	xsltParseStylesheetDoc
-	xsltParseStylesheetImportedDoc
-	xsltLoadStylesheetPI
-	xsltNumberFormat
-	xsltFormatNumberConversion
-	xsltParseTemplateContent
-	xsltAllocateExtra
-	xsltAllocateExtraCtxt
-
-
-/* xsltutils.h
-   --------------------------------------------------------------------- */
-	/* Our own version of namespaced atributes lookup. */
-	xsltGetNsProp
-
-	/* XSLT specific error and debug reporting functions. */
-	xsltGenericError DATA
-	xsltGenericErrorContext DATA
-	xsltGenericDebug DATA
-	xsltGenericDebugContext DATA
-	xsltPrintErrorContext
-	xsltMessage
-	xsltSetGenericErrorFunc
-	xsltSetGenericDebugFunc
-	xsltSetTransformErrorFunc
-	xsltTransformError
-
-	/* Sorting. */
-	xsltDocumentSortFunction
-	xsltComputeSortResult
-	xsltDoSortFunction
-	xsltSetSortFunc
-	xsltSetCtxtSortFunc
-
-	/* QNames handling. */
-	xsltGetQNameURI
-
-	/* Output, reuse libxml I/O buffers. */
-	xsltSaveResultTo
-	xsltSaveResultToFilename
-	xsltSaveResultToFile
-	xsltSaveResultToFd
-	xsltSaveResultToString
-
-	/* Profiling. */
-	xsltSaveProfiling
-	xsltGetProfileInformation
-	xsltTimestamp
-	xsltCalibrateAdjust
-
-	/* Hooks for the debugger. */
-	xslDebugStatus DATA
-	xsltSetDebuggerCallbacks
-	xslAddCall
-	xslDropCall
-
+xslDebugStatus DATA
+xsltEngineVersion DATA
+xsltExtMarker DATA
+xsltGenericDebug DATA
+xsltGenericDebugContext DATA
+xsltGenericError DATA
+xsltGenericErrorContext DATA
+xsltLibxmlVersion DATA
+xsltLibxsltVersion DATA
+xsltMaxDepth DATA
+xslAddCall
+xslDropCall
+xslHandleDebugger
+xsltAddKey
+xsltAddStackElemList
+xsltAddTemplate
+xsltAllocateExtra
+xsltAllocateExtraCtxt
+xsltApplyAttributeSet
+xsltApplyImports
+xsltApplyOneTemplate
+xsltApplyStripSpaces
+xsltApplyStylesheet
+xsltApplyStylesheetUser
+xsltApplyTemplates
+xsltAttrListTemplateProcess
+xsltAttrTemplateProcess
+xsltAttrTemplateValueProcess
+xsltAttrTemplateValueProcessNode
+xsltAttribute
+xsltCalibrateAdjust
+xsltCallTemplate
+xsltCheckExtPrefix
+xsltCheckRead
+xsltCheckWrite
+xsltChoose
+xsltCleanupGlobals
+xsltCleanupTemplates
+xsltComment
+xsltCompilePattern
+xsltComputeSortResult
+xsltCopy
+xsltCopyNamespace
+xsltCopyNamespaceList
+xsltCopyOf
+xsltCreateRVT
+xsltDebug
+xsltDebugDumpExtensions
+xsltDecimalFormatGetByName
+xsltDefaultSortFunction
+xsltDoSortFunction
+xsltDocumentComp
+xsltDocumentElem
+xsltDocumentFunction
+xsltDocumentSortFunction
+xsltElement
+xsltElementAvailableFunction
+xsltEvalAttrValueTemplate
+xsltEvalGlobalVariables
+xsltEvalOneUserParam
+xsltEvalStaticAttrValueTemplate
+xsltEvalTemplateString
+xsltEvalUserParams
+xsltEvalXPathPredicate
+xsltEvalXPathString
+xsltEvalXPathStringNs
+xsltExtElementLookup
+/*xsltExtFunctionLookup*/
+xsltExtModuleElementLookup
+xsltExtModuleElementPreComputeLookup
+xsltExtModuleFunctionLookup
+xsltExtModuleTopLevelLookup
+xsltFindDocument
+xsltFindElemSpaceHandling
+xsltFindTemplate
+xsltForEach
+xsltFormatNumberConversion
+xsltFormatNumberFunction
+xsltFreeAttributeSetsHashes
+xsltFreeCompMatchList
+xsltFreeCtxtExts
+xsltFreeDocumentKeys
+xsltFreeDocuments
+xsltFreeExts
+xsltFreeGlobalVariables
+xsltFreeKeys
+xsltFreeNamespaceAliasHashes
+xsltFreeRVTs
+xsltFreeSecurityPrefs
+xsltFreeStackElemList
+xsltFreeStyleDocuments
+xsltFreeStylePreComps
+xsltFreeStylesheet
+xsltFreeTemplateHashes
+xsltFreeTransformContext
+xsltFunctionAvailableFunction
+xsltFunctionNodeSet
+xsltGenerateIdFunction
+xsltGetDefaultSecurityPrefs
+xsltGetExtData
+xsltGetKey
+xsltGetNamespace
+xsltGetNsProp
+xsltGetProfileInformation
+xsltGetQNameURI
+xsltGetSecurityPrefs
+xsltGetSpecialNamespace
+xsltGetTemplate
+xsltGetUTF8Char
+xsltGetXIncludeDefault
+xsltIf
+xsltInitCtxtExts
+xsltInitCtxtKeys
+xsltInitElemPreComp
+xsltIsBlank
+xsltKeyFunction
+xsltLoadDocument
+xsltLoadStyleDocument
+xsltLoadStylesheetPI
+/*xsltMatchPattern*/
+xsltMessage
+xsltNamespaceAlias
+xsltNeedElemSpaceHandling
+xsltNewDocument
+xsltNewElemPreComp
+xsltNewSecurityPrefs
+xsltNewStyleDocument
+xsltNewStylesheet
+xsltNewTransformContext
+xsltNextImport
+xsltNumber
+xsltNumberFormat
+xsltParseGlobalParam
+xsltParseGlobalVariable
+xsltParseStylesheetAttributeSet
+xsltParseStylesheetCallerParam
+xsltParseStylesheetDoc
+xsltParseStylesheetFile
+xsltParseStylesheetImport
+xsltParseStylesheetImportedDoc
+xsltParseStylesheetInclude
+xsltParseStylesheetOutput
+xsltParseStylesheetParam
+xsltParseStylesheetProcess
+xsltParseStylesheetVariable
+xsltParseTemplateContent
+xsltPreComputeExtModuleElement
+xsltPrintErrorContext
+xsltProcessingInstruction
+xsltProfileStylesheet
+xsltQuoteOneUserParam
+xsltQuoteUserParams
+xsltRegisterAllElement
+xsltRegisterAllExtras
+xsltRegisterAllFunctions
+xsltRegisterExtElement
+xsltRegisterExtFunction
+xsltRegisterExtModule
+xsltRegisterExtModuleElement
+xsltRegisterExtModuleFull
+xsltRegisterExtModuleFunction
+xsltRegisterExtModuleTopLevel
+xsltRegisterExtPrefix
+xsltRegisterExtras
+xsltRegisterPersistRVT
+xsltRegisterTestModule
+xsltRegisterTmpRVT
+xsltResolveStylesheetAttributeSet
+xsltRunStylesheet
+xsltRunStylesheetUser
+xsltSaveProfiling
+xsltSaveResultTo
+xsltSaveResultToFd
+xsltSaveResultToFile
+xsltSaveResultToFilename
+xsltSaveResultToString
+xsltSecurityAllow
+xsltSecurityForbid
+xsltSetCtxtSecurityPrefs
+xsltSetCtxtSortFunc
+xsltSetDebuggerCallbacks
+xsltSetDefaultSecurityPrefs
+xsltSetGenericDebugFunc
+xsltSetGenericErrorFunc
+xsltSetSecurityPrefs
+xsltSetSortFunc
+xsltSetTransformErrorFunc
+xsltSetXIncludeDefault
+xsltShutdownCtxtExts
+xsltShutdownExts
+xsltSort
+xsltStyleGetExtData
+xsltStylePreCompute
+xsltSystemPropertyFunction
+xsltTemplateProcess
+xsltTestCompMatchList
+xsltText
+xsltTimestamp
+xsltTransformError
+xsltUnparsedEntityURIFunction
+xsltUnregisterExtModule
+xsltUnregisterExtModuleElement
+xsltUnregisterExtModuleFunction
+xsltUnregisterExtModuleTopLevel
+xsltValueOf
+xsltVariableLookup
+xsltXPathFunctionLookup
+xsltXPathGetTransformContext
+xsltXPathVariableLookup
