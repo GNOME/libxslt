@@ -1,3 +1,8 @@
+Wed Feb 18 11:40:23 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: trying to fix an extension regression pointed
+	  out on the list.
+
 Tue Feb 17 12:20:26 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: try to fix the problem with yelp
