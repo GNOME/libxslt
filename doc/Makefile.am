@@ -27,7 +27,8 @@ all : $(PAGES)
 web: $(PAGES) $(APIPAGES)
 
 $(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl
-	../xsltproc/xsltproc --html $(srcdir)/site.xsl $(srcdir)/xslt.html > index.html
+	-@(if [ -x $(bindir)/xsltproc ] ; then \
+	  $(bindir)/xsltproc --html $(srcdir)/site.xsl $(srcdir)/xslt.html > index.html ; fi )
 
 $(APIPAGES): libxslt-refs.xml site.xsl api.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \

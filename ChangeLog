@@ -1,3 +1,7 @@
+Sat Mar  9 11:53:39 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am: fixed a build problem in some environements
+
 2002-03-08  jacob berkman  <jacob@ximian.com>
 
 	* python/Makefile.am (libxsltmodule_la_SOURCES): remove $(srcdir)
