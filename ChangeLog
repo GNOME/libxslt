@@ -1,3 +1,8 @@
+Wed Jan 14 16:44:58 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxsl.py: applied shared lib loading patch for OS X from
+	  Gianni Ceccarelli
+
 Wed Jan 14 14:28:02 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/math.c, libexslt/common.c: fixed problem,

@@ -20,6 +20,9 @@ else:
             if osname == 'Linux' or osname == 'SunOS':
                 RTLD_GLOBAL = 0x00100
                 RTLD_NOW = 0x00002
+	    elif osname == 'Darwin':
+	        RTLD_GLOBAL = 0x8
+		RTLD_NOW = 0x2
             #
             # is there a better method ?
             #
