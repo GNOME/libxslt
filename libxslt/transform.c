@@ -442,6 +442,11 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
      */
     if (xslDebugStatus == XSLT_DEBUG_NONE)
         xmlXPathOrderDocElems(doc);
+    /*
+     * Must set parserOptions before calling xsltNewDocument
+     * (bug 164530)
+     */
+    cur->parserOptions = XSLT_PARSE_OPTIONS;
     docu = xsltNewDocument(cur, doc);
     if (docu == NULL) {
 	xsltTransformError(cur, NULL, (xmlNodePtr)doc,
@@ -454,12 +459,10 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     docu->main = 1;
     cur->document = docu;
     cur->inst = NULL;
-    cur->xinclude = xsltDoXIncludeDefault;
     cur->outputFile = NULL;
     cur->sec = xsltGetDefaultSecurityPrefs();
     cur->debugStatus = xslDebugStatus;
     cur->traceCode = (unsigned long*) &xsltDefaultTrace;
-    cur->parserOptions = XSLT_PARSE_OPTIONS;
 
     cur->dict = xmlDictCreateSub(style->dict);
 #ifdef WITH_XSLT_DEBUG

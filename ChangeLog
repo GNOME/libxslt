@@ -1,3 +1,8 @@
+Wed Jan 19 10:21:37 HKT 2005 William Brack <wbrack@mmm.com.hk>
+
+	* transform.c: fixed problem with parserOptions not being
+	  set before loading a new document (bug 164530)
+
 Mon Jan 17 16:50:02 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt/Makefile.am libxslt/xsltwin32config.h
