@@ -1,3 +1,8 @@
+Tue Aug 20 16:40:48 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* win32/Makefile.msvc: added the prefix location to the include
+	and lib search path.
+
 Mon Aug 19 15:03:11 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: found and fixed the small <xsl:choose>
