@@ -1,6 +1,7 @@
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
+#include <libxml/trionan.h>
 
 #include <libxslt/xsltconfig.h>
 #include <libxslt/xsltutils.h>
@@ -8,8 +9,6 @@
 #include <libxslt/extensions.h>
 
 #include "exslt.h"
-
-/* extern double xmlXPathNAN; */
 
 /**
  * exsltMathMin:
@@ -30,11 +29,11 @@ exsltMathMin (xmlNodeSetPtr ns) {
     if ((ns == NULL) || (ns->nodeNr == 0))
 	return(xmlXPathNAN);
     ret = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (ret == xmlXPathNAN)
+    if (trio_isnan(ret))
 	return(xmlXPathNAN);
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (cur == xmlXPathNAN)
+	if (trio_isnan(cur))
 	    return(xmlXPathNAN);
 	if (cur < ret)
 	    ret = cur;
@@ -91,11 +90,11 @@ exsltMathMax (xmlNodeSetPtr ns) {
     if ((ns == NULL) || (ns->nodeNr == 0))
 	return(xmlXPathNAN);
     ret = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (ret == xmlXPathNAN)
+    if (trio_isnan(ret))
 	return(xmlXPathNAN);
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (cur == xmlXPathNAN)
+	if (trio_isnan(cur))
 	    return(xmlXPathNAN);
 	if (cur > ret)
 	    ret = cur;
@@ -150,14 +149,14 @@ exsltMathHighest (xmlNodeSetPtr ns) {
 	return(ret);
 
     max = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (max == xmlXPathNAN)
+    if (trio_isnan(max))
 	return(ret);
     else
 	xmlXPathNodeSetAddUnique(ret, ns->nodeTab[0]);
 
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (cur == xmlXPathNAN) {
+	if (trio_isnan(cur)) {
 	    xmlXPathEmptyNodeSet(ret);
 	    return(ret);
 	}
@@ -221,14 +220,14 @@ exsltMathLowest (xmlNodeSetPtr ns) {
 	return(ret);
 
     min = xmlXPathCastNodeToNumber(ns->nodeTab[0]);
-    if (min == xmlXPathNAN)
+    if (trio_isnan(min))
 	return(ret);
     else
 	xmlXPathNodeSetAddUnique(ret, ns->nodeTab[0]);
 
     for (i = 1; i < ns->nodeNr; i++) {
 	cur = xmlXPathCastNodeToNumber(ns->nodeTab[i]);
-	if (cur == xmlXPathNAN) {
+	if (trio_isnan(cur)) {
 	    xmlXPathEmptyNodeSet(ret);
 	    return(ret);
 	}

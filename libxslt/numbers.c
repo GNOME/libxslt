@@ -16,17 +16,11 @@
 #include <limits.h>
 #include <float.h>
 
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h>
-#endif
-#ifdef HAVE_NAN_H
-#include <nan.h>
-#endif
-
 #include <libxml/xmlmemory.h>
 #include <libxml/parserInternals.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
+#include <libxml/trionan.h>
 #include "xsltutils.h"
 #include "pattern.h"
 #include "templates.h"
@@ -83,48 +77,6 @@ xsltIsDigitZero(xmlChar ch)
 	return FALSE;
     }
 }
-
-#ifndef isnan
-#ifndef HAVE_ISNAN
-
-/*
- * NaN (Not-A-Number)
- *
- * In C99 isnan() is defined as a macro, so its existence can be determined
- * with the preprocessor.
- *
- * ANSI/IEEE 754-1986 states that "Every NaN shall compare unordered
- * with everything, including itself." This means that "number == number"
- * will return true for all numbers, except NaN. Unfortunately, this
- * simple test does not work on all platforms supporting NaNs. Instead
- * we use an almost equivalent comparison.
- */
-static int
-isnan(volatile double number)
-{
-    return (!(number < 0.0 || number > 0.0) && (number != 0.0));
-}
-#endif /* !HAVE_ISNAN */
-#endif /* !isnan */
-
-#ifndef isinf
-#ifndef HAVE_ISINF
-/*
- * Infinity (positive and negative)
- *
- * C99 defines isinf() as a macro. See comment for isnan().
- */
-static int
-isinf(double number)
-{
-# ifdef HUGE_VAL
-    return ((number == HUGE_VAL) ? 1 : ((number == -HUGE_VAL) ? -1 : 0));
-# else
-    return FALSE;
-# endif
-}
-#endif /* !HAVE_ISINF */
-#endif /* !isinf */
 
 static void
 xsltNumberFormatDecimal(xmlBufferPtr buffer,
@@ -349,7 +301,7 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 	  is_last_default_token = (i >= numbers_max - 1);
 	}
 	
-	switch (isinf(number)) {
+	switch (trio_isinf(number)) {
 	case -1:
 	    xmlBufferCCat(buffer, "-Infinity");
 	    break;
@@ -357,7 +309,7 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 	    xmlBufferCCat(buffer, "Infinity");
 	    break;
 	default:
-	    if (isnan(number)) {
+	    if (trio_isnan(number)) {
 		xmlBufferCCat(buffer, "NaN");
 	    } else {
 
