@@ -506,6 +506,50 @@ xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNsPtr cur
 xsltStylesheetPtr style
 </FUNCTION>
 <STRUCT>
+<NAME>xsltNumberData</NAME>
+</STRUCT>
+<TYPEDEF>
+<NAME>xsltNumberDataPtr</NAME>
+typedef xsltNumberData *xsltNumberDataPtr;
+</TYPEDEF>
+<STRUCT>
+<NAME>xsltNumberData</NAME>
+struct xsltNumberData {
+    xmlChar *level;
+    xmlChar *count;
+    xmlChar *from;
+    xmlChar *value;
+    xmlChar *format;
+    int has_format;
+    int digitsPerGroup;
+    int groupingCharacter;
+    int groupingCharacterLen;
+    xmlDocPtr doc;
+    xmlNodePtr node;
+};
+</STRUCT>
+<STRUCT>
+<NAME>xsltFormatNumberInfo</NAME>
+</STRUCT>
+<TYPEDEF>
+<NAME>xsltFormatNumberInfoPtr</NAME>
+typedef xsltFormatNumberInfo *xsltFormatNumberInfoPtr;
+</TYPEDEF>
+<STRUCT>
+<NAME>xsltFormatNumberInfo</NAME>
+struct xsltFormatNumberInfo {
+    int	    integer_hash;	/* Number of '#' in integer part */
+    int	    integer_digits;	/* Number of '0' in integer part */
+    int	    frac_digits;	/* Number of '0' in fractional part */
+    int	    frac_hash;		/* Number of '#' in fractional part */
+    int	    group;		/* Number of chars per display 'group' */
+    int     multiplier;		/* Scaling for percent or permille */
+    char    add_decimal;	/* Flag for whether decimal point appears in pattern */
+    char    is_multiplier_set;	/* Flag to catch multiple occurences of percent/permille */
+    char    is_negative_pattern;/* Flag for processing -ve prefix/suffix */
+};
+</STRUCT>
+<STRUCT>
 <NAME>xsltCompMatch</NAME>
 </STRUCT>
 <TYPEDEF>
@@ -655,11 +699,6 @@ xsltStylesheetPtr style,xmlDocPtr doc,const char **params,const char *output,FIL
 <NAME>xsltApplyStripSpaces</NAME>
 <RETURNS>void 	</RETURNS>
 xsltTransformContextPtr ctxt,xmlNodePtr node
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltExtElementLookup</NAME>
-<RETURNS>xsltTransformFunction</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *URI
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltApplyStylesheet</NAME>
@@ -981,9 +1020,29 @@ xsltTransformContextPtr ctxt,xsltStylesheetPtr style,xmlNodePtr node,const char 
 xmlNodeSetPtr list
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltDoSortFunction</NAME>
+<NAME>xsltSetSortFunc</NAME>
+<RETURNS>void 	</RETURNS>
+xsltSortFunc handler
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetCtxtSortFunc</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xsltSortFunc handler
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDefaultSortFunction</NAME>
 <RETURNS>void 	</RETURNS>
 xsltTransformContextPtr ctxt,xmlNodePtr *sorts,int nbsorts
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDoSortFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr * sorts,int nbsorts
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltComputeSortResult</NAME>
+<RETURNS>xmlXPathObjectPtr  *</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr sort
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltGetQNameURI</NAME>
@@ -1202,7 +1261,7 @@ xsltSecurityPrefsPtr sec,xsltTransformContextPtr ctxt,const xmlChar *URL
 </FUNCTION>
 <MACRO>
 <NAME>XSLT_MAX_SORT</NAME>
-#define XSLT_MAX_SORT 5
+#define XSLT_MAX_SORT 15
 </MACRO>
 <MACRO>
 <NAME>XSLT_PAT_NO_PRIORITY</NAME>
@@ -1329,6 +1388,12 @@ xsltTransformContextPtr ctxt,
 				       xmlNodePtr inst,
 			               xsltElemPreCompPtr comp
 </USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>xsltSortFunc</NAME>
+<RETURNS>void </RETURNS>
+xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
+			      int nbsorts
+</USER_FUNCTION>
 <ENUM>
 <NAME>xsltStyleType</NAME>
 typedef enum {
@@ -1398,6 +1463,10 @@ struct xsltStylePreComp {
     xmlChar *order;             /* sort */
     int      has_order;		/* sort */
     int      descending;	/* sort */
+    xmlChar *lang;		/* sort */
+    int      has_lang;		/* sort */
+    xmlChar *case_order;	/* sort */
+    int      lower_first;	/* sort */
 
     xmlChar *use;		/* copy, element */
     int      has_use;		/* copy, element */
@@ -1642,6 +1711,8 @@ struct xsltTransformContext {
 
     xmlGenericErrorFunc  error;		/* a specific error handler */
     void              * errctx;		/* context for the error handler */
+
+    xsltSortFunc      sortfunc;		/* a ctxt specific sort routine */
 };
 </STRUCT>
 <MACRO>

@@ -58,10 +58,10 @@
   </bookinfo>
 
   <chapter id="libxslt-notes">
-     <title>Libxml Programming Notes</title>
+     <title>Libxslt Programming Notes</title>
 
-     <para>Libxml is an XSLT toolkit library, it allows to transform
-     XML documents. It uses the XML parser, tree and XPath functionnalities
+     <para>Libxslt is an XSLT toolkit library, which allows you to transform
+     XML documents. It uses the XML parser, tree and XPath functionalities
      of libxml2</para>
   </chapter>
   <chapter id="libxslt-lib">

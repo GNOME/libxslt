@@ -14,7 +14,10 @@ TITLE="Libxslt Library Reference"
 HREF="libxslt-lib.html"><LINK
 REL="PREVIOUS"
 TITLE="keys"
-HREF="libxslt-keys.html"></HEAD
+HREF="libxslt-keys.html"><LINK
+REL="NEXT"
+TITLE="numbersInternals"
+HREF="libxslt-numbersinternals.html"></HEAD
 ><BODY
 CLASS="REFENTRY"
 BGCOLOR="#FFFFFF"
@@ -99,7 +102,16 @@ SIZE="3"
 WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
->&nbsp;</TD
+><A
+HREF="libxslt-numbersinternals.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Next Page &#62;&#62;&#62;</B
+></FONT
+></A
+></TD
 ></TR
 ></TABLE
 ></DIV
@@ -111,7 +123,7 @@ NAME="LIBXSLT-XSLTINTERNALS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN5245"
+NAME="AEN5306"
 ></A
 ><H2
 >Name</H2
@@ -119,7 +131,7 @@ NAME="AEN5245"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN5248"
+NAME="AEN5309"
 ></A
 ><H2
 >Synopsis</H2
@@ -221,6 +233,18 @@ HREF="XMLNODEPTR"
 HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > comp);
+void        (<A
+HREF="libxslt-xsltinternals.html#XSLTSORTFUNC"
+>*xsltSortFunc</A
+>)                 (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> *sorts,
+                                             int nbsorts);
 enum        <A
 HREF="libxslt-xsltinternals.html#XSLTSTYLETYPE"
 >xsltStyleType</A
@@ -382,9 +406,9 @@ HREF="libxslt-xsltinternals.html#XSLTNUMBERFORMAT"
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
-                                             <GTKDOCLINK
-HREF="XSLTNUMBERDATAPTR"
->xsltNumberDataPtr</GTKDOCLINK
+                                             <A
+HREF="libxslt-numbersinternals.html#XSLTNUMBERDATAPTR"
+>xsltNumberDataPtr</A
 > data,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
@@ -444,7 +468,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN5332"
+NAME="AEN5396"
 ></A
 ><H2
 >Description</H2
@@ -454,14 +478,14 @@ NAME="AEN5332"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN5335"
+NAME="AEN5399"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5337"
+NAME="AEN5401"
 ></A
 ><H3
 ><A
@@ -477,7 +501,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->#define XSLT_MAX_SORT 5</PRE
+>#define XSLT_MAX_SORT 15</PRE
 ></TD
 ></TR
 ></TABLE
@@ -489,7 +513,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5343"
+NAME="AEN5407"
 ></A
 ><H3
 ><A
@@ -517,7 +541,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5349"
+NAME="AEN5413"
 ></A
 ><H3
 ><A
@@ -549,7 +573,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5355"
+NAME="AEN5419"
 ></A
 ><H3
 ><A
@@ -575,7 +599,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5360"
+NAME="AEN5424"
 ></A
 ><H3
 ><A
@@ -596,11 +620,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Macro used to access extra information stored in the context</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5365"
+NAME="AEN5430"
 ></A
 ><P
 ></P
@@ -627,7 +653,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -644,7 +670,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the index</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -655,7 +681,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5378"
+NAME="AEN5443"
 ></A
 ><H3
 ><A
@@ -676,11 +702,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Macro used to free extra information stored in the context</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5383"
+NAME="AEN5449"
 ></A
 ><P
 ></P
@@ -707,7 +735,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -724,7 +752,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the index</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -735,7 +763,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5396"
+NAME="AEN5462"
 ></A
 ><H3
 ><A
@@ -756,11 +784,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Macro used to define extra information stored in the context</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5401"
+NAME="AEN5468"
 ></A
 ><P
 ></P
@@ -787,7 +817,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -804,7 +834,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the index</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -815,7 +845,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5414"
+NAME="AEN5481"
 ></A
 ><H3
 ><A
@@ -861,7 +891,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5420"
+NAME="AEN5487"
 ></A
 ><H3
 ><A
@@ -887,7 +917,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5425"
+NAME="AEN5492"
 ></A
 ><H3
 ><A
@@ -931,7 +961,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5431"
+NAME="AEN5498"
 ></A
 ><H3
 ><A
@@ -957,7 +987,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5436"
+NAME="AEN5503"
 ></A
 ><H3
 ><A
@@ -990,7 +1020,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5442"
+NAME="AEN5509"
 ></A
 ><H3
 ><A
@@ -1016,7 +1046,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5447"
+NAME="AEN5514"
 ></A
 ><H3
 ><A
@@ -1098,6 +1128,8 @@ CLASS="PROGRAMLISTING"
 
     xmlGenericErrorFunc  error;		/* a specific error handler */
     void              * errctx;		/* context for the error handler */
+
+    xsltSortFunc      sortfunc;		/* a ctxt specific sort routine */
 };</PRE
 ></TD
 ></TR
@@ -1108,7 +1140,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5452"
+NAME="AEN5519"
 ></A
 ><H3
 ><A
@@ -1134,7 +1166,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5457"
+NAME="AEN5524"
 ></A
 ><H3
 ><A
@@ -1171,7 +1203,7 @@ designed to be extended by extension implementors.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5463"
+NAME="AEN5530"
 ></A
 ><H3
 ><A
@@ -1197,7 +1229,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5468"
+NAME="AEN5535"
 ></A
 ><H3
 ><A
@@ -1240,7 +1272,7 @@ stylesheet language like xsl:if or xsl:apply-templates.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5478"
+NAME="AEN5545"
 ></A
 ><P
 ></P
@@ -1329,7 +1361,114 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5499"
+NAME="AEN5566"
+></A
+><H3
+><A
+NAME="XSLTSORTFUNC"
+></A
+>xsltSortFunc ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        (*xsltSortFunc)                 (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> *sorts,
+                                             int nbsorts);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Signature of the function to use during sorting</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN5574"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>    a transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>sorts</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>   the node-set to sort</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>nbsorts</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> the number of sorts</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN5591"
 ></A
 ><H3
 ><A
@@ -1378,7 +1517,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5504"
+NAME="AEN5596"
 ></A
 ><H3
 ><A
@@ -1411,7 +1550,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5512"
+NAME="AEN5604"
 ></A
 ><P
 ></P
@@ -1452,7 +1591,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5522"
+NAME="AEN5614"
 ></A
 ><H3
 ><A
@@ -1484,6 +1623,10 @@ CLASS="PROGRAMLISTING"
     xmlChar *order;             /* sort */
     int      has_order;		/* sort */
     int      descending;	/* sort */
+    xmlChar *lang;		/* sort */
+    int      has_lang;		/* sort */
+    xmlChar *case_order;	/* sort */
+    int      lower_first;	/* sort */
 
     xmlChar *use;		/* copy, element */
     int      has_use;		/* copy, element */
@@ -1526,7 +1669,7 @@ precomputed data.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5528"
+NAME="AEN5620"
 ></A
 ><H3
 ><A
@@ -1552,7 +1695,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5533"
+NAME="AEN5625"
 ></A
 ><H3
 ><A
@@ -1587,7 +1730,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5538"
+NAME="AEN5630"
 ></A
 ><H3
 ><A
@@ -1613,7 +1756,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5543"
+NAME="AEN5635"
 ></A
 ><H3
 ><A
@@ -1737,7 +1880,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5548"
+NAME="AEN5640"
 ></A
 ><H3
 ><A
@@ -1763,7 +1906,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5553"
+NAME="AEN5645"
 ></A
 ><H3
 ><A
@@ -1793,7 +1936,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5558"
+NAME="AEN5650"
 ></A
 ><H3
 ><A
@@ -1823,7 +1966,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5563"
+NAME="AEN5655"
 ></A
 ><H3
 ><A
@@ -1852,7 +1995,7 @@ Will return from the function.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5569"
+NAME="AEN5661"
 ></A
 ><H3
 ><A
@@ -1881,7 +2024,7 @@ Will goto the error: label.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5575"
+NAME="AEN5667"
 ></A
 ><H3
 ><A
@@ -1910,7 +2053,7 @@ Will return from the function with a 0 value.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5581"
+NAME="AEN5673"
 ></A
 ><H3
 ><A
@@ -1940,7 +2083,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5588"
+NAME="AEN5680"
 ></A
 ><P
 ></P
@@ -1979,7 +2122,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5597"
+NAME="AEN5689"
 ></A
 ><H3
 ><A
@@ -2012,7 +2155,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5605"
+NAME="AEN5697"
 ></A
 ><P
 ></P
@@ -2068,7 +2211,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5618"
+NAME="AEN5710"
 ></A
 ><H3
 ><A
@@ -2103,7 +2246,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5626"
+NAME="AEN5718"
 ></A
 ><P
 ></P
@@ -2141,7 +2284,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5635"
+NAME="AEN5727"
 ></A
 ><H3
 ><A
@@ -2171,7 +2314,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5642"
+NAME="AEN5734"
 ></A
 ><P
 ></P
@@ -2227,7 +2370,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5655"
+NAME="AEN5747"
 ></A
 ><H3
 ><A
@@ -2262,7 +2405,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5663"
+NAME="AEN5755"
 ></A
 ><P
 ></P
@@ -2300,7 +2443,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5672"
+NAME="AEN5764"
 ></A
 ><H3
 ><A
@@ -2338,7 +2481,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5681"
+NAME="AEN5773"
 ></A
 ><P
 ></P
@@ -2400,7 +2543,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the xsltDecimalFormatPtr</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2411,7 +2554,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5698"
+NAME="AEN5790"
 ></A
 ><H3
 ><A
@@ -2449,7 +2592,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5707"
+NAME="AEN5799"
 ></A
 ><P
 ></P
@@ -2523,7 +2666,7 @@ went right, NULL if something went amiss.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5724"
+NAME="AEN5816"
 ></A
 ><H3
 ><A
@@ -2558,7 +2701,7 @@ information related to the stylesheet output</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5732"
+NAME="AEN5824"
 ></A
 ><P
 ></P
@@ -2613,7 +2756,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5745"
+NAME="AEN5837"
 ></A
 ><H3
 ><A
@@ -2646,7 +2789,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5753"
+NAME="AEN5845"
 ></A
 ><P
 ></P
@@ -2702,7 +2845,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5766"
+NAME="AEN5858"
 ></A
 ><H3
 ><A
@@ -2746,7 +2889,7 @@ transformation is done.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5775"
+NAME="AEN5867"
 ></A
 ><P
 ></P
@@ -2802,7 +2945,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5788"
+NAME="AEN5880"
 ></A
 ><H3
 ><A
@@ -2822,9 +2965,9 @@ CLASS="PROGRAMLISTING"
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
 > ctxt,
-                                             <GTKDOCLINK
-HREF="XSLTNUMBERDATAPTR"
->xsltNumberDataPtr</GTKDOCLINK
+                                             <A
+HREF="libxslt-numbersinternals.html#XSLTNUMBERDATAPTR"
+>xsltNumberDataPtr</A
 > data,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
@@ -2840,7 +2983,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5797"
+NAME="AEN5889"
 ></A
 ><P
 ></P
@@ -2912,7 +3055,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5814"
+NAME="AEN5906"
 ></A
 ><H3
 ><A
@@ -2991,7 +3134,7 @@ HREF="NUMBER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5832"
+NAME="AEN5924"
 ></A
 ><P
 ></P
@@ -3087,7 +3230,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>a possible XPath error</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -3098,7 +3241,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5857"
+NAME="AEN5949"
 ></A
 ><H3
 ><A
@@ -3134,7 +3277,7 @@ and process xslt:text</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5865"
+NAME="AEN5957"
 ></A
 ><P
 ></P
@@ -3189,7 +3332,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5878"
+NAME="AEN5970"
 ></A
 ><H3
 ><A
@@ -3220,7 +3363,7 @@ the stylesheet and return its number</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5885"
+NAME="AEN5977"
 ></A
 ><P
 ></P
@@ -3276,7 +3419,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5898"
+NAME="AEN5990"
 ></A
 ><H3
 ><A
@@ -3308,7 +3451,7 @@ This make sure there is a slot ready in the transformation context</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5905"
+NAME="AEN5997"
 ></A
 ><P
 ></P
@@ -3430,7 +3573,16 @@ SIZE="3"
 WIDTH="25%"
 BGCOLOR="#C00000"
 ALIGN="right"
->&nbsp;</TD
+><A
+HREF="libxslt-numbersinternals.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Next Page &#62;&#62;&#62;</B
+></FONT
+></A
+></TD
 ></TR
 ><TR
 ><TD
@@ -3446,7 +3598,13 @@ SIZE="3"
 ><TD
 COLSPAN="2"
 ALIGN="right"
->&nbsp;</TD
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>numbersInternals</B
+></FONT
+></TD
 ></TR
 ></TABLE
 ></DIV

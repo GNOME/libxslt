@@ -138,6 +138,10 @@ xsltFreeNamespaceAliasHashes
 
 <SECTION>
 <FILE>numbersInternals</FILE>
+xsltNumberData
+xsltNumberDataPtr
+xsltFormatNumberInfo
+xsltFormatNumberInfoPtr
 </SECTION>
 
 <SECTION>
@@ -185,7 +189,6 @@ xsltNewTransformContext
 xsltFreeTransformContext
 xsltApplyStylesheetUser
 xsltApplyStripSpaces
-xsltExtElementLookup
 xsltApplyStylesheet
 xsltProfileStylesheet
 xsltRunStylesheet
@@ -257,7 +260,11 @@ xsltSetGenericDebugFunc
 xsltSetTransformErrorFunc
 xsltTransformError
 xsltDocumentSortFunction
+xsltSetSortFunc
+xsltSetCtxtSortFunc
+xsltDefaultSortFunction
 xsltDoSortFunction
+xsltComputeSortResult
 xsltGetQNameURI
 xsltSaveResultTo
 xsltSaveResultToFilename
@@ -329,6 +336,7 @@ xsltTransformContextPtr
 xsltElemPreComp
 xsltElemPreCompPtr
 xsltTransformFunction
+xsltSortFunc
 xsltStyleType
 xsltElemPreCompDeallocator
 xsltStylePreComp
