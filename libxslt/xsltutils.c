@@ -12,6 +12,15 @@
 #include "libxslt.h"
 
 #include <stdio.h>
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
 #include <stdarg.h>
 
 #include <libxml/xmlmemory.h>
@@ -23,6 +32,16 @@
 #include "templates.h"
 #include "xsltInternals.h"
 #include "imports.h"
+
+/* gettimeofday on Windows ??? */
+#ifdef WIN32
+#ifdef _MSC_VER
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib")
+#define gettimeofday(p1,p2)
+#define HAVE_GETTIMEOFDAY
+#endif /* _MS_VER */
+#endif /* WIN32 */
 
 /************************************************************************
  * 									*
@@ -941,9 +960,62 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
 
 /************************************************************************
  * 									*
- * 		Generating proviling output				*
+ * 		Generating profiling informations			*
  * 									*
  ************************************************************************/
+
+/**
+ * xsltCalibrateTimestamps:
+ *
+ * Used for to calibrate the xsltTimestamp() function
+ * Should work if launched at startup and we don't loose our quantum :-)
+ *
+ * Returns the number of milliseconds used by xsltTimestamp()
+ */
+static long
+xsltCalibrateTimestamps(void) {
+    register int i;
+
+    for (i = 0;i < 999;i++)
+	xsltTimestamp();
+    return(xsltTimestamp() / 1000);
+}
+
+/**
+ * xsltTimestamp:
+ *
+ * Used for gathering profiling data
+ *
+ * Returns the number of milliseconds since the beginning of the
+ * profiling
+ */
+long
+xsltTimestamp(void) {
+#ifdef HAVE_GETTIMEOFDAY
+    static long calibration = -1;
+    static struct timeval startup;
+    struct timeval cur;
+    long msec;
+
+    if (calibration == -1) {
+	gettimeofday(&startup, NULL);
+	calibration = 0;
+	calibration = xsltCalibrateTimestamps();
+	gettimeofday(&startup, NULL);
+	return(0);
+    }
+
+    gettimeofday(&cur, NULL);
+    msec = cur.tv_sec - startup.tv_sec;
+    msec *= 10000;
+    msec += (cur.tv_usec - startup.tv_usec) / 100;
+    
+    msec -= calibration;
+    return((unsigned long) msec);
+#else
+    return(0);
+#endif
+}
 
 #define MAX_TEMPLATES 10000
 
@@ -959,6 +1031,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
     int nb, i,j;
     int max;
     int total;
+    long totalt;
     xsltTemplatePtr *templates;
     xsltStylesheetPtr style;
     xsltTemplatePtr template;
@@ -981,7 +1054,8 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 	    if (nb >= max)
 		break;
 
-	    templates[nb++] = template;
+	    if (template->nbCalls > 0)
+		templates[nb++] = template;
 	    template = template->next;
 	}
 
@@ -990,7 +1064,9 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 
     for (i = 0;i < nb -1;i++) {
 	for (j = i + 1; j < nb; j++) {
-	    if (templates[i]->nbCalls <= templates[j]->nbCalls) {
+	    if ((templates[i]->time <= templates[j]->time) ||
+		((templates[i]->time == templates[j]->time) &&
+	         (templates[i]->nbCalls <= templates[j]->nbCalls))) {
 		template = templates[j];
 		templates[j] = templates[i];
 		templates[i] = template;
@@ -998,9 +1074,10 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 	}
     }
 
-    fprintf(output, "%6s%20s%20s%10s NbCalls\n\n",
+    fprintf(output, "%6s%20s%20s%10s NbCalls Time 100us\n\n",
 	    "number", "match", "name", "mode");
     total = 0;
+    totalt = 0;
     for (i = 0;i < nb;i++) {
 	fprintf(output, "%5d ", i);
 	if (templates[i]->match != NULL) {
@@ -1027,10 +1104,12 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 	} else {
 	    fprintf(output, "%10s", "");
 	}
-	fprintf(output, " %6d\n", templates[i]->nbCalls);
+	fprintf(output, " %6d", templates[i]->nbCalls);
+	fprintf(output, " %6ld\n", templates[i]->time);
 	total += templates[i]->nbCalls;
+	totalt += templates[i]->time;
     }
-    fprintf(output, "\n%30s%26s %6d\n", "Total", "", total);
+    fprintf(output, "\n%30s%26s %6d %6ld\n", "Total", "", total, totalt);
 
     xmlFree(templates);
 }

@@ -385,6 +385,10 @@ struct _xsltTransformContext {
     const char *      outputFile;	/* the output URI if known */
 
     int profile;                        /* is this run profiled */
+    long             prof;		/* the current profiled value */
+    int              profNr;		/* Nb of templates in the stack */
+    int              profMax;		/* Size of the templtaes stack */
+    long            *profTab;		/* the profile template stack */
 };
 
 /**

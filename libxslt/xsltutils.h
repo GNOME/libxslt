@@ -116,6 +116,8 @@ int		xsltSaveResultToFd		(int fd,
 void		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
 						 FILE *output);
 
+long		xsltTimestamp			(void);
+
 #ifdef __cplusplus
 }
 #endif

@@ -114,7 +114,7 @@ static void usage(const char *name) {
 #ifdef LIBXML_XINCLUDE_ENABLED
     printf("      --xinclude : do XInclude processing on document intput\n");
 #endif
-    printf("      --profile : dump profiling informations \n");
+    printf("      --profile or --norman : dump profiling informations \n");
 }
 
 int
@@ -191,6 +191,9 @@ main(int argc, char **argv)
             timing++;
         } else if ((!strcmp(argv[i], "-profile")) ||
                    (!strcmp(argv[i], "--profile"))) {
+            profile++;
+        } else if ((!strcmp(argv[i], "-norman")) ||
+                   (!strcmp(argv[i], "--norman"))) {
             profile++;
         } else if ((!strcmp(argv[i], "-warnnet")) ||
                    (!strcmp(argv[i], "--warnnet"))) {

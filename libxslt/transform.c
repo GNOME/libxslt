@@ -73,6 +73,16 @@ int xsltMaxDepth = 500;
 
 #define PUSH_AND_POP(scope, type, name)					\
 scope int name##Push(xsltTransformContextPtr ctxt, type value) {	\
+    if (ctxt->name##Max == 0) {						\
+	ctxt->name##Max = 4;						\
+        ctxt->name##Tab = (type *) xmlMalloc(ctxt->name##Max *		\
+	              sizeof(ctxt->name##Tab[0]));			\
+        if (ctxt->name##Tab == NULL) {					\
+	    xmlGenericError(xmlGenericErrorContext,			\
+		    "malloc failed !\n");				\
+	    return(0);							\
+	}								\
+    }									\
     if (ctxt->name##Nr >= ctxt->name##Max) {				\
 	ctxt->name##Max *= 2;						\
         ctxt->name##Tab = (type *) xmlRealloc(ctxt->name##Tab,		\
@@ -94,7 +104,7 @@ scope type name##Pop(xsltTransformContextPtr ctxt) {			\
     if (ctxt->name##Nr > 0)						\
 	ctxt->name = ctxt->name##Tab[ctxt->name##Nr - 1];		\
     else								\
-        ctxt->name = NULL;						\
+        ctxt->name = (type) 0;						\
     ret = ctxt->name##Tab[ctxt->name##Nr];				\
     ctxt->name##Tab[ctxt->name##Nr] = 0;				\
     return(ret);							\
@@ -105,6 +115,7 @@ scope type name##Pop(xsltTransformContextPtr ctxt) {			\
  */
 PUSH_AND_POP(static, xsltTemplatePtr, templ)
 PUSH_AND_POP(static, xsltStackElemPtr, vars)
+PUSH_AND_POP(static, long, prof)
 
 /************************************************************************
  *									*
@@ -196,6 +207,13 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->varsMax = 5;
     cur->vars = NULL;
     cur->varsBase = 0;
+    /*
+     * the profiling stcka is not initialized by default
+     */
+    cur->profTab = NULL;
+    cur->profNr = 0;
+    cur->profMax = 0;
+    cur->prof = 0;
 
     cur->style = style;
     xmlXPathInit();
@@ -968,6 +986,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldInst = NULL;
     xmlAttrPtr attrs;
     int oldBase;
+    long start = 0;
 
     if ((ctxt == NULL) || (list == NULL))
         return;
@@ -983,7 +1002,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
     /*
-     * stack and saves
+     * stack saves, beware ordering of operations counts
      */
     oldInsert = insert = ctxt->insert;
     oldInst = ctxt->inst;
@@ -995,6 +1014,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
         ctxt->node = node;
 	if (ctxt->profile) {
 	    templ->nbCalls++;
+	    start = xsltTimestamp();
+	    profPush(ctxt, 0);
 	}
 	templPush(ctxt, templ);
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -1019,30 +1040,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             xsltGenericDebug(xsltGenericDebugContext,
                              "xsltApplyOneTemplate: insert == NULL !\n");
 #endif
-	    ctxt->node = oldCurrent;
-            ctxt->inst = oldInst;
-	    ctxt->insert = oldInsert;
-	    if (params == NULL)
-		xsltFreeStackElemList(varsPop(ctxt));
-	    else {
-		xsltStackElemPtr p, tmp = varsPop(ctxt);
-		if (tmp != params) {
-		    p = tmp;
-		    while ((p != NULL) && (p->next != params))
-			p = p->next;
-		    if (p == NULL) {
-			xsltFreeStackElemList(tmp);
-		    } else {
-			p->next = NULL;
-			xsltFreeStackElemList(tmp);
-		    }
-		}
-	    }
-	    if (templ != NULL) {
-		ctxt->varsBase = oldBase;
-		templPop(ctxt);
-	    }
-            return;
+	    goto error;
         }
 
         if (IS_XSLT_ELEM(cur)) {
@@ -1202,6 +1200,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             }
         } while (cur != NULL);
     }
+error:
     ctxt->node = oldCurrent;
     ctxt->inst = oldInst;
     ctxt->insert = oldInsert;
@@ -1224,6 +1223,18 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (templ != NULL) {
 	ctxt->varsBase = oldBase;
 	templPop(ctxt);
+	if (ctxt->profile) {
+	    long spent, child, total, end;
+	    
+	    end = xsltTimestamp(); 
+	    child = profPop(ctxt);
+	    total = end - start;
+	    spent = total - child;
+
+	    templ->time += spent;
+	    if (ctxt->profNr > 0)
+		ctxt->profTab[ctxt->profNr - 1] += total;
+	}
     }
 }
 
