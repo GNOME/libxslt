@@ -1,3 +1,11 @@
+Thu Nov 20 17:26:57 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c: another problem reported by Oleg Paraschenko
+	  on the same code in #127450
+	* tests/docs/Makefile.am tests/docs/bug-135.xml
+	  tests/general/Makefile.am tests/docs/bug-135*: added tests
+	  to the regression suite for bug #127450.
+
 Thu Nov 20 10:59:48 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c: fixed an error from #120684 patch raised in

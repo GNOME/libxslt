@@ -260,8 +260,11 @@ skipPredicate(const xmlChar *cur, int end) {
 	    end = skipString(cur, end);
 	    if (end <= 0)
 	        return(-1);
-	}
-        if (cur[end] == ']')
+	} else if (cur[end] == '[') {
+	    end = skipPredicate(cur, end);
+	    if (end <= 0)
+	        return(-1);
+	} else if (cur[end] == ']')
 	    return(end + 1);
 	end++;
     }
