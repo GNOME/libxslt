@@ -1,3 +1,8 @@
+Thu Aug 28 18:30:11 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/xsltexports.h libexslt/exsltexports.h: fixed typos reported by
+	  Mark Vakoc 
+
 Wed Aug 27 12:07:13 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/*.h: realigned parameters after taint

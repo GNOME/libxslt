@@ -38,7 +38,7 @@
     #if !defined(LIBEXSLT_STATIC)
       #define EXSLTPUBVAR __declspec(dllimport) extern
     #else
-      #define EXSLTPUBVAR
+      #define EXSLTPUBVAR extern
     #endif
   #endif
   #define EXSLTCALL __cdecl
