@@ -295,7 +295,7 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
 	     "xsltCheckWrite: out of memory for %s\n", URL);
 	    return(-1);
 	}
-	uri->path = xmlStrdup(URL);
+	uri->path = (char *)xmlStrdup(URL);
     }
     if ((uri->scheme == NULL) ||
 	(xmlStrEqual(BAD_CAST uri->scheme, BAD_CAST "file"))) {

@@ -16,6 +16,7 @@
 #include <math.h>
 #include <limits.h>
 #include <float.h>
+#include <string.h>
 
 #include <libxml/xmlmemory.h>
 #include <libxml/parserInternals.h>

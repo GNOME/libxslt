@@ -1516,16 +1516,14 @@ skip_children:
 	if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "param"))) {
 	    xmlNodePtr param = cur;
 
-            cur = cur->next;
 	    xsltTransformError(NULL, style, cur,
 		"xsltParseTemplateContent: ignoring misplaced param element\n");
 	    if (style != NULL) style->warnings++;
+            cur = cur->next;
 	    xmlUnlinkNode(param);
 	    xmlFreeNode(param);
-	    continue;
 	} else
 	    break;
-	cur = cur->next;
     }
 }
 

@@ -128,7 +128,7 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
     /*
      * check for and remove fragment identifier
      */
-    fragment = uri->fragment;
+    fragment = (xmlChar *)uri->fragment;
     if (fragment != NULL) {
 	uri->fragment = NULL;
 	URI = xmlSaveUri(uri);
