@@ -3432,6 +3432,9 @@ exsltDateDurationFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 
     ret = exsltDateDuration(number);
 
+    if (number != NULL)
+	xmlFree(number);
+
     if (ret == NULL)
 	xmlXPathReturnEmptyString(ctxt);
     else

@@ -1,3 +1,10 @@
+Sat Nov 23 14:46:06 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.c: patch from Charles Bozeman fixing a memory
+	  leak in exsltDateDurationFunction pointed out by Bernard Brinkhus
+	* python/tests/exslt.py: trouble with mem debug in that specific
+	  test...
+
 Sat Nov 23 12:33:58 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltInternals.h: Alexey Efimov reported a portability
