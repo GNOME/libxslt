@@ -1,3 +1,10 @@
+Thu Jul  5 15:11:58 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated
+	* libxslt/transform.c: added cdata-section-elements
+	* tests/REC/Makefile.am tests/REC/test-16.1-*: added 2 tests from
+	  the REC
+
 Thu Jul  5 10:44:47 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES: updated

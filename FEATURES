@@ -77,7 +77,7 @@ YES				omit-xml-declaration = "yes" | "no"
 YES				standalone = "yes" | "no"
 YES				doctype-public = string 
 YES				doctype-system = string 
-NO				cdata-section-elements = qnames 
+YES				cdata-section-elements = qnames 
 YES				indent = "yes" | "no"
 YES				media-type = string
 
