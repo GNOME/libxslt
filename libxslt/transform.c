@@ -1,6 +1,6 @@
 /*
  * transform.c: Implemetation of the XSL Transformation 1.0 engine
- *            transform part, i.e. applying a Stylesheet to a document
+ *              transform part, i.e. applying a Stylesheet to a document
  *
  * References:
  *   http://www.w3.org/TR/1999/REC-xslt-19991116
@@ -139,7 +139,7 @@ xsltGetXIncludeDefault(void) {
 
 /************************************************************************
  *									*
- *			handling of transformation contexts		*
+ *			Handling of Transformation Contexts		*
  *									*
  ************************************************************************/
 
@@ -195,6 +195,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->varsNr = 0;
     cur->varsMax = 5;
     cur->vars = NULL;
+    cur->varsBase = 0;
 
     cur->style = style;
     xmlXPathInit();
@@ -415,10 +416,10 @@ xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr target,
 /**
  * xsltCopyPropList:
  * @ctxt:  a XSLT process context
- * @target:  the element where the attributes will be grafted
- * @cur:  the first attribute
+ * @target:  the element where the properties will be grafted
+ * @cur:  the first property
  *
- * Do a copy of an attribute list.
+ * Do a copy of a properties list.
  *
  * Returns: a new xmlAttrPtr, or NULL in case of error.
  */
@@ -494,11 +495,11 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 /**
  * xsltCopyTreeList:
  * @ctxt:  a XSLT process context
- * @list:  the list of element node in the source tree.
+ * @list:  the list of element nodes in the source tree.
  * @insert:  the parent in the result tree.
  *
  * Make a copy of the full list of tree @list
- * and insert them as last children of @insert
+ * and insert it as last children of @insert
  *
  * Returns a pointer to the new list, or NULL in case of error
  */
@@ -617,7 +618,7 @@ void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
  *   <xsl:value-of select="."/>
  * </xsl:template>
  *
- * Note also that namespaces declarations are copied directly:
+ * Note also that namespace declarations are copied directly:
  *
  * the built-in template rule is the only template rule that is applied
  * for namespace nodes.
@@ -630,6 +631,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     int strip_spaces = -1;
     int nbchild = 0, oldSize;
     int childno = 0, oldPos;
+    int oldBase;
     xsltTemplatePtr template;
 
     CHECK_STOPPED;
@@ -760,8 +762,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    oldNode = ctxt->node;
 	    ctxt->node = node;
 	    templPush(ctxt, template);
+	    oldBase = ctxt->varsBase;
+	    ctxt->varsBase = ctxt->varsNr - 1;
 	    xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	    templPop(ctxt);
+	    ctxt->varsBase = oldBase;
 	    ctxt->node = oldNode;
 	}
 	attrs = attrs->next;
@@ -794,8 +799,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    oldNode = ctxt->node;
 		    ctxt->node = node;
 		    templPush(ctxt, template);
+		    oldBase = ctxt->varsBase;
+		    ctxt->varsBase = ctxt->varsNr - 1;
 		    xsltApplyOneTemplate(ctxt, node, template->content, 1);
 		    templPop(ctxt);
+		    ctxt->varsBase = oldBase;
 		    ctxt->node = oldNode;
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -827,8 +835,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    templPush(ctxt, template);
+		    oldBase = ctxt->varsBase;
+		    ctxt->varsBase = ctxt->varsNr - 1;
 		    xsltApplyOneTemplate(ctxt, cur, template->content, 1);
 		    templPop(ctxt);
+		    ctxt->varsBase = oldBase;
 		    ctxt->node = oldNode;
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -869,8 +880,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    templPush(ctxt, template);
+		    oldBase = ctxt->varsBase;
+		    ctxt->varsBase = ctxt->varsNr - 1;
 		    xsltApplyOneTemplate(ctxt, cur, template->content, 1);
 		    templPop(ctxt);
+		    ctxt->varsBase = oldBase;
 		    ctxt->node = oldNode;
 		}
 		break;
@@ -894,6 +908,7 @@ void
 xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
+    int oldBase;
 
     /*
      * Cleanup children empty nodes if asked for
@@ -953,8 +968,11 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	                 template->match, node->name);
 #endif
 	templPush(ctxt, template);
+	oldBase = ctxt->varsBase;
+	ctxt->varsBase = ctxt->varsNr - 1;
 	xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	templPop(ctxt);
+	ctxt->varsBase = oldBase;
     } else {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	if (node->type == XML_DOCUMENT_NODE)
@@ -969,8 +987,11 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	oldNode = ctxt->node;
 	ctxt->node = node;
 	templPush(ctxt, template);
+	oldBase = ctxt->varsBase;
+	ctxt->varsBase = ctxt->varsNr - 1;
 	xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	templPop(ctxt);
+	ctxt->varsBase = oldBase;
 	ctxt->node = oldNode;
     }
 }
@@ -1116,7 +1137,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                  cur->name);
 #endif
                 /*
-                 * Search if there is fallbacks
+                 * Search if there are fallbacks
                  */
                 child = cur->children;
                 while (child != NULL) {
@@ -1211,7 +1232,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  an XSLT processing context
  * @node:  The current node
  * @inst:  the instruction in the stylesheet
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process an XSLT-1.1 document element
  */
@@ -1527,7 +1548,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltFreeStackElemList(varsPop(ctxt));
 
     /*
-     * Save the res
+     * Save the result
      */
     ret = xsltSaveResultToFilename((const char *) filename,
                                    res, style, 0);
@@ -1570,7 +1591,7 @@ void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt sort node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * function attached to xsl:sort nodes, but this should not be
  * called directly
@@ -1593,7 +1614,7 @@ xsltSort(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt copy node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt copy node on the source node
  */
@@ -1706,7 +1727,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt text node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt text node on the source node
  */
@@ -1744,7 +1765,7 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt element node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt element node on the source node
  */
@@ -1868,7 +1889,7 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt attribute node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt attribute node on the source node
  */
@@ -1898,7 +1919,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     if (ctxt->insert->children != NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xsl:attribute : node has already children\n");
+	     "xsl:attribute : node already has children\n");
 	return;
     }
     if (comp->name == NULL) {
@@ -1982,7 +2003,7 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt comment node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt comment node on the source node
  */
@@ -2016,7 +2037,7 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt processing-instruction node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt processing-instruction node on the source node
  */
@@ -2073,7 +2094,7 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt copy-of node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt copy-of node on the source node
  */
@@ -2172,7 +2193,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt value-of node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt value-of node on the source node
  */
@@ -2241,7 +2262,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt number node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt number node on the source node
  */
@@ -2269,7 +2290,7 @@ xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt apply-imports node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt apply-imports node on the source node
  */
@@ -2277,6 +2298,7 @@ void
 xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	         xmlNodePtr inst ATTRIBUTE_UNUSED, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     xsltTemplatePtr template;
+    int oldBase;
 
     if ((ctxt->templ == NULL) || (ctxt->templ->style == NULL)) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -2286,10 +2308,13 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
     template = xsltGetTemplate(ctxt, node, ctxt->templ->style);
     if (template != NULL) {
 	templPush(ctxt, template);
+	oldBase = ctxt->varsBase;
+	ctxt->varsBase = ctxt->varsNr - 1;
 	varsPush(ctxt, NULL);
 	xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	xsltFreeStackElemList(varsPop(ctxt));
 	templPop(ctxt);
+	ctxt->varsBase = oldBase;
     }
 }
 
@@ -2298,7 +2323,7 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt call-template node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt call-template node on the source node
  */
@@ -2307,7 +2332,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlNodePtr cur = NULL;
     xsltStackElemPtr params = NULL, param;
-
+    int oldBase;
 
     if (ctxt->insert == NULL)
 	return;
@@ -2329,10 +2354,6 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     }
 
-    /*
-     * Create a new frame but block access to variables
-     */
-    templPush(ctxt, comp->templ);
     cur = inst->children;
     while (cur != NULL) {
 	if (ctxt->state == XSLT_STATE_STOPPED) break;
@@ -2353,10 +2374,17 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	cur = cur->next;
     }
+    /*
+     * Create a new frame but block access to variables
+     */
+    templPush(ctxt, comp->templ);
+    oldBase = ctxt->varsBase;		/* Save the original variable base */
     varsPush(ctxt, params);
+    ctxt->varsBase = ctxt->varsNr - 1;	/* Reset base to be new templ params */
     xsltApplyOneTemplate(ctxt, node, comp->templ->content, 1);
     xsltFreeStackElemList(varsPop(ctxt));
     templPop(ctxt);
+    ctxt->varsBase = oldBase;		/* Restore the original variable base */
 }
 
 /**
@@ -2364,7 +2392,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the apply-templates node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the apply-templates node on the source node
  */
@@ -2618,7 +2646,7 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt choose node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt choose node on the source node
  */
@@ -2734,7 +2762,7 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt if node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt if node on the source node
  */
@@ -2806,7 +2834,7 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt for-each node
- * @comp:  precomputed informations
+ * @comp:  precomputed information
  *
  * Process the xslt for-each node on the source node
  */
@@ -3098,6 +3126,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     ctxt->node = (xmlNodePtr) doc;
     xsltInitCtxtExts(ctxt);
     varsPush(ctxt, NULL);
+    ctxt->varsBase = ctxt->varsNr - 1;
     xsltProcessOneNode(ctxt, ctxt->node);
     xsltFreeStackElemList(varsPop(ctxt));
     xsltShutdownCtxtExts(ctxt);

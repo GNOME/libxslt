@@ -344,6 +344,7 @@ struct _xsltTransformContext {
     int               varsNr;		/* Nb of variable list in the stack */
     int               varsMax;		/* Size of the variable list stack */
     xsltStackElemPtr *varsTab;		/* the variable list stack */
+    int               varsBase;		/* the var base for current templ */
 
     /*
      * Extensions

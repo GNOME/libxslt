@@ -230,17 +230,17 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     int i;
     xsltStackElemPtr cur;
 
-    if ((ctxt == NULL) || (name == NULL))
+    if ((ctxt == NULL) || (name == NULL) || (ctxt->varsNr == 0))
 	return(NULL);
 
     /*
      * Do the lookup from the top of the stack, but
      * don't use params being computed in a call-param
      */
-    i = ctxt->varsNr - 1;
+    ;
 
-    for (;i >= 0;i--) {
-	cur = ctxt->varsTab[i];
+    for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
+	cur = ctxt->varsTab[i-1];
 	while (cur != NULL) {
 	    if (xmlStrEqual(cur->name, name)) {
 		if (nameURI == NULL) {

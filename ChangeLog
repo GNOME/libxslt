@@ -1,3 +1,8 @@
+Sat Jul  7 17:05:00 HKT 2001 Wiliam Brack <wbrack@mmm.com.hk>
+
+	* xsltInternals.h variables.c transform.c:
+	  fixed problem with variable scope within templates
+
 Fri Jul  6 17:42:06 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/extensions.html doc/internals.html doc/xslt.html:
