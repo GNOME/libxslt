@@ -222,12 +222,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	 (xmlStrEqual(style->method, (const xmlChar *) "html"))) ||
 	((root != NULL) &&
 	 (xmlStrEqual(root->name, (const xmlChar *) "html")))){
-#if LIBXML_VERSION > 20211
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
-#else
-	xsltGenericError(xsltGenericErrorContext,
-		"HTML output requires libxml version > 2.2.11\n");
-#endif
     } else if ((style->method != NULL) &&
 	       (xmlStrEqual(style->method, (const xmlChar *) "text"))) {
 	xmlNodePtr cur;

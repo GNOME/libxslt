@@ -493,12 +493,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 				            XSLT_NAMESPACE);
 			if (prop != NULL) {
 			    if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
-#if LIBXML_VERSION > 20211
 				text->name = xmlStringTextNoenc;
-#else
-				xsltGenericError(xsltGenericErrorContext,
-"xsl:text disable-output-escaping need newer > 20211 libxml version\n");
-#endif
 			    } else if (!xmlStrEqual(prop,
 					            (const xmlChar *)"no")){
 				xsltGenericError(xsltGenericErrorContext,

@@ -77,8 +77,16 @@ xsltNewTransformContext(void) {
  */
 void
 xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
+    xmlDocPtr doc, next;
+
     if (ctxt == NULL)
 	return;
+    doc = ctxt->extraDocs;
+    while (doc != NULL) {
+	next = (xmlDocPtr) doc->next;
+	xmlFreeDoc(doc);
+	doc = next;
+    }
     if (ctxt->xpathCtxt != NULL)
 	xmlXPathFreeContext(ctxt->xpathCtxt);
     xsltFreeVariableHashes(ctxt);
@@ -373,29 +381,16 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     }
 
-    value = xmlNodeListGetString(inst->doc, inst->children, 1);
+    value = xsltEvalTemplateString(ctxt, node, inst);
     if (value == NULL) {
 	if (ns) {
-#if LIBXML_VERSION > 20211
 	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, 
 		                (const xmlChar *)"");
-#else
-	    xsltGenericError(xsltGenericErrorContext,
-		"xsl:attribute: recompile against newer libxml version\n");
-	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
-#endif
 	} else
 	    attr = xmlSetProp(ctxt->insert, ncname, (const xmlChar *)"");
     } else {
-	/* TODO: attribute value template */
 	if (ns) {
-#if LIBXML_VERSION > 20211
 	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, value);
-#else
-	    xsltGenericError(xsltGenericErrorContext,
-		"xsl:attribute: recompile against newer libxml version\n");
-	    attr = xmlSetProp(ctxt->insert, ncname, value);
-#endif
 	} else
 	    attr = xmlSetProp(ctxt->insert, ncname, value);
 	

@@ -1,10 +1,14 @@
 
-                  XSLT support for libxml
+                  XSLT support for libxml2
 
 		  http://xmlsoft.org/
 
- Requires libxml2 with XPath support.
-Currently unusable, very early steps ...
+ Requires libxml2 >= 2.2.12 with XPath support. It won't even compile
+otherwise.
+ Check the FEATURES file for informations about completeness
+ Check the Changelog too to keep track of progresses.
+
+   report bugs to xml@rpmfind.net or on the bugzilla.gnome.org base.
 
 Daniel Veillard
 

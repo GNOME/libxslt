@@ -186,13 +186,19 @@ General:
 ========
 
 YES (w.o import)    Conflict Resolution for Template Rules
+
 YES		    Whitespace Stripping
+
 YES		    Built-in Template Rules
 YES		        match="*|/"
 YES			match="text()|@*"
 YES			match="processing-instruction()|comment()"
 NO			Namespace
 NO			Mode
+
+NO		    Extension Elements
+
+NO		    Extension Functions
 
 YES		    Attribute Value Templates
 
@@ -201,14 +207,14 @@ YES		    Result Tree Fragments
 Functions:
 ==========
 
-NO		    node-set document(object, node-set?)
+PARTIAL		    node-set document(object, node-set?)
 NO		    node-set key(string, object)
 YES		    string format-number(number, string, string?)
-NO		    node-set current() 
-NO		    string unparsed-entity-uri(string)
-NO		    string generate-id(node-set?)
-NO		    object system-property(string)
-NO		    boolean element-available(string)
-NO		    boolean function-available(string)
+YES		    node-set current() 
+YES		    string unparsed-entity-uri(string)
+YES		    string generate-id(node-set?)
+YES		    object system-property(string)
+YES		    boolean element-available(string)
+YES		    boolean function-available(string)
 
 Daniel.Veillard@imag.fr

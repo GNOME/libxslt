@@ -42,6 +42,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/parserInternals.h>
+#include <libxml/uri.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -110,7 +111,80 @@ isinf(double number)
  */
 void
 xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    xmlDocPtr doc;
+    xmlXPathObjectPtr obj;
+    xmlChar *base, *URI;
+
+
+    if ((nargs < 1) || (nargs > 2)) {
+        xsltGenericError(xsltGenericErrorContext,
+		"document() : invalid number of args %d\n", nargs);
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    if (ctxt->value == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "document() : invalid arg value\n");
+	ctxt->error = XPATH_INVALID_TYPE;
+	return;
+    }
+    if (ctxt->value->type == XPATH_NODESET) {
+	TODO
+        xsltGenericError(xsltGenericErrorContext,
+		"document() : with node-sets args not yet supported\n");
+	return;
+    }
+    /*
+     * Make sure it's converted to a string
+     */
+    xmlXPathStringFunction(ctxt, 1);
+    if (ctxt->value->type != XPATH_STRING) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "document() : invalid arg expecting a string\n");
+	ctxt->error = XPATH_INVALID_TYPE;
+	return;
+    }
+    obj = valuePop(ctxt);
+    if (obj->stringval == NULL) {
+	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+    } else {
+        base = xmlNodeGetBase(ctxt->context->doc, ctxt->context->node);
+	URI = xmlBuildURI(obj->stringval, base);
+	if (base != NULL)
+	    xmlFree(base);
+        if (URI == NULL) {
+	    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+	} else {
+	    doc = xmlParseDoc(URI);
+	    if (doc == NULL)
+		valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+	    else {
+		xsltTransformContextPtr tctxt;
+
+		/*
+		 * link it to the context for cleanup when done
+		 */
+		tctxt = (xsltTransformContextPtr) ctxt->context->extra;
+		if (tctxt == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+			"document() : internal error tctxt == NULL\n");
+		    xmlFreeDoc(doc);
+		    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+		} else {
+		    /*
+		     * Keep a link from the context to be able to deallocate
+		     */
+		    doc->next = (xmlNodePtr) tctxt->extraDocs;
+		    tctxt->extraDocs = doc;
+
+		    /* TODO: use XPointer of HTML location for fragment ID */
+		    /* pbm #xxx can lead to location sets, not nodesets :-) */
+                    valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) doc));
+		}
+	    }
+	}
+    }
+    xmlXPathFreeObject(obj);
 }
 
 /**
@@ -136,7 +210,40 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 void
 xsltUnparsedEntityURIFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    xmlXPathObjectPtr obj;
+    xmlChar *str;
+
+    if (nargs != 1) {
+        xsltGenericError(xsltGenericErrorContext,
+		"system-property() : expects one string arg\n");
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "generate-id() : invalid arg expecting a string\n");
+	ctxt->error = XPATH_INVALID_TYPE;
+	return;
+    }
+    obj = valuePop(ctxt);
+    str = obj->stringval;
+    if (str == NULL) {
+	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+    } else {
+	xmlEntityPtr entity;
+
+	entity = xmlGetDocEntity(ctxt->context->doc, str);
+	if (entity == NULL) {
+	    valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+	} else {
+	    if (entity->URI != NULL)
+		valuePush(ctxt, xmlXPathNewString(entity->URI));
+	    else
+		valuePush(ctxt, xmlXPathNewString(
+			    xmlStrdup((const xmlChar *)"")));
+	}
+    }
+    xmlXPathFreeObject(obj);
 }
 
 /**
@@ -376,6 +483,7 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
 	break;
     default:
 	XP_ERROR(XPATH_INVALID_ARITY);
+	return;
     }
     
     valuePush(ctxt,
@@ -398,7 +506,54 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
  */
 void
 xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    xmlNodePtr cur = NULL;
+    unsigned int val;
+    xmlChar str[20];
+
+    if (nargs == 0) {
+	cur = ctxt->context->node;
+    } else if (nargs == 1) {
+	xmlXPathObjectPtr obj;
+	xmlNodeSetPtr nodelist;
+	int i, ret;
+
+	if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_NODESET)) {
+	    ctxt->error = XPATH_INVALID_TYPE;
+	    xsltGenericError(xsltGenericErrorContext,
+		"generate-id() : invalid arg expecting a node-set\n");
+	    return;
+	}
+	obj = valuePop(ctxt);
+	nodelist = obj->nodesetval;
+	if ((nodelist == NULL) || (nodelist->nodeNr <= 0)) {
+	    ctxt->error = XPATH_INVALID_TYPE;
+	    xsltGenericError(xsltGenericErrorContext,
+		"generate-id() : got an empty node-set\n");
+	    xmlXPathFreeObject(obj);
+	    return;
+	}
+	cur = nodelist->nodeTab[0];
+	for (i = 2;i <= nodelist->nodeNr;i++) {
+	    ret = xmlXPathCmpNodes(cur, nodelist->nodeTab[i]);
+	    if (ret == -1)
+	        cur = nodelist->nodeTab[i];
+	}
+	xmlXPathFreeObject(obj);
+    } else {
+        xsltGenericError(xsltGenericErrorContext,
+		"generate-id() : invalid number of args %d\n", nargs);
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    /*
+     * Okay this is ugly but should work, use the NodePtr address
+     * to forge the ID
+     */
+    val = (unsigned int) cur;
+    val >>= 2;
+    val |= 0xFFFFFF;
+    sprintf((char *)str, "id%10d", val);
+    valuePush(ctxt, xmlXPathNewString(str));
 }
 
 /**
@@ -411,7 +566,39 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 void
 xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    xmlXPathObjectPtr obj;
+    xmlChar *str;
+
+    if (nargs != 1) {
+        xsltGenericError(xsltGenericErrorContext,
+		"system-property() : expects one string arg\n");
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "generate-id() : invalid arg expecting a string\n");
+	ctxt->error = XPATH_INVALID_TYPE;
+	return;
+    }
+    obj = valuePop(ctxt);
+    str = obj->stringval;
+    if (str == NULL) {
+	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+    } else if (!xmlStrcmp(str, (const xmlChar *)"xsl:version")) {
+	valuePush(ctxt, xmlXPathNewString(
+		(const xmlChar *)XSLT_DEFAULT_VERSION));
+    } else if (!xmlStrcmp(str, (const xmlChar *)"xsl:vendor")) {
+	valuePush(ctxt, xmlXPathNewString(
+		(const xmlChar *)XSLT_DEFAULT_VENDOR));
+    } else if (!xmlStrcmp(str, (const xmlChar *)"xsl:vendor-url")) {
+	valuePush(ctxt, xmlXPathNewString(
+		(const xmlChar *)XSLT_DEFAULT_URL));
+    } else {
+	/* TODO cheated with the QName resolution */
+	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+    }
+    xmlXPathFreeObject(obj);
 }
 
 /**
@@ -424,7 +611,23 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 void
 xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    xmlXPathObjectPtr obj;
+
+    if (nargs != 1) {
+        xsltGenericError(xsltGenericErrorContext,
+		"element-available() : expects one string arg\n");
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "element-available invalid arg expecting a string\n");
+	ctxt->error = XPATH_INVALID_TYPE;
+	return;
+    }
+    obj = valuePop(ctxt);
+    xmlXPathFreeObject(obj);
+    valuePush(ctxt, xmlXPathNewBoolean(0));
 }
 
 /**
@@ -437,7 +640,23 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 void
 xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    xmlXPathObjectPtr obj;
+
+    if (nargs != 1) {
+        xsltGenericError(xsltGenericErrorContext,
+		"function-available() : expects one string arg\n");
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "function-available invalid arg expecting a string\n");
+	ctxt->error = XPATH_INVALID_TYPE;
+	return;
+    }
+    obj = valuePop(ctxt);
+    xmlXPathFreeObject(obj);
+    valuePush(ctxt, xmlXPathNewBoolean(0));
 }
 
 /**
@@ -450,7 +669,13 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 void
 xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
-    TODO /* function */
+    if (nargs != 0) {
+        xsltGenericError(xsltGenericErrorContext,
+		"document() : function uses no argument\n");
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+    valuePush(ctxt, xmlXPathNewNodeSet(ctxt->context->node));
 }
 
 /**

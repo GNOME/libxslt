@@ -21,7 +21,8 @@ extern "C" {
 #define XSLT_REGISTER_VARIABLE_LOOKUP(ctxt)			\
     xmlXPathRegisterVariableLookup((ctxt)->xpathCtxt,		\
 	       xsltXPathVariableLookup,	(void *)(ctxt));	\
-    xsltRegisterAllFunctions((ctxt)->xpathCtxt)
+    xsltRegisterAllFunctions((ctxt)->xpathCtxt);		\
+    (ctxt)->xpathCtxt->extra = ctxt
 
 /*
  * Interfaces for the variable module.

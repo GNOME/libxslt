@@ -142,6 +142,7 @@ struct _xsltTransformContext {
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     void *variablesHash;		/* hash table or wherever variables
 				   	   informations are stored */
+    xmlDocPtr extraDocs;		/* extra docs parsed by document() */
 };
 
 /*

@@ -3,6 +3,13 @@
                  *  TODO  *
                  *        *
                   ********
+
+Doc:
+  - put a page at http://xmlsoft.org/XSLT/
+  - generate/transform the DocBook to HTML
+  - add HTML to package
+  - manpage and doc for xsltproc
+
 Design:
   - should transforms for a given stylesheet be thread clean,
     or can a stylesheet be enriched with document specific
@@ -15,10 +22,10 @@ Import:
   -> provide functions to circulate in the import tree of stylesheets
 
 Extra functions:
-  -> make a separate module.
   -> document() should not be a problem since Result Tree Fragments are
      implemnted
-  -> others 
+  => started, incomplete
+  -> missing key support
 
 ID and Key support:
   -> Id should be simple, key will probably requires some hash tables.
@@ -36,10 +43,7 @@ Error handling:
      and lack of optionnal features.
 
 Support Attribute value templates:
-  -> starts to be urgent. Design it in flexible ways but try to optimize
-     to handle most of it at the stylesheet parse time ...
-  => Done for the most part need to check all attributes in XSLT constructs
-     using them and use the dedicated readin function.
+  -> optimization by checking their existence at stylesheet parse time.
 
 Sorting:
   -> add support for imbricated sorts
@@ -58,6 +62,16 @@ Contextual error reporting:
                  *  DONE  *
                  *        *
                   ********
+
+Extra functions:
+  -> make a separate module.
+  => done functions.[ch]
+
+Support Attribute value templates:
+  -> starts to be urgent. Design it in flexible ways but try to optimize
+     to handle most of it at the stylesheet parse time ...
+  => Done for the most part need to check all attributes in XSLT constructs
+     using them and use the dedicated readin function.
 
 Separate util module:
   -> macros, config, verbosity ?

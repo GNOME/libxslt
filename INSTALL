@@ -3,7 +3,7 @@
 Requirements:
 =============
 
-this library requires libxml2 which you can grab from
+this library requires libxml2 >= 2.2.12 which you can grab from
 either the GNOME FTP or the xmlsoft.org server:
 
   ftp://xmlsoft.org/

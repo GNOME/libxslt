@@ -1,3 +1,15 @@
+Thu Jan 25 19:36:45 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES TODO README INSTALL: updated
+	* libxslt/xslt.h: added URL and version/vendor :-)
+	* libxslt/transform.c: fixed a problem in xsl:attribute, removed
+	  attempt to support older libxml2 version.
+	* libxslt/variables.h libxslt/xsltInternals.h: update to structures
+	  and macros to add/register new document created by document()
+	* libxslt/functions.c: implemented current(), unparsed-entity-uri()
+	  system-property(), element-available() and function-available().
+	  A crippled version of document() has been added too.
+
 Thu Jan 25 12:13:04 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* functions.[ch]: Bjorn Reese <breese@mail1.stofanet.dk> provided
