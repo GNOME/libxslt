@@ -1,3 +1,8 @@
+Wed Jul 23 21:57:39 IST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: applying a patch based on #117377
+	  for --path option.
+
 Mon Jul 21 20:28:11 IST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: allow strip-space to support full namespaces

@@ -160,6 +160,14 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
     warningSAXFunc warning = NULL;
 
     int i;
+    const char *lastsegment = URL;
+    const char *iter = URL;
+
+    while (*iter != 0) {
+        if (*iter == '/')
+	    lastsegment = iter + 1;
+	iter++;
+    }
 
     if ((ctxt != NULL) && (ctxt->sax != NULL)) {
 	warning = ctxt->sax->warning;
@@ -179,7 +187,7 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
 
 	newURL = xmlStrdup((const xmlChar *) paths[i]);
 	newURL = xmlStrcat(newURL, (const xmlChar *) "/");
-	newURL = xmlStrcat(newURL, (const xmlChar *) URL);
+	newURL = xmlStrcat(newURL, (const xmlChar *) lastsegment);
 	if (newURL != NULL) {
 	    ret = defaultEntityLoader((const char *)newURL, ID, ctxt);
 	    xmlFree(newURL);
