@@ -1,3 +1,13 @@
+Sat May  5 17:13:16 CEST 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* libxslt/numbersInternals.h libxslt/numbers.c
+	  tests/numbers/format-number.out tests/XSLTMark/number.out:
+	  Patch from William Brack to bring format-number() more in alignment
+	  with the Java implementations.
+
+	* libxslt/xslt.c tests/XSLTMark/xslbench1.out: Do not remove CDATA
+	  from stylesheet
+
 Fri May  4 20:10:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docbook/result/html/* tests/general/bug-11-.out 
