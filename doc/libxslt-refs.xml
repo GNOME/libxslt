@@ -766,24 +766,24 @@
       <ref name='xsltStyleExtInitFunction'/>
     </type>
     <type name='xmlAttrPtr'>
-      <ref name='xsltAttrTemplateProcess'/>
       <ref name='xsltAttrListTemplateProcess'/>
+      <ref name='xsltAttrTemplateProcess'/>
     </type>
     <type name='xmlChar *'>
       <ref name='xsltAttrTemplateValueProcess'/>
       <ref name='xsltEvalAttrValueTemplate'/>
       <ref name='xsltEvalTemplateString'/>
+      <ref name='xsltGetNsProp'/>
       <ref name='xsltAttrTemplateValueProcessNode'/>
       <ref name='xsltEvalXPathString'/>
       <ref name='xsltEvalXPathStringNs'/>
-      <ref name='xsltGetNsProp'/>
       <ref name='xsltEvalStaticAttrValueTemplate'/>
     </type>
     <type name='xmlDocPtr'>
       <ref name='xsltCreateRVT'/>
-      <ref name='xsltApplyStylesheet'/>
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStylesheet'/>
       <ref name='xsltGetProfileInformation'/>
     </type>
     <type name='xmlHashTablePtr'>
@@ -800,17 +800,17 @@
     </type>
     <type name='xmlNsPtr'>
       <ref name='xsltCopyNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
       <ref name='xsltGetNamespace'/>
       <ref name='xsltCopyNamespaceList'/>
-      <ref name='xsltGetSpecialNamespace'/>
     </type>
     <type name='xmlXPathError'>
       <ref name='xsltFormatNumberConversion'/>
     </type>
     <type name='xmlXPathFunction'>
       <ref name='xsltExtFunctionLookup'/>
-      <ref name='xsltExtModuleFunctionLookup'/>
       <ref name='xsltXPathFunctionLookup'/>
+      <ref name='xsltExtModuleFunctionLookup'/>
     </type>
     <type name='xmlXPathObjectPtr'>
       <ref name='xsltXPathVariableLookup'/>
@@ -848,8 +848,8 @@
       <ref name='xsltGetSecurityPrefs'/>
     </type>
     <type name='xsltSecurityPrefsPtr'>
-      <ref name='xsltNewSecurityPrefs'/>
       <ref name='xsltGetDefaultSecurityPrefs'/>
+      <ref name='xsltNewSecurityPrefs'/>
     </type>
     <type name='xsltStackElemPtr'>
       <ref name='xsltParseStylesheetCallerParam'/>

@@ -1,10 +1,12 @@
 /*
- * xsltwin32config.h: compile-time version informations for the XSLT engine
- *                    when compiled on windows
+ * Summary: compile-time version informations for the XSLT engine 
+ *          when compiled on windows
+ * Description: compile-time version informations for the XSLT engine
+ *              when compiled on windows. This file is generated.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLTWIN32CONFIG_H__

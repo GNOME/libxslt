@@ -1,9 +1,12 @@
 /*
- * security.h: interface for the XSLT security framework
+ * Summary: interface for the libxslt security framework
+ * Description: the libxslt security framework allow to restrict
+ *              the access to new resources (file or URL) from
+ *              the stylesheet at runtime.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_SECURITY_H__

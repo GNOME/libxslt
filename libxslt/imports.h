@@ -1,9 +1,11 @@
 /*
- * imports.h: interface for the XSLT import support
+ * Summary: interface for the XSLT import support
+ * Description: macros and fuctions needed to implement and
+ *              access the import tree
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_IMPORTS_H__

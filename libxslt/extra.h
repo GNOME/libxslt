@@ -1,9 +1,11 @@
 /*
- * extra.h: interface for the non-standard features
+ * Summary: interface for the non-standard features
+ * Description: implement some extension outside the XSLT namespace
+ *              but not EXSLT with is in a different library.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_EXTRA_H__

@@ -1,9 +1,10 @@
 /*
- * variable.h: interface for the variable matching and lookup.
+ * Summary: interface for the variable matching and lookup.
+ * Description: interface for the variable matching and lookup.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_VARIABLES_H__

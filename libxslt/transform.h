@@ -1,10 +1,12 @@
 /*
- * transform.h: Interfaces, constants and types related to the XSLT engine
- *            transform part.
+ * Summary: the XSLT engine transformation part.
+ * Description: This module implements the bulk of the actual
+ *              transformation processing. Most of the xsl: element
+ *              constructs are implemented in this module.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_TRANSFORM_H__

@@ -178,6 +178,10 @@ Class stylesheet()
     freeNamespaceAliasHashes()
     namespaceAlias()
 
+    # functions from module pattern
+    cleanupTemplates()
+    freeTemplateHashes()
+
     # functions from module preproc
     freeStylePreComps()
     stylePreCompute()

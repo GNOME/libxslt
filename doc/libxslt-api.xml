@@ -2,12 +2,18 @@
 <api name='libxslt'>
   <files>
     <file name='attributes'>
+     <summary>interface for the XSLT attribute handling</summary>
+     <description>this module handles the specificities of attribute and attribute groups processing. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltResolveStylesheetAttributeSet' type='function'/>
      <exports symbol='xsltParseStylesheetAttributeSet' type='function'/>
      <exports symbol='xsltApplyAttributeSet' type='function'/>
      <exports symbol='xsltFreeAttributeSetsHashes' type='function'/>
     </file>
     <file name='documents'>
+     <summary>interface for the document handling</summary>
+     <description>implements document loading and cache (multiple document() reference for the same resources must be equal. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltFreeDocuments' type='function'/>
      <exports symbol='xsltNewDocument' type='function'/>
      <exports symbol='xsltFreeStyleDocuments' type='function'/>
@@ -17,6 +23,9 @@
      <exports symbol='xsltNewStyleDocument' type='function'/>
     </file>
     <file name='extensions'>
+     <summary>interface for the extension support</summary>
+     <description>This provide the API needed for simple and module extension support. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltRegisterExtPrefix' type='function'/>
      <exports symbol='xsltRegisterExtFunction' type='function'/>
      <exports symbol='xsltPreComputeFunction' type='function'/>
@@ -58,6 +67,9 @@
      <exports symbol='xsltUnregisterExtModule' type='function'/>
     </file>
     <file name='extra'>
+     <summary>interface for the non-standard features</summary>
+     <description>implement some extension outside the XSLT namespace but not EXSLT with is in a different library. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='XSLT_XT_NAMESPACE' type='macro'/>
      <exports symbol='XSLT_XALAN_NAMESPACE' type='macro'/>
      <exports symbol='XSLT_SAXON_NAMESPACE' type='macro'/>
@@ -69,6 +81,9 @@
      <exports symbol='xsltRegisterAllExtras' type='function'/>
     </file>
     <file name='functions'>
+     <summary>interface for the XSLT functions not from XPath</summary>
+     <description>a set of extra functions coming from XSLT but not in XPath </description>
+     <author>Daniel Veillard and Bjorn Reese &lt;breese@users.sourceforge.net&gt; </author>
      <exports symbol='XSLT_REGISTER_FUNCTION_LOOKUP' type='macro'/>
      <exports symbol='xsltXPathFunctionLookup' type='function'/>
      <exports symbol='xsltRegisterAllFunctions' type='function'/>
@@ -82,6 +97,9 @@
      <exports symbol='xsltGenerateIdFunction' type='function'/>
     </file>
     <file name='imports'>
+     <summary>interface for the XSLT import support</summary>
+     <description>macros and fuctions needed to implement and access the import tree </description>
+     <author>Daniel Veillard </author>
      <exports symbol='XSLT_GET_IMPORT_PTR' type='macro'/>
      <exports symbol='XSLT_GET_IMPORT_INT' type='macro'/>
      <exports symbol='xsltNeedElemSpaceHandling' type='function'/>
@@ -92,6 +110,9 @@
      <exports symbol='xsltParseStylesheetInclude' type='function'/>
     </file>
     <file name='keys'>
+     <summary>interface for the key matching used in key() and template matches.</summary>
+     <description>implementation of the key mechanims. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltInitCtxtKeys' type='function'/>
      <exports symbol='xsltFreeKeys' type='function'/>
      <exports symbol='xsltGetKey' type='function'/>
@@ -99,6 +120,9 @@
      <exports symbol='xsltAddKey' type='function'/>
     </file>
     <file name='namespaces'>
+     <summary>interface for the XSLT namespace handling</summary>
+     <description>set of function easing the processing and generation of namespace nodes in XSLT. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltFreeNamespaceAliasHashes' type='function'/>
      <exports symbol='xsltGetSpecialNamespace' type='function'/>
      <exports symbol='xsltCopyNamespaceList' type='function'/>
@@ -107,6 +131,9 @@
      <exports symbol='xsltGetNamespace' type='function'/>
     </file>
     <file name='numbersInternals'>
+     <summary>Implementation of the XSLT number functions</summary>
+     <description>Implementation of the XSLT number functions </description>
+     <author>Bjorn Reese &lt;breese@users.sourceforge.net&gt; and Daniel Veillard </author>
      <exports symbol='xsltFormatNumberInfo' type='typedef'/>
      <exports symbol='xsltNumberData' type='typedef'/>
      <exports symbol='xsltNumberDataPtr' type='typedef'/>
@@ -115,6 +142,9 @@
      <exports symbol='_xsltFormatNumberInfo' type='struct'/>
     </file>
     <file name='pattern'>
+     <summary>interface for the pattern matching used in template matches.</summary>
+     <description>the implementation of the lookup of the right template for a given node must be really fast in order to keep decent performances. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltCompMatch' type='typedef'/>
      <exports symbol='xsltCompMatchPtr' type='typedef'/>
      <exports symbol='xsltNormalizeCompSteps' type='function'/>
@@ -128,12 +158,18 @@
      <exports symbol='xsltTestCompMatchList' type='function'/>
     </file>
     <file name='preproc'>
+     <summary>precomputing stylesheets</summary>
+     <description>this is the compilation phase, where most of the stylesheet is &quot;compiled&quot; into faster to use data. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltExtMarker' type='variable'/>
      <exports symbol='xsltFreeStylePreComps' type='function'/>
      <exports symbol='xsltDocumentComp' type='function'/>
      <exports symbol='xsltStylePreCompute' type='function'/>
     </file>
     <file name='security'>
+     <summary>interface for the libxslt security framework</summary>
+     <description>the libxslt security framework allow to restrict the access to new resources (file or URL) from the stylesheet at runtime. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='XSLT_SECPREF_CREATE_DIRECTORY' type='enum'/>
      <exports symbol='XSLT_SECPREF_WRITE_FILE' type='enum'/>
      <exports symbol='XSLT_SECPREF_READ_NETWORK' type='enum'/>
@@ -156,6 +192,9 @@
      <exports symbol='xsltSecurityForbid' type='function'/>
     </file>
     <file name='templates'>
+     <summary>interface for the template processing</summary>
+     <description>This set of routine encapsulates XPath calls and Attribute Value Templates evaluation. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltEvalStaticAttrValueTemplate' type='function'/>
      <exports symbol='xsltEvalAttrValueTemplate' type='function'/>
      <exports symbol='xsltEvalTemplateString' type='function'/>
@@ -169,6 +208,9 @@
      <exports symbol='xsltEvalXPathString' type='function'/>
     </file>
     <file name='transform'>
+     <summary>the XSLT engine transformation part.</summary>
+     <description>This module implements the bulk of the actual</description>
+     <author>Daniel Veillard </author>
      <exports symbol='xsltValueOf' type='function'/>
      <exports symbol='xsltNumber' type='function'/>
      <exports symbol='xsltRegisterAllElement' type='function'/>
@@ -202,6 +244,9 @@
      <exports symbol='xsltComment' type='function'/>
     </file>
     <file name='variables'>
+     <summary>interface for the variable matching and lookup.</summary>
+     <description>interface for the variable matching and lookup. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='XSLT_REGISTER_VARIABLE_LOOKUP' type='macro'/>
      <exports symbol='xsltFreeGlobalVariables' type='function'/>
      <exports symbol='xsltQuoteUserParams' type='function'/>
@@ -219,6 +264,9 @@
      <exports symbol='xsltVariableLookup' type='function'/>
     </file>
     <file name='xslt'>
+     <summary>Interfaces, constants and types related to the XSLT engine</summary>
+     <description>Interfaces, constants and types related to the XSLT engine </description>
+     <author>Daniel Veillard </author>
      <exports symbol='XSLT_DEFAULT_VERSION' type='macro'/>
      <exports symbol='XSLT_DEFAULT_VENDOR' type='macro'/>
      <exports symbol='XSLT_PARSE_OPTIONS' type='macro'/>
@@ -231,6 +279,9 @@
      <exports symbol='xsltCleanupGlobals' type='function'/>
     </file>
     <file name='xsltInternals'>
+     <summary>internal data structures, constants and functions</summary>
+     <description>Internal data structures, constants and functions used by the XSLT engine. They are not part of the API or ABI, i.e. they can change without prior notice, use carefully. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='CHECK_STOPPED0' type='macro'/>
      <exports symbol='XSLT_PAT_NO_PRIORITY' type='macro'/>
      <exports symbol='XSLT_MAX_SORT' type='macro'/>
@@ -322,6 +373,9 @@
      <exports symbol='xsltParseStylesheetOutput' type='function'/>
     </file>
     <file name='xsltexports'>
+     <summary>macros for marking symbols as exportable/importable.</summary>
+     <description>macros for marking symbols as exportable/importable. </description>
+     <author>Igor Zlatkovic &lt;igor@zlatkovic.com&gt; </author>
      <exports symbol='LIBXSLT_PUBLIC' type='macro'/>
      <exports symbol='XSLTPUBFUN' type='macro'/>
      <exports symbol='XSLTPUBVAR' type='macro'/>
@@ -329,6 +383,9 @@
      <exports symbol='XSLTCALL' type='macro'/>
     </file>
     <file name='xsltutils'>
+     <summary>set of utilities for the XSLT engine</summary>
+     <description>interfaces for the utilities module of the XSLT engine. things like message handling, profiling, and other generally useful routines. </description>
+     <author>Daniel Veillard </author>
      <exports symbol='IS_XSLT_REAL_NODE' type='macro'/>
      <exports symbol='IS_XSLT_ELEM' type='macro'/>
      <exports symbol='XSLT_TRACE' type='macro'/>

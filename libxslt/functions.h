@@ -1,10 +1,10 @@
 /*
- * functions.h: interface for the XSLT extra functions
+ * Summary: interface for the XSLT functions not from XPath
+ * Description: a set of extra functions coming from XSLT but not in XPath
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
- * Bjorn Reese <breese@users.sourceforge.net> for number formatting
+ * Author: Daniel Veillard and Bjorn Reese <breese@users.sourceforge.net>
  */
 
 #ifndef __XML_XSLT_FUNCTIONS_H__

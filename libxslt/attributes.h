@@ -1,9 +1,11 @@
 /*
- * attributes.h: interface for the XSLT attribute handling
+ * Summary: interface for the XSLT attribute handling
+ * Description: this module handles the specificities of attribute
+ *              and attribute groups processing.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_ATTRIBUTES_H__

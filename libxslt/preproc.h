@@ -1,9 +1,11 @@
 /*
- * preproc.h: precomputing data interfaces
+ * Summary: precomputing stylesheets
+ * Description: this is the compilation phase, where most of the
+ *              stylesheet is "compiled" into faster to use data.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_PRECOMP_H__

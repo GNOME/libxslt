@@ -1,3 +1,8 @@
+Mon Dec  1 16:41:27 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/*.h *.h.in: updated the metadata informations in the headers
+	* doc/* doc/html/*: regenerated the docs.
+
 Sun Nov 30 23:25:22 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* doc/Makefile.am: small further enhancement to makefile

@@ -1,9 +1,12 @@
 /*
- * xsltutils.h: interfaces for the utilities module of the XSLT engine.
+ * Summary: set of utilities for the XSLT engine
+ * Description: interfaces for the utilities module of the XSLT engine.
+ *              things like message handling, profiling, and other
+ *              generally useful routines.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLTUTILS_H__

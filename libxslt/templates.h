@@ -1,9 +1,11 @@
 /*
- * templates.h: interface for the template processing
+ * Summary: interface for the template processing
+ * Description: This set of routine encapsulates XPath calls
+ *              and Attribute Value Templates evaluation.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_TEMPLATES_H__

@@ -1,9 +1,10 @@
 /*
- * key.h: interface for the key matching used in template matches.
+ * Summary:  interface for the key matching used in key() and template matches.
+ * Description: implementation of the key mechanims.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_KEY_H__

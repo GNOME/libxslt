@@ -1,9 +1,10 @@
 /*
- * libxslt.h: internal header only used during the compilation of libxslt
+ * Summary: internal header only used during the compilation of libxslt
+ * Description: internal header only used during the compilation of libxslt
  *
- * See COPYRIGHT for the status of this software
+ * Copy: See Copyright for the status of this software.
  *
- * Author: daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XSLT_LIBXSLT_H__

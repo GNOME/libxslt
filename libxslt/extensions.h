@@ -1,9 +1,11 @@
 /*
- * extension.h: interface for the extension support
+ * Summary: interface for the extension support
+ * Description: This provide the API needed for simple and module
+ *              extension support.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_EXTENSION_H__

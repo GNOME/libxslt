@@ -1,9 +1,10 @@
 /*
- * xslt.h: Interfaces, constants and types related to the XSLT engine
+ * Summary: Interfaces, constants and types related to the XSLT engine
+ * Description: Interfaces, constants and types related to the XSLT engine
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_H__

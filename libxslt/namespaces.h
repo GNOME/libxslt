@@ -1,9 +1,11 @@
 /*
- * namespaces.h: interface for the XSLT namespace handling
+ * Summary: interface for the XSLT namespace handling
+ * Description: set of function easing the processing and generation
+ *              of namespace nodes in XSLT.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_NAMESPACES_H__

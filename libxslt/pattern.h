@@ -1,9 +1,12 @@
 /*
- * pattern.h: interface for the pattern matching used in template matches.
+ * Summary: interface for the pattern matching used in template matches.
+ * Description: the implementation of the lookup of the right template
+ *              for a given node must be really fast in order to keep
+ *              decent performances.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_PATTERN_H__

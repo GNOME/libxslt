@@ -1,12 +1,13 @@
 /*
- * xsltInternals.h: internal data structures, constants and functions used
- *                  by the XSLT engine.
- *                  They are not part of the API or ABI, i.e. they can change
- *                  without prior notice, use carefully.
+ * Summary: internal data structures, constants and functions
+ * Description: Internal data structures, constants and functions used
+ *              by the XSLT engine. 
+ *              They are not part of the API or ABI, i.e. they can change
+ *              without prior notice, use carefully.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_INTERNALS_H__

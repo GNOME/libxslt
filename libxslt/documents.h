@@ -1,9 +1,12 @@
 /*
- * document.h: interface for the document handling
+ * Summary: interface for the document handling
+ * Description: implements document loading and cache (multiple
+ *              document() reference for the same resources must
+ *              be equal.
  *
- * See Copyright for the status of this software.
+ * Copy: See Copyright for the status of this software.
  *
- * daniel@veillard.com
+ * Author: Daniel Veillard
  */
 
 #ifndef __XML_XSLT_DOCUMENTS_H__

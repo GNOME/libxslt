@@ -1,3 +1,11 @@
+/*
+ * Summary: Windows configuration header
+ * Description: Windows configuration header
+ *
+ * Copy: See Copyright for the status of this software.
+ *
+ * Author: Igor Zlatkovic
+ */
 #ifndef __LIBXSLT_WIN32_CONFIG__
 #define __LIBXSLT_WIN32_CONFIG__
 
