@@ -1,3 +1,7 @@
+Wed Apr 10 20:35:54 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: applied patch from Mark Vakoc
+
 Fri Mar 29 18:28:23 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-81.xml

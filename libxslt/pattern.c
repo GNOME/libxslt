@@ -650,11 +650,15 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 				(void *) doc;
 			    XSLT_RUNTIME_EXTRA_FREE(ctxt, select->lenExtra) =
 				(xmlFreeFunc) xmlXPathFreeObject;
-			}
+			} else
+			    list = newlist;
 		    }
 		    if ((list->nodesetval == NULL) ||
-			(list->nodesetval->nodeNr <= 0))
+			(list->nodesetval->nodeNr <= 0)) {
+			if (nocache == 1)
+			    xmlXPathFreeObject(list);
 			return(0);
+		    }
 		    /* TODO: store the index and use it for the scan */
 		    if (index == 0) {
 			for (j = 0;j < list->nodesetval->nodeNr;j++) {
