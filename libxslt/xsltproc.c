@@ -66,6 +66,7 @@ xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
 static void usage(const char *name) {
     printf("Usage: %s [options] stylesheet file [file ...]\n", name);
     printf("   Options:\n");
+    printf("      --version or -V: show the version of libxml and libxslt used\n");
     printf("      --verbose or -v: show logs of what's happening\n");
     printf("      --timing: display the time used\n");
     printf("      --repeat: run the transformation 20 times\n");
@@ -79,7 +80,7 @@ static void usage(const char *name) {
 #ifdef LIBXML_DOCB_ENABLED
     printf("      --docbook: the input document is SGML docbook\n");
 #endif
-    printf("      --param name value\n");
+    printf("      --param name value : pass a (parameter,value) pair\n");
     printf("      --nonet refuse to fetch DTDs or entities over network\n");
     printf("      --warnnet warn against fetching over the network\n");
 }
@@ -115,6 +116,11 @@ main(int argc, char **argv) {
 		   (!strcmp(argv[i], "-verbose")) ||
 		   (!strcmp(argv[i], "--verbose"))) {
 	    xsltSetGenericDebugFunc(stderr, NULL);
+	} else if ((!strcmp(argv[i], "-V")) ||
+		   (!strcmp(argv[i], "-version")) ||
+		   (!strcmp(argv[i], "--version"))) {
+	    printf("Using libxml %s and libxslt %s\n",
+		   xmlParserVersion, xsltEngineVersion);
 	} else if ((!strcmp(argv[i], "-repeat")) ||
 		   (!strcmp(argv[i], "--repeat"))) {
 	    if (repeat == 0)

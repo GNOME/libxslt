@@ -39,6 +39,8 @@
 /* #define WITH_XSLT_DEBUG_BLANKS */
 #endif
 
+const char *xsltEngineVersion = LIBXSLT_VERSION_STRING;
+
 /*
  * Useful macros
  */

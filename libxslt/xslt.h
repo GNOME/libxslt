@@ -50,6 +50,12 @@ extern "C" {
  */
 extern int xsltMaxDepth;
 
+/**
+ * xslEngineVersion:
+ *
+ * The version string for libxslt
+ */
+extern const char *xsltEngineVersion;
 #ifdef __cplusplus
 }
 #endif
