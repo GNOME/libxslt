@@ -1602,7 +1602,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    res = htmlNewDoc(doctypeSystem, doctypePublic);
 	    if (res == NULL)
 		goto error;
-	} else if (xmlStrEqual(style->method, (const xmlChar *) "text")) {
+	} else if (xmlStrEqual(method, (const xmlChar *) "text")) {
 	    ctxt->type = XSLT_OUTPUT_TEXT;
 	    res = xmlNewDoc(style->version);
 	    if (res == NULL)
@@ -3189,7 +3189,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             res = htmlNewDoc(doctypeSystem, doctypePublic);
             if (res == NULL)
                 goto error;
-        } else if (xmlStrEqual(style->method, (const xmlChar *) "text")) {
+        } else if (xmlStrEqual(method, (const xmlChar *) "text")) {
             ctxt->type = XSLT_OUTPUT_TEXT;
             res = xmlNewDoc(style->version);
             if (res == NULL)

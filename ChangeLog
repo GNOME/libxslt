@@ -1,3 +1,7 @@
+Sat Aug  4 20:42:32 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: bug fix on output="text" from Nicolas Marsgui
+
 Fri Aug  3 14:23:25 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* tests/general/bug-21-.out tests/general/bug-31-.out:
