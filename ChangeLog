@@ -1,3 +1,8 @@
+Mon Nov 18 11:38:46 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: the python bindings requires libxml2 >= 2.4.25
+	  for the regexp stuff.
+
 Mon Nov 18 10:09:06 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: similar patch to #98825 for --with-python
