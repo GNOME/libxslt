@@ -40,6 +40,7 @@
 #ifdef LIBXML_CATALOG_ENABLED
 #include <libxml/catalog.h>
 #endif
+#include <libxml/parser.h>
 #include <libxml/parserInternals.h>
 #include <libxml/uri.h>
 
@@ -103,6 +104,9 @@ static int profile = 0;
 #define MAX_PARAMETERS 64
 #define MAX_PATHS 64
 
+#if LIBXML_VERSION >= 20600
+static int options = XSLT_PARSE_OPTIONS;
+#endif
 static const char *params[MAX_PARAMETERS + 1];
 static int nbparams = 0;
 static xmlChar *strparams[MAX_PARAMETERS + 1];
@@ -386,12 +390,21 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 		res = xsltApplyStylesheet(cur, doc, params);
 		xmlFreeDoc(res);
 		xmlFreeDoc(doc);
+#if LIBXML_VERSION >= 20600
+#ifdef LIBXML_HTML_ENABLED
+		if (html)
+		    doc = htmlReadFile(filename, NULL, options);
+		else
+#endif
+		    doc = xmlReadFile(filename, NULL, options);
+#else
 #ifdef LIBXML_HTML_ENABLED
 		if (html)
 		    doc = htmlParseFile(filename, NULL);
 		else
 #endif
 		    doc = xmlParseFile(filename);
+#endif
 	    }
 	}
 	ctxt = xsltNewTransformContext(cur, doc);
@@ -539,7 +552,6 @@ main(int argc, char **argv)
 
     LIBXML_TEST_VERSION
 
-    xmlLineNumbersDefault(1);
     sec = xsltNewSecurityPrefs();
     xsltSetDefaultSecurityPrefs(sec);
     defaultEntityLoader = xmlGetExternalEntityLoader();
@@ -723,16 +735,17 @@ main(int argc, char **argv)
     }
     params[nbparams] = NULL;
 
+#if LIBXML_VERSION < 20600
+    /*
+     * The old parser interfaces uses the global variables
+     */
     if (novalid == 0)
         xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
     else
         xmlLoadExtDtdDefaultValue = 0;
-
-
-    /*
-     * Replace entities with their content.
-     */
     xmlSubstituteEntitiesDefault(1);
+    xmlLineNumbersDefault(1);
+#endif
 
     /*
      * Register the EXSLT extensions and the test module
@@ -780,7 +793,11 @@ main(int argc, char **argv)
         if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
             if (timing)
                 startTimer();
+#if LIBXML_VERSION >= 20600
+	    style = xmlReadFile((const char *) argv[i], NULL, options);
+#else
 	    style = xmlParseFile((const char *) argv[i]);
+#endif
             if (timing) 
 		endTimer("Parsing stylesheet %s", argv[i]);
 	    if (style == NULL) {
@@ -814,23 +831,35 @@ main(int argc, char **argv)
         }
     }
 
+#if LIBXML_VERSION < 20600
     /*
+     * The old parser interfaces uses the global variables
      * disable CDATA from being built in the document tree
      */
     xmlDefaultSAXHandlerInit();
     xmlDefaultSAXHandler.cdataBlock = NULL;
+#endif
 
     if ((cur != NULL) && (cur->errors == 0)) {
         for (; i < argc; i++) {
 	    doc = NULL;
             if (timing)
                 startTimer();
+#if LIBXML_VERSION >= 20600
+#ifdef LIBXML_HTML_ENABLED
+            if (html)
+                doc = htmlReadFile(argv[i], NULL, options);
+            else
+#endif
+                doc = xmlReadFile(argv[i], NULL, options);
+#else
 #ifdef LIBXML_HTML_ENABLED
             if (html)
                 doc = htmlParseFile(argv[i], NULL);
             else
 #endif
                 doc = xmlParseFile(argv[i]);
+#endif
             if (doc == NULL) {
                 fprintf(stderr, "unable to parse %s\n", argv[i]);
 		errorno = 6;

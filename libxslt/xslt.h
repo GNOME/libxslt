@@ -44,6 +44,16 @@ extern "C" {
  */
 #define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
 
+#if LIBXML_VERSION >= 20600
+/**
+ * XSLT_PARSE_OPTIONS:
+ *
+ * The set of options to pass to an xmlReadxxx when loading files for
+ * XSLT consumption.
+ */
+#define XSLT_PARSE_OPTIONS \
+ XML_PARSE_NOENT | XML_PARSE_DTDLOAD | XML_PARSE_DTDATTR | XML_PARSE_NOCDATA
+#endif
 /**
  * xsltMaxDepth:
  *

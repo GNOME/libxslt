@@ -107,7 +107,11 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	}
     }
 
-    import = xmlParseFile((const char *)URI);
+#ifdef XSLT_PARSE_OPTIONS
+    import = xmlReadFile((const char *) URI, NULL, XSLT_PARSE_OPTIONS);
+#else
+    import = xmlParseFile((const char *) URI);
+#endif
     if (import == NULL) {
 	xsltTransformError(NULL, style, cur,
 	    "xsl:import : unable to load %s\n", URI);

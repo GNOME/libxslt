@@ -1,3 +1,12 @@
+Fri Oct 31 15:53:45 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/documents.c libxslt/imports.c libxslt/xslt.c libxslt/xslt.h
+	  xsltproc/xsltproc.c: switch to use xmlReadfile instead of
+	  xmlParseFile, this avoid relying on global parser options, far
+	  far cleaner.
+	* tests/XSLTMark/xslbench1.out tests/general/bug-90.out: fixes a
+	  slightly corrected output for CDATA and STYLE element save.
+
 Tue Oct 28 15:30:54 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in python/Makefile.am python/tests/Makefile.am: applied

@@ -2059,7 +2059,11 @@ xsltParseStylesheetFile(const xmlChar* filename) {
 	}
     }
 
+#ifdef XSLT_PARSE_OPTIONS
+    doc = xmlReadFile((const char *) filename, NULL, XSLT_PARSE_OPTIONS);
+#else
     doc = xmlParseFile((const char *) filename);
+#endif
     if (doc == NULL) {
 	xsltTransformError(NULL, NULL, NULL,
 		"xsltParseStylesheetFile : cannot parse %s\n", filename);
@@ -2254,6 +2258,14 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 		subtree = ID->parent;
 		fake = xmlNewDoc(NULL);
 		if (fake != NULL) {
+#if LIBXML_VERSION >= 20600
+                    /*
+		     * the dictionnary should be shared since nodes are
+		     * moved over.
+		     */
+		    fake->dict = doc->dict;
+		    xmlDictReference(doc->dict);
+#endif
 		    xmlUnlinkNode(subtree);
 		    xmlAddChild((xmlNodePtr) fake, subtree);
 		    ret = xsltParseStylesheetDoc(fake);

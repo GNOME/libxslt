@@ -15,7 +15,8 @@
 <META content="TFI Technology Ltd Home of StayAlive, the premier crash protection software." name="DC.Description">
 <META content="TFI Technology" name="DC.Publisher">
 <META content="TFI Technology" name="DC.Contributors">
-<SCRIPT language="JavaScript"> 
+<SCRIPT language="JavaScript">
+ 
 
 	if (document.images)
 	{
@@ -76,6 +77,7 @@ function inact(imgName)
 	}
 }
 //
+
 </SCRIPT>
 </HEAD>
 <BODY background="TFI Technology Products_files/WaterMark.gif" bgColor="#ffffff" bgProperties="fixed"><TABLE border="0" cellPadding="0" cellSpacing="0" height="516" width="125"><TBODY>

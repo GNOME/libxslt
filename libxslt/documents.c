@@ -192,7 +192,11 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 	ret = ret->next;
     }
 
+#ifdef XSLT_PARSE_OPTIONS
+    doc = xmlReadFile((const char *) URI, NULL, XSLT_PARSE_OPTIONS);
+#else
     doc = xmlParseFile((const char *) URI);
+#endif
     if (doc == NULL)
 	return(NULL);
 
@@ -262,7 +266,11 @@ xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
 	ret = ret->next;
     }
 
+#ifdef XSLT_PARSE_OPTIONS
+    doc = xmlReadFile((const char *) URI, NULL, XSLT_PARSE_OPTIONS);
+#else
     doc = xmlParseFile((const char *) URI);
+#endif
     if (doc == NULL)
 	return(NULL);
 
