@@ -11,9 +11,6 @@ Design:
   - seems that saving back XSLT stylesheet from a compiled form might
     be a bit ugly ...
 
-Import:
-
-
 ID and Key support:
   -> done but namespace support in keys is not defined
   -> make sure keys are recomputed on new document input
@@ -35,7 +32,6 @@ Support Attribute value templates:
      a small API redesign
 
 Sorting:
-  -> add support for imbricated sorts
   -> add lang and case-order
   -> add foreign sorting functions (interfaces ?).
 
@@ -93,6 +89,9 @@ Support Attribute value templates:
   -> optimization by checking their existence at stylesheet parse time.
   => done when building the preproc function
 
+Sorting:
+  -> add support for imbricated sorts
+  => done but not well tested.
 
 Separate util module:
   -> macros, config, verbosity ?

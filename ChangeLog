@@ -1,3 +1,9 @@
+Thu May  3 19:02:21 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* TODO configure.in libxslt.spec.in: getting ready for 0.9.0
+	  release
+	* doc/html/* doc/xslt.html: updated and regenerated the docs
+
 Thu May  3 17:56:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* xsltutils.[ch] transform.c: implemented multiple levels of

@@ -121,7 +121,7 @@ NAME="LIBXSLT-XSLTINTERNALS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN3092"
+NAME="AEN3047"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +129,7 @@ NAME="AEN3092"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN3095"
+NAME="AEN3050"
 ></A
 ><H2
 >Synopsis</H2
@@ -144,6 +144,10 @@ CELLPADDING="6"
 CLASS="SYNOPSIS"
 >&#13;
 
+#define     <A
+HREF="libxslt-xsltinternals.html#XSLT-MAX-SORT-CAPS"
+>XSLT_MAX_SORT</A
+>
 enum        <A
 HREF="libxslt-xsltinternals.html#XSLTELEM"
 >xsltElem</A
@@ -171,14 +175,6 @@ HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
 struct      <A
 HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMAT"
 >xsltDecimalFormat</A
->;
-struct      <A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEET"
->xsltStylesheet</A
->;
-typedef     <A
-HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</A
 >;
 struct      <A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXT"
@@ -218,6 +214,14 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 enum        <A
 HREF="libxslt-xsltinternals.html#XSLTSTYLETYPE"
 >xsltStyleType</A
+>;
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEET"
+>xsltStylesheet</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 >;
 enum        <A
 HREF="libxslt-xsltinternals.html#XSLTOUTPUTTYPE"
@@ -372,7 +376,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3157"
+NAME="AEN3113"
 ></A
 ><H2
 >Description</H2
@@ -382,14 +386,40 @@ NAME="AEN3157"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3160"
+NAME="AEN3116"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3162"
+NAME="AEN3118"
+></A
+><H3
+><A
+NAME="XSLT-MAX-SORT-CAPS"
+></A
+>XSLT_MAX_SORT</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define XSLT_MAX_SORT 5</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3123"
 ></A
 ><H3
 ><A
@@ -418,7 +448,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3167"
+NAME="AEN3128"
 ></A
 ><H3
 ><A
@@ -441,7 +471,7 @@ CLASS="PROGRAMLISTING"
     xmlChar *name;	/* the local part of the name QName */
     xmlChar *nameURI;	/* the URI part of the name QName */
     xmlChar *select;	/* the eval string */
-    xmlNodePtr tree;	/* the tree if no eval string */
+    xmlNodePtr tree;	/* the tree if no eval string or the location */
     xmlXPathObjectPtr value; /* The value if computed */
 };</PRE
 ></TD
@@ -453,7 +483,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3172"
+NAME="AEN3133"
 ></A
 ><H3
 ><A
@@ -479,7 +509,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3177"
+NAME="AEN3138"
 ></A
 ><H3
 ><A
@@ -505,7 +535,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3182"
+NAME="AEN3143"
 ></A
 ><H3
 ><A
@@ -542,7 +572,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3187"
+NAME="AEN3148"
 ></A
 ><H3
 ><A
@@ -568,7 +598,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3192"
+NAME="AEN3153"
 ></A
 ><H3
 ><A
@@ -622,7 +652,363 @@ struct _xsltDocument {
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3197"
+NAME="AEN3158"
+></A
+><H3
+><A
+NAME="XSLTTRANSFORMCONTEXT"
+></A
+>struct xsltTransformContext</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltTransformContext {
+    xsltStylesheetPtr style;		/* the stylesheet used */
+    xsltOutputType type;		/* the type of output */
+
+    xsltTemplatePtr  templ;		/* the current template */
+    int              templNr;		/* Nb of templates in the stack */
+    int              templMax;		/* Size of the templtes stack */
+    xsltTemplatePtr *templTab;		/* the template stack */
+
+    xsltStackElemPtr  vars;		/* the current variable list */
+    int               varsNr;		/* Nb of variable list in the stack */
+    int               varsMax;		/* Size of the variable list stack */
+    xsltStackElemPtr *varsTab;		/* the variable list stack */
+
+    /*
+     * Extensions
+     */
+    xmlHashTablePtr   extFunctions;	/* the extension functions */
+    xmlHashTablePtr   extElements;	/* the extension elements */
+
+    const xmlChar *mode;		/* the current mode */
+    const xmlChar *modeURI;		/* the current mode URI */
+
+    xsltDocumentPtr docList;		/* the document list */
+
+    xsltDocumentPtr document;		/* the current document */
+    xmlNodePtr node;			/* the current node being processed */
+    xmlNodeSetPtr nodeList;		/* the current node list */
+    /* xmlNodePtr current;			the node */
+
+    xmlDocPtr output;			/* the resulting document */
+    xmlNodePtr insert;			/* the insertion node */
+
+    xmlXPathContextPtr xpathCtxt;	/* the XPath context */
+    xsltTransformState state;		/* the current state */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3163"
+></A
+><H3
+><A
+NAME="XSLTTRANSFORMCONTEXTPTR"
+></A
+>xsltTransformContextPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltTransformContext *xsltTransformContextPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3168"
+></A
+><H3
+><A
+NAME="XSLTSTYLEPRECOMP"
+></A
+>struct xsltStylePreComp</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltStylePreComp {
+    struct _xsltStylePreComp *next;/* chained list */
+    xsltStyleType type;		/* type of the element */
+    xsltTransformFunction func; /* handling function */
+    xmlNodePtr inst;		/* the instruction */
+
+    /*
+     * Pre computed values
+     */
+
+    xmlChar *stype;             /* sort */
+    int      has_stype;		/* sort */
+    int      number;		/* sort */
+    xmlChar *order;             /* sort */
+    int      has_order;		/* sort */
+    int      descending;	/* sort */
+
+    xmlChar *use;		/* copy, element */
+    int      has_use;		/* copy, element */
+
+    int      noescape;		/* text */
+
+    xmlChar *name;		/* element, attribute, pi */
+    int      has_name;		/* element, attribute, pi */
+    xmlChar *ns;		/* element */
+    int      has_ns;		/* element */
+
+    xmlChar *mode;		/* apply-templates */
+    xmlChar *modeURI;		/* apply-templates */
+
+    xmlChar *test;		/* if */
+
+    xsltTemplatePtr templ;	/* call-template */
+
+    xmlChar *select;		/* sort, copy-of, value-of, apply-templates */
+
+    int      ver11;		/* document */
+    xmlChar *filename;		/* document URL */
+    int      has_filename;	/* document */
+
+    xsltNumberData numdata;	/* number */
+
+    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
+    xmlNsPtr *nsList;		/* the namespaces in scope */
+    int nsNr;			/* the number of namespaces in scope */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3173"
+></A
+><H3
+><A
+NAME="XSLTSTYLEPRECOMPPTR"
+></A
+>xsltStylePreCompPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltStylePreComp *xsltStylePreCompPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3178"
+></A
+><H3
+><A
+NAME="XSLTTRANSFORMFUNCTION"
+></A
+>xsltTransformFunction ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        (*xsltTransformFunction)        (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> inst,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
+>xsltStylePreCompPtr</A
+> comp);</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>inst</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>comp</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&#13;</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3208"
+></A
+><H3
+><A
+NAME="XSLTSTYLETYPE"
+></A
+>enum xsltStyleType</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef enum {
+    XSLT_FUNC_COPY=1,
+    XSLT_FUNC_SORT,
+    XSLT_FUNC_TEXT,
+    XSLT_FUNC_ELEMENT,
+    XSLT_FUNC_ATTRIBUTE,
+    XSLT_FUNC_COMMENT,
+    XSLT_FUNC_PI,
+    XSLT_FUNC_COPYOF,
+    XSLT_FUNC_VALUEOF,
+    XSLT_FUNC_NUMBER,
+    XSLT_FUNC_APPLYIMPORTS,
+    XSLT_FUNC_CALLTEMPLATE,
+    XSLT_FUNC_APPLYTEMPLATES,
+    XSLT_FUNC_CHOOSE,
+    XSLT_FUNC_IF,
+    XSLT_FUNC_FOREACH,
+    XSLT_FUNC_DOCUMENT,
+    XSLT_FUNC_WITHPARAM,
+    XSLT_FUNC_PARAM,
+    XSLT_FUNC_VARIABLE,
+    XSLT_FUNC_WHEN
+} xsltStyleType;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3213"
 ></A
 ><H3
 ><A
@@ -713,6 +1099,13 @@ CLASS="PROGRAMLISTING"
     xmlChar *doctypeSystem;     /* doctype-system string */
     int indent;			/* should output being indented */
     xmlChar *mediaType;		/* media-type string */
+
+    /*
+     * Precomputed blocks
+     */
+    xsltStylePreCompPtr preComps;	/* list of precomputed blocks */
+    int warnings;		/* number of warnings found at compilation */
+    int errors;			/* number of errors found at compilation */
 };</PRE
 ></TD
 ></TR
@@ -723,7 +1116,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3202"
+NAME="AEN3218"
 ></A
 ><H3
 ><A
@@ -749,364 +1142,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3207"
-></A
-><H3
-><A
-NAME="XSLTTRANSFORMCONTEXT"
-></A
->struct xsltTransformContext</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->struct xsltTransformContext {
-    xsltStylesheetPtr style;		/* the stylesheet used */
-    xsltOutputType type;		/* the type of output */
-
-    xsltTemplatePtr  templ;		/* the current template */
-    int              templNr;		/* Nb of templates in the stack */
-    int              templMax;		/* Size of the templtes stack */
-    xsltTemplatePtr *templTab;		/* the template stack */
-
-    xsltStackElemPtr  vars;		/* the current variable list */
-    int               varsNr;		/* Nb of variable list in the stack */
-    int               varsMax;		/* Size of the variable list stack */
-    xsltStackElemPtr *varsTab;		/* the variable list stack */
-
-    /*
-     * Precomputed blocks
-     */
-    xsltStylePreCompPtr preComps;	/* list of precomputed blocks */
-
-    /*
-     * Extensions
-     */
-    xmlHashTablePtr   extFunctions;	/* the extension functions */
-    xmlHashTablePtr   extElements;	/* the extension elements */
-
-    const xmlChar *mode;		/* the current mode */
-    const xmlChar *modeURI;		/* the current mode URI */
-
-    xsltDocumentPtr docList;		/* the document list */
-
-    xsltDocumentPtr document;		/* the current document */
-    xmlNodePtr node;			/* the current node being processed */
-    xmlNodeSetPtr nodeList;		/* the current node list */
-    /* xmlNodePtr current;			the node */
-
-    xmlDocPtr output;			/* the resulting document */
-    xmlNodePtr insert;			/* the insertion node */
-
-    xmlXPathContextPtr xpathCtxt;	/* the XPath context */
-    xsltTransformState state;		/* the current state */
-};</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3212"
-></A
-><H3
-><A
-NAME="XSLTTRANSFORMCONTEXTPTR"
-></A
->xsltTransformContextPtr</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->typedef xsltTransformContext *xsltTransformContextPtr;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3217"
-></A
-><H3
-><A
-NAME="XSLTSTYLEPRECOMP"
-></A
->struct xsltStylePreComp</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->struct xsltStylePreComp {
-    struct _xsltStylePreComp *next;/* chained list */
-    xsltStyleType type;		/* type of the element */
-    xsltTransformFunction func; /* handling function */
-    xmlNodePtr inst;		/* the instruction */
-
-    /*
-     * Pre computed values
-     */
-
-    xmlChar *stype;             /* sort */
-    int      has_stype;		/* sort */
-    int      number;		/* sort */
-    xmlChar *order;             /* sort */
-    int      has_order;		/* sort */
-    int      descending;	/* sort */
-
-    xmlChar *use;		/* copy, element */
-    int      has_use;		/* copy, element */
-
-    int      noescape;		/* text */
-
-    xmlChar *name;		/* element, attribute, pi */
-    int      has_name;		/* element, attribute, pi */
-    xmlChar *ns;		/* element */
-    int      has_ns;		/* element */
-
-    xmlChar *mode;		/* apply-templates */
-    xmlChar *modeURI;		/* apply-templates */
-
-    xmlChar *test;		/* if */
-
-    xsltTemplatePtr templ;	/* call-template */
-
-    xmlChar *select;		/* sort, copy-of, value-of, apply-templates */
-
-    int      ver11;		/* document */
-    xmlChar *filename;		/* document URL */
-    int      has_filename;	/* document */
-
-    xsltNumberData numdata;	/* number */
-
-    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
-    xmlNsPtr *nsList;		/* the namespaces in scope */
-    int nsNr;			/* the number of namespaces in scope */
-};</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3222"
-></A
-><H3
-><A
-NAME="XSLTSTYLEPRECOMPPTR"
-></A
->xsltStylePreCompPtr</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->typedef xsltStylePreComp *xsltStylePreCompPtr;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3227"
-></A
-><H3
-><A
-NAME="XSLTTRANSFORMFUNCTION"
-></A
->xsltTransformFunction ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->void        (*xsltTransformFunction)        (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> inst,
-                                             <A
-HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
->xsltStylePreCompPtr</A
-> comp);</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
->:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->inst</I
-></TT
->:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->comp</I
-></TT
->:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&#13;</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3257"
-></A
-><H3
-><A
-NAME="XSLTSTYLETYPE"
-></A
->enum xsltStyleType</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->typedef enum {
-    XSLT_FUNC_COPY=1,
-    XSLT_FUNC_SORT,
-    XSLT_FUNC_TEXT,
-    XSLT_FUNC_ELEMENT,
-    XSLT_FUNC_ATTRIBUTE,
-    XSLT_FUNC_COMMENT,
-    XSLT_FUNC_PI,
-    XSLT_FUNC_COPYOF,
-    XSLT_FUNC_VALUEOF,
-    XSLT_FUNC_NUMBER,
-    XSLT_FUNC_APPLYIMPORTS,
-    XSLT_FUNC_CALLTEMPLATE,
-    XSLT_FUNC_APPLYTEMPLATES,
-    XSLT_FUNC_CHOOSE,
-    XSLT_FUNC_IF,
-    XSLT_FUNC_FOREACH,
-    XSLT_FUNC_DOCUMENT
-} xsltStyleType;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3262"
+NAME="AEN3223"
 ></A
 ><H3
 ><A
@@ -1136,7 +1172,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3267"
+NAME="AEN3228"
 ></A
 ><H3
 ><A
@@ -1166,7 +1202,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3272"
+NAME="AEN3233"
 ></A
 ><H3
 ><A
@@ -1182,7 +1218,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->#define CHECK_STOPPED if (ctxt-state == XSLT_STATE_STOPPED) return;</PRE
+>#define CHECK_STOPPED if (ctxt-&gt;state == XSLT_STATE_STOPPED) return;</PRE
 ></TD
 ></TR
 ></TABLE
@@ -1192,7 +1228,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3277"
+NAME="AEN3238"
 ></A
 ><H3
 ><A
@@ -1208,7 +1244,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->#define CHECK_STOPPEDE if (ctxt-state == XSLT_STATE_STOPPED) goto error;</PRE
+>#define CHECK_STOPPEDE if (ctxt-&gt;state == XSLT_STATE_STOPPED) goto error;</PRE
 ></TD
 ></TR
 ></TABLE
@@ -1218,7 +1254,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3282"
+NAME="AEN3243"
 ></A
 ><H3
 ><A
@@ -1234,7 +1270,7 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->#define CHECK_STOPPED0 if (ctxt-state == XSLT_STATE_STOPPED) return(0);</PRE
+>#define CHECK_STOPPED0 if (ctxt-&gt;state == XSLT_STATE_STOPPED) return(0);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -1244,7 +1280,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3287"
+NAME="AEN3248"
 ></A
 ><H3
 ><A
@@ -1305,7 +1341,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3303"
+NAME="AEN3264"
 ></A
 ><H3
 ><A
@@ -1356,7 +1392,7 @@ CLASS="PARAMETER"
 ><I
 >filename</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1386,7 +1422,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3324"
+NAME="AEN3285"
 ></A
 ><H3
 ><A
@@ -1439,7 +1475,7 @@ CLASS="PARAMETER"
 ><I
 >sheet</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1454,7 +1490,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3341"
+NAME="AEN3302"
 ></A
 ><H3
 ><A
@@ -1502,7 +1538,7 @@ CLASS="PARAMETER"
 ><I
 >str</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1532,7 +1568,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3361"
+NAME="AEN3322"
 ></A
 ><H3
 ><A
@@ -1585,7 +1621,7 @@ CLASS="PARAMETER"
 ><I
 >elem</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1600,7 +1636,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3378"
+NAME="AEN3339"
 ></A
 ><H3
 ><A
@@ -1656,7 +1692,7 @@ CLASS="PARAMETER"
 ><I
 >sheet</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1673,7 +1709,7 @@ CLASS="PARAMETER"
 ><I
 >name</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1703,7 +1739,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3404"
+NAME="AEN3365"
 ></A
 ><H3
 ><A
@@ -1759,7 +1795,7 @@ CLASS="PARAMETER"
 ><I
 >ret</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1776,7 +1812,7 @@ CLASS="PARAMETER"
 ><I
 >doc</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1806,7 +1842,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3430"
+NAME="AEN3391"
 ></A
 ><H3
 ><A
@@ -1859,7 +1895,7 @@ CLASS="PARAMETER"
 ><I
 >style</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1876,7 +1912,7 @@ CLASS="PARAMETER"
 ><I
 >cur</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1891,7 +1927,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3451"
+NAME="AEN3412"
 ></A
 ><H3
 ><A
@@ -1942,7 +1978,7 @@ CLASS="PARAMETER"
 ><I
 >doc</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1972,7 +2008,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3472"
+NAME="AEN3433"
 ></A
 ><H3
 ><A
@@ -2026,7 +2062,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -2043,7 +2079,7 @@ CLASS="PARAMETER"
 ><I
 >data</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -2060,7 +2096,7 @@ CLASS="PARAMETER"
 ><I
 >node</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -2075,7 +2111,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3497"
+NAME="AEN3458"
 ></A
 ><H3
 ><A
@@ -2136,7 +2172,7 @@ CLASS="PARAMETER"
 ><I
 >self</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -2153,7 +2189,7 @@ CLASS="PARAMETER"
 ><I
 >format</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -2170,7 +2206,7 @@ CLASS="PARAMETER"
 ><I
 >number</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -2187,7 +2223,7 @@ CLASS="PARAMETER"
 ><I
 >result</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"

@@ -154,7 +154,12 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
                                              <GTKDOCLINK
 HREF="XMLXPATHCOMPEXPRPTR"
 >xmlXPathCompExprPtr</GTKDOCLINK
-> comp);
+> comp,
+                                             <GTKDOCLINK
+HREF="XMLNSPTR"
+>xmlNsPtr</GTKDOCLINK
+> *nsList,
+                                             int nsNr);
 <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
@@ -202,9 +207,9 @@ HREF="XMLCHAR"
 HREF="libxslt-templates.html#XSLTEVALSTATICATTRVALUETEMPLATE"
 >xsltEvalStaticAttrValueTemplate</A
 > (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
@@ -303,7 +308,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN630"
+NAME="AEN631"
 ></A
 ><H2
 >Description</H2
@@ -313,14 +318,14 @@ NAME="AEN630"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN633"
+NAME="AEN634"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN635"
+NAME="AEN636"
 ></A
 ><H3
 ><A
@@ -343,7 +348,12 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
                                              <GTKDOCLINK
 HREF="XMLXPATHCOMPEXPRPTR"
 >xmlXPathCompExprPtr</GTKDOCLINK
-> comp);</PRE
+> comp,
+                                             <GTKDOCLINK
+HREF="XMLNSPTR"
+>xmlNsPtr</GTKDOCLINK
+> *nsList,
+                                             int nsNr);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -373,7 +383,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -390,12 +400,52 @@ CLASS="PARAMETER"
 ><I
 >comp</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
 >  the XPath compiled expression</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>nsList</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the namespaces in scope
+<TT
+CLASS="PARAMETER"
+><I
+>int</I
+></TT
+> nsNr:  the number of namespaces in scope</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>nsNr</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
 ></TR
 ><TR
 ><TD
@@ -420,7 +470,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN660"
+NAME="AEN671"
 ></A
 ><H3
 ><A
@@ -481,7 +531,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -498,7 +548,7 @@ CLASS="PARAMETER"
 ><I
 >node</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -515,7 +565,7 @@ CLASS="PARAMETER"
 ><I
 >parent</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -546,7 +596,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN691"
+NAME="AEN702"
 ></A
 ><H3
 ><A
@@ -611,7 +661,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -628,7 +678,7 @@ CLASS="PARAMETER"
 ><I
 >node</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -645,7 +695,7 @@ CLASS="PARAMETER"
 ><I
 >name</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -662,7 +712,7 @@ CLASS="PARAMETER"
 ><I
 >ns</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -693,7 +743,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN727"
+NAME="AEN738"
 ></A
 ><H3
 ><A
@@ -713,9 +763,9 @@ CLASS="PROGRAMLISTING"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 >*    xsltEvalStaticAttrValueTemplate (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
@@ -756,14 +806,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->ctxt</I
+>style</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  the XSLT transformation context</TD
+>  the XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -775,7 +825,7 @@ CLASS="PARAMETER"
 ><I
 >node</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -792,7 +842,7 @@ CLASS="PARAMETER"
 ><I
 >name</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -809,7 +859,7 @@ CLASS="PARAMETER"
 ><I
 >ns</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -826,7 +876,7 @@ CLASS="PARAMETER"
 ><I
 >found</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -857,7 +907,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN767"
+NAME="AEN778"
 ></A
 ><H3
 ><A
@@ -912,7 +962,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -929,7 +979,7 @@ CLASS="PARAMETER"
 ><I
 >comp</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -960,7 +1010,7 @@ caller.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN793"
+NAME="AEN804"
 ></A
 ><H3
 ><A
@@ -1015,7 +1065,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1032,7 +1082,7 @@ CLASS="PARAMETER"
 ><I
 >node</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1062,7 +1112,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN819"
+NAME="AEN830"
 ></A
 ><H3
 ><A
@@ -1121,7 +1171,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1138,7 +1188,7 @@ CLASS="PARAMETER"
 ><I
 >target</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1155,7 +1205,7 @@ CLASS="PARAMETER"
 ><I
 >cur</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1185,7 +1235,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN850"
+NAME="AEN861"
 ></A
 ><H3
 ><A
@@ -1244,7 +1294,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1261,7 +1311,7 @@ CLASS="PARAMETER"
 ><I
 >target</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1278,7 +1328,7 @@ CLASS="PARAMETER"
 ><I
 >attr</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1308,7 +1358,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN881"
+NAME="AEN892"
 ></A
 ><H3
 ><A
@@ -1363,7 +1413,7 @@ CLASS="PARAMETER"
 ><I
 >ctxt</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -1380,7 +1430,7 @@ CLASS="PARAMETER"
 ><I
 >attr</I
 ></TT
->:</TD
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
