@@ -1,3 +1,8 @@
+Wed Feb 18 13:32:55 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c: applied patch from Steve Little to 
+	  display the extension modules.
+
 Wed Feb 18 11:40:23 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: trying to fix an extension regression pointed

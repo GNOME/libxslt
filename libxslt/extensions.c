@@ -1621,6 +1621,16 @@ xsltDebugDumpExtensionsCallback(void* function ATTRIBUTE_UNUSED,
 	fprintf(output,"{%s}%s\n",URI,name);
 }
 
+static void
+xsltDebugDumpExtModulesCallback(void* function ATTRIBUTE_UNUSED,
+	                        FILE *output, const xmlChar* URI,
+				const xmlChar* not_used ATTRIBUTE_UNUSED,
+				const xmlChar* not_used2 ATTRIBUTE_UNUSED) {
+	if (!URI)
+		return;
+	fprintf(output,"%s\n",URI);
+}
+
 /**
  * xsltDebugDumpExtensions:
  * @output:  the FILE * for the output, if NULL stdout is used
@@ -1644,6 +1654,12 @@ xsltDebugDumpExtensions(FILE * output)
 	else {
 		fprintf(output,"\nRegistered Extension Elements:\n");
 		xmlHashScanFull(xsltElementsHash,(xmlHashScannerFull)xsltDebugDumpExtensionsCallback,output);
+ 	}
+	if (!xsltExtensionsHash)
+		fprintf(output,"\nNo registered extension modules\n");
+	else {
+		fprintf(output,"\nRegistered Extension Modules:\n");
+		xmlHashScanFull(xsltExtensionsHash,(xmlHashScannerFull)xsltDebugDumpExtModulesCallback,output);
  	}
 
 }
