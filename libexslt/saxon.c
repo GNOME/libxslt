@@ -180,6 +180,68 @@ exsltSaxonEvaluateFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 /**
+ * exsltSaxonLineNumberFunction:
+ * @ctxt:  an XPath parser context
+ * @nargs: number of arguments
+ * 
+ * Implements the SAXON line-number() function
+ *     integer saxon:line-number()
+ *
+ * This returns the line number of the context node in the source document
+ * within the entity that contains it. There are no arguments. If line numbers
+ * are not maintained for the current document, the function returns -1. (To
+ * ensure that line numbers are maintained, use the -l option on the command
+ * line)
+ *
+ * The extension has been extended to have the following form:
+ *     integer saxon:line-number([node-set-1])
+ * If a node-set is given, this extension will return the line number of the
+ * node in the argument node-set that is first in document order.
+ */
+static void
+exsltSaxonLineNumberFunction(xmlXPathParserContextPtr ctxt, int nargs) {
+    xmlNodePtr cur = NULL;
+
+    if (nargs == 0) {
+	cur = ctxt->context->node;
+    } else if (nargs == 1) {
+	xmlXPathObjectPtr obj;
+	xmlNodeSetPtr nodelist;
+	int i;
+
+	if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_NODESET)) {
+	    xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+		"saxon:line-number() : invalid arg expecting a node-set\n");
+	    ctxt->error = XPATH_INVALID_TYPE;
+	    return;
+	}
+
+	obj = valuePop(ctxt);
+	nodelist = obj->nodesetval;
+	if ((nodelist == NULL) || (nodelist->nodeNr <= 0)) {
+	    xmlXPathFreeObject(obj);
+	    valuePush(ctxt, xmlXPathNewFloat(-1));
+	}
+	cur = nodelist->nodeTab[0];
+	for (i = 1;i < nodelist->nodeNr;i++) {
+	    int ret = xmlXPathCmpNodes(cur, nodelist->nodeTab[i]);
+	    if (ret == -1)
+		cur = nodelist->nodeTab[i];
+	}
+	xmlXPathFreeObject(obj);
+    } else {
+	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+		"saxon:line-number() : invalid number of args %d\n",
+		nargs);
+	ctxt->error = XPATH_INVALID_ARITY;
+	return;
+    }
+
+    valuePush(ctxt, xmlXPathNewFloat(xmlGetLineNo(cur)));
+    return;
+}
+
+/**
  * exsltSaxonRegister:
  *
  * Registers the SAXON extension module
@@ -198,4 +260,7 @@ exsltSaxonRegister (void) {
      xsltRegisterExtModuleFunction((const xmlChar *) "evaluate",
 				   SAXON_NAMESPACE,
 				   exsltSaxonEvaluateFunction);
+    xsltRegisterExtModuleFunction ((const xmlChar *) "line-number",
+				   SAXON_NAMESPACE,
+				   exsltSaxonLineNumberFunction);
 }
