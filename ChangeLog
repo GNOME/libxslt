@@ -1,3 +1,10 @@
+Fri Sep 17 23:15:33 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: enhanced validation of date-time to catch
+	  bit-field overflow (bug 152836)
+	* tests/exslt/date/date.2.*, tests/exslt/time.2.*: added test
+	  cases for above
+
 Tue Sep  7 18:04:55 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/numbers.c: further refinement to UTF8 pattern
