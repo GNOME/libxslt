@@ -1,3 +1,12 @@
+Sun May 20 15:20:49 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/docbook/result/html/external.html 
+	  tests/docbook/result/html/graphics.html
+	  tests/docbook/result/html/gtest.html
+	  tests/docbook/test/external.xml tests/docbook/test/subdoc.ent:
+	  Added a test from coolo for IDs in external parsed entities
+	  and fixed 2 outputs
+
 Sat May 19 22:28:05 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.[ch] libxslt/xsltconfig.h.in libxslt/xsltproc.c:
