@@ -1,3 +1,8 @@
+Mon Nov 25 17:33:48 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/namespaces.c: fix for namespace generation on 
+	  attributes created with xsl:attribute
+
 Mon Nov 25 17:30:02 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.spec.in configure.in: add a line in %changelog for releases
