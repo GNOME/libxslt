@@ -1222,8 +1222,9 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 			moved = 0;
 			next = ns->next;
 			for (i = 0;i < style->exclPrefixNr;i++) {
-			    if (xmlStrEqual(ns->href,
-					    style->exclPrefixTab[i])) {
+			    if ((ns->prefix != NULL) && 
+			        (xmlStrEqual(ns->href,
+					     style->exclPrefixTab[i]))) {
 				/*
 				 * Move the namespace definition on the root
 				 * element to avoid duplicating it without
