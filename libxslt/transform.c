@@ -1792,9 +1792,8 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 	xmlNodePtr copy;
 
 	while (text != NULL) {
-	    if (((text->type != XML_TEXT_NODE) &&
-		 (text->type != XML_CDATA_SECTION_NODE)) ||
-		(text->next != NULL)) {
+	    if ((text->type != XML_TEXT_NODE) &&
+	         (text->type != XML_CDATA_SECTION_NODE)) {
 		xsltGenericError(xsltGenericErrorContext,
 				 "xsl:text content problem\n");
 		break;

@@ -1,3 +1,9 @@
+Mon Jul  9 23:23:50 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: small cleanup
+	* libxslt/transform.c libxslt/xslt.c : patch from Michal Sajdak
+	  for cdata/text handling
+
 Mon Jul  9 22:02:40 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltutils.c: small fix for xsl:message by Stephane GUIBOU

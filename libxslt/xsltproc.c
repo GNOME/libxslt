@@ -245,7 +245,12 @@ main(int argc, char **argv)
         }
     }
     params[nbparams] = NULL;
+
+    /*
+     * Replace entities with their content.
+     */
     xmlSubstituteEntitiesDefault(1);
+
     if (novalid == 0)           /* TODO XML_DETECT_IDS | XML_COMPLETE_ATTRS */
         xmlLoadExtDtdDefaultValue = 6;
     else
@@ -290,6 +295,7 @@ main(int argc, char **argv)
 
         }
     }
+
     /*
      * disable CDATA from being built in the document tree
      */
