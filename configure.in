@@ -342,9 +342,11 @@ if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
     LIBXML_LIBS="../../XML/.libs/libxml2.a -lz"
     DV_LINK="1"
     XSLTPROCDV="xsltproc.dv"
+    PYTHONSODV="_libxslt.so.dv"
 fi
 
 AC_SUBST(XSLTPROCDV)
+AC_SUBST(PYTHONSODV)
 AC_SUBST(XML_CONFIG)
 AC_SUBST(LIBXML_LIBS)
 AC_SUBST(LIBXML_CFLAGS)

@@ -1,4 +1,4 @@
-import libxml2
+from libxml2 import *
 import _libxslt
 
 #

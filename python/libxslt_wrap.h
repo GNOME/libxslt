@@ -34,5 +34,5 @@ typedef struct {
     xsltTransformContextPtr obj;
 } PytransformCtxt_Object;
 
-PyObject * libxslt_xsltTransformContextPtr(xsltTransformContextPtr ctxt);
-PyObject * libxslt_xsltStylesheetPtr(xsltStylesheetPtr ctxt);
+PyObject * libxslt_xsltStylesheetPtrWrap(xsltStylesheetPtr ctxt);
+PyObject * libxslt_xsltTransformContextPtrWrap(xsltTransformContextPtr ctxt);

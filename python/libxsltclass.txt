@@ -27,6 +27,9 @@ cleanupGlobals()
 
 # functions from module xsltInternals
 isBlank()
+loadStylesheetPI()
+newStylesheet()
+parseStylesheetDoc()
 
 # functions from module xsltutils
 calibrateAdjust()
@@ -90,4 +93,59 @@ Class transformCtxt()
 
     # functions from module xsltutils
     message()
+    printErrorContext()
 Class stylesheet()
+
+    # functions from module attributes
+    freeAttributeSetsHashes()
+    parseStylesheetAttributeSet()
+
+    # functions from module documents
+    freeStyleDocuments()
+
+    # functions from module extensions
+    checkExtPrefix()
+    freeExts()
+    registerExtPrefix()
+    shutdownExts()
+
+    # functions from module imports
+    nextImport()
+    parseStylesheetImport()
+    parseStylesheetInclude()
+
+    # functions from module keys
+    addKey()
+    freeKeys()
+
+    # functions from module namespaces
+    freeNamespaceAliasHashes()
+    namespaceAlias()
+
+    # functions from module pattern
+    cleanupTemplates()
+    freeTemplateHashes()
+
+    # functions from module preproc
+    freeStylePreComps()
+    stylePreCompute()
+
+    # functions from module python
+    applyStylesheet()
+
+    # functions from module transform
+    newTransformContext()
+
+    # functions from module variables
+    parseGlobalParam()
+    parseGlobalVariable()
+
+    # functions from module xsltInternals
+    freeStylesheet()
+    parseStylesheetOutput()
+    parseStylesheetProcess()
+    parseTemplateContent()
+
+    # functions from module xsltutils
+    saveResultToFd()
+    saveResultToFilename()

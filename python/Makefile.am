@@ -19,13 +19,17 @@ EXTRA_DIST = 			\
 	$(DOCS)
 
 if WITH_PYTHON
-all: _libxslt.so libxslt.py
+all: _libxslt.so libxslt.py $(PYTHONSODV)
 
 libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
 	cat $(srcdir)/libxsl.py libxsltclass.py > libxslt.py
 
 _libxslt.so: libxslt.o libxslt-py.o types.o
 	$(CC) $(LINK_FLAGS) libxslt.o libxslt-py.o types.o $(LIBS) -o _libxslt.so
+
+_libxslt.so.dv: libxslt.o libxslt-py.o types.o
+	rm -f _libxslt.so
+	$(CC) $(LINK_FLAGS) libxslt.o libxslt-py.o types.o -L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt $(HOME)/XML/python/_libxml.so $(HOME)/XML/.libs/libxml2.a -o _libxslt.so
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(PYTHON_SITE_PACKAGES)

@@ -265,6 +265,8 @@ py_types = {
     'htmlParserCtxt *': ('O', "parserCtxt", "xmlParserCtxtPtr", "xmlParserCtxtPtr", "libxml_"),
     'xsltTransformContextPtr':  ('O', "transformCtxt", "xsltTransformContextPtr", "xsltTransformContextPtr", "libxslt_"),
     'xsltTransformContext *':  ('O', "transformCtxt", "xsltTransformContextPtr", "xsltTransformContextPtr", "libxslt_"),
+    'xsltStylesheetPtr':  ('O', "stylesheet", "xsltStylesheetPtr", "xsltStylesheetPtr", "libxslt_"),
+    'xsltStylesheet *':  ('O', "stylesheet", "xsltStylesheetPtr", "xsltStylesheetPtr", "libxslt_"),
 }
 
 py_return_types = {
@@ -507,13 +509,13 @@ converter_type = {
     "xmlXPathObjectPtr": "xpathObjectRet(%s)",
 }
 
-primary_classes = []
+primary_classes = ["transformCtxt", "stylesheet"]
 
 classes_ancestor = {
 }
 classes_destructors = {
-    "xpathContext": "xmlXPathFreeContext",
-    "parserCtxt": "xmlFreeParserCtxt",
+    "stylesheet": "xsltFreeStylesheet",
+    "transformCtxt": "xsltFreeTransformContext",
 }
 
 function_classes = {}
@@ -607,27 +609,7 @@ for name in functions.keys():
     for type in ctypes:
         classe = classes_type[type][2]
 
-	if name[0:3] == "xml" and len(args) >= 1 and args[0][1] == type:
-	    found = 1
-	    func = nameFixup(name, classe, type, file)
-	    info = (0, func, name, ret, args, file)
-	    function_classes[classe].append(info)
-	elif name[0:3] == "xml" and len(args) >= 2 and args[1][1] == type:
-	    found = 1
-	    func = nameFixup(name, classe, type, file)
-	    info = (1, func, name, ret, args, file)
-	    function_classes[classe].append(info)
-	elif name[0:4] == "html" and len(args) >= 1 and args[0][1] == type:
-	    found = 1
-	    func = nameFixup(name, classe, type, file)
-	    info = (0, func, name, ret, args, file)
-	    function_classes[classe].append(info)
-	elif name[0:4] == "html" and len(args) >= 2 and args[1][1] == type:
-	    found = 1
-	    func = nameFixup(name, classe, type, file)
-	    info = (1, func, name, ret, args, file)
-	    function_classes[classe].append(info)
-	elif name[0:4] == "xslt" and len(args) >= 1 and args[0][1] == type:
+	if name[0:4] == "xslt" and len(args) >= 1 and args[0][1] == type:
 	    found = 1
 	    func = nameFixup(name, classe, type, file)
 	    info = (0, func, name, ret, args, file)
@@ -636,6 +618,11 @@ for name in functions.keys():
 	    found = 1
 	    func = nameFixup(name, classe, type, file)
 	    info = (1, func, name, ret, args, file)
+	    function_classes[classe].append(info)
+	elif name[0:4] == "xslt" and len(args) >= 3 and args[2][1] == type:
+	    found = 1
+	    func = nameFixup(name, classe, type, file)
+	    info = (2, func, name, ret, args, file)
 	    function_classes[classe].append(info)
 	if found == 1:
 	    break

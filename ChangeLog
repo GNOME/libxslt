@@ -1,3 +1,13 @@
+Wed Feb  6 00:20:57 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in python/Makefile.am: attempst to tweak to get
+	  full memory debug...
+	* python/generator.py python/libxsl.py python/libxslt-python-api.xml
+	  python/libxslt.c python/libxslt_wrap.h python/libxsltclass.txt:
+	  the basic API starts to work
+	* python/tests/test.*: first basic test
+	* libxslt/xsltutils.c: fixed a comment
+
 Tue Feb  5 17:35:00 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/Makefile.am: do not install outside of prefix,

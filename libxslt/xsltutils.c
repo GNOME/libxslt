@@ -924,7 +924,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
  * @compression:  the compression factor (0 - 9 included)
  *
  * Save the result @result obtained by applying the @style stylesheet
- * to a file or URL @URL
+ * to a file or @URL
  *
  * Returns the number of byte written or -1 in case of failure.
  */

@@ -5,6 +5,13 @@
     </file>
   </files>
   <symbols>
+    <function name='xsltApplyStylesheet' file='python'>
+      <info>Apply the stylesheet to the document</info>
+      <return type='xmlDocPtr' info="the result document or NULL in case of error"/>
+      <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet'/>
+      <arg name='doc' type='xmlDocPtr' info='a parsed XML document'/>
+      <arg name='params' type='pythonObject' info='the parameters dictionnary'/>
+    </function>
   <!--
     <function name='xsltRegisterXPathFunction' file='python'>
       <info>Register a Python written function to the XPath interpreter</info>

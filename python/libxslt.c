@@ -22,6 +22,42 @@
 
 /************************************************************************
  *									*
+ *			Per type specific glue				*
+ *									*
+ ************************************************************************/
+
+PyObject *
+libxslt_xsltStylesheetPtrWrap(xsltStylesheetPtr style) {
+    PyObject *ret;
+
+#ifdef DEBUG
+    printf("libxslt_xsltStylesheetPtrWrap: style = %p\n", style);
+#endif
+    if (style == NULL) {
+	Py_INCREF(Py_None);
+	return(Py_None);
+    }
+    ret = PyCObject_FromVoidPtrAndDesc((void *) style, "xsltStylesheetPtr", NULL);
+    return(ret);
+}
+
+PyObject *
+libxslt_xsltTransformContextPtrWrap(xsltTransformContextPtr ctxt) {
+    PyObject *ret;
+
+#ifdef DEBUG
+    printf("libxslt_xsltTransformContextPtrWrap: ctxt = %p\n", ctxt);
+#endif
+    if (ctxt == NULL) {
+	Py_INCREF(Py_None);
+	return(Py_None);
+    }
+    ret = PyCObject_FromVoidPtrAndDesc((void *) ctxt, "xsltTransformContextPtr", NULL);
+    return(ret);
+}
+
+/************************************************************************
+ *									*
  *		Memory debug interface					*
  *									*
  ************************************************************************/
@@ -105,6 +141,40 @@ libxslt_xmlDumpMemory(PyObject *self, PyObject *args) {
     return(Py_None);
 }
 
+/************************************************************************
+ *									*
+ *			Some customized front-ends			*
+ *									*
+ ************************************************************************/
+
+PyObject *
+libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
+    PyObject *py_retval;
+    xmlDocPtr c_retval;
+    xsltStylesheetPtr style;
+    PyObject *pyobj_style;
+    xmlDocPtr doc;
+    PyObject *pyobj_doc;
+    PyObject *pyobj_params;
+    char **params;
+
+    if (!PyArg_ParseTuple(args, "OOO:xsltApplyStylesheet", &pyobj_style, &pyobj_doc, &pyobj_params))
+        return(NULL);
+
+    if (pyobj_params != Py_None) {
+	printf("libxslt_xsltApplyStylesheet: parameters not yet supported\n");
+	Py_INCREF(Py_None);
+	return(Py_None);
+    } else {
+	params = NULL;
+    }
+    style = (xsltStylesheetPtr) Pystylesheet_Get(pyobj_style);
+    doc = (xmlDocPtr) PyxmlNode_Get(pyobj_doc);
+
+    c_retval = xsltApplyStylesheet(style, doc, params);
+    py_retval = libxml_xmlDocPtrWrap((xmlDocPtr) c_retval);
+    return(py_retval);
+}
 
 /************************************************************************
  *									*
