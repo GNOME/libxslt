@@ -263,6 +263,22 @@ AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
 
+#
+# Some fun with prelinking :-(
+# try to check if there is already an installed shared lib of the same level
+#
+INSTALLED_XSLT_LIB=""
+if test -e $prefix
+then
+    shared_xslt_lib="$prefix/lib/libxslt.so.$LIBXSLT_MAJOR_VERSION"
+    shared_xslt_la="$prefix/lib/libxslt.la"
+    if test -e $shared_xslt_lib -a -e $shared_xslt_la
+    then
+	INSTALLED_XSLT_LIB="-L$libdir -lxslt"
+    fi
+fi
+AC_SUBST(INSTALLED_XSLT_LIB)
+
 dnl
 dnl In build tree I use a static version with memory debug enabled
 dnl
