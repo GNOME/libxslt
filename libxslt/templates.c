@@ -22,6 +22,7 @@
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "variables.h"
+#include "functions.h"
 #include "templates.h"
 
 #define DEBUG_TEMPLATES

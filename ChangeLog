@@ -1,3 +1,10 @@
+Wed Jan 24 05:33:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.[ch] Makefile.am: added new module functions
+	  with templates for the XSLT functions.
+	* libxslt/variables.h templates.c: added registrations of new
+	  functions when an XPath context is created
+
 Tue Jan 23 17:24:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/Makefile.am: cleanup

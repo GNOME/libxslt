@@ -12,6 +12,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include "xsltInternals.h"
+#include "functions.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,7 +20,8 @@ extern "C" {
 
 #define XSLT_REGISTER_VARIABLE_LOOKUP(ctxt)			\
     xmlXPathRegisterVariableLookup((ctxt)->xpathCtxt,		\
-	       xsltXPathVariableLookup,	(void *)(ctxt)) 
+	       xsltXPathVariableLookup,	(void *)(ctxt));	\
+    xsltRegisterAllFunctions((ctxt)->xpathCtxt)
 
 /*
  * Interfaces for the variable module.
