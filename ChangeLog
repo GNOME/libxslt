@@ -1,3 +1,13 @@
+Sat Nov 23 12:23:32 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/generator.py python/libxslt.c: fixes for compiling
+	  without config.h
+
+Thu Nov 21 18:51:29 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed bug #99168 select evaluating to
+	  a node list check
+
 Thu Nov 21 15:12:33 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/documents/result.xhtml: the XHTML1 serialization change

@@ -473,7 +473,7 @@ def buildStubs():
     export.write("/* Generated */\n\n")
     wrapper = open("libxslt-py.c", "w")
     wrapper.write("/* Generated */\n\n")
-    wrapper.write("#include \"config.h\"\n")
+#    wrapper.write("#include \"config.h\"\n")
     wrapper.write("#include <libxslt/xsltconfig.h>\n")
     wrapper.write("#include \"libxslt_wrap.h\"\n")
     wrapper.write("#include \"libxslt-py.h\"\n\n")

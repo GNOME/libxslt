@@ -12,7 +12,7 @@
  * daniel@veillard.com
  */
 #include <Python.h>
-#include "config.h"
+/* #include "config.h" */
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
