@@ -19,6 +19,7 @@
 #include <libxml/hash.h>
 #include <libxml/xmlerror.h>
 #include <libxml/parserInternals.h>
+#include <libxml/xmlversion.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -80,11 +81,13 @@ xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst,
 		fprintf(stdout, "%s ", cur->name);
 	    else
 		fprintf(stdout, "noname !!!!");
+#ifdef LIBXML_DEBUG_ENABLED
 	    if (cur->value != NULL) {
 		xmlXPathDebugDumpObject(stdout, cur->value, 1);
 	    } else {
 		fprintf(stdout, "NULL !!!!");
 	    }
+#endif
 	    fprintf(stdout, "\n");
 	    cur = cur->next;
 	}

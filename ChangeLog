@@ -1,3 +1,8 @@
+Mon Mar 12 14:43:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/extra.c libxslt/variables.c: fixing compilation
+	  when libxml was compiled without debug support
+
 Sat Mar 10 13:50:16 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in: time for 0.5.0

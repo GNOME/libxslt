@@ -21,6 +21,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/parserInternals.h>
+#include <libxml/xmlversion.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -277,10 +278,12 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	    xmlXPathFreeParserContext(xpathParserCtxt);
 	if (result != NULL) {
 #ifdef DEBUG_VARIABLE
+#ifdef LIBXML_DEBUG_ENABLED
 	    if ((xsltGenericDebugContext == stdout) ||
 		(xsltGenericDebugContext == stderr))
 		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
 					result, 0);
+#endif
 #endif
 	    if (elem->value != NULL)
 		xmlXPathFreeObject(elem->value);
@@ -316,10 +319,12 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 		elem->value = xmlXPathNewCString("");
 	    }
 #ifdef DEBUG_VARIABLE
+#ifdef LIBXML_DEBUG_ENABLED
 	    if ((xsltGenericDebugContext == stdout) ||
 		(xsltGenericDebugContext == stderr))
 		xmlXPathDebugDumpObject((FILE *)xsltGenericDebugContext,
 					elem->value, 0);
+#endif
 #endif
 	}
 	elem->computed = 1;
