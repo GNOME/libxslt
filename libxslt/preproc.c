@@ -343,6 +343,13 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	 */
 	comp->select = xmlStrdup((const xmlChar *)".");
     }
+    comp->comp = xmlXPathCompile(comp->select);
+    if (comp->comp == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsltSortComp: could not compile select expression '%s'\n",
+	                 comp->select);
+	style->errors++;
+    }
 }
 
 /**
@@ -545,6 +552,14 @@ xsltCopyOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:copy-of : select is missing\n");
 	style->errors++;
+	return;
+    }
+    comp->comp = xmlXPathCompile(comp->select);
+    if (comp->comp == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:copy-of : could not compile select expression '%s'\n",
+	                 comp->select);
+	style->errors++;
     }
 }
 
@@ -587,6 +602,14 @@ xsltValueOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     if (comp->select == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:value-of : select is missing\n");
+	style->errors++;
+	return;
+    }
+    comp->comp = xmlXPathCompile(comp->select);
+    if (comp->comp == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:value-of : could not compile select expression '%s'\n",
+	                 comp->select);
 	style->errors++;
     }
 }
@@ -650,12 +673,18 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:param : could not compile select expression '%s'\n",
+			     comp->select);
+	    style->errors++;
+	}
 	if (inst->children != NULL)
 	    xsltGenericError(xsltGenericErrorContext,
 	    "xsl:param : content should be empty since select is present \n");
 	style->warnings++;
     }
-    comp->comp = NULL;
 
     if (prop != NULL)
         xmlFree(prop);
@@ -910,6 +939,15 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
+    if (comp->select != NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+     "xslt:apply-templates : could not compile select expression '%s'\n",
+			     comp->select);
+	    style->errors++;
+	}
+    }
 
     /* TODO: handle (or skip) the xsl:sort and xsl:with-param */
 }
@@ -960,6 +998,13 @@ xsltIfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	style->errors++;
 	return;
     }
+    comp->comp = xmlXPathCompile(comp->test);
+    if (comp->comp == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:if : could not compile test expression '%s'\n",
+	                 comp->test);
+	style->errors++;
+    }
 }
 
 /**
@@ -988,6 +1033,13 @@ xsltWhenComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	style->errors++;
 	return;
     }
+    comp->comp = xmlXPathCompile(comp->test);
+    if (comp->comp == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsl:when : could not compile test expression '%s'\n",
+	                 comp->test);
+	style->errors++;
+    }
 }
 
 /**
@@ -1011,7 +1063,19 @@ xsltForEachComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 
     comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
-
+    if (comp->select == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+		"xslt:for-each : select is missing\n");
+	style->errors++;
+    } else {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+     "xslt:for-each : could not compile select expression '%s'\n",
+			     comp->select);
+	    style->errors++;
+	}
+    }
     /* TODO: handle and skip the xsl:sort */
 }
 
@@ -1073,6 +1137,13 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:variable : could not compile select expression '%s'\n",
+			     comp->select);
+	    style->errors++;
+	}
 	if (inst->children != NULL)
 	    xsltGenericError(xsltGenericErrorContext,
 	"xsl:variable : content should be empty since select is present \n");
@@ -1145,9 +1216,16 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
+	comp->comp = xmlXPathCompile(comp->select);
+	if (comp->comp == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:param : could not compile select expression '%s'\n",
+			     comp->select);
+	    style->errors++;
+	}
 	if (inst->children != NULL)
 	    xsltGenericError(xsltGenericErrorContext,
-	"xsl:variable : content should be empty since select is present \n");
+	"xsl:param : content should be empty since select is present \n");
 	style->warnings++;
     }
 

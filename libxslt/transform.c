@@ -1696,14 +1696,12 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
-
-    if (comp->select == NULL)
+    if ((comp == NULL) || (comp->select == NULL) || (comp->comp == NULL)) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsl:copy-of : compilation have failed\n");
 	return;
-    if (comp->comp == NULL) {
-	comp->comp = xmlXPathCompile(comp->select);
-	if (comp->comp == NULL)
-	    return;
     }
+
 #ifdef WITH_XSLT_DEBUG_PROCESS
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltCopyOf: select %s\n", comp->select);
@@ -1796,15 +1794,12 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr copy = NULL;
     int oldProximityPosition, oldContextSize;
 
-    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
-
-    if (comp->select == NULL)
+    if ((comp == NULL) || (comp->select == NULL) || (comp->comp == NULL)) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsl:value-of : compilation have failed\n");
 	return;
-    if (comp->comp == NULL) {
-	comp->comp = xmlXPathCompile(comp->select);
-	if (comp->comp == NULL)
-	    return;
     }
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -2014,9 +2009,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (comp->select != NULL) {
 	if (comp->comp == NULL) {
-	    comp->comp = xmlXPathCompile(comp->select);
-	    if (comp->comp == NULL)
-		goto error;
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:apply-templates : compilation had failed\n");
+	    goto error;
 	}
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
@@ -2221,30 +2216,25 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     }
     while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when"))) {
-	xmlXPathCompExprPtr xpathComp;
-        /* TODO: build a prexpathCompiled block for when too ! */
-	when = replacement;
-	prop = xmlGetNsProp(when, (const xmlChar *)"test", XSLT_NAMESPACE);
-	if (prop == NULL) {
+	xsltStylePreCompPtr wcomp = replacement->_private;
+
+	if ((wcomp == NULL) || (wcomp->test == NULL) || (wcomp->comp == NULL)) {
 	    xsltGenericError(xsltGenericErrorContext,
-		 "xsl:when: test is not defined\n");
-	    return;
+		 "xsl:when: compilation failed !\n");
+	    goto error;
 	}
+	when = replacement;
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsl:when: test %s\n", prop);
+	     "xsl:when: test %s\n", wcomp->test);
 #endif
 
-	xpathComp = xmlXPathCompile(prop);
-	if (xpathComp == NULL)
-	    goto error;
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
   	ctxt->xpathCtxt->node = node;
 	ctxt->xpathCtxt->namespaces = comp->nsList;
 	ctxt->xpathCtxt->nsNr = comp->nsNr;
-  	res = xmlXPathCompiledEval(xpathComp, ctxt->xpathCtxt);
-	xmlXPathFreeCompExpr(xpathComp);
+  	res = xmlXPathCompiledEval(wcomp->comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	if (res != NULL) {
@@ -2319,20 +2309,12 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int doit = 1;
     int oldContextSize, oldProximityPosition;
 
-    if (comp == NULL) {
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return;
+    if ((comp == NULL) || (comp->test == NULL) || (comp->comp == NULL)) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:if : compilation had failed\n");
+	     "xsl:if : compilation have failed\n");
 	return;
-    }
-    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
-	return;
-
-    if (comp->test == NULL)
-	return;
-    if (comp->comp == NULL) {
-	comp->comp = xmlXPathCompile(comp->test);
-	if (comp->comp == NULL)
-	    return;
     }
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -2397,20 +2379,12 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int nbsorts = 0;
     xmlNodePtr sorts[XSLT_MAX_SORT];
 
-    if (comp == NULL) {
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return;
+    if ((comp == NULL) || (comp->select == NULL) || (comp->comp == NULL)) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:for-each : compilation had failed\n");
 	return;
-    }
-    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
-	return;
-
-    if (comp->select == NULL)
-	return;
-    if (comp->comp == NULL) {
-	comp->comp = xmlXPathCompile(comp->select);
-	if (comp->comp == NULL)
-	    return;
     }
 
 #ifdef WITH_XSLT_DEBUG_PROCESS

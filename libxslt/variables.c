@@ -263,12 +263,8 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	xmlXPathCompExprPtr comp = NULL;
 	xmlXPathObjectPtr result;
 
-	if (precomp != NULL) {
+	if ((precomp != NULL) && (precomp->comp != NULL)) {
 	    comp = precomp->comp;
-	    if (comp == NULL) {
-		comp = xmlXPathCompile(elem->select);
-		precomp->comp = comp;
-	    }
 	} else {
 	    comp = xmlXPathCompile(elem->select);
 	}
@@ -283,7 +279,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
-	if (precomp == NULL)
+	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,

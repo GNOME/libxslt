@@ -33,6 +33,7 @@ struct _xsltExtDef {
     struct _xsltExtDef *next;
     xmlChar *prefix;
     xmlChar *URI;
+    void    *data;
 };
 
 /************************************************************************
