@@ -1,6 +1,6 @@
 AC_INIT(libxslt/xslt.c)
 
-VERSION=0.0
+VERSION=0.0.1
 PACKAGE=libxslt
 
 AM_CONFIG_HEADER(config.h)

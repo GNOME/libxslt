@@ -3,7 +3,7 @@
 %define prefix   /usr
 
 Summary: Library providing XSLT support
-Name: libxstl
+Name: libxslt
 Version: %ver
 Release: 1
 Copyright: LGPL

@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+SUBDIRS=REC1 REC2
+
 INCLUDES = -I$(srcdir) -I$(top_srcdir)/libxslt \
 	$(LIBXML_CFLAGS) -Wall -ansi
 

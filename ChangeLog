@@ -1,3 +1,9 @@
+Mon Jan 22 23:35:57 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am libxslt.spec.in libxslt/Makefile.am tests/Makefile.am:
+	  prepared the Makefiles and spec files for a first release.
+	* COPYING.LIB: added LGPL Licence
+
 Mon Jan 22 22:36:43 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c: applied cleanup patch from Bjorn Reese
