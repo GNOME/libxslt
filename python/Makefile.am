@@ -27,8 +27,6 @@ mylibs = \
 	$(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la
 
-all: libxsltmod.so libxslt.py $(PYTHONSODV)
-
 LDADD = -lxslt -lexslt
 CFLAGS = -Wall -g
 
@@ -39,9 +37,18 @@ libxsltmod_so_SOURCES =
 libxsltmod_so_LDFLAGS = $(mylibs) $(LIBS) -shared -Wl,-soname,libxsltmod.so
 
 noinst_LTLIBRARIES = libxsltmodule.la
-libxsltmodule_la_SOURCES = libxslt.c types.c libxslt-py.c
+libxsltmodule_la_SOURCES = $(srcdir)/libxslt.c $(srcdir)/types.c $(srcdir)/libxslt-py.c
 
-libxsltmod.so: $(libxsltmodule_la_OBJECTS)
+GENERATE = generator.py
+API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml
+GENERATED= $(srcdir)/libxsltclass.py \
+           $(srcdir)/libxslt-export.c \
+	   $(srcdir)/libxslt-py.c \
+	   $(srcdir)/libxslt-py.h
+
+all: $(GENERATED) libxsltmod.so libxslt.py $(PYTHONSODV)
+
+libxsltmod.so: $(libxsltmodule_la_OBJECTS) libxsltmodule.la
 	-(rm -f .libs/libxsltmod.so; \
 	  $(LINK) -o $@ $(libxsltmodule_la_OBJECTS) $(libxsltmod_so_LDFLAGS);\
 	  if [ -r .libs/libxsltmod.so ] ; then cp .libs/libxsltmod.so . ; fi)
@@ -56,13 +63,6 @@ install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(DOCS_DIR)
 	-@(for doc in $(DOCS) ; \
 	   do @INSTALL@ -m 0644 $$doc $(DESTDIR)$(DOCS_DIR) ; done)
-
-GENERATE = generator.py
-API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml
-GENERATED= $(srcdir)/libxsltclass.py \
-           $(srcdir)/libxslt-export.c \
-	   $(srcdir)/libxslt-py.c \
-	   $(srcdir)/libxslt-py.h
 
 $(GENERATED): $(srcdir)/$(GENERATE) $(API_DESC)
 	cd $(srcdir) && $(PYTHON) $(GENERATE)

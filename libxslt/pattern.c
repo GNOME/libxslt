@@ -268,6 +268,9 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	comp->steps[comp->nbStep].lenExtra =
 	    xsltAllocateExtra(ctxt->style);
     }
+    if (op == XSLT_OP_PREDICATE) {
+	comp->steps[comp->nbStep].comp = xmlXPathCompile(value);
+    }
     comp->nbStep++;
     return (0);
 }
@@ -286,6 +289,7 @@ xsltSwapTopCompMatch(xsltCompMatchPtr comp) {
     if (j > 0) {
 	register xmlChar *tmp;
 	register xsltOp op;
+	register xmlXPathCompExprPtr expr; 
 	i = j - 1;
 	tmp = comp->steps[i].value;
 	comp->steps[i].value = comp->steps[j].value;
@@ -296,6 +300,9 @@ xsltSwapTopCompMatch(xsltCompMatchPtr comp) {
 	op = comp->steps[i].op;
 	comp->steps[i].op = comp->steps[j].op;
 	comp->steps[j].op = op;
+	expr = comp->steps[i].comp;
+	comp->steps[i].comp = comp->steps[j].comp;
+	comp->steps[j].comp = expr;
     }
 }
 
@@ -313,6 +320,7 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
     while (j > i) {
 	register xmlChar *tmp;
 	register xsltOp op;
+	register xmlXPathCompExprPtr expr; 
 	tmp = comp->steps[i].value;
 	comp->steps[i].value = comp->steps[j].value;
 	comp->steps[j].value = tmp;
@@ -322,6 +330,9 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
 	op = comp->steps[i].op;
 	comp->steps[i].op = comp->steps[j].op;
 	comp->steps[j].op = op;
+	expr = comp->steps[i].comp;
+	comp->steps[i].comp = comp->steps[j].comp;
+	comp->steps[j].comp = expr;
 	j--;
 	i++;
     }
@@ -800,22 +811,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 
 		if (step->value == NULL)
 		    goto wrong_index;
+		if (step->comp == NULL)
+		    goto wrong_index;
 
-		if (step->comp == NULL) {
-		    step->comp = xmlXPathCompile(step->value);
-		    if (step->comp == NULL)
-			goto wrong_index;
-		}
-		if (comp->nsList == NULL) {
-		    int j = 0;
-
-		    comp->nsList = xmlGetNsList(node->doc, node);
-		    if (comp->nsList != NULL) {
-			while (comp->nsList[j] != NULL)
-			    j++;
-		    }
-		    comp->nsNr = j;
-		}
 		if (!xsltEvalXPathPredicate(ctxt, step->comp, comp->nsList,
 			                    comp->nsNr))
 		    goto wrong_index;
@@ -1618,7 +1616,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 		   xsltTransformContextPtr runtime) {
     xsltParserContextPtr ctxt = NULL;
     xsltCompMatchPtr element, first = NULL, previous = NULL;
-    int current, start, end, level;
+    int current, start, end, level, j;
 
     if (pattern == NULL) {
 	xsltPrintErrorContext(NULL, NULL, node); /* TODO */
@@ -1677,6 +1675,14 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	    goto error;
 	ctxt->cur = &(ctxt->base)[current - start];
 	element->pattern = ctxt->base;
+	element->nsList = xmlGetNsList(doc, node);
+	j = 0;
+	if (element->nsList != NULL) {
+	    while (element->nsList[j] != NULL)
+		j++;
+	}
+	element->nsNr = j;
+
 
 #ifdef WITH_XSLT_DEBUG_PATTERN
 	xsltGenericDebug(xsltGenericDebugContext,

@@ -1,3 +1,12 @@
+Fri Mar  8 14:51:59 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: Fixes the problems exposed by #73880
+	  those ought to be computed at stylesheet compile time, not
+	  at run-time, and the computation was wrong.
+	* libxslt/transform.c: get rid of fake nodes coming from node-set
+          transformations. At least if they are still produced they will
+	  become easy to spot as resulting document won't be well-formed.
+
 Thu Mar  7 17:01:21 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c: fixed bug #73791 related to extension

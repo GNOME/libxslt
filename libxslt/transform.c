@@ -654,6 +654,13 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
         case XML_XINCLUDE_END:
             return(NULL);
     }
+    if (xmlStrEqual(node->name, (const xmlChar *) "fake node libxslt")) {
+	if (node->children != NULL)
+	    copy = xsltCopyTreeList(ctxt, node->children, insert);
+	else
+	    copy = NULL;
+	return(copy);
+    }
     copy = xmlCopyNode(node, 0);
     copy->doc = ctxt->output;
     if (copy != NULL) {
@@ -1009,6 +1016,16 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
 
+    if (xmlStrEqual(node->name, BAD_CAST "fake node libxslt")) {
+	xmlNodePtr children;
+
+	children = node->children;
+	while (children != NULL) {
+	    xsltProcessOneNode(ctxt, children, params);
+	    children = children->next;
+	}
+	return;
+    }
     template = xsltGetTemplate(ctxt, node, NULL);
     /*
      * If no template is found, apply the default rule.
@@ -1951,6 +1968,9 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    case XML_HTML_DOCUMENT_NODE:
 		break;
 	    case XML_ELEMENT_NODE:
+		if (xmlStrEqual(node->name, BAD_CAST "fake node libxslt"))
+		    return;
+
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
 				 "xsltCopy: node %s\n", node->name);
@@ -2717,9 +2737,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			}
 		    }
 		    /* no break on purpose */
+		case XML_ELEMENT_NODE:
 		case XML_DOCUMENT_NODE:
 		case XML_HTML_DOCUMENT_NODE:
-		case XML_ELEMENT_NODE:
 		case XML_CDATA_SECTION_NODE:
 		case XML_PI_NODE:
 		case XML_COMMENT_NODE:
