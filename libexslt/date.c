@@ -51,8 +51,8 @@
 
 /* needed to get localtime_r on Solaris */
 #ifdef sun
-#ifndef __EXTENSION__
-#define __EXTENSION__
+#ifndef __EXTENSIONS__
+#define __EXTENSIONS__
 #endif
 #endif
 

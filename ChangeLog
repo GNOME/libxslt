@@ -1,3 +1,8 @@
+Mon Aug 23 16:53:02 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.c libxslt/imports.c libxslt/xslt.c: fixing 
+	  compilation problems on Solaris #150844
+
 Sun Aug 22 17:19:49 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in NEWS doc/*: preparing release of 1.1.9
