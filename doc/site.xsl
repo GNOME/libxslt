@@ -150,7 +150,8 @@
     <ul>
       <xsl:choose>
         <xsl:when test="$dirname = ''">
-      <li><a href="{$href_base}tutorial/libxslttutorial.html">Tutorial</a></li>
+      <li><a href="{$href_base}tutorial/libxslttutorial.html">Tutorial</a>,
+          <a href="{$href_base}tutorial2/libxslt_pipes.html">Tutorial2</a></li>
       <li><a href="{$href_base}xsltproc.html">Man page for xsltproc</a></li>
         </xsl:when>
       </xsl:choose>
