@@ -20,7 +20,7 @@ var baseNameExslt = "libexslt";
 /* Configure file which contains the version and the output file where
    we can store our build configuration. */
 var configFile = baseDir + "\\configure.in";
-var versionFile = ".\\configure.txt";
+var versionFile = ".\\config.msvc";
 /* Input and output files regarding the lib(e)xml features. The second
    output file is there for the compatibility reasons, otherwise it
    is identical to the first. */
@@ -39,11 +39,13 @@ var verMajorExslt;
 var verMinorExslt;
 var verMicroExslt;
 /* Libxslt features. */
+var withTrio = false;
 var withXsltDebug = true;
 var withMemDebug = false;
 var withDebugger = true;
 var withIconv = true;
 /* Win32 build options. */
+var compiler = "msvc";
 var buildDebug = 0;
 var buildStatic = 0;
 var buildPrefix = ".";
@@ -61,11 +63,11 @@ var error = 0;
 function boolToStr(opt)
 {
 	if (opt == false)
-		return "Disabled";
+		return "no";
 	else if (opt == true)
-		return "Enabled";
+		return "yes";
 	error = 1;
-	return "Undefined";
+	return "*** undefined ***";
 }
 
 /* Helper function, transforms the argument string into the boolean
@@ -90,11 +92,13 @@ function usage()
 	txt += "Options can be specified in the form <option>=<value>, where the value is\n";
 	txt += "either 'yes' or 'no'.\n\n";
 	txt += "XSLT processor options, default value given in parentheses:\n\n";
+	txt += "  trio:       Enable TRIO string manipulator (" + (withTrio? "yes" : "no")  + ")\n";
 	txt += "  xslt_debug: Enable XSLT debbugging module (" + (withXsltDebug? "yes" : "no")  + ")\n";
 	txt += "  mem_debug:  Enable memory debugger (" + (withMemDebug? "yes" : "no")  + ")\n";
 	txt += "  debugger:   Enable external debugger support (" + (withDebugger? "yes" : "no")  + ")\n";
 	txt += "  iconv:      Use iconv library (" + (withIconv? "yes" : "no")  + ")\n";
 	txt += "\nWin32 build options, default value given in parentheses:\n\n";
+	txt += "  compiler:   Compiler to be used [msvc|mingw] (" + compiler + ")\n";
 	txt += "  debug:      Build unoptimised debug executables (" + (buildDebug? "yes" : "no")  + ")\n";
 	txt += "  static:     Link xsltproc statically to libxslt (" + (buildStatic? "yes" : "no")  + ")\n";
 	txt += "  prefix:     Base directory for the installation (" + buildPrefix + ")\n";
@@ -121,6 +125,10 @@ function discoverVersion()
 	var fso, cf, vf, ln, s;
 	fso = new ActiveXObject("Scripting.FileSystemObject");
 	cf = fso.OpenTextFile(configFile, 1);
+	if (compiler == "msvc")
+		versionFile = ".\\config.msvc";
+	else if (compiler == "mingw")
+		versionFile = ".\\config.mingw";
 	vf = fso.CreateTextFile(versionFile, true);
 	vf.WriteLine("# " + versionFile);
 	vf.WriteLine("# This file is generated automatically by " + WScript.ScriptName + ".");
@@ -154,6 +162,7 @@ function discoverVersion()
 	vf.WriteLine("EXSLT_SRCDIR=" + srcDirExslt);
 	vf.WriteLine("UTILS_SRCDIR=" + srcDirUtils);
 	vf.WriteLine("BINDIR=" + binDir);
+	vf.WriteLine("WITH_TRIO=" + (withTrio? "1" : "0"));
 	vf.WriteLine("WITH_DEBUG=" + (withXsltDebug? "1" : "0"));
 	vf.WriteLine("WITH_MEM_DEBUG=" + (withMemDebug? "1" : "0"));
 	vf.WriteLine("WITH_DEBUGGER=" + (withDebugger? "1" : "0"));
@@ -165,8 +174,13 @@ function discoverVersion()
 	vf.WriteLine("INCPREFIX=" + buildIncPrefix);
 	vf.WriteLine("LIBPREFIX=" + buildLibPrefix);
 	vf.WriteLine("SOPREFIX=" + buildSoPrefix);
-	vf.WriteLine("INCLUDE=$(INCLUDE);" + buildInclude);
-	vf.WriteLine("LIB=$(LIB);" + buildLib);
+	if (compiler == "msvc") {
+		vf.WriteLine("INCLUDE=$(INCLUDE);" + buildInclude);
+		vf.WriteLine("LIB=$(LIB);" + buildLib);
+	} else if (compiler == "mingw") {
+		vf.WriteLine("INCLUDE+=;" + buildInclude);
+		vf.WriteLine("LIB+=;" + buildLib);
+	}
 	vf.Close();
 }
 
@@ -187,6 +201,8 @@ function configureXslt()
 		} else if (s.search(/\@LIBXSLT_VERSION_NUMBER\@/) != -1) {
 			of.WriteLine(s.replace(/\@LIBXSLT_VERSION_NUMBER\@/, 
 				verMajorXslt*10000 + verMinorXslt*100 + verMicroXslt*1));
+		} else if (s.search(/\@WITH_TRIO\@/) != -1) {
+			of.WriteLine(s.replace(/\@WITH_TRIO\@/, withTrio? "1" : "0"));
 		} else if (s.search(/\@WITH_XSLT_DEBUG\@/) != -1) {
 			of.WriteLine(s.replace(/\@WITH_XSLT_DEBUG\@/, withXsltDebug? "1" : "0"));
 		} else if (s.search(/\@WITH_MEM_DEBUG\@/) != -1) {
@@ -302,6 +318,8 @@ for (i = 0; (i < WScript.Arguments.length) && (error == 0); i++) {
 			buildDebug = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "iconv")
 			buildIconv = strToBool(arg.substring(opt.length + 1, arg.length));
+		else if (opt == "compiler")
+			compiler = arg.substring(opt.length + 1, arg.length);
 		else if (opt == "static")
 			buildStatic = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "prefix")
@@ -366,12 +384,16 @@ if (error != 0) {
 
 // Create the Makefile.
 var fso = new ActiveXObject("Scripting.FileSystemObject");
-fso.CopyFile(".\\Makefile.msvc", ".\\Makefile", true);
+var makefile = ".\\Makefile.msvc";
+if (compiler == "mingw")
+	makefile = ".\\Makefile.mingw";
+fso.CopyFile(makefile, ".\\Makefile", true);
 WScript.Echo("Created Makefile.");
 
 // Display the final configuration.
 var txtOut = "\nXSLT processor configuration\n";
 txtOut += "----------------------------\n";
+txtOut += "              Trio: " + boolToStr(withTrio) + "\n";
 txtOut += "  Debugging module: " + boolToStr(withXsltDebug) + "\n";
 txtOut += "  Memory debugging: " + boolToStr(withMemDebug) + "\n";
 txtOut += "  Debugger support: " + boolToStr(withDebugger) + "\n";
@@ -379,6 +401,7 @@ txtOut += "         Use iconv: " + boolToStr(withIconv) + "\n";
 txtOut += "\n";
 txtOut += "Win32 build configuration\n";
 txtOut += "-------------------------\n";
+txtOut += "          Compiler: " + compiler + "\n";
 txtOut += "     Debug symbols: " + boolToStr(buildDebug) + "\n";
 txtOut += "   Static xsltproc: " + boolToStr(buildStatic) + "\n";
 txtOut += "    Install prefix: " + buildPrefix + "\n";
