@@ -4174,14 +4174,24 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
             XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
             if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
+	        xmlNodePtr last;
 		/* Need a small "hack" here to assure DTD comes before
 		   possible comment nodes */
 		node = res->children;
+		last = res->last;
 		res->children = NULL;
+		res->last = NULL;
                 res->intSubset = xmlCreateIntSubset(res, doctype,
                                                     doctypePublic,
                                                     doctypeSystem);
-		res->children->next = node;
+		if (res->children != NULL) {
+		    res->children->next = node;
+		    node->prev = res->children;
+		    res->last = last;
+		} else {
+		    res->children = node;
+		    res->last = last;
+		}
 	    }
         }
     }

@@ -1,3 +1,8 @@
+Thu Oct  7 16:15:15 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed a problem of tree structure raised
+	  by the new libxml2 tree checking code.
+
 Thu Sep 30 11:28:03 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: fixed problem with negative periods
