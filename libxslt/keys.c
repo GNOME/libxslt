@@ -318,8 +318,8 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 		    xsltTransformError(NULL, style, inst,
 		                       "key pattern is malformed: %s",
 				       key->match);
-	    }
-	    end++;
+	    } else
+		end++;
 	}
 	if (current == end) {
 	    xsltTransformError(NULL, style, inst,

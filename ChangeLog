@@ -1,9 +1,17 @@
+Thu Nov 20 10:59:48 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c: fixed an error from #120684 patch raised in
+	  #127450
+	* tests/docs/Makefile.am tests/docs/bug-134.xml
+	  tests/general/Makefile.am tests/docs/bug-134*: added tests
+	  to the regression suite for bug #127450.
+	
 Thu Nov 20 00:22:14 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c: fixed a bug in the keys selector parsing
 	  #120684 when | is in a predicate or a string.
-	* tests/docs/Makefile.am tests/docs/bug-132.xml
-	  tests/general/Makefile.am tests/docs/bug-132*: added tests
+	* tests/docs/Makefile.am tests/docs/bug-133.xml
+	  tests/general/Makefile.am tests/docs/bug-133*: added tests
 	  to the regression suite for bug #120684.
 	* Makefile.am: don't package cvs temp files
 	* doc/apibuild.py: update from libxml2 one
