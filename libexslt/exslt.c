@@ -27,5 +27,6 @@ exsltRegisterAll (void) {
     exsltSetsRegister();
     exsltFuncRegister();
     exsltStrRegister();
+    exsltDateRegister();
 }
 

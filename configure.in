@@ -95,7 +95,7 @@ AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, pow,
 AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, pow,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
 AC_CHECK_FUNCS(gettimeofday)
-AC_CHECK_FUNCS(mktime localtime asctime)
+AC_CHECK_FUNCS(mktime localtime asctime time gmtime)
 
 dnl
 dnl Perl is just needed for generating some data for XSLtmark

@@ -18,7 +18,8 @@ libexslt_la_SOURCES =                   \
 	math.c				\
 	sets.c				\
 	functions.c			\
-	strings.c
+	strings.c			\
+	date.c
 
 libexslt_la_LIBADD = $(EXTRA_LIBS)
 libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@
