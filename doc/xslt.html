@@ -207,9 +207,8 @@ platform, get in touch with me to upload the package. I will keep them in the
     href="http://developer.gnome.org/tools/cvs.html">Gnome CVS Tools</a>
     page; the CVS module is <b>libxslt</b>.</p>
   </li>
-  <li><a
-    href="ftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gz">daily
-    snapshots from CVS</a> are also provided</li>
+  <li><a href="ftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gz">daily snapshots
+    from CVS</a> are also provided</li>
 </ul>
 
 <h2><a name="FAQ">FAQ</a></h2>
@@ -236,12 +235,24 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
+<h3>1.0.19:  July 6 2002</h3>
+<ul>
+  <li>EXSLT: dynamic functions and date support bug fixes (Mark Vakoc)</li>
+  <li>xsl:number fix: Richard Jinks</li>
+  <li>xsl:format-numbers fix: Ken Neighbors</li>
+  <li>document('') fix: bug pointed by Eric van der Vlist</li>
+  <li>xsl:message with terminate="yes" fixes: William Brack</li>
+  <li>xsl:sort order support added: Ken Neighbors</li>
+  <li>a few other bug fixes, some of them requiring the latest version of
+    libxml2</li>
+</ul>
+
 <h3>1.0.18: May 27 2002</h3>
 <ul>
   <li>a number of bug fixes: attributes, extra namespace declarations
     (DocBook), xsl:include crash (Igor), documentation (Christian Cornelssen,
     Charles Bozeman and Geert Kloosterman),  element-available (Richard
-    Jinks) </li>
+  Jinks)</li>
   <li>xsltproc can now list teh registered extensions thanks to Mark
   Vakoc</li>
   <li>there is a new API to save directly to a string

@@ -77,323 +77,334 @@ A:link, A:visited, A:active { text-decoration: underline }
 <td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
 <h3>CVS only : check the <a href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
+<h3>1.0.19:  July 6 2002</h3>
+<ul>
+<li>EXSLT: dynamic functions and date support bug fixes (Mark Vakoc)</li>
+<li>xsl:number fix: Richard Jinks</li>
+<li>xsl:format-numbers fix: Ken Neighbors</li>
+<li>document('') fix: bug pointed by Eric van der Vlist</li>
+<li>xsl:message with terminate=&quot;yes&quot; fixes: William Brack</li>
+<li>xsl:sort order support added: Ken Neighbors</li>
+<li>a few other bug fixes, some of them requiring the latest version of
+    libxml2</li>
+</ul>
 <h3>1.0.18: May 27 2002</h3>
 <ul>
 <li>a number of bug fixes: attributes, extra namespace declarations
     (DocBook), xsl:include crash (Igor), documentation (Christian Cornelssen,
     Charles Bozeman and Geert Kloosterman),  element-available (Richard
-    Jinks) </li>
-  <li>xsltproc can now list teh registered extensions thanks to Mark
+  Jinks)</li>
+<li>xsltproc can now list teh registered extensions thanks to Mark
   Vakoc</li>
-  <li>there is a new API to save directly to a string
+<li>there is a new API to save directly to a string
     xsltSaveResultToString() by Morus Walter</li>
-  <li>specific error registration function for the python API</li>
+<li>specific error registration function for the python API</li>
 </ul>
 <h3>1.0.17: April 29 2002</h3>
 <ul>
 <li>cleanup in code, XSLT debugger support and Makefiles for Windows by
   Igor</li>
-  <li>a C++ portability fix by Mark Vakoc</li>
-  <li>EXSLT date improvement and regression tests by Charles Bozeman</li>
-  <li>attempt to fix a bug in xsltProcessUserParamInternal</li>
+<li>a C++ portability fix by Mark Vakoc</li>
+<li>EXSLT date improvement and regression tests by Charles Bozeman</li>
+<li>attempt to fix a bug in xsltProcessUserParamInternal</li>
 </ul>
 <h3>1.0.16: April 15 2002</h3>
 <ul>
 <li>Bug fixes: strip-space, URL in HTML output, error when xsltproc can't
     save</li>
-  <li>portability fixes: OSF/1, IEEE on alphas, Windows, Python bindings</li>
+<li>portability fixes: OSF/1, IEEE on alphas, Windows, Python bindings</li>
 </ul>
 <h3>1.0.15: Mar 25 2002</h3>
 <ul>
 <li>Bugfixes: XPath, python Makefile, recursive attribute sets, @foo[..]
     templates</li>
-  <li>Debug of memory alocation with valgind</li>
-  <li>serious profiling leading to significant improvement for DocBook
+<li>Debug of memory alocation with valgind</li>
+<li>serious profiling leading to significant improvement for DocBook
     processing</li>
-  <li>revamp of the Windows build</li>
+<li>revamp of the Windows build</li>
 </ul>
 <h3>1.0.14: Mar 18 2002</h3>
 <ul>
 <li>Improvement in the XPath engine (libxml2-2.4.18)</li>
-  <li>Nasty bug fix related to exslt:node-set</li>
-  <li>Fixed the python Makefiles, cleanup of doc comments, Windows
+<li>Nasty bug fix related to exslt:node-set</li>
+<li>Fixed the python Makefiles, cleanup of doc comments, Windows
     portability fixes</li>
 </ul>
 <h3>1.0.13: Mar 8 2002</h3>
 <ul>
 <li>a number of bug fixes including &quot;namespace node have no parents&quot;</li>
-  <li>Improvement of the Python bindings</li>
-  <li>Charles Bozeman provided fixes and regression tests for exslt date
+<li>Improvement of the Python bindings</li>
+<li>Charles Bozeman provided fixes and regression tests for exslt date
     functions.</li>
 </ul>
 <h3>1.0.12: Feb 11 2002</h3>
 <ul>
 <li>Fixed the makefiles especially the python module ones</li>
-  <li>half a dozen bugs fixes including 2 old ones</li>
+<li>half a dozen bugs fixes including 2 old ones</li>
 </ul>
 <h3>1.0.11: Feb 8 2002</h3>
 <ul>
 <li>Change of Licence to the <a href="http://www.opensource.org/licenses/mit-license.html">MIT
   Licence</a>
 </li>
-  <li>Added a beta version of the Python bindings, including support to
+<li>Added a beta version of the Python bindings, including support to
     extend the engine with functions written in Python</li>
-  <li>A number of bug fixes</li>
-  <li>Charlie Bozeman provided more EXSLT functions</li>
-  <li>Portability fixes</li>
+<li>A number of bug fixes</li>
+<li>Charlie Bozeman provided more EXSLT functions</li>
+<li>Portability fixes</li>
 </ul>
 <h3>1.0.10: Jan 14 2002</h3>
 <ul>
 <li>Windows fixes for Win32 from Igor</li>
-  <li>Fixed the Solaris compilation trouble (Albert)</li>
-  <li>Documentation changes and updates: John Fleck</li>
-  <li>Added a stringparam option to avoid escaping hell at the shell
+<li>Fixed the Solaris compilation trouble (Albert)</li>
+<li>Documentation changes and updates: John Fleck</li>
+<li>Added a stringparam option to avoid escaping hell at the shell
   level</li>
-  <li>A few bug fixes</li>
+<li>A few bug fixes</li>
 </ul>
 <h3>1.0.9: Dec 7 2001</h3>
 <ul>
 <li>Makefile patches from Peter Williams</li>
-  <li>attempt to fix the compilation problem associated to prelinking</li>
-  <li>obsoleted libxsltbreakpoint now deprecated and frozen to 1.0.8 API</li>
-  <li>xsltproc return codes are now significant, John Fleck updated the
+<li>attempt to fix the compilation problem associated to prelinking</li>
+<li>obsoleted libxsltbreakpoint now deprecated and frozen to 1.0.8 API</li>
+<li>xsltproc return codes are now significant, John Fleck updated the
     documentation</li>
-  <li>patch to allow as much as 40 steps in patterns (Marc Tardif), should be
+<li>patch to allow as much as 40 steps in patterns (Marc Tardif), should be
     made dynamic really</li>
-  <li>fixed a bug raised by Nik Clayton when using doctypes with HTML
+<li>fixed a bug raised by Nik Clayton when using doctypes with HTML
   output</li>
-  <li>patches from Keith Isdale to interface with xsltdebugger</li>
+<li>patches from Keith Isdale to interface with xsltdebugger</li>
 </ul>
 <h3>1.0.8: Nov 26 2001</h3>
 <ul>
 <li>fixed an annoying header problem, removed a few bugs and some code
     cleanup</li>
-  <li>patches for Windows and update of Windows Makefiles by Igor</li>
-  <li>OpenVMS port instructions from John A Fotheringham</li>
-  <li>fixed some Makefiles annoyance and libraries prelinking
+<li>patches for Windows and update of Windows Makefiles by Igor</li>
+<li>OpenVMS port instructions from John A Fotheringham</li>
+<li>fixed some Makefiles annoyance and libraries prelinking
   informations</li>
 </ul>
 <h3>1.0.7: Nov 10 2001</h3>
 <ul>
 <li>remove a compilation problem with LIBXSLT_PUBLIC</li>
-  <li>Finishing the integration steps for Keith Isdale debugger</li>
-  <li>fixes the handling of indent=&quot;no&quot; on HTML output</li>
-  <li>fixes on the configure script and RPM spec file</li>
+<li>Finishing the integration steps for Keith Isdale debugger</li>
+<li>fixes the handling of indent=&quot;no&quot; on HTML output</li>
+<li>fixes on the configure script and RPM spec file</li>
 </ul>
 <h3>1.0.6: Oct 30 2001</h3>
 <ul>
 <li>bug fixes on number formatting (Thomas), date/time functions (Bruce
     Miller)</li>
-  <li>update of the Windows Makefiles (Igor)</li>
-  <li>fixed DOCTYPE generation rules for HTML output (me)</li>
+<li>update of the Windows Makefiles (Igor)</li>
+<li>fixed DOCTYPE generation rules for HTML output (me)</li>
 </ul>
 <h3>1.0.5: Oct 10 2001</h3>
 <ul>
 <li>some portability fixes, including Windows makefile updates from
   Igor</li>
-  <li>fixed a dozen bugs on XSLT and EXSLT (me and Thomas Broyer)</li>
-  <li>support for Saxon's evaluate and expressions extensions added (initial
+<li>fixed a dozen bugs on XSLT and EXSLT (me and Thomas Broyer)</li>
+<li>support for Saxon's evaluate and expressions extensions added (initial
     contribution from Darren Graves)</li>
-  <li>better handling of XPath evaluation errors</li>
+<li>better handling of XPath evaluation errors</li>
 </ul>
 <h3>1.0.4: Sep 12 2001</h3>
 <ul>
 <li>Documentation updates from John fleck</li>
-  <li>bug fixes (DocBook  FO generation should be fixed)  and portability
+<li>bug fixes (DocBook  FO generation should be fixed)  and portability
     improvements</li>
-  <li>Thomas Broyer improved the existing EXSLT support and added String,
+<li>Thomas Broyer improved the existing EXSLT support and added String,
     Time and Date core functions support</li>
 </ul>
 <h3>1.0.3:  Aug 23 2001</h3>
 <ul>
 <li>XML Catalog support see the doc</li>
-  <li>New NaN/Infinity floating point code</li>
-  <li>A few bug fixes</li>
+<li>New NaN/Infinity floating point code</li>
+<li>A few bug fixes</li>
 </ul>
 <h3>1.0.2:  Aug 15 2001</h3>
 <ul>
 <li>lot of bug fixes, increased the testsuite</li>
-  <li>a large chunk of EXSLT is implemented</li>
-  <li>improvements on the extension framework</li>
-  <li>documentation improvements</li>
-  <li>Windows MSC projects files should be up-to-date</li>
-  <li>handle attributes inherited from the DTD by default</li>
+<li>a large chunk of EXSLT is implemented</li>
+<li>improvements on the extension framework</li>
+<li>documentation improvements</li>
+<li>Windows MSC projects files should be up-to-date</li>
+<li>handle attributes inherited from the DTD by default</li>
 </ul>
 <h3>1.0.1:  July 24 2001</h3>
 <ul>
 <li>initial EXSLT framework</li>
-  <li>better error reporting</li>
-  <li>fixed the profiler on Windows</li>
-  <li>bug fixes</li>
+<li>better error reporting</li>
+<li>fixed the profiler on Windows</li>
+<li>bug fixes</li>
 </ul>
 <h3>1.0.0: July 10 2001</h3>
 <ul>
 <li>a lot of cleanup, a lot of regression tests added or fixed</li>
-  <li>added a documentation for <a href="extensions.html">writing
+<li>added a documentation for <a href="extensions.html">writing
     extensions</a>
 </li>
-  <li>fixed some variable evaluation problems (with William)</li>
-  <li>added profiling of stylesheet execution accessible as the xsltproc
+<li>fixed some variable evaluation problems (with William)</li>
+<li>added profiling of stylesheet execution accessible as the xsltproc
     --profile option</li>
-  <li>fixed element-available() and the implementation of the various
+<li>fixed element-available() and the implementation of the various
     chunking methods present, Norm Walsh provided a lot of feedback</li>
-  <li>exclude-result-prefixes and namespaces output should now work as
+<li>exclude-result-prefixes and namespaces output should now work as
     expected</li>
-  <li>added support of embedded stylesheet as described in section 2.7 of the
+<li>added support of embedded stylesheet as described in section 2.7 of the
     spec</li>
 </ul>
 <h3>0.14.0: July 5 2001</h3>
 <ul>
 <li>lot of bug fixes, and code cleanup</li>
-  <li>completion of the little XSLT-1.0 features left unimplemented</li>
-  <li>Added and implemented the extension API suggested by Thomas Broyer</li>
-  <li>the Windows MSC environment should be complete</li>
-  <li>tested and optimized with a really large document (DocBook Definitive
+<li>completion of the little XSLT-1.0 features left unimplemented</li>
+<li>Added and implemented the extension API suggested by Thomas Broyer</li>
+<li>the Windows MSC environment should be complete</li>
+<li>tested and optimized with a really large document (DocBook Definitive
     Guide) libxml/libxslt should really be faster on serious workloads</li>
 </ul>
 <h3>0.13.0: June 26 2001</h3>
 <ul>
 <li>lots of cleanups</li>
-  <li>fixed a C++ compilation problem</li>
-  <li>couple of fixes to xsltSaveTo()</li>
-  <li>try to fix Docbook-xslt-1.4 and chunking, updated the regression test
+<li>fixed a C++ compilation problem</li>
+<li>couple of fixes to xsltSaveTo()</li>
+<li>try to fix Docbook-xslt-1.4 and chunking, updated the regression test
     with them</li>
-  <li>fixed pattern compilation and priorities problems</li>
-  <li>Patches for Windows and MSC project mostly contributed by Yon Derek</li>
-  <li>update to the Tutorial by John Fleck</li>
-  <li>William fixed bugs in templates and for-each functions</li>
-  <li>added a new interface xsltRunStylesheet() for a more flexible output
+<li>fixed pattern compilation and priorities problems</li>
+<li>Patches for Windows and MSC project mostly contributed by Yon Derek</li>
+<li>update to the Tutorial by John Fleck</li>
+<li>William fixed bugs in templates and for-each functions</li>
+<li>added a new interface xsltRunStylesheet() for a more flexible output
     (incomplete), added -o option to xsltproc</li>
 </ul>
 <h3>0.12.0: June 18 2001</h3>
 <ul>
 <li>fixed a dozen of bugs reported</li>
-  <li>HTML generation should be quite better (requires libxml-2.3.11 upgrade
+<li>HTML generation should be quite better (requires libxml-2.3.11 upgrade
     too)</li>
-  <li>William fixed some problems with document()</li>
-  <li>Fix namespace nodes selection and copy (requires libxml-2.3.11 upgrade
+<li>William fixed some problems with document()</li>
+<li>Fix namespace nodes selection and copy (requires libxml-2.3.11 upgrade
     too)</li>
-  <li>John Fleck added a<a href="tutorial/libxslttutorial.html">
+<li>John Fleck added a<a href="tutorial/libxslttutorial.html">
   tutorial</a>
 </li>
-  <li>Fixes for namespace handling when evaluating variables</li>
-  <li>XInclude global flag added to process XInclude on document() if
+<li>Fixes for namespace handling when evaluating variables</li>
+<li>XInclude global flag added to process XInclude on document() if
     requested</li>
-  <li>made xsltproc --version more detailed</li>
+<li>made xsltproc --version more detailed</li>
 </ul>
 <h3>0.11.0: June 1 2001</h3>
 <p>Mostly a bug fix release.</p>
 <ul>
 <li>integration of catalogs from xsltproc</li>
-  <li>added --version to xsltproc for bug reporting</li>
-  <li>fixed errors when handling ID in external parsed entities</li>
-  <li>document() should hopefully work correctly but ...</li>
-  <li>fixed bug with PI and comments processing</li>
-  <li>William fixed the XPath string functions when using unicode</li>
+<li>added --version to xsltproc for bug reporting</li>
+<li>fixed errors when handling ID in external parsed entities</li>
+<li>document() should hopefully work correctly but ...</li>
+<li>fixed bug with PI and comments processing</li>
+<li>William fixed the XPath string functions when using unicode</li>
 </ul>
 <h3>0.10.0: May 19 2001</h3>
 <ul>
 <li>cleanups to make stylesheet read-only (not 100% complete)</li>
-  <li>fixed URI resolution in document()</li>
-  <li>force all XPath expression to be compiled at stylesheet parsing time,
+<li>fixed URI resolution in document()</li>
+<li>force all XPath expression to be compiled at stylesheet parsing time,
     even if unused ...</li>
-  <li>Fixed HTML default output detection</li>
-  <li>Fixed double attribute generation #54446</li>
-  <li>Fixed {{ handling in attributes #54451</li>
-  <li>More tests and speedups for DocBook document transformations</li>
-  <li>Fixed a really bad race like bug in xsltCopyTreeList()</li>
-  <li>added a documentation on the libxslt internals</li>
-  <li>William Brack and Bjorn Reese improved format-number()</li>
-  <li>Fixed multiple sort, it should really work now</li>
-  <li>added a --docbook option for SGML DocBook input (hackish)</li>
-  <li>a number of other bug fixes and regression test added as people were
+<li>Fixed HTML default output detection</li>
+<li>Fixed double attribute generation #54446</li>
+<li>Fixed {{ handling in attributes #54451</li>
+<li>More tests and speedups for DocBook document transformations</li>
+<li>Fixed a really bad race like bug in xsltCopyTreeList()</li>
+<li>added a documentation on the libxslt internals</li>
+<li>William Brack and Bjorn Reese improved format-number()</li>
+<li>Fixed multiple sort, it should really work now</li>
+<li>added a --docbook option for SGML DocBook input (hackish)</li>
+<li>a number of other bug fixes and regression test added as people were
     submitting them</li>
 </ul>
 <h3>0.9.0: May 3 2001</h3>
 <ul>
 <li>lot of various bugfixes, extended the regression suite</li>
-  <li>xsltproc should work with multiple params</li>
-  <li>added an option to use xsltproc with HTML input</li>
-  <li>improved the stylesheet compilation, processing of complex stylesheets
+<li>xsltproc should work with multiple params</li>
+<li>added an option to use xsltproc with HTML input</li>
+<li>improved the stylesheet compilation, processing of complex stylesheets
     should be faster</li>
-  <li>using the same stylesheet for concurrent processing on multithreaded
+<li>using the same stylesheet for concurrent processing on multithreaded
     programs should work now</li>
-  <li>fixed another batch of namespace handling problems</li>
-  <li>Implemented multiple level of sorting</li>
+<li>fixed another batch of namespace handling problems</li>
+<li>Implemented multiple level of sorting</li>
 </ul>
 <h3>0.8.0: Apr 22 2001</h3>
 <ul>
 <li>fixed ansidecl.h problem</li>
-  <li>fixed unparsed-entity-uri() and generate-id()</li>
-  <li>sort semantic fixes and priority prob from William M. Brack</li>
-  <li>fixed namespace handling problems in XPath expression computations
+<li>fixed unparsed-entity-uri() and generate-id()</li>
+<li>sort semantic fixes and priority prob from William M. Brack</li>
+<li>fixed namespace handling problems in XPath expression computations
     (requires libxml-2.3.7)</li>
-  <li>fixes to current() and key()</li>
-  <li>other, smaller fixes, lots of testing with N Walsh DocBook HTML
+<li>fixes to current() and key()</li>
+<li>other, smaller fixes, lots of testing with N Walsh DocBook HTML
     stylesheets</li>
 </ul>
 <h3>0.7.0: Apr 10 2001</h3>
 <ul>
 <li>cleanup using stricter compiler flags</li>
-  <li>command line parameter passing</li>
-  <li>fix to xsltApplyTemplates from William M. Brack</li>
-  <li>added the XSLTMark in the regression tests as well as document()</li>
+<li>command line parameter passing</li>
+<li>fix to xsltApplyTemplates from William M. Brack</li>
+<li>added the XSLTMark in the regression tests as well as document()</li>
 </ul>
 <h3>0.6.0: Mar 22 2001</h3>
 <ul>
 <li>another beta</li>
-  <li>requires 2.3.5, which provide XPath expression compilation support</li>
-  <li>document() extension should function properly</li>
-  <li>fixed a number or reported bugs</li>
+<li>requires 2.3.5, which provide XPath expression compilation support</li>
+<li>document() extension should function properly</li>
+<li>fixed a number or reported bugs</li>
 </ul>
 <h3>0.5.0: Mar 10 2001</h3>
 <ul>
 <li>fifth beta</li>
-  <li>some optimization work, for the moment 2 XSLT transform cannot use the
+<li>some optimization work, for the moment 2 XSLT transform cannot use the
     same stylesheet at the same time (to be fixed)</li>
-  <li>fixed problems with handling of tree results</li>
-  <li>fixed a reported strip-spaces problem</li>
-  <li>added more reported/fixed bugs to the test suite</li>
-  <li>incorporated William M. Brack fix for imports and global variables as
+<li>fixed problems with handling of tree results</li>
+<li>fixed a reported strip-spaces problem</li>
+<li>added more reported/fixed bugs to the test suite</li>
+<li>incorporated William M. Brack fix for imports and global variables as
     well as patch for with-param support in apply-templates</li>
-  <li>a bug fix on for-each</li>
+<li>a bug fix on for-each</li>
 </ul>
 <h3>0.4.0: Mar 1 2001</h3>
 <ul>
 <li>fourth beta test, released at the same time of libxml2-2.3.3</li>
-  <li>bug fixes</li>
-  <li>some optimization</li>
-  <li>started implement extension support, not finished</li>
-  <li>implemented but not tested multiple file output</li>
+<li>bug fixes</li>
+<li>some optimization</li>
+<li>started implement extension support, not finished</li>
+<li>implemented but not tested multiple file output</li>
 </ul>
 <h3>0.3.0: Feb 24 2001</h3>
 <ul>
 <li>third beta test, released at the same time of libxml2-2.3.2</li>
-  <li>lot of bug fixes</li>
-  <li>some optimization</li>
-  <li>added DocBook XSL based testsuite</li>
+<li>lot of bug fixes</li>
+<li>some optimization</li>
+<li>added DocBook XSL based testsuite</li>
 </ul>
 <h3>0.2.0: Feb 15 2001</h3>
 <ul>
 <li>second beta version, released at the same time as libxml2-2.3.1</li>
-  <li>getting close to feature completion, lot of bug fixes, some in the HTML
+<li>getting close to feature completion, lot of bug fixes, some in the HTML
     and XPath support of libxml</li>
-  <li>start becoming usable for real work. This version can now regenerate
+<li>start becoming usable for real work. This version can now regenerate
     the XML 2e HTML from the original XML sources and the associated
     stylesheets (in <a href="http://www.w3.org/TR/REC-xml#b4d250b6c21">section I of the XML
     REC</a>)</li>
-  <li>Still misses extension element/function/prefixes support. Support of
+<li>Still misses extension element/function/prefixes support. Support of
     key() and document() is not complete</li>
 </ul>
 <h3>0.1.0: Feb 8 2001</h3>
 <ul>
 <li>first beta version, released at the same time as libxml2-2.3.0</li>
-  <li>lots of bug fixes, first &quot;testing&quot; version, but incomplete</li>
+<li>lots of bug fixes, first &quot;testing&quot; version, but incomplete</li>
 </ul>
 <h3>0.0.1: Jan 25 2001</h3>
 <ul>
 <li>first alpha version released at the same time as libxml2-2.2.12</li>
-  <li>Framework in place, should work on simple examples, but far from being
+<li>Framework in place, should work on simple examples, but far from being
     feature complete</li>
 </ul>
 <p><a href="bugs.html">Daniel Veillard</a></p>

@@ -78,24 +78,24 @@ A:link, A:visited, A:active { text-decoration: underline }
 <h3>Table  of content</h3>
 <ul>
 <li><a href="extensions.html#Introducti">Introduction</a></li>
-  <li><a href="extensions.html#Basics">Basics</a></li>
-  <li><a href="extensions.html#Keep">Extension modules</a></li>
-  <li><a href="extensions.html#Registerin">Registering a module</a></li>
-  <li><a href="extensions.html#module">Loading a module</a></li>
-  <li><a href="extensions.html#Registerin1">Registering an extension
+<li><a href="extensions.html#Basics">Basics</a></li>
+<li><a href="extensions.html#Keep">Extension modules</a></li>
+<li><a href="extensions.html#Registerin">Registering a module</a></li>
+<li><a href="extensions.html#module">Loading a module</a></li>
+<li><a href="extensions.html#Registerin1">Registering an extension
     function</a></li>
-  <li><a href="extensions.html#Implementi">Implementing an extension
+<li><a href="extensions.html#Implementi">Implementing an extension
     function</a></li>
-  <li><a href="extensions.html#Examples">Examples for extension
+<li><a href="extensions.html#Examples">Examples for extension
   functions</a></li>
-  <li><a href="extensions.html#Registerin2">Registering an extension
+<li><a href="extensions.html#Registerin2">Registering an extension
     element</a></li>
-  <li><a href="extensions.html#Implementi1">Implementing an extension
+<li><a href="extensions.html#Implementi1">Implementing an extension
     element</a></li>
-  <li><a href="extensions.html#Example">Example for extension
+<li><a href="extensions.html#Example">Example for extension
   elements</a></li>
-  <li><a href="extensions.html#shutdown">The shutdown of a module</a></li>
-  <li><a href="extensions.html#Future">Future work</a></li>
+<li><a href="extensions.html#shutdown">The shutdown of a module</a></li>
+<li><a href="extensions.html#Future">Future work</a></li>
 </ul>
 <h3><a name="Introducti1">Introduction</a></h3>
 <p>This document describes the work needed to write extensions to the
@@ -110,7 +110,7 @@ two <a href="http://www.w3.org/TR/xslt">ways to extend an XSLT engine</a>:</p>
 <ul>
 <li>providing <a href="http://www.w3.org/TR/xslt">new extension
     functions</a> which can be called from XPath expressions</li>
-  <li>providing <a href="http://www.w3.org/TR/xslt">new extension
+<li>providing <a href="http://www.w3.org/TR/xslt">new extension
     elements</a> which can be inserted in stylesheets</li>
 </ul>
 <p>In both cases the extensions need to be associated to a new namespace,
@@ -133,8 +133,8 @@ element.</p>
 <p>And extension module is defined by 3 objects:</p>
 <ul>
 <li>the namespace name associated</li>
-  <li>an initialization function</li>
-  <li>a shutdown function</li>
+<li>an initialization function</li>
+<li>a shutdown function</li>
 </ul>
 <h3><a name="Registerin">Registering a module</a></h3>
 <p>Currently a libxslt module has to be compiled within the application using
@@ -174,10 +174,10 @@ typedef void *(*xsltExtInitFunction)(xsltTransformContextPtr ctxt,
 <li>the function gets passed the namespace name URI as an argument, this
     allow a single function to provide the initialization for multiple
     logical modules</li>
-  <li>it also gets passed a transformation context, the initialization is
+<li>it also gets passed a transformation context, the initialization is
     done at run time before any processing occurs on the stylesheet but it
     will be invoked separately each time for each transformation</li>
-  <li>it returns a pointer, this can be used to store module specific
+<li>it returns a pointer, this can be used to store module specific
     informations which can be retrieved later when a function or an element
     from the extension are used, an obvious example is a connection to a
     database which should be kept and reused along the transformation. NULL
@@ -188,7 +188,7 @@ typedef void *(*xsltExtInitFunction)(xsltTransformContextPtr ctxt,
 <ul>
 <li>prepare the context for this module (like opening the database
     connection)</li>
-  <li>register the extensions specific to this module</li>
+<li>register the extensions specific to this module</li>
 </ul>
 <h3><a name="Registerin1">Registering an extension function</a></h3>
 <p>There is a single call to do this registration:</p>
@@ -222,8 +222,8 @@ find one from the other:</p>
     <pre>xsltTransformContextPtr
          xsltXPathGetTransformContext
                           (xmlXPathParserContextPtr ctxt);</pre>
-  </li>
-  <li>The <code>xmlXPathContextPtr</code> associated to an
+</li>
+<li>The <code>xmlXPathContextPtr</code> associated to an
     <code>xsltTransformContext</code> is stored in the <code>xpathCtxt</code>
     field.</li>
 </ul>
@@ -260,7 +260,7 @@ registering the module.</p>
 <li>push the return value on the stack using <code>valuePush(ctxt,
     obj)</code>
 </li>
-  <li>deallocate the parameters passed to the function using
+<li>deallocate the parameters passed to the function using
     <code>xmlXPathFreeObject(obj)</code>
 </li>
 </ul>
@@ -420,11 +420,11 @@ close the connection to the database to keep the same example.</p>
 <p>Well some of the pieces missing:</p>
 <ul>
 <li>a way to load shared libraries to instanciate new modules</li>
-  <li>a better detection of extension function usage and their registration
+<li>a better detection of extension function usage and their registration
     without having to use the extension prefix which ought to be reserved to
     element extensions.</li>
-  <li>more examples</li>
-  <li>implementations of the <a href="http://www.exslt.org/">EXSLT</a> common
+<li>more examples</li>
+<li>implementations of the <a href="http://www.exslt.org/">EXSLT</a> common
     extension libraries, Thomas Broyer nearly finished implementing them.</li>
 </ul>
 <p>
