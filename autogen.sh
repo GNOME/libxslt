@@ -24,7 +24,7 @@ DIE=0
 	DIE=1
 }
 
-(automake --version) < /dev/null > /dev/null 2>&1 || {
+(automake-1.4 --version) < /dev/null > /dev/null 2>&1 || {
 	echo
 	echo "You must have automake installed to compile gnome-xml."
 	echo "Get ftp://ftp.cygnus.com/pub/home/tromey/automake-1.2d.tar.gz"
@@ -49,9 +49,9 @@ fi
 echo "Running libtoolize..."
 libtoolize --copy --force
 echo "Running aclocal..."
-aclocal $ACLOCAL_FLAGS
+aclocal-1.4 $ACLOCAL_FLAGS
 echo "Running automake..."
-automake --add-missing
+automake-1.4 --add-missing
 echo "Running autoconf..."
 autoconf
 
