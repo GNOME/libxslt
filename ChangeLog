@@ -1,3 +1,9 @@
+Wed Jul 17 19:58:36 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c: fixed a bug reported by Keith Isdale
+	  at the xsltdbg interface when encountering an empty attribute
+	  set.
+
 Wed Jul 17 19:51:47 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/* : the change in HTML meta encoding tag serialization
