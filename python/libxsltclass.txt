@@ -20,6 +20,7 @@ registerAllExtras()
 cleanup()
 registerErrorHandler()
 registerExtModuleFunction()
+registerExtensionClass()
 
 # functions from module transform
 setXIncludeDefault()

@@ -401,7 +401,6 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
 	cur->extrasMax = 0;
     }
 
-
     XSLT_REGISTER_VARIABLE_LOOKUP(cur);
     XSLT_REGISTER_FUNCTION_LOOKUP(cur);
     cur->xpathCtxt->nsHash = style->nsHash;
@@ -420,6 +419,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->xinclude = xsltDoXIncludeDefault;
     cur->outputFile = NULL;
     cur->sec = xsltGetDefaultSecurityPrefs();
+
     return(cur);
 }
 
@@ -433,6 +433,13 @@ void
 xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
+
+    /*
+     * Shutdown the extension modules associated to the stylesheet
+     * used if needed.
+     */
+    xsltShutdownCtxtExts(ctxt);
+
     if (ctxt->xpathCtxt != NULL) {
 	ctxt->xpathCtxt->nsHash = NULL;
 	xmlXPathFreeContext(ctxt->xpathCtxt);

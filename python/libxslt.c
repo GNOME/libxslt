@@ -24,9 +24,10 @@
 #endif
 
 /* #define DEBUG */
-/* #define DEBUG_XPATH */
+#define DEBUG_XPATH */
 /* #define DEBUG_ERROR */
 /* #define DEBUG_MEMORY */
+#define DEBUG_EXTENSIONS */
 
 void initlibxsltmod(void);
 
@@ -131,7 +132,7 @@ libxslt_xsltRegisterExtModuleFunction(PyObject *self ATTRIBUTE_UNUSED,
     xmlChar *ns_uri;
     PyObject *pyobj_f;
 
-    if (!PyArg_ParseTuple(args, (char *)"szO:registerXPathFunction",
+    if (!PyArg_ParseTuple(args, (char *)"szO:registerExtModuleFunction",
 		          &name, &ns_uri, &pyobj_f))
         return(NULL);
 
@@ -411,6 +412,195 @@ libxslt_xsltRegisterErrorHandler(ATTRIBUTE_UNUSED PyObject * self,
 
 /************************************************************************
  *									*
+ *			Extension classes				*
+ *									*
+ ************************************************************************/
+
+static xmlHashTablePtr libxslt_extModuleClasses = NULL;
+
+static void *
+libxslt_xsltPythonExtModuleStyleInit(xsltStylesheetPtr style,
+	                            const xmlChar * URI) {
+    PyObject *result;
+    PyObject *class = NULL;
+
+#ifdef DEBUG_EXTENSIONS
+    printf("libxslt_xsltPythonExtModuleStyleInit(%p, %s) called\n",
+	   style, URI);
+#endif
+
+    if ((style == NULL) || (URI == NULL))
+	return(NULL);
+
+    /*
+     * Find the function, it should be there it was there at lookup
+     */
+    class = xmlHashLookup(libxslt_extModuleClasses, URI);
+    if (class == NULL) {
+	fprintf(stderr, "libxslt_xsltPythonExtModuleStyleInit: internal error %s not found !\n", URI);
+	return(NULL);
+    }
+
+    if (PyObject_HasAttrString(class, (char *) "_styleInit")) {
+	result = PyObject_CallMethod(class, (char *) "_styleInit",
+		     (char *) "Os", libxslt_xsltStylesheetPtrWrap(style), URI);
+    }
+    return((void *)result);
+}
+static void
+libxslt_xsltPythonExtModuleStyleShutdown(xsltStylesheetPtr style,
+	                                const xmlChar * URI, void *data) {
+    PyObject *class = NULL;
+    PyObject *result;
+
+#ifdef DEBUG_EXTENSIONS
+    printf("libxslt_xsltPythonExtModuleStyleShutdown(%p, %s, %p) called\n",
+	   style, URI, data);
+#endif
+
+    if ((style == NULL) || (URI == NULL))
+	return;
+
+    /*
+     * Find the function, it should be there it was there at lookup
+     */
+    class = xmlHashLookup(libxslt_extModuleClasses, URI);
+    if (class == NULL) {
+	fprintf(stderr, "libxslt_xsltPythonExtModuleStyleShutdown: internal error %s not found !\n", URI);
+	return(NULL);
+    }
+
+    if (PyObject_HasAttrString(class, (char *) "_styleShutdown")) {
+	result = PyObject_CallMethod(class, (char *) "_styleShutdown",
+		     (char *) "OsO", libxslt_xsltStylesheetPtrWrap(style),
+		     URI, (PyObject *) data);
+	Py_XDECREF(result);
+	Py_XDECREF((PyObject *)data);
+    }
+}
+
+static void *
+libxslt_xsltPythonExtModuleCtxtInit(xsltTransformContextPtr ctxt,
+	                            const xmlChar * URI) {
+    PyObject *result;
+    PyObject *class = NULL;
+
+#ifdef DEBUG_EXTENSIONS
+    printf("libxslt_xsltPythonExtModuleCtxtInit(%p, %s) called\n",
+	   ctxt, URI);
+#endif
+
+    if ((ctxt == NULL) || (URI == NULL))
+	return(NULL);
+
+    /*
+     * Find the function, it should be there it was there at lookup
+     */
+    class = xmlHashLookup(libxslt_extModuleClasses, URI);
+    if (class == NULL) {
+	fprintf(stderr, "libxslt_xsltPythonExtModuleCtxtInit: internal error %s not found !\n", URI);
+	return(NULL);
+    }
+
+    if (PyObject_HasAttrString(class, (char *) "_ctxtInit")) {
+	result = PyObject_CallMethod(class, (char *) "_ctxtInit",
+		     (char *) "Os", libxslt_xsltTransformContextPtrWrap(ctxt),
+		     URI);
+    }
+    return((void *)result);
+}
+static void
+libxslt_xsltPythonExtModuleCtxtShutdown(xsltTransformContextPtr ctxt,
+	                                const xmlChar * URI, void *data) {
+    PyObject *class = NULL;
+    PyObject *result;
+
+#ifdef DEBUG_EXTENSIONS
+    printf("libxslt_xsltPythonExtModuleCtxtShutdown(%p, %s, %p) called\n",
+	   ctxt, URI, data);
+#endif
+
+    if ((ctxt == NULL) || (URI == NULL))
+	return;
+
+    /*
+     * Find the function, it should be there it was there at lookup
+     */
+    class = xmlHashLookup(libxslt_extModuleClasses, URI);
+    if (class == NULL) {
+	fprintf(stderr, "libxslt_xsltPythonExtModuleCtxtShutdown: internal error %s not found !\n", URI);
+	return(NULL);
+    }
+
+    if (PyObject_HasAttrString(class, (char *) "_ctxtShutdown")) {
+	result = PyObject_CallMethod(class, (char *) "_ctxtShutdown",
+		     (char *) "OsO", libxslt_xsltTransformContextPtrWrap(ctxt),
+		     URI, (PyObject *) data);
+	Py_XDECREF(result);
+	Py_XDECREF((PyObject *)data);
+    }
+}
+
+PyObject *
+libxslt_xsltRegisterExtensionClass(PyObject *self ATTRIBUTE_UNUSED,
+	                           PyObject *args) {
+    PyObject *py_retval;
+    int ret = 0;
+    xmlChar *name;
+    xmlChar *ns_uri;
+    PyObject *pyobj_c;
+
+    if (!PyArg_ParseTuple(args, (char *)"zO:registerExtensionClass",
+		          &ns_uri, &pyobj_c))
+        return(NULL);
+
+    if ((ns_uri == NULL) || (pyobj_c == NULL)) {
+	py_retval = libxml_intWrap(-1);
+	return(py_retval);
+    }
+
+#ifdef DEBUG_EXTENSIONS
+    printf("libxslt_xsltRegisterExtensionClass(%s) called\n", ns_uri);
+#endif
+
+    if (libxslt_extModuleClasses == NULL)
+	libxslt_extModuleClasses = xmlHashCreate(10);
+    if (libxslt_extModuleClasses == NULL) {
+	py_retval = libxml_intWrap(-1);
+	return(py_retval);
+    }
+    ret = xmlHashAddEntry(libxslt_extModuleClasses, ns_uri, pyobj_c);
+    if (ret != 0) {
+	py_retval = libxml_intWrap(-1);
+	return(py_retval);
+    }
+    Py_XINCREF(pyobj_c);
+
+    ret = xsltRegisterExtModuleFull(ns_uri, 
+       (xsltExtInitFunction) libxslt_xsltPythonExtModuleCtxtInit,
+       (xsltExtShutdownFunction) libxslt_xsltPythonExtModuleCtxtShutdown,
+       (xsltStyleExtInitFunction) libxslt_xsltPythonExtModuleStyleInit,
+       (xsltStyleExtShutdownFunction) libxslt_xsltPythonExtModuleStyleShutdown);
+    py_retval = libxml_intWrap((int) ret);
+    if (ret < 0) {
+	Py_XDECREF(pyobj_c);
+    }
+    return(py_retval);
+}
+
+static void
+deallocateClasse(void *payload, xmlChar *name ATTRIBUTE_UNUSED) {
+    PyObject *class = (PyObject *) payload;
+
+#ifdef DEBUG_EXTENSIONS
+    printf("deallocateClasse(%s) called\n", name);
+#endif
+
+    Py_XDECREF(class);
+}
+
+/************************************************************************
+ *									*
  *			Integrated cleanup				*
  *									*
  ************************************************************************/
@@ -421,6 +611,9 @@ libxslt_xsltCleanup(PyObject *self ATTRIBUTE_UNUSED,
 
     if (libxslt_extModuleFunctions != NULL) {
 	xmlHashFree(libxslt_extModuleFunctions, deallocateCallback);
+    }
+    if (libxslt_extModuleClasses != NULL) {
+	xmlHashFree(libxslt_extModuleClasses, deallocateClasse);
     }
     xsltCleanupGlobals();
     xmlCleanupParser();

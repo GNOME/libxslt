@@ -1,3 +1,12 @@
+Mon Jan 13 23:25:59 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c libxslt/transform.c: fixing bug #101602
+	  for extension modules init and shutdown callbacks, check that
+	  they are now called when needed.
+	* python/libxsl.py python/libxslt-python-api.xml python/libxslt.c:
+	  started adding the extension module support at the Python level.
+	  Still a strange bug to hunt down left.
+
 Sun Jan 12 23:56:18 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attributes.c libxslt/xsltInternals.h libxslt/imports.c

@@ -49,6 +49,37 @@ else:
         import libxsltmod
         import libxml2
 
+class extensionModule:
+    def _styleInit(self, style, URI):
+        return self.styleInit(stylesheet(_obj=style), URI)
+
+    def _styleShutdown(self, style, URI, data):
+        return self.styleShutdown(stylesheet(_obj=style), URI, data)
+
+    def _ctxtInit(self, ctxt, URI):
+        return self.ctxtInit(transformCtxt(_obj=ctxt), URI)
+
+    def _ctxtShutdown(self, ctxt, URI, data):
+        return self.ctxtShutdown(transformCtxt(_obj=ctxt), URI, data)
+
+    def styleInit(self, style, URI):
+        """Callback function when used in a newly compiled stylesheet,
+	   the return value is passed in subsequent calls"""
+	pass
+
+    def styleShutdown(self, style, URI, data):
+        """Callback function when a stylesheet using it is destroyed"""
+	pass
+
+    def ctxtInit(self, ctxt, URI):
+        """Callback function when used in a new transformation process,
+	   the return value is passed in subsequent calls"""
+	pass
+
+    def ctxtShutdown(self, ctxt, URI, data):
+        """Callback function when a transformation using it finishes"""
+	pass
+
 #
 # Everything below this point is automatically generated
 #
