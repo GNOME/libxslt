@@ -111,7 +111,7 @@ NAME="LIBXSLT-XSLTINTERNALS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN4842"
+NAME="AEN4897"
 ></A
 ><H2
 >Name</H2
@@ -119,7 +119,7 @@ NAME="AEN4842"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN4845"
+NAME="AEN4900"
 ></A
 ><H2
 >Synopsis</H2
@@ -142,6 +142,22 @@ HREF="libxslt-xsltinternals.html#XSLT-MAX-SORT-CAPS"
 HREF="libxslt-xsltinternals.html#XSLT-PAT-NO-PRIORITY-CAPS"
 >XSLT_PAT_NO_PRIORITY</A
 >
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTRUNTIMEEXTRA"
+>xsltRuntimeExtra</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTRUNTIMEEXTRAPTR"
+>xsltRuntimeExtraPtr</A
+>;
+#define     <A
+HREF="libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-CAPS"
+>XSLT_RUNTIME_EXTRA</A
+>              (ctxt, nr)
+#define     <A
+HREF="libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-FREE-CAPS"
+>XSLT_RUNTIME_EXTRA_FREE</A
+>         (ctxt, nr)
 struct      <A
 HREF="libxslt-xsltinternals.html#XSLTTEMPLATE"
 >xsltTemplate</A
@@ -178,13 +194,10 @@ struct      <A
 HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 >xsltElemPreComp</A
 >;
-<GTKDOCLINK
-HREF="TYPEDEF"
->typedef</GTKDOCLINK
->     <A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
->              ();
+>;
 void        (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION"
 >*xsltTransformFunction</A
@@ -201,7 +214,7 @@ HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
 > inst,
                                              <A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > comp);
 enum        <A
@@ -212,7 +225,7 @@ void        (<A
 HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPDEALLOCATOR"
 >*xsltElemPreCompDeallocator</A
 >)   (<A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > comp);
 struct      <A
@@ -405,7 +418,21 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> templ);</PRE
+> templ);
+int         <A
+HREF="libxslt-xsltinternals.html#XSLTALLOCATEEXTRA"
+>xsltAllocateExtra</A
+>               (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style);
+int         <A
+HREF="libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT"
+>xsltAllocateExtraCtxt</A
+>           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -413,7 +440,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN4921"
+NAME="AEN4983"
 ></A
 ><H2
 >Description</H2
@@ -423,20 +450,20 @@ NAME="AEN4921"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN4924"
+NAME="AEN4986"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4926"
+NAME="AEN4988"
 ></A
 ><H3
 ><A
 NAME="XSLT-MAX-SORT-CAPS"
 ></A
->&#62;XSLT_MAX_SORT</H3
+>XSLT_MAX_SORT</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -458,13 +485,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4932"
+NAME="AEN4994"
 ></A
 ><H3
 ><A
 NAME="XSLT-PAT-NO-PRIORITY-CAPS"
 ></A
->&#62;XSLT_PAT_NO_PRIORITY</H3
+>XSLT_PAT_NO_PRIORITY</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -486,13 +513,230 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4938"
+NAME="AEN5000"
+></A
+><H3
+><A
+NAME="XSLTRUNTIMEEXTRA"
+></A
+>struct xsltRuntimeExtra</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltRuntimeExtra {
+    void       *info;		/* pointer to the extra data */
+    xmlFreeFunc deallocate;	/* pointer to the deallocation routine */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+>Extra information added to the transformation context</P
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN5006"
+></A
+><H3
+><A
+NAME="XSLTRUNTIMEEXTRAPTR"
+></A
+>xsltRuntimeExtraPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltRuntimeExtra *xsltRuntimeExtraPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN5011"
+></A
+><H3
+><A
+NAME="XSLT-RUNTIME-EXTRA-CAPS"
+></A
+>XSLT_RUNTIME_EXTRA()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)-&gt;extras[(nr)].info</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN5016"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>nr</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN5029"
+></A
+><H3
+><A
+NAME="XSLT-RUNTIME-EXTRA-FREE-CAPS"
+></A
+>XSLT_RUNTIME_EXTRA_FREE()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define XSLT_RUNTIME_EXTRA_FREE(ctxt, nr) (ctxt)-&gt;extras[(nr)].deallocate</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN5034"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>nr</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN5047"
 ></A
 ><H3
 ><A
 NAME="XSLTTEMPLATE"
 ></A
->&#62;struct xsltTemplate</H3
+>struct xsltTemplate</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -532,13 +776,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4944"
+NAME="AEN5053"
 ></A
 ><H3
 ><A
 NAME="XSLTTEMPLATEPTR"
 ></A
->&#62;xsltTemplatePtr</H3
+>xsltTemplatePtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -558,13 +802,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4949"
+NAME="AEN5058"
 ></A
 ><H3
 ><A
 NAME="XSLTDECIMALFORMAT"
 ></A
->&#62;struct xsltDecimalFormat</H3
+>struct xsltDecimalFormat</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -602,13 +846,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4955"
+NAME="AEN5064"
 ></A
 ><H3
 ><A
 NAME="XSLTDECIMALFORMATPTR"
 ></A
->&#62;xsltDecimalFormatPtr</H3
+>xsltDecimalFormatPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -628,13 +872,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4960"
+NAME="AEN5069"
 ></A
 ><H3
 ><A
 NAME="XSLTDOCUMENT"
 ></A
->&#62;struct xsltDocument</H3
+>struct xsltDocument</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -661,13 +905,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4966"
+NAME="AEN5075"
 ></A
 ><H3
 ><A
 NAME="XSLTDOCUMENTPTR"
 ></A
->&#62;xsltDocumentPtr</H3
+>xsltDocumentPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -687,13 +931,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4971"
+NAME="AEN5080"
 ></A
 ><H3
 ><A
 NAME="XSLTTRANSFORMCONTEXT"
 ></A
->&#62;struct xsltTransformContext</H3
+>struct xsltTransformContext</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -759,6 +1003,10 @@ CLASS="PROGRAMLISTING"
     long            *profTab;		/* the profile template stack */
 
     void            *_private;		/* user defined data */
+
+    int              extrasNr;		/* the number of extras used */
+    int              extrasMax;		/* the number of extras allocated */
+    xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
 };</PRE
 ></TD
 ></TR
@@ -769,13 +1017,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4976"
+NAME="AEN5085"
 ></A
 ><H3
 ><A
 NAME="XSLTTRANSFORMCONTEXTPTR"
 ></A
->&#62;xsltTransformContextPtr</H3
+>xsltTransformContextPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -795,13 +1043,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4981"
+NAME="AEN5090"
 ></A
 ><H3
 ><A
 NAME="XSLTELEMPRECOMP"
 ></A
->&#62;struct xsltElemPreComp</H3
+>struct xsltElemPreComp</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -832,13 +1080,13 @@ designed to be extended by extension implementors.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4987"
+NAME="AEN5096"
 ></A
 ><H3
 ><A
 NAME="XSLTELEMPRECOMPPTR"
 ></A
->&#62;xsltElemPreCompPtr ()</H3
+>xsltElemPreCompPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -848,61 +1096,23 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="TYPEDEF"
->typedef</GTKDOCLINK
->     xsltElemPreCompPtr              ();</PRE
+>typedef xsltElemPreComp *xsltElemPreCompPtr;</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
 ></P
-><DIV
-CLASS="INFORMALTABLE"
-><A
-NAME="AEN4993"
-></A
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TBODY
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-></TBODY
-></TABLE
-><P
-></P
-></DIV
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5002"
+NAME="AEN5101"
 ></A
 ><H3
 ><A
 NAME="XSLTTRANSFORMFUNCTION"
 ></A
->&#62;xsltTransformFunction ()</H3
+>xsltTransformFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -925,7 +1135,7 @@ HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
 > inst,
                                              <A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > comp);</PRE
 ></TD
@@ -939,7 +1149,7 @@ stylesheet language like xsl:if or xsl:apply-templates.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5012"
+NAME="AEN5111"
 ></A
 ><P
 ></P
@@ -1028,13 +1238,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5033"
+NAME="AEN5132"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLETYPE"
 ></A
->&#62;enum xsltStyleType</H3
+>enum xsltStyleType</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1077,13 +1287,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5038"
+NAME="AEN5137"
 ></A
 ><H3
 ><A
 NAME="XSLTELEMPRECOMPDEALLOCATOR"
 ></A
->&#62;xsltElemPreCompDeallocator ()</H3
+>xsltElemPreCompDeallocator ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1094,7 +1304,7 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 >void        (*xsltElemPreCompDeallocator)   (<A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > comp);</PRE
 ></TD
@@ -1110,7 +1320,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5046"
+NAME="AEN5145"
 ></A
 ><P
 ></P
@@ -1151,13 +1361,13 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5056"
+NAME="AEN5155"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLEPRECOMP"
 ></A
->&#62;struct xsltStylePreComp</H3
+>struct xsltStylePreComp</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1225,13 +1435,13 @@ precomputed data.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5062"
+NAME="AEN5161"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLEPRECOMPPTR"
 ></A
->&#62;xsltStylePreCompPtr</H3
+>xsltStylePreCompPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1251,13 +1461,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5067"
+NAME="AEN5166"
 ></A
 ><H3
 ><A
 NAME="XSLTSTACKELEM"
 ></A
->&#62;struct xsltStackElem</H3
+>struct xsltStackElem</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1286,13 +1496,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5072"
+NAME="AEN5171"
 ></A
 ><H3
 ><A
 NAME="XSLTSTACKELEMPTR"
 ></A
->&#62;xsltStackElemPtr</H3
+>xsltStackElemPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1312,13 +1522,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5077"
+NAME="AEN5176"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLESHEET"
 ></A
->&#62;struct xsltStylesheet</H3
+>struct xsltStylesheet</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1423,6 +1633,7 @@ CLASS="PROGRAMLISTING"
      * Extensions
      */
     xmlHashTablePtr extInfos;	/* the extension data */
+    int		    extrasNr;	/* the number of extras required */
 };</PRE
 ></TD
 ></TR
@@ -1433,13 +1644,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5082"
+NAME="AEN5181"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLESHEETPTR"
 ></A
->&#62;xsltStylesheetPtr</H3
+>xsltStylesheetPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1459,13 +1670,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5087"
+NAME="AEN5186"
 ></A
 ><H3
 ><A
 NAME="XSLTOUTPUTTYPE"
 ></A
->&#62;enum xsltOutputType</H3
+>enum xsltOutputType</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1489,13 +1700,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5092"
+NAME="AEN5191"
 ></A
 ><H3
 ><A
 NAME="XSLTTRANSFORMSTATE"
 ></A
->&#62;enum xsltTransformState</H3
+>enum xsltTransformState</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1519,13 +1730,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5097"
+NAME="AEN5196"
 ></A
 ><H3
 ><A
 NAME="CHECK-STOPPED-CAPS"
 ></A
->&#62;CHECK_STOPPED</H3
+>CHECK_STOPPED</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1548,13 +1759,13 @@ will return from the function</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5103"
+NAME="AEN5202"
 ></A
 ><H3
 ><A
 NAME="CHECK-STOPPEDE-CAPS"
 ></A
->&#62;CHECK_STOPPEDE</H3
+>CHECK_STOPPEDE</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1577,13 +1788,13 @@ will goto the error: label</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5109"
+NAME="AEN5208"
 ></A
 ><H3
 ><A
 NAME="CHECK-STOPPED0-CAPS"
 ></A
->&#62;CHECK_STOPPED0</H3
+>CHECK_STOPPED0</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1606,13 +1817,13 @@ will return from the function with a 0 value</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5115"
+NAME="AEN5214"
 ></A
 ><H3
 ><A
 NAME="XSLTNEWSTYLESHEET"
 ></A
->&#62;xsltNewStylesheet ()</H3
+>xsltNewStylesheet ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1636,7 +1847,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5122"
+NAME="AEN5221"
 ></A
 ><P
 ></P
@@ -1672,13 +1883,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5131"
+NAME="AEN5230"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSESTYLESHEETFILE"
 ></A
->&#62;xsltParseStylesheetFile ()</H3
+>xsltParseStylesheetFile ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1705,7 +1916,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5139"
+NAME="AEN5238"
 ></A
 ><P
 ></P
@@ -1758,13 +1969,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5152"
+NAME="AEN5251"
 ></A
 ><H3
 ><A
 NAME="XSLTFREESTYLESHEET"
 ></A
->&#62;xsltFreeStylesheet ()</H3
+>xsltFreeStylesheet ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1793,7 +2004,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5160"
+NAME="AEN5259"
 ></A
 ><P
 ></P
@@ -1831,13 +2042,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5169"
+NAME="AEN5268"
 ></A
 ><H3
 ><A
 NAME="XSLTISBLANK"
 ></A
->&#62;xsltIsBlank ()</H3
+>xsltIsBlank ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1861,7 +2072,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5176"
+NAME="AEN5275"
 ></A
 ><P
 ></P
@@ -1914,13 +2125,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5189"
+NAME="AEN5288"
 ></A
 ><H3
 ><A
 NAME="XSLTFREESTACKELEMLIST"
 ></A
->&#62;xsltFreeStackElemList ()</H3
+>xsltFreeStackElemList ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1949,7 +2160,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5197"
+NAME="AEN5296"
 ></A
 ><P
 ></P
@@ -1987,13 +2198,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5206"
+NAME="AEN5305"
 ></A
 ><H3
 ><A
 NAME="XSLTDECIMALFORMATGETBYNAME"
 ></A
->&#62;xsltDecimalFormatGetByName ()</H3
+>xsltDecimalFormatGetByName ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2025,7 +2236,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5215"
+NAME="AEN5314"
 ></A
 ><P
 ></P
@@ -2095,13 +2306,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5232"
+NAME="AEN5331"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSESTYLESHEETPROCESS"
 ></A
->&#62;xsltParseStylesheetProcess ()</H3
+>xsltParseStylesheetProcess ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2133,7 +2344,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5241"
+NAME="AEN5340"
 ></A
 ><P
 ></P
@@ -2203,13 +2414,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5258"
+NAME="AEN5357"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSESTYLESHEETOUTPUT"
 ></A
->&#62;xsltParseStylesheetOutput ()</H3
+>xsltParseStylesheetOutput ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2238,7 +2449,7 @@ information related to the stylesheet output</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5266"
+NAME="AEN5365"
 ></A
 ><P
 ></P
@@ -2293,13 +2504,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5279"
+NAME="AEN5378"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSESTYLESHEETDOC"
 ></A
->&#62;xsltParseStylesheetDoc ()</H3
+>xsltParseStylesheetDoc ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2326,7 +2537,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5287"
+NAME="AEN5386"
 ></A
 ><P
 ></P
@@ -2379,13 +2590,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5300"
+NAME="AEN5399"
 ></A
 ><H3
 ><A
 NAME="XSLTLOADSTYLESHEETPI"
 ></A
->&#62;xsltLoadStylesheetPI ()</H3
+>xsltLoadStylesheetPI ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2423,7 +2634,7 @@ transformation is done.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5309"
+NAME="AEN5408"
 ></A
 ><P
 ></P
@@ -2450,7 +2661,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a document to process</TD
 ></TR
 ><TR
 ><TD
@@ -2476,13 +2687,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5322"
+NAME="AEN5421"
 ></A
 ><H3
 ><A
 NAME="XSLTNUMBERFORMAT"
 ></A
->&#62;xsltNumberFormat ()</H3
+>xsltNumberFormat ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2514,7 +2725,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5331"
+NAME="AEN5430"
 ></A
 ><P
 ></P
@@ -2586,13 +2797,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5348"
+NAME="AEN5447"
 ></A
 ><H3
 ><A
 NAME="XSLTFORMATNUMBERCONVERSION"
 ></A
->&#62;xsltFormatNumberConversion ()</H3
+>xsltFormatNumberConversion ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2634,38 +2845,38 @@ HREF="NUMBER"
 ><P
 >Structure:</P
 ><P
->  pattern    := subpattern{;subpattern}
-  subpattern := {prefix}integer{.fraction}{suffix}
-  prefix     := '\\u0000'..'\\uFFFD' - specialCharacters
-  suffix     := '\\u0000'..'\\uFFFD' - specialCharacters
-  integer    := '#'* '0'* '0'
-  fraction   := '0'* '#'*</P
+>pattern    := subpattern{;subpattern}
+subpattern := {prefix}integer{.fraction}{suffix}
+prefix     := '\\u0000'..'\\uFFFD' - specialCharacters
+suffix     := '\\u0000'..'\\uFFFD' - specialCharacters
+integer    := '#'* '0'* '0'
+fraction   := '0'* '#'*</P
 ><P
->  Notation:
-   X*       0 or more instances of X
-   (X | Y)  either X or Y.
-   X..Y     any character from X up to Y, inclusive.
-   S - T    characters in S, except those in T</P
+>Notation:
+X*       0 or more instances of X
+(X | Y)  either X or Y.
+X..Y     any character from X up to Y, inclusive.
+S - T    characters in S, except those in T</P
 ><P
 >Special Characters:</P
 ><P
->  Symbol Meaning
-  0      a digit
-  #      a digit, zero shows as absent
-  .      placeholder for decimal separator
-  ,      placeholder for grouping separator.
-  ;      separates formats.
-  -      default negative prefix.
-  %      multiply by 100 and show as percentage
-  ?      multiply by 1000 and show as per mille
-  X      any other characters can be used in the prefix or suffix
-  '      used to quote special characters in a prefix or suffix.</P
+>Symbol Meaning
+0      a digit
+#      a digit, zero shows as absent
+.      placeholder for decimal separator
+,      placeholder for grouping separator.
+;      separates formats.
+-      default negative prefix.
+%      multiply by 100 and show as percentage
+?      multiply by 1000 and show as per mille
+X      any other characters can be used in the prefix or suffix
+'      used to quote special characters in a prefix or suffix.</P
 ><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5366"
+NAME="AEN5465"
 ></A
 ><P
 ></P
@@ -2769,13 +2980,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN5391"
+NAME="AEN5490"
 ></A
 ><H3
 ><A
 NAME="XSLTPARSETEMPLATECONTENT"
 ></A
->&#62;xsltParseTemplateContent ()</H3
+>xsltParseTemplateContent ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2805,7 +3016,7 @@ and process xslt:text</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN5399"
+NAME="AEN5498"
 ></A
 ><P
 ></P
@@ -2850,6 +3061,175 @@ WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
 >  the container node (can be a document for literal results)</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN5511"
+></A
+><H3
+><A
+NAME="XSLTALLOCATEEXTRA"
+></A
+>xsltAllocateExtra ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltAllocateExtra               (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Allocate an extra runtime information slot statically while compiling
+the stylesheet and return its number</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN5518"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the number of the slot</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN5531"
+></A
+><H3
+><A
+NAME="XSLTALLOCATEEXTRACTXT"
+></A
+>xsltAllocateExtraCtxt ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltAllocateExtraCtxt           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Allocate an extra runtime information slot at run-time
+and return its number
+This make sure there is a slot ready in the transformation context</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN5538"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the number of the slot</TD
 ></TR
 ></TBODY
 ></TABLE

@@ -3,7 +3,7 @@
 <html>
 <head>
   <title>The XSLT C library for Gnome</title>
-  <meta name="GENERATOR" content="amaya V5.0">
+  <meta name="GENERATOR" content="amaya 5.1">
   <meta http-equiv="Content-Type" content="text/html">
 </head>
 
@@ -86,8 +86,7 @@ useful resources:</p>
     href="http://www.zvon.org/xxl/XSLTutorial/Books/Book1/index.html">only
     Zvon XSLT tutorial</a> details a lot of constructs with examples.</li>
   <li><a href="http://www.jenitennison.com/xslt/index.html">Jeni Tennison's
-    XSLT</a>
-     pages provide links to a lot of answers</li>
+    XSLT</a> pages provide links to a lot of answers</li>
   <li>the <a href="http://incrementaldevelopment.com/xsltrick/">Gallery of
     XSLT Tricks</a> provides non-standard use case of XSLT</li>
   <li>And I suggest to buy Michael Kay "XSLT Programmer's Reference" book
@@ -206,8 +205,7 @@ platform, get in touch with me to upload the package. I will keep them in the
   </li>
   <li><a
     href="ftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gzftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gzftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gz">daily
-    snapshots from CVS</a>
-     are also provided</li>
+    snapshots from CVS</a> are also provided</li>
 </ul>
 
 <h2><a name="FAQ">FAQ</a></h2>
@@ -233,6 +231,14 @@ platform, get in touch with me to upload the package. I will keep them in the
 <h3>CVS only : check the <a
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
+
+<h3>1.0.13: Mar 8 2002</h3>
+<ul>
+  <li>a number of bug fixes including "namespace node have no parents"</li>
+  <li>Improvement of the Python bindings</li>
+  <li>Charles Bozeman provided fixes and regression tests for exslt date
+    functions.</li>
+</ul>
 
 <h3>1.0.12: Feb 11 2002</h3>
 <ul>
@@ -576,8 +582,8 @@ few pointers and informations which may be helpful:</p>
   <li>The <a href="http://www.oasis-open.org/committees/docbook/">DocBook
     homepage at Oasis</a> you should find pointers there on all the lastest
     versions of the DTDs and XSLT stylesheets</li>
-  <li><a href="http://www.docbook.org/">DocBook: The Definitive Guide</a>
-     is the official reference documentation for DocBook.</li>
+  <li><a href="http://www.docbook.org/">DocBook: The Definitive Guide</a> is
+    the official reference documentation for DocBook.</li>
   <li>Here is a <a href="/buildDocBookCatalog">shell script</a> to generate
     XML Catalogs for DocBook 4.1.2 . If it can write to the /etc/xml/
     directory, it will set-up /etc/xml/catalog and /etc/xml/docbook based on
@@ -665,12 +671,11 @@ or libxslt wrappers or bindings:</p>
 <ul>
   <li><a
     href="http://mail.gnome.org/archives/xml/2001-March/msg00014.html">Matt
-    Sergeant</a>
-     developped <a href="http://axkit.org/download/">XML::LibXML and
-    XML::LibXSLT</a>, a perl wrapper for libxml2/libxslt as part of the <a
-    href="http://axkit.com/">AxKit XML application server</a></li>
-  <li><a href="mailto:dkuhlman@cutter.rexx.com">Dave Kuhlman</a>
-     provides and earlier version of the libxml/libxslt <a
+    Sergeant</a> developped <a href="http://axkit.org/download/">XML::LibXML
+    and XML::LibXSLT</a>, a perl wrapper for libxml2/libxslt as part of the
+    <a href="http://axkit.com/">AxKit XML application server</a></li>
+  <li><a href="mailto:dkuhlman@cutter.rexx.com">Dave Kuhlman</a> provides and
+    earlier version of the libxml/libxslt <a
     href="http://www.rexx.com/~dkuhlman">wrappers for Python</a></li>
   <li>Petr Kozelka provides <a
     href="http://sourceforge.net/projects/libxml2-pas">Pascal units to glue
@@ -694,21 +699,21 @@ interface have not yet reached the maturity of the C API.</p>
 
 <p>To install the Python bindings there are 2 options:</p>
 <ul>
-<li> If you use an RPM based distribution, simply install the
-<a href="http://rpmfind.net/linux/rpm2html/search.php?query=libxml2-python"
->libxml2-python RPM</a> and the
-<a href="http://rpmfind.net/linux/rpm2html/search.php?query=libxslt-python"
->libxslt-python RPM</a>.
-<li> Otherwise use the <a href="ftp://xmlsoft.org/python/">libxml2-python
-module distribution</a> corresponding to your installed version of libxml2
-and libxslt. Note that to install it you will need both libxml2 and libxslt
-installed and run "python setup.py build install" in the module tree.
+  <li>If you use an RPM based distribution, simply install the <a
+    href="http://rpmfind.net/linux/rpm2html/search.php?query=libxml2-python">libxml2-python
+    RPM</a> and the <a
+    href="http://rpmfind.net/linux/rpm2html/search.php?query=libxslt-python">libxslt-python
+    RPM</a>.</li>
+  <li>Otherwise use the <a href="ftp://xmlsoft.org/python/">libxml2-python
+    module distribution</a> corresponding to your installed version of
+    libxml2 and libxslt. Note that to install it you will need both libxml2
+    and libxslt installed and run "python setup.py build install" in the
+    module tree.</li>
 </ul>
 
-<p>The distribution
-includes a set of examples and regression tests for the python bindings in
-the <code>python/tests</code> directory. Here are some excepts from those
-tests:</p>
+<p>The distribution includes a set of examples and regression tests for the
+python bindings in the <code>python/tests</code> directory. Here are some
+excepts from those tests:</p>
 
 <h3>basic.py:</h3>
 
@@ -730,25 +735,21 @@ result.freeDoc()</pre>
 for the operations on XML trees. Let's have a look at the objects manipulated
 in that example and how is the processing done:</p>
 <ul>
-  <li><code>styledoc</code>
-    : is a libxml2 document tree. It is obtained by parsing the XML file
-    "test.xsl" containing the stylesheet.</li>
-  <li><code>style</code>
-    : this is a precompiled stylesheet ready to be used by the following
-    transformations (note the plural form, multiple transformations can
-    resuse the same stylesheet).</li>
-  <li><code>doc</code>
-    : this is the document to apply the transformation to. In this case it is
-    simply generated by parsing it from a file but any other processing is
-    possible as long as one get a libxml2 Doc. Note that HTML tree are
-    suitable for XSLT processing in libxslt. This is actually how this page
-    is generated !</li>
-  <li><code>result</code>
-    : this is a document generated by applying the stylesheet to the
-    document. Note that some of the stylesheet informations may be related to
-    the serialization of that document and as in this example a specific
-    saveResultToFilename() method of the stylesheet should be used to save it
-    to a file (in that case to "foo").</li>
+  <li><code>styledoc</code> : is a libxml2 document tree. It is obtained by
+    parsing the XML file "test.xsl" containing the stylesheet.</li>
+  <li><code>style</code> : this is a precompiled stylesheet ready to be used
+    by the following transformations (note the plural form, multiple
+    transformations can resuse the same stylesheet).</li>
+  <li><code>doc</code> : this is the document to apply the transformation to.
+    In this case it is simply generated by parsing it from a file but any
+    other processing is possible as long as one get a libxml2 Doc. Note that
+    HTML tree are suitable for XSLT processing in libxslt. This is actually
+    how this page is generated !</li>
+  <li><code>result</code> : this is a document generated by applying the
+    stylesheet to the document. Note that some of the stylesheet informations
+    may be related to the serialization of that document and as in this
+    example a specific saveResultToFilename() method of the stylesheet should
+    be used to save it to a file (in that case to "foo").</li>
 </ul>
 
 <p>Also note the need to explicitely deallocate documents with freeDoc()
@@ -1776,8 +1777,8 @@ close the connection to the database to keep the same example.</p>
   <li>William Brack was an early adopted, contributed a number of patches and
     spent quite some time debugging non-trivial problems in early versions of
     libxslt</li>
-  <li><a href="mailto:izlatkovic@daenet.de">Igor  Zlatkovic</a>
-     is now the maintainer of the Windows port, <a
+  <li><a href="mailto:izlatkovic@daenet.de">Igor  Zlatkovic</a> is now the
+    maintainer of the Windows port, <a
     href="http://www.fh-frankfurt.de/~igor/projects/libxml/index.html">he
     provides binaries</a></li>
   <li>Thomas Broyer provided a lot of suggestions, and drafted most of the
@@ -1786,16 +1787,16 @@ close the connection to the database to keep the same example.</p>
     for libxslt</a></li>
   <li><a
     href="http://mail.gnome.org/archives/xml/2001-March/msg00014.html">Matt
-    Sergeant</a>
-     developed <a href="http://axkit.org/download/">XML::LibXSLT</a>, a perl
-    wrapper for libxml2/libxslt as part of the <a
-    href="http://axkit.com/">AxKit XML application server</a></li>
+    Sergeant</a> developed <a
+    href="http://axkit.org/download/">XML::LibXSLT</a>, a perl wrapper for
+    libxml2/libxslt as part of the <a href="http://axkit.com/">AxKit XML
+    application server</a></li>
   <li>there is a module for <a
     href="http://acs-misc.sourceforge.net/nsxml.html">libxml/libxslt support
     in OpenNSD/AOLServer</a></li>
-  <li><a href="mailto:dkuhlman@cutter.rexx.com">Dave Kuhlman</a>
-     provides libxml/libxslt <a href="http://www.rexx.com/~dkuhlman">wrappers
-    for Python</a></li>
+  <li><a href="mailto:dkuhlman@cutter.rexx.com">Dave Kuhlman</a> provides
+    libxml/libxslt <a href="http://www.rexx.com/~dkuhlman">wrappers for
+    Python</a></li>
   <li>Steve Ball and contributors maintains <a
     href="http://tclxml.sourceforge.net/">libxml2 and libxslt bindings for
     Tcl</a></li>

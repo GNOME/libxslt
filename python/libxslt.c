@@ -360,13 +360,17 @@ extern void initlibxml2mod(void);
 #endif
 
 void initlibxsltmod(void) {
+    static int initialized = 0;
     PyObject *m;
 
 #ifdef MERGED_MODULES
     initlibxml2mod();
 #endif
 
+    if (initialized != 0)
+	return;
     m = Py_InitModule("libxsltmod", libxsltMethods);
+    initialized = 1;
     /* libxslt_xmlErrorInitialize(); */
     /*
      * Specific XSLT initializations
@@ -377,7 +381,6 @@ void initlibxsltmod(void) {
     xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
     /* xmlDefaultSAXHandlerInit(); */
     xmlDefaultSAXHandler.cdataBlock = NULL;
-
 }
 
 

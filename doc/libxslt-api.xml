@@ -482,12 +482,14 @@
       <arg name='modeURI' type='const xmlChar *' info='the mode URI or NULL '/>
     </function>
     <function name='xsltAllocateExtra' file='xsltInternals'>
-      <return type='int'/>
-      <arg name='style' type='xsltStylesheetPtr'/>
+      <info>Allocate an extra runtime information slot statically while compiling the stylesheet and return its number</info>
+      <return type='int' info='the number of the slot '/>
+      <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet '/>
     </function>
     <function name='xsltAllocateExtraCtxt' file='xsltInternals'>
-      <return type='int'/>
-      <arg name='ctxt' type='xsltTransformContextPtr'/>
+      <info>Allocate an extra runtime information slot at run-time and return its number This make sure there is a slot ready in the transformation context</info>
+      <return type='int' info='the number of the slot '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
     </function>
     <function name='xsltApplyAttributeSet' file='attributes'>
       <info>Apply the xsl:use-attribute-sets</info>
@@ -816,9 +818,10 @@
       <arg name='URI' type='const xmlChar *' info='the element namespace URI '/>
     </function>
     <function name='xsltExtModuleElementPreComputeLookup' file='extensions'>
-      <return type='xsltPreComputeFunction'/>
-      <arg name='name' type='const xmlChar *'/>
-      <arg name='URI' type='const xmlChar *'/>
+      <info>Looks up an extension module element pre-computation function</info>
+      <return type='xsltPreComputeFunction' info='the callback function if found, NULL otherwise. '/>
+      <arg name='name' type='const xmlChar *' info='the element name '/>
+      <arg name='URI' type='const xmlChar *' info='the element namespace URI '/>
     </function>
     <function name='xsltExtModuleFunctionLookup' file='extensions'>
       <info>Looks up an extension module function</info>
@@ -1380,7 +1383,7 @@
       <arg name='SAX' type='xmlSAXHandlerPtr' info='a SAX handler for progressive callback output (not implemented yet) '/>
       <arg name='IObuf' type='xmlOutputBufferPtr' info='an output buffer for progressive output (not implemented yet) '/>
     </function>
-    <struct name='xsltRuntimeExtra' file='xsltInternals'/>
+    <struct name='xsltRuntimeExtra' file='xsltInternals' info='Extra information added to the transformation context'/>
     <typedef name='xsltRuntimeExtraPtr' file='xsltInternals'/>
     <function name='xsltSaveProfiling' file='xsltutils'>
       <info>Save the profiling informations on output</info>
@@ -1590,8 +1593,9 @@
       <arg name='ns_uri' type='const xmlChar *' info='the function namespace URI '/>
     </function>
     <function name='xsltXPathGetTransformContext' file='extensions'>
-      <return type='xsltTransformContextPtr'/>
-      <arg name='ctxt' type='xmlXPathParserContextPtr'/>
+      <info>Returns the XSLT transformation context from the XPath transformation context. This is useful when an XPath function in the extension module is called by the XPath interpreter and that the XSLT context is needed for example to retrieve the associated data pertaining to this XSLT transformation.</info>
+      <return type='xsltTransformContextPtr' info='the XSLT transformation context or NULL in case of error. '/>
+      <arg name='ctxt' type='xmlXPathParserContextPtr' info='an XPath transformation context '/>
     </function>
     <function name='xsltXPathVariableLookup' file='variables'>
       <info>This is the entry point when a varibale is needed by the XPath interpretor.</info>

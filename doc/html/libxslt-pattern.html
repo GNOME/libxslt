@@ -171,7 +171,15 @@ HREF="XMLDOCPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node);
+> node,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> runtime);
 void        <A
 HREF="libxslt-pattern.html#XSLTFREECOMPMATCHLIST"
 >xsltFreeCompMatchList</A
@@ -275,7 +283,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN398"
+NAME="AEN400"
 ></A
 ><H2
 >Description</H2
@@ -285,20 +293,20 @@ NAME="AEN398"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN401"
+NAME="AEN403"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN403"
+NAME="AEN405"
 ></A
 ><H3
 ><A
 NAME="XSLTCOMPMATCH"
 ></A
->&#62;struct xsltCompMatch</H3
+>struct xsltCompMatch</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -321,13 +329,13 @@ It is kept private (in pattern.c)</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN409"
+NAME="AEN411"
 ></A
 ><H3
 ><A
 NAME="XSLTCOMPMATCHPTR"
 ></A
->&#62;xsltCompMatchPtr</H3
+>xsltCompMatchPtr</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -347,13 +355,13 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN414"
+NAME="AEN416"
 ></A
 ><H3
 ><A
 NAME="XSLTCOMPILEPATTERN"
 ></A
->&#62;xsltCompilePattern ()</H3
+>xsltCompilePattern ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -377,7 +385,15 @@ HREF="XMLDOCPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node);</PRE
+> node,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> runtime);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -391,7 +407,7 @@ for fast matching.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN425"
+NAME="AEN429"
 ></A
 ><P
 ></P
@@ -459,6 +475,40 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>runtime</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the transformation context, if done at run-time</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
@@ -478,13 +528,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN446"
+NAME="AEN458"
 ></A
 ><H3
 ><A
 NAME="XSLTFREECOMPMATCHLIST"
 ></A
->&#62;xsltFreeCompMatchList ()</H3
+>xsltFreeCompMatchList ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -513,7 +563,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN454"
+NAME="AEN466"
 ></A
 ><P
 ></P
@@ -551,13 +601,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN463"
+NAME="AEN475"
 ></A
 ><H3
 ><A
 NAME="XSLTTESTCOMPMATCHLIST"
 ></A
->&#62;xsltTestCompMatchList ()</H3
+>xsltTestCompMatchList ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -589,7 +639,7 @@ HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN472"
+NAME="AEN484"
 ></A
 ><P
 ></P
@@ -676,13 +726,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN493"
+NAME="AEN505"
 ></A
 ><H3
 ><A
 NAME="XSLTADDTEMPLATE"
 ></A
->&#62;xsltAddTemplate ()</H3
+>xsltAddTemplate ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -723,7 +773,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN504"
+NAME="AEN516"
 ></A
 ><P
 ></P
@@ -827,13 +877,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN529"
+NAME="AEN541"
 ></A
 ><H3
 ><A
 NAME="XSLTGETTEMPLATE"
 ></A
->&#62;xsltGetTemplate ()</H3
+>xsltGetTemplate ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -874,7 +924,7 @@ it means one needs to look for the next imported template in scope.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN540"
+NAME="AEN552"
 ></A
 ><P
 ></P
@@ -961,13 +1011,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN561"
+NAME="AEN573"
 ></A
 ><H3
 ><A
 NAME="XSLTFREETEMPLATEHASHES"
 ></A
->&#62;xsltFreeTemplateHashes ()</H3
+>xsltFreeTemplateHashes ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -991,7 +1041,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN568"
+NAME="AEN580"
 ></A
 ><P
 ></P
@@ -1029,13 +1079,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN577"
+NAME="AEN589"
 ></A
 ><H3
 ><A
 NAME="XSLTCLEANUPTEMPLATES"
 ></A
->&#62;xsltCleanupTemplates ()</H3
+>xsltCleanupTemplates ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1060,7 +1110,7 @@ the ones it imports.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN584"
+NAME="AEN596"
 ></A
 ><P
 ></P
@@ -1098,13 +1148,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN593"
+NAME="AEN605"
 ></A
 ><H3
 ><A
 NAME="XSLTMATCHPATTERN"
 ></A
->&#62;xsltMatchPattern ()</H3
+>xsltMatchPattern ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1144,7 +1194,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN604"
+NAME="AEN616"
 ></A
 ><P
 ></P

@@ -123,7 +123,7 @@ NAME="LIBXSLT-EXTENSIONS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN3001"
+NAME="AEN3013"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN3001"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN3004"
+NAME="AEN3016"
 ></A
 ><H2
 >Synopsis</H2
@@ -273,6 +273,17 @@ HREF="libxslt-extensions.html#XSLTSHUTDOWNEXTS"
 HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</A
 > style);
+<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> <A
+HREF="libxslt-extensions.html#XSLTXPATHGETTRANSFORMCONTEXT"
+>xsltXPathGetTransformContext</A
+>
+                                            (<GTKDOCLINK
+HREF="XMLXPATHPARSERCONTEXTPTR"
+>xmlXPathParserContextPtr</GTKDOCLINK
+> ctxt);
 int         <A
 HREF="libxslt-extensions.html#XSLTREGISTEREXTMODULEFUNCTION"
 >xsltRegisterExtModuleFunction</A
@@ -332,15 +343,8 @@ HREF="XMLCHAR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *URI);
-<GTKDOCLINK
-HREF="TYPEDEF"
->typedef</GTKDOCLINK
->     <A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
->xsltElemPreCompPtr</A
->              ();
 <A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > <A
 HREF="libxslt-extensions.html#XSLTNEWELEMPRECOMP"
@@ -361,7 +365,7 @@ void        <A
 HREF="libxslt-extensions.html#XSLTINITELEMPRECOMP"
 >xsltInitElemPreComp</A
 >             (<A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > comp,
                                              <A
@@ -432,6 +436,21 @@ HREF="XMLCHAR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *URI);
+<GTKDOCLINK
+HREF="XSLTPRECOMPUTEFUNCTION"
+>xsltPreComputeFunction</GTKDOCLINK
+> <A
+HREF="libxslt-extensions.html#XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP"
+>xsltExtModuleElementPreComputeLookup</A
+>
+                                            (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *URI);
 int         <A
 HREF="libxslt-extensions.html#XSLTUNREGISTEREXTMODULEELEMENT"
 >xsltUnregisterExtModuleElement</A
@@ -443,13 +462,17 @@ HREF="XMLCHAR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *URI);
-<GTKDOCLINK
-HREF="TYPEDEF"
->typedef</GTKDOCLINK
->     <A
-HREF="libxslt-extensions.html#VOID"
->void</A
->                            ();
+void        (<A
+HREF="libxslt-extensions.html#XSLTTOPLEVELFUNCTION"
+>*xsltTopLevelFunction</A
+>)         (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> inst);
 int         <A
 HREF="libxslt-extensions.html#XSLTREGISTEREXTMODULETOPLEVEL"
 >xsltRegisterExtModuleTopLevel</A
@@ -461,13 +484,13 @@ HREF="XMLCHAR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *URI,
-                                             <GTKDOCLINK
-HREF="XSLTTOPLEVELFUNCTION"
->xsltTopLevelFunction</GTKDOCLINK
+                                             <A
+HREF="libxslt-extensions.html#XSLTTOPLEVELFUNCTION"
+>xsltTopLevelFunction</A
 > function);
-<GTKDOCLINK
-HREF="XSLTTOPLEVELFUNCTION"
->xsltTopLevelFunction</GTKDOCLINK
+<A
+HREF="libxslt-extensions.html#XSLTTOPLEVELFUNCTION"
+>xsltTopLevelFunction</A
 > <A
 HREF="libxslt-extensions.html#XSLTEXTMODULETOPLEVELLOOKUP"
 >xsltExtModuleTopLevelLookup</A
@@ -577,7 +600,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</A
 > style);
 <A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > <A
 HREF="libxslt-extensions.html#XSLTPRECOMPUTEEXTMODULEELEMENT"
@@ -602,7 +625,7 @@ HREF="libxslt-extensions.html#XSLTREGISTERTESTMODULE"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3128"
+NAME="AEN3146"
 ></A
 ><H2
 >Description</H2
@@ -612,20 +635,20 @@ NAME="AEN3128"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3131"
+NAME="AEN3149"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3133"
+NAME="AEN3151"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLEEXTINITFUNCTION"
 ></A
->&#62;xsltStyleExtInitFunction ()</H3
+>xsltStyleExtInitFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -653,7 +676,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3141"
+NAME="AEN3159"
 ></A
 ><P
 ></P
@@ -708,13 +731,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3154"
+NAME="AEN3172"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLEEXTSHUTDOWNFUNCTION"
 ></A
->&#62;xsltStyleExtShutdownFunction ()</H3
+>xsltStyleExtShutdownFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -743,7 +766,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3162"
+NAME="AEN3180"
 ></A
 ><P
 ></P
@@ -815,13 +838,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3179"
+NAME="AEN3197"
 ></A
 ><H3
 ><A
 NAME="XSLTEXTINITFUNCTION"
 ></A
->&#62;xsltExtInitFunction ()</H3
+>xsltExtInitFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -849,7 +872,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3187"
+NAME="AEN3205"
 ></A
 ><P
 ></P
@@ -904,13 +927,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3200"
+NAME="AEN3218"
 ></A
 ><H3
 ><A
 NAME="XSLTEXTSHUTDOWNFUNCTION"
 ></A
->&#62;xsltExtShutdownFunction ()</H3
+>xsltExtShutdownFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -939,7 +962,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3208"
+NAME="AEN3226"
 ></A
 ><P
 ></P
@@ -1011,13 +1034,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3225"
+NAME="AEN3243"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTMODULE"
 ></A
->&#62;xsltRegisterExtModule ()</H3
+>xsltRegisterExtModule ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1049,7 +1072,7 @@ HREF="libxslt-extensions.html#XSLTEXTSHUTDOWNFUNCTION"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3234"
+NAME="AEN3252"
 ></A
 ><P
 ></P
@@ -1136,13 +1159,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3255"
+NAME="AEN3273"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTMODULEFULL"
 ></A
->&#62;xsltRegisterExtModuleFull ()</H3
+>xsltRegisterExtModuleFull ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1182,7 +1205,7 @@ HREF="libxslt-extensions.html#XSLTSTYLEEXTSHUTDOWNFUNCTION"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3266"
+NAME="AEN3284"
 ></A
 ><P
 ></P
@@ -1303,13 +1326,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3295"
+NAME="AEN3313"
 ></A
 ><H3
 ><A
 NAME="XSLTUNREGISTEREXTMODULE"
 ></A
->&#62;xsltUnregisterExtModule ()</H3
+>xsltUnregisterExtModule ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1333,7 +1356,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3302"
+NAME="AEN3320"
 ></A
 ><P
 ></P
@@ -1386,13 +1409,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3315"
+NAME="AEN3333"
 ></A
 ><H3
 ><A
 NAME="XSLTGETEXTDATA"
 ></A
->&#62;xsltGetExtData ()</H3
+>xsltGetExtData ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1421,7 +1444,7 @@ transformation.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3323"
+NAME="AEN3341"
 ></A
 ><P
 ></P
@@ -1476,13 +1499,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3336"
+NAME="AEN3354"
 ></A
 ><H3
 ><A
 NAME="XSLTSTYLEGETEXTDATA"
 ></A
->&#62;xsltStyleGetExtData ()</H3
+>xsltStyleGetExtData ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1511,7 +1534,7 @@ stylesheet.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3344"
+NAME="AEN3362"
 ></A
 ><P
 ></P
@@ -1566,13 +1589,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3357"
+NAME="AEN3375"
 ></A
 ><H3
 ><A
 NAME="XSLTSHUTDOWNCTXTEXTS"
 ></A
->&#62;xsltShutdownCtxtExts ()</H3
+>xsltShutdownCtxtExts ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1596,7 +1619,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3364"
+NAME="AEN3382"
 ></A
 ><P
 ></P
@@ -1634,13 +1657,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3373"
+NAME="AEN3391"
 ></A
 ><H3
 ><A
 NAME="XSLTSHUTDOWNEXTS"
 ></A
->&#62;xsltShutdownExts ()</H3
+>xsltShutdownExts ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1664,7 +1687,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3380"
+NAME="AEN3398"
 ></A
 ><P
 ></P
@@ -1702,13 +1725,104 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3389"
+NAME="AEN3407"
+></A
+><H3
+><A
+NAME="XSLTXPATHGETTRANSFORMCONTEXT"
+></A
+>xsltXPathGetTransformContext ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> xsltXPathGetTransformContext
+                                            (<GTKDOCLINK
+HREF="XMLXPATHPARSERCONTEXTPTR"
+>xmlXPathParserContextPtr</GTKDOCLINK
+> ctxt);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Returns the XSLT transformation context from the XPath transformation
+context. This is useful when an XPath function in the extension module
+is called by the XPath interpreter and that the XSLT context is needed
+for example to retrieve the associated data pertaining to this XSLT
+transformation.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3415"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XPath transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the XSLT transformation context or NULL in case of error.</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3428"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTMODULEFUNCTION"
 ></A
->&#62;xsltRegisterExtModuleFunction ()</H3
+>xsltRegisterExtModuleFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1740,7 +1854,7 @@ HREF="XMLXPATHFUNCTION"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3398"
+NAME="AEN3437"
 ></A
 ><P
 ></P
@@ -1827,13 +1941,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3419"
+NAME="AEN3458"
 ></A
 ><H3
 ><A
 NAME="XSLTEXTFUNCTIONLOOKUP"
 ></A
->&#62;xsltExtFunctionLookup ()</H3
+>xsltExtFunctionLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1866,7 +1980,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3428"
+NAME="AEN3467"
 ></A
 ><P
 ></P
@@ -1953,13 +2067,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3449"
+NAME="AEN3488"
 ></A
 ><H3
 ><A
 NAME="XSLTEXTMODULEFUNCTIONLOOKUP"
 ></A
->&#62;xsltExtModuleFunctionLookup ()</H3
+>xsltExtModuleFunctionLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -1991,7 +2105,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3458"
+NAME="AEN3497"
 ></A
 ><P
 ></P
@@ -2061,13 +2175,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3475"
+NAME="AEN3514"
 ></A
 ><H3
 ><A
 NAME="XSLTUNREGISTEREXTMODULEFUNCTION"
 ></A
->&#62;xsltUnregisterExtModuleFunction ()</H3
+>xsltUnregisterExtModuleFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2095,7 +2209,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3483"
+NAME="AEN3522"
 ></A
 ><P
 ></P
@@ -2165,77 +2279,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3500"
-></A
-><H3
-><A
-NAME="XSLTELEMPRECOMPPTR"
-></A
->&#62;xsltElemPreCompPtr ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="TYPEDEF"
->typedef</GTKDOCLINK
->     xsltElemPreCompPtr              ();</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><A
-NAME="AEN3506"
-></A
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TBODY
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-></TBODY
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3515"
+NAME="AEN3539"
 ></A
 ><H3
 ><A
 NAME="XSLTNEWELEMPRECOMP"
 ></A
->&#62;xsltNewElemPreComp ()</H3
+>xsltNewElemPreComp ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2246,7 +2296,7 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 ><A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > xsltNewElemPreComp       (<A
 HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
@@ -2273,7 +2323,7 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3526"
+NAME="AEN3550"
 ></A
 ><P
 ></P
@@ -2363,13 +2413,13 @@ HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3548"
+NAME="AEN3572"
 ></A
 ><H3
 ><A
 NAME="XSLTINITELEMPRECOMP"
 ></A
->&#62;xsltInitElemPreComp ()</H3
+>xsltInitElemPreComp ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2380,7 +2430,7 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 >void        xsltInitElemPreComp             (<A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > comp,
                                              <A
@@ -2418,7 +2468,7 @@ data struct.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3561"
+NAME="AEN3585"
 ></A
 ><P
 ></P
@@ -2532,13 +2582,13 @@ CLASS="PARAMETER"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3588"
+NAME="AEN3612"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTMODULEELEMENT"
 ></A
->&#62;xsltRegisterExtModuleElement ()</H3
+>xsltRegisterExtModuleElement ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2574,7 +2624,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3598"
+NAME="AEN3622"
 ></A
 ><P
 ></P
@@ -2678,13 +2728,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3623"
+NAME="AEN3647"
 ></A
 ><H3
 ><A
 NAME="XSLTEXTELEMENTLOOKUP"
 ></A
->&#62;xsltExtElementLookup ()</H3
+>xsltExtElementLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2725,7 +2775,7 @@ module elements.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3634"
+NAME="AEN3658"
 ></A
 ><P
 ></P
@@ -2812,13 +2862,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3655"
+NAME="AEN3679"
 ></A
 ><H3
 ><A
 NAME="XSLTEXTMODULEELEMENTLOOKUP"
 ></A
->&#62;xsltExtModuleElementLookup ()</H3
+>xsltExtModuleElementLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2850,7 +2900,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3664"
+NAME="AEN3688"
 ></A
 ><P
 ></P
@@ -2920,13 +2970,121 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3681"
+NAME="AEN3705"
+></A
+><H3
+><A
+NAME="XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP"
+></A
+>xsltExtModuleElementPreComputeLookup ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><GTKDOCLINK
+HREF="XSLTPRECOMPUTEFUNCTION"
+>xsltPreComputeFunction</GTKDOCLINK
+> xsltExtModuleElementPreComputeLookup
+                                            (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *URI);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Looks up an extension module element pre-computation function</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3714"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the element name</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>URI</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the element namespace URI</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the callback function if found, NULL otherwise.</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3731"
 ></A
 ><H3
 ><A
 NAME="XSLTUNREGISTEREXTMODULEELEMENT"
 ></A
->&#62;xsltUnregisterExtModuleElement ()</H3
+>xsltUnregisterExtModuleElement ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -2954,7 +3112,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3689"
+NAME="AEN3739"
 ></A
 ><P
 ></P
@@ -3024,13 +3182,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3706"
+NAME="AEN3756"
 ></A
 ><H3
 ><A
-NAME="VOID"
+NAME="XSLTTOPLEVELFUNCTION"
 ></A
->&#62;void ()</H3
+>xsltTopLevelFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3040,10 +3198,14 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="TYPEDEF"
->typedef</GTKDOCLINK
->     void                            ();</PRE
+>void        (*xsltTopLevelFunction)         (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> inst);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -3052,7 +3214,7 @@ HREF="TYPEDEF"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3712"
+NAME="AEN3763"
 ></A
 ><P
 ></P
@@ -3069,10 +3231,29 @@ CLASS="CALSTABLE"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
 ><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>inst</I
+></TT
+>&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
@@ -3088,13 +3269,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3721"
+NAME="AEN3776"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTMODULETOPLEVEL"
 ></A
->&#62;xsltRegisterExtModuleTopLevel ()</H3
+>xsltRegisterExtModuleTopLevel ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3112,9 +3293,9 @@ HREF="XMLCHAR"
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
 > *URI,
-                                             <GTKDOCLINK
-HREF="XSLTTOPLEVELFUNCTION"
->xsltTopLevelFunction</GTKDOCLINK
+                                             <A
+HREF="libxslt-extensions.html#XSLTTOPLEVELFUNCTION"
+>xsltTopLevelFunction</A
 > function);</PRE
 ></TD
 ></TR
@@ -3126,7 +3307,7 @@ HREF="XSLTTOPLEVELFUNCTION"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3730"
+NAME="AEN3785"
 ></A
 ><P
 ></P
@@ -3213,13 +3394,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3751"
+NAME="AEN3806"
 ></A
 ><H3
 ><A
 NAME="XSLTEXTMODULETOPLEVELLOOKUP"
 ></A
->&#62;xsltExtModuleTopLevelLookup ()</H3
+>xsltExtModuleTopLevelLookup ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3229,9 +3410,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XSLTTOPLEVELFUNCTION"
->xsltTopLevelFunction</GTKDOCLINK
+><A
+HREF="libxslt-extensions.html#XSLTTOPLEVELFUNCTION"
+>xsltTopLevelFunction</A
 > xsltExtModuleTopLevelLookup
                                             (const <GTKDOCLINK
 HREF="XMLCHAR"
@@ -3251,7 +3432,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3760"
+NAME="AEN3815"
 ></A
 ><P
 ></P
@@ -3321,13 +3502,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3777"
+NAME="AEN3832"
 ></A
 ><H3
 ><A
 NAME="XSLTUNREGISTEREXTMODULETOPLEVEL"
 ></A
->&#62;xsltUnregisterExtModuleTopLevel ()</H3
+>xsltUnregisterExtModuleTopLevel ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3355,7 +3536,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3785"
+NAME="AEN3840"
 ></A
 ><P
 ></P
@@ -3425,13 +3606,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3802"
+NAME="AEN3857"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTFUNCTION"
 ></A
->&#62;xsltRegisterExtFunction ()</H3
+>xsltRegisterExtFunction ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3467,7 +3648,7 @@ HREF="XMLXPATHFUNCTION"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3812"
+NAME="AEN3867"
 ></A
 ><P
 ></P
@@ -3571,13 +3752,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3837"
+NAME="AEN3892"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTELEMENT"
 ></A
->&#62;xsltRegisterExtElement ()</H3
+>xsltRegisterExtElement ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3613,7 +3794,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3847"
+NAME="AEN3902"
 ></A
 ><P
 ></P
@@ -3717,13 +3898,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3872"
+NAME="AEN3927"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTEREXTPREFIX"
 ></A
->&#62;xsltRegisterExtPrefix ()</H3
+>xsltRegisterExtPrefix ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3755,7 +3936,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3881"
+NAME="AEN3936"
 ></A
 ><P
 ></P
@@ -3842,13 +4023,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3902"
+NAME="AEN3957"
 ></A
 ><H3
 ><A
 NAME="XSLTCHECKEXTPREFIX"
 ></A
->&#62;xsltCheckExtPrefix ()</H3
+>xsltCheckExtPrefix ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3876,7 +4057,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3910"
+NAME="AEN3965"
 ></A
 ><P
 ></P
@@ -3946,13 +4127,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3927"
+NAME="AEN3982"
 ></A
 ><H3
 ><A
 NAME="XSLTINITCTXTEXTS"
 ></A
->&#62;xsltInitCtxtExts ()</H3
+>xsltInitCtxtExts ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -3976,7 +4157,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3934"
+NAME="AEN3989"
 ></A
 ><P
 ></P
@@ -4029,13 +4210,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3947"
+NAME="AEN4002"
 ></A
 ><H3
 ><A
 NAME="XSLTFREECTXTEXTS"
 ></A
->&#62;xsltFreeCtxtExts ()</H3
+>xsltFreeCtxtExts ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -4059,7 +4240,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3954"
+NAME="AEN4009"
 ></A
 ><P
 ></P
@@ -4097,13 +4278,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3963"
+NAME="AEN4018"
 ></A
 ><H3
 ><A
 NAME="XSLTFREEEXTS"
 ></A
->&#62;xsltFreeExts ()</H3
+>xsltFreeExts ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -4127,7 +4308,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3970"
+NAME="AEN4025"
 ></A
 ><P
 ></P
@@ -4165,13 +4346,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3979"
+NAME="AEN4034"
 ></A
 ><H3
 ><A
 NAME="XSLTPRECOMPUTEEXTMODULEELEMENT"
 ></A
->&#62;xsltPreComputeExtModuleElement ()</H3
+>xsltPreComputeExtModuleElement ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -4182,7 +4363,7 @@ CELLPADDING="6"
 ><PRE
 CLASS="PROGRAMLISTING"
 ><A
-HREF="libxslt-extensions.html#XSLTELEMPRECOMPPTR"
+HREF="libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR"
 >xsltElemPreCompPtr</A
 > xsltPreComputeExtModuleElement
                                             (<A
@@ -4203,7 +4384,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3988"
+NAME="AEN4043"
 ></A
 ><P
 ></P
@@ -4273,13 +4454,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4005"
+NAME="AEN4060"
 ></A
 ><H3
 ><A
 NAME="XSLTREGISTERTESTMODULE"
 ></A
->&#62;xsltRegisterTestModule ()</H3
+>xsltRegisterTestModule ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
