@@ -201,6 +201,7 @@ EXPORTS
 	xsltAttrListTemplateProcess
 	xsltAttrTemplateProcess
 	xsltAttrTemplateValueProcess
+	xsltAttrTemplateValueProcessNode
 
 
 /* transform.h
@@ -243,6 +244,8 @@ EXPORTS
 
 	/* Hook for the debugger if activated. */
 	xslHandleDebugger
+
+	xsltCopyTree
 
 
 /* variables.h
@@ -330,6 +333,7 @@ EXPORTS
 
 	/* Profiling. */
 	xsltSaveProfiling
+	xsltGetProfileInformation
 	xsltTimestamp
 	xsltCalibrateAdjust
 
