@@ -1,0 +1,17 @@
+Sun Jan  7 13:51:30 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.[ch] libxslt/xsltInternals.h libxslt/xsltproc.c:
+	  first steps toward building the framework
+
+Sun Jan  7 12:22:13 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* NOTES: added notes taken while reading the spec.
+
+Fri Jan  5 11:34:12 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* test/REC1 test/REC2: added examples from the XSLT REC
+
+Fri Jan  5 11:14:29 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* README: basic informations
+	* Changelog: created

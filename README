@@ -1,0 +1,12 @@
+
+                  XSLT support for libxml
+
+		  http://xmlsoft.org/
+
+ Requires libxml2 with XPath support.
+Currently unusable, very early steps ...
+
+Daniel Veillard
+
+Daniel.Veillard@imag.fr
+$Id$

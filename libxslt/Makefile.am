@@ -1,0 +1,25 @@
+INCLUDES = -I$(top_srcdir)/libxslt \
+	 $(LIBXML_CFLAGS) -Wall -ansi
+
+lib_LTLIBRARIES = libxslt.la
+
+libxslt_la_SOURCES = 			\
+	xslt.c				\
+	xslt.h				\
+	xsltInternals.h
+
+
+
+# what is this include dir ?
+# libxsltincdir = $(includedir)/libxslt
+
+noinst_PROGRAMS = xsltproc
+
+DEPS = $(top_builddir)/libxslt/libxslt.la
+LDADDS = $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS)
+
+xsltproc_SOURCES = xsltproc.c
+xsltproc_LDFLAGS =
+xsltproc_DEPENDENCIES = $(DEPS)
+xsltproc_LDADD = $(LDADDS)
+
