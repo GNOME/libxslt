@@ -57,7 +57,7 @@ GENERATED= $(srcdir)/libxsltclass.py \
 $(GENERATED): $(srcdir)/$(GENERATE) $(API_DESC)
 	cd $(srcdir) && $(PYTHON) $(GENERATE)
 
-$(libxsltmodule_la_OBJECTS): $(GENERATED)
+$(libxsltmod_la_OBJECTS): $(GENERATED)
 
 else
 all: 
