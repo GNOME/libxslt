@@ -270,6 +270,7 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	return;
     }
 
+    xmlXPathStringFunction(ctxt, 1);
     obj2 = valuePop(ctxt);
     if ((obj2 == NULL) ||
 	(ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {

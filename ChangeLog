@@ -1,3 +1,8 @@
+Tue Nov 12 19:31:49 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.c: autoconvert key() first arg to string,
+	  reported by John Escott
+
 Tue Nov 12 13:40:47 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: corner case handling of copying a CDATA node.
