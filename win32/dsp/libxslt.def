@@ -26,7 +26,6 @@ EXPORTS
  	xsltNewStyleDocument
  	xsltFreeStyleDocuments
 
-
   	xsltRegisterExtPrefix
   	xsltCheckExtPrefix
   	xsltRegisterExtFunction
@@ -38,7 +37,6 @@ EXPORTS
 	xsltXPathGetTransformContext
 	xsltUnregisterExtModule
 	xsltRegisterExtModule
-
 
  	xsltDocumentFunction
  	xsltKeyFunction
@@ -139,7 +137,7 @@ EXPORTS
 	xsltSetXIncludeDefault
 	xsltLibxmlVersion
 	xsltLibxsltVersion
-	xsltEngineVersion
+	xsltEngineVersion DATA
 
 	xsltRunStylesheet
 	xsltLoadStylesheetPI

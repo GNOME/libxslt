@@ -8,6 +8,7 @@ BODY {font-size: 10pt; font-family: Verdana,Arial,Helvetica; margin-top: 5pt; ma
 H1 {font-size: 16pt; font-family: Verdana,Arial,Helvetica}
 H2 {font-size: 14pt; font-family: Verdana,Arial,Helvetica}
 H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
+A:link, A:visited, A:active { text-decoration: underline }
 --></style>
 <title>The XSLT C library for Gnome</title>
 </head>
@@ -36,7 +37,9 @@ H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
 <li><a href="xsltproc2.html">The xsltproc tool</a></li>
 <li><a href="API.html">The programming API</a></li>
 <li><a href="contribs.html">Contributions</a></li>
-<li><a href="xslt.html">flat page</a></li>
+<li>
+<a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a>
+</li>
 </ul></td></tr>
 </table>
 <table width="100%" border="0" cellspacing="1" cellpadding="3">
@@ -50,21 +53,16 @@ H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
 <li><a href="ftp://xmlsoft.org/">FTP</a></li>
 <li><a href="http://www.fh-frankfurt.de/~igor/projects/libxml/">Windows binaries</a></li>
 <li><a href="http://pages.eidosnet.co.uk/~garypen/libxml/">Solaris binaries</a></li>
+<li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li>
 </ul></td></tr>
 </table>
 </td></tr></table></td>
 <td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
-<p>
-<ul>
-<li><a href="intro.html">Introduction</a></li>
-<li><a href="docs.html">Documentation</a></li>
-<li><a href="bugs.html">Reporting bugs and getting help</a></li>
-<li><a href="help.html">how to help</a></li>
-<li><a href="downloads.html">Downloads</a></li>
-<li><a href="news.html">News</a></li>
-<li><a href="xsltproc2.html">The xsltproc command line tool</a></li>
-<li><a href="API.html">The programming API</a></li>
-</ul>
+<p>Libxslt is the XSLT C library developped for the Gnome project. XSLT itself
+is a an XML language to define transformation for XML. Libxslt is based
+on libxml2 the XML C library developped for the Gnome project.</p>
+<p>People can either embed the library in their application or use
+xsltproc the command line processing tool.</p>
 <p>External documents:</p>
 <ul>
 <li>John Fleck wrote <a href="tutorial/libxslttutorial.html">a tutorial for

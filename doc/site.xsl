@@ -1,10 +1,50 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-<!--
- - The global title
- -->
   <xsl:output method="html" version="4.01" encoding="ISO-8859-1"/>
-  <xsl:variable name="globaltitle" select="string(/html/body/h1[1])"/>
+<!--
+ - returns the filename associated to an ID in the original file
+ -->
+  <xsl:template name="filename">
+    <xsl:param name="name" select="string(@href)"/>
+    <xsl:choose>
+      <xsl:when test="$name = &quot;#Introducti&quot;">
+        <xsl:text>intro.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#Documentat&quot;">
+        <xsl:text>docs.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#Reporting&quot;">
+        <xsl:text>bugs.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#help&quot;">
+        <xsl:text>help.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#Help&quot;">
+        <xsl:text>help.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#Downloads&quot;">
+        <xsl:text>downloads.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#News&quot;">
+        <xsl:text>news.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#Contributi&quot;">
+        <xsl:text>contribs.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#xsltproc&quot;">
+        <xsl:text>xsltproc2.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;#API&quot;">
+        <xsl:text>API.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = &quot;&quot;">
+        <xsl:text>unknown.html</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$name"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 <!--
  - The table of content
  -->
@@ -26,7 +66,7 @@
           </xsl:element>
         </li>
       </xsl:for-each>
-      <li><a href="xslt.html">flat page</a></li>
+      <li><a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a></li>
     </ul>
   </xsl:variable>
   <xsl:variable name="related">
@@ -39,6 +79,7 @@
       <li><a href="ftp://xmlsoft.org/">FTP</a></li>
       <li><a href="http://www.fh-frankfurt.de/~igor/projects/libxml/">Windows binaries</a></li>
       <li><a href="http://pages.eidosnet.co.uk/~garypen/libxml/">Solaris binaries</a></li>
+      <li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li>
     </ul>
   </xsl:variable>
   <xsl:template name="toc">
@@ -85,6 +126,10 @@
   <xsl:template mode="head" match="meta">
 </xsl:template>
 <!--
+ - The global title
+ -->
+  <xsl:variable name="globaltitle" select="string(/html/body/h1[1])"/>
+<!--
  - Write the styles in the head
  -->
   <xsl:template name="style">
@@ -94,6 +139,7 @@ BODY {font-size: 10pt; font-family: Verdana,Arial,Helvetica; margin-top: 5pt; ma
 H1 {font-size: 16pt; font-family: Verdana,Arial,Helvetica}
 H2 {font-size: 14pt; font-family: Verdana,Arial,Helvetica}
 H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
+A:link, A:visited, A:active { text-decoration: underline }
 <xsl:text disable-output-escaping="yes">--&gt;</xsl:text></style>
   </xsl:template>
 <!--
@@ -129,50 +175,6 @@ H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
     </td>
     </tr>
     </table>
-  </xsl:template>
-<!--
- - returns the filename associated to an ID in the original file
- -->
-  <xsl:template name="filename">
-    <xsl:param name="name" select="string(@href)"/>
-    <xsl:choose>
-      <xsl:when test="$name = &quot;#Introducti&quot;">
-        <xsl:text>intro.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#Documentat&quot;">
-        <xsl:text>docs.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#Reporting&quot;">
-        <xsl:text>bugs.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#help&quot;">
-        <xsl:text>help.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#Help&quot;">
-        <xsl:text>help.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#Downloads&quot;">
-        <xsl:text>downloads.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#News&quot;">
-        <xsl:text>news.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#Contributi&quot;">
-        <xsl:text>contribs.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#xsltproc&quot;">
-        <xsl:text>xsltproc2.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;#API&quot;">
-        <xsl:text>API.html</xsl:text>
-      </xsl:when>
-      <xsl:when test="$name = &quot;&quot;">
-        <xsl:text>unknown.html</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$name"/>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
 <!--
  - Handling of nodes in the body before the first H2, table of content
