@@ -1,3 +1,11 @@
+Mon Apr 30 19:29:34 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/preproc.c libxslt/xslt.c libxslt/xsltInternals.h
+	  libxslt/xsltproc.c: counting errors and warnings at compilation
+	  time. Stop processing in case of error.
+	* tests/docs/bug-1[89]* tests/general/-1[89]* tests/general/inner.xsl:
+	  added more namespace related bug checks
+
 Mon Apr 30 13:47:11 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/preproc.c libxslt/variables.c: found the source of a

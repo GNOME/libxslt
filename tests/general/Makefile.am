@@ -21,9 +21,12 @@ EXTRA_DIST = \
     bug-15-.out bug-15-.xsl \
     bug-16-.out bug-16-.xsl \
     bug-17-.out bug-17-.xsl \
+    bug-18-.out bug-18-.xsl \
+    bug-19-.out bug-19-.xsl \
     character.out character.xsl \
     character2.out character2.xsl \
-    itemschoose.out itemschoose.xsl
+    itemschoose.out itemschoose.xsl \
+    inner.xsl
 
 
 all: test

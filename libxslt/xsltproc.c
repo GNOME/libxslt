@@ -157,7 +157,7 @@ main(int argc, char **argv) {
 		
 	}
     }
-    if (cur != NULL) {
+    if ((cur != NULL) && (cur->errors == 0)) {
 	for (;i < argc ; i++) {
 	    if (timing)
 		gettimeofday(&begin, NULL);

@@ -270,6 +270,8 @@ struct _xsltStylesheet {
      * Precomputed blocks
      */
     xsltStylePreCompPtr preComps;	/* list of precomputed blocks */
+    int warnings;		/* number of warnings found at compilation */
+    int errors;			/* number of errors found at compilation */
 };
 
 /*
