@@ -1,3 +1,8 @@
+Wed Jan 22 16:43:49 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxslt.c: fixed a couple of return error #104150
+	  reported by Peter O'Shea 
+
 Fri Jan 17 17:43:43 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: fixed a double free of stylesheet

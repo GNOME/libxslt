@@ -467,7 +467,7 @@ libxslt_xsltPythonExtModuleStyleShutdown(xsltStylesheetPtr style,
     class = xmlHashLookup(libxslt_extModuleClasses, URI);
     if (class == NULL) {
 	fprintf(stderr, "libxslt_xsltPythonExtModuleStyleShutdown: internal error %s not found !\n", URI);
-	return(NULL);
+	return;
     }
 
     if (PyObject_HasAttrString(class, (char *) "_styleShutdown")) {
@@ -529,7 +529,7 @@ libxslt_xsltPythonExtModuleCtxtShutdown(xsltTransformContextPtr ctxt,
     class = xmlHashLookup(libxslt_extModuleClasses, URI);
     if (class == NULL) {
 	fprintf(stderr, "libxslt_xsltPythonExtModuleCtxtShutdown: internal error %s not found !\n", URI);
-	return(NULL);
+	return;
     }
 
     if (PyObject_HasAttrString(class, (char *) "_ctxtShutdown")) {
