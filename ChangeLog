@@ -1,3 +1,8 @@
+Fri May  4 19:09:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: add a --docbook option if your libxml2
+	  has the SGML DocBook support compiled in.
+
 Fri May  4 17:06:01 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/general/bug-2[0-4].* tests/docs/bug-2[0-4].*: added more
