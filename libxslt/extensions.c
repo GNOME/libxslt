@@ -13,6 +13,7 @@
 #include "libxslt.h"
 
 #include <string.h>
+#include <limits.h>
 
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
@@ -20,11 +21,21 @@
 #include <libxml/xmlerror.h>
 #include <libxml/parserInternals.h>
 #include <libxml/xpathInternals.h>
+#ifdef WITH_MODULES
+#include <libxml/xmlmodule.h>
+#endif
+#include <libxml/list.h>
+#include <libxml/xmlIO.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "imports.h"
 #include "extensions.h"
+
+#ifdef _WIN32
+#include <stdlib.h>             /* for _MAX_PATH */
+#define PATH_MAX _MAX_PATH
+#endif
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_EXTENSIONS
@@ -42,7 +53,7 @@ struct _xsltExtDef {
     struct _xsltExtDef *next;
     xmlChar *prefix;
     xmlChar *URI;
-    void    *data;
+    void *data;
 };
 
 typedef struct _xsltExtModule xsltExtModule;
@@ -65,13 +76,14 @@ typedef struct _xsltExtElement xsltExtElement;
 typedef xsltExtElement *xsltExtElementPtr;
 struct _xsltExtElement {
     xsltPreComputeFunction precomp;
-    xsltTransformFunction  transform;
+    xsltTransformFunction transform;
 };
 
 static xmlHashTablePtr xsltExtensionsHash = NULL;
 static xmlHashTablePtr xsltFunctionsHash = NULL;
 static xmlHashTablePtr xsltElementsHash = NULL;
 static xmlHashTablePtr xsltTopLevelsHash = NULL;
+static xmlHashTablePtr xsltModuleHash = NULL;
 
 /************************************************************************
  * 									*
@@ -95,8 +107,8 @@ xsltNewExtDef(const xmlChar * prefix, const xmlChar * URI)
 
     cur = (xsltExtDefPtr) xmlMalloc(sizeof(xsltExtDef));
     if (cur == NULL) {
-	xsltTransformError(NULL, NULL, NULL,
-                         "xsltNewExtDef : malloc failed\n");
+        xsltTransformError(NULL, NULL, NULL,
+                           "xsltNewExtDef : malloc failed\n");
         return (NULL);
     }
     memset(cur, 0, sizeof(xsltExtDef));
@@ -114,13 +126,14 @@ xsltNewExtDef(const xmlChar * prefix, const xmlChar * URI)
  * Free up the memory allocated by @extensiond
  */
 static void
-xsltFreeExtDef(xsltExtDefPtr extensiond) {
+xsltFreeExtDef(xsltExtDefPtr extensiond)
+{
     if (extensiond == NULL)
-	return;
+        return;
     if (extensiond->prefix != NULL)
-	xmlFree(extensiond->prefix);
+        xmlFree(extensiond->prefix);
     if (extensiond->URI != NULL)
-	xmlFree(extensiond->URI);
+        xmlFree(extensiond->URI);
     xmlFree(extensiond);
 }
 
@@ -131,13 +144,14 @@ xsltFreeExtDef(xsltExtDefPtr extensiond) {
  * Free up the memory allocated by all the elements of @extensiond
  */
 static void
-xsltFreeExtDefList(xsltExtDefPtr extensiond) {
+xsltFreeExtDefList(xsltExtDefPtr extensiond)
+{
     xsltExtDefPtr cur;
 
     while (extensiond != NULL) {
-	cur = extensiond;
-	extensiond = extensiond->next;
-	xsltFreeExtDef(cur);
+        cur = extensiond;
+        extensiond = extensiond->next;
+        xsltFreeExtDef(cur);
     }
 }
 
@@ -155,15 +169,15 @@ xsltFreeExtDefList(xsltExtDefPtr extensiond) {
 static xsltExtModulePtr
 xsltNewExtModule(xsltExtInitFunction initFunc,
                  xsltExtShutdownFunction shutdownFunc,
-		 xsltStyleExtInitFunction styleInitFunc,
-		 xsltStyleExtShutdownFunction styleShutdownFunc)
+                 xsltStyleExtInitFunction styleInitFunc,
+                 xsltStyleExtShutdownFunction styleShutdownFunc)
 {
     xsltExtModulePtr cur;
 
     cur = (xsltExtModulePtr) xmlMalloc(sizeof(xsltExtModule));
     if (cur == NULL) {
-	xsltTransformError(NULL, NULL, NULL,
-                         "xsltNewExtModule : malloc failed\n");
+        xsltTransformError(NULL, NULL, NULL,
+                           "xsltNewExtModule : malloc failed\n");
         return (NULL);
     }
     cur->initFunc = initFunc;
@@ -180,9 +194,10 @@ xsltNewExtModule(xsltExtInitFunction initFunc,
  * Free up the memory allocated by @ext
  */
 static void
-xsltFreeExtModule(xsltExtModulePtr ext) {
+xsltFreeExtModule(xsltExtModulePtr ext)
+{
     if (ext == NULL)
-	return;
+        return;
     xmlFree(ext);
 }
 
@@ -201,11 +216,11 @@ xsltNewExtData(xsltExtModulePtr extModule, void *extData)
     xsltExtDataPtr cur;
 
     if (extModule == NULL)
-	return(NULL);
+        return (NULL);
     cur = (xsltExtDataPtr) xmlMalloc(sizeof(xsltExtData));
     if (cur == NULL) {
-	xsltTransformError(NULL, NULL, NULL,
-                         "xsltNewExtData : malloc failed\n");
+        xsltTransformError(NULL, NULL, NULL,
+                           "xsltNewExtData : malloc failed\n");
         return (NULL);
     }
     cur->extModule = extModule;
@@ -220,9 +235,10 @@ xsltNewExtData(xsltExtModulePtr extModule, void *extData)
  * Free up the memory allocated by @ext
  */
 static void
-xsltFreeExtData(xsltExtDataPtr ext) {
+xsltFreeExtData(xsltExtDataPtr ext)
+{
     if (ext == NULL)
-	return;
+        return;
     xmlFree(ext);
 }
 
@@ -237,22 +253,23 @@ xsltFreeExtData(xsltExtDataPtr ext) {
  * error
  */
 static xsltExtElementPtr
-xsltNewExtElement (xsltPreComputeFunction precomp,
-		   xsltTransformFunction transform) {
+xsltNewExtElement(xsltPreComputeFunction precomp,
+                  xsltTransformFunction transform)
+{
     xsltExtElementPtr cur;
 
     if (transform == NULL)
-	return(NULL);
+        return (NULL);
 
     cur = (xsltExtElementPtr) xmlMalloc(sizeof(xsltExtElement));
     if (cur == NULL) {
-	xsltTransformError(NULL, NULL, NULL,
-                         "xsltNewExtElement : malloc failed\n");
+        xsltTransformError(NULL, NULL, NULL,
+                           "xsltNewExtElement : malloc failed\n");
         return (NULL);
     }
     cur->precomp = precomp;
     cur->transform = transform;
-    return(cur);
+    return (cur);
 }
 
 /**
@@ -262,12 +279,92 @@ xsltNewExtElement (xsltPreComputeFunction precomp,
  * Frees up the memory allocated by @ext
  */
 static void
-xsltFreeExtElement (xsltExtElementPtr ext) {
+xsltFreeExtElement(xsltExtElementPtr ext)
+{
     if (ext == NULL)
-	return;
+        return;
     xmlFree(ext);
 }
 
+
+#ifdef WITH_MODULES
+typedef void (*exsltRegisterFunction) (void);
+
+/**
+ * xsltExtModuleRegisterDynamic:
+ * @URI:  the function or element namespace URI
+ *
+ * Looks up an extension module to dynamically load
+ * based on the namespace URI
+ *
+ * Returns 0 if successful, -1 in case of error. 
+ */
+
+static int
+xsltExtModuleRegisterDynamic(const xmlChar * URI)
+{
+
+    xmlModulePtr m;
+    exsltRegisterFunction regfunc;
+    xmlChar module_filename[PATH_MAX];
+    const xmlChar *extNameBegin = NULL;
+    const xmlChar *extDirectory = NULL;
+    int i, rc, seen_before;
+
+    /* check for bad inputs */
+    if (URI == NULL)
+        return (-1);
+
+    if (NULL == xsltModuleHash) {
+        xsltModuleHash = xmlHashCreate(5);
+        if (xsltModuleHash == NULL)
+            return (-1);
+    }
+
+    /* have we attempted to register this module already? */
+    seen_before = (int) xmlHashLookup(xsltModuleHash, URI);
+    if (0 != seen_before) {
+        return (-1);
+    }
+
+    for (i = xmlStrlen(URI); i != 0 && extNameBegin == NULL; --i) {
+        if (URI[i - 1] == '/')
+            extNameBegin = URI + i;
+    }
+
+    if (extNameBegin == NULL || *extNameBegin == '\0')
+        return (-1);
+
+    /* determine module directory */
+    extDirectory = getenv("LIBXSLT_PLUGINS_PATH");
+    if (NULL == extDirectory)
+        extDirectory = LIBXSLT_DEFAULT_PLUGINS_PATH();
+    if (NULL == extDirectory)
+        return (-1);
+
+    /* build the module filename, and confirm the module exists */
+    xmlStrPrintf(module_filename, sizeof(module_filename), "%s%s%s",
+                 extDirectory, extNameBegin, LIBXML_MODULE_EXTENSION);
+    if (1 != xmlCheckFilename(module_filename))
+        return (-1);
+
+    m = xmlModuleOpen(module_filename, 0);
+    if (NULL == m)
+        return (-1);
+
+    rc = xmlModuleSymbol(m, "exsltRegisterModule", (void **) &regfunc);
+    if (0 == rc) {
+        (*regfunc) ();
+    }
+
+    /* register this module in our hash */
+    xmlHashAddEntry(xsltModuleHash, URI, (void *) m);
+
+    return (NULL == regfunc) ? -1 : 0;
+}
+#else
+#define xsltExtModuleRegisterDynamic(b) -1
+#endif
 
 /************************************************************************
  * 									*
@@ -283,9 +380,10 @@ xsltFreeExtElement (xsltExtElementPtr ext) {
  * Free up the memory used by XSLT extensions in a stylesheet
  */
 void
-xsltFreeExts(xsltStylesheetPtr style) {
+xsltFreeExts(xsltStylesheetPtr style)
+{
     if (style->nsDefs != NULL)
-	xsltFreeExtDefList((xsltExtDefPtr) style->nsDefs);
+        xsltFreeExtDefList((xsltExtDefPtr) style->nsDefs);
 }
 
 /**
@@ -300,25 +398,27 @@ xsltFreeExts(xsltStylesheetPtr style) {
  */
 int
 xsltRegisterExtPrefix(xsltStylesheetPtr style,
-		      const xmlChar *prefix, const xmlChar *URI) {
+                      const xmlChar * prefix, const xmlChar * URI)
+{
     xsltExtDefPtr def, ret;
 
     if ((style == NULL) || (prefix == NULL) | (URI == NULL))
-	return(-1);
+        return (-1);
 
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
     xsltGenericDebug(xsltGenericDebugContext,
-	 "Registering extension prefix %s : %s\n", prefix, URI);
+                     "Registering extension prefix %s : %s\n", prefix,
+                     URI);
 #endif
     def = (xsltExtDefPtr) style->nsDefs;
     while (def != NULL) {
-	if (xmlStrEqual(prefix, def->prefix))
-	    return(-1);
-	def = def->next;
+        if (xmlStrEqual(prefix, def->prefix))
+            return (-1);
+        def = def->next;
     }
     ret = xsltNewExtDef(prefix, URI);
     if (ret == NULL)
-	return(-1);
+        return (-1);
     ret->next = (xsltExtDefPtr) style->nsDefs;
     style->nsDefs = ret;
 
@@ -327,14 +427,20 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
      * initialization function.
      */
     if (xsltExtensionsHash != NULL) {
-	xsltExtModulePtr module;
+        xsltExtModulePtr module;
 
-	module = xmlHashLookup(xsltExtensionsHash, URI);
-	if (module != NULL) {
-	    xsltStyleGetExtData(style, URI);
-	}
+        module = xmlHashLookup(xsltExtensionsHash, URI);
+        if (NULL == module) {
+            if (!xsltExtModuleRegisterDynamic(URI)) {
+                module = xmlHashLookup(xsltExtensionsHash, URI);
+            }
+        }
+
+        if (module != NULL) {
+            xsltStyleGetExtData(style, URI);
+        }
     }
-    return(0);
+    return (0);
 }
 
 /************************************************************************
@@ -355,19 +461,21 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
  * Returns 0 in case of success, -1 in case of failure
  */
 int
-xsltRegisterExtFunction(xsltTransformContextPtr ctxt, const xmlChar *name,
-	                const xmlChar *URI, xmlXPathFunction function) {
+xsltRegisterExtFunction(xsltTransformContextPtr ctxt, const xmlChar * name,
+                        const xmlChar * URI, xmlXPathFunction function)
+{
     if ((ctxt == NULL) || (name == NULL) ||
-	(URI == NULL) || (function == NULL))
-	return(-1);
+        (URI == NULL) || (function == NULL))
+        return (-1);
     if (ctxt->xpathCtxt != NULL) {
-	xmlXPathRegisterFuncNS(ctxt->xpathCtxt, name, URI, function);
+        xmlXPathRegisterFuncNS(ctxt->xpathCtxt, name, URI, function);
     }
     if (ctxt->extFunctions == NULL)
-	ctxt->extFunctions = xmlHashCreate(10);
+        ctxt->extFunctions = xmlHashCreate(10);
     if (ctxt->extFunctions == NULL)
-	return(-1);
-    return(xmlHashAddEntry2(ctxt->extFunctions, name, URI, XML_CAST_FPTR(function)));
+        return (-1);
+    return (xmlHashAddEntry2
+            (ctxt->extFunctions, name, URI, XML_CAST_FPTR(function)));
 }
 
 /**
@@ -381,17 +489,19 @@ xsltRegisterExtFunction(xsltTransformContextPtr ctxt, const xmlChar *name,
  *
  * Returns 0 in case of success, -1 in case of failure
  */
-int	
-xsltRegisterExtElement(xsltTransformContextPtr ctxt, const xmlChar *name,
-		       const xmlChar *URI, xsltTransformFunction function) {
+int
+xsltRegisterExtElement(xsltTransformContextPtr ctxt, const xmlChar * name,
+                       const xmlChar * URI, xsltTransformFunction function)
+{
     if ((ctxt == NULL) || (name == NULL) ||
-	(URI == NULL) || (function == NULL))
-	return(-1);
+        (URI == NULL) || (function == NULL))
+        return (-1);
     if (ctxt->extElements == NULL)
-	ctxt->extElements = xmlHashCreate(10);
+        ctxt->extElements = xmlHashCreate(10);
     if (ctxt->extElements == NULL)
-	return(-1);
-    return(xmlHashAddEntry2(ctxt->extElements, name, URI, XML_CAST_FPTR(function)));
+        return (-1);
+    return (xmlHashAddEntry2
+            (ctxt->extElements, name, URI, XML_CAST_FPTR(function)));
 }
 
 /**
@@ -401,11 +511,12 @@ xsltRegisterExtElement(xsltTransformContextPtr ctxt, const xmlChar *name,
  * Free the XSLT extension data
  */
 void
-xsltFreeCtxtExts(xsltTransformContextPtr ctxt) {
+xsltFreeCtxtExts(xsltTransformContextPtr ctxt)
+{
     if (ctxt->extElements != NULL)
-	xmlHashFree(ctxt->extElements, NULL);
+        xmlHashFree(ctxt->extElements, NULL);
     if (ctxt->extFunctions != NULL)
-	xmlHashFree(ctxt->extFunctions, NULL);
+        xmlHashFree(ctxt->extFunctions, NULL);
 }
 
 /**
@@ -419,7 +530,8 @@ xsltFreeCtxtExts(xsltTransformContextPtr ctxt) {
  * Returns the pointer or NULL if not present
  */
 void *
-xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI) {
+xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI)
+{
     xsltExtDataPtr data = NULL;
     xsltStylesheetPtr tmp;
 
@@ -429,59 +541,59 @@ xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI) {
 
     tmp = style;
     while (tmp != NULL) {
-	if (tmp->extInfos != NULL) {
-	    data = (xsltExtDataPtr) xmlHashLookup(tmp->extInfos, URI);
-	    if (data != NULL)
-		break;
-	}
+        if (tmp->extInfos != NULL) {
+            data = (xsltExtDataPtr) xmlHashLookup(tmp->extInfos, URI);
+            if (data != NULL)
+                break;
+        }
         tmp = xsltNextImport(tmp);
     }
     if (data == NULL) {
-	if (style->extInfos == NULL) {
-	    style->extInfos = xmlHashCreate(10);
-	    if (style->extInfos == NULL)
-		return(NULL);
-	}
+        if (style->extInfos == NULL) {
+            style->extInfos = xmlHashCreate(10);
+            if (style->extInfos == NULL)
+                return (NULL);
+        }
     }
     if (data == NULL) {
-	void *extData;
-	xsltExtModulePtr module;
+        void *extData;
+        xsltExtModulePtr module;
 
-	module = xmlHashLookup(xsltExtensionsHash, URI);
-	if (module == NULL) {
+        module = xmlHashLookup(xsltExtensionsHash, URI);
+        if (module == NULL) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-	    xsltGenericDebug(xsltGenericDebugContext,
-			     "Not registered extension module: %s\n", URI);
+            xsltGenericDebug(xsltGenericDebugContext,
+                             "Not registered extension module: %s\n", URI);
 #endif
-	    return(NULL);
-	} else {
-	    if (module->styleInitFunc == NULL) {
+            return (NULL);
+        } else {
+            if (module->styleInitFunc == NULL) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-		xsltGenericDebug(xsltGenericDebugContext,
-			     "Registering style module: %s\n", URI);
+                xsltGenericDebug(xsltGenericDebugContext,
+                                 "Registering style module: %s\n", URI);
 #endif
-		extData = NULL;
-	    } else {
+                extData = NULL;
+            } else {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-		xsltGenericDebug(xsltGenericDebugContext,
-				 "Initializing module: %s\n", URI);
+                xsltGenericDebug(xsltGenericDebugContext,
+                                 "Initializing module: %s\n", URI);
 #endif
-		extData = module->styleInitFunc(style, URI);
-	    }
+                extData = module->styleInitFunc(style, URI);
+            }
 
-	    data = xsltNewExtData(module, extData);
-	    if (data == NULL)
-		return (NULL);
-	    if (xmlHashAddEntry(style->extInfos, URI,
-				(void *) data) < 0) {
-		xsltGenericError(xsltGenericErrorContext,
-				 "Failed to register module data: %s\n", URI);
-		if (module->styleShutdownFunc)
-		    module->styleShutdownFunc(style, URI, extData);
-		xsltFreeExtData(data);
-		return(NULL);
-	    }
-	}
+            data = xsltNewExtData(module, extData);
+            if (data == NULL)
+                return (NULL);
+            if (xmlHashAddEntry(style->extInfos, URI, (void *) data) < 0) {
+                xsltGenericError(xsltGenericErrorContext,
+                                 "Failed to register module data: %s\n",
+                                 URI);
+                if (module->styleShutdownFunc)
+                    module->styleShutdownFunc(style, URI, extData);
+                xsltFreeExtData(data);
+                return (NULL);
+            }
+        }
     }
     return (data->extData);
 }
@@ -497,56 +609,57 @@ xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI) {
  * Returns the pointer or NULL if not present
  */
 void *
-xsltGetExtData(xsltTransformContextPtr ctxt, const xmlChar * URI) {
+xsltGetExtData(xsltTransformContextPtr ctxt, const xmlChar * URI)
+{
     xsltExtDataPtr data;
 
     if ((ctxt == NULL) || (URI == NULL))
         return (NULL);
     if (ctxt->extInfos == NULL) {
-	ctxt->extInfos = xmlHashCreate(10);
-	if (ctxt->extInfos == NULL)
-	    return(NULL);
-	data = NULL;
+        ctxt->extInfos = xmlHashCreate(10);
+        if (ctxt->extInfos == NULL)
+            return (NULL);
+        data = NULL;
     } else {
-	data = (xsltExtDataPtr) xmlHashLookup(ctxt->extInfos, URI);
+        data = (xsltExtDataPtr) xmlHashLookup(ctxt->extInfos, URI);
     }
     if (data == NULL) {
-	void *extData;
-	xsltExtModulePtr module;
+        void *extData;
+        xsltExtModulePtr module;
 
-	module = xmlHashLookup(xsltExtensionsHash, URI);
-	if (module == NULL) {
+        module = xmlHashLookup(xsltExtensionsHash, URI);
+        if (module == NULL) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-	    xsltGenericDebug(xsltGenericDebugContext,
-			     "Not registered extension module: %s\n", URI);
+            xsltGenericDebug(xsltGenericDebugContext,
+                             "Not registered extension module: %s\n", URI);
 #endif
-	    return(NULL);
-	} else {
-	    if (module->initFunc == NULL)
-		return(NULL);
+            return (NULL);
+        } else {
+            if (module->initFunc == NULL)
+                return (NULL);
 
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-	    xsltGenericDebug(xsltGenericDebugContext,
-			     "Initializing module: %s\n", URI);
+            xsltGenericDebug(xsltGenericDebugContext,
+                             "Initializing module: %s\n", URI);
 #endif
 
-	    extData = module->initFunc(ctxt, URI);
-	    if (extData == NULL)
-		return(NULL);
+            extData = module->initFunc(ctxt, URI);
+            if (extData == NULL)
+                return (NULL);
 
-	    data = xsltNewExtData(module, extData);
-	    if (data == NULL)
-		return (NULL);
-	    if (xmlHashAddEntry(ctxt->extInfos, URI,
-				(void *) data) < 0) {
-		xsltTransformError(ctxt, NULL, NULL,
-				 "Failed to register module data: %s\n", URI);
-		if (module->shutdownFunc)
-		    module->shutdownFunc(ctxt, URI, extData);
-		xsltFreeExtData(data);
-		return(NULL);
-	    }
-	}
+            data = xsltNewExtData(module, extData);
+            if (data == NULL)
+                return (NULL);
+            if (xmlHashAddEntry(ctxt->extInfos, URI, (void *) data) < 0) {
+                xsltTransformError(ctxt, NULL, NULL,
+                                   "Failed to register module data: %s\n",
+                                   URI);
+                if (module->shutdownFunc)
+                    module->shutdownFunc(ctxt, URI, extData);
+                xsltFreeExtData(data);
+                return (NULL);
+            }
+        }
     }
     return (data->extData);
 }
@@ -566,25 +679,26 @@ struct _xsltInitExtCtxt {
  * Initializes an extension module
  */
 static void
-xsltInitCtxtExt (xsltExtDataPtr styleData, xsltInitExtCtxt *ctxt,
-		 const xmlChar *URI) {
+xsltInitCtxtExt(xsltExtDataPtr styleData, xsltInitExtCtxt * ctxt,
+                const xmlChar * URI)
+{
     xsltExtModulePtr module;
     xsltExtDataPtr ctxtData;
     void *extData;
 
     if ((styleData == NULL) || (ctxt == NULL) || (URI == NULL) ||
-	(ctxt->ret == -1)) {
+        (ctxt->ret == -1)) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-    xsltGenericDebug(xsltGenericDebugContext,
-		     "xsltInitCtxtExt: NULL param or error\n");
+        xsltGenericDebug(xsltGenericDebugContext,
+                         "xsltInitCtxtExt: NULL param or error\n");
 #endif
         return;
     }
     module = styleData->extModule;
     if ((module == NULL) || (module->initFunc == NULL)) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-	xsltGenericDebug(xsltGenericDebugContext,
-			 "xsltInitCtxtExt: no module or no initFunc\n");
+        xsltGenericDebug(xsltGenericDebugContext,
+                         "xsltInitCtxtExt: no module or no initFunc\n");
 #endif
         return;
     }
@@ -592,8 +706,8 @@ xsltInitCtxtExt (xsltExtDataPtr styleData, xsltInitExtCtxt *ctxt,
     ctxtData = (xsltExtDataPtr) xmlHashLookup(ctxt->ctxt->extInfos, URI);
     if (ctxtData != NULL) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-	xsltGenericDebug(xsltGenericDebugContext,
-			 "xsltInitCtxtExt: already initialized\n");
+        xsltGenericDebug(xsltGenericDebugContext,
+                         "xsltInitCtxtExt: already initialized\n");
 #endif
         return;
     }
@@ -601,35 +715,35 @@ xsltInitCtxtExt (xsltExtDataPtr styleData, xsltInitExtCtxt *ctxt,
     extData = module->initFunc(ctxt->ctxt, URI);
     if (extData == NULL) {
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
-	xsltGenericDebug(xsltGenericDebugContext,
-			 "xsltInitCtxtExt: no extData\n");
+        xsltGenericDebug(xsltGenericDebugContext,
+                         "xsltInitCtxtExt: no extData\n");
 #endif
     }
     ctxtData = xsltNewExtData(module, extData);
     if (ctxtData == NULL) {
-	ctxt->ret = -1;
-	return;
+        ctxt->ret = -1;
+        return;
     }
 
     if (ctxt->ctxt->extInfos == NULL)
-	ctxt->ctxt->extInfos = xmlHashCreate(10);
+        ctxt->ctxt->extInfos = xmlHashCreate(10);
     if (ctxt->ctxt->extInfos == NULL) {
-	ctxt->ret = -1;
-	return;
+        ctxt->ret = -1;
+        return;
     }
 
     if (xmlHashAddEntry(ctxt->ctxt->extInfos, URI, ctxtData) < 0) {
-	xsltGenericError(xsltGenericErrorContext,
-			 "Failed to register module data: %s\n", URI);
-	if (module->shutdownFunc)
-	    module->shutdownFunc(ctxt->ctxt, URI, extData);
-	xsltFreeExtData(ctxtData);
-	ctxt->ret = -1;
-	return;
+        xsltGenericError(xsltGenericErrorContext,
+                         "Failed to register module data: %s\n", URI);
+        if (module->shutdownFunc)
+            module->shutdownFunc(ctxt->ctxt, URI, extData);
+        xsltFreeExtData(ctxtData);
+        ctxt->ret = -1;
+        return;
     }
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
     xsltGenericDebug(xsltGenericDebugContext, "Registered module %s\n",
-		     URI);
+                     URI);
 #endif
     ctxt->ret++;
 }
@@ -659,17 +773,17 @@ xsltInitCtxtExts(xsltTransformContextPtr ctxt)
     ctx.ret = 0;
 
     while (style != NULL) {
-	if (style->extInfos != NULL) {
-	    xmlHashScan(style->extInfos,
-			(xmlHashScanner) xsltInitCtxtExt, &ctx);
-	    if (ctx.ret == -1)
-		return(-1);
-	}
+        if (style->extInfos != NULL) {
+            xmlHashScan(style->extInfos,
+                        (xmlHashScanner) xsltInitCtxtExt, &ctx);
+            if (ctx.ret == -1)
+                return (-1);
+        }
         style = xsltNextImport(style);
     }
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
     xsltGenericDebug(xsltGenericDebugContext, "Registered %d modules\n",
-		     ctx.ret);
+                     ctx.ret);
 #endif
     return (ctx.ret);
 }
@@ -711,10 +825,11 @@ void
 xsltShutdownCtxtExts(xsltTransformContextPtr ctxt)
 {
     if (ctxt == NULL)
-	return;
+        return;
     if (ctxt->extInfos == NULL)
-	return;
-    xmlHashScan(ctxt->extInfos, (xmlHashScanner) xsltShutdownCtxtExt, ctxt);
+        return;
+    xmlHashScan(ctxt->extInfos, (xmlHashScanner) xsltShutdownCtxtExt,
+                ctxt);
     xmlHashFree(ctxt->extInfos, (xmlHashDeallocator) xsltFreeExtData);
     ctxt->extInfos = NULL;
 }
@@ -729,7 +844,7 @@ xsltShutdownCtxtExts(xsltTransformContextPtr ctxt)
  */
 static void
 xsltShutdownExt(xsltExtDataPtr data, xsltStylesheetPtr style,
-		const xmlChar * URI)
+                const xmlChar * URI)
 {
     xsltExtModulePtr module;
 
@@ -758,9 +873,9 @@ void
 xsltShutdownExts(xsltStylesheetPtr style)
 {
     if (style == NULL)
-	return;
+        return;
     if (style->extInfos == NULL)
-	return;
+        return;
     xmlHashScan(style->extInfos, (xmlHashScanner) xsltShutdownExt, style);
     xmlHashFree(style->extInfos, (xmlHashDeallocator) xsltFreeExtData);
     style->extInfos = NULL;
@@ -776,22 +891,23 @@ xsltShutdownExts(xsltStylesheetPtr style)
  * Returns 1 if this is an extension, 0 otherwise
  */
 int
-xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar *prefix) {
+xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar * prefix)
+{
     xsltExtDefPtr cur;
 
     if ((style == NULL) || (style->nsDefs == NULL))
-	return(0);
+        return (0);
 
     if (prefix == NULL)
-	prefix = BAD_CAST "#default";
+        prefix = BAD_CAST "#default";
 
     cur = (xsltExtDefPtr) style->nsDefs;
     while (cur != NULL) {
-	if (xmlStrEqual(prefix, cur->prefix))
-	    return(1);
-	cur = cur->next;
+        if (xmlStrEqual(prefix, cur->prefix))
+            return (1);
+        cur = cur->next;
     }
-    return(0);
+    return (0);
 }
 
 /**
@@ -808,10 +924,10 @@ xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar *prefix) {
  */
 int
 xsltRegisterExtModuleFull(const xmlChar * URI,
-			  xsltExtInitFunction initFunc,
-			  xsltExtShutdownFunction shutdownFunc,
-			  xsltStyleExtInitFunction styleInitFunc,
-			  xsltStyleExtShutdownFunction styleShutdownFunc)
+                          xsltExtInitFunction initFunc,
+                          xsltExtShutdownFunction shutdownFunc,
+                          xsltStyleExtInitFunction styleInitFunc,
+                          xsltStyleExtShutdownFunction styleShutdownFunc)
 {
     int ret;
     xsltExtModulePtr module;
@@ -832,7 +948,7 @@ xsltRegisterExtModuleFull(const xmlChar * URI,
         return (-1);
     }
     module = xsltNewExtModule(initFunc, shutdownFunc,
-			      styleInitFunc, styleShutdownFunc);
+                              styleInitFunc, styleShutdownFunc);
     if (module == NULL)
         return (-1);
     ret = xmlHashAddEntry(xsltExtensionsHash, URI, (void *) module);
@@ -851,10 +967,11 @@ xsltRegisterExtModuleFull(const xmlChar * URI,
  */
 int
 xsltRegisterExtModule(const xmlChar * URI,
-		      xsltExtInitFunction initFunc,
-		      xsltExtShutdownFunction shutdownFunc) {
+                      xsltExtInitFunction initFunc,
+                      xsltExtShutdownFunction shutdownFunc)
+{
     return xsltRegisterExtModuleFull(URI, initFunc, shutdownFunc,
-				     NULL, NULL);
+                                     NULL, NULL);
 }
 
 /**
@@ -890,9 +1007,10 @@ static void
 xsltUnregisterAllExtModules(void)
 {
     if (xsltExtensionsHash == NULL)
-	return;
+        return;
 
-    xmlHashFree(xsltExtensionsHash, (xmlHashDeallocator) xsltFreeExtModule);
+    xmlHashFree(xsltExtensionsHash,
+                (xmlHashDeallocator) xsltFreeExtModule);
     xsltExtensionsHash = NULL;
 }
 
@@ -912,8 +1030,8 @@ xsltTransformContextPtr
 xsltXPathGetTransformContext(xmlXPathParserContextPtr ctxt)
 {
     if ((ctxt == NULL) || (ctxt->context == NULL))
-	return(NULL);
-    return(ctxt->context->extra);
+        return (NULL);
+    return (ctxt->context->extra);
 }
 
 /**
@@ -927,20 +1045,21 @@ xsltXPathGetTransformContext(xmlXPathParserContextPtr ctxt)
  * Returns 0 if successful, -1 in case of error.
  */
 int
-xsltRegisterExtModuleFunction (const xmlChar *name, const xmlChar *URI,
-			       xmlXPathFunction function) {
+xsltRegisterExtModuleFunction(const xmlChar * name, const xmlChar * URI,
+                              xmlXPathFunction function)
+{
     if ((name == NULL) || (URI == NULL) || (function == NULL))
-	return(-1);
+        return (-1);
 
     if (xsltFunctionsHash == NULL)
-	xsltFunctionsHash = xmlHashCreate(10);
+        xsltFunctionsHash = xmlHashCreate(10);
     if (xsltFunctionsHash == NULL)
-	return(-1);
+        return (-1);
 
     xmlHashUpdateEntry2(xsltFunctionsHash, name, URI,
-			XML_CAST_FPTR(function), NULL);
+                        XML_CAST_FPTR(function), NULL);
 
-    return(0);
+    return (0);
 }
 
 /**
@@ -953,12 +1072,23 @@ xsltRegisterExtModuleFunction (const xmlChar *name, const xmlChar *URI,
  * Returns the function if found, NULL otherwise.
  */
 xmlXPathFunction
-xsltExtModuleFunctionLookup (const xmlChar *name, const xmlChar *URI) {
+xsltExtModuleFunctionLookup(const xmlChar * name, const xmlChar * URI)
+{
     xmlXPathFunction ret;
+
     if ((xsltFunctionsHash == NULL) || (name == NULL) || (URI == NULL))
-	return(NULL);
+        return (NULL);
 
     XML_CAST_FPTR(ret) = xmlHashLookup2(xsltFunctionsHash, name, URI);
+
+    /* if lookup fails, attempt a dynamic load on supported platforms */
+    if (NULL == ret) {
+        if (!xsltExtModuleRegisterDynamic(URI)) {
+            XML_CAST_FPTR(ret) =
+                xmlHashLookup2(xsltFunctionsHash, name, URI);
+        }
+    }
+
     return ret;
 }
 
@@ -972,12 +1102,12 @@ xsltExtModuleFunctionLookup (const xmlChar *name, const xmlChar *URI) {
  * Returns 0 if successful, -1 in case of error.
  */
 int
-xsltUnregisterExtModuleFunction (const xmlChar *name,
-				 const xmlChar *URI) {
+xsltUnregisterExtModuleFunction(const xmlChar * name, const xmlChar * URI)
+{
     if ((xsltFunctionsHash == NULL) || (name == NULL) || (URI == NULL))
-	return(-1);
+        return (-1);
 
-    return xmlHashRemoveEntry2 (xsltFunctionsHash, name, URI, NULL);
+    return xmlHashRemoveEntry2(xsltFunctionsHash, name, URI, NULL);
 }
 
 /**
@@ -986,7 +1116,8 @@ xsltUnregisterExtModuleFunction (const xmlChar *name,
  * Unregisters all extension module function
  */
 static void
-xsltUnregisterAllExtModuleFunction (void) {
+xsltUnregisterAllExtModuleFunction(void)
+{
     xmlHashFree(xsltFunctionsHash, NULL);
     xsltFunctionsHash = NULL;
 }
@@ -1003,20 +1134,21 @@ xsltUnregisterAllExtModuleFunction (void) {
  * Returns the new and initialized #xsltElemPreComp
  */
 xsltElemPreCompPtr
-xsltNewElemPreComp (xsltStylesheetPtr style, xmlNodePtr inst,
-		    xsltTransformFunction function) {
+xsltNewElemPreComp(xsltStylesheetPtr style, xmlNodePtr inst,
+                   xsltTransformFunction function)
+{
     xsltElemPreCompPtr cur;
 
-    cur = (xsltElemPreCompPtr) xmlMalloc (sizeof(xsltElemPreComp));
+    cur = (xsltElemPreCompPtr) xmlMalloc(sizeof(xsltElemPreComp));
     if (cur == NULL) {
-	xsltTransformError(NULL, style, NULL,
-                         "xsltNewExtElement : malloc failed\n");
+        xsltTransformError(NULL, style, NULL,
+                           "xsltNewExtElement : malloc failed\n");
         return (NULL);
     }
     memset(cur, 0, sizeof(xsltElemPreComp));
 
-    xsltInitElemPreComp (cur, style, inst, function,
-			 (xsltElemPreCompDeallocator) xmlFree);
+    xsltInitElemPreComp(cur, style, inst, function,
+                        (xsltElemPreCompDeallocator) xmlFree);
 
     return (cur);
 }
@@ -1035,9 +1167,10 @@ xsltNewElemPreComp (xsltStylesheetPtr style, xmlNodePtr inst,
  * data struct.
  */
 void
-xsltInitElemPreComp (xsltElemPreCompPtr comp, xsltStylesheetPtr style,
-		     xmlNodePtr inst, xsltTransformFunction function,
-		     xsltElemPreCompDeallocator freeFunc) {
+xsltInitElemPreComp(xsltElemPreCompPtr comp, xsltStylesheetPtr style,
+                    xmlNodePtr inst, xsltTransformFunction function,
+                    xsltElemPreCompDeallocator freeFunc)
+{
     comp->type = XSLT_FUNC_EXTENSION;
     comp->func = function;
     comp->inst = inst;
@@ -1057,25 +1190,24 @@ xsltInitElemPreComp (xsltElemPreCompPtr comp, xsltStylesheetPtr style,
  * Returns the precomputed data
  */
 xsltElemPreCompPtr
-xsltPreComputeExtModuleElement (xsltStylesheetPtr style,
-				xmlNodePtr inst) {
+xsltPreComputeExtModuleElement(xsltStylesheetPtr style, xmlNodePtr inst)
+{
     xsltExtElementPtr ext;
     xsltElemPreCompPtr comp = NULL;
 
     if ((style == NULL) || (inst == NULL) ||
-	(inst->type != XML_ELEMENT_NODE) || (inst->ns == NULL))
-	return (NULL);
+        (inst->type != XML_ELEMENT_NODE) || (inst->ns == NULL))
+        return (NULL);
 
     ext = (xsltExtElementPtr)
-	xmlHashLookup2 (xsltElementsHash, inst->name,
-			inst->ns->href);
+        xmlHashLookup2(xsltElementsHash, inst->name, inst->ns->href);
     if (ext == NULL)
-	return (NULL);
+        return (NULL);
 
     if (ext->precomp != NULL)
-	comp = ext->precomp(style, inst, ext->transform);
+        comp = ext->precomp(style, inst, ext->transform);
     if (comp == NULL)
-	comp = xsltNewElemPreComp (style, inst, ext->transform);
+        comp = xsltNewElemPreComp(style, inst, ext->transform);
 
     return (comp);
 }
@@ -1092,27 +1224,28 @@ xsltPreComputeExtModuleElement (xsltStylesheetPtr style,
  * Returns 0 if successful, -1 in case of error.
  */
 int
-xsltRegisterExtModuleElement (const xmlChar *name, const xmlChar *URI,
-			      xsltPreComputeFunction precomp,
-			      xsltTransformFunction transform) {
+xsltRegisterExtModuleElement(const xmlChar * name, const xmlChar * URI,
+                             xsltPreComputeFunction precomp,
+                             xsltTransformFunction transform)
+{
     xsltExtElementPtr ext;
 
     if ((name == NULL) || (URI == NULL) || (transform == NULL))
-	return(-1);
+        return (-1);
 
     if (xsltElementsHash == NULL)
-	xsltElementsHash = xmlHashCreate(10);
+        xsltElementsHash = xmlHashCreate(10);
     if (xsltElementsHash == NULL)
-	return(-1);
+        return (-1);
 
     ext = xsltNewExtElement(precomp, transform);
     if (ext == NULL)
-	return(-1);
+        return (-1);
 
     xmlHashUpdateEntry2(xsltElementsHash, name, URI, (void *) ext,
-			(xmlHashDeallocator) xsltFreeExtElement);
+                        (xmlHashDeallocator) xsltFreeExtElement);
 
-    return(0);
+    return (0);
 }
 
 /**
@@ -1127,17 +1260,18 @@ xsltRegisterExtModuleElement (const xmlChar *name, const xmlChar *URI,
  * Returns the element callback or NULL if not found
  */
 xsltTransformFunction
-xsltExtElementLookup (xsltTransformContextPtr ctxt,
-		      const xmlChar *name, const xmlChar *URI) {
+xsltExtElementLookup(xsltTransformContextPtr ctxt,
+                     const xmlChar * name, const xmlChar * URI)
+{
     xsltTransformFunction ret;
 
     if ((name == NULL) || (URI == NULL))
-	return(NULL);
+        return (NULL);
 
     if ((ctxt != NULL) && (ctxt->extElements != NULL)) {
-	XML_CAST_FPTR(ret) = xmlHashLookup2(ctxt->extElements, name, URI);
-	if (ret != NULL)
-	    return(ret);
+        XML_CAST_FPTR(ret) = xmlHashLookup2(ctxt->extElements, name, URI);
+        if (ret != NULL)
+            return (ret);
     }
     return xsltExtModuleElementLookup(name, URI);
 }
@@ -1152,17 +1286,27 @@ xsltExtElementLookup (xsltTransformContextPtr ctxt,
  * Returns the callback function if found, NULL otherwise.
  */
 xsltTransformFunction
-xsltExtModuleElementLookup (const xmlChar *name, const xmlChar *URI) {
+xsltExtModuleElementLookup(const xmlChar * name, const xmlChar * URI)
+{
     xsltExtElementPtr ext;
 
     if ((xsltElementsHash == NULL) || (name == NULL) || (URI == NULL))
-	return(NULL);
+        return (NULL);
 
     ext = (xsltExtElementPtr) xmlHashLookup2(xsltElementsHash, name, URI);
 
+    /* if function lookup fails, attempt a dynamic load on supported platforms */
+    ext = (xsltExtElementPtr) xmlHashLookup2(xsltElementsHash, name, URI);
+    if (NULL == ext) {
+        if (!xsltExtModuleRegisterDynamic(URI)) {
+            ext = (xsltExtElementPtr)
+	          xmlHashLookup2(xsltElementsHash, name, URI);
+        }
+    }
+
     if (ext == NULL)
-	return(NULL);
-    return(ext->transform);
+        return (NULL);
+    return (ext->transform);
 }
 
 /**
@@ -1175,18 +1319,26 @@ xsltExtModuleElementLookup (const xmlChar *name, const xmlChar *URI) {
  * Returns the callback function if found, NULL otherwise.
  */
 xsltPreComputeFunction
-xsltExtModuleElementPreComputeLookup (const xmlChar *name,
-				      const xmlChar *URI) {
+xsltExtModuleElementPreComputeLookup(const xmlChar * name,
+                                     const xmlChar * URI)
+{
     xsltExtElementPtr ext;
 
     if ((xsltElementsHash == NULL) || (name == NULL) || (URI == NULL))
-	return(NULL);
+        return (NULL);
 
     ext = (xsltExtElementPtr) xmlHashLookup2(xsltElementsHash, name, URI);
 
+    if (ext == NULL) {
+        if (!xsltExtModuleRegisterDynamic(URI)) {
+            ext = (xsltExtElementPtr)
+	          xmlHashLookup2(xsltElementsHash, name, URI);
+        }
+    }
+
     if (ext == NULL)
-	return(NULL);
-    return(ext->precomp);
+        return (NULL);
+    return (ext->precomp);
 }
 
 /**
@@ -1199,13 +1351,13 @@ xsltExtModuleElementPreComputeLookup (const xmlChar *name,
  * Returns 0 if successful, -1 in case of error.
  */
 int
-xsltUnregisterExtModuleElement (const xmlChar *name,
-				const xmlChar *URI) {
+xsltUnregisterExtModuleElement(const xmlChar * name, const xmlChar * URI)
+{
     if ((xsltElementsHash == NULL) || (name == NULL) || (URI == NULL))
-	return(-1);
+        return (-1);
 
-    return xmlHashRemoveEntry2 (xsltElementsHash, name, URI,
-				(xmlHashDeallocator) xsltFreeExtElement);
+    return xmlHashRemoveEntry2(xsltElementsHash, name, URI,
+                               (xmlHashDeallocator) xsltFreeExtElement);
 }
 
 /**
@@ -1214,7 +1366,8 @@ xsltUnregisterExtModuleElement (const xmlChar *name,
  * Unregisters all extension module element
  */
 static void
-xsltUnregisterAllExtModuleElement (void) {
+xsltUnregisterAllExtModuleElement(void)
+{
     xmlHashFree(xsltElementsHash, (xmlHashDeallocator) xsltFreeExtElement);
     xsltElementsHash = NULL;
 }
@@ -1230,20 +1383,21 @@ xsltUnregisterAllExtModuleElement (void) {
  * Returns 0 if successful, -1 in case of error.
  */
 int
-xsltRegisterExtModuleTopLevel (const xmlChar *name, const xmlChar *URI,
-			       xsltTopLevelFunction function) {
+xsltRegisterExtModuleTopLevel(const xmlChar * name, const xmlChar * URI,
+                              xsltTopLevelFunction function)
+{
     if ((name == NULL) || (URI == NULL) || (function == NULL))
-	return(-1);
+        return (-1);
 
     if (xsltTopLevelsHash == NULL)
-	xsltTopLevelsHash = xmlHashCreate(10);
+        xsltTopLevelsHash = xmlHashCreate(10);
     if (xsltTopLevelsHash == NULL)
-	return(-1);
+        return (-1);
 
     xmlHashUpdateEntry2(xsltTopLevelsHash, name, URI,
-			XML_CAST_FPTR(function), NULL);
+                        XML_CAST_FPTR(function), NULL);
 
-    return(0);
+    return (0);
 }
 
 /**
@@ -1256,13 +1410,23 @@ xsltRegisterExtModuleTopLevel (const xmlChar *name, const xmlChar *URI,
  * Returns the callback function if found, NULL otherwise.
  */
 xsltTopLevelFunction
-xsltExtModuleTopLevelLookup (const xmlChar *name, const xmlChar *URI) {
+xsltExtModuleTopLevelLookup(const xmlChar * name, const xmlChar * URI)
+{
     xsltTopLevelFunction ret;
+
     if ((xsltTopLevelsHash == NULL) || (name == NULL) || (URI == NULL))
-	return(NULL);
+        return (NULL);
 
     XML_CAST_FPTR(ret) = xmlHashLookup2(xsltTopLevelsHash, name, URI);
-    return(ret);
+
+    /* if lookup fails, attempt a dynamic load on supported platforms */
+    if (NULL == ret) {
+        if (!xsltExtModuleRegisterDynamic(URI)) {
+            XML_CAST_FPTR(ret) = xmlHashLookup2(xsltTopLevelsHash, name, URI);
+        }
+    }
+
+    return (ret);
 }
 
 /**
@@ -1275,12 +1439,12 @@ xsltExtModuleTopLevelLookup (const xmlChar *name, const xmlChar *URI) {
  * Returns 0 if successful, -1 in case of error.
  */
 int
-xsltUnregisterExtModuleTopLevel (const xmlChar *name,
-				 const xmlChar *URI) {
+xsltUnregisterExtModuleTopLevel(const xmlChar * name, const xmlChar * URI)
+{
     if ((xsltTopLevelsHash == NULL) || (name == NULL) || (URI == NULL))
-	return(-1);
+        return (-1);
 
-    return xmlHashRemoveEntry2 (xsltTopLevelsHash, name, URI, NULL);
+    return xmlHashRemoveEntry2(xsltTopLevelsHash, name, URI, NULL);
 }
 
 /**
@@ -1289,7 +1453,8 @@ xsltUnregisterExtModuleTopLevel (const xmlChar *name,
  * Unregisters all extension module function
  */
 static void
-xsltUnregisterAllExtModuleTopLevel (void) {
+xsltUnregisterAllExtModuleTopLevel(void)
+{
     xmlHashFree(xsltTopLevelsHash, NULL);
     xsltTopLevelsHash = NULL;
 }
@@ -1304,13 +1469,14 @@ xsltUnregisterAllExtModuleTopLevel (void) {
  * returns a pointer to the hash table if found, else NULL
  */
 xmlHashTablePtr
-xsltGetExtInfo (xsltStylesheetPtr style, const xmlChar *URI) {
+xsltGetExtInfo(xsltStylesheetPtr style, const xmlChar * URI)
+{
     xsltExtDataPtr data;
-    
+
     if (style != NULL && style->extInfos != NULL) {
-	data = xmlHashLookup(style->extInfos, URI);
-	if (data != NULL && data->extData != NULL)
-	    return data->extData;
+        data = xmlHashLookup(style->extInfos, URI);
+        if (data != NULL && data->extData != NULL)
+            return data->extData;
     }
     return NULL;
 }
@@ -1338,7 +1504,8 @@ static xmlChar *testStyleData = NULL;
  * function libxslt:test() for testing the extensions support.
  */
 static void
-xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs ATTRIBUTE_UNUSED)
+xsltExtFunctionTest(xmlXPathParserContextPtr ctxt,
+                    int nargs ATTRIBUTE_UNUSED)
 {
     xsltTransformContextPtr tctxt;
     void *data = NULL;
@@ -1348,29 +1515,29 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs ATTRIBUTE_UNUSED)
     if (testData == NULL) {
         xsltGenericDebug(xsltGenericDebugContext,
                          "xsltExtFunctionTest: not initialized,"
-			 " calling xsltGetExtData\n");
-	data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
-	if (data == NULL) {
-	    xsltTransformError(tctxt, NULL, NULL,
-			     "xsltExtElementTest: not initialized\n");
-	    return;
-	}
+                         " calling xsltGetExtData\n");
+        data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
+        if (data == NULL) {
+            xsltTransformError(tctxt, NULL, NULL,
+                               "xsltExtElementTest: not initialized\n");
+            return;
+        }
     }
     if (tctxt == NULL) {
-	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
-                         "xsltExtFunctionTest: failed to get the transformation context\n");
+        xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+                           "xsltExtFunctionTest: failed to get the transformation context\n");
         return;
     }
     if (data == NULL)
-	data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
+        data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
     if (data == NULL) {
-	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
-                         "xsltExtFunctionTest: failed to get module data\n");
+        xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+                           "xsltExtFunctionTest: failed to get module data\n");
         return;
     }
     if (data != testData) {
-	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
-                         "xsltExtFunctionTest: got wrong module data\n");
+        xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
+                           "xsltExtFunctionTest: got wrong module data\n");
         return;
     }
 #ifdef WITH_XSLT_DEBUG_FUNCTION
@@ -1388,33 +1555,36 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs ATTRIBUTE_UNUSED)
  */
 static xsltElemPreCompPtr
 xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst,
-			  xsltTransformFunction function) {
+                          xsltTransformFunction function)
+{
     xsltElemPreCompPtr ret;
 
     if (style == NULL) {
-	xsltTransformError(NULL, NULL, inst,
-		 "xsltExtElementTest: no transformation context\n");
+        xsltTransformError(NULL, NULL, inst,
+                           "xsltExtElementTest: no transformation context\n");
         return (NULL);
     }
     if (testStyleData == NULL) {
         xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltExtElementPreCompTest: not initialized,"
-		 " calling xsltStyleGetExtData\n");
-	xsltStyleGetExtData(style, (const xmlChar *) XSLT_DEFAULT_URL);
-	if (testStyleData == NULL) {
-	    xsltTransformError(NULL, style, inst,
-		 "xsltExtElementPreCompTest: not initialized\n");
-	    if (style != NULL) style->errors++;
-	    return (NULL);
-	}
+                         "xsltExtElementPreCompTest: not initialized,"
+                         " calling xsltStyleGetExtData\n");
+        xsltStyleGetExtData(style, (const xmlChar *) XSLT_DEFAULT_URL);
+        if (testStyleData == NULL) {
+            xsltTransformError(NULL, style, inst,
+                               "xsltExtElementPreCompTest: not initialized\n");
+            if (style != NULL)
+                style->errors++;
+            return (NULL);
+        }
     }
     if (inst == NULL) {
-	xsltTransformError(NULL, style, inst,
-		 "xsltExtElementPreCompTest: no instruction\n");
-	if (style != NULL) style->errors++;
+        xsltTransformError(NULL, style, inst,
+                           "xsltExtElementPreCompTest: no instruction\n");
+        if (style != NULL)
+            style->errors++;
         return (NULL);
     }
-    ret = xsltNewElemPreComp (style, inst, function);
+    ret = xsltNewElemPreComp(style, inst, function);
     return (ret);
 }
 
@@ -1437,37 +1607,36 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (testData == NULL) {
         xsltGenericDebug(xsltGenericDebugContext,
                          "xsltExtElementTest: not initialized,"
-			 " calling xsltGetExtData\n");
-	xsltGetExtData(ctxt, (const xmlChar *) XSLT_DEFAULT_URL);
-	if (testData == NULL) {
-	    xsltTransformError(ctxt, NULL, inst,
-			     "xsltExtElementTest: not initialized\n");
-	    return;
-	}
+                         " calling xsltGetExtData\n");
+        xsltGetExtData(ctxt, (const xmlChar *) XSLT_DEFAULT_URL);
+        if (testData == NULL) {
+            xsltTransformError(ctxt, NULL, inst,
+                               "xsltExtElementTest: not initialized\n");
+            return;
+        }
     }
     if (ctxt == NULL) {
-	xsltTransformError(ctxt, NULL, inst,
-                         "xsltExtElementTest: no transformation context\n");
+        xsltTransformError(ctxt, NULL, inst,
+                           "xsltExtElementTest: no transformation context\n");
         return;
     }
     if (node == NULL) {
-	xsltTransformError(ctxt, NULL, inst,
-                         "xsltExtElementTest: no current node\n");
+        xsltTransformError(ctxt, NULL, inst,
+                           "xsltExtElementTest: no current node\n");
         return;
     }
     if (inst == NULL) {
-	xsltTransformError(ctxt, NULL, inst,
-                         "xsltExtElementTest: no instruction\n");
+        xsltTransformError(ctxt, NULL, inst,
+                           "xsltExtElementTest: no instruction\n");
         return;
     }
     if (ctxt->insert == NULL) {
-	xsltTransformError(ctxt, NULL, inst,
-                         "xsltExtElementTest: no insertion point\n");
+        xsltTransformError(ctxt, NULL, inst,
+                           "xsltExtElementTest: no insertion point\n");
         return;
     }
-    commentNode =
-        xmlNewComment((const xmlChar *)
-                      "libxslt:test element test worked");
+    commentNode = xmlNewComment((const xmlChar *)
+                                "libxslt:test element test worked");
     xmlAddChild(ctxt->insert, commentNode);
 }
 
@@ -1481,21 +1650,22 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * Returns a pointer to the module specific data for this transformation
  */
 static void *
-xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI) {
+xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI)
+{
     if (testStyleData == NULL) {
         xsltGenericDebug(xsltGenericErrorContext,
                          "xsltExtInitTest: not initialized,"
-			 " calling xsltStyleGetExtData\n");
-	xsltStyleGetExtData(ctxt->style, URI);
-	if (testStyleData == NULL) {
-	    xsltTransformError(ctxt, NULL, NULL,
-			     "xsltExtInitTest: not initialized\n");
-	    return (NULL);
-	}
-    }	
+                         " calling xsltStyleGetExtData\n");
+        xsltStyleGetExtData(ctxt->style, URI);
+        if (testStyleData == NULL) {
+            xsltTransformError(ctxt, NULL, NULL,
+                               "xsltExtInitTest: not initialized\n");
+            return (NULL);
+        }
+    }
     if (testData != NULL) {
-	xsltTransformError(ctxt, NULL, NULL,
-                         "xsltExtInitTest: already initialized\n");
+        xsltTransformError(ctxt, NULL, NULL,
+                           "xsltExtInitTest: already initialized\n");
         return (NULL);
     }
     testData = (void *) "test data";
@@ -1515,20 +1685,22 @@ xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI) {
  */
 static void
 xsltExtShutdownTest(xsltTransformContextPtr ctxt,
-                    const xmlChar * URI, void *data) {
+                    const xmlChar * URI, void *data)
+{
     if (testData == NULL) {
-	xsltTransformError(ctxt, NULL, NULL,
-                         "xsltExtShutdownTest: not initialized\n");
+        xsltTransformError(ctxt, NULL, NULL,
+                           "xsltExtShutdownTest: not initialized\n");
         return;
     }
     if (data != testData) {
-	xsltTransformError(ctxt, NULL, NULL,
-                         "xsltExtShutdownTest: wrong data\n");
+        xsltTransformError(ctxt, NULL, NULL,
+                           "xsltExtShutdownTest: wrong data\n");
     }
     testData = NULL;
     xsltGenericDebug(xsltGenericDebugContext,
                      "Unregistered test module : %s\n", URI);
 }
+
 /**
  * xsltExtStyleInitTest:
  * @style:  an XSLT stylesheet
@@ -1540,11 +1712,11 @@ xsltExtShutdownTest(xsltTransformContextPtr ctxt,
  */
 static void *
 xsltExtStyleInitTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
-	             const xmlChar * URI)
+                     const xmlChar * URI)
 {
     if (testStyleData != NULL) {
-	xsltTransformError(NULL, NULL, NULL,
-                         "xsltExtInitTest: already initialized\n");
+        xsltTransformError(NULL, NULL, NULL,
+                           "xsltExtInitTest: already initialized\n");
         return (NULL);
     }
     testStyleData = (void *) "test data";
@@ -1564,15 +1736,16 @@ xsltExtStyleInitTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
  */
 static void
 xsltExtStyleShutdownTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
-			 const xmlChar * URI, void *data) {
+                         const xmlChar * URI, void *data)
+{
     if (testStyleData == NULL) {
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtShutdownTest: not initialized\n");
         return;
     }
     if (data != testStyleData) {
-	xsltTransformError(NULL, NULL, NULL,
-                         "xsltExtShutdownTest: wrong data\n");
+        xsltTransformError(NULL, NULL, NULL,
+                           "xsltExtShutdownTest: wrong data\n");
     }
     testStyleData = NULL;
     xsltGenericDebug(xsltGenericDebugContext,
@@ -1585,18 +1758,28 @@ xsltExtStyleShutdownTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
  * Registers the test module
  */
 void
-xsltRegisterTestModule (void) {
+xsltRegisterTestModule(void)
+{
     xsltRegisterExtModuleFull((const xmlChar *) XSLT_DEFAULT_URL,
-			      xsltExtInitTest, xsltExtShutdownTest,
-			      xsltExtStyleInitTest,
-			      xsltExtStyleShutdownTest);
+                              xsltExtInitTest, xsltExtShutdownTest,
+                              xsltExtStyleInitTest,
+                              xsltExtStyleShutdownTest);
     xsltRegisterExtModuleFunction((const xmlChar *) "test",
-                            (const xmlChar *) XSLT_DEFAULT_URL,
-                            xsltExtFunctionTest);
+                                  (const xmlChar *) XSLT_DEFAULT_URL,
+                                  xsltExtFunctionTest);
     xsltRegisterExtModuleElement((const xmlChar *) "test",
-				 (const xmlChar *) XSLT_DEFAULT_URL,
-				 xsltExtElementPreCompTest ,
-				 xsltExtElementTest);
+                                 (const xmlChar *) XSLT_DEFAULT_URL,
+                                 xsltExtElementPreCompTest,
+                                 xsltExtElementTest);
+}
+
+static void
+xsltHashScannerModuleFree(void *payload, void *data ATTRIBUTE_UNUSED,
+                          xmlChar * name ATTRIBUTE_UNUSED)
+{
+#ifdef WITH_MODULES
+    xmlModuleClose(payload);
+#endif
 }
 
 /**
@@ -1611,26 +1794,35 @@ xsltCleanupGlobals(void)
     xsltUnregisterAllExtModuleFunction();
     xsltUnregisterAllExtModuleElement();
     xsltUnregisterAllExtModuleTopLevel();
+
+    /* cleanup dynamic module hash */
+    if (NULL != xsltModuleHash) {
+        xmlHashScan(xsltModuleHash, xsltHashScannerModuleFree, 0);
+        xmlHashFree(xsltModuleHash, NULL);
+        xsltModuleHash = NULL;
+    }
 }
 
 static void
-xsltDebugDumpExtensionsCallback(void* function ATTRIBUTE_UNUSED,
-	                        FILE *output, const xmlChar* name,
-				const xmlChar* URI,
-				const xmlChar* not_used ATTRIBUTE_UNUSED) {
-	if (!name||!URI)
-		return;
-	fprintf(output,"{%s}%s\n",URI,name);
+xsltDebugDumpExtensionsCallback(void *function ATTRIBUTE_UNUSED,
+                                FILE * output, const xmlChar * name,
+                                const xmlChar * URI,
+                                const xmlChar * not_used ATTRIBUTE_UNUSED)
+{
+    if (!name || !URI)
+        return;
+    fprintf(output, "{%s}%s\n", URI, name);
 }
 
 static void
-xsltDebugDumpExtModulesCallback(void* function ATTRIBUTE_UNUSED,
-	                        FILE *output, const xmlChar* URI,
-				const xmlChar* not_used ATTRIBUTE_UNUSED,
-				const xmlChar* not_used2 ATTRIBUTE_UNUSED) {
-	if (!URI)
-		return;
-	fprintf(output,"%s\n",URI);
+xsltDebugDumpExtModulesCallback(void *function ATTRIBUTE_UNUSED,
+                                FILE * output, const xmlChar * URI,
+                                const xmlChar * not_used ATTRIBUTE_UNUSED,
+                                const xmlChar * not_used2 ATTRIBUTE_UNUSED)
+{
+    if (!URI)
+        return;
+    fprintf(output, "%s\n", URI);
 }
 
 /**
@@ -1642,27 +1834,33 @@ xsltDebugDumpExtModulesCallback(void* function ATTRIBUTE_UNUSED,
 void
 xsltDebugDumpExtensions(FILE * output)
 {
-	if (output == NULL)
-		output = stdout;
-    fprintf(output,"Registered XSLT Extensions\n--------------------------\n");
-	if (!xsltFunctionsHash)
-		fprintf(output,"No registered extension functions\n");
-	else {
-		fprintf(output,"Registered Extension Functions:\n");
-		xmlHashScanFull(xsltFunctionsHash,(xmlHashScannerFull)xsltDebugDumpExtensionsCallback,output);
- 	}
-	if (!xsltElementsHash)
-		fprintf(output,"\nNo registered extension elements\n");
-	else {
-		fprintf(output,"\nRegistered Extension Elements:\n");
-		xmlHashScanFull(xsltElementsHash,(xmlHashScannerFull)xsltDebugDumpExtensionsCallback,output);
- 	}
-	if (!xsltExtensionsHash)
-		fprintf(output,"\nNo registered extension modules\n");
-	else {
-		fprintf(output,"\nRegistered Extension Modules:\n");
-		xmlHashScanFull(xsltExtensionsHash,(xmlHashScannerFull)xsltDebugDumpExtModulesCallback,output);
- 	}
+    if (output == NULL)
+        output = stdout;
+    fprintf(output,
+            "Registered XSLT Extensions\n--------------------------\n");
+    if (!xsltFunctionsHash)
+        fprintf(output, "No registered extension functions\n");
+    else {
+        fprintf(output, "Registered Extension Functions:\n");
+        xmlHashScanFull(xsltFunctionsHash,
+                        (xmlHashScannerFull)
+                        xsltDebugDumpExtensionsCallback, output);
+    }
+    if (!xsltElementsHash)
+        fprintf(output, "\nNo registered extension elements\n");
+    else {
+        fprintf(output, "\nRegistered Extension Elements:\n");
+        xmlHashScanFull(xsltElementsHash,
+                        (xmlHashScannerFull)
+                        xsltDebugDumpExtensionsCallback, output);
+    }
+    if (!xsltExtensionsHash)
+        fprintf(output, "\nNo registered extension modules\n");
+    else {
+        fprintf(output, "\nRegistered Extension Modules:\n");
+        xmlHashScanFull(xsltExtensionsHash,
+                        (xmlHashScannerFull)
+                        xsltDebugDumpExtModulesCallback, output);
+    }
 
 }
-

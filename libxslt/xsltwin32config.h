@@ -40,11 +40,11 @@ extern "C" {
 #define LIBXSLT_VERSION_STRING "10112"
 
 /**
- * LIBXSLT_VERSION_EXTRA
+ * LIBXSLT_VERSION_EXTRA:
  *
  * extra version information, used to show a CVS compilation
  */
-#define LIBXML_VERSION_EXTRA "-CVS975"
+#define LIBXML_VERSION_EXTRA "-CVS977"
 
 /**
  * WITH_XSLT_DEBUG:
@@ -55,6 +55,18 @@ extern "C" {
  */
 #if 1
 #define WITH_XSLT_DEBUG
+#endif
+
+/**
+ * WITH_MODULES:
+ *
+ * Whether module support is configured into libxslt
+ */
+#if 0
+#ifndef WITH_MODULES
+#define WITH_MODULES
+#endif
+#define LIBXSLT_PLUGINS_PATH() getenv("LIBXSLT_PLUGINS_PATH")
 #endif
 
 #if 0

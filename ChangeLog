@@ -1,3 +1,10 @@
+Sun Jan  9 16:41:59 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in win32/configure.js libxslt/extensions.c
+	  libxslt/xsltconfig.h.in libxslt/xsltwin32config.h.in:
+	  integrated the module patch from Joel Reed with just a couple
+	  of changes and cleanup.
+
 Tue Dec 27 17:50:10 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: fixed a problem with the expression

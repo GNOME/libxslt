@@ -140,7 +140,7 @@ dnl
 dnl Some packages need to be checked against version numbers so we
 dnl define a function here for later use
 dnl
-AC_DEFUN(VERSION_TO_NUMBER,
+AC_DEFUN([VERSION_TO_NUMBER],
 [`$1 | sed -e 's/libxml //' | awk 'BEGIN { FS = "."; } { printf "%d", ([$]1 * 1000 + [$]2) * 1000 + [$]3;}'`])
 
 dnl
@@ -434,6 +434,36 @@ fi
 AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
+
+AC_ARG_WITH(plugins,
+[  --with-plugins          Add plugin extension support (on)])
+if test "$with_plugins" = ""
+then
+    with_plugins=yes
+fi
+
+if test "$with_plugins" = "yes" ; then
+  AC_MSG_CHECKING([libxml2 module support])
+  WITH_MODULES="`$XML_CONFIG --modules`"
+  if test "${WITH_MODULES}" = "1"; then
+    AC_MSG_RESULT(yes)
+  else
+    AC_MSG_RESULT(no)
+    WITH_MODULES="0"
+  fi
+else
+  WITH_MODULES="0"
+fi
+
+AC_SUBST(WITH_MODULES)
+
+dnl
+dnl setup default module path
+dnl
+module_prefix=$prefix
+test "x$module_prefix" = xNONE && module_prefix=$ac_default_prefix
+LIBXSLT_DEFAULT_PLUGINS_PATH="\"$module_prefix/lib/libxslt/$LIBXSLT_MAJOR_VERSION.$LIBXSLT_MINOR_VERSION/\""
+AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
 
 dnl
 dnl In build tree I use a static version with memory debug enabled

@@ -107,6 +107,19 @@ extern "C" {
 #endif
 
 /**
+ * WITH_MODULES:
+ *
+ * Whether module support is configured into libxslt
+ * Note: no default module path for win32 platforms
+ */
+#if @WITH_MODULES@
+#ifndef WITH_MODULES
+#define WITH_MODULES
+#endif
+#define LIBXSLT_DEFAULT_PLUGINS_PATH() @LIBXSLT_DEFAULT_PLUGINS_PATH@
+#endif
+
+/**
  * ATTRIBUTE_UNUSED:
  *
  * This macro is used to flag unused function parameters to GCC

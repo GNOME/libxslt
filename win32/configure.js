@@ -48,6 +48,7 @@ var withDebugger = true;
 var withIconv = true;
 var withZlib = false;
 var withCrypto = true;
+var withModules = false;
 /* Win32 build options. */
 var dirSep = "\\";
 var compiler = "msvc";
@@ -105,6 +106,7 @@ function usage()
 	txt += "  iconv:      Use iconv library (" + (withIconv? "yes" : "no")  + ")\n";
 	txt += "  zlib:       Use zlib library (" + (withZlib? "yes" : "no") + ")\n";
 	txt += "  crypto:     Enable Crypto support (" + (withCrypto? "yes" : "no") + ")\n";
+	txt += "  modules:    Enable Module support (" + (withModules? "yes" : "no") + ")\n";
 	txt += "\nWin32 build options, default value given in parentheses:\n\n";
 	txt += "  compiler:   Compiler to be used [msvc|mingw] (" + compiler + ")\n";
 	txt += "  cruntime:   C-runtime compiler option (only msvc) (" + cruntime + ")\n";
@@ -188,6 +190,7 @@ function discoverVersion()
 	vf.WriteLine("WITH_ICONV=" + (withIconv? "1" : "0"));
 	vf.WriteLine("WITH_ZLIB=" + (withZlib? "1" : "0"));
 	vf.WriteLine("WITH_CRYPTO=" + (withCrypto? "1" : "0"));
+	vf.WriteLine("WITH_MODULES=" + (withModules? "1" : "0"));
 	vf.WriteLine("DEBUG=" + (buildDebug? "1" : "0"));
 	vf.WriteLine("STATIC=" + (buildStatic? "1" : "0"));
 	vf.WriteLine("PREFIX=" + buildPrefix);
@@ -233,6 +236,10 @@ function configureXslt()
 			of.WriteLine(s.replace(/\@WITH_MEM_DEBUG\@/, withMemDebug? "1" : "0"));
 		} else if (s.search(/\@WITH_DEBUGGER\@/) != -1) {
 			of.WriteLine(s.replace(/\@WITH_DEBUGGER\@/, withDebugger? "1" : "0"));
+		} else if (s.search(/\@WITH_MODULES\@/) != -1) {
+			of.WriteLine(s.replace(/\@WITH_MODULES\@/, withModules? "1" : "0"));
+		} else if (s.search(/\@LIBXSLT_DEFAULT_PLUGINS_PATH\@/) != -1) {
+			of.WriteLine(s.replace(/\@LIBXSLT_DEFAULT_PLUGINS_PATH\@/, "NULL"));
 		} else
 			of.WriteLine(ln);
 	}
@@ -262,6 +269,8 @@ function configureExslt()
 			of.WriteLine(s.replace(/\@LIBEXSLT_VERSION_EXTRA\@/, verCvs));
 		} else if (s.search(/\@WITH_CRYPTO\@/) != -1) {
 			of.WriteLine(s.replace(/\@WITH_CRYPTO\@/, withCrypto? "1" : "0"));
+		} else if (s.search(/\@WITH_MODULES\@/) != -1) {
+			of.WriteLine(s.replace(/\@WITH_MODULES\@/, withModules? "1" : "0"));
 		} else
 			of.WriteLine(ln);
 	}
@@ -332,6 +341,8 @@ for (i = 0; (i < WScript.Arguments.length) && (error == 0); i++) {
 			withZlib  = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "crypto")
 			withCrypto = strToBool(arg.substring(opt.length + 1, arg.length));
+		else if (opt == "modules")
+			withModules = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "compiler")
 			compiler = arg.substring(opt.length + 1, arg.length);
  		else if (opt == "cruntime")
@@ -446,6 +457,7 @@ txtOut += "  Debugger support: " + boolToStr(withDebugger) + "\n";
 txtOut += "         Use iconv: " + boolToStr(withIconv) + "\n";
 txtOut += "         With zlib: " + boolToStr(withZlib) + "\n";
 txtOut += "            Crypto: " + boolToStr(withCrypto) + "\n";
+txtOut += "           Modules: " + boolToStr(withModules) + "\n";
 txtOut += "\n";
 txtOut += "Win32 build configuration\n";
 txtOut += "-------------------------\n";
