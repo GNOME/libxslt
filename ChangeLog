@@ -1,3 +1,8 @@
+Tue Sep  7 18:04:55 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/numbers.c: further refinement to UTF8 pattern
+	  separator (bug 151975)
+
 Tue Sep  7 00:14:12 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/numbers.c: fixed problem with UTF8 pattern
