@@ -22,7 +22,7 @@ libexslt_la_SOURCES =                   \
 	date.c				\
 	saxon.c
 
-libexslt_la_LIBADD = $(EXTRA_LIBS)
+libexslt_la_LIBADD = -lxslt $(EXTRA_LIBS)
 libexslt_la_LDFLAGS = -version-info @LIBEXSLT_VERSION_INFO@
 
 man_MANS = libexslt.4

@@ -517,6 +517,8 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     xmlNodePtr insert) {
     xmlNodePtr copy;
 
+    if (node->type == XML_DTD_NODE)
+	return(NULL);
     if ((node->type == XML_TEXT_NODE) ||
 	(node->type == XML_CDATA_SECTION_NODE))
 	return(xsltCopyText(ctxt, insert, node));

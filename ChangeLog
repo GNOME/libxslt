@@ -1,3 +1,9 @@
+Wed Nov 21 16:29:04 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libexslt/Makefile.am: trying to fix more Makefiles
+	  crapola
+	* libxslt/transform.c: small fix.
+
 Tue Nov 13 16:16:41 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* vms/* Makefile.am: included OpenVMS port instructions from

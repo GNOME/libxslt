@@ -264,11 +264,12 @@ case ${host} in
 esac
 
 XSLT_INCLUDEDIR='-I${includedir}'
-EXTRA_LIBS="$M_LIBS"
 if test "${WITH_DEBUGGER}" = "1" ; then
 	XSLT_LIBS="-lxslt -lxsltbreakpoint $LIBXML_LIBS $M_LIBS"
+	EXTRA_LIBS="-lxsltbreakpoint -lxml2 $M_LIBS"
 else
 	XSLT_LIBS="-lxslt $LIBXML_LIBS $M_LIBS"
+	EXTRA_LIBS="-lxml2 $M_LIBS"
 fi
 
 
