@@ -1,3 +1,10 @@
+Sat May  5 17:52:52 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/internals.html doc/node.fig doc/node.gif doc/processing.fig
+	  doc/processing.gif doc/stylesheet.fig doc/stylesheet.gif
+	  doc/templates.fig doc/templates.gif: started writing tye doc
+	  on how libxslt works.
+
 Sat May  5 17:13:16 CEST 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* libxslt/numbersInternals.h libxslt/numbers.c
