@@ -5,7 +5,6 @@ body      { background-color: #ffffff; }
 .element  { color: #447744; }
 .text     { color: #774444; }
       </style>
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
 <body><pre>
   <span class="element">&lt;table&gt;</span>
      <span class="text"></span>

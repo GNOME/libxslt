@@ -1,3 +1,10 @@
+Wed Apr 18 12:05:04 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.c: applied TOM's patch to key()
+	* tests/XSLTMark/chart.out tests/XSLTMark/dbonerow.out
+	  tests/XSLTMark/prettyprint.out tests/multiple/out/*.html:
+	  small HTML output change 
+
 Mon Apr 16 16:14:02 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c libxslt/transform.c libxslt/xsltInternals.h:

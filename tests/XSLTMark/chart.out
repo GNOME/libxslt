@@ -1,7 +1,5 @@
 <!DOCTYPE HTML PUBLIC "http://www.w3.org/TR/REC-html40/loose.dtd" "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
-<body bgcolor="#ffffff"><table border="0">
+<html><body bgcolor="#ffffff"><table border="0">
 <tr><td colspan="4" align="center">Sales By Region</td></tr>
 <tr>
 <td valign="top"><table border="0" cellpadding="2" cellspacing="0">
@@ -73,5 +71,4 @@
 <tr><td colspan="3" align="center">2000</td></tr>
 </table></td>
 </tr>
-</table></body>
-</html>
+</table></body></html>

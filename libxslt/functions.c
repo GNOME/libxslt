@@ -223,6 +223,7 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 		valuePush(ctxt, xmlXPathObjectCopy(obj1));
 		valuePush(ctxt,
 			  xmlXPathNewNodeSet(obj2->nodesetval->nodeTab[i]));
+		xmlXPathStringFunction(ctxt, 1);
 		xsltKeyFunction(ctxt, 2);
 		newobj = valuePop(ctxt);
 		ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
