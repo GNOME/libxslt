@@ -1,3 +1,7 @@
+Fri Nov 21 18:17:32 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/keys.c: small further enhancement, bug #127450
+
 Thu Nov 20 17:26:57 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c: another problem reported by Oleg Paraschenko

@@ -260,10 +260,12 @@ skipPredicate(const xmlChar *cur, int end) {
 	    end = skipString(cur, end);
 	    if (end <= 0)
 	        return(-1);
+	    continue;
 	} else if (cur[end] == '[') {
 	    end = skipPredicate(cur, end);
 	    if (end <= 0)
 	        return(-1);
+	    continue;
 	} else if (cur[end] == ']')
 	    return(end + 1);
 	end++;
@@ -317,10 +319,13 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	while ((match[end] != 0) && (match[end] != '|')) {
 	    if (match[end] == '[') {
 	        end = skipPredicate(match, end);
-		if (end <= 0)
+		if (end <= 0) {
 		    xsltTransformError(NULL, style, inst,
 		                       "key pattern is malformed: %s",
 				       key->match);
+		    if (style != NULL) style->errors++;
+		    goto error;
+		}
 	    } else
 		end++;
 	}
