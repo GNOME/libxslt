@@ -22,7 +22,7 @@
  */
 
 #define EXSLTPUBFUN
-#define EXSLTPUBVAR
+#define EXSLTPUBVAR extern
 #define EXSLTCALL
 
 /* Windows platform with MS compiler */

@@ -22,7 +22,7 @@
  */
 
 #define XSLTPUBFUN
-#define XSLTPUBVAR
+#define XSLTPUBVAR extern
 #define XSLTCALL
 
 /* Windows platform with MS compiler */
