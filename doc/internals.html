@@ -78,22 +78,22 @@ A:link, A:visited, A:active { text-decoration: underline }
 <h3>Table  of contents</h3>
 <ul>
 <li><a href="internals.html#Introducti">Introduction</a></li>
-<li><a href="internals.html#Basics">Basics</a></li>
-<li><a href="internals.html#Keep">Keep it simple stupid</a></li>
-<li><a href="internals.html#libxml">The libxml nodes</a></li>
-<li><a href="internals.html#XSLT">The XSLT processing steps</a></li>
-<li><a href="internals.html#XSLT1">The XSLT stylesheet compilation</a></li>
-<li><a href="internals.html#XSLT2">The XSLT template compilation</a></li>
-<li><a href="internals.html#processing">The processing itself</a></li>
-<li><a href="internals.html#XPath">XPath expressions compilation</a></li>
-<li><a href="internals.html#XPath1">XPath interpretation</a></li>
-<li><a href="internals.html#Descriptio">Description of XPath
+  <li><a href="internals.html#Basics">Basics</a></li>
+  <li><a href="internals.html#Keep">Keep it simple stupid</a></li>
+  <li><a href="internals.html#libxml">The libxml nodes</a></li>
+  <li><a href="internals.html#XSLT">The XSLT processing steps</a></li>
+  <li><a href="internals.html#XSLT1">The XSLT stylesheet compilation</a></li>
+  <li><a href="internals.html#XSLT2">The XSLT template compilation</a></li>
+  <li><a href="internals.html#processing">The processing itself</a></li>
+  <li><a href="internals.html#XPath">XPath expressions compilation</a></li>
+  <li><a href="internals.html#XPath1">XPath interpretation</a></li>
+  <li><a href="internals.html#Descriptio">Description of XPath
   Objects</a></li>
-<li><a href="internals.html#XPath3">XPath functions</a></li>
-<li><a href="internals.html#stack">The variables stack frame</a></li>
-<li><a href="internals.html#Extension">Extension support</a></li>
-<li><a href="internals.html#Futher">Further reading</a></li>
-<li><a href="internals.html#TODOs">TODOs</a></li>
+  <li><a href="internals.html#XPath3">XPath functions</a></li>
+  <li><a href="internals.html#stack">The variables stack frame</a></li>
+  <li><a href="internals.html#Extension">Extension support</a></li>
+  <li><a href="internals.html#Futher">Further reading</a></li>
+  <li><a href="internals.html#TODOs">TODOs</a></li>
 </ul>
 <h3><a name="Introducti2">Introduction</a></h3>
 <p>This document describes the processing of <a href="http://xmlsoft.org/XSLT/">libxslt</a>, the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developed for the <a href="http://www.gnome.org/">Gnome</a> project.</p>
@@ -107,10 +107,10 @@ stylesheet document and generates an output document:</p>
 the following operations:</p>
 <ul>
 <li>parsing files</li>
-<li>building the in-memory DOM structure associated with the documents
+  <li>building the in-memory DOM structure associated with the documents
     handled</li>
-<li>the XPath implementation</li>
-<li>serializing back the result document to XML and HTML. (Text is handled
+  <li>the XPath implementation</li>
+  <li>serializing back the result document to XML and HTML. (Text is handled
     directly.)</li>
 </ul>
 <h3><a name="Keep1">Keep it simple stupid</a></h3>
@@ -129,7 +129,7 @@ stylesheets. In general the implementation of libxslt follows the following
 pattern:</p>
 <ul>
 <li>KISS (keep it simple stupid)</li>
-<li>when there is a clear bottleneck optimize on top of this simple
+  <li>when there is a clear bottleneck optimize on top of this simple
     framework and refine only as much as is needed to reach the expected
     result</li>
 </ul>
@@ -148,19 +148,19 @@ variations depending on the node type:</p>
 indicates the kind of node it represents, the most common ones are:</p>
 <ul>
 <li>document nodes</li>
-<li>element nodes</li>
-<li>text nodes</li>
+  <li>element nodes</li>
+  <li>text nodes</li>
 </ul>
 <p>For the XSLT processing, entity nodes should not be generated (i.e. they
 should be replaced by their content). Most nodes also contains the following
 &quot;navigation&quot; informations:</p>
 <ul>
 <li>the containing <strong>doc</strong>ument</li>
-<li>the <strong>parent</strong> node</li>
-<li>the first <strong>children</strong> node</li>
-<li>the <strong>last</strong> children node</li>
-<li>the <strong>prev</strong>ious sibling</li>
-<li>the following sibling (<strong>next</strong>)</li>
+  <li>the <strong>parent</strong> node</li>
+  <li>the first <strong>children</strong> node</li>
+  <li>the <strong>last</strong> children node</li>
+  <li>the <strong>prev</strong>ious sibling</li>
+  <li>the following sibling (<strong>next</strong>)</li>
 </ul>
 <p>Elements nodes carries the list of attributes in the properties, an
 attribute itself holds the navigation pointers and the children list (the
@@ -176,21 +176,21 @@ used by the application to hold specific data on this node.</p>
 level:</p>
 <ol>
 <li>parse the stylesheet and generate a DOM tree</li>
-<li>take the stylesheet tree and build a compiled version of it (the
+  <li>take the stylesheet tree and build a compiled version of it (the
     compilation phase)</li>
-<li>take the input and generate a DOM tree</li>
-<li>process the stylesheet against the input tree and generate an output
+  <li>take the input and generate a DOM tree</li>
+  <li>process the stylesheet against the input tree and generate an output
     tree</li>
-<li>serialize the output tree</li>
+  <li>serialize the output tree</li>
 </ol>
 <p>A few things should be noted here:</p>
 <ul>
 <li>the steps 1/ 3/ and 5/ are optional</li>
-<li>the stylesheet obtained at 2/ can be reused by multiple processing 4/
+  <li>the stylesheet obtained at 2/ can be reused by multiple processing 4/
     (and this should also work in threaded programs)</li>
-<li>the tree provided in 2/ should never be freed using xmlFreeDoc, but by
+  <li>the tree provided in 2/ should never be freed using xmlFreeDoc, but by
     freeing the stylesheet.</li>
-<li>the input tree 4/ is not modified except the _private field which may
+  <li>the input tree 4/ is not modified except the _private field which may
     be used for labelling keys if used by the stylesheet</li>
 </ul>
 <h3><a name="XSLT1">The XSLT stylesheet compilation</a></h3>
@@ -267,22 +267,22 @@ applying the following algorithm:</p>
     hash table, walking the hash list until the node satisfies all the steps
     of the pattern, then checking the appropriate(s) global templates to see
     if there isn't a higher priority rule to apply</li>
-<li>If there is no template, apply the default rule (recurse on the
+  <li>If there is no template, apply the default rule (recurse on the
     children)</li>
-<li>else walk the content list of the selected templates, for each of them:
+  <li>else walk the content list of the selected templates, for each of them:
     <ul>
 <li>if the node is in the XSLT namespace then the node has a _private
         field pointing to the preprocessed values, jump to the specific
       code</li>
-<li>if the node is in an extension namespace, look up the associated
+      <li>if the node is in an extension namespace, look up the associated
         behavior</li>
-<li>otherwise copy the node.</li>
-</ul>
+      <li>otherwise copy the node.</li>
+    </ul>
 <p>The closure is usually done through the XSLT
     <strong>apply-templates</strong> construct recursing by applying the
     adequate template on the input node children or on the result of an
     associated XPath selection lookup.</p>
-</li>
+  </li>
 </ol>
 <p>Note that large parts of the input tree may not be processed by a given
 stylesheet and that on the opposite some may be processed multiple times.
@@ -292,15 +292,15 @@ logic. <strong>xsltApplyStylesheet()</strong> is the entry point, it
 allocates an xsltTransformContext containing the following:</p>
 <ul>
 <li>a pointer to the stylesheet being processed</li>
-<li>a stack of templates</li>
-<li>a stack of variables and parameters</li>
-<li>an XPath context</li>
-<li>the template mode</li>
-<li>current document</li>
-<li>current input node</li>
-<li>current selected node list</li>
-<li>the current insertion points in the output document</li>
-<li>a couple of hash tables for extension elements and functions</li>
+  <li>a stack of templates</li>
+  <li>a stack of variables and parameters</li>
+  <li>an XPath context</li>
+  <li>the template mode</li>
+  <li>current document</li>
+  <li>current input node</li>
+  <li>current selected node list</li>
+  <li>the current insertion points in the output document</li>
+  <li>a couple of hash tables for extension elements and functions</li>
 </ul>
 <p>Then a new document gets allocated (HTML or XML depending on the type of
 output), the user parameters and global variables and parameters are
@@ -354,13 +354,13 @@ transformation the context is maintained within the XSLT context. Its content
 follows the requirements from the XPath specification:</p>
 <ul>
 <li>the current document</li>
-<li>the current node</li>
-<li>a hash table of defined variables (but not used by XSLT)</li>
-<li>a hash table of defined functions</li>
-<li>the proximity position (the place of the node in the current node
+  <li>the current node</li>
+  <li>a hash table of defined variables (but not used by XSLT)</li>
+  <li>a hash table of defined functions</li>
+  <li>the proximity position (the place of the node in the current node
   list)</li>
-<li>the context size (the size of the current node list)</li>
-<li>the array of namespace declarations in scope (there also is a namespace
+  <li>the context size (the size of the current node list)</li>
+  <li>the array of namespace declarations in scope (there also is a namespace
     hash table but it is not used in the XSLT transformation).</li>
 </ul>
 <p>For the purpose of XSLT an <strong>extra</strong> pointer has been added
@@ -403,17 +403,17 @@ the stack).</p>
 <ul>
 <li>check <code>nargs</code> for proper handling of errors or functions
     with variable numbers of parameters</li>
-<li>pop the parameters from the stack using <code>obj =
+  <li>pop the parameters from the stack using <code>obj =
     valuePop(ctxt);</code>
 </li>
-<li>do the function specific computation</li>
-<li>push the result parameter on the stack using <code>valuePush(ctxt,
+  <li>do the function specific computation</li>
+  <li>push the result parameter on the stack using <code>valuePush(ctxt,
     res);</code>
 </li>
-<li>free up the input parameters with
+  <li>free up the input parameters with
   <code>xmlXPathFreeObject(obj);</code>
 </li>
-<li>return</li>
+  <li>return</li>
 </ul>
 <p>Sometime the work can be done directly by modifying in-situ the top object
 on the stack <code>ctxt-&gt;value</code>.</p>
@@ -452,11 +452,11 @@ for output should be added directly to libxml).</p>
 especially:</p>
 <ul>
 <li>static slot allocation on the stack frame</li>
-<li>specific boolean interpretation of an XPath expression</li>
-<li>some of the sorting optimization</li>
-<li>Lazy evaluation of location path. (this may require more changes but
+  <li>specific boolean interpretation of an XPath expression</li>
+  <li>some of the sorting optimization</li>
+  <li>Lazy evaluation of location path. (this may require more changes but
     sounds really interesting. XT does this too.)</li>
-<li>Optimization of an expression tree (This could be done as a completely
+  <li>Optimization of an expression tree (This could be done as a completely
     independent module.)</li>
 </ul>
 <p>

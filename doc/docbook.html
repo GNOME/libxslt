@@ -86,39 +86,39 @@ few pointers and informations which may be helpful:</p>
 <li>The <a href="http://www.oasis-open.org/committees/docbook/">DocBook
     homepage at Oasis</a> you should find pointers there on all the lastest
     versions of the DTDs and XSLT stylesheets</li>
-<li>
+  <li>
 <a href="http://www.docbook.org/">DocBook: The Definitive Guide</a> is
     the official reference documentation for DocBook.</li>
-<li>
+  <li>
 <a href="https://sourceforge.net/docman/index.php?group_id=21935">DocBook
     Open Repository</a> contains a lot of informations about DocBook</li>
-<li>Here is a <a href="/buildDocBookCatalog">shell script</a> to generate
+  <li>Here is a <a href="/buildDocBookCatalog">shell script</a> to generate
     XML Catalogs for DocBook 4.1.2 . If it can write to the /etc/xml/
     directory, it will set-up /etc/xml/catalog and /etc/xml/docbook based on
     the resources found on the system. Otherwise it will just create
     ~/xmlcatalog and ~/dbkxmlcatalog and doing:
     <p><code>export XMLCATALOG=$HOME/xmlcatalog</code></p>
-<p>should allow to process DocBook documentations without requiring
+    <p>should allow to process DocBook documentations without requiring
     network accesses for the DTd or stylesheets</p>
-</li>
-<li>I have uploaded <a href="ftp://xmlsoft.org/test/dbk412catalog.tar.gz">a
+  </li>
+  <li>I have uploaded <a href="ftp://xmlsoft.org/test/dbk412catalog.tar.gz">a
     small tarball</a> containing XML Catalogs for DocBook 4.1.2 which seems
     to work fine for me too</li>
-<li>Informations on installing a <a href="http://ourworld.compuserve.com/homepages/hoenicka_markus/cygc2057.html">Windows
+  <li>Informations on installing a <a href="http://ourworld.compuserve.com/homepages/hoenicka_markus/cygc2057.html">Windows
     DocBook processing setup</a> based on Cygwin (using the binaries from the
     official Windows port should be possible too)</li>
-<li>Alexander Kirillov's page on <a href="http://www.math.sunysb.edu/~kirillov/dbxml/">Using DocBook XML
+  <li>Alexander Kirillov's page on <a href="http://www.math.sunysb.edu/~kirillov/dbxml/">Using DocBook XML
     4.1.2</a> (RPM packages)</li>
-<li>Tim Waugh's <a href="http://cyberelk.net/tim/xmlto/">xmlto front-end
+  <li>Tim Waugh's <a href="http://cyberelk.net/tim/xmlto/">xmlto front-end
     conversion script</a>
 </li>
-<li>Linux Documentation Project <a href="http://www.linuxdoc.org/HOWTO/mini/DocBook-Install/">
+  <li>Linux Documentation Project <a href="http://www.linuxdoc.org/HOWTO/mini/DocBook-Install/">
     DocBook-Install-mini-HOWTO</a>
 </li>
-<li>ScrollKeeper the open documentation cataloging project has a <a href="http://scrollkeeper.sourceforge.net/docbook.shtml">DocBook
+  <li>ScrollKeeper the open documentation cataloging project has a <a href="http://scrollkeeper.sourceforge.net/docbook.shtml">DocBook
     section</a>
 </li>
-<li>Dan York presentation on <a href="http://www.lodestar2.com/people/dyork/talks/2001/xugo/docbook/index.html">Publishing
+  <li>Dan York presentation on <a href="http://www.lodestar2.com/people/dyork/talks/2001/xugo/docbook/index.html">Publishing
     using DocBook XML</a>
 </li>
 </ul>
@@ -132,13 +132,13 @@ again:</p>
     XML Catalogs pointing to a local installation of the DTD of DocBook.
     Check the <a href="http://xmlsoft.org/catalog.html">XML Catalog page</a>
     to understand more on this subject.</li>
-<li>before processing a new document, use the command
+  <li>before processing a new document, use the command
     <p><code>xmllint --valid --noout path_to_document</code></p>
-<p>to make sure that your input is valid DocBook. And fixes the errors
+    <p>to make sure that your input is valid DocBook. And fixes the errors
     before processing further. Note that XSLT processing may work correctly
     with some forms of validity errors left, but in general it can give
     troubles on output.</p>
-</li>
+  </li>
 </ul>
 <p><a href="bugs.html">Daniel Veillard</a></p>
 </td></tr></table></td></tr></table></td></tr></table></td>
