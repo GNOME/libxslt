@@ -3006,8 +3006,15 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (comp->templ == NULL) {
 	comp->templ = xsltFindTemplate(ctxt, comp->name, comp->ns);
 	if (comp->templ == NULL) {
-	    xsltTransformError(ctxt, NULL, inst,
-		 "xsl:call-template : template %s not found\n", comp->name);
+	    if (comp->ns != NULL) {
+	        xsltTransformError(ctxt, NULL, inst,
+			"xsl:call-template : template %s:%s not found\n",
+			comp->ns, comp->name);
+	    } else {
+	        xsltTransformError(ctxt, NULL, inst,
+			"xsl:call-template : template %s not found\n",
+			comp->name);
+	    }
 	    return;
 	}
     }

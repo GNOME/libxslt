@@ -760,7 +760,7 @@ xsltGetQNameURI2(xsltStylesheetPtr style, xmlNodePtr node,
         xmlFree(qname);
         return(NULL);
     }
-    *name = xmlDictLookup(style->dict, (*name)+len, -1);
+    *name = xmlDictLookup(style->dict, (*name)+len+1, -1);
     xmlFree(qname);
     return(ns->href);
 }
