@@ -42,7 +42,7 @@ libxslt_la_SOURCES = 			\
 	preproc.c			\
 	transform.c
 
-
+libxslt_la_LIBADD = $(EXTRA_LIBS)
 
 # what is this include dir ?
 # libxsltincdir = $(includedir)/libxslt

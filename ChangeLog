@@ -1,3 +1,7 @@
+Tue Mar 13 14:38:48 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am: nick@debian.org forwarded a fix
+
 Tue Mar 13 10:29:45 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* README.cvs-commits: added, pointing to HACKING
