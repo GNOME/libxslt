@@ -1,3 +1,9 @@
+Thu Dec 11 16:33:41 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* win32/Makefile.* win32/configure.js libxslt/xsltexports.h
+	  libexslt/exsltexports.h libxslt/win32config.h: msvc and
+	  mingw compilation fixes.
+
 Wed Dec 10 20:37:46 MST 2003 John Fleck <jfleck@inkstain.net>
 
 	* doc/xslt.html docs.html

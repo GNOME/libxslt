@@ -21,9 +21,26 @@
  * platform might need different definitions.
  */
 
+/**
+ * EXSLTPUBFUN:
+ *
+ * Macros which declare an exportable function
+ */
 #define EXSLTPUBFUN
+/**
+ * EXSLTPUBVAR:
+ *
+ * Macros which declare an exportable variable
+ */
 #define EXSLTPUBVAR extern
+/**
+ * EXSLTCALL:
+ *
+ * Macros which declare the called convention for exported functions
+ */
 #define EXSLTCALL
+
+/** DOC_DISABLE */
 
 /* Windows platform with MS compiler */
 #if defined(_WIN32) && defined(_MSC_VER)
@@ -70,7 +87,22 @@
 #endif
 
 /* Windows platform with GNU compiler (Mingw) */
-#if defined(_WIN32) && defined(__MINGW__)
+#if defined(_WIN32) && defined(__MINGW32__)
+  #undef EXSLTPUBFUN
+  #undef EXSLTPUBVAR
+  #undef EXSLTCALL
+  #if defined(IN_LIBEXSLT) && !defined(LIBEXSLT_STATIC)
+    #define EXSLTPUBFUN __declspec(dllexport)
+    #define EXSLTPUBVAR __declspec(dllexport) extern
+  #else
+    #define EXSLTPUBFUN
+    #if !defined(LIBEXSLT_STATIC)
+      #define EXSLTPUBVAR __declspec(dllimport) extern
+    #else
+      #define EXSLTPUBVAR extern
+    #endif
+  #endif
+  #define EXSLTCALL __cdecl
   #if !defined _REENTRANT
     #define _REENTRANT
   #endif

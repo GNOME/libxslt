@@ -46,14 +46,15 @@ var withDebugger = true;
 var withIconv = true;
 var withZlib = false;
 /* Win32 build options. */
+var dirSep = "\\";
 var compiler = "msvc";
 var buildDebug = 0;
 var buildStatic = 0;
 var buildPrefix = ".";
-var buildBinPrefix = "$(PREFIX)\\bin";
-var buildIncPrefix = "$(PREFIX)\\include";
-var buildLibPrefix = "$(PREFIX)\\lib";
-var buildSoPrefix = "$(PREFIX)\\lib";
+var buildBinPrefix = "";
+var buildIncPrefix = "";
+var buildLibPrefix = "";
+var buildSoPrefix = "";
 var buildInclude = ".";
 var buildLib = ".";
 /* Local stuff */
@@ -159,11 +160,6 @@ function discoverVersion()
 		}
 	}
 	cf.Close();
-	vf.WriteLine("BASEDIR=" + baseDir);
-	vf.WriteLine("XSLT_SRCDIR=" + srcDirXslt);
-	vf.WriteLine("EXSLT_SRCDIR=" + srcDirExslt);
-	vf.WriteLine("UTILS_SRCDIR=" + srcDirUtils);
-	vf.WriteLine("BINDIR=" + binDir);
 	vf.WriteLine("WITH_TRIO=" + (withTrio? "1" : "0"));
 	vf.WriteLine("WITH_DEBUG=" + (withXsltDebug? "1" : "0"));
 	vf.WriteLine("WITH_MEM_DEBUG=" + (withMemDebug? "1" : "0"));
@@ -365,6 +361,17 @@ if (error != 0) {
 	usage();
 	WScript.Quit(error);
 }
+dirSep = "\\";
+if (compiler == "mingw")
+	dirSep = "/";
+if (buildBinPrefix == "")
+	buildBinPrefix = "$(PREFIX)" + dirSep + "bin";
+if (buildIncPrefix == "")
+	buildIncPrefix = "$(PREFIX)" + dirSep + "include";
+if (buildLibPrefix == "")
+	buildLibPrefix = "$(PREFIX)" + dirSep + "lib";
+if (buildSoPrefix == "")
+	buildSoPrefix = "$(PREFIX)" + dirSep + "lib";
 
 // Discover the version.
 discoverVersion();
@@ -396,6 +403,16 @@ if (compiler == "mingw")
 	makefile = ".\\Makefile.mingw";
 fso.CopyFile(makefile, ".\\Makefile", true);
 WScript.Echo("Created Makefile.");
+// Create the config.h.
+var confighsrc = "..\\libxslt\\win32config.h";
+var configh = "..\\config.h";
+var f = fso.FileExists(configh);
+if (f) {
+	var t = fso.GetFile(configh);
+	t.Attributes =0;
+}
+fso.CopyFile(confighsrc, configh, true);
+WScript.Echo("Created config.h.");
 
 // Display the final configuration.
 var txtOut = "\nXSLT processor configuration\n";

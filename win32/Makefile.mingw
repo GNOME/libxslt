@@ -3,49 +3,26 @@
 # Take a look at the beginning and modify the variables to suit your 
 # environment. Having done that, you can do a
 #
-# nmake [all]     to build the libxslt and the accompanying utilities.
-# nmake clean     to remove all compiler output files and return to a
-#                 clean state.
-# nmake rebuild   to rebuild everything from scratch. This basically does
-#                 a 'nmake clean' and then a 'nmake all'.
-# nmake install   to install the library and its header files.
+# make [all]     to build the libxslt and the accompanying utilities.
+# make clean     to remove all compiler output files and return to a
+#                clean state.
+# make rebuild   to rebuild everything from scratch. This basically does
+#                a 'make clean' and then a 'make all'.
+# make install   to install the library and its header files.
 #
 # November 2002, Igor Zlatkovic <igor@zlatkovic.com>
 
 AUTOCONF = .\config.mingw
-
-# If you cannot run the configuration script, which would take the burden of
-# editing this file from your back, then remove the following line...
 include $(AUTOCONF)
-# ...and enable the following lines and adapt them to your environment.
-#BASEDIR = ..
-#XSLT_SRCDIR = $(BASEDIR)\libxslt
-#EXSLT_SRCDIR = $(BASEDIR)\libexslt
-#UTILS_SRCDIR = $(BASEDIR)\xsltproc
-#BINDIR = binaries
-#LIBXSLT_MAJOR_VERSION = 0 # set this to the right value.
-#LIBXSLT_MINOR_VERSION = 0 # set this to the right value.
-#LIBXSLT_MICRO_VERSION = 0 # set this to the right value.
-#LIBEXSLT_MAJOR_VERSION = 0 # set this to the right value.
-#LIBEXSLT_MINOR_VERSION = 0 # set this to the right value.
-#LIBEXSLT_MICRO_VERSION = 0 # set this to the right value.
-#WITH_XSLT_DEBUG = 1
-#WITH_MEM_DEBUG = 0
-#WITH_DEBUGGER = 1
-#DEBUG = 0
-#STATIC = 0
-#PREFIX = . # set this to the right value.
-#BINPREFIX = $(PREFIX)\bin
-#INCPREFIX = $(PREFIX)\include
-#LIBPREFIX = $(PREFIX)\lib
-#SOPREFIX = $(PREFIX)\lib
-#INCLUDE += ;$(INCPREFIX)
-#LIB += ;$(LIBPREFIX) 
-
 
 # There should never be a need to modify anything below this line.
 # ----------------------------------------------------------------
 
+BASEDIR = ..
+XSLT_SRCDIR = $(BASEDIR)/libxslt
+EXSLT_SRCDIR = $(BASEDIR)/libexslt
+UTILS_SRCDIR = $(BASEDIR)/xsltproc
+BINDIR = bin.mingw
 
 # Names of various input and output components.
 XSLT_NAME = xslt
@@ -60,11 +37,11 @@ EXSLT_IMP = $(EXSLT_BASENAME).lib
 EXSLT_A = $(EXSLT_BASENAME).a
 
 # Places where intermediate files produced by the compiler go
-XSLT_INTDIR = $(XSLT_BASENAME).int
-XSLT_INTDIR_A = $(XSLT_BASENAME)_a.int
-EXSLT_INTDIR = $(EXSLT_BASENAME).int
-EXSLT_INTDIR_A = $(EXSLT_BASENAME)_a.int
-UTILS_INTDIR = utils.int
+XSLT_INTDIR = int.xslt.mingw
+XSLT_INTDIR_A = int.xslta.mingw
+EXSLT_INTDIR = int.exslt.mingw
+EXSLT_INTDIR_A = int.exslta.mingw
+UTILS_INTDIR = int.utils.mingw
 
 # The preprocessor and its options.
 CPP = gcc.exe -E
@@ -172,33 +149,33 @@ libexslta : $(BINDIR)/$(EXSLT_A)
 utils : $(UTILS)
 
 clean :
-	if exist $(XSLT_INTDIR) rmdir /S /Q $(XSLT_INTDIR)
-	if exist $(XSLT_INTDIR_A) rmdir /S /Q $(XSLT_INTDIR_A)
-	if exist $(EXSLT_INTDIR) rmdir /S /Q $(EXSLT_INTDIR)
-	if exist $(EXSLT_INTDIR_A) rmdir /S /Q $(EXSLT_INTDIR_A)
-	if exist $(UTILS_INTDIR) rmdir /S /Q $(UTILS_INTDIR)
-	if exist $(BINDIR) rmdir /S /Q $(BINDIR)
+	cmd.exe /C if exist $(XSLT_INTDIR) rmdir /S /Q $(XSLT_INTDIR)
+	cmd.exe /C if exist $(XSLT_INTDIR_A) rmdir /S /Q $(XSLT_INTDIR_A)
+	cmd.exe /C if exist $(EXSLT_INTDIR) rmdir /S /Q $(EXSLT_INTDIR)
+	cmd.exe /C if exist $(EXSLT_INTDIR_A) rmdir /S /Q $(EXSLT_INTDIR_A)
+	cmd.exe /C if exist $(UTILS_INTDIR) rmdir /S /Q $(UTILS_INTDIR)
+	cmd.exe /C if exist $(BINDIR) rmdir /S /Q $(BINDIR)
 
 rebuild : clean all
 
 distclean : clean
-	if exist config.* del config.*
-	if exist Makefile del Makefile
+	cmd.exe /C if exist config.* del config.*
+	cmd.exe /C if exist Makefile del Makefile
 
 install : all
-	if not exist $(INCPREFIX)\$(XSLT_BASENAME) mkdir $(INCPREFIX)\$(XSLT_BASENAME)
-	if not exist $(INCPREFIX)\$(EXSLT_BASENAME) mkdir $(INCPREFIX)\$(EXSLT_BASENAME)
-	if not exist $(BINPREFIX) mkdir $(BINPREFIX)
-	if not exist $(LIBPREFIX) mkdir $(LIBPREFIX)
-	copy $(XSLT_SRCDIR)\*.h $(INCPREFIX)\$(XSLT_BASENAME)
-	copy $(EXSLT_SRCDIR)\*.h $(INCPREFIX)\$(EXSLT_BASENAME)
-	copy $(BINDIR)\$(XSLT_SO) $(SOPREFIX)
-	copy $(BINDIR)\$(XSLT_A) $(LIBPREFIX)
-	copy $(BINDIR)\$(XSLT_IMP) $(LIBPREFIX)
-	copy $(BINDIR)\$(EXSLT_SO) $(SOPREFIX)
-	copy $(BINDIR)\$(EXSLT_A) $(LIBPREFIX)
-	copy $(BINDIR)\$(EXSLT_IMP) $(LIBPREFIX)
-	copy $(BINDIR)\*.exe $(BINPREFIX)
+	cmd.exe /C if not exist $(INCPREFIX)\$(XSLT_BASENAME) mkdir $(INCPREFIX)\$(XSLT_BASENAME)
+	cmd.exe /C if not exist $(INCPREFIX)\$(EXSLT_BASENAME) mkdir $(INCPREFIX)\$(EXSLT_BASENAME)
+	cmd.exe /C if not exist $(BINPREFIX) mkdir $(BINPREFIX)
+	cmd.exe /C if not exist $(LIBPREFIX) mkdir $(LIBPREFIX)
+	cmd.exe /C copy $(XSLT_SRCDIR)\*.h $(INCPREFIX)\$(XSLT_BASENAME)
+	cmd.exe /C copy $(EXSLT_SRCDIR)\*.h $(INCPREFIX)\$(EXSLT_BASENAME)
+	cmd.exe /C copy $(BINDIR)\$(XSLT_SO) $(SOPREFIX)
+	cmd.exe /C copy $(BINDIR)\$(XSLT_A) $(LIBPREFIX)
+	cmd.exe /C copy $(BINDIR)\$(XSLT_IMP) $(LIBPREFIX)
+	cmd.exe /C copy $(BINDIR)\$(EXSLT_SO) $(SOPREFIX)
+	cmd.exe /C copy $(BINDIR)\$(EXSLT_A) $(LIBPREFIX)
+	cmd.exe /C copy $(BINDIR)\$(EXSLT_IMP) $(LIBPREFIX)
+	cmd.exe /C copy $(BINDIR)\*.exe $(BINPREFIX)
 
 # This is a target for me, to make a binary distribution. Not for the public use,
 # keep your hands off :-)
@@ -216,16 +193,16 @@ dep :
 
 # Makes the compiler output directory.
 $(BINDIR) :
-	if not exist $(BINDIR) mkdir $(BINDIR)
+	cmd.exe /C if not exist $(BINDIR) mkdir $(BINDIR)
 
 
 # Makes the libxslt intermediate directory.
 $(XSLT_INTDIR) :
-	if not exist $(XSLT_INTDIR) mkdir $(XSLT_INTDIR)
+	cmd.exe /C if not exist $(XSLT_INTDIR) mkdir $(XSLT_INTDIR)
 
 # Makes the static libxslt intermediate directory.
 $(XSLT_INTDIR_A) :
-	if not exist $(XSLT_INTDIR_A) mkdir $(XSLT_INTDIR_A)
+	cmd.exe /C if not exist $(XSLT_INTDIR_A) mkdir $(XSLT_INTDIR_A)
 
 # An implicit rule for libxslt compilation.
 $(XSLT_INTDIR)/%.o : $(XSLT_SRCDIR)/%.c
@@ -255,11 +232,11 @@ $(BINDIR)/$(XSLT_A) : $(BINDIR) $(XSLT_OBJS_A)
 
 # Creates the libexslt intermediate directory.
 $(EXSLT_INTDIR) :
-	if not exist $(EXSLT_INTDIR) mkdir $(EXSLT_INTDIR)
+	cmd.exe /C if not exist $(EXSLT_INTDIR) mkdir $(EXSLT_INTDIR)
 
 # Creates the static libexslt intermediate directory.
 $(EXSLT_INTDIR_A) :
-	if not exist $(EXSLT_INTDIR_A) mkdir $(EXSLT_INTDIR_A)
+	cmd.exe /C if not exist $(EXSLT_INTDIR_A) mkdir $(EXSLT_INTDIR_A)
 
 # An implicit rule for libexslt compilation.
 $(EXSLT_INTDIR)/%.o : $(EXSLT_SRCDIR)/%.c
@@ -290,7 +267,7 @@ $(BINDIR)/$(EXSLT_A) : $(BINDIR) $(EXSLT_OBJS_A) libxslta
 
 # Creates the utils intermediate directory.
 $(UTILS_INTDIR) :
-	if not exist $(UTILS_INTDIR) mkdir $(UTILS_INTDIR)
+	cmd.exe /C if not exist $(UTILS_INTDIR) mkdir $(UTILS_INTDIR)
 
 # An implicit rule for xsltproc and friends.
 APPLIBS = $(LIBS)

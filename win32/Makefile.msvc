@@ -13,39 +13,16 @@
 # March 2002, Igor Zlatkovic <igor@zlatkovic.com>
 
 AUTOCONF = .\config.msvc
-
-# If you cannot run the configuration script, which would take the burden of
-# editing this file from your back, then remove the following line...
 !include $(AUTOCONF)
-# ...and enable the following lines and adapt them to your environment.
-#BASEDIR = ..
-#XSLT_SRCDIR = $(BASEDIR)\libxslt
-#EXSLT_SRCDIR = $(BASEDIR)\libexslt
-#UTILS_SRCDIR = $(BASEDIR)\xsltproc
-#BINDIR = binaries
-#LIBXSLT_MAJOR_VERSION = 0 # set this to the right value.
-#LIBXSLT_MINOR_VERSION = 0 # set this to the right value.
-#LIBXSLT_MICRO_VERSION = 0 # set this to the right value.
-#LIBEXSLT_MAJOR_VERSION = 0 # set this to the right value.
-#LIBEXSLT_MINOR_VERSION = 0 # set this to the right value.
-#LIBEXSLT_MICRO_VERSION = 0 # set this to the right value.
-#WITH_XSLT_DEBUG = 1
-#WITH_MEM_DEBUG = 0
-#WITH_DEBUGGER = 1
-#DEBUG = 0
-#STATIC = 0
-#PREFIX = . # set this to the right value.
-#BINPREFIX = $(PREFIX)\bin
-#INCPREFIX = $(PREFIX)\include
-#LIBPREFIX = $(PREFIX)\lib
-#SOPREFIX = $(PREFIX)\lib
-#INCLUDE = $(INCLUDE);$(INCPREFIX)
-#LIB = $(LIB);$(LIBPREFIX) 
-
 
 # There should never be a need to modify anything below this line.
 # ----------------------------------------------------------------
 
+BASEDIR = ..
+XSLT_SRCDIR = $(BASEDIR)\libxslt
+EXSLT_SRCDIR = $(BASEDIR)\libexslt
+UTILS_SRCDIR = $(BASEDIR)\xsltproc
+BINDIR = bin.msvc
 
 # Names of various input and output components.
 XSLT_NAME = xslt
@@ -62,11 +39,11 @@ EXSLT_DEF = $(EXSLT_BASENAME).def
 EXSLT_A = $(EXSLT_BASENAME)_a.lib
 
 # Places where intermediate files produced by the compiler go
-XSLT_INTDIR = $(XSLT_BASENAME).int
-XSLT_INTDIR_A = $(XSLT_BASENAME)_a.int
-EXSLT_INTDIR = $(EXSLT_BASENAME).int
-EXSLT_INTDIR_A = $(EXSLT_BASENAME)_a.int
-UTILS_INTDIR = utils.int
+XSLT_INTDIR = int.xslt.msvc
+XSLT_INTDIR_A = int.xslta.msvc
+EXSLT_INTDIR = int.exslt.msvc
+EXSLT_INTDIR_A = int.exslta.msvc
+UTILS_INTDIR = int.utils.msvc
 
 # The preprocessor and its options.
 CPP = cl.exe /EP
