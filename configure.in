@@ -235,6 +235,11 @@ tests/xmlspec/Makefile
 tests/multiple/Makefile
 tests/XSLTMark/Makefile
 tests/docbook/Makefile
+tests/exslt/Makefile
+tests/exslt/common/Makefile
+tests/exslt/functions/Makefile
+tests/exslt/math/Makefile
+tests/exslt/sets/Makefile
 doc/Makefile
 xslt-config
 libxslt.spec

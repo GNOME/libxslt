@@ -1,3 +1,9 @@
+Fri Jul 27 04:00:38 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* configure.in tests/Makefile.am tests/exslt/*: added some tests
+	  to check EXSLT conformance
+	* libexslt/sets.c: fixed a typo when registering has-same-node
+
 Fri Jul 27 12:33:52 EDT 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c xsltproc/xsltproc.c: quick cleanup

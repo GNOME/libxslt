@@ -238,7 +238,7 @@ exsltSetsRegister (void) {
     xsltRegisterExtModuleFunction ((const xmlChar *) "distinct",
 				   EXSLT_SETS_NAMESPACE,
 				   exsltSetsDistinctFunction);
-    xsltRegisterExtModuleFunction ((const xmlChar *) "has-same-nodes",
+    xsltRegisterExtModuleFunction ((const xmlChar *) "has-same-node",
 				   EXSLT_SETS_NAMESPACE,
 				   exsltSetsHasSameNodesFunction);
     xsltRegisterExtModuleFunction ((const xmlChar *) "leading",
