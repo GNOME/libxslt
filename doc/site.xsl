@@ -105,6 +105,7 @@
     </form>
     <ul>
       <li><a href="index.html">Home</a></li>
+      <li><a href="http://xmlsoft.org/wiki">Wiki</a></li>
       <xsl:for-each select="/html/body/h2">
         <xsl:variable name="filename">
           <xsl:call-template name="filename">
