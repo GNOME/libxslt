@@ -1,3 +1,8 @@
+Sat Dec 20 23:37:31 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/transform.c: fixed Bug 129624 (erroneous output
+	  of namespaces)
+
 Sat Dec 20 16:22:11 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: fixed several routines to assure empty

@@ -1658,10 +1658,11 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             }
             /*
              * Add extra namespaces inherited from the current template
-             * if we are in the first level children
+             * if we are in the first level children and this is a
+	     * "real" template.
              */
-            if ((oldInsert == insert) && (ctxt->templ != NULL) &&
-                (ctxt->templ->inheritedNs != NULL)) {
+            if ((templ != NULL) && (oldInsert == insert) &&
+                (ctxt->templ != NULL) && (ctxt->templ->inheritedNs != NULL)) {
                 int i;
                 xmlNsPtr ns, ret;
 
