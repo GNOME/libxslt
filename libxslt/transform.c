@@ -63,6 +63,11 @@ static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 			  const xmlChar **systemID);
 #endif
 
+static void
+xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
+                     xmlNodePtr list, xsltTemplatePtr templ,
+                     xsltStackElemPtr params, int notcur);
+
 int xsltMaxDepth = 5000;
 
 /*
@@ -1092,7 +1097,7 @@ xsltApplyFallbacks(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			     "applying xsl:fallback\n");
 #endif
 	    ret++;
-	    xsltApplyOneTemplate(ctxt, node, child->children, NULL, NULL);
+	    xsltApplyOneTemplateInt(ctxt, node, child->children, NULL, NULL, 0);
 	}
 	child = child->next;
     }
@@ -1279,8 +1284,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		 "xsltDefaultProcessOneNode: applying template for CDATA %s\n",
 				     cur->content));
 #endif
-		    xsltApplyOneTemplate(ctxt, cur, template->content,
-			                 template, params);
+		    xsltApplyOneTemplateInt(ctxt, cur, template->content,
+			                 template, params, 0);
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    XSLT_TRACE(ctxt,XSLT_TRACE_PROCESS_NODE,xsltGenericDebug(xsltGenericDebugContext,
@@ -1304,8 +1309,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
-		    xsltApplyOneTemplate(ctxt, cur, template->content,
-			                 template, params);
+		    xsltApplyOneTemplateInt(ctxt, cur, template->content,
+			                 template, params, 0);
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    if (cur->content == NULL) {
@@ -1340,8 +1345,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
-		    xsltApplyOneTemplate(ctxt, cur, template->content,
-			                 template, params);
+		    xsltApplyOneTemplateInt(ctxt, cur, template->content,
+			                 template, params, 0);
 		}
 		break;
 	    default:
@@ -1401,7 +1406,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsltProcessOneNode: applying template '%s' for attribute %s\n",
 	                 template->match, node->name));
 #endif
-	xsltApplyOneTemplate(ctxt, node, template->content, template, params);
+	xsltApplyOneTemplateInt(ctxt, node, template->content, template, params, 0);
     } else {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	if (node->type == XML_DOCUMENT_NODE) {
@@ -1414,7 +1419,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	                     template->match, node->name));
         }
 #endif
-	xsltApplyOneTemplate(ctxt, node, template->content, template, params);
+	xsltApplyOneTemplateInt(ctxt, node, template->content, template, params, 0);
     }
 }
 
@@ -1435,6 +1440,30 @@ void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                      xmlNodePtr list, xsltTemplatePtr templ,
                      xsltStackElemPtr params)
+{
+    xsltApplyOneTemplateInt(ctxt, node, list, templ, params, 0);
+}
+
+/**
+ * xsltApplyOneTemplateInt:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @list:  the template replacement nodelist
+ * @templ: if is this a real template processing, the template processed
+ * @params:  a set of parameters for the template or NULL
+ * @notcur: flag to show current template rule doesn't change
+ *
+ * See above description for xsltApplyOneTemplate.  Internally there is
+ * an additional parameter 'notcur'.  When this parameter is non-zero,
+ * ctxt->templ is not changed (i.e. templPush and tempPop are not called).
+ * This is used by xsltCallTemplate in order to meet the XSLT spec (5.6)
+ * requirement that the "current template rule" should not be changed
+ * (bug 157859).
+ */
+static void
+xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
+                     xmlNodePtr list, xsltTemplatePtr templ,
+                     xsltStackElemPtr params, int notcur)
 {
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
@@ -1512,7 +1541,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
         }
 	tmpRVT = ctxt->tmpRVT;
 	ctxt->tmpRVT = NULL;
-        templPush(ctxt, templ);
+	if (!notcur)
+            templPush(ctxt, templ);
 #ifdef WITH_XSLT_DEBUG_PROCESS
         if (templ->name != NULL)
             XSLT_TRACE(ctxt,XSLT_TRACE_APPLY_TEMPLATE,xsltGenericDebug(xsltGenericDebugContext,
@@ -1587,7 +1617,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		     * at that level.
 		     */
 		    ctxt->insert = insert;
-		    xsltApplyOneTemplate(ctxt, node, cur, NULL, NULL);
+		    xsltApplyOneTemplateInt(ctxt, node, cur, NULL, NULL, 0);
 		    while (cur->next != NULL)
 			cur = cur->next;
 		    ctxt->insert = oldInsert;
@@ -1657,8 +1687,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                     if ((IS_XSLT_ELEM(child)) &&
                         (IS_XSLT_NAME(child, "fallback"))) {
                         found = 1;
-                        xsltApplyOneTemplate(ctxt, node, child->children,
-                                             NULL, NULL);
+                        xsltApplyOneTemplateInt(ctxt, node, child->children,
+                                             NULL, NULL, 0);
                     }
                     child = child->next;
                 }
@@ -1812,7 +1842,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     if (templ != NULL) {
         ctxt->varsBase = oldBase;
-        templPop(ctxt);
+	if (!notcur)
+            templPop(ctxt);
 	/*
 	 * Free up all the unreferenced RVT
 	 * Also set any global variables instantiated
@@ -2241,7 +2272,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	res->encoding = xmlStrdup(style->encoding);
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
-    xsltApplyOneTemplate(ctxt, node, inst->children, NULL, NULL);
+    xsltApplyOneTemplateInt(ctxt, node, inst->children, NULL, NULL, 0);
 
     /*
      * Do some post processing work depending on the generated output
@@ -2512,8 +2543,8 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	case XML_DOCUMENT_NODE:
 	case XML_HTML_DOCUMENT_NODE:
 	case XML_ELEMENT_NODE:
-	    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children,
-		                 NULL, NULL);
+	    xsltApplyOneTemplateInt(ctxt, ctxt->node, inst->children,
+		                 NULL, NULL, 0);
 	    break;
 	default:
 	    break;
@@ -2688,7 +2719,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     }
     
-    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children, NULL, NULL);
+    xsltApplyOneTemplateInt(ctxt, ctxt->node, inst->children, NULL, NULL, 0);
 
     ctxt->insert = oldInsert;
 }
@@ -3019,7 +3050,7 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     template = xsltGetTemplate(ctxt, node, ctxt->templ->style);
     if (template != NULL) {
-	xsltApplyOneTemplate(ctxt, node, template->content, template, NULL);
+	xsltApplyOneTemplateInt(ctxt, node, template->content, template, NULL, 0);
     }
 }
 
@@ -3097,8 +3128,9 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     /*
      * Create a new frame using the params first
+     * Set the "notcur" flag to abide by Section 5.6 of the spec
      */
-    xsltApplyOneTemplate(ctxt, node, comp->templ->content, comp->templ, params);
+    xsltApplyOneTemplateInt(ctxt, node, comp->templ->content, comp->templ, params, 1);
     if (params != NULL)
 	xsltFreeStackElemList(params);
 
@@ -3509,8 +3541,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    "xsltChoose: test evaluate to %d\n", doit));
 #endif
 	if (doit) {
-	    xsltApplyOneTemplate(ctxt, ctxt->node, when->children,
-		                 NULL, NULL);
+	    xsltApplyOneTemplateInt(ctxt, ctxt->node, when->children,
+		                 NULL, NULL, 0);
 	    goto done;
 	}
 	if (prop != NULL)
@@ -3531,8 +3563,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	XSLT_TRACE(ctxt,XSLT_TRACE_CHOOSE,xsltGenericDebug(xsltGenericDebugContext,
 			 "evaluating xsl:otherwise\n"));
 #endif
-	xsltApplyOneTemplate(ctxt, ctxt->node, replacement->children,
-		             NULL, NULL);
+	xsltApplyOneTemplateInt(ctxt, ctxt->node, replacement->children,
+		             NULL, NULL, 0);
 	replacement = replacement->next;
     }
     while (xmlIsBlankNode(replacement)) {
@@ -3616,7 +3648,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	"xsltIf: test evaluate to %d\n", doit));
 #endif
     if (doit) {
-	xsltApplyOneTemplate(ctxt, node, inst->children, NULL, NULL);
+	xsltApplyOneTemplateInt(ctxt, node, inst->children, NULL, NULL, 0);
     }
 
 error:
@@ -3755,7 +3787,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    }
 	}
-	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement, NULL, NULL);
+	xsltApplyOneTemplateInt(ctxt, list->nodeTab[i], replacement, NULL, NULL, 0);
     }
     ctxt->document = oldCDocPtr;
     ctxt->nodeList = oldList;

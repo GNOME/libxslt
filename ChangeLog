@@ -1,3 +1,10 @@
+Sun Nov 21 09:42:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: enhanced code to assure the "current
+	  template rule" is not changed by xsl:call-template (bug 157859).
+	* tests/general/bug-156.*, tests/general/Makefile.am,
+	  tests/docs/bug-156.*, tests/docs/Makefile.am: added a test case
+	  
 Mon Nov  8 11:41:32 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: fixed problem with day-of-week-in-month
