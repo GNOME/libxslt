@@ -32,6 +32,7 @@
 #include "templates.h"
 #include "xsltInternals.h"
 #include "imports.h"
+#include "transform.h"
 
 /* gettimeofday on Windows ??? */
 #ifdef WIN32
@@ -1244,5 +1245,105 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
     fprintf(output, "\n%30s%26s %6d %6ld\n", "Total", "", total, totalt);
 
     xmlFree(templates);
+}
+
+/************************************************************************
+ * 									*
+ * 		Hooks for the debugger					*
+ * 									*
+ ************************************************************************/
+
+/*
+ * There is currently only 3 debugging callback defined
+ * Debugger callbacks are disabled by default
+ */
+#define XSLT_CALLBACK_NUMBER 3
+
+typedef struct _xsltDebuggerCallbacks xsltDebuggerCallbacks;
+typedef xsltDebuggerCallbacks *xsltDebuggerCallbacksPtr;
+struct _xsltDebuggerCallbacks {
+    xsltHandleDebuggerCallback handler;
+    xsltAddCallCallback add;
+    xsltDropCallCallback drop;
+};
+
+static xsltDebuggerCallbacks xsltDebuggerCurrentCallbacks = {
+    NULL, /* handler */
+    NULL, /* add */
+    NULL  /* drop */
+};
+
+int xslDebugStatus;
+
+/**
+ * xslSetDebuggerCallbacks:
+ * @no : number of callbacks
+ * @block : the block of callbacks
+ * 
+ * This function allow to plug a debugger into the XSLT library
+ * @block points to a block of memory containing the address of @no 
+ * callback routines.
+ *
+ * Returns 0 in case of success and -1 in case of error
+ */
+int
+xsltSetDebuggerCallbacks(int no, void *block)
+{
+    xsltDebuggerCallbacksPtr callbacks;
+
+    if ((block == NULL) || (no != 1))
+	return(-1);
+
+    callbacks = (xsltDebuggerCallbacksPtr) block;
+    xsltDebuggerCurrentCallbacks.handler = callbacks->handler;
+    return(0);
+}
+
+/**
+ * xslHandleDebugger:
+ * @cur : source node being executed
+ * @node : data node being processed
+ * @templ : temlate that applies to node
+ * @ctxt : the xslt transform context 
+ * 
+ * If either cur or node are a breakpoint, or xslDebugStatus in state 
+ *   where debugging must occcur at this time then transfer control
+ *   to the xslDebugBreak function
+ */
+void
+xslHandleDebugger(xmlNodePtr cur, xmlNodePtr node, xsltTemplatePtr templ,
+	          xsltTransformContextPtr ctxt)
+{
+    if (xsltDebuggerCurrentCallbacks.handler != NULL)
+	xsltDebuggerCurrentCallbacks.handler(cur, node, templ, ctxt);
+}
+
+/**
+ * xslAddCall:
+ * @templ : current template being applied
+ * @source : the source node being processed
+ *
+ * Add template "call" to call stack
+ * Returns : 1 on sucess 0 otherwise an error may be printed if 
+ *            WITH_XSLT_DEBUG_BREAKPOINTS is defined
+ */
+int
+xslAddCall(xsltTemplatePtr templ, xmlNodePtr source)
+{
+    if (xsltDebuggerCurrentCallbacks.add != NULL)
+	return(xsltDebuggerCurrentCallbacks.add(templ, source));
+    return(0);
+}
+
+/**
+ * xslDropCall :
+ *
+ * Drop the topmost item off the call stack
+ */
+void
+xslDropCall(void)
+{
+    if (xsltDebuggerCurrentCallbacks.drop != NULL)
+	xsltDebuggerCurrentCallbacks.drop();
 }
 

@@ -61,11 +61,6 @@ static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 			  const xmlChar **systemID);
 #endif
 
-#ifdef WITH_DEBUGGER
-#include "../breakpoint/breakpoint.h"
-int xslDebugStatus;
-#endif
-
 int xsltMaxDepth = 5000;
 
 /*
@@ -1017,24 +1012,6 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 
 /**
- * xslHandleDebugger:
- * @cur : source node being executed
- * @node : data node being processed
- * @templ : temlate that applies to node
- * @ctxt : the xslt transform context 
- * 
- * If either cur or node are a breakpoint, or xslDebugStatus in state 
- *   where debugging must occcur at this time then transfer control
- *   to the xslDebugBreak function
- */
-void
-xslHandleDebugger(xmlNodePtr cur ATTRIBUTE_UNUSED, xmlNodePtr node ATTRIBUTE_UNUSED,
-                  xsltTemplatePtr templ ATTRIBUTE_UNUSED, xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED)
-{
-
-}
-
-/**
  * xsltApplyOneTemplate:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -1049,7 +1026,7 @@ xslHandleDebugger(xmlNodePtr cur ATTRIBUTE_UNUSED, xmlNodePtr node ATTRIBUTE_UNU
 void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                      xmlNodePtr list, xsltTemplatePtr templ,
-		     xsltStackElemPtr params)
+                     xsltStackElemPtr params)
 {
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
@@ -1064,8 +1041,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     long start = 0;
 
 #ifdef WITH_DEBUGGER
-    /* --- break point code --- */
-    if (xslDebugStatus != DEBUG_NONE) {
+    if (xslDebugStatus != XSLT_DEBUG_NONE) {
         if (templ) {
             addCallResult = xslAddCall(templ, templ->elem);
         } else {
@@ -1074,8 +1050,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
         switch (xslDebugStatus) {
 
-            case DEBUG_RUN_RESTART:
-            case DEBUG_QUIT:
+            case XSLT_DEBUG_RUN_RESTART:
+            case XSLT_DEBUG_QUIT:
                 if (addCallResult)
                     xslDropCall();
                 return;
@@ -1084,11 +1060,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
         if (templ)
             xslHandleDebugger(templ->elem, node, templ, ctxt);
         else if (list)
-	  xslHandleDebugger(list, node, templ, ctxt);
-	else if (ctxt->inst)
-	  xslHandleDebugger(ctxt->inst, node, templ, ctxt);
+            xslHandleDebugger(list, node, templ, ctxt);
+        else if (ctxt->inst)
+            xslHandleDebugger(ctxt->inst, node, templ, ctxt);
     }
-    /*  -- end --- */
 #endif
 
     if ((ctxt == NULL) || (list == NULL))
@@ -1096,7 +1071,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     CHECK_STOPPED;
 
     if (ctxt->templNr >= xsltMaxDepth) {
-	xsltPrintErrorContext(ctxt, NULL, list);
+        xsltPrintErrorContext(ctxt, NULL, list);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltApplyOneTemplate: loop found ???\n");
         xsltGenericError(xsltGenericErrorContext,
@@ -1112,21 +1087,20 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInst = ctxt->inst;
     oldCurrent = ctxt->node;
     varsPush(ctxt, params);
-    oldBase = ctxt->varsBase; /* only needed if templ != NULL */
+    oldBase = ctxt->varsBase;   /* only needed if templ != NULL */
     if (templ != NULL) {
-	ctxt->varsBase = ctxt->varsNr - 1;
+        ctxt->varsBase = ctxt->varsNr - 1;
         ctxt->node = node;
-	if (ctxt->profile) {
-	    templ->nbCalls++;
-	    start = xsltTimestamp();
-	    profPush(ctxt, 0);
-	}
-	templPush(ctxt, templ);
+        if (ctxt->profile) {
+            templ->nbCalls++;
+            start = xsltTimestamp();
+            profPush(ctxt, 0);
+        }
+        templPush(ctxt, templ);
 #ifdef WITH_XSLT_DEBUG_PROCESS
-	if (templ->name != NULL)
-	    xsltGenericDebug(xsltGenericDebugContext,
-			     "applying template '%s'\n",
-	                     templ->name);
+        if (templ->name != NULL)
+            xsltGenericDebug(xsltGenericDebugContext,
+                             "applying template '%s'\n", templ->name);
 #endif
     }
 
@@ -1137,14 +1111,12 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     while (cur != NULL) {
         ctxt->inst = cur;
 #ifdef WITH_DEBUGGER
-        /* --- break point code --- */
         switch (xslDebugStatus) {
-            case DEBUG_RUN_RESTART:
-            case DEBUG_QUIT:
+            case XSLT_DEBUG_RUN_RESTART:
+            case XSLT_DEBUG_QUIT:
                 break;
 
         }
-        /* --- end  --- */
 #endif
         /*
          * test, we must have a valid insertion point
@@ -1154,10 +1126,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             xsltGenericDebug(xsltGenericDebugContext,
                              "xsltApplyOneTemplate: insert == NULL !\n");
 #endif
-	    goto error;
+            goto error;
         }
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != DEBUG_NONE)
+        if (xslDebugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(cur, node, templ, ctxt);
 #endif
 
@@ -1171,16 +1143,16 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 if (IS_XSLT_NAME(cur, "message")) {
                     xsltMessage(ctxt, node, cur);
                 } else {
-		    /*
-		     * That's an error try to apply one of the fallback cases
-		     */
-		    ctxt->insert = insert;
-		    if (!xsltApplyFallbacks(ctxt, node, cur)) {
-			xsltGenericError(xsltGenericDebugContext,
-                                "xsltApplyOneTemplate: %s was not compiled\n",
-                                     cur->name);
-		    }
-		    ctxt->insert = oldInsert;
+                    /*
+                     * That's an error try to apply one of the fallback cases
+                     */
+                    ctxt->insert = insert;
+                    if (!xsltApplyFallbacks(ctxt, node, cur)) {
+                        xsltGenericError(xsltGenericDebugContext,
+                                         "xsltApplyOneTemplate: %s was not compiled\n",
+                                         cur->name);
+                    }
+                    ctxt->insert = oldInsert;
                 }
                 goto skip_children;
             }
@@ -1219,14 +1191,14 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                  cur->content);
             else if (cur->name == xmlStringTextNoenc)
                 xsltGenericDebug(xsltGenericDebugContext,
-                             "xsltApplyOneTemplate: copy unescaped text %s\n",
+                                 "xsltApplyOneTemplate: copy unescaped text %s\n",
                                  cur->content);
             else
                 xsltGenericDebug(xsltGenericDebugContext,
                                  "xsltApplyOneTemplate: copy text %s\n",
                                  cur->content);
 #endif
-	    xsltCopyText(ctxt, insert, cur);
+            xsltCopyText(ctxt, insert, cur);
         } else if ((cur->type == XML_ELEMENT_NODE) &&
                    (cur->ns != NULL) && (cur->_private != NULL)) {
             xsltTransformFunction function;
@@ -1234,11 +1206,11 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             /*
              * Flagged as an extension element
              */
-	    if (cur->_private == xsltExtMarker)
-		function = (xsltTransformFunction)
-		    xsltExtElementLookup(ctxt, cur->name, cur->ns->href);
-	    else
-		function = ((xsltElemPreCompPtr)cur->_private)->func;
+            if (cur->_private == xsltExtMarker)
+                function = (xsltTransformFunction)
+                    xsltExtElementLookup(ctxt, cur->name, cur->ns->href);
+            else
+                function = ((xsltElemPreCompPtr) cur->_private)->func;
 
             if (function == NULL) {
                 xmlNodePtr child;
@@ -1246,7 +1218,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
                 xsltGenericDebug(xsltGenericDebugContext,
-                                "xsltApplyOneTemplate: unknown extension %s\n",
+                                 "xsltApplyOneTemplate: unknown extension %s\n",
                                  cur->name);
 #endif
                 /*
@@ -1258,21 +1230,21 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                         (IS_XSLT_NAME(child, "fallback"))) {
                         found = 1;
                         xsltApplyOneTemplate(ctxt, node, child->children,
-				             NULL, NULL);
+                                             NULL, NULL);
                     }
                     child = child->next;
                 }
 
                 if (!found) {
-		    xsltPrintErrorContext(ctxt, NULL, cur);
+                    xsltPrintErrorContext(ctxt, NULL, cur);
                     xsltGenericError(xsltGenericErrorContext,
-                         "xsltApplyOneTemplate: failed to find extension %s\n",
+                                     "xsltApplyOneTemplate: failed to find extension %s\n",
                                      cur->name);
                 }
             } else {
 #ifdef WITH_XSLT_DEBUG_PROCESS
                 xsltGenericDebug(xsltGenericDebugContext,
-                              "xsltApplyOneTemplate: extension construct %s\n",
+                                 "xsltApplyOneTemplate: extension construct %s\n",
                                  cur->name);
 #endif
 
@@ -1295,41 +1267,42 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 attrs = xsltAttrListTemplateProcess(ctxt, copy,
                                                     cur->properties);
             }
-	    /*
-	     * Add extra namespaces inherited from the current template
-	     * if we are in the first level children
-	     */
-	    if ((oldInsert == insert) && (ctxt->templ != NULL) &&
-		(ctxt->templ->inheritedNs != NULL)) {
-		int i;
-		xmlNsPtr ns, ret;
+            /*
+             * Add extra namespaces inherited from the current template
+             * if we are in the first level children
+             */
+            if ((oldInsert == insert) && (ctxt->templ != NULL) &&
+                (ctxt->templ->inheritedNs != NULL)) {
+                int i;
+                xmlNsPtr ns, ret;
 
-		for (i = 0;i < ctxt->templ->inheritedNsNr;i++) {
-		    ns = ctxt->templ->inheritedNs[i];
-		    if (ctxt->style->nsAliases != NULL) {
-			const xmlChar *URI;
-			URI = (const xmlChar *)
-				xmlHashLookup(ctxt->style->nsAliases,
-					      ns->href);
-			if (URI == NULL) {
-			    ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-			    if ((ret == NULL) ||
-				(!xmlStrEqual(ret->href, ns->href)))
-				xmlNewNs(copy, ns->href, ns->prefix);
-			} else if (!xmlStrEqual(URI, XSLT_NAMESPACE)) {
-			    ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-			    if ((ret == NULL) ||
-				(!xmlStrEqual(ret->href, URI)))
-				xmlNewNs(copy, URI, ns->prefix);
-			}
-		    } else {
-			ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-			if ((ret == NULL) ||
-			    (!xmlStrEqual(ret->href, ns->href)))
-			    xmlNewNs(copy, ns->href, ns->prefix);
-		    }
-		}
-	    }
+                for (i = 0; i < ctxt->templ->inheritedNsNr; i++) {
+                    ns = ctxt->templ->inheritedNs[i];
+                    if (ctxt->style->nsAliases != NULL) {
+                        const xmlChar *URI;
+
+                        URI = (const xmlChar *)
+                            xmlHashLookup(ctxt->style->nsAliases,
+                                          ns->href);
+                        if (URI == NULL) {
+                            ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+                            if ((ret == NULL) ||
+                                (!xmlStrEqual(ret->href, ns->href)))
+                                xmlNewNs(copy, ns->href, ns->prefix);
+                        } else if (!xmlStrEqual(URI, XSLT_NAMESPACE)) {
+                            ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+                            if ((ret == NULL) ||
+                                (!xmlStrEqual(ret->href, URI)))
+                                xmlNewNs(copy, URI, ns->prefix);
+                        }
+                    } else {
+                        ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+                        if ((ret == NULL) ||
+                            (!xmlStrEqual(ret->href, ns->href)))
+                            xmlNewNs(copy, ns->href, ns->prefix);
+                    }
+                }
+            }
         }
 
         /*
@@ -1364,57 +1337,57 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             }
         } while (cur != NULL);
     }
-error:
+  error:
     ctxt->node = oldCurrent;
     ctxt->inst = oldInst;
     ctxt->insert = oldInsert;
     if (params == NULL)
-	xsltFreeStackElemList(varsPop(ctxt));
+        xsltFreeStackElemList(varsPop(ctxt));
     else {
-	xsltStackElemPtr p, tmp = varsPop(ctxt);
-	if (tmp != params) {
-	    p = tmp;
-	    while ((p != NULL) && (p->next != params))
-		p = p->next;
-	    if (p == NULL) {
-		xsltFreeStackElemList(tmp);
-	    } else {
-		p->next = NULL;
-		xsltFreeStackElemList(tmp);
-	    }
-	}
+        xsltStackElemPtr p, tmp = varsPop(ctxt);
+
+        if (tmp != params) {
+            p = tmp;
+            while ((p != NULL) && (p->next != params))
+                p = p->next;
+            if (p == NULL) {
+                xsltFreeStackElemList(tmp);
+            } else {
+                p->next = NULL;
+                xsltFreeStackElemList(tmp);
+            }
+        }
     }
     if (templ != NULL) {
-	ctxt->varsBase = oldBase;
-	templPop(ctxt);
-	if (ctxt->profile) {
-	    long spent, child, total, end;
-	    
-	    end = xsltTimestamp(); 
-	    child = profPop(ctxt);
-	    total = end - start;
-	    spent = total - child;
-	    if (spent <= 0) {
-		/*
-		 * Not possible unless the original calibration failed
-		 * we can try to corret it on the fly.
-		 */
-		xsltCalibrateAdjust(spent);
-		spent = 0;
-	    }
+        ctxt->varsBase = oldBase;
+        templPop(ctxt);
+        if (ctxt->profile) {
+            long spent, child, total, end;
 
-	    templ->time += spent;
-	    if (ctxt->profNr > 0)
-		ctxt->profTab[ctxt->profNr - 1] += total;
-	}
+            end = xsltTimestamp();
+            child = profPop(ctxt);
+            total = end - start;
+            spent = total - child;
+            if (spent <= 0) {
+                /*
+                 * Not possible unless the original calibration failed
+                 * we can try to corret it on the fly.
+                 */
+                xsltCalibrateAdjust(spent);
+                spent = 0;
+            }
+
+            templ->time += spent;
+            if (ctxt->profNr > 0)
+                ctxt->profTab[ctxt->profNr - 1] += total;
+        }
     }
 #ifdef WITH_DEBUGGER
-    if (xslDebugStatus != DEBUG_NONE && addCallResult) {
+    if ((xslDebugStatus != XSLT_DEBUG_NONE) && (addCallResult)) {
         xslDropCall();
     }
 #endif
 }
-
 
 /************************************************************************
  *									*
@@ -2522,7 +2495,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     cur = inst->children;
     while (cur != NULL) {
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != DEBUG_NONE)
+        if (xslDebugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(cur, node, comp->templ, ctxt);
 #endif
 	if (ctxt->state == XSLT_STATE_STOPPED) break;
@@ -2722,7 +2695,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     cur = inst->children;
     while (cur!=NULL) {
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != DEBUG_NONE)
+        if (xslDebugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(cur, node, comp->templ, ctxt);
 #endif
         if (ctxt->state == XSLT_STATE_STOPPED) break;
@@ -2856,7 +2829,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != DEBUG_NONE)
+        if (xslDebugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(when, node, comp->templ, ctxt);
 #endif
 
@@ -2912,7 +2885,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "otherwise"))) {
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != DEBUG_NONE)
+        if (xslDebugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(replacement, node, comp->templ, ctxt);
 #endif
 
@@ -3101,7 +3074,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    sorts[nbsorts++] = replacement;
 	}
 #ifdef WITH_DEBUGGER
-        if (xslDebugStatus != DEBUG_NONE)
+        if (xslDebugStatus != XSLT_DEBUG_NONE)
             xslHandleDebugger(replacement, node, NULL, ctxt);
 #endif
 	replacement = replacement->next;

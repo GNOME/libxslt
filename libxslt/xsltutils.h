@@ -154,6 +154,35 @@ void		xsltCalibrateAdjust		(long delta);
 
 #define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
 
+/*
+ * Hooks for the debugger
+ */
+
+typedef enum {
+    XSLT_DEBUG_NONE = 0, /* no debugging allowed */
+    XSLT_DEBUG_INIT,
+    XSLT_DEBUG_STEP,
+    XSLT_DEBUG_STEPOUT,
+    XSLT_DEBUG_NEXT,
+    XSLT_DEBUG_STOP,
+    XSLT_DEBUG_CONT,
+    XSLT_DEBUG_RUN,
+    XSLT_DEBUG_RUN_RESTART,
+    XSLT_DEBUG_QUIT
+} xsltDebugStatusCodes;
+
+LIBXSLT_PUBLIC extern int xslDebugStatus;
+
+typedef void (*xsltHandleDebuggerCallback) (xmlNodePtr cur, xmlNodePtr node,
+			xsltTemplatePtr templ, xsltTransformContextPtr ctxt);
+typedef int (*xsltAddCallCallback) (xsltTemplatePtr templ, xmlNodePtr source);
+typedef void (*xsltDropCallCallback) (void);
+
+int		xsltSetDebuggerCallbacks	(int no, void *block);
+int		xslAddCall			(xsltTemplatePtr templ,
+						 xmlNodePtr source);
+void		xslDropCall			(void);
+
 #ifdef __cplusplus
 }
 #endif

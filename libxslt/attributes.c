@@ -46,9 +46,6 @@
 #include "imports.h"
 #include "transform.h"
 
-#ifdef WITH_DEBUGGER
-#include "../breakpoint/breakpoint.h"
-#endif
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_ATTRIBUTES
 #endif
@@ -383,7 +380,9 @@ error:
  */
 static void
 xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	      xmlNodePtr inst, xsltStylePreCompPtr comp, int fromset) {
+                      xmlNodePtr inst, xsltStylePreCompPtr comp,
+                      int fromset)
+{
     xmlChar *prop = NULL;
     xmlChar *ncname = NULL, *name, *namespace;
     xmlChar *prefix = NULL;
@@ -394,105 +393,108 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 
     if (ctxt->insert == NULL)
-	return;
+        return;
     if (comp == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-	xsltGenericError(xsltGenericErrorContext,
-	     "xsl:attribute : compilation failed\n");
-	return;
+        xsltPrintErrorContext(ctxt, NULL, inst);
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsl:attribute : compilation failed\n");
+        return;
     }
 
-    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
-	return;
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL)
+        || (comp == NULL))
+        return;
     if (!comp->has_name) {
-	return;
+        return;
     }
     if (ctxt->insert->children != NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-	xsltGenericError(xsltGenericErrorContext,
-	     "xsl:attribute : node already has children\n");
-	return;
+        xsltPrintErrorContext(ctxt, NULL, inst);
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsl:attribute : node already has children\n");
+        return;
     }
-
 #ifdef WITH_DEBUGGER
-     /* --- break point code --- */
-     if (xslDebugStatus != DEBUG_NONE) {
-       xslHandleDebugger(inst, node, NULL, ctxt);
-     }
+    if (xslDebugStatus != XSLT_DEBUG_NONE) {
+        xslHandleDebugger(inst, node, NULL, ctxt);
+    }
 #endif
 
     if (comp->name == NULL) {
-	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name",
-		                         XSLT_NAMESPACE);
-	if (prop == NULL) {
-	    xsltPrintErrorContext(ctxt, NULL, inst);
-	    xsltGenericError(xsltGenericErrorContext,
-		 "xsl:attribute : name is missing\n");
-	    goto error;
-	}
-	name = prop;
+        prop =
+            xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *) "name",
+                                      XSLT_NAMESPACE);
+        if (prop == NULL) {
+            xsltPrintErrorContext(ctxt, NULL, inst);
+            xsltGenericError(xsltGenericErrorContext,
+                             "xsl:attribute : name is missing\n");
+            goto error;
+        }
+        name = prop;
     } else {
-	name = comp->name;
+        name = comp->name;
     }
 
     ncname = xmlSplitQName2(name, &prefix);
     if (ncname == NULL) {
-	prefix = NULL;
+        prefix = NULL;
     } else {
-	name = ncname;
+        name = ncname;
     }
-    if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
+    if (!xmlStrncasecmp(prefix, (xmlChar *) "xml", 3)) {
 #ifdef WITH_XSLT_DEBUG_PARSING
-	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltAttribute: xml prefix forbidden\n");
+        xsltGenericDebug(xsltGenericDebugContext,
+                         "xsltAttribute: xml prefix forbidden\n");
 #endif
-	goto error;
+        goto error;
     }
     if ((comp->ns == NULL) && (comp->has_ns)) {
-	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
-		(const xmlChar *)"namespace", XSLT_NAMESPACE);
-	if (namespace != NULL) {
-	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
-		                         ctxt->insert);
-	    xmlFree(namespace);
-	} else {
-	    if (prefix != NULL) {
-		ns = xmlSearchNs(inst->doc, inst, prefix);
-		if (ns == NULL) {
-		    xsltPrintErrorContext(ctxt, NULL, inst);
-		    xsltGenericError(xsltGenericErrorContext,
-			"xsl:attribute : no namespace bound to prefix %s\n", prefix);
-		} else {
-		    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
-		}
-	    }
-	}
+        namespace = xsltEvalAttrValueTemplate(ctxt, inst,
+                                              (const xmlChar *)
+                                              "namespace", XSLT_NAMESPACE);
+        if (namespace != NULL) {
+            ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
+                                         ctxt->insert);
+            xmlFree(namespace);
+        } else {
+            if (prefix != NULL) {
+                ns = xmlSearchNs(inst->doc, inst, prefix);
+                if (ns == NULL) {
+                    xsltPrintErrorContext(ctxt, NULL, inst);
+                    xsltGenericError(xsltGenericErrorContext,
+                                     "xsl:attribute : no namespace bound to prefix %s\n",
+                                     prefix);
+                } else {
+                    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+                }
+            }
+        }
     } else if (comp->ns != NULL) {
-	ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
-				     ctxt->insert);
+        ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
+                                     ctxt->insert);
     }
 
     if ((fromset) && (ns != NULL))
-	URL = ns->href;
+        URL = ns->href;
     if ((fromset == 0) || (!xmlHasNsProp(ctxt->insert, name, URL))) {
-	value = xsltEvalTemplateString(ctxt, node, inst);
-	if (value == NULL) {
-	    if (ns) {
-		attr = xmlSetNsProp(ctxt->insert, ns, name, 
-				    (const xmlChar *)"");
-	    } else {
-		attr = xmlSetProp(ctxt->insert, name, (const xmlChar *)"");
-	    }
-	} else {
-	    if (ns) {
-		attr = xmlSetNsProp(ctxt->insert, ns, name, value);
-	    } else {
-		attr = xmlSetProp(ctxt->insert, name, value);
-	    }
-	}
+        value = xsltEvalTemplateString(ctxt, node, inst);
+        if (value == NULL) {
+            if (ns) {
+                attr = xmlSetNsProp(ctxt->insert, ns, name,
+                                    (const xmlChar *) "");
+            } else {
+                attr =
+                    xmlSetProp(ctxt->insert, name, (const xmlChar *) "");
+            }
+        } else {
+            if (ns) {
+                attr = xmlSetNsProp(ctxt->insert, ns, name, value);
+            } else {
+                attr = xmlSetProp(ctxt->insert, name, value);
+            }
+        }
     }
 
-error:
+  error:
     if (prop != NULL)
         xmlFree(prop);
     if (ncname != NULL)
@@ -530,7 +532,9 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 void
 xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	              xmlNodePtr inst ATTRIBUTE_UNUSED, xmlChar *attributes) {
+                      xmlNodePtr inst ATTRIBUTE_UNUSED,
+                      xmlChar * attributes)
+{
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
     xmlChar *attrib, *endattr;
@@ -538,57 +542,61 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltStylesheetPtr style;
 
     if (attributes == NULL) {
-	return;
+        return;
     }
 
     attrib = attributes;
     while (*attrib != 0) {
-	while (IS_BLANK(*attrib)) attrib++;
-	if (*attrib == 0)
-	    break;
+        while (IS_BLANK(*attrib))
+            attrib++;
+        if (*attrib == 0)
+            break;
         endattr = attrib;
-	while ((*endattr != 0) && (!IS_BLANK(*endattr))) endattr++;
-	attrib = xmlStrndup(attrib, endattr - attrib);
-	if (attrib) {
+        while ((*endattr != 0) && (!IS_BLANK(*endattr)))
+            endattr++;
+        attrib = xmlStrndup(attrib, endattr - attrib);
+        if (attrib) {
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
-	    xsltGenericDebug(xsltGenericDebugContext,
-		"apply attribute set %s\n", attrib);
+            xsltGenericDebug(xsltGenericDebugContext,
+                             "apply attribute set %s\n", attrib);
 #endif
-	    ncname = xmlSplitQName2(attrib, &prefix);
-	    if (ncname == NULL) {
-		ncname = attrib;
-		attrib = NULL;
-		prefix = NULL;
-	    }
+            ncname = xmlSplitQName2(attrib, &prefix);
+            if (ncname == NULL) {
+                ncname = attrib;
+                attrib = NULL;
+                prefix = NULL;
+            }
 
-	    style = ctxt->style;
+            style = ctxt->style;
 #ifdef WITH_DEBUGGER
-	    /* --- break point code --- */
-	    if (style && (xslDebugStatus != DEBUG_NONE)) {
-	      values = xmlHashLookup2(style->attributeSets, ncname, prefix);
-	      if (values)	
-		xslHandleDebugger(values->attr->parent, node, NULL, ctxt);      
-	    }
+            if (style && (xslDebugStatus != XSLT_DEBUG_NONE)) {
+                values =
+                    xmlHashLookup2(style->attributeSets, ncname, prefix);
+                if (values)
+                    xslHandleDebugger(values->attr->parent, node, NULL,
+                                      ctxt);
+            }
 #endif
-	    while (style != NULL) {
-		values = xmlHashLookup2(style->attributeSets, ncname, prefix);
-		while (values != NULL) {
-		    if (values->attr != NULL) {
-			xsltAttributeInternal(ctxt, node, values->attr,
-					      values->attr->_private, 1);
-		    }
-		    values = values->next;
-		}
-		style = xsltNextImport(style);
-	    }
-	    if (attrib != NULL)
-		xmlFree(attrib);
-	    if (ncname != NULL)
-		xmlFree(ncname);
-	    if (prefix != NULL)
-		xmlFree(prefix);
-	}
-	attrib = endattr;
+            while (style != NULL) {
+                values =
+                    xmlHashLookup2(style->attributeSets, ncname, prefix);
+                while (values != NULL) {
+                    if (values->attr != NULL) {
+                        xsltAttributeInternal(ctxt, node, values->attr,
+                                              values->attr->_private, 1);
+                    }
+                    values = values->next;
+                }
+                style = xsltNextImport(style);
+            }
+            if (attrib != NULL)
+                xmlFree(attrib);
+            if (ncname != NULL)
+                xmlFree(ncname);
+            if (prefix != NULL)
+                xmlFree(prefix);
+        }
+        attrib = endattr;
     }
 }
 

@@ -1,3 +1,11 @@
+Fri Nov 30 12:59:05 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c libxslt/transform.c libxslt/xsltutils.c
+	  libxslt/xsltutils.h: revamped the mechanism to hook a debuger
+	  to use a callback setup function, deprecating libxsltbreakpoint
+	* xsltproc/Makefile.am configure.in breakpoint/Makefile.am: removing
+	  dependancies on libxsltbreakpoint
+
 Thu Nov 29 09:52:38 CET 2001 Daniel Veillard <daniel@veillard.com>
 
         Build patch from  Peter Williams  <peterw@ximian.com>

@@ -15,7 +15,7 @@ libxsltbreakpoint_la_SOURCES = 	\
 
 
 libxsltbreakpoint_la_LIBADD = @LIBXML_LIBS@
-libxsltbreakpoint_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@
+libxsltbreakpoint_la_LDFLAGS = -version-info @LIBXSLTBREAK_VERSION_INFO@
 
 man_MANS = #breakpoint.4
 
