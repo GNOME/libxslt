@@ -7,37 +7,43 @@
   <xsl:template name="filename">
     <xsl:param name="name" select="string(@href)"/>
     <xsl:choose>
-      <xsl:when test="$name = &quot;#Introducti&quot;">
+      <xsl:when test="$name = '#Introducti'">
         <xsl:text>intro.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#Documentat&quot;">
+      <xsl:when test="$name = '#Documentat'">
         <xsl:text>docs.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#Reporting&quot;">
+      <xsl:when test="$name = '#Reporting'">
         <xsl:text>bugs.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#help&quot;">
+      <xsl:when test="$name = '#help'">
         <xsl:text>help.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#Help&quot;">
+      <xsl:when test="$name = '#Help'">
         <xsl:text>help.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#Downloads&quot;">
+      <xsl:when test="$name = '#Downloads'">
         <xsl:text>downloads.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#News&quot;">
+      <xsl:when test="$name = '#News'">
         <xsl:text>news.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#Contributi&quot;">
+      <xsl:when test="$name = '#Contributi'">
         <xsl:text>contribs.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#xsltproc&quot;">
+      <xsl:when test="$name = '#xsltproc'">
         <xsl:text>xsltproc2.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;#API&quot;">
+      <xsl:when test="$name = '#API'">
         <xsl:text>API.html</xsl:text>
       </xsl:when>
-      <xsl:when test="$name = &quot;&quot;">
+      <xsl:when test="$name = '#Extensions'">
+        <xsl:text>extensions.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = '#Internals'">
+        <xsl:text>internals.html</xsl:text>
+      </xsl:when>
+      <xsl:when test="$name = ''">
         <xsl:text>unknown.html</xsl:text>
       </xsl:when>
       <xsl:otherwise>
