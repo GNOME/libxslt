@@ -38,7 +38,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
     xmlNodePtr node;
     xmlDocPtr container;
     xmlXPathObjectPtr ret = NULL;
-    int clen, tlen;
+    int clen;
 
     if ((nargs < 1) || (nargs > 2)) {
         xmlXPathSetArityError(ctxt);
@@ -78,7 +78,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
             for (cur = str, token = str; *cur != 0; cur += clen) {
 	        clen = xmlUTF8Size(cur);
                 for (delimiter = delimiters; *delimiter != 0;
-				delimiter += tlen) {
+				delimiter += xmlUTF8Size(delimiter)) {
                     if (!xmlUTF8Charcmp(cur, delimiter)) {
                         if (cur == token) {
                             /* discard empty tokens */
@@ -94,7 +94,6 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                         token = cur + clen;
                         break;
                     }
-		    tlen = xmlUTF8Size(token);
                 }
             }
             if (token != cur) {

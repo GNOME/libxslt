@@ -1,3 +1,8 @@
+The Apr 20 00:22:37 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/strings.c: fixed bug in UTF8 string tokenize
+	  kindly reported by Vasily Tchekalkin
+
 Mon Apr 19 00:39:18 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/*: preparing release 1.1.6
