@@ -290,6 +290,10 @@ xsltFreeExtElement(xsltExtElementPtr ext)
 #ifdef WITH_MODULES
 typedef void (*exsltRegisterFunction) (void);
 
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif
+
 /**
  * xsltExtModuleRegisterDynamic:
  * @URI:  the function or element namespace URI
@@ -336,7 +340,7 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
         return (-1);
 
     /* determine module directory */
-    extDirectory = getenv("LIBXSLT_PLUGINS_PATH");
+    extDirectory = getenv(BAD_CAST "LIBXSLT_PLUGINS_PATH");
     if (NULL == extDirectory)
         extDirectory = LIBXSLT_DEFAULT_PLUGINS_PATH();
     if (NULL == extDirectory)

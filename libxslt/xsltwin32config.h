@@ -44,7 +44,7 @@ extern "C" {
  *
  * extra version information, used to show a CVS compilation
  */
-#define LIBXML_VERSION_EXTRA "-CVS977"
+#define LIBXML_VERSION_EXTRA "-CVS978"
 
 /**
  * WITH_XSLT_DEBUG:
@@ -62,7 +62,7 @@ extern "C" {
  *
  * Whether module support is configured into libxslt
  */
-#if 0
+#if 1
 #ifndef WITH_MODULES
 #define WITH_MODULES
 #endif
