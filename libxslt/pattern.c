@@ -512,6 +512,22 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			ctxt->xpathCtxt->contextSize = len;
 			ctxt->xpathCtxt->proximityPosition = pos;
 		    }
+		} else if ((select != NULL) && (select->op == XSLT_OP_ALL)) {
+		    xmlNodePtr siblings = node->parent->children;
+
+		    while (siblings != NULL) {
+			if (siblings->type == XML_ELEMENT_NODE) {
+			    len++;
+			    if (siblings == node) {
+				pos = len;
+			    }
+			}
+			siblings = siblings->next;
+		    }
+		    if (pos != 0) {
+			ctxt->xpathCtxt->contextSize = len;
+			ctxt->xpathCtxt->proximityPosition = pos;
+		    }
 		}
 		oldNode = ctxt->node;
 		ctxt->node = node;
