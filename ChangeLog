@@ -1,3 +1,7 @@
+Fri Nov  2 11:19:49 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/libxslt.h: make sure LIBXSLT_PUBLIC is defined
+
 Thu Nov  1 15:15:39 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: handle indent=no when using an HTML

@@ -21,5 +21,8 @@
 #include "xsltconfig.h"
 #include <libxml/xmlversion.h>
 #endif
+#ifndef LIBXSLT_PUBLIC
+#define LIBXSLT_PUBLIC
+#endif
 
 #endif /* ! __XSLT_LIBXSLT_H__ */
