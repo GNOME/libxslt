@@ -1,3 +1,19 @@
+Mon Jul 21 20:28:11 IST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: allow strip-space to support full namespaces
+	  using prefix:* , should fix #114287
+	* tests/docs/Makefile.am tests/docs/bug-124.*
+	  tests/general/Makefile.am tests/general/bug-124*: added a
+	  test to the regression suite for this bug.
+
+Mon Jul 21 20:09:57 IST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/tramsform.c: make xsl:copy on attribute a copy in case
+	  the attribute was already defined, should fix bug #113812
+	* tests/docs/Makefile.am tests/docs/bug-123.*
+	  tests/general/Makefile.am tests/general/bug-123*: added the
+	  test to the regression suite.
+
 Fri Jul 18 13:13:52 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/strings.c: applied patch from Shaun McCance to implement

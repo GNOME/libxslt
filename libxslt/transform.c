@@ -2353,6 +2353,18 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 				 ((cur->ns != NULL) && (ret->ns != NULL) &&
 				  (xmlStrEqual(cur->ns->href,
 					       ret->ns->href))))) {
+				xmlNodePtr tmp;
+
+				/*
+				 * Attribute already exists,
+				 * update it with the new value
+				 */
+				tmp = cur->children;
+				cur->children = ret->children;
+				ret->children = tmp;
+				tmp = cur->last;
+				cur->last = ret->last;
+				ret->last = tmp;
 				xmlFreeProp(ret);
 				return;
 			    }
@@ -3089,6 +3101,12 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 				  xmlHashLookup2(ctxt->style->stripSpaces,
 						 cur->parent->name,
 						 cur->parent->ns->href);
+			    if (val == NULL) {
+				val = (const xmlChar *)
+				  xmlHashLookup2(ctxt->style->stripSpaces,
+						 BAD_CAST "*",
+						 cur->parent->ns->href);
+			    }
 			} else {
 			    val = (const xmlChar *)
 				  xmlHashLookup2(ctxt->style->stripSpaces,
