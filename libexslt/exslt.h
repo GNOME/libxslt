@@ -5,7 +5,7 @@
 #include <libxml/tree.h>
 #include "exsltconfig.h"
 
-#ifdef _cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -32,7 +32,7 @@ void LIBEXSLT_PUBLIC exsltSaxonRegister (void);
 
 void LIBEXSLT_PUBLIC exsltRegisterAll (void);
 
-#ifdef _cplusplus
+#ifdef __cplusplus
 }
 #endif
 #endif /* __EXSLT_H__ */
