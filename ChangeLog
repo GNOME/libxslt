@@ -1,3 +1,8 @@
+Sun Jul 11 22:46:31 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* transform.c: small change to key handling for RVT, needed
+	  because of enhancement to libxml2 xpath.
+
 Fri Jul  9 02:51:38 PDT 2004 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxsl.py: fixes Python on 64bits box problem.

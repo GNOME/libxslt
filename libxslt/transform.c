@@ -3109,6 +3109,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr sorts[XSLT_MAX_SORT];
     xmlDocPtr oldXDocPtr;
     xsltDocumentPtr oldCDocPtr, tmpDocPtr, newDocPtr = NULL;
+    xmlNodePtr newDocPtrPtr = NULL;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
 
@@ -3189,12 +3190,10 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			if (list->nodeTab[0]->type == XML_ELEMENT_NODE) {
 			    list->nodeTab[0]->psvi = (xmlNodePtr)newDocPtr;
 			} else
-			if ((list->nodeTab[0]->type == XML_DOCUMENT_NODE) ||
+			if ((list->nodeTab[0]->type == XML_ELEMENT_NODE) ||
 			    (list->nodeTab[0]->type == XML_DOCUMENT_NODE)) {
-			    xmlDocPtr tmp;
-
-			    tmp = (xmlDocPtr) list->nodeTab[0];
-			    tmp->psvi = (xmlNodePtr)newDocPtr;
+			    list->nodeTab[0]->psvi = (xmlNodePtr)newDocPtr;
+			    newDocPtrPtr = list->nodeTab[0];
 			}
 			ctxt->document = newDocPtr;
 		    }
@@ -3384,6 +3383,8 @@ error:
 	    newDocPtr->doc->parent = NULL;
 	    xsltFreeDocumentKeys(newDocPtr);
 	    xmlFree(newDocPtr);
+	    if (newDocPtrPtr != NULL)
+		newDocPtrPtr->psvi = NULL;
 	}
 	xmlXPathFreeNodeSet(list);
     }
