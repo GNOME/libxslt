@@ -130,6 +130,7 @@
      <exports symbol='xsltCopyNamespace' type='function'/>
      <exports symbol='xsltNamespaceAlias' type='function'/>
      <exports symbol='xsltGetNamespace' type='function'/>
+     <exports symbol='xsltGetPlainNamespace' type='function'/>
     </file>
     <file name='numbersInternals'>
      <summary>Implementation of the XSLT number functions</summary>
@@ -1602,6 +1603,14 @@ informations are stored'/>
       <arg name='node' type='xmlNodePtr' info='the node'/>
       <arg name='name' type='const xmlChar *' info='the attribute name'/>
       <arg name='nameSpace' type='const xmlChar *' info='the URI of the namespace'/>
+    </function>
+    <function name='xsltGetPlainNamespace' file='namespaces'>
+      <info>Find the right namespace value for this prefix, if needed create and add a new namespace decalaration on the node Handle namespace aliases and make sure the prefix is not NULL, this is needed for attributes.</info>
+      <return type='xmlNsPtr' info='the namespace node to use or NULL'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a transformation context'/>
+      <arg name='cur' type='xmlNodePtr' info='the input node'/>
+      <arg name='ns' type='xmlNsPtr' info='the namespace'/>
+      <arg name='out' type='xmlNodePtr' info='the output node (or its parent)'/>
     </function>
     <function name='xsltGetProfileInformation' file='xsltutils'>
       <info>This function should be called after the transformation completed to extract template processing profiling informations if availble. The informations are returned as an XML document tree like &lt;?xml version=&quot;1.0&quot;?&gt; &lt;profile&gt; &lt;template rank=&quot;1&quot; match=&quot;*&quot; name=&quot;&quot; mode=&quot;&quot; calls=&quot;6&quot; time=&quot;48&quot; average=&quot;8&quot;/&gt; &lt;template rank=&quot;2&quot; match=&quot;item2|item3&quot; name=&quot;&quot; mode=&quot;&quot; calls=&quot;10&quot; time=&quot;30&quot; average=&quot;3&quot;/&gt; &lt;template rank=&quot;3&quot; match=&quot;item1&quot; name=&quot;&quot; mode=&quot;&quot; calls=&quot;5&quot; time=&quot;17&quot; average=&quot;3&quot;/&gt; &lt;/profile&gt; The caller will need to free up the returned tree with xmlFreeDoc()</info>

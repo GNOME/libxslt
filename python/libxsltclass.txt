@@ -107,6 +107,7 @@ Class transformCtxt()
     copyNamespace()
     copyNamespaceList()
     namespace()
+    plainNamespace()
     specialNamespace()
 
     # functions from module templates

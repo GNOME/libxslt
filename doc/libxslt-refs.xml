@@ -235,6 +235,7 @@
     <reference name='xsltGetKey' href='html/libxslt-keys.html#xsltGetKey'/>
     <reference name='xsltGetNamespace' href='html/libxslt-namespaces.html#xsltGetNamespace'/>
     <reference name='xsltGetNsProp' href='html/libxslt-xsltutils.html#xsltGetNsProp'/>
+    <reference name='xsltGetPlainNamespace' href='html/libxslt-namespaces.html#xsltGetPlainNamespace'/>
     <reference name='xsltGetProfileInformation' href='html/libxslt-xsltutils.html#xsltGetProfileInformation'/>
     <reference name='xsltGetQNameURI' href='html/libxslt-xsltutils.html#xsltGetQNameURI'/>
     <reference name='xsltGetQNameURI2' href='html/libxslt-xsltutils.html#xsltGetQNameURI2'/>
@@ -627,6 +628,7 @@
       <ref name='xsltGetKey'/>
       <ref name='xsltGetNamespace'/>
       <ref name='xsltGetNsProp'/>
+      <ref name='xsltGetPlainNamespace'/>
       <ref name='xsltGetProfileInformation'/>
       <ref name='xsltGetQNameURI'/>
       <ref name='xsltGetQNameURI2'/>
@@ -826,6 +828,7 @@
       <ref name='xsltCopyNamespace'/>
       <ref name='xsltCopyNamespaceList'/>
       <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetPlainNamespace'/>
       <ref name='xsltGetSpecialNamespace'/>
     </type>
     <type name='xmlXPathCompExprPtr'>
@@ -1097,6 +1100,7 @@
       <ref name='xsltGetCNsProp'/>
       <ref name='xsltGetNamespace'/>
       <ref name='xsltGetNsProp'/>
+      <ref name='xsltGetPlainNamespace'/>
       <ref name='xsltGetQNameURI'/>
       <ref name='xsltGetQNameURI2'/>
       <ref name='xsltGetSpecialNamespace'/>
@@ -1146,6 +1150,7 @@
       <ref name='xsltCopyNamespace'/>
       <ref name='xsltCopyNamespaceList'/>
       <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetPlainNamespace'/>
     </type>
     <type name='xmlNsPtr *'>
       <ref name='xsltEvalXPathPredicate'/>
@@ -1407,6 +1412,7 @@
       <ref name='xsltGetExtData'/>
       <ref name='xsltGetKey'/>
       <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetPlainNamespace'/>
       <ref name='xsltGetProfileInformation'/>
       <ref name='xsltGetSpecialNamespace'/>
       <ref name='xsltGetTemplate'/>
@@ -1567,6 +1573,7 @@
       <ref name='xsltCopyNamespaceList'/>
       <ref name='xsltFreeNamespaceAliasHashes'/>
       <ref name='xsltGetNamespace'/>
+      <ref name='xsltGetPlainNamespace'/>
       <ref name='xsltGetSpecialNamespace'/>
       <ref name='xsltNamespaceAlias'/>
     </file>
@@ -2039,6 +2046,7 @@
           <ref name='xsltDecimalFormatGetByName'/>
           <ref name='xsltFindElemSpaceHandling'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltNextImport'/>
         </word>
@@ -2101,6 +2109,7 @@
       <letter name='H'>
         <word name='Handle'>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
         </word>
       </letter>
       <letter name='I'>
@@ -2598,6 +2607,7 @@
           <ref name='xsltAddKey'/>
           <ref name='xsltAddStackElemList'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
         </word>
         <word name='added'>
@@ -2620,6 +2630,7 @@
           <ref name='xsltCopyNamespaceList'/>
           <ref name='xsltFreeNamespaceAliasHashes'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
         </word>
         <word name='all'>
           <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
@@ -2817,6 +2828,7 @@
         </word>
         <word name='attributes'>
           <ref name='xsltAttrListTemplateProcess'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltNamespaceAlias'/>
         </word>
         <word name='attrubute'>
@@ -3219,6 +3231,7 @@
         </word>
         <word name='create'>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
         </word>
         <word name='creating'>
@@ -3313,6 +3326,7 @@
         </word>
         <word name='decalaration'>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
         </word>
         <word name='decimal'>
@@ -4071,6 +4085,7 @@
         <word name='input'>
           <ref name='xsltApplyStripSpaces'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltInitCtxtKeys'/>
           <ref name='xsltNewTransformContext'/>
@@ -4139,6 +4154,7 @@
           <ref name='xsltApplyStylesheetUser'/>
           <ref name='xsltFreeGlobalVariables'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltParseGlobalParam'/>
           <ref name='xsltParseGlobalVariable'/>
@@ -4316,6 +4332,7 @@
         </word>
         <word name='make'>
           <ref name='xsltAllocateExtraCtxt'/>
+          <ref name='xsltGetPlainNamespace'/>
         </word>
         <word name='makes'>
           <ref name='xsltCheckWrite'/>
@@ -4475,6 +4492,7 @@
           <ref name='xsltCompileAttr'/>
           <ref name='xsltEvalTemplateString'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltParseStylesheetImportedDoc'/>
           <ref name='xsltXPathFunctionLookup'/>
@@ -4673,20 +4691,6 @@
           <ref name='xsltSetGenericErrorFunc'/>
           <ref name='xsltSetTransformErrorFunc'/>
         </word>
-        <word name='output'>
-          <ref name='_xsltStylesheet'/>
-          <ref name='_xsltTransformContext'/>
-          <ref name='xsltApplyStylesheet'/>
-          <ref name='xsltApplyStylesheetUser'/>
-          <ref name='xsltDebugDumpExtensions'/>
-          <ref name='xsltGetNamespace'/>
-          <ref name='xsltGetSpecialNamespace'/>
-          <ref name='xsltParseStylesheetOutput'/>
-          <ref name='xsltProfileStylesheet'/>
-          <ref name='xsltRunStylesheet'/>
-          <ref name='xsltRunStylesheetUser'/>
-          <ref name='xsltSaveResultTo'/>
-        </word>
         <word name='own'>
           <ref name='xsltApplyStylesheetUser'/>
         </word>
@@ -4724,6 +4728,7 @@
         <word name='parent'>
           <ref name='xsltEvalTemplateString'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltParseStylesheetImportedDoc'/>
         </word>
@@ -4940,6 +4945,7 @@
           <ref name='xsltCheckExtPrefix'/>
           <ref name='xsltFormatNumberConversion'/>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetQNameURI'/>
           <ref name='xsltGetQNameURI2'/>
           <ref name='xsltGetSpecialNamespace'/>
@@ -5207,6 +5213,7 @@
         </word>
         <word name='right'>
           <ref name='xsltGetNamespace'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltParseStylesheetProcess'/>
         </word>
@@ -5659,6 +5666,7 @@
         </word>
         <word name='sure'>
           <ref name='xsltAllocateExtraCtxt'/>
+          <ref name='xsltGetPlainNamespace'/>
         </word>
         <word name='system-property'>
           <ref name='xsltSystemPropertyFunction'/>
@@ -5766,38 +5774,6 @@
         <word name='they'>
           <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltEvalAttrValueTemplate'/>
-        </word>
-        <word name='this'>
-          <ref name='XSLT_DEFAULT_URL'/>
-          <ref name='XSLT_DEFAULT_VENDOR'/>
-          <ref name='_xsltDocument'/>
-          <ref name='_xsltTemplate'/>
-          <ref name='_xsltTransformContext'/>
-          <ref name='xslHandleDebugger'/>
-          <ref name='xsltAddStackElemList'/>
-          <ref name='xsltApplyOneTemplate'/>
-          <ref name='xsltCheckExtPrefix'/>
-          <ref name='xsltCopyTextString'/>
-          <ref name='xsltDoSortFunction'/>
-          <ref name='xsltExtInitFunction'/>
-          <ref name='xsltExtShutdownFunction'/>
-          <ref name='xsltGetExtData'/>
-          <ref name='xsltGetNamespace'/>
-          <ref name='xsltGetSpecialNamespace'/>
-          <ref name='xsltGetTemplate'/>
-          <ref name='xsltRegisterAllElement'/>
-          <ref name='xsltRegisterAllFunctions'/>
-          <ref name='xsltRegisterExtModule'/>
-          <ref name='xsltRegisterExtModuleFull'/>
-          <ref name='xsltSetGenericDebugFunc'/>
-          <ref name='xsltSetGenericErrorFunc'/>
-          <ref name='xsltSetSecurityPrefs'/>
-          <ref name='xsltSort'/>
-          <ref name='xsltStyleExtInitFunction'/>
-          <ref name='xsltStyleExtShutdownFunction'/>
-          <ref name='xsltStyleGetExtData'/>
-          <ref name='xsltUnregisterExtModule'/>
-          <ref name='xsltXPathGetTransformContext'/>
         </word>
         <word name='those'>
           <ref name='xsltEvalAttrValueTemplate'/>
@@ -5919,6 +5895,7 @@
           <ref name='xsltGetDefaultSecurityPrefs'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltGetNsProp'/>
+          <ref name='xsltGetPlainNamespace'/>
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltGetUTF8Char'/>
           <ref name='xsltRegisterExtras'/>
@@ -6019,8 +5996,6 @@
           <ref name='xsltXPathVariableLookup'/>
         </word>
       </letter>
-    </chunk>
-    <chunk name='chunk9'>
       <letter name='w'>
         <word name='want'>
           <ref name='xsltEvalUserParams'/>
@@ -6149,6 +6124,8 @@
           <ref name='xsltSaveResultToString'/>
         </word>
       </letter>
+    </chunk>
+    <chunk name='chunk9'>
       <letter name='x'>
         <word name='xmlAttrPtr'>
           <ref name='xsltAttrListTemplateProcess'/>
@@ -6329,8 +6306,8 @@
       <chunk name='chunk5' start='j' end='n'/>
       <chunk name='chunk6' start='o' end='p'/>
       <chunk name='chunk7' start='q' end='s'/>
-      <chunk name='chunk8' start='t' end='v'/>
-      <chunk name='chunk9' start='w' end='z'/>
+      <chunk name='chunk8' start='t' end='w'/>
+      <chunk name='chunk9' start='x' end='z'/>
     </chunks>
   </index>
 </apirefs>
