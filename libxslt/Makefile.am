@@ -6,6 +6,8 @@ lib_LTLIBRARIES = libxslt.la
 libxslt_la_SOURCES = 			\
 	xslt.c				\
 	xslt.h				\
+	xsltutils.c			\
+	xsltutils.h			\
 	pattern.c			\
 	pattern.h			\
 	transform.c			\

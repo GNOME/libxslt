@@ -26,42 +26,15 @@
 #include <libxml/HTMLtree.h>
 #include "xslt.h"
 #include "xsltInternals.h"
+#include "xsltutils.h"
 #include "pattern.h"
 #include "transform.h"
 
 #define DEBUG_PROCESS
 
 /*
- * To cleanup
- */
-xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
-void xmlXPathBooleanFunction(xmlXPathParserContextPtr ctxt, int nargs);
-
-/*
- * There is no XSLT specific error reporting module yet
- */
-#define xsltGenericError xmlGenericError
-#define xsltGenericErrorContext xmlGenericErrorContext
-
-/*
  * Useful macros
  */
-
-#define TODO 								\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Unimplemented block at %s:%d\n",				\
-            __FILE__, __LINE__);
-
-#define STRANGE 							\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Internal error at %s:%d\n",				\
-            __FILE__, __LINE__);
-
-#define IS_XSLT_ELEM(n)							\
-    ((n)->ns != NULL) && (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE))
-
-#define IS_XSLT_NAME(n, val)						\
-    (xmlStrEqual((n)->name, (const xmlChar *) (val)))
 
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
@@ -286,7 +259,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     }
 #ifdef DEBUG_PROCESS
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltValueOf: select %s\n", prop);
 #endif
 
@@ -325,7 +298,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 #ifdef DEBUG_PROCESS
     else
-	xsltGenericError(xsltGenericErrorContext,
+	xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltValueOf: result %s\n", res->stringval);
 #endif
 error:
@@ -469,7 +442,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		break;
 	    default:
 #ifdef DEBUG_PROCESS
-		xsltGenericError(xsltGenericErrorContext,
+		xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltDefaultProcessOneNode: skipping node type %d\n",
 		                 node->type);
 #endif
@@ -478,7 +451,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	node = node->next;
 	if (delete != NULL) {
 #ifdef DEBUG_PROCESS
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltDefaultProcessOneNode: removing ignorable blank node\n");
 #endif
 	    xmlUnlinkNode(delete);
@@ -505,7 +478,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
 
 #ifdef DEBUG_PROCESS
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltApplyTemplates: node: %s\n", node->name);
 #endif
     prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
@@ -541,7 +514,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 */
 	if (insert == NULL) {
 #ifdef DEBUG_PROCESS
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyOneTemplate: insert == NULL !\n");
 #endif
 	    return;
@@ -552,7 +525,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 */
 	if (delete != NULL) {
 #ifdef DEBUG_PROCESS
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyOneTemplate: removing ignorable blank node\n");
 #endif
 	    xmlUnlinkNode(delete);
@@ -580,9 +553,13 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltAttribute(ctxt, node, cur);
 		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "element")) {
+		ctxt->insert = insert;
+		xsltAttribute(ctxt, node, cur);
+		ctxt->insert = oldInsert;
 	    } else {
 #ifdef DEBUG_PROCESS
-		xsltGenericError(xsltGenericErrorContext,
+		xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltApplyOneTemplate: found xslt:%s\n", cur->name);
 #endif
 		TODO
@@ -596,7 +573,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     */
 	    if (!(IS_BLANK_NODE(cur))) {
 #ifdef DEBUG_PROCESS
-		xsltGenericError(xsltGenericErrorContext,
+		xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltApplyOneTemplate: copy text %s\n", cur->content);
 #endif
 		copy = xmlCopyNode(cur, 0);
@@ -611,7 +588,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	} else if (cur->type == XML_ELEMENT_NODE) {
 #ifdef DEBUG_PROCESS
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyOneTemplate: copy node %s\n", cur->name);
 #endif
 	    copy = xsltCopyNode(ctxt, cur, insert);
@@ -683,7 +660,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     }
 #ifdef DEBUG_PROCESS
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltIf: test %s\n", prop);
 #endif
 
@@ -713,7 +690,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    doit = res->boolval;
 	else {
 #ifdef DEBUG_PROCESS
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		"xsltIf: test didn't evaluate to a boolean\n");
 #endif
 	    goto error;
@@ -721,7 +698,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
 #ifdef DEBUG_PROCESS
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	"xsltIf: test evaluate to %d\n", doit);
 #endif
     if (doit) {
@@ -753,7 +730,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr replacement;
     xmlNodeSetPtr list = NULL, oldlist;
     xmlXPathParserContextPtr xpathParserCtxt;
-    int i;
+    int i, oldProximityPosition, oldContextSize;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -765,7 +742,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     }
 #ifdef DEBUG_PROCESS
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltForEach: select %s\n", prop);
 #endif
 
@@ -794,7 +771,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    list = res->nodesetval;
 	else {
 #ifdef DEBUG_PROCESS
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		"xsltForEach: select didn't evaluate to a node list\n");
 #endif
 	    goto error;
@@ -802,7 +779,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
 #ifdef DEBUG_PROCESS
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	"xsltForEach: select evaluate to %d nodes\n", list->nodeNr);
 #endif
     /* TODO: handle and skip the xsl:sort */
@@ -810,11 +787,17 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     oldlist = ctxt->nodeList;
     ctxt->nodeList = list;
+    oldContextSize = ctxt->xpathCtxt->contextSize;
+    oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
+    ctxt->xpathCtxt->contextSize = list->nodeNr;
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
+	ctxt->xpathCtxt->proximityPosition = i + 1;
 	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement);
     }
     ctxt->nodeList = oldlist;
+    ctxt->xpathCtxt->contextSize = oldContextSize;
+    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 
 error:
     if (xpathParserCtxt != NULL)
@@ -843,10 +826,10 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     if (template == NULL) {
 #ifdef DEBUG_PROCESS
 	if (node->type == XML_DOCUMENT_NODE)
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltProcessOneNode: no template found for /\n");
 	else 
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltProcessOneNode: no template found for %s\n", node->name);
 #endif
 

@@ -13,6 +13,7 @@
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
 #include <libxslt/transform.h>
+#include <libxslt/xsltutils.h>
 
 static int debug = 0;
 
@@ -24,8 +25,13 @@ main(int argc, char **argv) {
 
     LIBXML_TEST_VERSION
     for (i = 1; i < argc ; i++) {
-	if ((!strcmp(argv[i], "-debug")) || (!strcmp(argv[i], "--debug")))
+	if ((!strcmp(argv[i], "-debug")) || (!strcmp(argv[i], "--debug"))) {
 	    debug++;
+	} else if ((!strcmp(argv[i], "-v")) ||
+		   (!strcmp(argv[i], "-verbose")) ||
+		   (!strcmp(argv[i], "--verbose"))) {
+	    xsltSetGenericDebugFunc(stderr, NULL);
+	}
     }
     xmlSubstituteEntitiesDefault(1);
     for (i = 1; i < argc ; i++) {

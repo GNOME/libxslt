@@ -21,24 +21,9 @@
 #include <libxml/parserInternals.h>
 #include "xslt.h"
 #include "xsltInternals.h"
+#include "xsltutils.h"
 
 /* #define DEBUG_PARSING */
-
-#define TODO 								\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Unimplemented block at %s:%d\n",				\
-            __FILE__, __LINE__);
-
-/*
- * To cleanup
- */
-xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
-
-/*
- * There is no XSLT specific error reporting module yet
- */
-#define xsltGenericError xmlGenericError
-#define xsltGenericErrorContext xmlGenericErrorContext
 
 /*
  * Types are private:
@@ -901,7 +886,7 @@ xsltCompilePattern(const xmlChar *pattern) {
     }
 
 #ifdef DEBUG_PARSING
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	    "xsltCompilePattern : parsing '%s'\n", pattern);
 #endif
 
@@ -1057,12 +1042,12 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
 	    return(-1);
 	}
 #ifdef DEBUG_PARSING
-	xsltGenericError(xsltGenericErrorContext,
+	xsltGenericDebug(xsltGenericDebugContext,
 		"xsltAddTemplate: created template hash\n");
 #endif
 	xmlHashAddEntry(style->templatesHash, name, pat);
 #ifdef DEBUG_PARSING
-	xsltGenericError(xsltGenericErrorContext,
+	xsltGenericDebug(xsltGenericDebugContext,
 		"xsltAddTemplate: added new hash %s\n", name);
 #endif
     } else {
@@ -1070,7 +1055,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
 	if (list == NULL) {
 	    xmlHashAddEntry(style->templatesHash, name, pat);
 #ifdef DEBUG_PARSING
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		    "xsltAddTemplate: added new hash %s\n", name);
 #endif
 	} else {
@@ -1082,7 +1067,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
 		pat->next = list;
 		xmlHashUpdateEntry(style->templatesHash, name, pat, NULL);
 #ifdef DEBUG_PARSING
-		xsltGenericError(xsltGenericErrorContext,
+		xsltGenericDebug(xsltGenericDebugContext,
 			"xsltAddTemplate: added head hash for %s\n", name);
 #endif
 	    } else {
@@ -1161,7 +1146,7 @@ xsltGetTemplate(xsltStylesheetPtr style, xmlNodePtr node) {
     list = (xsltCompMatchPtr) xmlHashLookup(style->templatesHash, name);
     if (list == NULL) {
 #ifdef DEBUG_MATCHING
-	xsltGenericError(xsltGenericErrorContext,
+	xsltGenericDebug(xsltGenericDebugContext,
 		"xsltGetTemplate: empty set for %s\n", name);
 #endif
 	return(NULL);

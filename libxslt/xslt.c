@@ -22,29 +22,13 @@
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "pattern.h"
+#include "xsltutils.h"
 
-/* #define DEBUG_PARSING */
-
-/*
- * To cleanup
- */
-xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
-
-/*
- * There is no XSLT specific error reporting module yet
- */
-#define xsltGenericError xmlGenericError
-#define xsltGenericErrorContext xmlGenericErrorContext
+#define DEBUG_PARSING
 
 /*
  * Useful macros
  */
-
-#define IS_XSLT_ELEM(n)							\
-    ((n)->ns != NULL) && (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE))
-
-#define IS_XSLT_NAME(n, val)						\
-    (xmlStrEqual((n)->name, (const xmlChar *) (val)))
 
 #define IS_BLANK(c) (((c) == 0x20) || ((c) == 0x09) || ((c) == 0xA) ||	\
                      ((c) == 0x0D))
@@ -52,15 +36,6 @@ xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
-#define TODO 								\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Unimplemented block at %s:%d\n",				\
-            __FILE__, __LINE__);
-
-#define STRANGE 							\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Internal error at %s:%d\n",				\
-            __FILE__, __LINE__);
 
 /************************************************************************
  *									*
@@ -354,7 +329,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    element = xmlStrndup(element, end - element);
 	    if (element) {
 #ifdef DEBUG_PARSING
-		xsltGenericError(xsltGenericErrorContext,
+		xsltGenericDebug(xsltGenericDebugContext,
 		    "add cdata section output element %s\n", element);
 #endif
 		xmlHashAddEntry(style->stripSpaces, element, "cdata");
@@ -405,7 +380,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	element = xmlStrndup(element, end - element);
 	if (element) {
 #ifdef DEBUG_PARSING
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		"add preserved space element %s\n", element);
 #endif
 	    xmlHashAddEntry(style->stripSpaces, element, "preserve");
@@ -455,7 +430,7 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	element = xmlStrndup(element, end - element);
 	if (element) {
 #ifdef DEBUG_PARSING
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		"add stripped space element %s\n", element);
 #endif
 	    xmlHashAddEntry(style->stripSpaces, element, "strip");
@@ -491,7 +466,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
     while (cur != NULL) {
 	if (delete != NULL) {
 #ifdef DEBUG_PARSING
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltParseStylesheetTemplate: removing ignorable blank node\n");
 #endif
 	    xmlUnlinkNode(delete);
@@ -553,7 +528,7 @@ skip_children:
     }
     if (delete != NULL) {
 #ifdef DEBUG_PARSING
-	xsltGenericError(xsltGenericErrorContext,
+	xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltParseStylesheetTemplate: removing ignorable blank node\n");
 #endif
 	xmlUnlinkNode(delete);
@@ -720,7 +695,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	}
 	if (!(IS_XSLT_ELEM(cur))) {
 #ifdef DEBUG_PARSING
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		    "xsltParseStylesheetTop : found foreign element %s\n",
 		    cur->name);
 #endif
@@ -740,7 +715,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	}
 	if (!(IS_XSLT_ELEM(cur))) {
 #ifdef DEBUG_PARSING
-	    xsltGenericError(xsltGenericErrorContext,
+	    xsltGenericDebug(xsltGenericDebugContext,
 		    "xsltParseStylesheetTop : found foreign element %s\n",
 		    cur->name);
 #endif
@@ -783,7 +758,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	cur = cur->next;
     }
 #ifdef DEBUG_PARSING
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 		    "parsed %d templates\n", templates);
 #endif
 }
@@ -822,9 +797,11 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
     }
 
     ret->doc = doc;
-    if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "stylesheet"))) {
+    if ((IS_XSLT_ELEM(cur)) && 
+	((IS_XSLT_NAME(cur, "stylesheet")) ||
+	 (IS_XSLT_NAME(cur, "transform")))) {
 #ifdef DEBUG_PARSING
-	xsltGenericError(xsltGenericErrorContext,
+	xsltGenericDebug(xsltGenericDebugContext,
 		"xsltParseStylesheetDoc : found stylesheet\n");
 #endif
 
@@ -845,7 +822,7 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 	}
 
 #ifdef DEBUG_PARSING
-        xsltGenericError(xsltGenericErrorContext,
+        xsltGenericDebug(xsltGenericDebugContext,
 		"xsltParseStylesheetDoc : document is stylesheet\n");
 #endif
 	
@@ -893,7 +870,7 @@ xsltParseStylesheetFile(const xmlChar* filename) {
 	return(NULL);
 
 #ifdef DEBUG_PARSING
-    xsltGenericError(xsltGenericErrorContext,
+    xsltGenericDebug(xsltGenericDebugContext,
 	    "xsltParseStylesheetFile : parse %s\n", filename);
 #endif
 

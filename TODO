@@ -2,6 +2,8 @@ Design:
   - should transforms for a given stylesheet be thread clean,
     or can a stylesheet be enriched with document specific
     informations and cleaned up later ?
+  - seems that saving back XSLT stylesheet from a compiled form might
+    be a bit ugly ...
     
 Import:
   -> parse them
@@ -28,3 +30,7 @@ Error handling:
   -> check the version stuff, design a separate module for error interfacing
      and default handling, parsing vs. runtime, fatal / compat / warning,
      and lack of optionnal features.
+
+Support Attribute value templates:
+  -> starts to be urgent. Design it in flexible ways but try to optimize
+     to handle most of it at the stylesheet parse time ...
