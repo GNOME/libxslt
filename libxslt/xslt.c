@@ -1314,7 +1314,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 		    URI = xmlHashLookup(style->nsHash, ns->prefix);
 		    if ((URI != NULL) && (!xmlStrEqual(URI, ns->href))) {
 			xsltTransformError(NULL, style, cur,
-	     "Namespaces prefix %s used for multiple namespaces\n");
+	     "Namespaces prefix %s used for multiple namespaces\n",ns->prefix);
 			if (style != NULL) style->warnings++;
 		    } else if (URI == NULL) {
 			xmlHashUpdateEntry(style->nsHash, ns->prefix,
