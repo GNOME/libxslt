@@ -1,3 +1,9 @@
+Mon Aug 19 15:03:11 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: found and fixed the small <xsl:choose>
+	  bug which was giving troubles to DocBook users (the test expression
+	  of <when> was evaluated in the namespace context of <choose> !)
+
 2002-08-18  Havoc Pennington  <hp@pobox.com>
 
 	* autogen.sh: hardcode aclocal-1.4/automake-1.4 so that users with

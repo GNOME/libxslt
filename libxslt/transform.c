@@ -3001,8 +3001,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	oldNsNr = ctxt->xpathCtxt->nsNr;
 	oldNamespaces = ctxt->xpathCtxt->namespaces;
   	ctxt->xpathCtxt->node = node;
-	ctxt->xpathCtxt->namespaces = comp->nsList;
-	ctxt->xpathCtxt->nsNr = comp->nsNr;
+	ctxt->xpathCtxt->namespaces = wcomp->nsList;
+	ctxt->xpathCtxt->nsNr = wcomp->nsNr;
   	res = xmlXPathCompiledEval(wcomp->comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	ctxt->xpathCtxt->contextSize = oldContextSize;
