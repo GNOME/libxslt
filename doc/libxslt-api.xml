@@ -31,10 +31,19 @@
      <exports symbol='xslAddCall'/>
      <exports symbol='xslDropCall'/>
     </file>
-    <file name='attributes'>
-     <exports symbol='xsltParseStylesheetAttributeSet'/>
-     <exports symbol='xsltFreeAttributeSetsHashes'/>
-     <exports symbol='xsltApplyAttributeSet'/>
+    <file name='xsltwin32config'>
+     <exports symbol='LIBXSLT_DOTTED_VERSION'/>
+     <exports symbol='LIBXSLT_VERSION'/>
+     <exports symbol='LIBXSLT_VERSION_STRING'/>
+     <exports symbol='WITH_XSLT_DEBUG'/>
+     <exports symbol='DEBUG_MEMORY'/>
+     <exports symbol='DEBUG_MEMORY_LOCATION'/>
+     <exports symbol='ATTRIBUTE_UNUSED'/>
+     <exports symbol='LIBXSLT_PUBLIC'/>
+    </file>
+    <file name='libxslt'>
+     <exports symbol='IN_LIBXSLT'/>
+     <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
     <file name='numbersInternals'>
     </file>
@@ -84,15 +93,10 @@
      <exports symbol='xsltPreComputeExtModuleElement'/>
      <exports symbol='xsltRegisterTestModule'/>
     </file>
-    <file name='imports'>
-     <exports symbol='XSLT_GET_IMPORT_PTR'/>
-     <exports symbol='XSLT_GET_IMPORT_INT'/>
-     <exports symbol='xsltParseStylesheetImport'/>
-     <exports symbol='xsltParseStylesheetInclude'/>
-     <exports symbol='xsltNextImport'/>
-     <exports symbol='xsltNeedElemSpaceHandling'/>
-     <exports symbol='xsltFindElemSpaceHandling'/>
-     <exports symbol='xsltFindTemplate'/>
+    <file name='attributes'>
+     <exports symbol='xsltParseStylesheetAttributeSet'/>
+     <exports symbol='xsltFreeAttributeSetsHashes'/>
+     <exports symbol='xsltApplyAttributeSet'/>
     </file>
     <file name='xsltInternals'>
      <exports symbol='XSLT_MAX_SORT'/>
@@ -141,9 +145,77 @@
      <exports symbol='xsltAllocateExtra'/>
      <exports symbol='xsltAllocateExtraCtxt'/>
     </file>
-    <file name='libxslt'>
-     <exports symbol='IN_LIBXSLT'/>
-     <exports symbol='LIBXSLT_PUBLIC'/>
+    <file name='pattern'>
+     <exports symbol='xsltCompMatch'/>
+     <exports symbol='xsltCompMatchPtr'/>
+     <exports symbol='xsltCompilePattern'/>
+     <exports symbol='xsltFreeCompMatchList'/>
+     <exports symbol='xsltTestCompMatchList'/>
+     <exports symbol='xsltAddTemplate'/>
+     <exports symbol='xsltGetTemplate'/>
+     <exports symbol='xsltFreeTemplateHashes'/>
+     <exports symbol='xsltCleanupTemplates'/>
+     <exports symbol='xsltMatchPattern'/>
+    </file>
+    <file name='documents'>
+     <exports symbol='xsltNewDocument'/>
+     <exports symbol='xsltLoadDocument'/>
+     <exports symbol='xsltFindDocument'/>
+     <exports symbol='xsltFreeDocuments'/>
+     <exports symbol='xsltLoadStyleDocument'/>
+     <exports symbol='xsltNewStyleDocument'/>
+     <exports symbol='xsltFreeStyleDocuments'/>
+    </file>
+    <file name='variables'>
+     <exports symbol='XSLT_REGISTER_VARIABLE_LOOKUP'/>
+     <exports symbol='xsltEvalGlobalVariables'/>
+     <exports symbol='xsltEvalUserParams'/>
+     <exports symbol='xsltQuoteUserParams'/>
+     <exports symbol='xsltEvalOneUserParam'/>
+     <exports symbol='xsltQuoteOneUserParam'/>
+     <exports symbol='xsltParseGlobalVariable'/>
+     <exports symbol='xsltParseGlobalParam'/>
+     <exports symbol='xsltParseStylesheetVariable'/>
+     <exports symbol='xsltParseStylesheetParam'/>
+     <exports symbol='xsltParseStylesheetCallerParam'/>
+     <exports symbol='xsltAddStackElemList'/>
+     <exports symbol='xsltFreeGlobalVariables'/>
+     <exports symbol='xsltVariableLookup'/>
+     <exports symbol='xsltXPathVariableLookup'/>
+    </file>
+    <file name='imports'>
+     <exports symbol='XSLT_GET_IMPORT_PTR'/>
+     <exports symbol='XSLT_GET_IMPORT_INT'/>
+     <exports symbol='xsltParseStylesheetImport'/>
+     <exports symbol='xsltParseStylesheetInclude'/>
+     <exports symbol='xsltNextImport'/>
+     <exports symbol='xsltNeedElemSpaceHandling'/>
+     <exports symbol='xsltFindElemSpaceHandling'/>
+     <exports symbol='xsltFindTemplate'/>
+    </file>
+    <file name='keys'>
+     <exports symbol='xsltAddKey'/>
+     <exports symbol='xsltGetKey'/>
+     <exports symbol='xsltInitCtxtKeys'/>
+     <exports symbol='xsltFreeKeys'/>
+     <exports symbol='xsltFreeDocumentKeys'/>
+    </file>
+    <file name='extra'>
+     <exports symbol='XSLT_LIBXSLT_NAMESPACE'/>
+     <exports symbol='XSLT_SAXON_NAMESPACE'/>
+     <exports symbol='XSLT_XT_NAMESPACE'/>
+     <exports symbol='XSLT_XALAN_NAMESPACE'/>
+     <exports symbol='XSLT_NORM_SAXON_NAMESPACE'/>
+     <exports symbol='xsltFunctionNodeSet'/>
+     <exports symbol='xsltDebug'/>
+     <exports symbol='xsltRegisterExtras'/>
+     <exports symbol='xsltRegisterAllExtras'/>
+    </file>
+    <file name='preproc'>
+     <exports symbol='xsltExtMarker'/>
+     <exports symbol='xsltDocumentComp'/>
+     <exports symbol='xsltStylePreCompute'/>
+     <exports symbol='xsltFreeStylePreComps'/>
     </file>
     <file name='transform'>
      <exports symbol='xsltSetXIncludeDefault'/>
@@ -177,62 +249,6 @@
      <exports symbol='xsltRegisterAllElement'/>
      <exports symbol='xslHandleDebugger'/>
     </file>
-    <file name='documents'>
-     <exports symbol='xsltNewDocument'/>
-     <exports symbol='xsltLoadDocument'/>
-     <exports symbol='xsltFindDocument'/>
-     <exports symbol='xsltFreeDocuments'/>
-     <exports symbol='xsltLoadStyleDocument'/>
-     <exports symbol='xsltNewStyleDocument'/>
-     <exports symbol='xsltFreeStyleDocuments'/>
-    </file>
-    <file name='extra'>
-     <exports symbol='XSLT_LIBXSLT_NAMESPACE'/>
-     <exports symbol='XSLT_SAXON_NAMESPACE'/>
-     <exports symbol='XSLT_XT_NAMESPACE'/>
-     <exports symbol='XSLT_XALAN_NAMESPACE'/>
-     <exports symbol='XSLT_NORM_SAXON_NAMESPACE'/>
-     <exports symbol='xsltFunctionNodeSet'/>
-     <exports symbol='xsltDebug'/>
-     <exports symbol='xsltRegisterExtras'/>
-     <exports symbol='xsltRegisterAllExtras'/>
-    </file>
-    <file name='variables'>
-     <exports symbol='XSLT_REGISTER_VARIABLE_LOOKUP'/>
-     <exports symbol='xsltEvalGlobalVariables'/>
-     <exports symbol='xsltEvalUserParams'/>
-     <exports symbol='xsltQuoteUserParams'/>
-     <exports symbol='xsltEvalOneUserParam'/>
-     <exports symbol='xsltQuoteOneUserParam'/>
-     <exports symbol='xsltParseGlobalVariable'/>
-     <exports symbol='xsltParseGlobalParam'/>
-     <exports symbol='xsltParseStylesheetVariable'/>
-     <exports symbol='xsltParseStylesheetParam'/>
-     <exports symbol='xsltParseStylesheetCallerParam'/>
-     <exports symbol='xsltAddStackElemList'/>
-     <exports symbol='xsltFreeGlobalVariables'/>
-     <exports symbol='xsltVariableLookup'/>
-     <exports symbol='xsltXPathVariableLookup'/>
-    </file>
-    <file name='pattern'>
-     <exports symbol='xsltCompMatch'/>
-     <exports symbol='xsltCompMatchPtr'/>
-     <exports symbol='xsltCompilePattern'/>
-     <exports symbol='xsltFreeCompMatchList'/>
-     <exports symbol='xsltTestCompMatchList'/>
-     <exports symbol='xsltAddTemplate'/>
-     <exports symbol='xsltGetTemplate'/>
-     <exports symbol='xsltFreeTemplateHashes'/>
-     <exports symbol='xsltCleanupTemplates'/>
-     <exports symbol='xsltMatchPattern'/>
-    </file>
-    <file name='keys'>
-     <exports symbol='xsltAddKey'/>
-     <exports symbol='xsltGetKey'/>
-     <exports symbol='xsltInitCtxtKeys'/>
-     <exports symbol='xsltFreeKeys'/>
-     <exports symbol='xsltFreeDocumentKeys'/>
-    </file>
     <file name='xslt'>
      <exports symbol='XSLT_DEFAULT_VERSION'/>
      <exports symbol='XSLT_DEFAULT_VENDOR'/>
@@ -240,22 +256,6 @@
      <exports symbol='XSLT_NAMESPACE'/>
      <exports symbol='LIBXSLT_PUBLIC'/>
      <exports symbol='xsltCleanupGlobals'/>
-    </file>
-    <file name='preproc'>
-     <exports symbol='xsltExtMarker'/>
-     <exports symbol='xsltDocumentComp'/>
-     <exports symbol='xsltStylePreCompute'/>
-     <exports symbol='xsltFreeStylePreComps'/>
-    </file>
-    <file name='xsltwin32config'>
-     <exports symbol='LIBXSLT_DOTTED_VERSION'/>
-     <exports symbol='LIBXSLT_VERSION'/>
-     <exports symbol='LIBXSLT_VERSION_STRING'/>
-     <exports symbol='WITH_XSLT_DEBUG'/>
-     <exports symbol='DEBUG_MEMORY'/>
-     <exports symbol='DEBUG_MEMORY_LOCATION'/>
-     <exports symbol='ATTRIBUTE_UNUSED'/>
-     <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
     <file name='xsltconfig'>
      <exports symbol='LIBXSLT_DOTTED_VERSION'/>
@@ -326,7 +326,7 @@
     <macro name='LIBXSLT_DOTTED_VERSION' file='xsltwin32config'>
       <info>the version string like &quot;1.2.3&quot;</info>
     </macro>
-    <macro name='LIBXSLT_PUBLIC' file='libxslt'>
+    <macro name='LIBXSLT_PUBLIC' file='xsltwin32config'>
       <info>This macro is needed on Win32 when using MSVC. It enables the client code to access exported variables. It should expand to nothing when compiling this library itself, but must expand to __declspec(dllimport) when a client includes the library header and that only if it links dynamically against this library.</info>
     </macro>
     <macro name='LIBXSLT_VERSION' file='xsltwin32config'>
@@ -792,7 +792,7 @@
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
       <arg name='comp' type='xmlXPathCompExprPtr' info='the compiled XPath expression '/>
     </function>
-    <function name='xsltExtElementLookup' file='extensions'>
+    <function name='xsltExtElementLookup' file='transform'>
       <info>Looks up an extension element. ctxt can be NULL to search only in module elements.</info>
       <return type='xsltTransformFunction' info='the element callback or NULL if not found '/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT process context '/>

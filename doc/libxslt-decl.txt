@@ -1,33 +1,4 @@
 <MACRO>
-<NAME>XSLT_DEFAULT_VERSION</NAME>
-#define XSLT_DEFAULT_VERSION     "1.0"
-</MACRO>
-<MACRO>
-<NAME>XSLT_DEFAULT_VENDOR</NAME>
-#define XSLT_DEFAULT_VENDOR      "libxslt"
-</MACRO>
-<MACRO>
-<NAME>XSLT_DEFAULT_URL</NAME>
-#define XSLT_DEFAULT_URL         "http://xmlsoft.org/XSLT/"
-</MACRO>
-<MACRO>
-<NAME>XSLT_NAMESPACE</NAME>
-#define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_PUBLIC</NAME>
-#define LIBXSLT_PUBLIC __declspec(dllimport)
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_PUBLIC</NAME>
-#define LIBXSLT_PUBLIC 
-</MACRO>
-<FUNCTION>
-<NAME>xsltCleanupGlobals</NAME>
-<RETURNS>void 	</RETURNS>
-void
-</FUNCTION>
-<MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
 #define LIBXSLT_DOTTED_VERSION "1.0.13"
 </MACRO>
@@ -71,615 +42,97 @@ void
 <NAME>LIBXSLT_PUBLIC</NAME>
 #define LIBXSLT_PUBLIC
 </MACRO>
-<MACRO>
-<NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.13"
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10013
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10013"
-</MACRO>
-<MACRO>
-<NAME>WITH_XSLT_DEBUG</NAME>
-#define WITH_XSLT_DEBUG
-</MACRO>
-<MACRO>
-<NAME>DEBUG_MEMORY</NAME>
-#define DEBUG_MEMORY
-</MACRO>
-<MACRO>
-<NAME>DEBUG_MEMORY_LOCATION</NAME>
-#define DEBUG_MEMORY_LOCATION
-</MACRO>
-<MACRO>
-<NAME>ATTRIBUTE_UNUSED</NAME>
-#define ATTRIBUTE_UNUSED
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_PUBLIC</NAME>
-#define LIBXSLT_PUBLIC __declspec(dllimport)
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_PUBLIC</NAME>
-#define LIBXSLT_PUBLIC 
-</MACRO>
 <FUNCTION>
-<NAME>xsltAddKey</NAME>
-<RETURNS>int 	</RETURNS>
-xsltStylesheetPtr style,const xmlChar *name,const xmlChar *nameURI,const xmlChar *match,const xmlChar *use,xmlNodePtr inst
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltGetKey</NAME>
-<RETURNS>xmlNodeSetPtr 	</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *nameURI,const xmlChar *value
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltInitCtxtKeys</NAME>
+<NAME>xsltParseStylesheetAttributeSet</NAME>
 <RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xsltDocumentPtr doc
+xsltStylesheetPtr style,xmlNodePtr cur
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltFreeKeys</NAME>
+<NAME>xsltFreeAttributeSetsHashes</NAME>
 <RETURNS>void 	</RETURNS>
 xsltStylesheetPtr style
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltFreeDocumentKeys</NAME>
+<NAME>xsltApplyAttributeSet</NAME>
 <RETURNS>void 	</RETURNS>
-xsltDocumentPtr doc
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xmlChar *attributes
 </FUNCTION>
-<STRUCT>
-<NAME>xsltCompMatch</NAME>
-</STRUCT>
-<TYPEDEF>
-<NAME>xsltCompMatchPtr</NAME>
-typedef xsltCompMatch *xsltCompMatchPtr;
-</TYPEDEF>
+<MACRO>
+<NAME>XSLT_LIBXSLT_NAMESPACE</NAME>
+#define XSLT_LIBXSLT_NAMESPACE ((xmlChar *) "http://xmlsoft.org/XSLT/namespace")
+</MACRO>
+<MACRO>
+<NAME>XSLT_SAXON_NAMESPACE</NAME>
+#define XSLT_SAXON_NAMESPACE ((xmlChar *) "http://icl.com/saxon")
+</MACRO>
+<MACRO>
+<NAME>XSLT_XT_NAMESPACE</NAME>
+#define XSLT_XT_NAMESPACE ((xmlChar *) "http://www.jclark.com/xt")
+</MACRO>
+<MACRO>
+<NAME>XSLT_XALAN_NAMESPACE</NAME>
+#define XSLT_XALAN_NAMESPACE ((xmlChar *)	\
+	                        "org.apache.xalan.xslt.extensions.Redirect")
+</MACRO>
+<MACRO>
+<NAME>XSLT_NORM_SAXON_NAMESPACE</NAME>
+#define XSLT_NORM_SAXON_NAMESPACE ((xmlChar *)	\
+	"http://nwalsh.com/xslt/ext/com.nwalsh.saxon.CVS")
+</MACRO>
 <FUNCTION>
-<NAME>xsltCompilePattern</NAME>
-<RETURNS>xsltCompMatchPtr  </RETURNS>
-const xmlChar *pattern,xmlDocPtr doc,xmlNodePtr node,xsltStylesheetPtr style,xsltTransformContextPtr runtime
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltFreeCompMatchList</NAME>
+<NAME>xsltFunctionNodeSet</NAME>
 <RETURNS>void 	</RETURNS>
-xsltCompMatchPtr comp
+xmlXPathParserContextPtr ctxt,int nargs
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltTestCompMatchList</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xsltCompMatchPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltAddTemplate</NAME>
-<RETURNS>int 	</RETURNS>
-xsltStylesheetPtr style,xsltTemplatePtr cur,const xmlChar *mode,const xmlChar *modeURI
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltGetTemplate</NAME>
-<RETURNS>xsltTemplatePtr 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltFreeTemplateHashes</NAME>
+<NAME>xsltDebug</NAME>
 <RETURNS>void 	</RETURNS>
-xsltStylesheetPtr style
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltCleanupTemplates</NAME>
+<NAME>xsltRegisterExtras</NAME>
 <RETURNS>void 	</RETURNS>
-xsltStylesheetPtr style
+xsltTransformContextPtr ctxt
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltMatchPattern</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,const xmlChar *pattern,xmlDocPtr ctxtdoc,xmlNodePtr ctxtnode
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSetXIncludeDefault</NAME>
+<NAME>xsltRegisterAllExtras</NAME>
 <RETURNS>void 	</RETURNS>
-int xinclude
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltGetXIncludeDefault</NAME>
-<RETURNS>int 	</RETURNS>
 void
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltNewTransformContext</NAME>
-<RETURNS>xsltTransformContextPtr  </RETURNS>
+<NAME>xsltNewDocument</NAME>
+<RETURNS>xsltDocumentPtr 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlDocPtr doc
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltLoadDocument</NAME>
+<RETURNS>xsltDocumentPtr 	</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar *URI
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFindDocument</NAME>
+<RETURNS>xsltDocumentPtr 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlDocPtr doc
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFreeDocuments</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltLoadStyleDocument</NAME>
+<RETURNS>xsltDocumentPtr 	</RETURNS>
+xsltStylesheetPtr style,const xmlChar *URI
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltNewStyleDocument</NAME>
+<RETURNS>xsltDocumentPtr 	</RETURNS>
 xsltStylesheetPtr style,xmlDocPtr doc
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltFreeTransformContext</NAME>
+<NAME>xsltFreeStyleDocuments</NAME>
 <RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltApplyStylesheetUser</NAME>
-<RETURNS>xmlDocPtr 	</RETURNS>
-xsltStylesheetPtr style,xmlDocPtr doc,const char **params,const char *output,FILE * profile,xsltTransformContextPtr userCtxt
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltApplyStripSpaces</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltExtElementLookup</NAME>
-<RETURNS>xsltTransformFunction</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *URI
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltApplyStylesheet</NAME>
-<RETURNS>xmlDocPtr 	</RETURNS>
-xsltStylesheetPtr style,xmlDocPtr doc,const char **params
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltProfileStylesheet</NAME>
-<RETURNS>xmlDocPtr 	</RETURNS>
-xsltStylesheetPtr style,xmlDocPtr doc,const char **params,FILE * output
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltRunStylesheet</NAME>
-<RETURNS>int 	</RETURNS>
-xsltStylesheetPtr style,xmlDocPtr doc,const char **params,const char *output,xmlSAXHandlerPtr SAX,xmlOutputBufferPtr IObuf
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltApplyOneTemplate</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr list,xsltTemplatePtr templ,xsltStackElemPtr params
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltDocumentElem</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSort</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltCopy</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltText</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltElement</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltComment</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltAttribute</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltProcessingInstruction</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltCopyOf</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltValueOf</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltNumber</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltApplyImports</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltCallTemplate</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltApplyTemplates</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltChoose</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltIf</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltForEach</NAME>
-<RETURNS>void  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltRegisterAllElement</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt
-</FUNCTION>
-<FUNCTION>
-<NAME>xslHandleDebugger</NAME>
-<RETURNS>void 	</RETURNS>
-xmlNodePtr cur,xmlNodePtr node,xsltTemplatePtr templ,xsltTransformContextPtr ctxt
-</FUNCTION>
-<MACRO>
-<NAME>XSLT_TODO</NAME>
-#define XSLT_TODO 							\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Unimplemented block at %s:%d\n",				\
-            __FILE__, __LINE__);
-</MACRO>
-<MACRO>
-<NAME>XSLT_STRANGE</NAME>
-#define XSLT_STRANGE 							\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Internal error at %s:%d\n",				\
-            __FILE__, __LINE__);
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_ELEM</NAME>
-#define IS_XSLT_ELEM(n)							\
-    (((n) != NULL) && ((n)->ns != NULL) &&				\
-     (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_NAME</NAME>
-#define IS_XSLT_NAME(n, val)						\
-    (xmlStrEqual((n)->name, (const xmlChar *) (val)))
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_REAL_NODE</NAME>
-#define IS_XSLT_REAL_NODE(n)						\
-    (((n) != NULL) &&							\
-     (((n)->type == XML_ELEMENT_NODE) ||				\
-      ((n)->type == XML_TEXT_NODE) ||					\
-      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
-      ((n)->type == XML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_HTML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_DOCB_DOCUMENT_NODE)))
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_REAL_NODE</NAME>
-#define IS_XSLT_REAL_NODE(n)						\
-    (((n) != NULL) &&							\
-     (((n)->type == XML_ELEMENT_NODE) ||				\
-      ((n)->type == XML_TEXT_NODE) ||					\
-      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
-      ((n)->type == XML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_HTML_DOCUMENT_NODE)))
-</MACRO>
-<FUNCTION>
-<NAME>xsltGetNsProp</NAME>
-<RETURNS>xmlChar  *</RETURNS>
-xmlNodePtr node,const xmlChar *name,const xmlChar *nameSpace
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltPrintErrorContext</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xsltStylesheetPtr style,xmlNodePtr node
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltMessage</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSetGenericErrorFunc</NAME>
-<RETURNS>void 	</RETURNS>
-void *ctx,xmlGenericErrorFunc handler
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSetGenericDebugFunc</NAME>
-<RETURNS>void 	</RETURNS>
-void *ctx,xmlGenericErrorFunc handler
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltDocumentSortFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlNodeSetPtr list
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltDoSortFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr *sorts,int nbsorts
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltGetQNameURI</NAME>
-<RETURNS>const xmlChar  *</RETURNS>
-xmlNodePtr node,xmlChar **name
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultTo</NAME>
-<RETURNS>int 	</RETURNS>
-xmlOutputBufferPtr buf,xmlDocPtr result,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultToFilename</NAME>
-<RETURNS>int 	</RETURNS>
-const char *URI,xmlDocPtr result,xsltStylesheetPtr style,int compression
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultToFile</NAME>
-<RETURNS>int 	</RETURNS>
-FILE *file,xmlDocPtr result,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultToFd</NAME>
-<RETURNS>int 	</RETURNS>
-int fd,xmlDocPtr result,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveProfiling</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,FILE *output
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltTimestamp</NAME>
-<RETURNS>long 	</RETURNS>
-void
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltCalibrateAdjust</NAME>
-<RETURNS>void 	</RETURNS>
-long delta
-</FUNCTION>
-<MACRO>
-<NAME>XSLT_TIMESTAMP_TICS_PER_SEC</NAME>
-#define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
-</MACRO>
-<ENUM>
-<NAME>xsltDebugStatusCodes</NAME>
-typedef enum {
-    XSLT_DEBUG_NONE = 0, /* no debugging allowed */
-    XSLT_DEBUG_INIT,
-    XSLT_DEBUG_STEP,
-    XSLT_DEBUG_STEPOUT,
-    XSLT_DEBUG_NEXT,
-    XSLT_DEBUG_STOP,
-    XSLT_DEBUG_CONT,
-    XSLT_DEBUG_RUN,
-    XSLT_DEBUG_RUN_RESTART,
-    XSLT_DEBUG_QUIT
-} xsltDebugStatusCodes;
-</ENUM>
-<USER_FUNCTION>
-<NAME>xsltHandleDebuggerCallback</NAME>
-<RETURNS>void </RETURNS>
-xmlNodePtr cur, xmlNodePtr node,
-			xsltTemplatePtr templ, xsltTransformContextPtr ctxt
-</USER_FUNCTION>
-<USER_FUNCTION>
-<NAME>xsltAddCallCallback</NAME>
-<RETURNS>int </RETURNS>
-xsltTemplatePtr templ, xmlNodePtr source
-</USER_FUNCTION>
-<USER_FUNCTION>
-<NAME>xsltDropCallCallback</NAME>
-<RETURNS>void </RETURNS>
-void
-</USER_FUNCTION>
-<FUNCTION>
-<NAME>xsltSetDebuggerCallbacks</NAME>
-<RETURNS>int 	</RETURNS>
-int no, void *block
-</FUNCTION>
-<FUNCTION>
-<NAME>xslAddCall</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTemplatePtr templ,xmlNodePtr source
-</FUNCTION>
-<FUNCTION>
-<NAME>xslDropCall</NAME>
-<RETURNS>void 	</RETURNS>
-void
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltEvalXPathPredicate</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlXPathCompExprPtr comp,xmlNsPtr *nsList,int nsNr
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltEvalTemplateString</NAME>
-<RETURNS>xmlChar  *</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr parent
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltEvalAttrValueTemplate</NAME>
-<RETURNS>xmlChar  *</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,const xmlChar *name,const xmlChar *ns
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltEvalStaticAttrValueTemplate</NAME>
-<RETURNS>xmlChar  *</RETURNS>
-xsltStylesheetPtr style,xmlNodePtr node,const xmlChar *name,const xmlChar *ns,int *found
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltEvalXPathString</NAME>
-<RETURNS>xmlChar  *</RETURNS>
-xsltTransformContextPtr ctxt,xmlXPathCompExprPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltTemplateProcess</NAME>
-<RETURNS>xmlNodePtr  *</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltAttrListTemplateProcess</NAME>
-<RETURNS>xmlAttrPtr 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr target,xmlAttrPtr cur
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltAttrTemplateProcess</NAME>
-<RETURNS>xmlAttrPtr 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr target,xmlAttrPtr attr
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltAttrTemplateValueProcess</NAME>
-<RETURNS>xmlChar  *</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar* attr
-</FUNCTION>
-<MACRO>
-<NAME>XSLT_REGISTER_VARIABLE_LOOKUP</NAME>
-#define XSLT_REGISTER_VARIABLE_LOOKUP(ctxt)			\
-    xmlXPathRegisterVariableLookup((ctxt)->xpathCtxt,		\
-	       xsltXPathVariableLookup,	(void *)(ctxt));	\
-    xsltRegisterAllFunctions((ctxt)->xpathCtxt);		\
-    xsltRegisterAllElement(ctxt);				\
-    (ctxt)->xpathCtxt->extra = ctxt
-</MACRO>
-<FUNCTION>
-<NAME>xsltEvalGlobalVariables</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltEvalUserParams</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,const char **params
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltQuoteUserParams</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,const char **params
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltEvalOneUserParam</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar * name,const xmlChar * value
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltQuoteOneUserParam</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar * name,const xmlChar * value
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltParseGlobalVariable</NAME>
-<RETURNS>void 	</RETURNS>
-xsltStylesheetPtr style,xmlNodePtr cur
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltParseGlobalParam</NAME>
-<RETURNS>void 	</RETURNS>
-xsltStylesheetPtr style,xmlNodePtr cur
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltParseStylesheetVariable</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr cur
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltParseStylesheetParam</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr cur
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltParseStylesheetCallerParam</NAME>
-<RETURNS>xsltStackElemPtr  </RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr cur
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltAddStackElemList</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTransformContextPtr ctxt,xsltStackElemPtr elems
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltFreeGlobalVariables</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltVariableLookup</NAME>
-<RETURNS>xmlXPathObjectPtr 	</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *ns_uri
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltXPathVariableLookup</NAME>
-<RETURNS>xmlXPathObjectPtr 	</RETURNS>
-void *ctxt,const xmlChar *name,const xmlChar *ns_uri
-</FUNCTION>
-<MACRO>
-<NAME>XSLT_REGISTER_FUNCTION_LOOKUP</NAME>
-#define XSLT_REGISTER_FUNCTION_LOOKUP(ctxt)			\
-    xmlXPathRegisterFuncLookup((ctxt)->xpathCtxt,		\
-	(xmlXPathFuncLookupFunc) xsltXPathFunctionLookup,	\
-	(void *)(ctxt->xpathCtxt));
-</MACRO>
-<FUNCTION>
-<NAME>xsltXPathFunctionLookup</NAME>
-<RETURNS>xmlXPathFunction</RETURNS>
-xmlXPathContextPtr ctxt,const xmlChar *name,const xmlChar *ns_uri
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltDocumentFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltKeyFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltUnparsedEntityURIFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltFormatNumberFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltGenerateIdFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSystemPropertyFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltElementAvailableFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltFunctionAvailableFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltRegisterAllFunctions</NAME>
-<RETURNS>void 	</RETURNS>
-xmlXPathContextPtr ctxt
+xsltStylesheetPtr style
 </FUNCTION>
 <USER_FUNCTION>
 <NAME>xsltStyleExtInitFunction</NAME>
@@ -869,6 +322,63 @@ xsltStylesheetPtr style,xmlNodePtr inst
 void
 </FUNCTION>
 <MACRO>
+<NAME>XSLT_REGISTER_FUNCTION_LOOKUP</NAME>
+#define XSLT_REGISTER_FUNCTION_LOOKUP(ctxt)			\
+    xmlXPathRegisterFuncLookup((ctxt)->xpathCtxt,		\
+	(xmlXPathFuncLookupFunc) xsltXPathFunctionLookup,	\
+	(void *)(ctxt->xpathCtxt));
+</MACRO>
+<FUNCTION>
+<NAME>xsltXPathFunctionLookup</NAME>
+<RETURNS>xmlXPathFunction</RETURNS>
+xmlXPathContextPtr ctxt,const xmlChar *name,const xmlChar *ns_uri
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDocumentFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltKeyFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltUnparsedEntityURIFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFormatNumberFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltGenerateIdFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSystemPropertyFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltElementAvailableFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFunctionAvailableFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathParserContextPtr ctxt,int nargs
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltRegisterAllFunctions</NAME>
+<RETURNS>void 	</RETURNS>
+xmlXPathContextPtr ctxt
+</FUNCTION>
+<MACRO>
 <NAME>XSLT_GET_IMPORT_PTR</NAME>
 #define XSLT_GET_IMPORT_PTR(res, style, name) {			\
     xsltStylesheetPtr st = style;				\
@@ -919,20 +429,42 @@ xsltTransformContextPtr ctxt,xmlNodePtr node
 xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *nameURI
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltParseStylesheetAttributeSet</NAME>
-<RETURNS>void 	</RETURNS>
-xsltStylesheetPtr style,xmlNodePtr cur
+<NAME>xsltAddKey</NAME>
+<RETURNS>int 	</RETURNS>
+xsltStylesheetPtr style,const xmlChar *name,const xmlChar *nameURI,const xmlChar *match,const xmlChar *use,xmlNodePtr inst
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltFreeAttributeSetsHashes</NAME>
+<NAME>xsltGetKey</NAME>
+<RETURNS>xmlNodeSetPtr 	</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *nameURI,const xmlChar *value
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltInitCtxtKeys</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xsltDocumentPtr doc
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFreeKeys</NAME>
 <RETURNS>void 	</RETURNS>
 xsltStylesheetPtr style
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltApplyAttributeSet</NAME>
+<NAME>xsltFreeDocumentKeys</NAME>
 <RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xmlChar *attributes
+xsltDocumentPtr doc
 </FUNCTION>
+<MACRO>
+<NAME>IN_LIBXSLT</NAME>
+#define IN_LIBXSLT
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_PUBLIC</NAME>
+#define LIBXSLT_PUBLIC __declspec(dllimport)
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_PUBLIC</NAME>
+#define LIBXSLT_PUBLIC 
+</MACRO>
 <FUNCTION>
 <NAME>xsltNamespaceAlias</NAME>
 <RETURNS>void 	</RETURNS>
@@ -963,82 +495,52 @@ xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNsPtr cur
 <RETURNS>void 	</RETURNS>
 xsltStylesheetPtr style
 </FUNCTION>
+<STRUCT>
+<NAME>xsltCompMatch</NAME>
+</STRUCT>
+<TYPEDEF>
+<NAME>xsltCompMatchPtr</NAME>
+typedef xsltCompMatch *xsltCompMatchPtr;
+</TYPEDEF>
 <FUNCTION>
-<NAME>xsltNewDocument</NAME>
-<RETURNS>xsltDocumentPtr 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlDocPtr doc
+<NAME>xsltCompilePattern</NAME>
+<RETURNS>xsltCompMatchPtr  </RETURNS>
+const xmlChar *pattern,xmlDocPtr doc,xmlNodePtr node,xsltStylesheetPtr style,xsltTransformContextPtr runtime
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltLoadDocument</NAME>
-<RETURNS>xsltDocumentPtr 	</RETURNS>
-xsltTransformContextPtr ctxt,const xmlChar *URI
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltFindDocument</NAME>
-<RETURNS>xsltDocumentPtr 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlDocPtr doc
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltFreeDocuments</NAME>
+<NAME>xsltFreeCompMatchList</NAME>
 <RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt
+xsltCompMatchPtr comp
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltLoadStyleDocument</NAME>
-<RETURNS>xsltDocumentPtr 	</RETURNS>
-xsltStylesheetPtr style,const xmlChar *URI
+<NAME>xsltTestCompMatchList</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xsltCompMatchPtr comp
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltNewStyleDocument</NAME>
-<RETURNS>xsltDocumentPtr 	</RETURNS>
-xsltStylesheetPtr style,xmlDocPtr doc
+<NAME>xsltAddTemplate</NAME>
+<RETURNS>int 	</RETURNS>
+xsltStylesheetPtr style,xsltTemplatePtr cur,const xmlChar *mode,const xmlChar *modeURI
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltFreeStyleDocuments</NAME>
+<NAME>xsltGetTemplate</NAME>
+<RETURNS>xsltTemplatePtr 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFreeTemplateHashes</NAME>
 <RETURNS>void 	</RETURNS>
 xsltStylesheetPtr style
 </FUNCTION>
-<MACRO>
-<NAME>XSLT_LIBXSLT_NAMESPACE</NAME>
-#define XSLT_LIBXSLT_NAMESPACE ((xmlChar *) "http://xmlsoft.org/XSLT/namespace")
-</MACRO>
-<MACRO>
-<NAME>XSLT_SAXON_NAMESPACE</NAME>
-#define XSLT_SAXON_NAMESPACE ((xmlChar *) "http://icl.com/saxon")
-</MACRO>
-<MACRO>
-<NAME>XSLT_XT_NAMESPACE</NAME>
-#define XSLT_XT_NAMESPACE ((xmlChar *) "http://www.jclark.com/xt")
-</MACRO>
-<MACRO>
-<NAME>XSLT_XALAN_NAMESPACE</NAME>
-#define XSLT_XALAN_NAMESPACE ((xmlChar *)	\
-	                        "org.apache.xalan.xslt.extensions.Redirect")
-</MACRO>
-<MACRO>
-<NAME>XSLT_NORM_SAXON_NAMESPACE</NAME>
-#define XSLT_NORM_SAXON_NAMESPACE ((xmlChar *)	\
-	"http://nwalsh.com/xslt/ext/com.nwalsh.saxon.CVS")
-</MACRO>
 <FUNCTION>
-<NAME>xsltFunctionNodeSet</NAME>
+<NAME>xsltCleanupTemplates</NAME>
 <RETURNS>void 	</RETURNS>
-xmlXPathParserContextPtr ctxt,int nargs
+xsltStylesheetPtr style
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltDebug</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltRegisterExtras</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltRegisterAllExtras</NAME>
-<RETURNS>void 	</RETURNS>
-void
+<NAME>xsltMatchPattern</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,const xmlChar *pattern,xmlDocPtr ctxtdoc,xmlNodePtr ctxtnode
 </FUNCTION>
 <VARIABLE>
 <NAME>xsltExtMarker</NAME>
@@ -1059,9 +561,295 @@ xsltStylesheetPtr style,xmlNodePtr inst
 <RETURNS>void 	</RETURNS>
 xsltStylesheetPtr style
 </FUNCTION>
+<FUNCTION>
+<NAME>xsltEvalXPathPredicate</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlXPathCompExprPtr comp,xmlNsPtr *nsList,int nsNr
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltEvalTemplateString</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr parent
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltEvalAttrValueTemplate</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,const xmlChar *name,const xmlChar *ns
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltEvalStaticAttrValueTemplate</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xsltStylesheetPtr style,xmlNodePtr node,const xmlChar *name,const xmlChar *ns,int *found
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltEvalXPathString</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xsltTransformContextPtr ctxt,xmlXPathCompExprPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltTemplateProcess</NAME>
+<RETURNS>xmlNodePtr  *</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAttrListTemplateProcess</NAME>
+<RETURNS>xmlAttrPtr 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr target,xmlAttrPtr cur
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAttrTemplateProcess</NAME>
+<RETURNS>xmlAttrPtr 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr target,xmlAttrPtr attr
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAttrTemplateValueProcess</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar* attr
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetXIncludeDefault</NAME>
+<RETURNS>void 	</RETURNS>
+int xinclude
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltGetXIncludeDefault</NAME>
+<RETURNS>int 	</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltNewTransformContext</NAME>
+<RETURNS>xsltTransformContextPtr  </RETURNS>
+xsltStylesheetPtr style,xmlDocPtr doc
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFreeTransformContext</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltApplyStylesheetUser</NAME>
+<RETURNS>xmlDocPtr 	</RETURNS>
+xsltStylesheetPtr style,xmlDocPtr doc,const char **params,const char *output,FILE * profile,xsltTransformContextPtr userCtxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltApplyStripSpaces</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltExtElementLookup</NAME>
+<RETURNS>xsltTransformFunction</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *URI
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltApplyStylesheet</NAME>
+<RETURNS>xmlDocPtr 	</RETURNS>
+xsltStylesheetPtr style,xmlDocPtr doc,const char **params
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltProfileStylesheet</NAME>
+<RETURNS>xmlDocPtr 	</RETURNS>
+xsltStylesheetPtr style,xmlDocPtr doc,const char **params,FILE * output
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltRunStylesheet</NAME>
+<RETURNS>int 	</RETURNS>
+xsltStylesheetPtr style,xmlDocPtr doc,const char **params,const char *output,xmlSAXHandlerPtr SAX,xmlOutputBufferPtr IObuf
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltApplyOneTemplate</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr list,xsltTemplatePtr templ,xsltStackElemPtr params
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDocumentElem</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSort</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCopy</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltText</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltElement</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltComment</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAttribute</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltProcessingInstruction</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCopyOf</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltValueOf</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltNumber</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltApplyImports</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCallTemplate</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltApplyTemplates</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltChoose</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltIf</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltForEach</NAME>
+<RETURNS>void  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xsltStylePreCompPtr comp
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltRegisterAllElement</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xslHandleDebugger</NAME>
+<RETURNS>void 	</RETURNS>
+xmlNodePtr cur,xmlNodePtr node,xsltTemplatePtr templ,xsltTransformContextPtr ctxt
+</FUNCTION>
 <MACRO>
-<NAME>IN_LIBXSLT</NAME>
-#define IN_LIBXSLT
+<NAME>XSLT_REGISTER_VARIABLE_LOOKUP</NAME>
+#define XSLT_REGISTER_VARIABLE_LOOKUP(ctxt)			\
+    xmlXPathRegisterVariableLookup((ctxt)->xpathCtxt,		\
+	       xsltXPathVariableLookup,	(void *)(ctxt));	\
+    xsltRegisterAllFunctions((ctxt)->xpathCtxt);		\
+    xsltRegisterAllElement(ctxt);				\
+    (ctxt)->xpathCtxt->extra = ctxt
+</MACRO>
+<FUNCTION>
+<NAME>xsltEvalGlobalVariables</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltEvalUserParams</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,const char **params
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltQuoteUserParams</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,const char **params
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltEvalOneUserParam</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar * name,const xmlChar * value
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltQuoteOneUserParam</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar * name,const xmlChar * value
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltParseGlobalVariable</NAME>
+<RETURNS>void 	</RETURNS>
+xsltStylesheetPtr style,xmlNodePtr cur
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltParseGlobalParam</NAME>
+<RETURNS>void 	</RETURNS>
+xsltStylesheetPtr style,xmlNodePtr cur
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltParseStylesheetVariable</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr cur
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltParseStylesheetParam</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr cur
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltParseStylesheetCallerParam</NAME>
+<RETURNS>xsltStackElemPtr  </RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr cur
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAddStackElemList</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTransformContextPtr ctxt,xsltStackElemPtr elems
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltFreeGlobalVariables</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltVariableLookup</NAME>
+<RETURNS>xmlXPathObjectPtr 	</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *ns_uri
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltXPathVariableLookup</NAME>
+<RETURNS>xmlXPathObjectPtr 	</RETURNS>
+void *ctxt,const xmlChar *name,const xmlChar *ns_uri
+</FUNCTION>
+<MACRO>
+<NAME>XSLT_DEFAULT_VERSION</NAME>
+#define XSLT_DEFAULT_VERSION     "1.0"
+</MACRO>
+<MACRO>
+<NAME>XSLT_DEFAULT_VENDOR</NAME>
+#define XSLT_DEFAULT_VENDOR      "libxslt"
+</MACRO>
+<MACRO>
+<NAME>XSLT_DEFAULT_URL</NAME>
+#define XSLT_DEFAULT_URL         "http://xmlsoft.org/XSLT/"
+</MACRO>
+<MACRO>
+<NAME>XSLT_NAMESPACE</NAME>
+#define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_PUBLIC</NAME>
@@ -1071,6 +859,11 @@ xsltStylesheetPtr style
 <NAME>LIBXSLT_PUBLIC</NAME>
 #define LIBXSLT_PUBLIC 
 </MACRO>
+<FUNCTION>
+<NAME>xsltCleanupGlobals</NAME>
+<RETURNS>void 	</RETURNS>
+void
+</FUNCTION>
 <MACRO>
 <NAME>XSLT_MAX_SORT</NAME>
 #define XSLT_MAX_SORT 5
@@ -1591,3 +1384,210 @@ xsltStylesheetPtr style
 <RETURNS>int 	</RETURNS>
 xsltTransformContextPtr ctxt
 </FUNCTION>
+<MACRO>
+<NAME>XSLT_TODO</NAME>
+#define XSLT_TODO 							\
+    xsltGenericError(xsltGenericErrorContext,				\
+	    "Unimplemented block at %s:%d\n",				\
+            __FILE__, __LINE__);
+</MACRO>
+<MACRO>
+<NAME>XSLT_STRANGE</NAME>
+#define XSLT_STRANGE 							\
+    xsltGenericError(xsltGenericErrorContext,				\
+	    "Internal error at %s:%d\n",				\
+            __FILE__, __LINE__);
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_ELEM</NAME>
+#define IS_XSLT_ELEM(n)							\
+    (((n) != NULL) && ((n)->ns != NULL) &&				\
+     (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_NAME</NAME>
+#define IS_XSLT_NAME(n, val)						\
+    (xmlStrEqual((n)->name, (const xmlChar *) (val)))
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_REAL_NODE</NAME>
+#define IS_XSLT_REAL_NODE(n)						\
+    (((n) != NULL) &&							\
+     (((n)->type == XML_ELEMENT_NODE) ||				\
+      ((n)->type == XML_TEXT_NODE) ||					\
+      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
+      ((n)->type == XML_DOCUMENT_NODE) ||				\
+      ((n)->type == XML_HTML_DOCUMENT_NODE) ||				\
+      ((n)->type == XML_DOCB_DOCUMENT_NODE)))
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_REAL_NODE</NAME>
+#define IS_XSLT_REAL_NODE(n)						\
+    (((n) != NULL) &&							\
+     (((n)->type == XML_ELEMENT_NODE) ||				\
+      ((n)->type == XML_TEXT_NODE) ||					\
+      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
+      ((n)->type == XML_DOCUMENT_NODE) ||				\
+      ((n)->type == XML_HTML_DOCUMENT_NODE)))
+</MACRO>
+<FUNCTION>
+<NAME>xsltGetNsProp</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xmlNodePtr node,const xmlChar *name,const xmlChar *nameSpace
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltPrintErrorContext</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xsltStylesheetPtr style,xmlNodePtr node
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltMessage</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetGenericErrorFunc</NAME>
+<RETURNS>void 	</RETURNS>
+void *ctx,xmlGenericErrorFunc handler
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetGenericDebugFunc</NAME>
+<RETURNS>void 	</RETURNS>
+void *ctx,xmlGenericErrorFunc handler
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDocumentSortFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlNodeSetPtr list
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDoSortFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr *sorts,int nbsorts
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltGetQNameURI</NAME>
+<RETURNS>const xmlChar  *</RETURNS>
+xmlNodePtr node,xmlChar **name
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultTo</NAME>
+<RETURNS>int 	</RETURNS>
+xmlOutputBufferPtr buf,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultToFilename</NAME>
+<RETURNS>int 	</RETURNS>
+const char *URI,xmlDocPtr result,xsltStylesheetPtr style,int compression
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultToFile</NAME>
+<RETURNS>int 	</RETURNS>
+FILE *file,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultToFd</NAME>
+<RETURNS>int 	</RETURNS>
+int fd,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveProfiling</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,FILE *output
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltTimestamp</NAME>
+<RETURNS>long 	</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCalibrateAdjust</NAME>
+<RETURNS>void 	</RETURNS>
+long delta
+</FUNCTION>
+<MACRO>
+<NAME>XSLT_TIMESTAMP_TICS_PER_SEC</NAME>
+#define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
+</MACRO>
+<ENUM>
+<NAME>xsltDebugStatusCodes</NAME>
+typedef enum {
+    XSLT_DEBUG_NONE = 0, /* no debugging allowed */
+    XSLT_DEBUG_INIT,
+    XSLT_DEBUG_STEP,
+    XSLT_DEBUG_STEPOUT,
+    XSLT_DEBUG_NEXT,
+    XSLT_DEBUG_STOP,
+    XSLT_DEBUG_CONT,
+    XSLT_DEBUG_RUN,
+    XSLT_DEBUG_RUN_RESTART,
+    XSLT_DEBUG_QUIT
+} xsltDebugStatusCodes;
+</ENUM>
+<USER_FUNCTION>
+<NAME>xsltHandleDebuggerCallback</NAME>
+<RETURNS>void </RETURNS>
+xmlNodePtr cur, xmlNodePtr node,
+			xsltTemplatePtr templ, xsltTransformContextPtr ctxt
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>xsltAddCallCallback</NAME>
+<RETURNS>int </RETURNS>
+xsltTemplatePtr templ, xmlNodePtr source
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>xsltDropCallCallback</NAME>
+<RETURNS>void </RETURNS>
+void
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>xsltSetDebuggerCallbacks</NAME>
+<RETURNS>int 	</RETURNS>
+int no, void *block
+</FUNCTION>
+<FUNCTION>
+<NAME>xslAddCall</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTemplatePtr templ,xmlNodePtr source
+</FUNCTION>
+<FUNCTION>
+<NAME>xslDropCall</NAME>
+<RETURNS>void 	</RETURNS>
+void
+</FUNCTION>
+<MACRO>
+<NAME>LIBXSLT_DOTTED_VERSION</NAME>
+#define LIBXSLT_DOTTED_VERSION "1.0.13"
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_VERSION</NAME>
+#define LIBXSLT_VERSION 10013
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_VERSION_STRING</NAME>
+#define LIBXSLT_VERSION_STRING "10013"
+</MACRO>
+<MACRO>
+<NAME>WITH_XSLT_DEBUG</NAME>
+#define WITH_XSLT_DEBUG
+</MACRO>
+<MACRO>
+<NAME>DEBUG_MEMORY</NAME>
+#define DEBUG_MEMORY
+</MACRO>
+<MACRO>
+<NAME>DEBUG_MEMORY_LOCATION</NAME>
+#define DEBUG_MEMORY_LOCATION
+</MACRO>
+<MACRO>
+<NAME>ATTRIBUTE_UNUSED</NAME>
+#define ATTRIBUTE_UNUSED
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_PUBLIC</NAME>
+#define LIBXSLT_PUBLIC __declspec(dllimport)
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_PUBLIC</NAME>
+#define LIBXSLT_PUBLIC 
+</MACRO>

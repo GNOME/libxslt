@@ -1,3 +1,10 @@
+Mon Mar 18 16:22:46 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/Makefile.am python/generator.py python/libxslt.c
+	  python/types.c python/tests/Makefile.am: applied the same kind of
+	  fixes to the Python Makefiels than to libxml2 ones. Updates
+	  and cleanups too.
+
 Sat Mar 16 23:48:21 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/common.c libxslt/pattern.c  libxslt/transform.c

@@ -15,7 +15,7 @@ EXTRA_DIST = $(TESTSPY) $(XMLS) $(EXTRAS)
 
 if WITH_PYTHON
 tests: $(TESTSPY)
-	-@(PYTHONPATH=".." ; export PYTHONPATH; \
+	-@(PYTHONPATH="..:../.libs" ; export PYTHONPATH; \
 	   for test in $(TESTSPY) ; do echo "-- $$test" ; $(PYTHON) $$test ; done)
 else
 tests:

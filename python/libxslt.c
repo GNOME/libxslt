@@ -12,16 +12,20 @@
  * daniel@veillard.com
  */
 #include <Python.h>
+#include "config.h"
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include "libxslt_wrap.h"
 #include "libxslt-py.h"
 
+
 /* #define DEBUG */
 /* #define DEBUG_XPATH */
 /* #define DEBUG_ERROR */
 /* #define DEBUG_MEMORY */
+
+void initlibxsltmod(void);
 
 /************************************************************************
  *									*
@@ -40,7 +44,8 @@ libxslt_xsltStylesheetPtrWrap(xsltStylesheetPtr style) {
 	Py_INCREF(Py_None);
 	return(Py_None);
     }
-    ret = PyCObject_FromVoidPtrAndDesc((void *) style, "xsltStylesheetPtr", NULL);
+    ret = PyCObject_FromVoidPtrAndDesc((void *) style,
+	                               (char *)"xsltStylesheetPtr", NULL);
     return(ret);
 }
 
@@ -55,93 +60,9 @@ libxslt_xsltTransformContextPtrWrap(xsltTransformContextPtr ctxt) {
 	Py_INCREF(Py_None);
 	return(Py_None);
     }
-    ret = PyCObject_FromVoidPtrAndDesc((void *) ctxt, "xsltTransformContextPtr", NULL);
+    ret = PyCObject_FromVoidPtrAndDesc((void *) ctxt,
+	                               (char *)"xsltTransformContextPtr", NULL);
     return(ret);
-}
-
-/************************************************************************
- *									*
- *		Memory debug interface					*
- *									*
- ************************************************************************/
-
-extern void xmlMemFree(void *ptr);
-extern void *xmlMemMalloc(size_t size);
-extern void *xmlMemRealloc(void *ptr,size_t size);
-extern char *xmlMemoryStrdup(const char *str);
-
-static int libxsltMemoryDebugActivated = 0;
-static long libxsltMemoryAllocatedBase = 0;
-
-static int libxsltMemoryDebug = 0;
-static xmlFreeFunc freeFunc = NULL;
-static xmlMallocFunc mallocFunc = NULL;
-static xmlReallocFunc reallocFunc = NULL;
-static xmlStrdupFunc strdupFunc = NULL;
-
-PyObject *
-libxslt_xmlDebugMemory(PyObject *self, PyObject *args) {
-    int activate;
-    PyObject *py_retval;
-    long ret;
-
-    if (!PyArg_ParseTuple(args, "i:xmlDebugMemory", &activate))
-        return(NULL);
-
-#ifdef DEBUG_MEMORY
-    printf("libxslt_xmlDebugMemory(%d) called\n", activate);
-#endif
-
-    if (activate != 0) {
-	if (libxsltMemoryDebug == 0) {
-	    /*
-	     * First initialize the library and grab the old memory handlers
-	     * and switch the library to memory debugging
-	     */
-	    xmlMemGet((xmlFreeFunc *) &freeFunc,
-		      (xmlMallocFunc *)&mallocFunc,
-		      (xmlReallocFunc *)&reallocFunc,
-		      (xmlStrdupFunc *) &strdupFunc);
-	    if ((freeFunc == xmlMemFree) && (mallocFunc == xmlMemMalloc) &&
-		(reallocFunc == xmlMemRealloc) &&
-		(strdupFunc == xmlMemoryStrdup)) {
-		libxsltMemoryAllocatedBase = xmlMemUsed();
-	    } else {
-		ret = (long) xmlMemSetup(xmlMemFree, xmlMemMalloc,
-			                 xmlMemRealloc, xmlMemoryStrdup);
-		if (ret < 0)
-		    goto error;
-		libxsltMemoryAllocatedBase = xmlMemUsed();
-	    }
-	    xmlInitParser();
-	    ret = 0;
-	} else if (libxsltMemoryDebugActivated == 0) {
-	    libxsltMemoryAllocatedBase = xmlMemUsed();
-	    ret = 0;
-	} else {
-	    ret = xmlMemUsed() - libxsltMemoryAllocatedBase;
-	}
-	libxsltMemoryDebug = 1;
-	libxsltMemoryDebugActivated = 1;
-    } else {
-	if (libxsltMemoryDebugActivated == 1)
-	    ret = xmlMemUsed() - libxsltMemoryAllocatedBase;
-	else
-	    ret = 0;
-	libxsltMemoryDebugActivated = 0;
-    }
-error:
-    py_retval = libxml_longWrap(ret);
-    return(py_retval);
-}
-
-PyObject *
-libxslt_xmlDumpMemory(PyObject *self, PyObject *args) {
-
-    if (libxsltMemoryDebug != 0)
-	xmlMemoryDump();
-    Py_INCREF(Py_None);
-    return(Py_None);
 }
 
 /************************************************************************
@@ -199,14 +120,15 @@ libxslt_xmlXPathFuncCallback(xmlXPathParserContextPtr ctxt, int nargs) {
 }
 
 PyObject *
-libxslt_xsltRegisterExtModuleFunction(PyObject *self, PyObject *args) {
+libxslt_xsltRegisterExtModuleFunction(PyObject *self ATTRIBUTE_UNUSED,
+	                              PyObject *args) {
     PyObject *py_retval;
     int ret = 0;
     xmlChar *name;
     xmlChar *ns_uri;
     PyObject *pyobj_f;
 
-    if (!PyArg_ParseTuple(args, "szO:registerXPathFunction",
+    if (!PyArg_ParseTuple(args, (char *)"szO:registerXPathFunction",
 		          &name, &ns_uri, &pyobj_f))
         return(NULL);
 
@@ -239,8 +161,8 @@ libxslt_xsltRegisterExtModuleFunction(PyObject *self, PyObject *args) {
     return(py_retval);
 }
 
-void
-deallocateCallback(void *payload, xmlChar *name) {
+static void
+deallocateCallback(void *payload, xmlChar *name ATTRIBUTE_UNUSED) {
     PyObject *function = (PyObject *) payload;
 
 #ifdef DEBUG_XPATH
@@ -257,7 +179,7 @@ deallocateCallback(void *payload, xmlChar *name) {
  ************************************************************************/
 
 PyObject *
-libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
+libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
     PyObject *py_retval;
     xmlDocPtr c_retval;
     xsltStylesheetPtr style;
@@ -270,7 +192,8 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
     PyObject *name;
     PyObject *value;
 
-    if (!PyArg_ParseTuple(args, "OOO:xsltApplyStylesheet", &pyobj_style, &pyobj_doc, &pyobj_params))
+    if (!PyArg_ParseTuple(args, (char *) "OOO:xsltApplyStylesheet",
+		          &pyobj_style, &pyobj_doc, &pyobj_params))
         return(NULL);
 
     if (pyobj_params != Py_None) {
@@ -291,11 +214,12 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
 
 		    tmp = PyString_AS_STRING(name);
 		    size = PyString_GET_SIZE(name);
-		    params[j * 2] = xmlCharStrndup(tmp, size);
+		    params[j * 2] = (char *) xmlCharStrndup(tmp, size);
 		    if (PyString_Check(value)) {
 			tmp = PyString_AS_STRING(value);
 			size = PyString_GET_SIZE(value);
-			params[(j * 2) + 1] = xmlCharStrndup(tmp, size);
+			params[(j * 2) + 1] = (char *)
+			    xmlCharStrndup(tmp, size);
 		    } else {
 			params[(j * 2) + 1] = NULL;
 		    }
@@ -334,7 +258,8 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
  ************************************************************************/
 
 PyObject *
-libxslt_xsltCleanup(PyObject *self, PyObject *args) {
+libxslt_xsltCleanup(PyObject *self ATTRIBUTE_UNUSED,
+	            PyObject *args ATTRIBUTE_UNUSED) {
 
     if (libxslt_extModuleFunctions != NULL) {
 	xmlHashFree(libxslt_extModuleFunctions, deallocateCallback);
@@ -352,7 +277,7 @@ libxslt_xsltCleanup(PyObject *self, PyObject *args) {
  ************************************************************************/
 static PyMethodDef libxsltMethods[] = {
 #include "libxslt-export.c"
-    { NULL }
+    { NULL, NULL, 0, NULL }
 };
 
 #ifdef MERGED_MODULES
@@ -369,7 +294,7 @@ void initlibxsltmod(void) {
 
     if (initialized != 0)
 	return;
-    m = Py_InitModule("libxsltmod", libxsltMethods);
+    m = Py_InitModule((char *)"libxsltmod", libxsltMethods);
     initialized = 1;
     /* libxslt_xmlErrorInitialize(); */
     /*

@@ -351,8 +351,14 @@ def print_function_wrapper(name, output, export, include):
 
     if ret[0] == 'void':
         if file == "python_accessor":
-            c_call = "\n    %s->%s = %s;\n" % (args[0][0], args[1][0],
-                                               args[1][0])
+	    if args[1][1] == "char *" or args[1][1] == "xmlChar *":
+		c_call = "\n    if (%s->%s != NULL) xmlFree(%s->%s);\n" % (
+		                 args[0][0], args[1][0], args[0][0], args[1][0])
+		c_call = c_call + "    %s->%s = xmlStrdup((const xmlChar *)%s);\n" % (args[0][0],
+		                 args[1][0], args[1][0])
+	    else:
+		c_call = "\n    %s->%s = %s;\n" % (args[0][0], args[1][0],
+						   args[1][0])
         else:
             c_call = "\n    %s(%s);\n" % (name, c_call);
         ret_convert = "    Py_INCREF(Py_None);\n    return(Py_None);\n"
@@ -368,7 +374,10 @@ def print_function_wrapper(name, output, export, include):
     elif py_return_types.has_key(ret[0]):
         (f, t, n, c, p) = py_return_types[ret[0]]
         c_return = "    %s c_retval;\n" % (ret[0])
-        c_call = "\n    c_retval = %s(%s);\n" % (name, c_call);
+        if file == "python_accessor" and ret[2] != None:
+            c_call = "\n    c_retval = %s->%s;\n" % (args[0][0], ret[2])
+        else:
+            c_call = "\n    c_retval = %s(%s);\n" % (name, c_call);
         ret_convert = "    py_retval = %s%sWrap((%s) c_retval);\n" % (p,n,c)
         ret_convert = ret_convert + "    return(py_retval);\n"
     else:
@@ -384,7 +393,7 @@ def print_function_wrapper(name, output, export, include):
     include.write("PyObject * ")
     include.write("libxslt_%s(PyObject *self, PyObject *args);\n" % (name))
 
-    export.write("    { \"%s\", libxslt_%s, METH_VARARGS, NULL },\n" % (name, name))
+    export.write("    { (char *)\"%s\", libxslt_%s, METH_VARARGS, NULL },\n" % (name, name))
 
     if file == "python":
         # Those have been manually generated
@@ -394,7 +403,10 @@ def print_function_wrapper(name, output, export, include):
         return 1
 
     output.write("PyObject *\n")
-    output.write("libxslt_%s(PyObject *self, PyObject *args) {\n" % (name))
+    output.write("libxslt_%s(ATTRIBUTE_UNUSED PyObject *self," % (name))
+    if format == "":
+	output.write("ATTRIBUTE_UNUSED ")
+    output.write(" PyObject *args) {\n")
     if ret[0] != 'void':
         output.write("    PyObject *py_retval;\n")
     if c_return != "":
@@ -402,7 +414,7 @@ def print_function_wrapper(name, output, export, include):
     if c_args != "":
         output.write(c_args)
     if format != "":
-        output.write("\n    if (!PyArg_ParseTuple(args, \"%s\"%s))\n" %
+        output.write("\n    if (!PyArg_ParseTuple(args, (char *)\"%s\"%s))\n" %
                      (format, format_args))
         output.write("        return(NULL);\n")
     if c_convert != "":
@@ -461,6 +473,8 @@ def buildStubs():
     export.write("/* Generated */\n\n")
     wrapper = open("libxslt-py.c", "w")
     wrapper.write("/* Generated */\n\n")
+    wrapper.write("#include \"config.h\"\n")
+    wrapper.write("#include <libxslt/xsltconfig.h>\n")
     wrapper.write("#include \"libxslt_wrap.h\"\n")
     wrapper.write("#include \"libxslt-py.h\"\n\n")
     for function in functions.keys():
