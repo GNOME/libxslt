@@ -1,3 +1,8 @@
+Sun Jan 30 20:01:21 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* tests/plugins/testplugin.c win32/Makefile.msvc win32/configure.js:
+	  applied plugin patch for Windows by Joel Reed
+
 Fri Jan 28 01:00:56 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* win32/configure.js: Makefile fixes for Widows from Joel Reed

@@ -396,6 +396,15 @@ if (cruntime == "/MT" || cruntime == "/MTd" ||
 	buildStatic = 1;
 }
 
+if (buildStatic == 1 && withModules == 1) {
+	WScript.Echo("Warning: Disabling plugin support.");
+	WScript.Echo("");  
+  WScript.Echo("Modules cannot be enabled when a statically linked cruntime has");
+	WScript.Echo("been selected, or when xsltproc.exe is linked statically to libxslt.");
+	WScript.Echo("");  
+	withModules=0;
+}
+
 dirSep = "\\";
 //if (compiler == "mingw")
 //	dirSep = "/";

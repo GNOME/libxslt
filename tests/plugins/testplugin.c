@@ -9,7 +9,6 @@
  * daniel@veillard.com
  */
 
-#define IN_LIBXSLT
 #include <libxslt/libxslt.h>
 
 #ifdef WITH_MODULES
@@ -32,6 +31,14 @@
 #include <libxslt/extensions.h>
 
 #define XSLT_TESTPLUGIN_URL "http://xmlsoft.org/xslt/testplugin"
+
+/* make sure init function is exported on win32 */
+#if defined(_WIN32)
+  #define PLUGINPUBFUN __declspec(dllexport)
+#else
+  #define PLUGINPUBFUN
+#endif
+
 
 /************************************************************************
  * 									*
@@ -311,7 +318,7 @@ xsltExtStyleShutdownTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
  */
 
 void
-XSLTPUBFUN xmlsoft_org_xslt_testplugin_init(void)
+PLUGINPUBFUN xmlsoft_org_xslt_testplugin_init(void)
 {
     xsltRegisterExtModuleFull((const xmlChar *) XSLT_TESTPLUGIN_URL,
                               xsltExtInitTest, xsltExtShutdownTest,
