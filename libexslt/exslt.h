@@ -3,11 +3,12 @@
 #define __EXSLT_H__
 
 #include <libxml/tree.h>
+#include "exsltconfig.h"
 
-extern const char *exsltLibraryVersion;
-extern const int exsltLibexsltVersion;
-extern const int exsltLibxsltVersion;
-extern const int exsltLibxmlVersion;
+LIBEXSLT_PUBLIC extern const char *exsltLibraryVersion;
+LIBEXSLT_PUBLIC extern const int exsltLibexsltVersion;
+LIBEXSLT_PUBLIC extern const int exsltLibxsltVersion;
+LIBEXSLT_PUBLIC extern const int exsltLibxmlVersion;
 
 #define EXSLT_COMMON_NAMESPACE ((const xmlChar *) "http://exslt.org/common")
 #define EXSLT_MATH_NAMESPACE ((const xmlChar *) "http://exslt.org/math")

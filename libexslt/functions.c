@@ -259,7 +259,9 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
      * the generation of result nodes.
      */
     if (fake->children != NULL) {
+#ifdef LIBXML_DEBUG_ENABLED
 	xmlDebugDumpNode (stderr, fake, 1);
+#endif
 	xsltGenericError(xsltGenericErrorContext,
 			 "{%s}%s: cannot write to result tree while "
 			 "executing a function\n",

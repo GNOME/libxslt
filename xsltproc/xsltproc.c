@@ -33,11 +33,14 @@
 #ifdef LIBXML_CATALOG_ENABLED
 #include <libxml/catalog.h>
 #endif
+#include <libxml/parserInternals.h>
+
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 #include <libxslt/extensions.h>
+
 #include <libexslt/exsltconfig.h>
 
 #ifdef WIN32
@@ -50,7 +53,6 @@
 #include <sys/time.h>
 #endif /* WIN32 */
 
-extern int xmlLoadExtDtdDefaultValue;
 
 static int debug = 0;
 static int repeat = 0;

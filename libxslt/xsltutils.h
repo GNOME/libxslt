@@ -9,6 +9,12 @@
 #ifndef __XML_XSLTUTILS_H__
 #define __XML_XSLTUTILS_H__
 
+#if defined(WIN32) && defined(_MSC_VER)
+#include <libxslt/xsltwin32config.h>
+#else
+#include <libxslt/xsltconfig.h>
+#endif
+
 #include <libxml/xpath.h>
 #include <libxml/xmlerror.h>
 #include "xsltInternals.h"
@@ -64,10 +70,10 @@ xmlChar *	 xsltGetNsProp			(xmlNodePtr node,
 /*
  * XSLT specific error and debug reporting functions
  */
-extern xmlGenericErrorFunc xsltGenericError;
-extern void *xsltGenericErrorContext;
-extern xmlGenericErrorFunc xsltGenericDebug;
-extern void *xsltGenericDebugContext;
+LIBXSLT_PUBLIC extern xmlGenericErrorFunc xsltGenericError;
+LIBXSLT_PUBLIC extern void *xsltGenericErrorContext;
+LIBXSLT_PUBLIC extern xmlGenericErrorFunc xsltGenericDebug;
+LIBXSLT_PUBLIC extern void *xsltGenericDebugContext;
 
 void		xsltPrintErrorContext		(xsltTransformContextPtr ctxt,
 	                                         xsltStylesheetPtr style,

@@ -10,10 +10,11 @@ confexec_DATA = xsltConf.sh
 
 bin_SCRIPTS = xslt-config
 
+dist-hook: libxml.spec
+	(cd $(srcdir) ; tar -cf - --exclude CVS win32) | (cd $(distdir); tar xf -)
+
 EXTRA_DIST = xsltConf.sh.in xslt-config.in libxslt.spec libxslt.spec.in \
-             FEATURES TODO COPYING.LIB Copyright IPR \
-	     win32/libxslt/libxslt.def win32/libxslt/libxslt.dsw \
-	     win32/libxslt/libxslt_so.dsp win32/xsltproc/xsltproc.dsp
+             FEATURES TODO COPYING.LIB Copyright IPR
 
 ## We create xsltConf.sh here and not from configure because we want
 ## to get the paths expanded correctly.  Macros like srcdir are given

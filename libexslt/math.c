@@ -8,7 +8,7 @@
 
 #include "exslt.h"
 
-extern double xmlXPathNAN;
+/* extern double xmlXPathNAN; */
 
 /**
  * exsltMathMin:

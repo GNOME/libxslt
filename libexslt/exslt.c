@@ -1,6 +1,10 @@
 #include <libxml/xmlversion.h>
 
+#if defined(WIN32) && defined(_MSC_VER)
+#include <libxslt/xsltwin32config.h>
+#else
 #include <libxslt/xsltconfig.h>
+#endif
 #include <libxslt/extensions.h>
 
 #include "exsltconfig.h"

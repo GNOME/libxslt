@@ -87,6 +87,15 @@ extern "C" {
 #define ATTRIBUTE_UNUSED
 #endif
 
+/**
+ * LIBXSLT_PUBLIC:
+ *
+ * This macro is used to declare PUBLIC variables for MSC on Windows
+ */
+#if !defined(WIN32) || defined(__CYGWIN__)
+#define LIBXSLT_PUBLIC
+#endif
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,3 +1,15 @@
+Fri Aug  3 14:23:25 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* tests/general/bug-21-.out tests/general/bug-31-.out:
+	  this got fixed by libxml patches
+	* win32/readme.msvc win32/dsp/* xsltproc/xsltproc.c
+	  Makefile.am libexslt/exslt.[ch] libexslt/exsltconfig.h.in
+	  libexslt/functions.c libexslt/math.c libxslt/win32config.h
+	  libxslt/xsltconfig.h.in libxslt/xsltutils.h
+	  libxslt/xsltwin32config.h libxslt/xsltwin32config.h.in:
+	  Applied Igor  Zlatkovic Win32 Facelift No.2 patch, and fixed
+	  a few things related to those changes.
+
 Wed Aug  1 13:58:21 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: well one need one \n after DOCTYPE
