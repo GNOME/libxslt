@@ -1,3 +1,10 @@
+Thu Sep 30 11:28:03 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: fixed problem with negative periods
+	  (bug 154021)
+	* tests/exslt/date/sum.2.out: changed expected output, now
+	  agrees with comments in sum.2.xml test data file
+	  
 Thu Sep 30 08:19:28 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/templates.c: patch from Mark Vakoc about an incorrect
