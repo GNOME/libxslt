@@ -1,3 +1,8 @@
+Tue Nov  4 01:08:17 PST 2003 William Brack <wbrack@mmm.com.hk>
+
+	* tests/multiple/out/letter*.orig: updated to reflect change
+	  to HTML output in libxml2 (formatting of <p>, bug #125093)
+
 Sun Nov  2 09:07:32 PST 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xslt.c: fixed bug #124286 - detect invalid name on
