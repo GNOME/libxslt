@@ -69,6 +69,7 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
     sprefix = xsltGetNsProp(node, (const xmlChar *)"stylesheet-prefix",
 	                   XSLT_NAMESPACE);
     if (sprefix == NULL) {
+	xsltPrintErrorContext(NULL, style, node);
 	xsltGenericError(xsltGenericErrorContext,
 	    "namespace-alias: stylesheet-prefix attribute missing\n");
 	return;
@@ -76,6 +77,7 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
     rprefix = xsltGetNsProp(node, (const xmlChar *)"result-prefix",
 	                   XSLT_NAMESPACE);
     if (rprefix == NULL) {
+	xsltPrintErrorContext(NULL, style, node);
 	xsltGenericError(xsltGenericErrorContext,
 	    "namespace-alias: result-prefix attribute missing\n");
 	goto error;
@@ -86,6 +88,7 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
 	sNs = xmlSearchNs(node->doc, node, sprefix);
     }
     if ((sNs == NULL) || (sNs->href == NULL)) {
+	xsltPrintErrorContext(NULL, style, node);
 	xsltGenericError(xsltGenericErrorContext,
 	    "namespace-alias: prefix %s not bound to any namespace\n",
 	                 sprefix);
@@ -97,6 +100,7 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
 	rNs = xmlSearchNs(node->doc, node, rprefix);
     }
     if ((rNs == NULL) || (rNs->href == NULL)) {
+	xsltPrintErrorContext(NULL, style, node);
 	xsltGenericError(xsltGenericErrorContext,
 	    "namespace-alias: prefix %s not bound to any namespace\n",
 	                 rprefix);
@@ -105,6 +109,7 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
     if (style->nsAliases == NULL)
 	style->nsAliases = xmlHashCreate(10);
     if (style->nsAliases == NULL) {
+	xsltPrintErrorContext(NULL, style, node);
 	xsltGenericError(xsltGenericErrorContext,
 	    "namespace-alias: cannot create hash table\n");
 	goto error;

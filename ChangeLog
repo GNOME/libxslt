@@ -1,3 +1,14 @@
+Thu Jul 12 21:31:06 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/documents.c libxslt/extensions.c libxslt/extra.c
+	  libxslt/functions.c libxslt/imports.c libxslt/keys.c
+	  libxslt/namespaces.c libxslt/numbers.c libxslt/pattern.c
+	  libxslt/preproc.c libxslt/templates.c libxslt/transform.c
+	  libxslt/variables.c libxslt/xslt.c: provide context for
+	  error messages. Requires libxml head changes.
+	* libxslt/xsltutils.c libxslt/xsltutils.h: fixed a --profile
+	  problem
+
 Wed Jul 11 00:32:21 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libexslt/Makefile.am: initial EXSLT framework

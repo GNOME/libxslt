@@ -73,6 +73,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:import : missing href attribute\n");
 	goto error;
@@ -81,12 +82,14 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     base = xmlNodeGetBase(style->doc, cur);
     URI = xmlBuildURI(uriRef, base);
     if (URI == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:import : invalid URI reference %s\n", uriRef);
 	goto error;
     }
     import = xmlParseFile((const char *)URI);
     if (import == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:import : unable to load %s\n", URI);
 	goto error;
@@ -130,6 +133,7 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:include : missing href attribute\n");
 	goto error;
@@ -138,6 +142,7 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     base = xmlNodeGetBase(style->doc, cur);
     URI = xmlBuildURI(uriRef, base);
     if (URI == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:include : invalid URI reference %s\n", uriRef);
 	goto error;
@@ -145,6 +150,7 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     include = xsltLoadStyleDocument(style, URI);
     if (include == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:include : unable to load %s\n", URI);
 	goto error;

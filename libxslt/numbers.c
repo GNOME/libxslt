@@ -1012,6 +1012,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 
 OUTPUT_NUMBER:
     if (found_error != 0) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                 "xsltFormatNumberConversion : error in format string, using default\n");
 	default_sign = (number < 0.0) ? 1 : 0;

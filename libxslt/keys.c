@@ -75,6 +75,7 @@ xsltNewKeyDef(const xmlChar *name, const xmlChar *nameURI) {
 
     cur = (xsltKeyDefPtr) xmlMalloc(sizeof(xsltKeyDef));
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"xsltNewKeyDef : malloc failed\n");
 	return(NULL);
@@ -145,6 +146,7 @@ xsltNewKeyTable(const xmlChar *name, const xmlChar *nameURI) {
 
     cur = (xsltKeyTablePtr) xmlMalloc(sizeof(xsltKeyTable));
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"xsltNewKeyTable : malloc failed\n");
 	return(NULL);
@@ -256,6 +258,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     }
     key->comp = xmlXPathCompile(pattern);
     if (key->comp == NULL) {
+	xsltPrintErrorContext(NULL, style, inst);
         xsltGenericError(xsltGenericErrorContext,
 		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         pattern);
@@ -263,6 +266,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     }
     key->usecomp = xmlXPathCompile(use);
     if (key->usecomp == NULL) {
+	xsltPrintErrorContext(NULL, style, inst);
         xsltGenericError(xsltGenericErrorContext,
 		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         use);

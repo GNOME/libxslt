@@ -9,7 +9,7 @@ Doc:
 
 Design:
   - seems that saving back XSLT stylesheet from a compiled form might
-    be a bit ugly ...
+    be a bit ugly ... Yes forget about it, it's just twaeked to the extreme
 
 ID and Key support:
   -> done but namespace support in keys is not defined
@@ -119,3 +119,13 @@ Doc:
   - put a page at http://xmlsoft.org/XSLT/
   - generate/transform the DocBook to HTML
   - add HTML to package
+
+Error handling:
+  -> check the version stuff, design a separate module for error interfacing
+     and default handling, parsing vs. runtime, fatal / compat / warning,
+     and lack of optionnal features.
+  -> reports context
+
+Profiler:
+  -> added looks good enough
+  -> autocorrection of initial calibration loop

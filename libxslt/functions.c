@@ -73,12 +73,14 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
 
     if ((nargs < 1) || (nargs > 2)) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"document() : invalid number of args %d\n", nargs);
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
     if (ctxt->value == NULL) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "document() : invalid arg value\n");
 	ctxt->error = XPATH_INVALID_TYPE;
@@ -87,6 +89,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
     if (nargs == 2) {
 	if (ctxt->value->type != XPATH_NODESET) {
+	    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+		                  NULL, NULL);
 	    xsltGenericError(xsltGenericErrorContext,
 		"document() : invalid arg expecting a nodeset\n");
 	    ctxt->error = XPATH_INVALID_TYPE;
@@ -133,6 +137,7 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
      */
     xmlXPathStringFunction(ctxt, 1);
     if (ctxt->value->type != XPATH_STRING) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "document() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
@@ -175,6 +180,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
 	    tctxt = xsltXPathGetTransformContext(ctxt);
 	    if (tctxt == NULL) {
+		xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+			              NULL, NULL);
 		xsltGenericError(xsltGenericErrorContext,
 			"document() : internal error tctxt == NULL\n");
 		valuePush(ctxt, xmlXPathNewNodeSet(NULL));
@@ -213,6 +220,7 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xsltTransformContextPtr tctxt;
 
     if (nargs != 2) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"key() : expects two arguments\n");
 	ctxt->error = XPATH_INVALID_ARITY;
@@ -222,6 +230,7 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     obj2 = valuePop(ctxt);
     if ((obj2 == NULL) ||
 	(ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "key() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
@@ -268,6 +277,8 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	    if (prefix != NULL) {
 		keyURI = xmlXPathNsLookup(ctxt->context, prefix);
 		if (keyURI == NULL) {
+		    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+					  NULL, NULL);
 		    xsltGenericError(xsltGenericErrorContext,
 			"key() : prefix %s is not bound\n", prefix);
 		}
@@ -283,6 +294,8 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	valuePush(ctxt, obj2);
 	xmlXPathStringFunction(ctxt, 1);
 	if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+				  NULL, NULL);
 	    xsltGenericError(xsltGenericErrorContext,
 		"key() : invalid arg expecting a string\n");
 	    ctxt->error = XPATH_INVALID_TYPE;
@@ -431,6 +444,8 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
 	if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_NODESET)) {
 	    ctxt->error = XPATH_INVALID_TYPE;
+	    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+				  NULL, NULL);
 	    xsltGenericError(xsltGenericErrorContext,
 		"generate-id() : invalid arg expecting a node-set\n");
 	    return;
@@ -450,6 +465,7 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	}
 	xmlXPathFreeObject(obj);
     } else {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"generate-id() : invalid number of args %d\n", nargs);
 	ctxt->error = XPATH_INVALID_ARITY;
@@ -480,12 +496,14 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     const xmlChar *nsURI = NULL;
 
     if (nargs != 1) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"system-property() : expects one string arg\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
     if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "system-property() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
@@ -501,6 +519,8 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	} else {
 	    nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	    if (nsURI == NULL) {
+		xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+			              NULL, NULL);
 		xsltGenericError(xsltGenericErrorContext,
 		    "system-property() : prefix %s is not bound\n", prefix);
 	    }
@@ -573,12 +593,14 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xsltTransformContextPtr tctxt;
 
     if (nargs != 1) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"element-available() : expects one string arg\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
     if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "element-available() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
@@ -587,6 +609,7 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     obj = valuePop(ctxt);
     tctxt = xsltXPathGetTransformContext(ctxt);
     if (tctxt == NULL) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 		"element-available() : internal error tctxt == NULL\n");
 	xmlXPathFreeObject(obj);
@@ -601,6 +624,8 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     } else {
 	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	if (nsURI == NULL) {
+	    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+				  NULL, NULL);
 	    xsltGenericError(xsltGenericErrorContext,
 		"element-available() : prefix %s is not bound\n", prefix);
 	}
@@ -634,12 +659,14 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     const xmlChar *nsURI = NULL;
 
     if (nargs != 1) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"function-available() : expects one string arg\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
     if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "function-available() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
@@ -653,6 +680,8 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     } else {
 	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	if (nsURI == NULL) {
+	    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+				  NULL, NULL);
 	    xsltGenericError(xsltGenericErrorContext,
 		"function-available() : prefix %s is not bound\n", prefix);
 	}
@@ -684,6 +713,7 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     xsltTransformContextPtr tctxt;
 
     if (nargs != 0) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"current() : function uses no argument\n");
 	ctxt->error = XPATH_INVALID_ARITY;
@@ -691,6 +721,7 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     tctxt = xsltXPathGetTransformContext(ctxt);
     if (tctxt == NULL) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 		"current() : internal error tctxt == NULL\n");
 	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
@@ -721,23 +752,27 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
     void *data;
 
     if (testData == NULL) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtFunctionTest: not initialized\n");
         return;
     }
     tctxt = xsltXPathGetTransformContext(ctxt);
     if (tctxt == NULL) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtFunctionTest: failed to get the transformation context\n");
         return;
     }
     data = xsltGetExtData(tctxt, (const xmlChar *) XSLT_DEFAULT_URL);
     if (data == NULL) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtFunctionTest: failed to get module data\n");
         return;
     }
     if (data != testData) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtFunctionTest: got wrong module data\n");
         return;
@@ -765,26 +800,31 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr comment;
 
     if (testData == NULL) {
+	xsltPrintErrorContext(ctxt, NULL, inst);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtElementTest: not initialized\n");
         return;
     }
     if (ctxt == NULL) {
+	xsltPrintErrorContext(ctxt, NULL, inst);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtElementTest: no transformation context\n");
         return;
     }
     if (node == NULL) {
+	xsltPrintErrorContext(ctxt, NULL, inst);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtElementTest: no current node\n");
         return;
     }
     if (inst == NULL) {
+	xsltPrintErrorContext(ctxt, NULL, inst);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtElementTest: no instruction\n");
         return;
     }
     if (ctxt->insert == NULL) {
+	xsltPrintErrorContext(ctxt, NULL, inst);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtElementTest: no insertion point\n");
         return;
@@ -808,6 +848,7 @@ static void *
 xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI)
 {
     if (testData != NULL) {
+	xsltPrintErrorContext(ctxt, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtInitTest: already initialized\n");
         return (NULL);
@@ -839,11 +880,13 @@ xsltExtShutdownTest(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
                     const xmlChar * URI, void *data)
 {
     if (testData == NULL) {
+	xsltPrintErrorContext(ctxt, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtShutdownTest: not initialized\n");
         return;
     }
     if (data != testData) {
+	xsltPrintErrorContext(ctxt, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltExtShutdownTest: wrong data\n");
     }

@@ -82,6 +82,7 @@ xsltNewExtDef(const xmlChar * prefix, const xmlChar * URI)
 
     cur = (xsltExtDefPtr) xmlMalloc(sizeof(xsltExtDef));
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltNewExtDef : malloc failed\n");
         return (NULL);
@@ -145,6 +146,7 @@ xsltNewExtModule(xsltExtInitFunction initFunc,
 
     cur = (xsltExtModulePtr) xmlMalloc(sizeof(xsltExtModule));
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltNewExtModule : malloc failed\n");
         return (NULL);
@@ -185,6 +187,7 @@ xsltNewExtData(xsltExtModulePtr extModule, void *extData)
 	return(NULL);
     cur = (xsltExtDataPtr) xmlMalloc(sizeof(xsltExtData));
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltNewExtData : malloc failed\n");
         return (NULL);
@@ -414,6 +417,7 @@ xsltInitCtxtExts(xsltTransformContextPtr ctxt)
                             return (-1);
                         if (xmlHashAddEntry(ctxt->extInfos, def->URI,
                                             (void *) data) < 0) {
+			    xsltPrintErrorContext(ctxt, NULL, NULL);
                             xsltGenericError(xsltGenericErrorContext,
                                              "Failed to register module : %s\n",
                                              def->URI);

@@ -272,6 +272,73 @@ xsltSetGenericDebugFunc(void *ctx, xmlGenericErrorFunc handler) {
 	xsltGenericDebug = xsltGenericDebugDefaultFunc;
 }
 
+/**
+ * xsltPrintErrorContext:
+ * @ctxt:  the transformation context
+ * @style:  the stylesheet
+ * @node:  the current node being processed
+ *
+ * Display the context of an error.
+ */
+void
+xsltPrintErrorContext(xsltTransformContextPtr ctxt,
+	              xsltStylesheetPtr style, xmlNodePtr node) {
+    int line = 0;
+    const xmlChar *file = NULL;
+    const xmlChar *name = NULL;
+    const char *type = "error";
+
+    if ((node != NULL) && (ctxt != NULL))
+	node = ctxt->inst;
+
+    if (node != NULL)  {
+	if ((node->type == XML_DOCUMENT_NODE) ||
+	    (node->type == XML_HTML_DOCUMENT_NODE)) {
+	    xmlDocPtr doc = (xmlDocPtr) node;
+
+	    file = doc->URL;
+	} else {
+	    if (node->type == XML_ELEMENT_NODE) {
+		line = (int) node->content;
+	    }
+	    if ((node->doc != NULL) && (node->doc->URL != NULL))
+		file = node->doc->URL;
+	    if (node->name != NULL)
+		name = node->name;
+	}
+    } 
+    
+    if (ctxt != NULL)
+	type = "runtime error";
+    else if (style != NULL)
+	type = "compilation error";
+
+    if ((file != NULL) && (line != 0) && (name != NULL))
+	xsltGenericError(xsltGenericErrorContext,
+		"%s: file %s line %d element %s\n",
+		type, file, line, name);
+    else if ((file != NULL) && (name != NULL))
+	xsltGenericError(xsltGenericErrorContext,
+		"%s: file %s element %s\n",
+		type, file, name);
+    else if ((file != NULL) && (line != 0))
+	xsltGenericError(xsltGenericErrorContext,
+		"%s: file %s line %d\n",
+		type, file, line);
+    else if (file != NULL)
+	xsltGenericError(xsltGenericErrorContext,
+		"%s: file %s\n",
+		type, file);
+    else if (name != NULL)
+	xsltGenericError(xsltGenericErrorContext,
+		"%s: element %s\n",
+		type, name);
+    else
+	xsltGenericError(xsltGenericErrorContext,
+		"%s\n",
+		type);
+}
+
 /************************************************************************
  * 									*
  * 				QNames					*
@@ -964,6 +1031,8 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
  * 									*
  ************************************************************************/
 
+static long calibration = -1;
+
 /**
  * xsltCalibrateTimestamps:
  *
@@ -982,6 +1051,17 @@ xsltCalibrateTimestamps(void) {
 }
 
 /**
+ * xsltCalibrateAdjust:
+ * @delta:  a negative dealy value found
+ *
+ * Used for to correct the calibration for xsltTimestamp()
+ */
+void
+xsltCalibrateAdjust(long delta) {
+    calibration += delta;
+}
+
+/**
  * xsltTimestamp:
  *
  * Used for gathering profiling data
@@ -992,12 +1072,11 @@ xsltCalibrateTimestamps(void) {
 long
 xsltTimestamp(void) {
 #ifdef HAVE_GETTIMEOFDAY
-    static long calibration = -1;
     static struct timeval startup;
     struct timeval cur;
     long msec;
 
-    if (calibration == -1) {
+    if (calibration < 0) {
 	gettimeofday(&startup, NULL);
 	calibration = 0;
 	calibration = xsltCalibrateTimestamps();

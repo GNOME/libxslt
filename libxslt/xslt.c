@@ -253,6 +253,7 @@ xsltNewTemplate(void) {
 
     cur = (xsltTemplatePtr) xmlMalloc(sizeof(xsltTemplate));
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"xsltNewTemplate : malloc failed\n");
 	return(NULL);
@@ -312,6 +313,7 @@ xsltNewStylesheet(void) {
 
     cur = (xsltStylesheetPtr) xmlMalloc(sizeof(xsltStylesheet));
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"xsltNewStylesheet : malloc failed\n");
 	return(NULL);
@@ -549,6 +551,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
                 (xmlStrEqual(prop, (const xmlChar *) "text"))) {
                 style->method = prop;
             } else {
+		xsltPrintErrorContext(NULL, style, cur);
                 xsltGenericError(xsltGenericErrorContext,
                                  "invalid value for method: %s\n", prop);
                 style->warnings++;
@@ -585,6 +588,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
         } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
             style->standalone = 0;
         } else {
+	    xsltPrintErrorContext(NULL, style, cur);
             xsltGenericError(xsltGenericErrorContext,
                              "invalid value for standalone: %s\n", prop);
             style->warnings++;
@@ -599,6 +603,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
         } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
             style->indent = 0;
         } else {
+	    xsltPrintErrorContext(NULL, style, cur);
             xsltGenericError(xsltGenericErrorContext,
                              "invalid value for indent: %s\n", prop);
             style->warnings++;
@@ -614,6 +619,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
         } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
             style->omitXmlDeclaration = 0;
         } else {
+	    xsltPrintErrorContext(NULL, style, cur);
             xsltGenericError(xsltGenericErrorContext,
                              "invalid value for omit-xml-declaration: %s\n",
                              prop);
@@ -688,6 +694,7 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr style, xmlNodePtr cur)
     if (prop != NULL) {
 	format = xsltDecimalFormatGetByName(style, prop);
 	if (format != NULL) {
+	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 	 "xsltParseStylestyleDecimalFormat: %s already exists\n", prop);
 	    style->warnings++;
@@ -695,6 +702,7 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr style, xmlNodePtr cur)
 	}
 	format = xsltNewDecimalFormat(prop);
 	if (format == NULL) {
+	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
      "xsltParseStylestyleDecimalFormat: failed creating new decimal-format\n");
 	    style->errors++;
@@ -790,6 +798,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     elements = xsltGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
     if (elements == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltParseStylesheetPreserveSpace: missing elements attribute\n");
 	style->warnings++;
@@ -866,6 +875,7 @@ xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    else
 		ns = xmlSearchNs(style->doc, cur, prefix);
 	    if (ns == NULL) {
+		xsltPrintErrorContext(NULL, style, cur);
 		xsltGenericError(xsltGenericErrorContext,
 	    "xsl:extension-element-prefix : undefined namespace %s\n",
 	                         prefix);
@@ -903,6 +913,7 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     elements = xsltGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
     if (elements == NULL) {
+	xsltPrintErrorContext(NULL, style, cur);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltParseStylesheetStripSpace: missing elements attribute\n");
 	style->warnings++;
@@ -982,6 +993,7 @@ xsltParseStylesheetExcludePrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    else
 		ns = xmlSearchNs(style->doc, cur, prefix);
 	    if (ns == NULL) {
+		xsltPrintErrorContext(NULL, style, cur);
 		xsltGenericError(xsltGenericErrorContext,
 	    "xsl:exclude-result-prefixes : undefined namespace %s\n",
 	                         prefix);
@@ -1175,6 +1187,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 		    if (style->nsHash == NULL) {
 			style->nsHash = xmlHashCreate(10);
 			if (style->nsHash == NULL) {
+			    xsltPrintErrorContext(NULL, style, cur);
 			    xsltGenericError(xsltGenericErrorContext,
 		 "xsltGatherNamespaces: failed to create hash table\n");
 			    style->errors++;
@@ -1183,6 +1196,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 		    }
 		    URI = xmlHashLookup(style->nsHash, ns->prefix);
 		    if ((URI != NULL) && (!xmlStrEqual(URI, ns->href))) {
+			xsltPrintErrorContext(NULL, style, cur);
 			xsltGenericError(xsltGenericErrorContext,
 	     "Namespaces prefix %s used for multiple namespaces\n");
 			style->warnings++;
@@ -1282,6 +1296,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 			    noesc = 1;
 			} else if (!xmlStrEqual(prop,
 						(const xmlChar *)"no")){
+			    xsltPrintErrorContext(NULL, style, cur);
 			    xsltGenericError(xsltGenericErrorContext,
 	     "xsl:text: disable-output-escaping allows only yes or no\n");
 			    style->warnings++;
@@ -1293,6 +1308,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 		    while (text != NULL) {
 			if ((text->type != XML_TEXT_NODE) &&
 			     (text->type != XML_CDATA_SECTION_NODE)) {
+			    xsltPrintErrorContext(NULL, style, cur);
 			    xsltGenericError(xsltGenericErrorContext,
 		 "xsltParseTemplateContent: xslt:text content problem\n");
 			    style->errors++;
@@ -1385,6 +1401,7 @@ skip_children:
 	    xmlNodePtr param = cur;
 
             cur = cur->next;
+	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseTemplateContent: ignoring misplaced param element\n");
 	    style->warnings++;
@@ -1439,6 +1456,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
 	     "xsltParseStylesheetKey: name %s\n", name);
 #endif
     } else {
+	xsltPrintErrorContext(NULL, style, key);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:key : error missing name\n");
 	style->errors++;
@@ -1447,6 +1465,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
 
     match = xsltGetNsProp(key, (const xmlChar *)"match", XSLT_NAMESPACE);
     if (match == NULL) {
+	xsltPrintErrorContext(NULL, style, key);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:key : error missing match\n");
 	style->errors++;
@@ -1455,6 +1474,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
 
     use = xsltGetNsProp(key, (const xmlChar *)"use", XSLT_NAMESPACE);
     if (use == NULL) {
+	xsltPrintErrorContext(NULL, style, key);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:key : error missing use\n");
 	style->errors++;
@@ -1612,12 +1632,14 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 
     prop = xsltGetNsProp(top, (const xmlChar *)"version", XSLT_NAMESPACE);
     if (prop == NULL) {
+	xsltPrintErrorContext(NULL, style, top);
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:version is missing: document may not be a stylesheet\n");
 	style->warnings++;
     } else {
 	if ((!xmlStrEqual(prop, (const xmlChar *)"1.0")) &&
             (!xmlStrEqual(prop, (const xmlChar *)"1.1"))) {
+	    xsltPrintErrorContext(NULL, style, top);
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsl:version: only 1.0 features are supported\n");
 	     /* TODO set up compatibility when not XSLT 1.0 */
@@ -1661,6 +1683,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    continue;
 	}
 	if (IS_XSLT_NAME(cur, "import")) {
+	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetTop: ignoring misplaced import element\n");
 	    style->errors++;
@@ -1690,6 +1713,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
         } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
 	    xsltNamespaceAlias(style, cur);
 	} else {
+	    xsltPrintErrorContext(NULL, style, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetTop: ignoring unknown %s element\n",
 		             cur->name);
@@ -1729,6 +1753,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
      */
     cur = xmlDocGetRootElement(doc);
     if (cur == NULL) {
+	xsltPrintErrorContext(NULL, ret, (xmlNodePtr) doc);
         xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetProcess : empty stylesheet\n");
 	ret->doc = NULL;
@@ -1756,6 +1781,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	 */
 	prop = xsltGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
 	if (prop == NULL) {
+	    xsltPrintErrorContext(NULL, ret, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetProcess : document is not a stylesheet\n");
 	    ret->doc = NULL;
@@ -1769,6 +1795,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 #endif
 	
 	if (!xmlStrEqual(prop, (const xmlChar *)"1.0")) {
+	    xsltPrintErrorContext(NULL, ret, cur);
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsl:version: only 1.0 features are supported\n");
 	     /* TODO set up compatibility when not XSLT 1.0 */
@@ -1851,6 +1878,7 @@ xsltParseStylesheetFile(const xmlChar* filename) {
 
     doc = xmlParseFile((const char *) filename);
     if (doc == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetFile : cannot parse %s\n", filename);
 	return(NULL);
@@ -2011,6 +2039,7 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 #endif
 	URI = xmlParseURI((const char *) href);
 	if (URI == NULL) {
+	    xsltPrintErrorContext(NULL, NULL, child);
 	    xsltGenericError(xsltGenericErrorContext,
 		    "xml-stylesheet : href %s is not valid\n", href);
 	    xmlFree(href);
@@ -2031,6 +2060,7 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 	    else
 		ID = xmlGetID(doc, (const xmlChar *) URI->fragment);
 	    if (ID == NULL) {
+		xsltPrintErrorContext(NULL, NULL, child);
 		xsltGenericError(xsltGenericErrorContext,
 		    "xml-stylesheet : no ID %s found\n", URI->fragment);
 	    } else {

@@ -117,12 +117,14 @@ xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 void
 xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
     if (nargs != 1) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"node-set() : expects one result-tree arg\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
     if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_XSLT_TREE)) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
 	xsltGenericError(xsltGenericErrorContext,
 	    "node-set() invalid arg expecting a result tree\n");
 	ctxt->error = XPATH_INVALID_TYPE;
@@ -145,6 +147,7 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
 static void
 xsltFunctionLocalTime(xmlXPathParserContextPtr ctxt, int nargs) {
     if ((nargs < 0) || (nargs > 1)) {
+	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
 		"localTime() : invalid number of args %d\n", nargs);
 	ctxt->error = XPATH_INVALID_ARITY;

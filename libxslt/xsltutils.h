@@ -69,6 +69,9 @@ extern void *xsltGenericErrorContext;
 extern xmlGenericErrorFunc xsltGenericDebug;
 extern void *xsltGenericDebugContext;
 
+void		xsltPrintErrorContext		(xsltTransformContextPtr ctxt,
+	                                         xsltStylesheetPtr style,
+						 xmlNodePtr node);
 void		xsltMessage			(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 xmlNodePtr inst);
@@ -117,6 +120,7 @@ void		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
 						 FILE *output);
 
 long		xsltTimestamp			(void);
+void		xsltCalibrateAdjust		(long delta);
 
 #ifdef __cplusplus
 }
