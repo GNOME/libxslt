@@ -1,3 +1,8 @@
+Fri Jul 13 16:57:08 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* win32/libxslt/libxslt.defs: trying to close #57460 by adding
+	  xsltProfileStylesheet
+
 Thu Jul 12 21:31:06 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/documents.c libxslt/extensions.c libxslt/extra.c
@@ -196,102 +201,7 @@ Thu Jul  5 10:44:47 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 	  test output accordingly
 	* libxslt/transform.c libxslt/preproc.c: added xsl:fallback support
 	* tests/REC/Makefile.am tests/REC/test-15-1.*: xsl:fallback test
-	* tests/xmlspec/Makefile.am tests/docbook/Makefile.am: cleanups
-
-Wed Jul  4 15:15:50 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/extension.[ch] libxslt/extra.[ch] libxslt/xsltInternals.h
-	  libxslt/transform.c libxslt/functions.c: Added the extension API
-	  suggested by Thomas Broyer, this should allow implementation of
-	  EXSLT for example.
-	* libxslt/extra.[ch]: added a fake xsltFunctionLocalTime() in Norm's
-	  CVS extension namespace to avoid complaints, some cleanup
-	* configure.in tests/Makefile.am tests/extensions/*: added a test
-	  for new modules testing both elements and functions registration
-
-Fri Jun 29 23:32:37 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/pattern.c libxslt/preproc.c libxslt/transform.c
-	  libxslt/xslt.c libxslt/xsltutils.[ch]: added xsltGetQNameURI()
-	  and cleaned up the way URI for QNames were computed through
-	  the code, serious cleanup.
-	* libxslt/xsltInternals.h libxslt/xslt.c: moved cdata-sections
-	  in their own hash table, implementation not yet finished.
-
-Thu Jun 28 23:01:14 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/keys.c libxslt/templates.c libxslt/transform.c
-	  libxslt/variables.c libxslt/xsltutils.c: hum seems I forgot
-	  to save/restore some XPath context, bug raised by
-	  Steve Cheng
-
-Thu Jun 28 15:48:06 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/xsltwin32config.h[.in]: added configuration/version
-	  informations for Windows/MSC
-	* libxslt/libxslt.h libxslt/*.c: internal header to centralize
-	  includes switches
-	* libxslt/Makefile.am: added libxslt.h and xsltwin32config.h[.in]
-	* libxslt/*.[ch] libxslt/*.in: quite a bit of cleanup, especially
-	  the email addresses
-	* AUTHORS: added William
-
-Tue Jun 26 18:45:38 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* configure.in doc/xslt.html: releasing 0.13.0
-	* doc/Makefile.am: don't index the win32 include
-	* doc/html/*: rebuilt the docs
-
-Mon Jun 25 15:30:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/xsltproc.c: John Fleck found a typo in usage()
-	* libxslt/xslt.c: avoid warning if version="1.1" is used
-	* libxslt/transform.c: forgot to initialize cur->outputFile
-	* libxslt/functions.c: DOCBOOK_XSL_HACK some versions of DocBook XSL
-	  use the vendor string to detect supporting chunking, this
-	  is a workaround to be considered in the list of decent XSLT
-	  processors <grin/>
-
-Mon Jun 25 12:41:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/transform.[ch] libxslt/xslt.c libxslt/xsltInternals.h:
-	  added a new interface xsltRunStylesheet() for a more flexible
-	  handling of the output and trying to adhere to xsl:document
-	  filename generation semantic if one knows the URL of the output,
-	  also add IObuf capacity and SAX for output but is currently not
-	  implemented.
-	* libxslt/xsltproc.c: added a -o or --output filename argument
-	  to test xsltRunStylesheet() or provide a base when generating
-	  multiple outputs
-	* tests/docbook/Makefile.am tests/docbook/result/xtchunk/html/*:
-	  updated tests to add DocBook xt:document based chunking
-	* tests/multiple/Makefile.am: cleaned up the makefile a bit
-	* tests/multiple/out/*.html: the new xt:document now generate
-	  the DOCTYPE if available as is the case for HTML
-
-Mon Jun 25 08:45:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
-
-	* Removed some redundant code in xsltDefaultProcessOneNode
-	  and revised the default processing of an attribute node
-
-Sun Jun 24 14:40:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
-
-	* Enhanced ApplyTemplates and ForEach to allow multiple
-	  documents within a nodelist.
-	* Repaired small bug in xsltDocument function which caused
-	  a crash if invalid second argument was provided.
-
-Sat Jun 23 15:44:00 MDT 2001 John Fleck <jfleck@inkstain.net>
-
-	* doc/tutorial/libxslttutorial.xml, libxslttutorial.html
-	  updating tutorial with explanation of xsltSave vs. xmlSave
-	  functions 
-
-Sat Jun 23 19:04:27 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* test/docbook: updated to docbook-xsl-1.4, regenerated results
-
-Sat Jun 23 15:32:25 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+	* tests/xmlspec/Makefile.am tests/docbook/Makefi; ; ; ; ; ; ; ; ; ; ; ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 r>
 
 	* Makefile.am libxslt/Makefile.am libxslt/numbers.c 
 	  libxslt/win32config.h libxslt/xsltconfig.h.in libxslt/xsltproc.c:
@@ -1338,115 +1248,7 @@ Sun Feb 11 17:24:03 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
 	  for the level attribute for xsl:number
 	* libxslt/numbers.c: internal restructuring
 
-Fri Feb  9 15:49:19 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/Makefile.am libxslt/documents.[ch]: added a new module
-	  to deal with documents
-	* libxslt/functions.c: fixed document() to return the same set
-	  for teh same URL
-	* libxslt/keys.[ch] libxslt/templates.c libxslt/transform.c
-	  libxslt/variables.c libxslt/xsltInternals.h: keys are really
-	  associated to loaded documents, not to the transformation
-	  context, made the change, this impacted a number of modules
-
-Thu Feb  8 12:51:00 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* doc/libxslt.sgml doc/html/*.html: updated and rebuilt the doc list
-
-Thu Feb  8 12:36:23 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* README configure.in libxslt.spec.in: bumped to 0.1.0, getting
-	  ready for the release
-	* libxslt/keys.c libxslt/xslt.c: cleanup of uninitialized vars
-	* tests/REC1/Makefile.am tests/REC/Makefile.am: the EXTRA list
-	  was not up to date
-
-Thu Feb  8 12:09:58 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* FEATURES libxslt/xsltInternals.h libxslt/pattern.c libxslt/keys.c:
-	  added support for keys in patterns
-	* tests/REC/test-12.2-2.*: added a specific testcase
-
-Wed Feb  7 21:16:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/functions.c FEATURES: started adding support for key()
-	* tests/REC/test-12.2-1.*: first key test
-
-Wed Feb  7 19:46:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* FEATURES: updated
-	* libxslt/Makefile.am libxslt/keys.[ch] libxslt/xslt.c
-	  libxslt/transform.c libxslt/xsltInternals.h: started adding key
-	  support
-	* libxslt/xsltutils.c: warning cleanup
-	* libxslt/pattern.h: fixed soopid cut'n paste prob
-
-Tue Feb  6 10:56:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* libxslt/transform.c libxslt/xslt.c: chased some reported
-	  unitinitialized variables.
-
-Tue Feb  6 10:55:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* tests/numbers/Makefile.am: fixed the EXTRA stuff
-
-Mon Feb  5 22:02:24 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* Copyright IPR Makefile.am: added some wording and a rewrite
-	  of the W3C IPR but without giving Copyright rights to W3C,
-	  should suit everybody
-
-Mon Feb  5 18:58:17 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* FEATURES: updated, added mode support for templates
-	* pattern.[ch] transform.c xslt.c xsltInternals.h: added mode
-	  support for templates
-	* templates.c variables.c: simple fixes
-	* xslt.c: added a separate DEBUG_BLANKS debug class disabled
-	* xsltproc.c: added option -timing
-	* xsltutils.c: seem I forgot to add encoding support in output...
-	* configure.in tests/Makefile.am tests/xmlspec/*: added a test
-	  consisting of reformatting the XML REC with the xmlspec XSLT,
-	  heavy !
-
-Mon Feb  5 18:43:37 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
-
-	* FEATURES: updated
-	* numbers.c: handles actual number formatting for both xsl:number
-	  and the format-number extension function.
-	* function.c: formatting moved to numbers.c
-	* transform.c: added xsl:number
-	* xslt.c: minor memory leak removed
-	* Makefile.am: added numbers.c and numbersInternals.h
-
-Sat Feb  3 21:49:36 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* TODO: updated
-	* doc/html/*.html updated
-	* doc/libxslt.sgml: added new modules
-	* libxslt/pattern.c: fix loop on hash clashes.
-
-Sat Feb  3 16:13:35 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* FEATURES: updated
-	* imports.c: bugfix
-	* pattern.c: lots of changes to make most patterns work
-	* templates.[ch]: added xsltEvalXPathPredicate() for predicate testing
-	* transform.c: cleanup and attribute patterns testing
-	* xslt.c: added xsltFreeStylesheetList() and now cleanup
-	  the imports
-	* tests/REC/test-2.3* tests/REC/test-2.6.2*: more tests
-	* tests/REC/test-5.2-*: 18 pattern tests from the spec, all should
-	  work now.
-
-Fri Feb  2 11:15:24 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
-
-	* FEATURES: updated
-	* transform.c: added xsl:element support
-	* namespaces.[ch]: added xsltGetSpecialNamespace()
-	* attributes.c: added xsl:attribute namespace support.
-
-Thu Feb  1 20:58:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+Fri Feb; ; ; ; ; ; ; ;  ; !; "; #; $; %; &; '; (; ); +; ,; -; .; /; 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; :; ;; <; =; >; ?; @; A; B; C; D; E; F; G; H; I; J; K; L; N; O; Q; R; S; T;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Feb  1 20:58:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/Makefile.am libxslt/imports.[ch]: new module to
 	  implement import cascade lookups and traversal
