@@ -369,6 +369,145 @@ error:
 }
 
 /**
+ * xsltAttributeInternal:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt attribute node
+ * @comp:  precomputed information
+ * @fromset:  the attribute comes from an attribute-set
+ *
+ * Process the xslt attribute node on the source node
+ */
+static void
+xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	      xmlNodePtr inst, xsltStylePreCompPtr comp, int fromset) {
+    xmlChar *prop = NULL;
+    xmlChar *ncname = NULL, *name, *namespace;
+    xmlChar *prefix = NULL;
+    xmlChar *value = NULL;
+    xmlNsPtr ns = NULL;
+    xmlAttrPtr attr;
+    const xmlChar *URL = NULL;
+
+
+    if (ctxt->insert == NULL)
+	return;
+    if (comp == NULL) {
+	xsltPrintErrorContext(ctxt, NULL, inst);
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsl:attribute : compilation failed\n");
+	return;
+    }
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
+	return;
+    if (!comp->has_name) {
+	return;
+    }
+    if (ctxt->insert->children != NULL) {
+	xsltPrintErrorContext(ctxt, NULL, inst);
+	xsltGenericError(xsltGenericErrorContext,
+	     "xsl:attribute : node already has children\n");
+	return;
+    }
+    if (comp->name == NULL) {
+	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name",
+		                         XSLT_NAMESPACE);
+	if (prop == NULL) {
+	    xsltPrintErrorContext(ctxt, NULL, inst);
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsl:attribute : name is missing\n");
+	    goto error;
+	}
+	name = prop;
+    } else {
+	name = comp->name;
+    }
+
+    ncname = xmlSplitQName2(name, &prefix);
+    if (ncname == NULL) {
+	prefix = NULL;
+    } else {
+	name = ncname;
+    }
+    if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
+#ifdef WITH_XSLT_DEBUG_PARSING
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltAttribute: xml prefix forbidden\n");
+#endif
+	goto error;
+    }
+    if ((comp->ns == NULL) && (comp->has_ns)) {
+	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
+		(const xmlChar *)"namespace", XSLT_NAMESPACE);
+	if (namespace != NULL) {
+	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
+		                         ctxt->insert);
+	    xmlFree(namespace);
+	} else {
+	    if (prefix != NULL) {
+		ns = xmlSearchNs(inst->doc, inst, prefix);
+		if (ns == NULL) {
+		    xsltPrintErrorContext(ctxt, NULL, inst);
+		    xsltGenericError(xsltGenericErrorContext,
+			"xsl:attribute : no namespace bound to prefix %s\n", prefix);
+		} else {
+		    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+		}
+	    }
+	}
+    } else if (comp->ns != NULL) {
+	ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
+				     ctxt->insert);
+    }
+
+    if ((fromset) && (ns != NULL))
+	URL = ns->href;
+    if ((fromset == 0) || (!xmlHasNsProp(ctxt->insert, name, URL))) {
+	value = xsltEvalTemplateString(ctxt, node, inst);
+	if (value == NULL) {
+	    if (ns) {
+		attr = xmlSetNsProp(ctxt->insert, ns, name, 
+				    (const xmlChar *)"");
+	    } else {
+		attr = xmlSetProp(ctxt->insert, name, (const xmlChar *)"");
+	    }
+	} else {
+	    if (ns) {
+		attr = xmlSetNsProp(ctxt->insert, ns, name, value);
+	    } else {
+		attr = xmlSetProp(ctxt->insert, name, value);
+	    }
+	}
+    }
+
+error:
+    if (prop != NULL)
+        xmlFree(prop);
+    if (ncname != NULL)
+        xmlFree(ncname);
+    if (prefix != NULL)
+        xmlFree(prefix);
+    if (value != NULL)
+        xmlFree(value);
+}
+
+/**
+ * xsltAttribute:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt attribute node
+ * @comp:  precomputed information
+ *
+ * Process the xslt attribute node on the source node
+ */
+void
+xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	      xmlNodePtr inst, xsltStylePreCompPtr comp) {
+    xsltAttributeInternal(ctxt, node, inst, comp, 0);
+}
+
+/**
  * xsltApplyAttributeSet:
  * @ctxt:  the XSLT stylesheet
  * @node:  the node in the source tree.
@@ -416,8 +555,8 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		values = xmlHashLookup2(style->attributeSets, ncname, prefix);
 		while (values != NULL) {
 		    if (values->attr != NULL) {
-			xsltAttribute(ctxt, node, values->attr,
-				      values->attr->_private);
+			xsltAttributeInternal(ctxt, node, values->attr,
+					      values->attr->_private, 1);
 		    }
 		    values = values->next;
 		}

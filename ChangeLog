@@ -1,3 +1,8 @@
+Mon Sep 10 19:38:54 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c libxslt/transform.c: fixed bug #59757
+	  on inheritance of attributes from multiple attributes-sets
+
 Mon Sep  3 02:14:58 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/Makefile.am libexslt/exslt.[ch] libexslt/strings.c:
