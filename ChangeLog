@@ -1,3 +1,8 @@
+Tue Apr 17 23:16:54 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* libexslt/date.c: fixed type inconsistencies, double->int
+	 and unsigned/signed mismatch warnings eliminated
+
 Tue Apr 16 19:40:21 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/Makefile.msvc: XSLT debugger support fix

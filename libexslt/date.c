@@ -106,9 +106,9 @@ struct _exsltDate {
 #define IS_LEAP(y)						\
 	(((y % 4 == 0) && (y % 100 != 0)) || (y % 400 == 0))
 
-static const int daysInMonth[12] =
+static const unsigned int daysInMonth[12] =
 	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-static const int daysInMonthLeap[12] =
+static const unsigned int daysInMonthLeap[12] =
 	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 #define VALID_MDAY(dt)						\
@@ -1182,7 +1182,7 @@ exsltDateMonthName (const xmlChar *dateTime) {
 	{ 'D', 'e', 'c', 'e', 'm', 'b', 'e', 'r', 0 }
     };
     int month;
-    month = exsltDateMonthInYear(dateTime);
+    month = (int) exsltDateMonthInYear(dateTime);
     if (!VALID_MONTH(month))
       month = 0;
     return monthNames[month];
@@ -1229,7 +1229,7 @@ exsltDateMonthAbbreviation (const xmlChar *dateTime) {
 	{ 'D', 'e', 'c', 0 }
     };
     int month;
-    month = exsltDateMonthInYear(dateTime);
+    month = (int) exsltDateMonthInYear(dateTime);
     if(!VALID_MONTH(month))
       month = 0;
     return monthAbbreviations[month];
@@ -1606,7 +1606,7 @@ exsltDateDayName (const xmlChar *dateTime) {
 	{ 'S', 'a', 't', 'u', 'r', 'd', 'a', 'y', 0 }
     };
     int day;
-    day = exsltDateDayInWeek(dateTime);
+    day = (int) exsltDateDayInWeek(dateTime);
     if((day < 1) || (day > 7))
       day = 0;
     return dayNames[day];
@@ -1645,7 +1645,7 @@ exsltDateDayAbbreviation (const xmlChar *dateTime) {
 	{ 'S', 'a', 't', 0 }
     };
     int day;
-    day = exsltDateDayInWeek(dateTime);
+    day = (int) exsltDateDayInWeek(dateTime);
     if((day < 1) || (day > 7))
       day = 0;
     return dayAbbreviations[day];
