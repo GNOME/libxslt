@@ -4,6 +4,7 @@
  * See Copyright for the status of this software.
  *
  * Daniel.Veillard@imag.fr
+ * Bjorn Reese <breese@mail1.stofanet.dk> for number formatting
  */
 
 #ifndef __XML_XSLT_FUNCTIONS_H__
@@ -16,6 +17,25 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/*
+ * Data structure of decimal-format
+ */
+typedef struct _xsltDecimalFormat {
+    /* Used for interpretation of pattern */
+    xmlChar digit;
+    xmlChar patternSeparator;
+    /* May appear in result */
+    xmlChar minusSign;
+    xmlChar *infinity;
+    xmlChar *noNumber;
+    /* Used for interpretation of pattern and may appear in result */
+    xmlChar decimalPoint;
+    xmlChar grouping;
+    xmlChar percent;
+    xmlChar permille;
+    xmlChar zeroDigit;
+} xsltDecimalFormat, *xsltDecimalFormatPtr;
 
 /*
  * Interfaces for the functions implementations

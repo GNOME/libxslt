@@ -2,3 +2,4 @@
 
 SUBDIRS=REC1 REC2
 
+test tests: all

@@ -32,7 +32,7 @@ libxslt_la_SOURCES = 			\
 bin_PROGRAMS = xsltproc
 
 DEPS = $(top_builddir)/libxslt/libxslt.la
-LDADDS = -L. $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS)
+LDADDS = -L. $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
 
 xsltproc_SOURCES = xsltproc.c
 xsltproc_LDFLAGS =

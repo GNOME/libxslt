@@ -8,6 +8,37 @@ AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 AM_MAINTAINER_MODE
 
 dnl
+dnl Check the environment
+dnl
+
+AC_ISC_POSIX
+AC_PROG_CC
+AC_STDC_HEADERS
+AC_ARG_PROGRAM
+AM_PROG_LIBTOOL
+
+dnl
+dnl Math detection
+dnl
+
+AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h)
+AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,
+  [M_LIBS="-lm"; AC_DEFINE(HAVE_ISNAN)]))
+
+AC_CHECK_FUNC(isinf, , AC_CHECK_LIB(m, isinf,
+  [M_LIBS="-lm"; AC_DEFINE(HAVE_ISINF)]))
+
+AC_CHECK_FUNC(pow, , AC_CHECK_LIB(m, pow,
+  [M_LIBS="-lm"; AC_DEFINE(HAVE_POW)]))
+
+AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, pow,
+  [M_LIBS="-lm"; AC_DEFINE(HAVE_FLOOR)]))
+
+AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, pow,
+  [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
+
+
+dnl
 dnl Debug for DV
 dnl
 if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
@@ -48,16 +79,6 @@ AC_ARG_WITH(libxml-libs-prefix,
         LIBXML_LIBS="-L$withval -lxml -lz"
 )
 
-
-dnl
-dnl Check the environment
-dnl
-
-AC_ISC_POSIX
-AC_PROG_CC
-AC_STDC_HEADERS
-AC_ARG_PROGRAM
-AM_PROG_LIBTOOL
 
 dnl No internationalization (yet ?)
 dnl 
@@ -110,10 +131,12 @@ AC_SUBST(LIBXML_CFLAGS)
 
 XSLT_LIBDIR='-L${libdir}'
 XSLT_INCLUDEDIR='-I${includedir}'
-XSLT_LIBS="-lxslt $LIBXML_LIBS"
+EXTRA_LIBS="$LIBXML_LIBS $M_LIBS"
+XSLT_LIBS="-lxslt $LIBXML_LIBS $M_LIBS"
 
 AC_SUBST(XSLT_LIBDIR)
 AC_SUBST(XSLT_INCLUDEDIR)
+AC_SUBST(EXTRA_LIBS)
 AC_SUBST(XSLT_LIBS)
 
 AC_OUTPUT([

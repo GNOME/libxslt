@@ -5,3 +5,24 @@
 
 /* Define if you have the ANSI C header files.  */
 #undef STDC_HEADERS
+
+#undef HAVE_ISINF
+#undef HAVE_ISNAN
+#undef HAVE_POW
+#undef HAVE_FLOOR
+#undef HAVE_FABS
+
+/* Define if you have the <float.h> header file.  */
+#undef HAVE_FLOAT_H
+
+/* Define if you have the <fp_class.h> header file.  */
+#undef HAVE_FP_CLASS_H
+
+/* Define if you have the <ieeefp.h> header file.  */
+#undef HAVE_IEEEFP_H
+
+/* Define if you have the <math.h> header file.  */
+#undef HAVE_MATH_H
+
+/* Define if you have the <nan.h> header file.  */
+#undef HAVE_NAN_H

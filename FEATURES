@@ -203,7 +203,7 @@ Functions:
 
 NO		    node-set document(object, node-set?)
 NO		    node-set key(string, object)
-NO		    string format-number(number, string, string?)
+YES		    string format-number(number, string, string?)
 NO		    node-set current() 
 NO		    string unparsed-entity-uri(string)
 NO		    string generate-id(node-set?)

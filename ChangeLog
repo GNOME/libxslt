@@ -1,3 +1,12 @@
+Thu Jan 25 12:13:04 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* functions.[ch]: Bjorn Reese <breese@mail1.stofanet.dk> provided
+	  number formatting !!!
+	* acconfig.h config.h.in configure.in libxslt/Makefile.am
+	  tests/Makefile.am; added testing for mathematical functions,
+	  fixed make test(s)
+	* FEATURES: updated
+
 Wed Jan 24 16:59:05 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltInternals.h libxslt/pattern.c: fixed problems
