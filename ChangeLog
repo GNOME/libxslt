@@ -1,3 +1,11 @@
+2001-07-15  Darin Adler  <darin@bentspoon.com>
+
+	* libxslt/.cvsignore:
+	* tests/XSLTMark/.cvsignore:
+	* tests/extensions/.cvsignore:
+	* tests/xmlspec/.cvsignore:
+	Some more generated files to ignore.
+
 Mon Jul 16 14:26:48 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* Makefile.am configure.in libexslt/Makefile.am:

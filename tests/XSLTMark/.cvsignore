@@ -1,3 +1,6 @@
+.memdump
 Makefile
 Makefile.in
-.memdump
+db100.xml
+db1000.xml
+db10000.xml
