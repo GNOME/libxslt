@@ -1,3 +1,10 @@
+Tue Apr  1 13:39:26 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in NEWS: preparing 1.0.29 release
+	* libxslt/documents.c: generate the document order for document()
+	  loaded resources.
+	* doc/*: updated and regenerated the docs
+
 Tue Apr  1 11:28:01 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed a namespace redundancy problem

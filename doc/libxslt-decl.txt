@@ -1,14 +1,14 @@
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.27"
+#define LIBXSLT_DOTTED_VERSION "1.0.29"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10027
+#define LIBXSLT_VERSION 10029
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10027"
+#define LIBXSLT_VERSION_STRING "10029"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -1150,15 +1150,15 @@ void
 </FUNCTION>
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.27"
+#define LIBXSLT_DOTTED_VERSION "1.0.29"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10027
+#define LIBXSLT_VERSION 10029
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10027"
+#define LIBXSLT_VERSION_STRING "10029"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -1183,6 +1183,426 @@ void
 <MACRO>
 <NAME>LIBXSLT_PUBLIC</NAME>
 #define LIBXSLT_PUBLIC 
+</MACRO>
+<MACRO>
+<NAME>TRIO_ERROR_CODE</NAME>
+#define TRIO_ERROR_CODE(x) ((-(x)) & 0x00FF)
+</MACRO>
+<MACRO>
+<NAME>TRIO_ERROR_POSITION</NAME>
+#define TRIO_ERROR_POSITION(x) ((-(x)) >> 8)
+</MACRO>
+<MACRO>
+<NAME>TRIO_ERROR_NAME</NAME>
+#define TRIO_ERROR_NAME(x) trio_strerror(x)
+</MACRO>
+<TYPEDEF>
+<NAME>int))</NAME>
+typedef int (*trio_outstream_t) TRIO_PROTO((trio_pointer_t, int));
+</TYPEDEF>
+<TYPEDEF>
+<NAME>TRIO_PROTO((trio_pointer_t))</NAME>
+typedef int (*trio_instream_t) TRIO_PROTO((trio_pointer_t));
+</TYPEDEF>
+<MACRO>
+<NAME>printf</NAME>
+# define printf trio_printf
+</MACRO>
+<MACRO>
+<NAME>vprintf</NAME>
+# define vprintf trio_vprintf
+</MACRO>
+<MACRO>
+<NAME>fprintf</NAME>
+# define fprintf trio_fprintf
+</MACRO>
+<MACRO>
+<NAME>vfprintf</NAME>
+# define vfprintf trio_vfprintf
+</MACRO>
+<MACRO>
+<NAME>sprintf</NAME>
+# define sprintf trio_sprintf
+</MACRO>
+<MACRO>
+<NAME>vsprintf</NAME>
+# define vsprintf trio_vsprintf
+</MACRO>
+<MACRO>
+<NAME>snprintf</NAME>
+# define snprintf trio_snprintf
+</MACRO>
+<MACRO>
+<NAME>vsnprintf</NAME>
+# define vsnprintf trio_vsnprintf
+</MACRO>
+<MACRO>
+<NAME>scanf</NAME>
+# define scanf trio_scanf
+</MACRO>
+<MACRO>
+<NAME>vscanf</NAME>
+# define vscanf trio_vscanf
+</MACRO>
+<MACRO>
+<NAME>fscanf</NAME>
+# define fscanf trio_fscanf
+</MACRO>
+<MACRO>
+<NAME>vfscanf</NAME>
+# define vfscanf trio_vfscanf
+</MACRO>
+<MACRO>
+<NAME>sscanf</NAME>
+# define sscanf trio_sscanf
+</MACRO>
+<MACRO>
+<NAME>vsscanf</NAME>
+# define vsscanf trio_vsscanf
+</MACRO>
+<MACRO>
+<NAME>dprintf</NAME>
+#define dprintf trio_dprintf
+</MACRO>
+<MACRO>
+<NAME>vdprintf</NAME>
+#define vdprintf trio_vdprintf
+</MACRO>
+<MACRO>
+<NAME>aprintf</NAME>
+#define aprintf trio_aprintf
+</MACRO>
+<MACRO>
+<NAME>vaprintf</NAME>
+#define vaprintf trio_vaprintf
+</MACRO>
+<MACRO>
+<NAME>asprintf</NAME>
+#define asprintf trio_asprintf
+</MACRO>
+<MACRO>
+<NAME>vasprintf</NAME>
+#define vasprintf trio_vasprintf
+</MACRO>
+<MACRO>
+<NAME>dscanf</NAME>
+#define dscanf trio_dscanf
+</MACRO>
+<MACRO>
+<NAME>vdscanf</NAME>
+#define vdscanf trio_vdscanf
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_GCC</NAME>
+# define TRIO_COMPILER_GCC
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUNPRO</NAME>
+# define TRIO_COMPILER_SUNPRO
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUNPRO</NAME>
+# define TRIO_COMPILER_SUNPRO
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_XLC</NAME>
+# define TRIO_COMPILER_XLC
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_XLC</NAME>
+# define TRIO_COMPILER_XLC /* Workaround for old xlc */
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_DECC</NAME>
+# define TRIO_COMPILER_DECC
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_DECC</NAME>
+# define TRIO_COMPILER_DECC /* Workaround for old DEC C compilers */
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_MSVC</NAME>
+# define TRIO_COMPILER_MSVC
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_BCB</NAME>
+# define TRIO_COMPILER_BCB
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_UNIX</NAME>
+# define TRIO_PLATFORM_UNIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_UNIX</NAME>
+# define TRIO_PLATFORM_UNIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_UNIX</NAME>
+# define TRIO_PLATFORM_UNIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_UNIX</NAME>
+# define TRIO_PLATFORM_UNIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_UNIX</NAME>
+# define TRIO_PLATFORM_UNIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_QNX</NAME>
+# define TRIO_PLATFORM_QNX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_UNIX</NAME>
+# define TRIO_PLATFORM_UNIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_UNIX</NAME>
+# define TRIO_PLATFORM_UNIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_WIN32</NAME>
+# define TRIO_PLATFORM_WIN32
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_VMS</NAME>
+# define TRIO_PLATFORM_VMS
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_MPEIX</NAME>
+# define TRIO_PLATFORM_MPEIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_C89</NAME>
+# define TRIO_COMPILER_SUPPORTS_C89
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_C90</NAME>
+#  define TRIO_COMPILER_SUPPORTS_C90
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_C94</NAME>
+#   define TRIO_COMPILER_SUPPORTS_C94
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_C99</NAME>
+#   define TRIO_COMPILER_SUPPORTS_C99
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_C94</NAME>
+#   define TRIO_COMPILER_SUPPORTS_C94
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_UNIX95</NAME>
+#  define TRIO_COMPILER_SUPPORTS_UNIX95
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_UNIX98</NAME>
+#  define TRIO_COMPILER_SUPPORTS_UNIX98
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_UNIX01</NAME>
+#  define TRIO_COMPILER_SUPPORTS_UNIX01
+</MACRO>
+<MACRO>
+<NAME>TRIO_PUBLIC</NAME>
+# define TRIO_PUBLIC
+</MACRO>
+<MACRO>
+<NAME>TRIO_PRIVATE</NAME>
+# define TRIO_PRIVATE static
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_ANCIENT</NAME>
+# define TRIO_COMPILER_ANCIENT
+</MACRO>
+<MACRO>
+<NAME>TRIO_CONST</NAME>
+# define TRIO_CONST
+</MACRO>
+<MACRO>
+<NAME>TRIO_VOLATILE</NAME>
+# define TRIO_VOLATILE
+</MACRO>
+<MACRO>
+<NAME>TRIO_SIGNED</NAME>
+# define TRIO_SIGNED
+</MACRO>
+<TYPEDEF>
+<NAME>trio_long_double_t</NAME>
+typedef double trio_long_double_t;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>trio_pointer_t</NAME>
+typedef char * trio_pointer_t;
+</TYPEDEF>
+<MACRO>
+<NAME>TRIO_SUFFIX_LONG</NAME>
+# define TRIO_SUFFIX_LONG(x) x
+</MACRO>
+<MACRO>
+<NAME>TRIO_PROTO</NAME>
+# define TRIO_PROTO(x) ()
+</MACRO>
+<MACRO>
+<NAME>TRIO_NOARGS</NAME>
+# define TRIO_NOARGS
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS1</NAME>
+# define TRIO_ARGS1(list,a1) list a1;
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS2</NAME>
+# define TRIO_ARGS2(list,a1,a2) list a1; a2;
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS3</NAME>
+# define TRIO_ARGS3(list,a1,a2,a3) list a1; a2; a3;
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS4</NAME>
+# define TRIO_ARGS4(list,a1,a2,a3,a4) list a1; a2; a3; a4;
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS5</NAME>
+# define TRIO_ARGS5(list,a1,a2,a3,a4,a5) list a1; a2; a3; a4; a5;
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS6</NAME>
+# define TRIO_ARGS6(list,a1,a2,a3,a4,a5,a6) list a1; a2; a3; a4; a5; a6;
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS2</NAME>
+# define TRIO_VARGS2(list,a1,a2) list a1; a2
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS3</NAME>
+# define TRIO_VARGS3(list,a1,a2,a3) list a1; a2; a3
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS4</NAME>
+# define TRIO_VARGS4(list,a1,a2,a3,a4) list a1; a2; a3; a4
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS5</NAME>
+# define TRIO_VARGS5(list,a1,a2,a3,a4,a5) list a1; a2; a3; a4; a5
+</MACRO>
+<MACRO>
+<NAME>TRIO_VA_DECL</NAME>
+# define TRIO_VA_DECL va_dcl
+</MACRO>
+<MACRO>
+<NAME>TRIO_VA_START</NAME>
+# define TRIO_VA_START(x,y) va_start((x))
+</MACRO>
+<MACRO>
+<NAME>TRIO_VA_END</NAME>
+# define TRIO_VA_END(x) va_end(x)
+</MACRO>
+<MACRO>
+<NAME>TRIO_CONST</NAME>
+# define TRIO_CONST const
+</MACRO>
+<MACRO>
+<NAME>TRIO_VOLATILE</NAME>
+# define TRIO_VOLATILE volatile
+</MACRO>
+<MACRO>
+<NAME>TRIO_SIGNED</NAME>
+# define TRIO_SIGNED signed
+</MACRO>
+<TYPEDEF>
+<NAME>trio_long_double_t</NAME>
+typedef long double trio_long_double_t;
+</TYPEDEF>
+<TYPEDEF>
+<NAME>trio_pointer_t</NAME>
+typedef void * trio_pointer_t;
+</TYPEDEF>
+<MACRO>
+<NAME>TRIO_SUFFIX_LONG</NAME>
+# define TRIO_SUFFIX_LONG(x) x ## L
+</MACRO>
+<MACRO>
+<NAME>TRIO_PROTO</NAME>
+# define TRIO_PROTO(x) x
+</MACRO>
+<MACRO>
+<NAME>TRIO_NOARGS</NAME>
+# define TRIO_NOARGS void
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS1</NAME>
+# define TRIO_ARGS1(list,a1) (a1)
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS2</NAME>
+# define TRIO_ARGS2(list,a1,a2) (a1,a2)
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS3</NAME>
+# define TRIO_ARGS3(list,a1,a2,a3) (a1,a2,a3)
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS4</NAME>
+# define TRIO_ARGS4(list,a1,a2,a3,a4) (a1,a2,a3,a4)
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS5</NAME>
+# define TRIO_ARGS5(list,a1,a2,a3,a4,a5) (a1,a2,a3,a4,a5)
+</MACRO>
+<MACRO>
+<NAME>TRIO_ARGS6</NAME>
+# define TRIO_ARGS6(list,a1,a2,a3,a4,a5,a6) (a1,a2,a3,a4,a5,a6)
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS2</NAME>
+# define TRIO_VARGS2 TRIO_ARGS2
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS3</NAME>
+# define TRIO_VARGS3 TRIO_ARGS3
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS4</NAME>
+# define TRIO_VARGS4 TRIO_ARGS4
+</MACRO>
+<MACRO>
+<NAME>TRIO_VARGS5</NAME>
+# define TRIO_VARGS5 TRIO_ARGS5
+</MACRO>
+<MACRO>
+<NAME>TRIO_VA_DECL</NAME>
+# define TRIO_VA_DECL ...
+</MACRO>
+<MACRO>
+<NAME>TRIO_VA_START</NAME>
+# define TRIO_VA_START(x,y) va_start((x),(y))
+</MACRO>
+<MACRO>
+<NAME>TRIO_VA_END</NAME>
+# define TRIO_VA_END(x) va_end(x)
+</MACRO>
+<MACRO>
+<NAME>TRIO_INLINE</NAME>
+# define TRIO_INLINE inline
+</MACRO>
+<MACRO>
+<NAME>TRIO_INLINE</NAME>
+# define TRIO_INLINE __inline__
+</MACRO>
+<MACRO>
+<NAME>TRIO_INLINE</NAME>
+# define TRIO_INLINE _inline
+</MACRO>
+<MACRO>
+<NAME>TRIO_INLINE</NAME>
+# define TRIO_INLINE __inline
+</MACRO>
+<MACRO>
+<NAME>TRIO_INLINE</NAME>
+# define TRIO_INLINE
 </MACRO>
 <STRUCT>
 <NAME>xsltSecurityPrefs</NAME>

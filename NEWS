@@ -11,6 +11,14 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.0.29: Apr 1 2003:
+   - performance improvements especially for large flat documents
+   - bug fixes: Result Value Tree handling, XML IDs, keys(), extra namespace
+    declarations with xsl:elements.
+   - portability: python and trio fixes (Albert Chin), python on Solaris
+    (Ben Phillips) 
+
+
 1.0.28: Mar 24 2003:
    - fixed node() in patterns semantic.
    - fixed a memory access problem in format-number()
