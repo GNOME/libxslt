@@ -1,3 +1,9 @@
+Wed May 26 10:51:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* doc/search.php.inc, doc/search/php: enhanced to remove
+	  forcing module names to lower case, and to fix problem
+	  with links between pages in libxml2 directory.
+
 Mon May 24 12:46:10 HKT 2004 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* win32/makefile.msvc, win32/configure.js: included the cruntime 

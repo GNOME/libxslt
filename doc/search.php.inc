@@ -171,8 +171,9 @@
 							$t,$m,$d,$w,$u);
 			    } else {
 				$id = strtoupper($name);
-				$m = strtolower($module);
-				$url = "html/libxml-$m.html#$id";
+//				$m = strtolower($module);
+				$m = $module;
+				$url = "../html/libxml-$m.html#$id";
 				$results[$name] = array($relevance,$type,
 						$module, $desc, $name, $url);
 			    }
@@ -196,8 +197,9 @@
 							$t,$m,$d,$w,$u);
 			    } else {
 				$id = strtoupper($name);
-				$m = strtolower($module);
-				$url = "XSLT/html/libxslt-$m.html#$id";
+//				$m = strtolower($module);
+				$m = $module;
+				$url = "html/libxslt-$m.html#$id";
 				$results[$name] = array($relevance,$type,
 						$module, $desc, $name, $url);
 			    }
@@ -263,7 +265,8 @@
 							$t,$m,$d,$w,$u);
 			    } else {
 				$id = strtoupper($name);
-				$m = strtolower($module);
+//				$m = strtolower($module);
+				$m = $module;
 				$u = str_replace(
 			"http://mail.gnome.org/archives/xml/", "", $url);
 				$results[$url] = array($relevance,$type,
@@ -289,7 +292,8 @@
 							$t,$m,$d,$w,$u);
 			    } else {
 				$id = strtoupper($name);
-				$m = strtolower($module);
+//				$m = strtolower($module);
+				$m = $module;
 				$u = str_replace(
 			"http://mail.gnome.org/archives/xslt/", "", $url);
 				$results[$url] = array($relevance,$type,
