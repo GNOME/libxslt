@@ -805,6 +805,34 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
     if (ncname == NULL)
 	return (-1);
 
+    res = xmlHashLookup2(ctxt->globalVars, ncname, href);
+    if (res != 0) {
+	xsltFreeStackElem(elem);
+	xsltTransformError(ctxt, style, NULL,
+	    "Global parameter %s already defined\n", ncname);
+    }
+
+    while (style != NULL) {
+        elem = ctxt->style->variables;
+	while (elem != NULL) {
+	    if ((elem->comp != NULL) &&
+	        (elem->comp->type == XSLT_FUNC_PARAM) &&
+		(xmlStrEqual(elem->name, ncname)) &&
+		(xmlStrEqual(elem->nameURI, href)))
+		goto found;
+            elem = elem->next;
+	}
+        style = xsltNextImport(style);
+    }
+    /*
+     * the parameter was not registered in the stylesheet(s), ignore it.
+     */
+    xmlFree(ncname);
+    return(0);
+found:
+    style = ctxt->style;
+    elem = NULL;
+
     /*
      * Do the evaluation if @eval is non-zero.
      */

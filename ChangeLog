@@ -1,3 +1,10 @@
+Tue Apr 22 15:45:25 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: fixing bug #110020 on global parameter
+	  and variables mismatch
+	* tests/reports/Makefile.am tests/reports/cmdlineparams.*: added
+	  the test to the regression suite
+
 Mon Apr 21 12:22:31 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/math.c: applied patch from Charles Bozeman fixing
