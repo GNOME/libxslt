@@ -850,36 +850,43 @@ xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 static xmlChar *
 xsltScanLiteral(xsltParserContextPtr ctxt) {
-    const xmlChar *q;
+    const xmlChar *q, *cur;
     xmlChar *ret = NULL;
+    int val, len;
 
     SKIP_BLANKS;
     if (CUR == '"') {
         NEXT;
-	q = CUR_PTR;
-	while ((IS_CHAR(CUR)) && (CUR != '"'))
-	    NEXT;
-	if (!IS_CHAR(CUR)) {
-	    /* XP_ERROR(XPATH_UNFINISHED_LITERAL_ERROR); */
+	cur = q = CUR_PTR;
+	val = xmlStringCurrentChar(NULL, cur, &len);
+	while ((IS_CHAR(val)) && (val != '"')) {
+	    cur += len;
+	    val = xmlStringCurrentChar(NULL, cur, &len);
+	}
+	if (!IS_CHAR(val)) {
 	    ctxt->error = 1;
 	    return(NULL);
 	} else {
-	    ret = xmlStrndup(q, CUR_PTR - q);
-	    NEXT;
+	    ret = xmlStrndup(q, cur - q);
         }
+	cur += len;
+	CUR_PTR = cur;
     } else if (CUR == '\'') {
         NEXT;
-	q = CUR_PTR;
-	while ((IS_CHAR(CUR)) && (CUR != '\''))
-	    NEXT;
-	if (!IS_CHAR(CUR)) {
-	    /* XP_ERROR(XPATH_UNFINISHED_LITERAL_ERROR); */
+	cur = q = CUR_PTR;
+	val = xmlStringCurrentChar(NULL, cur, &len);
+	while ((IS_CHAR(val)) && (val != '\'')) {
+	    cur += len;
+	    val = xmlStringCurrentChar(NULL, cur, &len);
+	}
+	if (!IS_CHAR(val)) {
 	    ctxt->error = 1;
 	    return(NULL);
 	} else {
-	    ret = xmlStrndup(q, CUR_PTR - q);
-	    NEXT;
+	    ret = xmlStrndup(q, cur - q);
         }
+	cur += len;
+	CUR_PTR = cur;
     } else {
 	/* XP_ERROR(XPATH_START_LITERAL_ERROR); */
 	ctxt->error = 1;
@@ -904,36 +911,28 @@ xsltScanLiteral(xsltParserContextPtr ctxt) {
 
 static xmlChar *
 xsltScanName(xsltParserContextPtr ctxt) {
-    xmlChar buf[XML_MAX_NAMELEN];
-    int len = 0;
+    const xmlChar *q, *cur;
+    xmlChar *ret = NULL;
+    int val, len;
 
     SKIP_BLANKS;
-    if (!IS_LETTER(CUR) && (CUR != '_') &&
-        (CUR != ':')) {
-	return(NULL);
-    }
 
-    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
-           (NXT(len) == '.') || (NXT(len) == '-') ||
-	   (NXT(len) == '_') || 
-	   (IS_COMBINING(NXT(len))) ||
-	   (IS_EXTENDER(NXT(len)))) {
-	buf[len] = NXT(len);
-	len++;
-	if (len >= XML_MAX_NAMELEN) {
-	    xmlGenericError(xmlGenericErrorContext, 
-	       "xsltScanName: reached XML_MAX_NAMELEN limit\n");
-	    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
-		   (NXT(len) == '.') || (NXT(len) == '-') ||
-		   (NXT(len) == '_') || (NXT(len) == ':') || 
-		   (IS_COMBINING(NXT(len))) ||
-		   (IS_EXTENDER(NXT(len))))
-		 len++;
-	    break;
-	}
+    cur = q = CUR_PTR;
+    val = xmlStringCurrentChar(NULL, cur, &len);
+    if (!IS_LETTER(val) && (val != '_') && (val != ':'))
+	return(NULL);
+
+    while ((IS_LETTER(val)) || (IS_DIGIT(val)) ||
+           (val == '.') || (val == '-') ||
+	   (val == '_') || 
+	   (IS_COMBINING(val)) ||
+	   (IS_EXTENDER(val))) {
+	cur += len;
+	val = xmlStringCurrentChar(NULL, cur, &len);
     }
-    SKIP(len);
-    return(xmlStrndup(buf, len));
+    ret = xmlStrndup(q, cur - q);
+    CUR_PTR = cur;
+    return(ret);
 }
 
 /**
@@ -947,35 +946,28 @@ xsltScanName(xsltParserContextPtr ctxt) {
 
 static xmlChar *
 xsltScanNCName(xsltParserContextPtr ctxt) {
-    xmlChar buf[XML_MAX_NAMELEN];
-    int len = 0;
+    const xmlChar *q, *cur;
+    xmlChar *ret = NULL;
+    int val, len;
 
     SKIP_BLANKS;
-    if (!IS_LETTER(CUR) && (CUR != '_')) {
-	return(NULL);
-    }
 
-    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
-           (NXT(len) == '.') || (NXT(len) == '-') ||
-	   (NXT(len) == '_') ||
-	   (IS_COMBINING(NXT(len))) ||
-	   (IS_EXTENDER(NXT(len)))) {
-	buf[len] = NXT(len);
-	len++;
-	if (len >= XML_MAX_NAMELEN) {
-	    xmlGenericError(xmlGenericErrorContext, 
-	       "xsltScanNCName: reached XML_MAX_NAMELEN limit\n");
-	    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
-		   (NXT(len) == '.') || (NXT(len) == '-') ||
-		   (NXT(len) == '_') ||
-		   (IS_COMBINING(NXT(len))) ||
-		   (IS_EXTENDER(NXT(len))))
-		 len++;
-	    break;
-	}
+    cur = q = CUR_PTR;
+    val = xmlStringCurrentChar(NULL, cur, &len);
+    if (!IS_LETTER(val) && (val != '_'))
+	return(NULL);
+
+    while ((IS_LETTER(val)) || (IS_DIGIT(val)) ||
+           (val == '.') || (val == '-') ||
+	   (val == '_') ||
+	   (IS_COMBINING(val)) ||
+	   (IS_EXTENDER(val))) {
+	cur += len;
+	val = xmlStringCurrentChar(NULL, cur, &len);
     }
-    SKIP(len);
-    return(xmlStrndup(buf, len));
+    ret = xmlStrndup(q, cur - q);
+    CUR_PTR = cur;
+    return(ret);
 }
 
 /**
@@ -1349,7 +1341,7 @@ parse_predicate:
 	NEXT;
 	q = CUR_PTR;
 	/* TODO: avoid breaking in strings ... */
-	while (IS_CHAR(CUR)) {
+	while (CUR != 0) {
 	    /* Skip over nested predicates */
 	    if (CUR == '[')
 		level++;
@@ -1360,7 +1352,7 @@ parse_predicate:
 	    }
 	    NEXT;
 	}
-	if (!IS_CHAR(CUR)) {
+	if (CUR == 0) {
 	    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
 	    xsltGenericError(xsltGenericErrorContext,
 		    "xsltCompileStepPattern : ']' expected\n");

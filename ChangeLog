@@ -1,3 +1,11 @@
+Thu Jan 17 23:39:00 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixed I18N problemes in the template parser
+	  pointed out by Xavier Cazin
+	* tests/docs/Makefile.am tests/docs/bug-69.xml
+	  tests/general/Makefile.am tests/general/bug-69.*: added a 
+	  specific example in the regression tests
+
 Thu Jan 17 10:40:03 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am libexslt/common.c libexslt/date.c libexslt/exslt.c
