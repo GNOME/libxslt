@@ -972,7 +972,7 @@ xsltNewElemPreComp (xsltStylesheetPtr style, xmlNodePtr inst,
 
     cur = (xsltElemPreCompPtr) xmlMalloc (sizeof(xsltElemPreComp));
     if (cur == NULL) {
-	xsltPrintErrorContext(style, NULL, NULL);
+	xsltPrintErrorContext(NULL, style, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "xsltNewExtElement : malloc failed\n");
         return (NULL);
