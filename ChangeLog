@@ -1,3 +1,8 @@
+Fri May 11 17:08:14 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/templates.c: fixed bug #54451 on escaped curly brackets
+	* tests/docs/bug-26-.xml tests/general/bug-26-.*: added test
+
 Fri May 11 16:20:40 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in tests/XSLTMark/Makefile.am: try to handle gracefully

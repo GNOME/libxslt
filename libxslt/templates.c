@@ -192,7 +192,10 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
 	    expr = xmlStrndup(str, cur - str);
 	    if (expr == NULL)
 		return(ret);
-	    else {
+	    else if (*expr == '{') {
+		ret = xmlStrcat(ret, expr);
+		xmlFree(expr);
+	    } else {
 		xmlXPathCompExprPtr comp;
 		/*
 		 * TODO: keep precompiled form around
