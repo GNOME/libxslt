@@ -26,6 +26,6 @@ clean:
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(EXAMPLE_DIR)
-	-(for test in $(TESTSPY) $(XMLS); \
+	-(for test in $(TESTSPY) $(XMLS) $(EXTRAS); \
 	  do @INSTALL@ -m 0644 $$test $(DESTDIR)$(EXAMPLE_DIR) ; done)
 

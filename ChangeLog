@@ -1,3 +1,17 @@
+Thu Feb  7 23:21:18 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/libxslt-api.xml doc/libxslt-decl.txt doc/libxslt-refs.xml
+	  doc/parsedecl.py: fixup the script and rebuid the API
+	* libxslt/extensions.h: cleanup
+	* python/generator.py python/libxslt-python-api.xml python/libxslt.c
+	  python/libxsltclass.txt: provided accessors for a lot of the
+	  tructures involved in the transformation. Stylesheet and
+	  transformation python object don't free automatically the
+	  encapsulated object when deallocated.
+	* python/tests/Makefile.am python/tests/basic.py
+	  python/tests/extfunc.py python/tests/pyxsltproc.py:
+	  updated the examples
+
 Thu Feb  7 17:59:27 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: small fix

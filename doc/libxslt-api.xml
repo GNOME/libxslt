@@ -69,7 +69,7 @@
      <exports symbol='xsltExtElementLookup'/>
      <exports symbol='xsltExtModuleElementLookup'/>
      <exports symbol='xsltUnregisterExtModuleElement'/>
-     <exports symbol='void'/>
+     <exports symbol='xsltTopLevelFunction'/>
      <exports symbol='xsltRegisterExtModuleTopLevel'/>
      <exports symbol='xsltExtModuleTopLevelLookup'/>
      <exports symbol='xsltUnregisterExtModuleTopLevel'/>
@@ -423,11 +423,6 @@
     <macro name='XSLT_XT_NAMESPACE' file='extra'>
       <info>This is James Clark&apos;s XT processor namespace for extensions</info>
     </macro>
-    <function name='void' file='extensions'>
-      <return type='typedef'/>
-      <arg name='style' type='*xsltTopLevelFunction) (xsltStylesheetPtr'/>
-      <arg name='inst' type='xmlNodePtr'/>
-    </function>
     <function name='xslAddCall' file='xsltutils'>
       <info>Add template &quot;call&quot; to call stack</info>
       <return type='int' info=': 1 on sucess 0 otherwise an error may be printed if WITH_XSLT_DEBUG_BREAKPOINTS is defined '/>
@@ -1499,6 +1494,11 @@
       <info>Used for gathering profiling data</info>
       <return type='long' info='the number of tenth of milliseconds since the beginning of the profiling '/>
     </function>
+    <functype name='xsltTopLevelFunction' file='extensions'>
+      <return type='void'/>
+      <arg name='style' type='xsltStylesheetPtr'/>
+      <arg name='inst' type='xmlNodePtr'/>
+    </functype>
     <struct name='xsltTransformContext' file='xsltInternals'/>
     <typedef name='xsltTransformContextPtr' file='xsltInternals'/>
     <functype name='xsltTransformFunction' file='xsltInternals'>

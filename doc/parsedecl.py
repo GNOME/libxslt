@@ -800,7 +800,11 @@ def link(id):
         target = string.upper(ids[id])
     else:
 	target = string.upper(id)
-    file = 'html/libxslt-' + string.lower(hash[id]) + '.html';
+    if hash.has_key(id):
+        module = string.lower(hash[id])
+    else:
+        module = 'index'
+    file = 'html/libxslt-' + module + '.html';
     return file + '#' + target
     
 print "Saving XML crossreferences libxslt-refs.xml"

@@ -6,7 +6,22 @@ import libxslt
 # Memory debug specific
 libxml2.debugMemory(1)
 
-def f(str):
+nodeName = None
+
+def f(ctx, str):
+    global nodeName
+
+    #
+    # Small check to verify the context is correcly accessed
+    #
+    try:
+	pctxt = libxslt.xpathParserContext(_obj=ctx)
+	ctxt = pctxt.context()
+	tctxt = ctxt.transformContext()
+	nodeName = tctxt.insertNode().name
+    except:
+        pass
+
     import string
     return string.upper(str)
 
@@ -27,7 +42,7 @@ styledoc = libxml2.parseDoc("""
 style = libxslt.parseStylesheetDoc(styledoc)
 doc = libxml2.parseDoc("<doc/>")
 result = style.applyStylesheet(doc, { "bar": "'success'" })
-style = None
+style.freeStylesheet()
 doc.freeDoc()
 
 root = result.children
@@ -37,6 +52,8 @@ if root.name != "article":
 if root.content != "SUCCESS":
     print "Unexpected root node content, extension function failed"
     sys.exit(1)
+if nodeName != 'article':
+    print "The function callback failed to access its context"
 
 result.freeDoc()
 

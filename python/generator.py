@@ -526,8 +526,7 @@ classes_ancestor = {
     "xpathParserContext" : "libxml2.xpathParserContext",
 }
 classes_destructors = {
-    "stylesheet": "xsltFreeStylesheet",
-    "transformCtxt": "xsltFreeTransformContext",
+    "xpathContext" : "pass"
 }
 
 function_classes = {}
@@ -577,6 +576,24 @@ def nameFixup(function, classe, type, file):
         func = string.lower(func[0:1]) + func[1:]
     elif name[0:10] == "xmlNodeGet" and file == "python_accessor":
         func = name[10:]
+        func = string.lower(func[0:1]) + func[1:]
+    elif name[0:18] == "xsltXPathParserGet" and file == "python_accessor":
+        func = name[18:]
+        func = string.lower(func[0:1]) + func[1:]
+    elif name[0:12] == "xsltXPathGet" and file == "python_accessor":
+        func = name[12:]
+        func = string.lower(func[0:1]) + func[1:]
+    elif name[0:16] == "xsltTransformGet" and file == "python_accessor":
+        func = name[16:]
+        func = string.lower(func[0:1]) + func[1:]
+    elif name[0:16] == "xsltTransformSet" and file == "python_accessor":
+        func = name[13:]
+        func = string.lower(func[0:1]) + func[1:]
+    elif name[0:17] == "xsltStylesheetGet" and file == "python_accessor":
+        func = name[17:]
+        func = string.lower(func[0:1]) + func[1:]
+    elif name[0:17] == "xsltStylesheetSet" and file == "python_accessor":
+        func = name[14:]
         func = string.lower(func[0:1]) + func[1:]
     elif name[0:l] == classe:
 	func = name[l:]
@@ -784,10 +801,13 @@ for classname in classes_list:
 	    classes.write("        self._o = None\n\n");
 	if classes_destructors.has_key(classname):
 	    classes.write("    def __del__(self):\n")
-	    classes.write("        if self._o != None:\n")
-	    classes.write("            _libxslt.%s(self._o)\n" %
-	                  classes_destructors[classname]);
-	    classes.write("        self._o = None\n\n");
+	    if classes_destructors[classname] == "pass":
+		classes.write("        pass\n")
+	    else:
+		classes.write("        if self._o != None:\n")
+		classes.write("            _libxslt.%s(self._o)\n" %
+			      classes_destructors[classname]);
+		classes.write("        self._o = None\n\n");
 	flist = function_classes[classname]
 	flist.sort(functionCompare)
 	oldfile = ""

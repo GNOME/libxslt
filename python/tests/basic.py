@@ -11,7 +11,7 @@ style = libxslt.parseStylesheetDoc(styledoc)
 doc = libxml2.parseFile("test.xml")
 result = style.applyStylesheet(doc, None)
 style.saveResultToFilename("foo", result, 0)
-style = None
+style.freeStylesheet()
 doc.freeDoc()
 result.freeDoc()
 

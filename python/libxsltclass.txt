@@ -46,6 +46,8 @@ xslDropCall()
 
 
 Class xpathParserContext(libxml2.xpathParserContext)
+    # accessors
+    context()
 
     # functions from module extra
     functionNodeSet()
@@ -62,10 +64,28 @@ Class xpathParserContext(libxml2.xpathParserContext)
 
 
 Class xpathContext(libxml2.xpathContext)
+    # accessors
+    contextDoc()
+    contextNode()
+    contextPosition()
+    contextSize()
+    function()
+    functionURI()
+    transformContext()
 
     # functions from module functions
     registerAllFunctions()
 Class transformCtxt()
+    # accessors
+    context()
+    current()
+    insertNode()
+    instruction()
+    mode()
+    modeURI()
+    outputDoc()
+    outputURI()
+    style()
 
     # functions from module attributes
     applyAttributeSet()
@@ -119,6 +139,17 @@ Class transformCtxt()
     printErrorContext()
     saveProfiling()
 Class stylesheet()
+    # accessors
+    doc()
+    doctypePublic()
+    doctypeSystem()
+    encoding()
+    imports()
+    method()
+    methodURI()
+    next()
+    parent()
+    version()
 
     # functions from module attributes
     freeAttributeSetsHashes()

@@ -797,11 +797,12 @@ const xmlChar *name,const xmlChar *URI
 <RETURNS>int 	</RETURNS>
 const xmlChar *name,const xmlChar *URI
 </FUNCTION>
-<FUNCTION>
-<NAME>void</NAME>
-<RETURNS>typedef  </RETURNS>
-*xsltTopLevelFunction)		(xsltStylesheetPtr style,xmlNodePtr inst
-</FUNCTION>
+<USER_FUNCTION>
+<NAME>xsltTopLevelFunction</NAME>
+<RETURNS>void </RETURNS>
+xsltStylesheetPtr style,
+					 xmlNodePtr inst
+</USER_FUNCTION>
 <FUNCTION>
 <NAME>xsltRegisterExtModuleTopLevel</NAME>
 <RETURNS>int 	</RETURNS>
@@ -809,7 +810,7 @@ const xmlChar *name,const xmlChar *URI,xsltTopLevelFunction function
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltExtModuleTopLevelLookup</NAME>
-<RETURNS>xsltTopLevelFunction</RETURNS>
+<RETURNS>xsltTopLevelFunction  </RETURNS>
 const xmlChar *name,const xmlChar *URI
 </FUNCTION>
 <FUNCTION>

@@ -149,15 +149,13 @@ int	xsltUnregisterExtModuleElement	(const xmlChar *name,
 /*
  * top-level elements
  */
-typedef void
-	(*xsltTopLevelFunction)		(xsltStylesheetPtr style,
+typedef void (*xsltTopLevelFunction)	(xsltStylesheetPtr style,
 					 xmlNodePtr inst);
 
 int	xsltRegisterExtModuleTopLevel	(const xmlChar *name,
 					 const xmlChar *URI,
 					 xsltTopLevelFunction function);
-xsltTopLevelFunction
-	xsltExtModuleTopLevelLookup	(const xmlChar *name,
+xsltTopLevelFunction xsltExtModuleTopLevelLookup (const xmlChar *name,
 					 const xmlChar *URI);
 int	xsltUnregisterExtModuleTopLevel	(const xmlChar *name,
 					 const xmlChar *URI);

@@ -181,11 +181,12 @@ libxslt_xmlXPathFuncCallback(xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    list = PyTuple_New(nargs);
+    list = PyTuple_New(nargs + 1);
+    PyTuple_SetItem(list, 0, libxml_xmlXPathParserContextPtrWrap(ctxt));
     for (i = 0;i < nargs;i++) {
 	obj = valuePop(ctxt);
 	cur = libxml_xmlXPathObjectPtrWrap(obj);
-	PyTuple_SetItem(list, i, cur);
+	PyTuple_SetItem(list, i + 1, cur);
     }
     result = PyEval_CallObject(current_function, list);
     Py_DECREF(list);

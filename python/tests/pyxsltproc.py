@@ -283,7 +283,8 @@ def main(args = None):
 	xsltProcess(doc, cur, args[i])
 	i = i + 1
 
-    cur = None
+    if cur != None:
+        cur.freeStylesheet()
     params = None
 
 if __name__ == "__main__":

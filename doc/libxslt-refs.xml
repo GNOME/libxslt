@@ -35,7 +35,6 @@
     <reference name='XSLT_TODO' href='html/libxslt-xsltutils.html#XSLT-TODO-CAPS'/>
     <reference name='XSLT_XALAN_NAMESPACE' href='html/libxslt-extra.html#XSLT-XALAN-NAMESPACE-CAPS'/>
     <reference name='XSLT_XT_NAMESPACE' href='html/libxslt-extra.html#XSLT-XT-NAMESPACE-CAPS'/>
-    <reference name='void' href='html/libxslt-extensions.html#VOID'/>
     <reference name='xslAddCall' href='html/libxslt-xsltutils.html#XSLADDCALL'/>
     <reference name='xslDropCall' href='html/libxslt-xsltutils.html#XSLDROPCALL'/>
     <reference name='xslHandleDebugger' href='html/libxslt-transform.html#XSLHANDLEDEBUGGER'/>
@@ -283,9 +282,6 @@
     <ref name='XSLT_XALAN_NAMESPACE'/>
     <ref name='XSLT_XT_NAMESPACE'/>
     </letter>
-    <letter name='v'>
-    <ref name='void'/>
-    </letter>
     <letter name='x'>
     <ref name='xslAddCall'/>
     <ref name='xslDropCall'/>
@@ -495,7 +491,6 @@
     </type>
     <type name='typedef'>
       <ref name='xsltElemPreCompPtr'/>
-      <ref name='void'/>
     </type>
     <type name='void *'>
       <ref name='xsltStyleExtInitFunction'/>
@@ -592,9 +587,6 @@
   <functions>
     <type name='*xsltPreComputeFunction) (xsltStylesheetPtr'>
       <ref name='xsltElemPreCompPtr'/>
-    </type>
-    <type name='*xsltTopLevelFunction) (xsltStylesheetPtr'>
-      <ref name='void'/>
     </type>
     <type name='FILE *'>
       <ref name='xsltApplyStylesheetUser'/>
@@ -813,7 +805,7 @@
       <ref name='xsltElemPreCompPtr'/>
       <ref name='xsltNewElemPreComp'/>
       <ref name='xsltInitElemPreComp'/>
-      <ref name='void'/>
+      <ref name='xsltTopLevelFunction'/>
       <ref name='xsltPreComputeExtModuleElement'/>
       <ref name='xsltParseStylesheetImport'/>
       <ref name='xsltParseStylesheetInclude'/>
@@ -972,6 +964,7 @@
       <ref name='xsltShutdownExts'/>
       <ref name='xsltNewElemPreComp'/>
       <ref name='xsltInitElemPreComp'/>
+      <ref name='xsltTopLevelFunction'/>
       <ref name='xsltRegisterExtPrefix'/>
       <ref name='xsltCheckExtPrefix'/>
       <ref name='xsltFreeExts'/>
@@ -1134,7 +1127,7 @@
       <ref name='xsltExtElementLookup'/>
       <ref name='xsltExtModuleElementLookup'/>
       <ref name='xsltUnregisterExtModuleElement'/>
-      <ref name='void'/>
+      <ref name='xsltTopLevelFunction'/>
       <ref name='xsltRegisterExtModuleTopLevel'/>
       <ref name='xsltExtModuleTopLevelLookup'/>
       <ref name='xsltUnregisterExtModuleTopLevel'/>
