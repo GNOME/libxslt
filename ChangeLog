@@ -1,3 +1,8 @@
+Sun Feb 25 04:51:33 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in tests/Makefile.am tests/docbook tree:
+	  added docbook XSL based test suite
+
 Sat Feb 24 14:02:05 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltutils.c: reformat of messages
