@@ -67,6 +67,10 @@
 #  endif
 #endif
 
+xmlParserInputPtr xmlNoNetExternalEntityLoader(const char *URL,
+	                                       const char *ID,
+					       xmlParserCtxtPtr ctxt);
+
 static int debug = 0;
 static int repeat = 0;
 static int timing = 0;
@@ -82,128 +86,11 @@ static int html = 0;
 static int xinclude = 0;
 #endif
 static int profile = 0;
-static int nonet;
-static xmlExternalEntityLoader defaultLoader = NULL;
 
 static struct timeval begin, end;
 static const char *params[16 + 1];
 static int nbparams = 0;
 static const char *output = NULL;
-
-#ifdef LIBXML_CATALOG_ENABLED
-static int xsltNoNetExists(const char *URL) {
-#ifdef HAVE_STAT
-    int ret;
-    struct stat info;
-    const char *path;
-
-    if (URL == NULL)
-	return(0);
-
-    if (!xmlStrncmp(BAD_CAST URL, BAD_CAST "file://localhost", 16))
-	path = &URL[16];
-    else if (!xmlStrncmp(BAD_CAST URL, BAD_CAST "file:///", 8)) {
-#ifdef _WIN32
-	path = &URL[8];
-#else
-	path = &URL[7];
-#endif
-    } else 
-	path = URL;
-    ret = stat(path, &info);
-    if (ret == 0)
-	return(1);
-#endif
-    return(0);
-}
-#endif
-
-static xmlParserInputPtr
-xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
-                               xmlParserCtxtPtr ctxt) {
-    xmlParserInputPtr input = NULL;
-    xmlChar *resource = NULL;
-
-#ifdef LIBXML_CATALOG_ENABLED
-    xmlCatalogAllow pref;
-
-    /*
-     * If the resource doesn't exists as a file,
-     * try to load it from the resource pointed in the catalogs
-     */
-    pref = xmlCatalogGetDefaults();
-
-    if ((pref != XML_CATA_ALLOW_NONE) && (!xsltNoNetExists(URL))) {
-	/*
-	 * Do a local lookup
-	 */
-	if ((ctxt->catalogs != NULL) &&
-	    ((pref == XML_CATA_ALLOW_ALL) ||
-	     (pref == XML_CATA_ALLOW_DOCUMENT))) {
-	    resource = xmlCatalogLocalResolve(ctxt->catalogs,
-					      (const xmlChar *)ID,
-					      (const xmlChar *)URL);
-        }
-	/*
-	 * Try a global lookup
-	 */
-	if ((resource == NULL) &&
-	    ((pref == XML_CATA_ALLOW_ALL) ||
-	     (pref == XML_CATA_ALLOW_GLOBAL))) {
-	    resource = xmlCatalogResolve((const xmlChar *)ID,
-					 (const xmlChar *)URL);
-	}
-	if ((resource == NULL) && (URL != NULL))
-	    resource = xmlStrdup((const xmlChar *) URL);
-
-	/*
-	 * TODO: do an URI lookup on the reference
-	 */
-	if ((resource != NULL) && (!xsltNoNetExists((const char *)resource))) {
-	    xmlChar *tmp = NULL;
-
-	    if ((ctxt->catalogs != NULL) &&
-		((pref == XML_CATA_ALLOW_ALL) ||
-		 (pref == XML_CATA_ALLOW_DOCUMENT))) {
-		tmp = xmlCatalogLocalResolveURI(ctxt->catalogs, resource);
-	    }
-	    if ((tmp == NULL) &&
-		((pref == XML_CATA_ALLOW_ALL) ||
-	         (pref == XML_CATA_ALLOW_GLOBAL))) {
-		tmp = xmlCatalogResolveURI(resource);
-	    }
-
-	    if (tmp != NULL) {
-		xmlFree(resource);
-		resource = tmp;
-	    }
-	}
-    }
-#endif
-    if (resource == NULL)
-	resource = (xmlChar *) URL;
-
-    if (resource != NULL) {
-        if ((!xmlStrncasecmp((const xmlChar *) resource,
-		            (const xmlChar *) "ftp://", 6)) ||
-            (!xmlStrncasecmp((const xmlChar *) resource,
-		            (const xmlChar *) "http://", 7))) {
-	    fprintf(stderr, "Attempt to load network entity %s \n", resource);
-
-	    if (nonet) {
-		if (resource != (xmlChar *) URL)
-		    xmlFree(resource);
-		return(NULL);
-	    }
-	}
-    }
-    if (defaultLoader != NULL) {
-	input = defaultLoader((const char *) resource, ID, ctxt);
-    }
-    if (resource != (xmlChar *) URL)
-	xmlFree(resource);
-    return(input);
-}
 
 static void
 xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
@@ -365,7 +252,6 @@ static void usage(const char *name) {
     printf("      --param name value : pass a (parameter,value) pair\n");
     printf("            string values must be quoted like \"'string'\"\n");
     printf("      --nonet refuse to fetch DTDs or entities over network\n");
-    printf("      --warnnet warn against fetching over the network\n");
 #ifdef LIBXML_CATALOG_ENABLED
     printf("      --catalogs : use the catalogs from $SGML_CATALOG_FILES\n");
 #endif
@@ -391,7 +277,6 @@ main(int argc, char **argv)
 
     LIBXML_TEST_VERSION
 
-    defaultLoader = xmlGetExternalEntityLoader();
     xmlLineNumbersDefault(1);
 
     if (novalid == 0)
@@ -461,13 +346,9 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-norman")) ||
                    (!strcmp(argv[i], "--norman"))) {
             profile++;
-        } else if ((!strcmp(argv[i], "-warnnet")) ||
-                   (!strcmp(argv[i], "--warnnet"))) {
-            xmlSetExternalEntityLoader(xsltNoNetExternalEntityLoader);
         } else if ((!strcmp(argv[i], "-nonet")) ||
                    (!strcmp(argv[i], "--nonet"))) {
-            xmlSetExternalEntityLoader(xsltNoNetExternalEntityLoader);
-            nonet = 1;
+            xmlSetExternalEntityLoader(xmlNoNetExternalEntityLoader);
 #ifdef LIBXML_CATALOG_ENABLED
         } else if ((!strcmp(argv[i], "-catalogs")) ||
                    (!strcmp(argv[i], "--catalogs"))) {

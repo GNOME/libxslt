@@ -1,3 +1,8 @@
+Wed Oct 31 18:53:26 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: cleanup, moved xsllNoNetExternalEntityLoader()
+	  to libxml and removed the --warnnet option
+
 Tue Oct 30 19:32:08 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: applied patches from David Härdeman closing
