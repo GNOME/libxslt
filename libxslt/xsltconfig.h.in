@@ -15,15 +15,42 @@
 extern "C" {
 #endif
 
+/**
+ * WITH_XSLT_DEBUG:
+ *
+ * Activate the compilation of the debug reporting. Speed penalty
+ * is insignifiant and being able to run xsltpoc -v is useful. On
+ * by default unless --without-debug is passed to configure
+ */
 #if @WITH_XSLT_DEBUG@
 #define WITH_XSLT_DEBUG
 #endif
 
 #if @WITH_MEM_DEBUG@
+/**
+ * DEBUG_MEMORY:
+ *
+ * should be activated only when debugging libxslt. It replaces the
+ * allocator with a collect and debug shell to the libc allocator.
+ * Use configure --with-mem-debug to activate it on both library
+ */
 #define DEBUG_MEMORY
+
+/**
+ * DEBUG_MEMORY_LOCATION:
+ *
+ * should be activated only when debugging libxslt.
+ * DEBUG_MEMORY_LOCATION should be activated only when libxml has
+ * been configured with --with-debug-mem too
+ */
 #define DEBUG_MEMORY_LOCATION
 #endif
 
+/**
+ * ATTRIBUTE_UNUSED:
+ *
+ * This macro is used to flag unused function parameters to GCC
+ */
 #ifdef __GNUC__
 #ifdef HAVE_ANSIDECL_H
 #include <ansidecl.h>

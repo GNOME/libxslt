@@ -4,7 +4,7 @@
 >pattern</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.44"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.59"><LINK
 REL="HOME"
 TITLE="Gnome XSLT Library Reference Manual"
 HREF="book1.html"><LINK
@@ -18,6 +18,7 @@ REL="NEXT"
 TITLE="templates"
 HREF="libxslt-templates.html"></HEAD
 ><BODY
+CLASS="REFENTRY"
 BGCOLOR="#FFFFFF"
 TEXT="#000000"
 LINK="#0000FF"
@@ -121,7 +122,7 @@ NAME="LIBXSLT-PATTERN"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN316"
+NAME="AEN300"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +130,7 @@ NAME="AEN316"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN319"
+NAME="AEN303"
 ></A
 ><H2
 >Synopsis</H2
@@ -265,7 +266,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN353"
+NAME="AEN337"
 ></A
 ><H2
 >Description</H2
@@ -275,14 +276,14 @@ NAME="AEN353"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN356"
+NAME="AEN340"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN358"
+NAME="AEN342"
 ></A
 ><H3
 ><A
@@ -303,12 +304,15 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Data structure used for the implementation of patterns.
+It is kept private (in pattern.c)</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN363"
+NAME="AEN348"
 ></A
 ><H3
 ><A
@@ -334,7 +338,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN368"
+NAME="AEN353"
 ></A
 ><H3
 ><A
@@ -377,6 +381,9 @@ for fast matching.</P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN364"
+></A
 ><P
 ></P
 ><TABLE
@@ -386,6 +393,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -452,6 +460,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >the generated pattern list or NULL in case of failure</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -460,7 +469,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN400"
+NAME="AEN385"
 ></A
 ><H3
 ><A
@@ -494,6 +503,9 @@ CLASS="PARAMETER"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN393"
+></A
 ><P
 ></P
 ><TABLE
@@ -503,6 +515,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -520,6 +533,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >  an XSLT comp list</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -528,7 +542,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN417"
+NAME="AEN402"
 ></A
 ><H3
 ><A
@@ -565,6 +579,9 @@ HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN411"
+></A
 ><P
 ></P
 ><TABLE
@@ -574,6 +591,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -640,6 +658,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >1 if it matches, 0 if it doesn't and -1 in case of failure</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -648,7 +667,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN447"
+NAME="AEN432"
 ></A
 ><H3
 ><A
@@ -694,6 +713,9 @@ CLASS="PARAMETER"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN443"
+></A
 ><P
 ></P
 ><TABLE
@@ -703,6 +725,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -786,6 +809,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >-1 in case of error, 0 otherwise</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -794,7 +818,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN483"
+NAME="AEN468"
 ></A
 ><H3
 ><A
@@ -840,6 +864,9 @@ it means one need to look for the next imported template in scope.</P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN479"
+></A
 ><P
 ></P
 ><TABLE
@@ -849,6 +876,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -915,6 +943,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >the xsltTemplatePtr or NULL if not found</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -923,7 +952,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN515"
+NAME="AEN500"
 ></A
 ><H3
 ><A
@@ -952,6 +981,9 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN507"
+></A
 ><P
 ></P
 ><TABLE
@@ -961,6 +993,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -978,6 +1011,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 > an XSLT stylesheet</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -986,7 +1020,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN531"
+NAME="AEN516"
 ></A
 ><H3
 ><A
@@ -1016,6 +1050,9 @@ the ones it imports.</P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN523"
+></A
 ><P
 ></P
 ><TABLE
@@ -1025,6 +1062,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1042,6 +1080,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 > an XSLT stylesheet</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1050,7 +1089,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN547"
+NAME="AEN532"
 ></A
 ><H3
 ><A
@@ -1087,6 +1126,9 @@ HREF="XMLCHAR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN541"
+></A
 ><P
 ></P
 ><TABLE
@@ -1096,6 +1138,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1160,8 +1203,9 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&#13;</TD
+>&nbsp;</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P

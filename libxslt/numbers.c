@@ -120,12 +120,6 @@ isinf(double number)
 }
 #endif
 
-/************************************************************************
- *
- * xsltNumberFormat
- *
- * Convert one number.
- */
 static void
 xsltNumberFormatDecimal(xmlBufferPtr buffer,
 			double number,
@@ -581,6 +575,14 @@ xsltNumberFormatGetValue(xmlXPathContextPtr context,
     return amount;
 }
 
+/**
+ * xsltNumberFormat:
+ * @ctxt: the XSLT transformation context
+ * @data: the formatting informations
+ * @node: the data to format
+ *
+ * Convert one number.
+ */
 void
 xsltNumberFormat(xsltTransformContextPtr ctxt,
 		 xsltNumberDataPtr data,
@@ -744,7 +746,12 @@ xsltFormatNumberPreSuffix(xsltDecimalFormatPtr self, xmlChar **format, xsltForma
     }
 }
 	    
-/************************************************************************
+/**
+ * xsltFormatNumberConversion:
+ * @self: the decimal format
+ * @format: the format requested
+ * @number: the value to format
+ * @result: the place to ouput the result
  *
  * format-number() uses the JDK 1.1 DecimalFormat class:
  *

@@ -38,8 +38,6 @@ void	xsltElementAvailableFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
 void	xsltFunctionAvailableFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-void	xsltXXXFunction			(xmlXPathParserContextPtr ctxt,
-					 int nargs);
 
 /*
  * And the registration

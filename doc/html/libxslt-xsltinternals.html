@@ -4,7 +4,7 @@
 >xsltInternals</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.44"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.59"><LINK
 REL="HOME"
 TITLE="Gnome XSLT Library Reference Manual"
 HREF="book1.html"><LINK
@@ -18,6 +18,7 @@ REL="NEXT"
 TITLE="numbersInternals"
 HREF="libxslt-numbersinternals.html"></HEAD
 ><BODY
+CLASS="REFENTRY"
 BGCOLOR="#FFFFFF"
 TEXT="#000000"
 LINK="#0000FF"
@@ -121,7 +122,7 @@ NAME="LIBXSLT-XSLTINTERNALS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN3047"
+NAME="AEN2938"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +130,7 @@ NAME="AEN3047"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN3050"
+NAME="AEN2941"
 ></A
 ><H2
 >Synopsis</H2
@@ -148,18 +149,6 @@ CLASS="SYNOPSIS"
 HREF="libxslt-xsltinternals.html#XSLT-MAX-SORT-CAPS"
 >XSLT_MAX_SORT</A
 >
-enum        <A
-HREF="libxslt-xsltinternals.html#XSLTELEM"
->xsltElem</A
->;
-struct      <A
-HREF="libxslt-xsltinternals.html#XSLTSTACKELEM"
->xsltStackElem</A
->;
-typedef     <A
-HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
->xsltStackElemPtr</A
->;
 #define     <A
 HREF="libxslt-xsltinternals.html#XSLT-PAT-NO-PRIORITY-CAPS"
 >XSLT_PAT_NO_PRIORITY</A
@@ -175,6 +164,18 @@ HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
 struct      <A
 HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMAT"
 >xsltDecimalFormat</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</A
+>;
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTDOCUMENT"
+>xsltDocument</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTDOCUMENTPTR"
+>xsltDocumentPtr</A
 >;
 struct      <A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXT"
@@ -214,6 +215,14 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 enum        <A
 HREF="libxslt-xsltinternals.html#XSLTSTYLETYPE"
 >xsltStyleType</A
+>;
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEM"
+>xsltStackElem</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
+>xsltStackElemPtr</A
 >;
 struct      <A
 HREF="libxslt-xsltinternals.html#XSLTSTYLESHEET"
@@ -281,9 +290,9 @@ HREF="libxslt-xsltinternals.html#XSLTFREESTACKELEMLIST"
 HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
 >xsltStackElemPtr</A
 > elem);
-<GTKDOCLINK
-HREF="XSLTDECIMALFORMATPTR"
->xsltDecimalFormatPtr</GTKDOCLINK
+<A
+HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</A
 > <A
 HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMATGETBYNAME"
 >xsltDecimalFormatGetByName</A
@@ -353,9 +362,9 @@ HREF="XMLXPATHERROR"
 > <A
 HREF="libxslt-xsltinternals.html#XSLTFORMATNUMBERCONVERSION"
 >xsltFormatNumberConversion</A
->    (<GTKDOCLINK
-HREF="XSLTDECIMALFORMATPTR"
->xsltDecimalFormatPtr</GTKDOCLINK
+>    (<A
+HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</A
 > self,
                                              <GTKDOCLINK
 HREF="XMLCHAR"
@@ -376,7 +385,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3113"
+NAME="AEN3006"
 ></A
 ><H2
 >Description</H2
@@ -386,14 +395,14 @@ NAME="AEN3113"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3116"
+NAME="AEN3009"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3118"
+NAME="AEN3011"
 ></A
 ><H3
 ><A
@@ -414,102 +423,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3123"
-></A
-><H3
-><A
-NAME="XSLTELEM"
-></A
->enum xsltElem</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->typedef enum {
-    XSLT_ELEM_VARIABLE=1,
-    XSLT_ELEM_PARAM
-} xsltElem;</PRE
-></TD
-></TR
-></TABLE
+>Max number of specified xsl:sort on an element</P
 ><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3128"
-></A
-><H3
-><A
-NAME="XSLTSTACKELEM"
-></A
->struct xsltStackElem</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->struct xsltStackElem {
-    struct _xsltStackElem *next;/* chained list */
-    xsltElem type;	/* type of the element */
-    int computed;	/* was the evaluation done */
-    xmlChar *name;	/* the local part of the name QName */
-    xmlChar *nameURI;	/* the URI part of the name QName */
-    xmlChar *select;	/* the eval string */
-    xmlNodePtr tree;	/* the tree if no eval string or the location */
-    xmlXPathObjectPtr value; /* The value if computed */
-};</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3133"
-></A
-><H3
-><A
-NAME="XSLTSTACKELEMPTR"
-></A
->xsltStackElemPtr</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->typedef xsltStackElem *xsltStackElemPtr;</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN3138"
+NAME="AEN3017"
 ></A
 ><H3
 ><A
@@ -530,12 +451,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>specific value for pattern without priority expressed</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3143"
+NAME="AEN3023"
 ></A
 ><H3
 ><A
@@ -567,12 +490,14 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The in-memory structure corresponding to an XSLT Template</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3148"
+NAME="AEN3029"
 ></A
 ><H3
 ><A
@@ -598,7 +523,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3153"
+NAME="AEN3034"
 ></A
 ><H3
 ><A
@@ -614,7 +539,8 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->struct xsltDecimalFormat *next; /* chained list */
+>struct xsltDecimalFormat {
+    struct _xsltDecimalFormat *next; /* chained list */
     xmlChar *name;
     /* Used for interpretation of pattern */
     xmlChar *digit;
@@ -629,20 +555,35 @@ CLASS="PROGRAMLISTING"
     xmlChar *percent;
     xmlChar *permille;
     xmlChar *zeroDigit;
-} xsltDecimalFormat, *xsltDecimalFormatPtr;
-
-/*
- * Data structure associated to a document
- */
-
-typedef struct _xsltDocument xsltDocument;
-typedef xsltDocument *xsltDocumentPtr;
-struct _xsltDocument {
-    struct _xsltDocument *next;	/* documents are kept in a chained list */
-    int main;			/* is this the main document */
-    xmlDocPtr doc;		/* the parsed document */
-    void *keys;			/* key tables storage */
 };</PRE
+></TD
+></TR
+></TABLE
+><P
+>Data structure of decimal-format</P
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3040"
+></A
+><H3
+><A
+NAME="XSLTDECIMALFORMATPTR"
+></A
+>xsltDecimalFormatPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltDecimalFormat *xsltDecimalFormatPtr;</PRE
 ></TD
 ></TR
 ></TABLE
@@ -652,7 +593,66 @@ struct _xsltDocument {
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3158"
+NAME="AEN3045"
+></A
+><H3
+><A
+NAME="XSLTDOCUMENT"
+></A
+>struct xsltDocument</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltDocument {
+    struct _xsltDocument *next;	/* documents are kept in a chained list */
+    int main;			/* is this the main document */
+    xmlDocPtr doc;		/* the parsed document */
+    void *keys;			/* key tables storage */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+>Data structure associated to a parsed document</P
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3051"
+></A
+><H3
+><A
+NAME="XSLTDOCUMENTPTR"
+></A
+>xsltDocumentPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltDocument *xsltDocumentPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3056"
 ></A
 ><H3
 ><A
@@ -703,6 +703,13 @@ CLASS="PROGRAMLISTING"
 
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     xsltTransformState state;		/* the current state */
+
+    /*
+     * Global variables
+     */
+    xmlHashTablePtr   globalVars;	/* the global variables and params */
+
+    xmlNodePtr inst;			/* the instruction in the stylesheet */
 };</PRE
 ></TD
 ></TR
@@ -713,7 +720,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3163"
+NAME="AEN3061"
 ></A
 ><H3
 ><A
@@ -739,7 +746,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3168"
+NAME="AEN3066"
 ></A
 ><H3
 ><A
@@ -805,12 +812,15 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>The in-memory structure corresponding to XSLT stylesheet constructs
+precomputed data.</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3173"
+NAME="AEN3072"
 ></A
 ><H3
 ><A
@@ -836,7 +846,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3178"
+NAME="AEN3077"
 ></A
 ><H3
 ><A
@@ -872,9 +882,15 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ></TR
 ></TABLE
 ><P
+>signature of the function associated to elements part of the
+stylesheet language like xsl:if or xsl:apply-templates.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3087"
+></A
 ><P
 ></P
 ><TABLE
@@ -884,6 +900,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -950,8 +967,9 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&#13;</TD
+>&nbsp;</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -960,7 +978,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3208"
+NAME="AEN3108"
 ></A
 ><H3
 ><A
@@ -1008,7 +1026,68 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3213"
+NAME="AEN3113"
+></A
+><H3
+><A
+NAME="XSLTSTACKELEM"
+></A
+>struct xsltStackElem</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltStackElem {
+    struct _xsltStackElem *next;/* chained list */
+    xsltStylePreCompPtr comp;   /* the compiled form */
+    int computed;	/* was the evaluation done */
+    xmlChar *name;	/* the local part of the name QName */
+    xmlChar *nameURI;	/* the URI part of the name QName */
+    xmlChar *select;	/* the eval string */
+    xmlNodePtr tree;	/* the tree if no eval string or the location */
+    xmlXPathObjectPtr value; /* The value if computed */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3118"
+></A
+><H3
+><A
+NAME="XSLTSTACKELEMPTR"
+></A
+>xsltStackElemPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltStackElem *xsltStackElemPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3123"
 ></A
 ><H3
 ><A
@@ -1116,7 +1195,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3218"
+NAME="AEN3128"
 ></A
 ><H3
 ><A
@@ -1142,7 +1221,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3223"
+NAME="AEN3133"
 ></A
 ><H3
 ><A
@@ -1172,7 +1251,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3228"
+NAME="AEN3138"
 ></A
 ><H3
 ><A
@@ -1202,7 +1281,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3233"
+NAME="AEN3143"
 ></A
 ><H3
 ><A
@@ -1223,12 +1302,15 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Macro to check if the XSLT processing should be stopped
+will return from the function</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3238"
+NAME="AEN3149"
 ></A
 ><H3
 ><A
@@ -1249,12 +1331,15 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Macro to check if the XSLT processing should be stopped
+will goto the error: label</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3243"
+NAME="AEN3155"
 ></A
 ><H3
 ><A
@@ -1275,12 +1360,15 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Macro to check if the XSLT processing should be stopped
+will return from the function with a 0 value</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3248"
+NAME="AEN3161"
 ></A
 ><H3
 ><A
@@ -1309,6 +1397,9 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3168"
+></A
 ><P
 ></P
 ><TABLE
@@ -1318,6 +1409,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1333,6 +1425,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >the newly allocated xsltStylesheetPtr or NULL in case of error</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1341,7 +1434,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3264"
+NAME="AEN3177"
 ></A
 ><H3
 ><A
@@ -1373,6 +1466,9 @@ HREF="XMLCHAR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3185"
+></A
 ><P
 ></P
 ><TABLE
@@ -1382,6 +1478,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1414,6 +1511,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >a new XSLT stylesheet structure.</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1422,7 +1520,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3285"
+NAME="AEN3198"
 ></A
 ><H3
 ><A
@@ -1456,6 +1554,9 @@ CLASS="PARAMETER"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3206"
+></A
 ><P
 ></P
 ><TABLE
@@ -1465,6 +1566,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1482,6 +1584,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >  an XSLT stylesheet</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1490,7 +1593,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3302"
+NAME="AEN3215"
 ></A
 ><H3
 ><A
@@ -1514,11 +1617,14 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
-></P
+>Check if a string is ignorable</P
 ><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3222"
+></A
 ><P
 ></P
 ><TABLE
@@ -1528,6 +1634,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1560,6 +1667,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >1 if the string is NULL or made of blanks chars, 0 otherwise</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1568,7 +1676,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3322"
+NAME="AEN3235"
 ></A
 ><H3
 ><A
@@ -1602,6 +1710,9 @@ CLASS="PARAMETER"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3243"
+></A
 ><P
 ></P
 ><TABLE
@@ -1611,6 +1722,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1628,6 +1740,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >  an XSLT stack element</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1636,7 +1749,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3339"
+NAME="AEN3252"
 ></A
 ><H3
 ><A
@@ -1652,9 +1765,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XSLTDECIMALFORMATPTR"
->xsltDecimalFormatPtr</GTKDOCLINK
+><A
+HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</A
 > xsltDecimalFormatGetByName
                                             (<A
 HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
@@ -1673,6 +1786,9 @@ HREF="XMLCHAR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3261"
+></A
 ><P
 ></P
 ><TABLE
@@ -1682,6 +1798,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1729,8 +1846,9 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&#13;</TD
+>&nbsp;</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1739,7 +1857,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3365"
+NAME="AEN3278"
 ></A
 ><H3
 ><A
@@ -1776,6 +1894,9 @@ HREF="XMLDOCPTR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3287"
+></A
 ><P
 ></P
 ><TABLE
@@ -1785,6 +1906,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1834,6 +1956,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >a new XSLT stylesheet structure.</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1842,7 +1965,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3391"
+NAME="AEN3304"
 ></A
 ><H3
 ><A
@@ -1876,6 +1999,9 @@ information related to the stylesheet output</P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3312"
+></A
 ><P
 ></P
 ><TABLE
@@ -1885,6 +2011,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -1917,8 +2044,9 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&#13;</TD
+>&nbsp;</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -1927,7 +2055,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3412"
+NAME="AEN3325"
 ></A
 ><H3
 ><A
@@ -1959,6 +2087,9 @@ HREF="XMLDOCPTR"
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3333"
+></A
 ><P
 ></P
 ><TABLE
@@ -1968,6 +2099,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -2000,6 +2132,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >a new XSLT stylesheet structure.</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -2008,7 +2141,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3433"
+NAME="AEN3346"
 ></A
 ><H3
 ><A
@@ -2040,9 +2173,14 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Convert one number.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3355"
+></A
 ><P
 ></P
 ><TABLE
@@ -2052,6 +2190,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -2067,7 +2206,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -2084,7 +2223,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the formatting informations</TD
 ></TR
 ><TR
 ><TD
@@ -2101,8 +2240,9 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the data to format</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P
@@ -2111,7 +2251,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3458"
+NAME="AEN3372"
 ></A
 ><H3
 ><A
@@ -2130,9 +2270,9 @@ CLASS="PROGRAMLISTING"
 ><GTKDOCLINK
 HREF="XMLXPATHERROR"
 >xmlXPathError</GTKDOCLINK
-> xsltFormatNumberConversion    (<GTKDOCLINK
-HREF="XSLTDECIMALFORMATPTR"
->xsltDecimalFormatPtr</GTKDOCLINK
+> xsltFormatNumberConversion    (<A
+HREF="libxslt-xsltinternals.html#XSLTDECIMALFORMATPTR"
+>xsltDecimalFormatPtr</A
 > self,
                                              <GTKDOCLINK
 HREF="XMLCHAR"
@@ -2150,9 +2290,48 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
+>format-<GTKDOCLINK
+HREF="NUMBER"
+>number</GTKDOCLINK
+>() uses the JDK 1.1 DecimalFormat class:</P
+><P
+>http://java.sun.com/products/jdk/1.1/docs/api/java.text.DecimalFormat.html</P
+><P
+>Structure:</P
+><P
+>pattern    := subpattern{;subpattern}
+subpattern := {prefix}integer{.fraction}{suffix}
+prefix     := '\\u0000'..'\\uFFFD' - specialCharacters
+suffix     := '\\u0000'..'\\uFFFD' - specialCharacters
+integer    := '#'* '0'* '0'
+fraction   := '0'* '#'*</P
+><P
+>Notation:
+X*       0 or more instances of X
+(X | Y)  either X or Y.
+X..Y     any character from X up to Y, inclusive.
+S - T    characters in S, except those in T</P
+><P
+>Special Characters:</P
+><P
+>Symbol Meaning
+0      a digit
+#      a digit, zero shows as absent
+.      placeholder for decimal separator
+,      placeholder for grouping separator.
+;      separates formats.
+-      default negative prefix.
+%      multiply by 100 and show as percentage
+?      multiply by 1000 and show as per mille
+X      any other characters can be used in the prefix or suffix
+'      used to quote special characters in a prefix or suffix.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
+><A
+NAME="AEN3390"
+></A
 ><P
 ></P
 ><TABLE
@@ -2162,6 +2341,7 @@ BGCOLOR="#FFD0D0"
 CELLSPACING="0"
 CELLPADDING="4"
 CLASS="CALSTABLE"
+><TBODY
 ><TR
 ><TD
 WIDTH="20%"
@@ -2177,7 +2357,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the decimal format</TD
 ></TR
 ><TR
 ><TD
@@ -2194,7 +2374,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the format requested</TD
 ></TR
 ><TR
 ><TD
@@ -2211,7 +2391,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the value to format</TD
 ></TR
 ><TR
 ><TD
@@ -2228,7 +2408,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the place to ouput the result</TD
 ></TR
 ><TR
 ><TD
@@ -2245,6 +2425,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >&nbsp;</TD
 ></TR
+></TBODY
 ></TABLE
 ><P
 ></P

@@ -191,8 +191,8 @@ xsltNextImport(xsltStylesheetPtr cur) {
 
 /**
  * xsltFindElemSpaceHandling:
- * ctxt:  an XSLT transformation context
- * node:  an XML node
+ * @ctxt:  an XSLT transformation context
+ * @node:  an XML node
  *
  * Find strip-space or preserve-space informations for an element
  * respect the import precedence or the wildcards
@@ -231,7 +231,7 @@ xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 
 /**
  * xsltFindTemplate:
- * ctxt:  an XSLT transformation context
+ * @ctxt:  an XSLT transformation context
  * @name: the template name
  * @nameURI: the template name URI
  *

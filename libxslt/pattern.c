@@ -1353,7 +1353,7 @@ error:
 
 /**
  * xsltCompilePattern:
- * @pattern an XSLT pattern
+ * @pattern: an XSLT pattern
  * @doc:  the containing document
  * @node:  the containing element
  *

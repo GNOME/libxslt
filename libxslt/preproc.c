@@ -1265,7 +1265,7 @@ xsltFreeStylePreComps(xsltStylesheetPtr style) {
 }
 
 /**
- * xsltDocumentCompute:
+ * xsltStylePreCompute:
  * @style:  the XSLT stylesheet
  * @inst:  the instruction in the stylesheet
  *

@@ -27,6 +27,11 @@ extern "C" {
  */
 #define XSLT_MAX_SORT 5
 
+/**
+ * XSLT_PAT_NO_PRIORITY:
+ *
+ * specific value for pattern without priority expressed
+ */
 #define XSLT_PAT_NO_PRIORITY -12345789
 
 /**
@@ -104,6 +109,10 @@ typedef xsltStylePreComp *xsltStylePreCompPtr;
 
 /**
  * xsltTransformFunction:
+ * @ctxt: the XSLT transformation context
+ * @node: the input node
+ * @inst: the stylesheet node
+ * @comp: the compiled information from the stylesheet
  *
  * signature of the function associated to elements part of the
  * stylesheet language like xsl:if or xsl:apply-templates.
@@ -357,8 +366,28 @@ struct _xsltTransformContext {
     xmlNodePtr inst;			/* the instruction in the stylesheet */
 };
 
+/**
+ * CHECK_STOPPED:
+ *
+ * Macro to check if the XSLT processing should be stopped
+ * will return from the function
+ */
 #define CHECK_STOPPED if (ctxt->state == XSLT_STATE_STOPPED) return;
+
+/**
+ * CHECK_STOPPEDE:
+ *
+ * Macro to check if the XSLT processing should be stopped
+ * will goto the error: label
+ */
 #define CHECK_STOPPEDE if (ctxt->state == XSLT_STATE_STOPPED) goto error;
+
+/**
+ * CHECK_STOPPED0:
+ *
+ * Macro to check if the XSLT processing should be stopped
+ * will return from the function with a 0 value
+ */
 #define CHECK_STOPPED0 if (ctxt->state == XSLT_STATE_STOPPED) return(0);
 
 /*

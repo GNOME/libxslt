@@ -1,10 +1,11 @@
-Thu May 17 13:54:48 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+Thu May 17 17:24:35 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c libxslt/transform.c libxslt/xsltInternals.h:
 	  add ctxt->inst to allow stylesheet element lookup (needed
 	  for document() fix)
-	* libxslt/*.h: tried to generate docs for the structures and
-	  macros
+	* libxslt/*.[ch]: generate docs for the structures and
+	  macros, general cleanup for docs
+	* doc/html/*.html: regenerated all docs
 
 Wed May 16 23:00:53 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 

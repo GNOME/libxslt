@@ -120,7 +120,7 @@ error:
 }
 
 /**
- * xsltGetSpecificNamespace:
+ * xsltGetSpecialNamespace:
  * @ctxt:  a transformation context
  * @cur:  the input node
  * @URI:  the namespace URI

@@ -1109,7 +1109,7 @@ xsltFreeGlobalVariables(xsltTransformContextPtr ctxt) {
 }
 
 /**
- * xsltVariableLookup:
+ * xsltXPathVariableLookup:
  * @ctxt:  a void * but the the XSLT transformation context actually
  * @name:  the variable name
  * @ns_uri:  the variable namespace URI

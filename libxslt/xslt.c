@@ -60,6 +60,8 @@
  * xsltIsBlank:
  * @str:  a string
  *
+ * Check if a string is ignorable
+ *
  * Returns 1 if the string is NULL or made of blanks chars, 0 otherwise
  */
 int

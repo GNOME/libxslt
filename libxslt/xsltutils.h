@@ -17,35 +17,40 @@
 extern "C" {
 #endif
 
-/*
- * To cleanup
+/**
+ * TODO:
+ *
+ * macro to flag unimplemented blocks
  */
-int xmlXPathIsNodeType(const xmlChar *name);
-xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
-void xmlXPathBooleanFunction(xmlXPathParserContextPtr ctxt, int nargs);
-/*********
-void xmlXPathRegisterVariableLookup(xmlXPathContextPtr ctxt,
-	             xmlXPathVariableLookupFunc f, void *data)
- *********/
-
-/*
- * Useful macros
- */
-
 #define TODO 								\
     xsltGenericError(xsltGenericErrorContext,				\
 	    "Unimplemented block at %s:%d\n",				\
             __FILE__, __LINE__);
 
+/**
+ * STRANGE:
+ *
+ * macro to flag that a problem was detected internally
+ */
 #define STRANGE 							\
     xsltGenericError(xsltGenericErrorContext,				\
 	    "Internal error at %s:%d\n",				\
             __FILE__, __LINE__);
 
+/**
+ * IS_XSLT_ELEM:
+ *
+ * Checks that the element pertains to XSLt namespace
+ */
 #define IS_XSLT_ELEM(n)							\
     (((n) != NULL) && ((n)->ns != NULL) &&				\
      (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
 
+/**
+ * IS_XSLT_NAME:
+ *
+ * Checks the value of an element in XSLT namespace
+ */
 #define IS_XSLT_NAME(n, val)						\
     (xmlStrEqual((n)->name, (const xmlChar *) (val)))
 

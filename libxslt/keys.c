@@ -435,7 +435,7 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr doc) {
     }
 }
 
-/*
+/**
  * xsltFreeDocumentKeys:
  * @doc: a XSLT document
  *
