@@ -86,6 +86,7 @@
       <li><a href="http://www.fh-frankfurt.de/~igor/projects/libxml/">Windows binaries</a></li>
       <li><a href="http://pages.eidosnet.co.uk/~garypen/libxml/">Solaris binaries</a></li>
       <li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li>
+      <li><a href="http://xsldbg.sourceforge.net/">Xsldbg Debugger</a></li>
     </ul>
   </xsl:variable>
   <xsl:template name="toc">
