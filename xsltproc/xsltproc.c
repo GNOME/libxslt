@@ -56,9 +56,8 @@
 #include <libexslt/exsltconfig.h>
 
 #if defined(WIN32) && !defined (__CYGWIN__)
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW32__)
 #include <winsock2.h>
-#pragma comment(lib, "ws2_32.lib")
 #define gettimeofday(p1,p2)
 #define HAVE_TIME_H
 #include <time.h>
