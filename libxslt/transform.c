@@ -858,7 +858,9 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 
 	if (IS_XSLT_ELEM(cur)) {
-	    xsltStylePreCompute(ctxt, cur);
+	    if (cur->_private == NULL)
+		xsltStylePreCompute(ctxt, cur);
+	    
 	    if (cur->_private != NULL) {
 		xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
 		if (info->func != NULL) {

@@ -1,3 +1,10 @@
+Wed Mar  7 23:22:09 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/preproc.c libxslt/xsltInternals.h: fixed a stylesheet
+	  reuse problem.
+	* libxslt/transform.c: fixed a bug which exaplined why no
+	  optimization were resulting from preproc stuff
+
 Wed Mar  7 21:51:52 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/preproc.c libxslt/transform.c: a couple of nastyness

@@ -124,6 +124,8 @@ void
 xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
     if (comp == NULL)
 	return;
+    if (comp->inst != NULL)
+	comp->inst->_private = NULL;
     if (comp->stype != NULL)
 	xmlFree(comp->stype);
     if (comp->order != NULL)
@@ -187,6 +189,7 @@ xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
     comp->ver11 = 0;
 
     if (xmlStrEqual(inst->name, (const xmlChar *) "output")) {
@@ -272,6 +275,7 @@ xsltSortComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     comp->stype = xsltEvalStaticAttrValueTemplate(ctxt, inst,
 			 (const xmlChar *)"data-type", &comp->has_stype);
@@ -330,6 +334,7 @@ xsltCopyComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
 
     comp->use = xmlGetNsProp(inst, (const xmlChar *)"use-attribute-sets",
@@ -358,6 +363,7 @@ xsltTextComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
     comp->noescape = 0;
 
     prop = xmlGetNsProp(inst,
@@ -392,6 +398,7 @@ xsltElementComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     /*
      * TODO: more computation can be done there, especially namespace lookup
@@ -422,6 +429,7 @@ xsltAttributeComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     /*
      * TODO: more computation can be done there, especially namespace lookup
@@ -450,6 +458,7 @@ xsltCommentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 }
 
 /**
@@ -469,6 +478,7 @@ xsltProcessingInstructionComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     comp->name = xsltEvalStaticAttrValueTemplate(ctxt, inst,
 				 (const xmlChar *)"name", &comp->has_name);
@@ -491,6 +501,7 @@ xsltCopyOfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
@@ -518,6 +529,7 @@ xsltValueOfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     prop = xmlGetNsProp(inst,
 	    (const xmlChar *)"disable-output-escaping",
@@ -651,6 +663,7 @@ xsltApplyImportsComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 }
 
 /**
@@ -674,6 +687,7 @@ xsltCallTemplateComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     /*
      * The full template resolution can be done statically
@@ -736,6 +750,7 @@ xsltApplyTemplatesComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     /*
      * Get mode if any
@@ -794,6 +809,7 @@ xsltChooseComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 }
 
 /**
@@ -813,6 +829,7 @@ xsltIfComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     comp->test = xmlGetNsProp(inst, (const xmlChar *)"test", XSLT_NAMESPACE);
     if (comp->test == NULL) {
@@ -839,6 +856,7 @@ xsltForEachComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (comp == NULL)
 	return;
     inst->_private = comp;
+    comp->inst = inst;
 
     comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
@@ -882,6 +900,8 @@ xsltFreeStylePreComps(xsltTransformContextPtr ctxt) {
  */
 void
 xsltStylePreCompute(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
+    if (inst->_private != NULL) 
+        return;
     if (IS_XSLT_ELEM(inst)) {
 	if (IS_XSLT_NAME(inst, "apply-templates")) {
 	    xsltApplyTemplatesComp(ctxt, inst);

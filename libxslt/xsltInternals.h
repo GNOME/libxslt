@@ -221,6 +221,7 @@ struct _xsltStylePreComp {
     struct _xsltStylePreComp *next;/* chained list */
     xsltStyleType type;		/* type of the element */
     xsltTransformFunction func; /* handling function */
+    xmlNodePtr inst;		/* the instruction */
 
     /*
      * Pre computed values
