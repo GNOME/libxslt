@@ -32,6 +32,7 @@ int		xsltRegisterExtElement	(xsltTransformContextPtr ctxt,
 void		xsltFreeCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeExts		(xsltStylesheetPtr style);
 
+extern const xmlChar *xsltExtMarker;
 #ifdef __cplusplus
 }
 #endif

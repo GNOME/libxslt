@@ -33,6 +33,7 @@ struct _xsltExtDef {
     xmlChar *URI;
 };
 
+const xmlChar *xsltExtMarker = (const xmlChar *)"extension";
 
 /************************************************************************
  * 									*

@@ -1,3 +1,11 @@
+Wed Mar 21 23:19:11 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltInternals.h libxslt/xslt.c libxslt/transform.c
+	  libxslt/templates.[ch] libxslt/preproc.c libxslt/extensions.[ch]
+	  extended xsltEvalStaticAttrValueTemplate and 
+	  xsltEvalAttrValueTemplate to support foreign namespaces,
+	  and fixed document()
+
 Mon Mar 19 18:40:40 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* xsltutils.h: cleanup some garbage added last night

@@ -255,6 +255,7 @@ struct _xsltStylePreComp {
 
     int      ver11;		/* document */
     xmlChar *filename;		/* document URL */
+    int      has_filename;	/* document */
 
     xsltNumberData numdata;	/* number */
 

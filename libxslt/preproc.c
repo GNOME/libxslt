@@ -199,25 +199,29 @@ xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Found saxon:output extension\n");
 #endif
-	filename = xmlGetNsProp(inst, (const xmlChar *)"file",
-	                XSLT_SAXON_NAMESPACE);
+	filename = xsltEvalStaticAttrValueTemplate(ctxt, inst,
+			 (const xmlChar *)"file",
+			 XSLT_SAXON_NAMESPACE, &comp->has_filename);
     } else if (xmlStrEqual(inst->name, (const xmlChar *) "write")) {
 #ifdef DEBUG_EXTRA
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Found xalan:write extension\n");
 #endif
-	filename = xmlGetNsProp(inst, (const xmlChar *)"select",
-	                XSLT_XALAN_NAMESPACE);
+	filename = xsltEvalStaticAttrValueTemplate(ctxt, inst,
+			 (const xmlChar *)"select",
+			 XSLT_XALAN_NAMESPACE, &comp->has_filename);
     } else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
-	filename = xmlGetNsProp(inst, (const xmlChar *)"href",
-	                XSLT_XT_NAMESPACE);
+	filename = xsltEvalStaticAttrValueTemplate(ctxt, inst,
+			 (const xmlChar *)"href",
+			 XSLT_XT_NAMESPACE, &comp->has_filename);
 	if (filename == NULL) {
 #ifdef DEBUG_EXTRA
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"Found xslt11:document construct\n");
 #endif
-	    filename = xmlGetNsProp(inst, (const xmlChar *)"href",
-			    XSLT_NAMESPACE);
+	    filename = xsltEvalStaticAttrValueTemplate(ctxt, inst,
+			     (const xmlChar *)"href",
+			     XSLT_NAMESPACE, &comp->has_filename);
 	    comp->ver11 = 1;
 	} else {
 #ifdef DEBUG_EXTRA
@@ -227,23 +231,27 @@ xsltDocumentComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	    comp->ver11 = 0;
 	}
     }
-    if (filename == NULL) {
+    if (!comp->has_filename) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltDocumentComp: could not find the href\n");
 	goto error;
     }
 
-    /*
-     * Compute output URL
-     */
-    base = xmlNodeGetBase(inst->doc, inst);
-    URL = xmlBuildURI(base, filename);
-    if (URL == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsltDocumentElem: URL computation failed %s\n", filename);
-	comp->filename = xmlStrdup(filename);
+    if (filename != NULL) {
+	/*
+	 * Compute output URL
+	 */
+	base = xmlNodeGetBase(inst->doc, inst);
+	URL = xmlBuildURI(filename, base);
+	if (URL == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsltDocumentComp: URL computation failed %s\n", filename);
+	    comp->filename = xmlStrdup(filename);
+	} else {
+	    comp->filename = URL;
+	}
     } else {
-	comp->filename = URL;
+	comp->filename = NULL;
     }
 
 error:
@@ -280,7 +288,8 @@ xsltSortComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     comp->inst = inst;
 
     comp->stype = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-			 (const xmlChar *)"data-type", &comp->has_stype);
+			 (const xmlChar *)"data-type",
+			 XSLT_NAMESPACE, &comp->has_stype);
     if (comp->stype != NULL) {
 	if (xmlStrEqual(comp->stype, (const xmlChar *) "text"))
 	    comp->number = 0;
@@ -293,7 +302,8 @@ xsltSortComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	}
     }
     comp->order = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-			      (const xmlChar *)"order", &comp->has_order);
+			      (const xmlChar *)"order",
+			      XSLT_NAMESPACE, &comp->has_order);
     if (comp->order != NULL) {
 	if (xmlStrEqual(comp->order, (const xmlChar *) "ascending"))
 	    comp->descending = 0;
@@ -406,12 +416,15 @@ xsltElementComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
      * TODO: more computation can be done there, especially namespace lookup
      */
     comp->name = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-				 (const xmlChar *)"name", &comp->has_name);
+				 (const xmlChar *)"name",
+				 XSLT_NAMESPACE, &comp->has_name);
     comp->ns = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-			 (const xmlChar *)"namespace", &comp->has_ns);
+			 (const xmlChar *)"namespace",
+			 XSLT_NAMESPACE, &comp->has_ns);
 
     comp->use = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-		       (const xmlChar *)"use-attribute-sets", &comp->has_use);
+		       (const xmlChar *)"use-attribute-sets",
+		       XSLT_NAMESPACE, &comp->has_use);
 }
 
 /**
@@ -437,9 +450,11 @@ xsltAttributeComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
      * TODO: more computation can be done there, especially namespace lookup
      */
     comp->name = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-				 (const xmlChar *)"name", &comp->has_name);
+				 (const xmlChar *)"name",
+				 XSLT_NAMESPACE, &comp->has_name);
     comp->ns = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-			 (const xmlChar *)"namespace", &comp->has_ns);
+			 (const xmlChar *)"namespace",
+			 XSLT_NAMESPACE, &comp->has_ns);
 
 }
 
@@ -483,7 +498,8 @@ xsltProcessingInstructionComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     comp->inst = inst;
 
     comp->name = xsltEvalStaticAttrValueTemplate(ctxt, inst,
-				 (const xmlChar *)"name", &comp->has_name);
+				 (const xmlChar *)"name",
+				 XSLT_NAMESPACE, &comp->has_name);
 }
 
 /**
@@ -951,6 +967,10 @@ xsltStylePreCompute(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	} else {
 	    xsltGenericError(xsltGenericDebugContext,
 		 "xsltStylePreCompute: unknown xslt:%s\n", inst->name);
+	}
+    } else {
+	if (IS_XSLT_NAME(inst, "document")) {
+	    xsltDocumentComp(ctxt, inst);
 	}
     }
 }

@@ -350,7 +350,8 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 	style->encoding  = prop;
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"method", XSLT_NAMESPACE);
+    /* relaxed to support xt:document */
+    prop = xmlGetProp(cur, (const xmlChar *)"method");
     if (prop != NULL) {
 	xmlChar *ncname;
 	xmlChar *prefix = NULL;
@@ -983,7 +984,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 		/*
 		 * Mark the element as being 'special'
 		 */
-		cur->_private = (void *) style;
+		cur->_private = (void *) xsltExtMarker;
 	    }
 	}
 

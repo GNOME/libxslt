@@ -24,10 +24,12 @@ xmlChar *	xsltEvalTemplateString		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr parent);
 xmlChar *	xsltEvalAttrValueTemplate	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
-						 const xmlChar *name);
+						 const xmlChar *name,
+						 const xmlChar *ns);
 xmlChar *	xsltEvalStaticAttrValueTemplate	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 const xmlChar *name,
+						 const xmlChar *ns,
 						 int *found);
 xmlChar *	xsltEvalXPathString		(xsltTransformContextPtr ctxt,
 						 xmlXPathCompExprPtr comp);

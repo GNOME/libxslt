@@ -214,6 +214,7 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
  * @ctxt:  the XSLT transformation context
  * @node:  the stylesheet node
  * @name:  the attribute QName
+ * @ns:  the attribute namespace URI
  *
  * Evaluate a attribute value template, i.e. the attribute value can
  * contain expressions contained in curly braces ({}) and those are
@@ -224,14 +225,14 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
  */
 xmlChar *
 xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	                  const xmlChar *name) {
+	                  const xmlChar *name, const xmlChar *ns) {
     xmlChar *ret;
     xmlChar *expr;
 
     if ((ctxt == NULL) || (node == NULL) || (name == NULL))
 	return(NULL);
 
-    expr = xmlGetNsProp(node, name, XSLT_NAMESPACE);
+    expr = xmlGetNsProp(node, name, ns);
     if (expr == NULL)
 	return(NULL);
 
@@ -255,7 +256,8 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * xsltEvalStaticAttrValueTemplate:
  * @ctxt:  the XSLT transformation context
  * @node:  the stylesheet node
- * @name:  the attribute QName
+ * @name:  the attribute Name
+ * @name:  the attribute namespace URI
  * @found:  indicator whether the attribute is present
  *
  * Check if an attribute value template has a static value, i.e. the
@@ -266,14 +268,14 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 xmlChar *
 xsltEvalStaticAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	                        const xmlChar *name, int *found) {
+			const xmlChar *name, const xmlChar *ns, int *found) {
     const xmlChar *ret;
     xmlChar *expr;
 
     if ((ctxt == NULL) || (node == NULL) || (name == NULL))
 	return(NULL);
 
-    expr = xmlGetNsProp(node, name, XSLT_NAMESPACE);
+    expr = xmlGetNsProp(node, name, ns);
     if (expr == NULL) {
 	*found = 0;
 	return(NULL);

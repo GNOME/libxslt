@@ -945,7 +945,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	} else if ((cur->type == XML_ELEMENT_NODE) && 
 		   (cur->ns != NULL) && (cur->_private != NULL)) {
 	    xsltTransformFunction function;
-
 	    /*
 	     * Flagged as an extension element
 	     */
@@ -960,8 +959,13 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyOneTemplate: extension construct %s\n", cur->name);
 #endif
+
+		if (cur->_private == (void *) xsltExtMarker) {
+		    cur->_private = NULL;
+		    xsltStylePreCompute(ctxt, cur);
+		}
 		ctxt->insert = insert;
-		function(ctxt, node, cur, NULL);
+		function(ctxt, node, cur, cur->_private);
 		ctxt->insert = oldInsert;
 	    }
 	    goto skip_children;
@@ -1044,6 +1048,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	         xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xsltStylesheetPtr style = NULL;
     int ret;
+    xmlChar *filename = NULL;
     xmlDocPtr result = NULL;
     xmlDocPtr oldOutput;
     xmlNodePtr oldInsert;
@@ -1051,8 +1056,66 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
 	return;
 
-    if (comp->filename == NULL)
-	return;
+    if (comp->filename == NULL) {
+	xmlChar *base = NULL;
+	xmlChar *URL = NULL;
+	if (xmlStrEqual(inst->name, (const xmlChar *) "output")) {
+#ifdef DEBUG_EXTRA
+	    xsltGenericDebug(xsltGenericDebugContext,
+		"Found saxon:output extension\n");
+#endif
+	    filename = xsltEvalAttrValueTemplate(ctxt, inst,
+			     (const xmlChar *)"file",
+			     XSLT_SAXON_NAMESPACE);
+	} else if (xmlStrEqual(inst->name, (const xmlChar *) "write")) {
+#ifdef DEBUG_EXTRA
+	    xsltGenericDebug(xsltGenericDebugContext,
+		"Found xalan:write extension\n");
+#endif
+	    filename = xsltEvalAttrValueTemplate(ctxt, inst,
+			     (const xmlChar *)"select",
+			     XSLT_XALAN_NAMESPACE);
+	} else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
+	    filename = xsltEvalAttrValueTemplate(ctxt, inst,
+			     (const xmlChar *)"href",
+			     XSLT_XT_NAMESPACE);
+	    if (filename == NULL) {
+#ifdef DEBUG_EXTRA
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "Found xslt11:document construct\n");
+#endif
+		filename = xsltEvalAttrValueTemplate(ctxt, inst,
+				 (const xmlChar *)"href",
+				 XSLT_NAMESPACE);
+		comp->ver11 = 1;
+	    } else {
+#ifdef DEBUG_EXTRA
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "Found xt:document extension\n");
+#endif
+		comp->ver11 = 0;
+	    }
+	}
+	if (filename == NULL)
+	    return;
+
+	/*
+	 * Compute output URL
+	 */
+	base = xmlNodeGetBase(inst->doc, inst);
+	URL = xmlBuildURI(filename, base);
+	if (URL == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsltDocumentComp: URL computation failed %s\n", filename);
+	} else {
+	    xmlFree(filename);
+	    filename = URL;
+	}
+	if (base != NULL)
+	    xmlFree(base);
+    } else {
+	filename = xmlStrdup(comp->filename);
+    }
 
     oldOutput = ctxt->output;
     oldInsert = ctxt->insert;
@@ -1063,13 +1126,12 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    "xsltDocumentElem: out of memory\n");
 	goto error;
     }
-    if (comp->ver11) {
-	/*
-	 * Version described in 1.1 draft allows full parametrization
-	 * of the output.
-	 */
-	xsltParseStylesheetOutput(style, inst);
-    }
+
+    /*
+     * Version described in 1.1 draft allows full parametrization
+     * of the output.
+     */
+    xsltParseStylesheetOutput(style, inst);
 
     /*
      * Create a new document tree and process the element template
@@ -1089,21 +1151,23 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     /*
      * Save the result
      */
-    ret = xsltSaveResultToFilename((const char *) comp->filename,
-		                       result, style, 0);
+    ret = xsltSaveResultToFilename((const char *) filename,
+				   result, style, 0);
     if (ret < 0) {
 	xsltGenericError(xsltGenericErrorContext,
-	    "xsltDocumentElem: unable to save to %s\n");
+	    "xsltDocumentElem: unable to save to %s\n", filename);
     } else {
 #ifdef DEBUG_EXTRA
 	xsltGenericDebug(xsltGenericDebugContext,
-	    "Wrote %d bytes to %s\n", ret, URL);
+	    "Wrote %d bytes to %s\n", ret, , filename);
 #endif
     }
 
 error:
     ctxt->output = oldOutput;
     ctxt->insert = oldInsert;
+    if (filename != NULL)
+        xmlFree(filename);
     if (style != NULL)
 	xsltFreeStylesheet(style);
     if (result != NULL)
@@ -1365,7 +1429,8 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = ctxt->insert;
 
     if (comp->name == NULL) {
-	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+	prop = xsltEvalAttrValueTemplate(ctxt, inst,
+		      (const xmlChar *)"name", XSLT_NAMESPACE);
 	if (prop == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xslt:element : name is missing\n");
@@ -1384,7 +1449,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     if ((comp->ns == NULL) && (comp->has_ns)) {
 	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
-		(const xmlChar *)"namespace");
+		(const xmlChar *)"namespace", XSLT_NAMESPACE);
 	if (namespace != NULL) {
 	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
 		                         ctxt->insert);
@@ -1425,7 +1490,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltApplyAttributeSet(ctxt, node, inst, comp->use);
 	} else {
 	    attributes = xsltEvalAttrValueTemplate(ctxt, inst,
-			       (const xmlChar *)"use-attribute-sets");
+		       (const xmlChar *)"use-attribute-sets", XSLT_NAMESPACE);
 	    if (attributes != NULL) {
 		xsltApplyAttributeSet(ctxt, node, inst, attributes);
 		xmlFree(attributes);
@@ -1488,7 +1553,8 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     }
     if (comp->name == NULL) {
-	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name",
+		                         XSLT_NAMESPACE);
 	if (prop == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xslt:element : name is missing\n");
@@ -1514,7 +1580,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     if ((comp->ns == NULL) && (comp->has_ns)) {
 	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
-		(const xmlChar *)"namespace");
+		(const xmlChar *)"namespace", XSLT_NAMESPACE);
 	if (namespace != NULL) {
 	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
 		                         ctxt->insert);
@@ -1617,7 +1683,8 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (comp->has_name == 0)
 	return;
     if (comp->name == NULL) {
-	ncname = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+	ncname = xsltEvalAttrValueTemplate(ctxt, inst,
+			    (const xmlChar *)"name", XSLT_NAMESPACE);
 	if (ncname == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 		 "xslt:processing-instruction : name is missing\n");
