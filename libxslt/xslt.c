@@ -162,7 +162,6 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
 	return;
 
     xsltFreeTemplateHashes(sheet);
-    xsltFreeVariableHashes(sheet);
     xsltFreeTemplateList(sheet->templates);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);

@@ -29,6 +29,7 @@
 #include "xsltutils.h"
 #include "pattern.h"
 #include "transform.h"
+#include "variables.h"
 
 #define DEBUG_PROCESS
 
@@ -39,31 +40,6 @@
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
-/*
- * Types are private:
- */
-
-typedef enum xsltOutputType {
-    XSLT_OUTPUT_XML = 0,
-    XSLT_OUTPUT_HTML,
-    XSLT_OUTPUT_TEXT
-} xsltOutputType;
-
-typedef struct _xsltTransformContext xsltTransformContext;
-typedef xsltTransformContext *xsltTransformContextPtr;
-struct _xsltTransformContext {
-    xsltStylesheetPtr style;		/* the stylesheet used */
-    xsltOutputType type;		/* the type of output */
-
-    xmlDocPtr doc;			/* the current doc */
-    xmlNodePtr node;			/* the current node */
-    xmlNodeSetPtr nodeList;		/* the current node list */
-
-    xmlDocPtr output;			/* the resulting document */
-    xmlNodePtr insert;			/* the insertion node */
-
-    xmlXPathContextPtr xpathCtxt;	/* the XPath context */
-};
 
 /************************************************************************
  *									*
@@ -104,6 +80,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	return;
     if (ctxt->xpathCtxt != NULL)
 	xmlXPathFreeContext(ctxt->xpathCtxt);
+    xsltFreeVariableHashes(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -330,7 +307,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	/* TODO: attribute value template */
 	if (ns) {
 #if LIBXML_VERSION > 20211
-	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href, value);
+	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, value);
 #else
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsl:attribute: recompile against newer libxml version\n");
@@ -403,6 +380,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
 	if (ctxt->xpathCtxt == NULL)
 	    goto error;
+	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
     }
     xpathParserCtxt =
 	xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
@@ -643,6 +621,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
 	    if (ctxt->xpathCtxt == NULL)
 		goto error;
+	    XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
 	}
 	xpathParserCtxt =
 	    xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
@@ -775,6 +754,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	             xmlNodePtr list) {
     xmlNodePtr cur, insert, copy;
     xmlNodePtr oldInsert;
+    int has_variables = 0;
 
     oldInsert = insert = ctxt->insert;
     /*
@@ -818,6 +798,11 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltAttribute(ctxt, node, cur);
 		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "variable")) {
+		if (has_variables == 0) {
+		    xsltPushStack(ctxt);
+		}
+		xsltParseStylesheetVariable(ctxt, cur);
 	    } else {
 #ifdef DEBUG_PROCESS
 		xsltGenericError(xsltGenericDebugContext,
@@ -889,6 +874,9 @@ skip_children:
 	    }
 	} while (cur != NULL);
     }
+    if (has_variables != 0) {
+	xsltPopStack(ctxt);
+    }
 }
 
 /**
@@ -926,6 +914,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
 	if (ctxt->xpathCtxt == NULL)
 	    goto error;
+	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
     }
     xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
@@ -1008,6 +997,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
 	if (ctxt->xpathCtxt == NULL)
 	    goto error;
+	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
     }
     xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)

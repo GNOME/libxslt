@@ -12,6 +12,7 @@
 
 #include <libxml/tree.h>
 #include <libxml/hash.h>
+#include <libxml/xpath.h>
 #include <libxslt/xslt.h>
 
 #ifdef __cplusplus
@@ -65,12 +66,6 @@ struct _xsltStylesheet {
     void *templatesHash;	/* hash table or wherever compiled templates
 				   informations are stored */
     /*
-     * Variable descriptions
-     */
-    void *variablesHash;	/* hash table or wherever variables
-				   informations are stored */
-
-    /*
      * Output related stuff.
      */
     xmlChar *method;		/* the output method */
@@ -85,6 +80,33 @@ struct _xsltStylesheet {
     xmlChar *mediaType;		/* media-type string */
 };
 
+
+/*
+ * The in-memory structure corresponding to an XSLT Transformation
+ */
+typedef enum xsltOutputType {
+    XSLT_OUTPUT_XML = 0,
+    XSLT_OUTPUT_HTML,
+    XSLT_OUTPUT_TEXT
+} xsltOutputType;
+
+typedef struct _xsltTransformContext xsltTransformContext;
+typedef xsltTransformContext *xsltTransformContextPtr;
+struct _xsltTransformContext {
+    xsltStylesheetPtr style;		/* the stylesheet used */
+    xsltOutputType type;		/* the type of output */
+
+    xmlDocPtr doc;			/* the current doc */
+    xmlNodePtr node;			/* the current node */
+    xmlNodeSetPtr nodeList;		/* the current node list */
+
+    xmlDocPtr output;			/* the resulting document */
+    xmlNodePtr insert;			/* the insertion node */
+
+    xmlXPathContextPtr xpathCtxt;	/* the XPath context */
+    void *variablesHash;		/* hash table or wherever variables
+				   	   informations are stored */
+};
 
 /*
  * Functions associated to the internal types

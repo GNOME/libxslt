@@ -24,6 +24,10 @@ xmlChar *xmlSplitQName2(const xmlChar *name, xmlChar **prefix);
 void xmlXPathBooleanFunction(xmlXPathParserContextPtr ctxt, int nargs);
 xmlAttrPtr xmlSetNsProp	(xmlNodePtr node, xmlNsPtr ns, const xmlChar *name,
 			 const xmlChar *value);
+/*********
+void xmlXPathRegisterVariableLookup(xmlXPathContextPtr ctxt,
+	             xmlXPathVariableLookupFunc f, void *data)
+ *********/
 
 /*
  * Useful macros

@@ -1,3 +1,11 @@
+Sat Jan 20 17:59:20 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/variables.[ch] libxslt/xslt.c
+	  libxslt/xsltInternals.h libxslt/xsltutils.h: changed a few
+	  structure to add an execution stack with variables. Tree
+	  valued variables still missing.
+	* TODO: updated
+
 Fri Jan 19 13:16:57 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.c: check version on stylesheets

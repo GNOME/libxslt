@@ -2,6 +2,7 @@ Design:
   - should transforms for a given stylesheet be thread clean,
     or can a stylesheet be enriched with document specific
     informations and cleaned up later ?
+    => currently stylesheet manipulation is not reentrant.
   - seems that saving back XSLT stylesheet from a compiled form might
     be a bit ugly ...
     
