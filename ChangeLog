@@ -1,3 +1,8 @@
+Sat Nov  1 22:36:30 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* tests/REC/test-5.2-17.xsl tests/REC/test-5.2-18.xsl: fixing two
+	  broken tests (revealed by #125502)
+
 Sat Nov  1 07:41:06 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/strings.c: fix bug #125265 about entities breaking
