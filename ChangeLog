@@ -1,3 +1,11 @@
+Sat Sep 25 21:38:57 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c libxslt/variables.c: fixed 2 leaks with
+	  namespaced variable names.
+	* tests/general/bug-154.*, tests/general/Makefile.am,
+	  tests/docs/bug-154*, tests/docs/Makefile.am: added test case
+	  for above
+
 Fri Sep 24 18:13:45 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am: add missing variable
