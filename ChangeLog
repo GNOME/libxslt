@@ -1,3 +1,7 @@
+Fri Jul  9 02:51:38 PDT 2004 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxsl.py: fixes Python on 64bits box problem.
+
 Tue Jul  6 18:43:37 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.spec.in: better python dependancy Red hat bug #126364

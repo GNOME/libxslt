@@ -33,6 +33,9 @@ else:
 	     pass
 #            print "libxslt could not guess RTLD_GLOBAL and RTLD_NOW " + \
 #                  "on this platform: %s" % (osname)
+    except:
+	 RTLD_GLOBAL = -1
+	 RTLD_NOW = -1
 
     if RTLD_GLOBAL != -1 and RTLD_NOW != -1:
         try:
