@@ -42,11 +42,11 @@ libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
 	cat $(srcdir)/libxsl.py libxsltclass.py > libxslt.py
 
 install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(PYTHON_SITE_PACKAGES)
-	-@INSTALL@ -m 0644 libxslt.py $(DESTDIR)$(PYTHON_SITE_PACKAGES)
-	$(mkinstalldirs) $(DESTDIR)$(DOCS_DIR)
-	-@(for doc in $(DOCS) ; \
-	   do @INSTALL@ -m 0644 $$doc $(DESTDIR)$(DOCS_DIR) ; done)
+	$(mkinstalldirs) $(libdir)/python${PYTHON_VERSION}/site-packages
+	@INSTALL@ -m 0644 libxslt.py $(libdir)/python${PYTHON_VERSION}/site-packages
+	$(mkinstalldirs) $(DOCS_DIR)
+	@(for doc in $(DOCS) ; \
+	   do @INSTALL@ -m 0644 $$doc $(DOCS_DIR) ; done)
 
 GENERATE = generator.py
 API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml

@@ -79,7 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 install -d $RPM_BUILD_ROOT%{_mandir}/man4
-make prefix=$RPM_BUILD_ROOT%{prefix} mandir=$RPM_BUILD_ROOT%{_mandir} install
+make prefix=$RPM_BUILD_ROOT%{prefix} mandir=$RPM_BUILD_ROOT%{_mandir} \
+     install
 
 #
 # this is a bit ugly but tries to generate the bindings for all versions
@@ -96,7 +97,8 @@ do
          make PYTHON="%{prefix}/bin/python$py_version" \
 	      PYTHON_VERSION="$py_version" \
 	      prefix=$RPM_BUILD_ROOT%{prefix} \
-	      mandir=$RPM_BUILD_ROOT%{_mandir} install)
+	      mandir=$RPM_BUILD_ROOT%{_mandir} \
+	      install)
     fi
 done
 %clean

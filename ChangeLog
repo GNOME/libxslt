@@ -1,3 +1,10 @@
+Wed Aug 21 21:27:29 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/templates.c: fixed a bug w.r.t. namespace context when
+	  doing the evaluation of attribute value templates 
+	* libxslt.spec.in python/Makefile.am: fixed some troubles
+	  with "make rpm"
+
 Wed Aug 21 18:59:28 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxslt.c: fixed the parameter order when calling

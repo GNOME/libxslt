@@ -100,17 +100,21 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
 }
 
 /**
- * xsltEvalXPathString:
+ * xsltEvalXPathStringNs:
  * @ctxt:  the XSLT transformation context
  * @comp:  the compiled XPath expression
+ * @nsNr:  the number of namespaces in the list
+ * @nsList:  the list of in-scope namespaces to use
  *
- * Process the expression using XPath and get a string
+ * Process the expression using XPath, allowing to pass a namespace mapping
+ * context and get a string
  *
  * Returns the computed string value or NULL, must be deallocated by the
  *    caller.
  */
 xmlChar *
-xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
+xsltEvalXPathStringNs(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
+	              int nsNr, xmlNsPtr *nsList) {
     xmlChar *ret = NULL;
     xmlXPathObjectPtr res;
     xmlNodePtr oldInst;
@@ -128,8 +132,8 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 
     ctxt->xpathCtxt->node = ctxt->node;
     /* TODO: do we need to propagate the namespaces here ? */
-    ctxt->xpathCtxt->namespaces = NULL;
-    ctxt->xpathCtxt->nsNr = 0;
+    ctxt->xpathCtxt->namespaces = nsList;
+    ctxt->xpathCtxt->nsNr = nsNr;
     res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
     if (res != NULL) {
 	if (res->type != XPATH_STRING)
@@ -157,6 +161,21 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     ctxt->xpathCtxt->nsNr = oldNsNr;
     ctxt->xpathCtxt->namespaces = oldNamespaces;
     return(ret);
+}
+
+/**
+ * xsltEvalXPathString:
+ * @ctxt:  the XSLT transformation context
+ * @comp:  the compiled XPath expression
+ *
+ * Process the expression using XPath and get a string
+ *
+ * Returns the computed string value or NULL, must be deallocated by the
+ *    caller.
+ */
+xmlChar *
+xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
+    return(xsltEvalXPathStringNs(ctxt, comp, 0, NULL));
 }
 
 /**
@@ -202,20 +221,26 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
 }
 
 /**
- * xsltAttrTemplateValueProcess:
+ * xsltAttrTemplateValueProcessNode:
  * @ctxt:  the XSLT transformation context
  * @str:  the attribute template node value
+ * @node:  the node hosting the attribute
+ * @nsList:  the list of in-scope namespaces to use
  *
- * Process the given node and return the new string value.
+ * Process the given string, allowing to pass a namespace mapping
+ * context and return the new string value.
  *
  * Returns the computed string value or NULL, must be deallocated by the
  *    caller.
  */
 xmlChar *
-xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
+xsltAttrTemplateValueProcessNode(xsltTransformContextPtr ctxt,
+	  const xmlChar *str, xmlNodePtr node) {
     xmlChar *ret = NULL;
     const xmlChar *cur;
     xmlChar *expr, *val;
+    xmlNsPtr *nsList = NULL;
+    int nsNr = 0;
 
     if (str == NULL) return(NULL);
     if (*str == 0)
@@ -244,8 +269,18 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
 		/*
 		 * TODO: keep precompiled form around
 		 */
+		if (nsList == NULL) {
+		    int i = 0;
+
+		    nsList = xmlGetNsList(node->doc, node);
+		    if (nsList != NULL) {
+			while (nsList[i] != NULL)
+			    i++;
+			nsNr = i;
+		    }
+		}
 		comp = xmlXPathCompile(expr);
-                val = xsltEvalXPathString(ctxt, comp);
+                val = xsltEvalXPathStringNs(ctxt, comp, nsNr, nsList);
 		xmlXPathFreeCompExpr(comp);
 		xmlFree(expr);
 		if (val != NULL) {
@@ -262,7 +297,25 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
 	ret = xmlStrncat(ret, str, cur - str);
     }
 
+    if (nsList != NULL)
+	xmlFree(nsList);
+
     return(ret);
+}
+
+/**
+ * xsltAttrTemplateValueProcess:
+ * @ctxt:  the XSLT transformation context
+ * @str:  the attribute template node value
+ *
+ * Process the given node and return the new string value.
+ *
+ * Returns the computed string value or NULL, must be deallocated by the
+ *    caller.
+ */
+xmlChar *
+xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
+    return(xsltAttrTemplateValueProcessNode(ctxt, str, NULL));
 }
 
 /**
@@ -298,7 +351,7 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      *       attribute content and the XPath precompiled expressions around
      */
 
-    ret = xsltAttrTemplateValueProcess(ctxt, expr);
+    ret = xsltAttrTemplateValueProcessNode(ctxt, expr, node);
 #ifdef WITH_XSLT_DEBUG_TEMPLATES
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltEvalAttrValueTemplate: %s returns %s\n", expr, ret);
@@ -392,7 +445,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 
 	/* TODO: optimize if no template value was detected */
 	if (in != NULL) {
-            out = xsltAttrTemplateValueProcess(ctxt, in);
+            out = xsltAttrTemplateValueProcessNode(ctxt, in, cur->parent);
 	    ret = xmlSetNsProp(target, ns, cur->name, out);
 	    if (out != NULL)
 		xmlFree(out);
