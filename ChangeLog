@@ -1,3 +1,8 @@
+Mon Apr 29 17:22:08 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: better attempt to fix the problem in
+	  xsltProcessUserParamInternal reported by Babak Vahedipour-Kunze
+
 Sun Apr 28 17:53:23 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/dsp/*.dsp: Removed obsolete macros

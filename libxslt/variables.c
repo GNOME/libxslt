@@ -778,6 +778,9 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	ncname = xmlStrdup(name);
     }
 
+    if (ncname == NULL)
+	return (-1);
+
     /*
      * Do the evaluation if @eval is non-zero.
      */
