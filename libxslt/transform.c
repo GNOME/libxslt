@@ -1369,6 +1369,19 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                                  (const xmlChar *)
                                                  "select",
                                                  XSLT_XALAN_NAMESPACE);
+	    if (URL != NULL) {
+		xmlXPathCompExprPtr cmp;
+		xmlChar *val;
+
+		/*
+		 * Trying to handle bug #59212
+		 */
+		cmp = xmlXPathCompile(URL);
+                val = xsltEvalXPathString(ctxt, cmp);
+		xmlXPathFreeCompExpr(cmp);
+		xmlFree(URL);
+		URL = val;
+	    }
 	    if (URL == NULL)
 		URL = xsltEvalAttrValueTemplate(ctxt, inst,
 						     (const xmlChar *)
@@ -3239,7 +3252,8 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
      */
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
-    ctxt->globalVars = xmlHashCreate(20);
+    if (ctxt->globalVars == NULL)
+	ctxt->globalVars = xmlHashCreate(20);
     if (params != NULL)
         xsltEvalUserParams(ctxt, params);
     xsltInitCtxtExts(ctxt);

@@ -25,7 +25,7 @@ extern "C" {
  */
 #define XSLT_REGISTER_FUNCTION_LOOKUP(ctxt)			\
     xmlXPathRegisterFuncLookup((ctxt)->xpathCtxt,		\
-	(void *) xsltXPathFunctionLookup,			\
+	(xmlXPathFuncLookupFunc) xsltXPathFunctionLookup,	\
 	(void *)(ctxt->xpathCtxt));
 
 xmlXPathFunction

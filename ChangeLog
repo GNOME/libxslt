@@ -1,3 +1,8 @@
+Fri Aug 24 01:15:24 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.h libxslt/preproc.c libxslt/transform.c:
+	  closed bugs #59212 and #59220
+
 Thu Aug 23 23:18:44 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* config.h.in configure.in xsltproc/xsltproc.c: complete test

@@ -223,9 +223,7 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Found xalan:write extension\n");
 #endif
-	filename = xsltEvalStaticAttrValueTemplate(style, inst,
-			 (const xmlChar *)"select",
-			 XSLT_XALAN_NAMESPACE, &comp->has_filename);
+	comp->ver11 = 0; /* the filename need to be interpreted */
     } else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
 	filename = xsltEvalStaticAttrValueTemplate(style, inst,
 			 (const xmlChar *)"href",
