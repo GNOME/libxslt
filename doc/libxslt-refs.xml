@@ -14,8 +14,8 @@
     <reference name='LIBXSLT_PUBLIC' href='html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS'/>
     <reference name='LIBXSLT_VERSION' href='html/libxslt-xsltconfig.html#LIBXSLT-VERSION-CAPS'/>
     <reference name='LIBXSLT_VERSION_STRING' href='html/libxslt-xsltconfig.html#LIBXSLT-VERSION-STRING-CAPS'/>
+    <reference name='WITH_DEBUGGER' href='html/libxslt-xsltconfig.html#WITH-DEBUGGER-CAPS'/>
     <reference name='WITH_XSLT_DEBUG' href='html/libxslt-xsltconfig.html#WITH-XSLT-DEBUG-CAPS'/>
-    <reference name='WITH_XSLT_DEBUGGER' href='html/libxslt-index.html#WITH-XSLT-DEBUGGER-CAPS'/>
     <reference name='XSLT_DEFAULT_URL' href='html/libxslt-xslt.html#XSLT-DEFAULT-URL-CAPS'/>
     <reference name='XSLT_DEFAULT_VENDOR' href='html/libxslt-xslt.html#XSLT-DEFAULT-VENDOR-CAPS'/>
     <reference name='XSLT_DEFAULT_VERSION' href='html/libxslt-xslt.html#XSLT-DEFAULT-VERSION-CAPS'/>
@@ -268,8 +268,8 @@
     <ref name='LIBXSLT_VERSION_STRING'/>
     </letter>
     <letter name='W'>
+    <ref name='WITH_DEBUGGER'/>
     <ref name='WITH_XSLT_DEBUG'/>
-    <ref name='WITH_XSLT_DEBUGGER'/>
     </letter>
     <letter name='X'>
     <ref name='XSLT_DEFAULT_URL'/>
@@ -1419,7 +1419,6 @@
       <letter name='A'>
         <word name='Activate'>
           <ref name='WITH_XSLT_DEBUG'/>
-          <ref name='WITH_XSLT_DEBUGGER'/>
         </word>
         <word name='Add'>
           <ref name='xslAddCall'/>
@@ -1794,7 +1793,6 @@
         </word>
         <word name='Speed'>
           <ref name='WITH_XSLT_DEBUG'/>
-          <ref name='WITH_XSLT_DEBUGGER'/>
         </word>
         <word name='Strip'>
           <ref name='xsltApplyStripSpaces'/>
@@ -2335,7 +2333,6 @@
         </word>
         <word name='compilation'>
           <ref name='WITH_XSLT_DEBUG'/>
-          <ref name='WITH_XSLT_DEBUGGER'/>
         </word>
         <word name='compiled'>
           <ref name='xsltEvalXPathPredicate'/>
@@ -2367,7 +2364,6 @@
         </word>
         <word name='configure'>
           <ref name='DEBUG_MEMORY'/>
-          <ref name='WITH_XSLT_DEBUGGER'/>
         </word>
         <word name='configured'>
           <ref name='DEBUG_MEMORY_LOCATION'/>
@@ -2500,9 +2496,6 @@
           <ref name='WITH_XSLT_DEBUG'/>
           <ref name='xsltDebug'/>
         </word>
-        <word name='debugger'>
-          <ref name='WITH_XSLT_DEBUGGER'/>
-        </word>
         <word name='debugging'>
           <ref name='DEBUG_MEMORY'/>
           <ref name='DEBUG_MEMORY_LOCATION'/>
@@ -2531,7 +2524,6 @@
         </word>
         <word name='default'>
           <ref name='WITH_XSLT_DEBUG'/>
-          <ref name='WITH_XSLT_DEBUGGER'/>
           <ref name='XSLT_DEFAULT_VERSION'/>
           <ref name='xsltGetXIncludeDefault'/>
           <ref name='xsltRegisterAllElement'/>
@@ -3006,7 +2998,6 @@
         </word>
         <word name='insignifiant'>
           <ref name='WITH_XSLT_DEBUG'/>
-          <ref name='WITH_XSLT_DEBUGGER'/>
         </word>
         <word name='instead'>
           <ref name='xsltRegisterExtras'/>
@@ -3575,7 +3566,6 @@
           <ref name='xsltTransformFunction'/>
         </word>
         <word name='passed'>
-          <ref name='WITH_XSLT_DEBUGGER'/>
           <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
@@ -3594,7 +3584,6 @@
         </word>
         <word name='penalty'>
           <ref name='WITH_XSLT_DEBUG'/>
-          <ref name='WITH_XSLT_DEBUGGER'/>
         </word>
         <word name='pertaining'>
           <ref name='xsltXPathGetTransformContext'/>
@@ -4174,9 +4163,6 @@
         <word name='suitable'>
           <ref name='xsltCompilePattern'/>
         </word>
-        <word name='support'>
-          <ref name='WITH_XSLT_DEBUGGER'/>
-        </word>
         <word name='supported'>
           <ref name='XSLT_DEFAULT_VERSION'/>
         </word>
@@ -4370,9 +4356,6 @@
         </word>
       </letter>
       <letter name='u'>
-        <word name='unless'>
-          <ref name='WITH_XSLT_DEBUGGER'/>
-        </word>
         <word name='unparsed-entity-uri'>
           <ref name='xsltUnparsedEntityURIFunction'/>
         </word>
