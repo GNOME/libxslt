@@ -8,7 +8,7 @@
 #define HAVE_LOCALTIME
 #define HAVE_GMTIME
 #define HAVE_TIME
-
+#define HAVE_MATH_H
 #define HAVE_FCNTL_H
 
 #include <io.h>
