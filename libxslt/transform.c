@@ -2043,21 +2043,21 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
 		res = htmlNewDoc(doctypeSystem, doctypePublic);
 	    else {
-		if (version == NULL)
-		    version = (const xmlChar *) "4.0";
+		if (version != NULL) {
 #ifdef XSLT_GENERATE_HTML_DOCTYPE
-		xsltGetHTMLIDs(version, &doctypePublic, &doctypeSystem);
+		    xsltGetHTMLIDs(version, &doctypePublic, &doctypeSystem);
 #endif
-		res = htmlNewDoc(doctypeSystem, doctypePublic);
+                }
+		res = htmlNewDocNoDtD(doctypeSystem, doctypePublic);
 	    }
 	    if (res == NULL)
 		goto error;
 	} else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltTransformError(ctxt, NULL, inst,
-	     "xsltDocumentElem: unsupported method xhtml, using html\n",
+	     "xsltDocumentElem: unsupported method xhtml\n",
 		             style->method);
 	    ctxt->type = XSLT_OUTPUT_HTML;
-	    res = htmlNewDoc(doctypeSystem, doctypePublic);
+	    res = htmlNewDocNoDtD(doctypeSystem, doctypePublic);
 	    if (res == NULL)
 		goto error;
 	} else if (xmlStrEqual(method, (const xmlChar *) "text")) {

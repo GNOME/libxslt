@@ -125,7 +125,7 @@ exsltSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	if (ret != ns)
 		xmlXPathFreeNodeSet(ns);
 
-    obj = xmlXPathWrapNodeSet(ns);
+    obj = xmlXPathWrapNodeSet(ret);
     obj->user = user;
     obj->boolval = boolval;
     valuePush((ctxt), obj);

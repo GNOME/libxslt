@@ -1,3 +1,10 @@
+Wed Apr 23 23:27:44 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/sets.c: fixed a bug introduced in the last commit
+	* libxslt/transform.c: tried to fix #111437
+	* tests/docbook/result/xtchunk/html/*.orig
+	  tests/multiple/out/*.orig: side effect of #111437 change.
+
 Wed Apr 23 22:41:08 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/strings.c: applied last patch for #110023 from 
