@@ -1,3 +1,7 @@
+Thu Nov 22 12:09:56 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libexslt/Makefile.am: more Makefile fixups
+
 Wed Nov 21 16:29:04 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libexslt/Makefile.am: trying to fix more Makefiles
