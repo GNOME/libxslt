@@ -190,6 +190,28 @@ xsltFreeCompMatchList(xsltCompMatchPtr comp) {
 }
 
 /**
+ * xsltNormalizeCompSteps:
+ * @payload: pointer to template hash table entry
+ * @data: pointer to the stylesheet
+ * @name: template match name
+ *
+ * This is a hashtable scanner function to normalize the compiled
+ * steps of an imported stylesheet.
+ */
+void xsltNormalizeCompSteps(void *payload,
+        void *data, const xmlChar *name) {
+    xsltCompMatchPtr comp = payload;
+    xsltStylesheetPtr style = data;
+    int ix;
+
+    for (ix = 0; ix < comp->nbStep; ix++) {
+        comp->steps[ix].previousExtra += style->extrasNr;
+        comp->steps[ix].indexExtra += style->extrasNr;
+        comp->steps[ix].lenExtra += style->extrasNr;
+    }
+}
+
+/**
  * xsltNewParserContext:
  * @style:  the stylesheet
  * @ctxt:  the transformation context, if done at run-time

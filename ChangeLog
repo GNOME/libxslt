@@ -1,3 +1,12 @@
+Sat Sep  6 09:57:03 PDT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* pattern.c pattern.h imports.c: fixed bug 119946, caused by
+	  incorrect creation of "extra" variables when compiling
+	  templates on imported stylesheets.
+	* tests/docs/Makefile.am tests/docs/bug-130.xml tests/docs/bug-130.doc
+	  tests/general/Makefile.am test/docs/bug-130*: added tests
+	  to the regression suite for this bug.
+
 Wed Sep  3 15:33:40 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/xmlspec/*.html: tyny change HTML -> html DOCTYPE due to

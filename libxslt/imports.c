@@ -44,7 +44,7 @@
 #include "imports.h"
 #include "documents.h"
 #include "security.h"
-
+#include "pattern.h"
 
 
 /************************************************************************
@@ -119,6 +119,8 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
 	res->parent = style;
 	res->next = style->imports;
 	style->imports = res;
+	xmlHashScan(res->templatesHash, 
+	            (xmlHashScanner) xsltNormalizeCompSteps, style);
 	style->extrasNr += res->extrasNr;
 	ret = 0;
     } else {

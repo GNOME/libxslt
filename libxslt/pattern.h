@@ -41,6 +41,10 @@ XSLTPUBFUN int XSLTCALL
 		xsltTestCompMatchList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xsltCompMatchPtr comp);
+XSLTPUBFUN void XSLTCALL
+		xsltNormalizeCompSteps	(void *payload,
+					 void *data,
+					 const xmlChar *name);
 
 /*
  * Template related interfaces.
