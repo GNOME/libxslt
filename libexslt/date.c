@@ -17,6 +17,12 @@
 
 #include <stdlib.h>
 
+#ifdef WIN32
+#include <win32config.h>
+#else
+#include "config.h"
+#endif
+
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>

@@ -1,5 +1,11 @@
 #include <libxml/xmlversion.h>
 
+#ifdef WIN32
+#include <win32config.h>
+#else
+#include "config.h"
+#endif
+
 #if defined(WIN32) && defined(_MSC_VER)
 #include <libxslt/xsltwin32config.h>
 #else

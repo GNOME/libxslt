@@ -1,5 +1,11 @@
 #include "libxslt/libxslt.h"
 
+#ifdef WIN32
+#include <win32config.h>
+#else
+#include "config.h"
+#endif
+
 #include <string.h>
 
 #include <libxml/tree.h>
