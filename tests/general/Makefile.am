@@ -71,6 +71,7 @@ EXTRA_DIST = \
     bug-64.out bug-64.xsl \
     bug-65.ent bug-65.out bug-65.xsl \
     bug-66.out bug-66.xsl \
+    bug-68.out bug-68.xsl \
     character.out character.xsl \
     character2.out character2.xsl \
     itemschoose.out itemschoose.xsl \

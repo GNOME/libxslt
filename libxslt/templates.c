@@ -217,6 +217,9 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
     xmlChar *expr, *val;
 
     if (str == NULL) return(NULL);
+    if (*str == 0)
+	return(xmlStrndup("", 0));
+
     cur = str;
     while (*cur != 0) {
 	if (*cur == '{') {
