@@ -1,3 +1,8 @@
+Tue Sep 24 20:33:08 MDT 2002 John Fleck <jfleck@inkstain.net>
+
+	* doc/xlst.html
+	changing link on ftp.gnome.org
+
 Mon Sep 23 10:14:38 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am: set-up DIST_SUBDIRS to avoid the same problem Jacob
