@@ -10,7 +10,7 @@ H2 {font-size: 14pt; font-family: Verdana,Arial,Helvetica}
 H3 {font-size: 12pt; font-family: Verdana,Arial,Helvetica}
 A:link, A:visited, A:active { text-decoration: underline }
 --></style>
-<title>How to help</title>
+<title>FAQ</title>
 </head>
 <body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000">
 <table border="0" width="100%" cellpadding="5" cellspacing="0" align="center"><tr>
@@ -19,7 +19,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 </td>
 <td><table border="0" width="90%" cellpadding="2" cellspacing="0" align="center" bgcolor="#000000"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="3" bgcolor="#fffacd"><tr><td align="center">
 <h1>The XSLT C library for Gnome</h1>
-<h2>How to help</h2>
+<h2>FAQ</h2>
 </td></tr></table></td></tr></table></td>
 </tr></table>
 <table border="0" cellpadding="4" cellspacing="0" width="100%" align="center"><tr><td bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="2" width="100%"><tr>
@@ -62,23 +62,20 @@ A:link, A:visited, A:active { text-decoration: underline }
 </table>
 </td></tr></table></td>
 <td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
-<p>You can help the project in various ways, the best thing to do first is to
-subscribe to the mailing-list as explained before, check the <a href="http://mail.gnome.org/archives/xslt/">archives </a>and the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Gnome bug
-database:</a>:</p>
-<ol>
-<li>provide patches when you find problems</li>
-<li>provide the diffs when you port libxslt to a new platform. They may not
-    be integrated in all cases but help pinpointing portability problems
-  and</li>
-<li>provide documentation fixes (either as patches to the code comments or
-    as HTML diffs).</li>
-<li>provide new documentations pieces (translations, examples, etc ...)</li>
-<li>Check the TODO file and try to close one of the items</li>
-<li>take one of the points raised in the archive or the bug database and
-    provide a fix. <a href="mailto:daniel@veillard.com">Get in touch with me
-    </a>before to avoid synchronization problems and check that the suggested
-    fix will fit in nicely :-)</li>
-</ol>
+<ol><li>
+<em>passing parameters on the xsltproc command line doesn't work</em>
+    <p><em>xsltproc --param test alpha foo.xsl foo.xml</em></p>
+<p><em>the param does not get passed and ends up as &quot;&quot;</em></p>
+<p>In a nutshell do a double escaping at the shell prompt:</p>
+<p>xsltproc --param test &quot;'alpha'&quot; foo.xsl foo.xml</p>
+<p>i.e. the string value is surrounded by &quot; and ' then terminated by '
+    and &quot;. Libxslt interpret the parameter values as XPath expressions, so
+    the string -&gt;<code>alpha</code>&lt;- is intepreted as the node set
+    matching this string. You really want            
+    -&gt;<code>'alpha'</code>&lt;- to be passed to the processor. And to
+    allow this you need to escape the quotes at the shell level using
+    -&gt;<code>&quot;'alpha'&quot;</code>&lt;- .</p>
+</li></ol>
 <p><a href="mailto:daniel@veillard.com">Daniel Veillard</a></p>
 </td></tr></table></td></tr></table></td></tr></table></td>
 </tr></table></td></tr></table>

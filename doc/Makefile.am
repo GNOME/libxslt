@@ -13,7 +13,7 @@ HTML_DIR=@HTML_DIR@
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)/html
 PAGES= API.html bugs.html contribs.html docs.html downloads.html \
-       help.html index.html intro.html news.html xsltproc2.html
+       help.html index.html intro.html news.html xsltproc2.html FAQ.html
 
 man_MANS = xsltproc.1
 

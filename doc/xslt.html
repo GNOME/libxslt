@@ -71,6 +71,31 @@ the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developed for the
 
 <h2><a name="Reporting">Reporting bugs and getting help</a></h2>
 
+<p>If you need help with the XSLT language itself, here are a number of
+useful resources:</p>
+<ul>
+  <li>I strongly suggest to subscribe to <a
+    href="http://www.mulberrytech.com/xsl/xsl-list">XSL-list</a>, check <a
+    href="http://www.biglist.com/lists/xsl-list/archives/">the XSL-list
+    archives</a></li>
+  <li>The <a href="http://www.dpawson.co.uk/xsl/xslfaq.html">XSL FAQ</a>.</li>
+  <li>The <a
+    href="http://www.nwalsh.com/docs/tutorials/xsl/xsl/slides.html">tutorial</a>
+    written by Paul Grosso and Norman Walsh is a very good on-line
+    introdution to the language.</li>
+  <li>The <a
+    href="http://www.zvon.org/xxl/XSLTutorial/Books/Book1/index.html">only
+    Zvon XSLT tutorial</a> details a lot of constructs with examples.</li>
+  <li><a href="http://www.jenitennison.com/xslt/index.html">Jeni Tennison's
+    XSLT</a>
+     pages provide links to a lot of answers</li>
+  <li>the <a href="http://incrementaldevelopment.com/xsltrick/">Gallery of
+    XSLT Tricks</a> provides non-standard use case of XSLT</li>
+  <li>And I suggest to buy Michael Kay "XSLT Programmer's Reference" book
+    published by <a href="http://www.wrox.com/">Wrox</a> if you plan to work
+    seriously with XSLT in the future.</li>
+</ul>
+
 <p>Well, bugs or missing features are always possible, and I will make a
 point of fixing them in a timely fashion. The best way to report a bug is to
 use the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Gnome
@@ -92,17 +117,6 @@ for portability problem, it makes things really harder to track and in some
 cases I'm not the best person to answer a given question, ask the list
 instead. <strong>Do not send code, I won't debug it</strong> (but patches are
 really appreciated!).</p>
-
-<p>If you need help with the XSLT language itself, I strongly suggest to
-subscribe to <a href="http://www.mulberrytech.com/xsl/xsl-list">XSL-list</a>,
-check <a href="http://www.biglist.com/lists/xsl-list/archives/">the XSL-list
-archives</a>, the <a href="http://www.dpawson.co.uk/xsl/xslfaq.html">XSL
-FAQ</a>. The <a
-href="http://www.nwalsh.com/docs/tutorials/xsl/xsl/slides.html">tutorial</a>
-written by Paul Grosso and Norman Walsh is a very good on-line introdution to
-the language. And I suggest to buy Michael Kay "XSLT Programmer's Reference"
-book published by <a href="http://www.wrox.com/">Wrox</a> if you plan to work
-seriously with XSLT in the future.</p>
 
 <p>Check the following too before posting:</p>
 <ul>
@@ -174,8 +188,8 @@ href="mailto:izlatkovic@daenet.de">Igor  Zlatkovic</a> is now the maintainer
 of the Windows port, <a
 href="http://www.fh-frankfurt.de/~igor/projects/libxml/index.html">he
 provides binaries</a>. <a href="mailto:Gary.Pennington@sun.com">Gary
-Pennington</a> provides <a
-href="http://garypennington.net/libxml2/">Solaris binaries</a>.</p>
+Pennington</a> provides <a href="http://garypennington.net/libxml2/">Solaris
+binaries</a>.</p>
 
 <p><a name="Contribs">Contribs:</a></p>
 
@@ -196,6 +210,23 @@ platform, get in touch with me to upload the package. I will keep them in the
     snapshots from CVS</a>
      are also provided</li>
 </ul>
+
+<h2><a name="FAQ">FAQ</a></h2>
+<ol>
+  <li><em>passing parameters on the xsltproc command line doesn't work</em>
+    <p><em>xsltproc --param test alpha foo.xsl foo.xml</em></p>
+    <p><em>the param does not get passed and ends up as ""</em></p>
+    <p>In a nutshell do a double escaping at the shell prompt:</p>
+    <p>xsltproc --param test "'alpha'" foo.xsl foo.xml</p>
+    <p>i.e. the string value is surrounded by " and ' then terminated by '
+    and ". Libxslt interpret the parameter values as XPath expressions, so
+    the string -&gt;<code>alpha</code>&lt;- is intepreted as the node set
+    matching this string. You really want            
+    -&gt;<code>'alpha'</code>&lt;- to be passed to the processor. And to
+    allow this you need to escape the quotes at the shell level using
+    -&gt;<code>"'alpha'"</code>&lt;- .</p>
+  </li>
+</ol>
 
 <h2><a name="News">News</a></h2>
 

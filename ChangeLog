@@ -1,3 +1,7 @@
+Wed Nov 28 11:17:04 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* doc/FAQ.html doc/site.xsl doc/*.html doc/Makefile.am: added an FAQ
+
 Tue Nov 27 21:15:43 MST 2001 John Fleck <jfleck@inkstain.net>
 
 	* doc/xsltproc.xml, xsltproc.1, xsltproc.html - documenting new
