@@ -7,7 +7,6 @@ Design:
   - should transforms for a given stylesheet be thread clean,
     or can a stylesheet be enriched with document specific
     informations and cleaned up later ?
-    => currently stylesheet manipulation is not reentrant.
   - seems that saving back XSLT stylesheet from a compiled form might
     be a bit ugly ...
     
@@ -26,11 +25,12 @@ ID and Key support:
 
 Pattern tester:
   -> try to optimize for ID scan and tests.
+  -> also put fast lookup for "text()", "comment()", "node()"
+     based patterns lists.
 
 Pattern scanner:
   -> add error checks on all returns
   -> handle unions
-  -> compute priority
 
 Error handling:
   -> check the version stuff, design a separate module for error interfacing
@@ -72,3 +72,6 @@ Support for disable-output-escaping="yes":
      level.
   => Done with a trick, text node name is different, requires > 2.2.11
 
+Pattern scanner:
+  -> compute priority
+  => done

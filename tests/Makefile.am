@@ -2,24 +2,3 @@
 
 SUBDIRS=REC1 REC2
 
-INCLUDES = -I$(srcdir) -I$(top_srcdir)/libxslt \
-	$(LIBXML_CFLAGS) -Wall -ansi
-
-noinst_PROGRAMS = # testxslt testevents
-
-DEPS = $(top_builddir)/libxslt/libxslt.la
-LDADDS = $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS)
-
-#testxslt_SOURCES = test-xslt.c
-#testxslt_LDFLAGS =
-#testxslt_DEPENDENCIES = $(DEPS)
-#testxslt_LDADD = $(LDADDS)
-#
-#testevents_SOURCES = test-events.c
-#testevents_LDFLAGS =
-#testevents_DEPENDENCIES = $(DEPS)
-#testevents_LDADD = $(LDADDS)
-
-test tests: $(top_builddir)/libxslt/xsltproc
-	@(cd REC1 ; make test)
-	@(cd REC2 ; make test)

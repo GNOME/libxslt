@@ -280,7 +280,17 @@ xsltTestCompMatch(xsltCompMatchPtr comp, xmlNodePtr node) {
 		    continue;
 		if (!xmlStrEqual(step->value, node->name))
 		    return(0);
-		/* TODO: Handle namespace ... */
+
+		/* Namespace test */
+		if (node->ns == NULL) {
+		    if (step->value2 != NULL)
+			return(0);
+		} else if (node->ns->href != NULL) {
+		    if (step->value2 == NULL)
+			return(0);
+		    if (!xmlStrEqual(step->value2, node->ns->href))
+			return(0);
+		}
 		continue;
             case XSLT_OP_CHILD:
 		TODO /* Handle OP_CHILD */
@@ -292,7 +302,17 @@ xsltTestCompMatch(xsltCompMatchPtr comp, xmlNodePtr node) {
 		    continue;
 		if (!xmlStrEqual(step->value, node->name))
 		    return(0);
-		/* TODO: Handle namespace ... */
+
+		/* Namespace test */
+		if (node->ns == NULL) {
+		    if (step->value2 != NULL)
+			return(0);
+		} else if (node->ns->href != NULL) {
+		    if (step->value2 == NULL)
+			return(0);
+		    if (!xmlStrEqual(step->value2, node->ns->href))
+			return(0);
+		}
 		continue;
             case XSLT_OP_PARENT:
 		node = node->parent;
@@ -302,7 +322,16 @@ xsltTestCompMatch(xsltCompMatchPtr comp, xmlNodePtr node) {
 		    continue;
 		if (!xmlStrEqual(step->value, node->name))
 		    return(0);
-		/* TODO: Handle namespace ... */
+		/* Namespace test */
+		if (node->ns == NULL) {
+		    if (step->value2 != NULL)
+			return(0);
+		} else if (node->ns->href != NULL) {
+		    if (step->value2 == NULL)
+			return(0);
+		    if (!xmlStrEqual(step->value2, node->ns->href))
+			return(0);
+		}
 		continue;
             case XSLT_OP_ANCESTOR:
 		/* TODO: implement coalescing of ANCESTOR/NODE ops */
@@ -323,8 +352,15 @@ xsltTestCompMatch(xsltCompMatchPtr comp, xmlNodePtr node) {
 		    if (node == NULL)
 			return(0);
 		    if (xmlStrEqual(step->value, node->name)) {
-			/* TODO: Handle namespace ... */
-			break;
+			/* Namespace test */
+			if (node->ns == NULL) {
+			    if (step->value2 == NULL)
+				break;
+			} else if (node->ns->href != NULL) {
+			    if ((step->value2 != NULL) &&
+			        (xmlStrEqual(step->value2, node->ns->href)))
+				break;
+			}
 		    }
 		}
 		if (node == NULL)
@@ -337,25 +373,61 @@ xsltTestCompMatch(xsltCompMatchPtr comp, xmlNodePtr node) {
 		TODO /* Handle Keys, might be done differently */
 		break;
             case XSLT_OP_NS:
-		TODO /* Handle Namespace */
+		/* Namespace test */
+		if (node->ns == NULL) {
+		    if (step->value != NULL)
+			return(0);
+		} else if (node->ns->href != NULL) {
+		    if (step->value == NULL)
+			return(0);
+		    if (!xmlStrEqual(step->value, node->ns->href))
+			return(0);
+		}
 		break;
             case XSLT_OP_ALL:
-		TODO /* Handle * */
+		switch (node->type) {
+		    case XML_DOCUMENT_NODE:
+		    case XML_HTML_DOCUMENT_NODE:
+		    case XML_ELEMENT_NODE:
+			break;
+		    default:
+			return(0);
+		}
 		break;
 	    case XSLT_OP_PREDICATE:
 		TODO /* Handle Predicate */
 		break;
             case XSLT_OP_PI:
-		TODO /* Handle PI() */
+		if (node->type != XML_PI_NODE)
+		    return(0);
+		if (step->value == NULL) {
+		    if (!xmlStrEqual(step->value, node->name))
+			return(0);
+		}
 		break;
             case XSLT_OP_COMMENT:
-		TODO /* Handle Comments() */
+		if (node->type != XML_COMMENT_NODE)
+		    return(0);
 		break;
             case XSLT_OP_TEXT:
-		TODO /* Handle Text() */
+		if ((node->type != XML_TEXT_NODE) &&
+		    (node->type != XML_CDATA_SECTION_NODE))
+		    return(0);
 		break;
             case XSLT_OP_NODE:
-		TODO /* Handle Node() */
+		switch (node->type) {
+		    case XML_DOCUMENT_NODE:
+		    case XML_HTML_DOCUMENT_NODE:
+		    case XML_ELEMENT_NODE:
+		    case XML_CDATA_SECTION_NODE:
+		    case XML_PI_NODE:
+		    case XML_COMMENT_NODE:
+		    case XML_TEXT_NODE:
+		    case XML_ATTRIBUTE_NODE:
+			break;
+		    default:
+			return(0);
+		}
 		break;
 	}
     }
@@ -601,7 +673,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	}
 	NEXT;
 	PUSH(XSLT_OP_COMMENT, NULL, NULL);
-    } else if (xmlStrEqual(name, (const xmlChar *)"comment")) {
+    } else if (xmlStrEqual(name, (const xmlChar *)"node")) {
 	NEXT;
 	SKIP_BLANKS;
 	if (CUR != ')') {
@@ -973,7 +1045,7 @@ error:
 int
 xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
     xsltCompMatchPtr pat, list;
-    const xmlChar *name;
+    const xmlChar *name = NULL;
     xmlChar *p, *pattern, tmp;
 
     if ((style == NULL) || (cur == NULL))

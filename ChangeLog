@@ -1,3 +1,11 @@
+Tue Jan 23 17:24:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/Makefile.am: cleanup
+	* libxslt/pattern.c: should support most of the patterns now
+	  except ID/Key and maybe some namespace checks when having
+	  a default namespace
+	* TODO: updated
+
 Tue Jan 23 14:58:32 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* Makefile.am libxslt.spec.in tests/REC1/Makefile.am
