@@ -391,8 +391,8 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	return(NULL);
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	"Evaluating variable %s\n", elem->name);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	"Evaluating variable %s\n", elem->name));
 #endif
     if (elem->select != NULL) {
 	xmlXPathCompExprPtr comp = NULL;
@@ -516,8 +516,8 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	"Evaluating global variable %s\n", elem->name);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	"Evaluating global variable %s\n", elem->name));
 #endif
 
 #ifdef WITH_DEBUGGER
@@ -651,8 +651,8 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 	return(-1);
  
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	"Registering global variables\n");
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	"Registering global variables\n"));
 #endif
 
     ctxt->node = (xmlNodePtr) ctxt->document->doc;
@@ -668,9 +668,9 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 	
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 	if ((style->doc != NULL) && (style->doc->URL != NULL)) {
-	    xsltGenericDebug(xsltGenericDebugContext,
+	    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
 			     "Registering global variables from %s\n",
-		             style->doc->URL);
+		             style->doc->URL));
 	}
 #endif
 
@@ -857,8 +857,8 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
     style = ctxt->style;
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	    "Evaluating user parameter %s=%s\n", name, value);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	    "Evaluating user parameter %s=%s\n", name, value));
 #endif
 
     /*
@@ -1136,12 +1136,12 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
     xsltStackElemPtr elem;
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-		     "Building variable %s", comp->name);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+		     "Building variable %s", comp->name));
     if (comp->select != NULL)
-	xsltGenericDebug(xsltGenericDebugContext,
-			 " select %s", comp->select);
-    xsltGenericDebug(xsltGenericDebugContext, "\n");
+	XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+			 " select %s", comp->select));
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext, "\n"));
 #endif
 
     elem = xsltNewStackElem();
@@ -1195,8 +1195,8 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 	    return(0);
 	}
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-	xsltGenericDebug(xsltGenericDebugContext,
-		 "param %s defined by caller\n", comp->name);
+	XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+		 "param %s defined by caller\n", comp->name));
 #endif
 	return(0);
     }
@@ -1231,8 +1231,8 @@ xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    xmlHashLookup2(ctxt->globalVars, name, ns_uri);
     if (elem == NULL) {
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-	xsltGenericDebug(xsltGenericDebugContext,
-			 "global variable not found %s\n", name);
+	XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+			 "global variable not found %s\n", name));
 #endif
 	return(NULL);
     }
@@ -1273,8 +1273,8 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     }
     if (elem->computed == 0) {
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-	xsltGenericDebug(xsltGenericDebugContext,
-		         "uncomputed variable %s\n", name);
+	XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+		         "uncomputed variable %s\n", name));
 #endif
         elem->value = xsltEvalVariable(ctxt, elem, NULL);
 	elem->computed = 1;
@@ -1282,8 +1282,8 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     if (elem->value != NULL)
 	return(xmlXPathObjectCopy(elem->value));
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-		     "variable not found %s\n", name);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+		     "variable not found %s\n", name));
 #endif
     return(NULL);
 }
@@ -1321,16 +1321,16 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     }
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	    "Handling param %s\n", comp->name);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	    "Handling param %s\n", comp->name));
 #endif
 
     if (comp->select == NULL) {
 	tree = cur->children;
     } else {
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-	xsltGenericDebug(xsltGenericDebugContext,
-	    "        select %s\n", comp->select);
+	XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	    "        select %s\n", comp->select));
 #endif
 	tree = cur;
     }
@@ -1448,8 +1448,8 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     }
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	"Registering variable %s\n", comp->name);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	"Registering variable %s\n", comp->name));
 #endif
 
     xsltRegisterVariable(ctxt, comp, cur->children, 0);
@@ -1485,8 +1485,8 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     }
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	"Registering param %s\n", comp->name);
+    XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	"Registering param %s\n", comp->name));
 #endif
 
     xsltRegisterVariable(ctxt, comp, cur->children, 1);
@@ -1526,8 +1526,8 @@ xsltXPathVariableLookup(void *ctxt, const xmlChar *name,
 	return(NULL);
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-    xsltGenericDebug(xsltGenericDebugContext,
-	    "Lookup variable %s\n", name);
+    XSLT_TRACE(((xsltTransformContextPtr)ctxt),XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	    "Lookup variable %s\n", name));
 #endif
     context = (xsltTransformContextPtr) ctxt;
     ret = xsltVariableLookup(context, name, ns_uri);
@@ -1537,8 +1537,8 @@ xsltXPathVariableLookup(void *ctxt, const xmlChar *name,
     }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     if (ret != NULL)
-	xsltGenericDebug(xsltGenericDebugContext,
-	    "found variable %s\n", name);
+	XSLT_TRACE(context,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
+	    "found variable %s\n", name));
 #endif
     return(ret);
 }

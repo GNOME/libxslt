@@ -78,13 +78,13 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
 	ret = xmlXPathEvalPredicate(ctxt->xpathCtxt, res);
 	xmlXPathFreeObject(res);
 #ifdef WITH_XSLT_DEBUG_TEMPLATES
-	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltEvalXPathPredicate: returns %d\n", ret);
+	XSLT_TRACE(ctxt,XSLT_TRACE_TEMPLATES,xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltEvalXPathPredicate: returns %d\n", ret));
 #endif
     } else {
 #ifdef WITH_XSLT_DEBUG_TEMPLATES
-	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltEvalXPathPredicate: failed\n");
+	XSLT_TRACE(ctxt,XSLT_TRACE_TEMPLATES,xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltEvalXPathPredicate: failed\n"));
 #endif
 	ctxt->state = XSLT_STATE_STOPPED;
 	ret = 0;
@@ -150,8 +150,8 @@ xsltEvalXPathStringNs(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
 	ctxt->state = XSLT_STATE_STOPPED;
     }
 #ifdef WITH_XSLT_DEBUG_TEMPLATES
-    xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltEvalXPathString: returns %s\n", ret);
+    XSLT_TRACE(ctxt,XSLT_TRACE_TEMPLATES,xsltGenericDebug(xsltGenericDebugContext,
+	 "xsltEvalXPathString: returns %s\n", ret));
 #endif
     ctxt->inst = oldInst;
     ctxt->node = oldNode;
@@ -371,8 +371,8 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     ret = xsltAttrTemplateValueProcessNode(ctxt, expr, node);
 #ifdef WITH_XSLT_DEBUG_TEMPLATES
-    xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltEvalAttrValueTemplate: %s returns %s\n", expr, ret);
+    XSLT_TRACE(ctxt,XSLT_TRACE_TEMPLATES,xsltGenericDebug(xsltGenericDebugContext,
+	 "xsltEvalAttrValueTemplate: %s returns %s\n", expr, ret));
 #endif
     if (expr != NULL)
 	xmlFree(expr);

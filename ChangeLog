@@ -1,3 +1,10 @@
+Sat Nov 22 13:04:59 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c libxslt/templates.c libxslt/transform.c
+	  libxslt/variables.c libxslt/xsltInternals.h libxslt/xsltutils.h:
+	  Applied patch from Mark Vadoc adding flexible trace debugging
+	  support to the library.
+
 Sat Nov 22 00:53:47 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: fixed bug #127561 (xsl:element with a
