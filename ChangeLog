@@ -1,3 +1,11 @@
+Mon Mar 25 17:11:42 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c libxslt/attributes.h libxslt/pattern.c
+	  libxslt/xslt.c: Fix bug #76043 about cascading attribute sets
+	* tests/docs/Makefile.am tests/docs/bug-80.xml
+	  tests/general/Makefile.am tests/general/bug-80.*: added a 
+	  specific example for bug #76043 in the regression tests
+
 Fri Mar 22 19:26:47 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: Fixing bug #75902 error with @foo[..]

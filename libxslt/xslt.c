@@ -1937,6 +1937,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	template->content = doc->children;
 	xsltAddTemplate(ret, template, NULL, NULL);
     }
+    xsltResolveStylesheetAttributeSet(ret);
 
     return(ret);
 }

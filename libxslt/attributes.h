@@ -22,6 +22,7 @@ void	xsltApplyAttributeSet		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr inst,
 					 xmlChar *attributes);
+void	xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style);
 #ifdef __cplusplus
 }
 #endif

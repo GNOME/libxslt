@@ -596,18 +596,23 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		 * if the node is in the result list.
 		 */
 		if (comp->steps[i + 1].op == XSLT_OP_PREDICATE) {
-		    xmlNodePtr previous;
+		    xmlDocPtr prevdoc, doc;
 		    xmlXPathObjectPtr list;
 		    int index, j;
+		    int nocache = 0;
 
-		    previous = (xmlNodePtr)
+		    prevdoc = (xmlDocPtr)
 			XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra);
 		    index = (int)
 			XSLT_RUNTIME_EXTRA(ctxt, select->indexExtra);
 		    list = (xmlXPathObjectPtr)
 			XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra);
-		    if (list == NULL) {
+		    
+		    doc = node->doc;
+		    if ((list == NULL) || (prevdoc != doc)) {
 			xmlChar *query;
+			xmlXPathObjectPtr newlist;
+			xmlNodePtr parent = node->parent;
 
 			if (comp->pattern[0] == '/')
 			    query = xmlStrdup(comp->pattern);
@@ -615,30 +620,54 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			    query = xmlStrdup((const xmlChar *)"//");
 			    query = xmlStrcat(query, comp->pattern);
 			}
-			list = xmlXPathEval(query, ctxt->xpathCtxt);
+			newlist = xmlXPathEval(query, ctxt->xpathCtxt);
 			xmlFree(query);
-			if (list == NULL)
+			if (newlist == NULL)
 			    return(-1);
-			if (list->type != XPATH_NODESET) {
-			    xmlXPathFreeObject(list);
+			if (newlist->type != XPATH_NODESET) {
+			    xmlXPathFreeObject(newlist);
 			    return(-1);
 			}
-			XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra) =
-			    (void *) list;
-			XSLT_RUNTIME_EXTRA_FREE(ctxt, select->lenExtra) =
-			    (xmlFreeFunc) xmlXPathFreeObject;
+			
+			if ((parent == NULL) || (node->doc == NULL))
+			    nocache = 1;
+			else {
+			    while (parent->parent != NULL)
+				parent = parent->parent;
+			    if (((parent->type != XML_DOCUMENT_NODE) &&
+				 (parent->type != XML_HTML_DOCUMENT_NODE)) ||
+				 (parent != (xmlNodePtr) node->doc))
+				nocache = 1;
+			}
+			if (nocache == 0) {
+			    if (list != NULL)
+				xmlXPathFreeObject(list);
+			    list = newlist;
+
+			    XSLT_RUNTIME_EXTRA(ctxt, select->lenExtra) =
+				(void *) list;
+			    XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra) =
+				(void *) doc;
+			    XSLT_RUNTIME_EXTRA_FREE(ctxt, select->lenExtra) =
+				(xmlFreeFunc) xmlXPathFreeObject;
+			}
 		    }
 		    if ((list->nodesetval == NULL) ||
 			(list->nodesetval->nodeNr <= 0))
 			return(0);
+		    /* TODO: store the index and use it for the scan */
 		    if (index == 0) {
 			for (j = 0;j < list->nodesetval->nodeNr;j++) {
 			    if (list->nodesetval->nodeTab[j] == node) {
+				if (nocache == 1)
+				    xmlXPathFreeObject(list);
 				return(1);
 			    }
 			}
 		    } else {
 		    }
+		    if (nocache == 1)
+			xmlXPathFreeObject(list);
 		    return(0);
 		}
 		/*

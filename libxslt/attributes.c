@@ -75,11 +75,14 @@
  * an attribute set
  */
 
+
 typedef struct _xsltAttrElem xsltAttrElem;
 typedef xsltAttrElem *xsltAttrElemPtr;
 struct _xsltAttrElem {
     struct _xsltAttrElem *next;/* chained list */
     xmlNodePtr attr;	/* the xsl:attribute definition */
+    const xmlChar *set; /* or the attribute set */
+    const xmlChar *ns;  /* and its namespace */
 };
 
 /************************************************************************
@@ -119,7 +122,10 @@ xsltNewAttrElem(xmlNodePtr attr) {
  */
 static void
 xsltFreeAttrElem(xsltAttrElemPtr attr) {
-    memset(attr, -1, sizeof(xsltAttrElem));
+    if (attr->set != NULL)
+	xmlFree((char *)attr->set);
+    if (attr->ns != NULL)
+	xmlFree((char *)attr->ns);
     xmlFree(attr);
 }
 
@@ -186,38 +192,64 @@ xsltMergeAttrElemList(xsltAttrElemPtr list, xsltAttrElemPtr old) {
     int add;
 
     while (old != NULL) {
-
+	if ((old->attr == NULL) && (old->set == NULL)) {
+	    old = old->next;
+	    continue;
+	}
 	/*
 	 * Check that the attribute is not yet in the list
 	 */
 	cur = list;
 	add = 1;
 	while (cur != NULL) {
+	    if ((cur->attr == NULL) && (cur->set == NULL)) {
+		if (cur->next == NULL)
+		    break;
+		cur = cur->next;
+		continue;
+	    }
+	    if ((cur->set != NULL) && (cur->set == old->set)) {
+		add = 0;
+		break;
+	    }
+	    if (cur->set != NULL) {
+		if (cur->next == NULL)
+		    break;
+		cur = cur->next;
+		continue;
+	    }
+	    if (old->set != NULL) {
+		if (cur->next == NULL)
+		    break;
+		cur = cur->next;
+		continue;
+	    }
 	    if (cur->attr == old->attr) {
 		xsltGenericError(xsltGenericErrorContext,
 	     "xsl:attribute-set : use-attribute-sets recursion detected\n");
 		return(list);
-	    }
-	    if (xmlStrEqual(cur->attr->name, old->attr->name)) {
-		if (cur->attr->ns == old->attr->ns) {
-		    add = 0;
-		    break;
-		}
-		if ((cur->attr->ns != NULL) && (old->attr->ns != NULL) &&
-		    (xmlStrEqual(cur->attr->ns->href, old->attr->ns->href))) {
-		    add = 0;
-		    break;
-		}
 	    }
 	    if (cur->next == NULL)
 		break;
             cur = cur->next;
 	}
 
-	if (cur == NULL) {
-	    list = xsltNewAttrElem(old->attr);
-	} else if (add) {
-	    cur->next = xsltNewAttrElem(old->attr);
+	if (add == 1) {
+	    if (cur == NULL) {
+		list = xsltNewAttrElem(old->attr);
+		if (old->set != NULL) {
+		    list->set = xmlStrdup(old->set);
+		    if (old->ns != NULL)
+			list->ns = xmlStrdup(old->ns);
+		}
+	    } else if (add) {
+		cur->next = xsltNewAttrElem(old->attr);
+		if (old->set != NULL) {
+		    cur->next->set = xmlStrdup(old->set);
+		    if (old->ns != NULL)
+			cur->next->ns = xmlStrdup(old->ns);
+		}
+	    }
 	}
 
 	old = old->next;
@@ -336,8 +368,12 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		attrib = NULL;
 		prefix = NULL;
 	    }
-	    values2 = xmlHashLookup2(style->attributeSets, ncname2, prefix2);
-	    values = xsltMergeAttrElemList(values, values2);
+	    values2 = xsltNewAttrElem(NULL);
+	    if (values2 != NULL) {
+		values2->set = ncname2;
+		values2->ns = prefix2;
+		values = xsltMergeAttrElemList(values, values2);
+	    }
 
 	    if (attrib != NULL)
 		xmlFree(attrib);
@@ -354,6 +390,8 @@ done:
     /*
      * Update the value
      */
+    if (values == NULL)
+	values = xsltNewAttrElem(NULL);
     xmlHashUpdateEntry2(style->attributeSets, ncname, prefix, values, NULL);
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
     xsltGenericDebug(xsltGenericDebugContext,
@@ -367,6 +405,105 @@ error:
         xmlFree(ncname);
     if (prefix != NULL)
         xmlFree(prefix);
+}
+
+/**
+ * xsltGetSAS:
+ * @style:  the XSLT stylesheet
+ * @name:  the attribute list name
+ * @ns:  the attribute list namespace
+ *
+ * lookup an attribute set based on the style cascade
+ *
+ * Returns the attribute set or NULL
+ */
+static xsltAttrElemPtr
+xsltGetSAS(xsltStylesheetPtr style, const xmlChar *name, const xmlChar *ns) {
+    xsltAttrElemPtr values;
+
+    while (style != NULL) {
+	values = xmlHashLookup2(style->attributeSets, name, ns);
+	if (values != NULL)
+	    return(values);
+	style = xsltNextImport(style);
+    }
+    return(NULL);
+}
+
+/**
+ * xsltResolveSASCallback,:
+ * @style:  the XSLT stylesheet
+ *
+ * resolve the references in an attribute set.
+ */
+static void
+xsltResolveSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
+	               const xmlChar *name, const xmlChar *ns,
+		       const xmlChar *ignored) {
+    xsltAttrElemPtr tmp;
+    xsltAttrElemPtr refs;
+
+    tmp = values;
+    while (tmp != NULL) {
+	if (tmp->set != NULL) {
+	    /*
+	     * Check against cycles !
+	     */
+	    if ((xmlStrEqual(name, tmp->set)) && (xmlStrEqual(ns, tmp->ns))) {
+		xsltGenericError(xsltGenericErrorContext,
+     "xsl:attribute-set : use-attribute-sets recursion detected on %s\n",
+                                 name);
+	    } else {
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
+		xsltGenericDebug(xsltGenericDebugContext,
+			"Importing attribute list %s\n", tmp->set);
+#endif
+
+		refs = xsltGetSAS(style, tmp->set, tmp->ns);
+		if (refs == NULL) {
+		    xsltGenericError(xsltGenericErrorContext,
+     "xsl:attribute-set : use-attribute-sets %s reference missing %s\n",
+				     name, tmp->set);
+		} else {
+		    /*
+		     * recurse first for cleanup
+		     */
+		    xsltResolveSASCallback(refs, style, name, ns, NULL);
+		    /*
+		     * Then merge
+		     */
+		    xsltMergeAttrElemList(values, refs);
+		    /*
+		     * Then suppress the reference
+		     */
+		    xmlFree((char *)tmp->set);
+		    tmp->set = NULL;
+		    if (tmp->ns != NULL) {
+			xmlFree((char *)tmp->ns);
+		    }
+		}
+	    }
+	}
+	tmp = tmp->next;
+    }
+}
+
+/**
+ * xsltResolveStylesheetAttributeSet:
+ * @style:  the XSLT stylesheet
+ *
+ * resolve the references between attribute sets.
+ */
+void
+xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style) {
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
+    xsltGenericDebug(xsltGenericDebugContext,
+	    "Resolving attribute sets references\n");
+#endif
+    if (style->attributeSets != NULL) {
+	xmlHashScanFull(style->attributeSets, 
+		(xmlHashScannerFull) xsltResolveSASCallback, style);
+    }
 }
 
 /**
