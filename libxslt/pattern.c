@@ -1342,7 +1342,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	if (CUR == '*') {
 	    NEXT;
 	    PUSH(XSLT_OP_ATTR, NULL, NULL);
-	    return;
+	    goto parse_predicate;
 	}
 	token = xsltScanQName(ctxt, &prefix);
 	if (prefix != NULL) {
