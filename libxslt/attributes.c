@@ -47,6 +47,7 @@
 #include "imports.h"
 #include "transform.h"
 
+#define WITH_XSLT_DEBUG_ATTRIBUTES
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_ATTRIBUTES
 #endif
@@ -491,6 +492,38 @@ xsltResolveSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
 }
 
 /**
+ * xsltMergeSASCallback,:
+ * @style:  the XSLT stylesheet
+ *
+ * Merge an attribute set from an imported stylesheet.
+ */
+static void
+xsltMergeSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
+	               const xmlChar *name, const xmlChar *ns,
+		       ATTRIBUTE_UNUSED const xmlChar *ignored) {
+    int ret;
+
+    ret = xmlHashAddEntry2(style->attributeSets, name, ns, values);
+    if (ret < 0) {
+	/*
+	 * Add failed, this attribute set can be removed.
+	 */
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
+	xsltGenericDebug(xsltGenericDebugContext,
+		"attribute sets %s present already in top stylesheet\n",
+		         name);
+#endif
+	xsltFreeAttrElem(values);
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
+    } else {
+	xsltGenericDebug(xsltGenericDebugContext,
+		"attribute sets %s moved to top stylesheet\n",
+		         name);
+#endif
+    }
+}
+
+/**
  * xsltResolveStylesheetAttributeSet:
  * @style:  the XSLT stylesheet
  *
@@ -498,10 +531,40 @@ xsltResolveSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
  */
 void
 xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style) {
+    xsltStylesheetPtr cur;
+
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
     xsltGenericDebug(xsltGenericDebugContext,
 	    "Resolving attribute sets references\n");
 #endif
+    /*
+     * First aggregate all the attribute sets definitions from the imports
+     */
+    cur = xsltNextImport(style);
+    while (cur != NULL) {
+	if (cur->attributeSets != NULL) {
+	    if (style->attributeSets == NULL) {
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "creating attribute set table\n");
+#endif
+		style->attributeSets = xmlHashCreate(10);
+	    }
+	    xmlHashScanFull(cur->attributeSets, 
+		(xmlHashScannerFull) xsltMergeSASCallback, style);
+	    /*
+	     * the attribute lists have either been migrated to style
+	     * or freed directly in xsltMergeSASCallback()
+	     */
+	    xmlHashFree(cur->attributeSets, NULL);
+	    cur->attributeSets = NULL;
+	}
+	cur = xsltNextImport(cur);
+    }
+
+    /*
+     * Then resolve all the references and computes the resulting sets
+     */
     if (style->attributeSets != NULL) {
 	xmlHashScanFull(style->attributeSets, 
 		(xmlHashScannerFull) xsltResolveSASCallback, style);
