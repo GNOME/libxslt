@@ -1010,15 +1010,29 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 */
 	if ((node->type == XML_ELEMENT_NODE) ||
 	    (node->type == XML_ATTRIBUTE_NODE)) {
+	    xmlNsPtr *nsList, *cur, ns;
 	    if (node->ns != NULL)
 		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
-	    else if ((insert != NULL) && (insert->type == XML_ELEMENT_NODE) &&
-		     (insert->ns != NULL)) {
+	    else if ((insert->type == XML_ELEMENT_NODE) && (insert->ns != NULL)) {
 		xmlNsPtr defaultNs;
 
 		defaultNs = xmlSearchNs(insert->doc, insert, NULL);
 		if (defaultNs != NULL)
 		    xmlNewNs(copy, BAD_CAST "", NULL);
+	    }
+	    /*
+	     * must also add in any new namespaces in scope for the node
+	     */
+	    nsList = xmlGetNsList(node->doc, node);
+	    if (nsList != NULL) {
+		cur = nsList;
+		while (*cur != NULL) {
+		    ns = xmlSearchNsByHref(insert->doc, insert, (*cur)->href);
+		    if (ns == NULL)
+			xmlNewNs(copy, (*cur)->href, (*cur)->prefix);
+		    cur++;
+		}
+		xmlFree(nsList);
 	    }
 	}
 	if (node->nsDef != NULL) {

@@ -585,7 +585,7 @@ xsltGetInheritedNsList(xsltStylesheetPtr style,
                                                sizeof(xmlNsPtr));
                     if (ret == NULL) {
                         xmlGenericError(xmlGenericErrorContext,
-                                        "xmlGetNsList : out of memory!\n");
+                                        "xsltGetInheritedNsList : out of memory!\n");
                         return(0);
                     }
                     ret[nbns] = NULL;
@@ -604,7 +604,7 @@ xsltGetInheritedNsList(xsltStylesheetPtr style,
                                                       sizeof(xmlNsPtr));
                         if (ret == NULL) {
                             xmlGenericError(xmlGenericErrorContext,
-                                            "xmlGetNsList : realloc failed!\n");
+                                            "xsltGetInheritedNsList : realloc failed!\n");
                             return(0);
                         }
                     }
