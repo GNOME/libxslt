@@ -29,15 +29,15 @@ void
 </FUNCTION>
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.11"
+#define LIBXSLT_DOTTED_VERSION "1.0.12"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10011
+#define LIBXSLT_VERSION 10012
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10011"
+#define LIBXSLT_VERSION_STRING "10012"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -590,15 +590,15 @@ void *ctxt,const xmlChar *name,const xmlChar *ns_uri
 </FUNCTION>
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.11"
+#define LIBXSLT_DOTTED_VERSION "1.0.12"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10011
+#define LIBXSLT_VERSION 10012
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10011"
+#define LIBXSLT_VERSION_STRING "10012"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -743,6 +743,11 @@ xsltTransformContextPtr ctxt
 xsltStylesheetPtr style
 </FUNCTION>
 <FUNCTION>
+<NAME>xsltXPathGetTransformContext</NAME>
+<RETURNS>xsltTransformContextPtr  </RETURNS>
+xmlXPathParserContextPtr ctxt
+</FUNCTION>
+<FUNCTION>
 <NAME>xsltRegisterExtModuleFunction</NAME>
 <RETURNS>int 	</RETURNS>
 const xmlChar *name,const xmlChar *URI,xmlXPathFunction function
@@ -763,13 +768,8 @@ const xmlChar *name,const xmlChar *URI
 const xmlChar *name,const xmlChar *URI
 </FUNCTION>
 <FUNCTION>
-<NAME>xsltElemPreCompPtr</NAME>
-<RETURNS>typedef  </RETURNS>
-*xsltPreComputeFunction)	(xsltStylesheetPtr style,xmlNodePtr inst,xsltTransformFunction function
-</FUNCTION>
-<FUNCTION>
 <NAME>xsltNewElemPreComp</NAME>
-<RETURNS>xsltElemPreCompPtr</RETURNS>
+<RETURNS>xsltElemPreCompPtr  </RETURNS>
 xsltStylesheetPtr style,xmlNodePtr inst,xsltTransformFunction function
 </FUNCTION>
 <FUNCTION>
@@ -784,12 +784,17 @@ const xmlChar *name,const xmlChar *URI,xsltPreComputeFunction precomp,xsltTransf
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltExtElementLookup</NAME>
-<RETURNS>xsltTransformFunction</RETURNS>
+<RETURNS>xsltTransformFunction  </RETURNS>
 xsltTransformContextPtr ctxt,const xmlChar *name,const xmlChar *URI
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltExtModuleElementLookup</NAME>
-<RETURNS>xsltTransformFunction</RETURNS>
+<RETURNS>xsltTransformFunction  </RETURNS>
+const xmlChar *name,const xmlChar *URI
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltExtModuleElementPreComputeLookup</NAME>
+<RETURNS>xsltPreComputeFunction  </RETURNS>
 const xmlChar *name,const xmlChar *URI
 </FUNCTION>
 <FUNCTION>
@@ -855,7 +860,7 @@ xsltStylesheetPtr style
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltPreComputeExtModuleElement</NAME>
-<RETURNS>xsltElemPreCompPtr</RETURNS>
+<RETURNS>xsltElemPreCompPtr  </RETURNS>
 xsltStylesheetPtr style,xmlNodePtr inst
 </FUNCTION>
 <FUNCTION>
@@ -1041,7 +1046,7 @@ extern const xmlChar *xsltExtMarker;
 </VARIABLE>
 <FUNCTION>
 <NAME>xsltDocumentComp</NAME>
-<RETURNS>xsltElemPreCompPtr</RETURNS>
+<RETURNS>xsltElemPreCompPtr  </RETURNS>
 xsltStylesheetPtr style,xmlNodePtr inst,xsltTransformFunction function
 </FUNCTION>
 <FUNCTION>
@@ -1091,6 +1096,10 @@ struct xsltRuntimeExtra {
 <MACRO>
 <NAME>XSLT_RUNTIME_EXTRA</NAME>
 #define XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].info
+</MACRO>
+<MACRO>
+<NAME>XSLT_RUNTIME_EXTRA_FREE</NAME>
+#define XSLT_RUNTIME_EXTRA_FREE(ctxt, nr) (ctxt)->extras[(nr)].deallocate
 </MACRO>
 <STRUCT>
 <NAME>xsltTemplate</NAME>

@@ -90,8 +90,7 @@ void		xsltShutdownCtxtExts	(xsltTransformContextPtr ctxt);
 
 void		xsltShutdownExts	(xsltStylesheetPtr style);
 
-xsltTransformContextPtr
-    		xsltXPathGetTransformContext
+xsltTransformContextPtr xsltXPathGetTransformContext
 					(xmlXPathParserContextPtr ctxt);
 
 /*
@@ -113,13 +112,12 @@ int	xsltUnregisterExtModuleFunction	(const xmlChar *name,
 /*
  * extension elements
  */
-typedef xsltElemPreCompPtr
-	(*xsltPreComputeFunction)	(xsltStylesheetPtr style,
+typedef xsltElemPreCompPtr (*xsltPreComputeFunction)
+    					(xsltStylesheetPtr style,
 					 xmlNodePtr inst,
 					 xsltTransformFunction function);
 
-xsltElemPreCompPtr
-	xsltNewElemPreComp		(xsltStylesheetPtr style,
+xsltElemPreCompPtr xsltNewElemPreComp	(xsltStylesheetPtr style,
 					 xmlNodePtr inst,
 					 xsltTransformFunction function);
 void	xsltInitElemPreComp		(xsltElemPreCompPtr comp,
@@ -132,16 +130,12 @@ int	xsltRegisterExtModuleElement	(const xmlChar *name,
 					 const xmlChar *URI,
 					 xsltPreComputeFunction precomp,
 					 xsltTransformFunction transform);
-xsltTransformFunction
-	xsltExtElementLookup		(xsltTransformContextPtr ctxt,
+xsltTransformFunction xsltExtElementLookup(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *URI);
-xsltTransformFunction
-	xsltExtModuleElementLookup	(const xmlChar *name,
+xsltTransformFunction xsltExtModuleElementLookup(const xmlChar *name,
 					 const xmlChar *URI);
-xsltPreComputeFunction
-	xsltExtModuleElementPreComputeLookup
-					(const xmlChar *name,
+xsltPreComputeFunction xsltExtModuleElementPreComputeLookup (const xmlChar *name,
 					 const xmlChar *URI);
 int	xsltUnregisterExtModuleElement	(const xmlChar *name,
 					 const xmlChar *URI);
@@ -171,7 +165,7 @@ int		xsltRegisterExtElement	(xsltTransformContextPtr ctxt,
 					 const xmlChar *URI,
 					 xsltTransformFunction function);
 
-/**
+/*
  * Extension Prefix handling API
  * Those are used by the XSLT (pre)processor.
  */
@@ -185,8 +179,7 @@ int		xsltInitCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeExts		(xsltStylesheetPtr style);
 
-xsltElemPreCompPtr
-	xsltPreComputeExtModuleElement	(xsltStylesheetPtr style,
+xsltElemPreCompPtr xsltPreComputeExtModuleElement(xsltStylesheetPtr style,
 					 xmlNodePtr inst);
 
 /**

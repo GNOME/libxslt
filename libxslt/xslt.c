@@ -2021,7 +2021,7 @@ xsltParseStylesheetFile(const xmlChar* filename) {
 
 /**
  * xsltParseStylesheetPI:
- * value: the value of the PI
+ * @value: the value of the PI
  *
  * This function checks that the type is text/xml and extracts
  * the URI-Reference for the stylesheet
@@ -2107,7 +2107,7 @@ xsltParseStylesheetPI(const xmlChar *value) {
 
 /**
  * xsltLoadStylesheetPI:
- * doc:  a document to process
+ * @doc:  a document to process
  *
  * This function tries to locate the stylesheet PI in the given document
  * If found, and if contained within the document, it will extract 

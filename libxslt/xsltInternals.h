@@ -201,7 +201,9 @@ struct _xsltElemPreComp {
  * precomputed data.
  */
 typedef struct _xsltStylePreComp xsltStylePreComp;
+
 typedef xsltStylePreComp *xsltStylePreCompPtr;
+
 struct _xsltStylePreComp {
     xsltElemPreCompPtr next;	/* chained list */
     xsltStyleType type;		/* type of the element */

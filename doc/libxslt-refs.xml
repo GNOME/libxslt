@@ -489,9 +489,6 @@
     <type name='long'>
       <ref name='xsltTimestamp'/>
     </type>
-    <type name='typedef'>
-      <ref name='xsltElemPreCompPtr'/>
-    </type>
     <type name='void *'>
       <ref name='xsltStyleExtInitFunction'/>
       <ref name='xsltExtInitFunction'/>
@@ -557,6 +554,9 @@
       <ref name='xsltPreComputeExtModuleElement'/>
       <ref name='xsltDocumentComp'/>
     </type>
+    <type name='xsltPreComputeFunction'>
+      <ref name='xsltExtModuleElementPreComputeLookup'/>
+    </type>
     <type name='xsltStackElemPtr'>
       <ref name='xsltParseStylesheetCallerParam'/>
     </type>
@@ -577,6 +577,7 @@
     </type>
     <type name='xsltTransformContextPtr'>
       <ref name='xsltNewTransformContext'/>
+      <ref name='xsltXPathGetTransformContext'/>
     </type>
     <type name='xsltTransformFunction'>
       <ref name='xsltExtElementLookup'/>
@@ -585,9 +586,6 @@
     </type>
   </constructors>
   <functions>
-    <type name='*xsltPreComputeFunction) (xsltStylesheetPtr'>
-      <ref name='xsltElemPreCompPtr'/>
-    </type>
     <type name='FILE *'>
       <ref name='xsltApplyStylesheetUser'/>
       <ref name='xsltProfileStylesheet'/>
@@ -655,6 +653,8 @@
       <ref name='xsltExtElementLookup'/>
       <ref name='xsltExtModuleElementLookup'/>
       <ref name='xsltExtModuleElementLookup'/>
+      <ref name='xsltExtModuleElementPreComputeLookup'/>
+      <ref name='xsltExtModuleElementPreComputeLookup'/>
       <ref name='xsltUnregisterExtModuleElement'/>
       <ref name='xsltUnregisterExtModuleElement'/>
       <ref name='xsltRegisterExtModuleTopLevel'/>
@@ -802,7 +802,6 @@
       <ref name='xsltParseStylesheetVariable'/>
       <ref name='xsltParseStylesheetParam'/>
       <ref name='xsltParseStylesheetCallerParam'/>
-      <ref name='xsltElemPreCompPtr'/>
       <ref name='xsltNewElemPreComp'/>
       <ref name='xsltInitElemPreComp'/>
       <ref name='xsltTopLevelFunction'/>
@@ -872,6 +871,7 @@
       <ref name='xsltSystemPropertyFunction'/>
       <ref name='xsltElementAvailableFunction'/>
       <ref name='xsltFunctionAvailableFunction'/>
+      <ref name='xsltXPathGetTransformContext'/>
       <ref name='xsltFunctionNodeSet'/>
     </type>
     <type name='xsltCompMatchPtr'>
@@ -1085,7 +1085,6 @@
       <ref name='xsltAllocateExtraCtxt'/>
     </type>
     <type name='xsltTransformFunction'>
-      <ref name='xsltElemPreCompPtr'/>
       <ref name='xsltNewElemPreComp'/>
       <ref name='xsltInitElemPreComp'/>
       <ref name='xsltRegisterExtModuleElement'/>
@@ -1120,16 +1119,17 @@
       <ref name='xsltStyleGetExtData'/>
       <ref name='xsltShutdownCtxtExts'/>
       <ref name='xsltShutdownExts'/>
+      <ref name='xsltXPathGetTransformContext'/>
       <ref name='xsltRegisterExtModuleFunction'/>
       <ref name='xsltExtFunctionLookup'/>
       <ref name='xsltExtModuleFunctionLookup'/>
       <ref name='xsltUnregisterExtModuleFunction'/>
-      <ref name='xsltElemPreCompPtr'/>
       <ref name='xsltNewElemPreComp'/>
       <ref name='xsltInitElemPreComp'/>
       <ref name='xsltRegisterExtModuleElement'/>
       <ref name='xsltExtElementLookup'/>
       <ref name='xsltExtModuleElementLookup'/>
+      <ref name='xsltExtModuleElementPreComputeLookup'/>
       <ref name='xsltUnregisterExtModuleElement'/>
       <ref name='xsltTopLevelFunction'/>
       <ref name='xsltRegisterExtModuleTopLevel'/>
@@ -1292,6 +1292,7 @@
       <ref name='xsltRuntimeExtra'/>
       <ref name='xsltRuntimeExtraPtr'/>
       <ref name='XSLT_RUNTIME_EXTRA'/>
+      <ref name='XSLT_RUNTIME_EXTRA_FREE'/>
       <ref name='xsltTemplate'/>
       <ref name='xsltTemplatePtr'/>
       <ref name='xsltDecimalFormat'/>

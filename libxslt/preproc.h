@@ -21,8 +21,7 @@ extern "C" {
  */
 extern const xmlChar *xsltExtMarker;
 
-xsltElemPreCompPtr
-		xsltDocumentComp	(xsltStylesheetPtr style,
+xsltElemPreCompPtr xsltDocumentComp	(xsltStylesheetPtr style,
 					 xmlNodePtr inst,
 					 xsltTransformFunction function);
 

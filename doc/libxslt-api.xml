@@ -58,16 +58,17 @@
      <exports symbol='xsltStyleGetExtData'/>
      <exports symbol='xsltShutdownCtxtExts'/>
      <exports symbol='xsltShutdownExts'/>
+     <exports symbol='xsltXPathGetTransformContext'/>
      <exports symbol='xsltRegisterExtModuleFunction'/>
      <exports symbol='xsltExtFunctionLookup'/>
      <exports symbol='xsltExtModuleFunctionLookup'/>
      <exports symbol='xsltUnregisterExtModuleFunction'/>
-     <exports symbol='xsltElemPreCompPtr'/>
      <exports symbol='xsltNewElemPreComp'/>
      <exports symbol='xsltInitElemPreComp'/>
      <exports symbol='xsltRegisterExtModuleElement'/>
      <exports symbol='xsltExtElementLookup'/>
      <exports symbol='xsltExtModuleElementLookup'/>
+     <exports symbol='xsltExtModuleElementPreComputeLookup'/>
      <exports symbol='xsltUnregisterExtModuleElement'/>
      <exports symbol='xsltTopLevelFunction'/>
      <exports symbol='xsltRegisterExtModuleTopLevel'/>
@@ -99,6 +100,7 @@
      <exports symbol='xsltRuntimeExtra'/>
      <exports symbol='xsltRuntimeExtraPtr'/>
      <exports symbol='XSLT_RUNTIME_EXTRA'/>
+     <exports symbol='XSLT_RUNTIME_EXTRA_FREE'/>
      <exports symbol='xsltTemplate'/>
      <exports symbol='xsltTemplatePtr'/>
      <exports symbol='xsltDecimalFormat'/>
@@ -411,6 +413,8 @@
       <info>registering macro, not general purpose at all but used in different modules</info>
     </macro>
     <macro name='XSLT_RUNTIME_EXTRA' file='xsltInternals'>
+    </macro>
+    <macro name='XSLT_RUNTIME_EXTRA_FREE' file='xsltInternals'>
     </macro>
     <macro name='XSLT_SAXON_NAMESPACE' file='extra'>
       <info>This is Michael Kay&apos;s Saxon processor namespace for extensions</info>
@@ -811,6 +815,11 @@
       <arg name='name' type='const xmlChar *' info='the element name '/>
       <arg name='URI' type='const xmlChar *' info='the element namespace URI '/>
     </function>
+    <function name='xsltExtModuleElementPreComputeLookup' file='extensions'>
+      <return type='xsltPreComputeFunction'/>
+      <arg name='name' type='const xmlChar *'/>
+      <arg name='URI' type='const xmlChar *'/>
+    </function>
     <function name='xsltExtModuleFunctionLookup' file='extensions'>
       <info>Looks up an extension module function</info>
       <return type='xmlXPathFunction' info='the function if found, NULL otherwise. '/>
@@ -1080,7 +1089,7 @@
     <function name='xsltLoadStylesheetPI' file='xsltInternals'>
       <info>This function tries to locate the stylesheet PI in the given document If found, and if contained within the document, it will extract that subtree to build the stylesheet to process doc (doc itself will be modified). If found but referencing an external document it will attempt to load it and generate a stylesheet from it. In both cases, the resulting stylesheet and the document need to be freed once the transformation is done.</info>
       <return type='xsltStylesheetPtr' info='a new XSLT stylesheet structure or NULL if not found. '/>
-      <arg name='doc' type='xmlDocPtr'/>
+      <arg name='doc' type='xmlDocPtr' info='a document to process '/>
     </function>
     <function name='xsltMatchPattern' file='pattern'>
       <info>Determine if a node matches a pattern.</info>
@@ -1579,6 +1588,10 @@
       <arg name='ctxt' type='xmlXPathContextPtr' info='a void * but the XSLT transformation context actually '/>
       <arg name='name' type='const xmlChar *' info='the function name '/>
       <arg name='ns_uri' type='const xmlChar *' info='the function namespace URI '/>
+    </function>
+    <function name='xsltXPathGetTransformContext' file='extensions'>
+      <return type='xsltTransformContextPtr'/>
+      <arg name='ctxt' type='xmlXPathParserContextPtr'/>
     </function>
     <function name='xsltXPathVariableLookup' file='variables'>
       <info>This is the entry point when a varibale is needed by the XPath interpretor.</info>
