@@ -98,10 +98,13 @@ static int xinclude = 0;
 #endif
 static int profile = 0;
 
-static const char *params[16 + 1];
+#define MAX_PARAMETERS 64
+
+static const char *params[MAX_PARAMETERS + 1];
 static int nbparams = 0;
 static const char *output = NULL;
 static int errorno = 0;
+
 
 /*
  * Internal timing routines to remove the necessity to have unix-specific
@@ -437,8 +440,8 @@ main(int argc, char **argv)
             i++;
             params[nbparams++] = argv[i++];
             params[nbparams++] = argv[i];
-            if (nbparams >= 16) {
-                fprintf(stderr, "too many params\n");
+            if (nbparams >= MAX_PARAMETERS) {
+                fprintf(stderr, "too many params increase MAX_PARAMETERS \n");
                 return (2);
             }
         } else if ((!strcmp(argv[i], "-maxdepth")) ||
