@@ -14,7 +14,7 @@ confexec_DATA = xsltConf.sh
 bin_SCRIPTS = xslt-config
 
 dist-hook: cleanup libxslt.spec
-	(cd $(srcdir) ; tar -cf - --exclude CVS win32 vms) | (cd $(distdir); tar xf -)
+	(cd $(srcdir) ; tar -cf - --exclude CVS win32 vms examples) | (cd $(distdir); tar xf -)
 
 EXTRA_DIST = xsltConf.sh.in xslt-config.in libxslt.spec libxslt.spec.in \
              FEATURES TODO Copyright libxslt.m4 \

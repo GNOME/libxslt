@@ -1,3 +1,8 @@
+Tue Jun 29 09:23:03 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am examples/xsltICUSort.c: seems I never commited to CVS
+	  the example from Richard Jinks
+
 Wed Jun  9 16:33:56 CEST 2004 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* win32/configure.js win32/Makefile.* minor changes for the new
