@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test:data xmlns:test="http://www.example.org/test">
+  <test:a a="1"/>
+  <test:b b="1"/>
+</test:data>

@@ -519,9 +519,30 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     if ((nodelist == NULL) || (nodelist->nodeNr <= 0))
 	goto error;
 
-    table = xsltNewKeyTable(keyd->name, keyd->nameURI);
-    if (table == NULL)
-	goto error;
+    /**
+     * Multiple key definitions for the same name are allowed, so
+     * we must check if the key is already present for this doc
+     */
+    table = (xsltKeyTablePtr) doc->keys;
+    while (table != NULL) {
+        if (xmlStrEqual(table->name, keyd->name) &&
+	    (((keyd->nameURI == NULL) && (table->nameURI == NULL)) ||
+	     ((keyd->nameURI != NULL) && (table->nameURI != NULL) &&
+	      (xmlStrEqual(table->nameURI, keyd->nameURI)))))
+	    break;
+	table = table->next;
+    }
+    /**
+     * If the key was not previously defined, create it now and
+     * chain it to the list of keys for the doc
+     */
+    if (table == NULL) {
+        table = xsltNewKeyTable(keyd->name, keyd->nameURI);
+        if (table == NULL)
+	    goto error;
+        table->next = doc->keys;
+        doc->keys = table;
+    }
 
     for (i = 0;i < nodelist->nodeNr;i++) {
 	if (IS_XSLT_REAL_NODE(nodelist->nodeTab[i])) {
@@ -559,9 +580,6 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	    }
 	}
     }
-
-    table->next = doc->keys;
-    doc->keys = table;
 
 error:
     ctxt->document = oldDoc;
