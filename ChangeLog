@@ -1,3 +1,9 @@
+Sun Jul 15 05:02:50 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/exslt.[hc] libexslt/common.[hc] libexslt/functions.[hc]
+	  libexslt/math.[hc] libexslt/sets.[hc] libexslt/utils.[hc]:
+	  start implementing EXSLT
+
 Sun Jul 15 16:01:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/numbers.c libxslt/numbersInternals.h libxslt/preproc.c:
