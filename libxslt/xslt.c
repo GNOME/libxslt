@@ -1249,7 +1249,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 /**
  * xsltParseTemplateContent:
  * @style:  the XSLT stylesheet
- * @template:  the container node (can be a document for literal results)
+ * @templ:  the container node (can be a document for literal results)
  *
  * parse a template content-model
  * Clean-up the template content from unwanted ignorable blank nodes
@@ -1257,14 +1257,14 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
  */
 
 void
-xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr template) {
+xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
     xmlNodePtr cur, delete;
     /*
      * This content comes from the stylesheet
      * For stylesheets, the set of whitespace-preserving
      * element names consists of just xsl:text.
      */
-    cur = template->children;
+    cur = templ->children;
     delete = NULL;
     while (cur != NULL) {
 	if (delete != NULL) {
@@ -1362,7 +1362,7 @@ skip_children:
 	    cur = cur->parent;
 	    if (cur == NULL)
 		break;
-	    if (cur == template) {
+	    if (cur == templ) {
 		cur = NULL;
 		break;
 	    }
@@ -1385,7 +1385,7 @@ skip_children:
     /*
      * Skip the first params
      */
-    cur = template->children;
+    cur = templ->children;
     while (cur != NULL) {
 	if ((IS_XSLT_ELEM(cur)) && (!(IS_XSLT_NAME(cur, "param"))))
 	    break;

@@ -851,7 +851,7 @@ xsltUnregisterExtModule(const xmlChar * URI)
  *
  * Unregister all the XSLT extension module from the library.
  */
-void
+static void
 xsltUnregisterAllExtModules(void)
 {
     if (xsltExtensionsHash == NULL)
@@ -948,7 +948,7 @@ xsltUnregisterExtModuleFunction (const xmlChar *name,
  *
  * Unregisters all extension module function
  */
-void
+static void
 xsltUnregisterAllExtModuleFunction (void) {
     xmlHashFree(xsltFunctionsHash, NULL);
     xsltFunctionsHash = NULL;
@@ -1088,7 +1088,7 @@ xsltUnregisterExtModuleElement (const xmlChar *name,
  *
  * Unregisters all extension module element
  */
-void
+static void
 xsltUnregisterAllExtModuleElement (void) {
     xmlHashFree(xsltElementsHash, (xmlHashDeallocator) xsltFreeExtElement);
     xsltElementsHash = NULL;
@@ -1162,7 +1162,7 @@ xsltUnregisterExtModuleTopLevel (const xmlChar *name,
  *
  * Unregisters all extension module function
  */
-void
+static void
 xsltUnregisterAllExtModuleTopLevel (void) {
     xmlHashFree(xsltTopLevelsHash, NULL);
     xsltTopLevelsHash = NULL;
@@ -1465,3 +1465,18 @@ xsltRegisterTestModule (void) {
 				 xsltExtElementPreCompTest ,
 				 xsltExtElementTest);
 }
+
+/**
+ * xsltCleanupGlobals:
+ *
+ * Unregister all global variables set up by the XSLT library
+ */
+void
+xsltCleanupGlobals(void)
+{
+    xsltUnregisterAllExtModules();
+    xsltUnregisterAllExtModuleFunction();
+    xsltUnregisterAllExtModuleElement();
+    xsltUnregisterAllExtModuleTopLevel();
+}
+

@@ -1,14 +1,18 @@
+#include "libxslt/libxslt.h"
+
 #include <string.h>
 
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/hash.h>
+#include <libxml/debugXML.h>
 
 #include <libxslt/xsltutils.h>
 #include <libxslt/variables.h>
 #include <libxslt/xsltInternals.h>
 #include <libxslt/extensions.h>
+#include <libxslt/transform.h>
 
 #include "exslt.h"
 
@@ -167,7 +171,6 @@ exsltFuncNewFunctionData (void) {
 static void
 exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj, oldResult, ret;
-    xmlHashTablePtr funcs;
     exsltFuncData *data;
     exsltFuncFunctionData *func;
     xmlNodePtr paramNode, oldInsert, fake;
@@ -340,8 +343,9 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
 }
 
 static void
-exsltFuncResultElem (xsltTransformContextPtr ctxt, xmlNodePtr node,
-		     xmlNodePtr inst, xsltStylePreCompPtr comp) {
+exsltFuncResultElem (xsltTransformContextPtr ctxt,
+	             xmlNodePtr node ATTRIBUTE_UNUSED, xmlNodePtr inst,
+		     xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
     xmlNodePtr test;
     xmlChar *select;
     exsltFuncData *data;

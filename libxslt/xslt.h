@@ -71,6 +71,11 @@ extern const int xsltLibxsltVersion;
  */
 extern const int xsltLibxmlVersion;
 
+/*
+ * Global cleanup function
+ */
+void	xsltCleanupGlobals	(void);
+
 #ifdef __cplusplus
 }
 #endif

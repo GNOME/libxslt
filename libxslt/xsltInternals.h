@@ -455,7 +455,7 @@ xmlXPathError		 xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 						 xmlChar **result);
 
 void			xsltParseTemplateContent(xsltStylesheetPtr style,
-						 xmlNodePtr template);
+						 xmlNodePtr templ);
 
 #ifdef __cplusplus
 }

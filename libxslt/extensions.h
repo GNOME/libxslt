@@ -80,8 +80,6 @@ int		xsltRegisterExtModuleFull
 
 int		xsltUnregisterExtModule	(const xmlChar * URI);
 
-void		xsltUnregisterAllExtModules(void);
-
 void *		xsltGetExtData		(xsltTransformContextPtr ctxt,
 					 const xmlChar *URI);
 
