@@ -1,3 +1,8 @@
+Sun Jan 20 14:33:33 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: Fixed RH bug #58124 due to an off-by-one
+	  error when parsing -o arguments.
+
 Sun Jan 20 14:15:55 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.xml libxslt/xsltutils.c xsltproc/xsltproc.c:
