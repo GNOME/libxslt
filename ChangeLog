@@ -1,3 +1,8 @@
+Tue Jan  8 21:04:17 MST 2002 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.xml, doc/xsltproc.1, doc/xsltproc.html
+	update xsltproc man page to add --stringparam option
+
 Tue Jan  8 17:21:02 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: added the --stringparam option
