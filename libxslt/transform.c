@@ -2010,6 +2010,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		if (ctxt->insert->type == XML_ELEMENT_NODE) {
 		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, cur;
+
 		    if (attr->ns != NULL) {
 			if (!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) {
 			    ret = xmlCopyProp(ctxt->insert, attr);
@@ -2022,8 +2023,29 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    if (ret != NULL) {
 			cur = ctxt->insert->properties;
 			if (cur != NULL) {
-			    while (cur->next != NULL)
+			    /*
+			     * Avoid duplicates and insert at the end
+			     * of the attribute list
+			     */
+			    while (cur->next != NULL) {
+				if ((xmlStrEqual(cur->name, ret->name)) &&
+                                    (((cur->ns == NULL) && (ret->ns == NULL)) ||
+				     ((cur->ns != NULL) && (ret->ns != NULL) &&
+				      (xmlStrEqual(cur->ns->href,
+						   ret->ns->href))))) {
+				    xmlFreeProp(ret);
+				    return;
+				}
 				cur = cur->next;
+			    }
+			    if ((xmlStrEqual(cur->name, ret->name)) &&
+				(((cur->ns == NULL) && (ret->ns == NULL)) ||
+				 ((cur->ns != NULL) && (ret->ns != NULL) &&
+				  (xmlStrEqual(cur->ns->href,
+					       ret->ns->href))))) {
+				xmlFreeProp(ret);
+				return;
+			    }
 			    cur->next = ret;
 			    ret->prev = cur;
 			} else
