@@ -184,7 +184,7 @@ install : all
 BDVERSION = $(LIBXSLT_MAJOR_VERSION).$(LIBXSLT_MINOR_VERSION).$(LIBXSLT_MICRO_VERSION)
 BDPREFIX = $(XSLT_BASENAME)-$(BDVERSION).win32
 bindist : all
-	$(MAKE) PREFIX=$(BDPREFIX) BINPREFIX=$(BDPREFIX)/util install
+	$(MAKE) PREFIX=$(BDPREFIX) SOPREFIX=$(BDPREFIX)/bin install
 	cscript //NoLogo configure.js genreadme $(XSLT_BASENAME) $(BDVERSION) $(BDPREFIX)\readme.txt
 
 
