@@ -112,6 +112,9 @@ EXPORTS
 
 	xsltEvalGlobalVariables
 	xsltEvalUserParams
+	xsltQuoteUserParams
+	xsltEvalOneUserParam
+	xsltQuoteOneUserParam
 	xsltParseGlobalVariable
 	xsltParseGlobalParam
 	xsltParseStylesheetVariable

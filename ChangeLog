@@ -1,3 +1,8 @@
+Wed Sep 12 17:00:53 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* win32/dsp/libxslt.def libxslt/variables.[ch]: trying to
+	  incorporate comments from bug #59220
+
 Wed Sep 12 05:51:32 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* configure.in libexslt/date.c libexslt/Makefile.am

@@ -39,6 +39,15 @@ extern "C" {
 int		xsltEvalGlobalVariables		(xsltTransformContextPtr ctxt);
 int		xsltEvalUserParams		(xsltTransformContextPtr ctxt,
 						 const char **params);
+int		xsltQuoteUserParams		(xsltTransformContextPtr ctxt,
+						 const char **params);
+int		xsltEvalOneUserParam		(xsltTransformContextPtr ctxt,
+    						 const xmlChar * name,
+						 const xmlChar * value);
+int		xsltQuoteOneUserParam		(xsltTransformContextPtr ctxt,
+    						 const xmlChar * name,
+						 const xmlChar * value);
+
 void		xsltParseGlobalVariable		(xsltStylesheetPtr style,
 						 xmlNodePtr cur);
 void		xsltParseGlobalParam		(xsltStylesheetPtr style,
