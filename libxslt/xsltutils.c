@@ -1074,29 +1074,7 @@ xsltCalibrateAdjust(long delta) {
 long
 xsltTimestamp(void)
 {
-#ifdef HAVE_GETTIMEOFDAY
-    static struct timeval startup;
-    struct timeval cur;
-    long tics;
-
-    if (calibration < 0) {
-        gettimeofday(&startup, NULL);
-        calibration = 0;
-        calibration = xsltCalibrateTimestamps();
-        gettimeofday(&startup, NULL);
-        return (0);
-    }
-
-    gettimeofday(&cur, NULL);
-    tics = (cur.tv_sec - startup.tv_sec) * XSLT_TIMESTAMP_TICS_PER_SEC;
-    tics += (cur.tv_usec - startup.tv_usec) /
-                          (1000000l / XSLT_TIMESTAMP_TICS_PER_SEC);
-    
-    tics -= calibration;
-    return(tics);
-#else
 #ifdef XSLT_WIN32_PERFORMANCE_COUNTER
-
     BOOL ok;
     LARGE_INTEGER performanceCount;
     LARGE_INTEGER performanceFrequency;
@@ -1124,13 +1102,34 @@ xsltTimestamp(void)
     return (long) (seconds * XSLT_TIMESTAMP_TICS_PER_SEC);
 
 #else /* XSLT_WIN32_PERFORMANCE_COUNTER */
+#ifdef HAVE_GETTIMEOFDAY
+    static struct timeval startup;
+    struct timeval cur;
+    long tics;
+
+    if (calibration < 0) {
+        gettimeofday(&startup, NULL);
+        calibration = 0;
+        calibration = xsltCalibrateTimestamps();
+        gettimeofday(&startup, NULL);
+        return (0);
+    }
+
+    gettimeofday(&cur, NULL);
+    tics = (cur.tv_sec - startup.tv_sec) * XSLT_TIMESTAMP_TICS_PER_SEC;
+    tics += (cur.tv_usec - startup.tv_usec) /
+                          (1000000l / XSLT_TIMESTAMP_TICS_PER_SEC);
+    
+    tics -= calibration;
+    return(tics);
+#else
 
     /* Neither gettimeofday() nor Win32 performance counter available */
 
     return (0);
 
+#endif /* HAVE_GETTIMEOFDAY */
 #endif /* XSLT_WIN32_PERFORMANCE_COUNTER */
-#endif
 }
 
 #define MAX_TEMPLATES 10000
