@@ -547,13 +547,9 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "-output")) ||
                    (!strcmp(argv[i], "--output"))) {
             i++;
-#if defined(WIN32) || defined (__CYGWIN__)
-	    output = xmlNormalizeWindowsPath(argv[i]);
+	    output = xmlCanonicPath(argv[i]);
             if (output == NULL)
 		output = xmlStrdup(argv[i]);
-#else
-            output = argv[i];
-#endif
         } else if ((!strcmp(argv[i], "-V")) ||
                    (!strcmp(argv[i], "-version")) ||
                    (!strcmp(argv[i], "--version"))) {
@@ -823,10 +819,8 @@ done:
         xsltFreeStylesheet(cur);
     for (i = 0;i < nbstrparams;i++)
 	xmlFree(strparams[i]);
-#if defined(WIN32) || defined (__CYGWIN__)
     if (output != NULL)
 	xmlFree(output);
-#endif
     xsltFreeSecurityPrefs(sec);
     xsltCleanupGlobals();
     xmlCleanupParser();
