@@ -1,3 +1,8 @@
+Tue Feb 17 11:29:15 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/templates.c: applied patch from #134588 provided by
+	  Mariano Suárez-Alvarez, attribute text node without doc.
+
 Mon Feb 16 15:55:57 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in, doc/*: updated and rebuilt the documentation

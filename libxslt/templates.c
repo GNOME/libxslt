@@ -491,6 +491,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	if (text != NULL) {
 	    ret->last = ret->children = text;
 	    text->parent = (xmlNodePtr) ret;
+	    text->doc = ret->doc;
 	    if (cur->_private != NULL) {
 		xmlChar *val;
 		val = xsltEvalAVT(ctxt, cur->_private, cur->parent);
