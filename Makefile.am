@@ -19,7 +19,8 @@ dist-hook: cleanup libxslt.spec
 EXTRA_DIST = xsltConf.sh.in xslt-config.in libxslt.spec libxslt.spec.in \
              FEATURES TODO Copyright libxslt.m4 \
 	     win32/libxslt/libxslt.def win32/libxslt/libxslt.dsw \
-	     win32/libxslt/libxslt_so.dsp win32/libxslt/xsltproc.dsp
+	     win32/libxslt/libxslt_so.dsp win32/libxslt/xsltproc.dsp \
+	     $(CVS_EXTRA_DIST)
 
 ## We create xsltConf.sh here and not from configure because we want
 ## to get the paths expanded correctly.  Macros like srcdir are given

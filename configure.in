@@ -24,7 +24,12 @@ LIBXSLT_VERSION_INFO=`expr $LIBXSLT_MAJOR_VERSION + $LIBXSLT_MINOR_VERSION`:$LIB
 LIBXSLT_VERSION_NUMBER=`expr $LIBXSLT_MAJOR_VERSION \* 10000 + $LIBXSLT_MINOR_VERSION \* 100 + $LIBXSLT_MICRO_VERSION`
 
 if test -f CVS/Entries; then
-  LIBXSLT_VERSION_EXTRA=-CVS`grep ChangeLog CVS/Entries | sed -e s\%/ChangeLog/1\.%% -e s\%/.*$%%`
+  extra=`grep ChangeLog CVS/Entries | grep -v LIBXSLT | sed -e s\%/ChangeLog/1\.%% -e s\%/.*$%%`
+  echo extra=$extra
+  if test "$extra" != ""
+  then
+      LIBXSLT_VERSION_EXTRA="-CVS$extra"
+  fi
 fi
 
 AC_SUBST(LIBXSLT_MAJOR_VERSION)

@@ -1,3 +1,8 @@
+Fri Aug 20 18:53:50 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am configure.in: a bit of cleanup and a extra variable for
+	  CVS dist
+
 Fri Aug 20 11:30:19 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/imports.c: fix a 64bit bug reported by Andreas Schwab
