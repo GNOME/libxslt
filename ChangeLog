@@ -1,3 +1,11 @@
+Sun May 16 20:48:35 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixing bug #135542 about the DOCTYPE name
+	  being generated when the root element is namespaced 
+	* tests/general/bug-151*, tests/docs/bug-151.xml,
+	  tests/general/Makefile.am, tests/docs/Makefile.am: added
+	  regression test for bug #135542
+
 Sun May 16 19:39:44 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/namespaces.c libxslt/namespaces.h libxslt/templates.c

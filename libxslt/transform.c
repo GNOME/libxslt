@@ -2213,6 +2213,13 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */
     root = xmlDocGetRootElement(res);
     if (root != NULL) {
+        const xmlChar *doctype = NULL;
+
+        if ((root->ns != NULL) && (root->ns->prefix != NULL))
+	    doctype = xmlDictQLookup(ctxt->dict, root->ns->prefix, root->name);
+	if (doctype == NULL)
+	    doctype = root->name;
+
         /*
          * Apply the default selection of the method
          */
@@ -2233,7 +2240,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 ctxt->type = XSLT_OUTPUT_HTML;
                 res->type = XML_HTML_DOCUMENT_NODE;
                 if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
-                    res->intSubset = xmlCreateIntSubset(res, root->name,
+                    res->intSubset = xmlCreateIntSubset(res, doctype,
                                                         doctypePublic,
                                                         doctypeSystem);
 #ifdef XSLT_GENERATE_HTML_DOCTYPE
@@ -2242,7 +2249,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                    &doctypeSystem);
                     if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
                         res->intSubset =
-                            xmlCreateIntSubset(res, root->name,
+                            xmlCreateIntSubset(res, doctype,
                                                doctypePublic,
                                                doctypeSystem);
 #endif
@@ -2254,7 +2261,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
             XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
                 XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
                 if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
-                res->intSubset = xmlCreateIntSubset(res, root->name,
+                res->intSubset = xmlCreateIntSubset(res, doctype,
                                                     doctypePublic,
                                                     doctypeSystem);
         }
@@ -4104,6 +4111,13 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
      */
     root = xmlDocGetRootElement(res);
     if (root != NULL) {
+        const xmlChar *doctype = NULL;
+
+        if ((root->ns != NULL) && (root->ns->prefix != NULL))
+	    doctype = xmlDictQLookup(ctxt->dict, root->ns->prefix, root->name);
+	if (doctype == NULL)
+	    doctype = root->name;
+
         /*
          * Apply the default selection of the method
          */
@@ -4124,7 +4138,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                 ctxt->type = XSLT_OUTPUT_HTML;
                 res->type = XML_HTML_DOCUMENT_NODE;
                 if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
-                    res->intSubset = xmlCreateIntSubset(res, root->name,
+                    res->intSubset = xmlCreateIntSubset(res, doctype,
                                                         doctypePublic,
                                                         doctypeSystem);
 #ifdef XSLT_GENERATE_HTML_DOCTYPE
@@ -4133,7 +4147,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                                    &doctypeSystem);
                     if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
                         res->intSubset =
-                            xmlCreateIntSubset(res, root->name,
+                            xmlCreateIntSubset(res, doctype,
                                                doctypePublic,
                                                doctypeSystem);
 #endif
@@ -4149,7 +4163,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 		   possible comment nodes */
 		node = res->children;
 		res->children = NULL;
-                res->intSubset = xmlCreateIntSubset(res, root->name,
+                res->intSubset = xmlCreateIntSubset(res, doctype,
                                                     doctypePublic,
                                                     doctypeSystem);
 		res->children->next = node;
