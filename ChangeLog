@@ -1,3 +1,9 @@
+Mon Oct 14 12:29:53 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* libxslt/win32config.h: remapped mkdir to _mkdir for MS runtime
+	* win32/Makefile.msvc: added security.c to the build
+	* win32/libxslt.def.src: exported functions from security.c
+
 Thu Oct 10 18:41:56 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: added another option --writesubtree to allow
