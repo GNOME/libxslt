@@ -13,7 +13,7 @@ DOC_MAIN_SGML_FILE=libxslt.sgml
 # The directory containing the source code (if it contains documentation).
 DOC_SOURCE_DIR=..
 
-HTML_DIR=@HTML_DIR@
+HTML_DIR=$(datadir)/doc
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)/html
 PAGES= API.html bugs.html contribs.html docs.html downloads.html \
@@ -36,15 +36,15 @@ $(APIPAGES): libxslt-refs.xml site.xsl api.xsl
 	  $(bindir)/xsltproc --html $(srcdir)/api.xsl $(srcdir)/xslt.html ; fi );
 
 scan:
-	gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --ignore-headers="acconfig.h config.h win32config.h"
+	-gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --ignore-headers="acconfig.h config.h win32config.h"
 #	gtkdoc-scan --module=libexslt --source-dir=$(DOC_SOURCE_DIR)/libexslt --ignore-headers="acconfig.h config.h win32config.h"
 
 templates: scan
-	gtkdoc-mktmpl --module=libxslt
+	-gtkdoc-mktmpl --module=libxslt
 #	gtkdoc-mktmpl --module=libexslt
 
 sgml:
-	gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt
+	-gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt
 #	gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libexslt
 
 html:

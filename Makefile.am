@@ -64,7 +64,7 @@ cleantar:
 	@(rm -f libxslt*.tar.gz)
 
 rpm: cleantar
-	@(unset CDPATH ; $(MAKE) dist && rpm -ta $(distdir).tar.gz)
+	@(unset CDPATH ; $(MAKE) dist && rpmbuild -ta $(distdir).tar.gz)
 
 
 pkgconfigdir=$(libdir)/pkgconfig
