@@ -1,472 +1,70 @@
-<HTML
-><HEAD
-><TITLE
->xslt</TITLE
-><META
-NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
-"><LINK
-REL="HOME"
-TITLE="Gnome XSLT Library Reference Manual"
-HREF="book1.html"><LINK
-REL="UP"
-TITLE="Libxslt Library Reference"
-HREF="libxslt-lib.html"><LINK
-REL="PREVIOUS"
-TITLE="Libxslt Library Reference"
-HREF="libxslt-lib.html"><LINK
-REL="NEXT"
-TITLE="functions"
-HREF="libxslt-functions.html"></HEAD
-><BODY
-CLASS="REFENTRY"
-BGCOLOR="#FFFFFF"
-TEXT="#000000"
-LINK="#0000FF"
-VLINK="#840084"
-ALINK="#0000FF"
-><DIV
-CLASS="NAVHEADER"
-><TABLE
-WIDTH="100%"
-BORDER="0"
-BGCOLOR="#000000"
-CELLPADDING="1"
-CELLSPACING="0"
-><TR
-><TH
-COLSPAN="4"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="5"
->Gnome XSLT Library Reference Manual</FONT
-></TH
-></TR
-><TR
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="left"
-><A
-HREF="libxslt-lib.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->&#60;&#60;&#60; Previous Page</B
-></FONT
-></A
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#0000C0"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
-><A
-HREF="book1.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Home</B
-></FONT
-></A
-></B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#00C000"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
-><A
-HREF="libxslt-lib.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Up</B
-></FONT
-></A
-></B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="right"
-><A
-HREF="libxslt-functions.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
-></TR
-></TABLE
-></DIV
-><H1
-><A
-NAME="LIBXSLT-XSLT"
-></A
->xslt</H1
-><DIV
-CLASS="REFNAMEDIV"
-><A
-NAME="AEN31"
-></A
-><H2
->Name</H2
->xslt&nbsp;--&nbsp;</DIV
-><DIV
-CLASS="REFSYNOPSISDIV"
-><A
-NAME="AEN34"
-></A
-><H2
->Synopsis</H2
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="SYNOPSIS"
->&#13;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>xslt</title><meta name="generator" content="DocBook XSL Stylesheets V1.58.1"><style xmlns="http://www.w3.org/TR/xhtml1/transitional" type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style><link rel="home" href="index.html" title="Gnome XSLT Library Reference Manual"><link rel="up" href="libxslt-lib.html" title="Libxslt Library Reference"><link rel="previous" href="libxslt-lib.html" title="Libxslt Library Reference"><link rel="next" href="libxslt-functions.html" title="functions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="libxslt-lib.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></img></a></td><td><a accesskey="u" href="libxslt-lib.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></img></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></img></a></td><th width="100%" align="center">Gnome XSLT Library Reference Manual</th><td><a accesskey="n" href="libxslt-functions.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></img></a></td></tr></table><div class="refentry" lang="en"><a name="libxslt-xslt"></a><div class="titlepage"></div><div class="refnamediv"><h2>xslt</h2><p>xslt &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
 
-#define     <A
-HREF="libxslt-xslt.html#XSLT-DEFAULT-VERSION-CAPS"
->XSLT_DEFAULT_VERSION</A
->
-#define     <A
-HREF="libxslt-xslt.html#XSLT-DEFAULT-VENDOR-CAPS"
->XSLT_DEFAULT_VENDOR</A
->
-#define     <A
-HREF="libxslt-xslt.html#XSLT-DEFAULT-URL-CAPS"
->XSLT_DEFAULT_URL</A
->
-#define     <A
-HREF="libxslt-xslt.html#XSLT-NAMESPACE-CAPS"
->XSLT_NAMESPACE</A
->
-#define     <A
-HREF="libxslt-xslt.html#LIBXSLT-PUBLIC-CAPS"
->LIBXSLT_PUBLIC</A
->
-void        <A
-HREF="libxslt-xslt.html#XSLTCLEANUPGLOBALS"
->xsltCleanupGlobals</A
->              (void);</PRE
-></TD
-></TR
-></TABLE
-></DIV
-><DIV
-CLASS="REFSECT1"
-><A
-NAME="AEN43"
-></A
-><H2
->Description</H2
-><P
-></P
-></DIV
-><DIV
-CLASS="REFSECT1"
-><A
-NAME="AEN46"
-></A
-><H2
->Details</H2
-><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN48"
-></A
-><H3
-><A
-NAME="XSLT-DEFAULT-VERSION-CAPS"
-></A
->XSLT_DEFAULT_VERSION</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->#define XSLT_DEFAULT_VERSION     "1.0"</PRE
-></TD
-></TR
-></TABLE
-><P
->The default version of XSLT supported.</P
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN54"
-></A
-><H3
-><A
-NAME="XSLT-DEFAULT-VENDOR-CAPS"
-></A
->XSLT_DEFAULT_VENDOR</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->#define XSLT_DEFAULT_VENDOR      "libxslt"</PRE
-></TD
-></TR
-></TABLE
-><P
->The XSLT "vendor" string for this processor.</P
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN60"
-></A
-><H3
-><A
-NAME="XSLT-DEFAULT-URL-CAPS"
-></A
->XSLT_DEFAULT_URL</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->#define XSLT_DEFAULT_URL         "http://xmlsoft.org/XSLT/"</PRE
-></TD
-></TR
-></TABLE
-><P
->The XSLT "vendor" URL for this processor.</P
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN66"
-></A
-><H3
-><A
-NAME="XSLT-NAMESPACE-CAPS"
-></A
->XSLT_NAMESPACE</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->#define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")</PRE
-></TD
-></TR
-></TABLE
-><P
->The XSLT specification namespace.</P
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN72"
-></A
-><H3
-><A
-NAME="LIBXSLT-PUBLIC-CAPS"
-></A
->LIBXSLT_PUBLIC</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->#define     LIBXSLT_PUBLIC</PRE
-></TD
-></TR
-></TABLE
-><P
->This macro is needed on Win32 when using MSVC. It enables the client code
+
+
+#define     <a href="libxslt-xslt.html#XSLT-DEFAULT-VERSION-CAPS">XSLT_DEFAULT_VERSION</a>
+#define     <a href="libxslt-xslt.html#XSLT-DEFAULT-VENDOR-CAPS">XSLT_DEFAULT_VENDOR</a>
+#define     <a href="libxslt-xslt.html#XSLT-DEFAULT-URL-CAPS">XSLT_DEFAULT_URL</a>
+#define     <a href="libxslt-xslt.html#XSLT-NAMESPACE-CAPS">XSLT_NAMESPACE</a>
+#define     <a href="libxslt-xslt.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
+void        <a href="libxslt-xslt.html#xsltCleanupGlobals">xsltCleanupGlobals</a>              (void);
+</pre></div><div class="refsect1" lang="en"><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><h2>Details</h2><div class="refsect2" lang="en"><h3><a name="XSLT-DEFAULT-VERSION-CAPS"></a>XSLT_DEFAULT_VERSION</h3><pre class="programlisting">#define XSLT_DEFAULT_VERSION     &quot;1.0&quot;
+</pre><p>
+The default version of XSLT supported.</p><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="XSLT-DEFAULT-VENDOR-CAPS"></a>XSLT_DEFAULT_VENDOR</h3><pre class="programlisting">#define XSLT_DEFAULT_VENDOR      &quot;libxslt&quot;
+</pre><p>
+The XSLT &quot;vendor&quot; string for this processor.</p><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="XSLT-DEFAULT-URL-CAPS"></a>XSLT_DEFAULT_URL</h3><pre class="programlisting">#define XSLT_DEFAULT_URL         &quot;http://xmlsoft.org/XSLT/&quot;
+</pre><p>
+The XSLT &quot;vendor&quot; URL for this processor.</p><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="XSLT-NAMESPACE-CAPS"></a>XSLT_NAMESPACE</h3><pre class="programlisting">#define XSLT_NAMESPACE ((xmlChar *) &quot;http://www.w3.org/1999/XSL/Transform&quot;)
+</pre><p>
+The XSLT specification namespace.</p><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="LIBXSLT-PUBLIC-CAPS"></a>LIBXSLT_PUBLIC</h3><pre class="programlisting">#define     LIBXSLT_PUBLIC</pre><p>
+This macro is needed on Win32 when using MSVC. It enables the client code
 to access exported variables. It should expand to nothing when compiling
 this library itself, but must expand to __declspec(dllimport) when a
 client includes the library header and that only if it links dynamically
-against this library.</P
-><P
-></P
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN78"
-></A
-><H3
-><A
-NAME="XSLTCLEANUPGLOBALS"
-></A
->xsltCleanupGlobals ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->void        xsltCleanupGlobals              (void);</PRE
-></TD
-></TR
-></TABLE
-><P
->Unregister all global variables set up by the XSLT library</P
-><P
-></P
-></DIV
-></DIV
-><DIV
-CLASS="NAVFOOTER"
-><BR
-CLEAR="all"><BR><TABLE
-WIDTH="100%"
-BORDER="0"
-BGCOLOR="#000000"
-CELLPADDING="1"
-CELLSPACING="0"
-><TR
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="left"
-><A
-HREF="libxslt-lib.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->&#60;&#60;&#60; Previous Page</B
-></FONT
-></A
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#0000C0"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
-><A
-HREF="book1.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Home</B
-></FONT
-></A
-></B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#00C000"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
-><A
-HREF="libxslt-lib.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Up</B
-></FONT
-></A
-></B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="right"
-><A
-HREF="libxslt-functions.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
-></TR
-><TR
-><TD
-COLSPAN="2"
-ALIGN="left"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Libxslt Library Reference</B
-></FONT
-></TD
-><TD
-COLSPAN="2"
-ALIGN="right"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->functions</B
-></FONT
-></TD
-></TR
-></TABLE
-></DIV
-></BODY
-></HTML
->
+against this library.</p><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltCleanupGlobals"></a>xsltCleanupGlobals ()</h3><pre class="programlisting">void        xsltCleanupGlobals              (void);</pre><p>
+Unregister all global variables set up by the XSLT library</p><p>
+
+</p></div></div></div><table xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="libxslt-lib.html"><b>&lt;&lt; Libxslt Library Reference</b></a></td><td align="right"><a accesskey="n" href="libxslt-functions.html"><b>functions &gt;&gt;</b></a></td></tr></table></body></html>

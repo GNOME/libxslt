@@ -1,293 +1,34 @@
-<HTML
-><HEAD
-><TITLE
->Libxslt Library Reference</TITLE
-><META
-NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
-"><LINK
-REL="HOME"
-TITLE="Gnome XSLT Library Reference Manual"
-HREF="book1.html"><LINK
-REL="PREVIOUS"
-TITLE="Libxslt Programming Notes"
-HREF="libxslt-notes.html"><LINK
-REL="NEXT"
-TITLE="xslt"
-HREF="libxslt-xslt.html"></HEAD
-><BODY
-CLASS="CHAPTER"
-BGCOLOR="#FFFFFF"
-TEXT="#000000"
-LINK="#0000FF"
-VLINK="#840084"
-ALINK="#0000FF"
-><DIV
-CLASS="NAVHEADER"
-><TABLE
-WIDTH="100%"
-BORDER="0"
-BGCOLOR="#000000"
-CELLPADDING="1"
-CELLSPACING="0"
-><TR
-><TH
-COLSPAN="4"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="5"
->Gnome XSLT Library Reference Manual</FONT
-></TH
-></TR
-><TR
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="left"
-><A
-HREF="libxslt-notes.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->&#60;&#60;&#60; Previous Page</B
-></FONT
-></A
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#0000C0"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
-><A
-HREF="book1.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Home</B
-></FONT
-></A
-></B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#00C000"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->&nbsp;</B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="right"
-><A
-HREF="libxslt-xslt.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
-></TR
-></TABLE
-></DIV
-><DIV
-CLASS="CHAPTER"
-><H1
-><A
-NAME="LIBXSLT-LIB"
-></A
->Libxslt Library Reference</H1
-><DIV
-CLASS="TOC"
-><DL
-><DT
-><B
->Table of Contents</B
-></DT
-><DT
-><A
-HREF="libxslt-xslt.html"
->xslt</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-functions.html"
->functions</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-pattern.html"
->pattern</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-templates.html"
->templates</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-transform.html"
->transform</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-xsltutils.html"
->xsltutils</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-attributes.html"
->attributes</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-imports.html"
->imports</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-extensions.html"
->extensions</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-namespaces.html"
->namespaces</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-variables.html"
->variables</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-keys.html"
->keys</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-xsltinternals.html"
->xsltInternals</A
->&nbsp;--&nbsp;</DT
-><DT
-><A
-HREF="libxslt-numbersinternals.html"
->numbersInternals</A
->&nbsp;--&nbsp;</DT
-></DL
-></DIV
-><P
->This section contains the API reference for libxslt. All
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Libxslt Library Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.58.1"><style xmlns="http://www.w3.org/TR/xhtml1/transitional" type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style><link rel="home" href="index.html" title="Gnome XSLT Library Reference Manual"><link rel="up" href="index.html" title="Gnome XSLT Library Reference Manual"><link rel="previous" href="libxslt-notes.html" title="Libxslt Programming Notes"><link rel="next" href="libxslt-xslt.html" title="xslt"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="libxslt-notes.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></img></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></img></a></td><th width="100%" align="center">Gnome XSLT Library Reference Manual</th><td><a accesskey="n" href="libxslt-xslt.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></img></a></td></tr></table><div class="chapter" lang="en"><div class="titlepage"><div><h2 class="title"><a name="libxslt-lib"></a>Libxslt Library Reference</h2></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="libxslt-xslt.html">xslt</a> - </dt><dt><a href="libxslt-functions.html">functions</a> - </dt><dt><a href="libxslt-pattern.html">pattern</a> - </dt><dt><a href="libxslt-templates.html">templates</a> - </dt><dt><a href="libxslt-transform.html">transform</a> - </dt><dt><a href="libxslt-xsltutils.html">xsltutils</a> - </dt><dt><a href="libxslt-attributes.html">attributes</a> - </dt><dt><a href="libxslt-imports.html">imports</a> - </dt><dt><a href="libxslt-extensions.html">extensions</a> - </dt><dt><a href="libxslt-namespaces.html">namespaces</a> - </dt><dt><a href="libxslt-variables.html">variables</a> - </dt><dt><a href="libxslt-keys.html">keys</a> - </dt><dt><a href="libxslt-xsltInternals.html">xsltInternals</a> - </dt><dt><a href="libxslt-numbersInternals.html">numbersInternals</a> - </dt></dl></div><p>This section contains the API reference for libxslt. All
     the public interfaces are documented here. This reference guide is
-    build by extracting comments from the code sources. </P
-></DIV
-><DIV
-CLASS="NAVFOOTER"
-><BR
-CLEAR="all"><BR><TABLE
-WIDTH="100%"
-BORDER="0"
-BGCOLOR="#000000"
-CELLPADDING="1"
-CELLSPACING="0"
-><TR
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="left"
-><A
-HREF="libxslt-notes.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->&#60;&#60;&#60; Previous Page</B
-></FONT
-></A
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#0000C0"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
-><A
-HREF="book1.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Home</B
-></FONT
-></A
-></B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#00C000"
-ALIGN="center"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->&nbsp;</B
-></FONT
-></TD
-><TD
-WIDTH="25%"
-BGCOLOR="#C00000"
-ALIGN="right"
-><A
-HREF="libxslt-xslt.html"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Next Page &#62;&#62;&#62;</B
-></FONT
-></A
-></TD
-></TR
-><TR
-><TD
-COLSPAN="2"
-ALIGN="left"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->Libxslt Programming Notes</B
-></FONT
-></TD
-><TD
-COLSPAN="2"
-ALIGN="right"
-><FONT
-COLOR="#FFFFFF"
-SIZE="3"
-><B
->xslt</B
-></FONT
-></TD
-></TR
-></TABLE
-></DIV
-></BODY
-></HTML
->
+    build by extracting comments from the code sources. </p></div><table xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="libxslt-notes.html"><b>&lt;&lt; Libxslt Programming Notes</b></a></td><td align="right"><a accesskey="n" href="libxslt-xslt.html"><b>xslt &gt;&gt;</b></a></td></tr></table></body></html>

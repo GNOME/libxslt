@@ -1,3 +1,9 @@
+Tue Apr 29 15:18:31 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am doc/libxslt.xml: upgraded to the XML/XSLT toolchain
+	  for the HTML generation fixing #111799
+	* doc/html/*.html doc/html/*.png: associated update
+
 Sun Apr 27 18:00:12 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/variables.c: removed premature call to xsltFreeStackElem

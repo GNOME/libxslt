@@ -1,246 +1,232 @@
-<ANCHOR id ="LIBXSLT-XSLT" href="libxslt/libxslt-xslt.html">
-<ANCHOR id ="XSLT-DEFAULT-VERSION-CAPS" href="libxslt/libxslt-xslt.html#XSLT-DEFAULT-VERSION-CAPS">
-<ANCHOR id ="XSLT-DEFAULT-VENDOR-CAPS" href="libxslt/libxslt-xslt.html#XSLT-DEFAULT-VENDOR-CAPS">
-<ANCHOR id ="XSLT-DEFAULT-URL-CAPS" href="libxslt/libxslt-xslt.html#XSLT-DEFAULT-URL-CAPS">
-<ANCHOR id ="XSLT-NAMESPACE-CAPS" href="libxslt/libxslt-xslt.html#XSLT-NAMESPACE-CAPS">
-<ANCHOR id ="LIBXSLT-PUBLIC-CAPS" href="libxslt/libxslt-xslt.html#LIBXSLT-PUBLIC-CAPS">
-<ANCHOR id ="XSLTCLEANUPGLOBALS" href="libxslt/libxslt-xslt.html#XSLTCLEANUPGLOBALS">
-<ANCHOR id ="LIBXSLT-FUNCTIONS" href="libxslt/libxslt-functions.html">
-<ANCHOR id ="XSLT-REGISTER-FUNCTION-LOOKUP-CAPS" href="libxslt/libxslt-functions.html#XSLT-REGISTER-FUNCTION-LOOKUP-CAPS">
-<ANCHOR id ="XSLTXPATHFUNCTIONLOOKUP" href="libxslt/libxslt-functions.html#XSLTXPATHFUNCTIONLOOKUP">
-<ANCHOR id ="XSLTDOCUMENTFUNCTION" href="libxslt/libxslt-functions.html#XSLTDOCUMENTFUNCTION">
-<ANCHOR id ="XSLTKEYFUNCTION" href="libxslt/libxslt-functions.html#XSLTKEYFUNCTION">
-<ANCHOR id ="XSLTUNPARSEDENTITYURIFUNCTION" href="libxslt/libxslt-functions.html#XSLTUNPARSEDENTITYURIFUNCTION">
-<ANCHOR id ="XSLTFORMATNUMBERFUNCTION" href="libxslt/libxslt-functions.html#XSLTFORMATNUMBERFUNCTION">
-<ANCHOR id ="XSLTGENERATEIDFUNCTION" href="libxslt/libxslt-functions.html#XSLTGENERATEIDFUNCTION">
-<ANCHOR id ="XSLTSYSTEMPROPERTYFUNCTION" href="libxslt/libxslt-functions.html#XSLTSYSTEMPROPERTYFUNCTION">
-<ANCHOR id ="XSLTELEMENTAVAILABLEFUNCTION" href="libxslt/libxslt-functions.html#XSLTELEMENTAVAILABLEFUNCTION">
-<ANCHOR id ="XSLTFUNCTIONAVAILABLEFUNCTION" href="libxslt/libxslt-functions.html#XSLTFUNCTIONAVAILABLEFUNCTION">
-<ANCHOR id ="XSLTREGISTERALLFUNCTIONS" href="libxslt/libxslt-functions.html#XSLTREGISTERALLFUNCTIONS">
-<ANCHOR id ="LIBXSLT-PATTERN" href="libxslt/libxslt-pattern.html">
-<ANCHOR id ="XSLTCOMPMATCH" href="libxslt/libxslt-pattern.html#XSLTCOMPMATCH">
-<ANCHOR id ="XSLTCOMPMATCHPTR" href="libxslt/libxslt-pattern.html#XSLTCOMPMATCHPTR">
-<ANCHOR id ="XSLTCOMPILEPATTERN" href="libxslt/libxslt-pattern.html#XSLTCOMPILEPATTERN">
-<ANCHOR id ="XSLTFREECOMPMATCHLIST" href="libxslt/libxslt-pattern.html#XSLTFREECOMPMATCHLIST">
-<ANCHOR id ="XSLTTESTCOMPMATCHLIST" href="libxslt/libxslt-pattern.html#XSLTTESTCOMPMATCHLIST">
-<ANCHOR id ="XSLTADDTEMPLATE" href="libxslt/libxslt-pattern.html#XSLTADDTEMPLATE">
-<ANCHOR id ="XSLTGETTEMPLATE" href="libxslt/libxslt-pattern.html#XSLTGETTEMPLATE">
-<ANCHOR id ="XSLTFREETEMPLATEHASHES" href="libxslt/libxslt-pattern.html#XSLTFREETEMPLATEHASHES">
-<ANCHOR id ="XSLTCLEANUPTEMPLATES" href="libxslt/libxslt-pattern.html#XSLTCLEANUPTEMPLATES">
-<ANCHOR id ="XSLTMATCHPATTERN" href="libxslt/libxslt-pattern.html#XSLTMATCHPATTERN">
-<ANCHOR id ="LIBXSLT-TEMPLATES" href="libxslt/libxslt-templates.html">
-<ANCHOR id ="XSLTEVALXPATHPREDICATE" href="libxslt/libxslt-templates.html#XSLTEVALXPATHPREDICATE">
-<ANCHOR id ="XSLTEVALTEMPLATESTRING" href="libxslt/libxslt-templates.html#XSLTEVALTEMPLATESTRING">
-<ANCHOR id ="XSLTEVALATTRVALUETEMPLATE" href="libxslt/libxslt-templates.html#XSLTEVALATTRVALUETEMPLATE">
-<ANCHOR id ="XSLTEVALSTATICATTRVALUETEMPLATE" href="libxslt/libxslt-templates.html#XSLTEVALSTATICATTRVALUETEMPLATE">
-<ANCHOR id ="XSLTEVALXPATHSTRING" href="libxslt/libxslt-templates.html#XSLTEVALXPATHSTRING">
-<ANCHOR id ="XSLTEVALXPATHSTRINGNS" href="libxslt/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">
-<ANCHOR id ="XSLTTEMPLATEPROCESS" href="libxslt/libxslt-templates.html#XSLTTEMPLATEPROCESS">
-<ANCHOR id ="XSLTATTRLISTTEMPLATEPROCESS" href="libxslt/libxslt-templates.html#XSLTATTRLISTTEMPLATEPROCESS">
-<ANCHOR id ="XSLTATTRTEMPLATEPROCESS" href="libxslt/libxslt-templates.html#XSLTATTRTEMPLATEPROCESS">
-<ANCHOR id ="XSLTATTRTEMPLATEVALUEPROCESS" href="libxslt/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESS">
-<ANCHOR id ="XSLTATTRTEMPLATEVALUEPROCESSNODE" href="libxslt/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESSNODE">
-<ANCHOR id ="LIBXSLT-TRANSFORM" href="libxslt/libxslt-transform.html">
-<ANCHOR id ="XSLTSETXINCLUDEDEFAULT" href="libxslt/libxslt-transform.html#XSLTSETXINCLUDEDEFAULT">
-<ANCHOR id ="XSLTGETXINCLUDEDEFAULT" href="libxslt/libxslt-transform.html#XSLTGETXINCLUDEDEFAULT">
-<ANCHOR id ="XSLTNEWTRANSFORMCONTEXT" href="libxslt/libxslt-transform.html#XSLTNEWTRANSFORMCONTEXT">
-<ANCHOR id ="XSLTFREETRANSFORMCONTEXT" href="libxslt/libxslt-transform.html#XSLTFREETRANSFORMCONTEXT">
-<ANCHOR id ="XSLTAPPLYSTYLESHEETUSER" href="libxslt/libxslt-transform.html#XSLTAPPLYSTYLESHEETUSER">
-<ANCHOR id ="XSLTAPPLYSTRIPSPACES" href="libxslt/libxslt-transform.html#XSLTAPPLYSTRIPSPACES">
-<ANCHOR id ="XSLTAPPLYSTYLESHEET" href="libxslt/libxslt-transform.html#XSLTAPPLYSTYLESHEET">
-<ANCHOR id ="XSLTPROFILESTYLESHEET" href="libxslt/libxslt-transform.html#XSLTPROFILESTYLESHEET">
-<ANCHOR id ="XSLTRUNSTYLESHEET" href="libxslt/libxslt-transform.html#XSLTRUNSTYLESHEET">
-<ANCHOR id ="XSLTRUNSTYLESHEETUSER" href="libxslt/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">
-<ANCHOR id ="XSLTAPPLYONETEMPLATE" href="libxslt/libxslt-transform.html#XSLTAPPLYONETEMPLATE">
-<ANCHOR id ="XSLTDOCUMENTELEM" href="libxslt/libxslt-transform.html#XSLTDOCUMENTELEM">
-<ANCHOR id ="XSLTSORT" href="libxslt/libxslt-transform.html#XSLTSORT">
-<ANCHOR id ="XSLTCOPY" href="libxslt/libxslt-transform.html#XSLTCOPY">
-<ANCHOR id ="XSLTTEXT" href="libxslt/libxslt-transform.html#XSLTTEXT">
-<ANCHOR id ="XSLTELEMENT" href="libxslt/libxslt-transform.html#XSLTELEMENT">
-<ANCHOR id ="XSLTCOMMENT" href="libxslt/libxslt-transform.html#XSLTCOMMENT">
-<ANCHOR id ="XSLTATTRIBUTE" href="libxslt/libxslt-transform.html#XSLTATTRIBUTE">
-<ANCHOR id ="XSLTPROCESSINGINSTRUCTION" href="libxslt/libxslt-transform.html#XSLTPROCESSINGINSTRUCTION">
-<ANCHOR id ="XSLTCOPYOF" href="libxslt/libxslt-transform.html#XSLTCOPYOF">
-<ANCHOR id ="XSLTVALUEOF" href="libxslt/libxslt-transform.html#XSLTVALUEOF">
-<ANCHOR id ="XSLTNUMBER" href="libxslt/libxslt-transform.html#XSLTNUMBER">
-<ANCHOR id ="XSLTAPPLYIMPORTS" href="libxslt/libxslt-transform.html#XSLTAPPLYIMPORTS">
-<ANCHOR id ="XSLTCALLTEMPLATE" href="libxslt/libxslt-transform.html#XSLTCALLTEMPLATE">
-<ANCHOR id ="XSLTAPPLYTEMPLATES" href="libxslt/libxslt-transform.html#XSLTAPPLYTEMPLATES">
-<ANCHOR id ="XSLTCHOOSE" href="libxslt/libxslt-transform.html#XSLTCHOOSE">
-<ANCHOR id ="XSLTIF" href="libxslt/libxslt-transform.html#XSLTIF">
-<ANCHOR id ="XSLTFOREACH" href="libxslt/libxslt-transform.html#XSLTFOREACH">
-<ANCHOR id ="XSLTREGISTERALLELEMENT" href="libxslt/libxslt-transform.html#XSLTREGISTERALLELEMENT">
-<ANCHOR id ="XSLHANDLEDEBUGGER" href="libxslt/libxslt-transform.html#XSLHANDLEDEBUGGER">
-<ANCHOR id ="LIBXSLT-XSLTUTILS" href="libxslt/libxslt-xsltutils.html">
-<ANCHOR id ="XSLT-TODO-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-TODO-CAPS">
-<ANCHOR id ="XSLT-STRANGE-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-STRANGE-CAPS">
-<ANCHOR id ="IS-XSLT-ELEM-CAPS" href="libxslt/libxslt-xsltutils.html#IS-XSLT-ELEM-CAPS">
-<ANCHOR id ="IS-XSLT-NAME-CAPS" href="libxslt/libxslt-xsltutils.html#IS-XSLT-NAME-CAPS">
-<ANCHOR id ="IS-XSLT-REAL-NODE-CAPS" href="libxslt/libxslt-xsltutils.html#IS-XSLT-REAL-NODE-CAPS">
-<ANCHOR id ="XSLTGETNSPROP" href="libxslt/libxslt-xsltutils.html#XSLTGETNSPROP">
-<ANCHOR id ="XSLTGETUTF8CHAR" href="libxslt/libxslt-xsltutils.html#XSLTGETUTF8CHAR">
-<ANCHOR id ="XSLTPRINTERRORCONTEXT" href="libxslt/libxslt-xsltutils.html#XSLTPRINTERRORCONTEXT">
-<ANCHOR id ="XSLTMESSAGE" href="libxslt/libxslt-xsltutils.html#XSLTMESSAGE">
-<ANCHOR id ="XSLTSETGENERICERRORFUNC" href="libxslt/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">
-<ANCHOR id ="XSLTSETGENERICDEBUGFUNC" href="libxslt/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">
-<ANCHOR id ="XSLTSETTRANSFORMERRORFUNC" href="libxslt/libxslt-xsltutils.html#XSLTSETTRANSFORMERRORFUNC">
-<ANCHOR id ="XSLTTRANSFORMERROR" href="libxslt/libxslt-xsltutils.html#XSLTTRANSFORMERROR">
-<ANCHOR id ="XSLTDOCUMENTSORTFUNCTION" href="libxslt/libxslt-xsltutils.html#XSLTDOCUMENTSORTFUNCTION">
-<ANCHOR id ="XSLTSETSORTFUNC" href="libxslt/libxslt-xsltutils.html#XSLTSETSORTFUNC">
-<ANCHOR id ="XSLTSETCTXTSORTFUNC" href="libxslt/libxslt-xsltutils.html#XSLTSETCTXTSORTFUNC">
-<ANCHOR id ="XSLTDEFAULTSORTFUNCTION" href="libxslt/libxslt-xsltutils.html#XSLTDEFAULTSORTFUNCTION">
-<ANCHOR id ="XSLTDOSORTFUNCTION" href="libxslt/libxslt-xsltutils.html#XSLTDOSORTFUNCTION">
-<ANCHOR id ="XSLTCOMPUTESORTRESULT" href="libxslt/libxslt-xsltutils.html#XSLTCOMPUTESORTRESULT">
-<ANCHOR id ="XSLTGETQNAMEURI" href="libxslt/libxslt-xsltutils.html#XSLTGETQNAMEURI">
-<ANCHOR id ="XSLTSAVERESULTTO" href="libxslt/libxslt-xsltutils.html#XSLTSAVERESULTTO">
-<ANCHOR id ="XSLTSAVERESULTTOFILENAME" href="libxslt/libxslt-xsltutils.html#XSLTSAVERESULTTOFILENAME">
-<ANCHOR id ="XSLTSAVERESULTTOFILE" href="libxslt/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE">
-<ANCHOR id ="XSLTSAVERESULTTOFD" href="libxslt/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">
-<ANCHOR id ="XSLTSAVERESULTTOSTRING" href="libxslt/libxslt-xsltutils.html#XSLTSAVERESULTTOSTRING">
-<ANCHOR id ="XSLTSAVEPROFILING" href="libxslt/libxslt-xsltutils.html#XSLTSAVEPROFILING">
-<ANCHOR id ="XSLTGETPROFILEINFORMATION" href="libxslt/libxslt-xsltutils.html#XSLTGETPROFILEINFORMATION">
-<ANCHOR id ="XSLTTIMESTAMP" href="libxslt/libxslt-xsltutils.html#XSLTTIMESTAMP">
-<ANCHOR id ="XSLTCALIBRATEADJUST" href="libxslt/libxslt-xsltutils.html#XSLTCALIBRATEADJUST">
-<ANCHOR id ="XSLT-TIMESTAMP-TICS-PER-SEC-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS">
-<ANCHOR id ="XSLTDEBUGSTATUSCODES" href="libxslt/libxslt-xsltutils.html#XSLTDEBUGSTATUSCODES">
-<ANCHOR id ="XSLTHANDLEDEBUGGERCALLBACK" href="libxslt/libxslt-xsltutils.html#XSLTHANDLEDEBUGGERCALLBACK">
-<ANCHOR id ="XSLTADDCALLCALLBACK" href="libxslt/libxslt-xsltutils.html#XSLTADDCALLCALLBACK">
-<ANCHOR id ="XSLTDROPCALLCALLBACK" href="libxslt/libxslt-xsltutils.html#XSLTDROPCALLCALLBACK">
-<ANCHOR id ="XSLTSETDEBUGGERCALLBACKS" href="libxslt/libxslt-xsltutils.html#XSLTSETDEBUGGERCALLBACKS">
-<ANCHOR id ="XSLADDCALL" href="libxslt/libxslt-xsltutils.html#XSLADDCALL">
-<ANCHOR id ="XSLDROPCALL" href="libxslt/libxslt-xsltutils.html#XSLDROPCALL">
-<ANCHOR id ="LIBXSLT-ATTRIBUTES" href="libxslt/libxslt-attributes.html">
-<ANCHOR id ="XSLTPARSESTYLESHEETATTRIBUTESET" href="libxslt/libxslt-attributes.html#XSLTPARSESTYLESHEETATTRIBUTESET">
-<ANCHOR id ="XSLTFREEATTRIBUTESETSHASHES" href="libxslt/libxslt-attributes.html#XSLTFREEATTRIBUTESETSHASHES">
-<ANCHOR id ="XSLTAPPLYATTRIBUTESET" href="libxslt/libxslt-attributes.html#XSLTAPPLYATTRIBUTESET">
-<ANCHOR id ="XSLTRESOLVESTYLESHEETATTRIBUTESET" href="libxslt/libxslt-attributes.html#XSLTRESOLVESTYLESHEETATTRIBUTESET">
-<ANCHOR id ="LIBXSLT-IMPORTS" href="libxslt/libxslt-imports.html">
-<ANCHOR id ="XSLT-GET-IMPORT-PTR-CAPS" href="libxslt/libxslt-imports.html#XSLT-GET-IMPORT-PTR-CAPS">
-<ANCHOR id ="XSLT-GET-IMPORT-INT-CAPS" href="libxslt/libxslt-imports.html#XSLT-GET-IMPORT-INT-CAPS">
-<ANCHOR id ="XSLTPARSESTYLESHEETIMPORT" href="libxslt/libxslt-imports.html#XSLTPARSESTYLESHEETIMPORT">
-<ANCHOR id ="XSLTPARSESTYLESHEETINCLUDE" href="libxslt/libxslt-imports.html#XSLTPARSESTYLESHEETINCLUDE">
-<ANCHOR id ="XSLTNEXTIMPORT" href="libxslt/libxslt-imports.html#XSLTNEXTIMPORT">
-<ANCHOR id ="XSLTNEEDELEMSPACEHANDLING" href="libxslt/libxslt-imports.html#XSLTNEEDELEMSPACEHANDLING">
-<ANCHOR id ="XSLTFINDELEMSPACEHANDLING" href="libxslt/libxslt-imports.html#XSLTFINDELEMSPACEHANDLING">
-<ANCHOR id ="XSLTFINDTEMPLATE" href="libxslt/libxslt-imports.html#XSLTFINDTEMPLATE">
-<ANCHOR id ="LIBXSLT-EXTENSIONS" href="libxslt/libxslt-extensions.html">
-<ANCHOR id ="XSLTSTYLEEXTINITFUNCTION" href="libxslt/libxslt-extensions.html#XSLTSTYLEEXTINITFUNCTION">
-<ANCHOR id ="XSLTSTYLEEXTSHUTDOWNFUNCTION" href="libxslt/libxslt-extensions.html#XSLTSTYLEEXTSHUTDOWNFUNCTION">
-<ANCHOR id ="XSLTEXTINITFUNCTION" href="libxslt/libxslt-extensions.html#XSLTEXTINITFUNCTION">
-<ANCHOR id ="XSLTEXTSHUTDOWNFUNCTION" href="libxslt/libxslt-extensions.html#XSLTEXTSHUTDOWNFUNCTION">
-<ANCHOR id ="XSLTREGISTEREXTMODULE" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTMODULE">
-<ANCHOR id ="XSLTREGISTEREXTMODULEFULL" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTMODULEFULL">
-<ANCHOR id ="XSLTUNREGISTEREXTMODULE" href="libxslt/libxslt-extensions.html#XSLTUNREGISTEREXTMODULE">
-<ANCHOR id ="XSLTGETEXTDATA" href="libxslt/libxslt-extensions.html#XSLTGETEXTDATA">
-<ANCHOR id ="XSLTSTYLEGETEXTDATA" href="libxslt/libxslt-extensions.html#XSLTSTYLEGETEXTDATA">
-<ANCHOR id ="XSLTSHUTDOWNCTXTEXTS" href="libxslt/libxslt-extensions.html#XSLTSHUTDOWNCTXTEXTS">
-<ANCHOR id ="XSLTSHUTDOWNEXTS" href="libxslt/libxslt-extensions.html#XSLTSHUTDOWNEXTS">
-<ANCHOR id ="XSLTXPATHGETTRANSFORMCONTEXT" href="libxslt/libxslt-extensions.html#XSLTXPATHGETTRANSFORMCONTEXT">
-<ANCHOR id ="XSLTREGISTEREXTMODULEFUNCTION" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTMODULEFUNCTION">
-<ANCHOR id ="XSLTEXTFUNCTIONLOOKUP" href="libxslt/libxslt-extensions.html#XSLTEXTFUNCTIONLOOKUP">
-<ANCHOR id ="XSLTEXTMODULEFUNCTIONLOOKUP" href="libxslt/libxslt-extensions.html#XSLTEXTMODULEFUNCTIONLOOKUP">
-<ANCHOR id ="XSLTUNREGISTEREXTMODULEFUNCTION" href="libxslt/libxslt-extensions.html#XSLTUNREGISTEREXTMODULEFUNCTION">
-<ANCHOR id ="XSLTNEWELEMPRECOMP" href="libxslt/libxslt-extensions.html#XSLTNEWELEMPRECOMP">
-<ANCHOR id ="XSLTINITELEMPRECOMP" href="libxslt/libxslt-extensions.html#XSLTINITELEMPRECOMP">
-<ANCHOR id ="XSLTREGISTEREXTMODULEELEMENT" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTMODULEELEMENT">
-<ANCHOR id ="XSLTEXTELEMENTLOOKUP" href="libxslt/libxslt-extensions.html#XSLTEXTELEMENTLOOKUP">
-<ANCHOR id ="XSLTEXTMODULEELEMENTLOOKUP" href="libxslt/libxslt-extensions.html#XSLTEXTMODULEELEMENTLOOKUP">
-<ANCHOR id ="XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP" href="libxslt/libxslt-extensions.html#XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP">
-<ANCHOR id ="XSLTUNREGISTEREXTMODULEELEMENT" href="libxslt/libxslt-extensions.html#XSLTUNREGISTEREXTMODULEELEMENT">
-<ANCHOR id ="XSLTTOPLEVELFUNCTION" href="libxslt/libxslt-extensions.html#XSLTTOPLEVELFUNCTION">
-<ANCHOR id ="XSLTREGISTEREXTMODULETOPLEVEL" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTMODULETOPLEVEL">
-<ANCHOR id ="XSLTEXTMODULETOPLEVELLOOKUP" href="libxslt/libxslt-extensions.html#XSLTEXTMODULETOPLEVELLOOKUP">
-<ANCHOR id ="XSLTUNREGISTEREXTMODULETOPLEVEL" href="libxslt/libxslt-extensions.html#XSLTUNREGISTEREXTMODULETOPLEVEL">
-<ANCHOR id ="XSLTREGISTEREXTFUNCTION" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTFUNCTION">
-<ANCHOR id ="XSLTREGISTEREXTELEMENT" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTELEMENT">
-<ANCHOR id ="XSLTREGISTEREXTPREFIX" href="libxslt/libxslt-extensions.html#XSLTREGISTEREXTPREFIX">
-<ANCHOR id ="XSLTCHECKEXTPREFIX" href="libxslt/libxslt-extensions.html#XSLTCHECKEXTPREFIX">
-<ANCHOR id ="XSLTINITCTXTEXTS" href="libxslt/libxslt-extensions.html#XSLTINITCTXTEXTS">
-<ANCHOR id ="XSLTFREECTXTEXTS" href="libxslt/libxslt-extensions.html#XSLTFREECTXTEXTS">
-<ANCHOR id ="XSLTFREEEXTS" href="libxslt/libxslt-extensions.html#XSLTFREEEXTS">
-<ANCHOR id ="XSLTPRECOMPUTEEXTMODULEELEMENT" href="libxslt/libxslt-extensions.html#XSLTPRECOMPUTEEXTMODULEELEMENT">
-<ANCHOR id ="XSLTREGISTERTESTMODULE" href="libxslt/libxslt-extensions.html#XSLTREGISTERTESTMODULE">
-<ANCHOR id ="XSLTDEBUGDUMPEXTENSIONS" href="libxslt/libxslt-extensions.html#XSLTDEBUGDUMPEXTENSIONS">
-<ANCHOR id ="LIBXSLT-NAMESPACES" href="libxslt/libxslt-namespaces.html">
-<ANCHOR id ="XSLTNAMESPACEALIAS" href="libxslt/libxslt-namespaces.html#XSLTNAMESPACEALIAS">
-<ANCHOR id ="XSLTGETNAMESPACE" href="libxslt/libxslt-namespaces.html#XSLTGETNAMESPACE">
-<ANCHOR id ="XSLTGETSPECIALNAMESPACE" href="libxslt/libxslt-namespaces.html#XSLTGETSPECIALNAMESPACE">
-<ANCHOR id ="XSLTCOPYNAMESPACE" href="libxslt/libxslt-namespaces.html#XSLTCOPYNAMESPACE">
-<ANCHOR id ="XSLTCOPYNAMESPACELIST" href="libxslt/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST">
-<ANCHOR id ="XSLTFREENAMESPACEALIASHASHES" href="libxslt/libxslt-namespaces.html#XSLTFREENAMESPACEALIASHASHES">
-<ANCHOR id ="LIBXSLT-VARIABLES" href="libxslt/libxslt-variables.html">
-<ANCHOR id ="XSLT-REGISTER-VARIABLE-LOOKUP-CAPS" href="libxslt/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS">
-<ANCHOR id ="XSLTEVALGLOBALVARIABLES" href="libxslt/libxslt-variables.html#XSLTEVALGLOBALVARIABLES">
-<ANCHOR id ="XSLTEVALUSERPARAMS" href="libxslt/libxslt-variables.html#XSLTEVALUSERPARAMS">
-<ANCHOR id ="XSLTQUOTEUSERPARAMS" href="libxslt/libxslt-variables.html#XSLTQUOTEUSERPARAMS">
-<ANCHOR id ="XSLTEVALONEUSERPARAM" href="libxslt/libxslt-variables.html#XSLTEVALONEUSERPARAM">
-<ANCHOR id ="XSLTQUOTEONEUSERPARAM" href="libxslt/libxslt-variables.html#XSLTQUOTEONEUSERPARAM">
-<ANCHOR id ="XSLTPARSEGLOBALVARIABLE" href="libxslt/libxslt-variables.html#XSLTPARSEGLOBALVARIABLE">
-<ANCHOR id ="XSLTPARSEGLOBALPARAM" href="libxslt/libxslt-variables.html#XSLTPARSEGLOBALPARAM">
-<ANCHOR id ="XSLTPARSESTYLESHEETVARIABLE" href="libxslt/libxslt-variables.html#XSLTPARSESTYLESHEETVARIABLE">
-<ANCHOR id ="XSLTPARSESTYLESHEETPARAM" href="libxslt/libxslt-variables.html#XSLTPARSESTYLESHEETPARAM">
-<ANCHOR id ="XSLTPARSESTYLESHEETCALLERPARAM" href="libxslt/libxslt-variables.html#XSLTPARSESTYLESHEETCALLERPARAM">
-<ANCHOR id ="XSLTADDSTACKELEMLIST" href="libxslt/libxslt-variables.html#XSLTADDSTACKELEMLIST">
-<ANCHOR id ="XSLTFREEGLOBALVARIABLES" href="libxslt/libxslt-variables.html#XSLTFREEGLOBALVARIABLES">
-<ANCHOR id ="XSLTVARIABLELOOKUP" href="libxslt/libxslt-variables.html#XSLTVARIABLELOOKUP">
-<ANCHOR id ="XSLTXPATHVARIABLELOOKUP" href="libxslt/libxslt-variables.html#XSLTXPATHVARIABLELOOKUP">
-<ANCHOR id ="LIBXSLT-KEYS" href="libxslt/libxslt-keys.html">
-<ANCHOR id ="XSLTADDKEY" href="libxslt/libxslt-keys.html#XSLTADDKEY">
-<ANCHOR id ="XSLTGETKEY" href="libxslt/libxslt-keys.html#XSLTGETKEY">
-<ANCHOR id ="XSLTINITCTXTKEYS" href="libxslt/libxslt-keys.html#XSLTINITCTXTKEYS">
-<ANCHOR id ="XSLTFREEKEYS" href="libxslt/libxslt-keys.html#XSLTFREEKEYS">
-<ANCHOR id ="XSLTFREEDOCUMENTKEYS" href="libxslt/libxslt-keys.html#XSLTFREEDOCUMENTKEYS">
-<ANCHOR id ="LIBXSLT-XSLTINTERNALS" href="libxslt/libxslt-xsltinternals.html">
-<ANCHOR id ="XSLT-MAX-SORT-CAPS" href="libxslt/libxslt-xsltinternals.html#XSLT-MAX-SORT-CAPS">
-<ANCHOR id ="XSLT-PAT-NO-PRIORITY-CAPS" href="libxslt/libxslt-xsltinternals.html#XSLT-PAT-NO-PRIORITY-CAPS">
-<ANCHOR id ="XSLTRUNTIMEEXTRA" href="libxslt/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRA">
-<ANCHOR id ="XSLTRUNTIMEEXTRAPTR" href="libxslt/libxslt-xsltinternals.html#XSLTRUNTIMEEXTRAPTR">
-<ANCHOR id ="XSLT-RUNTIME-EXTRA-LST-CAPS" href="libxslt/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-LST-CAPS">
-<ANCHOR id ="XSLT-RUNTIME-EXTRA-FREE-CAPS" href="libxslt/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-FREE-CAPS">
-<ANCHOR id ="XSLT-RUNTIME-EXTRA-CAPS" href="libxslt/libxslt-xsltinternals.html#XSLT-RUNTIME-EXTRA-CAPS">
-<ANCHOR id ="XSLTTEMPLATE" href="libxslt/libxslt-xsltinternals.html#XSLTTEMPLATE">
-<ANCHOR id ="XSLTTEMPLATEPTR" href="libxslt/libxslt-xsltinternals.html#XSLTTEMPLATEPTR">
-<ANCHOR id ="XSLTDECIMALFORMAT" href="libxslt/libxslt-xsltinternals.html#XSLTDECIMALFORMAT">
-<ANCHOR id ="XSLTDECIMALFORMATPTR" href="libxslt/libxslt-xsltinternals.html#XSLTDECIMALFORMATPTR">
-<ANCHOR id ="XSLTDOCUMENT" href="libxslt/libxslt-xsltinternals.html#XSLTDOCUMENT">
-<ANCHOR id ="XSLTDOCUMENTPTR" href="libxslt/libxslt-xsltinternals.html#XSLTDOCUMENTPTR">
-<ANCHOR id ="XSLTTRANSFORMCONTEXT" href="libxslt/libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXT">
-<ANCHOR id ="XSLTTRANSFORMCONTEXTPTR" href="libxslt/libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR">
-<ANCHOR id ="XSLTELEMPRECOMP" href="libxslt/libxslt-xsltinternals.html#XSLTELEMPRECOMP">
-<ANCHOR id ="XSLTELEMPRECOMPPTR" href="libxslt/libxslt-xsltinternals.html#XSLTELEMPRECOMPPTR">
-<ANCHOR id ="XSLTTRANSFORMFUNCTION" href="libxslt/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">
-<ANCHOR id ="XSLTSORTFUNC" href="libxslt/libxslt-xsltinternals.html#XSLTSORTFUNC">
-<ANCHOR id ="XSLTSTYLETYPE" href="libxslt/libxslt-xsltinternals.html#XSLTSTYLETYPE">
-<ANCHOR id ="XSLTELEMPRECOMPDEALLOCATOR" href="libxslt/libxslt-xsltinternals.html#XSLTELEMPRECOMPDEALLOCATOR">
-<ANCHOR id ="XSLTSTYLEPRECOMP" href="libxslt/libxslt-xsltinternals.html#XSLTSTYLEPRECOMP">
-<ANCHOR id ="XSLTSTYLEPRECOMPPTR" href="libxslt/libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR">
-<ANCHOR id ="XSLTSTACKELEM" href="libxslt/libxslt-xsltinternals.html#XSLTSTACKELEM">
-<ANCHOR id ="XSLTSTACKELEMPTR" href="libxslt/libxslt-xsltinternals.html#XSLTSTACKELEMPTR">
-<ANCHOR id ="XSLTSTYLESHEET" href="libxslt/libxslt-xsltinternals.html#XSLTSTYLESHEET">
-<ANCHOR id ="XSLTSTYLESHEETPTR" href="libxslt/libxslt-xsltinternals.html#XSLTSTYLESHEETPTR">
-<ANCHOR id ="XSLTOUTPUTTYPE" href="libxslt/libxslt-xsltinternals.html#XSLTOUTPUTTYPE">
-<ANCHOR id ="XSLTTRANSFORMSTATE" href="libxslt/libxslt-xsltinternals.html#XSLTTRANSFORMSTATE">
-<ANCHOR id ="CHECK-STOPPED-CAPS" href="libxslt/libxslt-xsltinternals.html#CHECK-STOPPED-CAPS">
-<ANCHOR id ="CHECK-STOPPEDE-CAPS" href="libxslt/libxslt-xsltinternals.html#CHECK-STOPPEDE-CAPS">
-<ANCHOR id ="CHECK-STOPPED0-CAPS" href="libxslt/libxslt-xsltinternals.html#CHECK-STOPPED0-CAPS">
-<ANCHOR id ="XSLTNEWSTYLESHEET" href="libxslt/libxslt-xsltinternals.html#XSLTNEWSTYLESHEET">
-<ANCHOR id ="XSLTPARSESTYLESHEETFILE" href="libxslt/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETFILE">
-<ANCHOR id ="XSLTFREESTYLESHEET" href="libxslt/libxslt-xsltinternals.html#XSLTFREESTYLESHEET">
-<ANCHOR id ="XSLTISBLANK" href="libxslt/libxslt-xsltinternals.html#XSLTISBLANK">
-<ANCHOR id ="XSLTFREESTACKELEMLIST" href="libxslt/libxslt-xsltinternals.html#XSLTFREESTACKELEMLIST">
-<ANCHOR id ="XSLTDECIMALFORMATGETBYNAME" href="libxslt/libxslt-xsltinternals.html#XSLTDECIMALFORMATGETBYNAME">
-<ANCHOR id ="XSLTPARSESTYLESHEETPROCESS" href="libxslt/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETPROCESS">
-<ANCHOR id ="XSLTPARSESTYLESHEETOUTPUT" href="libxslt/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETOUTPUT">
-<ANCHOR id ="XSLTPARSESTYLESHEETDOC" href="libxslt/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETDOC">
-<ANCHOR id ="XSLTPARSESTYLESHEETIMPORTEDDOC" href="libxslt/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETIMPORTEDDOC">
-<ANCHOR id ="XSLTLOADSTYLESHEETPI" href="libxslt/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">
-<ANCHOR id ="XSLTNUMBERFORMAT" href="libxslt/libxslt-xsltinternals.html#XSLTNUMBERFORMAT">
-<ANCHOR id ="XSLTFORMATNUMBERCONVERSION" href="libxslt/libxslt-xsltinternals.html#XSLTFORMATNUMBERCONVERSION">
-<ANCHOR id ="XSLTPARSETEMPLATECONTENT" href="libxslt/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">
-<ANCHOR id ="XSLTALLOCATEEXTRA" href="libxslt/libxslt-xsltinternals.html#XSLTALLOCATEEXTRA">
-<ANCHOR id ="XSLTALLOCATEEXTRACTXT" href="libxslt/libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT">
-<ANCHOR id ="LIBXSLT-NUMBERSINTERNALS" href="libxslt/libxslt-numbersinternals.html">
-<ANCHOR id ="XSLTNUMBERDATA" href="libxslt/libxslt-numbersinternals.html#XSLTNUMBERDATA">
-<ANCHOR id ="XSLTNUMBERDATAPTR" href="libxslt/libxslt-numbersinternals.html#XSLTNUMBERDATAPTR">
-<ANCHOR id ="XSLTFORMATNUMBERINFO" href="libxslt/libxslt-numbersinternals.html#XSLTFORMATNUMBERINFO">
-<ANCHOR id ="XSLTFORMATNUMBERINFOPTR" href="libxslt/libxslt-numbersinternals.html#XSLTFORMATNUMBERINFOPTR">
+<ANCHOR id="XSLT-DEFAULT-VERSION-CAPS" href="libxslt/libxslt-xslt.html#XSLT-DEFAULT-VERSION-CAPS">
+<ANCHOR id="XSLT-DEFAULT-VENDOR-CAPS" href="libxslt/libxslt-xslt.html#XSLT-DEFAULT-VENDOR-CAPS">
+<ANCHOR id="XSLT-DEFAULT-URL-CAPS" href="libxslt/libxslt-xslt.html#XSLT-DEFAULT-URL-CAPS">
+<ANCHOR id="XSLT-NAMESPACE-CAPS" href="libxslt/libxslt-xslt.html#XSLT-NAMESPACE-CAPS">
+<ANCHOR id="LIBXSLT-PUBLIC-CAPS" href="libxslt/libxslt-xslt.html#LIBXSLT-PUBLIC-CAPS">
+<ANCHOR id="xsltCleanupGlobals" href="libxslt/libxslt-xslt.html#xsltCleanupGlobals">
+<ANCHOR id="XSLT-REGISTER-FUNCTION-LOOKUP-CAPS" href="libxslt/libxslt-functions.html#XSLT-REGISTER-FUNCTION-LOOKUP-CAPS">
+<ANCHOR id="xsltXPathFunctionLookup" href="libxslt/libxslt-functions.html#xsltXPathFunctionLookup">
+<ANCHOR id="xsltDocumentFunction" href="libxslt/libxslt-functions.html#xsltDocumentFunction">
+<ANCHOR id="xsltKeyFunction" href="libxslt/libxslt-functions.html#xsltKeyFunction">
+<ANCHOR id="xsltUnparsedEntityURIFunction" href="libxslt/libxslt-functions.html#xsltUnparsedEntityURIFunction">
+<ANCHOR id="xsltFormatNumberFunction" href="libxslt/libxslt-functions.html#xsltFormatNumberFunction">
+<ANCHOR id="xsltGenerateIdFunction" href="libxslt/libxslt-functions.html#xsltGenerateIdFunction">
+<ANCHOR id="xsltSystemPropertyFunction" href="libxslt/libxslt-functions.html#xsltSystemPropertyFunction">
+<ANCHOR id="xsltElementAvailableFunction" href="libxslt/libxslt-functions.html#xsltElementAvailableFunction">
+<ANCHOR id="xsltFunctionAvailableFunction" href="libxslt/libxslt-functions.html#xsltFunctionAvailableFunction">
+<ANCHOR id="xsltRegisterAllFunctions" href="libxslt/libxslt-functions.html#xsltRegisterAllFunctions">
+<ANCHOR id="xsltCompMatch" href="libxslt/libxslt-pattern.html#xsltCompMatch">
+<ANCHOR id="xsltCompMatchPtr" href="libxslt/libxslt-pattern.html#xsltCompMatchPtr">
+<ANCHOR id="xsltCompilePattern" href="libxslt/libxslt-pattern.html#xsltCompilePattern">
+<ANCHOR id="xsltFreeCompMatchList" href="libxslt/libxslt-pattern.html#xsltFreeCompMatchList">
+<ANCHOR id="xsltTestCompMatchList" href="libxslt/libxslt-pattern.html#xsltTestCompMatchList">
+<ANCHOR id="xsltAddTemplate" href="libxslt/libxslt-pattern.html#xsltAddTemplate">
+<ANCHOR id="xsltGetTemplate" href="libxslt/libxslt-pattern.html#xsltGetTemplate">
+<ANCHOR id="xsltFreeTemplateHashes" href="libxslt/libxslt-pattern.html#xsltFreeTemplateHashes">
+<ANCHOR id="xsltCleanupTemplates" href="libxslt/libxslt-pattern.html#xsltCleanupTemplates">
+<ANCHOR id="xsltMatchPattern" href="libxslt/libxslt-pattern.html#xsltMatchPattern">
+<ANCHOR id="xsltEvalXPathPredicate" href="libxslt/libxslt-templates.html#xsltEvalXPathPredicate">
+<ANCHOR id="xsltEvalTemplateString" href="libxslt/libxslt-templates.html#xsltEvalTemplateString">
+<ANCHOR id="xsltEvalAttrValueTemplate" href="libxslt/libxslt-templates.html#xsltEvalAttrValueTemplate">
+<ANCHOR id="xsltEvalStaticAttrValueTemplate" href="libxslt/libxslt-templates.html#xsltEvalStaticAttrValueTemplate">
+<ANCHOR id="xsltEvalXPathString" href="libxslt/libxslt-templates.html#xsltEvalXPathString">
+<ANCHOR id="xsltEvalXPathStringNs" href="libxslt/libxslt-templates.html#xsltEvalXPathStringNs">
+<ANCHOR id="xsltTemplateProcess" href="libxslt/libxslt-templates.html#xsltTemplateProcess">
+<ANCHOR id="xsltAttrListTemplateProcess" href="libxslt/libxslt-templates.html#xsltAttrListTemplateProcess">
+<ANCHOR id="xsltAttrTemplateProcess" href="libxslt/libxslt-templates.html#xsltAttrTemplateProcess">
+<ANCHOR id="xsltAttrTemplateValueProcess" href="libxslt/libxslt-templates.html#xsltAttrTemplateValueProcess">
+<ANCHOR id="xsltAttrTemplateValueProcessNode" href="libxslt/libxslt-templates.html#xsltAttrTemplateValueProcessNode">
+<ANCHOR id="xsltSetXIncludeDefault" href="libxslt/libxslt-transform.html#xsltSetXIncludeDefault">
+<ANCHOR id="xsltGetXIncludeDefault" href="libxslt/libxslt-transform.html#xsltGetXIncludeDefault">
+<ANCHOR id="xsltNewTransformContext" href="libxslt/libxslt-transform.html#xsltNewTransformContext">
+<ANCHOR id="xsltFreeTransformContext" href="libxslt/libxslt-transform.html#xsltFreeTransformContext">
+<ANCHOR id="xsltApplyStylesheetUser" href="libxslt/libxslt-transform.html#xsltApplyStylesheetUser">
+<ANCHOR id="xsltApplyStripSpaces" href="libxslt/libxslt-transform.html#xsltApplyStripSpaces">
+<ANCHOR id="xsltApplyStylesheet" href="libxslt/libxslt-transform.html#xsltApplyStylesheet">
+<ANCHOR id="xsltProfileStylesheet" href="libxslt/libxslt-transform.html#xsltProfileStylesheet">
+<ANCHOR id="xsltRunStylesheet" href="libxslt/libxslt-transform.html#xsltRunStylesheet">
+<ANCHOR id="xsltRunStylesheetUser" href="libxslt/libxslt-transform.html#xsltRunStylesheetUser">
+<ANCHOR id="xsltApplyOneTemplate" href="libxslt/libxslt-transform.html#xsltApplyOneTemplate">
+<ANCHOR id="xsltDocumentElem" href="libxslt/libxslt-transform.html#xsltDocumentElem">
+<ANCHOR id="xsltSort" href="libxslt/libxslt-transform.html#xsltSort">
+<ANCHOR id="xsltCopy" href="libxslt/libxslt-transform.html#xsltCopy">
+<ANCHOR id="xsltText" href="libxslt/libxslt-transform.html#xsltText">
+<ANCHOR id="xsltElement" href="libxslt/libxslt-transform.html#xsltElement">
+<ANCHOR id="xsltComment" href="libxslt/libxslt-transform.html#xsltComment">
+<ANCHOR id="xsltAttribute" href="libxslt/libxslt-transform.html#xsltAttribute">
+<ANCHOR id="xsltProcessingInstruction" href="libxslt/libxslt-transform.html#xsltProcessingInstruction">
+<ANCHOR id="xsltCopyOf" href="libxslt/libxslt-transform.html#xsltCopyOf">
+<ANCHOR id="xsltValueOf" href="libxslt/libxslt-transform.html#xsltValueOf">
+<ANCHOR id="xsltNumber" href="libxslt/libxslt-transform.html#xsltNumber">
+<ANCHOR id="xsltApplyImports" href="libxslt/libxslt-transform.html#xsltApplyImports">
+<ANCHOR id="xsltCallTemplate" href="libxslt/libxslt-transform.html#xsltCallTemplate">
+<ANCHOR id="xsltApplyTemplates" href="libxslt/libxslt-transform.html#xsltApplyTemplates">
+<ANCHOR id="xsltChoose" href="libxslt/libxslt-transform.html#xsltChoose">
+<ANCHOR id="xsltIf" href="libxslt/libxslt-transform.html#xsltIf">
+<ANCHOR id="xsltForEach" href="libxslt/libxslt-transform.html#xsltForEach">
+<ANCHOR id="xsltRegisterAllElement" href="libxslt/libxslt-transform.html#xsltRegisterAllElement">
+<ANCHOR id="xslHandleDebugger" href="libxslt/libxslt-transform.html#xslHandleDebugger">
+<ANCHOR id="XSLT-TODO-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-TODO-CAPS">
+<ANCHOR id="XSLT-STRANGE-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-STRANGE-CAPS">
+<ANCHOR id="IS-XSLT-ELEM-CAPS" href="libxslt/libxslt-xsltutils.html#IS-XSLT-ELEM-CAPS">
+<ANCHOR id="IS-XSLT-NAME-CAPS" href="libxslt/libxslt-xsltutils.html#IS-XSLT-NAME-CAPS">
+<ANCHOR id="IS-XSLT-REAL-NODE-CAPS" href="libxslt/libxslt-xsltutils.html#IS-XSLT-REAL-NODE-CAPS">
+<ANCHOR id="xsltGetNsProp" href="libxslt/libxslt-xsltutils.html#xsltGetNsProp">
+<ANCHOR id="xsltGetUTF8Char" href="libxslt/libxslt-xsltutils.html#xsltGetUTF8Char">
+<ANCHOR id="xsltPrintErrorContext" href="libxslt/libxslt-xsltutils.html#xsltPrintErrorContext">
+<ANCHOR id="xsltMessage" href="libxslt/libxslt-xsltutils.html#xsltMessage">
+<ANCHOR id="xsltSetGenericErrorFunc" href="libxslt/libxslt-xsltutils.html#xsltSetGenericErrorFunc">
+<ANCHOR id="xsltSetGenericDebugFunc" href="libxslt/libxslt-xsltutils.html#xsltSetGenericDebugFunc">
+<ANCHOR id="xsltSetTransformErrorFunc" href="libxslt/libxslt-xsltutils.html#xsltSetTransformErrorFunc">
+<ANCHOR id="xsltTransformError" href="libxslt/libxslt-xsltutils.html#xsltTransformError">
+<ANCHOR id="xsltDocumentSortFunction" href="libxslt/libxslt-xsltutils.html#xsltDocumentSortFunction">
+<ANCHOR id="xsltSetSortFunc" href="libxslt/libxslt-xsltutils.html#xsltSetSortFunc">
+<ANCHOR id="xsltSetCtxtSortFunc" href="libxslt/libxslt-xsltutils.html#xsltSetCtxtSortFunc">
+<ANCHOR id="xsltDefaultSortFunction" href="libxslt/libxslt-xsltutils.html#xsltDefaultSortFunction">
+<ANCHOR id="xsltDoSortFunction" href="libxslt/libxslt-xsltutils.html#xsltDoSortFunction">
+<ANCHOR id="xsltComputeSortResult" href="libxslt/libxslt-xsltutils.html#xsltComputeSortResult">
+<ANCHOR id="xsltGetQNameURI" href="libxslt/libxslt-xsltutils.html#xsltGetQNameURI">
+<ANCHOR id="xsltSaveResultTo" href="libxslt/libxslt-xsltutils.html#xsltSaveResultTo">
+<ANCHOR id="xsltSaveResultToFilename" href="libxslt/libxslt-xsltutils.html#xsltSaveResultToFilename">
+<ANCHOR id="xsltSaveResultToFile" href="libxslt/libxslt-xsltutils.html#xsltSaveResultToFile">
+<ANCHOR id="xsltSaveResultToFd" href="libxslt/libxslt-xsltutils.html#xsltSaveResultToFd">
+<ANCHOR id="xsltSaveResultToString" href="libxslt/libxslt-xsltutils.html#xsltSaveResultToString">
+<ANCHOR id="xsltSaveProfiling" href="libxslt/libxslt-xsltutils.html#xsltSaveProfiling">
+<ANCHOR id="xsltGetProfileInformation" href="libxslt/libxslt-xsltutils.html#xsltGetProfileInformation">
+<ANCHOR id="xsltTimestamp" href="libxslt/libxslt-xsltutils.html#xsltTimestamp">
+<ANCHOR id="xsltCalibrateAdjust" href="libxslt/libxslt-xsltutils.html#xsltCalibrateAdjust">
+<ANCHOR id="XSLT-TIMESTAMP-TICS-PER-SEC-CAPS" href="libxslt/libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS">
+<ANCHOR id="xsltDebugStatusCodes" href="libxslt/libxslt-xsltutils.html#xsltDebugStatusCodes">
+<ANCHOR id="xsltHandleDebuggerCallback" href="libxslt/libxslt-xsltutils.html#xsltHandleDebuggerCallback">
+<ANCHOR id="xsltAddCallCallback" href="libxslt/libxslt-xsltutils.html#xsltAddCallCallback">
+<ANCHOR id="xsltDropCallCallback" href="libxslt/libxslt-xsltutils.html#xsltDropCallCallback">
+<ANCHOR id="xsltSetDebuggerCallbacks" href="libxslt/libxslt-xsltutils.html#xsltSetDebuggerCallbacks">
+<ANCHOR id="xslAddCall" href="libxslt/libxslt-xsltutils.html#xslAddCall">
+<ANCHOR id="xslDropCall" href="libxslt/libxslt-xsltutils.html#xslDropCall">
+<ANCHOR id="xsltParseStylesheetAttributeSet" href="libxslt/libxslt-attributes.html#xsltParseStylesheetAttributeSet">
+<ANCHOR id="xsltFreeAttributeSetsHashes" href="libxslt/libxslt-attributes.html#xsltFreeAttributeSetsHashes">
+<ANCHOR id="xsltApplyAttributeSet" href="libxslt/libxslt-attributes.html#xsltApplyAttributeSet">
+<ANCHOR id="xsltResolveStylesheetAttributeSet" href="libxslt/libxslt-attributes.html#xsltResolveStylesheetAttributeSet">
+<ANCHOR id="XSLT-GET-IMPORT-PTR-CAPS" href="libxslt/libxslt-imports.html#XSLT-GET-IMPORT-PTR-CAPS">
+<ANCHOR id="XSLT-GET-IMPORT-INT-CAPS" href="libxslt/libxslt-imports.html#XSLT-GET-IMPORT-INT-CAPS">
+<ANCHOR id="xsltParseStylesheetImport" href="libxslt/libxslt-imports.html#xsltParseStylesheetImport">
+<ANCHOR id="xsltParseStylesheetInclude" href="libxslt/libxslt-imports.html#xsltParseStylesheetInclude">
+<ANCHOR id="xsltNextImport" href="libxslt/libxslt-imports.html#xsltNextImport">
+<ANCHOR id="xsltNeedElemSpaceHandling" href="libxslt/libxslt-imports.html#xsltNeedElemSpaceHandling">
+<ANCHOR id="xsltFindElemSpaceHandling" href="libxslt/libxslt-imports.html#xsltFindElemSpaceHandling">
+<ANCHOR id="xsltFindTemplate" href="libxslt/libxslt-imports.html#xsltFindTemplate">
+<ANCHOR id="xsltStyleExtInitFunction" href="libxslt/libxslt-extensions.html#xsltStyleExtInitFunction">
+<ANCHOR id="xsltStyleExtShutdownFunction" href="libxslt/libxslt-extensions.html#xsltStyleExtShutdownFunction">
+<ANCHOR id="xsltExtInitFunction" href="libxslt/libxslt-extensions.html#xsltExtInitFunction">
+<ANCHOR id="xsltExtShutdownFunction" href="libxslt/libxslt-extensions.html#xsltExtShutdownFunction">
+<ANCHOR id="xsltRegisterExtModule" href="libxslt/libxslt-extensions.html#xsltRegisterExtModule">
+<ANCHOR id="xsltRegisterExtModuleFull" href="libxslt/libxslt-extensions.html#xsltRegisterExtModuleFull">
+<ANCHOR id="xsltUnregisterExtModule" href="libxslt/libxslt-extensions.html#xsltUnregisterExtModule">
+<ANCHOR id="xsltGetExtData" href="libxslt/libxslt-extensions.html#xsltGetExtData">
+<ANCHOR id="xsltStyleGetExtData" href="libxslt/libxslt-extensions.html#xsltStyleGetExtData">
+<ANCHOR id="xsltShutdownCtxtExts" href="libxslt/libxslt-extensions.html#xsltShutdownCtxtExts">
+<ANCHOR id="xsltShutdownExts" href="libxslt/libxslt-extensions.html#xsltShutdownExts">
+<ANCHOR id="xsltXPathGetTransformContext" href="libxslt/libxslt-extensions.html#xsltXPathGetTransformContext">
+<ANCHOR id="xsltRegisterExtModuleFunction" href="libxslt/libxslt-extensions.html#xsltRegisterExtModuleFunction">
+<ANCHOR id="xsltExtFunctionLookup" href="libxslt/libxslt-extensions.html#xsltExtFunctionLookup">
+<ANCHOR id="xsltExtModuleFunctionLookup" href="libxslt/libxslt-extensions.html#xsltExtModuleFunctionLookup">
+<ANCHOR id="xsltUnregisterExtModuleFunction" href="libxslt/libxslt-extensions.html#xsltUnregisterExtModuleFunction">
+<ANCHOR id="xsltNewElemPreComp" href="libxslt/libxslt-extensions.html#xsltNewElemPreComp">
+<ANCHOR id="xsltInitElemPreComp" href="libxslt/libxslt-extensions.html#xsltInitElemPreComp">
+<ANCHOR id="xsltRegisterExtModuleElement" href="libxslt/libxslt-extensions.html#xsltRegisterExtModuleElement">
+<ANCHOR id="xsltExtElementLookup" href="libxslt/libxslt-extensions.html#xsltExtElementLookup">
+<ANCHOR id="xsltExtModuleElementLookup" href="libxslt/libxslt-extensions.html#xsltExtModuleElementLookup">
+<ANCHOR id="xsltExtModuleElementPreComputeLookup" href="libxslt/libxslt-extensions.html#xsltExtModuleElementPreComputeLookup">
+<ANCHOR id="xsltUnregisterExtModuleElement" href="libxslt/libxslt-extensions.html#xsltUnregisterExtModuleElement">
+<ANCHOR id="xsltTopLevelFunction" href="libxslt/libxslt-extensions.html#xsltTopLevelFunction">
+<ANCHOR id="xsltRegisterExtModuleTopLevel" href="libxslt/libxslt-extensions.html#xsltRegisterExtModuleTopLevel">
+<ANCHOR id="xsltExtModuleTopLevelLookup" href="libxslt/libxslt-extensions.html#xsltExtModuleTopLevelLookup">
+<ANCHOR id="xsltUnregisterExtModuleTopLevel" href="libxslt/libxslt-extensions.html#xsltUnregisterExtModuleTopLevel">
+<ANCHOR id="xsltRegisterExtFunction" href="libxslt/libxslt-extensions.html#xsltRegisterExtFunction">
+<ANCHOR id="xsltRegisterExtElement" href="libxslt/libxslt-extensions.html#xsltRegisterExtElement">
+<ANCHOR id="xsltRegisterExtPrefix" href="libxslt/libxslt-extensions.html#xsltRegisterExtPrefix">
+<ANCHOR id="xsltCheckExtPrefix" href="libxslt/libxslt-extensions.html#xsltCheckExtPrefix">
+<ANCHOR id="xsltInitCtxtExts" href="libxslt/libxslt-extensions.html#xsltInitCtxtExts">
+<ANCHOR id="xsltFreeCtxtExts" href="libxslt/libxslt-extensions.html#xsltFreeCtxtExts">
+<ANCHOR id="xsltFreeExts" href="libxslt/libxslt-extensions.html#xsltFreeExts">
+<ANCHOR id="xsltPreComputeExtModuleElement" href="libxslt/libxslt-extensions.html#xsltPreComputeExtModuleElement">
+<ANCHOR id="xsltRegisterTestModule" href="libxslt/libxslt-extensions.html#xsltRegisterTestModule">
+<ANCHOR id="xsltDebugDumpExtensions" href="libxslt/libxslt-extensions.html#xsltDebugDumpExtensions">
+<ANCHOR id="xsltNamespaceAlias" href="libxslt/libxslt-namespaces.html#xsltNamespaceAlias">
+<ANCHOR id="xsltGetNamespace" href="libxslt/libxslt-namespaces.html#xsltGetNamespace">
+<ANCHOR id="xsltGetSpecialNamespace" href="libxslt/libxslt-namespaces.html#xsltGetSpecialNamespace">
+<ANCHOR id="xsltCopyNamespace" href="libxslt/libxslt-namespaces.html#xsltCopyNamespace">
+<ANCHOR id="xsltCopyNamespaceList" href="libxslt/libxslt-namespaces.html#xsltCopyNamespaceList">
+<ANCHOR id="xsltFreeNamespaceAliasHashes" href="libxslt/libxslt-namespaces.html#xsltFreeNamespaceAliasHashes">
+<ANCHOR id="XSLT-REGISTER-VARIABLE-LOOKUP-CAPS" href="libxslt/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS">
+<ANCHOR id="xsltEvalGlobalVariables" href="libxslt/libxslt-variables.html#xsltEvalGlobalVariables">
+<ANCHOR id="xsltEvalUserParams" href="libxslt/libxslt-variables.html#xsltEvalUserParams">
+<ANCHOR id="xsltQuoteUserParams" href="libxslt/libxslt-variables.html#xsltQuoteUserParams">
+<ANCHOR id="xsltEvalOneUserParam" href="libxslt/libxslt-variables.html#xsltEvalOneUserParam">
+<ANCHOR id="xsltQuoteOneUserParam" href="libxslt/libxslt-variables.html#xsltQuoteOneUserParam">
+<ANCHOR id="xsltParseGlobalVariable" href="libxslt/libxslt-variables.html#xsltParseGlobalVariable">
+<ANCHOR id="xsltParseGlobalParam" href="libxslt/libxslt-variables.html#xsltParseGlobalParam">
+<ANCHOR id="xsltParseStylesheetVariable" href="libxslt/libxslt-variables.html#xsltParseStylesheetVariable">
+<ANCHOR id="xsltParseStylesheetParam" href="libxslt/libxslt-variables.html#xsltParseStylesheetParam">
+<ANCHOR id="xsltParseStylesheetCallerParam" href="libxslt/libxslt-variables.html#xsltParseStylesheetCallerParam">
+<ANCHOR id="xsltAddStackElemList" href="libxslt/libxslt-variables.html#xsltAddStackElemList">
+<ANCHOR id="xsltFreeGlobalVariables" href="libxslt/libxslt-variables.html#xsltFreeGlobalVariables">
+<ANCHOR id="xsltVariableLookup" href="libxslt/libxslt-variables.html#xsltVariableLookup">
+<ANCHOR id="xsltXPathVariableLookup" href="libxslt/libxslt-variables.html#xsltXPathVariableLookup">
+<ANCHOR id="xsltAddKey" href="libxslt/libxslt-keys.html#xsltAddKey">
+<ANCHOR id="xsltGetKey" href="libxslt/libxslt-keys.html#xsltGetKey">
+<ANCHOR id="xsltInitCtxtKeys" href="libxslt/libxslt-keys.html#xsltInitCtxtKeys">
+<ANCHOR id="xsltFreeKeys" href="libxslt/libxslt-keys.html#xsltFreeKeys">
+<ANCHOR id="xsltFreeDocumentKeys" href="libxslt/libxslt-keys.html#xsltFreeDocumentKeys">
+<ANCHOR id="XSLT-MAX-SORT-CAPS" href="libxslt/libxslt-xsltInternals.html#XSLT-MAX-SORT-CAPS">
+<ANCHOR id="XSLT-PAT-NO-PRIORITY-CAPS" href="libxslt/libxslt-xsltInternals.html#XSLT-PAT-NO-PRIORITY-CAPS">
+<ANCHOR id="xsltRuntimeExtra" href="libxslt/libxslt-xsltInternals.html#xsltRuntimeExtra">
+<ANCHOR id="xsltRuntimeExtraPtr" href="libxslt/libxslt-xsltInternals.html#xsltRuntimeExtraPtr">
+<ANCHOR id="XSLT-RUNTIME-EXTRA-LST-CAPS" href="libxslt/libxslt-xsltInternals.html#XSLT-RUNTIME-EXTRA-LST-CAPS">
+<ANCHOR id="XSLT-RUNTIME-EXTRA-FREE-CAPS" href="libxslt/libxslt-xsltInternals.html#XSLT-RUNTIME-EXTRA-FREE-CAPS">
+<ANCHOR id="XSLT-RUNTIME-EXTRA-CAPS" href="libxslt/libxslt-xsltInternals.html#XSLT-RUNTIME-EXTRA-CAPS">
+<ANCHOR id="xsltTemplate" href="libxslt/libxslt-xsltInternals.html#xsltTemplate">
+<ANCHOR id="xsltTemplatePtr" href="libxslt/libxslt-xsltInternals.html#xsltTemplatePtr">
+<ANCHOR id="xsltDecimalFormat" href="libxslt/libxslt-xsltInternals.html#xsltDecimalFormat">
+<ANCHOR id="xsltDecimalFormatPtr" href="libxslt/libxslt-xsltInternals.html#xsltDecimalFormatPtr">
+<ANCHOR id="xsltDocument" href="libxslt/libxslt-xsltInternals.html#xsltDocument">
+<ANCHOR id="xsltDocumentPtr" href="libxslt/libxslt-xsltInternals.html#xsltDocumentPtr">
+<ANCHOR id="xsltTransformContext" href="libxslt/libxslt-xsltInternals.html#xsltTransformContext">
+<ANCHOR id="xsltTransformContextPtr" href="libxslt/libxslt-xsltInternals.html#xsltTransformContextPtr">
+<ANCHOR id="xsltElemPreComp" href="libxslt/libxslt-xsltInternals.html#xsltElemPreComp">
+<ANCHOR id="xsltElemPreCompPtr" href="libxslt/libxslt-xsltInternals.html#xsltElemPreCompPtr">
+<ANCHOR id="xsltTransformFunction" href="libxslt/libxslt-xsltInternals.html#xsltTransformFunction">
+<ANCHOR id="xsltSortFunc" href="libxslt/libxslt-xsltInternals.html#xsltSortFunc">
+<ANCHOR id="xsltStyleType" href="libxslt/libxslt-xsltInternals.html#xsltStyleType">
+<ANCHOR id="xsltElemPreCompDeallocator" href="libxslt/libxslt-xsltInternals.html#xsltElemPreCompDeallocator">
+<ANCHOR id="xsltStylePreComp" href="libxslt/libxslt-xsltInternals.html#xsltStylePreComp">
+<ANCHOR id="xsltStylePreCompPtr" href="libxslt/libxslt-xsltInternals.html#xsltStylePreCompPtr">
+<ANCHOR id="xsltStackElem" href="libxslt/libxslt-xsltInternals.html#xsltStackElem">
+<ANCHOR id="xsltStackElemPtr" href="libxslt/libxslt-xsltInternals.html#xsltStackElemPtr">
+<ANCHOR id="xsltStylesheet" href="libxslt/libxslt-xsltInternals.html#xsltStylesheet">
+<ANCHOR id="xsltStylesheetPtr" href="libxslt/libxslt-xsltInternals.html#xsltStylesheetPtr">
+<ANCHOR id="xsltOutputType" href="libxslt/libxslt-xsltInternals.html#xsltOutputType">
+<ANCHOR id="xsltTransformState" href="libxslt/libxslt-xsltInternals.html#xsltTransformState">
+<ANCHOR id="CHECK-STOPPED-CAPS" href="libxslt/libxslt-xsltInternals.html#CHECK-STOPPED-CAPS">
+<ANCHOR id="CHECK-STOPPEDE-CAPS" href="libxslt/libxslt-xsltInternals.html#CHECK-STOPPEDE-CAPS">
+<ANCHOR id="CHECK-STOPPED0-CAPS" href="libxslt/libxslt-xsltInternals.html#CHECK-STOPPED0-CAPS">
+<ANCHOR id="xsltNewStylesheet" href="libxslt/libxslt-xsltInternals.html#xsltNewStylesheet">
+<ANCHOR id="xsltParseStylesheetFile" href="libxslt/libxslt-xsltInternals.html#xsltParseStylesheetFile">
+<ANCHOR id="xsltFreeStylesheet" href="libxslt/libxslt-xsltInternals.html#xsltFreeStylesheet">
+<ANCHOR id="xsltIsBlank" href="libxslt/libxslt-xsltInternals.html#xsltIsBlank">
+<ANCHOR id="xsltFreeStackElemList" href="libxslt/libxslt-xsltInternals.html#xsltFreeStackElemList">
+<ANCHOR id="xsltDecimalFormatGetByName" href="libxslt/libxslt-xsltInternals.html#xsltDecimalFormatGetByName">
+<ANCHOR id="xsltParseStylesheetProcess" href="libxslt/libxslt-xsltInternals.html#xsltParseStylesheetProcess">
+<ANCHOR id="xsltParseStylesheetOutput" href="libxslt/libxslt-xsltInternals.html#xsltParseStylesheetOutput">
+<ANCHOR id="xsltParseStylesheetDoc" href="libxslt/libxslt-xsltInternals.html#xsltParseStylesheetDoc">
+<ANCHOR id="xsltParseStylesheetImportedDoc" href="libxslt/libxslt-xsltInternals.html#xsltParseStylesheetImportedDoc">
+<ANCHOR id="xsltLoadStylesheetPI" href="libxslt/libxslt-xsltInternals.html#xsltLoadStylesheetPI">
+<ANCHOR id="xsltNumberFormat" href="libxslt/libxslt-xsltInternals.html#xsltNumberFormat">
+<ANCHOR id="xsltFormatNumberConversion" href="libxslt/libxslt-xsltInternals.html#xsltFormatNumberConversion">
+<ANCHOR id="xsltParseTemplateContent" href="libxslt/libxslt-xsltInternals.html#xsltParseTemplateContent">
+<ANCHOR id="xsltAllocateExtra" href="libxslt/libxslt-xsltInternals.html#xsltAllocateExtra">
+<ANCHOR id="xsltAllocateExtraCtxt" href="libxslt/libxslt-xsltInternals.html#xsltAllocateExtraCtxt">
+<ANCHOR id="xsltNumberData" href="libxslt/libxslt-numbersInternals.html#xsltNumberData">
+<ANCHOR id="xsltNumberDataPtr" href="libxslt/libxslt-numbersInternals.html#xsltNumberDataPtr">
+<ANCHOR id="xsltFormatNumberInfo" href="libxslt/libxslt-numbersInternals.html#xsltFormatNumberInfo">
+<ANCHOR id="xsltFormatNumberInfoPtr" href="libxslt/libxslt-numbersInternals.html#xsltFormatNumberInfoPtr">

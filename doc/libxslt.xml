@@ -1,18 +1,20 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity xslt SYSTEM "sgml/xslt.sgml">
-<!entity functions SYSTEM "sgml/functions.sgml">
-<!entity pattern SYSTEM "sgml/pattern.sgml">
-<!entity templates SYSTEM "sgml/templates.sgml">
-<!entity transform SYSTEM "sgml/transform.sgml">
-<!entity xsltutils SYSTEM "sgml/xsltutils.sgml">
-<!entity attributes SYSTEM "sgml/attributes.sgml">
-<!entity imports SYSTEM "sgml/imports.sgml">
-<!entity namespaces SYSTEM "sgml/namespaces.sgml">
-<!entity variables SYSTEM "sgml/variables.sgml">
-<!entity extensions SYSTEM "sgml/extensions.sgml">
-<!entity keys SYSTEM "sgml/keys.sgml">
-<!entity xsltInternals SYSTEM "sgml/xsltInternals.sgml">
-<!entity numbersInternals SYSTEM "sgml/numbersInternals.sgml">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY xslt SYSTEM "xml/xslt.xml">
+<!ENTITY functions SYSTEM "xml/functions.xml">
+<!ENTITY pattern SYSTEM "xml/pattern.xml">
+<!ENTITY templates SYSTEM "xml/templates.xml">
+<!ENTITY transform SYSTEM "xml/transform.xml">
+<!ENTITY xsltutils SYSTEM "xml/xsltutils.xml">
+<!ENTITY attributes SYSTEM "xml/attributes.xml">
+<!ENTITY imports SYSTEM "xml/imports.xml">
+<!ENTITY namespaces SYSTEM "xml/namespaces.xml">
+<!ENTITY variables SYSTEM "xml/variables.xml">
+<!ENTITY extensions SYSTEM "xml/extensions.xml">
+<!ENTITY keys SYSTEM "xml/keys.xml">
+<!ENTITY xsltInternals SYSTEM "xml/xsltInternals.xml">
+<!ENTITY numbersInternals SYSTEM "xml/numbersInternals.xml">
 ]>
 
 <book>

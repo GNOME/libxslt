@@ -1329,6 +1329,10 @@ typedef int (*trio_instream_t) TRIO_PROTO((trio_pointer_t));
 # define TRIO_COMPILER_BCB
 </MACRO>
 <MACRO>
+<NAME>TRIO_PLATFORM_VMS</NAME>
+# define TRIO_PLATFORM_VMS
+</MACRO>
+<MACRO>
 <NAME>TRIO_PLATFORM_UNIX</NAME>
 # define TRIO_PLATFORM_UNIX
 </MACRO>
@@ -1365,12 +1369,24 @@ typedef int (*trio_instream_t) TRIO_PROTO((trio_pointer_t));
 # define TRIO_PLATFORM_WIN32
 </MACRO>
 <MACRO>
-<NAME>TRIO_PLATFORM_VMS</NAME>
-# define TRIO_PLATFORM_VMS
-</MACRO>
-<MACRO>
 <NAME>TRIO_PLATFORM_MPEIX</NAME>
 # define TRIO_PLATFORM_MPEIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_AIX</NAME>
+# define TRIO_PLATFORM_AIX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_HPUX</NAME>
+# define TRIO_PLATFORM_HPUX
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_SOLARIS</NAME>
+#  define TRIO_PLATFORM_SOLARIS
+</MACRO>
+<MACRO>
+<NAME>TRIO_PLATFORM_SUNOS</NAME>
+#  define TRIO_PLATFORM_SUNOS
 </MACRO>
 <MACRO>
 <NAME>TRIO_COMPILER_SUPPORTS_C89</NAME>
@@ -1494,7 +1510,7 @@ typedef char * trio_pointer_t;
 </MACRO>
 <MACRO>
 <NAME>TRIO_VA_START</NAME>
-# define TRIO_VA_START(x,y) va_start((x))
+# define TRIO_VA_START(x,y) va_start(x)
 </MACRO>
 <MACRO>
 <NAME>TRIO_VA_END</NAME>
@@ -1578,7 +1594,7 @@ typedef void * trio_pointer_t;
 </MACRO>
 <MACRO>
 <NAME>TRIO_VA_START</NAME>
-# define TRIO_VA_START(x,y) va_start((x),(y))
+# define TRIO_VA_START(x,y) va_start(x,y)
 </MACRO>
 <MACRO>
 <NAME>TRIO_VA_END</NAME>
@@ -1603,6 +1619,10 @@ typedef void * trio_pointer_t;
 <MACRO>
 <NAME>TRIO_INLINE</NAME>
 # define TRIO_INLINE
+</MACRO>
+<MACRO>
+<NAME>TRIO_COMPILER_SUPPORTS_LL</NAME>
+# define TRIO_COMPILER_SUPPORTS_LL
 </MACRO>
 <STRUCT>
 <NAME>xsltSecurityPrefs</NAME>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>numbersInternals</title><meta name="generator" content="DocBook XSL Stylesheets V1.58.1"><style xmlns="http://www.w3.org/TR/xhtml1/transitional" type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style><link rel="home" href="index.html" title="Gnome XSLT Library Reference Manual"><link rel="up" href="libxslt-lib.html" title="Libxslt Library Reference"><link rel="previous" href="libxslt-xsltInternals.html" title="xsltInternals"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="libxslt-xsltInternals.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></img></a></td><td><a accesskey="u" href="libxslt-lib.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></img></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></img></a></td><th width="100%" align="center">Gnome XSLT Library Reference Manual</th></tr></table><div class="refentry" lang="en"><a name="libxslt-numbersInternals"></a><div class="titlepage"></div><div class="refnamediv"><h2>numbersInternals</h2><p>numbersInternals &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="libxslt-numbersInternals.html#xsltNumberData">xsltNumberData</a>;
+typedef     <a href="libxslt-numbersInternals.html#xsltNumberDataPtr">xsltNumberDataPtr</a>;
+struct      <a href="libxslt-numbersInternals.html#xsltFormatNumberInfo">xsltFormatNumberInfo</a>;
+typedef     <a href="libxslt-numbersInternals.html#xsltFormatNumberInfoPtr">xsltFormatNumberInfoPtr</a>;
+</pre></div><div class="refsect1" lang="en"><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><h2>Details</h2><div class="refsect2" lang="en"><h3><a name="xsltNumberData"></a>struct xsltNumberData</h3><pre class="programlisting">struct xsltNumberData {
+    xmlChar *level;
+    xmlChar *count;
+    xmlChar *from;
+    xmlChar *value;
+    xmlChar *format;
+    int has_format;
+    int digitsPerGroup;
+    int groupingCharacter;
+    int groupingCharacterLen;
+    xmlDocPtr doc;
+    xmlNodePtr node;
+};
+</pre><p>
+This data structure is just a wrapper to pass xsl:number data in.</p><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltNumberDataPtr"></a>xsltNumberDataPtr</h3><pre class="programlisting">typedef xsltNumberData *xsltNumberDataPtr;
+</pre><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltFormatNumberInfo"></a>struct xsltFormatNumberInfo</h3><pre class="programlisting">struct xsltFormatNumberInfo {
+    int	    integer_hash;	/* Number of '#' in integer part */
+    int	    integer_digits;	/* Number of '0' in integer part */
+    int	    frac_digits;	/* Number of '0' in fractional part */
+    int	    frac_hash;		/* Number of '#' in fractional part */
+    int	    group;		/* Number of chars per display 'group' */
+    int     multiplier;		/* Scaling for percent or permille */
+    char    add_decimal;	/* Flag for whether decimal point appears in pattern */
+    char    is_multiplier_set;	/* Flag to catch multiple occurences of percent/permille */
+    char    is_negative_pattern;/* Flag for processing -ve prefix/suffix */
+};
+</pre><p>
+This data structure lists the various parameters needed to format numbers.</p><p>
+
+</p></div><hr xmlns="http://www.w3.org/TR/xhtml1/transitional"></hr><div class="refsect2" lang="en"><h3><a name="xsltFormatNumberInfoPtr"></a>xsltFormatNumberInfoPtr</h3><pre class="programlisting">typedef xsltFormatNumberInfo *xsltFormatNumberInfoPtr;
+</pre><p>
+
+</p></div></div></div><table xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="libxslt-xsltInternals.html"><b>&lt;&lt; xsltInternals</b></a></td><td align="right"></td></tr></table></body></html>

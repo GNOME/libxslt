@@ -12,7 +12,7 @@ EXTRA_DIST = 			\
 DOC_MODULE=libxslt-$(VERSION)
 
 # The top-level SGML file.
-DOC_MAIN_SGML_FILE=libxslt.sgml
+DOC_MAIN_XML_FILE=libxslt.xml
 
 # The directory containing the source code (if it contains documentation).
 DOC_SOURCE_DIR=..
@@ -63,17 +63,14 @@ templates: scan
 #	gtkdoc-mktmpl --module=libexslt
 
 sgml:
-	-gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt
-#	gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libexslt
+	-gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --output-format=xml --main-sgml-file=$(DOC_MAIN_XML_FILE)
 
 html:
 	if ! test -d html ; then mkdir html ; fi
-	-cd html && gtkdoc-mkhtml libxslt ../$(DOC_MAIN_SGML_FILE)
+	-cd html && gtkdoc-mkhtml libxslt ../$(DOC_MAIN_XML_FILE)
 
-xml: sgml 
+xml:
 	if test -d xml ; then rm xml/* ; else mkdir xml ; fi
-	-@(for s in sgml/*.sgml ; do name=`basename $$s .sgml` ; \
-	   xmllint --sgml $$s > xml/"$$name".xml ; done)
 	   
 libxslt-api.xml libexslt-api.xml: apibuild.py ../libxslt/*.h ../libxslt/*.c ../libexslt/*.h ../libexslt/*.c
 	-(./apibuild.py)
