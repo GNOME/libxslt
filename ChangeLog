@@ -1,3 +1,8 @@
+Fri Oct 31 20:26:04 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c: fix bug #120828 make sure that xsl:sort is
+	  empty.
+
 Fri Oct 31 15:53:45 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/documents.c libxslt/imports.c libxslt/xslt.c libxslt/xslt.h

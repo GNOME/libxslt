@@ -296,7 +296,6 @@ static void
 xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
-
     if ((style == NULL) || (inst == NULL))
 	return;
     comp = xsltNewStylePreComp(style, XSLT_FUNC_SORT);
@@ -369,6 +368,11 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	xsltTransformError(NULL, style, inst,
 	     "xsltSortComp: could not compile select expression '%s'\n",
 	                 comp->select);
+	if (style != NULL) style->errors++;
+    }
+    if (inst->children != NULL) {
+	xsltTransformError(NULL, style, inst,
+	"xsl:sort : is not empty\n");
 	if (style != NULL) style->errors++;
     }
 }
