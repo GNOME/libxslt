@@ -1,3 +1,10 @@
+Sun Mar 23 13:09:17 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-110.*
+	  tests/general/Makefile.am tests/general/bug-110*: added an
+	  example in the regression tests for bug #108976 which is
+	  fixed in libxml2
+
 Sat Mar 22 12:35:47 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-109.xml
