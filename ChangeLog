@@ -1,3 +1,10 @@
+Mon Apr 30 13:47:11 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/preproc.c libxslt/variables.c: found the source of a
+	  memory leak with DocBook introduced this w.e.. bit of cleanup.
+	* tests/docbook/result/html/*.html : regenerated the DocBook tests
+	  results.
+
 Sun Apr 29 18:54:03 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/variables.c: fixing bug #53769

@@ -57,8 +57,12 @@ xsltNewStackElem(void) {
 		"xsltNewStackElem : malloc failed\n");
 	return(NULL);
     }
-    memset(cur, 0, sizeof(xsltStackElem));
     cur->computed = 0;
+    cur->name = NULL;
+    cur->nameURI = NULL;
+    cur->select = NULL;
+    cur->tree = NULL;
+    cur->value = NULL;
     return(cur);
 }
 
@@ -81,7 +85,6 @@ xsltFreeStackElem(xsltStackElemPtr elem) {
     if (elem->value != NULL)
 	xmlXPathFreeObject(elem->value);
 
-    memset(elem, -1, sizeof(xsltStackElem));
     xmlFree(elem);
 }
 

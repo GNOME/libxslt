@@ -136,8 +136,6 @@ static void
 xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
     if (comp == NULL)
 	return;
-    if (comp->inst != NULL)
-	comp->inst->_private = NULL;
     if (comp->stype != NULL)
 	xmlFree(comp->stype);
     if (comp->order != NULL)
