@@ -2712,6 +2712,10 @@
           <ref name='xsltAttrTemplateValueProcessNode'/>
           <ref name='xsltEvalXPathStringNs'/>
         </word>
+        <word name='already'>
+          <ref name='_xsltDocument'/>
+          <ref name='_xsltStylesheet'/>
+        </word>
         <word name='also'>
           <ref name='xsltGetQNameURI'/>
           <ref name='xsltRunStylesheet'/>
@@ -3000,6 +3004,9 @@
           <ref name='xsltSort'/>
           <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathVariableLookup'/>
+        </word>
+        <word name='bypass'>
+          <ref name='_xsltStylesheet'/>
         </word>
         <word name='byte'>
           <ref name='xsltSaveResultTo'/>
@@ -3523,7 +3530,9 @@
           <ref name='xsltTestCompMatchList'/>
         </word>
         <word name='done'>
+          <ref name='_xsltDocument'/>
           <ref name='_xsltStackElem'/>
+          <ref name='_xsltStylesheet'/>
           <ref name='xsltCompilePattern'/>
           <ref name='xsltEvalGlobalVariables'/>
           <ref name='xsltEvalUserParams'/>
@@ -4051,6 +4060,7 @@
           <ref name='xsltParseStylesheetImportedDoc'/>
         </word>
         <word name='imports'>
+          <ref name='_xsltStylesheet'/>
           <ref name='xsltCleanupTemplates'/>
         </word>
         <word name='in-scope'>
@@ -4962,6 +4972,10 @@
         <word name='pre-computation'>
           <ref name='xsltExtModuleElementPreComputeLookup'/>
           <ref name='xsltRegisterExtModuleElement'/>
+        </word>
+        <word name='pre-processing'>
+          <ref name='_xsltDocument'/>
+          <ref name='_xsltStylesheet'/>
         </word>
         <word name='precedence'>
           <ref name='xsltFindElemSpaceHandling'/>

@@ -681,6 +681,7 @@
       <field name='doc' type='xmlDocPtr' info=' the parsed document'/>
       <field name='keys' type='void *' info=' key tables storage'/>
       <field name='includes' type='struct _xsltDocument *' info=' subsidiary includes'/>
+      <field name='preproc' type='int' info=' pre-processing already done'/>
     </struct>
     <typedef name='xsltDocumentPtr' file='xsltInternals' type='xsltDocument *'/>
     <struct name='xsltElemPreComp' file='xsltInternals' type='struct _xsltElemPreComp'>
@@ -844,7 +845,9 @@ informations are stored'/>
 *'/>
       <field name='attVTs' type='void *' info='* if namespace-alias has an alias for the default stylesheet prefix
 *'/>
-      <field name='defaultAlias' type='const xmlChar *' info=''/>
+      <field name='defaultAlias' type='const xmlChar *' info='* bypass pre-processing (already done) (used in imports)
+*'/>
+      <field name='nopreproc' type='int' info=''/>
     </struct>
     <typedef name='xsltStylesheetPtr' file='xsltInternals' type='xsltStylesheet *'/>
     <struct name='xsltTemplate' file='xsltInternals' type='struct _xsltTemplate'>
