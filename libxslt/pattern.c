@@ -1185,6 +1185,7 @@ xsltCompilePattern(const xmlChar *pattern, const xmlChar *mode,
 	    element->priority = -0.25;
 	} else if (((element->steps[0].op == XSLT_OP_PI) ||
 		    (element->steps[0].op == XSLT_OP_TEXT) ||
+		    (element->steps[0].op == XSLT_OP_ALL) ||
 		    (element->steps[0].op == XSLT_OP_NODE) ||
 		    (element->steps[0].op == XSLT_OP_COMMENT)) &&
 		   (element->steps[1].op == XSLT_OP_END)) {
@@ -1246,7 +1247,9 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	pat->next = NULL;
 	
 	pat->template = cur;
-	if (cur->priority != XSLT_PAT_NO_PRIORITY)
+	if (pat->priority != XSLT_PAT_NO_PRIORITY)
+	    cur->priority = pat->priority;
+	else
 	    pat->priority = cur->priority;
 
 	/*

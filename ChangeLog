@@ -1,3 +1,8 @@
+Wed Feb 14 18:07:25 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/pattern.c: priorities were horribly broken, hope it's
+	  fixed
+
 Wed Feb 14 15:39:06 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES libxslt/imports.h libxslt/pattern.[ch]
