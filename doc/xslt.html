@@ -1,9 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <title>The XSLT C library for Gnome</title>
-  <meta name="GENERATOR" content="amaya V5.0">
+  <meta name="GENERATOR" content="amaya V4.1">
   <meta http-equiv="Content-Type" content="text/html">
 </head>
 
@@ -42,9 +40,9 @@ alt="Red Hat Logo"></a></p>
 
 <h2><a name="Introducti">Introduction</a></h2>
 
-<p>This document describes <a href="http://xmlsoft.org/XSLT/">libxslt</a>,
-the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developped for the
-<a href="http://www.gnome.org/">Gnome</a> project.</p>
+<p>This document describes <a href="http://xmlsoft.org/XSLT/">libxslt</a>, the
+<a href="http://www.w3.org/TR/xslt">XSLT</a> C library developped for the <a
+href="http://www.gnome.org/">Gnome</a> project.</p>
 
 <p>Here are some key points about libxslt:</p>
 <ul>
@@ -72,35 +70,35 @@ the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developped for the
     doc</a>).</li>
   <li>Look at the <a href="http://mail.gnome.org/archives/xslt/">mailing-list
     archive</a>.</li>
-  <li>Of course since libxslt is based on libxml, it's a good idea to at
-    least read <a href="http://xmlsoft.org/">libxml description</a></li>
+  <li>Of course since libxslt is based on libxml, it's a good idea to at least
+    read <a href="http://xmlsoft.org/">libxml description</a></li>
 </ol>
 
 <h2><a name="Reporting">Reporting bugs and getting help</a></h2>
 
-<p>Well, bugs or missing features are always possible, and I will make a
-point of fixing them in a timely fashion. The best way to report a bug is to
-use the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Gnome
-bug tracking database</a> (make sure to use the "libxslt" module name). I
-look at reports there regularly and it's good to have a reminder when a bug
-is still open. Check the <a
-href="http://bugs.gnome.org/Reporting.html">instructions on reporting
-bugs</a> and be sure to specify that the bug is for the package libxslt.</p>
+<p>Well, bugs or missing features are always possible, and I will make a point
+of fixing them in a timely fashion. The best way to report a bug is to use the
+<a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Gnome bug
+tracking database</a> (make sure to use the "libxslt" module name). I look at
+reports there regularly and it's good to have a reminder when a bug is still
+open. Check the <a href="http://bugs.gnome.org/Reporting.html">instructions on
+reporting bugs</a> and be sure to specify that the bug is for the package
+libxslt.</p>
 
 <p>There is also a mailing-list <a
 href="mailto:xslt@gnome.org">xslt@gnome.org</a> for libxslt, with an <a
 href="http://mail.gnome.org/archives/xslt/">on-line archive</a>. To subscribe
 to this list, please visit the <a
-href="http://mail.gnome.org/mailman/listinfo/xslt">associated Web</a> page
-and follow the instructions.</p>
+href="http://mail.gnome.org/mailman/listinfo/xslt">associated Web</a> page and
+follow the instructions.</p>
 
 <p>Alternatively, you can just send the bug to the <a
 href="mailto:xslt@gnome.org">xslt@gnome.org</a> list, if it's really libxslt
-related I will approve it.. Please do not send me mail directly especially
-for portability problem, it makes things really harder to track and in some
-cases I'm not the best person to answer a given question, ask the list
-instead. <strong>Do not send code, I won't debug it</strong> (but patches are
-really appreciated!).</p>
+related I will approve it.. Please do not send me mail directly especially for
+portability problem, it makes things really harder to track and in some cases
+I'm not the best person to answer a given question, ask the list instead.
+<strong>Do not send code, I won't debug it</strong> (but patches are really
+appreciated!).</p>
 
 <p>Check the following too before posting:</p>
 <ul>
@@ -108,8 +106,8 @@ really appreciated!).</p>
     version</a>, and that the problem still shows up in those</li>
   <li>check the <a href="http://mail.gnome.org/archives/xslt/">list
     archives</a> to see if the problem was reported already, in this case
-    there is probably a fix available, similary check the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxml&amp;product=libxslt&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=NEEDINFO&amp;bug_status=REOPENED&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailcc1=1&amp;emaillongdesc1=1&amp;email2=&amp;emailtype2=substring&amp;emailassigned_to2=1&amp;emailreporter2=1&amp;emailcc2=1&amp;emaillongdesc2=1&amp;changedin=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;short_desc=&amp;short_desc_type=substring&amp;long_desc=&amp;long_desc_type=substring&amp;bug_file_loc=&amp;bug_file_loc_type=substring&amp;status_whiteboard=&amp;status_whiteboard_type=substring&amp;keywords=&amp;keywords_type=anywords&amp;op_sys_details=&amp;op_sys_details_type=substring&amp;version_details=&amp;version_details_type=substring&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time&amp;form_name=query">registered
-    open bugs</a></li>
+    there is probably a fix available, similary check the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxml&amp;product=libxslt&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=NEEDINFO&amp;bug_status=REOPENED&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;emailreporter1=1&amp;emailcc1=1&amp;emaillongdesc1=1&amp;email2=&amp;emailtype2=substring&amp;emailassigned_to2=1&amp;emailreporter2=1&amp;emailcc2=1&amp;emaillongdesc2=1&amp;changedin=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;short_desc=&amp;short_desc_type=substring&amp;long_desc=&amp;long_desc_type=substring&amp;bug_file_loc=&amp;bug_file_loc_type=substring&amp;status_whiteboard=&amp;status_whiteboard_type=substring&amp;keywords=&amp;keywords_type=anywords&amp;op_sys_details=&amp;op_sys_details_type=substring&amp;version_details=&amp;version_details_type=substring&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time&amp;form_name=query">registered open
+    bugs</a></li>
   <li>make sure you can reproduce the bug with xsltproc, a very useful thing
     to do is run the transformation with -v argument and redirrect the
     standard error to a file, then search in this file for the transformation
@@ -123,11 +121,10 @@ probably be processed faster.</p>
 
 <p>If you're looking for help, a quick look at <a
 href="http://mail.gnome.org/archives/xslt/">the list archive</a> may actually
-provide the answer, I usually send source samples when answering libxslt
-usage questions. The <a
-href="html/libxslt-lib.html#LIBXSLT-LIB">auto-generated documentation</a> is
-not as polished as I would like (I need to learn more about Docbook), but
-it's a good starting point.</p>
+provide the answer, I usually send source samples when answering libxslt usage
+questions. The <a href="html/libxslt-lib.html#LIBXSLT-LIB">auto-generated
+documentation</a> is not as polished as I would like (I need to learn more
+about Docbook), but it's a good starting point.</p>
 
 <h2><a name="help">How to help</a></h2>
 
@@ -166,7 +163,11 @@ href="http://rpmfind.net/linux/RPM/libxml2.html">libxml2</a>, <a
 href="http://rpmfind.net/linux/RPM/libxml2-devel.html">libxml2-devel</a>, <a
 href="http://rpmfind.net/linux/RPM/libxslt.html">libxslt</a> and <a
 href="http://rpmfind.net/linux/RPM/libxslt-devel.html">libxslt-devel</a>
-packages installed to compile applications using libxslt.)</p>
+packages installed to compile applications using libxslt.) <a
+href="mailto:izlatkovic@daenet.de">Igor  Zlatkovic</a> is now the maintainer
+of the Windows port, <a
+href="http://www.fh-frankfurt.de/~igor/projects/libxml/index.html">he provides
+binaries</a></p>
 
 <p><a name="Contribs">Contribs:</a></p>
 
@@ -179,8 +180,8 @@ platform, get in touch with me to upload the package. I will keep them in the
   <li><p>The <a
     href="http://cvs.gnome.org/bonsai/rview.cgi?cvsroot=/cvs/gnome&amp;dir=libxslt">Gnome
     CVS base</a>. Check the <a
-    href="http://developer.gnome.org/tools/cvs.html">Gnome CVS Tools</a>
-    page; the CVS module is <b>libxslt</b>.</p>
+    href="http://developer.gnome.org/tools/cvs.html">Gnome CVS Tools</a> page;
+    the CVS module is <b>libxslt</b>.</p>
   </li>
 </ul>
 
@@ -198,8 +199,8 @@ for a really accurate description</h3>
   <li>fixed some variable evaluation problems (with William)</li>
   <li>added profiling of stylesheed excution accessible as the xsltproc
     --profile option</li>
-  <li>fixed element-available() and the implementation of the various
-    chunking methods present, Norm Walsh provided a lot of feedback</li>
+  <li>fixed element-available() and the implementation of the various chunking
+    methods present, Norm Walsh provided a lot of feedback</li>
   <li>exclude-result-prefixes and namespaces output should now work as
     expected</li>
   <li>added support of embedded stylesheet as described in section 2.7 of the
@@ -354,11 +355,10 @@ for a really accurate description</h3>
   <li>second beta version, released at the same time as libxml2-2.3.1</li>
   <li>getting close to feature completion, lot of bug fixes, some in the HTML
     and XPath support of libxml</li>
-  <li>start becoming usable for real work. This version can now regenerate
-    the XML 2e HTML from the original XML sources and the associated
-    stylesheets (in <a
-    href="http://www.w3.org/TR/REC-xml#b4d250b6c21">section I of the XML
-    REC</a>)</li>
+  <li>start becoming usable for real work. This version can now regenerate the
+    XML 2e HTML from the original XML sources and the associated stylesheets
+    (in <a href="http://www.w3.org/TR/REC-xml#b4d250b6c21">section I of the
+    XML REC</a>)</li>
   <li>Still misses extension element/function/prefixes support. Support of
     key() and document() is not complete</li>
 </ul>
@@ -422,9 +422,9 @@ href="tutorial/libxslttutorial.html">tutorial</a>.</p>
 </ol>
 
 <p>Steps 2,3, and 5 will probably need to be changed depending on you
-processing needs and environment for example if reading/saving from/to
-memory, or if you want to apply XInclude processing to the stylesheet or
-input documents.</p>
+processing needs and environment for example if reading/saving from/to memory,
+or if you want to apply XInclude processing to the stylesheet or input
+documents.</p>
 
 <h2><a name="Contributi">Contributions</a></h2>
 <ul>
@@ -433,23 +433,27 @@ input documents.</p>
   <li>William Brack was an early adopted, contibuted a number of patches and
     spent quite some time debugging non-trivial problems in early versions of
     libxslt</li>
+  <li><a href="mailto:izlatkovic@daenet.de">Igor  Zlatkovic</a> is now the
+    maintainer of the Windows port, <a
+    href="http://www.fh-frankfurt.de/~igor/projects/libxml/index.html">he
+    provides binaries</a></li>
   <li>Thomas Broyer provided a lot of suggestions, and drafted most of the
     extension API</li>
   <li>John Fleck maintains <a href="tutorial/libxslttutorial.html">a tutorial
     for libxslt</a></li>
   <li><a
     href="http://mail.gnome.org/archives/xml/2001-March/msg00014.html">Matt
-    Sergeant</a>
-     developped <a href="http://axkit.org/download/">XML::LibXSLT</a>, a perl
-    wrapper for libxml2/libxslt as part of the <a
-    href="http://axkit.com/">AxKit XML application server</a></li>
+    Sergeant</a> developped <a
+    href="http://axkit.org/download/">XML::LibXSLT</a>, a perl wrapper for
+    libxml2/libxslt as part of the <a href="http://axkit.com/">AxKit XML
+    application server</a></li>
   <li>there is a module for <a
     href="http://acs-misc.sourceforge.net/nsxml.html">libxml/libxslt support
     in OpenNSD/AOLServer</a></li>
 </ul>
 
-<p>I'm still waiting for someone to contribute a simple XSLT processing
-module for Apache :-)</p>
+<p>I'm still waiting for someone to contribute a simple XSLT processing module
+for Apache :-)</p>
 
 <p></p>
 
