@@ -15,7 +15,7 @@
     </author>
     <address><email>jfleck@inkstain.net</email></address>
     
-    <releaseinfo>This is release 0.3 of the xsltproc Manual.</releaseinfo>
+    <releaseinfo>This is release 0.4 of the xsltproc Manual.</releaseinfo>
   </refentryinfo>
 
   <refmeta>
@@ -46,7 +46,6 @@
 	<arg>--param <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
 	<arg>--stringparam <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
 	<arg>--nonet</arg>
-	<arg>--warnnet</arg>
 	<arg>--catalogs</arg>
 	<arg>--xinclude</arg>
 	<arg>--profile</arg>
@@ -250,18 +249,6 @@
     </simpara>
 	</listitem>
       </varlistentry>
-
-    
-      <varlistentry>
-	<term>
-      <option>--warnnet</option></term>
-	<listitem>
-	  <simpara>Output notification when DTD's or entities
-      are fetched over the Internet.
-    </simpara>
-	</listitem>
-      </varlistentry>
-
     
       <varlistentry>
 	<term>

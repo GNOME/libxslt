@@ -83,25 +83,30 @@ arguments are filenames or URIs of the inputs to be processed. The output of
 the processing is redirected on the standard output. There is actually a few
 more options available:</p>
 <pre>orchis:~ -&gt; xsltproc
-Usage: xsltproc [options] stylesheet file [file ...]
-   Options:
-      --version or -V: show the version of libxml and libxslt used
-      --verbose or -v: show logs of what's happening
-      --output file or -o file: save to a given file
-      --timing: display the time used
-      --repeat: run the transformation 20 times
-      --debug: dump the tree of the result instead
-      --novalid: skip the Dtd loading phase
-      --noout: do not dump the result
-      --maxdepth val : increase the maximum depth
-      --html: the input document is(are) an HTML file(s)
-      --docbook: the input document is SGML docbook
-      --param name value : pass a (parameter,value) pair
-      --nonet refuse to fetch DTDs or entities over network
-      --warnnet warn against fetching over the network
-      --catalogs : use the catalogs from $SGML_CATALOG_FILES
-      --xinclude : do XInclude processing on document intput
-      --profile or --norman : dump profiling informations 
+Options:
+        --version or -V: show the version of libxml and libxslt used
+        --verbose or -v: show logs of what's happening
+        --output file or -o file: save to a given file
+        --timing: display the time used
+        --repeat: run the transformation 20 times
+        --debug: dump the tree of the result instead
+        --dumpextensions: dump the registered extension elements and functions to stdout
+        --novalid skip the Dtd loading phase
+        --noout: do not dump the result
+        --maxdepth val : increase the maximum depth
+        --html: the input document is(are) an HTML file(s)
+        --docbook: the input document is SGML docbook
+        --param name value : pass a (parameter,value) pair
+               value is an UTF8 XPath expression.
+               string values must be quoted like "'string'"
+ or            use stringparam to avoid it
+        --stringparam name value : pass a (parameter, UTF8 string value) pair
+        --nonet refuse to fetch DTDs or entities over network
+        --catalogs : use SGML catalogs from $SGML_CATALOG_FILES
+                     otherwise XML Catalogs starting from 
+                 file:///etc/xml/catalog are activated by default
+        --xinclude : do XInclude processing on document intput
+        --profile or --norman : dump profiling informations 
 orchis:~ -&gt;</pre>
 <p><a href="bugs.html">Daniel Veillard</a></p>
 </td></tr></table></td></tr></table></td></tr></table></td>

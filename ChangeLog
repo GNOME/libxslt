@@ -1,3 +1,11 @@
+Sat Sep 14 16:10:21 MDT 2002 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.xml
+	* doc/xsltproc.1
+	* doc/xsltproc2.html
+	Fixing erroneous mention of old --warnnet option (thanks to Jean
+	T. Anderson for pointing this out)
+
 Tue Sep 10 21:05:28 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/configure.js: added more readme info for the binary

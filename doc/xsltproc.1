@@ -26,9 +26,9 @@ xsltproc \- command line xslt processor
 \fBxsltproc\fR [\fB-V\fR | \fB-v\fR | \fB-o \fIfile\fR\fR | \fB--timing\fR | \fB--repeat\fR
          | \fB--debug\fR | \fB--novalid\fR | \fB--noout\fR | \fB--maxdepth \fIval\fR\fR
          | \fB--html\fR | \fB--docbook\fR | \fB--param \fIname\fR \fIvalue\fR\fR
-         | \fB--stringparam \fIname\fR \fIvalue\fR\fR | \fB--nonet\fR | \fB--warnnet\fR
-         | \fB--catalogs\fR | \fB--xinclude\fR | \fB--profile\fR | \fB--dumpextensions\fR]
-         [\fBstylesheet\fR] [\fIfile1\fR] [\fIfile2\fR] [\fI....\fR]
+         | \fB--stringparam \fIname\fR \fIvalue\fR\fR | \fB--nonet\fR | \fB--catalogs\fR
+         | \fB--xinclude\fR | \fB--profile\fR | \fB--dumpextensions\fR] [\fBstylesheet\fR]
+         [\fIfile1\fR] [\fIfile2\fR] [\fI....\fR]
 .fi
 
 .SH "INTRODUCTION"
@@ -102,10 +102,6 @@ Pass a paramenter of name \fIname\fR and value \fIvalue\fR where \fIvalue\fR is 
 .TP
 \fB--nonet\fR
 Do not use the Internet to fetch DTD's or entities.
-
-.TP
-\fB--warnnet\fR
-Output notification when DTD's or entities are fetched over the Internet.
 
 .TP
 \fB--catalogs\fR
