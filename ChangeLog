@@ -1,3 +1,8 @@
+2002-03-08  jacob berkman  <jacob@ximian.com>
+
+	* python/Makefile.am (libxsltmodule_la_SOURCES): remove $(srcdir)
+	as make will automatically look there for these files
+
 Fri Mar  8 17:44:31 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt/xsltwin32config.h: preparing release

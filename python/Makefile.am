@@ -37,7 +37,7 @@ libxsltmod_so_SOURCES =
 libxsltmod_so_LDFLAGS = $(mylibs) $(LIBS) -shared -Wl,-soname,libxsltmod.so
 
 noinst_LTLIBRARIES = libxsltmodule.la
-libxsltmodule_la_SOURCES = $(srcdir)/libxslt.c $(srcdir)/types.c $(srcdir)/libxslt-py.c
+libxsltmodule_la_SOURCES = libxslt.c types.c libxslt-py.c
 
 GENERATE = generator.py
 API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml
