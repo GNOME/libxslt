@@ -36,23 +36,23 @@ two <a href="http://www.w3.org/TR/xslt">ways to extend an XSLT engine</a>:</p><u
     elements</a> which can be inserted in stylesheets</li>
 </ul><p>In both cases the extensions need to be associated to a new namespace,
 i.e. an URI used as the name for the extension's namespace (there is no need
-to have a resource there for this to work).</p><p>libxslt provides a few extensions itself, either in libxslt namespace
-"http://xmlsoft.org/XSLT/" or in other namespace for well known extensions
+to have a resource there for this to work).</p><p>libxslt provides a few extensions itself, either in the libxslt namespace
+"http://xmlsoft.org/XSLT/namespace" or in namespaces for other well known extensions
 provided by other XSLT processors like Saxon, Xalan or XT.</p><h3><a name="Keep" id="Keep">Extension modules</a></h3><p>Since extensions are bound to a namespace name, usually sets of extensions
 coming from a given source are using the same namespace name defining in
-practice a group of extensions providing elements, functions or both. From
+practice a group of extensions providing elements, functions or both. From the
 libxslt point of view those are considered as an "extension module", and most
 of the APIs work at a module point of view.</p><p>Registration of new functions or elements are bound to the activation of
-the module, this is currently done by declaring the namespace as an extension
+the module. This is currently done by declaring the namespace as an extension
 by using the attribute  <code>extension-element-prefixes</code> on the
 <code><a href="http://www.w3.org/TR/xslt">xsl:stylesheet</a></code>
-element.</p><p>And extension module is defined by 3 objects:</p><ul><li>the namespace name associated</li>
+element.</p><p>An extension module is defined by 3 objects:</p><ul><li>the namespace name associated</li>
   <li>an initialization function</li>
   <li>a shutdown function</li>
 </ul><h3><a name="Registerin" id="Registerin">Registering a module</a></h3><p>Currently a libxslt module has to be compiled within the application using
-libxslt, there is no code to load dynamically shared libraries associated to
+libxslt. There is no code to load dynamically shared libraries associated to a
 namespace (this may be added but is likely to become a portability
-nightmare).</p><p>So the current way to register a module is to link the code implementing
+nightmare).</p><p>The current way to register a module is to link the code implementing
 it with the application and to call a registration function:</p><pre>int xsltRegisterExtModule(const xmlChar *URI,
                           xsltExtInitFunction initFunc,
                           xsltExtShutdownFunction shutdownFunc);</pre><p>The associated header is read by:</p><pre>#include&lt;libxslt/extensions.h&gt;</pre><p>which also defines the type for the initialization and shutdown
@@ -71,17 +71,17 @@ function:</p><pre>/**
  * transformation
  */
 typedef void *(*xsltExtInitFunction)(xsltTransformContextPtr ctxt,
-                                     const xmlChar *URI);</pre><p>There are 3 things to notice:</p><ul><li>the function gets passed the namespace name URI as an argument, this
-    allow a single function to provide the initialization for multiple
-    logical modules</li>
-  <li>it also gets passed a transformation context, the initialization is
+                                     const xmlChar *URI);</pre><p>There are 3 things to notice:</p><ul><li>The function gets passed the namespace name URI as an argument. This
+    allows a single function to provide the initialization for multiple
+    logical modules.</li>
+  <li>It also gets passed a transformation context. The initialization is
     done at run time before any processing occurs on the stylesheet but it
-    will be invoked separately each time for each transformation</li>
-  <li>it returns a pointer, this can be used to store module specific
-    informations which can be retrieved later when a function or an element
-    from the extension are used, an obvious example is a connection to a
-    database which should be kept and reused along the transformation. NULL
-    is a perfectly valid return, there is no way to indicate a failure at
+    will be invoked separately each time for each transformation.</li>
+  <li>It returns a pointer.  This can be used to store module specific
+    information which can be retrieved later when a function or an element
+    from the extension is used.  An obvious example is a connection to a
+    database which should be kept and reused along with the transformation. NULL
+    is a perfectly valid return; there is no way to indicate a failure at
     this level</li>
 </ul><p>What this function is expected to do is:</p><ul><li>prepare the context for this module (like opening the database
     connection)</li>
@@ -105,7 +105,7 @@ XPath function:</p><pre>/**
 
 typedef void (*xmlXPathEvalFunc)(xmlXPathParserContextPtr ctxt,
                                  int nargs);</pre><p>The context passed to an XPath function is not an XSLT context but an <a href="internals.html#XPath1">XPath context</a>. However it is possible to
-find one from the other:</p><ul><li>The function xsltXPathGetTransformContext provide this lookup facility:
+find one from the other:</p><ul><li>The function xsltXPathGetTransformContext provides this lookup facility:
     <pre>xsltTransformContextPtr
          xsltXPathGetTransformContext
                           (xmlXPathParserContextPtr ctxt);</pre>
@@ -114,14 +114,14 @@ find one from the other:</p><ul><li>The function xsltXPathGetTransformContext pr
     <code>xsltTransformContext</code> is stored in the <code>xpathCtxt</code>
     field.</li>
 </ul><p>The first thing an extension function may want to do is to check the
-arguments passed on the stack, the <code>nargs</code> will precise how many
-of them were provided on the XPath expression. The macros valuePop will
+arguments passed on the stack, the <code>nargs</code> parameter will tell how many
+of them were provided on the XPath expression. The macro valuePop will
 extract them from the XPath stack:</p><pre>#include &lt;libxml/xpath.h&gt;
 #include &lt;libxml/xpathInternals.h&gt;
 
 xmlXPathObjectPtr obj = valuePop(ctxt); </pre><p>Note that <code>ctxt</code> is the XPath context not the XSLT one. It is
 then possible to examine the content of the value. Check <a href="internals.html#Descriptio">the description of XPath objects</a> if
-necessary. The following is a common sequcnce checking whether the argument
+necessary. The following is a common sequence checking whether the argument
 passed is a string and converting it using the built-in XPath
 <code>string()</code> function if this is not the case:</p><pre>if (obj-&gt;type != XPATH_STRING) {
     valuePush(ctxt, obj);
@@ -132,12 +132,12 @@ exported either in <code>&lt;libxml/xpath.h&gt;</code> or in
 <code>&lt;libxml/xpathInternals.h&gt;</code>.</p><p>The extension function may also need to retrieve the data associated to
 this module instance (the database connection in the previous example) this
 can be done using the xsltGetExtData:</p><pre>void * xsltGetExtData(xsltTransformContextPtr ctxt,
-                      const xmlChar *URI);</pre><p>again the URI to be provided is the one used which was used when
+                      const xmlChar *URI);</pre><p>Again the URI to be provided is the one which was used when
 registering the module.</p><p>Once the function finishes, don't forget to:</p><ul><li>push the return value on the stack using <code>valuePush(ctxt,
     obj)</code></li>
   <li>deallocate the parameters passed to the function using
     <code>xmlXPathFreeObject(obj)</code></li>
-</ul><h3><a name="Examples" id="Examples">Examples for extension functions</a></h3><p>The module libxslt/functions.c containsthe sources of the XSLT built-in
+</ul><h3><a name="Examples" id="Examples">Examples for extension functions</a></h3><p>The module libxslt/functions.c contains the sources of the XSLT built-in
 functions, including document(), key(), generate-id(), etc. as well as a full
 example module at the end. Here is the test function implementation for the
 libxslt:test function:</p><pre>/**
@@ -174,7 +174,7 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
                            const xmlChar *URI,
                            xsltTransformFunction function);</pre><p>It is similar to the mechanism used to register an extension function,
 except that the signature of an extension element implementation is
-different.</p><p>The registration is bound to a single transformation instance referred by
+different.</p><p>The registration is bound to a single transformation instance referred to by
 ctxt, name is the UTF8 encoded name for the NCName of the element, and URI is
 the namespace name for the extension (no checking is done, a module could
 register elements for a different namespace, but it is not recommended).</p><h3><a name="Implementi1" id="Implementi1">Implementing an extension element</a></h3><p>The implementation of the element must have the signature of an XSLT
@@ -197,19 +197,19 @@ third arguments are xmlNodePtr i.e. internal memory <a href="internals.html#libx
 respectively <code>node</code> from the the input document being transformed
 by the stylesheet and <code>inst</code> the extension element in the
 stylesheet. The last argument is <code>comp</code> a pointer to a precompiled
-representation of <code>inst</code> but usually for extension function this
+representation of <code>inst</code> but usually for an extension function this
 value is <code>NULL</code> by default (it could be added and associated to
 the instruction in <code>inst-&gt;_private</code>).</p><p>The same functions are available from a function implementing an extension
 element as in an extension function, including
-<code>xsltGetExtData()</code>.</p><p>The goal of extension element being usually to enrich the generated
+<code>xsltGetExtData()</code>.</p><p>The goal of an extension element being usually to enrich the generated
 output, it is expected that they will grow the currently generated output
-tree, this can be done by grabbing ctxt-&gt;insert which is the current
+tree. This can be done by grabbing ctxt-&gt;insert which is the current
 libxml node being generated (Note this can also be the intermediate value
 tree being built for example to initialize a variable, the processing should
 be similar). The functions for libxml tree manipulation from <a href="http://xmlsoft.org/html/libxml-tree.html">&lt;libxml/tree.h&gt;</a> can
 be employed to extend or modify the tree, but it is required to preserve the
-insertion node and its ancestors since there is existing pointers to those
-elements still in use in the XSLT template execution stack.</p><h3><a name="Example" id="Example">Example for extension elements</a></h3><p>The module libxslt/transform.c containsthe sources of the XSLT built-in
+insertion node and its ancestors since there are existing pointers to those
+elements still in use in the XSLT template execution stack.</p><h3><a name="Example" id="Example">Example for extension elements</a></h3><p>The module libxslt/transform.c contains the sources of the XSLT built-in
 elements, including xsl:element, xsl:attribute, xsl:if, etc. There is a small
 but full example in functions.c providing the implementation for the
 libxslt:test element, it will output a comment in the result tree:</p><pre>/**
@@ -253,7 +253,7 @@ xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
                       "libxslt:test element test worked");
     xmlAddChild(ctxt-&gt;insert, comment);
 }</pre><h3><a name="shutdown" id="shutdown">The shutdown of a module</a></h3><p>When the XSLT processor ends a transformation, the shutdown function (if
-it exists) of all the modules initialized are called.The
+it exists) for each of the modules initialized is called.  The
 xsltExtShutdownFunction type defines the interface for a shutdown
 function:</p><pre>/**
  * xsltExtShutdownFunction:
@@ -265,11 +265,11 @@ function:</p><pre>/**
  */
 typedef void (*xsltExtShutdownFunction) (xsltTransformContextPtr ctxt,
                                          const xmlChar *URI,
-                                         void *data);</pre><p>this is really similar to a module initialization function except a third
+                                         void *data);</pre><p>This is really similar to a module initialization function except a third
 argument is passed, it's the value that was returned by the initialization
-function. This allow to deallocate resources from the module for example
-close the connection to the database to keep the same example.</p><h3><a name="Future" id="Future">Future work</a></h3><p>Well some of the pieces missing:</p><ul><li>a way to load shared libraries to instanciate new modules</li>
-  <li>a better detection of extension function usage and their registration
+function. This allows the routine to deallocate resources from the module for example
+close the connection to the database to keep the same example.</p><h3><a name="Future" id="Future">Future work</a></h3><p>Well, some of the pieces missing:</p><ul><li>a way to load shared libraries to instantiate new modules</li>
+  <li>a better detection of extension functions usage and their registration
     without having to use the extension prefix which ought to be reserved to
     element extensions.</li>
   <li>more examples</li>

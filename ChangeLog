@@ -1,3 +1,9 @@
+Sat Jul  3 17:52:27 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* doc/xslt.html, doc/extensions.html: corrected the URI for libxslt
+	  namespace, also a small enhancement of the surrounding text on
+	  extension functions. (bug 145250)
+	  
 Fri Jul  2 15:51:49 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: convenience change
