@@ -119,7 +119,8 @@ cases I'm not the best person to answer a given question, ask the list
 instead. <strong>Do not send code, I won't debug it</strong> (but patches are
 really appreciated!).</p>
 
-<p>Check the following too before posting:</p>
+<p>Check the following too <span style="color: #E50000">before
+posting</span>:</p>
 <ul>
   <li><a href="search.php">use the search engine</a> to get informations
     related to your problem.</li>
@@ -136,6 +137,28 @@ really appreciated!).</p>
     logs just preceding the possible problem</li>
   <li>Please send the command showing the error as well as the input and
     stylesheet (as an attachment)</li>
+</ul>
+
+<p>Then send the bug with associated informations to reproduce it to the <a
+href="mailto:xslt@gnome.org">xslt@gnome.org</a> list; if it's really libxslt
+related I will approve it. Please do not send mail to me directly, it makes
+things really hard to track and in some cases I am not the best person to
+answer a given question, ask on the list.</p>
+
+<p>To <span style="color: #E50000">be really clear about support</span>:</p>
+<ul>
+  <li>Support or help <span style="color: #E50000">request MUST be sent to
+    the list or on bugzilla</span> in case of problems, so that the Question
+    and Answers can be shared publicly. Failing to do so carries the implicit
+    message "I want free support but I don't want to share the benefits with
+    others" and is not welcome.</li>
+  <li>There is <span style="color: #E50000">no garantee for support</span>,
+    if your question remains unanswered after a week, repost it, making sure
+    you gave all the detail needed and the informations requested.</li>
+  <li>Failing to provide informations as requested or double checking first
+    for prior feedback also carries the implicit message "the time of the
+    library maintainers is less valuable than my time" and might not be
+    welcome.</li>
 </ul>
 
 <p>Of course, bugs reports with a suggested patch for fixing them will
@@ -186,13 +209,13 @@ you need the <a href="http://rpmfind.net/linux/RPM/libxml2.html">libxml2</a>,
 <a href="http://rpmfind.net/linux/RPM/libxslt.html">libxslt</a> and <a
 href="http://rpmfind.net/linux/RPM/libxslt-devel.html">libxslt-devel</a>
 packages installed to compile applications using libxslt.) <a
-href="mailto:igor@zlatkovic.com">Igor  Zlatkovic</a> is now the
-maintainer of the Windows port, <a
-href="http://www.zlatkovic.com/projects/libxml/index.html">he
-provides binaries</a>. <a href="mailto:Gary.Pennington@sun.com">Gary
-Pennington</a> provides <a href="http://garypennington.net/libxml2/">Solaris
-binaries</a>. <a href="mailto:Steve.Ball@zveno.com">Steve Ball</a> provides
-<a href="http://www.zveno.com/open_source/libxml2xslt.html">Mac Os X
+href="mailto:igor@zlatkovic.com">Igor  Zlatkovic</a> is now the maintainer of
+the Windows port, <a
+href="http://www.zlatkovic.com/projects/libxml/index.html">he provides
+binaries</a>. <a href="mailto:Gary.Pennington@sun.com">Gary Pennington</a>
+provides <a href="http://garypennington.net/libxml2/">Solaris binaries</a>.
+<a href="mailto:Steve.Ball@zveno.com">Steve Ball</a> provides <a
+href="http://www.zveno.com/open_source/libxml2xslt.html">Mac Os X
 binaries</a>.</p>
 
 <p><a name="Contribs">Contribs:</a></p>
@@ -244,7 +267,7 @@ for a really accurate description</h3>
   <li>Improvement of the python bindings: extension functions and activating
     EXSLT</li>
   <li>various bug fixes: number formatting, portability for bounded string
-    functions, CData nodes, key(), @*[...] patterns </li>
+    functions, CData nodes, key(), @*[...] patterns</li>
   <li>Documentation improvements (John Fleck)</li>
   <li>added libxslt.m4 (Thomas Schraitle)</li>
 </ul>
@@ -811,15 +834,16 @@ href="http://xmlsoft.org/python.html">libxml2 Python</a> module.</p>
 <p>The distribution includes a set of Python bindings, which are garanteed to
 be maintained as part of the library in the future, though the Python
 interface have not yet reached the maturity of the C API.</p>
+
 <p><a href="mailto:stephane.bidoul@softwareag.com">Stéphane Bidoul</a>
-maintains <a href="http://users.skynet.be/sbi/libxml-python/">a Windows
-port of the Python bindings</a>.
+maintains <a href="http://users.skynet.be/sbi/libxml-python/">a Windows port
+of the Python bindings</a>.</p>
 
 <p>Note to people interested in building bindings, the API is formalized as
 <a href="libxslt-api.xml">an XML API description file</a> which allows to
 automate a large part of the Python bindings, this includes function
-descriptions, enums, structures, typedefs, etc... The Python script used
-to build the bindings is python/generator.py in the source distribution.</p>
+descriptions, enums, structures, typedefs, etc... The Python script used to
+build the bindings is python/generator.py in the source distribution.</p>
 
 <p>To install the Python bindings there are 2 options:</p>
 <ul>
@@ -1901,10 +1925,10 @@ close the connection to the database to keep the same example.</p>
   <li>William Brack was an early adopted, contributed a number of patches and
     spent quite some time debugging non-trivial problems in early versions of
     libxslt</li>
-  <li><a href="mailto:igor@zlatkovic.com">Igor  Zlatkovic</a> is now
-    the maintainer of the Windows port, <a
-    href="http://www.zlatkovic.com/projects/libxml/index.html">he
-    provides binaries</a></li>
+  <li><a href="mailto:igor@zlatkovic.com">Igor  Zlatkovic</a> is now the
+    maintainer of the Windows port, <a
+    href="http://www.zlatkovic.com/projects/libxml/index.html">he provides
+    binaries</a></li>
   <li>Thomas Broyer provided a lot of suggestions, and drafted most of the
     extension API</li>
   <li>John Fleck maintains <a href="tutorial/libxslttutorial.html">a tutorial
