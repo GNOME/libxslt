@@ -654,14 +654,14 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 			    break;
                         case XML_ATTRIBUTE_NODE: {
 			    xmlAttrPtr attr = (xmlAttrPtr) 
-			                      nodelist->nodeTab[i]->psvi;
+			                      nodelist->nodeTab[i];
 			    attr->psvi = keyd;
 			    break;
 			}
                         case XML_DOCUMENT_NODE:
                         case XML_HTML_DOCUMENT_NODE: {
 			    xmlDocPtr kdoc = (xmlDocPtr) 
-			                    nodelist->nodeTab[i]->psvi;
+			                    nodelist->nodeTab[i];
 			    kdoc->psvi = keyd;
 			    break;
 			}

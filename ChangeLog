@@ -1,3 +1,8 @@
+2004-04-02 10:17:23 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/keys.c: applied patch from Mark Vakoc to fix problem
+	  with key matching attribute node.
+
 2004-04-01  Johan Dahlin  <johan@gnome.org>
 
 	* python/.cvsignore: Add generated files, to make cvs silent.
