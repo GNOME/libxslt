@@ -15,6 +15,8 @@
  * implement "other" date/time extension functions
  */
 
+#include <stdlib.h>
+
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
@@ -30,7 +32,7 @@
 #include <time.h>
 #endif
 
-#if 1
+#if 0
 #define DEBUG_EXSLT_DATE
 #endif
 
@@ -1842,13 +1844,6 @@ exsltDateLeapYearFunction (xmlXPathParserContextPtr ctxt,
 }
 
 #define X_IN_Y(x, y)						\
-/**								\
- * exsltDate##x##In##y##Function:				\
- * @ctxt: an XPath parser context				\
- * @nargs : the number of arguments				\
- *								\
- * Wraps #exsltDate##x##In##y for use by the XPath engine	\
- */								\
 static void							\
 exsltDate##x##In##y##Function (xmlXPathParserContextPtr ctxt,	\
 			      int nargs) {			\
@@ -1868,7 +1863,7 @@ exsltDate##x##In##y##Function (xmlXPathParserContextPtr ctxt,	\
 	}							\
     }								\
 								\
-    ret = exsltDate##x##In##y##(dt);				\
+    ret = exsltDate##x##In##y(dt);				\
 								\
     if (dt != NULL)						\
 	xmlFree(dt);						\
@@ -1876,6 +1871,13 @@ exsltDate##x##In##y##Function (xmlXPathParserContextPtr ctxt,	\
     xmlXPathReturnNumber(ctxt, ret);				\
 }
 
+/**
+ * exsltDateMonthInYearFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateMonthInYear for use by the XPath engine
+ */
 X_IN_Y(Month,Year)
 
 /**
@@ -1952,10 +1954,49 @@ exsltDateMonthAbbreviationFunction (xmlXPathParserContextPtr ctxt,
 	xmlXPathReturnString(ctxt, xmlStrdup(ret));
 }
 
+/**
+ * exsltDateWeekInYearFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateWeekInYear for use by the XPath engine
+ */
 X_IN_Y(Week,Year)
+
+/**
+ * exsltDateDayInYearFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateDayInYear for use by the XPath engine
+ */
 X_IN_Y(Day,Year)
+
+/**
+ * exsltDateDayInMonthFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateDayInMonth for use by the XPath engine
+ */
 X_IN_Y(Day,Month)
+
+/**
+ * exsltDateDayOfWeekInMonthFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDayOfWeekInMonth for use by the XPath engine
+ */
 X_IN_Y(DayOfWeek,Month)
+
+/**
+ * exsltDateDayInWeekFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateDayInWeek for use by the XPath engine
+ */
 X_IN_Y(Day,Week)
 
 /**
@@ -2033,8 +2074,31 @@ exsltDateDayAbbreviationFunction (xmlXPathParserContextPtr ctxt,
 }
 
 
+/**
+ * exsltDateHourInDayFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateHourInDay for use by the XPath engine
+ */
 X_IN_Y(Hour,Day)
+
+/**
+ * exsltDateMinuteInHourFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateMinuteInHour for use by the XPath engine
+ */
 X_IN_Y(Minute,Hour)
+
+/**
+ * exsltDateSecondInMinuteFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateSecondInMinute for use by the XPath engine
+ */
 X_IN_Y(Second,Minute)
 
 /**
