@@ -1,3 +1,8 @@
+Wed Mar  3 21:33:33 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* doc/*, doc/html/*, doc/EXSLT/*: rebuilt the docs to fix
+	  the "href_base" problem.
+
 Fri Feb 27 01:04:47 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* configure.in, config.h.in: added test for localtime_r
