@@ -767,18 +767,20 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			if (sibling != NULL) {
 			    pos = ix + indx;
 			    /*
-			     * If the node is in a Value Tree we cannot
-			     * cache it !
+			     * If the node is in a Value Tree we need to
+			     * save len, but cannot cache the node!
+			     * (bugs 153137 and 158840)
 			     */
-			    if ((node->doc != NULL) &&
-			        (node->doc->name != NULL) &&
-				(node->doc->name[0] != ' ')) {
+			    if (node->doc != NULL) {
 				len = (int)
 				    XSLT_RUNTIME_EXTRA(ctxt, sel->lenExtra);
-				XSLT_RUNTIME_EXTRA(ctxt,
+				if ((node->doc->name != NULL) &&
+				    (node->doc->name[0] != ' ')) {
+				    XSLT_RUNTIME_EXTRA(ctxt,
 					sel->previousExtra) = node;
-				XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
-				    (void *) pos;
+				    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra) =
+					(void *) pos;
+				}
 			    }
 			    ix = pos;
 			} else

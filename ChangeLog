@@ -1,3 +1,10 @@
+Mon Nov 22 08:10:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: small change to previous fix for bug 153137,
+	  fixes bug 158840.
+	* tests/general/bug-157.*, tests/general/Makefile.am,
+	  tests/docs/bug-157.*, tests/docs/Makefile.am: added test for this
+
 Sun Nov 21 09:42:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: enhanced code to assure the "current
