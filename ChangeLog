@@ -1,3 +1,8 @@
+Sat Apr 28 16:28:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c : changed the way --repeat works when
+	  used twice
+
 Sat Apr 28 16:19:06 CEST 2001 Bjorn Reese <breese@users.sourceforge.net>
 
 	* libxslt/numbers.c libxslt/preproc.c tests/REC/test-7.7-3.out:

@@ -74,7 +74,10 @@ main(int argc, char **argv) {
 	    xsltSetGenericDebugFunc(stderr, NULL);
 	} else if ((!strcmp(argv[i], "-repeat")) ||
 		   (!strcmp(argv[i], "--repeat"))) {
-	    repeat++;
+	    if (repeat == 0)
+		repeat = 20;
+	    else
+		repeat = 100;
 	} else if ((!strcmp(argv[i], "-novalid")) ||
 		   (!strcmp(argv[i], "--novalid"))) {
 	    novalid++;
@@ -197,7 +200,7 @@ main(int argc, char **argv) {
 		gettimeofday(&begin, NULL);
 	    if (repeat) {
 		int j;
-		for (j = 0;j < 19; j++) {
+		for (j = 0;j < repeat; j++) {
 		    res = xsltApplyStylesheet(cur, doc, params);
 		    xmlFreeDoc(res);
 		    xmlFreeDoc(doc);
@@ -213,8 +216,8 @@ main(int argc, char **argv) {
 		msec += (end.tv_usec - begin.tv_usec) / 1000;
 		if (repeat)
 		    fprintf(stderr,
-			    "Applying stylesheet 20 times took %ld ms\n",
-			    msec);
+			    "Applying stylesheet %d times took %ld ms\n",
+			    repeat, msec);
 		else
 		    fprintf(stderr, "Applying stylesheet took %ld ms\n",
 			    msec);
