@@ -658,6 +658,11 @@ xsltStylesheetPtr style,xmlDocPtr doc,const char **params,FILE * output
 xsltStylesheetPtr style,xmlDocPtr doc,const char **params,const char *output,xmlSAXHandlerPtr SAX,xmlOutputBufferPtr IObuf
 </FUNCTION>
 <FUNCTION>
+<NAME>xsltRunStylesheetUser</NAME>
+<RETURNS>int 	</RETURNS>
+xsltStylesheetPtr style,xmlDocPtr doc,const char **params,const char *output,xmlSAXHandlerPtr SAX,xmlOutputBufferPtr IObuf,FILE * profile,xsltTransformContextPtr userCtxt
+</FUNCTION>
+<FUNCTION>
 <NAME>xsltApplyOneTemplate</NAME>
 <RETURNS>void 	</RETURNS>
 xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr list,xsltTemplatePtr templ,xsltStackElemPtr params

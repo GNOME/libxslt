@@ -284,6 +284,35 @@ HREF="XMLSAXHANDLERPTR"
 HREF="XMLOUTPUTBUFFERPTR"
 >xmlOutputBufferPtr</GTKDOCLINK
 > IObuf);
+int         <A
+HREF="libxslt-transform.html#XSLTRUNSTYLESHEETUSER"
+>xsltRunStylesheetUser</A
+>           (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc,
+                                             const char **params,
+                                             const char *output,
+                                             <GTKDOCLINK
+HREF="XMLSAXHANDLERPTR"
+>xmlSAXHandlerPtr</GTKDOCLINK
+> SAX,
+                                             <GTKDOCLINK
+HREF="XMLOUTPUTBUFFERPTR"
+>xmlOutputBufferPtr</GTKDOCLINK
+> IObuf,
+                                             <GTKDOCLINK
+HREF="FILE-CAPS"
+>FILE</GTKDOCLINK
+> *profile,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> userCtxt);
 void        <A
 HREF="libxslt-transform.html#XSLTAPPLYONETEMPLATE"
 >xsltApplyOneTemplate</A
@@ -663,7 +692,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1130"
+NAME="AEN1137"
 ></A
 ><H2
 >Description</H2
@@ -673,14 +702,14 @@ NAME="AEN1130"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1133"
+NAME="AEN1140"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1135"
+NAME="AEN1142"
 ></A
 ><H3
 ><A
@@ -707,7 +736,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1141"
+NAME="AEN1148"
 ></A
 ><P
 ></P
@@ -745,7 +774,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1150"
+NAME="AEN1157"
 ></A
 ><H3
 ><A
@@ -772,7 +801,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1156"
+NAME="AEN1163"
 ></A
 ><P
 ></P
@@ -808,7 +837,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1165"
+NAME="AEN1172"
 ></A
 ><H3
 ><A
@@ -846,7 +875,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1174"
+NAME="AEN1181"
 ></A
 ><P
 ></P
@@ -916,7 +945,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1191"
+NAME="AEN1198"
 ></A
 ><H3
 ><A
@@ -951,7 +980,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1199"
+NAME="AEN1206"
 ></A
 ><P
 ></P
@@ -989,7 +1018,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1208"
+NAME="AEN1215"
 ></A
 ><H3
 ><A
@@ -1037,7 +1066,7 @@ its own transformation context.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1219"
+NAME="AEN1226"
 ></A
 ><P
 ></P
@@ -1175,7 +1204,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1252"
+NAME="AEN1259"
 ></A
 ><H3
 ><A
@@ -1209,7 +1238,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1260"
+NAME="AEN1267"
 ></A
 ><P
 ></P
@@ -1264,7 +1293,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1273"
+NAME="AEN1280"
 ></A
 ><H3
 ><A
@@ -1311,7 +1340,7 @@ module elements.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1284"
+NAME="AEN1291"
 ></A
 ><P
 ></P
@@ -1398,7 +1427,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1305"
+NAME="AEN1312"
 ></A
 ><H3
 ><A
@@ -1437,7 +1466,7 @@ NOTE: This may lead to a non-wellformed output XML wise !</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1314"
+NAME="AEN1321"
 ></A
 ><P
 ></P
@@ -1524,7 +1553,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1335"
+NAME="AEN1342"
 ></A
 ><H3
 ><A
@@ -1567,7 +1596,7 @@ the given output.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1345"
+NAME="AEN1352"
 ></A
 ><P
 ></P
@@ -1671,7 +1700,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1370"
+NAME="AEN1377"
 ></A
 ><H3
 ><A
@@ -1750,7 +1779,7 @@ since the interface uses only UTF8</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1386"
+NAME="AEN1393"
 ></A
 ><P
 ></P
@@ -1889,7 +1918,267 @@ error.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1419"
+NAME="AEN1426"
+></A
+><H3
+><A
+NAME="XSLTRUNSTYLESHEETUSER"
+></A
+>xsltRunStylesheetUser ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltRunStylesheetUser           (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc,
+                                             const char **params,
+                                             const char *output,
+                                             <GTKDOCLINK
+HREF="XMLSAXHANDLERPTR"
+>xmlSAXHandlerPtr</GTKDOCLINK
+> SAX,
+                                             <GTKDOCLINK
+HREF="XMLOUTPUTBUFFERPTR"
+>xmlOutputBufferPtr</GTKDOCLINK
+> IObuf,
+                                             <GTKDOCLINK
+HREF="FILE-CAPS"
+>FILE</GTKDOCLINK
+> *profile,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> userCtxt);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Apply the stylesheet to the document and generate the output according
+to <TT
+CLASS="PARAMETER"
+><I
+>output</I
+></TT
+> <TT
+CLASS="PARAMETER"
+><I
+>SAX</I
+></TT
+> and <TT
+CLASS="PARAMETER"
+><I
+>IObuf</I
+></TT
+>. It's an error to specify both <TT
+CLASS="PARAMETER"
+><I
+>SAX</I
+></TT
+> and <TT
+CLASS="PARAMETER"
+><I
+>IObuf</I
+></TT
+>.</P
+><P
+>NOTE: This may lead to a non-wellformed output XML wise !
+NOTE: This may also result in multiple files being generated
+NOTE: using IObuf, the result encoding used will be the one used for
+creating the output buffer, use the following macro to read it
+from the stylesheet
+XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+NOTE: using SAX, any encoding specified in the stylesheet will be lost
+since the interface uses only UTF8</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN1444"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a parsed XSLT stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>doc</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a parsed XML document</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>params</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a NULL terminated arry of parameters names/values tuples</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>output</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the URL/filename ot the generated resource if available</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>SAX</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a SAX handler for progressive callback output (not implemented yet)</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>IObuf</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an output buffer for progressive output (not implemented yet)</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>profile</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  profile FILE * output or NULL</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>userCtxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  user provided transform context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the number of by written to the main resource or -1 in case of
+error.</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1485"
 ></A
 ><H3
 ><A
@@ -1937,7 +2226,7 @@ caller to handle them back (they may be reused).</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1430"
+NAME="AEN1496"
 ></A
 ><P
 ></P
@@ -2043,7 +2332,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1455"
+NAME="AEN1521"
 ></A
 ><H3
 ><A
@@ -2085,7 +2374,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1465"
+NAME="AEN1531"
 ></A
 ><P
 ></P
@@ -2174,7 +2463,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1486"
+NAME="AEN1552"
 ></A
 ><H3
 ><A
@@ -2217,7 +2506,7 @@ called directly</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1496"
+NAME="AEN1562"
 ></A
 ><P
 ></P
@@ -2306,7 +2595,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1517"
+NAME="AEN1583"
 ></A
 ><H3
 ><A
@@ -2348,7 +2637,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1527"
+NAME="AEN1593"
 ></A
 ><P
 ></P
@@ -2437,7 +2726,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1548"
+NAME="AEN1614"
 ></A
 ><H3
 ><A
@@ -2479,7 +2768,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1558"
+NAME="AEN1624"
 ></A
 ><P
 ></P
@@ -2568,7 +2857,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1579"
+NAME="AEN1645"
 ></A
 ><H3
 ><A
@@ -2610,7 +2899,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1589"
+NAME="AEN1655"
 ></A
 ><P
 ></P
@@ -2699,7 +2988,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1610"
+NAME="AEN1676"
 ></A
 ><H3
 ><A
@@ -2741,7 +3030,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1620"
+NAME="AEN1686"
 ></A
 ><P
 ></P
@@ -2830,7 +3119,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1641"
+NAME="AEN1707"
 ></A
 ><H3
 ><A
@@ -2872,7 +3161,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1651"
+NAME="AEN1717"
 ></A
 ><P
 ></P
@@ -2961,7 +3250,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1672"
+NAME="AEN1738"
 ></A
 ><H3
 ><A
@@ -3003,7 +3292,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1682"
+NAME="AEN1748"
 ></A
 ><P
 ></P
@@ -3092,7 +3381,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1703"
+NAME="AEN1769"
 ></A
 ><H3
 ><A
@@ -3134,7 +3423,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1713"
+NAME="AEN1779"
 ></A
 ><P
 ></P
@@ -3223,7 +3512,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1734"
+NAME="AEN1800"
 ></A
 ><H3
 ><A
@@ -3265,7 +3554,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1744"
+NAME="AEN1810"
 ></A
 ><P
 ></P
@@ -3354,7 +3643,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1765"
+NAME="AEN1831"
 ></A
 ><H3
 ><A
@@ -3396,7 +3685,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1775"
+NAME="AEN1841"
 ></A
 ><P
 ></P
@@ -3485,7 +3774,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1796"
+NAME="AEN1862"
 ></A
 ><H3
 ><A
@@ -3527,7 +3816,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1806"
+NAME="AEN1872"
 ></A
 ><P
 ></P
@@ -3616,7 +3905,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1827"
+NAME="AEN1893"
 ></A
 ><H3
 ><A
@@ -3658,7 +3947,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1837"
+NAME="AEN1903"
 ></A
 ><P
 ></P
@@ -3747,7 +4036,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1858"
+NAME="AEN1924"
 ></A
 ><H3
 ><A
@@ -3789,7 +4078,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1868"
+NAME="AEN1934"
 ></A
 ><P
 ></P
@@ -3878,7 +4167,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1889"
+NAME="AEN1955"
 ></A
 ><H3
 ><A
@@ -3920,7 +4209,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1899"
+NAME="AEN1965"
 ></A
 ><P
 ></P
@@ -4009,7 +4298,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1920"
+NAME="AEN1986"
 ></A
 ><H3
 ><A
@@ -4051,7 +4340,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1930"
+NAME="AEN1996"
 ></A
 ><P
 ></P
@@ -4140,7 +4429,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1951"
+NAME="AEN2017"
 ></A
 ><H3
 ><A
@@ -4182,7 +4471,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1961"
+NAME="AEN2027"
 ></A
 ><P
 ></P
@@ -4271,7 +4560,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1982"
+NAME="AEN2048"
 ></A
 ><H3
 ><A
@@ -4301,7 +4590,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1989"
+NAME="AEN2055"
 ></A
 ><P
 ></P
@@ -4339,7 +4628,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1998"
+NAME="AEN2064"
 ></A
 ><H3
 ><A
@@ -4383,7 +4672,7 @@ to the xslDebugBreak function</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2008"
+NAME="AEN2074"
 ></A
 ><P
 ></P

@@ -1,3 +1,8 @@
+Mon Apr 15 19:27:31 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.16
+	* doc/*: updated and rebuilt the docs
+
 Mon Apr 15 17:27:51 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attributes.c: removed a warning
