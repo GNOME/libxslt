@@ -1,3 +1,10 @@
+Wed Dec  1 14:30:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xslt.c: applied patch from Mark Vakoc fixing bug with
+	  namespace URI on template names.
+	* tests/namespaces/tst9*, tests/namespaces/Makefile.am: added
+	  test case for this
+
 Tue Nov 30 10:53:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: more on RVT's in XPath predicates, this

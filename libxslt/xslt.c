@@ -1768,7 +1768,10 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 		ret->nameURI = NULL;
 	    cur = ret->next;
 	    while (cur != NULL) {
-	        if (xmlStrEqual(cur->name, prop)) {
+	        if ((URI != NULL && xmlStrEqual(cur->name, prop) &&
+				xmlStrEqual(cur->nameURI, URI) ) ||
+		    (URI == NULL && cur->nameURI == NULL &&
+				xmlStrEqual(cur->name, prop))) {
 		    xsltTransformError(NULL, style, template,
 		        "xsl:template: error duplicate name '%s'\n", prop);
 		    style->errors++;
