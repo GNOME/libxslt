@@ -3682,7 +3682,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 error:
     if (res != NULL)
         xmlFreeDoc(res);
-    if (ctxt != NULL)
+    if ((ctxt != NULL) && (userCtxt == NULL))
         xsltFreeTransformContext(ctxt);
     return (NULL);
 }

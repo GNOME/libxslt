@@ -1,3 +1,8 @@
+Thu Aug 29 21:26:30 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: re-applied the patch from Nathan Myers about
+	  a possible memory leak in case of error
+
 Wed Aug 28 13:44:54 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/Libxslt-Logo-180x168.gif doc/Libxslt-Logo-90x34.gif:
