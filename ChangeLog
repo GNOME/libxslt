@@ -1,3 +1,8 @@
+Wed Jan 30 12:46:41 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: patch from Charles Bozeman to support
+	  child::* patterns.
+
 Wed Jan 30 12:35:28 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c: Bob Stayton pointed out a problem when

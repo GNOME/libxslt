@@ -1272,11 +1272,17 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		xmlFree(token);
 		token = xsltScanName(ctxt);
 		if (token == NULL) {
-		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
-		    xsltGenericError(xsltGenericErrorContext,
+	            if (CUR == '*') {
+            	        NEXT;
+	                PUSH(XSLT_OP_ALL, token, NULL);
+	                goto parse_predicate;
+	            } else {
+		        xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
+		        xsltGenericError(xsltGenericErrorContext,
 			    "xsltCompileStepPattern : QName expected\n");
-		    ctxt->error = 1;
-		    goto error;
+		        ctxt->error = 1;
+		        goto error;
+		    }
 		}
 		URI = xsltGetQNameURI(ctxt->elem, &token);
 		if (token == NULL) {
