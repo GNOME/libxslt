@@ -1,3 +1,18 @@
+Sat Sep 18 17:08:31 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: fixed problem with timezone offset
+	  (bug 153000)
+	* tests/exslt/date/add.1.out: changed regression test output,
+	  which was apparently incorrect for above case
+
+Sat Sep 18 00:04:02 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: re-arranged sequence of setting up
+	  namespaces within xsltCopyTree (see the list thread
+	  http://mail.gnome.org/archives/xml/2004-September/msg00072.html)
+	* tests/general/bug-104.out: slight change to expected output
+	  due to above fix
+
 Fri Sep 17 23:15:33 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: enhanced validation of date-time to catch

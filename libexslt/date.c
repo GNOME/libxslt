@@ -1449,7 +1449,7 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
         d->mon = 1;
 
     /* normalize for time zone offset */
-    u->sec += (d->tzo * 60);
+    u->sec -= (d->tzo * 60);	/* changed from + to - (bug 153000) */
     d->tzo = 0;
 
     /* normalization */
