@@ -1,3 +1,11 @@
+Thu Nov 14 10:03:12 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.c: make sure the fixup for key() reported
+	  by John Escott actually works.
+	* tests/docs/Makefile.am tests/docs/bug-98.xml
+	  tests/general/Makefile.am tests/general/bug-98.*: added the
+	  example in the regression tests for this case
+
 Wed Nov 13 10:35:46 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixes bug #97969 for @*[...] patterns

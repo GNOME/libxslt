@@ -270,8 +270,8 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	return;
     }
 
-    xmlXPathStringFunction(ctxt, 1);
     obj2 = valuePop(ctxt);
+    xmlXPathStringFunction(ctxt, 1);
     if ((obj2 == NULL) ||
 	(ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
 	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
@@ -283,7 +283,7 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     obj1 = valuePop(ctxt);
 
-    if (obj2->type == XPATH_NODESET) {
+    if ((obj2->type == XPATH_NODESET) || (obj2->type == XPATH_XSLT_TREE)) {
 	int i;
 	xmlXPathObjectPtr newobj, ret;
 
