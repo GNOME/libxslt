@@ -2392,7 +2392,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltTransformError(ctxt, NULL, inst,
 		"xsl:element : no namespace bound to prefix %s\n", prefix);
 	} else {
-	    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+	    ns = xsltGetNamespace(ctxt, inst, oldns, ctxt->insert);
 	}
     }
 
