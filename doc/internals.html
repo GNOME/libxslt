@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <title>The XSLT C library for Gnome explained</title>
@@ -423,7 +425,7 @@ stack).</p>
   <li>return</li>
 </ul>
 
-<p> sometime the work can be done directly by modifying in-situ the top object
+<p>sometime the work can be done directly by modifying in-situ the top object
 on the stack <code>ctxt-&gt;value</code>.</p>
 
 <h2><a name="stack">The XSLT variables stack frame</a></h2>
@@ -431,7 +433,7 @@ on the stack <code>ctxt-&gt;value</code>.</p>
 <p>Not to be confused with XPath object stack, this stack holds the XSLT
 variables and parameters as they are defined through the recursive calls of
 call-template, apply-templates and default templates. This is used to define
-the scope of variables being called. </p>
+the scope of variables being called.</p>
 
 <p>This part seems to be the most urgent attention right now, first it is done
 in a very ineficient way since the location of the variables and
@@ -448,7 +450,7 @@ code will be stable. <span style="background-color: #FF0000">TODO</span></p>
 <p>The API for registrering those is Not Yet Completed, it is possible do do
 though .... <span style="background-color: #FF0000">TODO</span></p>
 
-<h2><a name="Futher">Futher reading</a></h2>
+<h2><a name="Futher">Further reading</a></h2>
 
 <p>Michael Kay wrote <a
 href="http://www-106.ibm.com/developerworks/library/x-xslt2/?dwzone=x?open&amp;l=132%2ct=gr%2c+p=saxon">a
@@ -467,6 +469,9 @@ href="http://xmlsoft.org/xmlmem.html">memory management</a>.</p>
 <p>redesign the XSLT stack frame handling far too much work is done at
 execution time, similary for the attribute value templates handling, at least
 the embedded subexpressions ought to be precompiled.</p>
+
+<p>Allow output to be saved to a SAX like output (this notion of SAX like API
+for output should be added directly to libxml).</p>
 
 <p>Implement and test some of the optimisation explained by Michael Kay
 especially:</p>
