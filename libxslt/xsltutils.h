@@ -84,17 +84,6 @@ extern "C" {
       ((n)->type == XML_HTML_DOCUMENT_NODE)))
 #endif
 
-/**
- * xsltSortFunc:
- * @ctxt:    a transformation context
- * @sorts:   the node-set to sort
- * @nbsorts: the number of sorts
- *
- * Signature of the function to use during sorting
- */
-typedef void (*xsltSortFunc) (xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
-			      int nbsorts);
-
 /*
  * Our own version of namespaced atributes lookup.
  */
@@ -137,6 +126,8 @@ void		xsltTransformError		(xsltTransformContextPtr ctxt,
 
 void		xsltDocumentSortFunction	(xmlNodeSetPtr list);
 void		xsltSetSortFunc			(xsltSortFunc handler);
+void		xsltSetCtxtSortFunc		(xsltTransformContextPtr ctxt,
+						 xsltSortFunc handler);
 void		xsltDefaultSortFunction		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr *sorts,
 						 int nbsorts);

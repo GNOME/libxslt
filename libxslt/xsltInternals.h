@@ -148,6 +148,17 @@ typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
 				       xmlNodePtr inst,
 			               xsltElemPreCompPtr comp);
 
+/**
+ * xsltSortFunc:
+ * @ctxt:    a transformation context
+ * @sorts:   the node-set to sort
+ * @nbsorts: the number of sorts
+ *
+ * Signature of the function to use during sorting
+ */
+typedef void (*xsltSortFunc) (xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
+			      int nbsorts);
+
 typedef enum {
     XSLT_FUNC_COPY=1,
     XSLT_FUNC_SORT,
@@ -464,6 +475,8 @@ struct _xsltTransformContext {
 
     xmlGenericErrorFunc  error;		/* a specific error handler */
     void              * errctx;		/* context for the error handler */
+
+    xsltSortFunc      sortfunc;		/* a ctxt specific sort routine */
 };
 
 /**

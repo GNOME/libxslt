@@ -1,3 +1,10 @@
+Thu Nov 28 17:52:21 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltInternals.h libxslt/xsltutils.c libxslt/xsltutils.h
+	  win32/libxslt.def.src: applied another patch from Richard Jinks
+	  for the export of teh sorting routine and allowing per context
+	  sort.
+
 Wed Nov 27 13:33:26 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/preproc.c libxslt/xsltInternals.h libxslt/xsltutils.c

@@ -966,14 +966,19 @@ static xsltSortFunc xsltSortFunction = xsltDefaultSortFunction;
  *
  * reorder the current node list accordingly to the set of sorting
  * requirement provided by the arry of nodes.
- * This is a wrapper function, the actual function used can be overriden
- * using xsltSetSortFunc()
+ * This is a wrapper function, the actual function used is specified
+ * using xsltSetCtxtSortFunc() to set the context specific sort function,
+ * or xsltSetSortFunc() to set the global sort function.
+ * If a sort function is set on the context, this will get called.
+ * Otherwise the global sort function is called.
  */
 void
 xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr * sorts,
                    int nbsorts)
 {
-    if (xsltSortFunction != NULL)
+    if (ctxt->sortfunc != NULL)
+	(ctxt->sortfunc)(ctxt, sorts, nbsorts);
+    else if (xsltSortFunction != NULL)
         xsltSortFunction(ctxt, sorts, nbsorts);
 }
 
@@ -981,7 +986,8 @@ xsltDoSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr * sorts,
  * xsltSetSortFunc:
  * @handler:  the new handler function
  *
- * Function to reset the handler for XSLT sorting.
+ * Function to reset the global handler for XSLT sorting.
+ * If the handler is NULL, the default sort function will be used.
  */
 void
 xsltSetSortFunc(xsltSortFunc handler) {
@@ -989,6 +995,21 @@ xsltSetSortFunc(xsltSortFunc handler) {
 	xsltSortFunction = handler;
     else
 	xsltSortFunction = xsltDefaultSortFunction;
+}
+
+/**
+ * xsltSetCtxtSortFunc:
+ * @ctxt:  a XSLT process context
+ * @handler:  the new handler function
+ *
+ * Function to set the handler for XSLT sorting
+ * for the specified context. 
+ * If the handler is NULL, then the global
+ * sort function will be called
+ */
+void 
+xsltSetCtxtSortFunc(xsltTransformContextPtr ctxt, xsltSortFunc handler) {
+    ctxt->sortfunc = handler;
 }
 
 /************************************************************************
