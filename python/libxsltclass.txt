@@ -33,6 +33,7 @@ isBlank()
 loadStylesheetPI()
 newStylesheet()
 parseStylesheetDoc()
+parseStylesheetFile()
 
 # functions from module xsltutils
 calibrateAdjust()
@@ -110,6 +111,8 @@ Class transformCtxt()
     # functions from module templates
     attrListTemplateProcess()
     attrTemplateProcess()
+    attrTemplateValueProcess()
+    attrTemplateValueProcessNode()
     evalAttrValueTemplate()
     evalTemplateString()
 
@@ -117,6 +120,9 @@ Class transformCtxt()
     applyStripSpaces()
     freeTransformContext()
     registerAllElement()
+
+    # functions from module transform.c
+    copyTree()
 
     # functions from module variables
     evalGlobalVariables()

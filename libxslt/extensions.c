@@ -875,7 +875,7 @@ xsltUnregisterAllExtModules(void)
  * xsltXPathGetTransformContext:
  * @ctxt:  an XPath transformation context
  *
- * Returns the XSLT transformation context from the XPath transformation
+ * Provides the XSLT transformation context from the XPath transformation
  * context. This is useful when an XPath function in the extension module
  * is called by the XPath interpreter and that the XSLT context is needed
  * for example to retrieve the associated data pertaining to this XSLT

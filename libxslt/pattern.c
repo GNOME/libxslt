@@ -2221,36 +2221,3 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
         xsltFreeCompMatchList(style->commentMatch);
 }
 
-#if 0
-/**
- * xsltMatchPattern
- * @node: a node in the source tree
- * @pattern: an XSLT pattern
- * @ctxtdoc:  context document (for namespaces)
- * @ctxtnode:  context node (for namespaces)
- *
- * Determine if a node matches a pattern.
- */
-int
-xsltMatchPattern(xsltTransformContextPtr context,
-		 xmlNodePtr node,
-		 const xmlChar *pattern,
-		 xmlDocPtr ctxtdoc,
-		 xmlNodePtr ctxtnode)
-{
-    int match = 0;
-    xsltCompMatchPtr first, comp;
-
-    if ((context != NULL) && (pattern != NULL)) {
-	first = xsltCompilePattern(pattern, ctxtdoc, ctxtnode);
-	for (comp = first; comp != NULL; comp = comp->next) {
-	    match = xsltTestCompMatch(context, comp, node, NULL, NULL);
-	    if (match)
-		break; /* for */
-	}
-	if (first)
-	    xsltFreeCompMatchList(first);
-    }
-    return match;
-}
-#endif

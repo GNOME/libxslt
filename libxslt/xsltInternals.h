@@ -50,8 +50,29 @@ struct _xsltRuntimeExtra {
     void       *val;		/* data not needing deallocation */
 };
 
+/**
+ * XSLT_RUNTIME_EXTRA_LST:
+ * @ctxt: the transformation context
+ * @nr: the index
+ *
+ * Macro used to access extra information stored in the context
+ */
 #define XSLT_RUNTIME_EXTRA_LST(ctxt, nr) (ctxt)->extras[(nr)].info
+/**
+ * XSLT_RUNTIME_EXTRA_FREE:
+ * @ctxt: the transformation context
+ * @nr: the index
+ *
+ * Macro used to free extra information stored in the context
+ */
 #define XSLT_RUNTIME_EXTRA_FREE(ctxt, nr) (ctxt)->extras[(nr)].deallocate
+/**
+ * XSLT_RUNTIME_EXTRA:
+ * @ctxt: the transformation context
+ * @nr: the index
+ *
+ * Macro used to define extra information stored in the context
+ */
 #define	XSLT_RUNTIME_EXTRA(ctxt, nr) (ctxt)->extras[(nr)].val
 
 /**

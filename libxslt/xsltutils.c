@@ -476,6 +476,8 @@ xsltSetTransformErrorFunc(xsltTransformContextPtr ctxt,
 /**
  * xsltTransformError:
  * @ctxt:  an XSLT transformation context
+ * @style:  the XSLT stylesheet used
+ * @node:  the current node in the stylesheet
  * @msg:  the message to display/transmit
  * @...:  extra parameters for the message display
  *
@@ -631,10 +633,12 @@ xsltDocumentSortFunction(xmlNodeSetPtr list) {
 /**
  * xsltComputeSortResult:
  * @ctxt:  a XSLT process context
- * @sorts:  array of sort nodes
+ * @sort:  node list
  *
  * reorder the current node list accordingly to the set of sorting
  * requirement provided by the array of nodes.
+ *
+ * Returns a ordered XPath nodeset or NULL in case of error.
  */
 xmlXPathObjectPtr *
 xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
@@ -1321,7 +1325,6 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
  * @doc_txt_len:  Length of the generated XML text
  * @result:  the result xmlDocPtr
  * @style:  the stylesheet
- * @compression:  the compression factor (0 - 9 included)
  *
  * Save the result @result obtained by applying the @style stylesheet
  * to a file or @URL
@@ -1715,7 +1718,7 @@ static xsltDebuggerCallbacks xsltDebuggerCurrentCallbacks = {
 int xslDebugStatus;
 
 /**
- * xslSetDebuggerCallbacks:
+ * xsltSetDebuggerCallbacks:
  * @no : number of callbacks
  * @block : the block of callbacks
  * 
@@ -1777,7 +1780,7 @@ xslAddCall(xsltTemplatePtr templ, xmlNodePtr source)
 }
 
 /**
- * xslDropCall :
+ * xslDropCall:
  *
  * Drop the topmost item off the call stack
  */

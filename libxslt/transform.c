@@ -77,55 +77,187 @@ int xsltMaxDepth = 5000;
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
-/*
- * Generic function for accessing stacks in the transform Context
+/**
+ * templPush:
+ * @ctxt: the transformation context
+ * @value:  the template to push on the stack
+ *
+ * Push a template on the stack
+ *
+ * Returns the new index in the stack or 0 in case of error
  */
-
-#define PUSH_AND_POP(scope, type, name)					\
-scope int name##Push(xsltTransformContextPtr ctxt, type value) {	\
-    if (ctxt->name##Max == 0) {						\
-	ctxt->name##Max = 4;						\
-        ctxt->name##Tab = (type *) xmlMalloc(ctxt->name##Max *		\
-	              sizeof(ctxt->name##Tab[0]));			\
-        if (ctxt->name##Tab == NULL) {					\
-	    xmlGenericError(xmlGenericErrorContext,			\
-		    "malloc failed !\n");				\
-	    return(0);							\
-	}								\
-    }									\
-    if (ctxt->name##Nr >= ctxt->name##Max) {				\
-	ctxt->name##Max *= 2;						\
-        ctxt->name##Tab = (type *) xmlRealloc(ctxt->name##Tab,		\
-	             ctxt->name##Max * sizeof(ctxt->name##Tab[0]));	\
-        if (ctxt->name##Tab == NULL) {					\
-	    xmlGenericError(xmlGenericErrorContext,			\
-		    "realloc failed !\n");				\
-	    return(0);							\
-	}								\
-    }									\
-    ctxt->name##Tab[ctxt->name##Nr] = value;				\
-    ctxt->name = value;							\
-    return(ctxt->name##Nr++);						\
-}									\
-scope type name##Pop(xsltTransformContextPtr ctxt) {			\
-    type ret;								\
-    if (ctxt->name##Nr <= 0) return(0);					\
-    ctxt->name##Nr--;							\
-    if (ctxt->name##Nr > 0)						\
-	ctxt->name = ctxt->name##Tab[ctxt->name##Nr - 1];		\
-    else								\
-        ctxt->name = (type) 0;						\
-    ret = ctxt->name##Tab[ctxt->name##Nr];				\
-    ctxt->name##Tab[ctxt->name##Nr] = 0;				\
-    return(ret);							\
-}									\
-
-/*
- * Those macros actually generate the functions
+static int
+templPush(xsltTransformContextPtr ctxt, xsltTemplatePtr value)
+{
+    if (ctxt->templMax == 0) {
+        ctxt->templMax = 4;
+        ctxt->templTab =
+            (xsltTemplatePtr *) xmlMalloc(ctxt->templMax *
+                                          sizeof(ctxt->templTab[0]));
+        if (ctxt->templTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "malloc failed !\n");
+            return (0);
+        }
+    }
+    if (ctxt->templNr >= ctxt->templMax) {
+        ctxt->templMax *= 2;
+        ctxt->templTab =
+            (xsltTemplatePtr *) xmlRealloc(ctxt->templTab,
+                                           ctxt->templMax *
+                                           sizeof(ctxt->templTab[0]));
+        if (ctxt->templTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "realloc failed !\n");
+            return (0);
+        }
+    }
+    ctxt->templTab[ctxt->templNr] = value;
+    ctxt->templ = value;
+    return (ctxt->templNr++);
+}
+/**
+ * varsPop:
+ * @ctxt: the transformation context
+ *
+ * Pop a template value from the stack
+ *
+ * Returns the stored template value
  */
-PUSH_AND_POP(static, xsltTemplatePtr, templ)
-PUSH_AND_POP(static, xsltStackElemPtr, vars)
-PUSH_AND_POP(static, long, prof)
+static xsltTemplatePtr
+templPop(xsltTransformContextPtr ctxt)
+{
+    xsltTemplatePtr ret;
+
+    if (ctxt->templNr <= 0)
+        return (0);
+    ctxt->templNr--;
+    if (ctxt->templNr > 0)
+        ctxt->templ = ctxt->templTab[ctxt->templNr - 1];
+    else
+        ctxt->templ = (xsltTemplatePtr) 0;
+    ret = ctxt->templTab[ctxt->templNr];
+    ctxt->templTab[ctxt->templNr] = 0;
+    return (ret);
+}
+/**
+ * varsPush:
+ * @ctxt: the transformation context
+ * @value:  the variable to push on the stack
+ *
+ * Push a variable on the stack
+ *
+ * Returns the new index in the stack or 0 in case of error
+ */
+static int
+varsPush(xsltTransformContextPtr ctxt, xsltStackElemPtr value)
+{
+    if (ctxt->varsMax == 0) {
+        ctxt->varsMax = 4;
+        ctxt->varsTab =
+            (xsltStackElemPtr *) xmlMalloc(ctxt->varsMax *
+                                           sizeof(ctxt->varsTab[0]));
+        if (ctxt->varsTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "malloc failed !\n");
+            return (0);
+        }
+    }
+    if (ctxt->varsNr >= ctxt->varsMax) {
+        ctxt->varsMax *= 2;
+        ctxt->varsTab =
+            (xsltStackElemPtr *) xmlRealloc(ctxt->varsTab,
+                                            ctxt->varsMax *
+                                            sizeof(ctxt->varsTab[0]));
+        if (ctxt->varsTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "realloc failed !\n");
+            return (0);
+        }
+    }
+    ctxt->varsTab[ctxt->varsNr] = value;
+    ctxt->vars = value;
+    return (ctxt->varsNr++);
+}
+/**
+ * varsPop:
+ * @ctxt: the transformation context
+ *
+ * Pop a variable value from the stack
+ *
+ * Returns the stored variable value
+ */
+static xsltStackElemPtr
+varsPop(xsltTransformContextPtr ctxt)
+{
+    xsltStackElemPtr ret;
+
+    if (ctxt->varsNr <= 0)
+        return (0);
+    ctxt->varsNr--;
+    if (ctxt->varsNr > 0)
+        ctxt->vars = ctxt->varsTab[ctxt->varsNr - 1];
+    else
+        ctxt->vars = (xsltStackElemPtr) 0;
+    ret = ctxt->varsTab[ctxt->varsNr];
+    ctxt->varsTab[ctxt->varsNr] = 0;
+    return (ret);
+}
+/**
+ * profPush:
+ * @ctxt: the transformation context
+ * @value:  the profiling value to push on the stack
+ *
+ * Push a profiling value on the stack
+ *
+ * Returns the new index in the stack or 0 in case of error
+ */
+static int
+profPush(xsltTransformContextPtr ctxt, long value)
+{
+    if (ctxt->profMax == 0) {
+        ctxt->profMax = 4;
+        ctxt->profTab =
+            (long *) xmlMalloc(ctxt->profMax * sizeof(ctxt->profTab[0]));
+        if (ctxt->profTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "malloc failed !\n");
+            return (0);
+        }
+    }
+    if (ctxt->profNr >= ctxt->profMax) {
+        ctxt->profMax *= 2;
+        ctxt->profTab =
+            (long *) xmlRealloc(ctxt->profTab,
+                                ctxt->profMax * sizeof(ctxt->profTab[0]));
+        if (ctxt->profTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "realloc failed !\n");
+            return (0);
+        }
+    }
+    ctxt->profTab[ctxt->profNr] = value;
+    ctxt->prof = value;
+    return (ctxt->profNr++);
+}
+/**
+ * profPop:
+ * @ctxt: the transformation context
+ *
+ * Pop a profiling value from the stack
+ *
+ * Returns the stored profiling value
+ */
+static long
+profPop(xsltTransformContextPtr ctxt)
+{
+    long ret;
+
+    if (ctxt->profNr <= 0)
+        return (0);
+    ctxt->profNr--;
+    if (ctxt->profNr > 0)
+        ctxt->prof = ctxt->profTab[ctxt->profNr - 1];
+    else
+        ctxt->prof = (long) 0;
+    ret = ctxt->profTab[ctxt->profNr];
+    ctxt->profTab[ctxt->profNr] = 0;
+    return (ret);
+}
 
 /************************************************************************
  *									*
@@ -149,7 +281,7 @@ xsltSetXIncludeDefault(int xinclude) {
 /**
  * xsltGetXIncludeDefault:
  *
- * return the default state for XInclude processing
+ * Provides the default state for XInclude processing
  *
  * Returns 0 if there is no processing 1 otherwise
  */
@@ -1021,6 +1153,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
  * xsltProcessOneNode:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
+ * @params:  extra parameters passed to the template if any
  *
  * Process the source node.
  */
@@ -3350,7 +3483,7 @@ xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 /**
  * xsltApplyStripSpaces:
  * @ctxt:  a XSLT process context
- * @root:  the root of the XML tree
+ * @node:  the root of the XML tree
  *
  * Strip the unwanted ignorable spaces from the input tree
  */

@@ -1,3 +1,18 @@
+Wed Dec 11 18:45:09 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am doc/apibuild.py doc/libxslt-api.xml:
+	  copied over the apibuild.py from libxml2, adapted a bit and
+	  regenerated the API description in XML. Todo: libexslt-api.xml
+	* libxslt/attributes.c libxslt/documents.c libxslt/extensions.c
+	  libxslt/imports.c libxslt/numbers.c libxslt/numbersInternals.h
+	  libxslt/pattern.c libxslt/preproc.c libxslt/security.c
+	  libxslt/templates.c libxslt/transform.c libxslt/transform.h
+	  libxslt/variables.c libxslt/xslt.c libxslt/xsltInternals.h
+	  libxslt/xsltutils.c libxslt/xsltutils.h: cleanup based on the
+	  report from the scripts.
+	* libxslt.spec.in: make sure libxslt-api.xml ends up in the devel
+	  package
+
 Thu Dec  5 18:05:44 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: xsl:element generated superfluous xmlns

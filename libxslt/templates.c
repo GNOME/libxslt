@@ -224,7 +224,6 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  the XSLT transformation context
  * @str:  the attribute template node value
  * @node:  the node hosting the attribute
- * @nsList:  the list of in-scope namespaces to use
  *
  * Process the given string, allowing to pass a namespace mapping
  * context and return the new string value.

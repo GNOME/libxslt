@@ -163,7 +163,7 @@ xsltSetDefaultSecurityPrefs(xsltSecurityPrefsPtr sec) {
 }
 
 /**
- * xsltSetDefaultSecurityPrefs:
+ * xsltGetDefaultSecurityPrefs:
  *
  * Get the default security preference application-wide
  *

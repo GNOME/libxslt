@@ -826,6 +826,8 @@ xsltFormatNumberPreSuffix(xsltDecimalFormatPtr self, xmlChar **format, xsltForma
  *   ?      multiply by 1000 and show as per mille
  *   X      any other characters can be used in the prefix or suffix
  *   '      used to quote special characters in a prefix or suffix.
+ *
+ * Returns a possible XPath error
  */
 xmlXPathError
 xsltFormatNumberConversion(xsltDecimalFormatPtr self,

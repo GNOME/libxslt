@@ -45,6 +45,8 @@
  * @doc:  a parsed XML document
  *
  * Register a new document, apply key computations
+ *
+ * Returns a handler to the document
  */
 xsltDocumentPtr	
 xsltNewDocument(xsltTransformContextPtr ctxt, xmlDocPtr doc) {
@@ -72,6 +74,8 @@ xsltNewDocument(xsltTransformContextPtr ctxt, xmlDocPtr doc) {
  * @doc:  a parsed XML document
  *
  * Register a new document, apply key computations
+ *
+ * Returns a handler to the document
  */
 xsltDocumentPtr	
 xsltNewStyleDocument(xsltStylesheetPtr style, xmlDocPtr doc) {
@@ -267,7 +271,7 @@ xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
 /**
  * xsltFindDocument:
  * @ctxt: an XSLT transformation context
- * @@doc: a parsed XML document
+ * @doc: a parsed XML document
  *
  * Try to find a document within the XSLT transformation context
  *

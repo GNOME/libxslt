@@ -2,7 +2,8 @@
 EXTRA_DIST = 			\
 	libxslt-api.xml		\
 	libxslt-decl.txt	\
-	xsltproc.xml
+	xsltproc.xml		\
+	apibuild.py
 
 # The name of the module.
 DOC_MODULE=libxslt-$(VERSION)
@@ -56,8 +57,8 @@ xml: sgml
 	-@(for s in sgml/*.sgml ; do name=`basename $$s .sgml` ; \
 	   xmllint --sgml $$s > xml/"$$name".xml ; done)
 	   
-libxslt-api.xml libxslt-refs.xml: xml parsedecl.py libxslt-decl.txt libxslt-decl-list.txt
-	-(./parsedecl.py)
+libxslt-api.xml: apibuild.py ../libxslt/*.h ../libxslt/*.c
+	-(./apibuild.py)
 
 api: libxslt-api.xml libxslt-refs.xml
 

@@ -266,10 +266,9 @@ xsltMergeAttrElemList(xsltAttrElemPtr list, xsltAttrElemPtr old) {
 /**
  * xsltParseStylesheetAttributeSet:
  * @style:  the XSLT stylesheet
- * @template:  the "preserve-space" element
+ * @cur:  the "attribute-set" element
  *
- * parse an XSLT stylesheet preserve-space element and record
- * elements needing preserving
+ * parse an XSLT stylesheet attribute-set element
  */
 
 void

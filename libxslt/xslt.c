@@ -68,53 +68,67 @@ double xmlXPathStringEvalNumber(const xmlChar *str);
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
-/*
- * Generic function for accessing stacks in the stylesheet
+/**
+ * exclPrefixPush:
+ * @style: the transformation stylesheet
+ * @value:  the excluded prefix to push on the stack
+ *
+ * Push an excluded prefix on the stack
+ *
+ * Returns the new index in the stack or 0 in case of error
  */
-
-#define PUSH_AND_POP(scope, type, name)					\
-scope int name##Push(xsltStylesheetPtr style, type value)	 {	\
-    if (style->name##Max == 0) {					\
-	style->name##Max = 4;						\
-        style->name##Tab = (type *) xmlMalloc(style->name##Max *	\
-	              sizeof(style->name##Tab[0]));			\
-        if (style->name##Tab == NULL) {					\
-	    xmlGenericError(xmlGenericErrorContext,			\
-		    "malloc failed !\n");				\
-	    return(0);							\
-	}								\
-    }									\
-    if (style->name##Nr >= style->name##Max) {				\
-	style->name##Max *= 2;						\
-        style->name##Tab = (type *) xmlRealloc(style->name##Tab,	\
-	             style->name##Max * sizeof(style->name##Tab[0]));	\
-        if (style->name##Tab == NULL) {					\
-	    xmlGenericError(xmlGenericErrorContext,			\
-		    "realloc failed !\n");				\
-	    return(0);							\
-	}								\
-    }									\
-    style->name##Tab[style->name##Nr] = value;				\
-    style->name = value;						\
-    return(style->name##Nr++);						\
-}									\
-scope type name##Pop(xsltStylesheetPtr style)	 {			\
-    type ret;								\
-    if (style->name##Nr <= 0) return(0);				\
-    style->name##Nr--;							\
-    if (style->name##Nr > 0)						\
-	style->name = style->name##Tab[style->name##Nr - 1];		\
-    else								\
-        style->name = NULL;						\
-    ret = style->name##Tab[style->name##Nr];				\
-    style->name##Tab[style->name##Nr] = 0;				\
-    return(ret);							\
-}									\
-
-/*
- * Those macros actually generate the functions
+static int
+exclPrefixPush(xsltStylesheetPtr style, xmlChar * value)
+{
+    if (style->exclPrefixMax == 0) {
+        style->exclPrefixMax = 4;
+        style->exclPrefixTab =
+            (xmlChar * *)xmlMalloc(style->exclPrefixMax *
+                                   sizeof(style->exclPrefixTab[0]));
+        if (style->exclPrefixTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "malloc failed !\n");
+            return (0);
+        }
+    }
+    if (style->exclPrefixNr >= style->exclPrefixMax) {
+        style->exclPrefixMax *= 2;
+        style->exclPrefixTab =
+            (xmlChar * *)xmlRealloc(style->exclPrefixTab,
+                                    style->exclPrefixMax *
+                                    sizeof(style->exclPrefixTab[0]));
+        if (style->exclPrefixTab == NULL) {
+            xmlGenericError(xmlGenericErrorContext, "realloc failed !\n");
+            return (0);
+        }
+    }
+    style->exclPrefixTab[style->exclPrefixNr] = value;
+    style->exclPrefix = value;
+    return (style->exclPrefixNr++);
+}
+/**
+ * exclPrefixPop:
+ * @style: the transformation stylesheet
+ *
+ * Pop an excluded prefix value from the stack
+ *
+ * Returns the stored excluded prefix value
  */
-PUSH_AND_POP(static, xmlChar *, exclPrefix)
+static xmlChar *
+exclPrefixPop(xsltStylesheetPtr style)
+{
+    xmlChar *ret;
+
+    if (style->exclPrefixNr <= 0)
+        return (0);
+    style->exclPrefixNr--;
+    if (style->exclPrefixNr > 0)
+        style->exclPrefix = style->exclPrefixTab[style->exclPrefixNr - 1];
+    else
+        style->exclPrefix = NULL;
+    ret = style->exclPrefixTab[style->exclPrefixNr];
+    style->exclPrefixTab[style->exclPrefixNr] = 0;
+    return (ret);
+}
 
 /************************************************************************
  *									*
@@ -240,11 +254,13 @@ xsltFreeDecimalFormatList(xsltStylesheetPtr self)
  * @name: the decimal-format name to find
  *
  * Find decimal-format by name
+ *
+ * Returns the xsltDecimalFormatPtr
  */
 xsltDecimalFormatPtr
 xsltDecimalFormatGetByName(xsltStylesheetPtr sheet, xmlChar *name)
 {
-    xsltDecimalFormatPtr result;
+    xsltDecimalFormatPtr result = NULL;
 
     if (name == NULL)
 	return sheet->decimalFormat;

@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 /**
- * TODO:
+ * XSLT_TODO:
  *
  * Macro to flag unimplemented blocks.
  */
@@ -34,7 +34,7 @@ extern "C" {
             __FILE__, __LINE__);
 
 /**
- * STRANGE:
+ * XSLT_STRANGE:
  *
  * Macro to flag that a problem was detected internally.
  */
@@ -175,6 +175,11 @@ xmlDocPtr	xsltGetProfileInformation	(xsltTransformContextPtr ctxt);
 long		xsltTimestamp			(void);
 void		xsltCalibrateAdjust		(long delta);
 
+/**
+ * XSLT_TIMESTAMP_TICS_PER_SEC:
+ *
+ * Sampling precision for profiling
+ */
 #define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
 
 /*

@@ -102,6 +102,7 @@ rm -fr %{buildroot}
 %defattr(-, root, root)
 
 %doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
+%doc doc/libxslt-api.xml
 %doc %{_mandir}/man4/libxslt.4*
 %doc %{_mandir}/man4/libexslt.4*
 %{_libdir}/lib*.so

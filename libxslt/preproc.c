@@ -193,8 +193,11 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
  * xsltDocumentComp:
  * @style:  the XSLT stylesheet
  * @inst:  the instruction in the stylesheet
+ * @function:  unused
  *
  * Pre process an XSLT-1.1 document element
+ *
+ * Returns a precompiled data structure for the element
  */
 xsltElemPreCompPtr
 xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,

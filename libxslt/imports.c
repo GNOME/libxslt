@@ -56,11 +56,11 @@
 /**
  * xsltParseStylesheetImport:
  * @style:  the XSLT stylesheet
- * @template:  the "strip-space" element
+ * @cur:  the import element
  *
- * parse an XSLT stylesheet strip-space element and record
- * elements needing stripping. Returns zero on success and something else
- * on failure.
+ * parse an XSLT stylesheet import element
+ *
+ * Returns 0 in case of success -1 in case of failure.
  */
 
 int
@@ -139,11 +139,11 @@ error:
 /**
  * xsltParseStylesheetInclude:
  * @style:  the XSLT stylesheet
- * @template:  the "strip-space" element
+ * @cur:  the include node
  *
- * parse an XSLT stylesheet strip-space element and record
- * elements needing stripping. Returns zero on success, something else
- * on failure.
+ * parse an XSLT stylesheet include element
+ *
+ * Returns 0 in case of success -1 in case of failure
  */
 
 int
@@ -230,7 +230,7 @@ xsltNextImport(xsltStylesheetPtr cur) {
  * xsltNeedElemSpaceHandling:
  * @ctxt:  an XSLT transformation context
  *
- * Returns whether that stylesheet requires white-space stripping
+ * Checks whether that stylesheet requires white-space stripping
  *
  * Returns 1 if space should be stripped, 0 if not
  */
