@@ -26,6 +26,23 @@
 
 /************************************************************************
  * 									*
+ * 		Handling of XSLT debugging				*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltDebug:
+ * @ctxt:  an XSLT processing context
+ * @node:  The current node
+ *
+ * Process an debug node
+ */
+void 
+xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node) {
+}
+
+/************************************************************************
+ * 									*
  * 		Handling of XSLT stylesheets messages			*
  * 									*
  ************************************************************************/
@@ -280,7 +297,9 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
     if ((buf == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
 
-    if (style->methodURI != NULL) {
+    if ((style->methodURI != NULL) &&
+	((style->method == NULL) ||
+	 (!xmlStrEqual(style->method, (const xmlChar *) "xhtml")))) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltSaveResultTo : unknown ouput method\n");
         return(-1);
@@ -295,6 +314,9 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	root = NULL;
     if ((style->method != NULL) &&
 	(xmlStrEqual(style->method, (const xmlChar *) "html"))) {
+	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
+    } else if ((style->method != NULL) &&
+	(xmlStrEqual(style->method, (const xmlChar *) "xhtml"))) {
 	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
     } else if ((style->method != NULL) &&
 	       (xmlStrEqual(style->method, (const xmlChar *) "text"))) {

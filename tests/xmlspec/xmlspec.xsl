@@ -1310,6 +1310,7 @@
 	  </xsl:if>
           <code><xsl:apply-templates/></code>
         </td>
+	<xsltdebug/>
         <xsl:apply-templates
           select="following-sibling::*[1][name()='com' or
                                           name()='constraint' or

@@ -119,25 +119,47 @@ main(int argc, char **argv) {
 		fprintf(stderr, "no result for %s\n", argv[i]);
 		continue;
 	    }
-	    if (cur->methodURI == NULL) {
-		if (timing)
-		    gettimeofday(&begin, NULL);
 #ifdef LIBXML_DEBUG_ENABLED
-		if (debug)
-		    xmlDebugDumpDocument(stdout, res);
-		else
+	    if (debug)
+		xmlDebugDumpDocument(stdout, res);
+	    else {
 #endif
-		    xsltSaveResultToFile(stdout, res, cur);
-		if (timing) {
-		    long msec;
-		    gettimeofday(&end, NULL);
-		    msec = end.tv_sec - begin.tv_sec;
-		    msec *= 1000;
-		    msec += (end.tv_usec - begin.tv_usec) / 1000;
-		    fprintf(stderr, "Saving result took %ld ms\n",
-			    msec);
+		if (cur->methodURI == NULL) {
+		    if (timing)
+			gettimeofday(&begin, NULL);
+			xsltSaveResultToFile(stdout, res, cur);
+		    if (timing) {
+			long msec;
+			gettimeofday(&end, NULL);
+			msec = end.tv_sec - begin.tv_sec;
+			msec *= 1000;
+			msec += (end.tv_usec - begin.tv_usec) / 1000;
+			fprintf(stderr, "Saving result took %ld ms\n",
+				msec);
+		    }
+		} else {
+		    if (xmlStrEqual(cur->method, "xhtml")) {
+			fprintf(stderr, "non standard output xhtml\n");
+			if (timing)
+			    gettimeofday(&begin, NULL);
+			    xsltSaveResultToFile(stdout, res, cur);
+			if (timing) {
+			    long msec;
+			    gettimeofday(&end, NULL);
+			    msec = end.tv_sec - begin.tv_sec;
+			    msec *= 1000;
+			    msec += (end.tv_usec - begin.tv_usec) / 1000;
+			    fprintf(stderr, "Saving result took %ld ms\n",
+				    msec);
+			}
+		    } else {
+			fprintf(stderr, "Unsupported non standard output %s\n",
+				cur->method);
+		    }
 		}
+#ifdef LIBXML_DEBUG_ENABLED
 	    }
+#endif
 
 	    xmlFreeDoc(res);
 	}

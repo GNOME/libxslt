@@ -1,3 +1,8 @@
+Tue Feb 13 18:07:12 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xsltproc.c: cleanup and debug
+	* libxslt/xsltutils.[ch] : added a small debugging hook
+
 Mon Feb 12 18:30:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/FEATURES libxslt/transform.c: added support for

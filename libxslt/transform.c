@@ -948,6 +948,35 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	case XML_HTML_DOCUMENT_NODE:
 	case XML_ELEMENT_NODE:
 	    break;
+	case XML_CDATA_SECTION_NODE:
+	    template = xsltGetTemplate(ctxt, node);
+	    if (template) {
+		xmlNodePtr oldNode;
+
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltDefaultProcessOneNode: applying template for CDATA %s\n",
+		                 node->content);
+#endif
+		oldNode = ctxt->node;
+		ctxt->node = node;
+		xsltApplyOneTemplate(ctxt, node, template->content);
+		ctxt->node = oldNode;
+	    } else /* if (ctxt->mode == NULL) */ {
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltDefaultProcessOneNode: copy CDATA %s\n",
+		                 node->content);
+#endif
+		copy = xmlNewDocText(ctxt->output, node->content);
+		if (copy != NULL) {
+		    xmlAddChild(ctxt->insert, copy);
+		} else {
+		    xsltGenericError(xsltGenericErrorContext,
+			"xsltDefaultProcessOneNode: cdata copy failed\n");
+		}
+	    }
+	    return;
 	case XML_TEXT_NODE:
 	    template = xsltGetTemplate(ctxt, node);
 	    if (template) {
@@ -964,9 +993,13 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		ctxt->node = oldNode;
 	    } else /* if (ctxt->mode == NULL) */ {
 #ifdef DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltDefaultProcessOneNode: copy text %s\n",
-		                 node->content);
+		if (node->content == NULL)
+		    xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltDefaultProcessOneNode: copy empty text\n");
+		else
+		    xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltDefaultProcessOneNode: copy text %s\n",
+				     node->content);
 #endif
 		copy = xmlCopyNode(node, 0);
 		if (copy != NULL) {
@@ -1091,15 +1124,43 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		ctxt->xpathCtxt->proximityPosition = childno;
 		xsltProcessOneNode(ctxt, cur);
 		break;
-	    case XML_TEXT_NODE:
 	    case XML_CDATA_SECTION_NODE:
+		template = xsltGetTemplate(ctxt, node);
+		if (template) {
+		    xmlNodePtr oldNode;
+
+#ifdef DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltDefaultProcessOneNode: applying template for CDATA %s\n",
+				     node->content);
+#endif
+		    oldNode = ctxt->node;
+		    ctxt->node = node;
+		    xsltApplyOneTemplate(ctxt, node, template->content);
+		    ctxt->node = oldNode;
+		} else /* if (ctxt->mode == NULL) */ {
+#ifdef DEBUG_PROCESS
+		    xsltGenericDebug(xsltGenericDebugContext,
+		     "xsltDefaultProcessOneNode: copy CDATA %s\n",
+				     node->content);
+#endif
+		    copy = xmlNewDocText(ctxt->output, node->content);
+		    if (copy != NULL) {
+			xmlAddChild(ctxt->insert, copy);
+		    } else {
+			xsltGenericError(xsltGenericErrorContext,
+			    "xsltDefaultProcessOneNode: cdata copy failed\n");
+		    }
+		}
+		break;
+	    case XML_TEXT_NODE:
 		template = xsltGetTemplate(ctxt, cur);
 		if (template) {
 		    xmlNodePtr oldNode;
 
 #ifdef DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltDefaultProcessOneNode: applying template for text %s\n",
+	     "xsltDefaultProcessOneNode: applying template for text %s\n",
 				     node->content);
 #endif
 		    oldNode = ctxt->node;
@@ -1110,9 +1171,13 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->node = oldNode;
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef DEBUG_PROCESS
-		    xsltGenericDebug(xsltGenericDebugContext,
+		    if (cur->content == NULL)
+			xsltGenericDebug(xsltGenericDebugContext,
+			 "xsltDefaultProcessOneNode: copy empty text\n");
+		    else
+			xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltDefaultProcessOneNode: copy text %s\n",
-				     node->content);
+					 cur->content);
 #endif
 		    copy = xmlCopyNode(cur, 0);
 		    if (copy != NULL) {
@@ -1578,6 +1643,9 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltGenericError(xsltGenericErrorContext,
 			"xsltApplyOneTemplate: text copy failed\n");
 	    }
+	} else if ((cur->type == XML_ELEMENT_NODE) &&
+		   (xmlStrEqual(cur->name, "xsltdebug"))) {
+	    xsltDebug(ctxt, cur);
 	} else if (cur->type == XML_ELEMENT_NODE) {
 #ifdef DEBUG_PROCESS
 	    xsltGenericDebug(xsltGenericDebugContext,
@@ -1944,6 +2012,9 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	if (node->type == XML_DOCUMENT_NODE)
 	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltProcessOneNode: no template found for /\n");
+	else if (node->type == XML_CDATA_SECTION_NODE)
+	    xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltProcessOneNode: no template found for CDATA\n");
 	else 
 	    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltProcessOneNode: no template found for %s\n", node->name);
@@ -2003,6 +2074,14 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
     if ((style->method != NULL) &&
 	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {
 	if (xmlStrEqual(style->method, (const xmlChar *) "html")) {
+	    ctxt->type = XSLT_OUTPUT_HTML;
+	    res = htmlNewDoc(style->doctypePublic, style->doctypeSystem);
+	    if (res == NULL)
+		goto error;
+	} else if (xmlStrEqual(style->method, (const xmlChar *) "xhtml")) {
+	    xsltGenericError(xsltGenericErrorContext,
+	     "xsltApplyStylesheet: insupported method xhtml, using html\n",
+		             style->method);
 	    ctxt->type = XSLT_OUTPUT_HTML;
 	    res = htmlNewDoc(style->doctypePublic, style->doctypeSystem);
 	    if (res == NULL)
