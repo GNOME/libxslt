@@ -1,3 +1,7 @@
+Sun Nov 11 21:15:05 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixing bug #64298 reported by T. V. Raman
+
 Sat Nov 10 14:01:44 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing 1.0.7

@@ -1934,14 +1934,16 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    } else
 			ret = xmlCopyProp(ctxt->insert, attr);
 
-		    cur = ctxt->insert->properties;
-		    if (cur != NULL) {
-			while (cur->next != NULL)
-			    cur = cur->next;
-			cur->next = ret;
-			ret->prev = cur;
-		    }else
-			ctxt->insert->properties = ret;
+		    if (ret != NULL) {
+			cur = ctxt->insert->properties;
+			if (cur != NULL) {
+			    while (cur->next != NULL)
+				cur = cur->next;
+			    cur->next = ret;
+			    ret->prev = cur;
+			} else
+			    ctxt->insert->properties = ret;
+		    }
 		}
 		break;
 	    }
