@@ -160,6 +160,7 @@ EXTRA_DIST =	\
 	bug-158.xml bug-158.doc \
 	bug-159.xml \
 	bug-160.xml \
+	bug-161.xml \
 	character.xml \
 	array.xml \
 	items.xml

@@ -99,6 +99,7 @@ struct _xsltCompMatch {
     const xmlChar *modeURI;      /* the mode URI */
     xsltTemplatePtr template;    /* the associated template */
 
+    int direct;
     /* TODO fix the statically allocated size steps[] */
     int nbStep;
     int maxStep;
@@ -147,6 +148,7 @@ xsltNewCompMatch(void) {
     cur->maxStep = 40;
     cur->nsNr = 0;
     cur->nsList = NULL;
+    cur->direct = 0;
     return(cur);
 }
 
@@ -367,6 +369,27 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
 	i++;
     }
     comp->steps[comp->nbStep++].op = XSLT_OP_END;
+    /*
+     * detect consecutive XSLT_OP_PREDICATE indicating a direct
+     * matching should be done.
+     */
+    for (i = 0;i < comp->nbStep - 1;i++) {
+        if ((comp->steps[i].op == XSLT_OP_PREDICATE) &&
+	    (comp->steps[i + 1].op == XSLT_OP_PREDICATE)) {
+
+	    comp->direct = 1;
+	    if (comp->pattern[0] != '/') {
+		xmlChar *query;
+
+		query = xmlStrdup((const xmlChar *)"//");
+		query = xmlStrcat(query, comp->pattern);
+
+		xmlFree((xmlChar *) comp->pattern);
+		comp->pattern = query;
+	    }
+	    break;
+	}
+    }
 }
 
 /************************************************************************
@@ -397,6 +420,107 @@ xsltPatPushState(xsltStepStates *states, int step, xmlNodePtr node) {
 #if 0
     fprintf(stderr, "Push: %d, %s\n", step, node->name);
 #endif
+    return(0);
+}
+
+/**
+ * xsltTestCompMatchDirect:
+ * @ctxt:  a XSLT process context
+ * @comp: the precompiled pattern
+ * @node: a node
+ *
+ * Test whether the node matches the pattern, do a direct evalutation
+ * and not a step by step evaluation.
+ *
+ * Returns 1 if it matches, 0 if it doesn't and -1 in case of failure
+ */
+static int
+xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
+	                xmlNodePtr node) {
+    xsltStepOpPtr sel = NULL;
+    xmlDocPtr prevdoc;
+    xmlDocPtr doc;
+    xmlXPathObjectPtr list;
+    int ix, j;
+    int nocache = 0;
+    int isRVT;
+
+    doc = node->doc;
+    if ((doc != NULL) &&
+	(doc->name != NULL) &&
+	(doc->name[0] == ' ') &&
+	(xmlStrEqual(BAD_CAST doc->name,
+		     BAD_CAST " fake node libxslt")))
+	isRVT = 1;
+    else
+	isRVT = 0;
+    sel = &comp->steps[0]; /* store extra in first step arbitrarily */
+
+    prevdoc = (xmlDocPtr)
+	XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr);
+    ix = XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival);
+    list = (xmlXPathObjectPtr)
+	XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra);
+    
+    if ((list == NULL) || (prevdoc != doc)) {
+	xmlXPathObjectPtr newlist;
+	xmlNodePtr parent = node->parent;
+	xmlDocPtr olddoc;
+	xmlNodePtr oldnode;
+
+	oldnode = ctxt->xpathCtxt->node;
+	olddoc = ctxt->xpathCtxt->doc;
+	ctxt->xpathCtxt->node = node;
+	ctxt->xpathCtxt->doc = doc;
+	newlist = xmlXPathEval(comp->pattern, ctxt->xpathCtxt);
+	ctxt->xpathCtxt->node = oldnode;
+	ctxt->xpathCtxt->doc = olddoc;
+	if (newlist == NULL)
+	    return(-1);
+	if (newlist->type != XPATH_NODESET) {
+	    xmlXPathFreeObject(newlist);
+	    return(-1);
+	}
+	ix = 0;
+
+	if ((parent == NULL) || (node->doc == NULL) || isRVT)
+	    nocache = 1;
+	
+	if (nocache == 0) {
+	    if (list != NULL)
+		xmlXPathFreeObject(list);
+	    list = newlist;
+
+	    XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra) =
+		(void *) list;
+	    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr) =
+		(void *) doc;
+	    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) =
+		0;
+	    XSLT_RUNTIME_EXTRA_FREE(ctxt, sel->lenExtra) =
+		(xmlFreeFunc) xmlXPathFreeObject;
+	} else
+	    list = newlist;
+    }
+    if ((list->nodesetval == NULL) ||
+	(list->nodesetval->nodeNr <= 0)) {
+	if (nocache == 1)
+	    xmlXPathFreeObject(list);
+	return(0);
+    }
+    /* TODO: store the index and use it for the scan */
+    if (ix == 0) {
+	for (j = 0;j < list->nodesetval->nodeNr;j++) {
+	    if (list->nodesetval->nodeTab[j] == node) {
+		if (nocache == 1)
+		    xmlXPathFreeObject(list);
+		return(1);
+	    }
+	}
+    } else {
+    }
+    if (nocache == 1)
+	xmlXPathFreeObject(list);
     return(0);
 }
 
@@ -449,6 +573,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	if (comp->modeURI != NULL)
 	    return(0);
     }
+
     i = 0;
 restart:
     for (;i < comp->nbStep;i++) {
@@ -667,6 +792,20 @@ restart:
 		int pos = 0, len = 0;
 		int isRVT;
 
+		/*
+		 * when there is cascading XSLT_OP_PREDICATE, then use a
+		 * direct computation approach. It's not done directly
+		 * at the beginning of the routine to filter out as much
+		 * as possible this costly computation.
+		 */
+		if (comp->direct) {
+		    if (states.states != NULL) {
+			/* Free the rollback states */
+			xmlFree(states.states);
+		    }
+		    return(xsltTestCompMatchDirect(ctxt, comp, node));
+		}
+
 		doc = node->doc;
 		if ((doc != NULL) &&
 		    (doc->name != NULL) &&
@@ -676,98 +815,10 @@ restart:
 		    isRVT = 1;
 		else
 		    isRVT = 0;
-		/*
-		 * The simple existing predicate code cannot handle
-		 * properly cascaded predicates. If in this situation
-		 * compute directly the full node list once and check
-		 * if the node is in the result list.
-		 */
-		if (comp->steps[i + 1].op == XSLT_OP_PREDICATE) {
-		    xmlDocPtr prevdoc;
-		    xmlXPathObjectPtr list;
-		    int ix, j;
-		    int nocache = 0;
 
-		    prevdoc = (xmlDocPtr)
-			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr);
-		    ix = XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival);
-		    list = (xmlXPathObjectPtr)
-			XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra);
-		    
-		    if ((list == NULL) || (prevdoc != doc)) {
-			xmlChar *query;
-			xmlXPathObjectPtr newlist;
-			xmlNodePtr parent = node->parent;
-			xmlDocPtr olddoc;
-			xmlNodePtr oldnode;
-
-			if (comp->pattern[0] == '/')
-			    query = xmlStrdup(comp->pattern);
-			else {
-			    query = xmlStrdup((const xmlChar *)"//");
-			    query = xmlStrcat(query, comp->pattern);
-			}
-			oldnode = ctxt->xpathCtxt->node;
-			olddoc = ctxt->xpathCtxt->doc;
-			ctxt->xpathCtxt->node = node;
-			ctxt->xpathCtxt->doc = doc;
-			newlist = xmlXPathEval(query, ctxt->xpathCtxt);
-			ctxt->xpathCtxt->node = oldnode;
-			ctxt->xpathCtxt->doc = olddoc;
-			xmlFree(query);
-			if (newlist == NULL)
-			    return(-1);
-			if (newlist->type != XPATH_NODESET) {
-			    xmlXPathFreeObject(newlist);
-			    return(-1);
-			}
-			ix = 0;
-
-			if ((parent == NULL) || (node->doc == NULL) || isRVT)
-			    nocache = 1;
-			
-			if (nocache == 0) {
-			    if (list != NULL)
-				xmlXPathFreeObject(list);
-			    list = newlist;
-
-			    XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra) =
-				(void *) list;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr) =
-				(void *) doc;
-			    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) =
-			        0;
-			    XSLT_RUNTIME_EXTRA_FREE(ctxt, sel->lenExtra) =
-				(xmlFreeFunc) xmlXPathFreeObject;
-			} else
-			    list = newlist;
-		    }
-		    if ((list->nodesetval == NULL) ||
-			(list->nodesetval->nodeNr <= 0)) {
-			if (nocache == 1)
-			    xmlXPathFreeObject(list);
-			goto rollback;
-		    }
-		    /* TODO: store the index and use it for the scan */
-		    if (ix == 0) {
-			for (j = 0;j < list->nodesetval->nodeNr;j++) {
-			    if (list->nodesetval->nodeTab[j] == node) {
-				if (nocache == 1)
-				    xmlXPathFreeObject(list);
-				goto found;
-			    }
-			}
-		    } else {
-		    }
-		    if (nocache == 1)
-			xmlXPathFreeObject(list);
-		    goto rollback;
-		}
 		/*
 		 * Depending on the last selection, one may need to
 		 * recompute contextSize and proximityPosition.
-		 *
-		 * TODO: make this thread safe !
 		 */
 		oldCS = ctxt->xpathCtxt->contextSize;
 		oldCP = ctxt->xpathCtxt->proximityPosition;

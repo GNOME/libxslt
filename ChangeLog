@@ -1,3 +1,11 @@
+Thu Mar 31 11:54:31 CEST 2005
+
+	* libxslt/pattern.c: fixed bug #171488 with cascading select in
+	  patterns.
+	* tests/general/bug-161.*, tests/general/Makefile.am,
+	  tests/docs/bug-161.*, tests/docs/Makefile.am: added test provided
+	  by Ben Ko
+	
 Thu Mar 31 00:28:38 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* tests/plugins/Makefile.am: fixed build outside of source tree
