@@ -774,10 +774,6 @@ main(int argc, char **argv)
 			errorno = 5;
 			goto done;
 		    }
-		    if (cur->indent == 1)
-			xmlIndentTreeOutput = 1;
-		    else
-			xmlIndentTreeOutput = 0;
 		    i++;
 		} else {
 		    xmlFreeDoc(style);

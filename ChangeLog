@@ -1,3 +1,7 @@
+Wed Feb  5 00:07:43 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: fixed bug #99623
+
 Tue Feb  4 22:10:17 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixing bug #105116 sometimes one need
