@@ -1,8 +1,14 @@
+Sun Dec 21 13:56:48 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-139.xml
+	  tests/general/Makefile.am tests/general/bug-139*: added
+	  test for entities parsing (Bug #129489)
+
 Sun Dec 21 20:33:27 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* tests/docs/Makefile.am tests/docs/bug-138.xml
 	  tests/general/Makefile.am tests/general/bug-138*: added
-	  test for namespace problem (Bug 129624)
+	  test for namespace problem (Bug #129624)
 
 Sun Dec 21 13:17:05 CET 2003 Daniel Veillard <daniel@veillard.com>
 
