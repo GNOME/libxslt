@@ -9,6 +9,9 @@
 #include "exslt.h"
 #include "utils.h"
 
+/* TODO: cleanup when headers change have propagated in a libxml release */
+extern double xmlXPathNAN;
+
 /**
  * exslMathMin:
  * @ns:  a node-set
@@ -20,7 +23,7 @@
  *         xmlXPathNAN if @ns is NULL or empty or if one of the nodes
  *         turns into NaN.
  */
-double
+static double
 exslMathMin (xmlNodeSetPtr ns) {
     double ret, cur;
     int i;
@@ -47,7 +50,7 @@ exslMathMin (xmlNodeSetPtr ns) {
  *
  * Wraps #exslMathMin for use by the XPath processor.
  */
-void
+static void
 exslMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns;
     double ret;
@@ -81,7 +84,7 @@ exslMathMinFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         xmlXPathNAN if @ns is NULL or empty or if one of the nodes
  *         turns into NaN.
  */
-double
+static double
 exslMathMax (xmlNodeSetPtr ns) {
     double ret, cur;
     int i;
@@ -108,7 +111,7 @@ exslMathMax (xmlNodeSetPtr ns) {
  *
  * Wraps #exslMathMax for use by the XPath processor.
  */
-void
+static void
 exslMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns;
     double ret;
@@ -138,7 +141,7 @@ exslMathMaxFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  * Returns the nodes in the node-set whose value is the maximum value
  *         for the node-set.
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslMathHighest (xmlNodeSetPtr ns) {
     xmlNodeSetPtr ret = xmlXPathNodeSetCreate(NULL);
     double max, cur;
@@ -179,7 +182,7 @@ exslMathHighest (xmlNodeSetPtr ns) {
  *
  * Wraps #exslMathHighest for use by the XPath processor
  */
-void
+static void
 exslMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
 
@@ -209,7 +212,7 @@ exslMathHighestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  * Returns the nodes in the node-set whose value is the minimum value
  *         for the node-set.
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslMathLowest (xmlNodeSetPtr ns) {
     xmlNodeSetPtr ret = xmlXPathNodeSetCreate(NULL);
     double min, cur;
@@ -250,7 +253,7 @@ exslMathLowest (xmlNodeSetPtr ns) {
  *
  * Wraps #exslMathLowest for use by the XPath processor
  */
-void
+static void
 exslMathLowestFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
 
@@ -280,7 +283,14 @@ exslMathInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 			     URI, exslMathHighestFunction);
     xsltRegisterExtFunction (ctxt, (const xmlChar *) "lowest",
 			     URI, exslMathLowestFunction);
+    return(NULL);
 }
+
+/**
+ * exslMathRegister:
+ *
+ * Registers the EXSLT - Math module
+ */
 
 void
 exslMathRegister (void) {

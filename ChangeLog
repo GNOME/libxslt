@@ -1,3 +1,17 @@
+Mon Jul 16 14:26:48 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* Makefile.am configure.in libexslt/Makefile.am:
+	  Integration of libexslt in the build system
+	* libxslt/Makefile.am libxslt/xsltproc.c libxslt/xsltutils.c
+	  xsltproc/Makefile.am xsltproc/xsltproc.c:
+	  Moved xsltproc to a separate directory, linked it to libexslt,
+	  and added exslt version reports to -V
+	* tests/*/Makefile.am: updated the path to xsltproc
+	* libexslt/common.c libexslt/exslt.h libexslt/exsltconfig.h.in
+	  libexslt/functions.c libexslt/math.c libexslt/sets.c: added
+	  versionning informations, some cleanup, and added documentation
+	  to a couple of exported functions
+
 Sun Jul 15 15:27:47 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/Makefile.am: account for new source files

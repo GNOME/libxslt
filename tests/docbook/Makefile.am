@@ -2,7 +2,7 @@
 
 all: single xtchunk # Avoid doing the test in normal pass
 
-$(top_builddir)/libxslt/xsltproc:
+$(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = README VERSION
@@ -18,7 +18,7 @@ single:
 	  echo -n "$$i : html " ; \
 	  out=$(srcdir)/result/html/`basename $$i .xml`.tst; \
 	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/libxslt/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
+	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
 	  if [ -f $$html ] ; then \
 	      grep -v id < $$html > $$html.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -31,7 +31,7 @@ single:
 	  out=$(srcdir)/result/fo/`basename $$i .xml`.tst; \
 	  fo=$(srcdir)/result/fo/`basename $$i .xml`.fo; \
 	  msg=$(srcdir)/result/fo/`basename $$i .xml`.msg; \
-	  $(top_builddir)/libxslt/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out 2> $$msg ; \
+	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out 2> $$msg ; \
 	  if [ -f $$fo ] ; then \
 	      grep -v id < $$fo > $$fo.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -43,7 +43,7 @@ single:
 	  echo -n "xhtml " ; \
 	  out=$(srcdir)/result/xhtml/`basename $$i .xml`.tst; \
 	  xhtml=$(srcdir)/result/xhtml/`basename $$i .xml`.xhtml; \
-	  $(top_builddir)/libxslt/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
+	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
 	  if [ -f $$xhtml ] ; then \
 	      grep -v id < $$xhtml > $$xhtml.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -60,7 +60,7 @@ xtchunk:
 	@(for i in $(srcdir)/test/gdp-handbook.xml ; do \
 	  echo "Testing HTML chunking on $$i :" ; \
 	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/libxslt/xsltproc -o $(srcdir)/result/xtchunk/html/gdp-handbook $(srcdir)/html/xtchunk.xsl $$i ; \
+	  $(top_builddir)/xsltproc/xsltproc -o $(srcdir)/result/xtchunk/html/gdp-handbook $(srcdir)/html/xtchunk.xsl $$i ; \
 	  for html in $(srcdir)/result/xtchunk/html/*.html ; do \
 	      orig=$(srcdir)/result/xtchunk/html/`basename $$html .html`.orig ;\
 	      if [ -f $$orig ] ; then \
@@ -77,7 +77,7 @@ xtchunk:
 #
 # The full set of tests
 #
-htmltests: $(top_builddir)/libxslt/xsltproc
+htmltests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
 	@echo "##"
 	@echo "## HTML stylesheets regression tests"
@@ -86,7 +86,7 @@ htmltests: $(top_builddir)/libxslt/xsltproc
 	  echo $$i ; \
 	  out=$(srcdir)/result/html/`basename $$i .xml`.tst; \
 	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/libxslt/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
+	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
 	  if [ -f $$html ] ; then \
 	      grep -v id < $$html > $$html.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -96,7 +96,7 @@ htmltests: $(top_builddir)/libxslt/xsltproc
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	  rm -f $$out ; done )
 
-fotests: $(top_builddir)/libxslt/xsltproc
+fotests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
 	@echo "##"
 	@echo "## XSL FO stylesheets regression tests"
@@ -106,7 +106,7 @@ fotests: $(top_builddir)/libxslt/xsltproc
 	  out=$(srcdir)/result/fo/`basename $$i .xml`.tst; \
 	  fo=$(srcdir)/result/fo/`basename $$i .xml`.fo; \
 	  msg=$(srcdir)/result/fo/`basename $$i .xml`.msg; \
-	  $(top_builddir)/libxslt/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out  2> $$msg ; \
+	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/fo/docbook.xsl $$i > $$out  2> $$msg ; \
 	  if [ -f $$fo ] ; then \
 	      grep -v id < $$fo > $$fo.noid ; \
 	      grep -v id < $$out > $$out.noid ; \
@@ -117,7 +117,7 @@ fotests: $(top_builddir)/libxslt/xsltproc
 	  rm -f $$out $$msg ; \
 	  done )
 
-xhtmltests: $(top_builddir)/libxslt/xsltproc
+xhtmltests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
 	@echo "##"
 	@echo "## XHTML stylesheets regression tests"
@@ -126,7 +126,7 @@ xhtmltests: $(top_builddir)/libxslt/xsltproc
 	  echo $$i ; \
 	  out=$(srcdir)/result/xhtml/`basename $$i .xml`.tst; \
 	  xhtml=$(srcdir)/result/xhtml/`basename $$i .xml`.xhtml; \
-	  $(top_builddir)/libxslt/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
+	  $(top_builddir)/xsltproc/xsltproc --nonet $(srcdir)/xhtml/docbook.xsl $$i > $$out ; \
 	  if [ -f $$xhtml ] ; then \
 	      grep -v id < $$xhtml > $$xhtml.noid ; \
 	      grep -v id < $$out > $$out.noid ; \

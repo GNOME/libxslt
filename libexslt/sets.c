@@ -20,7 +20,7 @@
  * Returns the difference between the two node sets, or nodes1 if
  *         nodes2 is empty
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslSetsDifference (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     xmlNodeSetPtr ret;
     int i, l1;
@@ -50,7 +50,7 @@ exslSetsDifference (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
  *
  * Wraps #exslSetsDifference for use by the XPath processor
  */
-void
+static void
 exslSetsDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
@@ -91,7 +91,7 @@ exslSetsDifferenceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  * Returns a node set comprising the nodes that are within both the
  *         node sets passed as arguments
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslSetsIntersection (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     xmlNodeSetPtr ret = xmlXPathNodeSetCreate(NULL);
     int i, l1;
@@ -119,7 +119,7 @@ exslSetsIntersection (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
  *
  * Wraps #exslSetsIntersection for use by the XPath processor
  */
-void
+static void
 exslSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
@@ -158,7 +158,7 @@ exslSetsIntersectionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  * Returns a subset of the nodes contained in @nodes, or @nodes if
  *         it is empty
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslSetsDistinctSorted (xmlNodeSetPtr nodes) {
     xmlNodeSetPtr ret;
     xmlHashTablePtr hash;
@@ -214,7 +214,7 @@ exslSetsDistinct (xmlNodeSetPtr nodes) {
  *
  * Wraps #exslSetsDistinct for use by the XPath processor
  */
-void
+static void
 exslSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr ns, ret;
 
@@ -246,7 +246,7 @@ exslSetsDistinctFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  * Returns true (1) if @nodes1 shares any node with @nodes2, false (0)
  *         otherwise
  */
-int
+static int
 exslSetsHasSameNodes (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     int i, l;
     xmlNodePtr cur;
@@ -271,7 +271,7 @@ exslSetsHasSameNodes (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
  *
  * Wraps #exslSetsHasSameNodes for use by the XPath processor
  */
-void
+static void
 exslSetsHasSameNodesFunction (xmlXPathParserContextPtr ctxt,
 			      int nargs) {
     xmlNodeSetPtr arg1, arg2;
@@ -314,7 +314,7 @@ exslSetsHasSameNodesFunction (xmlXPathParserContextPtr ctxt,
  *         @nodes if @node is NULL or an empty node-set if @nodes
  *         doesn't contain @node
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslSetsNodeLeadingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
     int i, l;
     xmlNodePtr cur;
@@ -370,7 +370,7 @@ exslSetsNodeLeading (xmlNodeSetPtr nodes, xmlNodePtr node) {
  *         in document order, @nodes1 if @nodes2 is NULL or empty or
  *         an empty node-set if @nodes1 doesn't contain @nodes2
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslSetsLeadingSorted (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
     if (xmlXPathNodeSetIsEmpty(nodes2))
 	return(nodes1);
@@ -411,7 +411,7 @@ exslSetsLeading (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
  *
  * Wraps #exslSetsLeading for use by the XPath processor
  */
-void
+static void
 exslSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
@@ -452,7 +452,7 @@ exslSetsLeadingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
  *         @nodes if @node is NULL or an empty node-set if @nodes
  *         doesn't contain @node
  */
-xmlNodeSetPtr
+static xmlNodeSetPtr
 exslSetsNodeTrailingSorted (xmlNodeSetPtr nodes, xmlNodePtr node) {
     int i, l;
     xmlNodePtr cur;
@@ -549,7 +549,7 @@ exslSetsTrailing (xmlNodeSetPtr nodes1, xmlNodeSetPtr nodes2) {
  *
  * Wraps #exslSetsTrailing for use by the XPath processor
  */
-void
+static void
 exslSetsTrailingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlNodeSetPtr arg1, arg2, ret;
 
@@ -595,6 +595,12 @@ exslSetsInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
     return(NULL);
 }
+
+/**
+ * exslCommonRegister:
+ *
+ * Registers the EXSLT - Sets module
+ */
 
 void
 exslSetsRegister (void) {

@@ -1,14 +1,22 @@
+#include <libxml/xmlversion.h>
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
+#include <libxslt/xsltconfig.h>
 #include <libxslt/xsltutils.h>
 #include <libxslt/xsltInternals.h>
 #include <libxslt/extensions.h>
 #include <libxslt/transform.h>
 
+#include "exsltconfig.h"
 #include "exslt.h"
 #include "utils.h"
+
+const char *exsltLibraryVersion = LIBEXSLT_VERSION_STRING;
+const int exsltLibexsltVersion = LIBEXSLT_VERSION;
+const int exsltLibxsltVersion = LIBXSLT_VERSION;
+const int exsltLibxmlVersion = LIBXML_VERSION;
 
 /**
  * exslNodeSetFunction:
@@ -18,7 +26,7 @@
  *    node-set exsl:node-set (result-tree-fragment)
  * for use by the XPath processor.
  */
-void
+static void
 exslNodeSetFunction(xmlXPathParserContextPtr ctxt, int nargs){
     if (nargs != 1) {
 	xmlXPathSetArityError(ctxt);
@@ -32,7 +40,7 @@ exslNodeSetFunction(xmlXPathParserContextPtr ctxt, int nargs){
     ctxt->value->boolval = 1;
 }
 
-void
+static void
 exslObjectTypeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj, ret;
 
@@ -86,6 +94,12 @@ exslCommonInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
     return(NULL);
 }
+
+/**
+ * exslCommonRegister:
+ *
+ * Registers the EXSLT - Common module
+ */
 
 void
 exslCommonRegister (void) {

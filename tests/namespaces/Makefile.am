@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-$(top_builddir)/libxslt/xsltproc:
+$(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = \
@@ -12,7 +12,7 @@ EXTRA_DIST = \
 
 all: test
 
-test tests: $(top_builddir)/libxslt/xsltproc
+test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
 	@(for i in $(srcdir)/*.xml ; do \
 	  doc="`basename $$i .xml`" ; \
@@ -22,7 +22,7 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	  name="`basename $$j .xsl`"; \
 	  out=$(srcdir)/"$$name".out; \
 	  echo $$j ; \
-	  $(top_builddir)/libxslt/xsltproc $$j $$i > result.$$name;\
+	  $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name;\
 	  if [ ! -f $$out ] ; then cp result.$$name $$out ; \
 	  else diff $$out result.$$name ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\

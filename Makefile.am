@@ -1,5 +1,7 @@
 SUBDIRS = \
 	libxslt \
+	libexslt \
+	xsltproc \
 	tests \
 	doc
 
@@ -11,7 +13,7 @@ bin_SCRIPTS = xslt-config
 EXTRA_DIST = xsltConf.sh.in xslt-config.in libxslt.spec libxslt.spec.in \
              FEATURES TODO COPYING.LIB Copyright IPR \
 	     win32/libxslt/libxslt.def win32/libxslt/libxslt.dsw \
-	     win32/libxslt/libxslt_so.dsp win32/libxslt/xsltproc.dsp
+	     win32/libxslt/libxslt_so.dsp win32/xsltproc/xsltproc.dsp
 
 ## We create xsltConf.sh here and not from configure because we want
 ## to get the paths expanded correctly.  Macros like srcdir are given

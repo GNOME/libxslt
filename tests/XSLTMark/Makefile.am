@@ -47,7 +47,7 @@ EXTRA_DIST = \
   xslbench3.out xslbench3.xsl \
   xslbenchdream.xml
 
-$(top_builddir)/libxslt/xsltproc:
+$(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 all: alphabetize attsets avts axis backwards bottles breadth brutal chart \
@@ -74,7 +74,7 @@ db10000.xml: $(srcdir)/dbgen.pl
 alphabetize: db100.xml
 	@(echo > .memdump)
 	@(echo alphabetize)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/alphabetize.xsl db100.xml > alphabetize.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/alphabetize.xsl db100.xml > alphabetize.tmp; \
 	  if [ ! -f $(srcdir)/alphabetize.out ] ; then cp alphabetize.tmp $(srcdir)/alphabetize.out ; \
 	  else diff $(srcdir)/alphabetize.out alphabetize.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -85,7 +85,7 @@ alphabetize: db100.xml
 avts: db100.xml
 	@(echo > .memdump)
 	@(echo avts)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/avts.xsl db100.xml > avts.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/avts.xsl db100.xml > avts.tmp; \
 	  if [ ! -f $(srcdir)/avts.out ] ; then cp avts.tmp $(srcdir)/avts.out ; \
 	  else diff $(srcdir)/avts.out avts.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -95,7 +95,7 @@ avts: db100.xml
 creation: db100.xml
 	@(echo > .memdump)
 	@(echo creation)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/creation.xsl db100.xml > creation.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/creation.xsl db100.xml > creation.tmp; \
 	  if [ ! -f $(srcdir)/creation.out ] ; then cp creation.tmp $(srcdir)/creation.out ; \
 	  else diff $(srcdir)/creation.out creation.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -105,7 +105,7 @@ creation: db100.xml
 dbonerow: db10000.xml
 	@(echo > .memdump)
 	@(echo dbonerow)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/dbonerow.xsl db10000.xml > dbonerow.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/dbonerow.xsl db10000.xml > dbonerow.tmp; \
 	  if [ ! -f $(srcdir)/dbonerow.out ] ; then cp dbonerow.tmp $(srcdir)/dbonerow.out ; \
 	  else diff $(srcdir)/dbonerow.out dbonerow.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -115,7 +115,7 @@ dbonerow: db10000.xml
 dbtail: db100.xml
 	@(echo > .memdump)
 	@(echo dbtail)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/dbtail.xsl db100.xml > dbtail.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/dbtail.xsl db100.xml > dbtail.tmp; \
 	  if [ ! -f $(srcdir)/dbtail.out ] ; then cp dbtail.tmp $(srcdir)/dbtail.out ; \
 	  else diff $(srcdir)/dbtail.out dbtail.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -125,7 +125,7 @@ dbtail: db100.xml
 decoy: db100.xml
 	@(echo > .memdump)
 	@(echo decoy)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/decoy.xsl db100.xml > decoy.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/decoy.xsl db100.xml > decoy.tmp; \
 	  if [ ! -f $(srcdir)/decoy.out ] ; then cp decoy.tmp $(srcdir)/decoy.out ; \
 	  else diff $(srcdir)/decoy.out decoy.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -135,7 +135,7 @@ decoy: db100.xml
 encrypt: db100.xml
 	@(echo > .memdump)
 	@(echo encrypt)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/encrypt.xsl db100.xml > encrypt.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/encrypt.xsl db100.xml > encrypt.tmp; \
 	  if [ ! -f $(srcdir)/encrypt.out ] ; then cp encrypt.tmp $(srcdir)/encrypt.out ; \
 	  else diff $(srcdir)/encrypt.out encrypt.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -145,7 +145,7 @@ encrypt: db100.xml
 functions: db100.xml
 	@(echo > .memdump)
 	@(echo functions)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/functions.xsl db100.xml > functions.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/functions.xsl db100.xml > functions.tmp; \
 	  if [ ! -f $(srcdir)/functions.out ] ; then cp functions.tmp $(srcdir)/functions.out ; \
 	  else diff $(srcdir)/functions.out functions.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -155,7 +155,7 @@ functions: db100.xml
 identity: db1000.xml
 	@(echo > .memdump)
 	@(echo identity)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/identity.xsl db1000.xml > identity.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/identity.xsl db1000.xml > identity.tmp; \
 	  if [ ! -f $(srcdir)/identity.out ] ; then cp identity.tmp $(srcdir)/identity.out ; \
 	  else diff $(srcdir)/identity.out identity.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -165,7 +165,7 @@ identity: db1000.xml
 inventory:
 	@(echo > .memdump)
 	@(echo inventory)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/inventory.xsl $(srcdir)/inventory.xml > inventory.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/inventory.xsl $(srcdir)/inventory.xml > inventory.tmp; \
 	  if [ ! -f $(srcdir)/inventory.out ] ; then cp inventory.tmp $(srcdir)/inventory.out ; \
 	  else diff $(srcdir)/inventory.out inventory.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -175,7 +175,7 @@ inventory:
 patterns: db100.xml
 	@(echo > .memdump)
 	@(echo patterns)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/patterns.xsl db100.xml > patterns.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/patterns.xsl db100.xml > patterns.tmp; \
 	  if [ ! -f $(srcdir)/patterns.out ] ; then cp patterns.tmp $(srcdir)/patterns.out ; \
 	  else diff $(srcdir)/patterns.out patterns.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -185,7 +185,7 @@ patterns: db100.xml
 prettyprint: db100.xml
 	@(echo > .memdump)
 	@(echo prettyprint)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/prettyprint.xsl db100.xml > prettyprint.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/prettyprint.xsl db100.xml > prettyprint.tmp; \
 	  if [ ! -f $(srcdir)/prettyprint.out ] ; then cp prettyprint.tmp $(srcdir)/prettyprint.out ; \
 	  else diff $(srcdir)/prettyprint.out prettyprint.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -195,7 +195,7 @@ prettyprint: db100.xml
 stringsort: db1000.xml
 	@(echo > .memdump)
 	@(echo stringsort)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/stringsort.xsl db1000.xml > stringsort.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/stringsort.xsl db1000.xml > stringsort.tmp; \
 	  if [ ! -f $(srcdir)/stringsort.out ] ; then cp stringsort.tmp $(srcdir)/stringsort.out ; \
 	  else diff $(srcdir)/stringsort.out stringsort.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -207,7 +207,7 @@ endif
 attsets:
 	@(echo > .memdump)
 	@(echo attsets)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/attsets.xsl $(srcdir)/chart.xml > attsets.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/attsets.xsl $(srcdir)/chart.xml > attsets.tmp; \
 	  if [ ! -f $(srcdir)/attsets.out ] ; then cp attsets.tmp $(srcdir)/attsets.out ; \
 	  else diff $(srcdir)/attsets.out attsets.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -217,7 +217,7 @@ attsets:
 axis:
 	@(echo > .memdump)
 	@(echo axis)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/axis.xsl $(srcdir)/axis.xml > axis.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/axis.xsl $(srcdir)/axis.xml > axis.tmp; \
 	  if [ ! -f $(srcdir)/axis.out ] ; then cp axis.tmp $(srcdir)/axis.out ; \
 	  else diff $(srcdir)/axis.out axis.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -227,7 +227,7 @@ axis:
 backwards:
 	@(echo > .memdump)
 	@(echo backwards)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/backwards.xsl $(srcdir)/game.xml > backwards.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/backwards.xsl $(srcdir)/game.xml > backwards.tmp; \
 	  if [ ! -f $(srcdir)/backwards.out ] ; then cp backwards.tmp $(srcdir)/backwards.out ; \
 	  else diff $(srcdir)/backwards.out backwards.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -237,7 +237,7 @@ backwards:
 bottles:
 	@(echo > .memdump)
 	@(echo bottles)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/bottles.xsl $(srcdir)/bottles.xml > bottles.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/bottles.xsl $(srcdir)/bottles.xml > bottles.tmp; \
 	  if [ ! -f $(srcdir)/bottles.out ] ; then cp bottles.tmp $(srcdir)/bottles.out ; \
 	  else diff $(srcdir)/bottles.out bottles.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -247,7 +247,7 @@ bottles:
 breadth:
 	@(echo > .memdump)
 	@(echo breadth)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/find.xsl $(srcdir)/breadth.xml > breadth.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/find.xsl $(srcdir)/breadth.xml > breadth.tmp; \
 	  if [ ! -f $(srcdir)/breadth.out ] ; then cp breadth.tmp $(srcdir)/breadth.out ; \
 	  else diff $(srcdir)/breadth.out breadth.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -257,7 +257,7 @@ breadth:
 brutal:
 	@(echo > .memdump)
 	@(echo brutal)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/brutal.xsl $(srcdir)/brutal.xml > brutal.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/brutal.xsl $(srcdir)/brutal.xml > brutal.tmp; \
 	  if [ ! -f $(srcdir)/brutal.out ] ; then cp brutal.tmp $(srcdir)/brutal.out ; \
 	  else diff $(srcdir)/brutal.out brutal.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -267,7 +267,7 @@ brutal:
 chart:
 	@(echo > .memdump)
 	@(echo chart)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/chart.xsl $(srcdir)/chart.xml > chart.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/chart.xsl $(srcdir)/chart.xml > chart.tmp; \
 	  if [ ! -f $(srcdir)/chart.out ] ; then cp chart.tmp $(srcdir)/chart.out ; \
 	  else diff $(srcdir)/chart.out chart.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -277,7 +277,7 @@ chart:
 current:
 	@(echo > .memdump)
 	@(echo current)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/current.xsl $(srcdir)/current.xml > current.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/current.xsl $(srcdir)/current.xml > current.tmp; \
 	  if [ ! -f $(srcdir)/current.out ] ; then cp current.tmp $(srcdir)/current.out ; \
 	  else diff $(srcdir)/current.out current.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -287,7 +287,7 @@ current:
 depth:
 	@(echo > .memdump)
 	@(echo depth)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/find.xsl $(srcdir)/depth.xml > depth.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/find.xsl $(srcdir)/depth.xml > depth.tmp; \
 	  if [ ! -f $(srcdir)/depth.out ] ; then cp depth.tmp $(srcdir)/depth.out ; \
 	  else diff $(srcdir)/depth.out depth.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -297,7 +297,7 @@ depth:
 game:
 	@(echo > .memdump)
 	@(echo game)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/game.xsl $(srcdir)/game.xml > game.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/game.xsl $(srcdir)/game.xml > game.tmp; \
 	  if [ ! -f $(srcdir)/game.out ] ; then cp game.tmp $(srcdir)/game.out ; \
 	  else diff $(srcdir)/game.out game.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -307,7 +307,7 @@ game:
 html:
 	@(echo > .memdump)
 	@(echo html)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/html.xsl $(srcdir)/html.xml > html.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/html.xsl $(srcdir)/html.xml > html.tmp; \
 	  if [ ! -f $(srcdir)/html.out ] ; then cp html.tmp $(srcdir)/html.out ; \
 	  else diff $(srcdir)/html.out html.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -317,7 +317,7 @@ html:
 metric:
 	@(echo > .memdump)
 	@(echo metric)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/metric.xsl $(srcdir)/metric.xml > metric.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/metric.xsl $(srcdir)/metric.xml > metric.tmp; \
 	  if [ ! -f $(srcdir)/metric.out ] ; then cp metric.tmp $(srcdir)/metric.out ; \
 	  else diff $(srcdir)/metric.out metric.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -327,7 +327,7 @@ metric:
 number:
 	@(echo > .memdump)
 	@(echo number)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/number.xsl $(srcdir)/number.xml > number.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/number.xsl $(srcdir)/number.xml > number.tmp; \
 	  if [ ! -f $(srcdir)/number.out ] ; then cp number.tmp $(srcdir)/number.out ; \
 	  else diff $(srcdir)/number.out number.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -337,7 +337,7 @@ skipdriver=ExternalDriver:txdriver
 oddtemplate:
 	@(echo > .memdump)
 	@(echo oddtemplate)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/oddtemplate.xsl $(srcdir)/oddtemplate.xml > oddtemplate.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/oddtemplate.xsl $(srcdir)/oddtemplate.xml > oddtemplate.tmp; \
 	  if [ ! -f $(srcdir)/oddtemplate.out ] ; then cp oddtemplate.tmp $(srcdir)/oddtemplate.out ; \
 	  else diff $(srcdir)/oddtemplate.out oddtemplate.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -347,7 +347,7 @@ oddtemplate:
 priority:
 	@(echo > .memdump)
 	@(echo priority)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/priority.xsl $(srcdir)/priority.xml > priority.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/priority.xsl $(srcdir)/priority.xml > priority.tmp; \
 	  if [ ! -f $(srcdir)/priority.out ] ; then cp priority.tmp $(srcdir)/priority.out ; \
 	  else diff $(srcdir)/priority.out priority.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -357,7 +357,7 @@ priority:
 products:
 	@(echo > .memdump)
 	@(echo products)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/products.xsl $(srcdir)/products.xml > products.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/products.xsl $(srcdir)/products.xml > products.tmp; \
 	  if [ ! -f $(srcdir)/products.out ] ; then cp products.tmp $(srcdir)/products.out ; \
 	  else diff $(srcdir)/products.out products.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -367,7 +367,7 @@ products:
 queens:
 	@(echo > .memdump)
 	@(echo queens)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/queens.xsl $(srcdir)/queens.xml > queens.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/queens.xsl $(srcdir)/queens.xml > queens.tmp; \
 	  if [ ! -f $(srcdir)/queens.out ] ; then cp queens.tmp $(srcdir)/queens.out ; \
 	  else diff $(srcdir)/queens.out queens.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -377,7 +377,7 @@ queens:
 reverser:
 	@(echo > .memdump)
 	@(echo reverser)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/reverser.xsl $(srcdir)/gettysburg.xml > reverser.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/reverser.xsl $(srcdir)/gettysburg.xml > reverser.tmp; \
 	  if [ ! -f $(srcdir)/reverser.out ] ; then cp reverser.tmp $(srcdir)/reverser.out ; \
 	  else diff $(srcdir)/reverser.out reverser.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -387,7 +387,7 @@ reverser:
 summarize:
 	@(echo > .memdump)
 	@(echo summarize)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/summarize.xsl $(srcdir)/queens.xsl > summarize.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/summarize.xsl $(srcdir)/queens.xsl > summarize.tmp; \
 	  if [ ! -f $(srcdir)/summarize.out ] ; then cp summarize.tmp $(srcdir)/summarize.out ; \
 	  else diff $(srcdir)/summarize.out summarize.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -397,7 +397,7 @@ summarize:
 total:
 	@(echo > .memdump)
 	@(echo total)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/total.xsl $(srcdir)/chart.xml > total.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/total.xsl $(srcdir)/chart.xml > total.tmp; \
 	  if [ ! -f $(srcdir)/total.out ] ; then cp total.tmp $(srcdir)/total.out ; \
 	  else diff $(srcdir)/total.out total.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -407,7 +407,7 @@ total:
 tower:
 	@(echo > .memdump)
 	@(echo tower)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/tower.xsl $(srcdir)/tower.xml > tower.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/tower.xsl $(srcdir)/tower.xml > tower.tmp; \
 	  if [ ! -f $(srcdir)/tower.out ] ; then cp tower.tmp $(srcdir)/tower.out ; \
 	  else diff $(srcdir)/tower.out tower.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -417,7 +417,7 @@ tower:
 trend:
 	@(echo > .memdump)
 	@(echo trend)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/trend.xsl $(srcdir)/trend.xml > trend.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/trend.xsl $(srcdir)/trend.xml > trend.tmp; \
 	  if [ ! -f $(srcdir)/trend.out ] ; then cp trend.tmp $(srcdir)/trend.out ; \
 	  else diff $(srcdir)/trend.out trend.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -427,7 +427,7 @@ trend:
 union:
 	@(echo > .memdump)
 	@(echo union)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/union.xsl $(srcdir)/union.xml > union.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/union.xsl $(srcdir)/union.xml > union.tmp; \
 	  if [ ! -f $(srcdir)/union.out ] ; then cp union.tmp $(srcdir)/union.out ; \
 	  else diff $(srcdir)/union.out union.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -437,7 +437,7 @@ union:
 xpath:
 	@(echo > .memdump)
 	@(echo xpath)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/xpath.xsl $(srcdir)/xpath.xml > xpath.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/xpath.xsl $(srcdir)/xpath.xml > xpath.tmp; \
 	  if [ ! -f $(srcdir)/xpath.out ] ; then cp xpath.tmp $(srcdir)/xpath.out ; \
 	  else diff $(srcdir)/xpath.out xpath.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -447,7 +447,7 @@ xpath:
 xslbench1:
 	@(echo > .memdump)
 	@(echo xslbench1)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/xslbench1.xsl $(srcdir)/xslbench1.xml > xslbench1.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/xslbench1.xsl $(srcdir)/xslbench1.xml > xslbench1.tmp; \
 	  if [ ! -f $(srcdir)/xslbench1.out ] ; then cp xslbench1.tmp $(srcdir)/xslbench1.out ; \
 	  else diff $(srcdir)/xslbench1.out xslbench1.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -455,7 +455,7 @@ xslbench1:
 xslbench2:
 	@(echo > .memdump)
 	@(echo xslbench2)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/xslbench2.xsl $(srcdir)/xslbenchdream.xml > xslbench2.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/xslbench2.xsl $(srcdir)/xslbenchdream.xml > xslbench2.tmp; \
 	  if [ ! -f $(srcdir)/xslbench2.out ] ; then cp xslbench2.tmp $(srcdir)/xslbench2.out ; \
 	  else diff $(srcdir)/xslbench2.out xslbench2.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )
@@ -463,7 +463,7 @@ xslbench2:
 xslbench3:
 	@(echo > .memdump)
 	@(echo xslbench3)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/xslbench3.xsl $(srcdir)/xslbenchdream.xml > xslbench3.tmp; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/xslbench3.xsl $(srcdir)/xslbenchdream.xml > xslbench3.tmp; \
 	  if [ ! -f $(srcdir)/xslbench3.out ] ; then cp xslbench3.tmp $(srcdir)/xslbench3.out ; \
 	  else diff $(srcdir)/xslbench3.out xslbench3.tmp ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true )

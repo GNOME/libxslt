@@ -1066,7 +1066,7 @@ xsltCalibrateAdjust(long delta) {
  *
  * Used for gathering profiling data
  *
- * Returns the number of milliseconds since the beginning of the
+ * Returns the number of tenth of milliseconds since the beginning of the
  * profiling
  */
 long

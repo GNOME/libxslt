@@ -4,6 +4,11 @@
 
 #include <libxml/tree.h>
 
+extern const char *exsltLibraryVersion;
+extern const int exsltLibexsltVersion;
+extern const int exsltLibxsltVersion;
+extern const int exsltLibxmlVersion;
+
 #define EXSLT_COMMON_NAMESPACE ((const xmlChar *) "http://exslt.org/common")
 #define EXSLT_MATH_NAMESPACE ((const xmlChar *) "http://exslt.org/math")
 #define EXSLT_SETS_NAMESPACE ((const xmlChar *) "http://exslt.org/sets")

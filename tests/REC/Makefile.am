@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-$(top_builddir)/libxslt/xsltproc:
+$(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = 						\
@@ -71,13 +71,13 @@ EXTRA_DIST = 						\
 
 all: test
 
-test tests: $(top_builddir)/libxslt/xsltproc
+test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
 	@(for i in $(srcdir)/*.xsl ; do \
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then continue ; fi ; \
 	  echo $$name.xml ; \
-	  $(top_builddir)/libxslt/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
+	  $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
 	  if [ ! -f $(srcdir)/$$name.out ] ; then cp $$name.res $(srcdir)/$$name.out ; \
 	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
 	  else diff $(srcdir)/$$name.out $$name.res ; fi ; fi; \
@@ -87,7 +87,7 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	@(for i in $(srcdir)/stand*.xml ; do \
 	  name=`basename $$i .xml` ; \
 	  echo $$name.xml ; \
-	  $(top_builddir)/libxslt/xsltproc $(srcdir)/$$name.xml > $$name.res;\
+	  $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xml > $$name.res;\
 	  if [ ! -f $(srcdir)/$$name.stand.out ] ; then cp $$name.res $(srcdir)/$$name.stand.out ; \
 	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
 	  else diff $(srcdir)/$$name.stand.out $$name.res ; fi ; fi; \

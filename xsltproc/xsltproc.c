@@ -6,7 +6,8 @@
  * daniel@veillard.com
  */
 
-#include "libxslt.h"
+#include "libxslt/libxslt.h"
+#include "libexslt/exslt.h"
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -37,6 +38,7 @@
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 #include <libxslt/extensions.h>
+#include <libexslt/exsltconfig.h>
 
 #ifdef WIN32
 #ifdef _MSC_VER
@@ -305,13 +307,15 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-V")) ||
                    (!strcmp(argv[i], "-version")) ||
                    (!strcmp(argv[i], "--version"))) {
-            printf("Using libxml %s and libxslt %s\n",
-                   xmlParserVersion, xsltEngineVersion);
+            printf("Using libxml %s, libxslt %s and libexslt %s\n",
+                   xmlParserVersion, xsltEngineVersion, exsltLibraryVersion);
             printf
-                ("xsltproc was compiled against libxml %d and libxslt %d\n",
-                 LIBXML_VERSION, LIBXSLT_VERSION);
+    ("xsltproc was compiled against libxml %d, libxslt %d and libexslt %d\n",
+                 LIBXML_VERSION, LIBXSLT_VERSION, LIBEXSLT_VERSION);
             printf("libxslt %d was compiled against libxml %d\n",
                    xsltLibxsltVersion, xsltLibxmlVersion);
+            printf("libexslt %d was compiled against libxml %d\n",
+                   exsltLibexsltVersion, exsltLibxmlVersion);
         } else if ((!strcmp(argv[i], "-repeat"))
                    || (!strcmp(argv[i], "--repeat"))) {
             if (repeat == 0)
@@ -398,6 +402,11 @@ main(int argc, char **argv)
      * Replace entities with their content.
      */
     xmlSubstituteEntitiesDefault(1);
+
+    /*
+     * Register the EXSLT extensions
+     */
+    exslRegisterAll();
 
     for (i = 1; i < argc; i++) {
         if ((!strcmp(argv[i], "-maxdepth")) ||

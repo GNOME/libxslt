@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-$(top_builddir)/libxslt/xsltproc:
+$(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = dict.dtd  dict.xml  dict.xsl result.xml \
@@ -30,9 +30,9 @@ GENERATED = \
 
 all: test
 
-test tests: $(top_builddir)/libxslt/xsltproc
+test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)
-	@($(top_builddir)/libxslt/xsltproc $(srcdir)/dict.xsl $(srcdir)/dict.xml > dict.res ; \
+	@($(top_builddir)/xsltproc/xsltproc $(srcdir)/dict.xsl $(srcdir)/dict.xml > dict.res ; \
 	diff $(srcdir)/result.xml dict.res; \
 	for i in $(srcdir)/out/letter*.html $(srcdir)/out/titlepage.html ; do \
 	  orig=$(srcdir)/out/`basename $$i .html`.orig ; \

@@ -71,7 +71,7 @@ exslFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
  *
  * Shutdown the EXSLT - Functions module
  */
-static void
+static static void
 exslFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
 		  const xmlChar *URI ATTRIBUTE_UNUSED,
 		  exslFuncData *data) {
@@ -114,6 +114,7 @@ exslFuncNewFunctionData (void) {
 
     ret->nargs = 0;
     ret->content = NULL;
+    return(ret);
 }
 
 /**
@@ -139,7 +140,7 @@ exslFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     data = (exslFuncData *) xsltGetExtData (tctxt,
 					    EXSLT_FUNCTIONS_NAMESPACE);
     oldResult = data->result;
-    data->result == NULL;
+    data->result = NULL;
 
     func = (exslFuncFunctionData*) xmlHashLookup2 (data->funcs,
 						   ctxt->context->functionURI,

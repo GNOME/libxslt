@@ -49,16 +49,3 @@ libxslt_la_SOURCES = 			\
 libxslt_la_LIBADD = $(EXTRA_LIBS)
 libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@
 
-# what is this include dir ?
-# libxsltincdir = $(includedir)/libxslt
-
-bin_PROGRAMS = xsltproc
-
-DEPS = $(lib_LTLIBRARIES)
-LDADDS = -L. $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
-
-xsltproc_SOURCES = xsltproc.c
-xsltproc_LDFLAGS =
-xsltproc_DEPENDENCIES = $(DEPS)
-xsltproc_LDADD = $(LDADDS)
-
