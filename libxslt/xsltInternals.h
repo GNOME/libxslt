@@ -451,6 +451,8 @@ struct _xsltTransformContext {
     int              extrasNr;		/* the number of extras used */
     int              extrasMax;		/* the number of extras allocated */
     xsltRuntimeExtraPtr extras;		/* extra per runtime informations */
+
+    xsltDocumentPtr  styleList;		/* the stylesheet docs list */
 };
 
 /**

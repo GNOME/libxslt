@@ -1,3 +1,11 @@
+Wed Jun 19 13:43:00 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/documents.c libxslt/functions.c libxslt/xsltInternals.h:
+	  fixed document('') as pointed by Eric van der Vlist
+	* tests/docs/Makefile.am tests/docs/bug-86.xml
+	  tests/general/Makefile.am tests/general/bug-86.*: added the
+	  specific example in the regression tests
+
 Sat Jun 15 15:44:58 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c libxslt/numbersInternals.h: applied a

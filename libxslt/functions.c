@@ -106,147 +106,149 @@ xsltXPathFunctionLookup (xmlXPathContextPtr ctxt,
  *   node-set document(object, node-set?)
  */
 void
-xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
+xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
+{
     xsltDocumentPtr doc;
     xmlXPathObjectPtr obj, obj2 = NULL;
     xmlChar *base = NULL, *URI;
 
 
     if ((nargs < 1) || (nargs > 2)) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
+        xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL,
+                              NULL);
         xsltGenericError(xsltGenericErrorContext,
-		"document() : invalid number of args %d\n", nargs);
-	ctxt->error = XPATH_INVALID_ARITY;
-	return;
+                         "document() : invalid number of args %d\n",
+                         nargs);
+        ctxt->error = XPATH_INVALID_ARITY;
+        return;
     }
     if (ctxt->value == NULL) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-	xsltGenericError(xsltGenericErrorContext,
-	    "document() : invalid arg value\n");
-	ctxt->error = XPATH_INVALID_TYPE;
-	return;
+        xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL,
+                              NULL);
+        xsltGenericError(xsltGenericErrorContext,
+                         "document() : invalid arg value\n");
+        ctxt->error = XPATH_INVALID_TYPE;
+        return;
     }
 
     if (nargs == 2) {
-	if (ctxt->value->type != XPATH_NODESET) {
-	    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
-		                  NULL, NULL);
-	    xsltGenericError(xsltGenericErrorContext,
-		"document() : invalid arg expecting a nodeset\n");
-	    ctxt->error = XPATH_INVALID_TYPE;
-	    return;
-	}
+        if (ctxt->value->type != XPATH_NODESET) {
+            xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+                                  NULL, NULL);
+            xsltGenericError(xsltGenericErrorContext,
+                             "document() : invalid arg expecting a nodeset\n");
+            ctxt->error = XPATH_INVALID_TYPE;
+            return;
+        }
 
-	obj2 = valuePop(ctxt);
+        obj2 = valuePop(ctxt);
     }
 
     if (ctxt->value->type == XPATH_NODESET) {
-	int i;
-	xmlXPathObjectPtr newobj, ret;
+        int i;
+        xmlXPathObjectPtr newobj, ret;
 
-	obj = valuePop(ctxt);
-	ret = xmlXPathNewNodeSet(NULL);
+        obj = valuePop(ctxt);
+        ret = xmlXPathNewNodeSet(NULL);
 
-	if (obj->nodesetval) {
-	    for (i = 0; i < obj->nodesetval->nodeNr; i++) {
-		valuePush(ctxt,
-			  xmlXPathNewNodeSet(obj->nodesetval->nodeTab[i]));
-		xmlXPathStringFunction(ctxt, 1);
-		if (nargs == 2) {
-		    valuePush(ctxt, xmlXPathObjectCopy(obj2));
-		} else {
-		    valuePush(ctxt,
-			      xmlXPathNewNodeSet(obj->nodesetval->nodeTab[i]));
-		}
-		xsltDocumentFunction(ctxt, 2);
-		newobj = valuePop(ctxt);
-		ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
-						       newobj->nodesetval);
-		xmlXPathFreeObject(newobj);
-	    }
-	}
+        if (obj->nodesetval) {
+            for (i = 0; i < obj->nodesetval->nodeNr; i++) {
+                valuePush(ctxt,
+                          xmlXPathNewNodeSet(obj->nodesetval->nodeTab[i]));
+                xmlXPathStringFunction(ctxt, 1);
+                if (nargs == 2) {
+                    valuePush(ctxt, xmlXPathObjectCopy(obj2));
+                } else {
+                    valuePush(ctxt,
+                              xmlXPathNewNodeSet(obj->nodesetval->
+                                                 nodeTab[i]));
+                }
+                xsltDocumentFunction(ctxt, 2);
+                newobj = valuePop(ctxt);
+                ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
+                                                       newobj->nodesetval);
+                xmlXPathFreeObject(newobj);
+            }
+        }
 
-	xmlXPathFreeObject(obj);
-	if (obj2 != NULL)
-	    xmlXPathFreeObject(obj2);
-	valuePush(ctxt, ret);
-	return;
+        xmlXPathFreeObject(obj);
+        if (obj2 != NULL)
+            xmlXPathFreeObject(obj2);
+        valuePush(ctxt, ret);
+        return;
     }
     /*
      * Make sure it's converted to a string
      */
     xmlXPathStringFunction(ctxt, 1);
     if (ctxt->value->type != XPATH_STRING) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-	xsltGenericError(xsltGenericErrorContext,
-	    "document() : invalid arg expecting a string\n");
-	ctxt->error = XPATH_INVALID_TYPE;
-	if (obj2 != NULL)
-	    xmlXPathFreeObject(obj2);
-	return;
+        xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL,
+                              NULL);
+        xsltGenericError(xsltGenericErrorContext,
+                         "document() : invalid arg expecting a string\n");
+        ctxt->error = XPATH_INVALID_TYPE;
+        if (obj2 != NULL)
+            xmlXPathFreeObject(obj2);
+        return;
     }
     obj = valuePop(ctxt);
     if (obj->stringval == NULL) {
-	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+        valuePush(ctxt, xmlXPathNewNodeSet(NULL));
     } else {
-	if ((obj2 != NULL) && (obj2->nodesetval != NULL) &&
-	    (obj2->nodesetval->nodeNr > 0) &&
-	    IS_XSLT_REAL_NODE(obj2->nodesetval->nodeTab[0])) {
-	    xmlNodePtr target;
+        if ((obj2 != NULL) && (obj2->nodesetval != NULL) &&
+            (obj2->nodesetval->nodeNr > 0) &&
+            IS_XSLT_REAL_NODE(obj2->nodesetval->nodeTab[0])) {
+            xmlNodePtr target;
 
-	    target = obj2->nodesetval->nodeTab[0];
-	    if (target->type == XML_ATTRIBUTE_NODE) {
-		target = ((xmlAttrPtr) target)->parent;
-	    }
-	    base = xmlNodeGetBase(target->doc, target);
-	} else {
-	    xsltTransformContextPtr tctxt;
-	    
-	    tctxt = xsltXPathGetTransformContext(ctxt);
-	    if ((tctxt != NULL) && (tctxt->inst != NULL)) {
-		base = xmlNodeGetBase(tctxt->inst->doc, tctxt->inst);
-	    } else if ((tctxt != NULL) && (tctxt->style != NULL) &&
-		       (tctxt->style->doc != NULL)) {
-		base = xmlNodeGetBase(tctxt->style->doc, 
-			              (xmlNodePtr) tctxt->style->doc);
-	    }
-	}
-	URI = xmlBuildURI(obj->stringval, base);
-	if (base != NULL)
-	    xmlFree(base);
+            target = obj2->nodesetval->nodeTab[0];
+            if (target->type == XML_ATTRIBUTE_NODE) {
+                target = ((xmlAttrPtr) target)->parent;
+            }
+            base = xmlNodeGetBase(target->doc, target);
+        } else {
+            xsltTransformContextPtr tctxt;
+
+            tctxt = xsltXPathGetTransformContext(ctxt);
+            if ((tctxt != NULL) && (tctxt->inst != NULL)) {
+                base = xmlNodeGetBase(tctxt->inst->doc, tctxt->inst);
+            } else if ((tctxt != NULL) && (tctxt->style != NULL) &&
+                       (tctxt->style->doc != NULL)) {
+                base = xmlNodeGetBase(tctxt->style->doc,
+                                      (xmlNodePtr) tctxt->style->doc);
+            }
+        }
+        URI = xmlBuildURI(obj->stringval, base);
+        if (base != NULL)
+            xmlFree(base);
         if (URI == NULL) {
-	    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-	} else {
-	    xsltTransformContextPtr tctxt;
+            valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+        } else {
+            xsltTransformContextPtr tctxt;
 
-	    tctxt = xsltXPathGetTransformContext(ctxt);
-	    if (tctxt == NULL) {
-		xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
-			              NULL, NULL);
-		xsltGenericError(xsltGenericErrorContext,
-			"document() : internal error tctxt == NULL\n");
-		valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-	    } else {
-                if (xmlStrEqual(tctxt->style->doc->URL, URI)) {
-                    valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr)tctxt->style->doc));
-                }
+            tctxt = xsltXPathGetTransformContext(ctxt);
+            if (tctxt == NULL) {
+                xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt),
+                                      NULL, NULL);
+                xsltGenericError(xsltGenericErrorContext,
+                                 "document() : internal error tctxt == NULL\n");
+                valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+            } else {
+                doc = xsltLoadDocument(tctxt, URI);
+                if (doc == NULL)
+                    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
                 else {
-		    doc = xsltLoadDocument(tctxt, URI);
-		    if (doc == NULL)
-		        valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-		    else {
-		        /* TODO: use XPointer of HTML location for fragment ID */
-		        /* pbm #xxx can lead to location sets, not nodesets :-) */
-		        valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) doc->doc));
-		    }
+                    /* TODO: use XPointer of HTML location for fragment ID */
+                    /* pbm #xxx can lead to location sets, not nodesets :-) */
+                    valuePush(ctxt,
+                              xmlXPathNewNodeSet((xmlNodePtr) doc->doc));
                 }
-	    }
-	    xmlFree(URI);
-	}
+            }
+            xmlFree(URI);
+        }
     }
     xmlXPathFreeObject(obj);
     if (obj2 != NULL)
-	xmlXPathFreeObject(obj2);
+        xmlXPathFreeObject(obj2);
 }
 
 /**

@@ -26,6 +26,8 @@
 #include <libxml/xinclude.h>
 #endif
 
+#define WITH_XSLT_DEBUG_DOCUMENTS
+
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_DOCUMENTS
 #endif
@@ -131,6 +133,15 @@ xsltFreeDocuments(xsltTransformContextPtr ctxt) {
 	    xmlFreeDoc(doc->doc);
         xmlFree(doc);
     }
+    cur = ctxt->styleList;
+    while (cur != NULL) {
+	doc = cur;
+	cur = cur->next;
+	xsltFreeDocumentKeys(doc);
+	if (!doc->main)
+	    xmlFreeDoc(doc->doc);
+        xmlFree(doc);
+    }
 }
 
 
@@ -139,7 +150,8 @@ xsltFreeDocuments(xsltTransformContextPtr ctxt) {
  * @ctxt: an XSLT transformation context
  * @URI:  the computed URI of the document
  *
- * Try to load a document within the XSLT transformation context
+ * Try to load a document (not a stylesheet)
+ * within the XSLT transformation context
  *
  * Returns the new xsltDocumentPtr or NULL in case of error
  */
@@ -191,7 +203,7 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
  * @style: an XSLT style sheet
  * @URI:  the computed URI of the document
  *
- * Try to load a document within the XSLT transformation context
+ * Try to load a stylesheet document within the XSLT transformation context
  *
  * Returns the new xsltDocumentPtr or NULL in case of error
  */
