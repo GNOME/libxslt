@@ -606,7 +606,7 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 		"current() : internal error tctxt == NULL\n");
 	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
     } else {
-	valuePush(ctxt, xmlXPathNewNodeSet(tctxt->current));
+	valuePush(ctxt, xmlXPathNewNodeSet(tctxt->node)); /* current */
     }
 }
 

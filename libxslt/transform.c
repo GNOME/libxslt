@@ -851,8 +851,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */
     oldInsert = insert = ctxt->insert;
     if (real) {
-	oldCurrent = ctxt->current;
-	ctxt->current = node;
+	oldCurrent = ctxt->node;
+	ctxt->node = node;
     }
 
     /*
@@ -869,7 +869,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		 "xsltApplyOneTemplate: insert == NULL !\n");
 #endif
 	    if (real)
-		ctxt->current = oldCurrent;
+		ctxt->node = oldCurrent;
 	    return;
 	}
 
@@ -1008,7 +1008,7 @@ skip_children:
 	} while (cur != NULL);
     }
     if (real)
-	ctxt->current = oldCurrent;
+	ctxt->node = oldCurrent;
 }
 
 
