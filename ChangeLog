@@ -1,3 +1,11 @@
+Wed Feb  6 19:46:09 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxlst.c python/libxslt-python-api.xml 
+	  python/libxsltclass.txt: plugged the extension of the engine
+	  with python defined functions
+	* python/tests/Makefile.am python/tests/extfunc.py: added a
+	  basic test, still a memleak, cleanup function needed.
+
 Wed Feb  6 13:49:55 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.spec.in python/Makefile.am python/libxsl.py: the

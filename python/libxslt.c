@@ -143,6 +143,99 @@ libxslt_xmlDumpMemory(PyObject *self, PyObject *args) {
 
 /************************************************************************
  *									*
+ *			Extending the API				*
+ *									*
+ ************************************************************************/
+
+static xmlHashTablePtr libxslt_extModuleFunctions = NULL;
+
+static void
+libxslt_xmlXPathFuncCallback(xmlXPathParserContextPtr ctxt, int nargs) {
+    PyObject *list, *cur, *result;
+    xmlXPathObjectPtr obj;
+    xmlXPathContextPtr rctxt;
+    PyObject *current_function = NULL;
+    const xmlChar *name;
+    const xmlChar *ns_uri;
+    int i;
+
+    if (ctxt == NULL)
+	return;
+    rctxt = ctxt->context;
+    if (rctxt == NULL)
+	return;
+    name = rctxt->function;
+    ns_uri = rctxt->functionURI;
+#ifdef DEBUG_XPATH
+    printf("libxslt_xmlXPathFuncCallback called name %s URI %s\n", name, ns_uri);
+#endif
+
+    /*
+     * Find the function, it should be there it was there at lookup
+     */
+    current_function = xmlHashLookup2(libxslt_extModuleFunctions,
+	                              name, ns_uri);
+    if (current_function == NULL) {
+	printf("libxslt_xmlXPathFuncCallback: internal error %s not found !\n",
+	       name);
+	return;
+    }
+
+    list = PyTuple_New(nargs);
+    for (i = 0;i < nargs;i++) {
+	obj = valuePop(ctxt);
+	cur = libxml_xmlXPathObjectPtrWrap(obj);
+	PyTuple_SetItem(list, i, cur);
+    }
+    result = PyEval_CallObject(current_function, list);
+    Py_DECREF(list);
+
+    obj = libxml_xmlXPathObjectPtrConvert(result);
+    valuePush(ctxt, obj);
+}
+
+PyObject *
+libxslt_xsltRegisterExtModuleFunction(PyObject *self, PyObject *args) {
+    PyObject *py_retval;
+    int ret = 0;
+    xmlChar *name;
+    xmlChar *ns_uri;
+    PyObject *pyobj_f;
+
+    if (!PyArg_ParseTuple(args, "szO:registerXPathFunction",
+		          &name, &ns_uri, &pyobj_f))
+        return(NULL);
+
+    if ((name == NULL) || (pyobj_f == NULL)) {
+	py_retval = libxml_intWrap(-1);
+	return(py_retval);
+    }
+
+#ifdef DEBUG_XPATH
+    printf("libxslt_xsltRegisterExtModuleFunction(%s, %s) called\n",
+	   name, ns_uri);
+#endif
+
+    if (libxslt_extModuleFunctions == NULL)
+	libxslt_extModuleFunctions = xmlHashCreate(10);
+    if (libxslt_extModuleFunctions == NULL) {
+	py_retval = libxml_intWrap(-1);
+	return(py_retval);
+    }
+    ret = xmlHashAddEntry2(libxslt_extModuleFunctions, name, ns_uri, pyobj_f);
+    if (ret != 0) {
+	py_retval = libxml_intWrap(-1);
+	return(py_retval);
+    }
+
+    ret = xsltRegisterExtModuleFunction(name, ns_uri, 
+	                                     libxslt_xmlXPathFuncCallback);
+    py_retval = libxml_intWrap((int) ret);
+    return(py_retval);
+}
+
+/************************************************************************
+ *									*
  *			Some customized front-ends			*
  *									*
  ************************************************************************/
@@ -156,7 +249,7 @@ libxslt_xsltApplyStylesheet(PyObject *self, PyObject *args) {
     xmlDocPtr doc;
     PyObject *pyobj_doc;
     PyObject *pyobj_params;
-    char **params;
+    const char **params;
 
     if (!PyArg_ParseTuple(args, "OOO:xsltApplyStylesheet", &pyobj_style, &pyobj_doc, &pyobj_params))
         return(NULL);

@@ -18,6 +18,9 @@ registerAllExtras()
 # functions from module functions
 registerAllFunctions()
 
+# functions from module python
+registerExtModuleFunction()
+
 # functions from module transform
 setXIncludeDefault()
 xincludeDefault()

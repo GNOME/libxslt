@@ -1,7 +1,8 @@
 EXAMPLE_DIR = $(prefix)/share/doc/libxslt-python-$(LIBXML_VERSION)/examples
 
 TESTS=		\
-    basic.py
+    basic.py	\
+    extfunc.py
 
 XMLS=		\
     test.xml	\
