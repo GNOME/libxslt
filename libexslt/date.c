@@ -2667,6 +2667,12 @@ exsltDateAddDuration (const xmlChar *xstr, const xmlChar *ystr)
  * In these cases the difference between the @dateTime and 
  * 1970-01-01T00:00:00Z is calculated and converted to seconds.
  *
+ * Note that there was some confusion over whether "difference" meant
+ * that a dateTime of 1970-01-01T00:00:01Z should be a positive one or
+ * a negative one.  After correspondence with exslt.org, it was determined
+ * that the intent of the specification was to have it positive.  The
+ * coding was modified in July 2003 to reflect this.
+ *
  * Returns seconds or Nan.
  */
 static double
@@ -2704,7 +2710,7 @@ exsltDateSeconds (const xmlChar *dateTime)
             y->value.date.day  = 1;
             y->value.date.tz_flag = 1;
 
-            dur = _exsltDateDifference(dt, y, 1);
+            dur = _exsltDateDifference(y, dt, 1);
             if (dur != NULL) {
                 ret = exsltDateCastDateToNumber(dur); 
                 exsltDateFreeDate(dur);

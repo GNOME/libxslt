@@ -25,6 +25,7 @@
 #include "xsltutils.h"
 #include "pattern.h"
 #include "templates.h"
+#include "transform.h"
 #include "numbersInternals.h"
 
 #ifndef FALSE
@@ -60,7 +61,62 @@ static char alpha_upper_list[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static char alpha_lower_list[] = "abcdefghijklmnopqrstuvwxyz";
 static xsltFormatToken default_token;
 
+/*
+ * **** Start temp insert ****
+ *
+ * The following two routines (xsltUTF8Size and xsltUTF8Charcmp)
+ * will be replaced with calls to the corresponding libxml routines
+ * at a later date (when other inter-library dependencies require it)
+ */
 
+/**
+ * xsltUTF8Size:
+ * @utf: pointer to the UTF8 character
+ *
+ * returns the numbers of bytes in the character, -1 on format error
+ */
+static int
+xsltUTF8Size(xmlChar *utf) {
+    xmlChar mask;
+    int len;
+
+    if (utf == NULL)
+        return -1;
+    if (*utf < 0x80)
+        return 1;
+    /* check valid UTF8 character */
+    if (!(*utf & 0x40))
+        return -1;
+    /* determine number of bytes in char */
+    len = 2;
+    for (mask=0x20; mask != 0; mask>>=1) {
+        if (!(*utf & mask))
+            return len;
+        len++;
+    }
+    return -1;
+}
+
+/**
+ * xsltUTF8Charcmp
+ * @utf1: pointer to first UTF8 char
+ * @utf2: pointer to second UTF8 char
+ *
+ * returns result of comparing the two UCS4 values
+ * as with xmlStrncmp
+ */
+static int
+xsltUTF8Charcmp(xmlChar *utf1, xmlChar *utf2) {
+
+    if (utf1 == NULL ) {
+        if (utf2 == NULL)
+            return 0;
+        return -1;
+    }
+    return xmlStrncmp(utf1, utf2, xsltUTF8Size(utf1));
+}
+
+/***** Stop temp insert *****/
 /************************************************************************
  *									*
  *			Utility functions				*
@@ -68,11 +124,11 @@ static xsltFormatToken default_token;
  ************************************************************************/
 
 #define IS_SPECIAL(self,letter)			\
-    (((letter) == (self)->zeroDigit[0])	    ||	\
-     ((letter) == (self)->digit[0])	    ||	\
-     ((letter) == (self)->decimalPoint[0])  ||	\
-     ((letter) == (self)->grouping[0])	    ||	\
-     ((letter) == (self)->patternSeparator[0]))
+    ((xsltUTF8Charcmp((letter), (self)->zeroDigit) == 0)	    ||	\
+     (xsltUTF8Charcmp((letter), (self)->digit) == 0)	    ||	\
+     (xsltUTF8Charcmp((letter), (self)->decimalPoint) == 0)  ||	\
+     (xsltUTF8Charcmp((letter), (self)->grouping) == 0)	    ||	\
+     (xsltUTF8Charcmp((letter), (self)->patternSeparator) == 0))
 
 #define IS_DIGIT_ZERO(x) xsltIsDigitZero(x)
 #define IS_DIGIT_ONE(x) xsltIsDigitZero((xmlChar)(x)-1)
@@ -98,19 +154,30 @@ xsltIsDigitZero(unsigned int ch)
 static void
 xsltNumberFormatDecimal(xmlBufferPtr buffer,
 			double number,
-			xmlChar digit_zero,
+			int digit_zero,
 			int width,
 			int digitsPerGroup,
 			int groupingCharacter,
 			int groupingCharacterLen)
 {
-    xmlChar temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 4];
+    /*
+     * This used to be
+     *  xmlChar temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 4];
+     * which would be length 68 on x86 arch.  It was changed to be a longer,
+     * fixed length in order to try to cater for (reasonable) UTF8
+     * separators and numeric characters.  The max UTF8 char size will be
+     * 6 or less, so the value used [500] should be *much* larger than needed
+     */
+    xmlChar temp_string[500];
     xmlChar *pointer;
+    xmlChar temp_char[6];
     int i;
+    int val;
+    int len;
 
     /* Build buffer from back */
-    pointer = &temp_string[sizeof(temp_string)];
-    *(--pointer) = 0;
+    pointer = &temp_string[sizeof(temp_string)] - 1;	/* last char */
+    *pointer = 0;
     i = 0;
     while (pointer > temp_string) {
 	if ((i >= width) && (fabs(number) < 1.0))
@@ -118,14 +185,43 @@ xsltNumberFormatDecimal(xmlBufferPtr buffer,
 	if ((i > 0) && (groupingCharacter != 0) &&
 	    (digitsPerGroup > 0) &&
 	    ((i % digitsPerGroup) == 0)) {
+	    if (pointer - groupingCharacterLen < temp_string) {
+	        i = -1;		/* flag error */
+		break;
+	    }
 	    pointer -= groupingCharacterLen;
 	    xmlCopyCharMultiByte(pointer, groupingCharacter);
 	}
-	if (pointer > temp_string)
-	    *(--pointer) = digit_zero + (int)fmod(number, 10.0);
+	
+	val = digit_zero + (int)fmod(number, 10.0);
+	if (val < 0x80) {			/* shortcut if ASCII */
+	    if (pointer <= temp_string) {	/* Check enough room */
+	        i = -1;
+		break;
+	    }
+	    *(--pointer) = val;
+	}
+	else {
+	/* 
+	 * Here we have a multibyte character.  It's a little messy,
+	 * because until we generate the char we don't know how long
+	 * it is.  So, we generate it into the buffer temp_char, then
+	 * copy from there into temp_string.
+	 */
+	    len = xmlCopyCharMultiByte(temp_char, val);
+	    if ( (pointer - len) < temp_string ) {
+	        i = -1;
+		break;
+	    }
+	    pointer -= len;
+	    strncpy(pointer, temp_char, len);
+	}
 	number /= 10.0;
 	++i;
     }
+    if (i < 0)
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNumberFormatDecimal: Internal buffer size exceeded");
     xmlBufferCat(buffer, pointer);
 }
 
@@ -223,6 +319,8 @@ xsltNumberFormatTokenize(xmlChar *format,
 {
     int index = 0;
     int j;
+    int val;
+    int len;
 
     default_token.token = DEFAULT_TOKEN;
     default_token.width = 1;
@@ -237,10 +335,11 @@ xsltNumberFormatTokenize(xmlChar *format,
      * Insert initial non-alphanumeric token.
      * There is always such a token in the list, even if NULL
      */
-    while (! (IS_LETTER(format[index]) || IS_DIGIT(format[index]))) {
-	if (format[index] == 0)
+    while (! (IS_LETTER(val=xmlStringCurrentChar(NULL, format+index, &len)) ||
+    	      IS_DIGIT(val)) ) {
+	if (format[index] == 0)		/* if end of format string */
 	    break; /* while */
-	index++;
+	index += len;
     }
     if (index > 0)
 	tokens->start = xmlStrndup(format, index);
@@ -260,29 +359,27 @@ xsltNumberFormatTokenize(xmlChar *format,
 	    tokens->end = NULL;
 	}
 
-	if (IS_DIGIT_ONE(format[index]) ||
-		 IS_DIGIT_ZERO(format[index])) {
+	val = xmlStringCurrentChar(NULL, format+index, &len);
+	if (IS_DIGIT_ONE(val) ||
+		 IS_DIGIT_ZERO(val)) {
 	    tokens->tokens[tokens->nTokens].width = 1;
-	    while (IS_DIGIT_ZERO(format[index])) {
+	    while (IS_DIGIT_ZERO(val)) {
 		tokens->tokens[tokens->nTokens].width++;
-		index++;
+		index += len;
+		val = xmlStringCurrentChar(NULL, format+index, &len);
 	    }
-	    if (IS_DIGIT_ONE(format[index])) {
-		tokens->tokens[tokens->nTokens].token = format[index] - 1;
-		index++;
+	    if (IS_DIGIT_ONE(val)) {
+		tokens->tokens[tokens->nTokens].token = val - 1;
+		index += len;
+		val = xmlStringCurrentChar(NULL, format+index, &len);
 	    }
-	} else if (format[index] == (xmlChar)'A') {
-	    tokens->tokens[tokens->nTokens].token = format[index];
-	    index++;
-	} else if (format[index] == (xmlChar)'a') {
-	    tokens->tokens[tokens->nTokens].token = format[index];
-	    index++;
-	} else if (format[index] == (xmlChar)'I') {
-	    tokens->tokens[tokens->nTokens].token = format[index];
-	    index++;
-	} else if (format[index] == (xmlChar)'i') {
-	    tokens->tokens[tokens->nTokens].token = format[index];
-	    index++;
+	} else if ( (val == (xmlChar)'A') ||
+		    (val == (xmlChar)'a') ||
+		    (val == (xmlChar)'I') ||
+		    (val == (xmlChar)'i') ) {
+	    tokens->tokens[tokens->nTokens].token = val;
+	    index += len;
+	    val = xmlStringCurrentChar(NULL, format+index, &len);
 	} else {
 	    /* XSLT section 7.7
 	     * "Any other format token indicates a numbering sequence
@@ -302,17 +399,20 @@ xsltNumberFormatTokenize(xmlChar *format,
 	 * to correspond to the Letter and Digit classes from XML (and
 	 * one wonders why XSLT doesn't refer to these instead).
 	 */
-	while (IS_LETTER(format[index]) || IS_DIGIT(format[index]))
-	    index++;
+	while (IS_LETTER(val) || IS_DIGIT(val)) {
+	    index += len;
+	    val = xmlStringCurrentChar(NULL, format+index, &len);
+	}
 
 	/*
 	 * Insert temporary non-alphanumeric final tooken.
 	 */
 	j = index;
-	while (! (IS_LETTER(format[index]) || IS_DIGIT(format[index]))) {
-	    if (format[index] == 0)
+	while (! (IS_LETTER(val) || IS_DIGIT(val))) {
+	    if (val == 0)
 		break; /* while */
-	    index++;
+	    index += len;
+	    val = xmlStringCurrentChar(NULL, format+index, &len);
 	}
 	if (index > j)
 	    tokens->end = xmlStrndup(&format[j], index - j);
@@ -340,17 +440,23 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 	/* Insert number */
 	number = numbers[(numbers_max - 1) - i];
 	if (i < tokens->nTokens) {
-	  /* The "n"th format token will be used to format the "n"th
-	   * number in the list */
+	  /*
+	   * The "n"th format token will be used to format the "n"th
+	   * number in the list
+	   */
 	  token = &(tokens->tokens[i]);
 	} else if (tokens->nTokens > 0) {
-	  /* If there are more numbers than format tokens, then the
+	  /*
+	   * If there are more numbers than format tokens, then the
 	   * last format token will be used to format the remaining
-	   * numbers. */
+	   * numbers.
+	   */
 	  token = &(tokens->tokens[tokens->nTokens - 1]);
 	} else {
-	  /* If there are no format tokens, then a format token of
-	   * 1 is used to format all numbers. */
+	  /*
+	   * If there are no format tokens, then a format token of
+	   * 1 is used to format all numbers.
+	   */
 	  token = &default_token;
 	}
 
@@ -735,43 +841,59 @@ static int
 xsltFormatNumberPreSuffix(xsltDecimalFormatPtr self, xmlChar **format, xsltFormatNumberInfoPtr info)
 {
     int	count=0;	/* will hold total length of prefix/suffix */
+    int len;
 
     while (1) {
-	/* prefix / suffix ends at end of string or at first 'special' character */
+	/* 
+	 * prefix / suffix ends at end of string or at 
+	 * first 'special' character 
+	 */
 	if (**format == 0)
 	    return count;
 	/* if next character 'escaped' just count it */
 	if (**format == SYMBOL_QUOTE) {
 	    if (*++(*format) == 0)
 		return -1;
-	    if (*++(*format) != SYMBOL_QUOTE)
+	    if ((len=xsltUTF8Size(*format))<=0)
+	        return -1;
+	    *format += len;
+	    if (**format != SYMBOL_QUOTE)
 		return -1;
 	}
-	else if (IS_SPECIAL(self, **format))
+	else if (IS_SPECIAL(self, *format))
 	    return count;
-	/* else treat percent/per-mille as special cases, depending on whether +ve or -ve */
+	/*
+	 * else treat percent/per-mille as special cases,
+	 * depending on whether +ve or -ve 
+	 */
 	else if (!info->is_negative_pattern) {
-	    /* for +ve prefix/suffix, allow only a single occurence of either */
-	    if (**format == self->percent[0]) {
+	    /*
+	     * for +ve prefix/suffix, allow only a 
+	     * single occurence of either 
+	     */
+	    if (xsltUTF8Charcmp(*format, self->percent) == 0) {
 		if (info->is_multiplier_set)
 		    return -1;
 		info->multiplier = 100;
 		info->is_multiplier_set = TRUE;
-	    } else if (**format == self->permille[0]) {
+	    } else if (xsltUTF8Charcmp(*format, self->permille) == 0) {
 		if (info->is_multiplier_set)
 		    return -1;
 		info->multiplier = 1000;
 		info->is_multiplier_set = TRUE;
 	    }
 	} else {
-	    /* for -ve prefix/suffix, allow only single occurence & insist it's previously defined */
-	    if (**format == self->percent[0]) {
+	    /*
+	     * for -ve prefix/suffix, allow only single occurence 
+	     * & insist it's previously defined 
+	     */
+	    if (xsltUTF8Charcmp(*format, self->percent) == 0) {
 		if (info->is_multiplier_set)
 		    return -1;
 		if (info->multiplier != 100)
 		    return -1;
 		info->is_multiplier_set = TRUE;
-	    } else if (**format == self->permille[0]) {
+	    } else if (xsltUTF8Charcmp(*format, self->permille) == 0) {
 		if (info->is_multiplier_set)
 		    return -1;
 		if (info->multiplier != 1000)
@@ -780,8 +902,10 @@ xsltFormatNumberPreSuffix(xsltDecimalFormatPtr self, xmlChar **format, xsltForma
 	    }
 	}
 	
-	count++;
-	(*format)++;
+	if ((len=xsltUTF8Size(*format)) < 1)
+	    return -1;
+	count += len;
+	*format += len;
     }
 }
 	    
@@ -840,10 +964,13 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     xmlChar pchar;
     int	    prefix_length, suffix_length = 0, nprefix_length, nsuffix_length;
     double  scale;
-    int	    j;
+    int	    j, len;
     int     self_grouping_len;
     xsltFormatNumberInfo format_info;
-    /* delayed_multiplier allows a 'trailing' percent or permille to be treated as suffix */
+    /* 
+     * delayed_multiplier allows a 'trailing' percent or
+     * permille to be treated as suffix 
+     */
     int		delayed_multiplier = 0;
     /* flag to show no -ve format present for -ve number */
     char	default_sign = 0;
@@ -891,7 +1018,10 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 
     the_format = format;
 
-    /* First we process the +ve pattern to get percent / permille, as well as main format */
+    /*
+     * First we process the +ve pattern to get percent / permille,
+     * as well as main format 
+     */
     prefix = the_format;
     prefix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
     if (prefix_length < 0) {
@@ -899,20 +1029,24 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	goto OUTPUT_NUMBER;
     }
 
-    /* Here we process the "number" part of the format.  It gets a little messy because of    */
-    /* the percent/per-mille - if that appears at the end, it may be part of the suffix       */
-    /* instead of part of the number, so the variable delayed_multiplier is used to handle it */
+    /* 
+     * Here we process the "number" part of the format.  It gets 
+     * a little messy because of the percent/per-mille - if that
+     * appears at the end, it may be part of the suffix instead 
+     * of part of the number, so the variable delayed_multiplier 
+     * is used to handle it 
+     */
     self_grouping_len = xmlStrlen(self->grouping);
     while ((*the_format != 0) &&
-	   (*the_format != self->decimalPoint[0]) &&
-	   (*the_format != self->patternSeparator[0])) {
+	   (xsltUTF8Charcmp(the_format, self->decimalPoint) != 0) &&
+	   (xsltUTF8Charcmp(the_format, self->patternSeparator) != 0)) {
 	
 	if (delayed_multiplier != 0) {
 	    format_info.multiplier = delayed_multiplier;
 	    format_info.is_multiplier_set = TRUE;
 	    delayed_multiplier = 0;
 	}
-	if (*the_format == self->digit[0]) {
+	if (xsltUTF8Charcmp(the_format, self->digit) == 0) {
 	    if (format_info.integer_digits > 0) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
@@ -920,7 +1054,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	    format_info.integer_hash++;
 	    if (format_info.group >= 0)
 		format_info.group++;
-	} else if (*the_format == self->zeroDigit[0]) {
+	} else if (xsltUTF8Charcmp(the_format, self->zeroDigit) == 0) {
 	    format_info.integer_digits++;
 	    if (format_info.group >= 0)
 		format_info.group++;
@@ -930,13 +1064,13 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	    format_info.group = 0;
 	    the_format += self_grouping_len;
 	    continue;
-	} else if (*the_format == self->percent[0]) {
+	} else if (xsltUTF8Charcmp(the_format, self->percent) == 0) {
 	    if (format_info.is_multiplier_set) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
 	    }
 	    delayed_multiplier = 100;
-	} else  if (*the_format == self->permille[0]) {
+	} else  if (xsltUTF8Charcmp(the_format, self->permille) == 0) {
 	    if (format_info.is_multiplier_set) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
@@ -945,45 +1079,62 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	} else
 	    break; /* while */
 	
-	the_format++;
+	if ((len=xsltUTF8Size(the_format)) < 1) {
+	    found_error = 1;
+	    goto OUTPUT_NUMBER;
+	}
+	the_format += len;
+
     }
 
     /* We have finished the integer part, now work on fraction */
-    if (*the_format == self->decimalPoint[0]) {
+    if (xsltUTF8Charcmp(the_format, self->decimalPoint) == 0) {
         format_info.add_decimal = TRUE;
-	the_format++;		/* Skip over the decimal */
+	the_format += xsltUTF8Size(the_format);	/* Skip over the decimal */
     }
     
     while (*the_format != 0) {
 	
-	if (*the_format == self->zeroDigit[0]) {
+	if (xsltUTF8Charcmp(the_format, self->zeroDigit) == 0) {
 	    if (format_info.frac_hash != 0) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
 	    }
 	    format_info.frac_digits++;
-	} else if (*the_format == self->digit[0]) {
+	} else if (xsltUTF8Charcmp(the_format, self->digit) == 0) {
 	    format_info.frac_hash++;
-	} else if (*the_format == self->percent[0]) {
+	} else if (xsltUTF8Charcmp(the_format, self->percent) == 0) {
 	    if (format_info.is_multiplier_set) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
 	    }
 	    delayed_multiplier = 100;
-	    the_format++;
+	    if ((len = xsltUTF8Size(the_format)) < 1) {
+	        found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    the_format += len;
 	    continue; /* while */
-	} else if (*the_format == self->permille[0]) {
+	} else if (xsltUTF8Charcmp(the_format, self->permille) == 0) {
 	    if (format_info.is_multiplier_set) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
 	    }
 	    delayed_multiplier = 1000;
-	    the_format++;
+	    if  ((len = xsltUTF8Size(the_format)) < 1) {
+	        found_error = 1;
+		goto OUTPUT_NUMBER;
+	    }
+	    the_format += len;
 	    continue; /* while */
-	} else if (*the_format != self->grouping[0]) {
+	} else if (xsltUTF8Charcmp(the_format, self->grouping) != 0) {
 	    break; /* while */
 	}
-	the_format++;
+	if ((len = xsltUTF8Size(the_format)) < 1) {
+	    found_error = 1;
+	    goto OUTPUT_NUMBER;
+	}
+	the_format += len;
 	if (delayed_multiplier != 0) {
 	    format_info.multiplier = delayed_multiplier;
 	    delayed_multiplier = 0;
@@ -991,7 +1142,10 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	}
     }
 
-    /* If delayed_multiplier is set after processing the "number" part, should be in suffix */
+    /* 
+     * If delayed_multiplier is set after processing the 
+     * "number" part, should be in suffix 
+     */
     if (delayed_multiplier != 0) {
 	the_format--;
 	delayed_multiplier = 0;
@@ -1000,27 +1154,36 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     suffix = the_format;
     suffix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
     if ( (suffix_length < 0) ||
-	 ((*the_format != 0) && (*the_format != self->patternSeparator[0])) ) {
+	 ((*the_format != 0) && 
+	  (xsltUTF8Charcmp(the_format, self->patternSeparator) != 0)) ) {
 	found_error = 1;
 	goto OUTPUT_NUMBER;
     }
 
-    /* We have processed the +ve prefix, number part and +ve suffix. */
-    /* If the number is -ve, we must substitute the -ve prefix / suffix */
+    /*
+     * We have processed the +ve prefix, number part and +ve suffix.
+     * If the number is -ve, we must substitute the -ve prefix / suffix
+     */
     if (number < 0) {
-	the_format = (xmlChar *)xmlStrchr(format, self->patternSeparator[0]);
-	if (the_format == NULL) {	/* No -ve pattern present, so use default signing */
+        j =  xmlUTF8Strloc(format, self->patternSeparator);
+	if (j < 0) {
+	/* No -ve pattern present, so use default signing */
 	    default_sign = 1;
 	}
 	else {
-	    /* Flag changes interpretation of percent/permille in -ve pattern */
-	    the_format++;	/* Skip over pattern separator */
+	    /* Skip over pattern separator */
+	    the_format = format + j + 1;
+	    /* 
+	     * Flag changes interpretation of percent/permille 
+	     * in -ve pattern 
+	     */
 	    format_info.is_negative_pattern = TRUE;
 	    format_info.is_multiplier_set = FALSE;
 
 	    /* First do the -ve prefix */
 	    nprefix = the_format;
-	    nprefix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
+	    nprefix_length = xsltFormatNumberPreSuffix(self, 
+	    				&the_format, &format_info);
 	    if (nprefix_length<0) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
@@ -1029,8 +1192,8 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	    /* Next skip over the -ve number info */
 	    the_format += prefix_length;
 	    while (*the_format != 0) {
-		if ( (*the_format == (self)->percent[0]) ||
-		     (*the_format == (self)->permille[0]) ) {
+		if ( (xsltUTF8Charcmp(the_format, (self)->percent) == 0) ||
+		     (xsltUTF8Charcmp(the_format, (self)->permille)== 0) ) {
 		    if (format_info.is_multiplier_set) {
 			found_error = 1;
 			goto OUTPUT_NUMBER;
@@ -1038,7 +1201,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 		    format_info.is_multiplier_set = TRUE;
 		    delayed_multiplier = 1;
 		}
-		else if (IS_SPECIAL(self, *the_format))
+		else if (IS_SPECIAL(self, the_format))
 		    delayed_multiplier = 0;
 		else
 		    break; /* while */
@@ -1052,7 +1215,8 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	    /* Finally do the -ve suffix */
 	    if (*the_format != 0) {
 		nsuffix = the_format;
-		nsuffix_length = xsltFormatNumberPreSuffix(self, &the_format, &format_info);
+		nsuffix_length = xsltFormatNumberPreSuffix(self, 
+					&the_format, &format_info);
 		if (nsuffix_length < 0) {
 		found_error = 1;
 		goto OUTPUT_NUMBER;
@@ -1064,12 +1228,16 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 		found_error = 1;
 		goto OUTPUT_NUMBER;
 	    }
-	    /* Here's another Java peculiarity:
+	    /*
+	     * Here's another Java peculiarity:
 	     * if -ve prefix/suffix == +ve ones, discard & use default
 	     */
-	    if ((nprefix_length != prefix_length) || (nsuffix_length != suffix_length) ||
-		((nprefix_length > 0) && (xmlStrncmp(nprefix, prefix, prefix_length) !=0 )) ||
-		((nsuffix_length > 0) && (xmlStrncmp(nsuffix, suffix, suffix_length) !=0 ))) {
+	    if ((nprefix_length != prefix_length) ||
+	    	(nsuffix_length != suffix_length) ||
+		((nprefix_length > 0) && 
+		 (xmlStrncmp(nprefix, prefix, prefix_length) !=0 )) ||
+		((nsuffix_length > 0) && 
+		 (xmlStrncmp(nsuffix, suffix, suffix_length) !=0 ))) {
 	 	prefix = nprefix;
 		prefix_length = nprefix_length;
 		suffix = nsuffix;
@@ -1083,7 +1251,8 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 OUTPUT_NUMBER:
     if (found_error != 0) {
 	xsltTransformError(NULL, NULL, NULL,
-                "xsltFormatNumberConversion : error in format string, using default\n");
+                "xsltFormatNumberConversion : "
+		"error in format string, using default\n");
 	default_sign = (number < 0.0) ? 1 : 0;
 	prefix_length = suffix_length = 0;
 	format_info.integer_hash = 0;
@@ -1097,22 +1266,25 @@ OUTPUT_NUMBER:
 
     /* Ready to output our number.  First see if "default sign" is required */
     if (default_sign != 0)
-	xmlBufferAdd(buffer, self->minusSign, 1);
+	xmlBufferAdd(buffer, self->minusSign, xsltUTF8Size(self->minusSign));
 
     /* Put the prefix into the buffer */
     for (j = 0; j < prefix_length; j++) {
 	if ((pchar = *prefix++) == SYMBOL_QUOTE) {
-	    pchar = *prefix++;
-	    prefix++;
-	}
-	xmlBufferAdd(buffer, &pchar, 1);
+	    len = xsltUTF8Size(prefix);
+	    xmlBufferAdd(buffer, prefix, len);
+	    prefix += len + 1;	/* skip the ending quote */
+	    j += len - 1;	/* 'for' will increment by 1 */
+	} else
+	    xmlBufferAdd(buffer, &pchar, 1);
     }
 
     /* Next do the integer part of the number */
     number = fabs(number) * (double)format_info.multiplier;
     scale = pow(10.0, (double)(format_info.frac_digits + format_info.frac_hash));
     number = floor((scale * number + 0.5)) / scale;
-    if ((self->grouping != NULL) && (self->grouping[0] != 0)) {
+    if ((self->grouping != NULL) && 
+        (self->grouping[0] != 0)) {
 	int sep, len;
 	
 	len = xmlStrlen(self->grouping);
@@ -1137,18 +1309,20 @@ OUTPUT_NUMBER:
     /* Add leading zero, if required */
     if ((floor(number) == 0) &&
 	(format_info.integer_digits + format_info.frac_digits == 0)) {
-        xmlBufferAdd(buffer, self->zeroDigit, 1);
+        xmlBufferAdd(buffer, self->zeroDigit, xsltUTF8Size(self->zeroDigit));
     }
 
     /* Next the fractional part, if required */
     if (format_info.frac_digits + format_info.frac_hash == 0) {
         if (format_info.add_decimal)
-	    xmlBufferAdd(buffer, self->decimalPoint, 1);
+	    xmlBufferAdd(buffer, self->decimalPoint, 
+	    		 xsltUTF8Size(self->decimalPoint));
     }
     else {
       number -= floor(number);
 	if ((number != 0) || (format_info.frac_digits != 0)) {
-	    xmlBufferAdd(buffer, self->decimalPoint, 1);
+	    xmlBufferAdd(buffer, self->decimalPoint,
+	    		 xsltUTF8Size(self->decimalPoint));
 	    number = floor(scale * number + 0.5);
 	    for (j = format_info.frac_hash; j > 0; j--) {
 		if (fmod(number, 10.0) >= 1.0)
@@ -1163,13 +1337,16 @@ OUTPUT_NUMBER:
     /* Put the suffix into the buffer */
     for (j = 0; j < suffix_length; j++) {
 	if ((pchar = *suffix++) == SYMBOL_QUOTE) {
-	    pchar = *suffix++;
-	    suffix++;
-	}
-	xmlBufferAdd(buffer, &pchar, 1);
+            len = xsltUTF8Size(suffix);
+	    xmlBufferAdd(buffer, suffix, len);
+	    suffix += len + 1;  /* skip the ending quote */
+	    j += len - 1;       /* 'for' will increment by 1 */
+	} else
+	    xmlBufferAdd(buffer, &pchar, 1);
     }
 
     *result = xmlStrdup(xmlBufferContent(buffer));
     xmlBufferFree(buffer);
     return status;
 }
+
