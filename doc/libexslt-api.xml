@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<api name='libexslt'>
+  <files>
+    <file name='exslt'>
+     <exports symbol='EXSLT_COMMON_NAMESPACE'/>
+     <exports symbol='EXSLT_DATE_NAMESPACE'/>
+     <exports symbol='EXSLT_DYNAMIC_NAMESPACE'/>
+     <exports symbol='EXSLT_FUNCTIONS_NAMESPACE'/>
+     <exports symbol='EXSLT_MATH_NAMESPACE'/>
+     <exports symbol='EXSLT_SETS_NAMESPACE'/>
+     <exports symbol='EXSLT_STRINGS_NAMESPACE'/>
+     <exports symbol='SAXON_NAMESPACE'/>
+     <exports symbol='exsltCommonRegister'/>
+     <exports symbol='exsltDateRegister'/>
+     <exports symbol='exsltDynRegister'/>
+     <exports symbol='exsltFuncRegister'/>
+     <exports symbol='exsltLibexsltVersion'/>
+     <exports symbol='exsltLibraryVersion'/>
+     <exports symbol='exsltLibxmlVersion'/>
+     <exports symbol='exsltLibxsltVersion'/>
+     <exports symbol='exsltMathRegister'/>
+     <exports symbol='exsltRegisterAll'/>
+     <exports symbol='exsltSaxonRegister'/>
+     <exports symbol='exsltSetsRegister'/>
+     <exports symbol='exsltStrRegister'/>
+    </file>
+  </files>
+  <symbols>
+    <macro name='EXSLT_COMMON_NAMESPACE' file='exslt'>
+      <info>Namespace for EXSLT common functions</info>
+    </macro>
+    <macro name='EXSLT_DATE_NAMESPACE' file='exslt'>
+      <info>Namespace for EXSLT date functions</info>
+    </macro>
+    <macro name='EXSLT_DYNAMIC_NAMESPACE' file='exslt'>
+      <info>Namespace for EXSLT dynamic functions</info>
+    </macro>
+    <macro name='EXSLT_FUNCTIONS_NAMESPACE' file='exslt'>
+      <info>Namespace for EXSLT functions extension functions</info>
+    </macro>
+    <macro name='EXSLT_MATH_NAMESPACE' file='exslt'>
+      <info>Namespace for EXSLT math functions</info>
+    </macro>
+    <macro name='EXSLT_SETS_NAMESPACE' file='exslt'>
+      <info>Namespace for EXSLT set functions</info>
+    </macro>
+    <macro name='EXSLT_STRINGS_NAMESPACE' file='exslt'>
+      <info>Namespace for EXSLT strings functions</info>
+    </macro>
+    <macro name='SAXON_NAMESPACE' file='exslt'>
+      <info>Namespace for SAXON extensions functions</info>
+    </macro>
+    <function name='exsltCommonRegister' file='exslt'>
+      <info>Registers the EXSLT - Common module</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltDateRegister' file='exslt'>
+      <info>Registers the EXSLT - Dates and Times module</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltDynRegister' file='exslt'>
+      <info>Registers the EXSLT - Dynamic module</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltFuncRegister' file='exslt'>
+      <info>Registers the EXSLT - Functions module</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltMathRegister' file='exslt'>
+      <info>Registers the EXSLT - Math module</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltRegisterAll' file='exslt'>
+      <info>Registers all available EXSLT extensions</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltSaxonRegister' file='exslt'>
+      <info>Registers the SAXON extension module</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltSetsRegister' file='exslt'>
+      <info>Registers the EXSLT - Sets module</info>
+      <return type='void'/>
+    </function>
+    <function name='exsltStrRegister' file='exslt'>
+      <info>Registers the EXSLT - Strings module</info>
+      <return type='void'/>
+    </function>
+  </symbols>
+</api>

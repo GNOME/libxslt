@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 EXTRA_DIST = 			\
 	libxslt-api.xml		\
+	libexslt-api.xml		\
 	libxslt-decl.txt	\
 	xsltproc.xml		\
 	apibuild.py
@@ -57,7 +58,7 @@ xml: sgml
 	-@(for s in sgml/*.sgml ; do name=`basename $$s .sgml` ; \
 	   xmllint --sgml $$s > xml/"$$name".xml ; done)
 	   
-libxslt-api.xml: apibuild.py ../libxslt/*.h ../libxslt/*.c
+libxslt-api.xml libexslt-api.xml: apibuild.py ../libxslt/*.h ../libxslt/*.c ../libexslt/*.h ../libexslt/*.c
 	-(./apibuild.py)
 
 api: libxslt-api.xml libxslt-refs.xml

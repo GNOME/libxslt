@@ -1,3 +1,9 @@
+Wed Dec 11 19:18:45 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/Makefile.am doc/apibuild.py doc/libexslt-api.xml: added
+	  the generation of libexslt-api.xml
+        * libexslt/exslt.h: small cleanup.
+
 Wed Dec 11 18:45:09 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/Makefile.am doc/apibuild.py doc/libxslt-api.xml:

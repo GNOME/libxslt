@@ -225,6 +225,8 @@ ignored_words = {
   "LIBXML_DLL_IMPORT": (0, "Special macro to flag external keywords"),
   "__declspec": (3, "Windows keyword"),
   "ATTRIBUTE_UNUSED": (0, "macro keyword"),
+  "LIBEXSLT_PUBLIC": (0, "macro keyword"),
+  "X_IN_Y": (5, "macro function builder"),
 }
 
 class CLexer:
@@ -1449,6 +1451,11 @@ def rebuild():
     builder.scan()
     builder.analyze()
     builder.serialize()
+    if glob.glob("../libexslt/exslt.c") != [] :
+        extra = docBuilder("libexslt", ["../libexslt"], ["libexslt.h"])
+	extra.scan()
+	extra.analyze()
+	extra.serialize()
     return builder
 
 #
