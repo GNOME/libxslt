@@ -46,6 +46,9 @@
 #include "imports.h"
 #include "transform.h"
 
+#ifdef WITH_DEBUGGER
+#include "../breakpoint/breakpoint.h"
+#endif
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_ATTRIBUTES
 #endif
@@ -410,6 +413,14 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsl:attribute : node already has children\n");
 	return;
     }
+
+#ifdef WITH_DEBUGGER
+     /* --- break point code --- */
+     if (xslDebugStatus != DEBUG_NONE) {
+       xslHandleDebugger(inst, node, NULL, ctxt);
+     }
+#endif
+
     if (comp->name == NULL) {
 	prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name",
 		                         XSLT_NAMESPACE);
@@ -551,6 +562,14 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 
 	    style = ctxt->style;
+#ifdef WITH_DEBUGGER
+	    /* --- break point code --- */
+	    if (style && (xslDebugStatus != DEBUG_NONE)) {
+	      values = xmlHashLookup2(style->attributeSets, ncname, prefix);
+	      if (values)	
+		xslHandleDebugger(values->attr->parent, node, NULL, ctxt);      
+	    }
+#endif
 	    while (style != NULL) {
 		values = xmlHashLookup2(style->attributeSets, ncname, prefix);
 		while (values != NULL) {

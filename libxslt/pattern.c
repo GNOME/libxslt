@@ -89,7 +89,7 @@ struct _xsltCompMatch {
     int maxStep;
     xmlNsPtr *nsList;		/* the namespaces in scope */
     int nsNr;			/* the number of namespaces in scope */
-    xsltStepOp steps[20];        /* ops for computation */
+    xsltStepOp steps[40];        /* ops for computation */
 };
 
 typedef struct _xsltParserContext xsltParserContext;
@@ -128,7 +128,7 @@ xsltNewCompMatch(void) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltCompMatch));
-    cur->maxStep = 20;
+    cur->maxStep = 40;
     cur->nsNr = 0;
     cur->nsList = NULL;
     return(cur);
@@ -237,7 +237,7 @@ xsltFreeParserContext(xsltParserContextPtr ctxt) {
 static int
 xsltCompMatchAdd(xsltCompMatchPtr comp, xsltOp op, xmlChar *value,
 	         xmlChar *value2) {
-    if (comp->nbStep >= 20) {
+    if (comp->nbStep >= 40) {
 	xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
         xsltGenericError(xsltGenericErrorContext,
 		"xsltCompMatchAdd: overflow\n");

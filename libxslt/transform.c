@@ -1015,10 +1015,6 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 }
 
-#ifdef WITH_DEBUGGER
-
-/* make it eaier to reuse the code for handling checking of debug 
- status and breaking to debugger if needed */
 
 /**
  * xslHandleDebugger:
@@ -1032,56 +1028,11 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *   to the xslDebugBreak function
  */
 void
-xslHandleDebugger(xmlNodePtr cur, xmlNodePtr node,
-                  xsltTemplatePtr templ, xsltTransformContextPtr ctxt)
+xslHandleDebugger(xmlNodePtr cur ATTRIBUTE_UNUSED, xmlNodePtr node ATTRIBUTE_UNUSED,
+                  xsltTemplatePtr templ ATTRIBUTE_UNUSED, xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED)
 {
 
-    xslSetActiveBreakPoint(0);
-
-    switch (xslDebugStatus) {
-
-            /* A temparary stopping point */
-        case DEBUG_STOP:
-            xslDebugStatus = DEBUG_CONT;
-            /* only allow breakpoints at xml elements */
-            if (xmlGetLineNo(cur) != -1)
-                xslDebugBreak(cur, node, templ, ctxt);
-            break;
-
-        case DEBUG_STEP:
-            /* only allow breakpoints at xml elements */
-            if (xmlGetLineNo(cur) != -1)
-                xslDebugBreak(cur, node, templ, ctxt);
-            break;
-
-        case DEBUG_CONT:
-            {
-                int breakPoint = xslIsBreakPointNode(cur);
-
-                if (breakPoint) {
-                    if (xslIsBreakPointEnabled(breakPoint) == 1) {
-                        xslSetActiveBreakPoint(breakPoint);
-                        xslDebugBreak(cur, node, templ, ctxt);
-                    }
-                } else {
-                    breakPoint = xslIsBreakPointNode(node);
-                    if (xslIsBreakPointEnabled(breakPoint) == 1) {
-                        xslSetActiveBreakPoint(breakPoint);
-                        xslDebugBreak(cur, node, templ, ctxt);
-                    }
-                }
-            }
-            break;
-    }
 }
-#else
-void
-xslHandleDebugger(xmlNodePtr cur, xmlNodePtr node,
-                  xsltTemplatePtr templ, xsltTransformContextPtr ctxt)
-{
-}
-#endif
-
 
 /**
  * xsltApplyOneTemplate:
@@ -1132,9 +1083,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
         if (templ)
             xslHandleDebugger(templ->elem, node, templ, ctxt);
-        else
-            xslHandleDebugger(list, node, templ, ctxt);
-
+        else if (list)
+	  xslHandleDebugger(list, node, templ, ctxt);
+	else if (ctxt->inst)
+	  xslHandleDebugger(ctxt->inst, node, templ, ctxt);
     }
     /*  -- end --- */
 #endif

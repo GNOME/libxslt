@@ -1,3 +1,8 @@
+Tue Nov 27 22:16:50 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: Marc Tardif provided a patch to use as
+	  much as 40 steps. A dynamic alloc would still be better
+
 Mon Nov 26 21:45:07 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: return useful code signaling error conditions
