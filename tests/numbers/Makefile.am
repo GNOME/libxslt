@@ -3,7 +3,7 @@
 $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
-EXTRA_DIST = doc.xsl doc.xml result.xml
+EXTRA_DIST = format-number.xsl format-number.xml format-number.out
 
 all: test
 

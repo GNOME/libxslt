@@ -1,3 +1,7 @@
+Tue Feb  6 10:55:26 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/numbers/Makefile.am: fixed the EXTRA stuff
+
 Mon Feb  5 22:02:24 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* Copyright IPR Makefile.am: added some wording and a rewrite
