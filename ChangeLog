@@ -1,3 +1,9 @@
+Fri Oct 26 14:12:14 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* win32/dsp/libexslt_a.dsp win32/dsp/libexslt_so.dsp
+	  win32/dsp/libxslt.def: updated with latest ZIP from Igor,
+	  made sure the .def is handled as binary
+
 Fri Oct 26 11:37:01 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* win32/dsp/libxslt.def libxslt/xslt.h: applied Igor patches

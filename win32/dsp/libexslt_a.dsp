@@ -107,6 +107,10 @@ SOURCE=..\..\libexslt\math.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\libexslt\saxon.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\libexslt\sets.c
 # End Source File
 # Begin Source File
