@@ -1,6 +1,6 @@
 SUBDIRS= . tests
 
-LIBS=-L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt $(PYTHON_SITE_PACKAGES)/_libxml.so $(LIBXML_LIBS)
+LIBS=-L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt # $(PYTHON_SITE_PACKAGES)/_libxml.so  $(LIBXML_LIBS)
 INCLUDES=-I/usr/include/python$(PYTHON_VERSION) -I$(PYTHON_INCLUDES) $(LIBXML_CFLAGS) -I$(top_srcdir)
 SHCFLAGS=$(INCLUDES) -Wall -fPIC -g
 LINK_FLAGS= -shared
@@ -29,7 +29,7 @@ _libxslt.so: libxslt.o libxslt-py.o types.o
 
 _libxslt.so.dv: libxslt.o libxslt-py.o types.o
 	rm -f _libxslt.so
-	$(CC) $(LINK_FLAGS) libxslt.o libxslt-py.o types.o -L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt $(HOME)/XML/python/_libxml.so $(HOME)/XML/.libs/libxml2.a -o _libxslt.so
+	$(CC) $(LINK_FLAGS) -o _libxslt.so libxslt.o libxslt-py.o types.o -L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt # $(HOME)/XML/python/_libxml.so $(HOME)/XML/.libs/libxml2.a
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(PYTHON_SITE_PACKAGES)

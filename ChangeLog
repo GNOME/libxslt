@@ -1,3 +1,10 @@
+Wed Feb  6 13:49:55 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt.spec.in python/Makefile.am python/libxsl.py: the
+	  spec file will now build libxslt-python, fought with shared
+	  and other crazyness, seems to work now :-)
+	* doc/libxslt-api.xml: regenerated
+
 Wed Feb  6 11:29:31 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am configure.in tests/Makefile.am tests/*/Makefile.am
