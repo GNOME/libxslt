@@ -1,3 +1,9 @@
+Mon Dec 15 20:33:52 MST 2003 John Fleck <jfleck@inkstain.net>
+
+	* libxslt/xsltutils.h
+	* doc/*
+	document XSLT_TRACE macro (sort of) and rebuild docs
+
 Thu Dec 11 19:50:41 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* win32/Makefile.mingw win32/configure.js: tried to fix mingw

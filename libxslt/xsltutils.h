@@ -17,7 +17,6 @@
 #else
 #include <libxslt/xsltconfig.h>
 #endif
-
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #endif
@@ -115,6 +114,11 @@ typedef enum {
 	XSLT_TRACE_VARIABLES = 		1<<16
 } xsltDebugTraceCodes;
 
+/**
+ * XSLT_TRACE:
+ *
+ * Control the type of xsl debugtrace messages emitted.
+ */
 #define XSLT_TRACE(ctxt,code,call)	\
 	if (ctxt->traceCode && (*(ctxt->traceCode) & code)) \
 	    call
