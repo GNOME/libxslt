@@ -21,7 +21,7 @@
 .SH NAME
 xsltproc \- command line xslt processor
 .SH "SYNOPSIS"
-\fBxsltproc\fR [\fB-V\fR | \fB-v\fR | \fB-o  \fIfile\fR \fR | \fB--timing\fR | \fB--repeat\fR | \fB--debug\fR | \fB--novalid\fR | \fB--noout\fR | \fB--maxdepth  \fIval\fR \fR | \fB--html\fR | \fB--docbook\fR | \fB--param  \fIname\fR   \fIvalue\fR \fR | \fB--nonet\fR | \fB--warnnet\fR | \fB--catalogs\fR | \fB--xinclude\fR | \fB--profile\fR] [\fB\fIstylesheet\fR\fR] [ \fIfile1\fR ] [ \fIfile2\fR ] [ \fI....\fR ]
+\fBxsltproc\fR [\fB-V\fR | \fB-v\fR | \fB-o  \fIfile\fR \fR | \fB--timing\fR | \fB--repeat\fR | \fB--debug\fR | \fB--novalid\fR | \fB--noout\fR | \fB--maxdepth  \fIval\fR \fR | \fB--html\fR | \fB--docbook\fR | \fB--param  \fIname\fR   \fIvalue\fR \fR | \fB--stringparam  \fIname\fR   \fIvalue\fR \fR | \fB--nonet\fR | \fB--warnnet\fR | \fB--catalogs\fR | \fB--xinclude\fR | \fB--profile\fR] [\fB\fIstylesheet\fR\fR] [ \fIfile1\fR ] [ \fIfile2\fR ] [ \fI....\fR ]
 .SH "INTRODUCTION"
 
 .PP
@@ -51,7 +51,7 @@ Output each step taken by xsltproc in processing the stylesheet and the document
 
 .TP
 
-      \fB-o\fR or \fB--output\fR\fIfile\fR
+      \fB-o\fR or \fB--output\fR \fIfile\fR
 
 Direct output to the file named \fIfile\fR. For multiple outputs, also known as "chunking", \fB-o\fR \fBdirectory/\fR directs the output files to a specified directory. The directory must already exist.
 
@@ -105,9 +105,15 @@ The input document is DocBook SGML.
 
 .TP
 
-      \fB--param\fR \fIname\fR\fIvalue\fR
+      \fB--param\fR \fIname\fR \fIvalue\fR
 
-Pass a parameter of name \fIname\fR and value \fIvalue\fR to the stylesheet. You may pass multiple name/value pairs up to a maximum of 32. If the value being passed is a string rather than a node identifier it must be escaped in quotes, as follows: xsltproc --param rootid '"introduction"' \fIstylesheet\fR \fIfile\fR
+Pass a parameter of name \fIname\fR and value \fIvalue\fR to the stylesheet. You may pass multiple name/value pairs up to a maximum of 32. If the value being passed is a string rather than a node identifier, use \fB--stringparam\fR instead.
+
+.TP
+
+	  \fB--stringparam\fR \fIname\fR \fIvalue\fR
+
+Pass a paramenter of name \fIname\fR and value \fIvalue\fR where \fIvalue\fR is a string rather than a node identifier.
 
 .TP
 
@@ -166,7 +172,10 @@ xsltproc's return codes provide information that can be used when calling it fro
 6: error in one of the documents
 
 .PP
-7: unsuppoted xsl:output method
+7: unsupported xsl:output method
+
+.PP
+8: string parameter contains both quote and double-quotes
 
 .SH "MORE INFORMATION"
 

@@ -44,6 +44,7 @@
 	<arg>--html</arg>
 	<arg>--docbook</arg>
 	<arg>--param <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
+	<arg>--stringparam <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
 	<arg>--nonet</arg>
 	<arg>--warnnet</arg>
 	<arg>--catalogs</arg>
@@ -216,22 +217,27 @@
     
       <varlistentry>
 	<term>
-      <option>--param</option> <replaceable>name</replaceable><replaceable>value</replaceable></term>
+      <option>--param</option> <replaceable>name</replaceable> <replaceable>value</replaceable></term>
 	<listitem>
 	  <simpara>Pass a parameter of name
       <replaceable>name</replaceable> and value
       <replaceable>value</replaceable> to the stylesheet. You may pass multiple
       name/value pairs up to a maximum of 32. If the value being passed is a
-      string rather than a node identifier it must be escaped in quotes, as follows:
-	  xsltproc --param rootid '"introduction"'
-	  <replaceable>stylesheet</replaceable> <replaceable>file</replaceable>
-
-	</simpara>
-      
-    
-	</listitem>
+	    string rather than a node identifier, use
+	    <option>--stringparam</option> instead.
+	  </simpara>
+      	</listitem>
       </varlistentry>
 
+      <varlistentry>
+	<term>
+	  <option>--stringparam</option> <replaceable>name</replaceable> <replaceable>value</replaceable></term>
+	<listitem>
+	  <simpara>Pass a paramenter of name <replaceable>name</replaceable> and
+	    value <replaceable>value</replaceable> where
+	    <replaceable>value</replaceable> is a string rather than a node identifier.</simpara>
+	</listitem>
+      </varlistentry>
     
       <varlistentry>
 	<term>
