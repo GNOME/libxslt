@@ -1,3 +1,11 @@
+Sat May 26 17:08:19 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: fixed handling of PI and comments
+	  (bug raised by Brent M Hendricks).
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-31-* tests/docs/bug-31-*: added a specific
+	  regression test
+
 Wed May 23 13:25:37 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: added --xinclude in the option list,

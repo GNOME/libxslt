@@ -730,6 +730,15 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		if (template) {
 		    xmlNodePtr oldNode;
 
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		    if (cur->type == XML_PI_NODE)
+			xsltGenericDebug(xsltGenericDebugContext,
+			 "xsltProcessOneNode: template found for PI %s\n",
+			                 cur->name);
+		    else if (cur->type == XML_COMMENT_NODE)
+			xsltGenericDebug(xsltGenericDebugContext,
+			 "xsltProcessOneNode: template found for comment\n");
+#endif
 		    oldNode = ctxt->node;
 		    ctxt->node = cur;
 		    ctxt->xpathCtxt->contextSize = nbchild;
@@ -1301,6 +1310,22 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		}
 		break;
 	    }
+	    case XML_PI_NODE:
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+				 "xsl:copy: PI %s\n", node->name);
+#endif
+		copy = xmlNewPI(node->name, node->content);
+		xmlAddChild(ctxt->insert, copy);
+		break;
+	    case XML_COMMENT_NODE:
+#ifdef WITH_XSLT_DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+				 "xsl:copy: comment\n");
+#endif
+		copy = xmlNewComment(node->content);
+		xmlAddChild(ctxt->insert, copy);
+		break;
 	    default:
 		break;
 
@@ -2076,6 +2101,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		case XML_HTML_DOCUMENT_NODE:
 		case XML_ELEMENT_NODE:
 		case XML_CDATA_SECTION_NODE:
+		case XML_PI_NODE:
+		case XML_COMMENT_NODE:
 		    xmlXPathNodeSetAdd(list, cur);
 		    break;
 		default:
