@@ -4,12 +4,7 @@
   Note that this is automatically generated from the news webpage at:
        http://xmlsoft.org/XSLT/news.html
 
-
-CVS only : check the Changelog at 
-http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
- file
-for a really accurate description:
-
+Those are the public releases made:
 1.1.5: Mar 23 2004:
    - performance: use dictionnary lookup for variables
    - remove use of _private from source documents

@@ -151,6 +151,7 @@ EXTRA_DIST = \
     bug-143.out bug-143.xsl \
     bug-144.out bug-144.xsl \
     bug-145.out bug-145.xsl bug-145.err \
+    bug-146.out bug-146.xsl \
     character.out character.xsl \
     character2.out character2.xsl \
     itemschoose.out itemschoose.xsl \

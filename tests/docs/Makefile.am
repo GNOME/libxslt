@@ -145,6 +145,7 @@ EXTRA_DIST =	\
 	bug-143.xml \
 	bug-144.xml \
 	bug-145.xml \
+	bug-146.xml \
 	character.xml \
 	array.xml \
 	items.xml
