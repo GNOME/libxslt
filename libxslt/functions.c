@@ -670,7 +670,7 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
 	name = xmlStrdup(obj->stringval);
 	ns = xmlSearchNs(tctxt->inst->doc, tctxt->inst, NULL);
-	nsURI = xmlStrdup(ns->href);
+	if (ns != NULL) nsURI = xmlStrdup(ns->href);
     } else {
 	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	if (nsURI == NULL) {

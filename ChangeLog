@@ -1,3 +1,8 @@
+Wed May 22 11:50:36 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/function.c: applied a patch from Richard Jinks
+	  to avoid a crash in element-available()
+
 Tue May 21 19:38:20 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.spec.in: applied patch from Geert Kloosterman to
