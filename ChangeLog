@@ -1,3 +1,8 @@
+Thu Jan 29 14:47:22 PST 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: added check for "--" or ending '-'
+	  in xsl:comment (Bug 132742)
+
 Thu Jan 29 14:08:31 PST 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c, libxslt/attributes.c: added
