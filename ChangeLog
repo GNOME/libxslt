@@ -1,6 +1,7 @@
 Wed Feb 19 15:52:33 CET 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* xsltproc/xsltproc.c: obsoleted xmlNormalizeWindowsPath
+	* win32/configure.js: included handling of the trio option
 
 Mon Feb 10 17:34:32 CET 2003 Daniel Veillard <daniel@veillard.com>
 
