@@ -14,6 +14,9 @@
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -53,6 +56,16 @@
 #include <sys/time.h>
 #endif /* WIN32 */
 
+#ifndef HAVE_STAT
+#  ifdef HAVE__STAT
+     /* MS C library seems to define stat and _stat. The definition
+      *         is identical. Still, mapping them to each other causes a warning. */
+#    ifndef _MSC_VER
+#      define stat(x,y) _stat(x,y)
+#    endif
+#    define HAVE_STAT
+#  endif
+#endif
 
 static int debug = 0;
 static int repeat = 0;
@@ -80,20 +93,99 @@ static const char *output = NULL;
 static xmlParserInputPtr
 xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
                                xmlParserCtxtPtr ctxt) {
-    if (URL != NULL) {
-        if ((!xmlStrncasecmp((const xmlChar *) URL,
+    xmlParserInputPtr input = NULL;
+    xmlChar *resource = NULL;
+
+#ifdef LIBXML_CATALOG_ENABLED
+#ifdef HAVE_STAT
+    struct stat info;
+#endif
+    xmlCatalogAllow pref;
+
+    /*
+     * If the resource doesn't exists as a file,
+     * try to load it from the resource pointed in the catalogs
+     */
+    pref = xmlCatalogGetDefaults();
+
+    if ((pref != XML_CATA_ALLOW_NONE)
+#ifdef HAVE_STAT
+        && ((URL == NULL) || (stat(URL, &info) < 0))
+#endif
+	) {
+	/*
+	 * Do a local lookup
+	 */
+	if ((ctxt->catalogs != NULL) &&
+	    ((pref == XML_CATA_ALLOW_ALL) ||
+	     (pref == XML_CATA_ALLOW_DOCUMENT))) {
+	    resource = xmlCatalogLocalResolve(ctxt->catalogs,
+					      (const xmlChar *)ID,
+					      (const xmlChar *)URL);
+        }
+	/*
+	 * Try a global lookup
+	 */
+	if ((resource == NULL) &&
+	    ((pref == XML_CATA_ALLOW_ALL) ||
+	     (pref == XML_CATA_ALLOW_GLOBAL))) {
+	    resource = xmlCatalogResolve((const xmlChar *)ID,
+					 (const xmlChar *)URL);
+	}
+	if ((resource == NULL) && (URL != NULL))
+	    resource = xmlStrdup((const xmlChar *) URL);
+
+	/*
+	 * TODO: do an URI lookup on the reference
+	 */
+	if ((resource != NULL)
+#ifdef HAVE_STAT
+            && (stat((const char *) resource, &info) < 0)
+#endif
+	    ) {
+	    xmlChar *tmp = NULL;
+
+	    if ((ctxt->catalogs != NULL) &&
+		((pref == XML_CATA_ALLOW_ALL) ||
+		 (pref == XML_CATA_ALLOW_DOCUMENT))) {
+		tmp = xmlCatalogLocalResolveURI(ctxt->catalogs, resource);
+	    }
+	    if ((tmp == NULL) &&
+		((pref == XML_CATA_ALLOW_ALL) ||
+	         (pref == XML_CATA_ALLOW_GLOBAL))) {
+		tmp = xmlCatalogResolveURI(resource);
+	    }
+
+	    if (tmp != NULL) {
+		xmlFree(resource);
+		resource = tmp;
+	    }
+	}
+    }
+#endif
+    if (resource == NULL)
+	resource = (xmlChar *) URL;
+
+    if (resource != NULL) {
+        if ((!xmlStrncasecmp((const xmlChar *) resource,
 		            (const xmlChar *) "ftp://", 6)) ||
-            (!xmlStrncasecmp((const xmlChar *) URL,
+            (!xmlStrncasecmp((const xmlChar *) resource,
 		            (const xmlChar *) "http://", 7))) {
-	    fprintf(stderr, "Attempt to load network entity %s \n", URL);
-	    if (nonet)
+	    fprintf(stderr, "Attempt to load network entity %s \n", resource);
+
+	    if (nonet) {
+		if (resource != (xmlChar *) URL)
+		    xmlFree(resource);
 		return(NULL);
+	    }
 	}
     }
     if (defaultLoader != NULL) {
-	return(defaultLoader(URL, ID, ctxt));
+	input = defaultLoader((const char *) resource, ID, ctxt);
     }
-    return(NULL);
+    if (resource != (xmlChar *) URL)
+	xmlFree(resource);
+    return(input);
 }
 
 static void
@@ -451,7 +543,7 @@ main(int argc, char **argv)
 		    /* it is an embedded stylesheet */
 		    xsltProcess(style, cur, argv[i]);
 		    xsltFreeStylesheet(cur);
-		    exit(0);
+		    goto done;
 		}
 		cur = xsltParseStylesheetDoc(style);
 		if (cur != NULL) {
@@ -460,6 +552,9 @@ main(int argc, char **argv)
 		    else
 			xmlIndentTreeOutput = 0;
 		    i++;
+		} else {
+		    xmlFreeDoc(style);
+		    goto done;
 		}
 	    }
             break;
@@ -507,6 +602,7 @@ main(int argc, char **argv)
         }
         xsltFreeStylesheet(cur);
     }
+done:
     xsltCleanupGlobals();
     xmlCleanupParser();
     xmlMemoryDump();

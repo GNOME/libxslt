@@ -1,3 +1,10 @@
+Thu Aug 23 17:37:40 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: catalog integration, cleanup with
+	  the --nonet option closing #59427
+	* libxslt/xslt.c: removed a small memleak when using a 
+	  stylesheet PI
+
 Tue Aug 21 13:17:19 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* //Makefile.am : fixed an error I propagated to nearly all

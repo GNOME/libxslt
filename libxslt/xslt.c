@@ -2119,12 +2119,14 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 		}
 	    }
 	} else {
-	    xmlChar *URL;
+	    xmlChar *URL, *base;
 
 	    /*
 	     * Reference to an external stylesheet
 	     */
-	    URL = xmlBuildURI(href, xmlNodeGetBase(doc, (xmlNodePtr) doc));
+
+	    base = xmlNodeGetBase(doc, (xmlNodePtr) doc);
+	    URL = xmlBuildURI(href, base);
 	    if (URL != NULL) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
@@ -2139,6 +2141,8 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 #endif
 		ret = xsltParseStylesheetFile(href);
 	    }
+	    if (base != NULL)
+		xmlFree(base);
 	}
 	xmlFreeURI(URI);
 	xmlFree(href);
