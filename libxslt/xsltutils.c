@@ -764,6 +764,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
     xmlNodePtr root;
     int base;
     const xmlChar *method;
+    int indent;
 
     if ((buf == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
@@ -784,6 +785,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 
     XSLT_GET_IMPORT_PTR(method, style, method)
     XSLT_GET_IMPORT_PTR(encoding, style, encoding)
+    XSLT_GET_IMPORT_INT(indent, style, indent);
 
     if ((method == NULL) && (result->type == XML_HTML_DOCUMENT_NODE))
 	method = (const xmlChar *) "html";
@@ -800,7 +802,10 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	} else {
 	    htmlSetMetaEncoding(result, (const xmlChar *) "UTF-8");
 	}
-	htmlDocContentDumpOutput(buf, result, (const char *) encoding);
+	if (indent != 0)
+	    indent = 1;
+	htmlDocContentDumpFormatOutput(buf, result, (const char *) encoding,
+		                       indent);
 	xmlOutputBufferFlush(buf);
     } else if ((method != NULL) &&
 	(xmlStrEqual(method, (const xmlChar *) "xhtml"))) {
@@ -854,12 +859,10 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
     } else {
 	int omitXmlDecl;
 	int standalone;
-	int indent;
 	const xmlChar *version;
 
 	XSLT_GET_IMPORT_INT(omitXmlDecl, style, omitXmlDeclaration);
 	XSLT_GET_IMPORT_INT(standalone, style, standalone);
-	XSLT_GET_IMPORT_INT(indent, style, indent);
 	XSLT_GET_IMPORT_PTR(version, style, version)
 
 	if (omitXmlDecl != 1) {

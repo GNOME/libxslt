@@ -96,9 +96,9 @@
         </fo:block>
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-<fo:wrapper id="id2760726"><!--for loop, DSSSL and--></fo:wrapper>
-<fo:wrapper id="id2760739"><!--loops, implementing (DSSSL)--></fo:wrapper>
-<fo:wrapper id="id2760757"><!--tail recursion (DSSSL)--></fo:wrapper>
+<fo:wrapper id="id2766444"><!--for loop, DSSSL and--></fo:wrapper>
+<fo:wrapper id="id2766461"><!--loops, implementing (DSSSL)--></fo:wrapper>
+<fo:wrapper id="id2766477"><!--tail recursion (DSSSL)--></fo:wrapper>
 
 DSSSL doesn't have any construct that resembles the
 for loop that occurs in most imperative languages like C
@@ -113,9 +113,9 @@ Loops in DSSSL use a special form of
   <fo:inline id="dl3">&#x2778;</fo:inline>(if (&gt; count 10)
     <fo:inline id="dl4">&#x2779;</fo:inline>#t
     (<fo:inline id="dl5">&#x277A;</fo:inline>loopvar <fo:inline id="dl6">&#x277B;</fo:inline>(+ count 1))))</fo:block></fo:block>
-      <fo:block id="id2881523">
+      <fo:block id="id2882068">
         <fo:list-block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="2.2em" provisional-label-separation="0.2em">
-          <fo:list-item id="id2881531">
+          <fo:list-item id="id2882047">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>&#x2776;</fo:block>
             </fo:list-item-label>
@@ -125,20 +125,20 @@ initial value, immediately after the <fo:inline font-family="Courier">let</fo:in
 operand.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2760484">
+          <fo:list-item id="id2761001">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>&#x2777;</fo:block>
             </fo:list-item-label>
             <fo:list-item-body start-indent="body-start()">
               <fo:block>
-<fo:wrapper id="id2881527"><!--variables (DSSSL), local, defining after loop variable--></fo:wrapper>
+<fo:wrapper id="id2882027"><!--variables (DSSSL), local, defining after loop variable--></fo:wrapper>
 
 Any number of additional local variables can be defined after
 the loop variable, just as they can in any other
 <fo:inline font-family="Courier">let</fo:inline> expression.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2855278">
+          <fo:list-item id="id2855821">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>&#x2778;</fo:block>
             </fo:list-item-label>
@@ -147,7 +147,7 @@ the loop variable, just as they can in any other
 test in it.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2855311">
+          <fo:list-item id="id2882029">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>&#x2779;</fo:block>
             </fo:list-item-label>
@@ -155,7 +155,7 @@ test in it.</fo:block>
               <fo:block>This is the value that will be returned.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2765172">
+          <fo:list-item id="id2763042">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>&#x277A;</fo:block>
             </fo:list-item-label>
@@ -164,7 +164,7 @@ test in it.</fo:block>
 it was a function name.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2765206">
+          <fo:list-item id="id2763077">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>&#x277B;</fo:block>
             </fo:list-item-label>

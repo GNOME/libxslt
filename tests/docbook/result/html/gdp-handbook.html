@@ -1,38 +1,12 @@
-<html>
-<head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
-<title>The GNOME Handbook of Writing Software Documentation</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.40">
-</head>
-<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article">
-<div class="titlepage">
-<div><h2 class="title">
-<a name="index"></a>The GNOME Handbook of Writing Software Documentation</h2></div>
-<div>
-<h3 class="author">David Mason</h3>
-<div class="affiliation">
-<span class="orgname">Red Hat, Inc.<br></span><div class="address">
-<br>
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type"><title>The GNOME Handbook of Writing Software Documentation</title><meta name="generator" content="DocBook XSL Stylesheets V1.40"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"><div><h2 class="title"><a name="index"></a>The GNOME Handbook of Writing Software Documentation</h2></div><div><h3 class="author">David Mason</h3><div class="affiliation"><span class="orgname">Red Hat, Inc.<br></span><div class="address"><br>
             <tt>&lt;<a href="mailto:dcm@redhat.com">dcm@redhat.com</a>&gt;</tt><br>
-          </div>
-</div>
-<h3 class="author">Daniel Mueth</h3>
-<div class="affiliation"><div class="address">
-<br>
+          </div></div><h3 class="author">Daniel Mueth</h3><div class="affiliation"><div class="address"><br>
             <tt>&lt;<a href="mailto:d-mueth@uchicago.edu">d-mueth@uchicago.edu</a>&gt;</tt><br>
-          </div></div>
-<h3 class="author">Alexander Kirillov</h3>
-<div class="affiliation"><div class="address">
-<br>
+          </div></div><h3 class="author">Alexander Kirillov</h3><div class="affiliation"><div class="address"><br>
             <tt>&lt;<a href="mailto:kirillov@math.sunysb.edu">kirillov@math.sunysb.edu</a>&gt;</tt><br>
-          </div></div>
-</div>
-<div><p class="releaseinfo">
+          </div></div></div><div><p class="releaseinfo">
       This is a pre-release!
-    </p></div>
-<div><p class="copyright">Copyright © 2000 Red Hat, Inc., Daniel Mueth, and Alexander Kirillov</p></div>
-<div><div class="legalnotice">
-<p>
+    </p></div><div><p class="copyright">Copyright © 2000 Red Hat, Inc., Daniel Mueth, and Alexander Kirillov</p></div><div><div class="legalnotice"><p>
       Permission is granted to copy, distribute and/or modify this
       document under the terms of the <i>GNU Free Documentation
       License</i>, Version 1.1 or any later version published
@@ -42,170 +16,18 @@
       the Free Software Foundation by visiting <a href="http://www.fsf.org" target="_top">their Web site</a> or by writing to:
       Free Software Foundation, Inc., 59 Temple Place - Suite 330,
       Boston, MA 02111-1307, USA.
-     </p>
-<p>
+     </p><p>
       Many of the names used by companies to distinguish their products and
       services are claimed as trademarks. Where those names appear in any
       GNOME documentation, and those trademarks are made aware to the members
       of the GNOME Documentation Project, the names have been printed in caps
       or initial caps.
-     </p>
-</div></div>
-<div><div class="revhistory"><table border="1" width="100%" summary="Revision history">
-<tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr>
-<tr>
-<td align="left">Revision 
+     </p></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 
           0.99
-        </td>
-<td align="left">
+        </td><td align="left">
          04.10.2000
-        </td>
-</tr>
-</table></div></div>
-<hr>
-</div>
-<div class="toc">
-<p><b>Table of Contents</b></p>
-<dl>
-<dt> <a href="#intro">Introduction</a>
-</dt>
-<dd><dl>
-<dt> <a href="#gdp">The GNOME Documentation Project</a>
-</dt>
-<dt> <a href="#notation">Notation and Conventions</a>
-</dt>
-<dt> <a href="#about">About This Handbook</a>
-</dt>
-</dl></dd>
-<dt> <a href="#gettingstarted">Getting Started Writing GNOME Documentation</a>
-</dt>
-<dd><dl>
-<dt> <a href="#selecting">Selecting A Document</a>
-</dt>
-<dt> <a href="#docbook">Installing and Using DocBook</a>
-</dt>
-<dt> <a href="#gdptemplates">GDP Document Templates</a>
-</dt>
-<dt> <a href="#screenshots">Screenshots</a>
-</dt>
-<dt> <a href="#applicationbugs">Application Bugs</a>
-</dt>
-<dt> <a href="#cvs">Using CVS</a>
-</dt>
-</dl></dd>
-<dt> <a href="#gnomedocsystem">The GNOME Documentation System</a>
-</dt>
-<dd><dl>
-<dt> <a href="#gnomehelpbrowser">The GNOME Help Browser</a>
-</dt>
-<dt> <a href="#gnomehelpbrowser2">The GNOME Help Browser (GNOME-2.0)</a>
-</dt>
-<dt> <a href="#gnomehelponthefly">Dynamic Document Synthesis(GNOME-2.0)</a>
-</dt>
-<dt> <a href="#gnomehelpcomponents">The GNOME Documentation Components</a>
-</dt>
-</dl></dd>
-<dt> <a href="#docbookbasics">DocBook Basics </a>
-</dt>
-<dd><dl>
-<dt> <a href="#introtodocbook">Introduction to DocBook</a>
-</dt>
-<dt> <a href="#xml">XML and SGML</a>
-</dt>
-<dt> <a href="#structure"> Structure Elements</a>
-</dt>
-<dt> <a href="#inline">Inline Elements</a>
-</dt>
-</dl></dd>
-<dt> <a href="#conventions">GDP Documentation Conventions </a>
-</dt>
-<dd><dl>
-<dt> <a href="#conventionsalldocs">Conventions for All GDP Documentation</a>
-</dt>
-<dt> <a href="#conventionsappdocs">Conventions for Application Documentation</a>
-</dt>
-</dl></dd>
-<dt> <a href="#writingapplicationmanuals">Writing Application and Applet Manuals</a>
-</dt>
-<dt> <a href="#listingdocsinhelpmenu">Listing Documents in the Help Menu</a>
-</dt>
-<dt> <a href="#applicationhelpbuttons">Application Help Buttons</a>
-</dt>
-<dt> <a href="#packagingappletdocs">Packaging Applet Documentation</a>
-</dt>
-<dd><dl>
-<dt> <a href="#appletfiles">Applet Documentation Files</a>
-</dt>
-<dt> <a href="#appletmenu">Adding Documentation to an Applet Menu</a>
-</dt>
-</dl></dd>
-<dt> <a href="#writingcontextsensitivehelp">Writing Context Sensitive Help (coming in GNOME-2.0)</a>
-</dt>
-<dt> <a href="#referring">Referring to Other GNOME Documentation (coming in
-    GNOME-2.0)</a>
-</dt>
-<dt> <a href="#basics">Basics of Documentation Style</a>
-</dt>
-<dd><dl>
-<dt> <a href="#styleplanning">Planning</a>
-</dt>
-<dt> <a href="#balance">Achieving a Balanced Style</a>
-</dt>
-<dt> <a href="#stylestructure">Structure</a>
-</dt>
-<dt> <a href="#stylegrammar">Grammar and Spelling</a>
-</dt>
-</dl></dd>
-<dt> <a href="#teamwork">Teamwork</a>
-</dt>
-<dd><dl>
-<dt> <a href="#teamworkgdp">Working With The GDP Team</a>
-</dt>
-<dt> <a href="#teamworkdevelopers">Working With Developers</a>
-</dt>
-</dl></dd>
-<dt> <a href="#finishing">Finishing A Document</a>
-</dt>
-<dd><dl>
-<dt> <a href="#editting">Editing The Document</a>
-</dt>
-<dt> <a href="#submitting">Submitting The Document</a>
-</dt>
-</dl></dd>
-<dt> <a href="#resources">Resources</a>
-</dt>
-<dd><dl>
-<dt> <a href="#resourcesweb">Resources On The Web</a>
-</dt>
-<dt> <a href="#resourcesbooks">Books</a>
-</dt>
-<dt> <a href="#mailinglists">Mailing Lists</a>
-</dt>
-<dt> <a href="#irc">IRC</a>
-</dt>
-</dl></dd>
-<dt>A <a href="#templates">Document Templates</a>
-</dt>
-<dd><dl>
-<dt> <a href="#template1">Template 1: Application Manual</a>
-</dt>
-<dt> <a href="#template2-1x">Template 2: Applet Manual For GNOME 1.x</a>
-</dt>
-<dt> <a href="#template2-2x">Template 2: Applet Manual For GNOME 2.x</a>
-</dt>
-</dl></dd>
-</dl>
-</div>
-<div class="sect1">
-<a name="intro"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="intro"></a>Introduction</h2></div></div>
-<div class="sect2">
-<a name="gdp"></a><div class="titlepage"><div><h3 class="title">
-<a name="gdp"></a>The GNOME Documentation Project</h3></div></div>
-<div class="sect3">
-<a name="goals"></a><div class="titlepage"><div><h4 class="title">
-<a name="goals"></a>Goals</h4></div></div>
-<p>
+        </td></tr></table></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt> <a href="#intro">Introduction</a></dt><dd><dl><dt> <a href="#gdp">The GNOME Documentation Project</a></dt><dt> <a href="#notation">Notation and Conventions</a></dt><dt> <a href="#about">About This Handbook</a></dt></dl></dd><dt> <a href="#gettingstarted">Getting Started Writing GNOME Documentation</a></dt><dd><dl><dt> <a href="#selecting">Selecting A Document</a></dt><dt> <a href="#docbook">Installing and Using DocBook</a></dt><dt> <a href="#gdptemplates">GDP Document Templates</a></dt><dt> <a href="#screenshots">Screenshots</a></dt><dt> <a href="#applicationbugs">Application Bugs</a></dt><dt> <a href="#cvs">Using CVS</a></dt></dl></dd><dt> <a href="#gnomedocsystem">The GNOME Documentation System</a></dt><dd><dl><dt> <a href="#gnomehelpbrowser">The GNOME Help Browser</a></dt><dt> <a href="#gnomehelpbrowser2">The GNOME Help Browser (GNOME-2.0)</a></dt><dt> <a href="#gnomehelponthefly">Dynamic Document Synthesis(GNOME-2.0)</a></dt><dt> <a href="#gnomehelpcomponents">The GNOME Documentation Components</a></dt></dl></dd><dt> <a href="#docbookbasics">DocBook Basics </a></dt><dd><dl><dt> <a href="#introtodocbook">Introduction to DocBook</a></dt><dt> <a href="#xml">XML and SGML</a></dt><dt> <a href="#structure"> Structure Elements</a></dt><dt> <a href="#inline">Inline Elements</a></dt></dl></dd><dt> <a href="#conventions">GDP Documentation Conventions </a></dt><dd><dl><dt> <a href="#conventionsalldocs">Conventions for All GDP Documentation</a></dt><dt> <a href="#conventionsappdocs">Conventions for Application Documentation</a></dt></dl></dd><dt> <a href="#writingapplicationmanuals">Writing Application and Applet Manuals</a></dt><dt> <a href="#listingdocsinhelpmenu">Listing Documents in the Help Menu</a></dt><dt> <a href="#applicationhelpbuttons">Application Help Buttons</a></dt><dt> <a href="#packagingappletdocs">Packaging Applet Documentation</a></dt><dd><dl><dt> <a href="#appletfiles">Applet Documentation Files</a></dt><dt> <a href="#appletmenu">Adding Documentation to an Applet Menu</a></dt></dl></dd><dt> <a href="#writingcontextsensitivehelp">Writing Context Sensitive Help (coming in GNOME-2.0)</a></dt><dt> <a href="#referring">Referring to Other GNOME Documentation (coming in
+    GNOME-2.0)</a></dt><dt> <a href="#basics">Basics of Documentation Style</a></dt><dd><dl><dt> <a href="#styleplanning">Planning</a></dt><dt> <a href="#balance">Achieving a Balanced Style</a></dt><dt> <a href="#stylestructure">Structure</a></dt><dt> <a href="#stylegrammar">Grammar and Spelling</a></dt></dl></dd><dt> <a href="#teamwork">Teamwork</a></dt><dd><dl><dt> <a href="#teamworkgdp">Working With The GDP Team</a></dt><dt> <a href="#teamworkdevelopers">Working With Developers</a></dt></dl></dd><dt> <a href="#finishing">Finishing A Document</a></dt><dd><dl><dt> <a href="#editting">Editing The Document</a></dt><dt> <a href="#submitting">Submitting The Document</a></dt></dl></dd><dt> <a href="#resources">Resources</a></dt><dd><dl><dt> <a href="#resourcesweb">Resources On The Web</a></dt><dt> <a href="#resourcesbooks">Books</a></dt><dt> <a href="#mailinglists">Mailing Lists</a></dt><dt> <a href="#irc">IRC</a></dt></dl></dd><dt>A <a href="#templates">Document Templates</a></dt><dd><dl><dt> <a href="#template1">Template 1: Application Manual</a></dt><dt> <a href="#template2-1x">Template 2: Applet Manual For GNOME 1.x</a></dt><dt> <a href="#template2-2x">Template 2: Applet Manual For GNOME 2.x</a></dt></dl></dd></dl></div><div class="sect1"><a name="intro"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="intro"></a>Introduction</h2></div></div><div class="sect2"><a name="gdp"></a><div class="titlepage"><div><h3 class="title"><a name="gdp"></a>The GNOME Documentation Project</h3></div></div><div class="sect3"><a name="goals"></a><div class="titlepage"><div><h4 class="title"><a name="goals"></a>Goals</h4></div></div><p>
           The GNOME Documentation Project (GDP) aims to provide GNOME
           and GNOME applications with a complete, intuitive, and clear
           documentation system.  At the center of the GDP is the
@@ -227,12 +49,7 @@
           Guide</i></a>, the <a href="http://www.gnome.org/learn/" target="_top"><i>GNOME FAQ</i></a>, and
           GNOME application documentation.  Most GNOME applications
           have their own manual in addition to context sensitive help.
-        </p>
-</div>
-<div class="sect3">
-<a name="joining"></a><div class="titlepage"><div><h4 class="title">
-<a name="joining"></a>Joining the GDP</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="joining"></a><div class="titlepage"><div><h4 class="title"><a name="joining"></a>Joining the GDP</h4></div></div><p>
          Documenting GNOME and all the numerous GNOME applications is
          a very large project.  The GDP is always looking for people
          to help write, update, and edit documentation.  If you are
@@ -249,12 +66,7 @@
          projects and members, see the
          <a href="http://developer.gnome.org/projects/gdp" target="_top">
            <i>GDP Website</i></a>.
-       </p>
-</div>
-<div class="sect3">
-<a name="collaborating"></a><div class="titlepage"><div><h4 class="title">
-<a name="collaborating"></a>Collaborating with the GDP</h4></div></div>
-<p>
+       </p></div><div class="sect3"><a name="collaborating"></a><div class="titlepage"><div><h4 class="title"><a name="collaborating"></a>Collaborating with the GDP</h4></div></div><p>
         GNOME developers, packagers, and translators may not be
         writing GNOME documentation but will want to understand how
         the GNOME documentation system works and will need to
@@ -269,63 +81,22 @@
         and that the developer(s) would like a GDP member to write
         documentation for the application. The #docs IRC channel on
         irc.gnome.org is another option for contacting GDP members.
-       </p>
-</div>
-</div>
-<div class="sect2">
-<a name="notation"></a><div class="titlepage"><div><h3 class="title">
-<a name="notation"></a>Notation and Conventions</h3></div></div>
-<p>
+       </p></div></div><div class="sect2"><a name="notation"></a><div class="titlepage"><div><h3 class="title"><a name="notation"></a>Notation and Conventions</h3></div></div><p>
         This Handbook uses the following notation:
-        <div class="informaltable" id="id2771823">
-<a name="id2771823"></a><table border="0">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><tt>/usr/bin</tt></td>
-<td>
+        <div class="informaltable" id="id2772333"><a name="id2772333"></a><table border="0"><colgroup><col><col></colgroup><tbody><tr><td><tt>/usr/bin</tt></td><td>
                   Directory
-                </td>
-</tr>
-<tr>
-<td><tt>foo.sgml</tt></td>
-<td>
+                </td></tr><tr><td><tt>foo.sgml</tt></td><td>
                   Filename
-                </td>
-</tr>
-<tr>
-<td><b>command</b></td>
-<td>
+                </td></tr><tr><td><b>command</b></td><td>
                   Command or text that would be typed.
-                </td>
-</tr>
-<tr>
-<td><b><i><tt>replaceable</tt></i></b></td>
-<td>
+                </td></tr><tr><td><b><i><tt>replaceable</tt></i></b></td><td>
                   &quot;Variable&quot; text that can be replaced.
-                </td>
-</tr>
-<tr>
-<td><tt>Program or Doc Code</tt></td>
-<td>Program or document code</td>
-</tr>
-</tbody>
-</table>
-</div>
-      </p>
-</div>
-<div class="sect2">
-<a name="about"></a><div class="titlepage"><div><h3 class="title">
-<a name="about"></a>About This Handbook</h3></div></div>
-<p>
+                </td></tr><tr><td><tt>Program or Doc Code</tt></td><td>Program or document code</td></tr></tbody></table></div>
+      </p></div><div class="sect2"><a name="about"></a><div class="titlepage"><div><h3 class="title"><a name="about"></a>About This Handbook</h3></div></div><p>
        This Handbook is a guide for both writing documentation for
        GNOME components and applications and for properly binding and
        packaging documentation into GNOME applications.
-      </p>
-<p>
+      </p><p>
        This Handbook, like all GNOME documentation, was written in
        DocBook(SGML) and is available in several formats including
        SGML, HTML, PostScript, and PDF.  For the latest version, see
@@ -333,19 +104,7 @@
        <i>Getting The GNOME Handbook of Writing Software
        Documentation</i> </a>.  Alternately, one may
        download it anonymously from GNOME CVS under <tt>gnome-docu/gdp</tt>.
-      </p>
-</div>
-</div>
-<div class="sect1">
-<a name="gettingstarted"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="gettingstarted"></a>Getting Started Writing GNOME Documentation</h2></div></div>
-<div class="sect2">
-<a name="selecting"></a><div class="titlepage"><div><h3 class="title">
-<a name="selecting"></a>Selecting A Document</h3></div></div>
-<div class="sect3">
-<a name="know"></a><div class="titlepage"><div><h4 class="title">
-<a name="know"></a>Document Something You Know</h4></div></div>
-<p>
+      </p></div></div><div class="sect1"><a name="gettingstarted"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="gettingstarted"></a>Getting Started Writing GNOME Documentation</h2></div></div><div class="sect2"><a name="selecting"></a><div class="titlepage"><div><h3 class="title"><a name="selecting"></a>Selecting A Document</h3></div></div><div class="sect3"><a name="know"></a><div class="titlepage"><div><h4 class="title"><a name="know"></a>Document Something You Know</h4></div></div><p>
           The most frequently asked question of new contributors who
           join the GDP is &quot;which document should I start
           with?&quot;. Because most people involved are volunteers, we do
@@ -353,27 +112,20 @@
           write documents for. The first step is all yours - you must
           decide what about GNOME interests you most and find out if
           it has complete documents or not.
-        </p>
-<p>
+        </p><p>
           It is also important to spend some time with GNOME to make
           sure you are familiar enough with it to be
           <i>authoritative</i>  in your writing. The
           best way to do this is to just sit down and play with GNOME
           as much as possible before starting to write.
-        </p>
-<p>
+        </p><p>
           The easiest way to get started is to improve existing
           documentation. If you notice some inaccuracies or omissions
           in the documentation, or you think that you can explain the
           material more clearly, just send your suggestions to the
           author of the original documentation or to the GNOME
           documentation project at <tt>&lt;<a href="mailto:docs@gnome.org">docs@gnome.org</a>&gt;</tt>.
-        </p>
-</div>
-<div class="sect3">
-<a name="doctable"></a><div class="titlepage"><div><h4 class="title">
-<a name="doctable"></a>The GNOME Documentation Status Table</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="doctable"></a><div class="titlepage"><div><h4 class="title"><a name="doctable"></a>The GNOME Documentation Status Table</h4></div></div><p>
           The <i>GDP Documentation Status Table</i>
           (<i>DocTable</i>) (<a href="http://www.gnome.org/gdp/doctable/" target="_top">http://www.gnome.org/gdp/doctable/</a>) is a
           web page which tracks the status of all the various
@@ -384,8 +136,7 @@
           current status of the documentation, who is working on the
           particular document, where the documentation can be found,
           and provides a forum for the discussion of each item.
-        </p>
-<p>
+        </p><p>
           You should use the <i>DocTable</i> to help
           you select a documentation item which needs work done.  Once
           you have selected an item to work on, please register
@@ -396,34 +147,19 @@
           help.  The <i>DocTable</i> also allows
           people to make announcements and suggestions and to discuss
           issues in the comments section.
-        </p>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2766646"></a>Note</h3>
-<p>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2766655"></a>Note</h3><p>
           Note that the information in the
           <i>DocTable</i> may not always be up-to-date
           or accurate.  When you assign yourself to documenting an
           application, make sure you find out the latest status of
           documentation by contacting the application author.  
-         </p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<a name="docbook"></a><div class="titlepage"><div><h3 class="title">
-<a name="docbook"></a>Installing and Using DocBook</h3></div></div>
-<p>
+         </p></div></div></div><div class="sect2"><a name="docbook"></a><div class="titlepage"><div><h3 class="title"><a name="docbook"></a>Installing and Using DocBook</h3></div></div><p>
         All documentation for the GNOME project is written in SGML
         using the DocBook DTD. There are many advantages to using
         this for documentation, not least of which is the single
         source nature of SGML. To contribute to the GDP you should
         learn to use DocBook.
-      </p>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2766734"></a>NOTE</h3>
-<p>
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2766742"></a>NOTE</h3><p>
           To get started writing for the GDP you do not need to rush
           out and learn DocBook - if you feel it is too much to handle
           for now, you can submit plain ASCII text to the <a href="http://mail.gnome.org/mailman/listinfo/gnome-doc-list/" target="_top">
@@ -431,29 +167,18 @@
           </a>and a volunteer will mark it up for you. Seeing your
           document marked up will also be a great way for you to start
           learning DocBook.
-        </p>
-</div>
-<div class="sect3">
-<a name="installingdocbook"></a><div class="titlepage"><div><h4 class="title">
-<a name="installingdocbook"></a>Installing DocBook</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="installingdocbook"></a><div class="titlepage"><div><h4 class="title"><a name="installingdocbook"></a>Installing DocBook</h4></div></div><p>
           Download and install the following <a href="ftp://sourceware.cygnus.com:/pub/docbook-tools/" target="_top">DocBook Tools packages</a>: jade, docbook,
           jadetex, sgml-common, and stylesheets. (RPM users should note
           that jade is platform dependent (eg. i386), while the other packages
           are in the <tt>noarch</tt>
           directory.) You can find more 
           information on DocBook Tools <a href="           http://sourceware.cygnus.com/docbook-tools/" target="_top">here</a>.
-        </p>
-<p>
+        </p><p>
           If you are an Emacs user you may
           want to grab the psgml package as well. This is a major mode
           for editing sgml files in Emacs.
-        </p>
-</div>
-<div class="sect3">
-<a name="gdpstylesheets"></a><div class="titlepage"><div><h4 class="title">
-<a name="gdpstylesheets"></a>GDP Stylesheets</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="gdpstylesheets"></a><div class="titlepage"><div><h4 class="title"><a name="gdpstylesheets"></a>GDP Stylesheets</h4></div></div><p>
           The GDP uses its own DocBook stylesheets.  To use the GDP
           stylesheets, you should download the file
           <tt>gdp-both.dsl</tt> from the <tt>gnome-docu/gdp/dsssl</tt> module in
@@ -465,18 +190,12 @@
           Alternately, you can download and install the
           <a href="http://people.redhat.com/dcm/software.html" target="_top">gnome-doc-tools package</a> which will set
           up the stylesheets as well as the DTD discussed below.
-        </p>
-</div>
-<div class="sect3">
-<a name="gdpdtd"></a><div class="titlepage"><div><h4 class="title">
-<a name="gdpdtd"></a>GDP DTD (PNG Image Support)</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="gdpdtd"></a><div class="titlepage"><div><h4 class="title"><a name="gdpdtd"></a>GDP DTD (PNG Image Support)</h4></div></div><p>
           Due to some license issues involved with the creation of
           gifs, the GNOME Documentation Project has decided to use the
           PNG image format for all images in GNOME documentation. You
           can read more about the issues involved with gifs at <a href="http://www.gnu.org/philosophy/gif.html" target="_top">http://www.gnu.org/philosophy/gif.html</a>.
-        </p>
-<p>
+        </p><p>
           The current DocBook DTD(3.1) does not include support for
           embedding PNG images in your documents.  Since the GDP uses
           many screenshots in its documentation, we use our own
@@ -486,19 +205,14 @@
           your output document appearance subtly vary between the two
           DTD's.  To install the GDP custom DTD with PNG image support
           by hand:
-        </p>
-<div class="itemizedlist"><ul>
-<li style="list-style-type: opencircle"><p>
-<a name="id2767148"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: opencircle"><p><a name="id2767156"></a>
               Download <a href="http://www.labs.redhat.com/png/png-support.html" target="_top">the
               GDP DocBook DTD for PNG support</a> and install it
               where you keep your DTD's. (On Red Hat use <tt>/usr/lib/sgml/</tt>.) Note that
               the 3.0 DTD is missing support for the
               <tt>&lt;legalnotice&gt;</tt> tag, so it is
               recommended that you use version 3.1
-            </p></li>
-<li style="list-style-type: disc"><p>
-<a name="id2767316"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2767324"></a>
               Add the new DTD to your SGML CATALOG file.  The location
               of your SGML CATALOG file may vary depending upon your
               distribution. (On Red Hat it is usually in
@@ -511,44 +225,33 @@ PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.0//EN&quot; &quot;png-support-
               <pre class="programlisting">
 PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot; &quot;png-support-3.1.dtd&quot;
               </pre> 
-            </p></li>
-</ul></div>
-<p>
+            </p></li></ul></div><p>
           Alternately, you can download and install the
           <a href="http://people.redhat.com/dcm/software.html" target="_top">gnome-doc-tools package</a> which will set
           up the custom stylesheets and DTD for you.
-        </p>
-<p>
+        </p><p>
           To include PNG files in your documents, you will need to
           indicate that you are using this special DTD.  To do
           this, use the following headers:
-        </p>
-<p>
+        </p><p>
           Articles:
           <pre class="programlisting">
 &lt;!DOCTYPE Article PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant
 V1.1//EN&quot;[]&gt;
           </pre>
-        </p>
-<p>
+        </p><p>
           Books:
           <pre class="programlisting">
 &lt;!DOCTYPE Book PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant
 V1.1//EN&quot;[]&gt;
           </pre>
-        </p>
-</div>
-<div class="sect3">
-<a name="editors"></a><div class="titlepage"><div><h4 class="title">
-<a name="editors"></a>Editors</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="editors"></a><div class="titlepage"><div><h4 class="title"><a name="editors"></a>Editors</h4></div></div><p>
           There are many editors on Linux and UNIX systems available
           to you. Which editor you use to work on the sgml documents
           is completely up to you, as long as the editor is able to
           preserve sgml and produce the source in a format that is
           readable by everyone.
-        </p>
-<p>
+        </p><p>
           Probably the two most popular editors available are
           Emacs and
           vi. These and other editors are
@@ -558,12 +261,7 @@ V1.1//EN&quot;[]&gt;
           psgml package in DocBook Tools, which is the standard set of
           tools for the GDP. You may find out more about DocBook Tools
           in <a href="#installingdocbook" title="Installing DocBook">the section called &#8220;Installing DocBook&#8221;</a>.
-        </p>
-</div>
-<div class="sect3">
-<a name="make-output"></a><div class="titlepage"><div><h4 class="title">
-<a name="make-output"></a>Creating Something Useful with your Docs</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="make-output"></a><div class="titlepage"><div><h4 class="title"><a name="make-output"></a>Creating Something Useful with your Docs</h4></div></div><p>
           The tools available in DocBook Tools allow you to convert
           your sgml document to many different formats including html
           and Postscript. The primary tool used to do the conversion
@@ -571,8 +269,7 @@ V1.1//EN&quot;[]&gt;
           most cases you will not have to work directly with
           Jade; Instead,  you will use the
           scripts provided by DocBook Tools.
-        </p>
-<p>
+        </p><p>
           To preview your DocBook document, it is easiest to convert
           it to <tt>html</tt>. If you have installed the
           DocBook tools described above, all you have to do is to run
@@ -588,46 +285,32 @@ V1.1//EN&quot;[]&gt;
           Note that every time you run <b>db2html</b>, it
           creates the <tt>mydocument</tt> directory over, so
           you will have to copy the screenshots over each time.
-        </p>
-<p>
+        </p><p>
           You can also convert your document to PostScript by running
           the command <tt>$</tt><b>db2ps
           mydocument.sgml</b>, after which you can print out or
           view the resulting .ps file.  
-        </p>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2889214"></a>NOTE</h3>
-<p>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2889222"></a>NOTE</h3><p>
             The html files you get will not look quite the same as the
             documentation distributed with GNOME unless you have the
             custom stylesheets installed on your machine. DocBook
             Tools' default stylesheets will produce a different look
             to your docs. You can read more about the GDP stylesheets
             in <a href="#gdpstylesheets" title="GDP Stylesheets">the section called &#8220;GDP Stylesheets&#8221;</a>.
-          </p>
-</div>
-</div>
-<div class="sect3">
-<a name="jadeimages"></a><div class="titlepage"><div><h4 class="title">
-<a name="jadeimages"></a>Images in DocBook Tools</h4></div></div>
-<p>
+          </p></div></div><div class="sect3"><a name="jadeimages"></a><div class="titlepage"><div><h4 class="title"><a name="jadeimages"></a>Images in DocBook Tools</h4></div></div><p>
           If your document uses images you will need to take note of a
           few things that should take place in order for you to make
           use of those images in your output.
-        </p>
-<p>
+        </p><p>
           The DocBook Tools scripts and applications are smart enough
           to know that when you are creating html you will be using
           PNG files and when you are creating Postscript you will be
           using EPS files (you must use EPS with Postscript).
-        </p>
-<p>
+        </p><p>
           Thus, you should never explicitly
           include the extension of the image file, since DocBook
           Tools will automatically insert it for you. For example:
-        </p>
-<pre class="programlisting">
+        </p><pre class="programlisting">
 
 &lt;figure&gt;
  &lt;title&gt;My Image&lt;/title&gt;
@@ -637,16 +320,14 @@ V1.1//EN&quot;[]&gt;
   &lt;/graphic&gt;
  &lt;/screenshot&gt;
 &lt;/figure&gt;
-     </pre>
-<p>
+     </pre><p>
           You will notice in this example that the file
           <tt>myfile.png</tt> was referred to as simply
           <tt>myfile</tt>. Now when you run
           <b>db2html</b> to create an html file, it will
           automatically look for <tt>myfile.png</tt> in
           the directory.
-        </p>
-<p>
+        </p><p>
           If you want to create PostScript ouput, you will need to create an
           EPS version of your image file to be displayed in the
           PostScript file. There is a simple script available which
@@ -656,42 +337,28 @@ V1.1//EN&quot;[]&gt;
           included in the gnome-doc-tools package, so if you are using
           this package, you should already have
           <b>img2eps</b> on you system.
-        </p>
-</div>
-<div class="sect3">
-<a name="moredocbookinfo"></a><div class="titlepage"><div><h4 class="title">
-<a name="moredocbookinfo"></a>Learning DocBook</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="moredocbookinfo"></a><div class="titlepage"><div><h4 class="title"><a name="moredocbookinfo"></a>Learning DocBook</h4></div></div><p>
           There are many resources available to help you learn DocBook.
           The following resources on the web are useful for learning
           DocBook:
-        </p>
-<div class="itemizedlist"><ul>
-<li style="list-style-type: disc"><p>
-<a name="id2889502"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2889510"></a>
               <a href="http://www.docbook.org" target="_top">http://www.docbook.org</a>  - Norman
               Walsh's <i>DocBook: The Definitive
               Guide</i>.  Online O'Reilly book on using
               DocBook. Contains an excellent element reference. May be
               too formal for a beginner.
-            </p></li>
-<li style="list-style-type: disc"><p>
-<a name="id2889557"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2889566"></a>
               <a href="http://www.oswg.org/oswg-nightly/oswg/en_US.ISO_8859-1/articles/DocBook-Intro/docbook-intro/index.html" target="_top">A Practical Introduction to DocBook</a>
               - The Open Source Writers Group's introduction to using
               DocBook. This is an excellent HOW-TO type article on
               getting started.
-            </p></li>
-<li style="list-style-type: disc"><p>
-<a name="id2889597"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2889607"></a>
               <a href="http://nis-www.lanl.gov/~rosalia/mydocs/docbook-intro/docbook-intro.html" target="_top">Getting Going with DocBook: Notes for
               Hackers</a> - Mark Galassi's introduction to DocBook
               for hackers. This has to be one of the first
               introductions to DocBook ever - still as good as it ever
               was.
-            </p></li>
-<li style="list-style-type: disc"><p>
-<a name="id2889637"></a>
+            </p></li><li style="list-style-type: disc"><p><a name="id2889646"></a>
               <a href="http://www.freebsd.org/tutorials/docproj-primer/" target="_top">
               FreeBSD Documentation Project Primer for New
               Contributors</a> - FreeBSD documentation project
@@ -699,31 +366,19 @@ V1.1//EN&quot;[]&gt;
               writing documentation using DocBook. Note that it also
               describes some custom extensions of DocBook;
               fortunately, they are clearly marked as such.
-            </p></li>
-</ul></div>
-<p>
+            </p></li></ul></div><p>
           Norman Walsh's book is also available in print.
-        </p>
-<p>
+        </p><p>
           The following sections of this document are designed to help
           documentation authors write correct and consistent DocBook:
-        </p>
-<div class="itemizedlist"><ul><li style="list-style-type: disc"><p>
-<a name="id2889703"></a>
+        </p><div class="itemizedlist"><ul><li style="list-style-type: disc"><p><a name="id2889713"></a>
               <a href="#docbookbasics" title="DocBook Basics ">the section called &#8220;DocBook Basics &#8221;</a> - Descriptions of
               commonly used DocBook tags.
-            </p></li></ul></div>
-<p>
+            </p></li></ul></div><p>
           You may also discuss specific DocBook questions with GDP
           members on the #docs IRC channel at irc.gnome.org and on the
           gnome-doc-list mailing list.
-        </p>
-</div>
-</div>
-<div class="sect2">
-<a name="gdptemplates"></a><div class="titlepage"><div><h3 class="title">
-<a name="gdptemplates"></a>GDP Document Templates</h3></div></div>
-<p>
+        </p></div></div><div class="sect2"><a name="gdptemplates"></a><div class="titlepage"><div><h3 class="title"><a name="gdptemplates"></a>GDP Document Templates</h3></div></div><p>
         Templates for various types of GNOME documents are found in
         <a href="#templates" title="A. Document Templates">Appendix A. Document Templates</a>.  They are kept in CVS in
         gnome-docu/gdp/templates. The easiest source to get them from
@@ -731,12 +386,7 @@ V1.1//EN&quot;[]&gt;
         Document Templates</a> web page, which is typically kept
         completely up-to-date with CVS and has a basic description of
         each file from CVS.
-      </p>
-</div>
-<div class="sect2">
-<a name="screenshots"></a><div class="titlepage"><div><h3 class="title">
-<a name="screenshots"></a>Screenshots</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="screenshots"></a><div class="titlepage"><div><h3 class="title"><a name="screenshots"></a>Screenshots</h3></div></div><p>
         Most GNOME documents will have screenshots of the particular
         applet, application, GNOME component, or widget being
         discussed.  As discussed above in <a href="#gdpdtd" title="GDP DTD (PNG Image Support)">the section called &#8220;GDP DTD (PNG Image Support)&#8221;</a> you
@@ -744,11 +394,7 @@ V1.1//EN&quot;[]&gt;
         supports PNG images, the format used for all images in GNOME
         documentation. For the basic DocBook structure used to insert
         images in a document, see <a href="#jadeimages" title="Images in DocBook Tools">the section called &#8220;Images in DocBook Tools&#8221;</a> above.
-      </p>
-<div class="sect3">
-<a name="screenshotappearance"></a><div class="titlepage"><div><h4 class="title">
-<a name="screenshotappearance"></a>Screenshot Appearance</h4></div></div>
-<p>
+      </p><div class="sect3"><a name="screenshotappearance"></a><div class="titlepage"><div><h4 class="title"><a name="screenshotappearance"></a>Screenshot Appearance</h4></div></div><p>
           For all screenshots of windows that typically have border
           decorations (e.g. applications and dialogs, but not applets
           in a panel), GDP standards dictate
@@ -769,12 +415,7 @@ V1.1//EN&quot;[]&gt;
           <i>gnome-doc-list mailing list</i> </a>
           requesting a GDP member reproduce these screenshots in the
           correct format and email them to you.
-        </p>
-</div>
-<div class="sect3">
-<a name="screenshottools"></a><div class="titlepage"><div><h4 class="title">
-<a name="screenshottools"></a>Screenshot Tools</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="screenshottools"></a><div class="titlepage"><div><h4 class="title"><a name="screenshottools"></a>Screenshot Tools</h4></div></div><p>
           There are many tools for taking screenshots in
           GNOME/Linux. Perhaps the most convenient is the
           Screen-Shooter Applet. Just click
@@ -795,12 +436,7 @@ V1.1//EN&quot;[]&gt;
           gimp can both be used for taking
           screenshots, cropping screenshots, and converting image
           formats. 
-        </p>
-</div>
-<div class="sect3">
-<a name="screenshotfiles"></a><div class="titlepage"><div><h4 class="title">
-<a name="screenshotfiles"></a>Screenshot Files</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="screenshotfiles"></a><div class="titlepage"><div><h4 class="title"><a name="screenshotfiles"></a>Screenshot Files</h4></div></div><p>
           Screenshots should be kept in the main documentation
           directory with your SGML file for applets, or should be
           kept in a directory called &quot;figs&quot; for application and other
@@ -816,13 +452,7 @@ V1.1//EN&quot;[]&gt;
           convert the PNG images to EPS as described in <a href="#jadeimages" title="Images in DocBook Tools">the section called &#8220;Images in DocBook Tools&#8221;</a>, but will not need to copy these
           images from their default location, as they are included
           directly into the output(PostScript of PDF) file.
-        </p>
-</div>
-</div>
-<div class="sect2">
-<a name="applicationbugs"></a><div class="titlepage"><div><h3 class="title">
-<a name="applicationbugs"></a>Application Bugs</h3></div></div>
-<p>
+        </p></div></div><div class="sect2"><a name="applicationbugs"></a><div class="titlepage"><div><h3 class="title"><a name="applicationbugs"></a>Application Bugs</h3></div></div><p>
         Documentation authors tend to investigate and test applets and
         applications more thoroughly than most 
         users.  Often documentation authors will discover one or
@@ -835,12 +465,7 @@ V1.1//EN&quot;[]&gt;
         submit a bug report is by using the Bug
         Buddy applet which is part of the gnome-applets
         package.  
-      </p>
-</div>
-<div class="sect2">
-<a name="cvs"></a><div class="titlepage"><div><h3 class="title">
-<a name="cvs"></a>Using CVS</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="cvs"></a><div class="titlepage"><div><h3 class="title"><a name="cvs"></a>Using CVS</h3></div></div><p>
         CVS (Concurrent Versions System) is a tool that allows
         multiple developers to concurrently work on a set of
         documents, keeping track of the modifications made by each
@@ -854,11 +479,7 @@ V1.1//EN&quot;[]&gt;
         typically be emailed to the the application developer. Core
         GDP members may also be granted login CVS privileges so they
         may commit modified files directly to CVS.
-      </p>
-<div class="sect3">
-<a name="anonymouscvs"></a><div class="titlepage"><div><h4 class="title">
-<a name="anonymouscvs"></a>Anonymous CVS</h4></div></div>
-<p>
+      </p><div class="sect3"><a name="anonymouscvs"></a><div class="titlepage"><div><h4 class="title"><a name="anonymouscvs"></a>Anonymous CVS</h4></div></div><p>
           To anonymously check out documents from CVS, you must first
           log in.  From the bash shell, you should set your CVSROOT
           shell variable with <b>  export
@@ -871,12 +492,7 @@ V1.1//EN&quot;[]&gt;
           gnome-docu/gdp</b>. After you have this document
           checked out and you would like to download any updates on
           the CVS server, use <b>cvs -z3 update -Pd</b>.
-        </p>
-</div>
-<div class="sect3">
-<a name="logincvs"></a><div class="titlepage"><div><h4 class="title">
-<a name="logincvs"></a>Login CVS</h4></div></div>
-<p>  If you have been given a
+        </p></div><div class="sect3"><a name="logincvs"></a><div class="titlepage"><div><h4 class="title"><a name="logincvs"></a>Login CVS</h4></div></div><p>  If you have been given a
         login for the GNOME CVS server,  you may commit your file
         modifications to CVS.  Be sure to read the following section
         on CVS etiquette before making any commits to CVS.  To log in
@@ -903,12 +519,7 @@ V1.1//EN&quot;[]&gt;
         add a new file to the CVS server, use <b>cvs -z3 add
         <i><tt>filename</tt></i></b>, followed by the
         commit command.
-        </p>
-</div>
-<div class="sect3">
-<a name="cvsetiquette"></a><div class="titlepage"><div><h4 class="title">
-<a name="cvsetiquette"></a>CVS Etiquette</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="cvsetiquette"></a><div class="titlepage"><div><h4 class="title"><a name="cvsetiquette"></a>CVS Etiquette</h4></div></div><p>
           Because files in CVS are typically used and modified by
           multiple developers and documentation authors, users should
           exercise a few simple practices out of courtesy towards the
@@ -923,17 +534,7 @@ V1.1//EN&quot;[]&gt;
           is being modified.  When modifying files created by others,
           you should follow the indentation scheme used by the initial
           author.
-        </p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<a name="gnomedocsystem"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="gnomedocsystem"></a>The GNOME Documentation System</h2></div></div>
-<div class="sect2">
-<a name="gnomehelpbrowser"></a><div class="titlepage"><div><h3 class="title">
-<a name="gnomehelpbrowser"></a>The GNOME Help Browser</h3></div></div>
-<p>
+        </p></div></div></div><div class="sect1"><a name="gnomedocsystem"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="gnomedocsystem"></a>The GNOME Documentation System</h2></div></div><div class="sect2"><a name="gnomehelpbrowser"></a><div class="titlepage"><div><h3 class="title"><a name="gnomehelpbrowser"></a>The GNOME Help Browser</h3></div></div><p>
         At the core of the GNOME help system is the GNOME
         Help Browser. The Help
         Browser provides a unified interface to several
@@ -941,19 +542,13 @@ V1.1//EN&quot;[]&gt;
         pages, texinfo pages, Linux Documentation Project(LDP)
         documents, GNOME application documentation, and other GNOME
         documents.
-      </p>
-<p>
+      </p><p>
         The GNOME Help Browser works by
         searching standard directories for documents which are to be
         presented.  Thus, the documentation that appears in the GHB is
         specific to each computer and will typically only represent
         software that is installed on the computer.
-      </p>
-</div>
-<div class="sect2">
-<a name="gnomehelpbrowser2"></a><div class="titlepage"><div><h3 class="title">
-<a name="gnomehelpbrowser2"></a>The GNOME Help Browser (GNOME-2.0)</h3></div></div>
-<p> In
+      </p></div><div class="sect2"><a name="gnomehelpbrowser2"></a><div class="titlepage"><div><h3 class="title"><a name="gnomehelpbrowser2"></a>The GNOME Help Browser (GNOME-2.0)</h3></div></div><p> In
       GNOME 2.0, the GNOME Help Browser
       will be replaced by Nautilus.
       Nautilus will be the file manager/graphical shell for GNOME 2.0
@@ -971,12 +566,7 @@ V1.1//EN&quot;[]&gt;
       display documents which are on the web as well as those on the
       local file system. For more information on
       Nautilus, visit the #nautilus IRC
-      channel on irc.gnome.org.  </p>
-</div>
-<div class="sect2">
-<a name="gnomehelponthefly"></a><div class="titlepage"><div><h3 class="title">
-<a name="gnomehelponthefly"></a>Dynamic Document Synthesis(GNOME-2.0)</h3></div></div>
-<p>
+      channel on irc.gnome.org.  </p></div><div class="sect2"><a name="gnomehelponthefly"></a><div class="titlepage"><div><h3 class="title"><a name="gnomehelponthefly"></a>Dynamic Document Synthesis(GNOME-2.0)</h3></div></div><p>
         GNOME uses the documentation presented by all the various
         GNOME components and applications installed on the system to
         present a complete and customized documentation environment
@@ -984,32 +574,18 @@ V1.1//EN&quot;[]&gt;
         users system.  Some of this documentation, such as the manuals
         for applets, will be combined in such a way that it appears to
         be a single document.
-      </p>
-<p>
+      </p><p>
         By using such a system, you can be sure that any GNOME app you
         install that has documentation will show up in the index,
         table of contents, any search you do in the help browser.
-      </p>
-</div>
-<div class="sect2">
-<a name="gnomehelpcomponents"></a><div class="titlepage"><div><h3 class="title">
-<a name="gnomehelpcomponents"></a>The GNOME Documentation Components</h3></div></div>
-<div class="sect3">
-<a name="applicationmanualsintro"></a><div class="titlepage"><div><h4 class="title">
-<a name="applicationmanualsintro"></a>Application Manuals</h4></div></div>
-<p>
+      </p></div><div class="sect2"><a name="gnomehelpcomponents"></a><div class="titlepage"><div><h3 class="title"><a name="gnomehelpcomponents"></a>The GNOME Documentation Components</h3></div></div><div class="sect3"><a name="applicationmanualsintro"></a><div class="titlepage"><div><h4 class="title"><a name="applicationmanualsintro"></a>Application Manuals</h4></div></div><p>
           Every GNOME application should have an application manual.
           An application manual is a document specific to the
           particular application which explains the various windows
           and features of the application.  Application Manuals
           typically use screenshots (PNG format) for clarity.  Writing
           application manuals is discussed in more detail in <a href="#writingapplicationmanuals" title="Writing Application and Applet Manuals">the section called &#8220;Writing Application and Applet Manuals&#8221;</a> below.
-        </p>
-</div>
-<div class="sect3">
-<a name="applicationhelpintro"></a><div class="titlepage"><div><h4 class="title">
-<a name="applicationhelpintro"></a>Application Help</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="applicationhelpintro"></a><div class="titlepage"><div><h4 class="title"><a name="applicationhelpintro"></a>Application Help</h4></div></div><p>
           Applications should have a Help
           button on screens on which users may need help.  These
           Help buttons should pull up the
@@ -1020,13 +596,8 @@ V1.1//EN&quot;[]&gt;
           browser should show either the first page of the application
           manual, or else the relevant page thereof. Application help
           is described in more detail in <a href="#applicationhelpbuttons" title="Application Help Buttons">the section called &#8220;Application Help Buttons&#8221;</a> below.
-        </p>
-</div>
-<div class="sect3">
-<a name="contextsensitivehelpintro"></a><div class="titlepage"><div><h4 class="title">
-<a name="contextsensitivehelpintro"></a>Application Context Sensitive Help (coming in
-        GNOME-2.0)</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="contextsensitivehelpintro"></a><div class="titlepage"><div><h4 class="title"><a name="contextsensitivehelpintro"></a>Application Context Sensitive Help (coming in
+        GNOME-2.0)</h4></div></div><p>
           Context sensitive help is a system which will allow the user
           to query any part (button, widget, etc.) of an application
           window.  This is done by either entering a CS Help mode by
@@ -1035,12 +606,7 @@ V1.1//EN&quot;[]&gt;
           at the time.  Context sensitive help is described in more
           detail in <a href="#writingcontextsensitivehelp" title="Writing Context Sensitive Help (coming in GNOME-2.0)">the section called &#8220;Writing Context Sensitive Help (coming in GNOME-2.0)&#8221;</a>
           below.
-        </p>
-</div>
-<div class="sect3">
-<a name="userguide"></a><div class="titlepage"><div><h4 class="title">
-<a name="userguide"></a>The GNOME User Guide</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="userguide"></a><div class="titlepage"><div><h4 class="title"><a name="userguide"></a>The GNOME User Guide</h4></div></div><p>
           The <i>GNOME User Guide</i> describes the
           GNOME desktop environment and core components of GNOME such
           as the panel and
@@ -1049,54 +615,28 @@ V1.1//EN&quot;[]&gt;
           this will become a document for the web and for printing
           that is derived from various parts chosen in the system that
           are necessary for the new user to understand.
-        </p>
-</div>
-<div class="sect3">
-<a name="userdocs"></a><div class="titlepage"><div><h4 class="title">
-<a name="userdocs"></a>User Documents</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="userdocs"></a><div class="titlepage"><div><h4 class="title"><a name="userdocs"></a>User Documents</h4></div></div><p>
           Aside from the <i>GNOME User Guide</i>,
           there are several other documents to help GNOME users learn
           GNOME, including the <i>GNOME FAQ</i>,
           <i>GNOME Installation and Configuration
           Guide</i>, and the <i>GNOME Administrators
           Guide</i>.
-        </p>
-</div>
-<div class="sect3">
-<a name="developerdocs"></a><div class="titlepage"><div><h4 class="title">
-<a name="developerdocs"></a>Developer Documents</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="developerdocs"></a><div class="titlepage"><div><h4 class="title"><a name="developerdocs"></a>Developer Documents</h4></div></div><p>
           There are many White Papers, Tutorials, HOWTO's and FAQ's to
           make programming GNOME and GNOME applications as easy as
           possible.
-        </p>
-<p>
+        </p><p>
           API documentation is also available for the GNOME libraries. This is
           detailed documentation of the code that is used to build GNOME
           apps. You can keep up with the GNOME API docs on the <a href="http://developer.gnome.org/doc/API/" target="_top">GNOME API
           Reference</a> page.
-        </p>
-</div>
-<div class="sect3">
-<a name="projectdocs"></a><div class="titlepage"><div><h4 class="title">
-<a name="projectdocs"></a>Project Documents</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="projectdocs"></a><div class="titlepage"><div><h4 class="title"><a name="projectdocs"></a>Project Documents</h4></div></div><p>
           Some GNOME projects have documentation to maintain
           consistency in their product and to help new contributors
           get up to speed quickly. Among these are the GDP documents,
           such as the one you are reading now.
-        </p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<a name="docbookbasics"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="docbookbasics"></a>DocBook Basics </h2></div></div>
-<div class="sect2">
-<a name="introtodocbook"></a><div class="titlepage"><div><h3 class="title">
-<a name="introtodocbook"></a>Introduction to DocBook</h3></div></div>
-<p>
+        </p></div></div></div><div class="sect1"><a name="docbookbasics"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="docbookbasics"></a>DocBook Basics </h2></div></div><div class="sect2"><a name="introtodocbook"></a><div class="titlepage"><div><h3 class="title"><a name="introtodocbook"></a>Introduction to DocBook</h3></div></div><p>
         To understand DocBook, a basic understanding of SGML is
         helpful. SGML stands for Standard General Markup Language and
         is one of the first markup languages every created. HTML is
@@ -1107,21 +647,18 @@ V1.1//EN&quot;[]&gt;
         ending elements, for example in the DocBook DTD, one denotes a
         title with <tt>&lt;title&gt;</tt>The
         Title<tt>&lt;/title&gt;</tt>.
-      </p>
-<p>
+      </p><p>
         The DTD (in the case of the GDP, DocBook) defines rules for how the
         elements can be used. For example, if one element can only be used when
         embedded within another, this is defined in the DTD.
-      </p>
-<p> 
+      </p><p> 
 	An SGML file is just a plain ASCII file containing the text
 	with the markup specified above. To convert it  to some easily
 	readable format, you need special tools. The GDP uses <i>DocBook
         Tools</i>, a free package of utilities for working with DocBook
         which includes <i>Jade</i>, which does the SGML/DSSL
         parsing. You can read more about DocBook Tools in <a href="#installingdocbook" title="Installing DocBook">the section called &#8220;Installing DocBook&#8221;</a>. 
-      </p>
-<p>
+      </p><p>
         The final appearance of the output (e.g. PostScript or HTML)
         is determined by a
         <i>stylesheet</i>. Stylesheets are files,
@@ -1133,8 +670,7 @@ V1.1//EN&quot;[]&gt;
         collection of stylesheets (Norman Walsh's modular
         stylesheets); GNOME Document Project uses some customized
         version of this stylesheets -- see <a href="#gdpstylesheets" title="GDP Stylesheets">the section called &#8220;GDP Stylesheets&#8221;</a>.   
-      </p>
-<p>
+      </p><p>
         The advantage of specifying the <i>structure</i>
         of a document with SGML instead of specifying the
         <i>appearance</i> of the document with a typical
@@ -1145,34 +681,26 @@ V1.1//EN&quot;[]&gt;
         piece of paper), SGML can be processed to produce output for a
         large variety of media such as text, postscript, HTML,
         Braille, audio, and potentially many other formats.
-      </p>
-<p>
+      </p><p>
         Using 'content' as the elements to define the text of a document also
         allows for search engines to make use of the actual elements to make a
         &quot;smarter search&quot;. For example, if you are searching for all documents
         written by the author &quot;Susie&quot; your search engine could be made smart
         enough to only search &lt;author&gt; elements, making for a faster and more
         accurate search.
-      </p>
-<p>
+      </p><p>
         Since the overall appearance of the output is determined not by the DTD
         or the SGML document, but rather by a stylesheet, the appearance of a
         document can be easily changed just by changing the stylesheet. This
         allows everyone in the project to create documents that all look the
         same.
-      </p>
-<p>
+      </p><p>
         As stated before, the GDP uses the DocBook DTD.  For a list of
         introductory and reference resources on DocBook, see <a href="#resources" title="Resources">the section called &#8220;Resources&#8221;</a>.  The following sections also provide
         convenient instructions on which markup tags to use in various
         circumstances.  Be sure to read <a href="#conventions" title="GDP Documentation Conventions ">the section called &#8220;GDP Documentation Conventions &#8221;</a>
         for GDP documentation-specific guidelines.
-      </p>
-</div>
-<div class="sect2">
-<a name="xml"></a><div class="titlepage"><div><h3 class="title">
-<a name="xml"></a>XML and SGML</h3></div></div>
-<p> In not so distant future (probably before GNOME 2.0),
+      </p></div><div class="sect2"><a name="xml"></a><div class="titlepage"><div><h3 class="title"><a name="xml"></a>XML and SGML</h3></div></div><p> In not so distant future (probably before GNOME 2.0),
       DocBook itself and GNOME Documentation project will migrate from
       SGML to XML. This transition should be relatively painless:
       (almost) all DocBook tags will remain the same. However, XML has
@@ -1181,13 +709,7 @@ V1.1//EN&quot;[]&gt;
       ready for this transistion, it is <i>strongly
       advised</i> that the documentation writers conform to XML
       syntax rules. Here are most important differences:
-      </p>
-<div class="variablelist"><dl>
-<dt>
-<a name="id2892208"></a><span class="term"> <i>Minimization</i></span>
-</dt>
-<dd><p>
-<a name="id2892227"></a>
+      </p><div class="variablelist"><dl><dt><a name="id2892218"></a><span class="term"> <i>Minimization</i></span></dt><dd><p><a name="id2892236"></a>
 	      It is possible with some implementations of SGML to use
 	      minimizations to close elements in a document by using
 	      &lt;/&gt;, for example:
@@ -1198,12 +720,7 @@ V1.1//EN&quot;[]&gt;
               if you are using Emacs with psgml
               mode, you can also use menu command
           Modify-&gt;Normalize.
-         </p></dd>
-<dt>
-<a name="id2892341"></a><span class="term"> <i>Self-closing tags</i></span>
-</dt>
-<dd><p>
-<a name="id2892360"></a>
+         </p></dd><dt><a name="id2892350"></a><span class="term"> <i>Self-closing tags</i></span></dt><dd><p><a name="id2892370"></a>
             Also, in SGML some tags are allowed not to have closing
             tags.  For example, it is legal for
             <tt>&lt;xref&gt;</tt> not to have a closing tag: 
@@ -1213,28 +730,14 @@ V1.1//EN&quot;[]&gt;
             <tt><tt>&lt;xref 
                    linkend=&quot;someid&quot;/&gt;</tt></tt> (note the
             slash!).
-          </p></dd>
-<dt>
-<a name="id2892423"></a><span class="term"> <i>Case sensitive tags</i></span>
-</dt>
-<dd><p>
-<a name="id2892443"></a>
+          </p></dd><dt><a name="id2892433"></a><span class="term"> <i>Case sensitive tags</i></span></dt><dd><p><a name="id2892453"></a>
 	      In XML, unlike SGML, tags are case-senstive
 	      <tt>&lt;title&gt;</tt> and
 	      <tt>&lt;TITLE&gt;</tt> are different tags!
 	      Therefore, please always use lowercase tags (except for
 	      things like <tt>DOCTYPE, CDATA</tt> and
 	      <tt>ENTITY</tt>, which are not DocBook tags). 
-	    </p></dd>
-</dl></div>
-</div>
-<div class="sect2">
-<a name="structure"></a><div class="titlepage"><div><h3 class="title">
-<a name="structure"></a> Structure Elements</h3></div></div>
-<div class="sect3">
-<a name="section"></a><div class="titlepage"><div><h4 class="title">
-<a name="section"></a>Sections and paragraphs</h4></div></div>
-<p>
+	    </p></dd></dl></div></div><div class="sect2"><a name="structure"></a><div class="titlepage"><div><h3 class="title"><a name="structure"></a> Structure Elements</h3></div></div><div class="sect3"><a name="section"></a><div class="titlepage"><div><h4 class="title"><a name="section"></a>Sections and paragraphs</h4></div></div><p>
           Top-level element of a book body must be
           <tt>&lt;chapter&gt;</tt>; it may contain one or more
           <tt>&lt;sect1&gt;</tt>, each of them may contain
@@ -1244,22 +747,15 @@ V1.1//EN&quot;[]&gt;
           <tt>&lt;sect1&gt;</tt>. Regardless of which elements
           you use, give each structural element a unique id, so that
           you can link to it. For usage example, see the template.
-        </p>
-<p> Please try to avoid using deeply nested sections; for
+        </p><p> Please try to avoid using deeply nested sections; for
           most situations, <tt>&lt;sect1&gt;</tt> and
           <tt>&lt;sect2&gt;</tt> should be sufficient. If not,
           you probably should split your <tt>&lt;sect1&gt;</tt>
           into several smaller ones.
-        </p>
-<p> Use the tag <tt>&lt;para&gt;</tt> for
+        </p><p> Use the tag <tt>&lt;para&gt;</tt> for
           paragraphs, even if there is only one paragraph in a
           section--see template for examples.
-        </p>
-</div>
-<div class="sect3">
-<a name="notes"></a><div class="titlepage"><div><h4 class="title">
-<a name="notes"></a>Notes, Warnings, And Tips</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="notes"></a><div class="titlepage"><div><h4 class="title"><a name="notes"></a>Notes, Warnings, And Tips</h4></div></div><p>
           For notes, tips, warnings, and important information, which
           should be set apart from the main text (usually as a
           paragraph with some warning sign on the margin), use tags
@@ -1275,24 +771,13 @@ V1.1//EN&quot;[]&gt;
   compiler with Pentium optimization.
  &lt;/para&gt;
 &lt;/tip&gt; </pre>  produces
-        </p>
-<div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="extip"></a>TIP</h3>
-<p>
+        </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="extip"></a>TIP</h3><p>
             To speed up program compilation, use
             gcc compiler with Pentium
-            optimization.  </p>
-</div>
-<p>
+            optimization.  </p></div><p>
           Note that this should not be inside a
           <tt>&lt;para&gt;</tt> but between paragraphs.
-        </p>
-</div>
-<div class="sect3">
-<a name="figures"></a><div class="titlepage"><div><h4 class="title">
-<a name="figures"></a> Screenshots and other figures</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="figures"></a><div class="titlepage"><div><h4 class="title"><a name="figures"></a> Screenshots and other figures</h4></div></div><p>
           To include screenshots and other figures, use the following
           tags:
           
@@ -1310,27 +795,12 @@ V1.1//EN&quot;[]&gt;
           replacing <tt>example_screenshot</tt> with the
           actual file name (without extension). The result will look like this:
           
-          <div class="figure">
-<p>
-<a name="shot1"></a><b>Figure 1. Screenshot</b>
-</p>
-<div class="screenshot"><p><img src="figures/example_screenshot"></p></div>
-</div>
-        </p>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2892951"></a>NOTE</h3>
-<p>
+          <div class="figure"><p><a name="shot1"></a><b>Figure 1. Screenshot</b></p><div class="screenshot"><p><img src="figures/example_screenshot"></p></div></div>
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2892961"></a>NOTE</h3><p>
             Notice in this example that the screenshot file name does
             not include the file type extension -- to find out
             why, please read <a href="#jadeimages" title="Images in DocBook Tools">the section called &#8220;Images in DocBook Tools&#8221;</a>.
-          </p>
-</div>
-</div>
-<div class="sect3">
-<a name="listing"></a><div class="titlepage"><div><h4 class="title">
-<a name="listing"></a>Program listings and terminal session</h4></div></div>
-<p>
+          </p></div></div><div class="sect3"><a name="listing"></a><div class="titlepage"><div><h4 class="title"><a name="listing"></a>Program listings and terminal session</h4></div></div><p>
           To show a file fragment--for example, program
           listing--use <tt>&lt;programlisting&gt;</tt> tag:
           <pre class="programlisting">
@@ -1355,8 +825,7 @@ Type=Application
           </pre>
           As a matter of fact, all examples in this document were
           produced using <tt>&lt;programlisting&gt;</tt>.
-        </p>
-<p>
+        </p><p>
           To show a record of terminal session--i.e., sequence of
           commands entered at the command line--use
           <tt>&lt;screen&gt;</tt> tag:
@@ -1375,36 +844,20 @@ make: *** No rule to make target `love'.  Stop.
           Note the use of tags <tt>&lt;prompt&gt;</tt> and
           <tt>&lt;userinput&gt;</tt> for marking system prompt
           and commands entered by user.
-          <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2893196"></a>NOTE</h3>
-<p>
+          <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2893205"></a>NOTE</h3><p>
               Note that both <tt>&lt;programlisting&gt;</tt>
               and <tt>&lt;screen&gt;</tt> preserve linebreaks,
               but interpret SGML tags (unlike LaTeX
               verbatim environment). Take a look at
               the source of this document to see how you can have SGML
               tags literally shown but not interpreted,
-            </p>
-</div>
-        </p>
-</div>
-<div class="sect3">
-<a name="lists"></a><div class="titlepage"><div><h4 class="title">
-<a name="lists"></a> Lists</h4></div></div>
-<p>
+            </p></div>
+        </p></div><div class="sect3"><a name="lists"></a><div class="titlepage"><div><h4 class="title"><a name="lists"></a> Lists</h4></div></div><p>
 	  The most common list types  in DocBook are
 	  <tt>&lt;itemizedlist&gt;</tt>,
 	  <tt>&lt;orderedlist&gt;</tt>, and 
 	  <tt>&lt;variablelist&gt;</tt>.
-	</p>
-<div class="variablelist"><dl>
-<dt>
-<a name="id2893314"></a><span class="term"> <tt>&lt;itemizedlist&gt;</tt></span>
-</dt>
-<dd>
-<p>
-<a name="id2893334"></a> 
+	</p><div class="variablelist"><dl><dt><a name="id2893324"></a><span class="term"> <tt>&lt;itemizedlist&gt;</tt></span></dt><dd><p><a name="id2893344"></a> 
 		This is the simplest unnumbered list, parallel to
 	    <tt>&lt;ul&gt;</tt> in HTML. Here is an example: 
 		<pre class="programlisting">
@@ -1435,30 +888,21 @@ make: *** No rule to make target `love'.  Stop.
 
 		</pre>
 		and output:
-                </p>
-<div class="itemizedlist"><ul>
-<li><p>
-<a name="id2893352"></a>
+                </p><div class="itemizedlist"><ul><li><p><a name="id2893362"></a>
 		      Show backup files --
 		      This will show any backup file that might be on
 		      your system.
-		    </p></li>
-<li><p>
-<a name="id2893425"></a>
+		    </p></li><li><p><a name="id2893435"></a>
 		      Show hidden files --
 		      This will show all &quot;dot files&quot; or files that
 		      begin with a dot.  This files typically include
 		      configuration files and directories.
-		    </p></li>
-<li><p>
-<a name="id2893458"></a>
+		    </p></li><li><p><a name="id2893467"></a>
 		      Mix files and directories
 		      -- This option will display files and
 		      directories in the order you sort them instead
 		      of always having directories shown above files.
-		    </p></li>
-</ul></div>
-<p> Note the use of <tt>&amp;mdash;</tt>
+		    </p></li></ul></div><p> Note the use of <tt>&amp;mdash;</tt>
               for long dash (see <a href="#specsymb" title=" Special symbols ">the section called &#8220; Special symbols &#8221;</a>). Also,
               please note that the result looks much nicer because the
               terms being explained (Show backup
@@ -1471,13 +915,7 @@ make: *** No rule to make target `love'.  Stop.
               or -- if none of
               this applies -- use
               <a href="#gui" title="GUI elements"><tt>&lt;emphasis&gt;</tt></a>.
-	      </p>
-</dd>
-<dt>
-<a name="id2893633"></a><span class="term"> <tt>&lt;orderedlist&gt;</tt></span>
-</dt>
-<dd><p>
-<a name="id2893652"></a>
+	      </p></dd><dt><a name="id2893643"></a><span class="term"> <tt>&lt;orderedlist&gt;</tt></span></dt><dd><p><a name="id2893662"></a>
 		This list is completely analogous to
 		<tt>&lt;itemizedlist&gt;</tt> and has the same
 		syntax, but  it produces numbered list. By default,
@@ -1490,12 +928,7 @@ make: *** No rule to make target `love'.  Stop.
 		<tt>loweralpha</tt>,
 		<tt>upperroman</tt>,
 		<tt>lowerroman</tt>.
-	      </p></dd>
-<dt>
-<a name="id2893733"></a><span class="term"> <tt>&lt;variablelist&gt;</tt></span>
-</dt>
-<dd><p>
-<a name="id2893752"></a> This list is used when each entry is
+	      </p></dd><dt><a name="id2893742"></a><span class="term"> <tt>&lt;variablelist&gt;</tt></span></dt><dd><p><a name="id2893762"></a> This list is used when each entry is
 	    rather long, so it should be formatted as a block of text
 	    with some subtitle, like a small subsection.  The
 	    <tt>&lt;variablelist&gt;</tt> is more complicated
@@ -1531,58 +964,33 @@ make: *** No rule to make target `love'.  Stop.
 &lt;/variablelist&gt;        
 
 		</pre>		
-		</p></dd>
-</dl></div>
-<p>
+		</p></dd></dl></div><p>
 	Lists can be nested; in this case, the stylesheets
 	are smart enough to change the numeration (for
 	<tt>&lt;orderedlist&gt;</tt>) or marks of each entry
 	(in  <tt>&lt;itemizedlist&gt;</tt>) for sub-lists
-	</p>
-</div>
-</div>
-<div class="sect2">
-<a name="inline"></a><div class="titlepage"><div><h3 class="title">
-<a name="inline"></a>Inline Elements</h3></div></div>
-<div class="sect3">
-<a name="gui"></a><div class="titlepage"><div><h4 class="title">
-<a name="gui"></a>GUI elements</h4></div></div>
-<div class="itemizedlist"><ul>
-<li><p>
-<a name="id2893915"></a>
+	</p></div></div><div class="sect2"><a name="inline"></a><div class="titlepage"><div><h3 class="title"><a name="inline"></a>Inline Elements</h3></div></div><div class="sect3"><a name="gui"></a><div class="titlepage"><div><h4 class="title"><a name="gui"></a>GUI elements</h4></div></div><div class="itemizedlist"><ul><li><p><a name="id2893925"></a>
               <tt>&lt;guibutton&gt;</tt> -- used for
               buttons, including checkbuttons and radio buttons
-            </p></li>
-<li><p>
-<a name="id2893941"></a>
+            </p></li><li><p><a name="id2893950"></a>
               <tt>&lt;guimenu&gt;</tt>, 
               <tt>&lt;guisubmenu&gt;</tt> --used for 
 	      top-level menus and submenus
               respectively, for example <tt>
               &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt; submenu of the
               &lt;guimenu&gt;Main Menu&lt;/guimenu&gt;</tt>
-            </p></li>
-<li><p>
-<a name="id2893990"></a>
+            </p></li><li><p><a name="id2894000"></a>
               <tt>&lt;guimenuitem&gt;</tt>--an entry in a
               menu
-            </p></li>
-<li><p>
-<a name="id2894016"></a>
+            </p></li><li><p><a name="id2894026"></a>
               <tt>&lt;guiicon&gt;</tt>--an icon
-            </p></li>
-<li><p>
-<a name="id2894040"></a>
+            </p></li><li><p><a name="id2894049"></a>
               <tt>&lt;guilabel&gt;</tt>--for items which have
               labels, like tabs, or bounding boxes. 
-            </p></li>
-<li><p>
-<a name="id2894065"></a>
+            </p></li><li><p><a name="id2894075"></a>
               <tt>&lt;interface&gt;</tt>-- for most everything
               else... a window, a dialog box, the Panel, etc.
-            </p></li>
-</ul></div>
-<p>
+            </p></li></ul></div><p>
           If you need to refer to a sequence of menu choices, such as
           Main Menu-&gt;Utilities-&gt;GNOME
             terminal
@@ -1593,12 +1001,7 @@ make: *** No rule to make target `love'.  Stop.
  &lt;guimenu&gt;Main Menu&lt;/guimenu&gt; &lt;guisubmenu&gt;Utilities&lt;/guisubmenu&gt;
  &lt;guimenuitem&gt;GNOME terminal&lt;/guimenuitem&gt; &lt;/menuchoice&gt;
           </pre>
-        </p>
-</div>
-<div class="sect3">
-<a name="links"></a><div class="titlepage"><div><h4 class="title">
-<a name="links"></a>Links and references</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="links"></a><div class="titlepage"><div><h4 class="title"><a name="links"></a>Links and references</h4></div></div><p>
           To refer to another place in the same document, you can use
           tags <tt>&lt;xref&gt;</tt> and
           <tt>&lt;link&gt;</tt>. The first of them
@@ -1610,13 +1013,11 @@ An example of a &lt;link linkend=&quot;extip&quot;&gt;tip&lt;/link&gt; was given
 &lt;xref linkend=&quot;notes&quot; /&gt;.  
           </pre>
           which produces: An example of a <a href="#extip">tip</a> was given in  <a href="#notes" title="Notes, Warnings, And Tips">the section called &#8220;Notes, Warnings, And Tips&#8221;</a>.
-        </p>
-<p>
+        </p><p>
           Here <tt>notes</tt> and <tt>extip</tt>
           are the id attributes of <a href="#notes" title="Notes, Warnings, And Tips">the section called &#8220;Notes, Warnings, And Tips&#8221;</a> and of the
           example of a tip in it.
-        </p>
-<p>  To produce a link  to an external source, such as a
+        </p><p>  To produce a link  to an external source, such as a
           Web page or a local file, use <tt>&lt;ulink&gt;</tt>
           tag, for example:
           <pre class="programlisting">
@@ -1630,57 +1031,39 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           most cases, however, use of <tt>mailto</tt> is
           unnecessary--see discussion of
           <tt>&lt;email&gt;</tt> tag).
-        </p>
-</div>
-<div class="sect3">
-<a name="filenames"></a><div class="titlepage"><div><h4 class="title">
-<a name="filenames"></a>Filenames, commands, and other
-        computer-related things</h4></div></div>
-<p>
+        </p></div><div class="sect3"><a name="filenames"></a><div class="titlepage"><div><h4 class="title"><a name="filenames"></a>Filenames, commands, and other
+        computer-related things</h4></div></div><p>
           Here are some tags used to describe operating system-related
           things:  
-        </p>
-<div class="itemizedlist"><ul>
-<li><p>
-<a name="id2894468"></a>  <tt>&lt;filename&gt;</tt> -- used
+        </p><div class="itemizedlist"><ul><li><p><a name="id2894478"></a>  <tt>&lt;filename&gt;</tt> -- used
               for filenames,
               e.g.<tt>&lt;filename&gt;</tt>
                     foo.sgml
                   <tt>&lt;/filename&gt;</tt> 
               produces: <tt>foo.sgml</tt>.
-            </p></li>
-<li><p>
-<a name="id2894523"></a>  <tt>&lt;filename
+            </p></li><li><p><a name="id2894533"></a>  <tt>&lt;filename
               class=&quot;directory&quot;&gt;</tt> -- used for
               directories, e.g.<tt>&lt;filename
               class=&quot;directory&quot;&gt;</tt>/usr/bin
                   <tt>&lt;/filename&gt;</tt>
               produces: <tt>/usr/bin</tt>.
-            </p></li>
-<li><p>
-<a name="id2894585"></a>
+            </p></li><li><p><a name="id2894594"></a>
               <tt>&lt;application&gt;</tt> -- used for
               application names,
               e.g. <tt>&lt;application&gt;</tt>Gnumeric
               <tt>&lt;/application&gt;</tt> produces:
               Gnumeric.
-            </p></li>
-<li><p>
-<a name="id2894640"></a>
+            </p></li><li><p><a name="id2894649"></a>
 	      <tt>&lt;envar&gt;</tt> -- used for
 	      environment variables, e.g. 
               <tt>&lt;envar&gt;</tt>PATH<tt>&lt;/envar&gt;</tt>. 
-            </p></li>
-<li><p>
-<a name="id2894681"></a>
+            </p></li><li><p><a name="id2894690"></a>
               <tt>&lt;command&gt;</tt> -- used for
               commands entered on command line, e.g.
               <tt>&lt;command&gt;</tt>make install
               <tt>&lt;/command&gt;</tt> produces:
               <b>make install</b>.
-            </p></li>
-<li><p>
-<a name="id2894736"></a>
+            </p></li><li><p><a name="id2894745"></a>
               <tt>&lt;replaceable&gt;</tt> -- used for
               replaceable text, e.g.
               <tt>&lt;command&gt;</tt>db2html<tt>&lt;replaceable&gt;</tt>
@@ -1688,16 +1071,9 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
               <tt>&lt;/replaceable&gt;</tt><tt>&lt;/command&gt;</tt>
               produces: <b>db2html
               <i><tt>foo.sgml</tt></i></b>.
-            </p></li>
-</ul></div>
-</div>
-<div class="sect3">
-<a name="keys"></a><div class="titlepage"><div><h4 class="title">
-<a name="keys"></a>Keyboard input</h4></div></div>
-<p> To mark up text input by the user, use
+            </p></li></ul></div></div><div class="sect3"><a name="keys"></a><div class="titlepage"><div><h4 class="title"><a name="keys"></a>Keyboard input</h4></div></div><p> To mark up text input by the user, use
         <tt>&lt;userinput&gt;</tt>.
-        </p>
-<p>  To mark keystrokes such as shortcuts and other
+        </p><p>  To mark keystrokes such as shortcuts and other
           commands, use <tt>&lt;keycap&gt;</tt>. 
           This is used for marking up what is printed on the top 
           of the physical key on the keyboard. There are a couple of
@@ -1710,8 +1086,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           terms commonly required in GNOME documentation,
           although <tt>&lt;keysym&gt;</tt> is useful for marking
           up control codes.
-       </p>
-<p>
+       </p><p>
           To mark up a combination of keystrokes, use the
           <tt>&lt;keycombo&gt;</tt> wrapper:
           <pre class="programlisting">
@@ -1722,8 +1097,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
  &lt;keycap&gt;F1&lt;/keycap&gt;
 &lt;/keycombo&gt;
           </pre>
-        </p>
-<p>
+        </p><p>
           Finally, if you want to show a shortcut for some menu
           command, here are the appropriate tags (rather long):
           <pre class="programlisting">
@@ -1737,12 +1111,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           </pre>
           which produces simply
            Quit (<b>Ctrl-q</b>)
-        </p>
-</div>
-<div class="sect3">
-<a name="email"></a><div class="titlepage"><div><h4 class="title">
-<a name="email"></a>E-mail addresses</h4></div></div>
-<p>  To mark up e-mail
+        </p></div><div class="sect3"><a name="email"></a><div class="titlepage"><div><h4 class="title"><a name="email"></a>E-mail addresses</h4></div></div><p>  To mark up e-mail
         address, use <tt>&lt;email&gt;</tt>:
           <pre class="programlisting">
  The easiest way to get in touch with me is by e-mail
@@ -1752,12 +1121,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
           by e-mail  (<tt>&lt;<a href="mailto:me@mydomain.com">me@mydomain.com</a>&gt;</tt>) Note that
           <tt>&lt;email&gt;</tt> automatically produces a link
           in html version.
-        </p>
-</div>
-<div class="sect3">
-<a name="specsymb"></a><div class="titlepage"><div><h4 class="title">
-<a name="specsymb"></a> Special symbols </h4></div></div>
-<p> 
+        </p></div><div class="sect3"><a name="specsymb"></a><div class="titlepage"><div><h4 class="title"><a name="specsymb"></a> Special symbols </h4></div></div><p> 
 	  DocBook also provides special means for entering
 	typographic symbols which can not be entered directly
 	form the keyboard (such as copyright sign). This is done using
@@ -1765,77 +1129,36 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
 	macros, or commands, of LaTeX. They generally have the form 
 	  <tt>&amp;entityname;</tt>. Note that the semicolon
 	is required. 
-	</p>
-<p>
+	</p><p>
 	  here is partial list of most commonly used enitites:
-	</p>
-<div class="itemizedlist"><ul>
-<li><p>
-<a name="id2895213"></a>
+	</p><div class="itemizedlist"><ul><li><p><a name="id2895223"></a>
              <tt>&amp;amp;</tt> -- ampersend (&amp;)
-	  </p></li>
-<li><p>
-<a name="id2895232"></a>
+	  </p></li><li><p><a name="id2895242"></a>
              <tt>&amp;lt;</tt> -- left angle bracket (&lt;)
-	  </p></li>
-<li><p>
-<a name="id2895251"></a>
+	  </p></li><li><p><a name="id2895261"></a>
              <tt>&amp;copy;</tt> -- copyright sign (©)
-	  </p></li>
-<li><p>
-<a name="id2895270"></a>
+	  </p></li><li><p><a name="id2895280"></a>
              <tt>&amp;mdash;</tt> -- long dash (--)
-	  </p></li>
-<li><p>
-<a name="id2895289"></a>
+	  </p></li><li><p><a name="id2895299"></a>
              <tt>&amp;hellip;</tt> -- ellipsis (...)
-	  </p></li>
-</ul></div>
-<p>
+	  </p></li></ul></div><p>
 	  Note that the actual look of the resulting symbols depends
 	  on the fonts used by your browser; for example, it might
 	  happen that long dash (<tt>&amp;mdash;</tt>) looks
 	  exactly like the usual dash (-). However, in the PostScript
 	  (and thus, in print) the output will look markedly better if
 	  you use appropriate tags. 
-	</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<a name="conventions"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="conventions"></a>GDP Documentation Conventions </h2></div></div>
-<div class="sect2">
-<a name="conventionsalldocs"></a><div class="titlepage"><div><h3 class="title">
-<a name="conventionsalldocs"></a>Conventions for All GDP Documentation</h3></div></div>
-<div class="sect3">
-<a name="xmlcomp"></a><div class="titlepage"><div><h4 class="title">
-<a name="xmlcomp"></a> XML compatibility </h4></div></div>
-<p>
+	</p></div></div></div><div class="sect1"><a name="conventions"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="conventions"></a>GDP Documentation Conventions </h2></div></div><div class="sect2"><a name="conventionsalldocs"></a><div class="titlepage"><div><h3 class="title"><a name="conventionsalldocs"></a>Conventions for All GDP Documentation</h3></div></div><div class="sect3"><a name="xmlcomp"></a><div class="titlepage"><div><h4 class="title"><a name="xmlcomp"></a> XML compatibility </h4></div></div><p>
 	  All GNOME documentation  should conform to XML syntax
 	  requirements, which are stricter than SGML ones -- see
 	  <a href="#xml" title="XML and SGML">the section called &#8220;XML and SGML&#8221;</a> for more informaion.
-	</p>
-</div>
-<div class="sect3">
-<a name="authorsnames"></a><div class="titlepage"><div><h4 class="title">
-<a name="authorsnames"></a> Authors' names</h4></div></div>
-<p> 
+	</p></div><div class="sect3"><a name="authorsnames"></a><div class="titlepage"><div><h4 class="title"><a name="authorsnames"></a> Authors' names</h4></div></div><p> 
 	  All GNOME documentation should contain the names of both the
 	  application authors and documentation authors, as well as a
 	  link to the application web page (if it exists) and
 	  information for bug submission -- see templates for an
 	  example. 
-	  </p>
-</div>
-</div>
-<div class="sect2">
-<a name="conventionsappdocs"></a><div class="titlepage"><div><h3 class="title">
-<a name="conventionsappdocs"></a>Conventions for Application Documentation</h3></div></div>
-<div class="sect3">
-<a name="applicationversionid"></a><div class="titlepage"><div><h4 class="title">
-<a name="applicationversionid"></a>Application Version Identification</h4></div></div>
-<p>
+	  </p></div></div><div class="sect2"><a name="conventionsappdocs"></a><div class="titlepage"><div><h3 class="title"><a name="conventionsappdocs"></a>Conventions for Application Documentation</h3></div></div><div class="sect3"><a name="applicationversionid"></a><div class="titlepage"><div><h4 class="title"><a name="applicationversionid"></a>Application Version Identification</h4></div></div><p>
           Application documentation should identify the version of the
           application for which the documentation is written:
           <pre class="programlisting">
@@ -1847,12 +1170,7 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
  &lt;/para&gt;
 &lt;/sect1&gt;
           </pre>
-        </p>
-</div>
-<div class="sect3">
-<a name="license"></a><div class="titlepage"><div><h4 class="title">
-<a name="license"></a> Copyright information </h4></div></div>
-<p> Application
+        </p></div><div class="sect3"><a name="license"></a><div class="titlepage"><div><h4 class="title"><a name="license"></a> Copyright information </h4></div></div><p> Application
         documentation should contain a copyright notice, stating the
         licensing terms. It is suggested that you use the GNU Free
         Documentation License.  You could also use some other license
@@ -1860,32 +1178,15 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         license.  If documentation uses some trademarks (such as UNIX,
         Linux, Windows, etc.), proper legal junk should also be
         included (see templates).
-	</p>
-</div>
-<div class="sect3">
-<a name="license2"></a><div class="titlepage"><div><h4 class="title">
-<a name="license2"></a>Software license</h4></div></div>
-<p> 
+	</p></div><div class="sect3"><a name="license2"></a><div class="titlepage"><div><h4 class="title"><a name="license2"></a>Software license</h4></div></div><p> 
          All GNOME applications must contain information about the
        license (for software, not for documentation), either in the
        &quot;About&quot; box or in the manual. 
-       </p>
-</div>
-<div class="sect3">
-<a name="bugtraq"></a><div class="titlepage"><div><h4 class="title">
-<a name="bugtraq"></a> Bug reporting</h4></div></div>
-<p> 
+       </p></div><div class="sect3"><a name="bugtraq"></a><div class="titlepage"><div><h4 class="title"><a name="bugtraq"></a> Bug reporting</h4></div></div><p> 
 	  Application documentation should give an address for
         reporting bugs and for submitting comments about the
         documentaion (see templates for an example). 
-       </p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<a name="writingapplicationmanuals"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="writingapplicationmanuals"></a>Writing Application and Applet Manuals</h2></div></div>
-<p>
+       </p></div></div></div><div class="sect1"><a name="writingapplicationmanuals"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="writingapplicationmanuals"></a>Writing Application and Applet Manuals</h2></div></div><p>
        Every GNOME application or applet should have a manual specific
       to that particular application. This manual should be a complete
       and authoritative guide.  The manual should describe what the
@@ -1893,40 +1194,25 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
       each window or panel presented to the user using screenshots (in
       PNG format only) when appropriate.  They should also describe
       each feature and preference option available.
-    </p>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2895753"></a>Documentation Availability</h3>
-<p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2895762"></a>Documentation Availability</h3><p>
         Applications and applets should not rely on documentation
         which is only available on the internet.  All manuals and
         other documentation should be packaged with the application or
         applet and be made available to the user through the standard
         GNOME help system methods described below.
-      </p>
-</div>
-<p> Application manuals should be based on the template in
+      </p></div><p> Application manuals should be based on the template in
     <a href="#template1" title="Template 1: Application Manual">the section called &#8220;Template 1: Application Manual&#8221;</a>.  Applet manuals should be based on
     the templates in <a href="#template2-1x" title="Template 2: Applet Manual For GNOME 1.x">the section called &#8220;Template 2: Applet Manual For GNOME 1.x&#8221;</a> for GNOME
     versions 1.x and the templates in <a href="#template2-2x" title="Template 2: Applet Manual For GNOME 2.x">the section called &#8220;Template 2: Applet Manual For GNOME 2.x&#8221;</a>
     for GNOME versions 2.x.
-    </p>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2895793"></a>Manuals For Large Applications</h3>
-<p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2895803"></a>Manuals For Large Applications</h3><p>
         Manuals for very large applications, such as GNOME Workshop
         components should be a <tt>&lt;book&gt;</tt> (and thus
         use <tt>&lt;chapter&gt;</tt> for each primary section)
         , instead of <tt>&lt;article&gt;</tt> which most
         applications use(with each primary section being a
         <tt>&lt;sect1&gt;</tt>).
-      </p>
-</div>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2895908"></a>Applet Manuals in GNOME 2.0</h3>
-<p>
+      </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2895918"></a>Applet Manuals in GNOME 2.0</h3><p>
         Note that applet manuals in GNOME 2.0 are treated in a special
         way.  The manuals for all applets are merged into a single
         virtual document by Nautilus.  For this reason, the header
@@ -1935,29 +1221,17 @@ url=&quot;http://www.gnome.org&quot;&gt;GNOME Web page&lt;/ulink&gt;
         <tt>&lt;sect1&gt;</tt>. Applet manuals will typically
         have several sections, each of which is
         <tt>&lt;sect2&gt;</tt>.
-      </p>
-</div>
-<p>
+      </p></div><p>
       Application manuals should be made available by having a
       &quot;Manual&quot; entry in the Help pull-down menu
       at the top of the 
       application, as described in <a href="#listingdocsinhelpmenu" title="Listing Documents in the Help Menu">the section called &#8220;Listing Documents in the Help Menu&#8221;</a>.
       Applets should make their manuals available by
       right-clicking on the applet. 
-    </p>
-</div>
-<div class="sect1">
-<a name="listingdocsinhelpmenu"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="listingdocsinhelpmenu"></a>Listing Documents in the Help Menu</h2></div></div>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2896032"></a>Developer Information</h3>
-<p>
+    </p></div><div class="sect1"><a name="listingdocsinhelpmenu"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="listingdocsinhelpmenu"></a>Listing Documents in the Help Menu</h2></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2896041"></a>Developer Information</h3><p>
         This section is for developers.  Documentation authors
         generally do not need to know this material.
-      </p>
-</div>
-<p>
+      </p></div><p>
       Typically the application manual and possibly additional help
       documents will be made available to the user under the
       Help menu at the top right of the
@@ -1986,16 +1260,10 @@ function-reference.html Gnumeric function reference
       application's name.  The application documentation (converted
       from SGML into HTML with <b>db2html</b>) should be
       placed in this directory too.
-    </p>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2896222"></a>Note</h3>
-<p>
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2896232"></a>Note</h3><p>
        If the help files are not present in the correct directory, the
        menu items will NOT appear when the program is run. 
-      </p>
-</div>
-<p>
+      </p></div><p>
       The <tt>topic.dat</tt> file is used by the GNOME
       menu building code to generate the Help
       menu. When you define your menu:  
@@ -2018,20 +1286,10 @@ GnomeUIInfo helpmenu[] = {
       Help menu. When the user selects any of these
       topics from the Help menu, a help browser
       will be started with the associated HTML documentation.
-    </p>
-</div>
-<div class="sect1">
-<a name="applicationhelpbuttons"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="applicationhelpbuttons"></a>Application Help Buttons</h2></div></div>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2896391"></a>Developer Information</h3>
-<p>
+    </p></div><div class="sect1"><a name="applicationhelpbuttons"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="applicationhelpbuttons"></a>Application Help Buttons</h2></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2896401"></a>Developer Information</h3><p>
         This section is for developers.  Documentation authors
         generally do not need to know this material.
-      </p>
-</div>
-<p>
+      </p></div><p>
       Most GNOME applications will have Help
       buttons.  These are most often seen in Preference windows. (All
       Preference windows should have Help
@@ -2043,35 +1301,20 @@ GnomeUIInfo helpmenu[] = {
       the application author must be careful to guarantee that the
       application correctly opens the help documentation when the
       Help buttons are pressed.  
-    </p>
-<p>
+    </p><p>
       To make the Help buttons call the correct document in the GNOME Help
       Browser the developer should add code based on the following example:
-    </p>
-<pre class="programlisting">
+    </p><pre class="programlisting">
 gchar *tmp;
 tmp = gnome_help_file_find_file (&quot;module&quot;, &quot;page.html&quot;);
 if (tmp) {
   gnome_help_goto(0, tmp);
   g_free(tmp);
 }
-    </pre>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2896529"></a>NOTE</h3>
-<p>
+    </pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2896539"></a>NOTE</h3><p>
         The example above is in the C language, please refer to other
         documentation or forums for other GNOME language bindings.
-      </p>
-</div>
-</div>
-<div class="sect1">
-<a name="packagingappletdocs"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="packagingappletdocs"></a>Packaging Applet Documentation</h2></div></div>
-<div class="sect2">
-<a name="appletfiles"></a><div class="titlepage"><div><h3 class="title">
-<a name="appletfiles"></a>Applet Documentation Files</h3></div></div>
-<p>
+      </p></div></div><div class="sect1"><a name="packagingappletdocs"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="packagingappletdocs"></a>Packaging Applet Documentation</h2></div></div><div class="sect2"><a name="appletfiles"></a><div class="titlepage"><div><h3 class="title"><a name="appletfiles"></a>Applet Documentation Files</h3></div></div><p>
         In GNOME 2.0 each applet will have its own documentation
         installed separately, and the GNOME 2.0 help
         browser (Nautilus) will dynamically
@@ -2088,13 +1331,11 @@ if (tmp) {
         packaged with the applets.  The applet author should be
         contacted to modify the menu items and help buttons to bind to
         the applet documentation if necessary.
-      </p>
-<p>
+      </p><p>
         Images which are part of the applet documentation should be in
         PNG format and should reside in the same directory as the SGML
         document file in CVS(gnome-applets/APPLETNAME/help/C).
-      </p>
-<p>
+      </p><p>
         Applets which are not part of the gnome-applets package must
         package their documentation with the particular applet
         package. They should use the same applet template as other
@@ -2107,27 +1348,16 @@ if (tmp) {
         of the <i>GNOME Applets</i> book, you must
         remember to add <tt>&lt;legalnotice&gt;</tt> and
         <tt>&lt;copyright&gt;</tt> sections.
-      </p>
-</div>
-<div class="sect2">
-<a name="appletmenu"></a><div class="titlepage"><div><h3 class="title">
-<a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div>
-<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
-<h3 class="title">
-<a name="id2896781"></a>Developer Information</h3>
-<p>
+      </p></div><div class="sect2"><a name="appletmenu"></a><div class="titlepage"><div><h3 class="title"><a name="appletmenu"></a>Adding Documentation to an Applet Menu</h3></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title"><a name="id2896791"></a>Developer Information</h3><p>
           This section is for developers.  Documentation authors
           generally do not need to know this material.
-        </p>
-</div>
-<p>
+        </p></div><p>
         Applets should have About and
         Manual menu items, typically as the first
         and second top-most items in the menu respectively.  This
         section describes how the developer creates these menu items
         and links them to the documentation.
-      </p>
-<p>
+      </p><p>
         To add an applet's manual to its applet menu, use:
 <pre class="programlisting">
 /* add an item to the applet menu */
@@ -2138,14 +1368,12 @@ _(&quot;Manual&quot;), &amp;open_manual, NULL);
         callback, the third argument is the label which will appear
         when the user right clicks on the applet, and the fourth
         argument is the callback function.
-      </p>
-<p>
+      </p><p>
         You will need to write a simple callback function to open the
         help browser to the appropriate document.  This is done using
         the <tt>gnome_help_file_find_file</tt> function,
         as described in <a href="#applicationhelpbuttons" title="Application Help Buttons">the section called &#8220;Application Help Buttons&#8221;</a>.
-      </p>
-<p>
+      </p><p>
         You will also want to add an About menu
         item to the applet's menu.  This is a
         stock menu item and is done:
@@ -2154,28 +1382,19 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
        GNOME_STOCK_MENU_ABOUT, _(&quot;About&quot;), &amp;my_applet_cb_about,
        NULL);
 </pre>
-      </p>
-<p>
+      </p><p>
         More information can be found at <a href="http://developer.gnome.org/doc/tutorials/applet/index.html" target="_top">Writing
         GNOME panel applets using the GTK+/GTK-- widget set</a>.
-      </p>
-</div>
-</div>
-<div class="sect1">
-<a name="writingcontextsensitivehelp"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="writingcontextsensitivehelp"></a>Writing Context Sensitive Help (coming in GNOME-2.0)</h2></div></div>
-<p>
+      </p></div></div><div class="sect1"><a name="writingcontextsensitivehelp"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="writingcontextsensitivehelp"></a>Writing Context Sensitive Help (coming in GNOME-2.0)</h2></div></div><p>
       Context sensitive help, also known as &quot;pop-up&quot; help, will allow
       a user to obtain help information about specific buttons or
       parts of an application.
-    </p>
-<p>
+    </p><p>
       Context sensitive help is still under development and not all
       the details are available at this time. However, the basics can
       be shown here so that you can understand how the system will
       work.
-    </p>
-<p>
+    </p><p>
       The Context Sensitive Help system is designed to allow the
       developer to give an id to a particular portion of the User
       Interface, for example, a button. Once the interface is complete
@@ -2183,13 +1402,11 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       create a &quot;map&quot; file. This map file allows the developer or
       writer to associate particular paragraph sections from an XML
       document to the interface items.
-    </p>
-<p>
+    </p><p>
       The XML used for the document is a small XML DTD that is being
       developed to use the same tags (albeit, much fewer) as DocBook
       so that writers do not have to re-learn a new DTD.
-    </p>
-<p>
+    </p><p>
       Once the document is written and map file is complete, when the
       user launches context sensitive help on the interface (either by
       pressing a button and then clicking on the interface item they
@@ -2197,22 +1414,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
       item and selecting a pop-up menu item like &quot;What's This&quot;) a
       small transient window will appear with brief but detailed
       information on the interface item.
-    </p>
-</div>
-<div class="sect1">
-<a name="referring"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="referring"></a>Referring to Other GNOME Documentation (coming in
-    GNOME-2.0)</h2></div></div>
-<p>
+    </p></div><div class="sect1"><a name="referring"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="referring"></a>Referring to Other GNOME Documentation (coming in
+    GNOME-2.0)</h2></div></div><p>
       In the GNOME 2.0 Help System, you will be able to create links
       from one document to another.  The exact mechanism for doing
       this is in development.
-    </p>
-</div>
-<div class="sect1">
-<a name="basics"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="basics"></a>Basics of Documentation Style</h2></div></div>
-<p>
+    </p></div><div class="sect1"><a name="basics"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="basics"></a>Basics of Documentation Style</h2></div></div><p>
        Most people have never enjoyed reading a software manual, and
        they probably never will.  Many times, they'll read the
        documentation only when they run into problems, and they'll be
@@ -2225,19 +1432,14 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
        will serve beginners as they <i>become</i>
        experts. Remember, your goal is to produce <i>complete,
        intuitive and clear</i> documentation.
-    </p>
-<p>
+    </p><p>
        In order to write useful documentation, you'll have to know who
        your audience is likely to be.  Then, you can look for the
        problems they're likely to run into, and solve them.  It will
        also help if you focus on the tasks users will perform, and
        group features accordingly, rather than simply describing
        features at random.  
-    </p>
-<div class="sect2">
-<a name="styleplanning"></a><div class="titlepage"><div><h3 class="title">
-<a name="styleplanning"></a>Planning</h3></div></div>
-<p>
+    </p><div class="sect2"><a name="styleplanning"></a><div class="titlepage"><div><h3 class="title"><a name="styleplanning"></a>Planning</h3></div></div><p>
          Begin documenting by learning how to use the application and
          reading over any existing documentation.  Pay attention to
          places where your document will differ from the template.  It
@@ -2248,17 +1450,10 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
          <tt>&lt;book&gt;</tt> tag instead of
          <tt>&lt;chapter&gt;</tt> or
          <tt>&lt;article&gt;</tt>.
-      </p>
-</div>
-<div class="sect2">
-<a name="balance"></a><div class="titlepage"><div><h3 class="title">
-<a name="balance"></a>Achieving a Balanced Style</h3></div></div>
-<p> 
+      </p></div><div class="sect2"><a name="balance"></a><div class="titlepage"><div><h3 class="title"><a name="balance"></a>Achieving a Balanced Style</h3></div></div><p> 
          Just as you need to juggle expert and novice readers,
          you'll have to juggle a number of other extremes as you write:
-         <div class="itemizedlist"><ul>
-<li><p>
-<a name="id2897331"></a>
+         <div class="itemizedlist"><ul><li><p><a name="id2897341"></a>
               Documents should be complete, yet concise.  You should
               describe every feature, but you'll have decide how much
               detail is really necessary.  It's not, for example,
@@ -2268,9 +1463,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               you spend fewer words on the obvious, you can spend more
               time clarifying the ambiguous labels and explaining
               items that are more complex.
-            </p></li>
-<li><p>
-<a name="id2897359"></a>
+            </p></li><li><p><a name="id2897368"></a>
               Be engaging and friendly, yet professional. Games
               documents may be less formal than productivity
               application documents (people don't
@@ -2279,18 +1472,14 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               maintain a standard of style which holds the reader's
               interest without resorting to jokes and untranslatable
               allusions or puns.
-           </p></li>
-<li><p>
-<a name="id2897398"></a>
+           </p></li><li><p><a name="id2897408"></a>
               Examples, tips, notes, and screenshots are useful to
               break up long stretches of text, but too many can get in
               the way, and make your documents too choppy to read.
               It's good to provide a screenshot of any dialog windows
               a user might run into, but if a dialog box has several
               tabs, it's not usually necessary to have one for each.
-           </p></li>
-<li><p>
-<a name="id2897422"></a>
+           </p></li><li><p><a name="id2897432"></a>
               The GDP strives to have all of its documentation conform
               to certain standards of style and content, but every
               document (and every writer) is different.  You will need
@@ -2298,14 +1487,8 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
               the rest of the project, without compromising the
               individual needs of your subject, or your own
               individuality as a writer.
-           </p></li>
-</ul></div>
-       </p>
-</div>
-<div class="sect2">
-<a name="stylestructure"></a><div class="titlepage"><div><h3 class="title">
-<a name="stylestructure"></a>Structure</h3></div></div>
-<p>
+           </p></li></ul></div>
+       </p></div><div class="sect2"><a name="stylestructure"></a><div class="titlepage"><div><h3 class="title"><a name="stylestructure"></a>Structure</h3></div></div><p>
          In general, you won't have to worry too much about structure,
          because the templates provide you with an excellent example.
          As a general rule, try to follow that structural example.
@@ -2313,8 +1496,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
          necessary, a glossary or index.  You probably won't need to
          use every available structural tag, but take advantage of
          what DocBook provides you.
-      </p>
-<p>
+      </p><p>
          As to linking, there's some disagreement about whether to use
          <tt>&lt;xref&gt;</tt> <tt>&lt;link&gt;</tt>
          when you make links within your documents.  You'll have to
@@ -2323,8 +1505,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
          Regardless of which you use, you should not forget to use
          them.  Help your readers find information that relevant to
          the issue at hand.
-      </p>
-<p>
+      </p><p>
          The table of contents will be generated automatically, but
          you will probably have to develop your own index if you wish
          to have one.  The Nautilus Help Browser will have new, and
@@ -2333,12 +1514,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
          will contain a glossary in its next versions; unless you're
          writing a<tt>&lt;book&gt;</tt>, it will probably be best to
          contribute to that rather than developing your own.
-      </p>
-</div>
-<div class="sect2">
-<a name="stylegrammar"></a><div class="titlepage"><div><h3 class="title">
-<a name="stylegrammar"></a>Grammar and Spelling</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="stylegrammar"></a><div class="titlepage"><div><h3 class="title"><a name="stylegrammar"></a>Grammar and Spelling</h3></div></div><p>
         Nobody expects you to be perfect; they just expect the
         documentation for their software to be error-free.  That means
         that, in the same way that developers look for bugs and accept
@@ -2347,29 +1523,18 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         draft documents are fine.  However, if those problems show up
         in a &quot;real&quot; release, they can count against the credibility of
         GNOME and Linux.  They'll also make you look bad.
-      </p>
-<p>
+      </p><p>
         There is no substitute for a human proofreader; use a
         spell-check program, then read it over yourself, and then find
         someone else to help you.  Other GDP members are, of course,
         willing and able to help you, but non-writers are often at
         least as helpful.
-      </p>
-<p>
+      </p><p>
         Proofreading documents is both a also a good way to
         familiarize yourself with documentation, and it certainly
         makes you valuable to the GDP. Help other writers proof their
         documents, and they will help you with yours.
-      </p>
-</div>
-</div>
-<div class="sect1">
-<a name="teamwork"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="teamwork"></a>Teamwork</h2></div></div>
-<div class="sect2">
-<a name="teamworkgdp"></a><div class="titlepage"><div><h3 class="title">
-<a name="teamworkgdp"></a>Working With The GDP Team</h3></div></div>
-<p>
+      </p></div></div><div class="sect1"><a name="teamwork"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="teamwork"></a>Teamwork</h2></div></div><div class="sect2"><a name="teamworkgdp"></a><div class="titlepage"><div><h3 class="title"><a name="teamworkgdp"></a>Working With The GDP Team</h3></div></div><p>
         The GDP team is a valuable resource for any documentation
         author.  GDP members can answer most questions documentation
         authors have during the course of their work. It is also
@@ -2382,8 +1547,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         GDP members is on the #docs IRC channel at irc.gnome.org or
         else by emailing the <a href="http://mail.gnome.org/mailman/listinfo/gnome-doc-list/" target="_top">
         <i>gnome-doc-list mailing list</i></a>.
-      </p>
-<p>
+      </p><p>
         After an author has finished a document (or even a draft
         version of the document), it is a good idea to ask a member of
         the GDP team to read the document, checking it for grammar,
@@ -2391,12 +1555,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         another author to do this by either asking on the #docs IRC
         channel at irc.gnome.org or by emailing the <a href="http://mail.gnome.org/mailman/listinfo/gnome-doc-list/" target="_top">
         <i>gnome-doc-list mailing list</i></a>.
-      </p>
-</div>
-<div class="sect2">
-<a name="teamworkdevelopers"></a><div class="titlepage"><div><h3 class="title">
-<a name="teamworkdevelopers"></a>Working With Developers</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="teamworkdevelopers"></a><div class="titlepage"><div><h3 class="title"><a name="teamworkdevelopers"></a>Working With Developers</h3></div></div><p>
         Writing documentation typically involves a certain amount of
         interaction with the developers of GNOME or the application
         which is being documented.  Often a document author will need
@@ -2406,26 +1565,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         is technically correct.  The documentation author should also
         make sure that the application author correctly binds and
         packages the documentation with the application.
-      </p>
-</div>
-</div>
-<div class="sect1">
-<a name="finishing"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="finishing"></a>Finishing A Document</h2></div></div>
-<div class="sect2">
-<a name="editting"></a><div class="titlepage"><div><h3 class="title">
-<a name="editting"></a>Editing The Document</h3></div></div>
-<p>
+      </p></div></div><div class="sect1"><a name="finishing"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="finishing"></a>Finishing A Document</h2></div></div><div class="sect2"><a name="editting"></a><div class="titlepage"><div><h3 class="title"><a name="editting"></a>Editing The Document</h3></div></div><p>
         When the document is finished, the document should be edited
         by another member of the GDP for spelling, clarity, and
         DocBook markup. It should also be read by an application
         author to make sure the document is technically accurate.
-      </p>
-</div>
-<div class="sect2">
-<a name="submitting"></a><div class="titlepage"><div><h3 class="title">
-<a name="submitting"></a>Submitting The Document</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="submitting"></a><div class="titlepage"><div><h3 class="title"><a name="submitting"></a>Submitting The Document</h3></div></div><p>
         After the document has been edited and checked for technical
         accuracy, it is ready to be combined with the application or
         documentation package.  This is typically done by passing the
@@ -2438,75 +1583,39 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         packages) may also need to be modified to include the
         documentation in the package.  Generally, this should be done
         by the developers.
-      </p>
-<p>
+      </p><p>
         The final step is to email the GNOME Translation Team at
         <tt>&lt;<a href="mailto:gnome-i18n@nuclecu.unam.mx">gnome-i18n@nuclecu.unam.mx</a>&gt;</tt> to notify them that
         there is a new document for them to translate.
-      </p>
-</div>
-</div>
-<div class="sect1">
-<a name="resources"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="resources"></a>Resources</h2></div></div>
-<div class="sect2">
-<a name="resourcesweb"></a><div class="titlepage"><div><h3 class="title">
-<a name="resourcesweb"></a>Resources On The Web</h3></div></div>
-<p>  The <a href="http://developer.gnome.org/projects/gdp/" target="_top">GNOME
+      </p></div></div><div class="sect1"><a name="resources"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="resources"></a>Resources</h2></div></div><div class="sect2"><a name="resourcesweb"></a><div class="titlepage"><div><h3 class="title"><a name="resourcesweb"></a>Resources On The Web</h3></div></div><p>  The <a href="http://developer.gnome.org/projects/gdp/" target="_top">GNOME
       Documentation Project Web page</a> lists current GDP 
       projects and members.
-      </p>
-<p>
+      </p><p>
         The <a href="http://www.gnome.org/gdp/doctable/" target="_top">GDP Documentation Status Table</a> tracks the
         status of all the various documentation components of GNOME.
-      </p>
-<p>
+      </p><p>
         Norman Walsh's  <a href="http://www.docbook.org" target="_top"> <i>DocBook: The Definitive
         Guide</i></a> in an excellent book on DocBook,
         available both online and in print.
-      </p>
-</div>
-<div class="sect2">
-<a name="resourcesbooks"></a><div class="titlepage"><div><h3 class="title">
-<a name="resourcesbooks"></a>Books</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="resourcesbooks"></a><div class="titlepage"><div><h3 class="title"><a name="resourcesbooks"></a>Books</h3></div></div><p>
         Docbook: The Definitive Guide is available in both printed
         form and on the web at:
         <a href="http://www.docbook.org/tdg/index.html" target="_top">
         <i>Docbook: The Definitive Guide</i>
         </a>
-      </p>
-</div>
-<div class="sect2">
-<a name="mailinglists"></a><div class="titlepage"><div><h3 class="title">
-<a name="mailinglists"></a>Mailing Lists</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="mailinglists"></a><div class="titlepage"><div><h3 class="title"><a name="mailinglists"></a>Mailing Lists</h3></div></div><p>
         The <i>gnome-docs-list</i> mailing list is the
         main discussion area for all contributors to the GNOME
         Documentation Project. You can find out how to subscribe to
         this list on <a href="http://www.gnome.org/resources/mailing-lists.html" target="_top">GNOME Mailing Lists</a>.  This is a rather
         low-volume list, so you will not be flooded with messages.
-      </p>
-</div>
-<div class="sect2">
-<a name="irc"></a><div class="titlepage"><div><h3 class="title">
-<a name="irc"></a>IRC</h3></div></div>
-<p>
+      </p></div><div class="sect2"><a name="irc"></a><div class="titlepage"><div><h3 class="title"><a name="irc"></a>IRC</h3></div></div><p>
         Internet Relay Chat (IRC) is a fast and easy way to get in
         touch with other GDP members.  There are generally at least a
         few members here who can answer questions or discuss
         documentation issues.  The IRC channel is #docs at
         irc.gnome.org.
-      </p>
-</div>
-</div>
-<div class="appendix">
-<h2 class="title" style="clear: both">
-<a name="templates"></a>A. Document Templates</h2>
-<div class="sect1">
-<a name="template1"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="template1"></a>Template 1: Application Manual</h2></div></div>
-<p>
+      </p></div></div><div class="appendix"><h2 class="title" style="clear: both"><a name="templates"></a>A. Document Templates</h2><div class="sect1"><a name="template1"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="template1"></a>Template 1: Application Manual</h2></div></div><p>
         The following template should be used for all application
         manuals.  You can always get the latest copy of this
         template from  <a href="http://developer.gnome.org/projects/gdp/templates.html" target="_top">GDP
@@ -3242,12 +2351,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 
 </pre>
-      </p>
-</div>
-<div class="sect1">
-<a name="template2-1x"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="template2-1x"></a>Template 2: Applet Manual For GNOME 1.x</h2></div></div>
-<p>
+      </p></div><div class="sect1"><a name="template2-1x"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="template2-1x"></a>Template 2: Applet Manual For GNOME 1.x</h2></div></div><p>
         The following templates should be used for all applet
         manuals in GNOME 1.x releases.  You can always get the latest
         copy of these templates from  <a href="http://developer.gnome.org/projects/gdp/templates.html" target="_top">GDP
@@ -3569,18 +2673,12 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 
 </pre>
-      </p>
-</div>
-<div class="sect1">
-<a name="template2-2x"></a><div class="titlepage"><div><h2 class="title" style="clear: both">
-<a name="template2-2x"></a>Template 2: Applet Manual For GNOME 2.x</h2></div></div>
-<p>
+      </p></div><div class="sect1"><a name="template2-2x"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="template2-2x"></a>Template 2: Applet Manual For GNOME 2.x</h2></div></div><p>
         The following templates should be used for all applet
         manuals in GNOME 2.x releases.  You can always get the latest
         copy of these templates from  <a href="http://developer.gnome.org/projects/gdp/templates.html" target="_top">GDP
         Documentation Templates</a>.
-      </p>
-<p>
+      </p><p>
         Note that this template consists of two files.  The first file
         is an introductory chapter. You should not modify this
         chapter. The second file is the actual applet document, which
@@ -3592,8 +2690,7 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
         Make sure you update the entity
         at the top of the shell document to reflect the new name of
         the applet document.
-      </p>
-<p>
+      </p><p>
         <pre class="programlisting">
 
 &lt;!DOCTYPE book PUBLIC &quot;-//GNOME//DTD DocBook PNG Variant V1.1//EN&quot;[
@@ -4200,8 +3297,4 @@ applet_widget_register_stock_callback (APPLET_WIDGET(applet), &quot;about&quot;,
 
 
 </pre>
-      </p>
-</div>
-</div>
-</div></body>
-</html>
+      </p></div></div></div></body></html>

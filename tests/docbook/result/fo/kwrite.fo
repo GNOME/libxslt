@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2855373" hyphenate="true" master-name="titlepage1" language="en">
+  <fo:page-sequence id="id2855907" hyphenate="true" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
@@ -338,8 +338,8 @@ this might look like the following:</fo:block>
             </fo:block>
           </fo:block>
           <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">the following command line help options are available</fo:block>
-          <fo:list-block id="id2761356" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-            <fo:list-item id="id2761362" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-block id="id2761827" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2763342" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline>
@@ -352,7 +352,7 @@ this might look like the following:</fo:block>
 line.</fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2761416" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2763395" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline>
@@ -365,7 +365,7 @@ line.</fo:block>
 kwrite interacts with qt&#x2122;.</fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2761495" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2759855" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline>
@@ -378,7 +378,7 @@ kwrite interacts with qt&#x2122;.</fo:block>
 kwrite interacts with kde.</fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2761206" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2759926" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline>
@@ -390,7 +390,7 @@ kwrite interacts with kde.</fo:block>
                 <fo:block>this lists all of the command line options.</fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2759307" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2759983" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline>
@@ -402,7 +402,7 @@ kwrite interacts with kde.</fo:block>
                 <fo:block>lists kwrite's authors in the terminal window</fo:block>
               </fo:list-item-body>
             </fo:list-item>
-            <fo:list-item id="id2759375" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-item id="id2760054" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
               <fo:list-item-label end-indent="label-end()">
                 <fo:block>
                   <fo:inline>
@@ -814,8 +814,8 @@ text)</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2882943" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2882950" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2883474" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2883481" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;new (<fo:inline font-weight="bold">ctrl-n</fo:inline>)</fo:inline>
@@ -826,7 +826,7 @@ text)</fo:block>
 document with unsaved changes the user is given a chance to save it.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2883092" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2883623" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;0pen (<fo:inline font-weight="bold">ctrl-o</fo:inline>)</fo:inline>
@@ -859,7 +859,7 @@ directory, and finally  there is dropdown box with a list of some commonly
 frequented directories.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2883289" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2883820" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;open  
@@ -873,7 +873,7 @@ saved files. clicking on a specific file will open it in kwrite - if the file
 still resides at the same location. </fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2883397" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2883928" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;save (<fo:inline font-weight="bold">ctrl-s</fo:inline>)</fo:inline>
@@ -886,7 +886,7 @@ asking for the user's consent.  if it is the first save of a new document the
 save as dialog (described below) will be invoked.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2883542" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2884073" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;save
@@ -898,7 +898,7 @@ as</fo:inline>
 done by means of the file dialog box described above in the <fo:basic-link internal-destination="open">open</fo:basic-link> section of this help file.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2883655" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2884186" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;print (<fo:inline font-weight="bold">ctrl-p</fo:inline>)</fo:inline>
@@ -908,7 +908,7 @@ done by means of the file dialog box described above in the <fo:basic-link inter
               <fo:block>opens a simple print dialog allowing the user to specify what, where, and how to print</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2883797" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2884328" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;new window</fo:inline>
@@ -919,7 +919,7 @@ done by means of the file dialog box described above in the <fo:basic-link inter
 on more than one file at a time with kwrite.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2883923" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2884454" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;new view</fo:inline>
@@ -931,7 +931,7 @@ kwrite (as explained in the previous entry) but containing the same
 document.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2884037" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2884568" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>file-&gt;quit (<fo:inline font-weight="bold">ctrl-q</fo:inline>)</fo:inline>
@@ -954,8 +954,8 @@ closed.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2884258" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2884265" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2884789" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2884796" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;undo (<fo:inline font-weight="bold">ctrl-z</fo:inline>)</fo:inline>
@@ -966,7 +966,7 @@ closed.</fo:block>
 constitutes such an action may be better understood by referring to the <fo:basic-link internal-destination="group-undos">group undos</fo:basic-link> portion of this help file.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2884428" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2884959" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;redo (<fo:inline font-weight="bold">ctrl-shift-z</fo:inline>)</fo:inline>
@@ -976,7 +976,7 @@ constitutes such an action may be better understood by referring to the <fo:basi
               <fo:block>this will reverse the most recent change (if any) made using undo</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2884585" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2885116" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;undo/redo history</fo:inline>
@@ -1000,7 +1000,7 @@ proceed - making it unnecessary to go through a series of single undo or redo
 actions.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2884768" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2885300" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;cut (<fo:inline font-weight="bold">ctrl-x</fo:inline>)</fo:inline>
@@ -1012,7 +1012,7 @@ clipboard is a feature of kde that works invisibly to provide a way to transfer 
 applications.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2884914" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2885445" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;copy (<fo:inline font-weight="bold">ctrl-c</fo:inline>)</fo:inline>
@@ -1024,7 +1024,7 @@ pasted elsewhere.  the clipboard is a feature of kde that works invisibly to
 provide a way to transfer data between applications.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2885058" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2885589" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;paste (<fo:inline font-weight="bold">ctrl-v</fo:inline>)</fo:inline>
@@ -1036,7 +1036,7 @@ clipboard is feature of kde that works invisibly to provide a way to transfer
 data between applications.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2885201" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2885732" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;select all (<fo:inline font-weight="bold">ctrl-a</fo:inline>)</fo:inline>
@@ -1047,7 +1047,7 @@ data between applications.</fo:block>
 copying the entire file to another application.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2885346" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2885877" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;invert selection</fo:inline>
@@ -1058,7 +1058,7 @@ copying the entire file to another application.</fo:block>
 effectively reversing the current state of selection.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2885440" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2885971" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;find (<fo:inline font-weight="bold">ctrl-f</fo:inline>)</fo:inline>
@@ -1081,7 +1081,7 @@ the search from the current position of the cursor within the document rather
 than from the beginning.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2885674" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2886205" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;find next (<fo:inline font-weight="bold">f3</fo:inline>)</fo:inline>
@@ -1092,7 +1092,7 @@ than from the beginning.</fo:block>
 dialog box.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2885805" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2886336" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>edit-&gt;replace (<fo:inline font-weight="bold">ctrl-r</fo:inline>)</fo:inline>
@@ -1108,7 +1108,7 @@ on replace option allows the user to have kwrite ask for
 confirmation before each replacement.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2885992" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2886523" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>
@@ -1132,8 +1132,8 @@ cursor.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2886174" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2886181" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2886705" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2886712" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>go-&gt;go to line</fo:inline>
@@ -1149,7 +1149,7 @@ control to the right of the text box which allows the user to move the goto
 point in the document in an analog manner.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2886278" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2886809" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>go-&gt;add marker (<fo:inline font-weight="bold">ctrl-m</fo:inline>)</fo:inline>
@@ -1164,7 +1164,7 @@ marked for easy return. if  the user thinks (s)he may need to return to a specif
 point (s)he may by way of this feature instruct kwrite to remember it. </fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2886459" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2886990" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>go-&gt;set marker</fo:inline>
@@ -1176,7 +1176,7 @@ located, and allows the user to choose its position in the list of bookmarks
 which is appended at the bottom of this menu item.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2886550" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2887081" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>go-&gt;clear markers</fo:inline>
@@ -1199,8 +1199,8 @@ markers are available for this window.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2886690" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2886696" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2887221" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2887228" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>tools-&gt;spelling...</fo:inline>
@@ -1213,8 +1213,8 @@ clicking on this entry will start the checker and bring up the speller dialog
 box through which the user can control the process.  there are three text boxes
 lined up vertically in the center of the dialog with their corresponding labels
 just to the left.  starting at the top they are:</fo:block>
-              <fo:list-block id="id2886799" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-                <fo:list-item id="id2886806" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-block id="id2887330" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887337" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>misspelled word:</fo:inline>
@@ -1227,7 +1227,7 @@ dictionary - a file containing a list of correctly spelled words against which
 it compares each word in the editor.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2886850" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887381" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>replacement:</fo:inline>
@@ -1240,7 +1240,7 @@ or her own correction, or choose a different suggestion from the next
 box.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2886894" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887425" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>suggestions:</fo:inline>
@@ -1256,8 +1256,8 @@ above.</fo:block>
               </fo:list-block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">on the right side of the dialog box are 6 buttons that allow the user to
 control the spell check process.  they are:</fo:block>
-              <fo:list-block id="id2886963" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-                <fo:list-item id="id2886969" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-block id="id2887494" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887500" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>replace</fo:inline>
@@ -1269,7 +1269,7 @@ consideration in the document with the word in the
 replacement: box.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887024" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887555" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>replace all</fo:inline>
@@ -1282,7 +1282,7 @@ substitution for any other occurences of this misspelled
 word: in the document.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887093" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887624" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>ignore</fo:inline>
@@ -1293,7 +1293,7 @@ word: in the document.</fo:block>
 making any changes.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887134" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887665" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>ignore all</fo:inline>
@@ -1303,7 +1303,7 @@ making any changes.</fo:block>
                     <fo:block> this button tells the checker to do nothing with the current
 misspelled word: and to pass over any other instances of
 the same word.</fo:block>
-                    <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2887185">
+                    <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2887716">
                       <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Note</fo:block>
                       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">this only applies to the current spell check
 run.  if the checker is run again later it will stop on this same
@@ -1311,7 +1311,7 @@ word.</fo:block>
                     </fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887207" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887738" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>add</fo:inline>
@@ -1324,7 +1324,7 @@ the checker will always consider this word to be correctly
 spelled.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887263" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887794" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>stop</fo:inline>
@@ -1340,15 +1340,15 @@ progress bar.  as the checking process proceeds the bar will fill from left to
 right providing a graphical representation of how far along in the document the
 process has reached.  in addition, the progress is displayed numerically in
 the center of the progress bar.</fo:block>
-              <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2887325">
+              <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2887856">
                 <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Note</fo:block>
                 <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">a numerical display of the spell check
 process is simultaneously displayed in the status bar of the editor.  the <fo:basic-link internal-destination="show-statusbar">status bar</fo:basic-link> is the horizontal strip at the bottom
 of the editor just outside of the text entry area.</fo:block>
               </fo:block>
               <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">two more buttons are located below the progress bar.  they are:</fo:block>
-              <fo:list-block id="id2887374" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-                <fo:list-item id="id2887381" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-block id="id2887905" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887912" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>help</fo:inline>
@@ -1359,7 +1359,7 @@ of the editor just outside of the text entry area.</fo:block>
 pages (this document).</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887435" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2887966" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>cancel</fo:inline>
@@ -1369,7 +1369,7 @@ pages (this document).</fo:block>
                     <fo:block> this button cancels the spell check process.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887475" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2888006" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>tools-&gt;indent</fo:inline>
@@ -1381,7 +1381,7 @@ step depends on the <fo:basic-link internal-destination="pref-indent"> indentati
 settings</fo:basic-link>.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887575" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2888106" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>tools-&gt;unindent</fo:inline>
@@ -1392,7 +1392,7 @@ settings</fo:basic-link>.</fo:block>
 depends on the <fo:basic-link internal-destination="pref-indent"> indentation settings</fo:basic-link>.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887670" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2888202" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>tools-&gt;clean
@@ -1403,7 +1403,7 @@ indentation</fo:inline>
                     <fo:block>not yet implemented</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887748" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2888279" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>tools-&gt;comment</fo:inline>
@@ -1415,7 +1415,7 @@ where the text cursor is located or to the beginning of any
 selected lines.</fo:block>
                   </fo:list-item-body>
                 </fo:list-item>
-                <fo:list-item id="id2887816" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+                <fo:list-item id="id2888348" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                   <fo:list-item-label end-indent="label-end()">
                     <fo:block>
                       <fo:inline>tools-&gt;uncomment</fo:inline>
@@ -1440,8 +1440,8 @@ selected lines.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2887930" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2887936" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2888461" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2888467" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;show toolbar</fo:inline>
@@ -1452,7 +1452,7 @@ selected lines.</fo:block>
 initiate frequently used commands. when unchecked the toolbar is hidden.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888029" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2888560" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;show statusbar</fo:inline>
@@ -1464,7 +1464,7 @@ containing information about the status of the current document.  when unchecked
 the statusbar is hidden.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888123" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2888654" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;show path</fo:inline>
@@ -1475,7 +1475,7 @@ the statusbar is hidden.</fo:block>
 file system) of the current document.  when unchecked the path is hidden.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888216" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2888747" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;configure key bindings</fo:inline>
@@ -1500,7 +1500,7 @@ would mean that anytime he or she held down the <fo:inline font-weight="bold">ct
 kwrite) the about kde display box would be called. </fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888440" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2888971" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;configure toolbars</fo:inline>
@@ -1520,7 +1520,7 @@ an action selected in the right window which changes the position of its button
 in the toolbar.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888553" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889084" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;preferences</fo:inline>
@@ -1530,7 +1530,7 @@ in the toolbar.</fo:block>
               <fo:block>this menu item opens a dialog whereby several different <fo:basic-link internal-destination="pref-dialog">settings</fo:basic-link> may be adjusted.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888662" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889193" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;configure
@@ -1542,7 +1542,7 @@ highlighting</fo:inline>
 highlighting.  the dialog is described in <fo:basic-link internal-destination="pref-highlighting">Chapter 5. highlighting</fo:basic-link>.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888760" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889291" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;vertical  
@@ -1557,7 +1557,7 @@ particular contiguous columns and rows.  in affect the user can select a
 rectangular area of text anywhere in the document.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888855" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889386" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;highlight mode</fo:inline>
@@ -1569,7 +1569,7 @@ editor uses to display the text. the styles are selected by programming
 language. the font/color information is not stored with the document.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2888946" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889477" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>settings-&gt;end of line</fo:inline>
@@ -1591,8 +1591,8 @@ used by unix, mac&#xAE; or msdos/windows&#xAE; systems.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2889130" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2889136" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2889661" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889668" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>help-&gt;contents (<fo:inline font-weight="bold">f1</fo:inline>)</fo:inline>
@@ -1602,7 +1602,7 @@ used by unix, mac&#xAE; or msdos/windows&#xAE; systems.</fo:block>
               <fo:block>this invokes the kde help system starting at the kwrite help pages (this document).</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2889278" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889809" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>help-&gt;what's this? (<fo:inline font-weight="bold">shift-f1</fo:inline>)</fo:inline>
@@ -1614,7 +1614,7 @@ clicking on items within kwrite with this arrow will open a help window (if
 one exists for the particular item) explaining the item's function.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2889437" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2889968" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>help-&gt;report bug</fo:inline>
@@ -1627,7 +1627,7 @@ problems(bugs) in the program.  the dialog attempts to do this by
 means of email using the information given by the user.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2889537" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890068" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>help-&gt;about kwrite</fo:inline>
@@ -1637,7 +1637,7 @@ means of email using the information given by the user.</fo:block>
               <fo:block>this will display version and author information</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2889625" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890156" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>help-&gt;about kde</fo:inline>
@@ -1726,7 +1726,7 @@ palette and any other available palettes can be displayed using the drop down
 selection box located directly above the palette display at the top right of the
 dialog box.  besides the custom colors, the user can access a number of
 pre-prepared palettes.</fo:block>
-        <fo:list-block id="id2890081" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2890612" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item id="pref-color-settings" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
@@ -1738,7 +1738,7 @@ pre-prepared palettes.</fo:block>
 kwrite.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890150" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890681" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>text background</fo:inline>
@@ -1749,7 +1749,7 @@ kwrite.</fo:block>
 background of those areas of the document containing text.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890192" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890724" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>selected</fo:inline>
@@ -1760,7 +1760,7 @@ background of those areas of the document containing text.</fo:block>
 selected (or highlighted) portions of the document.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890234" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890765" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>found</fo:inline>
@@ -1772,7 +1772,7 @@ encountered as the result of a <fo:basic-link internal-destination="find">find</
 operation.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890292" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890823" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>selected + found</fo:inline>
@@ -1793,8 +1793,8 @@ the previous entry above but that has also been selected.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2890360" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2890367" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2890891" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890898" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>auto indent</fo:inline>
@@ -1806,7 +1806,7 @@ new lines to begin with the same indentation level as the previous
 line.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890408" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2890939" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>indent with spaces</fo:inline>
@@ -1819,7 +1819,7 @@ the <fo:basic-link internal-destination="pref-edit">edit</fo:basic-link> section
 dialog.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890470" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891001" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>backspace key indents</fo:inline>
@@ -1831,7 +1831,7 @@ backspace key to be used to
 indent.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890537" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891068" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>tab key indents</fo:inline>
@@ -1843,7 +1843,7 @@ allows the tab key to be used to
 indent.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890603" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891134" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>keep indent profile</fo:inline>
@@ -1854,7 +1854,7 @@ indent.</fo:block>
 retains current indentation settings for future documents.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890644" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891176" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>keep extra spaces</fo:inline>
@@ -1875,8 +1875,8 @@ will not be shortened.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2890712" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2890719" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2891244" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891250" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>persistent selections</fo:inline>
@@ -1886,7 +1886,7 @@ will not be shortened.</fo:block>
               <fo:block>this prevents key input or cursor movement by way of the  
 arrow keys from causing the elimination of text  
 selection. </fo:block>
-              <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2890758">
+              <fo:block space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" start-indent="0.25in" end-indent="0.25in" id="id2891289">
                 <fo:block font-size="14pt" font-weight="bold" keep-with-next="always">Note</fo:block>
                 <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">(note: if the overwrite selections option is  
 activated then any typed character input or paste operation will replace  
@@ -1894,7 +1894,7 @@ the selected text.)</fo:block>
               </fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890780" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891311" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>overwrite selections</fo:inline>
@@ -1905,7 +1905,7 @@ the selected text.)</fo:block>
 the selected text.  </fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890821" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891352" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>mouse autocopy</fo:inline>
@@ -1917,7 +1917,7 @@ selected with the mouse will be automatically copied to the
 clipboard.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890863" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891394" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>x11-like single selection</fo:inline>
@@ -1927,7 +1927,7 @@ clipboard.</fo:block>
               <fo:block>not implemented yet.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890903" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891434" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>vertical selections</fo:inline>
@@ -1939,7 +1939,7 @@ activates the <fo:basic-link internal-destination="vertical-selection">vertical 
 option.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2890964" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891495" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>toggle old</fo:inline>
@@ -1959,8 +1959,8 @@ option.</fo:block>
             </fo:block>
           </fo:block>
         </fo:block>
-        <fo:list-block id="id2891022" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2891029" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2891553" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891560" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>word wrap</fo:inline>
@@ -1974,7 +1974,7 @@ when  the current line reaches the length specified by the <fo:basic-link intern
 option.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891117" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891648" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>wrap words  
@@ -1987,7 +1987,7 @@ determines the length (in characters) at which the editor will
 automatically start a new line.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891189" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891720" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>replace tabs by  
@@ -1999,7 +1999,7 @@ spaces</fo:inline>
 with the number of spaces indicated in the <fo:basic-link internal-destination="pref-tab-width">tab width:</fo:basic-link> entry.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891271" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891802" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>tab width</fo:inline>
@@ -2011,7 +2011,7 @@ option is selected this entry determines the number of spaces with which
 the editor will automatically replace tabs.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891339" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891870" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>remove trailing spaces</fo:inline>
@@ -2022,7 +2022,7 @@ the editor will automatically replace tabs.</fo:block>
 ends of lines of text.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891391" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891922" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>auto brackets</fo:inline>
@@ -2035,7 +2035,7 @@ enters the right bracket (}, ), or ]) to the right of the
 cursor.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891446" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2891977" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>group undos</fo:inline>
@@ -2062,7 +2062,7 @@ button would only remove the last three letters typed, or the last three
 operations.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891566" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892097" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>show tabs</fo:inline>
@@ -2073,7 +2073,7 @@ operations.</fo:block>
 of a tab in the text.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891607" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892138" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>smart home</fo:inline>
@@ -2083,7 +2083,7 @@ of a tab in the text.</fo:block>
               <fo:block>not yet implemented</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891647" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892178" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>page up/down moves cursor</fo:inline>
@@ -2100,7 +2100,7 @@ option selected, the first key press will cause the cursor to move to either the
 or bottom of the visible text as a new page of text is displayed.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891736" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892267" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>wrap cursor</fo:inline>
@@ -2117,7 +2117,7 @@ horizontally in the same line and trying to move it left past the beginning
 does nothing.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891777" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892308" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline><fo:basic-link internal-destination="undo">undo</fo:basic-link> steps:</fo:inline>
@@ -2147,8 +2147,8 @@ button 10 times and obtain results.</fo:block>
 help the user catch and correct any spelling errors.  this section of the
 preferences dialog allows certain important settings to be adjusted in this
 regard.</fo:block>
-        <fo:list-block id="id2891914" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item id="id2891921" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-block id="id2892445" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892452" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>create root/affix combinations not in
@@ -2162,7 +2162,7 @@ suffixes or prefixes even if the particular combination is not listed in
 its dictionary data base of words.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2891965" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892496" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>consider run-together words as spelling
@@ -2176,7 +2176,7 @@ words that are 'run-together', i.e., that do not have spaces
 separating them.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2892017" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892548" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>dictionary:</fo:inline>
@@ -2189,7 +2189,7 @@ dictionaries may be available.  this drop down box allows the user to
 choose which language the spell checker should use.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2892060" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892591" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>encoding:</fo:inline>
@@ -2203,7 +2203,7 @@ this drop down box allows this code to be specified so that the spell
 checker can do its job correctly. </fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item id="id2892105" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+          <fo:list-item id="id2892636" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
             <fo:list-item-label end-indent="label-end()">
               <fo:block>
                 <fo:inline>client:</fo:inline>
@@ -2243,8 +2243,8 @@ modes.  the user can select which page to view by clicking on the
 appropriate tab at the top of the dialog</fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">items available on the defaults page are as
 follows:</fo:block>
-      <fo:list-block id="id2892261" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2892268" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2892792" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2892799" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>default item styles</fo:inline>
@@ -2256,8 +2256,8 @@ this would allow a programmer to more easily identify different items (types of
 entries) in his or her code.
 
 </fo:block>
-            <fo:list-block id="id2892307" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-              <fo:list-item id="id2892314" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2892838" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2892845" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>item</fo:inline>
@@ -2273,7 +2273,7 @@ selected as needed.  the options in the rest of this section apply
 to the entry selected in this box.</fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2892412" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2892943" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>normal</fo:inline>
@@ -2285,7 +2285,7 @@ to the entry selected in this box.</fo:block>
 dialog box, a further explanation of which may be found in the <fo:basic-link internal-destination="prefcolors">colors</fo:basic-link> section of <fo:basic-link internal-destination="pref-dialog">configure kwrite</fo:basic-link>.</fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2892491" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893022" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>bold</fo:inline>
@@ -2296,7 +2296,7 @@ dialog box, a further explanation of which may be found in the <fo:basic-link in
 bold text.</fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2892532" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893063" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>italic</fo:inline>
@@ -2307,7 +2307,7 @@ bold text.</fo:block>
 text.</fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2892573" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893104" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>selected</fo:inline>
@@ -2322,7 +2322,7 @@ dialog box, a further explanation of which may be found in the <fo:basic-link in
             </fo:list-block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2892653" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2893184" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>default font</fo:inline>
@@ -2331,8 +2331,8 @@ dialog box, a further explanation of which may be found in the <fo:basic-link in
           <fo:list-item-body start-indent="body-start()">
             <fo:block>here the user can choose the default font for all
 text.</fo:block>
-            <fo:list-block id="id2892690" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-              <fo:list-item id="id2892697" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2893221" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893228" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>family</fo:inline>
@@ -2344,7 +2344,7 @@ for most programming purposes, a monospaced font (one in which a w takes up the 
 amount of space as an i) may be the best choice.</fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2892740" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893271" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>size</fo:inline>
@@ -2355,7 +2355,7 @@ amount of space as an i) may be the best choice.</fo:block>
 points.</fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2892781" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893312" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>charset</fo:inline>
@@ -2374,8 +2374,8 @@ more specific highlighting depending on the language style.</fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">one need not set every available option, items not configured
 specifically will use the default configuration specified on the previous  
 (defaults tab.</fo:block>
-      <fo:list-block id="id2892875" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2892881" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2893406" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2893412" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>config select</fo:inline>
@@ -2385,8 +2385,8 @@ specifically will use the default configuration specified on the previous
             <fo:block>this group of options is used to customize the highlighting styles
 for each programming language type.  any changes you made in
 other areas of this dialog apply only to this type.</fo:block>
-            <fo:list-block id="id2892921" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-              <fo:list-item id="id2892928" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+            <fo:list-block id="id2893452" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893459" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>highlight</fo:inline>
@@ -2397,7 +2397,7 @@ other areas of this dialog apply only to this type.</fo:block>
 configure</fo:block>
                 </fo:list-item-body>
               </fo:list-item>
-              <fo:list-item id="id2892968" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+              <fo:list-item id="id2893499" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
                 <fo:list-item-label end-indent="label-end()">
                   <fo:block>
                     <fo:inline>item</fo:inline>
@@ -2420,7 +2420,7 @@ defaults page of this dialog box while leaving
 highlight modes page.</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2893120" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2893651" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>item style</fo:inline>
@@ -2436,7 +2436,7 @@ selected, bold and
 italic.</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2893243" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2893774" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>highlight auto select</fo:inline>
@@ -2452,7 +2452,7 @@ language is <fo:inline font-weight="bold" font-family="Courier">*.cpp;*.cc;*.c;*
 <fo:inline font-family="Courier">foo.h</fo:inline> would automatically apply the c++ style to it.</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2893340" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2893871" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>item font</fo:inline>
@@ -2490,8 +2490,8 @@ the defaults tab.</fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">kwrite copyright 2000 by jochen wilhelmy  
 <fo:inline font-family="Courier">&lt;digisnap@cs.tu-berlin.de&gt;</fo:inline></fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">contributions:</fo:block>
-      <fo:list-block id="id2893516" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-        <fo:list-item id="id2893522" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2894047" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+        <fo:list-item id="id2894053" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -2499,7 +2499,7 @@ the defaults tab.</fo:block>
             <fo:block>additional contributions by glen parker <fo:inline font-family="Courier">&lt;glenebob@nwlink.com&gt;</fo:inline></fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2893544" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2894075" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -2509,8 +2509,8 @@ the defaults tab.</fo:block>
         </fo:list-item>
       </fo:list-block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">documentation by thad mcginnis <fo:inline font-family="Courier">&lt;ctmcginnis@compuserve.com&gt;</fo:inline></fo:block>
-      <fo:list-block id="id2893581" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
-        <fo:list-item id="id2893588" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2894112" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+        <fo:list-item id="id2894119" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>

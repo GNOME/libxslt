@@ -1,3 +1,10 @@
+Thu Nov  1 15:15:39 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.c: handle indent=no when using an HTML
+	  output
+	* tests/docbook/result/* tests/xmlspec/REC-xml-*.html: this
+	  modified the output of those test suites
+
 Wed Oct 31 18:53:26 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: cleanup, moved xsllNoNetExternalEntityLoader()
