@@ -1355,7 +1355,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    goto error;
 	}
 	PUSH(XSLT_OP_ATTR, token, URL);
-	return;
+	goto parse_predicate;
     }
     if (token == NULL)
 	token = xsltScanName(ctxt);
@@ -1745,8 +1745,14 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 			 element->pattern);
 #endif
 	xsltCompileLocationPathPattern(ctxt);
-	if (ctxt->error)
+	if (ctxt->error) {
+	    xsltPrintErrorContext(NULL, style, node);
+	    xsltGenericError(xsltGenericErrorContext,
+			     "xsltCompilePattern : failed to compile '%s'\n",
+			     element->pattern);
+	    style->errors++;
 	    goto error;
+	}
 
 	/*
 	 * Reverse for faster interpretation.
@@ -1806,6 +1812,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	xsltPrintErrorContext(NULL, NULL, node); /* TODO */
         xsltGenericError(xsltGenericErrorContext,
 			 "xsltCompilePattern : NULL pattern\n");
+	style->errors++;
 	goto error;
     }
 

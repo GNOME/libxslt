@@ -1,3 +1,11 @@
+Fri Mar 22 19:26:47 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: Fixing bug #75902 error with @foo[..]
+	  steps which were not compiled
+	* tests/docs/Makefile.am tests/docs/bug-79.xml
+	  tests/general/Makefile.am tests/general/bug-79.*: added a 
+	  specific example for bug #75902 in the regression tests
+	
 Fri Mar 22 16:13:22 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: Fixing bug #75777 error with namespaced
