@@ -2717,7 +2717,11 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 
     value = xsltEvalTemplateString(ctxt, node, inst);
-    /* TODO: check that there is no ?> sequence */
+    if (xmlStrstr(value, BAD_CAST "?>") != NULL) {
+	xsltTransformError(ctxt, NULL, inst,
+	     "xsl:processing-instruction: '?>' not allowed within PI content\n");
+	goto error;
+    }
 #ifdef WITH_XSLT_DEBUG_PROCESS
     if (value == NULL) {
 	XSLT_TRACE(ctxt,XSLT_TRACE_PI,xsltGenericDebug(xsltGenericDebugContext,
