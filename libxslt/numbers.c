@@ -445,6 +445,8 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 		    }
 		}
 		array[amount++] = (double)cnt;
+		if (amount >= max)
+		    break; /* for */
 	    }
 	}
 	xmlXPathFreeParserContext(parser);
