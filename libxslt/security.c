@@ -289,10 +289,13 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
 
     uri = xmlParseURI((const char *)URL);
     if (uri == NULL) {
-	xsltTransformError(ctxt, NULL, NULL,
-	 "xsltDocumentElem: URL parsing failed for %s\n",
-			 URL);
-	return(-1);
+        uri = xmlCreateURI();
+	if (uri == NULL) {
+	    xsltTransformError(ctxt, NULL, NULL,
+	     "xsltCheckWrite: out of memory for %s\n", URL);
+	    return(-1);
+	}
+	uri->path = xmlStrdup(URL);
     }
     if ((uri->scheme == NULL) ||
 	(xmlStrEqual(BAD_CAST uri->scheme, BAD_CAST "file"))) {
