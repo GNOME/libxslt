@@ -43,6 +43,7 @@
 #include <libxml/catalog.h>
 #endif
 #include <libxml/parserInternals.h>
+#include <libxml/uri.h>
 
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
@@ -104,14 +105,78 @@ static int xinclude = 0;
 static int profile = 0;
 
 #define MAX_PARAMETERS 64
+#define MAX_PATHS 64
 
 static const char *params[MAX_PARAMETERS + 1];
 static int nbparams = 0;
 static xmlChar *strparams[MAX_PARAMETERS + 1];
 static int nbstrparams = 0;
+static xmlChar *paths[MAX_PATHS + 1];
+static int nbpaths = 0;
 static const char *output = NULL;
 static int errorno = 0;
 static const char *writesubtree = NULL;
+
+/*
+ * Entity loading control and customization.
+ */
+static
+void parsePath(const xmlChar *path) {
+    const xmlChar *cur;
+
+    if (path == NULL)
+	return;
+    while (*path != 0) {
+	if (nbpaths >= MAX_PATHS) {
+	    fprintf(stderr, "MAX_PATHS reached: too many paths\n");
+	    return;
+	}
+	cur = path;
+	while ((*cur == ' ') || (*cur == ':'))
+	    cur++;
+	path = cur;
+	while ((*cur != 0) && (*cur != ' ') && (*cur != ':'))
+	    cur++;
+	if (cur != path) {
+	    paths[nbpaths] = xmlStrndup(path, cur - path);
+	    if (paths[nbpaths] != NULL)
+		nbpaths++;
+	    path = cur;
+	}
+    }
+}
+
+xmlExternalEntityLoader defaultEntityLoader = NULL;
+
+static xmlParserInputPtr 
+xsltprocExternalEntityLoader(const char *URL, const char *ID,
+			     xmlParserCtxtPtr context) {
+    xmlParserInputPtr ret;
+    xmlURIPtr uri;
+
+    int i;
+
+    if (defaultEntityLoader != NULL) {
+	ret = defaultEntityLoader(URL, ID, context);
+	if (ret != NULL)
+	    return(ret);
+    }
+    for (i = 0;i < nbpaths;i++) {
+	xmlChar *newURL;
+	int len;
+
+	len = xmlStrlen(paths[i]) + xmlStrlen(URL) + 5;
+	newURL = xmlMalloc(len);
+	if (newURL != NULL) {
+	    snprintf(newURL, len, "%s/%s", paths[i], URL);
+	    ret = defaultEntityLoader((const char *)newURL, ID, context);
+	    xmlFree(newURL);
+	    if (ret != NULL)
+		return(ret);
+	}
+    }
+    return(NULL);
+}
 
 /*
  * Internal timing routines to remove the necessity to have unix-specific
@@ -404,6 +469,7 @@ static void usage(const char *name) {
     printf("\t       string values must be quoted like \"'string'\"\n or");
     printf("\t       use stringparam to avoid it\n");
     printf("\t--stringparam name value : pass a (parameter, UTF8 string value) pair\n");
+    printf("\t--path 'paths': provide a set of paths for resources\n");
     printf("\t--nonet : refuse to fetch DTDs or entities over network\n");
     printf("\t--nowrite : refuse to write to any file or resource\n");
     printf("\t--nomkdir : refuse to create directories\n");
@@ -441,6 +507,8 @@ main(int argc, char **argv)
     xmlLineNumbersDefault(1);
     sec = xsltNewSecurityPrefs();
     xsltSetDefaultSecurityPrefs(sec);
+    defaultEntityLoader = xmlGetExternalEntityLoader();
+    xmlSetExternalEntityLoader(xsltprocExternalEntityLoader);
 
     for (i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-"))
@@ -507,7 +575,7 @@ main(int argc, char **argv)
             profile++;
         } else if ((!strcmp(argv[i], "-nonet")) ||
                    (!strcmp(argv[i], "--nonet"))) {
-            xmlSetExternalEntityLoader(xmlNoNetExternalEntityLoader);
+	    defaultEntityLoader = xmlNoNetExternalEntityLoader;
         } else if ((!strcmp(argv[i], "-nowrite")) ||
                    (!strcmp(argv[i], "--nowrite"))) {
 	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_FILE,
@@ -526,6 +594,10 @@ main(int argc, char **argv)
 	    writesubtree = argv[i];
 	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_FILE,
 		                 xsltSubtreeCheck);
+        } else if ((!strcmp(argv[i], "-path")) ||
+                   (!strcmp(argv[i], "--path"))) {
+	    i++;
+	    parsePath(BAD_CAST argv[i]);
 #ifdef LIBXML_CATALOG_ENABLED
         } else if ((!strcmp(argv[i], "-catalogs")) ||
                    (!strcmp(argv[i], "--catalogs"))) {
@@ -637,6 +709,10 @@ main(int argc, char **argv)
 	    continue;
         } else if ((!strcmp(argv[i], "-writesubtree")) ||
                    (!strcmp(argv[i], "--writesubtree"))) {
+            i++;
+	    continue;
+        } else if ((!strcmp(argv[i], "-path")) ||
+                   (!strcmp(argv[i], "--path"))) {
             i++;
 	    continue;
 	}

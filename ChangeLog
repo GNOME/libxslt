@@ -1,3 +1,9 @@
+Tue Oct 15 12:45:42 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: added a --path option to provide the
+	  enhancement requested by #79638, first cur at it, untested
+	  yet.
+
 Tue Oct 15 13:02:40 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: seems the media-type attribute wasn't
