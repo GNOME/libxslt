@@ -1,3 +1,8 @@
+Thu Sep 30 08:13:57 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* doc/tutorial2/libxslt_pipes.*: updated the tutorial from Panagiotis
+	  Louridas
+
 Thu Sep 30 00:10:09 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/*: release of 1.1.11, rebuilt the docs
