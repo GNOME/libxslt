@@ -1,3 +1,7 @@
+Sun Nov 24 13:58:48 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxsl.py: updated with new version from Stéphane Bidoul
+
 Sat Nov 23 22:49:08 CET 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/libxslt.def.src: exported new functions
