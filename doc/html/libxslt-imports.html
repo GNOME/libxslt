@@ -123,7 +123,7 @@ NAME="LIBXSLT-IMPORTS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN2626"
+NAME="AEN2779"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN2626"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN2629"
+NAME="AEN2782"
 ></A
 ><H2
 >Synopsis</H2
@@ -229,7 +229,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2653"
+NAME="AEN2806"
 ></A
 ><H2
 >Description</H2
@@ -239,14 +239,14 @@ NAME="AEN2653"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2656"
+NAME="AEN2809"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2658"
+NAME="AEN2811"
 ></A
 ><H3
 ><A
@@ -267,11 +267,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>a macro to import pointers from the stylesheet cascading order</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2663"
+NAME="AEN2817"
 ></A
 ><P
 ></P
@@ -343,7 +345,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2680"
+NAME="AEN2834"
 ></A
 ><H3
 ><A
@@ -364,11 +366,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>a macro to import intergers from the stylesheet cascading order</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2685"
+NAME="AEN2840"
 ></A
 ><P
 ></P
@@ -440,7 +444,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2702"
+NAME="AEN2857"
 ></A
 ><H3
 ><A
@@ -468,11 +472,14 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>parse an XSLT stylesheet strip-space element and record
+elements needing stripping</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2709"
+NAME="AEN2865"
 ></A
 ><P
 ></P
@@ -499,7 +506,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -527,7 +534,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2722"
+NAME="AEN2878"
 ></A
 ><H3
 ><A
@@ -555,11 +562,14 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>parse an XSLT stylesheet strip-space element and record
+elements needing stripping</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2729"
+NAME="AEN2886"
 ></A
 ><P
 ></P
@@ -586,7 +596,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -614,7 +624,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2742"
+NAME="AEN2899"
 ></A
 ><H3
 ><A
@@ -641,11 +651,13 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
+>Find the next stylesheet in import precedence.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2749"
+NAME="AEN2907"
 ></A
 ><P
 ></P
@@ -687,7 +699,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the next stylesheet or NULL if it was the last one</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -698,7 +710,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2762"
+NAME="AEN2920"
 ></A
 ><H3
 ><A
@@ -722,11 +734,13 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Returns whether that stylesheet requires white-space stripping</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2768"
+NAME="AEN2927"
 ></A
 ><P
 ></P
@@ -753,7 +767,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  an XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -768,7 +782,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>1 if space should be stripped, 0 if not</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -779,7 +793,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2781"
+NAME="AEN2940"
 ></A
 ><H3
 ><A
@@ -807,11 +821,14 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Find strip-space or preserve-space informations for an element
+respect the import precedence or the wildcards</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2788"
+NAME="AEN2948"
 ></A
 ><P
 ></P
@@ -838,7 +855,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  an XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -855,7 +872,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  an XML node</TD
 ></TR
 ><TR
 ><TD
@@ -870,7 +887,8 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>1 if space should be stripped, 0 if not, and 2 if everything
+        should be CDTATA wrapped.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -881,7 +899,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2805"
+NAME="AEN2965"
 ></A
 ><H3
 ><A
@@ -916,11 +934,13 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
+>Finds the named template, apply import precedence rule.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2814"
+NAME="AEN2975"
 ></A
 ><P
 ></P
@@ -947,7 +967,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  an XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -964,7 +984,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the template name</TD
 ></TR
 ><TR
 ><TD
@@ -981,7 +1001,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the template name URI</TD
 ></TR
 ><TR
 ><TD
@@ -996,7 +1016,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the xsltTemplatePtr or NULL if not found</TD
 ></TR
 ></TBODY
 ></TABLE

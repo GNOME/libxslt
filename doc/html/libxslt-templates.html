@@ -123,7 +123,7 @@ NAME="LIBXSLT-TEMPLATES"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN588"
+NAME="AEN638"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN588"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN591"
+NAME="AEN641"
 ></A
 ><H2
 >Synopsis</H2
@@ -310,7 +310,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN637"
+NAME="AEN687"
 ></A
 ><H2
 >Description</H2
@@ -320,14 +320,14 @@ NAME="AEN637"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN640"
+NAME="AEN690"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN642"
+NAME="AEN692"
 ></A
 ><H3
 ><A
@@ -360,11 +360,14 @@ HREF="XMLNSPTR"
 ></TR
 ></TABLE
 ><P
+>Process the expression using XPath and evaluate the result as
+an XPath predicate</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN650"
+NAME="AEN701"
 ></A
 ><P
 ></P
@@ -391,7 +394,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -408,7 +411,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath compiled expression</TD
 ></TR
 ><TR
 ><TD
@@ -425,7 +428,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the namespaces in scope</TD
 ></TR
 ><TR
 ><TD
@@ -442,7 +445,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of namespaces in scope</TD
 ></TR
 ><TR
 ><TD
@@ -457,7 +460,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>1 is the predicate was true, 0 otherwise</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -468,7 +471,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN675"
+NAME="AEN726"
 ></A
 ><H3
 ><A
@@ -503,11 +506,15 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Evaluate a template string value, i.e. the parent list is interpreter
+as template content and the resulting tree string value is returned
+This is needed for example by xsl:comment and xsl:processing-instruction</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN684"
+NAME="AEN736"
 ></A
 ><P
 ></P
@@ -534,7 +541,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -551,7 +558,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the stylesheet node</TD
 ></TR
 ><TR
 ><TD
@@ -568,7 +575,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the content parent</TD
 ></TR
 ><TR
 ><TD
@@ -583,7 +590,8 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the computed string value or NULL, must be deallocated by the
+   caller.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -594,7 +602,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN705"
+NAME="AEN757"
 ></A
 ><H3
 ><A
@@ -633,11 +641,15 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
+>Evaluate a attribute value template, i.e. the attribute value can
+contain expressions contained in curly braces ({}) and those are
+substituted by they computed value.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN715"
+NAME="AEN768"
 ></A
 ><P
 ></P
@@ -664,7 +676,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -681,7 +693,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the stylesheet node</TD
 ></TR
 ><TR
 ><TD
@@ -698,7 +710,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the attribute QName</TD
 ></TR
 ><TR
 ><TD
@@ -715,7 +727,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the attribute namespace URI</TD
 ></TR
 ><TR
 ><TD
@@ -730,7 +742,8 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the computed string value or NULL, must be deallocated by the
+   caller.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -741,7 +754,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN740"
+NAME="AEN793"
 ></A
 ><H3
 ><A
@@ -781,11 +794,14 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
+>Check if an attribute value template has a static value, i.e. the
+attribute value does not contain expressions contained in curly braces ({})</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN750"
+NAME="AEN804"
 ></A
 ><P
 ></P
@@ -812,7 +828,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -829,7 +845,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the stylesheet node</TD
 ></TR
 ><TR
 ><TD
@@ -846,7 +862,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the attribute Name</TD
 ></TR
 ><TR
 ><TD
@@ -863,7 +879,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the attribute namespace URI</TD
 ></TR
 ><TR
 ><TD
@@ -880,7 +896,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  indicator whether the attribute is present</TD
 ></TR
 ><TR
 ><TD
@@ -895,7 +911,8 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the static string value or NULL, must be deallocated by the
+   caller.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -906,7 +923,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN779"
+NAME="AEN833"
 ></A
 ><H3
 ><A
@@ -937,11 +954,13 @@ HREF="XMLXPATHCOMPEXPRPTR"
 ></TR
 ></TABLE
 ><P
+>Process the expression using XPath and get a string</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN787"
+NAME="AEN842"
 ></A
 ><P
 ></P
@@ -968,7 +987,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -985,7 +1004,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the compiled XPath expression</TD
 ></TR
 ><TR
 ><TD
@@ -1000,7 +1019,8 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the computed string value or NULL, must be deallocated by the
+   caller.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1011,7 +1031,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN804"
+NAME="AEN859"
 ></A
 ><H3
 ><A
@@ -1042,11 +1062,13 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Process the given node and return the new string value.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN812"
+NAME="AEN868"
 ></A
 ><P
 ></P
@@ -1073,7 +1095,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -1090,7 +1112,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the attribute template node</TD
 ></TR
 ><TR
 ><TD
@@ -1105,7 +1127,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the computed tree replacement</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1116,7 +1138,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN829"
+NAME="AEN885"
 ></A
 ><H3
 ><A
@@ -1151,11 +1173,13 @@ HREF="XMLATTRPTR"
 ></TR
 ></TABLE
 ><P
+>Do a copy of an attribute list with attribute template processing</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN838"
+NAME="AEN895"
 ></A
 ><P
 ></P
@@ -1182,7 +1206,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -1199,7 +1223,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the element where the attributes will be grafted</TD
 ></TR
 ><TR
 ><TD
@@ -1216,7 +1240,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the first attribute</TD
 ></TR
 ><TR
 ><TD
@@ -1231,7 +1255,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> a new xmlAttrPtr, or NULL in case of error.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1242,7 +1266,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN859"
+NAME="AEN916"
 ></A
 ><H3
 ><A
@@ -1277,11 +1301,13 @@ HREF="XMLATTRPTR"
 ></TR
 ></TABLE
 ><P
+>Process the given attribute and return the new processed copy.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN868"
+NAME="AEN926"
 ></A
 ><P
 ></P
@@ -1308,7 +1334,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -1325,7 +1351,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the result node</TD
 ></TR
 ><TR
 ><TD
@@ -1357,7 +1383,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the attribute replacement.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1368,7 +1394,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN889"
+NAME="AEN947"
 ></A
 ><H3
 ><A
@@ -1399,11 +1425,13 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
+>Process the given node and return the new string value.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN897"
+NAME="AEN956"
 ></A
 ><P
 ></P
@@ -1430,7 +1458,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -1462,7 +1490,8 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the computed string value or NULL, must be deallocated by the
+   caller.</TD
 ></TR
 ></TBODY
 ></TABLE

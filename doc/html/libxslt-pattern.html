@@ -123,7 +123,7 @@ NAME="LIBXSLT-PATTERN"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN334"
+NAME="AEN359"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN334"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN337"
+NAME="AEN362"
 ></A
 ><H2
 >Synopsis</H2
@@ -259,7 +259,15 @@ HREF="XMLNODEPTR"
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *pattern);</PRE
+> *pattern,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> ctxtdoc,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> ctxtnode);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -267,7 +275,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN371"
+NAME="AEN398"
 ></A
 ><H2
 >Description</H2
@@ -277,14 +285,14 @@ NAME="AEN371"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN374"
+NAME="AEN401"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN376"
+NAME="AEN403"
 ></A
 ><H3
 ><A
@@ -305,12 +313,15 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>Data structure used for the implementation of patterns.
+It is kept private (in pattern.c)</P
+><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN381"
+NAME="AEN409"
 ></A
 ><H3
 ><A
@@ -336,7 +347,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN386"
+NAME="AEN414"
 ></A
 ><H3
 ><A
@@ -371,11 +382,16 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Compile the XSLT pattern and generates a list of precompiled form suitable
+for fast matching.</P
+><P
+>[1] Pattern ::= LocationPathPattern | Pattern '|' LocationPathPattern</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN395"
+NAME="AEN425"
 ></A
 ><P
 ></P
@@ -402,7 +418,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT pattern</TD
 ></TR
 ><TR
 ><TD
@@ -419,7 +435,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the containing document</TD
 ></TR
 ><TR
 ><TD
@@ -436,7 +452,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the containing element</TD
 ></TR
 ><TR
 ><TD
@@ -451,7 +467,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the generated pattern list or NULL in case of failure</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -462,7 +478,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN416"
+NAME="AEN446"
 ></A
 ><H3
 ><A
@@ -486,11 +502,18 @@ HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
 ></TR
 ></TABLE
 ><P
+>Free up the memory allocated by all the elements of <TT
+CLASS="PARAMETER"
+><I
+>comp</I
+></TT
+></P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN422"
+NAME="AEN454"
 ></A
 ><P
 ></P
@@ -517,7 +540,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  an XSLT comp list</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -528,7 +551,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN431"
+NAME="AEN463"
 ></A
 ><H3
 ><A
@@ -560,11 +583,13 @@ HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
 ></TR
 ></TABLE
 ><P
+>Test wether the node matches one of the patterns in the list</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN439"
+NAME="AEN472"
 ></A
 ><P
 ></P
@@ -591,7 +616,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a XSLT process context</TD
 ></TR
 ><TR
 ><TD
@@ -608,7 +633,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> a node</TD
 ></TR
 ><TR
 ><TD
@@ -625,7 +650,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> the precompiled pattern list</TD
 ></TR
 ><TR
 ><TD
@@ -640,7 +665,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>1 if it matches, 0 if it doesn't and -1 in case of failure</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -651,7 +676,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN460"
+NAME="AEN493"
 ></A
 ><H3
 ><A
@@ -687,11 +712,18 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
+>Register the XSLT pattern associated to <TT
+CLASS="PARAMETER"
+><I
+>cur</I
+></TT
+></P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN469"
+NAME="AEN504"
 ></A
 ><P
 ></P
@@ -718,7 +750,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -735,7 +767,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT template</TD
 ></TR
 ><TR
 ><TD
@@ -752,7 +784,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the mode name or NULL</TD
 ></TR
 ><TR
 ><TD
@@ -769,7 +801,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the mode URI or NULL</TD
 ></TR
 ><TR
 ><TD
@@ -784,7 +816,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>-1 in case of error, 0 otherwise</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -795,7 +827,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN494"
+NAME="AEN529"
 ></A
 ><H3
 ><A
@@ -830,11 +862,19 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
+>Finds the template applying to this node, if <TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+> is non-NULL
+it means one needs to look for the next imported template in scope.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN503"
+NAME="AEN540"
 ></A
 ><P
 ></P
@@ -861,7 +901,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a XSLT process context</TD
 ></TR
 ><TR
 ><TD
@@ -878,7 +918,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the node being processed</TD
 ></TR
 ><TR
 ><TD
@@ -895,7 +935,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the current style</TD
 ></TR
 ><TR
 ><TD
@@ -910,7 +950,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the xsltTemplatePtr or NULL if not found</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -921,7 +961,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN524"
+NAME="AEN561"
 ></A
 ><H3
 ><A
@@ -945,11 +985,13 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
+>Free up the memory used by xsltAddTemplate/xsltGetTemplate mechanism</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN530"
+NAME="AEN568"
 ></A
 ><P
 ></P
@@ -976,7 +1018,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT stylesheet</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -987,7 +1029,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN539"
+NAME="AEN577"
 ></A
 ><H3
 ><A
@@ -1011,11 +1053,14 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
+>Cleanup the state of the templates used by the stylesheet and
+the ones it imports.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN545"
+NAME="AEN584"
 ></A
 ><P
 ></P
@@ -1042,7 +1087,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT stylesheet</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1053,7 +1098,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN554"
+NAME="AEN593"
 ></A
 ><H3
 ><A
@@ -1080,16 +1125,26 @@ HREF="XMLNODEPTR"
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
-> *pattern);</PRE
+> *pattern,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> ctxtdoc,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> ctxtnode);</PRE
 ></TD
 ></TR
 ></TABLE
+><P
+>Determine if a node matches a pattern.</P
 ><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN562"
+NAME="AEN604"
 ></A
 ><P
 ></P
@@ -1133,7 +1188,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> a node in the source tree</TD
 ></TR
 ><TR
 ><TD
@@ -1150,7 +1205,41 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT pattern</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxtdoc</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  context document (for namespaces)</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxtnode</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  context node (for namespaces)</TD
 ></TR
 ><TR
 ><TD

@@ -123,7 +123,7 @@ NAME="LIBXSLT-NAMESPACES"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN3816"
+NAME="AEN4016"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN3816"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN3819"
+NAME="AEN4019"
 ></A
 ><H2
 >Synopsis</H2
@@ -255,7 +255,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3850"
+NAME="AEN4050"
 ></A
 ><H2
 >Description</H2
@@ -265,14 +265,14 @@ NAME="AEN3850"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3853"
+NAME="AEN4053"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3855"
+NAME="AEN4055"
 ></A
 ><H3
 ><A
@@ -300,11 +300,14 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Read the stylesheet-prefix and result-prefix attributes, register
+them as well as the corresponding namespace.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3862"
+NAME="AEN4063"
 ></A
 ><P
 ></P
@@ -331,7 +334,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XSLT stylesheet</TD
 ></TR
 ><TR
 ><TD
@@ -348,7 +351,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the xsl:namespace-alias node</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -359,7 +362,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3875"
+NAME="AEN4076"
 ></A
 ><H3
 ><A
@@ -398,11 +401,15 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Find the right namespace value for this prefix, if needed create
+and add a new namespace decalaration on the node
+Handle namespace aliases</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3885"
+NAME="AEN4087"
 ></A
 ><P
 ></P
@@ -429,7 +436,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -446,7 +453,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the input node</TD
 ></TR
 ><TR
 ><TD
@@ -463,7 +470,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the namespace</TD
 ></TR
 ><TR
 ><TD
@@ -480,7 +487,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the output node (or its parent)</TD
 ></TR
 ><TR
 ><TD
@@ -495,7 +502,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the namespace node to use or NULL</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -506,7 +513,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3910"
+NAME="AEN4112"
 ></A
 ><H3
 ><A
@@ -549,11 +556,14 @@ HREF="XMLNODEPTR"
 ></TR
 ></TABLE
 ><P
+>Find the right namespace value for this URI, if needed create
+and add a new namespace decalaration on the node</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3921"
+NAME="AEN4124"
 ></A
 ><P
 ></P
@@ -580,7 +590,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -597,7 +607,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the input node</TD
 ></TR
 ><TR
 ><TD
@@ -614,7 +624,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the namespace URI</TD
 ></TR
 ><TR
 ><TD
@@ -631,7 +641,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the suggested prefix</TD
 ></TR
 ><TR
 ><TD
@@ -648,7 +658,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the output node (or its parent)</TD
 ></TR
 ><TR
 ><TD
@@ -663,7 +673,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the namespace node to use or NULL</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -674,7 +684,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3950"
+NAME="AEN4153"
 ></A
 ><H3
 ><A
@@ -709,11 +719,20 @@ HREF="XMLNSPTR"
 ></TR
 ></TABLE
 ><P
+>Do a copy of an namespace node. If <TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+> is non-NULL the
+new namespaces are added automatically. This handles namespaces
+aliases</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3959"
+NAME="AEN4164"
 ></A
 ><P
 ></P
@@ -740,7 +759,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -757,7 +776,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the target node</TD
 ></TR
 ><TR
 ><TD
@@ -774,7 +793,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the namespace node</TD
 ></TR
 ><TR
 ><TD
@@ -789,7 +808,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> a new xmlNsPtr, or NULL in case of error.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -800,7 +819,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3980"
+NAME="AEN4185"
 ></A
 ><H3
 ><A
@@ -835,11 +854,20 @@ HREF="XMLNSPTR"
 ></TR
 ></TABLE
 ><P
+>Do a copy of an namespace list. If <TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+> is non-NULL the
+new namespaces are added automatically. This handles namespaces
+aliases</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3989"
+NAME="AEN4196"
 ></A
 ><P
 ></P
@@ -866,7 +894,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a transformation context</TD
 ></TR
 ><TR
 ><TD
@@ -883,7 +911,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the target node</TD
 ></TR
 ><TR
 ><TD
@@ -900,7 +928,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the first namespace</TD
 ></TR
 ><TR
 ><TD
@@ -915,7 +943,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> a new xmlNsPtr, or NULL in case of error.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -926,7 +954,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN4010"
+NAME="AEN4217"
 ></A
 ><H3
 ><A
@@ -950,11 +978,13 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ></TR
 ></TABLE
 ><P
+>Free up the memory used by namespaces aliases</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN4016"
+NAME="AEN4224"
 ></A
 ><P
 ></P
@@ -981,7 +1011,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+> an XSLT stylesheet</TD
 ></TR
 ></TBODY
 ></TABLE

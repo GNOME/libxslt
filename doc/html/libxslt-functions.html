@@ -123,7 +123,7 @@ NAME="LIBXSLT-FUNCTIONS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN83"
+NAME="AEN89"
 ></A
 ><H2
 >Name</H2
@@ -131,7 +131,7 @@ NAME="AEN83"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN86"
+NAME="AEN92"
 ></A
 ><H2
 >Synopsis</H2
@@ -246,7 +246,7 @@ HREF="XMLXPATHCONTEXTPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN113"
+NAME="AEN119"
 ></A
 ><H2
 >Description</H2
@@ -256,14 +256,14 @@ NAME="AEN113"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN116"
+NAME="AEN122"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN118"
+NAME="AEN124"
 ></A
 ><H3
 ><A
@@ -284,11 +284,13 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
+>registering macro, not general purpose at all but used in different modules</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN123"
+NAME="AEN130"
 ></A
 ><P
 ></P
@@ -326,7 +328,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN132"
+NAME="AEN139"
 ></A
 ><H3
 ><A
@@ -361,11 +363,14 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
+>This is the entry point when a function is needed by the XPath
+interpretor.</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN141"
+NAME="AEN149"
 ></A
 ><P
 ></P
@@ -392,7 +397,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  a void * but the XSLT transformation context actually</TD
 ></TR
 ><TR
 ><TD
@@ -409,7 +414,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the function name</TD
 ></TR
 ><TR
 ><TD
@@ -426,7 +431,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the function namespace URI</TD
 ></TR
 ><TR
 ><TD
@@ -441,7 +446,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>the callback function or NULL if not found</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -452,7 +457,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN162"
+NAME="AEN170"
 ></A
 ><H3
 ><A
@@ -477,11 +482,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the <GTKDOCLINK
+HREF="DOCUMENT"
+>document</GTKDOCLINK
+>() XSLT function
+  node-set document(object, node-set?)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN168"
+NAME="AEN178"
 ></A
 ><P
 ></P
@@ -508,7 +519,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -525,7 +536,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -536,7 +547,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN181"
+NAME="AEN191"
 ></A
 ><H3
 ><A
@@ -561,11 +572,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the <GTKDOCLINK
+HREF="KEY"
+>key</GTKDOCLINK
+>() XSLT function
+  node-set key(string, object)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN187"
+NAME="AEN199"
 ></A
 ><P
 ></P
@@ -592,7 +609,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -609,7 +626,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -620,7 +637,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN200"
+NAME="AEN212"
 ></A
 ><H3
 ><A
@@ -645,11 +662,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the unparsed-entity-<GTKDOCLINK
+HREF="URI"
+>uri</GTKDOCLINK
+>() XSLT function
+  string unparsed-entity-uri(string)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN206"
+NAME="AEN220"
 ></A
 ><P
 ></P
@@ -676,7 +699,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -693,7 +716,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -704,7 +727,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN219"
+NAME="AEN233"
 ></A
 ><H3
 ><A
@@ -729,11 +752,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the format-<GTKDOCLINK
+HREF="NUMBER"
+>number</GTKDOCLINK
+>() XSLT function
+  string format-number(number, string, string?)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN225"
+NAME="AEN241"
 ></A
 ><P
 ></P
@@ -760,7 +789,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -777,7 +806,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -788,7 +817,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN238"
+NAME="AEN254"
 ></A
 ><H3
 ><A
@@ -813,11 +842,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the generate-<GTKDOCLINK
+HREF="ID"
+>id</GTKDOCLINK
+>() XSLT function
+  string generate-id(node-set?)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN244"
+NAME="AEN262"
 ></A
 ><P
 ></P
@@ -844,7 +879,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -861,7 +896,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -872,7 +907,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN257"
+NAME="AEN275"
 ></A
 ><H3
 ><A
@@ -897,11 +932,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the system-<GTKDOCLINK
+HREF="PROPERTY"
+>property</GTKDOCLINK
+>() XSLT function
+  object system-property(string)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN263"
+NAME="AEN283"
 ></A
 ><P
 ></P
@@ -928,7 +969,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -945,7 +986,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -956,7 +997,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN276"
+NAME="AEN296"
 ></A
 ><H3
 ><A
@@ -981,11 +1022,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the element-<GTKDOCLINK
+HREF="AVAILABLE"
+>available</GTKDOCLINK
+>() XSLT function
+  boolean element-available(string)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN282"
+NAME="AEN304"
 ></A
 ><P
 ></P
@@ -1012,7 +1059,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -1029,7 +1076,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1040,7 +1087,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN295"
+NAME="AEN317"
 ></A
 ><H3
 ><A
@@ -1065,11 +1112,17 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Implement the function-<GTKDOCLINK
+HREF="AVAILABLE"
+>available</GTKDOCLINK
+>() XSLT function
+  boolean function-available(string)</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN301"
+NAME="AEN325"
 ></A
 ><P
 ></P
@@ -1096,7 +1149,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath Parser context</TD
 ></TR
 ><TR
 ><TD
@@ -1113,7 +1166,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the number of arguments</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1124,7 +1177,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN314"
+NAME="AEN338"
 ></A
 ><H3
 ><A
@@ -1148,11 +1201,13 @@ HREF="XMLXPATHCONTEXTPTR"
 ></TR
 ></TABLE
 ><P
+>Registers all default XSLT functions in this context</P
+><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN320"
+NAME="AEN345"
 ></A
 ><P
 ></P
@@ -1179,7 +1234,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the XPath context</TD
 ></TR
 ></TBODY
 ></TABLE
