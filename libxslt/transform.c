@@ -52,13 +52,14 @@
 
 /**
  * xsltNewTransformContext:
+ * @doc:  the input document
  *
  * Create a new XSLT TransformContext
  *
  * Returns the newly allocated xsltTransformContextPtr or NULL in case of error
  */
 xsltTransformContextPtr
-xsltNewTransformContext(void) {
+xsltNewTransformContext(xmlDocPtr doc) {
     xsltTransformContextPtr cur;
 
     cur = (xsltTransformContextPtr) xmlMalloc(sizeof(xsltTransformContext));
@@ -68,6 +69,16 @@ xsltNewTransformContext(void) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltTransformContext));
+    xmlXPathInit();
+    cur->doc = doc;
+    cur->xpathCtxt = xmlXPathNewContext(doc);
+    if (cur->xpathCtxt == NULL) {
+        xsltGenericError(xsltGenericErrorContext,
+		"xsltNewTransformContext : xmlXPathNewContext failed\n");
+	xmlFree(cur);
+	return(NULL);
+    }
+    XSLT_REGISTER_VARIABLE_LOOKUP(cur);
     return(cur);
 }
 
@@ -531,13 +542,6 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 "xsltCopyOf: select %s\n", prop);
 #endif
 
-    if (ctxt->xpathCtxt == NULL) {
-	xmlXPathInit();
-	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	if (ctxt->xpathCtxt == NULL)
-	    goto error;
-	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
-    }
     xpathParserCtxt =
 	xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
@@ -659,13 +663,6 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 "xsltValueOf: select %s\n", prop);
 #endif
 
-    if (ctxt->xpathCtxt == NULL) {
-	xmlXPathInit();
-	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	if (ctxt->xpathCtxt == NULL)
-	    goto error;
-	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
-    }
     xpathParserCtxt =
 	xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
@@ -734,10 +731,15 @@ error:
 void
 xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr copy;
-    xmlNodePtr delete = NULL;
+    xmlNodePtr delete = NULL, cur;
     int strip_spaces = -1;
+    int nbchild = 0, oldSize;
+    int childno = 0, oldPos;
 
     CHECK_STOPPED;
+    /*
+     * Handling of leaves
+     */
     switch (node->type) {
 	case XML_DOCUMENT_NODE:
 	case XML_HTML_DOCUMENT_NODE:
@@ -779,18 +781,16 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	default:
 	    return;
     }
-    node = node->children;
-    while (node != NULL) {
-	switch (node->type) {
-	    case XML_DOCUMENT_NODE:
-	    case XML_HTML_DOCUMENT_NODE:
-	    case XML_ELEMENT_NODE:
-		xsltProcessOneNode(ctxt, node);
-		break;
+    /*
+     * Handling of Elements: first pass, cleanup and counting
+     */
+    cur = node->children;
+    while (cur != NULL) {
+	switch (cur->type) {
 	    case XML_TEXT_NODE:
 		/* TODO: check the whitespace stripping rules ! */
-		if ((IS_BLANK_NODE(node)) &&
-		    (node->parent != NULL) &&
+		if ((IS_BLANK_NODE(cur)) &&
+		    (cur->parent != NULL) &&
 		    (ctxt->style->stripSpaces != NULL)) {
 		    const xmlChar *val;
 
@@ -798,7 +798,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 			/* TODO: add namespaces support */
 			val = (const xmlChar *)
 			      xmlHashLookup(ctxt->style->stripSpaces,
-					    node->parent->name);
+					    cur->parent->name);
 			if (val != NULL) {
 			    if (xmlStrEqual(val, (xmlChar *) "strip"))
 				strip_spaces = 1;
@@ -817,29 +817,26 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 			}
 		    }
 		    if (strip_spaces == 1) {
-			delete = node;
+			delete = cur;
 			break;
 		    }
 		}
 		/* no break on purpose */
 	    case XML_CDATA_SECTION_NODE:
-		copy = xmlCopyNode(node, 0);
-		if (copy != NULL) {
-		    xmlAddChild(ctxt->insert, copy);
-		} else {
-		    xsltGenericError(xsltGenericErrorContext,
-			"xsltDefaultProcessOneNode: text copy failed\n");
-		}
+	    case XML_DOCUMENT_NODE:
+	    case XML_HTML_DOCUMENT_NODE:
+	    case XML_ELEMENT_NODE:
+		nbchild++;
 		break;
 	    default:
 #ifdef DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltDefaultProcessOneNode: skipping node type %d\n",
-		                 node->type);
+		                 cur->type);
 #endif
-		delete = node;
+		delete = cur;
 	}
-	node = node->next;
+	cur = cur->next;
 	if (delete != NULL) {
 #ifdef DEBUG_PROCESS
 	    xsltGenericDebug(xsltGenericDebugContext,
@@ -850,6 +847,39 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    delete = NULL;
 	}
     }
+    /*
+     * Handling of Elements: second pass, actual processing
+     */
+    oldSize = ctxt->xpathCtxt->contextSize;
+    oldPos = ctxt->xpathCtxt->proximityPosition;
+    cur = node->children;
+    while (cur != NULL) {
+	childno++;
+	switch (cur->type) {
+	    case XML_DOCUMENT_NODE:
+	    case XML_HTML_DOCUMENT_NODE:
+	    case XML_ELEMENT_NODE:
+		ctxt->xpathCtxt->contextSize = nbchild;
+		ctxt->xpathCtxt->proximityPosition = childno;
+		xsltProcessOneNode(ctxt, cur);
+		break;
+	    case XML_TEXT_NODE:
+	    case XML_CDATA_SECTION_NODE:
+		copy = xmlCopyNode(cur, 0);
+		if (copy != NULL) {
+		    xmlAddChild(ctxt->insert, copy);
+		} else {
+		    xsltGenericError(xsltGenericErrorContext,
+			"xsltDefaultProcessOneNode: text copy failed\n");
+		}
+		break;
+	    default:
+		break;
+	}
+	cur = cur->next;
+    }
+    ctxt->xpathCtxt->contextSize = oldSize;
+    ctxt->xpathCtxt->proximityPosition = oldPos;
 }
 
 /**
@@ -970,11 +1000,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 
 	if (ctxt->xpathCtxt == NULL) {
-	    xmlXPathInit();
-	    ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	    if (ctxt->xpathCtxt == NULL)
-		goto error;
-	    XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
 	}
 	xpathParserCtxt =
 	    xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
@@ -1307,13 +1332,6 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 "xsltIf: test %s\n", prop);
 #endif
 
-    if (ctxt->xpathCtxt == NULL) {
-	xmlXPathInit();
-	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	if (ctxt->xpathCtxt == NULL)
-	    goto error;
-	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
-    }
     xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
 	goto error;
@@ -1390,13 +1408,6 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 "xsltForEach: select %s\n", prop);
 #endif
 
-    if (ctxt->xpathCtxt == NULL) {
-	xmlXPathInit();
-	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	if (ctxt->xpathCtxt == NULL)
-	    goto error;
-	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
-    }
     xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
 	goto error;
@@ -1534,10 +1545,9 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
 
     if ((style == NULL) || (doc == NULL))
 	return(NULL);
-    ctxt = xsltNewTransformContext();
+    ctxt = xsltNewTransformContext(doc);
     if (ctxt == NULL)
 	return(NULL);
-    ctxt->doc = doc;
     ctxt->style = style;
     xsltEvalGlobalVariables(ctxt);
     if ((style->method != NULL) &&

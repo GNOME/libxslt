@@ -294,14 +294,6 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 
     if ((ctxt == NULL) || (elem == NULL))
 	return(-1);
- 
-    if (ctxt->xpathCtxt == NULL) {
-	xmlXPathInit();
-	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	if (ctxt->xpathCtxt == NULL)
-	    return(-1);
-	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
-    }
 
 #ifdef DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
@@ -382,14 +374,6 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
     if (ctxt == NULL)
 	return(-1);
  
-    if (ctxt->xpathCtxt == NULL) {
-	xmlXPathInit();
-	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	if (ctxt->xpathCtxt == NULL)
-	    return(-1);
-	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
-    }
-
 #ifdef DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
 	"Evaluating global variables\n");
@@ -503,6 +487,63 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
 }
 
 /**
+ * xsltGlobalVariableLookup:
+ * @ctxt:  the XSLT transformation context
+ * @name:  the variable name
+ * @ns_uri:  the variable namespace URI
+ *
+ * Search in the Variable array of the context for the given
+ * variable value.
+ *
+ * Returns the value or NULL if not found
+ */
+xmlXPathObjectPtr
+xsltGlobalVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
+		         const xmlChar *ns_uri) {
+    xsltStylesheetPtr style;
+    xsltStackElemPtr elem;
+
+    style = ctxt->style;
+    /* TODO: handle the stylesheet cascade */
+    if (style != NULL) {
+	elem = style->variables;
+	
+	while (elem != NULL) {
+	    if (xmlStrEqual(elem->name, name)) {
+		/* TODO: double check param binding */
+		if (ns_uri == NULL) {
+		    if (elem->nameURI == NULL)
+			break;
+		} else {
+		    if ((elem->nameURI != NULL) &&
+			(xmlStrEqual(elem->nameURI, ns_uri)))
+			break;
+		}
+
+	    }
+	    elem = elem->next;
+	}
+    }
+    if (elem == NULL)
+	return(NULL);
+
+    if (!elem->computed) {
+#ifdef DEBUG_VARIABLE
+	xsltGenericDebug(xsltGenericDebugContext,
+		         "uncomputed global variable %s\n", name);
+#endif
+        xsltEvalVariables(ctxt, elem);
+    }
+    if (elem->value != NULL)
+	return(xmlXPathObjectCopy(elem->value));
+#ifdef DEBUG_VARIABLE
+    xsltGenericDebug(xsltGenericDebugContext,
+		     "global variable not found %s\n", name);
+#endif
+    return(NULL);
+}
+
+/**
  * xsltVariableLookup:
  * @ctxt:  the XSLT transformation context
  * @name:  the variable name
@@ -523,8 +564,7 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 
     elem = xsltStackLookup(ctxt, name, ns_uri);
     if (elem == NULL) {
-	TODO /* searching on other ctxtsheets ? */
-	return(NULL);
+	return(xsltGlobalVariableLookup(ctxt, name, ns_uri));
     }
     if (!elem->computed) {
 #ifdef DEBUG_VARIABLE

@@ -52,13 +52,6 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, const xmlChar *expr) {
     xmlXPathObjectPtr res, tmp;
     xmlXPathParserContextPtr xpathParserCtxt;
 
-    if (ctxt->xpathCtxt == NULL) {
-	xmlXPathInit();
-	ctxt->xpathCtxt = xmlXPathNewContext(ctxt->doc);
-	if (ctxt->xpathCtxt == NULL)
-	    return(NULL);
-	XSLT_REGISTER_VARIABLE_LOOKUP(ctxt);
-    }
     xpathParserCtxt =
 	xmlXPathNewParserContext(expr, ctxt->xpathCtxt);
     if (xpathParserCtxt == NULL)
@@ -145,7 +138,7 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 xmlChar *
 xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
-    xmlChar *ret = NULL, *ret2;
+    xmlChar *ret = NULL;
     const xmlChar *cur;
     xmlChar *expr, *val;
 
@@ -153,17 +146,13 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
     cur = str;
     while (*cur != 0) {
 	if (*cur == '{') {
-	    ret2 = xmlStrncat(ret, str, cur - str);
-	    if (ret != NULL)
-		xmlFree(ret);
-	    ret = ret2;
+	    ret = xmlStrncat(ret, str, cur - str);
 	    str = cur;
 	    cur++;
 	    while ((*cur != 0) && (*cur != '}')) cur++;
 	    if (*cur == 0) {
-		ret2 = xmlStrncat(ret, str, cur - str);
-		xmlFree(ret);
-		return(ret2);
+		ret = xmlStrncat(ret, str, cur - str);
+		return(ret);
 	    }
 	    str++;
 	    expr = xmlStrndup(str, cur - str);
@@ -173,11 +162,8 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
                 val = xsltEvalXPathString(ctxt, expr);
 		xmlFree(expr);
 		if (val != NULL) {
-		    ret2 = xmlStrcat(ret, val);
-		    if (ret != NULL)
-			xmlFree(ret);
+		    ret = xmlStrcat(ret, val);
 		    xmlFree(val);
-		    ret = ret2;
 		}
 	    }
 	    cur++;
@@ -186,10 +172,7 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
 	    cur++;
     }
     if (cur != str) {
-	ret2 = xmlStrncat(ret, str, cur - str);
-	if (ret != NULL)
-	    xmlFree(ret);
-	ret = ret2;
+	ret = xmlStrncat(ret, str, cur - str);
     }
 
     return(ret);
