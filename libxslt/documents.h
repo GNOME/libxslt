@@ -20,6 +20,8 @@ xsltDocumentPtr	xsltNewDocument		(xsltTransformContextPtr ctxt,
 					 xmlDocPtr doc);
 xsltDocumentPtr	xsltLoadDocument	(xsltTransformContextPtr ctxt,
 					 const xmlChar *URI);
+xsltDocumentPtr	xsltFindDocument	(xsltTransformContextPtr ctxt,
+					 xmlDocPtr doc);
 void		xsltFreeDocuments	(xsltTransformContextPtr ctxt);
 
 xsltDocumentPtr	xsltLoadStyleDocument	(xsltStylesheetPtr style,
@@ -27,6 +29,7 @@ xsltDocumentPtr	xsltLoadStyleDocument	(xsltStylesheetPtr style,
 xsltDocumentPtr	xsltNewStyleDocument	(xsltStylesheetPtr style,
 					 xmlDocPtr doc);
 void		xsltFreeStyleDocuments	(xsltStylesheetPtr style);
+
 #ifdef __cplusplus
 }
 #endif

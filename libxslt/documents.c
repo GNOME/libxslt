@@ -198,3 +198,31 @@ xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
     return(ret);
 }
 
+/**
+ * xsltFindDocument:
+ * @ctxt: an XSLT transformation context
+ * @@doc: a parsed XML document
+ *
+ * Try to find a document within the XSLT transformation context
+ *
+ * Returns the desired xsltDocumentPtr or NULL in case of error
+ */
+xsltDocumentPtr
+xsltFindDocument (xsltTransformContextPtr ctxt, xmlDocPtr doc) {
+    xsltDocumentPtr ret;
+
+    if ((ctxt == NULL) || (doc == NULL))
+	return(NULL);
+
+    /*
+     * Walk the context list to find the document
+     */
+    ret = ctxt->docList;
+    while (ret != NULL) {
+	if (ret->doc == doc)
+	    return(ret);
+	ret = ret->next;
+    }
+    return(NULL);
+}
+

@@ -299,7 +299,6 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
     xsltGenericDebug(xsltGenericDebugContext,
 	"Get key %s, value %s\n", name, value);
 #endif
-
     table = (xsltKeyTablePtr) ctxt->document->keys;
     while (table != NULL) {
 	if (xmlStrEqual(table->name, name) &&
@@ -332,6 +331,8 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     xsltKeyTablePtr table;
     int	oldPos, oldSize;
     xmlNodePtr oldInst;
+    xsltDocumentPtr oldDoc;
+    xmlDocPtr oldXDoc;
 
     /*
      * Evaluate the nodelist
@@ -345,8 +346,11 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     oldPos = ctxt->xpathCtxt->proximityPosition;
     oldSize = ctxt->xpathCtxt->contextSize;
     oldInst = ctxt->inst;
+    oldDoc = ctxt->document;
+    oldXDoc= ctxt->xpathCtxt->doc;
 
     ctxt->document = doc;
+    ctxt->xpathCtxt->doc = doc->doc;
     ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
     ctxt->node = (xmlNodePtr) doc->doc;
     /* TODO : clarify the use of namespaces in keys evaluation */
@@ -357,6 +361,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     ctxt->xpathCtxt->contextSize = oldSize;
     ctxt->xpathCtxt->proximityPosition = oldPos;
     ctxt->inst = oldInst;
+
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
 	    nodelist = res->nodesetval;
@@ -422,6 +427,8 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     doc->keys = table;
 
 error:
+    ctxt->document = oldDoc;
+    ctxt->xpathCtxt->doc = oldXDoc;
     if (res != NULL)
 	xmlXPathFreeObject(res);
 }
