@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../libxslt ; make xsltproc)
+	@(cd ../../xsltproc ; make xsltproc)
 
 EXTRA_DIST = REC-xml-20001006.xml xmlspec-v21.dtd W3C-REC.css \
              logo-REC xmlspec.xsl REC-xml-2e.xsl diffspec.xsl \

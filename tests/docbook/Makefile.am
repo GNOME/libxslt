@@ -3,7 +3,7 @@
 all: single xtchunk # Avoid doing the test in normal pass
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../libxslt ; make xsltproc)
+	@(cd ../../xsltproc ; make xsltproc)
 
 EXTRA_DIST = README VERSION
 

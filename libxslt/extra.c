@@ -132,8 +132,10 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
 	ctxt->error = XPATH_INVALID_TYPE;
 	return;
     }
-    ctxt->value->type = XPATH_NODESET;
-    ctxt->value->boolval = 1;
+    if (ctxt->value->type == XPATH_XSLT_TREE) {
+	ctxt->value->type = XPATH_NODESET;
+	ctxt->value->boolval = 1;
+    }
 }
 
 /**

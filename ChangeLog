@@ -1,3 +1,9 @@
+Tue Jul 31 03:47:10 EDT 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extra.c: fixed a serious proble is node-set was called
+	  on a nodeset
+	* tests//*/Makefile.am: fixed the rule to rebuild xsltproc
+
 Lun Jul 30 05:47:43 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/functions.c: fixed memory leaks

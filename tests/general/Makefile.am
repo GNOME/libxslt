@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../libxslt ; make xsltproc)
+	@(cd ../../xsltproc ; make xsltproc)
 
 EXTRA_DIST = \
     bug-1-.out bug-1-.xsl \
