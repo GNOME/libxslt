@@ -453,7 +453,15 @@ xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->ns = xsltEvalStaticAttrValueTemplate(style, inst,
 			 (const xmlChar *)"namespace",
 			 XSLT_NAMESPACE, &comp->has_ns);
+    if (comp->has_ns == 0) {
+	xmlNsPtr defaultNs;
 
+	defaultNs = xmlSearchNs(inst->doc, inst, NULL);
+	if (defaultNs != NULL) {
+	    comp->ns = xmlStrdup(defaultNs->href);
+	    comp->has_ns = 1;
+	}
+    }
     comp->use = xsltEvalStaticAttrValueTemplate(style, inst,
 		       (const xmlChar *)"use-attribute-sets",
 		       XSLT_NAMESPACE, &comp->has_use);

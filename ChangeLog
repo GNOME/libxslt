@@ -1,3 +1,10 @@
+Fri Jul  5 18:28:08 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c libxslt/transform.c: fixed bug #87279
+	* tests/docs/Makefile.am tests/docs/bug-88.xml
+	  tests/general/Makefile.am tests/general/bug-88.*: added an
+	  example in the regression tests for this case
+
 Fri Jul  5 16:30:02 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/preproc.c libxslt/xsltutils.c: applied a patch from

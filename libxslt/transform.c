@@ -2124,6 +2124,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNsPtr ns = NULL, oldns = NULL;
     xmlNodePtr copy;
     xmlNodePtr oldInsert;
+    int generateDefault = 0;
 
 
     if (ctxt->insert == NULL)
@@ -2166,6 +2167,8 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		                         ctxt->insert);
 	    xmlFree(namespace);
 	}
+    } else if ((comp->ns != NULL) && (prefix == NULL) && (comp->has_ns)) {
+	generateDefault = 1;
     } else if (comp->ns != NULL) {
 	ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
 				     ctxt->insert);
@@ -2195,7 +2198,10 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    "xsl:element : creation of %s failed\n", name);
 	goto error;
     }
-    if ((ns == NULL) && (oldns != NULL)) {
+    if (generateDefault == 1) {
+        ns = xmlNewNs(copy, comp->ns, NULL);
+	copy->ns = ns;
+    } else if ((ns == NULL) && (oldns != NULL)) {
 	/* very specific case xsltGetNamespace failed */
         ns = xmlNewNs(copy, oldns->href, oldns->prefix);
 	copy->ns = ns;
