@@ -66,6 +66,18 @@ extern "C" {
 #endif
 
 /**
+ * XSLT_NEED_TRIO:
+ *
+ * should be activated in the existing libc library lacks some of the
+ * string formatting function, in that case reuse the Trio ones already
+ * compiled in the libxml2 library.
+ */
+
+#if @WITH_TRIO@
+#define XSLT_NEED_TRIO
+#endif
+
+/**
  * WITH_XSLT_DEBUGGER:
  *
  * Activate the compilation of the debugger support. Speed penalty

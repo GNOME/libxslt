@@ -121,6 +121,21 @@ AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, fabs,
 AC_CHECK_FUNCS(gettimeofday)
 AC_CHECK_FUNCS(mktime localtime asctime time gmtime ftime)
 
+dnl Checking the standard string functions availability
+AC_CHECK_FUNCS(printf sprintf fprintf snprintf vfprintf vsprintf vsnprintf sscanf,,
+               NEED_TRIO=1)
+dnl
+dnl Check for trio string functions
+dnl
+
+if test "${NEED_TRIO}" = "1" ; then
+    echo Reusing trio library for string functions
+    WITH_TRIO=1
+else    
+    WITH_TRIO=0
+fi
+AC_SUBST(WITH_TRIO)
+
 dnl
 dnl Perl is just needed for generating some data for XSLtmark
 dnl

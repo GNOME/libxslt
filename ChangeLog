@@ -1,3 +1,11 @@
+Mon Nov  4 06:55:36 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: remove the use of snprintf, and use
+	  libxml2 string API instead.
+	* configure.in libxslt/xsltconfig.h.in libxslt/xsltutils.c:
+	  try to cope with architecture lacking some of the string functions,
+	  reuse the trio ones compiled in libxml2 , should close #97113
+
 Wed Oct 23 17:06:24 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am libxslt.spec.in doc/Makefile.am: cleaned up

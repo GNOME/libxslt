@@ -175,10 +175,10 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
 	xmlChar *newURL;
 	int len;
 
-	len = xmlStrlen(paths[i]) + xmlStrlen(BAD_CAST URL) + 5;
-	newURL = xmlMalloc(len);
+	newURL = xmlStrdup((const xmlChar *) paths[i]);
+	newURL = xmlStrcat(newURL, (const xmlChar *) "/");
+	newURL = xmlStrcat(newURL, (const xmlChar *) URL);
 	if (newURL != NULL) {
-	    snprintf(newURL, len, "%s/%s", paths[i], URL);
 	    ret = defaultEntityLoader((const char *)newURL, ID, ctxt);
 	    xmlFree(newURL);
 	    if (ret != NULL) {

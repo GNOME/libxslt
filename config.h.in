@@ -18,6 +18,9 @@
 /* Define to 1 if you have the <float.h> header file. */
 #undef HAVE_FLOAT_H
 
+/* Define to 1 if you have the `fprintf' function. */
+#undef HAVE_FPRINTF
+
 /* Define to 1 if you have the <fp_class.h> header file. */
 #undef HAVE_FP_CLASS_H
 
@@ -50,6 +53,18 @@
 
 /* Define to 1 if you have the <nan.h> header file. */
 #undef HAVE_NAN_H
+
+/* Define to 1 if you have the `printf' function. */
+#undef HAVE_PRINTF
+
+/* Define to 1 if you have the `snprintf' function. */
+#undef HAVE_SNPRINTF
+
+/* Define to 1 if you have the `sprintf' function. */
+#undef HAVE_SPRINTF
+
+/* Define to 1 if you have the `sscanf' function. */
+#undef HAVE_SSCANF
 
 /* Define to 1 if you have the `stat' function. */
 #undef HAVE_STAT
@@ -89,6 +104,15 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the `vfprintf' function. */
+#undef HAVE_VFPRINTF
+
+/* Define to 1 if you have the `vsnprintf' function. */
+#undef HAVE_VSNPRINTF
+
+/* Define to 1 if you have the `vsprintf' function. */
+#undef HAVE_VSPRINTF
 
 /* Define to 1 if you have the `_stat' function. */
 #undef HAVE__STAT
