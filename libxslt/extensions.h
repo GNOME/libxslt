@@ -19,6 +19,8 @@ extern "C" {
 int		xsltRegisterExtPrefix	(xsltStylesheetPtr style,
 					 const xmlChar *prefix,
 					 const xmlChar *URI);
+int		xsltCheckExtPrefix	(xsltStylesheetPtr style,
+					 const xmlChar *prefix);
 int		xsltRegisterExtFunction	(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *URI,
@@ -27,7 +29,7 @@ int		xsltRegisterExtElement	(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *URI,
 					 xsltTransformFunction function);
-void		xsltInitCtxtExts	(xsltTransformContextPtr ctxt);
+void		xsltFreeCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeExts		(xsltStylesheetPtr style);
 
 #ifdef __cplusplus

@@ -199,16 +199,41 @@ xsltRegisterExtElement(xsltTransformContextPtr ctxt, const xmlChar *name,
 }
 
 /*
- * xsltInitCtxtExts:
+ * xsltFreeCtxtExts:
  * @ctxt: an XSLT transformation context
  *
- * Initialize the XSLT extension support
+ * Free the XSLT extension data
  */
 void
-xsltInitCtxtExts(xsltTransformContextPtr ctxt) {
+xsltFreeCtxtExts(xsltTransformContextPtr ctxt) {
     if (ctxt->extElements == NULL)
 	xmlHashFree(ctxt->extElements, NULL);
     if (ctxt->extFunctions == NULL)
 	xmlHashFree(ctxt->extFunctions, NULL);
+}
+
+/*
+ * xsltCheckExtPrefix:
+ * @style: the stylesheet
+ * @prefix: the namespace prefix (possibly NULL)
+ *
+ * Check if the given prefix is one of the declared extensions
+ *
+ * Returns 1 if this is an extension, 0 otherwise
+ */
+int
+xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar *prefix) {
+    xsltExtDefPtr cur;
+
+    if ((style == NULL) || (style->nsDefs == NULL))
+	return(0);
+
+    cur = (xsltExtDefPtr) style->nsDefs;
+    while (cur != NULL) {
+	if (xmlStrEqual(prefix, cur->prefix))
+	    return(1);
+	cur = cur->next;
+    }
+    return(0);
 }
 

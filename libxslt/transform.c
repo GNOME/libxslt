@@ -38,6 +38,7 @@
 #include "imports.h"
 #include "keys.h"
 #include "documents.h"
+#include "extensions.h"
 
 #define DEBUG_PROCESS
 
@@ -199,6 +200,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     if (ctxt->varsTab != NULL)
 	xmlFree(ctxt->varsTab);
     xsltFreeDocuments(ctxt);
+    xsltFreeCtxtExts(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -1883,6 +1885,29 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	} else if ((cur->type == XML_ELEMENT_NODE) &&
 		   (xmlStrEqual(cur->name, (const xmlChar *)"xsltdebug"))) {
 	    xsltDebug(ctxt, cur);
+	} else if ((cur->type == XML_ELEMENT_NODE) && 
+		   (cur->ns != NULL) && (cur->_private != NULL)) {
+	    xsltTransformFunction function;
+
+	    /*
+	     * Flagged as an extension element
+	     */
+	    function = (xsltTransformFunction)
+		xmlHashLookup2(ctxt->extElements, cur->name, cur->ns->href);
+	    if (function == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+			"xsltApplyOneTemplate: failed to find extension %s\n",
+			         cur->name);
+	    } else {
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+		 "xsltApplyOneTemplate: extension construct %s\n", cur->name);
+#endif
+		ctxt->insert = insert;
+		function(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+	    }
+	    goto skip_children;
 	} else if (cur->type == XML_ELEMENT_NODE) {
 #ifdef DEBUG_PROCESS
 	    xsltGenericDebug(xsltGenericDebugContext,

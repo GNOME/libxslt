@@ -1,3 +1,9 @@
+Tue Feb 27 16:15:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c: extension prefix support for the full stylesheet
+	* libxslt/transform.c libxslt/extensions.[ch]: more work should
+	  start working
+
 Mon Feb 26 22:59:44 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/xslt.html : cleaned up, added a bit more description on

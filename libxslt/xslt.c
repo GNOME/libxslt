@@ -31,6 +31,7 @@
 #include "imports.h"
 #include "keys.h"
 #include "documents.h"
+#include "extensions.h"
 
 #define DEBUG_PARSING
 /* #define DEBUG_BLANKS */
@@ -283,6 +284,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
 	return;
 
     xsltFreeKeys(sheet);
+    xsltFreeExts(sheet);
     xsltFreeTemplateHashes(sheet);
     xsltFreeDecimalFormatList(sheet);
     xsltFreeTemplateList(sheet->templates);
@@ -629,6 +631,62 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 }
 
 /**
+ * xsltParseStylesheetExtPrefix:
+ * @style:  the XSLT stylesheet
+ * @template:  the "strip-space" prefix
+ *
+ * parse an XSLT stylesheet strip-space prefix and record
+ * prefixes needing stripping
+ */
+
+void
+xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
+    xmlChar *prefixes;
+    xmlChar *prefix, *end;
+
+    if ((cur == NULL) || (style == NULL))
+	return;
+
+    prefixes = xmlGetNsProp(cur, (const xmlChar *)"extension-element-prefixes",
+	                    XSLT_NAMESPACE);
+    if (prefixes == NULL) {
+	return;
+    }
+
+    prefix = prefixes;
+    while (*prefix != 0) {
+	while (IS_BLANK(*prefix)) prefix++;
+	if (*prefix == 0)
+	    break;
+        end = prefix;
+	while ((*end != 0) && (!IS_BLANK(*end))) end++;
+	prefix = xmlStrndup(prefix, end - prefix);
+	if (prefix) {
+	    xmlNsPtr ns;
+
+	    if (xmlStrEqual(prefix, (const xmlChar *)"#default"))
+		ns = xmlSearchNs(style->doc, cur, NULL);
+	    else
+		ns = xmlSearchNs(style->doc, cur, prefix);
+	    if (ns == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+	    "xsl:extension-element-prefix : undefined namespace %s\n",
+	                         prefix);
+	    } else {
+#ifdef DEBUG_PARSING
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "add extension prefix %s\n", prefix);
+#endif
+		xsltRegisterExtPrefix(style, prefix, ns->href);
+	    }
+	    xmlFree(prefix);
+	}
+	prefix = end;
+    }
+    xmlFree(prefixes);
+}
+
+/**
  * xsltParseStylesheetStripSpace:
  * @style:  the XSLT stylesheet
  * @template:  the "strip-space" element
@@ -911,6 +969,13 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 		}
 		delete = cur;
 		goto skip_children;
+	    }
+	} else if ((cur->ns != NULL) && (style->nsDefs != NULL)) {
+	    if (xsltCheckExtPrefix(style, cur->ns->prefix)) {
+		/*
+		 * Mark the element as being 'special'
+		 */
+		cur->_private = (void *) style;
 	    }
 	}
 
@@ -1231,6 +1296,8 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	}
 	xmlFree(prop);
     }
+
+    xsltParseStylesheetExtPrefix(style, top);
 
     cur = top->children;
 
