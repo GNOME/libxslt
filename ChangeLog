@@ -1,3 +1,9 @@
+Mon Mar 21 20:56:43 MST 2005 John Fleck (jfleck@inkstain.net)
+
+	* doc/xsltproc.xml, xsltproc.html, xsltproc.1
+	update documentation to reflect addition of --nodtdattr
+	command line flag. Bug #171098
+
 Wed Mar 16 17:19:24 HKT 2005 William Brack (wbrack@mmm.com.hk)
 
 	* libxslt/xslt.c: fixed problem with text node on stylesheet

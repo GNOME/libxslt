@@ -24,7 +24,7 @@ xsltproc \- command line xslt processor
 .ad l
 .hy 0
 .HP 9
-\fBxsltproc\fR [\fB\-V\fR | \fB\-v\fR | \fB\-o\ \fIfile\fR\fR | \fB\-\-timing\fR | \fB\-\-repeat\fR | \fB\-\-debug\fR | \fB\-\-novalid\fR | \fB\-\-noout\fR | \fB\-\-maxdepth\ \fIval\fR\fR | \fB\-\-html\fR | \fB\-\-param\ \fIname\fR\ \fIvalue\fR\fR | \fB\-\-stringparam\ \fIname\fR\ \fIvalue\fR\fR | \fB\-\-nonet\fR | \fB\-\-path\ \fIpaths\fR\fR | \fB\-\-load\-trace\fR | \fB\-\-catalogs\fR | \fB\-\-xinclude\fR | \fB\-\-profile\fR | \fB\-\-dumpextensions\fR | \fB\-\-nowrite\fR | \fB\-\-nomkdir\fR | \fB\-\-writesubtree\fR] [\fB\fIstylesheet\fR\fR] [\fIfile1\fR] [\fIfile2\fR] [\fI\&.\&.\&.\&.\fR]
+\fBxsltproc\fR [\fB\-V\fR | \fB\-v\fR | \fB\-o\ \fIfile\fR\fR | \fB\-\-timing\fR | \fB\-\-repeat\fR | \fB\-\-debug\fR | \fB\-\-novalid\fR | \fB\-\-noout\fR | \fB\-\-maxdepth\ \fIval\fR\fR | \fB\-\-html\fR | \fB\-\-param\ \fIname\fR\ \fIvalue\fR\fR | \fB\-\-stringparam\ \fIname\fR\ \fIvalue\fR\fR | \fB\-\-nonet\fR | \fB\-\-path\ \fIpaths\fR\fR | \fB\-\-load\-trace\fR | \fB\-\-catalogs\fR | \fB\-\-xinclude\fR | \fB\-\-profile\fR | \fB\-\-dumpextensions\fR | \fB\-\-nowrite\fR | \fB\-\-nomkdir\fR | \fB\-\-writesubtree\fR | \fB\-\-nodtdattr\fR] [\fB\fIstylesheet\fR\fR] [\fIfile1\fR] [\fIfile2\fR] [\fI\&.\&.\&.\&.\fR]
 .ad
 .hy
 
@@ -54,7 +54,7 @@ Output each step taken by xsltproc in processing the stylesheet and the document
 
 .TP
 \fB\-o\fR or \fB\-\-output\fR \fIfile\fR
-Direct output to the file named \fIfile\fR\&. For multiple outputs, also known as "chunking", \fB\-o\fR  \fBdirectory/\fR directs the output files to a specified directory\&. The directory must already exist\&.
+Direct output to the file named \fIfile\fR\&. For multiple outputs, also known as "chunking", \fB\-o\fR \fBdirectory/\fR directs the output files to a specified directory\&. The directory must already exist\&.
 
 .TP
 \fB\-\-timing\fR
@@ -110,7 +110,7 @@ Use the SGML catalog specified in \fBSGML_CATALOG_FILES\fR to resolve the locati
 
 .TP
 \fB\-\-xinclude\fR
-Process the input document using the Xinclude specification\&. More details on this can be found in the Xinclude specification: http://www\&.w3\&.org/TR/xinclude/: \fIhttp://www.w3.org/TR/xinclude/\fR 
+Process the input document using the Xinclude specification\&. More details on this can be found in the Xinclude specification: http://www\&.w3\&.org/TR/xinclude/: \fIhttp://www.w3.org/TR/xinclude/\fR
 
 .TP
 \fB\-\-profile\fR or \fB\-\-norman\fR
@@ -131,6 +131,10 @@ Refuses to create directories\&.
 .TP
 \fB\-\-writesubtree\fR \fIpath\fR
 Allow file write only within the \fIpath\fR subtree\&.
+
+.TP
+\fB\-\-nodtdattr\fR
+Do not apply default attributes from the document's DTD\&.
 
 .SH "RETURN VALUES"
 

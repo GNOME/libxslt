@@ -56,6 +56,7 @@
 	<arg>--nowrite</arg>
 	<arg>--nomkdir</arg>
 	<arg>--writesubtree</arg>
+	<arg>--nodtdattr</arg>
       </group>
       <arg><option><replaceable>stylesheet</replaceable></option></arg>
       <arg><replaceable>file1</replaceable></arg>
@@ -340,7 +341,16 @@
     </simpara>
 	</listitem>
       </varlistentry>
-    
+      <varlistentry>
+	<term>
+	  <option>--nodtdattr</option>
+	</term>
+	<listitem>
+	  <simpara>Do not apply default attributes from the document's
+	  <acronym>DTD</acronym>.
+	  </simpara>
+	</listitem>
+      </varlistentry>
     
     </variablelist>
   </refsect1>
