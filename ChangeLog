@@ -1,3 +1,7 @@
+Mon May 17 23:08:42 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* NEWS doc/*: updated for 1.1.7
+
 Mon May 17 06:14:09 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: release of libxslt-1.1.7

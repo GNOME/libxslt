@@ -5,6 +5,16 @@
        http://xmlsoft.org/XSLT/news.html
 
 Those are the public releases made:
+1.1.7: May 17 2004:
+   - build fix: warning about localtime_r on Solaris
+   - bug fix: UTF8 string tokenize (William Brack), subtle memory
+    corruption, linefeed after comment at document level (William),
+    disable-output-escaping problem (William), pattern compilation in deep
+    imported stylesheets (William), namespace extension prefix bug,
+    libxslt.m4 bug (Edward Rudd), namespace lookup for attribute, namespaced
+    DOCTYPE name
+
+
 1.1.6: Apr 18 2004:
    - 2 bug fixes about keys fixed one by Mark Vakoc
 

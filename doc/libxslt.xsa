@@ -8,18 +8,10 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.5</version>
-    <last-release> Mar 23 2004</last-release>
+    <version>1.1.6</version>
+    <last-release> Apr 18 2004</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - performance: use dictionnary lookup for variables
-   - remove use of _private from source documents
-   - cleanup of "make tests" output
-   - bugfixes: AVT in local variables, use localtime_r to avoid thread
-    troubles (William), dictionary handling bug (William), limited number of
-    stubstitutions in AVT (William), tokenize fix for UTF-8 (William),
-    superfluous namespace (William), xsltproc error code on
-    &lt;xsl:message&gt; halt, OpenVMS fix, dictionnary reference counting
-    change.
+    <changes>   - 2 bug fixes about keys fixed one by Mark Vakoc
 
 </changes>
   </product>
