@@ -3208,15 +3208,21 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsl:choose: empty content not allowed\n");
 	goto error;
     }
-    if ((!IS_XSLT_ELEM(replacement)) ||
-	(!IS_XSLT_NAME(replacement, "when"))) {
+    if (((!IS_XSLT_ELEM(replacement)) || (!IS_XSLT_NAME(replacement, "when")))
+	    && (!xmlIsBlankNode(replacement))) {
 	xsltTransformError(ctxt, NULL, inst,
 	     "xsl:choose: xsl:when expected first\n");
 	goto error;
     }
-    while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when"))) {
+    while ((IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when")))
+	    || xmlIsBlankNode(replacement)) {
 	xsltStylePreCompPtr wcomp = replacement->_private;
 
+	if (xmlIsBlankNode(replacement)) {
+	    replacement = replacement->next;
+	    continue;
+	}
+	
 	if ((wcomp == NULL) || (wcomp->test == NULL) || (wcomp->comp == NULL)) {
 	    xsltTransformError(ctxt, NULL, inst,
 		 "xsl:choose: compilation failed !\n");
@@ -3292,6 +3298,9 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	xsltApplyOneTemplate(ctxt, ctxt->node, replacement->children,
 		             NULL, NULL);
+	replacement = replacement->next;
+    }
+    while (xmlIsBlankNode(replacement)) {
 	replacement = replacement->next;
     }
     if (replacement != NULL) {
