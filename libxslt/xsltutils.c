@@ -129,6 +129,75 @@ xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *nameSpace) {
     return(NULL);
 }
 
+/**
+ * xsltGetUTF8Char:
+ * @utf:  a sequence of UTF-8 encoded bytes
+ * @len:  a pointer to @bytes len
+ *
+ * Read one UTF8 Char from @utf
+ * Function copied from libxml2 xmlGetUTF8Char() ... to discard ultimately
+ * and use the original API
+ *
+ * Returns the char value or -1 in case of error and update @len with the
+ *        number of bytes used
+ */
+int
+xsltGetUTF8Char(const unsigned char *utf, int *len) {
+    unsigned int c;
+
+    if (utf == NULL)
+	goto error;
+    if (len == NULL)
+	goto error;
+    if (*len < 1)
+	goto error;
+
+    c = utf[0];
+    if (c & 0x80) {
+	if (*len < 2)
+	    goto error;
+	if ((utf[1] & 0xc0) != 0x80)
+	    goto error;
+	if ((c & 0xe0) == 0xe0) {
+	    if (*len < 3)
+		goto error;
+	    if ((utf[2] & 0xc0) != 0x80)
+		goto error;
+	    if ((c & 0xf0) == 0xf0) {
+		if (*len < 4)
+		    goto error;
+		if ((c & 0xf8) != 0xf0 || (utf[3] & 0xc0) != 0x80)
+		    goto error;
+		*len = 4;
+		/* 4-byte code */
+		c = (utf[0] & 0x7) << 18;
+		c |= (utf[1] & 0x3f) << 12;
+		c |= (utf[2] & 0x3f) << 6;
+		c |= utf[3] & 0x3f;
+	    } else {
+	      /* 3-byte code */
+		*len = 3;
+		c = (utf[0] & 0xf) << 12;
+		c |= (utf[1] & 0x3f) << 6;
+		c |= utf[2] & 0x3f;
+	    }
+	} else {
+	  /* 2-byte code */
+	    *len = 2;
+	    c = (utf[0] & 0x1f) << 6;
+	    c |= utf[1] & 0x3f;
+	}
+    } else {
+	/* 1-byte code */
+	*len = 1;
+    }
+    return(c);
+
+error:
+    *len = 0;
+    return(-1);
+}
+
 
 /************************************************************************
  * 									*

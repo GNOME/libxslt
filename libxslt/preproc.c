@@ -26,6 +26,7 @@
 #include <libxml/valid.h>
 #include <libxml/hash.h>
 #include <libxml/uri.h>
+#include <libxml/encoding.h>
 #include <libxml/xmlerror.h>
 #include "xslt.h"
 #include "xsltutils.h"
@@ -770,7 +771,8 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
     prop = xsltGetNsProp(cur, (const xmlChar *)"grouping-separator",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
-	comp->numdata.groupingCharacter = prop[0];
+	comp->numdata.groupingCharacter =
+	    xsltGetUTF8Char(prop, &(comp->numdata.groupingCharacterLen));
 	xmlFree(prop);
     }
     

@@ -87,9 +87,11 @@ extern "C" {
 /*
  * Our own version of namespaced atributes lookup.
  */
-xmlChar *	 xsltGetNsProp			(xmlNodePtr node,
+xmlChar *	xsltGetNsProp			(xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *nameSpace);
+int		xsltGetUTF8Char			(const unsigned char *utf,
+						 int *len);
 
 /*
  * XSLT specific error and debug reporting functions.

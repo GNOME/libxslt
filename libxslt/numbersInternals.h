@@ -29,7 +29,8 @@ typedef struct _xsltNumberData {
     xmlChar *format;
     int has_format;
     int digitsPerGroup;
-    xmlChar groupingCharacter;
+    int groupingCharacter;
+    int groupingCharacterLen;
     xmlDocPtr doc;
     xmlNodePtr node;
 } xsltNumberData, *xsltNumberDataPtr;

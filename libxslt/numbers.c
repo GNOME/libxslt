@@ -21,6 +21,7 @@
 #include <libxml/parserInternals.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
+#include <libxml/encoding.h>
 #include "xsltutils.h"
 #include "pattern.h"
 #include "templates.h"
@@ -100,9 +101,10 @@ xsltNumberFormatDecimal(xmlBufferPtr buffer,
 			xmlChar digit_zero,
 			int width,
 			int digitsPerGroup,
-			xmlChar groupingCharacter)
+			int groupingCharacter,
+			int groupingCharacterLen)
 {
-    xmlChar temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 1];
+    xmlChar temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 4];
     xmlChar *pointer;
     int i;
 
@@ -116,7 +118,8 @@ xsltNumberFormatDecimal(xmlBufferPtr buffer,
 	if ((i > 0) && (groupingCharacter != 0) &&
 	    (digitsPerGroup > 0) &&
 	    ((i % digitsPerGroup) == 0)) {
-	    *(--pointer) = groupingCharacter;
+	    pointer -= groupingCharacterLen;
+	    xmlCopyCharMultiByte(pointer, groupingCharacter);
 	}
 	if (pointer > temp_string)
 	    *(--pointer) = digit_zero + (int)fmod(number, 10.0);
@@ -403,7 +406,8 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 						token->token,
 						token->width,
 						data->digitsPerGroup,
-						data->groupingCharacter);
+						data->groupingCharacter,
+						data->groupingCharacterLen);
 		    }
 		    break;
 		}
@@ -837,6 +841,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     int	    prefix_length, suffix_length = 0, nprefix_length, nsuffix_length;
     double  scale;
     int	    j;
+    int     self_grouping_len;
     xsltFormatNumberInfo format_info;
     /* delayed_multiplier allows a 'trailing' percent or permille to be treated as suffix */
     int		delayed_multiplier = 0;
@@ -897,6 +902,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     /* Here we process the "number" part of the format.  It gets a little messy because of    */
     /* the percent/per-mille - if that appears at the end, it may be part of the suffix       */
     /* instead of part of the number, so the variable delayed_multiplier is used to handle it */
+    self_grouping_len = xmlStrlen(self->grouping);
     while ((*the_format != 0) &&
 	   (*the_format != self->decimalPoint[0]) &&
 	   (*the_format != self->patternSeparator[0])) {
@@ -918,9 +924,12 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	    format_info.integer_digits++;
 	    if (format_info.group >= 0)
 		format_info.group++;
-	} else if (*the_format == self->grouping[0]) {
+	} else if ((self_grouping_len > 0) &&
+	    (!xmlStrncmp(the_format, self->grouping, self_grouping_len))) {
 	    /* Reset group count */
 	    format_info.group = 0;
+	    the_format += self_grouping_len;
+	    continue;
 	} else if (*the_format == self->percent[0]) {
 	    if (format_info.is_multiplier_set) {
 		found_error = 1;
@@ -1103,16 +1112,18 @@ OUTPUT_NUMBER:
     number = fabs(number) * (double)format_info.multiplier;
     scale = pow(10.0, (double)(format_info.frac_digits + format_info.frac_hash));
     number = floor((scale * number + 0.5)) / scale;
-    if ((self->grouping != NULL) && (self->grouping[0] != 0))
+    if ((self->grouping != NULL) && (self->grouping[0] != 0)) {
+	int sep, len;
+	sep = xsltGetUTF8Char(self->grouping, &len);
 	xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
 				format_info.integer_digits,
 				format_info.group,
-				(xmlChar) self->grouping[0]);
-    else
+				sep, len);
+    } else
 	xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
 				format_info.integer_digits,
 				format_info.group,
-				(xmlChar) ',');
+				',', 1);
 
     /* Special case: java treats '.#' like '.0', '.##' like '.0#', etc. */
     if ((format_info.integer_digits + format_info.integer_hash +
@@ -1144,7 +1155,7 @@ OUTPUT_NUMBER:
 	    }
 	    xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
 				format_info.frac_digits + j,
-				0, (xmlChar)0);
+				0, 0, 0);
 	}
     }
     /* Put the suffix into the buffer */

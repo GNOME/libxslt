@@ -1,3 +1,14 @@
+Mon Oct 21 20:56:31 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c libxslt/numbersInternals.h libxslt/xsltutils.[ch]:
+	  fixed bug #78501 when using a non ascii character for the
+	  number formatting grouping separator.
+	* tests/docs/Makefile.am tests/docs/bug-95.xml
+	  tests/general/Makefile.am tests/general/bug-95.*: added the
+	  example in the regression tests for this case
+	* libxslt/attributes.c: cleaning up a problem introduced in last
+	  patch
+
 Mon Oct 21 09:31:55 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libxslt/attributes.c: fixed minor typo in a call to
