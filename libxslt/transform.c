@@ -57,6 +57,14 @@
 int xsltMaxDepth = 500;
 
 /*
+ * Cleanup when propagated in official libxml release
+ */
+typedef xmlXPathFunction
+	(*xmlXPathFuncLookupFunc)	(void *ctxt,
+					 const xmlChar *name,
+					 const xmlChar *ns_uri);
+
+/*
  * Useful macros
  */
 

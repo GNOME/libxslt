@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2752647" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2772157" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
@@ -116,7 +116,7 @@ This article is just a test. This article is just a test.
 This article is just a test. This article is just a test. 
 This article is just a test. This article is just a test. 
 </fo:block>
-      <fo:table-and-caption id="id2755352" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+      <fo:table-and-caption id="id2759590" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
           <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">This is a test table</fo:block>
         </fo:table-caption>
@@ -225,8 +225,8 @@ This article is just a test. This article is just a test.
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:list-block id="id2754308" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2754314" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2758475" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2758481" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>term</fo:inline>
@@ -236,7 +236,7 @@ This article is just a test. This article is just a test.
             <fo:block>some text</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2754343" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2758509" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>term2a, </fo:inline>
@@ -247,7 +247,7 @@ This article is just a test. This article is just a test.
             <fo:block>some text</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2754376" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2758543" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>term3</fo:inline>

@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2752647" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2772157" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
@@ -99,136 +99,213 @@ This article is just a test. This article is just a test.
 This article is just a test. This article is just a test. 
 This article is just a test. This article is just a test. 
 </fo:block>
-      <fo:block id="id2752463">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-            <fo:block keep-with-next.within-column="always">
-              <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">First level section</fo:block>
-            </fo:block>
+      <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+        <fo:static-content flow-name="xsl-region-after">
+          <fo:block text-align="center" font-size="10pt">
+            <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
           </fo:block>
-        </fo:block>
-        <fo:block id="id2767895">
+        </fo:static-content>
+        <fo:flow flow-name="xsl-region-body">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
-                <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Second level section</fo:block>
+                <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">First level section</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
-          <fo:block id="id2767907">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-                <fo:block keep-with-next.within-column="always">
-                  <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Third level section</fo:block>
-                </fo:block>
+          <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+            <fo:static-content flow-name="xsl-region-after">
+              <fo:block text-align="center" font-size="10pt">
+                <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
               </fo:block>
-            </fo:block>
-            <fo:block id="id2768011">
+            </fo:static-content>
+            <fo:flow flow-name="xsl-region-body">
               <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
                 <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                   <fo:block keep-with-next.within-column="always">
-                    <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Fourth level section</fo:block>
+                    <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Second level section</fo:block>
                   </fo:block>
                 </fo:block>
               </fo:block>
-              <fo:block id="id2768023">
-                <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-                  <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-                    <fo:block keep-with-next.within-column="always">
-                      <fo:block font-size="10pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Fifth level section</fo:block>
+              <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+                <fo:static-content flow-name="xsl-region-after">
+                  <fo:block text-align="center" font-size="10pt">
+                    <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+                  </fo:block>
+                </fo:static-content>
+                <fo:flow flow-name="xsl-region-body">
+                  <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                    <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+                      <fo:block keep-with-next.within-column="always">
+                        <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Third level section</fo:block>
+                      </fo:block>
                     </fo:block>
                   </fo:block>
-                </fo:block>
-                <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
-              </fo:block>
-            </fo:block>
+                  <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+                    <fo:static-content flow-name="xsl-region-after">
+                      <fo:block text-align="center" font-size="10pt">
+                        <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+                      </fo:block>
+                    </fo:static-content>
+                    <fo:flow flow-name="xsl-region-body">
+                      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+                          <fo:block keep-with-next.within-column="always">
+                            <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Fourth level section</fo:block>
+                          </fo:block>
+                        </fo:block>
+                      </fo:block>
+                      <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+                        <fo:static-content flow-name="xsl-region-after">
+                          <fo:block text-align="center" font-size="10pt">
+                            <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+                          </fo:block>
+                        </fo:static-content>
+                        <fo:flow flow-name="xsl-region-body">
+                          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+                              <fo:block keep-with-next.within-column="always">
+                                <fo:block font-size="10pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Fifth level section</fo:block>
+                              </fo:block>
+                            </fo:block>
+                          </fo:block>
+                          <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
+                        </fo:flow>
+                      </fo:page-sequence>
+                    </fo:flow>
+                  </fo:page-sequence>
+                </fo:flow>
+              </fo:page-sequence>
+            </fo:flow>
+          </fo:page-sequence>
+        </fo:flow>
+      </fo:page-sequence>
+      <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+        <fo:static-content flow-name="xsl-region-after">
+          <fo:block text-align="center" font-size="10pt">
+            <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
           </fo:block>
-        </fo:block>
-      </fo:block>
-      <fo:block id="id2755330">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-            <fo:block keep-with-next.within-column="always">
-              <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
-            </fo:block>
-          </fo:block>
-        </fo:block>
-        <fo:block id="id2755341">
+        </fo:static-content>
+        <fo:flow flow-name="xsl-region-body">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
-                <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">SimpleSect @ level 2</fo:block>
+                <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
-          <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
-        </fo:block>
-      </fo:block>
-      <fo:block id="id2755365">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-            <fo:block keep-with-next.within-column="always">
-              <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
-            </fo:block>
-          </fo:block>
-        </fo:block>
-        <fo:block id="id2755376">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-              <fo:block keep-with-next.within-column="always">
-                <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
-              </fo:block>
-            </fo:block>
-          </fo:block>
-          <fo:block id="id2755388">
+          <fo:block id="id2759570">
             <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
               <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                 <fo:block keep-with-next.within-column="always">
-                  <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">SimpleSect @ level 3</fo:block>
+                  <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">SimpleSect @ level 2</fo:block>
                 </fo:block>
               </fo:block>
             </fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
           </fo:block>
-        </fo:block>
-      </fo:block>
-      <fo:block id="id2755413">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-            <fo:block keep-with-next.within-column="always">
-              <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
-            </fo:block>
+        </fo:flow>
+      </fo:page-sequence>
+      <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+        <fo:static-content flow-name="xsl-region-after">
+          <fo:block text-align="center" font-size="10pt">
+            <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
           </fo:block>
-        </fo:block>
-        <fo:block id="id2754059">
+        </fo:static-content>
+        <fo:flow flow-name="xsl-region-body">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
               <fo:block keep-with-next.within-column="always">
-                <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
+                <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
               </fo:block>
             </fo:block>
           </fo:block>
-          <fo:block id="id2754070">
-            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-                <fo:block keep-with-next.within-column="always">
-                  <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
-                </fo:block>
+          <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+            <fo:static-content flow-name="xsl-region-after">
+              <fo:block text-align="center" font-size="10pt">
+                <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
               </fo:block>
-            </fo:block>
-            <fo:block id="id2754082">
+            </fo:static-content>
+            <fo:flow flow-name="xsl-region-body">
               <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
                 <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
                   <fo:block keep-with-next.within-column="always">
-                    <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">SimpleSect @ level 4</fo:block>
+                    <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
                   </fo:block>
                 </fo:block>
               </fo:block>
-              <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
+              <fo:block id="id2759617">
+                <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                  <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+                    <fo:block keep-with-next.within-column="always">
+                      <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">SimpleSect @ level 3</fo:block>
+                    </fo:block>
+                  </fo:block>
+                </fo:block>
+                <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
+              </fo:block>
+            </fo:flow>
+          </fo:page-sequence>
+        </fo:flow>
+      </fo:page-sequence>
+      <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+        <fo:static-content flow-name="xsl-region-after">
+          <fo:block text-align="center" font-size="10pt">
+            <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+          </fo:block>
+        </fo:static-content>
+        <fo:flow flow-name="xsl-region-body">
+          <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+            <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+              <fo:block keep-with-next.within-column="always">
+                <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
+              </fo:block>
             </fo:block>
           </fo:block>
-        </fo:block>
-      </fo:block>
+          <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+            <fo:static-content flow-name="xsl-region-after">
+              <fo:block text-align="center" font-size="10pt">
+                <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+              </fo:block>
+            </fo:static-content>
+            <fo:flow flow-name="xsl-region-body">
+              <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+                  <fo:block keep-with-next.within-column="always">
+                    <fo:block font-size="14pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
+                  </fo:block>
+                </fo:block>
+              </fo:block>
+              <fo:page-sequence id="" hyphenate="true" master-name="oneside1" language="en">
+                <fo:static-content flow-name="xsl-region-after">
+                  <fo:block text-align="center" font-size="10pt">
+                    <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
+                  </fo:block>
+                </fo:static-content>
+                <fo:flow flow-name="xsl-region-body">
+                  <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                    <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+                      <fo:block keep-with-next.within-column="always">
+                        <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Another Section</fo:block>
+                      </fo:block>
+                    </fo:block>
+                  </fo:block>
+                  <fo:block id="id2758233">
+                    <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+                      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
+                        <fo:block keep-with-next.within-column="always">
+                          <fo:block font-size="12pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">SimpleSect @ level 4</fo:block>
+                        </fo:block>
+                      </fo:block>
+                    </fo:block>
+                    <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
+                  </fo:block>
+                </fo:flow>
+              </fo:page-sequence>
+            </fo:flow>
+          </fo:page-sequence>
+        </fo:flow>
+      </fo:page-sequence>
     </fo:flow>
   </fo:page-sequence>
 </fo:root>

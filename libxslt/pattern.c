@@ -380,6 +380,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		return(1);
             case XSLT_OP_ROOT:
 		if ((node->type == XML_DOCUMENT_NODE) ||
+#ifdef LIBXML_DOCB_ENABLED
+		    (node->type != XML_DOCB_DOCUMENT_NODE) ||
+#endif
 		    (node->type == XML_HTML_DOCUMENT_NODE))
 		    continue;
 		return(0);
@@ -402,9 +405,31 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			return(0);
 		}
 		continue;
-            case XSLT_OP_CHILD:
-		TODO /* Handle OP_CHILD */
+            case XSLT_OP_CHILD: {
+		xmlNodePtr lst;
+
+		if ((node->type != XML_ELEMENT_NODE) &&
+		    (node->type != XML_DOCUMENT_NODE) &&
+#ifdef LIBXML_DOCB_ENABLED
+		    (node->type != XML_DOCB_DOCUMENT_NODE) &&
+#endif
+		    (node->type != XML_HTML_DOCUMENT_NODE))
+		    return(0);
+
+		lst = node->children;
+
+		if (step->value != NULL) {
+		    while (lst != NULL) {
+			if ((lst->type == XML_ELEMENT_NODE) &&
+			    (xmlStrEqual(step->value, lst->name)))
+			    break;
+			lst = lst->next;
+		    }
+		    if (lst != NULL)
+			continue;
+		}
 		return(0);
+	    }
             case XSLT_OP_ATTR:
 		if (node->type != XML_ATTRIBUTE_NODE)
 		    return(0);
@@ -425,6 +450,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		}
 		continue;
             case XSLT_OP_PARENT:
+		if ((node->type != XML_ELEMENT_NODE) &&
+		    (node->type != XML_ATTRIBUTE_NODE))
+		    return(0);
 		node = node->parent;
 		if (node == NULL)
 		    return(0);
@@ -481,6 +509,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		/* TODO Handle IDs decently, must be done differently */
 		xmlAttrPtr id;
 
+		if (node->type != XML_ELEMENT_NODE)
+		    return(0);
+
 		id = xmlGetID(node->doc, step->value);
 		if ((id == NULL) || (id->parent != node))
 		    return(0);
@@ -502,7 +533,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		break;
 	    }
             case XSLT_OP_NS:
-		/* Namespace test */
+		if (node->type != XML_ELEMENT_NODE)
+		    return(0);
 		if (node->ns == NULL) {
 		    if (step->value != NULL)
 			return(0);
@@ -514,14 +546,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		}
 		break;
             case XSLT_OP_ALL:
-		switch (node->type) {
-		    case XML_DOCUMENT_NODE:
-		    case XML_HTML_DOCUMENT_NODE:
-		    case XML_ELEMENT_NODE:
-			break;
-		    default:
-			return(0);
-		}
+		if (node->type != XML_ELEMENT_NODE)
+		    return(0);
 		break;
 	    case XSLT_OP_PREDICATE: {
 		xmlNodePtr oldNode;
@@ -611,7 +637,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			select->index = pos;
 			select->len = len;
 		    }
-		} else if ((select != NULL) && (select->op == XSLT_OP_ALL)) {
+		} else if ((select != NULL) && (select->op == XSLT_OP_ALL) &&
+			   (node->type == XML_ELEMENT_NODE)) {
 		    if ((select->previous != NULL) &&
 			(select->previous->parent == node->parent)) {
 			/*
@@ -1208,7 +1235,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    goto error;
     } else if (CUR == ':') {
 	NEXT;
-	if (NXT(1) != ':') {
+	if (CUR != ':') {
 	    xmlChar *prefix = token;
 	    xmlNsPtr ns;
 
@@ -1245,8 +1272,9 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	} else {
 	    NEXT;
 	    if (xmlStrEqual(token, (const xmlChar *) "child")) {
-		name = xsltScanName(ctxt);
-		if (name == NULL) {
+		xmlFree(token);
+		token = xsltScanName(ctxt);
+		if (token == NULL) {
 		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
 		    xsltGenericError(xsltGenericErrorContext,
 			    "xsltCompileStepPattern : QName expected\n");
@@ -1264,8 +1292,9 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		}
 		PUSH(XSLT_OP_CHILD, name, URL);
 	    } else if (xmlStrEqual(token, (const xmlChar *) "attribute")) {
-		name = xsltScanName(ctxt);
-		if (name == NULL) {
+		xmlFree(token);
+		token = xsltScanName(ctxt);
+		if (token == NULL) {
 		    xsltPrintErrorContext(NULL, NULL, NULL); /* TODO */
 		    xsltGenericError(xsltGenericErrorContext,
 			    "xsltCompileStepPattern : QName expected\n");
@@ -1660,7 +1689,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
         case XSLT_OP_CHILD:
         case XSLT_OP_PARENT:
         case XSLT_OP_ANCESTOR:
-	    name = pat->steps[0].value;
+	    top = (xsltCompMatchPtr *) &(style->elemMatch);
 	    break;
         case XSLT_OP_ROOT:
 	    top = (xsltCompMatchPtr *) &(style->rootMatch);
@@ -1914,6 +1943,23 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	    list = list->next;
 	}
+	/*
+	 * Some of the tests for elements can also apply to documents
+	 */
+	if ((node->type == XML_DOCUMENT_NODE) ||
+	    (node->type == XML_HTML_DOCUMENT_NODE)) {
+	    list = curstyle->elemMatch;
+	    while ((list != NULL) &&
+		   ((ret == NULL)  || (list->priority > priority))) {
+		if (xsltTestCompMatch(ctxt, list, node,
+				      ctxt->mode, ctxt->modeURI)) {
+		    ret = list->template;
+		    break;
+		}
+		list = list->next;
+	    }
+	}
+
 	if (node->_private != NULL) {
 	    list = curstyle->keyMatch;
 	    while ((list != NULL) &&

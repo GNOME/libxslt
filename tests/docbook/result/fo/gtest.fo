@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2752455" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
+  <fo:page-sequence id="id2600853" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
     <fo:static-content flow-name="xsl-region-before">
       <fo:block text-align="center">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">Chapter 1. Graphics Test</fo:block>
@@ -104,7 +104,7 @@
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">A graphic by entityref:</fo:block>
       <fo:block>
-        <fo:external-graphic src="url()" content-width="auto" content-height="auto" width="auto" height="auto"/>
+        <fo:external-graphic src="url(test/emc2.gif)" content-width="auto" content-height="auto" width="auto" height="auto"/>
       </fo:block>
     </fo:flow>
   </fo:page-sequence>
