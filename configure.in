@@ -21,7 +21,7 @@ dnl
 dnl Math detection
 dnl
 
-AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h)
+AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h ansidecl.h)
 AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_ISNAN)]))
 

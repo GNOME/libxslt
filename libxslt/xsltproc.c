@@ -13,6 +13,9 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
+#ifdef LIBXML_XINCLUDE_ENABLED
+#include <libxml/xinclude.h>
+#endif
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
 #include <libxslt/transform.h>
@@ -25,6 +28,9 @@ static int repeat = 0;
 static int timing = 0;
 static int novalid = 0;
 static int noout = 0;
+#ifdef LIBXML_XINCLUDE_ENABLED
+static int xinclude = 0;
+#endif
 
 int
 main(int argc, char **argv) {
@@ -72,6 +78,11 @@ main(int argc, char **argv) {
 	} else if ((!strcmp(argv[i], "-timing")) ||
 		   (!strcmp(argv[i], "--timing"))) {
 	    timing++;
+#ifdef LIBXML_XINCLUDE_ENABLED
+	} else if ((!strcmp(argv[i], "-xinclude")) ||
+		   (!strcmp(argv[i], "--xinclude"))) {
+	    xinclude++;
+#endif
 	} else if ((!strcmp(argv[i], "-param")) ||
 		   (!strcmp(argv[i], "--param"))) {
 	    i++;
@@ -150,6 +161,22 @@ main(int argc, char **argv) {
 		fprintf(stderr, "Parsing document %s took %ld ms\n",
 			argv[i], msec);
 	    }
+#ifdef LIBXML_XINCLUDE_ENABLED
+	    if (xinclude) {
+		if (timing)
+		    gettimeofday(&begin, NULL);
+		xmlXIncludeProcess(doc);
+		if (timing) {
+		    long msec;
+		    gettimeofday(&end, NULL);
+		    msec = end.tv_sec - begin.tv_sec;
+		    msec *= 1000;
+		    msec += (end.tv_usec - begin.tv_usec) / 1000;
+		    fprintf(stderr, "XInclude processing %s took %ld ms\n",
+			    argv[i], msec);
+		}
+	    }
+#endif
 	    if (timing)
 		gettimeofday(&begin, NULL);
 	    if (repeat) {
