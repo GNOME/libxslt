@@ -139,6 +139,65 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
 
 /**
+ * xsltCopyNode:
+ * @ctxt:  a XSLT process context
+ * @node:  the element node in the source tree.
+ * @insert:  the parent in the result tree.
+ *
+ * Make a copy of the element node @node
+ * and insert it as last child of @insert
+ *
+ * Returns a pointer to the new node, or NULL in case of error
+ */
+xmlNodePtr
+xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	     xmlNodePtr insert) {
+    xmlNodePtr copy;
+
+    copy = xmlCopyNode(node, 0);
+    if (copy != NULL) {
+	xmlAddChild(insert, copy);
+	/*
+	 * Add namespaces as they are needed
+	 */
+	if (node->nsDef != NULL)
+	    copy->nsDef = xmlCopyNamespaceList(node->nsDef);
+	if (node->ns != NULL) {
+	    /*
+	     * optimization, if the namespace is already the
+	     * on on the parent node, reuse it directly
+	     *
+	     * TODO: check possible mess with xmlCopyNamespaceList
+	     */
+	    if ((insert->type == XML_ELEMENT_NODE) &&
+		(insert->ns != NULL) && 
+		(xmlStrEqual(insert->ns->href, node->ns->href))) {
+		copy->ns = insert->ns;
+	    } else {
+		xmlNsPtr ns;
+
+		/*
+		 * Look in the output tree if the namespace is
+		 * already in scope.
+		 */
+		ns = xmlSearchNsByHref(ctxt->output, copy,
+				       node->ns->href);
+		if (ns != NULL)
+		    copy->ns = ns;
+		else {
+		    ns = xmlNewNs(copy, node->ns->href,
+				  node->ns->prefix);
+		}
+	    }
+	}
+    } else {
+	xsltGenericError(xsltGenericErrorContext,
+		"xsltProcessOneNode: copy %s failed\n", node->name);
+    }
+    return(copy);
+}
+
+/**
  * xsltDefaultProcessOneNode:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -147,10 +206,22 @@ void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
  * <xsl:template match="*|/">
  *   <xsl:apply-templates/>
  * </xsl:template>
+ *
+ * and
+ *
+ * <xsl:template match="text()|@*">
+ *   <xsl:value-of select="."/>
+ * </xsl:template>
+ *
+ * Note also that namespaces declarations are copied directly:
+ *
+ * the built-in template rule is the only template rule that is applied
+ * for namespace nodes.
  */
 void
 xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr copy;
+
     switch (node->type) {
 	case XML_DOCUMENT_NODE:
 	case XML_HTML_DOCUMENT_NODE:
@@ -169,15 +240,26 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		break;
 	    case XML_TEXT_NODE:
 		/* TODO: check the whitespace stripping rules ! */
-		if (IS_BLANK_NODE(node))
-		    break;
+		if ((IS_BLANK_NODE(node)) &&
+		    (node->parent != NULL) &&
+		    (ctxt->style->stripSpaces != NULL)) {
+		    const xmlChar *val;
+
+		    val = (const xmlChar *)
+			  xmlHashLookup(ctxt->style->stripSpaces,
+				        node->parent->name);
+		    if ((val != NULL) &&
+			(xmlStrEqual(val, (xmlChar *) "strip")))
+			break;
+		}
+		/* no break on purpose */
 	    case XML_CDATA_SECTION_NODE:
 		copy = xmlCopyNode(node, 0);
 		if (copy != NULL) {
 		    xmlAddChild(ctxt->insert, copy);
 		} else {
 		    xsltGenericError(xsltGenericErrorContext,
-			"xsltProcessOneNode: text copy failed\n");
+			"xsltDefaultProcessOneNode: text copy failed\n");
 		}
 		break;
 	    default:
@@ -260,19 +342,37 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		TODO
 	    }
-	} else if (!(IS_BLANK_NODE(cur))) {
+	} else if (cur->type == XML_TEXT_NODE) {
+	    /*
+	     * This text comes from the stylesheet
+	     * For stylesheets, the set of whitespace-preserving
+	     * element names consists of just xsl:text.
+	     */
+	    if (!(IS_BLANK_NODE(cur))) {
+#ifdef DEBUG_PROCESS
+		xsltGenericError(xsltGenericErrorContext,
+		     "xsltProcessOneNode: copy text %s\n", cur->content);
+#endif
+		copy = xmlCopyNode(cur, 0);
+		if (copy != NULL) {
+		    xmlAddChild(insert, copy);
+		} else {
+		    xsltGenericError(xsltGenericErrorContext,
+			    "xsltProcessOneNode: text copy failed\n");
+		}
+	    }
+	} else  {
 #ifdef DEBUG_PROCESS
 	    xsltGenericError(xsltGenericErrorContext,
-		 "xsltProcessOneNode: copy %s\n", cur->name);
+		 "xsltProcessOneNode: copy node %s\n", cur->name);
 #endif
-	    copy = xmlCopyNode(cur, 0);
-	    if (copy != NULL) {
-		xmlAddChild(insert, copy);
-	    } else {
-		xsltGenericError(xsltGenericErrorContext,
-			"xsltProcessOneNode: copy %s failed\n", cur->name);
-		return;
-	    }
+	    copy = xsltCopyNode(ctxt, cur, insert);
+	    /*
+	     * all the attributes are directly inherited
+	     * TODO: Do the substitution of {} XPath expressions !!!
+	     */
+	    if (cur->properties != NULL)
+		copy->properties = xmlCopyPropList(copy, cur->properties);
 	}
 	/*
 	 * Skip to next node
@@ -305,6 +405,13 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    }
 	} while (cur != NULL);
     }
+    /********
+    if (ctxt->style->indent) {
+	copy = xmlNewText("\n");
+	if (copy != NULL)
+	    xmlAddChild(ctxt->insert, copy);
+    }
+    ********/
 }
 
 /**

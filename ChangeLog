@@ -1,3 +1,8 @@
+Fri Jan 12 18:34:01 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* transform.c, xsltproc.c: small fight with spaces and formatting
+	  may need a revisit later but looks pretty good right now.
+
 Fri Jan 12 13:43:30 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* transform.c: basic processing in place

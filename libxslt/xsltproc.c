@@ -31,8 +31,14 @@ main(int argc, char **argv) {
     for (i = 1; i < argc ; i++) {
 	if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
 	    cur = xsltParseStylesheetFile((const xmlChar *)argv[i]);
-	    i++;
-	    break;
+	    if (cur != NULL) {
+		if (cur->indent)
+		    xmlIndentTreeOutput = 1;
+		else
+		    xmlIndentTreeOutput = 0;
+		i++;
+		break;
+	    }
 	}
     }
     for (;i < argc ; i++) {
