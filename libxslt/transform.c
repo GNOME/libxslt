@@ -537,7 +537,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	case XML_HTML_DOCUMENT_NODE:
 	case XML_ELEMENT_NODE:
 	    varsPush(ctxt, NULL);
-	    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children, 0);
 	    xsltFreeStackElemList(varsPop(ctxt));
 	    break;
 	default:
@@ -670,7 +670,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     
     varsPush(ctxt, NULL);
-    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children, 0);
     xsltFreeStackElemList(varsPop(ctxt));
 
     ctxt->insert = oldInsert;
@@ -1115,7 +1115,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		ctxt->node = node;
 		templPush(ctxt, template);
 		varsPush(ctxt, NULL);
-		xsltApplyOneTemplate(ctxt, node, template->content);
+		xsltApplyOneTemplate(ctxt, node, template->content, 1);
 		xsltFreeStackElemList(varsPop(ctxt));
 		templPop(ctxt);
 		ctxt->node = oldNode;
@@ -1148,7 +1148,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		ctxt->node = node;
 		templPush(ctxt, template);
 		varsPush(ctxt, NULL);
-		xsltApplyOneTemplate(ctxt, node, template->content);
+		xsltApplyOneTemplate(ctxt, node, template->content, 1);
 		xsltFreeStackElemList(varsPop(ctxt));
 		templPop(ctxt);
 		ctxt->node = oldNode;
@@ -1182,7 +1182,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->node = node;
 		    templPush(ctxt, template);
 		    varsPush(ctxt, NULL);
-		    xsltApplyOneTemplate(ctxt, node, template->content);
+		    xsltApplyOneTemplate(ctxt, node, template->content, 1);
 		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
@@ -1273,7 +1273,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    ctxt->node = node;
 	    templPush(ctxt, template);
 	    varsPush(ctxt, NULL);
-	    xsltApplyOneTemplate(ctxt, node, template->content);
+	    xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	    xsltFreeStackElemList(varsPop(ctxt));
 	    templPop(ctxt);
 	    ctxt->node = oldNode;
@@ -1307,7 +1307,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->node = node;
 		    templPush(ctxt, template);
 		    varsPush(ctxt, NULL);
-		    xsltApplyOneTemplate(ctxt, node, template->content);
+		    xsltApplyOneTemplate(ctxt, node, template->content, 1);
 		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
@@ -1342,7 +1342,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    templPush(ctxt, template);
 		    varsPush(ctxt, NULL);
-		    xsltApplyOneTemplate(ctxt, cur, template->content);
+		    xsltApplyOneTemplate(ctxt, cur, template->content, 1);
 		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
@@ -1377,7 +1377,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    templPush(ctxt, template);
 		    varsPush(ctxt, NULL);
-		    xsltApplyOneTemplate(ctxt, cur, template->content);
+		    xsltApplyOneTemplate(ctxt, cur, template->content, 1);
 		    xsltFreeStackElemList(varsPop(ctxt));
 		    templPop(ctxt);
 		    ctxt->node = oldNode;
@@ -1414,7 +1414,7 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (template != NULL) {
 	templPush(ctxt, template);
 	varsPush(ctxt, NULL);
-	xsltApplyOneTemplate(ctxt, node, template->content);
+	xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	xsltFreeStackElemList(varsPop(ctxt));
 	templPop(ctxt);
     }
@@ -1488,7 +1488,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	cur = cur->next;
     }
-    xsltApplyOneTemplate(ctxt, node, template->content);
+    xsltApplyOneTemplate(ctxt, node, template->content, 1);
 
     xsltFreeStackElemList(varsPop(ctxt));
     templPop(ctxt);
@@ -1719,14 +1719,16 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @list:  the template replacement nodelist
+ * @real: is this a real template processing
  *
  * Process the apply-templates node on the source node
  */
 void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	             xmlNodePtr list) {
+	             xmlNodePtr list, int real) {
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
+    xmlNodePtr oldCurrent;
     xmlAttrPtr attrs;
 
     if (list == NULL)
@@ -1746,6 +1748,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      * stack and saves
      */
     oldInsert = insert = ctxt->insert;
+    if (real) {
+	oldCurrent = ctxt->current;
+	ctxt->current = node;
+    }
 
     /*
      * Insert all non-XSLT nodes found in the template
@@ -1760,6 +1766,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyOneTemplate: insert == NULL !\n");
 #endif
+	    if (real)
+		ctxt->current = oldCurrent;
 	    return;
 	}
 
@@ -1918,6 +1926,8 @@ skip_children:
 	    }
 	} while (cur != NULL);
     }
+    if (real)
+	ctxt->current = oldCurrent;
 }
 
 /**
@@ -2001,7 +2011,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	if (doit) {
 	    varsPush(ctxt, NULL);
-	    xsltApplyOneTemplate(ctxt, ctxt->node, when->children);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, when->children, 0);
 	    xsltFreeStackElemList(varsPop(ctxt));
 	    goto done;
 	}
@@ -2018,7 +2028,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "otherwise"))) {
 	varsPush(ctxt, NULL);
-	xsltApplyOneTemplate(ctxt, ctxt->node, replacement->children);
+	xsltApplyOneTemplate(ctxt, ctxt->node, replacement->children, 0);
 	xsltFreeStackElemList(varsPop(ctxt));
 	replacement = replacement->next;
     }
@@ -2104,7 +2114,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
     if (doit) {
 	varsPush(ctxt, NULL);
-	xsltApplyOneTemplate(ctxt, node, inst->children);
+	xsltApplyOneTemplate(ctxt, node, inst->children, 0);
 	xsltFreeStackElemList(varsPop(ctxt));
     }
 
@@ -2198,7 +2208,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
 	varsPush(ctxt, NULL);
-	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement);
+	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement, 0);
 	xsltFreeStackElemList(varsPop(ctxt));
     }
     ctxt->nodeList = oldlist;
@@ -2257,7 +2267,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 	templPush(ctxt, template);
 	varsPush(ctxt, NULL);
-	xsltApplyOneTemplate(ctxt, node, template->content);
+	xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	xsltFreeStackElemList(varsPop(ctxt));
 	templPop(ctxt);
     } else {
@@ -2273,7 +2283,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	ctxt->node = node;
 	templPush(ctxt, template);
 	varsPush(ctxt, NULL);
-	xsltApplyOneTemplate(ctxt, node, template->content);
+	xsltApplyOneTemplate(ctxt, node, template->content, 1);
 	xsltFreeStackElemList(varsPop(ctxt));
 	templPop(ctxt);
 	ctxt->node = oldNode;

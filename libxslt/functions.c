@@ -464,13 +464,22 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
  */
 void
 xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
+    xsltTransformContextPtr tctxt;
+
     if (nargs != 0) {
         xsltGenericError(xsltGenericErrorContext,
 		"document() : function uses no argument\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }
-    valuePush(ctxt, xmlXPathNewNodeSet(ctxt->context->node));
+    tctxt = (xsltTransformContextPtr) ctxt->context->extra;
+    if (tctxt == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+		"current() : internal error tctxt == NULL\n");
+	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+    } else {
+	valuePush(ctxt, xmlXPathNewNodeSet(tctxt->current));
+    }
 }
 
 /**

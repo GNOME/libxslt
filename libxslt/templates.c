@@ -163,7 +163,7 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = ctxt->insert;
     ctxt->insert = insert;
 
-    xsltApplyOneTemplate(ctxt, node, parent->children);
+    xsltApplyOneTemplate(ctxt, node, parent->children, 0);
 
     ctxt->insert = oldInsert;
 

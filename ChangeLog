@@ -1,3 +1,9 @@
+Mon Feb 19 19:34:59 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/Makefile.am: small cleanup
+	* libxslt/functions.c libxslt/transform.c libxslt/xsltInternals.h:
+	  fixed current() I hope
+
 Mon Feb 19 18:05:47 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/numbers.c libxslt/numbersInternals.h libxslt/xslt.c

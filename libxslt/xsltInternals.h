@@ -216,8 +216,9 @@ struct _xsltTransformContext {
     xsltDocumentPtr docList;		/* the document list */
 
     xsltDocumentPtr document;		/* the current document */
-    xmlNodePtr node;			/* the current node */
+    xmlNodePtr node;			/* the node being processed */
     xmlNodeSetPtr nodeList;		/* the current node list */
+    xmlNodePtr current;			/* the current node */
 
     xmlDocPtr output;			/* the resulting document */
     xmlNodePtr insert;			/* the insertion node */

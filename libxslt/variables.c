@@ -288,7 +288,7 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	    oldNode = ctxt->node;
 	    ctxt->insert = container;
 
-	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, 0);
 
 	    ctxt->insert = oldInsert;
 	    ctxt->node = oldNode;
