@@ -318,6 +318,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     ctxt->node = (xmlNodePtr) doc->doc;
     ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
     xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathRunEval(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);
     do {
         tmp = valuePop(xpathParserCtxt);

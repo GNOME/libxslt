@@ -1178,6 +1178,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->node = ctxt->node;
 	xmlXPathEvalExpr(xpathParserCtxt);
+	xmlXPathRunEval(xpathParserCtxt);
 	xmlXPathStringFunction(xpathParserCtxt, 1);
 	if (comp->number)
 	    xmlXPathNumberFunction(xpathParserCtxt, 1);
@@ -1695,6 +1696,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     ctxt->xpathCtxt->node = node;
     xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathRunEval(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);
     do {
         tmp = valuePop(xpathParserCtxt);
@@ -1803,6 +1805,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     ctxt->xpathCtxt->node = node;
     xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathRunEval(xpathParserCtxt);
     xmlXPathStringFunction(xpathParserCtxt, 1);
     res = valuePop(xpathParserCtxt);
     do {
@@ -2008,6 +2011,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    goto error;
 	ctxt->xpathCtxt->node = node;
 	xmlXPathEvalExpr(xpathParserCtxt);
+	xmlXPathRunEval(xpathParserCtxt);
 	res = valuePop(xpathParserCtxt);
 	do {
 	    tmp = valuePop(xpathParserCtxt);
@@ -2202,6 +2206,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    goto error;
 	ctxt->xpathCtxt->node = node;
 	xmlXPathEvalExpr(xpathParserCtxt);
+	xmlXPathRunEval(xpathParserCtxt);
 	xmlXPathBooleanFunction(xpathParserCtxt, 1);
 	res = valuePop(xpathParserCtxt);
 	do {
@@ -2306,6 +2311,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     ctxt->xpathCtxt->node = node;
     xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathRunEval(xpathParserCtxt);
     xmlXPathBooleanFunction(xpathParserCtxt, 1);
     res = valuePop(xpathParserCtxt);
     do {
@@ -2384,6 +2390,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	goto error;
     ctxt->xpathCtxt->node = node;
     xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathRunEval(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);
     do {
         tmp = valuePop(xpathParserCtxt);

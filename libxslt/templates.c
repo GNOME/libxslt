@@ -58,6 +58,7 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt, const xmlChar *expr) {
 	return(0);
     ctxt->xpathCtxt->node = ctxt->node;
     xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathRunEval(xpathParserCtxt);
     res = valuePop(xpathParserCtxt);
     do {
         tmp = valuePop(xpathParserCtxt);
@@ -105,6 +106,7 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, const xmlChar *expr) {
 	return(NULL);
     ctxt->xpathCtxt->node = ctxt->node;
     xmlXPathEvalExpr(xpathParserCtxt);
+    xmlXPathRunEval(xpathParserCtxt);
     xmlXPathStringFunction(xpathParserCtxt, 1);
     res = valuePop(xpathParserCtxt);
     do {

@@ -262,6 +262,7 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	    return(-1);
 	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
 	xmlXPathEvalExpr(xpathParserCtxt);
+	xmlXPathRunEval(xpathParserCtxt);
 	result = valuePop(xpathParserCtxt);
 	do {
 	    tmp = valuePop(xpathParserCtxt);
