@@ -227,7 +227,7 @@ xsltFunctionExpression(xmlXPathParserContextPtr ctxt, int nargs){
     tctxt = xsltXPathGetTransformContext(ctxt);
     comp = xmlXPathCompile(obj->stringval);
     if(comp != NULL) {
-      ret = xmlXPathNewCString(obj->stringval);    
+      ret = xmlXPathNewString(obj->stringval);    
       ret->user = comp;
       valuePush(ctxt, ret);
     }

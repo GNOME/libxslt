@@ -17,6 +17,8 @@
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "documents.h"
+#include "transform.h"
+#include "imports.h"
 #include "keys.h"
 
 #ifdef LIBXML_XINCLUDE_ENABLED
@@ -173,6 +175,12 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
 	                 URI);
 #endif
     }
+    /*
+     * Apply white-space stripping if asked for
+     */
+    if (xsltNeedElemSpaceHandling(ctxt))
+	xsltApplyStripSpaces(ctxt, xmlDocGetRootElement(doc));
+
     ret = xsltNewDocument(ctxt, doc);
     return(ret);
 }

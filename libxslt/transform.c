@@ -3058,7 +3058,7 @@ xsltGetHTMLIDs(const xmlChar *version, const xmlChar **public,
  *
  * Strip the unwanted ignorable spaces from the input tree
  */
-static void
+void
 xsltApplyStripSpaces(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xmlNodePtr current;
 #ifdef WITH_XSLT_DEBUG_PROCESS

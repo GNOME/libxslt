@@ -40,6 +40,8 @@ xmlDocPtr		xsltApplyStylesheetUser	(xsltStylesheetPtr style,
 /**
  * Private Interfaces
  */
+void		xsltApplyStripSpaces	(xsltTransformContextPtr ctxt,
+					 xmlNodePtr node);
 xsltTransformFunction
 		xsltExtElementLookup	(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,

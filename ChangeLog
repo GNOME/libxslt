@@ -1,3 +1,9 @@
+Tue Oct  9 13:02:46 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/documents.c libxslt/extra.c libxslt/transform.[ch]:
+	  strip-space should also be applied to document imported
+	  at run-time.
+
 Tue Oct  9 12:36:53 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/imports.[ch] libxslt/transform.c libxslt/xslt.c:
