@@ -1,0 +1,5 @@
+Support for disable-output-escaping="yes":
+  -> looks problematic, libxml has no support for anything like this,
+     and unless adding a new node type :-( or tweaking text node and
+     output routines this is gonna be messy ... must be handled at libxml
+     level.
