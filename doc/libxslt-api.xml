@@ -42,7 +42,6 @@
      <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
     <file name='libxslt'>
-     <exports symbol='IN_LIBXSLT'/>
      <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
     <file name='numbersInternals'>
@@ -311,8 +310,6 @@
     </macro>
     <macro name='DEBUG_MEMORY_LOCATION' file='xsltwin32config'>
       <info>should be activated only when debugging libxslt. DEBUG_MEMORY_LOCATION should be activated only when libxml has been configured with --with-debug-mem too</info>
-    </macro>
-    <macro name='IN_LIBXSLT' file='libxslt'>
     </macro>
     <macro name='IS_XSLT_ELEM' file='xsltutils'>
       <info>Checks that the element pertains to XSLT namespace.</info>

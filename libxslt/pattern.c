@@ -455,20 +455,17 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
             case XSLT_OP_ATTR:
 		if (node->type != XML_ATTRIBUTE_NODE)
 		    return(0);
-		if (step->value == NULL)
-		    continue;
-		if (step->value[0] != node->name[0])
-		    return(0);
-		if (!xmlStrEqual(step->value, node->name))
-		    return(0);
-
+		if (step->value != NULL) {
+		    if (step->value[0] != node->name[0])
+			return(0);
+		    if (!xmlStrEqual(step->value, node->name))
+			return(0);
+		}
 		/* Namespace test */
 		if (node->ns == NULL) {
 		    if (step->value2 != NULL)
 			return(0);
-		} else if (node->ns->href != NULL) {
-		    if (step->value2 == NULL)
-			return(0);
+		} else if (step->value2 != NULL) {
 		    if (!xmlStrEqual(step->value2, node->ns->href))
 			return(0);
 		}

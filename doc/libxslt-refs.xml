@@ -7,7 +7,6 @@
     <reference name='CHECK_STOPPEDE' href='html/libxslt-xsltinternals.html#CHECK-STOPPEDE-CAPS'/>
     <reference name='DEBUG_MEMORY' href='html/libxslt-xsltconfig.html#DEBUG-MEMORY-CAPS'/>
     <reference name='DEBUG_MEMORY_LOCATION' href='html/libxslt-xsltconfig.html#DEBUG-MEMORY-LOCATION-CAPS'/>
-    <reference name='IN_LIBXSLT' href='html/libxslt-libxslt.html#IN-LIBXSLT-CAPS'/>
     <reference name='IS_XSLT_ELEM' href='html/libxslt-xsltutils.html#IS-XSLT-ELEM-CAPS'/>
     <reference name='IS_XSLT_NAME' href='html/libxslt-xsltutils.html#IS-XSLT-NAME-CAPS'/>
     <reference name='IS_XSLT_REAL_NODE' href='html/libxslt-xsltutils.html#IS-XSLT-REAL-NODE-CAPS'/>
@@ -256,7 +255,6 @@
     <ref name='DEBUG_MEMORY_LOCATION'/>
     </letter>
     <letter name='I'>
-    <ref name='IN_LIBXSLT'/>
     <ref name='IS_XSLT_ELEM'/>
     <ref name='IS_XSLT_NAME'/>
     <ref name='IS_XSLT_REAL_NODE'/>
@@ -1205,7 +1203,6 @@
       <ref name='xsltFreeDocumentKeys'/>
     </file>
     <file name='libxslt'>
-      <ref name='IN_LIBXSLT'/>
       <ref name='LIBXSLT_PUBLIC'/>
     </file>
     <file name='namespaces'>
