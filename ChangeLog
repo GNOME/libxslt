@@ -1,3 +1,8 @@
+Sun Jun 08 22:57:13 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/transform.c: changed xsltChoose to ignore whitespace 
+	  which is a sibling of xsl:when
+
 Sat May 31 17:18:21 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/xslt.c: fixed a possible crash when the document
