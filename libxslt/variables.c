@@ -600,6 +600,7 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 		    (elem->comp->inst->doc == def->comp->inst->doc)) {
 		    xsltTransformError(ctxt, style, elem->comp->inst,
 			"Global variable %s already defined\n", elem->name);
+		    style->errors++;
 		}
 	    }
 	    elem = elem->next;
@@ -671,8 +672,20 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
 	elem->next = NULL;
 	style->variables = elem;
     } else {
-	while (tmp->next != NULL)
+	while (tmp != NULL) {
+	    if ((elem->comp->type == XSLT_FUNC_VARIABLE) &&
+		(tmp->comp->type == XSLT_FUNC_VARIABLE) &&
+		(xmlStrEqual(elem->name, tmp->name)) &&
+		((elem->nameURI == tmp->nameURI) ||
+		 (xmlStrEqual(elem->nameURI, tmp->nameURI)))) {
+		xsltTransformError(NULL, style, comp->inst,
+		"redefinition of global variable %s\n", elem->name);
+		style->errors++;
+	    }
+	    if (tmp->next == NULL)
+	        break;
 	    tmp = tmp->next;
+	}
 	elem->next = NULL;
 	tmp->next = elem;
     }

@@ -1,3 +1,2 @@
-runtime error: file ./tst-1.xsl line 4 element variable
-Global variable my.var already defined
-no result for ./tst-1.xml
+compilation error: file ./tst-1.xsl line 4 element variable
+redefinition of global variable my.var

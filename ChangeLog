@@ -1,3 +1,9 @@
+Sun Nov 17 22:06:59 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: fix bug #98793 on clash of imported global
+	  variables.
+	* tests/reports/tst-1.err: this changes the output of that test
+
 Sun Nov 17 18:12:20 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing 1.0.23
