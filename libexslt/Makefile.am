@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libexslt \
+INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/libexslt -I$(top_builddir)/libxslt \
          $(LIBXML_CFLAGS) $(CFLAGS)
 
 lib_LTLIBRARIES = libexslt.la

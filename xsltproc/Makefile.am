@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir) -I$(top_builddir)/libxslt -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)/libxslt -I$(top_builddir)/libexslt -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
 	 $(LIBXML_CFLAGS) $(CFLAGS)
 
 

@@ -1,3 +1,8 @@
+2001-08-06  Peter Williams  <peterw@ximian.com>
+
+	* libexslt/Makefile.am, xsltproc/Makefile.am: Fixes for compiling
+	when srcdir != builddir.
+
 Sun Aug  5 09:37:14 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libxslt/extensions.[ch] libxslt/preproc.[ch] libxslt/transform.c
