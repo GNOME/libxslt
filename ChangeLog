@@ -1,3 +1,8 @@
+Thu Jul 17 10:35:22 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c: quick fix for an HP-UX compilation problem,
+	  might require more attention could be an Unicode support breakage.
+
 Wed Jul 16 10:46:35 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c libxslt/transform.c libxslt/transform.h

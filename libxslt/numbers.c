@@ -78,7 +78,7 @@ static xsltFormatToken default_token;
 #define IS_DIGIT_ONE(x) xsltIsDigitZero((xmlChar)(x)-1)
 
 static int
-xsltIsDigitZero(xmlChar ch)
+xsltIsDigitZero(unsigned int ch)
 {
     /*
      * Reference: ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
