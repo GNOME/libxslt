@@ -43,6 +43,7 @@ libxslt_la_SOURCES = 			\
 	transform.c
 
 libxslt_la_LIBADD = $(EXTRA_LIBS)
+libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@
 
 # what is this include dir ?
 # libxsltincdir = $(includedir)/libxslt

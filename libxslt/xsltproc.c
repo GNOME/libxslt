@@ -6,10 +6,20 @@
  * Daniel.Veillard@imag.fr
  */
 
-#include <string.h>
-#include <sys/time.h>
-#include <unistd.h>
 #include <libxml/xmlversion.h>
+#include <libxslt/xsltconfig.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
@@ -19,6 +29,9 @@
 #endif
 #ifdef LIBXML_XINCLUDE_ENABLED
 #include <libxml/xinclude.h>
+#endif
+#ifdef LIBXML_CATALOG_ENABLED
+#include <libxml/catalog.h>
 #endif
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
@@ -83,6 +96,9 @@ static void usage(const char *name) {
     printf("      --param name value : pass a (parameter,value) pair\n");
     printf("      --nonet refuse to fetch DTDs or entities over network\n");
     printf("      --warnnet warn against fetching over the network\n");
+#ifdef LIBXML_CATALOG_ENABLED
+    printf("      --catalogs : use the catalogs from $SGML_CATALOG_FILES\n");
+#endif
 }
 
 int
@@ -153,6 +169,18 @@ main(int argc, char **argv) {
 		   (!strcmp(argv[i], "--nonet"))) {
 	    xmlSetExternalEntityLoader(xsltNoNetExternalEntityLoader);
 	    nonet = 1;
+#ifdef LIBXML_CATALOG_ENABLED
+	} else if ((!strcmp(argv[i], "-catalogs")) ||
+		 (!strcmp(argv[i], "--catalogs"))) {
+	    const char *catalogs;
+
+	    catalogs = getenv("SGML_CATALOG_FILES");
+	    if (catalogs == NULL) {
+		fprintf(stderr, "Variable $SGML_CATALOG_FILES not set\n");
+	    } else {
+		xmlLoadCatalogs(catalogs);
+	    }
+#endif
 #ifdef LIBXML_XINCLUDE_ENABLED
 	} else if ((!strcmp(argv[i], "-xinclude")) ||
 		   (!strcmp(argv[i], "--xinclude"))) {

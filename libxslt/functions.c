@@ -373,7 +373,6 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
 	break;
     default:
 	XP_ERROR(XPATH_INVALID_ARITY);
-	return;
     }
 
     if (xsltFormatNumberConversion(formatValues,

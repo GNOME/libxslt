@@ -19,7 +19,7 @@ AC_SUBST(LIBXSLT_VERSION_NUMBER)
 VERSION=${LIBXSLT_VERSION}
 
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 AM_MAINTAINER_MODE
 
 dnl
@@ -36,6 +36,7 @@ dnl
 dnl Math detection
 dnl
 
+AC_CHECK_HEADERS(sys/types.h sys/time.h stdlib.h unistd.h string.h)
 AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h ansidecl.h)
 AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_ISNAN)]))
@@ -60,7 +61,7 @@ AC_CHECK_PROG(PERL, perl, perl, false)
 AM_CONDITIONAL(WITH_PERL, test "$PERL" != "false")
 
 dnl
-dnl Debug for DV
+dnl Debug for DV (-Wunreachable-code)
 dnl
 if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
     if test "${with_mem_debug}" = "" ; then
