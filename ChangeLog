@@ -1,4 +1,9 @@
-Thu Aug 14 10:04:37 HKT 2003 William Brack <wbrack@mmm.com.hk>
+Thu Aug 14 23:15:14 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* transform.c: fixed bug 114563 (params not passed when
+	  default template processed)
+
+Thu Aug 14 22:04:37 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* xslt.c: fixed bug 119862 (missing param on ns error print)
 

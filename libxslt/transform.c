@@ -1038,6 +1038,7 @@ void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * xsltDefaultProcessOneNode:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
+ * @params: extra parameters passed to the template if any
  *
  * Process the source node with the default built-in template rule:
  * <xsl:template match="*|/">
@@ -1056,7 +1057,8 @@ void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * for namespace nodes.
  */
 static void
-xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
+xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
+			  xsltStackElemPtr params) {
     xmlNodePtr copy;
     xmlAttrPtr attrs;
     xmlNodePtr delete = NULL, cur;
@@ -1190,7 +1192,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    template = xsltGetTemplate(ctxt, (xmlNodePtr) attrs, NULL);
 	    if (template) {
 		xsltApplyOneTemplate(ctxt, (xmlNodePtr) attrs,
-		                     template->content, template, NULL);
+		                     template->content, template, params);
 	    }
 	    attrs = attrs->next;
 	}
@@ -1206,7 +1208,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    case XML_ELEMENT_NODE:
 		ctxt->xpathCtxt->contextSize = nbchild;
 		ctxt->xpathCtxt->proximityPosition = childno;
-		xsltProcessOneNode(ctxt, cur, NULL);
+		xsltProcessOneNode(ctxt, cur, params);
 		break;
 	    case XML_CDATA_SECTION_NODE:
 		template = xsltGetTemplate(ctxt, cur, NULL);
@@ -1217,7 +1219,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 				     cur->content);
 #endif
 		    xsltApplyOneTemplate(ctxt, cur, template->content,
-			                 template, NULL);
+			                 template, params);
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
@@ -1242,7 +1244,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    xsltApplyOneTemplate(ctxt, cur, template->content,
-			                 template, NULL);
+			                 template, params);
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    if (cur->content == NULL)
@@ -1276,7 +1278,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
 		    xsltApplyOneTemplate(ctxt, cur, template->content,
-			                 template, NULL);
+			                 template, params);
 		}
 		break;
 	    default:
@@ -1324,7 +1326,7 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	oldNode = ctxt->node;
 	ctxt->node = node;
-	xsltDefaultProcessOneNode(ctxt, node);
+	xsltDefaultProcessOneNode(ctxt, node, params);
 	ctxt->node = oldNode;
 	return;
     }
