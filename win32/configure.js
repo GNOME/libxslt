@@ -154,7 +154,7 @@ function discoverVersion()
 	vf.WriteLine("BINDIR=" + binDir);
 	vf.WriteLine("WITH_DEBUG=" + (withXsltDebug? "1" : "0"));
 	vf.WriteLine("WITH_MEM_DEBUG=" + (withMemDebug? "1" : "0"));
-	vf.WriteLine("WITH_DEBUG=" + (withDebugger? "1" : "0"));
+	vf.WriteLine("WITH_DEBUGGER=" + (withDebugger? "1" : "0"));
 	vf.WriteLine("DEBUG=" + (buildDebug? "1" : "0"));
 	vf.WriteLine("STATIC=" + (buildStatic? "1" : "0"));
 	vf.WriteLine("PREFIX=" + buildPrefix);

@@ -3,7 +3,7 @@
 # Take a look at the beginning and modify the variables to suit your 
 # environment. Having done that, you can do a
 #
-# nmake [all]     to build the libxml and the accompanying utilities.
+# nmake [all]     to build the libxslt and the accompanying utilities.
 # nmake clean     to remove all compiler output files and return to a
 #                 clean state.
 # nmake rebuild   to rebuild everything from scratch. This basically does
@@ -31,7 +31,7 @@ AUTOCONF = .\configure.txt
 #LIBEXSLT_MICRO_VERSION = 0 # set this to the right value.
 #WITH_XSLT_DEBUG = 1
 #WITH_MEM_DEBUG = 0
-#WITH_DEBUGGER = 0
+#WITH_DEBUGGER = 1
 #DEBUG = 0
 #STATIC = 0
 #PREFIX = . # set this to the right value.
