@@ -1,3 +1,8 @@
+Sun Feb 25 06:52:14 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt.spec.in: releasing 0.3.0
+	* doc/xslt.html: updated
+	
 Sun Feb 25 05:28:30 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in tests/docbook/html : oops forgot to add
