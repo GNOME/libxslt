@@ -621,8 +621,8 @@
       <arg name='pattern' type='const xmlChar *' info='an XSLT pattern '/>
       <arg name='doc' type='xmlDocPtr' info='the containing document '/>
       <arg name='node' type='xmlNodePtr' info='the containing element '/>
-      <arg name='style' type='xsltStylesheetPtr'/>
-      <arg name='runtime' type='xsltTransformContextPtr'/>
+      <arg name='style' type='xsltStylesheetPtr' info='the stylesheet '/>
+      <arg name='runtime' type='xsltTransformContextPtr' info='the transformation context, if done at run-time '/>
     </function>
     <function name='xsltCopy' file='transform'>
       <info>Process the xslt copy node on the source node</info>

@@ -471,6 +471,12 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
     } else if (comp->ns != NULL) {
         ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
                                      ctxt->insert);
+    } else if (prefix != NULL) {
+	xmlNsPtr tmp;
+	tmp = xmlSearchNs(inst->doc, inst, prefix);
+	if (tmp != NULL) {
+	    ns = xsltGetNamespace(ctxt, inst, tmp, ctxt->insert);
+	}
     }
 
     if ((fromset) && (ns != NULL))

@@ -288,6 +288,8 @@ unknown_types = {}
 def skip_function(name):
     if name[0:12] == "xmlXPathWrap":
         return 1
+    if name == "xsltMatchPattern":
+        return 1
 #    if name[0:11] == "xmlXPathNew":
 #        return 1
     return 0

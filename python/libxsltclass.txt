@@ -105,9 +105,6 @@ Class transformCtxt()
     namespace()
     specialNamespace()
 
-    # functions from module pattern
-    matchPattern()
-
     # functions from module templates
     attrListTemplateProcess()
     attrTemplateProcess()

@@ -1,3 +1,7 @@
+Sun Feb 10 22:08:51 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attributes.c: fixed a bug reported by Norm
+
 Sun Feb 10 20:25:28 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxml.c : fixed a small warning.

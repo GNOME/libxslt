@@ -2508,6 +2508,7 @@
           <ref name='xsltTestCompMatchList'/>
         </word>
         <word name='done'>
+          <ref name='xsltCompilePattern'/>
           <ref name='xsltEvalGlobalVariables'/>
           <ref name='xsltInitCtxtKeys'/>
           <ref name='xsltLoadStylesheetPI'/>
@@ -3782,6 +3783,9 @@
         </word>
         <word name='run'>
           <ref name='WITH_XSLT_DEBUG'/>
+        </word>
+        <word name='run-time'>
+          <ref name='xsltCompilePattern'/>
         </word>
       </letter>
     </chunk>
