@@ -153,7 +153,9 @@ database:</a>:</p>
 <h2><a name="Downloads">Downloads</a></h2>
 
 <p>The latest versions of libxslt can be found on <a
-href="ftp://xmlsoft.org/">xmlsoft.org</a> or on the <a
+href="ftp://xmlsoft.org/">xmlsoft.org</a> (<a
+href="ftp://speakeasy.rpmfind.net/pub/libxml/">Seattle</a>, <a
+href="ftp://fr.rpmfind.net/pub/libxml/">France</a>) or on the <a
 href="ftp://ftp.gnome.org/pub/GNOME/MIRRORS.html">Gnome FTP server</a> either
 as a <a href="ftp://ftp.gnome.org/pub/GNOME/unstable/sources/libxslt/">source
 archive</a> or <a
@@ -382,10 +384,11 @@ orchis:~ -&gt;</pre>
 <h2>The programming API</h2>
 
 <p>Okay this section is clearly incomplete. But integrating libxslt into your
-application should be realitively easy. First check the few steps described
+application should be realatively easy. First check the few steps described
 below, then for more detailed informations, look at the<a
 href="html/libxslt-lib.html"> generated pages</a> for the API and the source
-of libxslt/xsltproc.c .</p>
+of libxslt/xsltproc.c  and the  <a
+href="tutorial/libxslttutorial.html">tutorial</a>.</p>
 
 <p>Basically doing an XSLT transformation can be done in a few steps:</p>
 <ol>
@@ -407,8 +410,28 @@ documents.</p>
 
 <h2><a name="Contributi">Contributions</a></h2>
 <ul>
-  <li>Bjorn Reese is the author of the number support</li>
+  <li>Bjorn Reese is the author of the number support and worked on the
+    XSLTMark support</li>
+  <li>William Brack was an early adopted, contibuted a number of patches and
+    spent quite some time debugging non-trivial problems in early versions of
+    libxslt</li>
+  <li>Thomas Broyer provided a lot of suggestions, and drafted most of the
+    extension API</li>
+  <li>John Fleck maintains <a href="tutorial/libxslttutorial.html">a tutorial
+    for libxslt</a></li>
+  <li><a
+    href="http://mail.gnome.org/archives/xml/2001-March/msg00014.html">Matt
+    Sergeant</a> developped <a
+    href="http://axkit.org/download/">XML::LibXSLT</a>, a perl wrapper for
+    libxml2/libxslt as part of the <a href="http://axkit.com/">AxKit XML
+    application server</a></li>
+  <li>there is a module for <a
+    href="http://acs-misc.sourceforge.net/nsxml.html">libxml/libxslt support
+    in OpenNSD/AOLServer</a></li>
 </ul>
+
+<p>I'm still waiting for someone to contribute a simple XSLT processing module
+for Apache :-)</p>
 
 <p></p>
 
