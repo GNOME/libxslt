@@ -1,3 +1,9 @@
+Sat Mar 22 12:35:47 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-109.xml
+	  tests/general/Makefile.am tests/general/bug-109*: added an
+	  example in the regression tests for the invalid bug #108716
+
 Sat Mar 22 12:01:24 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: fixed bug #108633 reported by
