@@ -25,6 +25,7 @@ installed.
 Summary: Libraries, includes, etc. to develop XML and HTML applications
 Group: Development/Libraries
 Requires: libxslt = %{version}
+Requires: libxml2-devel >= 2.2.12
 
 %description devel
 This C library allows to transform XML files into other XML files
