@@ -1,4 +1,10 @@
-Thu Mar 31 11:54:31 CEST 2005
+Thu Mar 31 23:50:43 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docbook/result/fo/gdp-handbook.fo tests/general/bug-105.out
+	  tests/general/bug-142.out: updated the result of some tests
+	  following the change to serailization in libxml2.
+
+Thu Mar 31 11:54:31 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixed bug #171488 with cascading select in
 	  patterns.
