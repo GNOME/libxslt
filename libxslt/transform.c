@@ -1312,6 +1312,125 @@ skip_children:
 }
 
 /**
+ * xsltChoose:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt choose node
+ *
+ * Process the xslt choose node on the source node
+ */
+void
+xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop;
+    xmlXPathObjectPtr res = NULL, tmp;
+    xmlXPathParserContextPtr xpathParserCtxt = NULL;
+    xmlNodePtr replacement, when;
+    int doit = 1;
+
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return;
+
+    /* 
+     * Check the when's
+     */
+    replacement = inst->children;
+    if (replacement == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:choose: empty content not allowed\n");
+	goto error;
+    }
+    if ((!IS_XSLT_ELEM(replacement)) ||
+	(!IS_XSLT_NAME(replacement, "when"))) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:choose: xsl:when expected first\n");
+	goto error;
+    }
+    while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when"))) {
+
+	when = replacement;
+	prop = xmlGetNsProp(when, (const xmlChar *)"test", XSLT_NAMESPACE);
+	if (prop == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsl:when: test is not defined\n");
+	    return;
+	}
+#ifdef DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsl:when: test %s\n", prop);
+#endif
+
+	xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
+	if (xpathParserCtxt == NULL)
+	    goto error;
+	ctxt->xpathCtxt->node = node;
+	valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
+	xmlXPathEvalExpr(xpathParserCtxt);
+	xmlXPathBooleanFunction(xpathParserCtxt, 1);
+	res = valuePop(xpathParserCtxt);
+	do {
+	    tmp = valuePop(xpathParserCtxt);
+	    if (tmp != NULL) {
+		xmlXPathFreeObject(tmp);
+	    }
+	} while (tmp != NULL);
+
+	if (res != NULL) {
+	    if (res->type == XPATH_BOOLEAN)
+		doit = res->boolval;
+	    else {
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "xsl:when: test didn't evaluate to a boolean\n");
+#endif
+		goto error;
+	    }
+	}
+
+#ifdef DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "xsl:when: test evaluate to %d\n", doit);
+#endif
+	if (doit) {
+	    xsltApplyOneTemplate(ctxt, ctxt->node, when->children);
+	    goto done;
+	}
+	if (xpathParserCtxt != NULL)
+	    xmlXPathFreeParserContext(xpathParserCtxt);
+	xpathParserCtxt = NULL;
+	if (prop != NULL)
+	    xmlFree(prop);
+	prop = NULL;
+	if (res != NULL)
+	    xmlXPathFreeObject(res);
+	res = NULL;
+	replacement = replacement->next;
+    }
+    if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "otherwise"))) {
+	xsltApplyOneTemplate(ctxt, ctxt->node, replacement->children);
+	replacement = replacement->next;
+    }
+    if (replacement != NULL) {
+#ifdef DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "xsl:otherwise: applying default fallback\n");
+#endif
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:choose: unexpected content %s\n", replacement->name);
+	goto error;
+    }
+
+done:
+error:
+    if (xpathParserCtxt != NULL)
+	xmlXPathFreeParserContext(xpathParserCtxt);
+    if (prop != NULL)
+	xmlFree(prop);
+    if (res != NULL)
+	xmlXPathFreeObject(res);
+}
+
+/**
  * xsltIf:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.

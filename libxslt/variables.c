@@ -605,6 +605,7 @@ xsltFreeVariableHashes(xsltTransformContextPtr ctxt) {
 	xsltFreeStackElemList(stack->elems[i]);
     }
     xmlFree(stack);
+
 }
 
 /**

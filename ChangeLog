@@ -1,3 +1,9 @@
+Thu Feb  1 05:36:28 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-11*: added more tests
+	* libxslt/transform.c libxslt/variables.c: fixing bugs raised by
+	  said tests
+
 Wed Jan 31 21:42:43 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/REC/test-[9-10]*: added more tests
