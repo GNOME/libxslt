@@ -1,3 +1,8 @@
+                  ********
+                 *        *
+                 *  TODO  *
+                 *        *
+                  ********
 Design:
   - should transforms for a given stylesheet be thread clean,
     or can a stylesheet be enriched with document specific
@@ -18,15 +23,6 @@ Pattern scanner:
   -> handle unions
   -> compute priority
 
-Separate util module:
-  -> macros, config, verbosity ?
-
-Support for disable-output-escaping="yes":
-  -> looks problematic, libxml has no support for anything like this,
-     and unless adding a new node type :-( or tweaking text node and
-     output routines this is gonna be messy ... must be handled at libxml
-     level.
-
 Error handling:
   -> check the version stuff, design a separate module for error interfacing
      and default handling, parsing vs. runtime, fatal / compat / warning,
@@ -35,6 +31,8 @@ Error handling:
 Support Attribute value templates:
   -> starts to be urgent. Design it in flexible ways but try to optimize
      to handle most of it at the stylesheet parse time ...
+  => Done for the most part need to check all attributes in XSLT constructs
+     using them and use the dedicated readin function.
 
 Sorting:
   -> add support for imbricated sorts
@@ -45,4 +43,23 @@ Validity:
   -> should we add validation by default ? Make this an option
   -> redirrect validity errors
 
+Contextual error reporting:
+  -> provide a couple of functions providing context analysis, not urgent
+
+                  ********
+                 *        *
+                 *  DONE  *
+                 *        *
+                  ********
+
+Separate util module:
+  -> macros, config, verbosity ?
+  => xsltutils.[ch]
+
+Support for disable-output-escaping="yes":
+  -> looks problematic, libxml has no support for anything like this,
+     and unless adding a new node type :-( or tweaking text node and
+     output routines this is gonna be messy ... must be handled at libxml
+     level.
+  => Done with a trick, text node name is different, requires > 2.2.11
 

@@ -20,6 +20,9 @@ int		xsltAddTemplate		(xsltStylesheetPtr style,
 xsltTemplatePtr	xsltGetTemplate		(xsltStylesheetPtr style,
 					 xmlNodePtr node);
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
+xsltTemplatePtr xsltFindTemplate	(xsltStylesheetPtr style,
+					 const xmlChar *name,
+					 const xmlChar *nameURI);
 #ifdef __cplusplus
 }
 #endif

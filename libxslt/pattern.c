@@ -974,12 +974,33 @@ int
 xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
     xsltCompMatchPtr pat, list;
     const xmlChar *name;
+    xmlChar *p, *pattern, tmp;
 
+    if ((style == NULL) || (cur == NULL))
+	return(-1);
+
+    p = cur->match;
+    if (p == NULL)
+	return(-1);
+
+next_pattern:
+    if (*p == 0)
+	return(0);
     /*
      * get a compiled form of the pattern
      */
-    /* TODO : handle | in patterns as multple pat !!! */
-    pat = xsltCompilePattern(cur->match);
+    pattern = p;
+    while ((*p != 0) && (*p != '|')) {
+	/* TODO: handle string escaping "a | b" in patterns ... */
+	p++;
+    }
+
+    tmp = *p;
+    *p = 0;
+    pat = xsltCompilePattern(pattern);
+    *p = tmp;
+    if (tmp != 0)
+	p++;
     if (pat == NULL)
 	return(-1);
     pat->template = cur;
@@ -1080,6 +1101,8 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur) {
 	    }
 	}
     }
+    if (*p != 0)
+	goto next_pattern;
     return(0);
 }
 
@@ -1172,5 +1195,38 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
     if (style->templatesHash != NULL)
 	xmlHashFree((xmlHashTablePtr) style->templatesHash,
 		    (xmlHashDeallocator) xsltFreeCompMatchList);
+}
+
+/**
+ * xsltFindTemplate:
+ * @style: an XSLT stylesheet
+ * @name: the template name
+ * @nameURI: the template name URI
+ *
+ * Finds the named template.
+ *
+ * Returns the xsltTemplatePtr or NULL if not found
+ */
+xsltTemplatePtr
+xsltFindTemplate(xsltStylesheetPtr style, const xmlChar *name,
+	        const xmlChar *nameURI) {
+    xsltTemplatePtr cur;
+
+    if ((style == NULL) || (name == NULL))
+	return(NULL);
+
+    /* TODO: apply stylesheet import order */
+    cur = style->templates;
+    while (cur != NULL) {
+	if (xmlStrEqual(name, cur->name)) {
+	    if (((nameURI == NULL) && (cur->nameURI == NULL)) ||
+		((nameURI != NULL) && (cur->nameURI != NULL) &&
+		 (xmlStrEqual(nameURI, cur->nameURI)))) {
+		return(cur);
+	    }
+	}
+	cur = cur->next;
+    }
+    return(NULL);
 }
 

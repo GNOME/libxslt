@@ -22,7 +22,7 @@ static int repeat = 0;
 int
 main(int argc, char **argv) {
     int i;
-    xsltStylesheetPtr cur;
+    xsltStylesheetPtr cur = NULL;
     xmlDocPtr doc, res;
 
     /* --repeat : repeat 100 times, for timing or profiling */

@@ -19,12 +19,33 @@
 extern "C" {
 #endif
 
+
 /*
- * The in-memory structure corresponding to an XSLT Stylesheet
- * NOTE: most of the content is simply linked from the doc tree
- *       structure, no specific allocation is made.
+ * The in-memory structure corresponding to an XSLT Variable
+ * or Param
  */
 
+typedef enum {
+    XSLT_ELEM_VARIABLE=1,
+    XSLT_ELEM_PARAM
+} xsltElem;
+
+typedef struct _xsltStackElem xsltStackElem;
+typedef xsltStackElem *xsltStackElemPtr;
+struct _xsltStackElem {
+    struct _xsltStackElem *next;/* chained list */
+    xsltElem type;	/* type of the element */
+    int computed;	/* was the evaluation done */
+    xmlChar *name;	/* the local part of the name QName */
+    xmlChar *nameURI;	/* the URI part of the name QName */
+    xmlChar *select;	/* the eval string */
+    xmlNodePtr tree;	/* the tree if no eval string */
+    xmlXPathObjectPtr value; /* The value if computed */
+};
+
+/*
+ * The in-memory structure corresponding to an XSLT Template
+ */
 #define XSLT_PAT_NO_PRIORITY -12345789
 
 typedef struct _xsltTemplate xsltTemplate;
@@ -42,6 +63,8 @@ struct _xsltTemplate {
 
 /*
  * The in-memory structure corresponding to an XSLT Stylesheet
+ * NOTE: most of the content is simply linked from the doc tree
+ *       structure, no specific allocation is made.
  */
 typedef struct _xsltStylesheet xsltStylesheet;
 typedef xsltStylesheet *xsltStylesheetPtr;
@@ -58,6 +81,11 @@ struct _xsltStylesheet {
     xmlDocPtr doc;		/* the parsed XML stylesheet */
     xmlHashTablePtr stripSpaces;/* the hash table of the strip-space
 				   preserve space and cdata-section elements */
+
+    /*
+     * Global variable or parameters
+     */
+    xsltStackElemPtr variables; /* linked list of param and variables */
 
     /*
      * Template descriptions
@@ -114,6 +142,7 @@ struct _xsltTransformContext {
 xsltStylesheetPtr	xsltParseStylesheetFile	(const xmlChar* filename);
 void			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
 int			xsltIsBlank		(xmlChar *str);
+void			xsltFreeStackElemList	(xsltStackElemPtr elem);
 
 #ifdef __cplusplus
 }

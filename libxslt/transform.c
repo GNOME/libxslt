@@ -295,7 +295,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (value == NULL) {
 	if (ns) {
 #if LIBXML_VERSION > 20211
-	    attr = xmlSetNsProp(ctxt->insert, ncname, ns->href,
+	    attr = xmlSetNsProp(ctxt->insert, ns, ncname, 
 		                (const xmlChar *)"");
 #else
 	    xsltGenericError(xsltGenericErrorContext,
@@ -586,6 +586,89 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 }
 
 /**
+ * xsltCallTemplate:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt call-template node
+ *
+ * Process the xslt call-template node on the source node
+ */
+void
+xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *prop = NULL;
+    xmlChar *ncname = NULL;
+    xmlChar *prefix = NULL;
+    xmlNsPtr ns = NULL;
+    xsltTemplatePtr template;
+    xmlNodePtr cur;
+    int has_param = 0;
+
+
+    if (ctxt->insert == NULL)
+	return;
+    prop = xmlGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:call-template : name is missing\n");
+	goto error;
+    }
+
+    ncname = xmlSplitQName2(prop, &prefix);
+    if (ncname == NULL) {
+	ncname = prop;
+	prop = NULL;
+	prefix = NULL;
+    }
+    if ((prefix != NULL) && (ns == NULL)) {
+	ns = xmlSearchNs(ctxt->insert->doc, ctxt->insert, prefix);
+	if (ns == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"no namespace bound to prefix %s\n", prefix);
+	}
+    }
+    if (ns != NULL)
+	template = xsltFindTemplate(ctxt->style, ncname, ns->href);
+    else
+	template = xsltFindTemplate(ctxt->style, ncname, NULL);
+    if (template == NULL) {
+	xsltGenericError(xsltGenericDebugContext,
+	     "xslt:call-template: template %s not found\n", cur->name);
+	goto error;
+    }
+    cur = inst->children;
+    while (cur != NULL) {
+	if (IS_XSLT_ELEM(cur)) {
+	    if (IS_XSLT_NAME(cur, "with-param")) {
+		if (has_param == 0) {
+		    xsltPushStack(ctxt);
+		    has_param = 1;
+		}
+		xsltParseStylesheetParam(ctxt, cur);
+	    } else {
+		xsltGenericError(xsltGenericDebugContext,
+		     "xslt:call-template: misplaced xslt:%s\n", cur->name);
+	    }
+	} else {
+	    xsltGenericError(xsltGenericDebugContext,
+		 "xslt:call-template: misplaced %s element\n", cur->name);
+	}
+	cur = cur->next;
+    }
+    xsltApplyOneTemplate(ctxt, node, template->content);
+
+error:
+    if (has_param == 1)
+	xsltPopStack(ctxt);
+    if (prop != NULL)
+        xmlFree(prop);
+    if (ncname != NULL)
+        xmlFree(ncname);
+    if (prefix != NULL)
+        xmlFree(prefix);
+}
+
+/**
  * xsltApplyTemplates:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -803,8 +886,21 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else if (IS_XSLT_NAME(cur, "variable")) {
 		if (has_variables == 0) {
 		    xsltPushStack(ctxt);
+		    has_variables = 1;
 		}
 		xsltParseStylesheetVariable(ctxt, cur);
+	    } else if (IS_XSLT_NAME(cur, "param")) {
+		if (has_variables == 0) {
+		    xsltPushStack(ctxt);
+		    has_variables = 1;
+		}
+		xsltParseStylesheetParam(ctxt, cur);
+	    } else if (IS_XSLT_NAME(cur, "call-template")) {
+		if (has_variables == 0) {
+		    xsltPushStack(ctxt);
+		    has_variables = 1;
+		}
+		xsltCallTemplate(ctxt, node, cur);
 	    } else {
 #ifdef DEBUG_PROCESS
 		xsltGenericError(xsltGenericDebugContext,
@@ -1120,6 +1216,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
 	return(NULL);
     ctxt->doc = doc;
     ctxt->style = style;
+    xsltEvalGlobalVariables(ctxt);
     if ((style->method != NULL) &&
 	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {
 	if (xmlStrEqual(style->method, (const xmlChar *) "html")) {

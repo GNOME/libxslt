@@ -25,9 +25,16 @@ extern "C" {
  * Interfaces for the variable module.
  */
 
+int		xsltEvalGlobalVariables		(xsltTransformContextPtr ctxt);
 void		xsltPushStack			(xsltTransformContextPtr ctxt);
 void		xsltPopStack			(xsltTransformContextPtr ctxt);
+void		xsltParseGlobalVariable		(xsltStylesheetPtr style,
+						 xmlNodePtr cur);
+void		xsltParseGlobalParam		(xsltStylesheetPtr style,
+						 xmlNodePtr cur);
 void		xsltParseStylesheetVariable	(xsltTransformContextPtr ctxt,
+						 xmlNodePtr cur);
+void		xsltParseStylesheetParam	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr cur);
 void			xsltFreeVariableHashes	(xsltTransformContextPtr ctxt);
 xmlXPathObjectPtr	xsltVariableLookup	(xsltTransformContextPtr ctxt,
@@ -37,7 +44,8 @@ int			xsltRegisterVariable	(xsltTransformContextPtr ctxt,
 						 const xmlChar *name,
 						 const xmlChar *ns_uri,
 						 const xmlChar *select,
-						 xmlXPathObjectPtr value);
+						 xmlNodePtr tree,
+						 int param);
 xmlXPathObjectPtr	xsltXPathVariableLookup	(void *ctxt,
 						 const xmlChar *name,
 						 const xmlChar *ns_uri);

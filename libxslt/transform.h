@@ -21,7 +21,9 @@ extern "C" {
  */
 xmlDocPtr	xsltApplyStylesheet	(xsltStylesheetPtr style,
 					 xmlDocPtr doc);
-
+void		xsltApplyOneTemplate	(xsltTransformContextPtr ctxt,
+					 xmlNodePtr node,
+					 xmlNodePtr list);
 #ifdef __cplusplus
 }
 #endif

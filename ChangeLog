@@ -1,3 +1,14 @@
+Mon Jan 22 11:46:44 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* xsltproc.c: removed bug
+	* tests/REC2/html.xml: added newline after doctype
+	* libxslt/variables.[ch] libxslt/xsltInternals.h: added param
+	  support, result tree fragment support (requires just commited
+	  extensions to libxml2 XPath !!!)
+	* transform.c: added call-template, with-param support
+	* libxslt/pattern.[ch]: xsltFindTemplate() needed for call-template
+	* TODO: updated, added a DONE section and started migrating stuff :-)
+
 Sun Jan 21 12:03:16 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* Makefile.am tests/Makefile.am tests/REC1/Makefile.am

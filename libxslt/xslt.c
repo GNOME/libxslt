@@ -165,6 +165,8 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     xsltFreeTemplateList(sheet->templates);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
+    if (sheet->variables != NULL)
+	xsltFreeStackElemList(sheet->variables);
     if (sheet->stripSpaces != NULL)
 	xmlHashFree(sheet->stripSpaces, NULL);
 
@@ -563,12 +565,11 @@ skip_children:
 
     /*
      * Find and handle the params
-     */
     cur = template->children;
     while (cur != NULL) {
-	/*
+	/ *
 	 * Remove Blank nodes found at this level.
-	 */
+	 * /
 	if (IS_BLANK_NODE(cur)) {
 	    xmlNodePtr blank = cur;
 
@@ -578,11 +579,12 @@ skip_children:
 	    continue;
 	}
 	if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "param"))) {
-	    TODO /* Handle param */
+	    xsltParseGlobalParam(style, cur);
 	} else
 	    break;
 	cur = cur->next;
     }
+     */
 
     /*
      * Browse the remaining of the template
