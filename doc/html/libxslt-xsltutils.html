@@ -122,7 +122,7 @@ NAME="LIBXSLT-XSLTUTILS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN1776"
+NAME="AEN1767"
 ></A
 ><H2
 >Name</H2
@@ -130,7 +130,7 @@ NAME="AEN1776"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN1779"
+NAME="AEN1770"
 ></A
 ><H2
 >Synopsis</H2
@@ -195,6 +195,21 @@ extern      void *<A
 HREF="libxslt-xsltutils.html#XSLTGENERICDEBUGCONTEXT"
 >xsltGenericDebugContext</A
 >;
+void        <A
+HREF="libxslt-xsltutils.html#XSLTPRINTERRORCONTEXT"
+>xsltPrintErrorContext</A
+>           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node);
 void        <A
 HREF="libxslt-xsltutils.html#XSLTMESSAGE"
 >xsltMessage</A
@@ -331,7 +346,18 @@ HREF="LONG"
 >        <A
 HREF="libxslt-xsltutils.html#XSLTTIMESTAMP"
 >xsltTimestamp</A
->                   (void);</PRE
+>                   (void);
+void        <A
+HREF="libxslt-xsltutils.html#XSLTCALIBRATEADJUST"
+>xsltCalibrateAdjust</A
+>             (<GTKDOCLINK
+HREF="LONG"
+>long</GTKDOCLINK
+> delta);
+#define     <A
+HREF="libxslt-xsltutils.html#XSLT-TIMESTAMP-TICS-PER-SEC-CAPS"
+>XSLT_TIMESTAMP_TICS_PER_SEC</A
+></PRE
 ></TD
 ></TR
 ></TABLE
@@ -339,7 +365,7 @@ HREF="libxslt-xsltutils.html#XSLTTIMESTAMP"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1831"
+NAME="AEN1829"
 ></A
 ><H2
 >Description</H2
@@ -349,14 +375,14 @@ NAME="AEN1831"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1834"
+NAME="AEN1832"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1836"
+NAME="AEN1834"
 ></A
 ><H3
 ><A
@@ -377,14 +403,12 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->macro to flag unimplemented blocks</P
-><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1842"
+NAME="AEN1839"
 ></A
 ><H3
 ><A
@@ -405,14 +429,12 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->macro to flag that a problem was detected internally</P
-><P
 ></P
 ></DIV
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1848"
+NAME="AEN1844"
 ></A
 ><H3
 ><A
@@ -433,13 +455,11 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Checks that the element pertains to XSLt namespace</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1854"
+NAME="AEN1849"
 ></A
 ><P
 ></P
@@ -477,7 +497,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1863"
+NAME="AEN1858"
 ></A
 ><H3
 ><A
@@ -498,13 +518,11 @@ CLASS="PROGRAMLISTING"
 ></TR
 ></TABLE
 ><P
->Checks the value of an element in XSLT namespace</P
-><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1869"
+NAME="AEN1863"
 ></A
 ><P
 ></P
@@ -559,7 +577,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1882"
+NAME="AEN1876"
 ></A
 ><H3
 ><A
@@ -614,7 +632,7 @@ default declaration values unless DTD use has been turned off.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1896"
+NAME="AEN1890"
 ></A
 ><P
 ></P
@@ -702,7 +720,7 @@ It's up to the caller to free the memory.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1917"
+NAME="AEN1911"
 ></A
 ><H3
 ><A
@@ -728,7 +746,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1922"
+NAME="AEN1916"
 ></A
 ><H3
 ><A
@@ -754,7 +772,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1927"
+NAME="AEN1921"
 ></A
 ><H3
 ><A
@@ -780,7 +798,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1932"
+NAME="AEN1926"
 ></A
 ><H3
 ><A
@@ -806,7 +824,117 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1937"
+NAME="AEN1931"
+></A
+><H3
+><A
+NAME="XSLTPRINTERRORCONTEXT"
+></A
+>xsltPrintErrorContext ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltPrintErrorContext           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Display the context of an error.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN1940"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the current node being processed</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1957"
 ></A
 ><H3
 ><A
@@ -844,7 +972,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1946"
+NAME="AEN1966"
 ></A
 ><P
 ></P
@@ -916,7 +1044,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1963"
+NAME="AEN1983"
 ></A
 ><H3
 ><A
@@ -978,7 +1106,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1975"
+NAME="AEN1995"
 ></A
 ><P
 ></P
@@ -1033,7 +1161,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1988"
+NAME="AEN2008"
 ></A
 ><H3
 ><A
@@ -1095,7 +1223,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2000"
+NAME="AEN2020"
 ></A
 ><P
 ></P
@@ -1150,7 +1278,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2013"
+NAME="AEN2033"
 ></A
 ><H3
 ><A
@@ -1185,7 +1313,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2021"
+NAME="AEN2041"
 ></A
 ><P
 ></P
@@ -1223,7 +1351,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2030"
+NAME="AEN2050"
 ></A
 ><H3
 ><A
@@ -1259,7 +1387,7 @@ requirement provided by the arry of nodes.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2038"
+NAME="AEN2058"
 ></A
 ><P
 ></P
@@ -1331,7 +1459,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2055"
+NAME="AEN2075"
 ></A
 ><H3
 ><A
@@ -1390,7 +1518,7 @@ defined and hence has the same lifespan as the document holding it.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2068"
+NAME="AEN2088"
 ></A
 ><P
 ></P
@@ -1466,7 +1594,7 @@ not prefixed.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2086"
+NAME="AEN2106"
 ></A
 ><H3
 ><A
@@ -1520,7 +1648,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2098"
+NAME="AEN2118"
 ></A
 ><P
 ></P
@@ -1607,7 +1735,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2119"
+NAME="AEN2139"
 ></A
 ><H3
 ><A
@@ -1659,7 +1787,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2130"
+NAME="AEN2150"
 ></A
 ><P
 ></P
@@ -1763,7 +1891,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2155"
+NAME="AEN2175"
 ></A
 ><H3
 ><A
@@ -1818,7 +1946,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2167"
+NAME="AEN2187"
 ></A
 ><P
 ></P
@@ -1905,7 +2033,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2188"
+NAME="AEN2208"
 ></A
 ><H3
 ><A
@@ -1952,7 +2080,7 @@ This does not close the descriptor.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2198"
+NAME="AEN2218"
 ></A
 ><P
 ></P
@@ -2039,7 +2167,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2219"
+NAME="AEN2239"
 ></A
 ><H3
 ><A
@@ -2078,7 +2206,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2228"
+NAME="AEN2248"
 ></A
 ><P
 ></P
@@ -2133,7 +2261,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2241"
+NAME="AEN2261"
 ></A
 ><H3
 ><A
@@ -2163,7 +2291,7 @@ HREF="LONG"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2248"
+NAME="AEN2268"
 ></A
 ><P
 ></P
@@ -2188,7 +2316,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of milliseconds since the beginning of the
+>the number of tenth of milliseconds since the beginning of the
 profiling</TD
 ></TR
 ></TBODY
@@ -2196,6 +2324,103 @@ profiling</TD
 ><P
 ></P
 ></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2277"
+></A
+><H3
+><A
+NAME="XSLTCALIBRATEADJUST"
+></A
+>xsltCalibrateAdjust ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltCalibrateAdjust             (<GTKDOCLINK
+HREF="LONG"
+>long</GTKDOCLINK
+> delta);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Used for to correct the calibration for <A
+HREF="libxslt-xsltutils.html#XSLTTIMESTAMP"
+>xsltTimestamp</A
+>()</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN2285"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>delta</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a negative dealy value found</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2294"
+></A
+><H3
+><A
+NAME="XSLT-TIMESTAMP-TICS-PER-SEC-CAPS"
+></A
+>XSLT_TIMESTAMP_TICS_PER_SEC</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define XSLT_TIMESTAMP_TICS_PER_SEC 100000l</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
 ></DIV
 ></DIV
 ><DIV

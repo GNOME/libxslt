@@ -1,3 +1,11 @@
+Tue Jul 24 17:45:22 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libxslt.spec.in libxslt/xsltwin32config.h:
+	  releasing 1.0.1
+	* doc/html/*.html: updated the docs.
+	* xsltproc/xsltproc.c: activate line numbering unfortunately
+	  this works only with CVS, libxml2-2.4.1 is broken in this respect
+
 Mon Jul 23 23:35:00 HKT 2001 William M. Brack <wbrack@mmm.com.hk>
 
 	* libxslt/documents.c enhancement to xsltFindDocument to

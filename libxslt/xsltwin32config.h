@@ -21,21 +21,21 @@ extern "C" {
  *
  * the version string like "1.2.3"
  */
-#define LIBXSLT_DOTTED_VERSION "1.0.0"
+#define LIBXSLT_DOTTED_VERSION "1.0.1"
 
 /**
  * LIBXSLT_VERSION:
  *
  * the version number: 1.2.3 value is 1002003
  */
-#define LIBXSLT_VERSION 10000
+#define LIBXSLT_VERSION 10001
 
 /**
  * LIBXSLT_VERSION_STRING:
  *
  * the version number string, 1.2.3 value is "1002003"
  */
-#define LIBXSLT_VERSION_STRING "10000"
+#define LIBXSLT_VERSION_STRING "10001"
 
 /**
  * WITH_XSLT_DEBUG:

@@ -280,6 +280,8 @@ main(int argc, char **argv)
     LIBXML_TEST_VERSION
 
     defaultLoader = xmlGetExternalEntityLoader();
+    xmlLineNumbersDefault(1);
+
     if (novalid == 0)           /* TODO XML_DETECT_IDS | XML_COMPLETE_ATTRS */
         xmlLoadExtDtdDefaultValue = 6;
     else

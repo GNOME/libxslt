@@ -10,7 +10,8 @@ Copyright: LGPL
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/XSLT/libxslt-%{ver}.tar.gz
 BuildRoot: /var/tmp/libxslt-%{PACKAGE_VERSION}-root
-Requires: libxml2 >= 2.3.10
+Requires: libxml2 >= @LIBXML_REQUIRED_VERSION@
+BuildRequires: libxml2-devel >= @LIBXML_REQUIRED_VERSION@
 
 URL: http://xmlsoft.org/XSLT/
 Docdir: %{prefix}/doc
