@@ -152,7 +152,7 @@ AC_ARG_WITH(libxml-include-prefix,
 
 AC_ARG_WITH(libxml-libs-prefix,
         [  --with-libxml-libs-prefix=[PFX]	Specify location of libxml libs],
-        LIBXML_LIBS="-L$withval -lxml -lz"
+        LIBXML_LIBS="-L$withval"
 )
 
 
@@ -194,8 +194,8 @@ then
 	vers=VERSION_TO_NUMBER($XML_CONFIG --version)
 	if test "$vers" -ge VERSION_TO_NUMBER(echo $LIBXML_REQUIRED_VERSION)
 	then
-		LIBXML_LIBS="`$XML_CONFIG --libs`"
-		LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
+		LIBXML_LIBS="$LIBXML_LIBS `$XML_CONFIG --libs`"
+		LIBXML_CFLAGS="$LIBXML_CFLAGS `$XML_CONFIG --cflags`"
 		AC_MSG_RESULT(found)
 	else
 		AC_MSG_ERROR(You need at least libxml2 $LIBXML_REQUIRED_VERSION for this version of libxslt)

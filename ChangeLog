@@ -1,3 +1,7 @@
+Thu Oct  4 15:28:25 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: applied patch to close bug #60724
+
 Tue Oct  2 21:38:23 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/date.c: applied patch from Charlie Bozeman that fixes
