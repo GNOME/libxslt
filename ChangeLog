@@ -1,3 +1,11 @@
+Tue May 22 18:52:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/functions.c: fixed the document() bug reported by
+	  Stephane GUIBOUD-RIBAUD
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-29-* tests/docs/bug-29-*: added a specific
+	  regression test
+
 Tue May 22 15:09:02 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in libxslt/Makefile.am: fixed bug #54953

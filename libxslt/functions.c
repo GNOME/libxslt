@@ -137,10 +137,14 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     if (obj->stringval == NULL) {
 	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
     } else {
-	if (obj2 != NULL) {
-	    /* obj2 should be ordered in document order !!!!! */
-	    base = xmlNodeGetBase(obj2->nodesetval->nodeTab[0]->doc,
-				  obj->nodesetval->nodeTab[0]);
+	if ((obj2 != NULL) && (obj2->nodesetval != NULL)) {
+	    xmlNodePtr target;
+
+	    target = obj2->nodesetval->nodeTab[0];
+	    if (target->type == XML_ATTRIBUTE_NODE) {
+		target = ((xmlAttrPtr) target)->parent;
+	    }
+	    base = xmlNodeGetBase(target->doc, target);
 	} else {
 	    xsltTransformContextPtr tctxt = ctxt->context->extra;
 	    if ((tctxt != NULL) && (tctxt->inst != NULL)) {
