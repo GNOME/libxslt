@@ -215,31 +215,38 @@ fi
 AC_SUBST(pythondir)
 AC_SUBST(PYTHON_SUBDIR)
 
-dnl
-dnl check for gcrypt
-dnl
-AC_PATH_PROG(LIBGCRYPT_CONFIG, libgcrypt-config, no)
-if test "$LIBGCRYPT_CONFIG" != "no" ; then
-  LIBGCRYPT_VERSION=`$LIBGCRYPT_CONFIG --version`
-  if test VERSION_TO_NUMBER(echo $LIBGCRYPT_VERSION) -lt VERSION_TO_NUMBER(echo "1.1.42")
-  then
+AC_ARG_WITH(crypto, [  --with-crypto           Add crypto support to exslt (on)])
+WITH_CRYPTO=0
+if test "$with_crypto" = "no" ; then
+    echo Disabling crypto support
     LIBGCRYPT_CFLAGS=""
     LIBGCRYPT_LIBS=""
-    AC_MSG_NOTICE([gcrypt library version < 1.1.42 - Crypto extensions will not be available.])
-  else
-    LIBGCRYPT_CFLAGS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --cflags`
-    LIBGCRYPT_LIBS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --libs`
-    AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
-    AC_MSG_NOTICE([Crypto extensions will be available.])
-  fi
 else
-  LIBGCRYPT_CFLAGS=""
-  LIBGCRYPT_LIBS=""
-  AC_MSG_NOTICE([Crypto extensions will not be available. Install libgcrypt and reconfigure to make available.])
+    AC_PATH_PROG(LIBGCRYPT_CONFIG, libgcrypt-config, no)
+    if test "$LIBGCRYPT_CONFIG" != "no" ; then
+      LIBGCRYPT_VERSION=`$LIBGCRYPT_CONFIG --version`
+      if test VERSION_TO_NUMBER(echo $LIBGCRYPT_VERSION) -lt VERSION_TO_NUMBER(echo "1.1.42")
+      then
+        LIBGCRYPT_CFLAGS=""
+        LIBGCRYPT_LIBS=""
+        echo gcrypt library version < 1.1.42 - Crypto extensions will not be available.
+      else
+        LIBGCRYPT_CFLAGS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --cflags`
+        LIBGCRYPT_LIBS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --libs`
+        AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
+        echo Crypto extensions will be available.
+		WITH_CRYPTO=1
+      fi
+    else
+      LIBGCRYPT_CFLAGS=""
+      LIBGCRYPT_LIBS=""
+      echo Crypto extensions will not be available. Install libgcrypt and reconfigure to make available.
+    fi
 fi
-
+AC_SUBST(WITH_CRYPTO)
 AC_SUBST(LIBGCRYPT_CFLAGS)
 AC_SUBST(LIBGCRYPT_LIBS)
+
 dnl
 dnl Debug for DV (-Wunreachable-code)
 dnl
@@ -251,6 +258,10 @@ if [[ "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ]] || \
     fi
     CFLAGS="-Wall -g -O -ansi -pedantic -W -Wunused -Wimplicit -Wreturn-type -Wswitch -Wcomment -Wtrigraphs -Wformat -Wchar-subscripts -Wuninitialized -Wparentheses -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline "
     STATIC_BINARIES="-static"
+    if [ "${LOGNAME}" = "veillard" ]
+    then
+        LIBXML_SRC="/u/veillard/XML"
+    fi
 else
     STATIC_BINARIES=
 fi

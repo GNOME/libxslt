@@ -35,6 +35,15 @@ extern "C" {
 #define LIBEXSLT_VERSION_STRING "@LIBEXSLT_VERSION_NUMBER@"
 
 /**
+ * WITH_CRYPTO:
+ *
+ * Whether crypto support is configured into exslt
+ */
+#if @WITH_CRYPTO@
+#define EXSLT_CRYPTO_ENABLED
+#endif
+
+/**
  * ATTRIBUTE_UNUSED:
  *
  * This macro is used to flag unused function parameters to GCC

@@ -21,6 +21,8 @@
 
 #include "exslt.h"
 
+#ifdef EXSLT_CRYPTO_ENABLED
+
 #define HASH_DIGEST_LENGTH 32
 #define MD5_DIGEST_LENGTH 16
 #define SHA1_DIGEST_LENGTH 20
@@ -731,3 +733,5 @@ exsltCryptoRegister (void) {
 }
 
 #endif /* defined(HAVE_CRYPTO) */
+
+#endif /* EXSLT_CRYPTO_ENABLED */

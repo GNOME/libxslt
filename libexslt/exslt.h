@@ -72,7 +72,9 @@ EXSLTPUBVAR const int exsltLibxmlVersion;
 #define SAXON_NAMESPACE ((const xmlChar *) "http://icl.com/saxon")
 
 EXSLTPUBFUN void EXSLTCALL exsltCommonRegister (void);
+#ifdef EXSLT_CRYPTO_ENABLED
 EXSLTPUBFUN void EXSLTCALL exsltCryptoRegister (void);
+#endif
 EXSLTPUBFUN void EXSLTCALL exsltMathRegister (void);
 EXSLTPUBFUN void EXSLTCALL exsltSetsRegister (void);
 EXSLTPUBFUN void EXSLTCALL exsltFuncRegister (void);

@@ -32,7 +32,9 @@ const int exsltLibxmlVersion = LIBXML_VERSION;
 void
 exsltRegisterAll (void) {
     exsltCommonRegister();
+#ifdef EXSLT_CRYPTO_ENABLED
     exsltCryptoRegister();
+#endif
     exsltMathRegister();
     exsltSetsRegister();
     exsltFuncRegister();

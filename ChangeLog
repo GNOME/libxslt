@@ -1,3 +1,9 @@
+Fri Jul 16 12:14:57 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libexslt/crypto.c libexslt/exslt.[ch] 
+	  libexslt/exsltconfig.h.in win32/configure.js: apply patch from
+	  Rob Richards to add a normal --with-crypto configure option.
+
 Tue Jul 13 22:57:43 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/functions.c: added some logic to xsltKeyFunction

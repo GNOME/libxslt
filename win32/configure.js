@@ -45,6 +45,7 @@ var withMemDebug = false;
 var withDebugger = true;
 var withIconv = true;
 var withZlib = false;
+var withCrypto = true;
 /* Win32 build options. */
 var dirSep = "\\";
 var compiler = "msvc";
@@ -101,6 +102,7 @@ function usage()
 	txt += "  debugger:   Enable external debugger support (" + (withDebugger? "yes" : "no")  + ")\n";
 	txt += "  iconv:      Use iconv library (" + (withIconv? "yes" : "no")  + ")\n";
 	txt += "  zlib:       Use zlib library (" + (withZlib? "yes" : "no") + ")\n";
+	txt += "  crypto:     Enable Crypto support (" + (withCrypto? "yes" : "no") + ")\n";
 	txt += "\nWin32 build options, default value given in parentheses:\n\n";
 	txt += "  compiler:   Compiler to be used [msvc|mingw] (" + compiler + ")\n";
 	txt += "  cruntime:   C-runtime compiler option (only msvc) (" + cruntime + ")\n";
@@ -168,6 +170,7 @@ function discoverVersion()
 	vf.WriteLine("WITH_DEBUGGER=" + (withDebugger? "1" : "0"));
 	vf.WriteLine("WITH_ICONV=" + (withIconv? "1" : "0"));
 	vf.WriteLine("WITH_ZLIB=" + (withZlib? "1" : "0"));
+	vf.WriteLine("WITH_CRYPTO=" + (withCrypto? "1" : "0"));
 	vf.WriteLine("DEBUG=" + (buildDebug? "1" : "0"));
 	vf.WriteLine("STATIC=" + (buildStatic? "1" : "0"));
 	vf.WriteLine("PREFIX=" + buildPrefix);
@@ -236,6 +239,8 @@ function configureExslt()
 		} else if (s.search(/\@LIBEXSLT_VERSION_NUMBER\@/) != -1) {
 			of.WriteLine(s.replace(/\@LIBEXSLT_VERSION_NUMBER\@/, 
 				verMajorExslt*10000 + verMinorExslt*100 + verMicroExslt*1));
+		} else if (s.search(/\@WITH_CRYPTO\@/) != -1) {
+			of.WriteLine(s.replace(/\@WITH_CRYPTO\@/, withCrypto? "1" : "0"));
 		} else
 			of.WriteLine(ln);
 	}
@@ -304,6 +309,8 @@ for (i = 0; (i < WScript.Arguments.length) && (error == 0); i++) {
 			withIconv = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "zlib")
 			withZlib  = strToBool(arg.substring(opt.length + 1, arg.length));
+		else if (opt == "crypto")
+			withCrypto = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "compiler")
 			compiler = arg.substring(opt.length + 1, arg.length);
  		else if (opt == "cruntime")
@@ -408,6 +415,7 @@ txtOut += "  Memory debugging: " + boolToStr(withMemDebug) + "\n";
 txtOut += "  Debugger support: " + boolToStr(withDebugger) + "\n";
 txtOut += "         Use iconv: " + boolToStr(withIconv) + "\n";
 txtOut += "         With zlib: " + boolToStr(withZlib) + "\n";
+txtOut += "            Crypto: " + boolToStr(withCrypto) + "\n";
 txtOut += "\n";
 txtOut += "Win32 build configuration\n";
 txtOut += "-------------------------\n";
