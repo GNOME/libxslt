@@ -264,12 +264,18 @@ xsltDecimalFormatGetByName(xsltStylesheetPtr sheet, xmlChar *name)
 
     if (name == NULL)
 	return sheet->decimalFormat;
-    
-    for (result = sheet->decimalFormat->next;
-	 result != NULL;
-	 result = result->next) {
-	if (xmlStrEqual(name, result->name))
-	    break; /* for */
+
+    while (sheet != NULL) {
+	for (result = sheet->decimalFormat->next;
+	     result != NULL;
+	     result = result->next) {
+	    if (xmlStrEqual(name, result->name))
+		return result; /* for */
+	}
+	if (sheet->next != NULL)
+	    sheet = sheet->next;
+	else
+	    sheet = sheet->imports;
     }
     return result;
 }
