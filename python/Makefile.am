@@ -32,7 +32,7 @@ mylibs = \
 
 all-local: libxslt.py
 
-pythondir = $(prefix)/lib/python${PYTHON_VERSION}/site-packages
+pythondir = $(libdir)/python${PYTHON_VERSION}/site-packages
 python_LTLIBRARIES = libxsltmod.la
 
 libxsltmod_la_SOURCES = libxslt.c types.c libxslt-py.c
