@@ -3,7 +3,7 @@
 $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
-EXTRA_DIST = dict.dtd  dict.xml  dict.xsl \
+EXTRA_DIST = dict.dtd  dict.xml  dict.xsl result.xml \
     out/lettera.html out/lettera.orig out/letterb.html out/letterb.orig \
     out/letterc.html out/letterc.orig out/letterd.html out/letterd.orig \
     out/lettere.html out/lettere.orig out/letterf.html out/letterf.orig \

@@ -1,3 +1,9 @@
+Wed May  2 10:55:56 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/multiple/makefile.am: fixing #54015
+	* tests/XSLTMark/makefile.am tests/docbook/makefile.am: fixing #54014
+	  and a similar problem for the docbook tests
+
 Mon Apr 30 22:31:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/general/bug-8-.out: fixed in libxml xpath
