@@ -1,3 +1,8 @@
+Fri Jan 23 18:52:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: changed priority of template patterns
+	  starting with '//' from 0.0 to 0.5 (Bug 131705)
+
 Thu Jan 22 18:42:03 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: applied patch from Stefan Kost to fix

@@ -1643,6 +1643,7 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	 */
 	NEXT;
 	NEXT;
+	ctxt->comp->priority = 0.5;	/* '//' means not 0 priority */
 	xsltCompileRelativePathPattern(ctxt, NULL);
     } else if (CUR == '/') {
 	/*
@@ -1784,6 +1785,11 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 			 "xsltCompilePattern : parsing '%s'\n",
 			 element->pattern);
 #endif
+	/*
+	 Preset default priority to be zero.
+	 This may be changed by xsltCompileLocationPathPattern.
+	 */
+	element->priority = 0;
 	xsltCompileLocationPathPattern(ctxt);
 	if (ctxt->error) {
 	    xsltTransformError(NULL, style, node,
@@ -1801,42 +1807,36 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	/*
 	 * Set-up the priority
 	 */
-	if (((element->steps[0].op == XSLT_OP_ELEM) ||
-	     (element->steps[0].op == XSLT_OP_ATTR)) &&
-	    (element->steps[0].value != NULL) &&
-	    (element->steps[1].op == XSLT_OP_END)) {
-	    element->priority = 0;
-#if 0
-	} else if ((element->steps[0].op == XSLT_OP_ROOT) &&
-		   (element->steps[1].op == XSLT_OP_END)) {
-	    element->priority = 0;
-#endif
-	} else if ((element->steps[0].op == XSLT_OP_PI) &&
-		   (element->steps[0].value != NULL) &&
-		   (element->steps[1].op == XSLT_OP_END)) {
-	    element->priority = 0;
-	} else if ((element->steps[0].op == XSLT_OP_ATTR) &&
-		   (element->steps[0].value2 != NULL) &&
-		   (element->steps[1].op == XSLT_OP_END)) {
-	    element->priority = -0.25;
-	} else if ((element->steps[0].op == XSLT_OP_NS) &&
-		   (element->steps[0].value != NULL) &&
-		   (element->steps[1].op == XSLT_OP_END)) {
-	    element->priority = -0.25;
-	} else if ((element->steps[0].op == XSLT_OP_ATTR) &&
-		   (element->steps[0].value == NULL) &&
-		   (element->steps[0].value2 == NULL) &&
-		   (element->steps[1].op == XSLT_OP_END)) {
-	    element->priority = -0.5;
-	} else if (((element->steps[0].op == XSLT_OP_PI) ||
-		    (element->steps[0].op == XSLT_OP_TEXT) ||
-		    (element->steps[0].op == XSLT_OP_ALL) ||
-		    (element->steps[0].op == XSLT_OP_NODE) ||
-		    (element->steps[0].op == XSLT_OP_COMMENT)) &&
-		   (element->steps[1].op == XSLT_OP_END)) {
-	    element->priority = -0.5;
-	} else {
-	    element->priority = 0.5;
+	if (element->priority == 0) {	/* if not yet determined */
+	    if (((element->steps[0].op == XSLT_OP_ELEM) ||
+		 (element->steps[0].op == XSLT_OP_ATTR) ||
+		 (element->steps[0].op == XSLT_OP_PI)) &&
+		(element->steps[0].value != NULL) &&
+		(element->steps[1].op == XSLT_OP_END)) {
+		;	/* previously preset */
+	    } else if ((element->steps[0].op == XSLT_OP_ATTR) &&
+		       (element->steps[0].value2 != NULL) &&
+		       (element->steps[1].op == XSLT_OP_END)) {
+			element->priority = -0.25;
+	    } else if ((element->steps[0].op == XSLT_OP_NS) &&
+		       (element->steps[0].value != NULL) &&
+		       (element->steps[1].op == XSLT_OP_END)) {
+			element->priority = -0.25;
+	    } else if ((element->steps[0].op == XSLT_OP_ATTR) &&
+		       (element->steps[0].value == NULL) &&
+		       (element->steps[0].value2 == NULL) &&
+		       (element->steps[1].op == XSLT_OP_END)) {
+			element->priority = -0.5;
+	    } else if (((element->steps[0].op == XSLT_OP_PI) ||
+		       (element->steps[0].op == XSLT_OP_TEXT) ||
+		       (element->steps[0].op == XSLT_OP_ALL) ||
+		       (element->steps[0].op == XSLT_OP_NODE) ||
+		       (element->steps[0].op == XSLT_OP_COMMENT)) &&
+		       (element->steps[1].op == XSLT_OP_END)) {
+			element->priority = -0.5;
+	    } else {
+		element->priority = 0.5;
+	    }
 	}
 #ifdef WITH_XSLT_DEBUG_PATTERN
 	xsltGenericDebug(xsltGenericDebugContext,
