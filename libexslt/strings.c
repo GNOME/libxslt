@@ -34,7 +34,8 @@ exsltStrTokenizeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlChar *str, *delimiters, *cur;
     const xmlChar *token, *delimiter;
     xmlNodePtr node;
-    xmlDocPtr doc;
+    xmlDocPtr container;
+
     xmlXPathObjectPtr ret;
 
     if ((nargs < 1) || (nargs > 2)) {
@@ -58,54 +59,44 @@ exsltStrTokenizeFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
-    doc = xsltXPathGetTransformContext(ctxt)->document->doc;
-    ret = xmlXPathNewNodeSet (NULL);
-    if (ret != NULL) {
-	ret->boolval = 1;
-	/*
-	 * This is a hack: token elements are added as children of a
-	 * fake element node. This is necessary to free them up
-	 * correctly when freeing the node-set.
-	 */
-	ret->user = (void *) xmlNewDocNode (doc, NULL,
-				(const xmlChar *) "fake", NULL);
-	if (ret->user == NULL)
-	    goto error;
-    }
+	/* Return a result tree fragment */
 
-    for (cur = str, token = str; *cur != 0; cur++) {
-	for (delimiter = delimiters; *delimiter != 0; delimiter++) {
-	    if (*cur == *delimiter) {
-		if (cur == token) {
-		    /* discard empty tokens */
-		    break;
+	container = xmlNewDoc(NULL);
+	if (container != NULL) {
+		container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
+		container->doc = container;
+		ret = xmlXPathNewValueTree((xmlNodePtr) container);
+   		if (ret != NULL) {
+			/* Tag the subtree for removal once consumed */
+			ret->boolval = 1;
+   		 	for (cur = str, token = str; *cur != 0; cur++) {
+				for (delimiter = delimiters; *delimiter != 0; delimiter++) {
+				   	if (*cur == *delimiter) {
+						if (cur == token) {
+					    /* discard empty tokens */
+					    break;
+				  	    }
+					    *cur = 0;
+						node = xmlNewChild ( (xmlNodePtr) container, NULL,
+					      (const xmlChar *) "token", token);
+						*cur = *delimiter;
+						token = cur + 1;
+						break;
+	    			}
+				}
+    		}
+    	node = xmlNewChild ((xmlNodePtr) container, NULL, (const xmlChar *) "token", token);
 		}
-		*cur = 0;
-		node = xmlNewDocNode (doc, NULL,
-				      (const xmlChar *) "token", token);
-		*cur = *delimiter;
-		token = cur + 1;
-
-		xmlAddChild ((xmlNodePtr) ret->user, node);
-		xmlXPathNodeSetAdd (ret->nodesetval, node);
-		break;
-	    }
 	}
-    }
-    node = xmlNewDocNode (doc, NULL, (const xmlChar *) "token", token);
-    xmlAddChild ((xmlNodePtr) ret->user, node);
-    xmlXPathNodeSetAdd (ret->nodesetval, node);
 
-    valuePush (ctxt, ret);
-    ret = NULL;		/* hack to prevent freeing ret later */
-
-error:
-    if (ret != NULL)
-	xmlXPathFreeObject (ret);
     if (str != NULL)
 	xmlFree(str);
     if (delimiters != NULL)
 	xmlFree(delimiters);
+	if (ret != NULL)
+    	valuePush (ctxt, ret);
+	else
+		valuePush(ctxt,xmlXPathNewNodeSet(NULL));
 }
 
 /**
