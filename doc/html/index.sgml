@@ -102,6 +102,7 @@
 <ANCHOR id ="XSLTPARSESTYLESHEETATTRIBUTESET" href="libxslt/libxslt-attributes.html#XSLTPARSESTYLESHEETATTRIBUTESET">
 <ANCHOR id ="XSLTFREEATTRIBUTESETSHASHES" href="libxslt/libxslt-attributes.html#XSLTFREEATTRIBUTESETSHASHES">
 <ANCHOR id ="XSLTAPPLYATTRIBUTESET" href="libxslt/libxslt-attributes.html#XSLTAPPLYATTRIBUTESET">
+<ANCHOR id ="XSLTRESOLVESTYLESHEETATTRIBUTESET" href="libxslt/libxslt-attributes.html#XSLTRESOLVESTYLESHEETATTRIBUTESET">
 <ANCHOR id ="LIBXSLT-IMPORTS" href="libxslt/libxslt-imports.html">
 <ANCHOR id ="XSLT-GET-IMPORT-PTR-CAPS" href="libxslt/libxslt-imports.html#XSLT-GET-IMPORT-PTR-CAPS">
 <ANCHOR id ="XSLT-GET-IMPORT-INT-CAPS" href="libxslt/libxslt-imports.html#XSLT-GET-IMPORT-INT-CAPS">

@@ -57,6 +57,11 @@ xsltStylesheetPtr style
 <RETURNS>void 	</RETURNS>
 xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst,xmlChar *attributes
 </FUNCTION>
+<FUNCTION>
+<NAME>xsltResolveStylesheetAttributeSet</NAME>
+<RETURNS>void 	</RETURNS>
+xsltStylesheetPtr style
+</FUNCTION>
 <MACRO>
 <NAME>XSLT_LIBXSLT_NAMESPACE</NAME>
 #define XSLT_LIBXSLT_NAMESPACE ((xmlChar *) "http://xmlsoft.org/XSLT/namespace")
