@@ -52,6 +52,14 @@
  *			Module interfaces				*
  *									*
  ************************************************************************/
+static void xsltFixImportedCompSteps(xsltStylesheetPtr master, 
+			xsltStylesheetPtr style) {
+    xsltStylesheetPtr res;
+    for (res = style; res != NULL; res = res->imports)
+	xmlHashScan(res->templatesHash,
+	            (xmlHashScanner) xsltNormalizeCompSteps, master);
+    master->extrasNr += style->extrasNr;
+}
 
 /**
  * xsltParseStylesheetImport:
@@ -134,9 +142,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     if (res != NULL) {
 	res->next = style->imports;
 	style->imports = res;
-	xmlHashScan(res->templatesHash, 
-	            (xmlHashScanner) xsltNormalizeCompSteps, style);
-	style->extrasNr += res->extrasNr;
+	xsltFixImportedCompSteps(style, res);
 	ret = 0;
     } else {
 	xmlFreeDoc(import);

@@ -1,3 +1,9 @@
+Sun May  2 12:47:32 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/imports.c: enhanced normalization of comp steps
+	  when an imported stylesheet has it's own imports
+	  (bug 141279)
+
 Sat May  1 10:35:03 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: added code to recognize
