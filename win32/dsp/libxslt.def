@@ -157,3 +157,6 @@ EXPORTS
 	xsltParseTemplateContent
 	xsltRegisterTestModule
 	xsltCleanupGlobals
+	xsltDocumentComp
+	xsltInitElemPreComp
+	xsltPrintErrorContext
