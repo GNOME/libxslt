@@ -1,3 +1,9 @@
+Sat Aug 21 22:08:14 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* transform.c: Further enhancement for keys on exslt:node-sets.
+	  Corrects a rather serious timing problem (bug 150741)
+	* tests/exslt/common/node-set.8.*: added regression test for this
+
 Fri Aug 20 18:53:50 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am configure.in: a bit of cleanup and a extra variable for

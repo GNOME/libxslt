@@ -3127,8 +3127,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int nbsorts = 0;
     xmlNodePtr sorts[XSLT_MAX_SORT];
     xmlDocPtr oldXDocPtr;
-    xsltDocumentPtr oldCDocPtr, newDocPtr = NULL;
-    xmlNodePtr newDocPtrPtr = NULL;
+    xsltDocumentPtr oldCDocPtr;
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
 
@@ -3193,29 +3192,26 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		 In order to take care of potential keys we need to
 		 do some extra work in the case of an RVT converted
 		 into a nodeset (e.g. exslt:node-set())
+		 We create a "pseudo-doc" (if not already created) and
+		 store it's pointer into _private.  This doc, together
+		 with the keyset, will be freed when the RVT is freed.
 	        */
 		if ((list != NULL) && (ctxt->document->keys != NULL)) {
 		    if ((list->nodeNr != 0) &&
 		        (list->nodeTab[0]->doc != NULL) &&
 		        (xmlStrEqual((xmlChar *)list->nodeTab[0]->doc->name,
 			   (const xmlChar *) " fake node libxslt")) &&
-			(list->nodeTab[0]->doc->psvi == NULL)) {
-		        newDocPtr = xsltNewDocument(ctxt, 
-			       list->nodeTab[0]->doc);
-		        if (newDocPtr == NULL) {
+			(list->nodeTab[0]->doc->_private == NULL)) {
+			    list->nodeTab[0]->doc->_private = xsltNewDocument(
+			    	ctxt, list->nodeTab[0]->doc);
+			if (list->nodeTab[0]->doc->_private == NULL) {
 			    xsltTransformError(ctxt, NULL, inst,
 		    "xsltApplyTemplates : failed to allocate subdoc\n");
 		        }
-			if (list->nodeTab[0]->type == XML_ELEMENT_NODE) {
-			    list->nodeTab[0]->psvi = (xmlNodePtr)newDocPtr;
-			} else
-			if ((list->nodeTab[0]->type == XML_ELEMENT_NODE) ||
-			    (list->nodeTab[0]->type == XML_DOCUMENT_NODE)) {
-			    list->nodeTab[0]->psvi = (xmlNodePtr)newDocPtr;
-			    newDocPtrPtr = list->nodeTab[0];
-			}
-			ctxt->document = newDocPtr;
+
+			ctxt->document = list->nodeTab[0]->doc->_private;
 		    }
+
 		}
 	     } else {
 		list = NULL;
@@ -3390,19 +3386,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 error:
     if (params != NULL)
 	xsltFreeStackElemList(params);	/* free the parameter list */
-    if (list != NULL) {
-        /*
-	  If we created a "pseudo-document" we must free it now
-	*/
-	if (newDocPtr != NULL) {
-	    newDocPtr->doc->parent = NULL;
-	    xsltFreeDocumentKeys(newDocPtr);
-	    xmlFree(newDocPtr);
-	    if (newDocPtrPtr != NULL)
-		newDocPtrPtr->psvi = NULL;
-	}
+    if (list != NULL)
 	xmlXPathFreeNodeSet(list);
-    }
     /*
      * res must be deallocated after list
      */
