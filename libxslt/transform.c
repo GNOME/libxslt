@@ -713,10 +713,18 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (node->nsDef != NULL)
 		xsltCopyNamespaceList(ctxt, copy, node->nsDef);
 	}
-	if (((node->type == XML_ELEMENT_NODE) ||
-	     (node->type == XML_ATTRIBUTE_NODE)) &&
-	    (node->ns != NULL)) {
-	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
+	if ((node->type == XML_ELEMENT_NODE) ||
+	     (node->type == XML_ATTRIBUTE_NODE)) {
+	    if (node->ns != NULL)
+		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
+	    else if ((insert != NULL) && (insert->type == XML_ELEMENT_NODE) &&
+		     (insert->ns != NULL)) {
+		xmlNsPtr defaultNs;
+
+		defaultNs = xmlSearchNs(insert->doc, insert, NULL);
+		if (defaultNs != NULL)
+		    xmlNewNs(copy, BAD_CAST "", NULL);
+	    }
 	}
     } else {
 	xsltTransformError(ctxt, NULL, node,
@@ -827,8 +835,18 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	/*
 	 * Add namespaces as they are needed
 	 */
-	if (node->ns != NULL) {
-	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
+	if ((node->type == XML_ELEMENT_NODE) ||
+	    (node->type == XML_ATTRIBUTE_NODE)) {
+	    if (node->ns != NULL)
+		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
+	    else if ((insert != NULL) && (insert->type == XML_ELEMENT_NODE) &&
+		     (insert->ns != NULL)) {
+		xmlNsPtr defaultNs;
+
+		defaultNs = xmlSearchNs(insert->doc, insert, NULL);
+		if (defaultNs != NULL)
+		    xmlNewNs(copy, BAD_CAST "", NULL);
+	    }
 	}
 	if (node->nsDef != NULL)
 	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
