@@ -39,7 +39,6 @@
  *			Result Value Tree interfaces			*
  *									*
  ************************************************************************/
-
 /**
  * xsltCreateRVT:
  * @ctxt:  an XSLT transformation context
@@ -471,7 +470,6 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	     * Tag the subtree for removal once consumed
 	     */
 	    xsltRegisterTmpRVT(ctxt, container);
-
 	    oldoutput = ctxt->output;
 	    ctxt->output = container;
 	    oldInsert = ctxt->insert;
@@ -606,7 +604,10 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	     * Tag the subtree for removal once consumed
 	     */
 	    xsltRegisterTmpRVT(ctxt, container);
-
+	    /*
+	     * Save a pointer to the global variable for later cleanup
+	     */
+	    container->_private = elem;
 	    oldoutput = ctxt->output;
 	    ctxt->output = container;
 	    oldInsert = ctxt->insert;

@@ -1688,11 +1688,18 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
         templPop(ctxt);
 	/*
 	 * Free up all the unreferenced RVT
+	 * Also set any global variables instantiated
+	 * using them, to be "not yet computed".
 	 */
 	if (ctxt->tmpRVT != NULL) {
+	    xsltStackElemPtr elem;
 	    xmlDocPtr tmp = ctxt->tmpRVT, next;
-
             while (tmp != NULL) {
+	        elem = (xsltStackElemPtr)tmp->_private;
+		if (elem != NULL) {
+		    elem->computed = 0;
+		    xmlXPathFreeObject(elem->value);
+		}
 	        next = (xmlDocPtr) tmp->next;
 		xmlFreeDoc(tmp);
 		tmp = next;
@@ -2328,7 +2335,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltGenericDebug(xsltGenericDebugContext,
 				 "xsltCopy: namespace declaration\n");
 #endif
-                xsltCopyNamespace(ctxt, ctxt->insert, (xmlNsPtr) node);
+                xsltCopyNamespace(ctxt, ctxt->insert, (xmlNsPtr)node);
 		break;
 	    default:
 		break;

@@ -1,3 +1,10 @@
+Sat Jul 12 20:35:28 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* fixed bug 114764, trouble with globals and RVT's
+	  with minor changes in variables.c and transform.c
+	  so that any global instantiated with an RVT gets
+	  uninitialized when the RVT is destroyed.
+	  
 Thu Jul 10 15:47:33 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: simple cast missing Peter Breitenlohner
