@@ -143,6 +143,15 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
     if ((ctxt == NULL) || (cur == NULL) || (out == NULL) || (URI == NULL))
 	return(NULL);
 
+    if ((prefix == NULL) && (URI[0] == 0)) {
+	ret = xmlSearchNs(out->doc, out, NULL);
+	if (ret != NULL) {
+	    ret = xmlNewNs(out, URI, prefix);
+	    return(ret);
+	}
+	return(NULL);
+    }
+
     if ((out->parent != NULL) &&
 	(out->parent->type == XML_ELEMENT_NODE) &&
 	(out->parent->ns != NULL) &&

@@ -1,3 +1,8 @@
+Mon Feb 24 19:43:15 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/namespaces.c: fixed #106554 for spurious xmlns:nsX=""
+	  generation
+
 Sun Feb 23 14:52:57 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-105.xml
