@@ -1128,11 +1128,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		     "xsltDefaultProcessOneNode: copy text %s\n",
 			cur->content);
 #endif
-		copy = xmlCopyNode(cur, 0);
-		if (copy != NULL) {
-		    xmlAddChild(ctxt->insert, copy);
-		    ctxt->lasttext = NULL;	/* AddChild may truncate buf */
-		} else {
+		copy = xsltCopyText(ctxt, ctxt->insert, cur);
+		if (copy == NULL) {
 		    xsltTransformError(ctxt, NULL, node,
 		     "xsltDefaultProcessOneNode: text copy failed\n");
 		}
