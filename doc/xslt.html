@@ -160,6 +160,25 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
+<h3>0.10.0: May 19 2001</h3>
+<ul>
+  <li>cleanups to make stylesheet read-only (not 100% complete)</li>
+  <li>fixed URI resolution in document()</li>
+  <li>force all XPath expression to be compiled at stylesheet parsing time,
+    even if unused ...</li>
+  <li>Fixed HTML default output detection</li>
+  <li>Fixed double attibute generation #54446</li>
+  <li>Fixed {{ handling in attributes #54451</li>
+  <li>More tests and speedups for DocBook document transformations</li>
+  <li>Fixed a really bad race like bug in xsltCopyTreeList()</li>
+  <li>added a documentation on the libxslt internals</li>
+  <li>William Brack and Bjorn Reese improved format-number()</li>
+  <li>Fixed multiple sort, it should really work now</li>
+  <li>added a --docbook option for SGML DocBook input (hackish)</li>
+  <li>a number of other bug fixes and regression test added as people were
+    submitting them</li>
+</ul>
+
 <h3>0.9.0: May 3 2001</h3>
 <ul>
   <li>lot of various bugfixes, extended the regression suite</li>
@@ -285,8 +304,8 @@ orchis:~ -&gt;</pre>
 <p>Okay this section is clearly incomplete. But integrating libxslt into your
 application should be realitively easy. First check the few steps described
 below, then for more detailed informations, look at the<a
-href="html/libxslt-lib.html"> generated pages</a> for the API and the source of
-libxslt/xsltproc.c .</p>
+href="html/libxslt-lib.html"> generated pages</a> for the API and the source
+of libxslt/xsltproc.c .</p>
 
 <p>Basically doing an XSLT transformation can be done in a few steps:</p>
 <ol>
