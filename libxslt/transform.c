@@ -3118,12 +3118,12 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    if ((list->nodeNr != 0) &&
 		        (xmlStrEqual((xmlChar *)list->nodeTab[0]->doc->name,
 			   (const xmlChar *) " fake node libxslt")) &&
-			(list->nodeTab[0]->doc->parent == NULL)) {
+			(list->nodeTab[0]->doc->_private == NULL)) {
 		        newDocPtr = xsltNewDocument(ctxt, 
 			       list->nodeTab[0]->doc);
 		        if (newDocPtr == NULL) {
 		        }
-			list->nodeTab[0]->parent = (xmlNodePtr)newDocPtr;
+			list->nodeTab[0]->_private = (xmlNodePtr)newDocPtr;
 			ctxt->document = newDocPtr;
 		    }
 		}
@@ -3300,17 +3300,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 error:
     if (params != NULL)
 	xsltFreeStackElemList(params);	/* free the parameter list */
-    ctxt->nodeList = oldList;
-    ctxt->xpathCtxt->contextSize = oldContextSize;
-    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
-    ctxt->xpathCtxt->doc = oldXDocPtr;
-    ctxt->document = oldCDocPtr;
-    ctxt->xpathCtxt->nsNr = oldNsNr;
-    ctxt->xpathCtxt->namespaces = oldNamespaces;
-
-    ctxt->node = oldNode;
-    ctxt->mode = oldMode;
-    ctxt->modeURI = oldModeURI;
     if (list != NULL) {
         /*
 	  If we created a "pseudo-document" we must free it now
@@ -3331,6 +3320,18 @@ error:
      */
     if (res != NULL)
 	xmlXPathFreeObject(res);
+
+    ctxt->nodeList = oldList;
+    ctxt->xpathCtxt->contextSize = oldContextSize;
+    ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
+    ctxt->xpathCtxt->doc = oldXDocPtr;
+    ctxt->document = oldCDocPtr;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
+
+    ctxt->node = oldNode;
+    ctxt->mode = oldMode;
+    ctxt->modeURI = oldModeURI;
 }
 
 

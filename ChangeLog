@@ -1,3 +1,8 @@
+Mon Jan 10 08:33:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: Refined wrapper code with large
+	  test case submitted by Norm Walsh. (Bug 130922)
+
 Sun Jan 10 23:33:21 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: Added coding to create a xsltDocument
