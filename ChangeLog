@@ -1,3 +1,9 @@
+Tue Jan 14 16:22:48 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing release 2.0.24
+	* libxslt.spec.in: small update
+	* doc/*: updated the news, rebuilt the APIs descriptions
+
 Tue Jan 14 14:23:47 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.c: fixed #101502 by applying and cleaning up

@@ -83,6 +83,25 @@ A:link, A:visited, A:active { text-decoration: underline }
 <td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
 <h3>CVS only : check the <a href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
+<h3>1.0.24: Jan 14 2003</h3>
+<ul>
+<li>bug fixes: imported global varables, python bindings (Stéphane Bidoul),
+    EXSLT memory leak (Charles Bozeman), namespace generation on
+    xsl:attribute, space handling with imports (Daniel Stodden),
+    extension-element-prefixes (Josh Parsons), comments within xsl:text (Matt
+    Sergeant), superfluous xmlns generation, XInclude related bug for
+    numbering, EXSLT strings (Alexey Efimov), attribute-sets computation on
+    imports, extension module init and shutdown callbacks not called</li>
+  <li>HP-UX portability (Alexey Efimov), Windows makefiles (Igor and Stephane
+    Bidoul), VMS makefile updates (Craig A. Berry)</li>
+  <li>adds xsltGetProfileInformation() (Michael Rothwell)</li>
+  <li>fix the API generation scripts</li>
+  <li>API to provide the sorting routines (Richard Jinks)</li>
+  <li>added XML description of the EXSLT API</li>
+  <li>added ESXLT URI (un)escaping (Jörg Walter)</li>
+  <li>Some memory leaks have been found and fixed</li>
+  <li>document() now support fragment identifiers in URIs</li>
+</ul>
 <h3>1.0.23: Nov 17 2002</h3>
 <ul>
 <li>Windows build cleanup (Igor)</li>

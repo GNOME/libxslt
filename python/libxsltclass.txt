@@ -35,6 +35,7 @@ loadStylesheetPI()
 newStylesheet()
 parseStylesheetDoc()
 parseStylesheetFile()
+parseStylesheetImportedDoc()
 
 # functions from module xsltutils
 calibrateAdjust()

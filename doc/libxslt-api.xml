@@ -207,6 +207,7 @@
      <exports symbol='xsltOutputType'/>
      <exports symbol='xsltParseStylesheetDoc'/>
      <exports symbol='xsltParseStylesheetFile'/>
+     <exports symbol='xsltParseStylesheetImportedDoc'/>
      <exports symbol='xsltParseStylesheetOutput'/>
      <exports symbol='xsltParseStylesheetProcess'/>
      <exports symbol='xsltParseTemplateContent'/>
@@ -1603,6 +1604,11 @@ informations are stored'/>
       <return type='int' info='0 in case of success -1 in case of failure.'/>
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet'/>
       <arg name='cur' type='xmlNodePtr' info='the import element'/>
+    </function>
+    <function name='xsltParseStylesheetImportedDoc' file='xsltInternals'>
+      <info>parse an XSLT stylesheet building the associated structures except the processing not needed for imported documents.</info>
+      <return type='xsltStylesheetPtr' info='a new XSLT stylesheet structure.'/>
+      <arg name='doc' type='xmlDocPtr' info='and xmlDoc parsed XML'/>
     </function>
     <function name='xsltParseStylesheetInclude' file='imports'>
       <info>parse an XSLT stylesheet include element</info>
