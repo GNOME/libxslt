@@ -344,6 +344,7 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @target:  the element where the text will be attached
  * @string:  the text string
+ * @noescape:  should disable-escaping be activated for this text node.
  *
  * Create a text node
  *
@@ -351,7 +352,7 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 static xmlNodePtr
 xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
-	     const xmlChar *string) {
+	     const xmlChar *string, int noescape) {
     xmlNodePtr copy;
 
     if (string == NULL)
@@ -363,14 +364,28 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 		     string);
 #endif
 
-    /* TODO: handle coalescing of text nodes here */
+    /* handle coalescing of text nodes here */
     if ((ctxt->type == XSLT_OUTPUT_XML) &&
 	(ctxt->style->cdataSection != NULL) &&
 	(target != NULL) &&
 	(xmlHashLookup(ctxt->style->cdataSection,
 		       target->name) != NULL)) {
+	if ((target != NULL) && (target->last != NULL) &&
+	    (target->last->type == XML_CDATA_SECTION_NODE)) {
+	    xmlNodeAddContent(target->last, string);
+	    return(target->last);
+	}
 	copy = xmlNewCDataBlock(ctxt->output, string,
 				xmlStrlen(string));
+    } else if ((noescape) && (ctxt->type == XSLT_OUTPUT_XML)) {
+	if ((target != NULL) && (target->last != NULL) &&
+	    (target->last->type == XML_TEXT_NODE) &&
+	    (target->last->name == xmlStringTextNoenc)) {
+	    xmlNodeAddContent(target->last, string);
+	    return(target->last);
+	}
+	copy = xmlNewText(string);
+	copy->name = xmlStringTextNoenc;
     } else {
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
@@ -2450,7 +2465,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		     "xsltCopyOf: result %s\n", res->stringval);
 #endif
 		/* append content as text node */
-		xsltCopyTextString(ctxt, ctxt->insert, res->stringval);
+		xsltCopyTextString(ctxt, ctxt->insert, res->stringval, 0);
 	    }
 	}
     } else {
@@ -2509,21 +2524,18 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (res->type != XPATH_STRING)
 	    res = xmlXPathConvertString(res);
 	if (res->type == XPATH_STRING) {
-	    /* TODO: integrate with xsltCopyTextString */
-            copy = xmlNewText(res->stringval);
-	    if (copy != NULL) {
-		if (comp->noescape)
-		    copy->name = xmlStringTextNoenc;
-		xmlAddChild(ctxt->insert, copy);
-	    }
+	    copy = xsltCopyTextString(ctxt, ctxt->insert, res->stringval,
+		               comp->noescape);
 	}
     } else {
 	ctxt->state = XSLT_STATE_STOPPED;
     }
     if (copy == NULL) {
-	xsltPrintErrorContext(ctxt, NULL, inst);
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsltValueOf: text copy failed\n");
+	if ((res == NULL) || (res->stringval != NULL)) {
+	    xsltPrintErrorContext(ctxt, NULL, inst);
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsltValueOf: text copy failed\n");
+	}
     }
 #ifdef WITH_XSLT_DEBUG_PROCESS
     else

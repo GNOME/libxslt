@@ -1752,18 +1752,19 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     /*
      * process xsl:import elements
      */
-	while (cur != NULL) {
-		if (IS_BLANK_NODE(cur)) {
-			cur = cur->next;
-			continue;
-		}
-		if (IS_XSLT_ELEM(cur) && IS_XSLT_NAME(cur, "import")) {
-			if (xsltParseStylesheetImport(style, cur) != 0)
-				style->errors++;
-		} else
-			break;
-		cur = cur->next;
-	}
+    while (cur != NULL) {
+	    if (IS_BLANK_NODE(cur)) {
+		    cur = cur->next;
+		    continue;
+	    }
+	    if (IS_XSLT_ELEM(cur) && IS_XSLT_NAME(cur, "import")) {
+		    if (xsltParseStylesheetImport(style, cur) != 0)
+			    style->errors++;
+	    } else
+		    break;
+	    cur = cur->next;
+    }
+
     /*
      * process other top-level elements
      */

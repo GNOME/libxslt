@@ -1,3 +1,11 @@
+Wed Aug 21 13:48:07 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c libxslt/xslt.c: fixed bug #89258 and a bit of
+	  cleanup.
+	* tests/docs/Makefile.am tests/docs/bug-90.xml
+	  tests/general/Makefile.am tests/general/bug-90.*: added the
+	  example in the regression tests for this case
+
 Tue Aug 20 16:40:48 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* win32/Makefile.msvc: added the prefix location to the include
