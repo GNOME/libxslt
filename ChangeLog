@@ -1,3 +1,14 @@
+Sun Jun 10 13:37:33 HKT 2001 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: fixed problems with document() in
+	  xsltApplyTemplates and xsltForEach.  Cleaned up several
+	  error messages.
+	* libxslt/keys.c: saved and restored ctxt->document within
+	  xsltInitKey to fix problem with keys when doc changed
+	* libxslt/documents.[ch]: added new procedure xsltFindDocument
+	  needed when document() causes a change of doc within
+	  xsltApplyTemplates and xsltForEach
+
 Thu Jun  7 21:31:46 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltutils.[ch]: closing bug #55683 required to add
