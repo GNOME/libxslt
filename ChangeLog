@@ -1,3 +1,9 @@
+Fri Mar  1 10:14:07 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: similar to #72663 and #72658, don't memdump
+	  unless compiled explicitely with memory debugging switched on
+	* TODO: refreshed a bit
+
 Fri Feb 22 23:44:57 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/generator.py python/libxslt.c: changes for the 'usual'

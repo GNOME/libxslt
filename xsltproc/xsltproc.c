@@ -616,7 +616,9 @@ main(int argc, char **argv)
 done:
     xsltCleanupGlobals();
     xmlCleanupParser();
+#ifdef WITH_MEM_DEBUG
     xmlMemoryDump();
+#endif
     return(errorno);
 }
 

@@ -4,9 +4,6 @@
                  *        *
                   ********
 
-Doc:
-  - manpage and doc for xsltproc
-
 Design:
   - seems that saving back XSLT stylesheet from a compiled form might
     be a bit ugly ... Yes forget about it, it's just twaeked to the extreme
@@ -119,6 +116,8 @@ Doc:
   - put a page at http://xmlsoft.org/XSLT/
   - generate/transform the DocBook to HTML
   - add HTML to package
+  - manpage and doc for xsltproc
+
 
 Error handling:
   -> check the version stuff, design a separate module for error interfacing
