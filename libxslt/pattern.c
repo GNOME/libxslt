@@ -199,7 +199,7 @@ xsltFreeCompMatchList(xsltCompMatchPtr comp) {
  * steps of an imported stylesheet.
  */
 void xsltNormalizeCompSteps(void *payload,
-        void *data, const xmlChar *name) {
+        void *data, const xmlChar *name ATTRIBUTE_UNUSED) {
     xsltCompMatchPtr comp = payload;
     xsltStylesheetPtr style = data;
     int ix;

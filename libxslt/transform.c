@@ -1068,7 +1068,6 @@ static void
 xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			  xsltStackElemPtr params) {
     xmlNodePtr copy;
-    xmlAttrPtr attrs;
     xmlNodePtr delete = NULL, cur;
     int nbchild = 0, oldSize;
     int childno = 0, oldPos;
@@ -1192,17 +1191,6 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     /*
      * Handling of Elements: second pass, actual processing
      */
-    if (node->type == XML_ELEMENT_NODE) {
-	attrs = node->properties;
-	while (attrs != NULL) {
-	    template = xsltGetTemplate(ctxt, (xmlNodePtr) attrs, NULL);
-	    if (template) {
-		xsltApplyOneTemplate(ctxt, (xmlNodePtr) attrs,
-		                     template->content, template, params);
-	    }
-	    attrs = attrs->next;
-	}
-    }
     oldSize = ctxt->xpathCtxt->contextSize;
     oldPos = ctxt->xpathCtxt->proximityPosition;
     cur = node->children;

@@ -1,3 +1,11 @@
+Sat Nov  1 17:04:27 PST 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c, tests/general/bug-119.out: fixed
+	  bug #125502 and corrected expected test output
+	* tests/general/bug-79.out: fixed broken test (bug #123328)
+	* libxslt/pattern.c, libexslt/functions.c: minor change to
+	  eliminate compilation warning
+	  
 Sat Nov  1 22:36:30 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/REC/test-5.2-17.xsl tests/REC/test-5.2-18.xsl: fixing two

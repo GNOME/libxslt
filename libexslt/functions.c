@@ -184,13 +184,13 @@ exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
  * @style: an XSLT stylesheet
  * @URI: the namespace URI for the extension
  *
- * Allocates the styleshet data for EXSLT - Function
+ * Allocates the stylesheet data for EXSLT - Function
  *
  * Returns the allocated data
  */
 static xmlHashTablePtr
-exsltFuncStyleInit (xsltStylesheetPtr style,
-		    const xmlChar *URI) {
+exsltFuncStyleInit (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
+		    const xmlChar *URI ATTRIBUTE_UNUSED) {
     return xmlHashCreate(1);
 }
 
