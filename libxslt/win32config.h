@@ -70,6 +70,7 @@ static int isnan (double d) {
 #include <direct.h>
 #if defined(_MSC_VER)
 #define mkdir(p,m) (_mkdir(p))
+#define vsnprintf(b,c,f,a) (_vsnprintf(b,c,f,a))
 #endif
 
 #define HAVE_SYS_STAT_H
