@@ -847,15 +847,15 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 		    tst = 1;
 		else {
 		    if (number) {
-			/* We arbitrarily make NaN bigger than number
-			   (thinking that alpha is usually > number) */
+			/* We make NaN smaller than number in accordance
+			   with XSLT spec */
 			if (xmlXPathIsNaN(results[j]->floatval)) {
 			    if (xmlXPathIsNaN(results[j + incr]->floatval))
 				tst = 0;
 			    else
-				tst = 1;
+				tst = -1;
 			} else if (xmlXPathIsNaN(results[j + incr]->floatval))
-			    tst = -1;
+			    tst = 1;
 			else if (results[j]->floatval ==
 				results[j + incr]->floatval)
 			    tst = 0;
