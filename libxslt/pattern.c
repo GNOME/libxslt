@@ -1027,7 +1027,7 @@ xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #define CUR_PTR ctxt->cur
 
 #define SKIP_BLANKS 							\
-    while (IS_BLANK(CUR)) NEXT
+    while (IS_BLANK_CH(CUR)) NEXT
 
 #define CURRENT (*ctxt->cur)
 #define NEXT ((*ctxt->cur) ?  ctxt->cur++: ctxt->cur)
@@ -1729,7 +1729,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
     current = end = 0;
     while (pattern[current] != 0) {
 	start = current;
-	while (IS_BLANK(pattern[current]))
+	while (IS_BLANK_CH(pattern[current]))
 	    current++;
 	end = current;
 	level = 0;

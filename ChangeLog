@@ -1,3 +1,10 @@
+Tue Nov 18 13:42:12 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/strings.c: fixed entity problem in exslt:tokenize
+	  uncovered by newapi.xsl
+	* libxslt/transform.c,libxslt/pattern.c,libxslt/keys.c: changed
+	  to use IS_BLANK_CH for char compares (fixes warnings)
+
 Fri Nov 14 23:59:08 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/preproc.c: applied fix from Bjorn Reese to close

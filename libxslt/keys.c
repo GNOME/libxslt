@@ -256,7 +256,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     current = end = 0;
     while (match[current] != 0) {
 	start = current;
-	while (IS_BLANK(match[current]))
+	while (IS_BLANK_CH(match[current]))
 	    current++;
 	end = current;
 	while ((match[end] != 0) && (match[end] != '|')) {

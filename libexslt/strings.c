@@ -94,9 +94,9 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                 }
             }
             if (token != cur) {
-                node =
-                    xmlNewChild((xmlNodePtr) container, NULL,
-                                (const xmlChar *) "token", token);
+	    	node = xmlNewDocRawNode(container, NULL,
+				    (const xmlChar *) "token", token);
+                xmlAddChild((xmlNodePtr) container, node);
 	        xmlXPathNodeSetAddUnique(ret->nodesetval, node);
             }
         }

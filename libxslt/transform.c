@@ -2059,12 +2059,12 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 	element = elements;
 	while (*element != 0) {
-	    while (IS_BLANK(*element))
+	    while (IS_BLANK_CH(*element))
 		element++;
 	    if (*element == 0)
 		break;
 	    end = element;
-	    while ((*end != 0) && (!IS_BLANK(*end)))
+	    while ((*end != 0) && (!IS_BLANK_CH(*end)))
 		end++;
 	    element = xmlStrndup(element, end - element);
 	    if (element) {
