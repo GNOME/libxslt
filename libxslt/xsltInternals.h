@@ -120,6 +120,7 @@ struct _xsltStylesheet {
     xmlDocPtr doc;		/* the parsed XML stylesheet */
     xmlHashTablePtr stripSpaces;/* the hash table of the strip-space
 				   preserve space and cdata-section elements */
+    int             stripAll;	/* strip-space * (1) preserve-space * (-1) */
 
     /*
      * Global variable or parameters

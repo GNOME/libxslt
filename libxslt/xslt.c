@@ -622,7 +622,11 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"add preserved space element %s\n", element);
 #endif
-	    xmlHashAddEntry(style->stripSpaces, element, "preserve");
+	    if (xmlStrEqual(element, (const xmlChar *)"*")) {
+		style->stripAll = -1;
+	    } else {
+		xmlHashAddEntry(style->stripSpaces, element, "preserve");
+	    }
 	    xmlFree(element);
 	}
 	element = end;
@@ -635,7 +639,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
  * @style:  the XSLT stylesheet
  * @template:  the "strip-space" prefix
  *
- * parse an XSLT stylesheet strip-space prefix and record
+ * parse an XSLT stylesheet extension prefix and record
  * prefixes needing stripping
  */
 
@@ -728,7 +732,11 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"add stripped space element %s\n", element);
 #endif
-	    xmlHashAddEntry(style->stripSpaces, element, "strip");
+	    if (xmlStrEqual(element, (const xmlChar *)"*")) {
+		style->stripAll = 1;
+	    } else {
+		xmlHashAddEntry(style->stripSpaces, element, "strip");
+	    }
 	    xmlFree(element);
 	}
 	element = end;

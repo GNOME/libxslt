@@ -219,13 +219,9 @@ xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    if (xmlStrEqual(val, (xmlChar *) "preserve"))
 		return(0);
 	} 
-	val = (const xmlChar *)
-	      xmlHashLookup(ctxt->style->stripSpaces,
-			    (const xmlChar *)"*");
-	if ((val != NULL) &&
-	    (xmlStrEqual(val, (xmlChar *) "strip")))
+	if (ctxt->style->stripAll == 1)
 	    return(1);
-	if (xmlStrEqual(val, (xmlChar *) "preserve"))
+	if (ctxt->style->stripAll == -1)
 	    return(0);
 
 	style = xsltNextImport(style);

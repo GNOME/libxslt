@@ -1,3 +1,10 @@
+Wed Mar  7 18:01:07 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	 * imports.c transform.c xslt.c xsltInternals.h: fixed a
+	   strip-spaces problem
+	 * tests/docs/*.xml tests/general/*.[xsl,out]: added reported
+	   bugs to testsuite
+
 Wed Mar  7 13:34:13 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.[ch]: finished integrating the current

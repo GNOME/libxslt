@@ -680,6 +680,30 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xsltTemplatePtr template;
     xmlNodePtr oldNode;
 
+    /*
+     * Cleanup children empty nodes if asked for
+     */
+    if ((node->children != NULL) &&
+	(xsltFindElemSpaceHandling(ctxt, node))) {
+	xmlNodePtr delete = NULL, cur = node->children;
+
+	while (cur != NULL) {
+	    if (IS_BLANK_NODE(cur))
+		delete = cur;
+	    
+            cur = cur->next;
+	    if (delete != NULL) {
+#ifdef DEBUG_PROCESS
+		xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltDefaultProcessOneNode: removing ignorable blank node\n");
+#endif
+		xmlUnlinkNode(delete);
+		xmlFreeNode(delete);
+		delete = NULL;
+	    }
+	}
+    }
+
     template = xsltGetTemplate(ctxt, node, NULL);
     /*
      * If no template is found, apply the default rule.
