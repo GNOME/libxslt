@@ -41,7 +41,10 @@ libxslt_la_SOURCES = 			\
 	documents.c			\
 	preproc.c			\
 	transform.c			\
-	win32config.h
+	win32config.h			\
+	xsltwin32config.h		\
+	xsltwin32config.h.in		\
+	libxslt.h
 
 libxslt_la_LIBADD = $(EXTRA_LIBS)
 libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@

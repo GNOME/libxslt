@@ -1,0 +1,64 @@
+/*
+ * xsltwin32config.h: compile-time version informations for the XSLT engine
+ *                    when compiled on windows
+ *
+ * See Copyright for the status of this software.
+ *
+ * daniel@veillard.com
+ */
+
+#ifndef __XML_XSLTWIN32CONFIG_H__
+#define __XML_XSLTWIN32CONFIG_H__
+
+#include <win32config.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * LIBXSLT_DOTTED_VERSION:
+ *
+ * the version string like "1.2.3"
+ */
+#define LIBXSLT_DOTTED_VERSION "0.13.0"
+
+/**
+ * LIBXSLT_VERSION:
+ *
+ * the version number: 1.2.3 value is 1002003
+ */
+#define LIBXSLT_VERSION 1300
+
+/**
+ * LIBXSLT_VERSION_STRING:
+ *
+ * the version number string, 1.2.3 value is "1002003"
+ */
+#define LIBXSLT_VERSION_STRING "1300"
+
+/**
+ * WITH_XSLT_DEBUG:
+ *
+ * Activate the compilation of the debug reporting. Speed penalty
+ * is insignifiant and being able to run xsltpoc -v is useful. On
+ * by default
+ */
+#if 1
+#define WITH_XSLT_DEBUG
+#endif
+
+/**
+ * ATTRIBUTE_UNUSED:
+ *
+ * This macro is used to flag unused function parameters to GCC, useless here
+ */
+#ifndef ATTRIBUTE_UNUSED
+#define ATTRIBUTE_UNUSED
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __XML_XSLTWIN32CONFIG_H__ */

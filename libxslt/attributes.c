@@ -6,10 +6,10 @@
  *
  * See Copyright for the status of this software.
  *
- * Daniel.Veillard@imag.fr
+ * daniel@veillard.com
  */
 
-#include "xsltconfig.h"
+#include "libxslt.h"
 
 #include <string.h>
 

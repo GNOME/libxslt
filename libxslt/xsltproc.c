@@ -3,11 +3,10 @@
  *
  * See Copyright for the status of this software.
  *
- * Daniel.Veillard@imag.fr
+ * daniel@veillard.com
  */
 
-#include <libxml/xmlversion.h>
-#include <libxslt/xsltconfig.h>
+#include "libxslt.h"
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif

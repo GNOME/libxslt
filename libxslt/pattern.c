@@ -6,7 +6,7 @@
  *
  * See Copyright for the status of this software.
  *
- * Daniel.Veillard@imag.fr
+ * daniel@veillard.com
  */
 
 /*
@@ -14,7 +14,7 @@
  * TODO: detect [number] at compilation, optimize accordingly
  */
 
-#include "xsltconfig.h"
+#include "libxslt.h"
 
 #include <string.h>
 

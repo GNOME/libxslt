@@ -3,7 +3,7 @@
  *
  * See Copyright for the status of this software.
  *
- * Daniel.Veillard@imag.fr
+ * daniel@veillard.com
  */
 
 #ifndef __XML_XSLT_ATTRIBUTES_H__

@@ -35,7 +35,7 @@ installed.
 
 %changelog
 
-* Mon Jan 22 2001 Daniel.Veillard <Daniel.Veillard@imag.fr>
+* Mon Jan 22 2001 Daniel.Veillard <daniel@veillard.com>
 
 - created based on libxml2 spec file
 

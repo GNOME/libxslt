@@ -1,3 +1,14 @@
+Thu Jun 28 15:48:06 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltwin32config.h[.in]: added configuration/version
+	  informations for Windows/MSC
+	* libxslt/libxslt.h libxslt/*.c: internal header to centralize
+	  includes switches
+	* libxslt/Makefile.am: added libxslt.h and xsltwin32config.h[.in]
+	* libxslt/*.[ch] libxslt/*.in: quite a bit of cleanup, especially
+	  the email addresses
+	* AUTHORS: added William
+
 Tue Jun 26 18:45:38 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in doc/xslt.html: releasing 0.13.0

@@ -3,7 +3,7 @@
  *
  * See Copyright for the status of this software.
  *
- * Daniel.Veillard@imag.fr
+ * daniel@veillard.com
  * Bjorn Reese <breese@users.sourceforge.net> for number formatting
  */
 

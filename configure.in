@@ -178,6 +178,7 @@ AC_OUTPUT([
 Makefile
 libxslt/Makefile
 libxslt/xsltconfig.h
+libxslt/xsltwin32config.h
 tests/Makefile
 tests/docs/Makefile
 tests/REC1/Makefile
