@@ -406,7 +406,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet)
 /**
  * xsltParseStylesheetOutput:
  * @style:  the XSLT stylesheet
- * @template:  the "output" element
+ * @cur:  the "output" element
  *
  * parse an XSLT stylesheet output element and record
  * information related to the stylesheet output
@@ -684,7 +684,7 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr style, xmlNodePtr cur)
 /**
  * xsltParseStylesheetPreserveSpace:
  * @style:  the XSLT stylesheet
- * @template:  the "preserve-space" element
+ * @cur:  the "preserve-space" element
  *
  * parse an XSLT stylesheet preserve-space element and record
  * elements needing preserving
@@ -797,7 +797,7 @@ xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
 /**
  * xsltParseStylesheetStripSpace:
  * @style:  the XSLT stylesheet
- * @template:  the "strip-space" element
+ * @cur:  the "strip-space" element
  *
  * parse an XSLT stylesheet strip-space element and record
  * elements needing stripping
@@ -893,13 +893,13 @@ xsltParseStylesheetExcludePrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
 		ns = xmlSearchNs(style->doc, cur, prefix);
 	    if (ns == NULL) {
 		xsltGenericError(xsltGenericErrorContext,
-	    "xsl:extension-element-prefix : undefined namespace %s\n",
+	    "xsl:exclude-result-prefixes : undefined namespace %s\n",
 	                         prefix);
 		style->warnings++;
 	    } else {
 #ifdef WITH_XSLT_DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
-		    "add extension prefix %s\n", prefix);
+		    "exclude result prefix %s\n", prefix);
 #endif
 		exclPrefixPush(style, (xmlChar *) ns->href);
 		nb++;
@@ -1038,7 +1038,7 @@ skip_children:
  * xsltGatherNamespaces:
  * @style:  the XSLT stylesheet
  *
- * Browse the stylesheet and buit the namspace hash table which
+ * Browse the stylesheet and build the namspace hash table which
  * will be used for XPath interpretation. If needed do a bit of normalization
  */
 
@@ -1169,7 +1169,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 			} else if (!xmlStrEqual(prop,
 						(const xmlChar *)"no")){
 			    xsltGenericError(xsltGenericErrorContext,
-	     "xslt:text: disable-output-escaping allow only yes or no\n");
+	     "xsl:text: disable-output-escaping allows only yes or no\n");
 			    style->warnings++;
 
 			}
@@ -1247,7 +1247,7 @@ skip_children:
     if (delete != NULL) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltParseStylesheetTemplate: removing text\n");
+	 "xsltParseTemplateContent: removing text\n");
 #endif
 	xmlUnlinkNode(delete);
 	xmlFreeNode(delete);
@@ -1265,7 +1265,7 @@ skip_children:
     }
 
     /*
-     * Browse the remaining of the template
+     * Browse the remainder of the template
      */
     while (cur != NULL) {
 	if ((IS_XSLT_ELEM(cur)) && (IS_XSLT_NAME(cur, "param"))) {
@@ -1273,7 +1273,7 @@ skip_children:
 
             cur = cur->next;
 	    xsltGenericError(xsltGenericErrorContext,
-		"xsltParseStylesheetTop: ignoring misplaced param element\n");
+		"xsltParseTemplateContent: ignoring misplaced param element\n");
 	    style->warnings++;
 	    xmlUnlinkNode(param);
 	    xmlFreeNode(param);
@@ -1323,7 +1323,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
 	}
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xslt:key: name %s\n", name);
+	     "xsltParseStylesheetKey: name %s\n", name);
 #endif
     } else {
 	xsltGenericError(xsltGenericErrorContext,
@@ -1411,7 +1411,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	}
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xslt:template: mode %s\n", mode);
+	     "xsltParseStylesheetTemplate: mode %s\n", mode);
 #endif
     } else {
 	mode = NULL;

@@ -502,7 +502,7 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	    nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	    if (nsURI == NULL) {
 		xsltGenericError(xsltGenericErrorContext,
-		    "system-property(): prefix %s is not bound\n", prefix);
+		    "system-property() : prefix %s is not bound\n", prefix);
 	    }
 	}
 
@@ -577,7 +577,7 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
 	xsltGenericError(xsltGenericErrorContext,
-	    "element-available invalid arg expecting a string\n");
+	    "element-available() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
 	return;
     }
@@ -608,7 +608,7 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
 	xsltGenericError(xsltGenericErrorContext,
-	    "function-available invalid arg expecting a string\n");
+	    "function-available() : invalid arg expecting a string\n");
 	ctxt->error = XPATH_INVALID_TYPE;
 	return;
     }
@@ -621,7 +621,7 @@ xsltFunctionAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	nsURI = xmlXPathNsLookup(ctxt->context, prefix);
 	if (nsURI == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
-		"function-available(): prefix %s is not bound\n", prefix);
+		"function-available() : prefix %s is not bound\n", prefix);
 	}
     }
 
@@ -652,7 +652,7 @@ xsltCurrentFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
     if (nargs != 0) {
         xsltGenericError(xsltGenericErrorContext,
-		"document() : function uses no argument\n");
+		"current() : function uses no argument\n");
 	ctxt->error = XPATH_INVALID_ARITY;
 	return;
     }

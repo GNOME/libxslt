@@ -81,7 +81,7 @@ xsltCopyStackElem(xsltStackElemPtr elem) {
     cur = (xsltStackElemPtr) xmlMalloc(sizeof(xsltStackElem));
     if (cur == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-		"xsltNewStackElem : malloc failed\n");
+		"xsltCopyStackElem : malloc failed\n");
 	return(NULL);
     }
     cur->name = xmlStrdup(elem->name);
@@ -271,6 +271,7 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
  * xsltEvalVariable:
  * @ctxt:  the XSLT transformation context
  * @elem:  the variable or parameter.
+ * @precomp: pointer to precompiled data
  *
  * Evaluate a variable value.
  *
@@ -379,8 +380,8 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 
 /**
  * xsltEvalGlobalVariable:
- * @ctxt:  the XSLT transformation context
  * @elem:  the variable or parameter.
+ * @ctxt:  the XSLT transformation context
  *
  * Evaluate a global variable value.
  *
@@ -642,7 +643,7 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
  * @ctxt:  the XSLT transformation context
  * @params:  a NULL terminated arry of parameters names/values tuples
  *
- * Evaluate the global variables of a stylesheet. This need to be
+ * Evaluate the global variables of a stylesheet. This needs to be
  * done on parsed stylesheets before starting to apply transformations
  *
  * Returns 0 in case of success, -1 in case of error
@@ -825,9 +826,7 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 /**
  * xsltRegisterVariable:
  * @ctxt:  the XSLT transformation context
- * @name:  the variable name
- * @ns_uri:  the variable namespace URI
- * @select:  the expression which need to be evaluated to generate a value
+ * @comp:  pointer to precompiled data
  * @tree:  the tree if select is NULL
  * @param:  this is a parameter actually
  *
@@ -1007,7 +1006,7 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xsl:variable : compilation had failed\n");
+	     "xsl:variable : compilation failed\n");
 	return;
     }
 
@@ -1046,7 +1045,7 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xsl:param : compilation had failed\n");
+	     "xsl:param : compilation failed\n");
 	return;
     }
 
@@ -1084,7 +1083,7 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xsl:variable : compilation had failed\n");
+	     "xsl:variable : compilation failed\n");
 	return;
     }
 
@@ -1121,7 +1120,7 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     comp = (xsltStylePreCompPtr) cur->_private;
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xsl:param : compilation had failed\n");
+	     "xsl:param : compilation failed\n");
 	return;
     }
 

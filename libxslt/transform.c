@@ -316,7 +316,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
  * xsltCopyText:
  * @ctxt:  a XSLT process context
  * @target:  the element where the text will be attached
- * @text:  the text or CDATA node
+ * @cur:  the text or CDATA node
  *
  * Do a copy of a text node
  *
@@ -1494,7 +1494,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		goto error;
 	} else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltGenericError(xsltGenericErrorContext,
-	     "xsltApplyStylesheet: unsupported method xhtml, using html\n",
+	     "xsltDocumentElem: unsupported method xhtml, using html\n",
 		             style->method);
 	    ctxt->type = XSLT_OUTPUT_HTML;
 	    res = htmlNewDoc(doctypeSystem, doctypePublic);
@@ -1507,7 +1507,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		goto error;
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
-			     "xsltApplyStylesheet: unsupported method %s\n",
+			     "xsltDocumentElem: unsupported method %s\n",
 		             style->method);
 	    goto error;
 	}
@@ -1615,10 +1615,10 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		if (node->type == XML_CDATA_SECTION_NODE)
 		    xsltGenericDebug(xsltGenericDebugContext,
-			 "xsl:copy: CDATA text %s\n", node->content);
+			 "xsltCopy: CDATA text %s\n", node->content);
 		else
 		    xsltGenericDebug(xsltGenericDebugContext,
-			 "xsl:copy: text %s\n", node->content);
+			 "xsltCopy: text %s\n", node->content);
 #endif
 		xsltCopyText(ctxt, ctxt->insert, node);
 		break;
@@ -1628,7 +1628,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    case XML_ELEMENT_NODE:
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
-				 "xsl:copy: node %s\n", node->name);
+				 "xsltCopy: node %s\n", node->name);
 #endif
 		copy = xsltCopyNode(ctxt, node, ctxt->insert);
 		ctxt->insert = copy;
@@ -1639,7 +1639,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    case XML_ATTRIBUTE_NODE: {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
-				 "xsl:copy: attribute %s\n", node->name);
+				 "xsltCopy: attribute %s\n", node->name);
 #endif
 		if (ctxt->insert->type == XML_ELEMENT_NODE) {
 		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, cur;
@@ -1668,7 +1668,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    case XML_PI_NODE:
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
-				 "xsl:copy: PI %s\n", node->name);
+				 "xsltCopy: PI %s\n", node->name);
 #endif
 		copy = xmlNewPI(node->name, node->content);
 		xmlAddChild(ctxt->insert, copy);
@@ -1676,7 +1676,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    case XML_COMMENT_NODE:
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
-				 "xsl:copy: comment\n");
+				 "xsltCopy: comment\n");
 #endif
 		copy = xmlNewComment(node->content);
 		xmlAddChild(ctxt->insert, copy);
@@ -1807,7 +1807,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsl:element : xml prefix forbidden\n");
+		 "xsltElement: xml prefix forbidden\n");
 #endif
 	    goto error;
 	}
@@ -1923,7 +1923,7 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsl:attribute : xml prefix forbidden\n");
+	     "xsltAttribute: xml prefix forbidden\n");
 #endif
 	goto error;
     }
@@ -1998,10 +1998,10 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef WITH_XSLT_DEBUG_PROCESS
     if (value == NULL)
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsl:comment: empty\n");
+	     "xsltComment: empty\n");
     else
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsl:comment: content %s\n", value);
+	     "xsltComment: content %s\n", value);
 #endif
 
     comment = xmlNewComment(value);
@@ -2052,10 +2052,10 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef WITH_XSLT_DEBUG_PROCESS
     if (value == NULL)
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsl:processing-instruction: %s empty\n", ncname);
+	     "xsltProcessingInstruction: %s empty\n", ncname);
     else
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsl:processing-instruction: %s content %s\n", ncname, value);
+	     "xsltProcessingInstruction: %s content %s\n", ncname, value);
 #endif
 
     pi = xmlNewPI(name, value);
@@ -2656,13 +2656,13 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 	if ((wcomp == NULL) || (wcomp->test == NULL) || (wcomp->comp == NULL)) {
 	    xsltGenericError(xsltGenericErrorContext,
-		 "xsl:when: compilation failed !\n");
+		 "xsl:choose: compilation failed !\n");
 	    goto error;
 	}
 	when = replacement;
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
-	     "xsl:when: test %s\n", wcomp->test);
+	     "xsltChoose: test %s\n", wcomp->test);
 #endif
 
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
@@ -2685,7 +2685,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    else {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
-		    "xsl:when: test didn't evaluate to a boolean\n");
+		    "xsltChoose: test didn't evaluate to a boolean\n");
 #endif
 		goto error;
 	    }
@@ -2693,7 +2693,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	xsltGenericDebug(xsltGenericDebugContext,
-	    "xsl:when: test evaluate to %d\n", doit);
+	    "xsltChoose: test evaluate to %d\n", doit);
 #endif
 	if (doit) {
 	    varsPush(ctxt, NULL);
@@ -2882,7 +2882,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
 	if (nbsorts >= XSLT_MAX_SORT) {
 	    xsltGenericError(xsltGenericDebugContext,
-		"xsl:for-each: too many sort\n");
+		"xsl:for-each: too many sorts\n");
 	} else {
 	    sorts[nbsorts++] = replacement;
 	}
@@ -3057,7 +3057,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 		goto error;
 	} else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltGenericError(xsltGenericErrorContext,
-	     "xsltApplyStylesheet: unsupported method xhtml, using html\n",
+	     "xsltApplyStylesheetInternal: unsupported method xhtml, using html\n",
 		             style->method);
 	    ctxt->type = XSLT_OUTPUT_HTML;
 	    res = htmlNewDoc(doctypeSystem, doctypePublic);
@@ -3070,7 +3070,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 		goto error;
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
-			     "xsltApplyStylesheet: unsupported method %s\n",
+			     "xsltApplyStylesheetInternal: unsupported method %s\n",
 		             style->method);
 	    goto error;
 	}

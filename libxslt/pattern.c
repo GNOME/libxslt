@@ -237,7 +237,7 @@ xsltCompMatchAdd(xsltCompMatchPtr comp, xsltOp op, xmlChar *value,
 	         xmlChar *value2) {
     if (comp->nbStep >= 20) {
         xsltGenericError(xsltGenericErrorContext,
-		"xsltCompMatchAddOp: overflow\n");
+		"xsltCompMatchAdd: overflow\n");
         return(-1);
     }
     comp->steps[comp->nbStep].op = op;
@@ -886,7 +886,7 @@ xsltScanName(xsltParserContextPtr ctxt) {
 	len++;
 	if (len >= XML_MAX_NAMELEN) {
 	    xmlGenericError(xmlGenericErrorContext, 
-	       "xmlScanName: reached XML_MAX_NAMELEN limit\n");
+	       "xsltScanName: reached XML_MAX_NAMELEN limit\n");
 	    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
 		   (NXT(len) == '.') || (NXT(len) == '-') ||
 		   (NXT(len) == '_') || (NXT(len) == ':') || 
@@ -928,7 +928,7 @@ xsltScanNCName(xsltParserContextPtr ctxt) {
 	len++;
 	if (len >= XML_MAX_NAMELEN) {
 	    xmlGenericError(xmlGenericErrorContext, 
-	       "xmlScanNCName: reached XML_MAX_NAMELEN limit\n");
+	       "xsltScanNCName: reached XML_MAX_NAMELEN limit\n");
 	    while ((IS_LETTER(NXT(len))) || (IS_DIGIT(NXT(len))) ||
 		   (NXT(len) == '.') || (NXT(len) == '-') ||
 		   (NXT(len) == '_') ||
@@ -968,7 +968,7 @@ xsltScanQName(xsltParserContextPtr ctxt, xmlChar **prefix) {
 
 /*
  * xsltCompileIdKeyPattern:
- * @comp:  the compilation context
+ * @ctxt:  the compilation context
  * @name:  a preparsed name
  * @aid:  whether id/key are allowed there
  *
@@ -1104,7 +1104,7 @@ error:
 
 /**
  * xsltCompileStepPattern:
- * @comp:  the compilation context
+ * @ctxt:  the compilation context
  * @token:  a posible precompiled name
  *
  * Compile the XSLT StepPattern and generates a precompiled
@@ -1147,7 +1147,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    ns = xmlSearchNs(ctxt->doc, ctxt->elem, prefix);
 	    if (ns == NULL) {
 		xsltGenericError(xsltGenericErrorContext,
-		    "xsl: pattern, no namespace bound to prefix %s\n",
+		    "xsltCompileStepPattern : no namespace bound to prefix %s\n",
 				 prefix);
 	    } else {
 		URL = xmlStrdup(ns->href);
@@ -1341,7 +1341,7 @@ error:
 
 /**
  * xsltCompileLocationPathPattern:
- * @comp:  the compilation context
+ * @ctxt:  the compilation context
  *
  * Compile the XSLT LocationPathPattern and generates a precompiled
  * form suitable for fast matching.
@@ -1726,11 +1726,11 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 /**
  * xsltGetTemplate:
  * @ctxt:  a XSLT process context
- * @mode:  the mode 
+ * @node:  the node being processed
  * @style:  the current style
  *
  * Finds the template applying to this node, if @style is non-NULL
- * it means one need to look for the next imported template in scope.
+ * it means one needs to look for the next imported template in scope.
  *
  * Returns the xsltTemplatePtr or NULL if not found
  */

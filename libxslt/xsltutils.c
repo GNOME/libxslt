@@ -239,7 +239,7 @@ void *xsltGenericDebugContext = NULL;
  * Function to reset the handler and the error context for out of
  * context error messages.
  * This simply means that @handler will be called for subsequent
- * error messages while not parsing nor validating. And @ctx will
+ * error messages while not parsing or validating. And @ctx will
  * be passed as first argument to @handler
  * One can simply force messages to be emitted to another FILE * than
  * stderr by setting @ctx to this file handle and @handler to NULL.
@@ -264,7 +264,7 @@ xsltSetGenericDebugFunc(void *ctx, xmlGenericErrorFunc handler) {
  * @node:  the node holding the QName
  * @name:  pointer to the initial QName value
  *
- * This function analyze @name, if the name contains a prefix,
+ * This function analyzes @name, if the name contains a prefix,
  * the function seaches the associated namespace in scope for it.
  * It will also replace @name value with the NCName, the old value being
  * freed.
@@ -303,7 +303,7 @@ xsltGetQNameURI(xmlNodePtr node, xmlChar ** name)
 
     /*
      * we are not trying to validate but just to cut, and yes it will
-     * work even if this is as set of UTF-8 encoded chars
+     * work even if this is a set of UTF-8 encoded chars
      */
     while ((qname[len] != 0) && (qname[len] != ':')) 
 	len++;
@@ -378,10 +378,9 @@ xsltDocumentSortFunction(xmlNodeSetPtr list) {
  * xsltComputeSortResult:
  * @ctxt:  a XSLT process context
  * @sorts:  array of sort nodes
- * @nbsorts:  the number of sorts in the array
  *
  * reorder the current node list accordingly to the set of sorting
- * requirement provided by the arry of nodes.
+ * requirement provided by the array of nodes.
  */
 static xmlXPathObjectPtr *
 xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
@@ -400,7 +399,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     comp = sort->_private;
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:sort : compilation had failed\n");
+	     "xslt:sort : compilation failed\n");
 	return(NULL);
     }
 
@@ -420,7 +419,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     results = xmlMalloc(len * sizeof(xmlXPathObjectPtr));
     if (results == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xsltSort: memory allocation failure\n");
+	     "xsltComputeSortResult: memory allocation failure\n");
 	return(NULL);
     }
 
@@ -451,7 +450,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
 		} else {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
-			"xsltSort: select didn't evaluate to a number\n");
+			"xsltComputeSortResult: select didn't evaluate to a number\n");
 #endif
 		    results[i] = NULL;
 		}
@@ -461,7 +460,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
 		} else {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
-			"xsltSort: select didn't evaluate to a string\n");
+			"xsltComputeSortResult: select didn't evaluate to a string\n");
 #endif
 		    results[i] = NULL;
 		}
@@ -863,7 +862,7 @@ xsltSaveResultToFilename(const char *URL, xmlDocPtr result,
  * to an open FILE * I/O.
  * This does not close the FILE @file
  *
- * Returns the number of byte written or -1 in case of failure.
+ * Returns the number of bytes written or -1 in case of failure.
  */
 int
 xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
@@ -907,7 +906,7 @@ xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
  * to an open file descriptor
  * This does not close the descriptor.
  *
- * Returns the number of byte written or -1 in case of failure.
+ * Returns the number of bytes written or -1 in case of failure.
  */
 int
 xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {

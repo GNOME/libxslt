@@ -187,14 +187,14 @@ xsltMergeAttrElemList(xsltAttrElemPtr list, xsltAttrElemPtr old) {
     while (old != NULL) {
 
 	/*
-	 * Check taht the attribute is not yet in the list
+	 * Check that the attribute is not yet in the list
 	 */
 	cur = list;
 	add = 1;
 	while (cur != NULL) {
 	    if (cur->attr == old->attr) {
 		xsltGenericError(xsltGenericErrorContext,
-	     "xslt:attribute-set : use-attribute-sets recursion detected\n");
+	     "xsl:attribute-set : use-attribute-sets recursion detected\n");
 		return(list);
 	    }
 	    if (xmlStrEqual(cur->attr->name, old->attr->name)) {
@@ -255,7 +255,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     prop = xsltGetNsProp(cur, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:attribute-set : name is missing\n");
+	     "xsl:attribute-set : name is missing\n");
 	goto error;
     }
 
@@ -286,7 +286,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	if (IS_XSLT_ELEM(list)) {
 	    if (!IS_XSLT_NAME(list, "attribute")) {
 		xsltGenericError(xsltGenericErrorContext,
-		    "xslt:attribute-set : unexpected child xsl:%s\n",
+		    "xsl:attribute-set : unexpected child xsl:%s\n",
 		                 list->name);
 	    } else {
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
@@ -297,7 +297,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    }
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
-		"xslt:attribute-set : unexpected child %s\n", list->name);
+		"xsl:attribute-set : unexpected child %s\n", list->name);
 	}
 	list = list->next;
     }
@@ -327,7 +327,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltAttrElemPtr values2;
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
-		"xslt:attribute-set : %s adds use %s\n", ncname, attribute);
+		"xsl:attribute-set : %s adds use %s\n", ncname, attribute);
 #endif
 	    ncname2 = xmlSplitQName2(attribute, &prefix2);
 	    if (ncname2 == NULL) {

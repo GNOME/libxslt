@@ -257,14 +257,14 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     key->comp = xmlXPathCompile(pattern);
     if (key->comp == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-		"xslt:key : XPath pattern compilation failed '%s'\n",
+		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         pattern);
 	style->errors++;
     }
     key->usecomp = xmlXPathCompile(use);
     if (key->usecomp == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-		"xslt:key : XPath pattern compilation failed '%s'\n",
+		"xsl:key : XPath pattern compilation failed '%s'\n",
 		         use);
 	style->errors++;
     }

@@ -43,7 +43,7 @@
  * @ctxt:  the XSLT transformation context
  * @comp:  the XPath compiled expression
  * @nsList:  the namespaces in scope
- * @int nsNr:  the number of namespaces in scope
+ * @nsNr:  the number of namespaces in scope
  *
  * Process the expression using XPath and evaluate the result as
  * an XPath predicate
@@ -136,7 +136,7 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 	    res->stringval = NULL;
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
-		 "xpath : string() function didn't returned a String\n");
+		 "xpath : string() function didn't return a String\n");
 	}
 	xmlXPathFreeObject(res);
     }
@@ -292,7 +292,7 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ret = xsltAttrTemplateValueProcess(ctxt, expr);
 #ifdef WITH_XSLT_DEBUG_TEMPLATES
     xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltEvalXPathString: %s returns %s\n", expr, ret);
+	 "xsltEvalAttrValueTemplate: %s returns %s\n", expr, ret);
 #endif
     if (expr != NULL)
 	xmlFree(expr);
@@ -304,7 +304,7 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @style:  the XSLT stylesheet
  * @node:  the stylesheet node
  * @name:  the attribute Name
- * @name:  the attribute namespace URI
+ * @ns:  the attribute namespace URI
  * @found:  indicator whether the attribute is present
  *
  * Check if an attribute value template has a static value, i.e. the
