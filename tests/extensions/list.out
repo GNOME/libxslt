@@ -30,8 +30,14 @@ saxon:output available
 xalanredirect:write available
 xt:document available
 libxslt:debug available
- === 3 Extension functions:
+ === 9 Extension functions:
 libxslt:node-set() available
 saxon:node-set() available
 xt:node-set() available
+libxslt:evaluate() available
+saxon:evaluate() available
+libxslt:expression() available
+saxon:expression() available
+libxslt:eval() available
+saxon:eval() available
 

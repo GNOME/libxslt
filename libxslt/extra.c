@@ -145,6 +145,138 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
     }
 }
 
+/**
+ * xsltFunctionEvaluate:
+ * @ctxt:  the XPath Parser context
+ * @nargs:  the number of arguments
+ *
+ * Implement the evaluate() XSLT function
+ *   node-set evaluate(string)
+ *
+ * This function is available in libxslt or saxon namespace.
+ */
+void
+xsltFunctionEvaluate(xmlXPathParserContextPtr ctxt, int nargs){
+  xsltTransformContextPtr tctxt;
+  xmlXPathObjectPtr obj, ret;
+  xmlXPathCompExprPtr comp;
+
+  if (nargs != 1) {
+    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
+    xsltGenericError(xsltGenericErrorContext,
+		     "evaluate() : expects one string arg\n");
+    ctxt->error = XPATH_INVALID_ARITY;
+    return;
+  }
+
+  obj = valuePop(ctxt);
+  if (obj->type != XPATH_STRING) {
+    obj = xmlXPathConvertString(obj);
+  }
+
+  if (obj->stringval == NULL) {
+    valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+  }
+  else {
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    comp = xmlXPathCompile(obj->stringval);
+    ret = xmlXPathCompiledEval(comp, 
+			       tctxt->xpathCtxt);
+    valuePush(ctxt, ret);
+    xmlXPathFreeCompExpr(comp);
+  }
+  xmlXPathFreeObject(obj);
+} 
+
+/**
+ * xsltFunctionExpression:
+ * @ctxt:  the XPath Parser context
+ * @nargs:  the number of arguments
+ *
+ * Implement the evaluate() XSLT function
+ *   stored-expression expression(string)
+ *
+ * This function is available in libxslt or saxon namespace.
+ */
+void
+xsltFunctionExpression(xmlXPathParserContextPtr ctxt, int nargs){
+  xsltTransformContextPtr tctxt;
+  xmlXPathObjectPtr obj, ret;
+  xmlXPathCompExprPtr comp;
+
+  if (nargs != 1) {
+    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
+    xsltGenericError(xsltGenericErrorContext,
+		     "expression() : expects one string arg\n");
+    ctxt->error = XPATH_INVALID_ARITY;
+    return;
+  }
+
+  obj = valuePop(ctxt);
+  if (obj->type != XPATH_STRING) {
+    obj = xmlXPathConvertString(obj);
+  }
+
+  if (obj->stringval == NULL) {
+    xsltGenericError(xsltGenericErrorContext,
+		     "expression() : invalid string arg\n");
+    ctxt->error = XPATH_INVALID_TYPE;
+    return; 
+  }
+  else {
+    tctxt = xsltXPathGetTransformContext(ctxt);
+    comp = xmlXPathCompile(obj->stringval);
+    if(comp != NULL) {
+      ret = xmlXPathNewCString(obj->stringval);    
+      ret->user = comp;
+      valuePush(ctxt, ret);
+    }
+  }
+  xmlXPathFreeObject(obj);
+} 
+
+/**
+ * xsltFunctionEval:
+ * @ctxt:  the XPath Parser context
+ * @nargs:  the number of arguments
+ *
+ * Implement the eval() XSLT function
+ *   node-set eval(stored-expression)
+ *
+ * This function is available in libxslt or saxon namespace.
+ */
+void
+xsltFunctionEval(xmlXPathParserContextPtr ctxt, int nargs){
+  xsltTransformContextPtr tctxt;
+  xmlXPathObjectPtr obj, ret;
+  xmlXPathCompExprPtr comp;
+
+  if (nargs != 1) {
+    xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
+    xsltGenericError(xsltGenericErrorContext,
+		     "eval() : expects one compiled xpath expr\n");
+    ctxt->error = XPATH_INVALID_ARITY;
+    return;
+  }
+
+  obj = valuePop(ctxt);
+  if (obj->type != XPATH_STRING ||
+      obj->user == NULL) {
+    xsltGenericError(xsltGenericErrorContext,
+		     "eval() : invalid arg expecting compiled xpath expr\n");
+    ctxt->error = XPATH_INVALID_ARITY;
+  }
+
+  tctxt = xsltXPathGetTransformContext(ctxt);
+  comp = obj->user;
+  ret = xmlXPathCompiledEval(comp, 
+			     tctxt->xpathCtxt);
+  valuePush(ctxt, ret);
+  xmlXPathFreeObject(obj);
+} 
+
+
+
 /*
  * Okay the following really seems unportable and since it's not
  * part of any standard I'm not too ashamed to do this
@@ -298,6 +430,24 @@ xsltRegisterAllExtras (void) {
     xsltRegisterExtModuleFunction((const xmlChar *) "node-set",
 				  XSLT_XT_NAMESPACE,
 				  xsltFunctionNodeSet);
+    xsltRegisterExtModuleFunction((const xmlChar *) "evaluate",
+				  XSLT_LIBXSLT_NAMESPACE,
+				  xsltFunctionEvaluate);
+    xsltRegisterExtModuleFunction((const xmlChar *) "evaluate",
+				  XSLT_SAXON_NAMESPACE,
+				  xsltFunctionEvaluate);
+    xsltRegisterExtModuleFunction((const xmlChar *) "expression",
+				  XSLT_LIBXSLT_NAMESPACE,
+				  xsltFunctionExpression);
+    xsltRegisterExtModuleFunction((const xmlChar *) "expression",
+				  XSLT_SAXON_NAMESPACE,
+				  xsltFunctionExpression);
+    xsltRegisterExtModuleFunction((const xmlChar *) "eval",
+				  XSLT_LIBXSLT_NAMESPACE,
+				  xsltFunctionEval);
+    xsltRegisterExtModuleFunction((const xmlChar *) "eval",
+				  XSLT_SAXON_NAMESPACE,
+				  xsltFunctionEval);
 #ifdef WITH_LOCALTIME
     xsltRegisterExtModuleFunction((const xmlChar *) "localTime",
 				  XSLT_NORM_SAXON_NAMESPACE,
