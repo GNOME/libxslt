@@ -26,7 +26,7 @@
       <surname>Fleck</surname>
     </author>
     <releaseinfo>
-      This is verion 0.1 of the libxslt Tutorial
+      This is version 0.1 of the libxslt Tutorial
     </releaseinfo>
   </articleinfo>
   <abstract>
@@ -45,7 +45,7 @@
     computer's <acronym>XML</acronym> files.
     </para>
 
-    <para>One of the most imporant of those tools is <acronym>XSLT</acronym>:
+    <para>One of the most important of those tools is <acronym>XSLT</acronym>:
       Extensible Stylesheet Language Transformations. <acronym>XSLT</acronym>
       is a declarative language that allows you to
       translate your <acronym>XML</acronym> into arbitrary text output
