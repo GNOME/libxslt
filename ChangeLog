@@ -1,3 +1,7 @@
+Tue Jan  8 12:51:15 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/*.html: updated gdome2 homepage
+
 Sat Jan  5 19:32:17 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* win32/dsp: Windows/MSVC project files update from Igor Zlatkovic

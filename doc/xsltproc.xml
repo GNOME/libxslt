@@ -309,7 +309,8 @@
     <para>4: failed to parse the stylesheet</para>
     <para>5: error in the stylesheet</para>
     <para>6: error in one of the documents</para>
-    <para>7: unsuppoted xsl:output method</para>
+    <para>7: unsupported xsl:output method</para>
+    <para>8: string parameter contains both quote and double-quotes</para>
   </refsect1>
 
 

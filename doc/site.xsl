@@ -84,7 +84,7 @@
       <li><a href="xsltproc.html">Man page for xsltproc</a></li>
       <li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li>
       <li><a href="http://xmlsoft.org/">XML libxml</a></li>
-      <li><a href="http://www.cs.unibo.it/~casarini/gdome2/">DOM gdome2</a></li>
+      <li><a href="http://phd.cs.unibo.it/gdome2/">DOM gdome2</a></li>
       <li><a href="ftp://xmlsoft.org/">FTP</a></li>
       <li><a href="http://www.fh-frankfurt.de/~igor/projects/libxml/">Windows binaries</a></li>
       <li><a href="http://garypennington.net/libxml2/">Solaris binaries</a></li>
