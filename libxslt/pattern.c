@@ -1944,6 +1944,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (xsltTestCompMatch(ctxt, list, node,
 			          ctxt->mode, ctxt->modeURI)) {
 		ret = list->template;
+		priority = list->priority;
 		break;
 	    }
 	    list = list->next;
@@ -1959,6 +1960,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		if (xsltTestCompMatch(ctxt, list, node,
 				      ctxt->mode, ctxt->modeURI)) {
 		    ret = list->template;
+		    priority = list->priority;
 		    break;
 		}
 		list = list->next;
@@ -1972,6 +1974,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		if (xsltTestCompMatch(ctxt, list, node,
 				      ctxt->mode, ctxt->modeURI)) {
 		    ret = list->template;
+		    priority = list->priority;
 		    break;
 		}
 		list = list->next;
