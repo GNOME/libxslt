@@ -3802,6 +3802,20 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 	xmlFreeDoc(res);
 	res = NULL;
     }
+    if ((res != NULL) && (ctxt != NULL) && (output != NULL)) {
+	int ret;
+
+	ret = xsltCheckWrite(userCtxt->sec, userCtxt, output);
+	if (ret == 0) {
+	    xsltTransformError(ctxt, NULL, NULL,
+		     "xsltApplyStylesheet: forbidden to save to %s\n",
+			       output);
+	} else if (ret < 0) {
+	    xsltTransformError(ctxt, NULL, NULL,
+		     "xsltApplyStylesheet: saving to %s may not be possible\n",
+			       output);
+	}
+    }
 
     if ((ctxt != NULL) && (userCtxt == NULL))
 	xsltFreeTransformContext(ctxt);

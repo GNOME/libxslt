@@ -1,3 +1,8 @@
+Wed Jan  8 12:33:47 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed a problem related to directory
+	  checking and creation raised by Craig Goss
+
 Thu Jan  2 23:23:30 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/strings.c: applied patch from Jörg Walter to provide
