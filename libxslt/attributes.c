@@ -44,6 +44,7 @@
 #include "namespaces.h"
 #include "templates.h"
 #include "imports.h"
+#include "transform.h"
 
 #define DEBUG_ATTRIBUTES
 
@@ -415,7 +416,7 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    while (style != NULL) {
 		values = xmlHashLookup2(style->attributeSets, ncname, prefix);
 		while (values != NULL) {
-		    xsltAttribute(ctxt, node, values->attr);
+		    xsltAttribute(ctxt, node, values->attr, NULL);
 		    values = values->next;
 		}
 		style = xsltNextImport(style);

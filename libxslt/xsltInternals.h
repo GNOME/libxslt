@@ -189,8 +189,12 @@ struct _xsltStylesheet {
 typedef struct _xsltTransformContext xsltTransformContext;
 typedef xsltTransformContext *xsltTransformContextPtr;
 
-typedef void (*xsltStyleFunc) (xsltTransformContextPtr ctxt,
-	                       xmlNodePtr node, xmlNodePtr inst);
+typedef struct _xsltStylePreComp xsltStylePreComp;
+typedef xsltStylePreComp *xsltStylePreCompPtr;
+
+typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
+	                               xmlNodePtr node, xmlNodePtr inst,
+			               xsltStylePreCompPtr comp);
 
 typedef enum {
     XSLT_FUNC_COPY=1,
@@ -212,12 +216,10 @@ typedef enum {
     XSLT_FUNC_DOCUMENT
 } xsltStyleType;
 
-typedef struct _xsltStylePreComp xsltStylePreComp;
-typedef xsltStylePreComp *xsltStylePreCompPtr;
 struct _xsltStylePreComp {
     struct _xsltStylePreComp *next;/* chained list */
-    xsltStyleType type;	/* type of the element */
-    xsltStyleFunc func; /* handling function */
+    xsltStyleType type;		/* type of the element */
+    xsltTransformFunction func; /* handling function */
 
     /*
      * Pre computed values
@@ -311,9 +313,6 @@ struct _xsltTransformContext {
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
     xsltTransformState state;		/* the current state */
 };
-
-typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
-	                               xmlNodePtr node, xmlNodePtr inst);
 
 #define CHECK_STOPPED if (ctxt->state == XSLT_STATE_STOPPED) return;
 #define CHECK_STOPPEDE if (ctxt->state == XSLT_STATE_STOPPED) goto error;

@@ -341,12 +341,13 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  an XSLT processing context
  * @node:  The current node
  * @inst:  the instruction in the stylesheet
+ * @comp:  precomputed informations
  *
  * Process an XSLT-1.1 document element
  */
 void 
 xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	         xmlNodePtr inst) {
+	         xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *filename = NULL;
     xmlChar *base = NULL;
     xmlChar *URL = NULL;
@@ -470,22 +471,19 @@ error:
  ************************************************************************/
 
 void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
-void xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	         xmlNodePtr inst);
-void xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst);
-void xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst);
 
 /**
  * xsltSort:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt sort node
+ * @comp:  precomputed informations
  *
  * Process the xslt sort node on the source node
  */
 void
 xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlXPathObjectPtr *results = NULL;
     xmlNodeSetPtr list = NULL;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
@@ -621,12 +619,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt copy node
+ * @comp:  precomputed informations
  *
  * Process the xslt copy node on the source node
  */
 void
 xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop;
     xmlNodePtr copy, oldInsert;
 
@@ -704,12 +703,13 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt text node
+ * @comp:  precomputed informations
  *
  * Process the xslt text node on the source node
  */
 void
 xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	    xmlNodePtr inst) {
+	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlNodePtr copy;
 
     if (inst->children != NULL) {
@@ -750,12 +750,13 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt element node
+ * @comp:  precomputed informations
  *
  * Process the xslt element node on the source node
  */
 void
 xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	    xmlNodePtr inst) {
+	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL, *attributes = NULL;
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
@@ -844,12 +845,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt attribute node
+ * @comp:  precomputed informations
  *
  * Process the xslt attribute node on the source node
  */
 void
 xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL;
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
@@ -934,12 +936,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt comment node
+ * @comp:  precomputed informations
  *
  * Process the xslt comment node on the source node
  */
 void
 xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *value = NULL;
     xmlNodePtr comment;
 
@@ -966,12 +969,13 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt processing-instruction node
+ * @comp:  precomputed informations
  *
  * Process the xslt processing-instruction node on the source node
  */
 void
 xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *ncname = NULL;
     xmlChar *value = NULL;
     xmlNodePtr pi;
@@ -1014,12 +1018,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt copy-of node
+ * @comp:  precomputed informations
  *
  * Process the xslt copy-of node on the source node
  */
 void
 xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL;
     xmlXPathObjectPtr res = NULL, tmp;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
@@ -1119,12 +1124,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt value-of node
+ * @comp:  precomputed informations
  *
  * Process the xslt value-of node on the source node
  */
 void
 xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop;
     int disableEscaping = 0;
     xmlXPathObjectPtr res = NULL, tmp;
@@ -1207,13 +1213,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @cur:   the xslt number node
+ * @comp:  precomputed informations
  *
  * Process the xslt number node on the source node
  */
 void
-xsltNumber(xsltTransformContextPtr ctxt,
-	   xmlNodePtr node,
-	   xmlNodePtr cur)
+xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	   xmlNodePtr cur, xsltStylePreCompPtr comp)
 {
     xmlChar *prop;
     xsltNumberData numdata;
@@ -1640,12 +1646,13 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt apply-imports node
+ * @comp:  precomputed informations
  *
  * Process the xslt apply-imports node on the source node
  */
 void
 xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	         xmlNodePtr inst) {
+	         xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xsltTemplatePtr template;
 
     if ((ctxt->templ == NULL) || (ctxt->templ->style == NULL)) {
@@ -1668,12 +1675,13 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt call-template node
+ * @comp:  precomputed informations
  *
  * Process the xslt call-template node on the source node
  */
 void
 xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL;
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
@@ -1755,12 +1763,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the apply-templates node
+ * @comp:  precomputed informations
  *
  * Process the apply-templates node on the source node
  */
 void
 xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL;
     xmlNodePtr cur, delete = NULL;
     xmlXPathObjectPtr res = NULL, tmp;
@@ -1937,7 +1946,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else if (IS_XSLT_NAME(cur, "sort")) {
 		if (!have_sort) {
 		    have_sort = 1;
-		    xsltSort(ctxt, node, cur);
+		    xsltSort(ctxt, node, cur, cur->_private);
 		} else {
 		    TODO /* imbricated sorts */
 		}
@@ -2012,7 +2021,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		"xsltApplyOneTemplate: loop found ???\n");
 	xsltGenericError(xsltGenericErrorContext,
 		"try increasing xsltMaxDepth (--maxdepth)\n");
-	xsltDebug(ctxt, node, list);
+	xsltDebug(ctxt, node, list, NULL);
 	return;
     }
 
@@ -2043,25 +2052,13 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    return;
 	}
 
-	if (cur->_private != NULL) {
-	    xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
-	    if (info->func != NULL) {
-		ctxt->insert = insert;
-		info->func(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else {
-		xsltGenericError(xsltGenericDebugContext,
-		 "xsltApplyOneTemplate: %s has _private without function\n",
-		                 cur->name);
-	    }
-	    goto skip_children;
-	} else if (IS_XSLT_ELEM(cur)) {
+	if (IS_XSLT_ELEM(cur)) {
 	    xsltStylePreCompute(ctxt, cur);
 	    if (cur->_private != NULL) {
 		xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
 		if (info->func != NULL) {
 		    ctxt->insert = insert;
-		    info->func(ctxt, node, cur);
+		    info->func(ctxt, node, cur, info);
 		    ctxt->insert = oldInsert;
 		} else {
 		    xsltGenericError(xsltGenericDebugContext,
@@ -2073,82 +2070,14 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 	    if (IS_XSLT_NAME(cur, "variable")) {
 		xsltParseStylesheetVariable(ctxt, cur);
-	    } else if (IS_XSLT_NAME(cur, "apply-templates")) {
-		ctxt->insert = insert;
-		xsltApplyTemplates(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "value-of")) {
-		ctxt->insert = insert;
-		xsltValueOf(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "copy")) {
-		ctxt->insert = insert;
-		xsltCopy(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "copy-of")) {
-		ctxt->insert = insert;
-		xsltCopyOf(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "if")) {
-		ctxt->insert = insert;
-		xsltIf(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "choose")) {
-		ctxt->insert = insert;
-		xsltChoose(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "for-each")) {
-		ctxt->insert = insert;
-		xsltForEach(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "apply-imports")) {
-		ctxt->insert = insert;
-		xsltApplyImports(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "attribute")) {
-		ctxt->insert = insert;
-		xsltAttribute(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "element")) {
-		ctxt->insert = insert;
-		xsltElement(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "text")) {
-#ifdef DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: found xslt:text, not expected\n");
-#endif
-		xsltText(ctxt, node, cur);
-	    } else if (IS_XSLT_NAME(cur, "comment")) {
-		ctxt->insert = insert;
-		xsltComment(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "number")) {
-		ctxt->insert = insert;
-		xsltNumber(ctxt, node, cur);
-		ctxt->insert = oldInsert;
-	    } else if (IS_XSLT_NAME(cur, "processing-instruction")) {
-		ctxt->insert = insert;
-		xsltProcessingInstruction(ctxt, node, cur);
-		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "param")) {
 		xsltParseStylesheetParam(ctxt, cur);
-	    } else if (IS_XSLT_NAME(cur, "call-template")) {
-		ctxt->insert = insert;
-		xsltCallTemplate(ctxt, node, cur);
-		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "message")) {
 		xsltMessage(ctxt, node, cur);
-	    } else if (IS_XSLT_NAME(cur, "document")) {
-		/*
-		 * Okay this is really added only in 1.1
-		 */
-		ctxt->insert = insert;
-		xsltDocumentElem(ctxt, node, cur);
-		ctxt->insert = oldInsert;
 	    } else {
 		xsltGenericError(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: found xslt:%s\n", cur->name);
+		     "xsltApplyOneTemplate: problem with xsl:%s\n",
+	                         cur->name);
 	    }
 	    CHECK_STOPPED;
 	    goto skip_children;
@@ -2193,7 +2122,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		 "xsltApplyOneTemplate: extension construct %s\n", cur->name);
 #endif
 		ctxt->insert = insert;
-		function(ctxt, node, cur);
+		function(ctxt, node, cur, NULL);
 		ctxt->insert = oldInsert;
 	    }
 	    goto skip_children;
@@ -2260,12 +2189,13 @@ skip_children:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt choose node
+ * @comp:  precomputed informations
  *
  * Process the xslt choose node on the source node
  */
 void
 xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop = NULL;
     xmlXPathObjectPtr res = NULL, tmp;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
@@ -2382,12 +2312,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt if node
+ * @comp:  precomputed informations
  *
  * Process the xslt if node on the source node
  */
 void
 xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop;
     xmlXPathObjectPtr res = NULL, tmp;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
@@ -2457,12 +2388,13 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt for-each node
+ * @comp:  precomputed informations
  *
  * Process the xslt for-each node on the source node
  */
 void
 xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst) {
+	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
     xmlChar *prop;
     xmlXPathObjectPtr res = NULL, tmp;
     xmlNodePtr replacement;
@@ -2527,7 +2459,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */
     replacement = inst->children;
     while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
-	xsltSort(ctxt, node, replacement);
+	xsltSort(ctxt, node, replacement, replacement->_private);
 	replacement = replacement->next;
     }
 

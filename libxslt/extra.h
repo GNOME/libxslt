@@ -30,7 +30,8 @@ void		xsltRegisterExtras	(xsltTransformContextPtr ctxt);
 
 void		xsltDebug		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 #ifdef __cplusplus
 }
 #endif

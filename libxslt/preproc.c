@@ -666,7 +666,7 @@ xsltCallTemplateComp(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     xmlChar *prop;
     xmlChar *ncname = NULL;
     xmlChar *prefix = NULL;
-    xmlNsPtr ns;
+    xmlNsPtr ns = NULL;
 
     if ((ctxt == NULL) || (inst == NULL))
 	return;
@@ -915,6 +915,9 @@ xsltStylePreCompute(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	    xsltProcessingInstructionComp(ctxt, inst);
 	} else if (IS_XSLT_NAME(inst, "call-template")) {
 	    xsltCallTemplateComp(ctxt, inst);
+	} else if (IS_XSLT_NAME(inst, "param")) {
+	    /* TODO: is there any use optimizing param too ? */
+	    return;
 	} else if (IS_XSLT_NAME(inst, "variable")) {
 	    /* TODO: is there any use optimizing variable too ? */
 	    return;

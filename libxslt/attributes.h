@@ -17,9 +17,6 @@ extern "C" {
 
 void	xsltParseStylesheetAttributeSet	(xsltStylesheetPtr style,
 					 xmlNodePtr cur);
-void	xsltAttribute			(xsltTransformContextPtr ctxt,
-					 xmlNodePtr node,
-					 xmlNodePtr inst);
 void	xsltFreeAttributeSetsHashes	(xsltStylesheetPtr style);
 void	xsltApplyAttributeSet		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,

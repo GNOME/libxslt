@@ -40,11 +40,13 @@
  * @ctxt:  an XSLT processing context
  * @node:  The current node
  * @inst:  the instruction in the stylesheet
+ * @comp:  precomputed informations
  *
  * Process an debug node
  */
 void 
-xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
+xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst,
+	  xsltStylePreCompPtr comp) {
     int i, j;
 
     fprintf(stdout, "Templates:\n");

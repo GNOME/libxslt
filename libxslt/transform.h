@@ -27,55 +27,72 @@ void		xsltApplyOneTemplate	(xsltTransformContextPtr ctxt,
 					 int real);
 void 		xsltDocumentElem	(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltSort		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltCopy		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltText		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltElement		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltComment		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltAttribute		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltProcessingInstruction(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltCopyOf		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltValueOf		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltNumber		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr cur);
+					 xmlNodePtr cur,
+					 xsltStylePreCompPtr comp);
 void 		xsltApplyImports	(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltCallTemplate	(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltApplyTemplates	(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltChoose		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltIf			(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 void 		xsltForEach		(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
-					 xmlNodePtr inst);
+					 xmlNodePtr inst,
+					 xsltStylePreCompPtr comp);
 #ifdef __cplusplus
 }
 #endif
