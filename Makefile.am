@@ -28,4 +28,9 @@ xsltConf.sh: xsltConf.sh.in Makefile
 test tests:
 	@(cd tests ; make test)
 
+cleantar:
+	@(rm -f libxslt*.tar.gz)
+
+rpm: cleantar distcheck
+	rpm -ta libxslt*.tar.gz
 
