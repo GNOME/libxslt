@@ -1,3 +1,10 @@
+Wed Feb 25 14:24:34 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/variables.c: trying to use the fact that names comes
+	  from a dictionnary when looking up for variables.
+	* tests/documents/Makefile.am: try to fix an error reported on
+	  the list.
+
 Wed Feb 25 17:02:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* tests/general/Makefile.am, tests/general/bug-142.xsl,

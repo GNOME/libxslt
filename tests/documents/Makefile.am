@@ -3,11 +3,12 @@
 $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
-EXTRA_DIST = bredfort.css index.xml system.xml \
-             bredfort.xsl menu.xml worklog.xml \
-	     result.xhtml docfile.xml doc_file.xml \
-	     test.xml test.xsl test.result \
-	     message.xml message.xsl message.result
+EXTRA_DIST = \
+    bredfort.css bredfort.xsl doc_file.xml docfile.xml \
+    fragment2.xml fragment.result fragment.xml fragment.xsl \
+    index.xml menu.xml message.result message.xml message.xsl \
+    result.xhtml system.xml test_bad.err test_bad.result \
+    test_bad.xml test.result test.xml test.xsl worklog.xml
 
 
 all:

@@ -244,7 +244,6 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
 static xsltStackElemPtr
 xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	        const xmlChar *nameURI) {
-    xsltStackElemPtr ret = NULL;
     int i;
     xsltStackElemPtr cur;
 
@@ -254,6 +253,58 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     /*
      * Do the lookup from the top of the stack, but
      * don't use params being computed in a call-param
+     * First lookup expects the variable name and URI to
+     * come from the disctionnary and hence get equality
+     */
+    for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
+	cur = ctxt->varsTab[i-1];
+	while (cur != NULL) {
+	    if (cur->name == name) {
+		if (nameURI == NULL) {
+		    if (cur->nameURI == NULL) {
+			return(cur);
+		    }
+		} else {
+		    if ((cur->nameURI != NULL) &&
+			(cur->nameURI == nameURI)) {
+			return(cur);
+		    }
+		}
+
+	    }
+	    cur = cur->next;
+	}
+    }
+
+#if 0
+    if ((xmlDictOwns(ctxt->dict, name) <= 0) ||
+        ((nameURI != NULL) && (xmlDictOwns(ctxt->dict, nameURI) <= 0))) {
+	/*
+	 * Redo the lookup with string compares
+	 */
+	for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
+	    cur = ctxt->varsTab[i-1];
+	    while (cur != NULL) {
+		if (xmlStrEqual(cur->name, name)) {
+		    if (nameURI == NULL) {
+			if (cur->nameURI == NULL) {
+			    return(cur);
+			}
+		    } else {
+			if ((cur->nameURI != NULL) &&
+			    (xmlStrEqual(cur->nameURI, nameURI))) {
+			    return(cur);
+			}
+		    }
+
+		}
+		cur = cur->next;
+	    }
+	}
+    }
+#else
+    /*
+     * Redo the lookup with string compares
      */
     for (i = ctxt->varsNr; i > ctxt->varsBase; i--) {
 	cur = ctxt->varsTab[i-1];
@@ -274,7 +325,8 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	    cur = cur->next;
 	}
     }
-    return(ret);
+#endif
+    return(NULL);
 }
 
 /**
