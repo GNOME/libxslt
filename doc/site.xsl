@@ -190,7 +190,7 @@ A:link, A:visited, A:active { text-decoration: underline }
     <table border="0" width="100%" cellpadding="5" cellspacing="0" align="center">
     <tr>
     <td width="100">
-    <a href="http://www.gnome.org/"><img src="smallfootonly.gif" alt="Gnome Logo"/></a>
+    <a href="http://www.gnome.org/"><img src="gnome2.png" alt="Gnome2 Logo"/></a>
     <a href="http://www.redhat.com"><img src="redhat.gif" alt="Red Hat Logo"/></a>
     <div align="left">
     <a href="http://xmlsoft.org/XSLT/"><img src="Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo"/></a>
