@@ -1,3 +1,8 @@
+2001-07-19  Darin Adler  <darin@bentspoon.com>
+
+	* configure.in: Add HTML_DIR definition.
+	* xsltproc/.cvsignore: Ignore some generated files.
+
 2001-07-18  Peter Williams  <peterw@ximian.com>
 
 	* xsltproc/Makefile.am (INCLUDES): Fix compiling when

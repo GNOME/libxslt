@@ -49,6 +49,17 @@ AM_MAINTAINER_MODE
 AC_ARG_WITH(html-dir, [  --with-html-dir=PATH path to installed docs ])
 
 dnl
+dnl Specific dir for HTML output ?
+dnl
+
+if test "x$with_html_dir" = "x" ; then
+  HTML_DIR='$(prefix)/doc'
+else
+  HTML_DIR=$with_html_dir
+fi
+AC_SUBST(HTML_DIR)
+
+dnl
 dnl Check the environment
 dnl
 
