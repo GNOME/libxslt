@@ -1,3 +1,10 @@
+Thu Feb 26 16:59:45 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c libxslt/pattern.c: removed the last use
+	  of _private that time in the input document, use the psvi
+	  field again, this may be interesting if XSLT2 support gets
+	  in but since this is very unlikely ...
+
 Thu Feb 26 16:04:28 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c libxslt/variables.c: use the psvi field

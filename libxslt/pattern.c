@@ -2057,6 +2057,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     const xmlChar *name = NULL;
     xsltCompMatchPtr list = NULL;
     float priority;
+    int keyed = 0;
 
     if ((ctxt == NULL) || (node == NULL))
 	return(NULL);
@@ -2133,23 +2134,37 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    list = curstyle->rootMatch;
 		else
 		    list = curstyle->elemMatch;
+		if (node->psvi != NULL) keyed = 1;
 		break;
-	    case XML_ATTRIBUTE_NODE:
+	    case XML_ATTRIBUTE_NODE: {
+	        xmlAttrPtr attr;
+
 		list = curstyle->attrMatch;
+		attr = (xmlAttrPtr) node;
+		if (attr->psvi != NULL) keyed = 1;
 		break;
+	    }
 	    case XML_PI_NODE:
 		list = curstyle->piMatch;
+		if (node->psvi != NULL) keyed = 1;
 		break;
 	    case XML_DOCUMENT_NODE:
-	    case XML_HTML_DOCUMENT_NODE:
+	    case XML_HTML_DOCUMENT_NODE: {
+	        xmlDocPtr doc;
+
 		list = curstyle->rootMatch;
+		doc = (xmlDocPtr) node;
+		if (doc->psvi != NULL) keyed = 1;
 		break;
+	    }
 	    case XML_TEXT_NODE:
 	    case XML_CDATA_SECTION_NODE:
 		list = curstyle->textMatch;
+		if (node->psvi != NULL) keyed = 1;
 		break;
 	    case XML_COMMENT_NODE:
 		list = curstyle->commentMatch;
+		if (node->psvi != NULL) keyed = 1;
 		break;
 	    case XML_ENTITY_REF_NODE:
 	    case XML_ENTITY_NODE:
@@ -2166,7 +2181,6 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		break;
 	    default:
 		break;
-
 	}
 	while ((list != NULL) &&
 	       ((ret == NULL)  || (list->priority > priority))) {
@@ -2210,7 +2224,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	}
 
-	if (node->_private != NULL) {
+	if (keyed) {
 	    list = curstyle->keyMatch;
 	    while ((list != NULL) &&
 		   ((ret == NULL)  || (list->priority > priority))) {

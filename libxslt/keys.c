@@ -644,7 +644,30 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 		    } else {
 			xmlXPathNodeSetAdd(keylist, nodelist->nodeTab[i]);
 		    }
-		    nodelist->nodeTab[i]->_private = keyd;
+		    switch (nodelist->nodeTab[i]->type) {
+                        case XML_ELEMENT_NODE:
+                        case XML_TEXT_NODE:
+                        case XML_CDATA_SECTION_NODE:
+                        case XML_PI_NODE:
+                        case XML_COMMENT_NODE:
+			    nodelist->nodeTab[i]->psvi = keyd;
+			    break;
+                        case XML_ATTRIBUTE_NODE: {
+			    xmlAttrPtr attr = (xmlAttrPtr) 
+			                      nodelist->nodeTab[i]->psvi;
+			    attr->psvi = keyd;
+			    break;
+			}
+                        case XML_DOCUMENT_NODE:
+                        case XML_HTML_DOCUMENT_NODE: {
+			    xmlDocPtr doc = (xmlDocPtr) 
+			                    nodelist->nodeTab[i]->psvi;
+			    doc->psvi = keyd;
+			    break;
+			}
+			default:
+			    break;
+		    }
 		    xmlFree(str);
 		    str = list[index++];
 		}
