@@ -1,3 +1,8 @@
+Sun Apr 27 18:00:12 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/variables.c: removed premature call to xsltFreeStackElem
+	* win32/libxslty.def.src: added more exports
+
 Sun Apr 27 12:46:31 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* NEWS doc/*.xsl doc/*.html: updated the web site, made the
