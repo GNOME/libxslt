@@ -1,5 +1,6 @@
 #!/usr/bin/python -u
 import sys
+import string
 import libxml2
 import libxslt
 
@@ -22,7 +23,6 @@ def f(ctx, str):
     except:
         pass
 
-    import string
     return string.upper(str)
 
 libxslt.registerExtModuleFunction("foo", "http://example.com/foo", f)
@@ -54,6 +54,7 @@ if root.content != "SUCCESS":
     sys.exit(1)
 if nodeName != 'article':
     print "The function callback failed to access its context"
+    sys.exit(1)
 
 result.freeDoc()
 

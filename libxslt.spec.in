@@ -2,7 +2,7 @@ Summary: Library providing the Gnome XSLT engine
 Name: libxslt
 Version: @VERSION@
 Release: 1
-Copyright: LGPL
+License: MIT
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/XSLT/libxslt-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -108,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-, root, root)
 
-%doc AUTHORS ChangeLog NEWS README COPYING COPYING.LIB TODO FEATURES
+%doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
 %doc doc/*.html doc/html doc/tutorial
 %doc %{_mandir}/man1/xsltproc.1*
 
@@ -118,6 +118,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(-, root, root)
 
+%doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
 %{prefix}/lib/lib*.so
 %{prefix}/lib/*a
 %{prefix}/lib/*.sh
@@ -127,6 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %files python
 %defattr(-, root, root)
 
+%doc AUTHORS ChangeLog NEWS README Copyright FEATURES
 %{prefix}/lib/python*/site-packages/libxslt.py
 %{prefix}/lib/python*/site-packages/_libxslt.so
 %doc python/TODO
@@ -135,6 +137,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Feb  8 2002 Daniel.Veillard <veillard@redhat.com>
+
+- added the python module
+-changed the Licence to MIT
 
 * Sat Nov 10 2001 Daniel.Veillard <daniel@veillard.com>
 

@@ -27,7 +27,7 @@ dist-hook: libxslt.spec
 	(cd $(srcdir) ; tar -cf - --exclude CVS win32 vms) | (cd $(distdir); tar xf -)
 
 EXTRA_DIST = xsltConf.sh.in xslt-config.in libxslt.spec libxslt.spec.in \
-             FEATURES TODO COPYING.LIB Copyright IPR \
+             FEATURES TODO Copyright \
 	     win32/libxslt/libxslt.def win32/libxslt/libxslt.dsw \
 	     win32/libxslt/libxslt_so.dsp win32/libxslt/xsltproc.dsp
 

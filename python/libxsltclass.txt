@@ -65,12 +65,6 @@ Class xpathParserContext(libxml2.xpathParserContext)
 
 Class xpathContext(libxml2.xpathContext)
     # accessors
-    contextDoc()
-    contextNode()
-    contextPosition()
-    contextSize()
-    function()
-    functionURI()
     transformContext()
 
     # functions from module functions

@@ -1,3 +1,15 @@
+Fri Feb  8 17:01:10 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* Copyright Makefile.am configure.in libxslt.spec.in: change the
+	  Licence to MIT Licence and release of 1.0.11
+	* doc/FAQ.html doc/intro.html doc/libxslt-decl.txt doc/news.html 
+	  doc/xslt.html: updates of the docs accordingly
+	* libxslt/xsltwin32config.h: numbering
+	* python/generator.py python/libxml_wrap.h python/libxsltclass.txt
+	  python/libxslt-python-api.xml: cleanup the dependancies with
+	  libxml2
+	* python/tests/extfunc.py: updated examples.
+
 Thu Feb  7 23:21:18 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/libxslt-api.xml doc/libxslt-decl.txt doc/libxslt-refs.xml

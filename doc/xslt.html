@@ -48,9 +48,8 @@ the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developed for the
     sticking closely to ANSI C/POSIX for easy embedding. Should works on
     Linux/Unix/Windows.</li>
   <li>This library is released under the <a
-    href="http://www.gnu.org/copyleft/lesser.html">GNU LGPL</a> and a
-    derivative of the W3C IPR (check the Copyright and the IPR files in the
-    distribution). If you are not happy with this, drop me a mail.</li>
+    href="http://www.opensource.org/licenses/mit-license.html">MIT
+  Licence</a></li>
   <li>Though not designed primarily with performances in mind, libxslt seems
     to be a relatively fast processor.</li>
 </ul>
@@ -224,6 +223,8 @@ platform, get in touch with me to upload the package. I will keep them in the
     matching this string. You really want -&gt;<code>'alpha'</code>&lt;- to
     be passed to the processor. And to allow this you need to escape the
     quotes at the shell level using -&gt;<code>"'alpha'"</code>&lt;- .</p>
+    <p>or use</p>
+    <p>xsltproc --stringparam test alpha foo.xsl foo.xml</p>
   </li>
 </ol>
 
@@ -233,7 +234,19 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
-<h3>1.0.10: Jan 14 2001</h3>
+<h3>1.0.11: Feb 8 2002</h3>
+<ul>
+  <li>Change of Licence to the <a
+    href="http://www.opensource.org/licenses/mit-license.html">MIT
+  Licence</a></li>
+  <li>Added a beta version of the Python bindings, including support to
+    extend the engine with functions written in Python</li>
+  <li>A number of bug fixes</li>
+  <li>Charlie Bozeman provided more EXSLT functions</li>
+  <li>Portability fixes</li>
+</ul>
+
+<h3>1.0.10: Jan 14 2002</h3>
 <ul>
   <li>Windows fixes for Win32 from Igor</li>
   <li>Fixed the Solaris compilation trouble (Albert)</li>
