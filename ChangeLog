@@ -1,3 +1,9 @@
+Tue May 15 00:20:10 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* libxslt/xslt.c: xsl:include crash fix
+	* libxslt/imports.c: xsl:include crash fix
+	* libxslt/imports.h: xsl:include crash fix	
+
 Wed May  9 01:39:14 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
 
 	* libexslt/exslt.h: fixed a typo _cplusplus -> __cplusplus
