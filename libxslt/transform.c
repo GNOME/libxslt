@@ -808,6 +808,13 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	    case XML_COMMENT_NODE:
 		nbchild++;
 		break;
+            case XML_DTD_NODE:
+		/* Unlink the DTD, it's still reachable using doc->intSubset */
+		if (cur->next != NULL)
+		    cur->next->prev = cur->prev;
+		if (cur->prev != NULL)
+		    cur->prev->next = cur->next;
+		break;
 	    default:
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		xsltGenericDebug(xsltGenericDebugContext,
@@ -2662,6 +2669,14 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		case XML_COMMENT_NODE:
 		    xmlXPathNodeSetAdd(list, cur);
 		    break;
+		case XML_DTD_NODE:
+		    /* Unlink the DTD, it's still reachable
+		     * using doc->intSubset */
+		    if (cur->next != NULL)
+			cur->next->prev = cur->prev;
+		    if (cur->prev != NULL)
+			cur->prev->next = cur->next;
+		    break;
 		default:
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		    xsltGenericDebug(xsltGenericDebugContext,
@@ -3297,6 +3312,23 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 
     if ((style == NULL) || (doc == NULL))
         return (NULL);
+
+    if (doc->intSubset != NULL) {
+	/*
+	 * Avoid hitting the DTD when scanning nodes
+	 * but keep it linked as doc->intSubset
+	 */
+	xmlNodePtr cur = doc->intSubset;
+	if (cur->next != NULL)
+	    cur->next->prev = cur->prev;
+	if (cur->prev != NULL)
+	    cur->prev->next = cur->next;
+	if (doc->children == cur)
+	    doc->children = cur->next;
+	if (doc->last == cur)
+	    doc->last = cur->prev;
+	cur->prev = cur->next = NULL;
+    }
 
     if (userCtxt != NULL)
 	ctxt = userCtxt;

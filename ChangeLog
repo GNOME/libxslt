@@ -1,3 +1,11 @@
+Mon Jan 14 18:35:18 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: releasing 1.0.10
+	* doc/*: updating the docs for the release.
+	* libxslt/namespaces.c libxslt/pattern.c libxslt/transform.c:
+	  seems I inadvertantly commited previously stuff from a failed
+	  attempt at fixing namespace nodes parents.
+
 Mon Jan 14 12:20:33 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c: the xsl:number implementation incorrectly
