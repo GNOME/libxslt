@@ -372,6 +372,7 @@ xsltNewStylesheet(void) {
     cur->exclPrefixTab = NULL;
     cur->extInfos = NULL;
     cur->extrasNr = 0;
+    cur->internalized = 1;
     cur->dict = xmlDictCreate();
 #ifdef WITH_XSLT_DEBUG
     xsltGenericDebug(xsltGenericDebugContext,
@@ -1183,6 +1184,8 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((style != NULL) && (cur != NULL) && (cur->doc != NULL) &&
         (style->dict != NULL) && (cur->doc->dict == style->dict))
 	internalize = 1;
+    else
+        style->internalized = 0;
 
     /*
      * This content comes from the stylesheet
@@ -1224,7 +1227,8 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 			 */
 			txt->content = (xmlChar *)
 			               xmlDictLookup(style->dict, old, -1);
-			xmlFree(old);
+			if (old != txt->content)
+			    xmlFree(old);
 		    }
 		    prop = prop->next;
 		}
@@ -1516,8 +1520,28 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 		     * replace xsl:text by the list of childs
 		     */
 		    if (text == NULL) {
+		        int internalize = 0;
+			if ((style != NULL) && (text != NULL) &&
+			    (text->doc != NULL) && (style->dict != NULL) &&
+			    (text->doc->dict == style->dict))
+			    internalize = 1;
+			else
+			    style->internalized = 0;
+
 			text = cur->children;
 			while (text != NULL) {
+			    if ((text->content != NULL) &&
+			        (!xmlDictOwns(style->dict, text->content))) {
+				xmlChar *old = (xmlChar *) text->content;
+
+				/*
+				 * internalize the text string
+				 */
+				text->content = (xmlChar *)
+					xmlDictLookup(style->dict, old, -1);
+				xmlFree(old);
+			    }
+
 			    next = text->next;
 			    xmlUnlinkNode(text);
 			    xmlAddPrevSibling(cur, text);

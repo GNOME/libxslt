@@ -1,3 +1,12 @@
+Sat Jan 22 16:28:27 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/templates.c libxslt/transform.c libxslt/xslt.c
+	  libxslt/xsltInternals.h: when copying text nodes in elements
+	  or attributes to the output, if interning, then reuse the strings
+	  directly without copying them in the output tree if dicts are
+	  shared between the context and the output docs. Less allocations
+	  smaller output document and no copying involved anymore.
+
 Sat Jan 22 11:24:43 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: internalize all text node content from

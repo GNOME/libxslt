@@ -443,6 +443,10 @@ struct _xsltStylesheet {
      * bypass pre-processing (already done) (used in imports)
      */
     int nopreproc;
+    /*
+     * all document text strings were internalized
+     */
+    int internalized;
 };
 
 /*
@@ -558,7 +562,11 @@ struct _xsltTransformContext {
      * temporary storage for doc ptr, currently only used for
      * global var evaluation
      */
-   xmlDocPtr		tmpDoc;
+    xmlDocPtr		tmpDoc;
+    /*
+     * all document text strings are internalized
+     */
+    int internalized;
 };
 
 /**

@@ -465,6 +465,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->traceCode = (unsigned long*) &xsltDefaultTrace;
 
     cur->dict = xmlDictCreateSub(style->dict);
+    cur->internalized = ((style->internalized) && (cur->dict != NULL));
 #ifdef WITH_XSLT_DEBUG
     xsltGenericDebug(xsltGenericDebugContext,
 	     "Creating sub-dictionary from stylesheet for transformation\n");
@@ -660,6 +661,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
  * @ctxt:  a XSLT process context
  * @target:  the element where the text will be attached
  * @cur:  the text or CDATA node
+ * @interned:  the string is in the target doc dictionnary
  *
  * Do a copy of a text node
  *
@@ -667,7 +669,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
  */
 static xmlNodePtr
 xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
-	     xmlNodePtr cur) {
+	     xmlNodePtr cur, int interned) {
     xmlNodePtr copy;
 
     if ((cur->type != XML_TEXT_NODE) &&
@@ -701,19 +703,37 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	 ((target->ns != NULL) &&
 	  (xmlHashLookup2(ctxt->style->cdataSection,
 	                  target->name, target->ns->href) != NULL)))) {
+	/*
+	 * nodes which must be output as CDATA due to the stylesheet
+	 */
 	copy = xmlNewCDataBlock(ctxt->output, cur->content,
 				xmlStrlen(cur->content));
 	ctxt->lasttext = NULL;
-    } else {
-        unsigned int len;
-
-	len = xmlStrlen(cur->content);
-	if ((target != NULL) && (target->last != NULL) &&
+    } else if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
 	    (target->last->name == xmlStringText) &&
 	    (cur->name != xmlStringTextNoenc)) {
-	    return(xsltAddTextString(ctxt, target->last, cur->content, len));
-	}
+	/*
+	 * we are appending to an existing text node
+	 */
+	return(xsltAddTextString(ctxt, target->last, cur->content,
+	                         xmlStrlen(cur->content)));
+    } else if ((interned) && (target != NULL) && (target->doc != NULL) &&
+               (target->doc->dict == ctxt->dict)) {
+        copy = xmlNewTextLen(NULL, 0);
+	if (copy == NULL)
+	    return NULL;
+	if (cur->name == xmlStringTextNoenc)
+	    copy->name = xmlStringTextNoenc;
+	copy->content = cur->content;
+    } else {
+        /*
+	 * normal processing. keep counters to extend the text node
+	 * in xsltAddTextString if needed.
+	 */
+        unsigned int len;
+
+	len = xmlStrlen(cur->content);
 	copy = xmlNewTextLen(cur->content, len);
 	if (copy == NULL)
 	    return NULL;
@@ -826,7 +846,7 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return(NULL);
     if ((node->type == XML_TEXT_NODE) ||
 	(node->type == XML_CDATA_SECTION_NODE))
-	return(xsltCopyText(ctxt, insert, node));
+	return(xsltCopyText(ctxt, insert, node, 0));
     copy = xmlDocCopyNode(node, insert->doc, 0);
     if (copy != NULL) {
 	copy->doc = ctxt->output;
@@ -1163,7 +1183,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsltDefaultProcessOneNode: copy CDATA %s\n",
 		node->content));
 #endif
-	    copy = xsltCopyText(ctxt, ctxt->insert, node);
+	    copy = xsltCopyText(ctxt, ctxt->insert, node, 0);
 	    if (copy == NULL) {
 		xsltTransformError(ctxt, NULL, node,
 		 "xsltDefaultProcessOneNode: cdata copy failed\n");
@@ -1180,7 +1200,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			node->content));
             }
 #endif
-	    copy = xsltCopyText(ctxt, ctxt->insert, node);
+	    copy = xsltCopyText(ctxt, ctxt->insert, node, 0);
 	    if (copy == NULL) {
 		xsltTransformError(ctxt, NULL, node,
 		 "xsltDefaultProcessOneNode: text copy failed\n");
@@ -1204,7 +1224,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			cur->content));
                 }
 #endif
-		copy = xsltCopyText(ctxt, ctxt->insert, cur);
+		copy = xsltCopyText(ctxt, ctxt->insert, cur, 0);
 		if (copy == NULL) {
 		    xsltTransformError(ctxt, NULL, node,
 		     "xsltDefaultProcessOneNode: text copy failed\n");
@@ -1297,7 +1317,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		     "xsltDefaultProcessOneNode: copy CDATA %s\n",
 				     cur->content));
 #endif
-		    copy = xsltCopyText(ctxt, ctxt->insert, cur);
+		    copy = xsltCopyText(ctxt, ctxt->insert, cur, 0);
 		    if (copy == NULL) {
 			xsltTransformError(ctxt, NULL, cur,
 			    "xsltDefaultProcessOneNode: cdata copy failed\n");
@@ -1327,7 +1347,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 					 cur->content));
                     }
 #endif
-		    copy = xsltCopyText(ctxt, ctxt->insert, cur);
+		    copy = xsltCopyText(ctxt, ctxt->insert, cur, 0);
 		    if (copy == NULL) {
 			xsltTransformError(ctxt, NULL, cur,
 			    "xsltDefaultProcessOneNode: text copy failed\n");
@@ -1661,7 +1681,7 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
                                  cur->content));
             }
 #endif
-            if (xsltCopyText(ctxt, insert, cur) == NULL)
+            if (xsltCopyText(ctxt, insert, cur, ctxt->internalized) == NULL)
 		goto error;
         } else if ((cur->type == XML_ELEMENT_NODE) &&
                    (cur->ns != NULL) && (cur->psvi != NULL)) {
@@ -2434,7 +2454,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			 "xsltCopy: text %s\n", node->content));
                 }
 #endif
-		xsltCopyText(ctxt, ctxt->insert, node);
+		xsltCopyText(ctxt, ctxt->insert, node, 0);
 		break;
 	    case XML_DOCUMENT_NODE:
 	    case XML_HTML_DOCUMENT_NODE:
@@ -3981,6 +4001,12 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if ((style == NULL) || (doc == NULL))
         return (NULL);
 
+    if (style->internalized == 0) {
+#ifdef WITH_XSLT_DEBUG
+	xsltGenericDebug(xsltGenericDebugContext,
+			 "Stylesheet was not fully internalized !\n");
+#endif
+    }
     if (doc->intSubset != NULL) {
 	/*
 	 * Avoid hitting the DTD when scanning nodes

@@ -451,7 +451,8 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
         return(NULL);
     }
     value = cur->children->content;
-    if (value == NULL) value = BAD_CAST "";
+    if (value == NULL)
+        value = xmlDictLookup(ctxt->dict, BAD_CAST "", 0);
     if ((cur->ns != NULL) &&
 	(xmlStrEqual(cur->ns->href, XSLT_NAMESPACE))) {
 	if (xmlStrEqual(cur->name, (const xmlChar *)"use-attribute-sets")) {
@@ -502,6 +503,10 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 		} else {
 		    text->content = val;
 		}
+	    } else if ((ctxt->internalized) && (target != NULL) &&
+	               (target->doc != NULL) &&
+		       (target->doc->dict == ctxt->dict)) {
+		text->content = value;
 	    } else {
 		text->content = xmlStrdup(value);
 	    }
