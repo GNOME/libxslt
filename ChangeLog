@@ -1,3 +1,8 @@
+Tue May 21 08:43:11 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/libexslt.4: Applied patch for the EXSLT man page
+	  from Charles Bozeman
+
 Sat May 18 10:01:38 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/libexslt.4 libxslt/libxslt.4 libxslt/keys.c 
