@@ -1,3 +1,8 @@
+Fri Jul  6 01:00:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/html/*: rebuilt docs before release
+	* libxslt/extensions.c: fixed a function doc header
+
 Fri Jul  6 00:40:55 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* FEATURES: updated

@@ -576,7 +576,7 @@ xsltUnregisterExtModule(const xmlChar * URI)
 }
 
 /**
- * xsltUnregisterExtModule:
+ * xsltUnregisterAllExtModules:
  *
  * Unregister all the XSLT extension module from the library.
  */
