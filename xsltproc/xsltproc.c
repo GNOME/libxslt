@@ -163,10 +163,12 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
     const char *lastsegment = URL;
     const char *iter = URL;
 
-    while (*iter != 0) {
-        if (*iter == '/')
-	    lastsegment = iter + 1;
-	iter++;
+    if (nbpaths > 0) {
+	while (*iter != 0) {
+	    if (*iter == '/')
+		lastsegment = iter + 1;
+	    iter++;
+	}
     }
 
     if ((ctxt != NULL) && (ctxt->sax != NULL)) {
