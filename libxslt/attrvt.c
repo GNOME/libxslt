@@ -161,7 +161,8 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 	return;
     }
     str = attr->children->content;
-    if (xmlStrchr(str, '{') == NULL) return;
+    if ((xmlStrchr(str, '{') == NULL) &&
+        (xmlStrchr(str, '}') == NULL)) return;
 
     avt = xsltNewAttrVT(style);
     if (avt == NULL) return;

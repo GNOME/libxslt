@@ -456,13 +456,34 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	}
 	return(NULL);
     }
-    if (cur->ns != NULL)
-	ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
-    else
-	ns = NULL;
 
-    /* TODO output doc->dict, use xmlNewNsPropEatName() instead */
-    ret = xmlNewNsProp(target, ns, cur->name, NULL);
+    ret = target->properties;
+    while (ret != NULL) {
+        if (xmlStrEqual(ret->name, cur->name)) {
+	    if (cur->ns == NULL) {
+	        if (ret->ns == NULL)
+		    break;
+	    } else {
+	        if ((ret->ns != NULL) &&
+		    (xmlStrEqual(ret->ns->href, cur->ns->href)))
+		    break;
+	    }
+	}
+        ret = ret->next;
+    }
+    if (ret != NULL) {
+        /* free the existing value */
+	xmlFreeNodeList(ret->children);
+	ret->children = ret->last = NULL;
+    } else {
+        /* create a new attribute */
+	if (cur->ns != NULL)
+	    ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
+	else
+	    ns = NULL;
+	/* TODO output doc->dict, use xmlNewNsPropEatName() instead */
+	ret = xmlNewNsProp(target, ns, cur->name, NULL);
+    }
     if (ret != NULL) {
         xmlNodePtr text;
 
