@@ -1058,19 +1058,25 @@ exsltDateFormatDuration (const exsltDateValDurationPtr dt) {
     years  = (double)(dt->mon / 12);
     months = (double)(dt->mon % 12);
 
+    *cur = '\0';
     if (secs < 0.0) {
         secs = -secs;
-        *cur++ = '-';
-    } else if (days < 0) {
+        *cur = '-';
+    } 
+    if (days < 0) {
         days = -days;
-        *cur++ = '-';
-    } else if (years < 0) {
+        *cur = '-';
+    } 
+    if (years < 0) {
         years = -years;
-        *cur++ = '-';
-    } else if (months < 0) {
+        *cur = '-';
+    } 
+    if (months < 0) {
         months = -months;
-        *cur++ = '-';
+        *cur = '-';
     }
+    if (*cur == '-')
+	cur++;
 
     *cur++ = 'P';
 
@@ -1549,7 +1555,7 @@ exsltDateNormalize (exsltDateValPtr dt)
  * @flag: force difference in days
  *
  * Calculate the difference between @x and @y as a duration
- * (i.e. x - y). If the @flag is set then even if the least specific
+ * (i.e. y - x). If the @flag is set then even if the least specific
  * format of @x or @y is xs:gYear or xs:gYearMonth.
  *
  * Returns date/time pointer or NULL.
