@@ -1,3 +1,8 @@
+Tue Sep 10 21:05:28 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* win32/configure.js: added more readme info for the binary
+	  package.
+	
 Mon Sep  9 14:07:06 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixed a bug in match="node()" reported by
