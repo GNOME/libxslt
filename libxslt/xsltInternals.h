@@ -19,7 +19,6 @@
 extern "C" {
 #endif
 
-
 /*
  * The in-memory structure corresponding to an XSLT Variable
  * or Param
@@ -200,6 +199,11 @@ struct _xsltTransformContext {
     int              templMax;		/* Size of the templtes stack */
     xsltTemplatePtr *templTab;		/* the template stack */
 
+    xsltStackElemPtr  vars;		/* the current variable list */
+    int               varsNr;		/* Nb of variable list in the stack */
+    int               varsMax;		/* Size of the variable list stack */
+    xsltStackElemPtr *varsTab;		/* the variable list stack */
+
     const xmlChar *mode;		/* the current mode */
     const xmlChar *modeURI;		/* the current mode URI */
 
@@ -213,8 +217,6 @@ struct _xsltTransformContext {
     xmlNodePtr insert;			/* the insertion node */
 
     xmlXPathContextPtr xpathCtxt;	/* the XPath context */
-    void *variablesHash;		/* hash table or wherever variables
-				   	   informations are stored */
     xsltTransformState state;		/* the current state */
 };
 

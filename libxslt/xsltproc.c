@@ -138,7 +138,7 @@ main(int argc, char **argv) {
 				msec);
 		    }
 		} else {
-		    if (xmlStrEqual(cur->method, "xhtml")) {
+		    if (xmlStrEqual(cur->method, (const xmlChar *)"xhtml")) {
 			fprintf(stderr, "non standard output xhtml\n");
 			if (timing)
 			    gettimeofday(&begin, NULL);

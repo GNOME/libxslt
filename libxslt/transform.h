@@ -23,7 +23,6 @@ xmlDocPtr	xsltApplyStylesheet	(xsltStylesheetPtr style,
 					 xmlDocPtr doc);
 void		xsltApplyOneTemplate	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
-					 xsltTemplatePtr templ,
 					 xmlNodePtr list);
 #ifdef __cplusplus
 }

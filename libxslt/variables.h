@@ -18,6 +18,11 @@
 extern "C" {
 #endif
 
+
+/*
+ * registering macro, not general purpose at all
+ */
+
 #define XSLT_REGISTER_VARIABLE_LOOKUP(ctxt)			\
     xmlXPathRegisterVariableLookup((ctxt)->xpathCtxt,		\
 	       xsltXPathVariableLookup,	(void *)(ctxt));	\

@@ -90,6 +90,7 @@ scope type name##Pop(xsltTransformContextPtr ctxt) {			\
  * Those macros actually generate the functions
  */
 PUSH_AND_POP(extern, xsltTemplatePtr, templ)
+PUSH_AND_POP(extern, xsltStackElemPtr, vars)
 
 /************************************************************************
  *									*
@@ -118,6 +119,10 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltTransformContext));
+
+    /*
+     * initialize the template stack
+     */
     cur->templTab = (xsltTemplatePtr *)
 	        xmlMalloc(10 * sizeof(xsltTemplatePtr));
     if (cur->templTab == NULL) {
@@ -129,6 +134,23 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->templNr = 0;
     cur->templMax = 5;
     cur->templ = NULL;
+
+    /*
+     * initialize the variables stack
+     */
+    cur->varsTab = (xsltStackElemPtr *)
+	        xmlMalloc(10 * sizeof(xsltStackElemPtr));
+    if (cur->varsTab == NULL) {
+        xmlGenericError(xmlGenericErrorContext,
+		"xsltNewTransformContext: out of memory\n");
+	xmlFree(cur->templTab);
+	xmlFree(cur);
+	return(NULL);
+    }
+    cur->varsNr = 0;
+    cur->varsMax = 5;
+    cur->vars = NULL;
+
     cur->style = style;
     xmlXPathInit();
     cur->xpathCtxt = xmlXPathNewContext(doc);
@@ -136,6 +158,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltNewTransformContext : xmlXPathNewContext failed\n");
 	xmlFree(cur->templTab);
+	xmlFree(cur->varsTab);
 	xmlFree(cur);
 	return(NULL);
     }
@@ -145,6 +168,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
         xsltGenericError(xsltGenericErrorContext,
 		"xsltNewTransformContext : xsltNewDocument failed\n");
 	xmlFree(cur->templTab);
+	xmlFree(cur->varsTab);
 	xmlFree(cur);
 	return(NULL);
     }
@@ -167,7 +191,8 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	xmlXPathFreeContext(ctxt->xpathCtxt);
     if (ctxt->templTab != NULL)
 	xmlFree(ctxt->templTab);
-    xsltFreeVariableHashes(ctxt);
+    if (ctxt->varsTab != NULL)
+	xmlFree(ctxt->varsTab);
     xsltFreeDocuments(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
@@ -506,7 +531,9 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	case XML_DOCUMENT_NODE:
 	case XML_HTML_DOCUMENT_NODE:
 	case XML_ELEMENT_NODE:
-	    xsltApplyOneTemplate(ctxt, ctxt->node, NULL, inst->children);
+	    varsPush(ctxt, NULL);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+	    xsltFreeStackElemList(varsPop(ctxt));
 	    break;
 	default:
 	    break;
@@ -589,7 +616,9 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
         xmlFree(attributes);
     }
     
-    xsltApplyOneTemplate(ctxt, ctxt->node, NULL, inst->children);
+    varsPush(ctxt, NULL);
+    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+    xsltFreeStackElemList(varsPop(ctxt));
 
 error:
     if (prop != NULL)
@@ -1027,7 +1056,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		oldNode = ctxt->node;
 		ctxt->node = node;
-		xsltApplyOneTemplate(ctxt, node, template, NULL);
+		templPush(ctxt, template);
+		varsPush(ctxt, NULL);
+		xsltApplyOneTemplate(ctxt, node, template->content);
+		xsltFreeStackElemList(varsPop(ctxt));
+		templPop(ctxt);
 		ctxt->node = oldNode;
 	    } else /* if (ctxt->mode == NULL) */ {
 #ifdef DEBUG_PROCESS
@@ -1056,7 +1089,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		oldNode = ctxt->node;
 		ctxt->node = node;
-		xsltApplyOneTemplate(ctxt, node, template, NULL);
+		templPush(ctxt, template);
+		varsPush(ctxt, NULL);
+		xsltApplyOneTemplate(ctxt, node, template->content);
+		xsltFreeStackElemList(varsPop(ctxt));
+		templPop(ctxt);
 		ctxt->node = oldNode;
 	    } else /* if (ctxt->mode == NULL) */ {
 #ifdef DEBUG_PROCESS
@@ -1086,7 +1123,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 
 		    oldNode = ctxt->node;
 		    ctxt->node = node;
-		    xsltApplyOneTemplate(ctxt, node, template, NULL);
+		    templPush(ctxt, template);
+		    varsPush(ctxt, NULL);
+		    xsltApplyOneTemplate(ctxt, node, template->content);
+		    xsltFreeStackElemList(varsPop(ctxt));
+		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		} else if (ctxt->mode == NULL) {
 		    if (attr->ns != NULL) {
@@ -1173,7 +1214,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 
 	    oldNode = ctxt->node;
 	    ctxt->node = node;
-	    xsltApplyOneTemplate(ctxt, node, template, NULL);
+	    templPush(ctxt, template);
+	    varsPush(ctxt, NULL);
+	    xsltApplyOneTemplate(ctxt, node, template->content);
+	    xsltFreeStackElemList(varsPop(ctxt));
+	    templPop(ctxt);
 	    ctxt->node = oldNode;
 	}
 	attrs = attrs->next;
@@ -1203,7 +1248,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		    oldNode = ctxt->node;
 		    ctxt->node = node;
-		    xsltApplyOneTemplate(ctxt, node, template, NULL);
+		    templPush(ctxt, template);
+		    varsPush(ctxt, NULL);
+		    xsltApplyOneTemplate(ctxt, node, template->content);
+		    xsltFreeStackElemList(varsPop(ctxt));
+		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef DEBUG_PROCESS
@@ -1234,7 +1283,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->node = cur;
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
-		    xsltApplyOneTemplate(ctxt, cur, template, NULL);
+		    templPush(ctxt, template);
+		    varsPush(ctxt, NULL);
+		    xsltApplyOneTemplate(ctxt, cur, template->content);
+		    xsltFreeStackElemList(varsPop(ctxt));
+		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		} else /* if (ctxt->mode == NULL) */ {
 #ifdef DEBUG_PROCESS
@@ -1265,7 +1318,11 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		    ctxt->node = cur;
 		    ctxt->xpathCtxt->contextSize = nbchild;
 		    ctxt->xpathCtxt->proximityPosition = childno;
-		    xsltApplyOneTemplate(ctxt, cur, template, NULL);
+		    templPush(ctxt, template);
+		    varsPush(ctxt, NULL);
+		    xsltApplyOneTemplate(ctxt, cur, template->content);
+		    xsltFreeStackElemList(varsPop(ctxt));
+		    templPop(ctxt);
 		    ctxt->node = oldNode;
 		}
 		break;
@@ -1298,7 +1355,11 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     template = xsltGetTemplate(ctxt, node, ctxt->templ->style);
     if (template != NULL) {
-	xsltApplyOneTemplate(ctxt, node, template, NULL);
+	templPush(ctxt, template);
+	varsPush(ctxt, NULL);
+	xsltApplyOneTemplate(ctxt, node, template->content);
+	xsltFreeStackElemList(varsPop(ctxt));
+	templPop(ctxt);
     }
 }
 
@@ -1319,7 +1380,6 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNsPtr ns = NULL;
     xsltTemplatePtr template;
     xmlNodePtr cur = NULL;
-    int has_param = 0;
 
 
     if (ctxt->insert == NULL)
@@ -1350,18 +1410,16 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	template = xsltFindTemplate(ctxt, ncname, NULL);
     if (template == NULL) {
 	xsltGenericError(xsltGenericDebugContext,
-	     "xslt:call-template: template %s not found\n", cur->name);
+	     "xslt:call-template: template %s not found\n", ncname);
 	goto error;
     }
+    templPush(ctxt, template);
+    varsPush(ctxt, NULL);
     cur = inst->children;
     while (cur != NULL) {
-	CHECK_STOPPEDE;
+	if (ctxt->state == XSLT_STATE_STOPPED) break;
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "with-param")) {
-		if (has_param == 0) {
-		    xsltPushStack(ctxt);
-		    has_param = 1;
-		}
 		xsltParseStylesheetParam(ctxt, cur);
 	    } else {
 		xsltGenericError(xsltGenericDebugContext,
@@ -1373,11 +1431,14 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	cur = cur->next;
     }
-    xsltApplyOneTemplate(ctxt, node, template, NULL);
+    varsPush(ctxt, NULL);
+    xsltApplyOneTemplate(ctxt, node, template->content);
+    xsltFreeStackElemList(varsPop(ctxt));
+
+    xsltFreeStackElemList(varsPop(ctxt));
+    templPop(ctxt);
 
 error:
-    if (has_param == 1)
-	xsltPopStack(ctxt);
     if (prop != NULL)
         xmlFree(prop);
     if (ncname != NULL)
@@ -1602,35 +1663,29 @@ error:
  * xsltApplyOneTemplate:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
- * @templ:  the template
  * @list:  the template replacement nodelist
  *
  * Process the apply-templates node on the source node
  */
 void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	             xsltTemplatePtr templ, xmlNodePtr list) {
+	             xmlNodePtr list) {
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
     xmlAttrPtr attrs;
-    int has_variables = 0;
 
-    if ((templ == NULL) && (list == NULL))
+    if (list == NULL)
 	return;
     CHECK_STOPPED;
 
     /*
      * stack and saves
      */
-    if (templ != NULL)
-	templPush(ctxt, templ);
     oldInsert = insert = ctxt->insert;
 
     /*
      * Insert all non-XSLT nodes found in the template
      */
-    if ((list == NULL) && (templ != NULL))
-	list = templ->content;
     cur = list;
     while (cur != NULL) {
 	/*
@@ -1641,11 +1696,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyOneTemplate: insert == NULL !\n");
 #endif
-	    if (has_variables != 0) {
-		xsltPopStack(ctxt);
-	    }
-	    if (templ != NULL)
-		templPop(ctxt);
 	    return;
 	}
 
@@ -1690,6 +1740,9 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltElement(ctxt, node, cur);
 		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "text")) {
+		xsltGenericError(xsltGenericDebugContext,
+		     "xsltApplyOneTemplate: found xslt:text, not expected\n");
 	    } else if (IS_XSLT_NAME(cur, "comment")) {
 		ctxt->insert = insert;
 		xsltComment(ctxt, node, cur);
@@ -1703,23 +1756,11 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltProcessingInstruction(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "variable")) {
-		if (has_variables == 0) {
-		    xsltPushStack(ctxt);
-		    has_variables = 1;
-		}
 		xsltParseStylesheetVariable(ctxt, cur);
 	    } else if (IS_XSLT_NAME(cur, "param")) {
-		if (has_variables == 0) {
-		    xsltPushStack(ctxt);
-		    has_variables = 1;
-		}
 		xsltParseStylesheetParam(ctxt, cur);
 	    } else if (IS_XSLT_NAME(cur, "call-template")) {
 		ctxt->insert = insert;
-		if (has_variables == 0) {
-		    xsltPushStack(ctxt);
-		    has_variables = 1;
-		}
 		xsltCallTemplate(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "message")) {
@@ -1812,11 +1853,6 @@ skip_children:
 	    }
 	} while (cur != NULL);
     }
-    if (has_variables != 0) {
-	xsltPopStack(ctxt);
-    }
-    if (templ != NULL)
-	templPop(ctxt);
 }
 
 /**
@@ -1899,7 +1935,9 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    "xsl:when: test evaluate to %d\n", doit);
 #endif
 	if (doit) {
-	    xsltApplyOneTemplate(ctxt, ctxt->node, NULL, when->children);
+	    varsPush(ctxt, NULL);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, when->children);
+	    xsltFreeStackElemList(varsPop(ctxt));
 	    goto done;
 	}
 	if (xpathParserCtxt != NULL)
@@ -1914,7 +1952,9 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	replacement = replacement->next;
     }
     if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "otherwise"))) {
-	xsltApplyOneTemplate(ctxt, ctxt->node, NULL, replacement->children);
+	varsPush(ctxt, NULL);
+	xsltApplyOneTemplate(ctxt, ctxt->node, replacement->children);
+	xsltFreeStackElemList(varsPop(ctxt));
 	replacement = replacement->next;
     }
     if (replacement != NULL) {
@@ -1998,7 +2038,9 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	"xsltIf: test evaluate to %d\n", doit);
 #endif
     if (doit) {
-	xsltApplyOneTemplate(ctxt, node, NULL, inst->children);
+	varsPush(ctxt, NULL);
+	xsltApplyOneTemplate(ctxt, node, inst->children);
+	xsltFreeStackElemList(varsPop(ctxt));
     }
 
 error:
@@ -2090,7 +2132,9 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
-	xsltApplyOneTemplate(ctxt, list->nodeTab[i], NULL, replacement);
+	varsPush(ctxt, NULL);
+	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement);
+	xsltFreeStackElemList(varsPop(ctxt));
     }
     ctxt->nodeList = oldlist;
     ctxt->xpathCtxt->contextSize = oldContextSize;
@@ -2146,7 +2190,11 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	     "xsltProcessOneNode: applying template for attribute %s\n",
 	                 node->name);
 #endif
-	xsltApplyOneTemplate(ctxt, node, template, NULL);
+	templPush(ctxt, template);
+	varsPush(ctxt, NULL);
+	xsltApplyOneTemplate(ctxt, node, template->content);
+	xsltFreeStackElemList(varsPop(ctxt));
+	templPop(ctxt);
     } else {
 #ifdef DEBUG_PROCESS
 	if (node->type == XML_DOCUMENT_NODE)
@@ -2158,7 +2206,11 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 	oldNode = ctxt->node;
 	ctxt->node = node;
-	xsltApplyOneTemplate(ctxt, node, template, NULL);
+	templPush(ctxt, template);
+	varsPush(ctxt, NULL);
+	xsltApplyOneTemplate(ctxt, node, template->content);
+	xsltFreeStackElemList(varsPop(ctxt));
+	templPop(ctxt);
 	ctxt->node = oldNode;
     }
 }
@@ -2184,7 +2236,6 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
     ctxt = xsltNewTransformContext(style, doc);
     if (ctxt == NULL)
 	return(NULL);
-    xsltEvalGlobalVariables(ctxt);
     if ((style->method != NULL) &&
 	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {
 	if (xmlStrEqual(style->method, (const xmlChar *) "html")) {
@@ -2227,7 +2278,10 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
     ctxt->node = (xmlNodePtr) doc;
+    varsPush(ctxt, NULL);
+    xsltEvalGlobalVariables(ctxt);
     xsltProcessOneNode(ctxt, ctxt->node);
+    xsltFreeStackElemList(varsPop(ctxt));
 
 
     if ((ctxt->type = XSLT_OUTPUT_XML) &&

@@ -1,3 +1,13 @@
+Sat Feb 17 00:51:53 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltutils.c: started doing more useful stuff in
+	  xsltDebug
+	* libxslt/transform.[ch] libxslt/variables.[ch] libxslt/templates.c
+	  libxslt/xsltInternals.h: changed the way variables/params
+	  are stored
+	* libxslt/xsltproc.c: removed a pedantic warning
+	* libxslt/variables.[ch]: found an ugly evaluation bug
+
 Thu Feb 15 18:14:48 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/REC/Makefile.am: updated

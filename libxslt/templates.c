@@ -164,7 +164,7 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = ctxt->insert;
     ctxt->insert = insert;
 
-    xsltApplyOneTemplate(ctxt, node, NULL, parent->children);
+    xsltApplyOneTemplate(ctxt, node, parent->children);
 
     ctxt->insert = oldInsert;
 
@@ -321,7 +321,8 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
             out = xsltAttrTemplateValueProcess(ctxt, in);
 	    child = xmlNewDocText(ctxt->output, out);
 	    xmlAddChild((xmlNodePtr) ret, child);
-	    xmlFree(out);
+	    if (out != NULL)
+		xmlFree(out);
 	    xmlFree(in);
 	} else
 	    ret->children = NULL;

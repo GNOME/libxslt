@@ -30,19 +30,6 @@
 
 #define DEBUG_VARIABLE
 
-/*
- * Types are private:
- */
-
-typedef struct _xsltStack xsltStack;
-typedef xsltStack *xsltStackPtr;
-struct _xsltStack {
-    int cur;
-    int max;
-    xsltStackElemPtr elems[50];
-};
-
-
 /************************************************************************
  *									*
  *			Module interfaces				*
@@ -122,29 +109,12 @@ xsltFreeStackElemList(xsltStackElemPtr elem) {
  */
 int
 xsltAddStackElem(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
-    xsltStackPtr stack;
     xsltStackElemPtr cur;
 
     if ((ctxt == NULL) || (elem == NULL))
 	return(-1);
 
-    stack = ctxt->variablesHash;
-    if (stack == NULL) {
-	/* TODO make stack size dynamic !!! */
-	stack = xmlMalloc(sizeof (xsltStack));
-	if (stack == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-		"xsltPushStack : malloc failed\n");
-	    return(-1);
-	}
-	memset(stack, 0, sizeof(xsltStack));
-	ctxt->variablesHash = stack;
-	stack->cur = 0;
-	stack->max = 50;
-    }
-    /* TODO: check that there is no conflict with existing values
-     * at that level */
-    cur = stack->elems[stack->cur];
+    cur = ctxt->vars;
     while (cur != NULL) {
 	if (xmlStrEqual(elem->name, cur->name)) {
 	    if (((elem->nameURI == NULL) && (cur->nameURI == NULL)) ||
@@ -158,68 +128,10 @@ xsltAddStackElem(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	cur = cur->next;
     }
 
-    elem->next = stack->elems[stack->cur];
-    stack->elems[stack->cur] = elem;
+    elem->next = ctxt->varsTab[ctxt->varsNr - 1];
+    ctxt->varsTab[ctxt->varsNr - 1] = elem;
+    ctxt->vars = elem;
     return(0);
-}
-
-/**
- * xsltPushStack:
- * @ctxt:  xn XSLT transformation context
- *
- * Push a new level on the ctxtsheet interprestation stack
- */
-void
-xsltPushStack(xsltTransformContextPtr ctxt) {
-    xsltStackPtr stack;
-
-    if (ctxt == NULL)
-	return;
-
-    stack = ctxt->variablesHash;
-    if (stack == NULL) {
-	/* TODO make stack size dynamic !!! */
-	stack = xmlMalloc(sizeof (xsltStack));
-	if (stack == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-		"xsltPushStack : malloc failed\n");
-	    return;
-	}
-	memset(stack, 0, sizeof(xsltStack));
-	ctxt->variablesHash = stack;
-	stack->cur = 0;
-	stack->max = 50;
-    }
-    if (stack->cur >= stack->max + 1) {
-	TODO /* make stack size dynamic !!! */
-	xsltGenericError(xsltGenericErrorContext,
-	    "xsltPushStack : overflow\n");
-	return;
-    }
-    stack->cur++;
-    stack->elems[stack->cur] = NULL;
-}
-
-/**
- * xsltPopStack:
- * @ctxt:  an XSLT transformation context
- *
- * Pop a level on the ctxtsheet interprestation stack
- */
-void
-xsltPopStack(xsltTransformContextPtr ctxt) {
-    xsltStackPtr stack;
-
-    if (ctxt == NULL)
-	return;
-
-    stack = ctxt->variablesHash;
-    if (stack == NULL)
-	return;
-
-    xsltFreeStackElemList(stack->elems[stack->cur]);
-    stack->elems[stack->cur] = NULL;
-    stack->cur--;
 }
 
 /**
@@ -234,36 +146,24 @@ xsltStackElemPtr
 xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 	        const xmlChar *nameURI) {
     xsltStackElemPtr ret = NULL;
-    xsltStackPtr stack;
     int i;
     xsltStackElemPtr cur;
 
     if ((ctxt == NULL) || (name == NULL))
 	return(NULL);
 
-    stack = ctxt->variablesHash;
-    if (stack == NULL)
-	return(NULL);
-
-    for (i = stack->cur;i >= 0;i--) {
-	cur = stack->elems[i];
+    for (i = ctxt->varsNr - 1;i >= 0;i--) {
+	cur = ctxt->varsTab[i];
 	while (cur != NULL) {
 	    if (xmlStrEqual(cur->name, name)) {
-		/* TODO: double check param binding */
 		if (nameURI == NULL) {
 		    if (cur->nameURI == NULL) {
-			if (cur->type == XSLT_ELEM_PARAM)
-			    ret = cur;
-			else
-			    return(cur);
+			return(cur);
 		    }
 		} else {
 		    if ((cur->nameURI != NULL) &&
 			(xmlStrEqual(cur->nameURI, nameURI))) {
-			if (cur->type == XSLT_ELEM_PARAM)
-			    ret = cur;
-			else
-			    return(cur);
+			return(cur);
 		    }
 		}
 
@@ -333,8 +233,8 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	    if (elem->value != NULL)
 		xmlXPathFreeObject(elem->value);
 	    elem->value = result;
-	    elem->computed = 1;
 	}
+	elem->computed = 1;
     } else {
 	if (elem->tree == NULL) {
 	    elem->value = xmlXPathNewCString("");
@@ -354,7 +254,7 @@ xsltEvalVariables(xsltTransformContextPtr ctxt, xsltStackElemPtr elem) {
 	    oldNode = ctxt->node;
 	    ctxt->insert = container;
 
-	    xsltApplyOneTemplate(ctxt, ctxt->node, NULL, elem->tree);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree);
 
 	    ctxt->insert = oldInsert;
 	    ctxt->node = oldNode;
@@ -495,8 +395,8 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, const xmlChar *name,
     if (ns_uri)
 	elem->nameURI = xmlStrdup(ns_uri);
     elem->tree = tree;
-    xsltAddStackElem(ctxt, elem);
     xsltEvalVariables(ctxt, elem);
+    xsltAddStackElem(ctxt, elem);
     return(0);
 }
 
@@ -597,32 +497,6 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
     return(NULL);
 }
 
-
-/**
- * xsltFreeVariableHashes:
- * @ctxt: an XSLT transformation context
- *
- * Free up the memory used by xsltAddVariable/xsltGetVariable mechanism
- */
-void
-xsltFreeVariableHashes(xsltTransformContextPtr ctxt) {
-    xsltStackPtr stack;
-    int i;
-
-    if (ctxt == NULL)
-	return;
-
-    stack = ctxt->variablesHash;
-    if (stack == NULL)
-	return;
-
-    for (i = 0; i <= stack->cur;i++) {
-	xsltFreeStackElemList(stack->elems[i]);
-    }
-    xmlFree(stack);
-
-}
-
 /**
  * xsltParseStylesheetParam:
  * @ctxt:  the XSLT transformation context
@@ -657,6 +531,10 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
     if (select == NULL) {
 	tree = cur->children;
     } else {
+#ifdef DEBUG_VARIABLE
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "        select %s\n", select);
+#endif
 	if (cur->children != NULL)
 	    xsltGenericError(xsltGenericErrorContext,
 	    "xsl:param : content shuld be empty since select is present \n");
