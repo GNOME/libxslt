@@ -40,3 +40,8 @@ Sorting:
   -> add lang and case-order
   -> add foreign sorting functions (interfaces ?).
 
+Validity:
+  -> should we add validation by default ? Make this an option
+  -> redirrect validity errors
+
+

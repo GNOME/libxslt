@@ -23,6 +23,7 @@
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "pattern.h"
+#include "variables.h"
 #include "xsltutils.h"
 
 #define DEBUG_PARSING
@@ -161,6 +162,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
 	return;
 
     xsltFreeTemplateHashes(sheet);
+    xsltFreeVariableHashes(sheet);
     xsltFreeTemplateList(sheet->templates);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
@@ -704,12 +706,27 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 void
 xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     xmlNodePtr cur;
+    xmlChar *prop;
 #ifdef DEBUG_PARSING
     int templates = 0;
 #endif
 
     if (top == NULL)
 	return;
+
+    prop = xmlGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:version is missing: document may not be a stylesheet\n");
+    } else {
+	if (!xmlStrEqual(prop, (const xmlChar *)"1.0")) {
+	    xsltGenericError(xsltGenericErrorContext,
+		"xsl:version: only 1.0 features are supported\n");
+	    TODO /* set up compatibility when not XSLT 1.0 */
+	}
+	xmlFree(prop);
+    }
+
     cur = top->children;
 
     while (cur != NULL) {

@@ -45,6 +45,15 @@ struct _xsltTemplate {
 typedef struct _xsltStylesheet xsltStylesheet;
 typedef xsltStylesheet *xsltStylesheetPtr;
 struct _xsltStylesheet {
+    /*
+     * The stylesheet import relation is kept as a tree
+     */
+    struct _xsltStylesheet *parent;
+    struct _xsltStylesheet *imports;
+
+    /*
+     * General data on the style sheet document
+     */
     xmlDocPtr doc;		/* the parsed XML stylesheet */
     xmlHashTablePtr stripSpaces;/* the hash table of the strip-space
 				   preserve space and cdata-section elements */
@@ -55,6 +64,11 @@ struct _xsltStylesheet {
     xsltTemplatePtr templates;	/* the ordered list of templates */
     void *templatesHash;	/* hash table or wherever compiled templates
 				   informations are stored */
+    /*
+     * Variable descriptions
+     */
+    void *variablesHash;	/* hash table or wherever variables
+				   informations are stored */
 
     /*
      * Output related stuff.
@@ -63,7 +77,7 @@ struct _xsltStylesheet {
     xmlChar *methodURI;		/* associated namespace if any */
     xmlChar *version;		/* version string */
     xmlChar *encoding;		/* encoding string */
-    int omitXmlDeclaration;   /* omit-xml-declaration = "yes" | "no" */
+    int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
     int standalone;             /* standalone = "yes" | "no" */
     xmlChar *doctypePublic;     /* doctype-public string */
     xmlChar *doctypeSystem;     /* doctype-system string */

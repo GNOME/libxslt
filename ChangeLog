@@ -1,3 +1,9 @@
+Fri Jan 19 13:16:57 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xslt.c: check version on stylesheets
+	* libxslt/xslt.c libxslt/xsltInternals.h libxslt/variables[.ch]:
+	  started adding variables interfaces and modules.
+
 Thu Jan 18 16:08:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.c: added support for disable-output-escaping
