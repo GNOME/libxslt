@@ -1,3 +1,10 @@
+Mon Jan 17 16:50:02 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libxslt/Makefile.am libxslt/xsltwin32config.h
+	  tests/Makefile.am tests/plugins/Makefile.am
+	  tests/plugins/testplugin.c: applied another patch from Joel Reed
+	  still failing here but looking better
+
 Sun Jan 16 00:09:11 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c: applied another patch from Joel Reed

@@ -10,7 +10,7 @@
  */
 
 #define IN_LIBXSLT
-#include "libxslt.h"
+#include <libxslt/libxslt.h>
 
 #ifdef WITH_MODULES
 
@@ -25,11 +25,11 @@
 #include <libxml/xpathInternals.h>
 #include <libxml/list.h>
 #include <libxml/xmlIO.h>
-#include "xslt.h"
-#include "xsltInternals.h"
-#include "xsltutils.h"
-#include "imports.h"
-#include "extensions.h"
+#include <libxslt/xslt.h>
+#include <libxslt/xsltInternals.h>
+#include <libxslt/xsltutils.h>
+#include <libxslt/imports.h>
+#include <libxslt/extensions.h>
 
 #define XSLT_TESTPLUGIN_URL "http://xmlsoft.org/xslt/testplugin"
 

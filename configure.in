@@ -475,12 +475,12 @@ dnl
 if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
     if test "`uname -i`" != "x86_64" ;
     then
-	LIBXML_LIBS="../../XML/.libs/libxml2.a -lpthread -lz"
+	LIBXML_LIBS="$HOME/XML/.libs/libxml2.a -lpthread -lz"
     fi
     DV_LINK="1"
     XSLTPROCDV="xsltproc.dv"
     INSTALLED_XSLT_LIB=""
-    LIBXML_SRC="../../XML/"
+    LIBXML_SRC="$HOME/XML/"
 fi
 
 WIN32_EXTRA_LIBADD=
@@ -572,6 +572,7 @@ tests/exslt/math/Makefile
 tests/exslt/sets/Makefile
 tests/exslt/strings/Makefile
 tests/exslt/date/Makefile
+tests/plugins/Makefile
 doc/Makefile
 xslt-config
 libxslt.spec
