@@ -5,7 +5,7 @@ $(top_builddir)/xsltproc/xsltproc:
 
 EXTRA_DIST = bredfort.css index.xml system.xml \
              bredfort.xsl menu.xml worklog.xml \
-	     result.xhtml docfile.xml doc\ file.xml \
+	     result.xhtml docfile.xml doc_file.xml \
 	     test.xml test.xsl test.result \
 	     message.xml message.xsl message.result
 

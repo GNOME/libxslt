@@ -1,3 +1,10 @@
+Tue Sep 11 13:02:34 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* tests/documents/Makefile.am tests/documents/*: changed the
+	  test to use doc%5Ffile instead of doc%20file, this is 
+	  sufficient to preserve the test capacities while closing
+	  bug #60090
+
 Tue Sep 11 12:33:03 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extra.c : close #59570 by simply not providing
