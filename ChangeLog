@@ -1,3 +1,9 @@
+Mon Nov 26 11:21:27 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixing bug #64044 reported by Gero Meiﬂner,
+	  template matches compilation was failing to skip blanks bewteen
+	  consecutive predicates
+
 Mon Nov 26 10:27:30 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am configure.in breakpoint/Makefile.am libexslt/Makefile.am:

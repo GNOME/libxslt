@@ -1372,6 +1372,7 @@ parse_predicate:
 	/* push the predicate lower than local test */
 	SWAP();
 	NEXT;
+	SKIP_BLANKS;
     }
     return;
 error:
