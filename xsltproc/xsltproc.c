@@ -424,7 +424,7 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	}
 	if (ctxt->state == XSLT_STATE_ERROR)
 	    errorno = 9;
-	if (ctxt->state == XSLT_STATE_STOPPED)
+	else if (ctxt->state == XSLT_STATE_STOPPED)
 	    errorno = 10;
 	xsltFreeTransformContext(ctxt);
 	if (timing) {
@@ -488,6 +488,8 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	}
 	if (ctxt->state == XSLT_STATE_ERROR)
 	    errorno = 9;
+	else if (ctxt->state == XSLT_STATE_STOPPED)
+	    errorno = 10;
 	xsltFreeTransformContext(ctxt);
 	if (timing)
 	    endTimer("Running stylesheet and saving result");

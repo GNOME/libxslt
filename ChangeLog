@@ -1,3 +1,8 @@
+Wed Mar 17 18:49:55 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* xsltproc/xsltproc.c: added check for state XSLT_STATE_STOPPED
+	  when output file is used (bug 137341)
+	  
 Tue Mar 16 08:55:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltutils.c: corrected my error from bug 135938
