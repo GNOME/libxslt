@@ -112,6 +112,7 @@ xsltGetExtInfo
 xsltGetKey
 xsltGetNamespace
 xsltGetNsProp
+xsltGetPlainNamespace
 xsltGetProfileInformation
 xsltGetQNameURI
 xsltGetQNameURI2

@@ -1,3 +1,7 @@
+Mon Jul  5 21:48:13 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: releasing 1.1.8
+
 Sun Jul  4 24:18:12 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* xsltproc/Makefile.am: changed the sequence of LD_ADDS and
