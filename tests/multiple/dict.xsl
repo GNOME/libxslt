@@ -5,7 +5,7 @@
     xmlns:xt="http://www.jclark.com/xt"
     xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
     version="1.0"
-    exclude-result-prefixes="doc"
+    exclude-result-prefixes="doc xt"
     extension-element-prefixes="xt">
 
   <!--**********************************************
