@@ -489,7 +489,6 @@
     <macro name='XSLTCALL' file='xsltexports'>
     </macro>
     <macro name='XSLTPUBFUN' file='xsltexports'>
-      <info>XSLTPUBFUN, XSLTPUBVAR, XSLTCALL  Macros which declare an exportable function, an exportable variable and the calling convention used for functions.  Please use an extra block for every platform/compiler combination when modifying this, rather than overlong #ifdef lines. This helps readability as well as the fact that different compilers on the same platform might need different definitions. Windows platform with MS compiler Windows platform with Borland compiler Windows platform with GNU compiler (Mingw) Cygwin platform, GNU compiler</info>
     </macro>
     <macro name='XSLTPUBVAR' file='xsltexports'>
     </macro>
@@ -560,6 +559,7 @@
       <info>Macro to flag unimplemented blocks.</info>
     </macro>
     <macro name='XSLT_TRACE' file='xsltutils'>
+      <info>Control the type of xsl debugtrace messages emitted.</info>
     </macro>
     <macro name='XSLT_XALAN_NAMESPACE' file='extra'>
       <info>This is the Apache project XALAN processor namespace for extensions.</info>
@@ -1181,12 +1181,12 @@ informations are stored'/>
     </function>
     <function name='xsltDebugGetDefaultTrace' file='xsltutils'>
       <info></info>
-      <return type='xsltDebugTraceCodes' info=''/>
+      <return type='xsltDebugTraceCodes' info='the current default debug tracing level mask'/>
     </function>
     <function name='xsltDebugSetDefaultTrace' file='xsltutils'>
-      <info></info>
+      <info>Set the default debug tracing level mask</info>
       <return type='void'/>
-      <arg name='val' type='xsltDebugTraceCodes' info=''/>
+      <arg name='val' type='xsltDebugTraceCodes' info='an xsltDebugTraceCodes value'/>
     </function>
     <function name='xsltDecimalFormatGetByName' file='xsltInternals'>
       <info>Find decimal-format by name</info>
