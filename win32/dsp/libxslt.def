@@ -1,10 +1,33 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 LIBRARY libxslt
 EXPORTS
+
+
 
 	xsltParseStylesheetAttributeSet
 	xsltFreeAttributeSetsHashes
 	xsltApplyAttributeSet
+
+
+
 
  	xsltNewDocument
  	xsltLoadDocument
@@ -14,6 +37,9 @@ EXPORTS
  	xsltNewStyleDocument
  	xsltFreeStyleDocuments
 
+
+
+
 	xsltRegisterExtModule
 	xsltRegisterExtModuleFull
 	xsltUnregisterExtModule
@@ -22,9 +48,14 @@ EXPORTS
 	xsltShutdownCtxtExts
 	xsltShutdownExts
 	xsltXPathGetTransformContext
+
+	
 	xsltRegisterExtModuleFunction
+	
 	xsltExtModuleFunctionLookup
 	xsltUnregisterExtModuleFunction
+
+	
 	xsltNewElemPreComp
 	xsltInitElemPreComp
 	xsltRegisterExtModuleElement
@@ -32,24 +63,40 @@ EXPORTS
 	xsltExtModuleElementLookup
 	xsltExtModuleElementPreComputeLookup
 	xsltUnregisterExtModuleElement
+
+	
 	xsltRegisterExtModuleTopLevel
 	xsltExtModuleTopLevelLookup
 	xsltUnregisterExtModuleTopLevel
+	
+	
 	xsltRegisterExtFunction
 	xsltRegisterExtElement
+	
+	
+
 	xsltRegisterExtPrefix
 	xsltCheckExtPrefix
 	xsltInitCtxtExts
 	xsltFreeCtxtExts
 	xsltFreeExts
 	xsltPreComputeExtModuleElement
+
+	
 	xsltRegisterTestModule
+
+
+
 
 	xsltFunctionNodeSet
 	xsltDebug
 	xsltRegisterExtras
 	xsltRegisterAllExtras
 
+
+
+
+	
  	xsltDocumentFunction
  	xsltKeyFunction
  	xsltUnparsedEntityURIFunction
@@ -58,8 +105,14 @@ EXPORTS
  	xsltSystemPropertyFunction
  	xsltElementAvailableFunction
  	xsltFunctionAvailableFunction
- 	xsltRegisterAllFunctions
+ 	
+	
+	xsltRegisterAllFunctions
 
+
+
+
+	
 	xsltParseStylesheetImport
 	xsltParseStylesheetInclude
 	xsltNextImport
@@ -67,11 +120,17 @@ EXPORTS
 	xsltFindElemSpaceHandling
 	xsltFindTemplate
 
+
+
+
 	xsltAddKey
 	xsltGetKey
 	xsltInitCtxtKeys
 	xsltFreeKeys
 	xsltFreeDocumentKeys
+
+
+
 
 	xsltNamespaceAlias
 	xsltGetNamespace
@@ -80,38 +139,69 @@ EXPORTS
 	xsltCopyNamespaceList
 	xsltFreeNamespaceAliasHashes
 
+
+
+
+	
+
+
+
+
+	
 	xsltCompilePattern
 	xsltFreeCompMatchList
 	xsltTestCompMatchList
+
+	
 	xsltAddTemplate
 	xsltGetTemplate
 	xsltFreeTemplateHashes
 	xsltCleanupTemplates
+	
+
+
+
+
+
 
 	xsltDocumentComp
 	xsltStylePreCompute
 	xsltFreeStylePreComps
 
+
+
+
 	xsltEvalXPathPredicate
 	xsltEvalTemplateString
 	xsltEvalAttrValueTemplate
 	xsltEvalStaticAttrValueTemplate
+
+	
 	xsltEvalXPathString
 	xsltTemplateProcess
 	xsltAttrListTemplateProcess
 	xsltAttrTemplateProcess
 	xsltAttrTemplateValueProcess
 
+
+
+
+	
 	xsltSetXIncludeDefault
 	xsltGetXIncludeDefault
+	
+	
 	xsltNewTransformContext
 	xsltFreeTransformContext
 	xsltApplyStylesheetUser
+
+	
 	xsltApplyStripSpaces
 	xsltExtElementLookup
 	xsltApplyStylesheet
 	xsltProfileStylesheet
 	xsltRunStylesheet
+	xsltRunStylesheetUser
 	xsltApplyOneTemplate
 	xsltDocumentElem
 	xsltSort
@@ -131,8 +221,14 @@ EXPORTS
 	xsltIf
 	xsltForEach
 	xsltRegisterAllElement
+
+	
 	xslHandleDebugger
 
+
+
+
+	
 	xsltEvalGlobalVariables
 	xsltEvalUserParams
 	xsltQuoteUserParams
@@ -148,12 +244,20 @@ EXPORTS
 	xsltVariableLookup
 	xsltXPathVariableLookup
 
+
+
+
 	xsltMaxDepth DATA
 	xsltEngineVersion DATA
 	xsltLibxsltVersion DATA
 	xsltLibxmlVersion DATA
 	xsltCleanupGlobals
 
+
+
+
+	
+	
 	xsltNewStylesheet
 	xsltParseStylesheetFile
 	xsltFreeStylesheet
@@ -167,8 +271,16 @@ EXPORTS
 	xsltNumberFormat
 	xsltFormatNumberConversion
 	xsltParseTemplateContent
+	xsltAllocateExtra
+	xsltAllocateExtraCtxt
 
+
+
+
+	
 	xsltGetNsProp
+
+	
 	xsltGenericError DATA
 	xsltGenericErrorContext DATA
 	xsltGenericDebug DATA
@@ -177,19 +289,28 @@ EXPORTS
 	xsltMessage
 	xsltSetGenericErrorFunc
 	xsltSetGenericDebugFunc
+
+	
 	xsltDocumentSortFunction
 	xsltDoSortFunction
+
+	
 	xsltGetQNameURI
+
+	
 	xsltSaveResultTo
 	xsltSaveResultToFilename
 	xsltSaveResultToFile
 	xsltSaveResultToFd
+
+	
 	xsltSaveProfiling
 	xsltTimestamp
 	xsltCalibrateAdjust
+
+	
 	xslDebugStatus DATA
 	xsltSetDebuggerCallbacks
 	xslAddCall
 	xslDropCall
-
 

@@ -1,11 +1,37 @@
-LIBRARY libexslt
-EXPORTS
-	exsltLibraryVersion DATA
-	exsltLibexsltVersion DATA
-	exsltLibxsltVersion DATA
-	exsltLibxmlVersion DATA
-	exsltCommonRegister
-	exsltMathRegister
-	exsltSetsRegister
-	exsltFuncRegister
-	exsltRegisterAll
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LIBRARY libexslt 
+EXPORTS 
+
+
+
+	exsltLibraryVersion DATA
+ 	exsltLibexsltVersion DATA
+ 	exsltLibxsltVersion DATA
+ 	exsltLibxmlVersion DATA
+ 	exsltCommonRegister
+	exsltMathRegister
+	exsltSetsRegister
+	exsltFuncRegister
+	exsltStrRegister
+	exsltDateRegister
+	exsltSaxonRegister
+	exsltRegisterAll  
+ 
