@@ -26,7 +26,7 @@
       <surname>Fleck</surname>
     </author>
     <releaseinfo>
-      This is version 0.1 of the libxslt Tutorial
+      This is version 0.2 of the libxslt Tutorial
     </releaseinfo>
   </articleinfo>
   <abstract>
@@ -186,13 +186,23 @@ res = xsltApplyStylesheet(cur, doc, NULL);
 
     <sect2 id="saveresult">
       <title>Saving the result</title>
-      <para><application>libxslt</application> includes a function to use in
-	saving the resulting output: <function>xsltSaveResultToFile</function>. In
-      this case, we save the results to stdout:
+      <para><application>libxslt</application> includes a family of functions to use in
+	saving the resulting output. For this example,
+      <function>xsltSaveResultToFile</function> is used, and the results are
+      saved to stdout:
 
 	<programlisting>
 xsltSaveResultToFile(stdout, res, cur);
 	</programlisting>
+
+	<note>
+	  <para><application>libxml</application> also contains output
+	    functions, such as <function>xmlSaveFile</function>, which can be
+	    used here. However, output-related information contained in the
+	    stylesheet, such as a declaration of the encoding to be used, will
+	    be lost if one of the <application>libxslt</application> save
+	    functions is not used.</para>
+	</note>
       </para>
     </sect2>
 

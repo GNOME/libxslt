@@ -11,7 +11,7 @@
 <a name="id2741878"></a>libxslt Tutorial</h1></div>
 <div><h3 class="author">John Fleck</h3></div>
 <div><span class="releaseinfo">
-      This is version 0.1 of the libxslt Tutorial
+      This is version 0.2 of the libxslt Tutorial
     <br>
 </span></div>
 <div><p class="copyright">Copyright © 2001 by John Fleck</p></div>
@@ -225,13 +225,24 @@ res = xsltApplyStylesheet(cur, doc, NULL);
 <a name="saveresult"></a>
 <span class="title">Saving the result</span>
 </h3></div></div>
-<p>libxslt includes a function to use in
-	saving the resulting output: <tt>xsltSaveResultToFile</tt>. In
-      this case, we save the results to stdout:
+<p>libxslt includes a family of functions to use in
+	saving the resulting output. For this example,
+      <tt>xsltSaveResultToFile</tt> is used, and the results are
+      saved to stdout:
 
 	<pre class="programlisting">
 xsltSaveResultToFile(stdout, res, cur);
 	</pre>
+
+	<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title"><a name="id2691572">Note</a></h3>
+<p>libxml also contains output
+	    functions, such as <tt>xmlSaveFile</tt>, which can be
+	    used here. However, output-related information contained in the
+	    stylesheet, such as a declaration of the encoding to be used, will
+	    be lost if one of the libxslt save
+	    functions is not used.</p>
+</div>
       </p>
 </div>
 <div class="sect2">
