@@ -134,30 +134,27 @@
 <table border="1">
 <tr><td colspan="4">Need to Reorder:</td></tr>
 <tr>
+<td class="tablecell">
+      Virginia
+    </td>
 <td class="tablecell">2203</td>
-<td class="tablecell"><table border="1"><tr>
-<td width="40">0</td>
-<td width="0" bgcolor="#ffffff">.</td>
-<td width="100" bgcolor="#000000">.</td>
-</tr></table></td>
+<td class="tablecell">0</td>
 <td class="tablecell">cog</td>
 </tr>
 <tr>
+<td class="tablecell">
+      Virginia
+    </td>
 <td class="tablecell">2209</td>
-<td class="tablecell"><table border="1"><tr>
-<td width="40">0</td>
-<td width="0" bgcolor="#ffffff">.</td>
-<td width="100" bgcolor="#000000">.</td>
-</tr></table></td>
+<td class="tablecell">0</td>
 <td class="tablecell">doohickey</td>
 </tr>
 <tr>
+<td class="tablecell">
+      Pluto
+    </td>
 <td class="tablecell">2210</td>
-<td class="tablecell"><table border="1"><tr>
-<td width="40">0</td>
-<td width="0" bgcolor="#ffffff">.</td>
-<td width="100" bgcolor="#000000">.</td>
-</tr></table></td>
+<td class="tablecell">0</td>
 <td class="tablecell">flange</td>
 </tr>
 <tr>
