@@ -22,6 +22,10 @@ int		xsltAddTemplate		(xsltStylesheetPtr style,
 xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node);
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
+int		xsltMatchPattern	(xsltTransformContextPtr ctxt,
+					 xmlNodePtr node,
+					 const xmlChar *pattern);
+
 #ifdef __cplusplus
 }
 #endif

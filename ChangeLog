@@ -1,3 +1,8 @@
+Tue Feb 13 20:31:03 CET 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* libxslt/pattern.c: added xsltMatchPattern()
+	* libxslt/numbers.c: implemented "level=multiple" for xsl:number
+
 Tue Feb 13 18:07:12 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/xsltproc.c: cleanup and debug

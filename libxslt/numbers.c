@@ -25,6 +25,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include "xsltutils.h"
+#include "pattern.h"
 #include "numbersInternals.h"
 
 #ifndef FALSE
@@ -389,25 +390,21 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
     }
 }
 
-#if 0
-static void
-xsltNumberFormatGetAnyLevel(xmlXPathContextPtr context)
+static int
+xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
+			    xmlNodePtr node,
+			    xmlChar *count,
+			    xmlChar *from,
+			    double *array,
+			    int max)
 {
     /* preceding | ancestor-or-self */
-}
-#endif
-
-static int
-xsltNumberFormatMatch(xmlXPathContextPtr context,
-		      xmlNodePtr node,
-		      xmlChar *pattern)
-{
-    /* FIXME: must handle generic patterns */
-    return xmlStrEqual(node->name, pattern);
+    TODO;
+    return 0;
 }
 
 static int
-xsltNumberFormatGetMultipleLevel(xmlXPathContextPtr context,
+xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 				 xmlNodePtr node,
 				 xmlChar *count,
 				 xmlChar *from,
@@ -420,8 +417,8 @@ xsltNumberFormatGetMultipleLevel(xmlXPathContextPtr context,
     xmlNodePtr preceding;
     xmlXPathParserContextPtr parser;
 
-    context->node = node;
-    parser = xmlXPathNewParserContext(NULL, context);
+    context->xpathCtxt->node = node;
+    parser = xmlXPathNewParserContext(NULL, context->xpathCtxt);
     if (parser) {
 	/* ancestor-or-self::*[count] */
 	for (ancestor = node;
@@ -429,11 +426,11 @@ xsltNumberFormatGetMultipleLevel(xmlXPathContextPtr context,
 	     ancestor = xmlXPathNextAncestor(parser, ancestor)) {
 	    
 	    if ((from != NULL) &&
-		xsltNumberFormatMatch(context, ancestor, from))
+		xsltMatchPattern(context, ancestor, from))
 		break; /* for */
 	    
 	    if ((count == NULL) ||
-		xsltNumberFormatMatch(context, ancestor, count)) {
+		xsltMatchPattern(context, ancestor, count)) {
 		/* count(preceding-sibling::*) */
 		cnt = 0;
 		for (preceding = ancestor;
@@ -443,7 +440,7 @@ xsltNumberFormatGetMultipleLevel(xmlXPathContextPtr context,
 			if (preceding->type == ancestor->type)
 			    cnt++;
 		    } else {
-			if (preceding->type != XML_TEXT_NODE)
+			if (xsltMatchPattern(context, preceding, count))
 			    cnt++;
 		    }
 		}
@@ -523,7 +520,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
     } else if (data->level) {
 	
 	if (xmlStrEqual(data->level, "single")) {
-	    amount = xsltNumberFormatGetMultipleLevel(ctxt->xpathCtxt,
+	    amount = xsltNumberFormatGetMultipleLevel(ctxt,
 						      node,
 						      data->count,
 						      data->from,
@@ -540,7 +537,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 	} else if (xmlStrEqual(data->level, "multiple")) {
 	    double numarray[1024];
 	    int max = sizeof(numarray)/sizeof(numarray[0]);
-	    amount = xsltNumberFormatGetMultipleLevel(ctxt->xpathCtxt,
+	    amount = xsltNumberFormatGetMultipleLevel(ctxt,
 						      node,
 						      data->count,
 						      data->from,
@@ -555,7 +552,22 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 					      output);
 	    }
 	} else if (xmlStrEqual(data->level, "any")) {
-	    TODO;
+	    double numarray[1024];
+	    int max = sizeof(numarray)/sizeof(numarray[0]);
+	    amount = xsltNumberFormatGetAnyLevel(ctxt,
+						 node,
+						 data->count,
+						 data->from,
+						 numarray,
+						 max);
+	    if (amount > 0) {
+		xsltNumberFormatInsertNumbers(data,
+					      numarray,
+					      amount,
+					      &array,
+					      array_amount,
+					      output);
+	    }
 	}
     }
     /* Insert number as text node */

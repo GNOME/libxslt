@@ -1112,83 +1112,105 @@ error:
 xsltCompMatchPtr
 xsltCompilePattern(const xmlChar *pattern, const xmlChar *mode,
 	           const xmlChar *modeURI) {
-    xsltParserContextPtr ctxt;
-    xsltCompMatchPtr ret;
-    const xmlChar *cur;
+    xsltParserContextPtr ctxt = NULL;
+    xsltCompMatchPtr element, first = NULL, previous = NULL;
+    int current, start, end;
 
     if (pattern == NULL) {
         xsltGenericError(xsltGenericErrorContext,
-		"xsltCompilePattern : NULL pattern\n");
+			 "xsltCompilePattern : NULL pattern\n");
 	return(NULL);
     }
 
 #ifdef DEBUG_PARSING
     xsltGenericDebug(xsltGenericDebugContext,
-	    "xsltCompilePattern : parsing '%s'\n", pattern);
+		     "xsltCompilePattern : parsing '%s'\n", pattern);
 #endif
 
-    cur = pattern;
-    while (IS_BLANK(*cur)) cur++;
-    if (*cur == 0) {
-        xsltGenericError(xsltGenericErrorContext,
-		"xsltCompilePattern : NULL pattern\n");
-	return(NULL);
-    }
     ctxt = xsltNewParserContext();
     if (ctxt == NULL)
 	return(NULL);
-    ret = xsltNewCompMatch(mode, modeURI);
-    if (ret == NULL) {
-	xsltFreeParserContext(ctxt);
-	return(NULL);
+    current = end = 0;
+    while (pattern[current] != 0) {
+	start = current;
+	while (IS_BLANK(pattern[current]))
+	    current++;
+	end = current;
+	while ((pattern[end] != 0) && (pattern[end] != '|'))
+	    end++;
+	if (current == end) {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "xsltCompilePattern : NULL pattern\n");
+	    goto error;
+	}
+	element = xsltNewCompMatch(mode, modeURI);
+	if (element == NULL) {
+	    goto error;
+	}
+	if (first == NULL)
+	    first = element;
+	else if (previous != NULL)
+	    previous->next = element;
+	previous = element;
+
+	ctxt->comp = element;
+	ctxt->base = xmlStrndup(&pattern[start], end - start);
+	ctxt->cur = &(ctxt->base)[current - start];
+	xsltCompileLocationPathPattern(ctxt);
+	if (ctxt->base)
+	    xmlFree((xmlChar *)ctxt->base);
+	if (ctxt->error)
+	    goto error;
+
+	/*
+	 * Reverse for faster interpretation.
+	 */
+	xsltReverseCompMatch(element);
+
+	/*
+	 * Set-up the priority
+	 */
+	if (((element->steps[0].op == XSLT_OP_ELEM) ||
+	     (element->steps[0].op == XSLT_OP_ATTR)) &&
+	    (element->steps[0].value != NULL) &&
+	    (element->steps[1].op == XSLT_OP_END)) {
+	    element->priority = 0;
+	} else if ((element->steps[0].op == XSLT_OP_PI) &&
+		   (element->steps[0].value != NULL) &&
+		   (element->steps[1].op == XSLT_OP_END)) {
+	    element->priority = 0;
+	} else if ((element->steps[0].op == XSLT_OP_NS) &&
+		   (element->steps[0].value != NULL) &&
+		   (element->steps[1].op == XSLT_OP_END)) {
+	    element->priority = -0.25;
+	} else if (((element->steps[0].op == XSLT_OP_PI) ||
+		    (element->steps[0].op == XSLT_OP_TEXT) ||
+		    (element->steps[0].op == XSLT_OP_NODE) ||
+		    (element->steps[0].op == XSLT_OP_COMMENT)) &&
+		   (element->steps[1].op == XSLT_OP_END)) {
+	    element->priority = -0.5;
+	} else {
+	    element->priority = 0.5;
+	}
+	if (pattern[end] == '|')
+	    end++;
+	current = end;
     }
-
-    ctxt->comp = ret;
-    ctxt->base = pattern;
-    ctxt->cur = cur;
-    xsltCompileLocationPathPattern(ctxt);
-    if (ctxt->error)
+    if (end == 0) {
+        xsltGenericError(xsltGenericErrorContext,
+			 "xsltCompilePattern : NULL pattern\n");
 	goto error;
-
-    /*
-     * Reverse for faster interpretation.
-     */
-    xsltReverseCompMatch(ret);
-
-    /*
-     * Set-up the priority
-     */
-    if (((ret->steps[0].op == XSLT_OP_ELEM) ||
-	 (ret->steps[0].op == XSLT_OP_ATTR)) &&
-	(ret->steps[0].value != NULL) &&
-	(ret->steps[1].op == XSLT_OP_END)) {
-	ret->priority = 0;
-    } else if ((ret->steps[0].op == XSLT_OP_PI) &&
-	       (ret->steps[0].value != NULL) &&
-	       (ret->steps[1].op == XSLT_OP_END)) {
-	ret->priority = 0;
-    } else if ((ret->steps[0].op == XSLT_OP_NS) &&
-	       (ret->steps[0].value != NULL) &&
-	       (ret->steps[1].op == XSLT_OP_END)) {
-	ret->priority = -0.25;
-    } else if (((ret->steps[0].op == XSLT_OP_PI) ||
-		(ret->steps[0].op == XSLT_OP_TEXT) ||
-		(ret->steps[0].op == XSLT_OP_NODE) ||
-	        (ret->steps[0].op == XSLT_OP_COMMENT)) &&
-	       (ret->steps[1].op == XSLT_OP_END)) {
-	ret->priority = -0.5;
-    } else {
-	ret->priority = 0.5;
     }
 
     xsltFreeParserContext(ctxt);
-    return(ret);
+    return(first);
 
 error:
-    xsltFreeParserContext(ctxt);
-    xsltFreeCompMatch(ret);
+    if (ctxt != NULL)
+	xsltFreeParserContext(ctxt);
+    if (first != NULL)
+	xsltFreeCompMatchList(first);
     return(NULL);
-
 }
 
 
@@ -1212,45 +1234,25 @@ error:
 int
 xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	        const xmlChar *mode, const xmlChar *modeURI) {
-    xsltCompMatchPtr pat, list, *top = NULL;
+    xsltCompMatchPtr pat, list, *top = NULL, next;
     const xmlChar *name = NULL;
-    xmlChar *p, *pattern, tmp;
 
-    if ((style == NULL) || (cur == NULL))
+    if ((style == NULL) || (cur == NULL) || (cur->match == NULL))
 	return(-1);
 
-    p = cur->match;
-    if (p == NULL)
-	return(-1);
+    pat = xsltCompilePattern(cur->match, mode, modeURI);
+    while (pat) {
+	next = pat->next;
+	pat->next = NULL;
+	
+	pat->template = cur;
+	if (cur->priority != XSLT_PAT_NO_PRIORITY)
+	    pat->priority = cur->priority;
 
-next_pattern:
-    if (*p == 0)
-	return(0);
-    /*
-     * get a compiled form of the pattern
-     */
-    pattern = p;
-    while ((*p != 0) && (*p != '|')) {
-	/* TODO: handle string escaping "a | b" in patterns ... */
-	p++;
-    }
-
-    tmp = *p;
-    *p = 0;
-    pat = xsltCompilePattern(pattern, mode, modeURI);
-    *p = tmp;
-    if (tmp != 0)
-	p++;
-    if (pat == NULL)
-	return(-1);
-    pat->template = cur;
-    if (cur->priority != XSLT_PAT_NO_PRIORITY)
-	pat->priority = cur->priority;
-
-    /*
-     * insert it in the hash table list corresponding to its lookup name
-     */
-    switch (pat->steps[0].op) {
+	/*
+	 * insert it in the hash table list corresponding to its lookup name
+	 */
+	switch (pat->steps[0].op) {
         case XSLT_OP_ATTR:
 	    if (pat->steps[0].value != NULL)
 		name = pat->steps[0].value;
@@ -1262,29 +1264,29 @@ next_pattern:
         case XSLT_OP_PARENT:
         case XSLT_OP_ANCESTOR:
         case XSLT_OP_NS:
-             name = pat->steps[0].value;
-	     break;
+	    name = pat->steps[0].value;
+	    break;
         case XSLT_OP_ROOT:
-             top = (xsltCompMatchPtr *) &(style->rootMatch);
-	     break;
+	    top = (xsltCompMatchPtr *) &(style->rootMatch);
+	    break;
         case XSLT_OP_KEY:
-             top = (xsltCompMatchPtr *) &(style->keyMatch);
-	     break;
+	    top = (xsltCompMatchPtr *) &(style->keyMatch);
+	    break;
         case XSLT_OP_ID:
-	     /* TODO optimize ID !!! */
+	    /* TODO optimize ID !!! */
         case XSLT_OP_ALL:
-             top = (xsltCompMatchPtr *) &(style->elemMatch);
-	     break;
+	    top = (xsltCompMatchPtr *) &(style->elemMatch);
+	    break;
         case XSLT_OP_END:
 	case XSLT_OP_PREDICATE:
 	    xsltGenericError(xsltGenericErrorContext,
-		    "xsltAddTemplate: invalid compiled pattern\n");
+			     "xsltAddTemplate: invalid compiled pattern\n");
 	    xsltFreeCompMatch(pat);
 	    return(-1);
-	/*
-	 * TODO: some flags at the top level about type based patterns
-	 *       would be faster than inclusion in the hash table.
-	 */
+	    /*
+	     * TODO: some flags at the top level about type based patterns
+	     *       would be faster than inclusion in the hash table.
+	     */
 	case XSLT_OP_PI:
 	    if (pat->steps[0].value != NULL)
 		name = pat->steps[0].value;
@@ -1304,83 +1306,83 @@ next_pattern:
 		top = (xsltCompMatchPtr *) &(style->elemMatch);
 	    
 	    break;
-    }
-    if (name != NULL) {
-	if (style->templatesHash == NULL) {
-	    style->templatesHash = xmlHashCreate(1024);
+	}
+	if (name != NULL) {
 	    if (style->templatesHash == NULL) {
-		xsltFreeCompMatch(pat);
-		return(-1);
-	    }
-#ifdef DEBUG_PARSING
-	    xsltGenericDebug(xsltGenericDebugContext,
-		    "xsltAddTemplate: created template hash\n");
-#endif
-	    xmlHashAddEntry3(style->templatesHash, name, mode, modeURI, pat);
-#ifdef DEBUG_PARSING
-	    xsltGenericDebug(xsltGenericDebugContext,
-		    "xsltAddTemplate: added new hash %s\n", name);
-#endif
-	} else {
-	    list = (xsltCompMatchPtr) xmlHashLookup3(style->templatesHash,
-		                      name, mode, modeURI);
-	    if (list == NULL) {
-		xmlHashAddEntry3(style->templatesHash, name,
-			         mode, modeURI, pat);
+		style->templatesHash = xmlHashCreate(1024);
+		if (style->templatesHash == NULL) {
+		    xsltFreeCompMatch(pat);
+		    return(-1);
+		}
 #ifdef DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
-			"xsltAddTemplate: added new hash %s\n", name);
+				 "xsltAddTemplate: created template hash\n");
+#endif
+		xmlHashAddEntry3(style->templatesHash, name, mode, modeURI, pat);
+#ifdef DEBUG_PARSING
+		xsltGenericDebug(xsltGenericDebugContext,
+				 "xsltAddTemplate: added new hash %s\n", name);
 #endif
 	    } else {
-		/*
-		 * Note '<=' since one must choose among the matching
-		 * template rules that are left, the one that occurs
-		 * last in the stylesheet
-		 */
-		if (list->priority <= pat->priority) {
-		    pat->next = list;
-		    xmlHashUpdateEntry3(style->templatesHash, name,
-			                mode, modeURI, pat, NULL);
+		list = (xsltCompMatchPtr) xmlHashLookup3(style->templatesHash,
+							 name, mode, modeURI);
+		if (list == NULL) {
+		    xmlHashAddEntry3(style->templatesHash, name,
+				     mode, modeURI, pat);
 #ifdef DEBUG_PARSING
 		    xsltGenericDebug(xsltGenericDebugContext,
-			    "xsltAddTemplate: added head hash for %s\n", name);
+				     "xsltAddTemplate: added new hash %s\n", name);
 #endif
 		} else {
-		    while (list->next != NULL) {
-			if (list->next->priority <= pat->priority)
-			    break;
-			list = list->next;
+		    /*
+		     * Note '<=' since one must choose among the matching
+		     * template rules that are left, the one that occurs
+		     * last in the stylesheet
+		     */
+		    if (list->priority <= pat->priority) {
+			pat->next = list;
+			xmlHashUpdateEntry3(style->templatesHash, name,
+					    mode, modeURI, pat, NULL);
+#ifdef DEBUG_PARSING
+			xsltGenericDebug(xsltGenericDebugContext,
+					 "xsltAddTemplate: added head hash for %s\n", name);
+#endif
+		    } else {
+			while (list->next != NULL) {
+			    if (list->next->priority <= pat->priority)
+				break;
+			    list = list->next;
+			}
+			pat->next = list->next;
+			list->next = pat;
 		    }
-		    pat->next = list->next;
-		    list->next = pat;
 		}
 	    }
-	}
-    } else if (top != NULL) {
-	list = *top;
-	if (list == NULL) {
-	    *top = pat;
-	    pat->next = NULL;
-	} else if (list->priority <= pat->priority) {
-	    pat->next = list;
-	    *top = pat;
-	} else {
-	    while (list->next != NULL) {
-		if (list->next->priority <= pat->priority)
-		    break;
-		list = list->next;
+	} else if (top != NULL) {
+	    list = *top;
+	    if (list == NULL) {
+		*top = pat;
+		pat->next = NULL;
+	    } else if (list->priority <= pat->priority) {
+		pat->next = list;
+		*top = pat;
+	    } else {
+		while (list->next != NULL) {
+		    if (list->next->priority <= pat->priority)
+			break;
+		    list = list->next;
+		}
+		pat->next = list->next;
+		list->next = pat;
 	    }
-	    pat->next = list->next;
-	    list->next = pat;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "xsltAddTemplate: invalid compiled pattern\n");
+	    xsltFreeCompMatch(pat);
+	    return(-1);
 	}
-    } else {
-	xsltGenericError(xsltGenericErrorContext,
-		"xsltAddTemplate: invalid compiled pattern\n");
-	xsltFreeCompMatch(pat);
-	return(-1);
+	pat = next;
     }
-    if (*p != 0)
-	goto next_pattern;
     return(0);
 }
 
@@ -1560,3 +1562,30 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
         xsltFreeCompMatchList(style->commentMatch);
 }
 
+/**
+ * xsltMatchTemplate
+ * @node: a node in the source tree
+ * @pattern: an XSLT pattern
+ *
+ * Determine if a node matches a pattern.
+ */
+int
+xsltMatchPattern(xsltTransformContextPtr context,
+		 xmlNodePtr node,
+		 const xmlChar *pattern)
+{
+    int match = 0;
+    xsltCompMatchPtr first, comp;
+
+    if ((context != NULL) && (pattern != NULL)) {
+	first = xsltCompilePattern(pattern, NULL, NULL);
+	for (comp = first; comp != NULL; comp = comp->next) {
+	    match = xsltTestCompMatch(context, comp, node, NULL, NULL);
+	    if (match)
+		break; /* for */
+	}
+	if (first)
+	    xsltFreeCompMatchList(first);
+    }
+    return match;
+}
