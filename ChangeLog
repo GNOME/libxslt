@@ -1,3 +1,9 @@
+Sat May 18 10:01:38 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/libexslt.4 libxslt/libxslt.4 libxslt/keys.c 
+	  libxslt/xsltconfig.h.in: applied a man page patch from 
+	  Christian Cornelssen and fixed a couple of issues he raised.
+
 Thu May 16 19:38:24 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: moved the extension dump out of the loop

@@ -73,7 +73,9 @@ extern "C" {
  * On by default unless --without-debugger is passed to configure
  */
 #if @WITH_DEBUGGER@
+#ifndef WITH_DEBUGGER
 #define WITH_DEBUGGER
+#endif
 #endif
 
 /**

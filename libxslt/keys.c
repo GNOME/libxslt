@@ -394,6 +394,8 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 
 	    if (res->nodesetval != NULL)
 		len = res->nodesetval->nodeNr;
+	    else
+		len = 0;
 	    if (len != 0) {
 		ret = (xmlChar **) xmlMalloc((len + 1) * sizeof(xmlChar *));
 		if (ret != NULL) {
