@@ -1,3 +1,11 @@
+Sat Mar 10 13:50:16 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in: time for 0.5.0
+	* tests/docs/Makefile.am tests/general/Makefile.am: make sure the
+	  new test files are included in the distribution
+	* doc/xslt.html : updated
+	* doc/html/*.html: regenerated the docs
+
 Thu Mar  8 02:34:52 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docbook/result/html/*.html: regenerated the HTML

@@ -121,7 +121,7 @@ NAME="LIBXSLT-XSLTUTILS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN906"
+NAME="AEN1592"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +129,7 @@ NAME="AEN906"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN909"
+NAME="AEN1595"
 ></A
 ><H2
 >Synopsis</H2
@@ -144,6 +144,13 @@ CELLPADDING="6"
 CLASS="SYNOPSIS"
 >&#13;
 
+int         <A
+HREF="libxslt-xsltutils.html#XMLXPATHISNODETYPE"
+>xmlXPathIsNodeType</A
+>              (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name);
 <GTKDOCLINK
 HREF="XMLCHAR"
 >xmlChar</GTKDOCLINK
@@ -166,70 +173,6 @@ HREF="XMLXPATHPARSERCONTEXTPTR"
 >xmlXPathParserContextPtr</GTKDOCLINK
 > ctxt,
                                              int nargs);
-<GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
->  <A
-HREF="libxslt-xsltutils.html#XMLSETNSPROP"
->xmlSetNsProp</A
->                    (<GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
-> ns,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *name,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *value);
-<GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->  <A
-HREF="libxslt-xsltutils.html#XMLXPATHNEXTPRECEDING"
->xmlXPathNextPreceding</A
->           (<GTKDOCLINK
-HREF="XMLXPATHPARSERCONTEXTPTR"
->xmlXPathParserContextPtr</GTKDOCLINK
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur);
-<GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->  <A
-HREF="libxslt-xsltutils.html#XMLXPATHNEXTANCESTOR"
->xmlXPathNextAncestor</A
->            (<GTKDOCLINK
-HREF="XMLXPATHPARSERCONTEXTPTR"
->xmlXPathParserContextPtr</GTKDOCLINK
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur);
-<GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->  <A
-HREF="libxslt-xsltutils.html#XMLXPATHNEXTPRECEDINGSIBLING"
->xmlXPathNextPrecedingSibling</A
->    (<GTKDOCLINK
-HREF="XMLXPATHPARSERCONTEXTPTR"
->xmlXPathParserContextPtr</GTKDOCLINK
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur);
 #define     <A
 HREF="libxslt-xsltutils.html#TODO-CAPS"
 >TODO</A
@@ -367,18 +310,7 @@ HREF="XMLDOCPTR"
                                              <A
 HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</A
-> style);
-void        <A
-HREF="libxslt-xsltutils.html#XSLTDEBUG"
->xsltDebug</A
->                       (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node);</PRE
+> style);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -386,7 +318,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN974"
+NAME="AEN1641"
 ></A
 ><H2
 >Description</H2
@@ -396,14 +328,90 @@ NAME="AEN974"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN977"
+NAME="AEN1644"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN979"
+NAME="AEN1646"
+></A
+><H3
+><A
+NAME="XMLXPATHISNODETYPE"
+></A
+>xmlXPathIsNodeType ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xmlXPathIsNodeType              (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *name);</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&#13;</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1665"
 ></A
 ><H3
 ><A
@@ -503,7 +511,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1004"
+NAME="AEN1690"
 ></A
 ><H3
 ><A
@@ -582,449 +590,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1023"
-></A
-><H3
-><A
-NAME="XMLSETNSPROP"
-></A
->xmlSetNsProp ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLATTRPTR"
->xmlAttrPtr</GTKDOCLINK
->  xmlSetNsProp                    (<GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node,
-                                             <GTKDOCLINK
-HREF="XMLNSPTR"
->xmlNsPtr</GTKDOCLINK
-> ns,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *name,
-                                             const <GTKDOCLINK
-HREF="XMLCHAR"
->xmlChar</GTKDOCLINK
-> *value);</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ns</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->name</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->value</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&#13;</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1058"
-></A
-><H3
-><A
-NAME="XMLXPATHNEXTPRECEDING"
-></A
->xmlXPathNextPreceding ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->  xmlXPathNextPreceding           (<GTKDOCLINK
-HREF="XMLXPATHPARSERCONTEXTPTR"
->xmlXPathParserContextPtr</GTKDOCLINK
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur);</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->cur</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&#13;</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1083"
-></A
-><H3
-><A
-NAME="XMLXPATHNEXTANCESTOR"
-></A
->xmlXPathNextAncestor ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->  xmlXPathNextAncestor            (<GTKDOCLINK
-HREF="XMLXPATHPARSERCONTEXTPTR"
->xmlXPathParserContextPtr</GTKDOCLINK
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur);</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->cur</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&#13;</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1108"
-></A
-><H3
-><A
-NAME="XMLXPATHNEXTPRECEDINGSIBLING"
-></A
->xmlXPathNextPrecedingSibling ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
-><GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
->  xmlXPathNextPrecedingSibling    (<GTKDOCLINK
-HREF="XMLXPATHPARSERCONTEXTPTR"
->xmlXPathParserContextPtr</GTKDOCLINK
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> cur);</PRE
-></TD
-></TR
-></TABLE
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->cur</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&nbsp;</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><I
-CLASS="EMPHASIS"
->Returns</I
-> :</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->&#13;</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1133"
+NAME="AEN1709"
 ></A
 ><H3
 ><A
@@ -1050,7 +616,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1138"
+NAME="AEN1714"
 ></A
 ><H3
 ><A
@@ -1076,7 +642,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1143"
+NAME="AEN1719"
 ></A
 ><H3
 ><A
@@ -1134,7 +700,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1157"
+NAME="AEN1733"
 ></A
 ><H3
 ><A
@@ -1209,7 +775,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1175"
+NAME="AEN1751"
 ></A
 ><H3
 ><A
@@ -1235,7 +801,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1180"
+NAME="AEN1756"
 ></A
 ><H3
 ><A
@@ -1261,7 +827,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1185"
+NAME="AEN1761"
 ></A
 ><H3
 ><A
@@ -1287,7 +853,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1190"
+NAME="AEN1766"
 ></A
 ><H3
 ><A
@@ -1313,7 +879,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1195"
+NAME="AEN1771"
 ></A
 ><H3
 ><A
@@ -1418,7 +984,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1221"
+NAME="AEN1797"
 ></A
 ><H3
 ><A
@@ -1530,7 +1096,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1246"
+NAME="AEN1822"
 ></A
 ><H3
 ><A
@@ -1642,7 +1208,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1271"
+NAME="AEN1847"
 ></A
 ><H3
 ><A
@@ -1710,7 +1276,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1288"
+NAME="AEN1864"
 ></A
 ><H3
 ><A
@@ -1841,7 +1407,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1319"
+NAME="AEN1895"
 ></A
 ><H3
 ><A
@@ -1977,7 +1543,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1352"
+NAME="AEN1928"
 ></A
 ><H3
 ><A
@@ -2128,7 +1694,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1388"
+NAME="AEN1964"
 ></A
 ><H3
 ><A
@@ -2265,7 +1831,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1421"
+NAME="AEN1997"
 ></A
 ><H3
 ><A
@@ -2385,90 +1951,6 @@ WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
 >the number of byte written or -1 in case of failure.</TD
-></TR
-></TABLE
-><P
-></P
-></DIV
-></DIV
-><HR><DIV
-CLASS="REFSECT2"
-><A
-NAME="AEN1452"
-></A
-><H3
-><A
-NAME="XSLTDEBUG"
-></A
->xsltDebug ()</H3
-><TABLE
-BORDER="0"
-BGCOLOR="#D6E8FF"
-WIDTH="100%"
-CELLPADDING="6"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->void        xsltDebug                       (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt,
-                                             <GTKDOCLINK
-HREF="XMLNODEPTR"
->xmlNodePtr</GTKDOCLINK
-> node);</PRE
-></TD
-></TR
-></TABLE
-><P
->Process an debug node</P
-><P
-></P
-><DIV
-CLASS="INFORMALTABLE"
-><P
-></P
-><TABLE
-BORDER="0"
-WIDTH="100%"
-BGCOLOR="#FFD0D0"
-CELLSPACING="0"
-CELLPADDING="4"
-CLASS="CALSTABLE"
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->ctxt</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  an XSLT processing context</TD
-></TR
-><TR
-><TD
-WIDTH="20%"
-ALIGN="RIGHT"
-VALIGN="TOP"
-><TT
-CLASS="PARAMETER"
-><I
->node</I
-></TT
->&nbsp;:</TD
-><TD
-WIDTH="80%"
-ALIGN="LEFT"
-VALIGN="TOP"
->  The current node</TD
 ></TR
 ></TABLE
 ><P

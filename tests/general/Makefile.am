@@ -4,7 +4,11 @@ $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
 
 EXTRA_DIST = \
-    itemschoose.out  itemschoose.xsl
+    bug-1-.out bug-1-.xsl \
+    bug-2-.out bug-2-.xsl \
+    character.out character.xsl \
+    character2.out character2.xsl \
+    itemschoose.out itemschoose.xsl
 
 
 all: test
