@@ -2497,7 +2497,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
 	(!xmlStrEqual(style->method, (const xmlChar *) "xml"))) {
 	if (xmlStrEqual(style->method, (const xmlChar *) "html")) {
 	    ctxt->type = XSLT_OUTPUT_HTML;
-	    res = htmlNewDoc(style->doctypePublic, style->doctypeSystem);
+	    res = htmlNewDoc(style->doctypeSystem, style->doctypePublic);
 	    if (res == NULL)
 		goto error;
 	} else if (xmlStrEqual(style->method, (const xmlChar *) "xhtml")) {
@@ -2505,7 +2505,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
 	     "xsltApplyStylesheet: insupported method xhtml, using html\n",
 		             style->method);
 	    ctxt->type = XSLT_OUTPUT_HTML;
-	    res = htmlNewDoc(style->doctypePublic, style->doctypeSystem);
+	    res = htmlNewDoc(style->doctypeSystem, style->doctypePublic);
 	    if (res == NULL)
 		goto error;
 	} else if (xmlStrEqual(style->method, (const xmlChar *) "text")) {

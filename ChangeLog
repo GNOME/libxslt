@@ -1,3 +1,10 @@
+Fri May  4 20:10:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/docbook/result/html/* tests/general/bug-11-.out 
+	  tests/multiple/result.xml tests/XSLTMark/*.out 
+	  libxslt/transform.c: all the PUBLIC and SYSTEM IDs
+	  were swapped
+
 Fri May  4 19:09:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: add a --docbook option if your libxml2
