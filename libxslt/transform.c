@@ -2501,6 +2501,18 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	name = ncname;
     }
 
+    /*
+     * Create the new element
+     */
+    copy = xmlNewDocNode(ctxt->output, NULL, name, NULL);
+    if (copy == NULL) {
+	xsltTransformError(ctxt, NULL, inst,
+	    "xsl:element : creation of %s failed\n", name);
+	goto error;
+    }
+    xmlAddChild(ctxt->insert, copy);
+    ctxt->insert = copy;
+
     if ((comp->ns == NULL) && (comp->has_ns)) {
 	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
 		(const xmlChar *)"namespace", XSLT_NAMESPACE);
@@ -2532,30 +2544,25 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
     }
 
-    copy = xmlNewDocNode(ctxt->output, ns, name, NULL);
-    if (copy == NULL) {
-	xsltTransformError(ctxt, NULL, inst,
-	    "xsl:element : creation of %s failed\n", name);
-	goto error;
-    }
     if (generateDefault == 1) {
 	xmlNsPtr defaultNs = NULL;
 
-	if ((ctxt->insert != NULL) && (ctxt->insert->type == XML_ELEMENT_NODE))
-	    defaultNs = xmlSearchNs(ctxt->insert->doc, ctxt->insert, NULL);
+	if ((oldInsert != NULL) && (oldInsert->type == XML_ELEMENT_NODE))
+	    defaultNs = xmlSearchNs(oldInsert->doc, oldInsert, NULL);
 	if ((defaultNs == NULL) || (!xmlStrEqual(defaultNs->href, comp->ns))) {
-	    ns = xmlNewNs(copy, comp->ns, NULL);
-	    copy->ns = ns;
+	    ns = xmlNewNs(ctxt->insert, comp->ns, NULL);
+	    ctxt->insert->ns = ns;
 	} else {
-	    copy->ns = defaultNs;
+	    ctxt->insert->ns = defaultNs;
 	}
     } else if ((ns == NULL) && (oldns != NULL)) {
 	/* very specific case xsltGetNamespace failed */
-        ns = xmlNewNs(copy, oldns->href, oldns->prefix);
-	copy->ns = ns;
-    }
-    xmlAddChild(ctxt->insert, copy);
-    ctxt->insert = copy;
+        ns = xmlNewNs(ctxt->insert, oldns->href, oldns->prefix);
+	ctxt->insert->ns = ns;
+    } else
+        ctxt->insert->ns = ns;
+
+
     if (comp->has_use) {
 	if (comp->use != NULL) {
 	    xsltApplyAttributeSet(ctxt, node, inst, comp->use);

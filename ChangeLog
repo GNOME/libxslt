@@ -1,3 +1,11 @@
+Sat Nov 22 00:53:47 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: fixed bug #127561 (xsl:element with a
+	  'computed' namespace attribute)
+	* tests/docs/Makefile.am tests/docs/bug-136.xml
+	  tests/general/Makefile.am tests/docs/bug-136*: added tests
+	  to the regression for bug #127561
+
 Fri Nov 21 18:17:32 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/keys.c: small further enhancement, bug #127450
