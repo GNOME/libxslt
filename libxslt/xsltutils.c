@@ -1291,11 +1291,13 @@ xsltSetDebuggerCallbacks(int no, void *block)
 {
     xsltDebuggerCallbacksPtr callbacks;
 
-    if ((block == NULL) || (no != 1))
+    if ((block == NULL) || (no != XSLT_CALLBACK_NUMBER))
 	return(-1);
 
     callbacks = (xsltDebuggerCallbacksPtr) block;
     xsltDebuggerCurrentCallbacks.handler = callbacks->handler;
+    xsltDebuggerCurrentCallbacks.add  = callbacks->add;
+    xsltDebuggerCurrentCallbacks.drop  = callbacks->drop;
     return(0);
 }
 
