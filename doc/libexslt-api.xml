@@ -50,6 +50,10 @@
     <macro name='SAXON_NAMESPACE' file='exslt'>
       <info>Namespace for SAXON extensions functions</info>
     </macro>
+    <variable name='exsltLibexsltVersion' file='exslt' type='const int'/>
+    <variable name='exsltLibraryVersion' file='exslt' type='const char *'/>
+    <variable name='exsltLibxmlVersion' file='exslt' type='const int'/>
+    <variable name='exsltLibxsltVersion' file='exslt' type='const int'/>
     <function name='exsltCommonRegister' file='exslt'>
       <info>Registers the EXSLT - Common module</info>
       <return type='void'/>

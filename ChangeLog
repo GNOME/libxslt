@@ -1,3 +1,8 @@
+Fri Dec 13 14:50:12 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/apibuild.py doc/libexslt-api.xml doc/libxslt-api.xml: updated
+	  the apibuilder script, regenerated the APIs
+
 Fri Dec 13 11:59:07 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c: numbering should not traverse XInclude

@@ -182,6 +182,10 @@ class index:
 	      if self.functions.has_key(id):
 	          up = idx.functions[id]
 	          self.functions[id].update(None, up.type, up.info, up.extra)
+	 #     else:
+	 #         print "Function %s from %s is not declared in headers" % (
+	#	        id, idx.functions[id].module)
+	 # TODO: do the same for variables.
 
      def analyze_dict(self, type, dict):
          count = 0
@@ -745,6 +749,7 @@ class CParser:
 		 name = token[1]
 		 signature = self.signature
 		 if signature != None:
+		     type = string.split(type, '(')[0]
 		     d = self.mergeFunctionComment(name,
 			     ((type, None), signature), 1)
 		     self.index.add(name, self.filename, not self.is_header,
@@ -853,7 +858,7 @@ class CParser:
 	 name = None
 	 self.comment = None
 	 comment = ""
-	 value = ""
+	 value = "0"
          while token != None:
 	     if token[0] == "sep" and token[1] == "{":
 	         token = self.token()
@@ -874,9 +879,9 @@ class CParser:
 			 self.enums.append((name, value, comment))
 		     name = token[1]
 		     comment = ""
-		     value = ""
 		     token = self.token()
 		     if token[0] == "op" and token[1][0] == "=":
+		         value = ""
 		         if len(token[1]) > 1:
 			     value = token[1][1:]
 		         token = self.token()
@@ -884,6 +889,12 @@ class CParser:
 			       token[1] != '}'):
 			     value = value + token[1]
 			     token = self.token()
+		     else:
+		         try:
+			     value = "%d" % (int(value) + 1)
+			 except:
+			     print "Failed to compute value of enum %s" % (name)
+			     value=""
 		     if token[0] == "sep" and token[1] == ",":
 			 token = self.token()
 	     else:
@@ -1341,12 +1352,12 @@ class docBuilder:
 	     output.write("    <struct name='%s' file='%s' type='%s'" % (
 	              name, self.modulename_file(id.module), id.info))
 	     name = id.info[7:]
-	     if self.idx.structs.has_key(name) and \
-	        type(self.idx.structs[name]) == type(()):
+	     if self.idx.structs.has_key(name) and ( \
+	        type(self.idx.structs[name].info) == type(()) or
+		type(self.idx.structs[name].info) == type([])):
 	         output.write(">\n");
 		 try:
 		     for field in self.idx.structs[name].info:
-			 print name, field
 			 desc = field[2]
 			 if desc == None:
 			     desc = ''
@@ -1362,6 +1373,15 @@ class docBuilder:
 	     output.write("    <typedef name='%s' file='%s' type='%s'/>\n" % (
 	              name, self.modulename_file(id.module), id.info))
 
+     def serialize_variable(self, output, name):
+         id = self.idx.variables[name]
+	 if id.info != None:
+	     output.write("    <variable name='%s' file='%s' type='%s'/>\n" % (
+		     name, self.modulename_file(id.module), id.info))
+	 else:
+	     output.write("    <variable name='%s' file='%s'/>\n" % (
+	             name, self.modulename_file(id.module)))
+	              
      def serialize_function(self, output, name):
          id = self.idx.functions[name]
          output.write("    <%s name='%s' file='%s'>\n" % (id.type, name,
@@ -1423,6 +1443,10 @@ class docBuilder:
 	 typedefs.sort()
 	 for typedef in typedefs:
 	     self.serialize_typedef(output, typedef)
+	 variables = self.idx.variables.keys()
+	 variables.sort()
+	 for variable in variables:
+	     self.serialize_variable(output, variable)
 	 functions = self.idx.functions.keys()
 	 functions.sort()
 	 for function in functions:
@@ -1437,7 +1461,8 @@ def rebuild():
     if glob.glob("../parser.c") != [] :
         print "Rebuilding API description for libxml2"
 	builder = docBuilder("libxml2", ["..", "../include/libxml"],
-	                     ["xmlwin32version.h", "tst.c"])
+	                     ["xmlwin32version.h", "tst.c",
+			      "schemasInternals.h", "xmlschemas" ])
     elif glob.glob("../libxslt/transform.c") != [] :
         print "Rebuilding API description for libxslt"
 	builder = docBuilder("libxslt", ["../libxslt"],

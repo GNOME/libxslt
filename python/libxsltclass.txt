@@ -121,9 +121,6 @@ Class transformCtxt()
     freeTransformContext()
     registerAllElement()
 
-    # functions from module transform.c
-    copyTree()
-
     # functions from module variables
     evalGlobalVariables()
     evalOneUserParam()
