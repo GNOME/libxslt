@@ -334,7 +334,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     /* TODO: xsl:sort lang attribute */
     /* TODO: xsl:sort case-order attribute */
 
-    comp->select = xmlGetNsProp(inst,(const xmlChar *)"select", XSLT_NAMESPACE);
+    comp->select = xsltGetNsProp(inst,(const xmlChar *)"select", XSLT_NAMESPACE);
     if (comp->select == NULL) {
 	/*
 	 * The default value of the select attribute is ., which will
@@ -373,7 +373,7 @@ xsltCopyComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->inst = inst;
 
 
-    comp->use = xmlGetNsProp(inst, (const xmlChar *)"use-attribute-sets",
+    comp->use = xsltGetNsProp(inst, (const xmlChar *)"use-attribute-sets",
 				    XSLT_NAMESPACE);
     if (comp->use == NULL)
 	comp->has_use = 0;
@@ -402,7 +402,7 @@ xsltTextComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->inst = inst;
     comp->noescape = 0;
 
-    prop = xmlGetNsProp(inst,
+    prop = xsltGetNsProp(inst,
 	    (const xmlChar *)"disable-output-escaping",
 			XSLT_NAMESPACE);
     if (prop != NULL) {
@@ -546,7 +546,7 @@ xsltCopyOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     inst->_private = comp;
     comp->inst = inst;
 
-    comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
+    comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -583,7 +583,7 @@ xsltValueOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     inst->_private = comp;
     comp->inst = inst;
 
-    prop = xmlGetNsProp(inst,
+    prop = xsltGetNsProp(inst,
 	    (const xmlChar *)"disable-output-escaping",
 			XSLT_NAMESPACE);
     if (prop != NULL) {
@@ -597,7 +597,7 @@ xsltValueOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	}
 	xmlFree(prop);
     }
-    comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
+    comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -640,7 +640,7 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     /*
      * The full namespace resolution can be done statically
      */
-    prop = xmlGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:with-param : name is missing\n");
@@ -670,7 +670,7 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    comp->has_ns = 0;
     }
 
-    comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
+    comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xmlXPathCompile(comp->select);
@@ -718,22 +718,22 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     comp->numdata.doc = cur->doc;
     comp->numdata.node = cur;
-    comp->numdata.value = xmlGetNsProp(cur, (const xmlChar *)"value",
+    comp->numdata.value = xsltGetNsProp(cur, (const xmlChar *)"value",
 	                                XSLT_NAMESPACE);
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"format", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"format", XSLT_NAMESPACE);
     if (prop != NULL) {
 	comp->numdata.format = prop;
     } else {
 	comp->numdata.format = xmlStrdup(BAD_CAST(""));
     }
     
-    comp->numdata.count = xmlGetNsProp(cur, (const xmlChar *)"count",
+    comp->numdata.count = xsltGetNsProp(cur, (const xmlChar *)"count",
 					XSLT_NAMESPACE);
-    comp->numdata.from = xmlGetNsProp(cur, (const xmlChar *)"from",
+    comp->numdata.from = xsltGetNsProp(cur, (const xmlChar *)"from",
 					XSLT_NAMESPACE);
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"level", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"level", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, BAD_CAST("single")) ||
 	    xmlStrEqual(prop, BAD_CAST("multiple")) ||
@@ -747,13 +747,13 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 	}
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
     if (prop != NULL) {
 	TODO; /* xsl:number lang attribute */
 	xmlFree(prop);
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"letter-value", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"letter-value", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, BAD_CAST("alphabetic"))) {
 	    xsltGenericError(xsltGenericErrorContext,
@@ -773,14 +773,14 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 	xmlFree(prop);
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"grouping-separator",
+    prop = xsltGetNsProp(cur, (const xmlChar *)"grouping-separator",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
 	comp->numdata.groupingCharacter = prop[0];
 	xmlFree(prop);
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"grouping-size", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"grouping-size", XSLT_NAMESPACE);
     if (prop != NULL) {
 	sscanf((char *)prop, "%d", &comp->numdata.digitsPerGroup);
 	xmlFree(prop);
@@ -843,7 +843,7 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     /*
      * The full template resolution can be done statically
      */
-    prop = xmlGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:call-template : name is missing\n");
@@ -905,7 +905,7 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     /*
      * Get mode if any
      */
-    prop = xmlGetNsProp(inst, (const xmlChar *)"mode", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(inst, (const xmlChar *)"mode", XSLT_NAMESPACE);
     if (prop != NULL) {
 	xmlChar *prefix = NULL;
 
@@ -937,7 +937,7 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    comp->modeURI = NULL;
 	}
     }
-    comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
+    comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xmlXPathCompile(comp->select);
@@ -991,7 +991,7 @@ xsltIfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     inst->_private = comp;
     comp->inst = inst;
 
-    comp->test = xmlGetNsProp(inst, (const xmlChar *)"test", XSLT_NAMESPACE);
+    comp->test = xsltGetNsProp(inst, (const xmlChar *)"test", XSLT_NAMESPACE);
     if (comp->test == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:if : test is not defined\n");
@@ -1026,7 +1026,7 @@ xsltWhenComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     inst->_private = comp;
     comp->inst = inst;
 
-    comp->test = xmlGetNsProp(inst, (const xmlChar *)"test", XSLT_NAMESPACE);
+    comp->test = xsltGetNsProp(inst, (const xmlChar *)"test", XSLT_NAMESPACE);
     if (comp->test == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xsl:when : test is not defined\n");
@@ -1061,7 +1061,7 @@ xsltForEachComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     inst->_private = comp;
     comp->inst = inst;
 
-    comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
+    comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -1105,7 +1105,7 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     /*
      * The full template resolution can be done statically
      */
-    prop = xmlGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:variable : name is missing\n");
@@ -1134,7 +1134,7 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    comp->has_ns = 0;
     }
 
-    comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
+    comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xmlXPathCompile(comp->select);
@@ -1184,7 +1184,7 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     /*
      * The full template resolution can be done statically
      */
-    prop = xmlGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:param : name is missing\n");
@@ -1213,7 +1213,7 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    comp->has_ns = 0;
     }
 
-    comp->select = xmlGetNsProp(inst, (const xmlChar *)"select",
+    comp->select = xsltGetNsProp(inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xmlXPathCompile(comp->select);

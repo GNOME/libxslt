@@ -71,7 +71,7 @@ xsltParseStylesheetImport(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    uriRef = xmlGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
+    uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:import : missing href attribute\n");
@@ -128,7 +128,7 @@ xsltParseStylesheetInclude(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    uriRef = xmlGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
+    uriRef = xsltGetNsProp(cur, (const xmlChar *)"href", XSLT_NAMESPACE);
     if (uriRef == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:include : missing href attribute\n");

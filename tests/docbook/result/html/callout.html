@@ -12,9 +12,9 @@
 <span class="title">Loops</span>
 </h2></div></div>
 <p>
-<a class="indexterm" name="id2724235"></a>
-<a class="indexterm" name="id2724246"></a>
-<a class="indexterm" name="id2724256"></a>
+<a class="indexterm" name="id2760547"></a>
+<a class="indexterm" name="id2760556"></a>
+<a class="indexterm" name="id2760566"></a>
 
 DSSSL doesn't have any construct that resembles the
 for loop that occurs in most imperative languages like C
@@ -25,16 +25,10 @@ functional languages for implementing a loop: tail recursion.
 Loops in DSSSL use a special form of
 <tt>let</tt>. This loop counts from 1 to 10:
 <pre class="screen">
-(let <a name="dl1"></a>
-<img src="../images/callouts/1.png" alt="1" border="0">loopvar <a name="dl2"></a>
-<img src="../images/callouts/2.png" alt="2" border="0">((count 1))
-  <a name="dl3"></a>
-<img src="../images/callouts/3.png" alt="3" border="0">(if (&gt; count 10)
-    <a name="dl4"></a>
-<img src="../images/callouts/4.png" alt="4" border="0">#t
-    (<a name="dl5"></a>
-<img src="../images/callouts/5.png" alt="5" border="0">loopvar <a name="dl6"></a>
-<img src="../images/callouts/6.png" alt="6" border="0">(+ count 1))))</pre>
+(let <a name="dl1"></a><img src="../images/callouts/1.png" alt="1" border="0">loopvar <a name="dl2"></a><img src="../images/callouts/2.png" alt="2" border="0">((count 1))
+  <a name="dl3"></a><img src="../images/callouts/3.png" alt="3" border="0">(if (&gt; count 10)
+    <a name="dl4"></a><img src="../images/callouts/4.png" alt="4" border="0">#t
+    (<a name="dl5"></a><img src="../images/callouts/5.png" alt="5" border="0">loopvar <a name="dl6"></a><img src="../images/callouts/6.png" alt="6" border="0">(+ count 1))))</pre>
 </p>
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
@@ -48,7 +42,7 @@ operand.</p></td>
 <td width="5%" valign="top" align="left">
 <a href="#dl2"><img src="../images/callouts/2.png" alt="2" border="0"></a> </td>
 <td valign="top" align="left"><p>
-<a class="indexterm" name="id2720570"></a>
+<a class="indexterm" name="id2753740"></a>
 
 Any number of additional local variables can be defined after
 the loop variable, just as they can in any other

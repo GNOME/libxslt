@@ -1,3 +1,14 @@
+Thu Jun  7 21:31:46 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltutils.[ch]: closing bug #55683 required to add
+	  xsltGetNsProp()
+	* libxslt/attributes.c libxslt/imports.c libxslt/namespaces.c
+	  libxslt/preproc.c libxslt/templates.c libxslt/xslt.c:
+	  Updated to use the new function
+	* tests/XSLTMark/prettyprint.out tests/docbook/result/html/*.html:
+	  the fixes in the serialization of <pre> in HTML in libxml
+	  led to a number of changes in the output
+
 Thu Jun  7 04:23:38 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docs/Makefile.am tests/general/Makefile.am

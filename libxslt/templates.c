@@ -256,7 +256,7 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((ctxt == NULL) || (node == NULL) || (name == NULL))
 	return(NULL);
 
-    expr = xmlGetNsProp(node, name, ns);
+    expr = xsltGetNsProp(node, name, ns);
     if (expr == NULL)
 	return(NULL);
 
@@ -299,7 +299,7 @@ xsltEvalStaticAttrValueTemplate(xsltStylesheetPtr style, xmlNodePtr node,
     if ((style == NULL) || (node == NULL) || (name == NULL))
 	return(NULL);
 
-    expr = xmlGetNsProp(node, name, ns);
+    expr = xsltGetNsProp(node, name, ns);
     if (expr == NULL) {
 	*found = 0;
 	return(NULL);

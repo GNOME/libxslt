@@ -252,7 +252,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:attribute-set : name is missing\n");
@@ -307,7 +307,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
      */
     /* TODO check recursion */
 
-    attributes = xmlGetNsProp(cur, (const xmlChar *)"use-attribute-sets",
+    attributes = xsltGetNsProp(cur, (const xmlChar *)"use-attribute-sets",
 	                      XSLT_NAMESPACE);
     if (attributes == NULL) {
 	goto done;

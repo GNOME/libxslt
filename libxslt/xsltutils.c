@@ -27,6 +27,90 @@
 
 /************************************************************************
  * 									*
+ * 			Convenience function				*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltGetNsProp:
+ * @node:  the node
+ * @name:  the attribute name
+ * @namespace:  the URI of the namespace
+ *
+ * Similar to xmlGetNsProp() but with a slightly different semantic
+ *
+ * Search and get the value of an attribute associated to a node
+ * This attribute has to be anchored in the namespace specified,
+ * or has no namespace and the element is in that namespace.
+ *
+ * This does the entity substitution.
+ * This function looks in DTD attribute declaration for #FIXED or
+ * default declaration values unless DTD use has been turned off.
+ *
+ * Returns the attribute value or NULL if not found.
+ *     It's up to the caller to free the memory.
+ */
+xmlChar *
+xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *namespace) {
+    xmlAttrPtr prop;
+    xmlDocPtr doc;
+    xmlNsPtr ns;
+
+    if (node == NULL)
+	return(NULL);
+
+    prop = node->properties;
+    if (namespace == NULL)
+	return(xmlGetProp(node, name));
+    while (prop != NULL) {
+	/*
+	 * One need to have
+	 *   - same attribute names
+	 *   - and the attribute carrying that namespace
+	 */
+        if ((xmlStrEqual(prop->name, name)) &&
+	    (((prop->ns == NULL) && (node->ns != NULL) &&
+	      (xmlStrEqual(node->ns->href, namespace))) ||
+	     ((prop->ns != NULL) &&
+	      (xmlStrEqual(prop->ns->href, namespace))))) {
+	    xmlChar *ret;
+
+	    ret = xmlNodeListGetString(node->doc, prop->children, 1);
+	    if (ret == NULL) return(xmlStrdup((xmlChar *)""));
+	    return(ret);
+        }
+	prop = prop->next;
+    }
+
+    /*
+     * Check if there is a default declaration in the internal
+     * or external subsets
+     */
+    doc =  node->doc;
+    if (doc != NULL) {
+        if (doc->intSubset != NULL) {
+	    xmlAttributePtr attrDecl;
+
+	    attrDecl = xmlGetDtdAttrDesc(doc->intSubset, node->name, name);
+	    if ((attrDecl == NULL) && (doc->extSubset != NULL))
+		attrDecl = xmlGetDtdAttrDesc(doc->extSubset, node->name, name);
+		
+	    if ((attrDecl != NULL) && (attrDecl->prefix != NULL)) {
+	        /*
+		 * The DTD declaration only allows a prefix search
+		 */
+		ns = xmlSearchNs(doc, node, attrDecl->prefix);
+		if ((ns != NULL) && (xmlStrEqual(ns->href, namespace)))
+		    return(xmlStrdup(attrDecl->defaultValue));
+	    }
+	}
+    }
+    return(NULL);
+}
+
+
+/************************************************************************
+ * 									*
  * 		Handling of XSLT stylesheets messages			*
  * 									*
  ************************************************************************/
@@ -47,7 +131,7 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
     if ((ctxt == NULL) || (inst == NULL))
 	return;
 
-    prop = xmlGetNsProp(inst, (const xmlChar *)"terminate", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(inst, (const xmlChar *)"terminate", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
 	    terminate = 1;

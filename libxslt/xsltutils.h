@@ -54,6 +54,12 @@ extern "C" {
 #define IS_XSLT_NAME(n, val)						\
     (xmlStrEqual((n)->name, (const xmlChar *) (val)))
 
+/*
+ * Our own version of namespaced atributes lookup
+ */
+xmlChar *	 xsltGetNsProp			(xmlNodePtr node,
+						 const xmlChar *name,
+						 const xmlChar *namespace);
 
 /*
  * XSLT specific error and debug reporting functions

@@ -348,13 +348,13 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (style->version != NULL) xmlFree(style->version);
 	style->version  = prop;
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"encoding", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"encoding", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (style->encoding != NULL) xmlFree(style->encoding);
 	style->encoding  = prop;
@@ -407,19 +407,19 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 	}
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"doctype-system", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"doctype-system", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (style->doctypeSystem != NULL) xmlFree(style->doctypeSystem);
 	style->doctypeSystem  = prop;
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"doctype-public", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"doctype-public", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (style->doctypePublic != NULL) xmlFree(style->doctypePublic);
 	style->doctypePublic  = prop;
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"standalone",
+    prop = xsltGetNsProp(cur, (const xmlChar *)"standalone",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
@@ -434,7 +434,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 	xmlFree(prop);
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"indent",
+    prop = xsltGetNsProp(cur, (const xmlChar *)"indent",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
@@ -449,7 +449,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 	xmlFree(prop);
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"omit-xml-declaration",
+    prop = xsltGetNsProp(cur, (const xmlChar *)"omit-xml-declaration",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
@@ -464,7 +464,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
 	xmlFree(prop);
     }
 
-    elements = xmlGetNsProp(cur, (const xmlChar *)"cdata-section-elements",
+    elements = xsltGetNsProp(cur, (const xmlChar *)"cdata-section-elements",
 	                    XSLT_NAMESPACE);
     if (elements != NULL) {
 	if (style->stripSpaces == NULL)
@@ -515,7 +515,7 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr style, xmlNodePtr cur)
 
     format = style->decimalFormat;
     
-    prop = xmlGetNsProp(cur, BAD_CAST("name"), XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, BAD_CAST("name"), XSLT_NAMESPACE);
     if (prop != NULL) {
 	format = xsltDecimalFormatGetByName(style, prop);
 	if (format != NULL) {
@@ -538,63 +538,63 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr style, xmlNodePtr cur)
 	    iter->next = format;
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"decimal-separator",
+    prop = xsltGetNsProp(cur, (const xmlChar *)"decimal-separator",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->decimalPoint != NULL) xmlFree(format->decimalPoint);
 	format->decimalPoint  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"grouping-separator",
+    prop = xsltGetNsProp(cur, (const xmlChar *)"grouping-separator",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->grouping != NULL) xmlFree(format->grouping);
 	format->grouping  = prop;
     }
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"infinity", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"infinity", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->infinity != NULL) xmlFree(format->infinity);
 	format->infinity  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"minus-sign", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"minus-sign", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->minusSign != NULL) xmlFree(format->minusSign);
 	format->minusSign  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"NaN", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"NaN", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->noNumber != NULL) xmlFree(format->noNumber);
 	format->noNumber  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"percent", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"percent", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->percent != NULL) xmlFree(format->percent);
 	format->percent  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"per-mille", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"per-mille", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->permille != NULL) xmlFree(format->permille);
 	format->permille  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"zero-digit", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"zero-digit", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->zeroDigit != NULL) xmlFree(format->zeroDigit);
 	format->zeroDigit  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"digit", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *)"digit", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->digit != NULL) xmlFree(format->digit);
 	format->digit  = prop;
     }
     
-    prop = xmlGetNsProp(cur, (const xmlChar *)"pattern-separator",
+    prop = xsltGetNsProp(cur, (const xmlChar *)"pattern-separator",
 	                XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (format->patternSeparator != NULL) xmlFree(format->patternSeparator);
@@ -619,7 +619,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    elements = xmlGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
+    elements = xsltGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
     if (elements == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltParseStylesheetPreserveSpace: missing elements attribute\n");
@@ -675,7 +675,7 @@ xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    prefixes = xmlGetNsProp(cur, (const xmlChar *)"extension-element-prefixes",
+    prefixes = xsltGetNsProp(cur, (const xmlChar *)"extension-element-prefixes",
 	                    XSLT_NAMESPACE);
     if (prefixes == NULL) {
 	return;
@@ -732,7 +732,7 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    elements = xmlGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
+    elements = xsltGetNsProp(cur, (const xmlChar *)"elements", XSLT_NAMESPACE);
     if (elements == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsltParseStylesheetStripSpace: missing elements attribute\n");
@@ -985,7 +985,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 		    xmlNodePtr text = cur->children, next;
 		    int noesc = 0;
 			
-		    prop = xmlGetNsProp(cur,
+		    prop = xsltGetNsProp(cur,
 			    (const xmlChar *)"disable-output-escaping",
 					XSLT_NAMESPACE);
 		    if (prop != NULL) {
@@ -1137,7 +1137,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     /*
      * Get arguments
      */
-    prop = xmlGetNsProp(key, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(key, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop != NULL) {
 	xmlChar *prefix = NULL;
 
@@ -1179,7 +1179,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
 	goto error;
     }
 
-    match = xmlGetNsProp(key, (const xmlChar *)"match", XSLT_NAMESPACE);
+    match = xsltGetNsProp(key, (const xmlChar *)"match", XSLT_NAMESPACE);
     if (match == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:key : error missing match\n");
@@ -1187,7 +1187,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
 	goto error;
     }
 
-    use = xmlGetNsProp(key, (const xmlChar *)"use", XSLT_NAMESPACE);
+    use = xsltGetNsProp(key, (const xmlChar *)"use", XSLT_NAMESPACE);
     if (use == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:key : error missing use\n");
@@ -1243,7 +1243,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     /*
      * Get arguments
      */
-    prop = xmlGetNsProp(template, (const xmlChar *)"mode", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(template, (const xmlChar *)"mode", XSLT_NAMESPACE);
     if (prop != NULL) {
 	xmlChar *prefix = NULL;
 
@@ -1282,20 +1282,20 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	mode = NULL;
 	modeURI = NULL;
     }
-    prop = xmlGetNsProp(template, (const xmlChar *)"match", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(template, (const xmlChar *)"match", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (ret->match != NULL) xmlFree(ret->match);
 	ret->match  = prop;
     }
 
-    prop = xmlGetNsProp(template, (const xmlChar *)"priority", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(template, (const xmlChar *)"priority", XSLT_NAMESPACE);
     if (prop != NULL) {
 	priority = xmlXPathStringEvalNumber(prop);
 	ret->priority = priority;
 	xmlFree(prop);
     }
 
-    prop = xmlGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(template, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop != NULL) {
 	xmlChar *ncname;
 	xmlChar *prefix = NULL;
@@ -1364,7 +1364,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     if (top == NULL)
 	return;
 
-    prop = xmlGetNsProp(top, (const xmlChar *)"version", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(top, (const xmlChar *)"version", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	    "xsl:version is missing: document may not be a stylesheet\n");
@@ -1506,7 +1506,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	/*
 	 * the document itself might be the template, check xsl:version
 	 */
-	prop = xmlGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
+	prop = xsltGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
 	if (prop == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsltParseStylesheetProcess : document is not a stylesheet\n");
