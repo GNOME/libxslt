@@ -56,6 +56,7 @@ with XPath functions written in Python.
 %build
 %configure
 make
+gzip -9 ChangeLog
 
 %install
 rm -fr %{buildroot}
@@ -74,7 +75,7 @@ rm -fr %{buildroot}
 %files
 %defattr(-, root, root)
 
-%doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
+%doc AUTHORS ChangeLog.gz NEWS README Copyright TODO FEATURES
 %doc doc/*.html doc/html doc/tutorial doc/*.gif
 %doc %{_mandir}/man1/xsltproc.1*
 %{_libdir}/lib*.so.*
@@ -83,7 +84,7 @@ rm -fr %{buildroot}
 %files devel
 %defattr(-, root, root)
 
-%doc AUTHORS ChangeLog NEWS README Copyright TODO FEATURES
+%doc AUTHORS ChangeLog.gz NEWS README Copyright TODO FEATURES
 %doc doc/libxslt-api.xml
 %doc doc/libxslt-refs.xml
 %doc doc/EXSLT/libexslt-api.xml
@@ -102,7 +103,7 @@ rm -fr %{buildroot}
 %files python
 %defattr(-, root, root)
 
-%doc AUTHORS ChangeLog NEWS README Copyright FEATURES
+%doc AUTHORS ChangeLog.gz NEWS README Copyright FEATURES
 %{_libdir}/python*/site-packages/libxslt.py
 %{_libdir}/python*/site-packages/libxsltmod*
 %doc python/TODO

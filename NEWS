@@ -5,6 +5,10 @@
        http://xmlsoft.org/XSLT/news.html
 
 Those are the public releases made:
+1.1.6: Apr 18 2004:
+   - 2 bug fixes about keys fixed one by Mark Vakoc
+
+
 1.1.5: Mar 23 2004:
    - performance: use dictionnary lookup for variables
    - remove use of _private from source documents

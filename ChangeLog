@@ -1,3 +1,8 @@
+Mon Apr 19 00:39:18 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: preparing release 1.1.6
+	* libxslt.spec.in: keep the ChangeLog compressed 
+
 Mon Apr  5 15:23:53 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/keys.c: fixed a stupid cut'npaste bug #139132
