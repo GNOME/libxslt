@@ -1,3 +1,11 @@
+Sun Dec 21 12:51:12 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c: fixed second problem on #122483, namespace
+	  definitions must be propagated to keys.
+	* tests/docs/Makefile.am tests/docs/bug-137.xml
+	  tests/general/Makefile.am tests/docs/bug-137*: added test
+	  to the regression for bug #122483
+	
 Sun Dec 21 12:08:45 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: added the cast needed to fix #129188 warning

@@ -43,6 +43,8 @@ struct _xsltKeyDef {
     xmlChar *use;
     xmlXPathCompExprPtr comp;
     xmlXPathCompExprPtr usecomp;
+    xmlNsPtr *nsList;           /* the namespaces in scope */
+    int nsNr;                   /* the number of namespaces in scope */
 };
 
 typedef struct _xsltKeyTable xsltKeyTable;
@@ -85,6 +87,7 @@ xsltNewKeyDef(const xmlChar *name, const xmlChar *nameURI) {
 	cur->name = xmlStrdup(name);
     if (nameURI != NULL)
 	cur->nameURI = xmlStrdup(nameURI);
+    cur->nsList = NULL;
     return(cur);
 }
 
@@ -110,6 +113,8 @@ xsltFreeKeyDef(xsltKeyDefPtr keyd) {
 	xmlFree(keyd->match);
     if (keyd->use != NULL)
 	xmlFree(keyd->use);
+    if (keyd->nsList != NULL)
+        xmlFree(keyd->nsList);
     memset(keyd, -1, sizeof(xsltKeyDef));
     xmlFree(keyd);
 }
@@ -292,7 +297,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	   const xmlChar *use, xmlNodePtr inst) {
     xsltKeyDefPtr key;
     xmlChar *pattern = NULL;
-    int current, end, start;
+    int current, end, start, i = 0;
 
     if ((style == NULL) || (name == NULL) || (match == NULL) || (use == NULL))
 	return(-1);
@@ -306,6 +311,12 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     key->match = xmlStrdup(match);
     key->use = xmlStrdup(use);
     key->inst = inst;
+    key->nsList = xmlGetNsList(inst->doc, inst);
+    if (key->nsList != NULL) {
+        while (key->nsList[i] != NULL)
+	    i++;
+    }
+    key->nsNr = i;
 
     /*
      * Split the | and register it as as many keys
@@ -430,7 +441,8 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
  *         by the caller.
  */
 static xmlChar **
-xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
+xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
+                  xsltKeyDefPtr keyd) {
     xmlChar **ret = NULL;
     xmlXPathObjectPtr res;
     xmlNodePtr oldInst;
@@ -447,9 +459,8 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     oldNamespaces = ctxt->xpathCtxt->namespaces;
 
     ctxt->xpathCtxt->node = ctxt->node;
-    /* TODO: do we need to propagate the namespaces here ? */
-    ctxt->xpathCtxt->namespaces = NULL;
-    ctxt->xpathCtxt->nsNr = 0;
+    ctxt->xpathCtxt->namespaces = keyd->nsList;
+    ctxt->xpathCtxt->nsNr = keyd->nsNr;
     res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
@@ -615,7 +626,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	if (IS_XSLT_REAL_NODE(nodelist->nodeTab[i])) {
 	    ctxt->node = nodelist->nodeTab[i];
 
-	    list = xsltEvalXPathKeys(ctxt, keyd->usecomp);
+	    list = xsltEvalXPathKeys(ctxt, keyd->usecomp, keyd);
 	    if (list != NULL) {
 		int index = 0;
 
