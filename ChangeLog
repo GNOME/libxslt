@@ -1,3 +1,8 @@
+Thu Sep 26 20:08:50 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.21
+	* doc/* : updated and regenerated the docs and web pages
+
 Wed Sep 25 11:16:06 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed a disable output escaping bug for
