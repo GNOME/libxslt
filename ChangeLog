@@ -1,3 +1,10 @@
+Sat Aug 14 21:49:48 PDT 2004 William Brack <wbrack@mmm.comlhk>
+
+	* libxslt/namespaces.[ch], transform.c, xslt.c, xsltInternals.h:
+	  fixed handling of #default in namespace-alias for default
+	  namespace (bug 149659)
+	* tests/namespaces/tst7.* tst8.*: added regression tests for above
+
 Fri Aug  6 11:05:31 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: added date:sum routine supplied by Joel

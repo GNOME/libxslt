@@ -64,8 +64,10 @@ void
 xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
     xmlChar *sprefix;
     xmlNsPtr sNs;
+    const xmlChar *shref;
     xmlChar *rprefix;
     xmlNsPtr rNs;
+    const xmlChar *rhref;
 
     sprefix = xsltGetNsProp(node, (const xmlChar *)"stylesheet-prefix",
 	                   XSLT_NAMESPACE);
@@ -81,37 +83,68 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
 	    "namespace-alias: result-prefix attribute missing\n");
 	goto error;
     }
+    
     if (xmlStrEqual(sprefix, (const xmlChar *)"#default")) {
+        /*
+	 * Do we have a default namespace previously declared?
+	 */
 	sNs = xmlSearchNs(node->doc, node, NULL);
+	if (sNs == NULL)
+	    shref = NULL;	/* No - set NULL */
+	else
+	    shref = sNs->href;	/* Yes - set for nsAlias table */
     } else {
 	sNs = xmlSearchNs(node->doc, node, sprefix);
+ 
+	if ((sNs == NULL) || (sNs->href == NULL)) {
+	    xsltTransformError(NULL, style, node,
+	        "namespace-alias: prefix %s not bound to any namespace\n",
+					sprefix);
+	    goto error;
+	} else
+	    shref = sNs->href;
     }
-    if ((sNs == NULL) || (sNs->href == NULL)) {
-	xsltTransformError(NULL, style, node,
-	    "namespace-alias: prefix %s not bound to any namespace\n",
-	                 sprefix);
-	goto error;
-    }
+
+    /*
+     * When "#default" is used for result, if a default namespace has not
+     * been explicitly declared the special value UNDEFINED_DEFAULT_NS is
+     * put into the nsAliases table
+     */
     if (xmlStrEqual(rprefix, (const xmlChar *)"#default")) {
 	rNs = xmlSearchNs(node->doc, node, NULL);
+	if (rNs == NULL)
+	    rhref = UNDEFINED_DEFAULT_NS;
+	else
+	    rhref = rNs->href;
     } else {
 	rNs = xmlSearchNs(node->doc, node, rprefix);
+
+        if ((rNs == NULL) || (rNs->href == NULL)) {
+	    xsltTransformError(NULL, style, node,
+	        "namespace-alias: prefix %s not bound to any namespace\n",
+					rprefix);
+	    goto error;
+	} else
+	    rhref = rNs->href;
     }
-    if ((rNs == NULL) || (rNs->href == NULL)) {
-	xsltTransformError(NULL, style, node,
-	    "namespace-alias: prefix %s not bound to any namespace\n",
-	                 rprefix);
-	goto error;
+    /*
+     * Special case if #default is used for stylesheet and no default has
+     * been explicitly declared.  We use style->defaultAlias for this
+     */
+    if (shref == NULL) {
+        if (rNs != NULL)
+            style->defaultAlias = rNs->href;
+    } else {
+        if (style->nsAliases == NULL)
+	    style->nsAliases = xmlHashCreate(10);
+        if (style->nsAliases == NULL) {
+	    xsltTransformError(NULL, style, node,
+	        "namespace-alias: cannot create hash table\n");
+	    goto error;
+        }
+        xmlHashAddEntry((xmlHashTablePtr) style->nsAliases,
+	            shref, (void *) rhref);
     }
-    if (style->nsAliases == NULL)
-	style->nsAliases = xmlHashCreate(10);
-    if (style->nsAliases == NULL) {
-	xsltTransformError(NULL, style, node,
-	    "namespace-alias: cannot create hash table\n");
-	goto error;
-    }
-    xmlHashAddEntry((xmlHashTablePtr) style->nsAliases,
-	            sNs->href, (void *) rNs->href);
 
 error:
     if (sprefix != NULL)
@@ -247,6 +280,15 @@ xsltGetPlainNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
 	style = xsltNextImport(style);
     }
 
+    if (URI == UNDEFINED_DEFAULT_NS) {
+        xmlNsPtr dflt;
+	dflt = xmlSearchNs(cur->doc, cur, NULL);
+        if (dflt == NULL)
+	    return NULL;
+	else
+	    URI = dflt->href;
+    }
+
     if (URI == NULL)
 	URI = ns->href;
 
@@ -368,7 +410,14 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 	style = xsltNextImport(style);
     }
 
-    if (URI == NULL)
+    if (URI == UNDEFINED_DEFAULT_NS) {
+        xmlNsPtr dflt;
+	dflt = xmlSearchNs(cur->doc, cur, NULL);
+	if (dflt != NULL)
+	    URI = dflt->href;
+	else
+	    return NULL;
+    } else if (URI == NULL)
 	URI = ns->href;
 
     /*
@@ -456,6 +505,8 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    /* TODO apply cascading */
 	    URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases,
 		                                  cur->href);
+	    if (URI == UNDEFINED_DEFAULT_NS)
+	        continue;
 	    if (URI != NULL) {
 		q = xmlNewNs(node, URI, cur->prefix);
 	    } else {
@@ -505,6 +556,8 @@ xsltCopyNamespace(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {
 	URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases,
 					      cur->href);
+	if (URI == UNDEFINED_DEFAULT_NS)
+	    return(NULL);
 	if (URI != NULL) {
 	    ret = xmlNewNs(node, URI, cur->prefix);
 	} else {

@@ -1496,6 +1496,11 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 	     * This is an element which will be output as part of the
 	     * template exectution, precompile AVT if found.
 	     */
+	    if ((cur->ns == NULL) && (style->defaultAlias != NULL) &&
+	    		(cur->type == XML_ELEMENT_NODE)) {
+		cur->ns = xmlSearchNsByHref(cur->doc, cur,
+			style->defaultAlias);
+	    }
 	    if (cur->properties != NULL) {
 	        xmlAttrPtr attr = cur->properties;
 

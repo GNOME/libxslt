@@ -1715,6 +1715,15 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		      style = xsltNextImport(style);
 		    }
 
+		    if (URI == UNDEFINED_DEFAULT_NS) {
+		      xmlNsPtr dflt;
+		      dflt = xmlSearchNs(cur->doc, cur, NULL);
+		      if (dflt == NULL)
+		        continue;
+		      else
+		        URI = dflt->href;
+		    }
+
 		    if (URI == NULL) {
 		      ret = xmlSearchNs(copy->doc, copy, ns->prefix);
 		      if ((ret == NULL) ||

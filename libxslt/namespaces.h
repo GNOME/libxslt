@@ -18,6 +18,12 @@
 extern "C" {
 #endif
 
+/*
+ * Used within nsAliases hashtable when the default namespace is required
+ * but it's not been explicitly defined
+ */
+#define	UNDEFINED_DEFAULT_NS	(const xmlChar *) -1L
+
 XSLTPUBFUN void XSLTCALL
 		xsltNamespaceAlias	(xsltStylesheetPtr style,
 					 xmlNodePtr node);

@@ -11,7 +11,9 @@ EXTRA_DIST = \
     tst3.xml tst3.xsl tst3.out \
     tst4.xml tst4.xsl tst4.out \
     tst5.xml tst5.xsl tst5.out \
-    tst6.xml tst6.xsl tst6.out
+    tst6.xml tst6.xsl tst6.out \
+    tst7.xml tst7.xsl tst7.out \
+    tst8.xml tst8.xsl tst8.out
 
 all:
 

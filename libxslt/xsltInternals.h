@@ -431,6 +431,10 @@ struct _xsltStylesheet {
      * precompiled attribute value templates.
      */
     void *attVTs;
+    /*
+     * if namespace-alias has an alias for the default stylesheet prefix
+     */
+    const xmlChar *defaultAlias;
 };
 
 /*
