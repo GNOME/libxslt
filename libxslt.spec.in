@@ -10,7 +10,7 @@ Copyright: LGPL
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/XSLT/libxslt-%{ver}.tar.gz
 BuildRoot: /var/tmp/libxslt-%{PACKAGE_VERSION}-root
-Requires: libxml2 >= 2.3.8
+Requires: libxml2 >= 2.3.10
 
 URL: http://xmlsoft.org/XSLT/
 Docdir: %{prefix}/doc
@@ -25,7 +25,7 @@ installed.
 Summary: Libraries, includes, etc. to develop XML and HTML applications
 Group: Development/Libraries
 Requires: libxslt = %{version}
-Requires: libxml2-devel >= 2.3.8
+Requires: libxml2-devel >= 2.3.10
 
 %description devel
 This C library allows to transform XML files into other XML files

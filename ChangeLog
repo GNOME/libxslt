@@ -1,3 +1,7 @@
+Fri Jun  1 11:30:49 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt.spec.in: released 0.11.0
+
 Mon May 28 12:54:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c: William M. Brack found a small bug
