@@ -42,9 +42,9 @@ noinst_LTLIBRARIES = libxsltmodule.la
 libxsltmodule_la_SOURCES = libxslt.c types.c libxslt-py.c
 
 libxsltmod.so: $(libxsltmodule_la_OBJECTS)
-	-@rm -f .libs/libxsltmod.so
-	$(LINK) -o $@ $(libxsltmodule_la_OBJECTS) $(libxsltmod_so_LDFLAGS)
-	-@(if [ -r .libs/libxsltmod.so ] ; then cp .libs/libxsltmod.so . ; fi)
+	-(rm -f .libs/libxsltmod.so; \
+	  $(LINK) -o $@ $(libxsltmodule_la_OBJECTS) $(libxsltmod_so_LDFLAGS);\
+	  if [ -r .libs/libxsltmod.so ] ; then cp .libs/libxsltmod.so . ; fi)
 
 
 libxslt.py: $(srcdir)/libxsl.py libxsltclass.py

@@ -1,3 +1,7 @@
+Tue Feb 12 15:08:38 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/Makefile.am: trying to fix #71270 
+
 Mon Feb 11 19:40:34 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/*.py: removed tab used spaces
