@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS=REC1 REC2 REC numbers
+SUBDIRS=docs REC1 REC2 REC general numbers
 
 test tests: all

@@ -133,12 +133,12 @@ YES			select = node-set-expression
 YES		    xsl:if
 YES			test = boolean-expression
 
-NO		    xsl:choose
+YES		    xsl:choose
 
-NO		    xsl:when
-NO			test = boolean-expression
+YES		    xsl:when
+YES			test = boolean-expression
 
-NO		    xsl:otherwise
+YES		    xsl:otherwise
 
 YES		    xsl:sort
 YES			select = string-expression 

@@ -1,3 +1,12 @@
+Thu Feb  1 14:54:39 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* FEATURES: updated choose/when/otherwise added
+	* libxslt/transform.c: plugged choose in
+	* configure.in tests/Makefile.am tests/REC/Makefile.am
+	  tests/docs/Makefile.am tests/docs/items.xml tests/general/Makefile.am
+	  tests/general/itemschoose.*: started adding a more generic
+	  infrastructure for testing.
+
 Thu Feb  1 05:36:28 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/REC/test-11*: added more tests

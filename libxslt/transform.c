@@ -224,6 +224,7 @@ void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node);
 void xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	         xmlNodePtr inst);
 void xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst);
+void xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst);
 
 /**
  * xsltSort:
@@ -1183,6 +1184,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    } else if (IS_XSLT_NAME(cur, "if")) {
 		ctxt->insert = insert;
 		xsltIf(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "choose")) {
+		ctxt->insert = insert;
+		xsltChoose(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "for-each")) {
 		ctxt->insert = insert;
