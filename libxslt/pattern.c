@@ -2162,6 +2162,19 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		}
 		list = list->next;
 	    }
+	} else if ((node->type == XML_PI_NODE) ||
+		   (node->type == XML_COMMENT_NODE)) {
+	    list = curstyle->elemMatch;
+	    while ((list != NULL) &&
+		   ((ret == NULL)  || (list->priority > priority))) {
+		if (xsltTestCompMatch(ctxt, list, node,
+				      ctxt->mode, ctxt->modeURI)) {
+		    ret = list->template;
+		    priority = list->priority;
+		    break;
+		}
+		list = list->next;
+	    }
 	}
 
 	if (node->_private != NULL) {

@@ -1,3 +1,11 @@
+Wed Mar  5 12:47:31 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixed bug #107591 node() in pattern
+	  matches should catch comments and PIs
+	* tests/docs/Makefile.am tests/docs/bug-107.xml
+	  tests/general/Makefile.am tests/general/bug-107*: added an
+	  example in the regression tests for this case
+
 Wed Feb 26 16:49:17 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-106.xml
