@@ -1,3 +1,9 @@
+Sun Jul  8 14:39:27 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/extensions.html: fixed a number of typo found by Dan York
+	* libxslt/xsltutils.c: improved the profiling ouput, added the
+	  average value too.
+
 Sun Jul  8 00:01:21 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/variables.c: tryingt to fix a problem raised by Norm

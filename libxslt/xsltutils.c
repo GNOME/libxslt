@@ -1074,7 +1074,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 	}
     }
 
-    fprintf(output, "%6s%20s%20s%10s NbCalls Time 100us\n\n",
+    fprintf(output, "%6s%20s%20s%10s  Calls Tot 100us Avg\n\n",
 	    "number", "match", "name", "mode");
     total = 0;
     totalt = 0;
@@ -1105,7 +1105,8 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 	    fprintf(output, "%10s", "");
 	}
 	fprintf(output, " %6d", templates[i]->nbCalls);
-	fprintf(output, " %6ld\n", templates[i]->time);
+	fprintf(output, " %6ld %6ld\n", templates[i]->time,
+		templates[i]->time / templates[i]->nbCalls);
 	total += templates[i]->nbCalls;
 	totalt += templates[i]->time;
     }
