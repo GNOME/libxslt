@@ -4,35 +4,35 @@
 	if (document.images)
 	{
 		var imgBannerPreload = new Image();
-		imgBannerPreload.src=&quot;images/AboutBanner.gif&quot;;
+		imgBannerPreload.src="images/AboutBanner.gif";
 
 		var imgWaterMarkPreload = new Image();
-		imgWaterMarkPreload.src=&quot;images/WaterMark.gif&quot;;
+		imgWaterMarkPreload.src="images/WaterMark.gif";
 
 		var imgAboutPreload = new Image();
-		imgAboutPreload.src=&quot;images/abouttfism.gif&quot;;
+		imgAboutPreload.src="images/abouttfism.gif";
 		var imgAboutSelPreload = new Image();
-		imgAboutSelPreload.src = &quot;images/abouttfism_sel.gif&quot;
+		imgAboutSelPreload.src = "images/abouttfism_sel.gif"
 
 		var imgBuyNowPreload = new Image();
-		imgBuyNowPreload.src=&quot;images/buynowsm.gif&quot;;
+		imgBuyNowPreload.src="images/buynowsm.gif";
 		var imgBuyNowSelPreload = new Image();
-		imgBuyNowSelPreload.src = &quot;images/buynowsm_sel.gif&quot;
+		imgBuyNowSelPreload.src = "images/buynowsm_sel.gif"
 
 		var imgDownloadsPreload = new Image();
-		imgDownloadsPreload.src=&quot;images/downloadssm.gif&quot;;
+		imgDownloadsPreload.src="images/downloadssm.gif";
 		var imgDownloadsSelPreload = new Image();
-		imgDownloadsSelPreload.src = &quot;images/downloadssm_sel.gif&quot;
+		imgDownloadsSelPreload.src = "images/downloadssm_sel.gif"
 
 		var imgProductsPreload = new Image();
-		imgProductsPreload.src=&quot;images/productssm.gif&quot;;
+		imgProductsPreload.src="images/productssm.gif";
 		var imgProductsSelPreload = new Image();
-		imgProductsSelPreload.src = &quot;images/productssm_sel.gif&quot;
+		imgProductsSelPreload.src = "images/productssm_sel.gif"
 
 		var imgNewswirePreload = new Image();
-		imgNewswirePreload.src=&quot;images/newswiresm.gif&quot;;
+		imgNewswirePreload.src="images/newswiresm.gif";
 		var imgNewswireSelPreload = new Image();
-		imgNewswireSelPreload.src = &quot;images/newswiresm_sel.gif&quot;
+		imgNewswireSelPreload.src = "images/newswiresm_sel.gif"
 	}
 
 function img_preload(imgName)
@@ -40,7 +40,7 @@ function img_preload(imgName)
 	if (document.images)
 	{
 		var imgPreload = new Image();
-		imgPreload.src=&quot;images/&quot; + imgName;
+		imgPreload.src="images/" + imgName;
 	}
 }
 
@@ -48,7 +48,7 @@ function act(imgName)
 {
 	if (document.images)
 	{
-		document.images[imgName].src = eval(&quot;img&quot; + imgName + &quot;SelPreload.src&quot;);
+		document.images[imgName].src = eval("img" + imgName + "SelPreload.src");
 	}
 }
 
@@ -56,7 +56,7 @@ function inact(imgName)
 {
 	if (document.images)
 	{
-		document.images[imgName].src = eval(&quot;img&quot; + imgName + &quot;Preload.src&quot;);
+		document.images[imgName].src = eval("img" + imgName + "Preload.src");
 	}
 }
 //

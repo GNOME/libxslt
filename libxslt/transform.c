@@ -478,7 +478,6 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		copy = xmlNewDocText(ctxt->output, node->content);
 		if (copy != NULL) {
-		    copy->name = xmlStringTextNoenc;
 		    xmlAddChild(ctxt->insert, copy);
 		} else {
 		    xsltGenericError(xsltGenericErrorContext,
@@ -663,7 +662,6 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 #endif
 		    copy = xmlNewDocText(ctxt->output, node->content);
 		    if (copy != NULL) {
-			copy->name = xmlStringTextNoenc;
 			xmlAddChild(ctxt->insert, copy);
 		    } else {
 			xsltGenericError(xsltGenericErrorContext,

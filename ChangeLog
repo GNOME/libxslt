@@ -1,3 +1,8 @@
+Sat May  5 18:58:13 CEST 2001 Bjorn Reese <breese@users.sourceforge.net>
+
+	* libxslt/transform.c tests/XSLTMark/xslbench1.out: Another fix
+	  for the CDATA output
+
 Sat May  5 18:09:15 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.c: do not escape content of CDATA nodes on output
