@@ -3,7 +3,6 @@
  *
  * Reference:
  *   Michael Kay "XSLT Programmer's Reference" pp 637-643
- *   Writing Multiple Output Files
  *   The node-set() extension function
  *
  * See Copyright for the status of this software.
@@ -24,6 +23,8 @@
 #include "xsltInternals.h"
 #include "xsltutils.h"
 #include "extensions.h"
+#include "variables.h"
+#include "transform.h"
 #include "extra.h"
 
 #define DEBUG_EXTRA
@@ -95,7 +96,6 @@ xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
  * 									*
  ************************************************************************/
 
-
 /**
  * xsltFunctionNodeSet:
  * @ctxt:  the XPath Parser context
@@ -140,4 +140,10 @@ xsltRegisterExtras(xsltTransformContextPtr ctxt) {
 	                    XSLT_XT_NAMESPACE, xsltFunctionNodeSet);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "debug",
 	                    XSLT_LIBXSLT_NAMESPACE, xsltDebug);
+    xsltRegisterExtElement(ctxt, (const xmlChar *) "output",
+	                    XSLT_SAXON_NAMESPACE, xsltDocumentElem);
+    xsltRegisterExtElement(ctxt, (const xmlChar *) "write",
+	                    XSLT_SAXON_NAMESPACE, xsltDocumentElem);
+    xsltRegisterExtElement(ctxt, (const xmlChar *) "document",
+	                    XSLT_XT_NAMESPACE, xsltDocumentElem);
 }

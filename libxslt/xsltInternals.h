@@ -246,6 +246,7 @@ typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
 xsltDecimalFormatPtr	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
 						   xmlChar *name);
  */
+xsltStylesheetPtr	xsltNewStylesheet	(void);
 xsltStylesheetPtr	xsltParseStylesheetFile	(const xmlChar* filename);
 void			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
 int			xsltIsBlank		(xmlChar *str);
@@ -255,6 +256,8 @@ xsltDecimalFormatPtr	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
 
 xsltStylesheetPtr	xsltParseStylesheetProcess(xsltStylesheetPtr ret,
 	                                         xmlDocPtr doc);
+void			xsltParseStylesheetOutput(xsltStylesheetPtr style,
+						  xmlNodePtr cur);
 xsltStylesheetPtr	xsltParseStylesheetDoc	(xmlDocPtr doc);
 #ifdef __cplusplus
 }

@@ -19,6 +19,8 @@ extern "C" {
 #define XSLT_LIBXSLT_NAMESPACE ((xmlChar *) "http://xmlsoft.org/XSLT/namespace")
 #define XSLT_SAXON_NAMESPACE ((xmlChar *) "http://icl.com/saxon")
 #define XSLT_XT_NAMESPACE ((xmlChar *) "http://www.jclark.com/xt")
+#define XSLT_XALAN_NAMESPACE ((xmlChar *)	\
+	                        "org.apache.xalan.xslt.extensions.Redirect")
 
 void		xsltFunctionNodeSet	(xmlXPathParserContextPtr ctxt,
 					 int nargs);

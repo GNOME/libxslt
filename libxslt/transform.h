@@ -25,6 +25,9 @@ void		xsltApplyOneTemplate	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr list,
 					 int real);
+void 		xsltDocumentElem	(xsltTransformContextPtr ctxt,
+	                                 xmlNodePtr node,
+					 xmlNodePtr inst);
 #ifdef __cplusplus
 }
 #endif

@@ -2,8 +2,14 @@
  * transform.c: Implemetation of the XSL Transformation 1.0 engine
  *            transform part, i.e. applying a Stylesheet to a document
  *
- * Reference:
+ * References:
  *   http://www.w3.org/TR/1999/REC-xslt-19991116
+ *
+ *   Michael Kay "XSLT Programmer's Reference" pp 637-643
+ *   Writing Multiple Output Files
+ *
+ *   XSLT-1.1 Working Draft
+ *   http://www.w3.org/TR/xslt11#multiple-output
  *
  * See Copyright for the status of this software.
  *
@@ -25,6 +31,7 @@
 #include <libxml/parserInternals.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/HTMLtree.h>
+#include <libxml/uri.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -320,9 +327,143 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     return(copy);
 }
+
 /************************************************************************
  *									*
- *			
+ *		    XSLT-1.1 extensions					*
+ *									*
+ ************************************************************************/
+
+/**
+ * xsltDocumentElem:
+ * @ctxt:  an XSLT processing context
+ * @node:  The current node
+ * @inst:  the instruction in the stylesheet
+ *
+ * Process an XSLT-1.1 document element
+ */
+void 
+xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	         xmlNodePtr inst) {
+    xmlChar *filename = NULL;
+    xmlChar *base = NULL;
+    xmlChar *URL = NULL;
+    xsltStylesheetPtr style = NULL;
+    int ver11 = 0, ret;
+    xmlDocPtr result = NULL;
+    xmlDocPtr oldOutput;
+    xmlNodePtr oldInsert;
+
+    oldOutput = ctxt->output;
+    oldInsert = ctxt->insert;
+    if (xmlStrEqual(inst->name, (const xmlChar *) "output")) {
+#ifdef DEBUG_EXTRA
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "Found saxon:output extension\n");
+#endif
+	filename = xmlGetNsProp(inst, (const xmlChar *)"file",
+	                XSLT_SAXON_NAMESPACE);
+    } else if (xmlStrEqual(inst->name, (const xmlChar *) "write")) {
+#ifdef DEBUG_EXTRA
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "Found xalan:write extension\n");
+#endif
+	filename = xmlGetNsProp(inst, (const xmlChar *)"select",
+	                XSLT_XALAN_NAMESPACE);
+    } else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
+	filename = xmlGetNsProp(inst, (const xmlChar *)"href",
+	                XSLT_XT_NAMESPACE);
+	if (filename == NULL) {
+#ifdef DEBUG_EXTRA
+	    xsltGenericDebug(xsltGenericDebugContext,
+		"Found xslt11:document construct\n");
+#endif
+	    filename = xmlGetNsProp(inst, (const xmlChar *)"href",
+			    XSLT_NAMESPACE);
+	    ver11 = 1;
+	} else {
+#ifdef DEBUG_EXTRA
+	    xsltGenericDebug(xsltGenericDebugContext,
+		"Found xt:document extension\n");
+#endif
+	    ver11 = 0;
+	}
+    }
+    if (filename == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltDocumentElem: could not find the href\n");
+	goto error;
+    }
+    style = xsltNewStylesheet();
+    if (style == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltDocumentElem: out of memory\n");
+	goto error;
+    }
+    if (ver11) {
+	/*
+	 * Version described in 1.1 draft allows full parametrization
+	 * of the output.
+	 */
+	xsltParseStylesheetOutput(style, inst);
+    }
+
+    /*
+     * Create a new document tree and process the element template
+     */
+    result = xmlNewDoc(style->version);
+    if (result == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltDocumentElem: out of memory\n");
+	goto error;
+    }
+    ctxt->output = result;
+    ctxt->insert = (xmlNodePtr) result;
+    varsPush(ctxt, NULL);
+    xsltApplyOneTemplate(ctxt, node, inst->children, 0);
+    xsltFreeStackElemList(varsPop(ctxt));
+
+    /*
+     * Save the result
+     */
+    base = xmlNodeGetBase(inst->doc, inst);
+    URL = xmlBuildURI(base, filename);
+    if (URL == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltDocumentElem: URL computation failed %s\n", filename);
+	ret = xsltSaveResultToFilename((const char *)filename,
+		                       result, style, 0);
+    } else {
+	ret = xsltSaveResultToFilename((const char *)URL, result, style, 0);
+    }
+    if (ret < 0) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsltDocumentElem: unable to save to %s\n");
+    } else {
+#ifdef DEBUG_EXTRA
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "Wrote %d bytes to %s\n", ret, URL);
+#endif
+    }
+
+error:
+    ctxt->output = oldOutput;
+    ctxt->insert = oldInsert;
+    if (base != NULL)
+	xmlFree(base);
+    if (URL != NULL)
+	xmlFree(URL);
+    if (style != NULL)
+	xsltFreeStylesheet(style);
+    if (filename != NULL)
+	xmlFree(filename);
+    if (result != NULL)
+	xmlFreeDoc(result);
+}
+
+/************************************************************************
+ *									*
+ *		Most of the XSLT-1.0 transformations			*
  *									*
  ************************************************************************/
 
@@ -1855,6 +1996,13 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "message")) {
 		xsltMessage(ctxt, node, cur);
+	    } else if (IS_XSLT_NAME(cur, "document")) {
+		/*
+		 * Okay this is really added only in 1.1
+		 */
+		ctxt->insert = insert;
+		xsltDocumentElem(ctxt, node, cur);
+		ctxt->insert = oldInsert;
 	    } else {
 		xsltGenericError(xsltGenericDebugContext,
 		     "xsltApplyOneTemplate: found xslt:%s\n", cur->name);
