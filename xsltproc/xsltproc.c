@@ -318,7 +318,7 @@ static void usage(const char *name) {
     printf("\t--docbook: the input document is SGML docbook\n");
 #endif
     printf("\t--param name value : pass a (parameter,value) pair\n");
-    printf("\t       value is an XPath expression.");
+    printf("\t       value is an XPath expression.\n");
     printf("\t       string values must be quoted like \"'string'\"\n or");
     printf("\t       use stringparam to avoid it\n");
     printf("\t--stringparam name value : pass a (parameter,string value) pair\n");

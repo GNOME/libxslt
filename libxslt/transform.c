@@ -3318,7 +3318,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 	 * Avoid hitting the DTD when scanning nodes
 	 * but keep it linked as doc->intSubset
 	 */
-	xmlNodePtr cur = doc->intSubset;
+	xmlNodePtr cur = (xmlNodePtr) doc->intSubset;
 	if (cur->next != NULL)
 	    cur->next->prev = cur->prev;
 	if (cur->prev != NULL)
