@@ -84,6 +84,11 @@ class extensionModule:
         """Callback function when a transformation using it finishes"""
 	pass
 
+def cleanup():
+    """Cleanup all libxslt and libxml2 memory allocated"""
+    libxsltmod.xsltPythonCleanup()
+    libxml2.cleanupParser()
+
 #
 # Everything below this point is automatically generated
 #

@@ -1,3 +1,10 @@
+Fri Jul  2 15:51:49 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: convenience change
+	* python/libxsl.py python/libxslt-python-api.xml python/libxslt.c:
+	  try to avoid calling libxml2 cleanup function directly but go
+	  though the python wrapper of libxml2 for memory debug accounting.
+
 Fri Jul  2 16:24:12 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/keys.c: added namespace setup before calling XPath

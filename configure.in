@@ -388,7 +388,7 @@ if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
     DV_LINK="1"
     XSLTPROCDV="xsltproc.dv"
     INSTALLED_XSLT_LIB=""
-   # PYTHONSODV="libxsltmod.so.dv"
+    LIBXML_SRC="../../XML/"
 fi
 
 WIN32_EXTRA_LIBADD=

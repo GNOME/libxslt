@@ -840,8 +840,8 @@ libxslt_xsltRegisterExtensionClass(PyObject *self ATTRIBUTE_UNUSED,
  ************************************************************************/
 
 PyObject *
-libxslt_xsltCleanup(PyObject *self ATTRIBUTE_UNUSED,
-	            PyObject *args ATTRIBUTE_UNUSED) {
+libxslt_xsltPythonCleanup(PyObject *self ATTRIBUTE_UNUSED,
+	                  PyObject *args ATTRIBUTE_UNUSED) {
 
     if (libxslt_extModuleFunctions != NULL) {
 	xmlHashFree(libxslt_extModuleFunctions, deallocateCallback);
@@ -856,7 +856,6 @@ libxslt_xsltCleanup(PyObject *self ATTRIBUTE_UNUSED,
 	xmlHashFree(libxslt_extModuleClasses, deallocateClasse);
     }
     xsltCleanupGlobals();
-    xmlCleanupParser();
     Py_INCREF(Py_None);
     return(Py_None);
 }

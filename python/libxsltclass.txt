@@ -17,7 +17,7 @@ unregisterExtModuleTopLevel()
 registerAllExtras()
 
 # functions from module python
-cleanup()
+pythonCleanup()
 registerErrorHandler()
 registerExtModuleElement()
 registerExtModuleFunction()

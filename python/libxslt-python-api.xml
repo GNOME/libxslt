@@ -45,8 +45,8 @@
       <arg name='URI' type='xmlChar *' info='the namespace or NULL'/>
       <arg name='c' type='pythonObject' info='the python class instance'/>
     </function>
-    <function name='xsltCleanup' file='python'>
-      <info>Cleanup all libxslt and libxml2 memory allocated</info>
+    <function name='xsltPythonCleanup' file='python'>
+      <info>Cleanup just libxslt (not libxml2) memory allocated</info>
       <return type='void'/>
     </function>
     <!-- xmlXPathParserContextPtr accessors -->
