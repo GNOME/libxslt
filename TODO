@@ -15,8 +15,7 @@ Design:
     be a bit ugly ...
     
 Import:
-  -> parse them
-  -> provide functions to circulate in the import tree of stylesheets
+  -> make sure we use the cascade wherever it's needed
 
 Extra functions:
   -> document() should not be a problem since Result Tree Fragments are
@@ -63,6 +62,10 @@ Contextual error reporting:
                  *  DONE  *
                  *        *
                   ********
+
+Import:
+  -> parse them
+  -> provide functions to circulate in the import tree of stylesheets
 
 Extra functions:
   -> make a separate module.

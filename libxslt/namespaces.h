@@ -21,6 +21,11 @@ xmlNsPtr	xsltGetNamespace	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr cur,
 					 xmlNsPtr ns,
 					 xmlNodePtr out);
+xmlNsPtr	xsltGetSpecialNamespace	(xsltTransformContextPtr ctxt,
+					 xmlNodePtr cur,
+					 const xmlChar *URI,
+					 const xmlChar *prefix,
+					 xmlNodePtr out);
 xmlNsPtr	xsltCopyNamespaceList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNsPtr cur);

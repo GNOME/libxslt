@@ -120,6 +120,51 @@ error:
 }
 
 /**
+ * xsltGetSpecificNamespace:
+ * @ctxt:  a transformation context
+ * @cur:  the input node
+ * @URI:  the namespace URI
+ * @prefix:  the suggested prefix
+ * @out:  the output node (or its parent)
+ *
+ * Find the right namespace value for this URI, if needed create
+ * and add a new namespace decalaration on the node
+ *
+ * Returns the namespace node to use or NULL
+ */
+xmlNsPtr
+xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
+		const xmlChar *URI, const xmlChar *prefix, xmlNodePtr out) {
+    xmlNsPtr ret;
+    static int prefixno = 1;
+    char nprefix[10];
+
+    if ((ctxt == NULL) || (cur == NULL) || (out == NULL) || (URI == NULL))
+	return(NULL);
+
+    if ((out->parent != NULL) &&
+	(out->parent->type == XML_ELEMENT_NODE) &&
+	(out->parent->ns != NULL) &&
+	(xmlStrEqual(out->parent->ns->href, URI)))
+	ret = out->parent->ns;
+    else
+	ret = xmlSearchNsByHref(out->doc, out, URI);
+
+    if (ret == NULL) {
+	if (prefix == NULL) {
+	    do {
+		sprintf(nprefix, "ns%d", prefixno++);
+		ret = xmlSearchNs(out->doc, out, (xmlChar *)nprefix);
+	    } while (ret != NULL);
+	    prefix = (const xmlChar *) &nprefix[0];
+	}
+	if (out->type == XML_ELEMENT_NODE)
+	    ret = xmlNewNs(out, URI, prefix);
+    }
+    return(ret);
+}
+
+/**
  * xsltGetNamespace:
  * @ctxt:  a transformation context
  * @cur:  the input node

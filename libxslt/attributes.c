@@ -325,16 +325,17 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	prop = NULL;
 	prefix = NULL;
     }
+
     if ((prefix != NULL) && (xmlStrEqual(prefix, (const xmlChar *)"xmlns"))) {
 #ifdef DEBUG_PARSING
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xslt:attribute : xmlns prefix forbidden\n");
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xslt:attribute : xmlns prefix forbidden\n");
 #endif
 	goto error;
     }
     prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
     if (prop != NULL) {
-	TODO /* xsl:attribute namespace */
+	ns = xsltGetSpecialNamespace(ctxt, inst, prop, prefix, ctxt->insert);
     } else {
 	if (prefix != NULL) {
 	    ns = xmlSearchNs(inst->doc, inst, prefix);

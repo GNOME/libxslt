@@ -27,11 +27,11 @@ NO		    Embedding Stylesheets
 Top Level Elements:
 ===================
 
-NO		    xsl:include
-NO			href = uri-reference
+YES		    xsl:include
+YES			href = uri-reference
 
-NO		    xsl:import
-NO			href = uri-reference
+YES		    xsl:import
+YES			href = uri-reference
 
 YES		    xsl:strip-space
 YES			elements = tokens
@@ -49,8 +49,8 @@ YES		    xsl:namespace-alias
 YES			stylesheet-prefix = prefix | "#default"
 YES			result-prefix = prefix | "#default"
 
-NO		    xsl:attribute-set
-NO			name = qname 
+YES		    xsl:attribute-set
+YES			name = qname 
 NO			use-attribute-sets = qnames
 
 YES		    xsl:variable
@@ -92,14 +92,14 @@ NO		    xsl:apply-imports
 YES		    xsl:call-template
 YES			name = qname
 
-NO		    xsl:element
-NO			name = { qname }
-NO			namespace = { uri-reference }
-NO			use-attribute-sets = qnames
+YES		    xsl:element
+YES			name = { qname }
+YES			namespace = { uri-reference }
+YES			use-attribute-sets = qnames
 
 YES		    xsl:attribute
 YES			name = { qname }
-NO			namespace = { uri-reference }
+YES			namespace = { uri-reference }
 
 YES		    xsl:text
 YES			disable-output-escaping = "yes" | "no"
@@ -110,7 +110,7 @@ YES			name = { ncname }
 YES		    xsl:comment
 
 YES		    xsl:copy
-NO			use-attribute-sets = qnames
+YES			use-attribute-sets = qnames
 
 YES		    xsl:value-of
 YES			select = string-expression 

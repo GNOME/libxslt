@@ -442,6 +442,94 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 }
 
 /**
+ * xsltElement:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt element node
+ *
+ * Process the xslt element node on the source node
+ */
+void
+xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	    xmlNodePtr inst) {
+    xmlChar *prop = NULL, *attributes = NULL;
+    xmlChar *ncname = NULL;
+    xmlChar *prefix = NULL;
+    xmlChar *value = NULL;
+    xmlNsPtr ns = NULL;
+    xmlNodePtr copy;
+
+
+    if (ctxt->insert == NULL)
+	return;
+    if (ctxt->insert->children != NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:element : node has already children\n");
+	return;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+    if (prop == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:element : name is missing\n");
+	goto error;
+    }
+
+    ncname = xmlSplitQName2(prop, &prefix);
+    if (ncname == NULL) {
+	ncname = prop;
+	prop = NULL;
+	prefix = NULL;
+    }
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
+    if (prop != NULL) {
+	ns = xsltGetSpecialNamespace(ctxt, inst, prop, prefix, ctxt->insert);
+    } else {
+	if (prefix != NULL) {
+	    if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
+#ifdef DEBUG_PARSING
+		xsltGenericDebug(xsltGenericDebugContext,
+		     "xslt:element : xml prefix forbidden\n");
+#endif
+		goto error;
+	    }
+	    ns = xmlSearchNs(inst->doc, inst, prefix);
+	    if (ns == NULL) {
+		xsltGenericError(xsltGenericErrorContext,
+		    "no namespace bound to prefix %s\n", prefix);
+	    } else {
+		ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
+	    }
+	}
+    }
+
+    copy = xmlNewDocNode(ctxt->output, ns, ncname, NULL);
+    if (copy == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	    "xsl:element : creation of %s failed\n", ncname);
+	goto error;
+    }
+    xmlAddChild(ctxt->insert, copy);
+    attributes = xsltEvalAttrValueTemplate(ctxt, inst,
+	                               (const xmlChar *)"use-attribute-sets");
+    if (attributes != NULL) {
+	xsltApplyAttributeSet(ctxt, node, inst, attributes);
+        xmlFree(attributes);
+    }
+    
+    xsltApplyOneTemplate(ctxt, ctxt->node, inst->children);
+
+error:
+    if (prop != NULL)
+        xmlFree(prop);
+    if (ncname != NULL)
+        xmlFree(ncname);
+    if (prefix != NULL)
+        xmlFree(prefix);
+    if (value != NULL)
+        xmlFree(value);
+}
+
+/**
  * xsltComment:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -1174,12 +1262,10 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltAttribute(ctxt, node, cur);
 		ctxt->insert = oldInsert;
-		/*******
 	    } else if (IS_XSLT_NAME(cur, "element")) {
 		ctxt->insert = insert;
 		xsltElement(ctxt, node, cur);
 		ctxt->insert = oldInsert;
-		*******/
 	    } else if (IS_XSLT_NAME(cur, "comment")) {
 		ctxt->insert = insert;
 		xsltComment(ctxt, node, cur);
