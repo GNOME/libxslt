@@ -12,6 +12,8 @@
      <exports symbol='xsltMessage'/>
      <exports symbol='xsltSetGenericErrorFunc'/>
      <exports symbol='xsltSetGenericDebugFunc'/>
+     <exports symbol='xsltSetTransformErrorFunc'/>
+     <exports symbol='xsltTransformError'/>
      <exports symbol='xsltDocumentSortFunction'/>
      <exports symbol='xsltDoSortFunction'/>
      <exports symbol='xsltGetQNameURI'/>
@@ -41,6 +43,23 @@
      <exports symbol='DEBUG_MEMORY_LOCATION'/>
      <exports symbol='ATTRIBUTE_UNUSED'/>
      <exports symbol='LIBXSLT_PUBLIC'/>
+    </file>
+    <file name='security'>
+     <exports symbol='xsltSecurityPrefs'/>
+     <exports symbol='xsltSecurityPrefsPtr'/>
+     <exports symbol='xsltSecurityOption'/>
+     <exports symbol='xsltSecurityCheck'/>
+     <exports symbol='xsltNewSecurityPrefs'/>
+     <exports symbol='xsltFreeSecurityPrefs'/>
+     <exports symbol='xsltSetSecurityPrefs'/>
+     <exports symbol='xsltGetSecurityPrefs'/>
+     <exports symbol='xsltSetDefaultSecurityPrefs'/>
+     <exports symbol='xsltGetDefaultSecurityPrefs'/>
+     <exports symbol='xsltSetCtxtSecurityPrefs'/>
+     <exports symbol='xsltSecurityAllow'/>
+     <exports symbol='xsltSecurityForbid'/>
+     <exports symbol='xsltCheckWrite'/>
+     <exports symbol='xsltCheckRead'/>
     </file>
     <file name='libxslt'>
      <exports symbol='LIBXSLT_PUBLIC'/>
@@ -291,10 +310,12 @@
      <exports symbol='xsltEvalAttrValueTemplate'/>
      <exports symbol='xsltEvalStaticAttrValueTemplate'/>
      <exports symbol='xsltEvalXPathString'/>
+     <exports symbol='xsltEvalXPathStringNs'/>
      <exports symbol='xsltTemplateProcess'/>
      <exports symbol='xsltAttrListTemplateProcess'/>
      <exports symbol='xsltAttrTemplateProcess'/>
      <exports symbol='xsltAttrTemplateValueProcess'/>
+     <exports symbol='xsltAttrTemplateValueProcessNode'/>
     </file>
   </files>
   <symbols>
@@ -422,6 +443,11 @@
     <macro name='XSLT_SAXON_NAMESPACE' file='extra'>
       <info>This is Michael Kay&apos;s Saxon processor namespace for extensions.</info>
     </macro>
+    <const name='XSLT_SECPREF_CREATE_DIRECTORY' file='security'/>
+    <const name='XSLT_SECPREF_READ_FILE' file='security'/>
+    <const name='XSLT_SECPREF_READ_NETWORK' file='security'/>
+    <const name='XSLT_SECPREF_WRITE_FILE' file='security'/>
+    <const name='XSLT_SECPREF_WRITE_NETWORK' file='security'/>
     <const name='XSLT_STATE_ERROR' file='xsltInternals'/>
     <const name='XSLT_STATE_OK' file='xsltInternals'/>
     <const name='XSLT_STATE_STOPPED' file='xsltInternals'/>
@@ -570,6 +596,13 @@
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
       <arg name='attr' type='const xmlChar*'/>
     </function>
+    <function name='xsltAttrTemplateValueProcessNode' file='templates'>
+      <info>Process the given string, allowing to pass a namespace mapping context and return the new string value.</info>
+      <return type='xmlChar *' info='the computed string value or NULL, must be deallocated by the caller. '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
+      <arg name='str' type='const xmlChar*' info='the attribute template node value '/>
+      <arg name='node' type='xmlNodePtr' info='the node hosting the attribute '/>
+    </function>
     <function name='xsltAttribute' file='transform'>
       <info>Process the xslt attribute node on the source node</info>
       <return type='void'/>
@@ -596,6 +629,20 @@
       <return type='int' info='1 if this is an extension, 0 otherwise '/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet '/>
       <arg name='prefix' type='const xmlChar *' info='the namespace prefix (possibly NULL) '/>
+    </function>
+    <function name='xsltCheckRead' file='security'>
+      <info>Check if the resource is allowed to be read </info>
+      <return type='int'/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security options '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
+      <arg name='URL' type='const xmlChar *' info='the resource to be read '/>
+    </function>
+    <function name='xsltCheckWrite' file='security'>
+      <info>Check if the resource is allowed to be written, if necessary makes some preliminary work like creating directories </info>
+      <return type='int'/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security options '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
+      <arg name='URL' type='const xmlChar *' info='the resource to be written '/>
     </function>
     <function name='xsltChoose' file='transform'>
       <info>Process the xslt choose node on the source node</info>
@@ -701,7 +748,7 @@
       <arg name='function' type='xsltTransformFunction'/>
     </function>
     <function name='xsltDocumentElem' file='transform'>
-      <info>Process an XSLT-1.1 document element</info>
+      <info>Process an EXSLT/XSLT-1.1 document element</info>
       <return type='void'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT processing context '/>
       <arg name='node' type='xmlNodePtr' info='The current node '/>
@@ -799,6 +846,14 @@
       <return type='xmlChar *' info='the computed string value or NULL, must be deallocated by the caller. '/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
       <arg name='comp' type='xmlXPathCompExprPtr' info='the compiled XPath expression '/>
+    </function>
+    <function name='xsltEvalXPathStringNs' file='templates'>
+      <info>Process the expression using XPath, allowing to pass a namespace mapping context and get a string</info>
+      <return type='xmlChar *' info='the computed string value or NULL, must be deallocated by the caller. '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
+      <arg name='comp' type='xmlXPathCompExprPtr' info='the compiled XPath expression '/>
+      <arg name='nsNr' type='int' info='the number of namespaces in the list '/>
+      <arg name='nsList' type='xmlNsPtr *' info='the list of in-scope namespaces to use '/>
     </function>
     <function name='xsltExtElementLookup' file='transform'>
       <info>Looks up an extension element. ctxt can be NULL to search only in module elements.</info>
@@ -936,6 +991,11 @@
       <return type='void'/>
       <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet '/>
     </function>
+    <function name='xsltFreeSecurityPrefs' file='security'>
+      <info>Free up a security preference block</info>
+      <return type='void'/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security block to free '/>
+    </function>
     <function name='xsltFreeStackElemList' file='xsltInternals'>
       <info>Free up the memory allocated by elem</info>
       <return type='void'/>
@@ -984,6 +1044,9 @@
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context '/>
       <arg name='nargs' type='int' info='the number of arguments '/>
     </function>
+    <function name='xsltGetDefaultSecurityPrefs' file='security'>
+      <return type='xsltSecurityPrefsPtr'/>
+    </function>
     <function name='xsltGetExtData' file='extensions'>
       <info>Retrieve the data associated to the extension module in this given transformation.</info>
       <return type='void *'/>
@@ -1018,6 +1081,12 @@
       <return type='const xmlChar *' info='name is not prefixed. '/>
       <arg name='node' type='xmlNodePtr' info='the node holding the QName '/>
       <arg name='name' type='xmlChar **' info='pointer to the initial QName value '/>
+    </function>
+    <function name='xsltGetSecurityPrefs' file='security'>
+      <info>Lookup the security option to get the callback checking function</info>
+      <return type='xsltSecurityCheck' info='NULL if not found, the function otherwise '/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security block to update '/>
+      <arg name='option' type='xsltSecurityOption' info='the option to lookup '/>
     </function>
     <function name='xsltGetSpecialNamespace' file='namespaces'>
       <info>Find the right namespace value for this URI, if needed create and add a new namespace decalaration on the node</info>
@@ -1141,6 +1210,10 @@
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet '/>
       <arg name='inst' type='xmlNodePtr' info='the element node '/>
       <arg name='function' type='xsltTransformFunction' info='the transform function '/>
+    </function>
+    <function name='xsltNewSecurityPrefs' file='security'>
+      <info>Create a new security preference block</info>
+      <return type='xsltSecurityPrefsPtr' info='a pointer to the new block or NULL in case of error '/>
     </function>
     <function name='xsltNewStyleDocument' file='documents'>
       <info>Register a new document, apply key computations</info>
@@ -1453,10 +1526,45 @@
       <arg name='result' type='xmlDocPtr' info='the result xmlDocPtr '/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet '/>
     </function>
+    <function name='xsltSecurityAllow' file='security'>
+      <info>Function used to always allow an operation</info>
+      <return type='int' info='1 always '/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security block to use '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
+      <arg name='value' type='const char *' info='unused '/>
+    </function>
+    <functype name='xsltSecurityCheck' file='security'>
+      <info>User provided function to check the value of a string like a file path or an URL ...</info>
+      <return type='int'/>
+      <arg name='sec' type='xsltSecurityPrefsPtr'/>
+      <arg name='ctxt' type='xsltTransformContextPtr'/>
+      <arg name='value' type='const char *'/>
+    </functype>
+    <function name='xsltSecurityForbid' file='security'>
+      <info>Function used to always forbid an operation</info>
+      <return type='int' info='0 always '/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security block to use '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
+      <arg name='value' type='const char *' info='unused '/>
+    </function>
+    <enum name='xsltSecurityOption' file='security'/>
+    <struct name='xsltSecurityPrefs' file='security'/>
+    <typedef name='xsltSecurityPrefsPtr' file='security'/>
+    <function name='xsltSetCtxtSecurityPrefs' file='security'>
+      <info>Set the security preference for a specific transformation</info>
+      <return type='int' info='-1 in case of error, 0 otherwise '/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security block to use '/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
+    </function>
     <function name='xsltSetDebuggerCallbacks' file='xsltutils'>
       <return type='int'/>
       <arg name='no' type='int'/>
       <arg name='block' type='void *'/>
+    </function>
+    <function name='xsltSetDefaultSecurityPrefs' file='security'>
+      <info>Get the default security preference application-wide</info>
+      <return type='void'/>
+      <arg name='sec' type='xsltSecurityPrefsPtr'/>
     </function>
     <function name='xsltSetGenericDebugFunc' file='xsltutils'>
       <info>Function to reset the handler and the error context for out of context error messages. This simply means that handler will be called for subsequent error messages while not parsing or validating. And ctx will be passed as first argument to handler One can simply force messages to be emitted to another FILE * than stderr by setting ctx to this file handle and handler to NULL.</info>
@@ -1467,6 +1575,20 @@
     <function name='xsltSetGenericErrorFunc' file='xsltutils'>
       <info>Function to reset the handler and the error context for out of context error messages. This simply means that handler will be called for subsequent error messages while not parsing nor validating. And ctx will be passed as first argument to handler One can simply force messages to be emitted to another FILE * than stderr by setting ctx to this file handle and handler to NULL.</info>
       <return type='void'/>
+      <arg name='ctx' type='void *' info='the new error handling context '/>
+      <arg name='handler' type='xmlGenericErrorFunc' info='the new handler function '/>
+    </function>
+    <function name='xsltSetSecurityPrefs' file='security'>
+      <info>Update the security option to use the new callback checking function</info>
+      <return type='int' info='-1 in case of error, 0 otherwise '/>
+      <arg name='sec' type='xsltSecurityPrefsPtr' info='the security block to update '/>
+      <arg name='option' type='xsltSecurityOption' info='the option to update '/>
+      <arg name='func' type='xsltSecurityCheck' info='the user callback to use for this option '/>
+    </function>
+    <function name='xsltSetTransformErrorFunc' file='xsltutils'>
+      <info>Function to reset the handler and the error context for out of context error messages specific to a given XSLT transromation. </info>
+      <return type='void'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context '/>
       <arg name='ctx' type='void *' info='the new error handling context '/>
       <arg name='handler' type='xmlGenericErrorFunc' info='the new handler function '/>
     </function>
@@ -1565,6 +1687,15 @@
     </functype>
     <struct name='xsltTransformContext' file='xsltInternals'/>
     <typedef name='xsltTransformContextPtr' file='xsltInternals'/>
+    <function name='xsltTransformError' file='xsltutils'>
+      <info>Display and format an error messages, gives file, line, position and extra parameters, will use the specific transformation context if available</info>
+      <return type='void'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context '/>
+      <arg name='style' type='xsltStylesheetPtr'/>
+      <arg name='node' type='xmlNodePtr'/>
+      <arg name='msg' type='const char *' info='the message to display/transmit '/>
+      <arg name='' type='...'/>
+    </function>
     <functype name='xsltTransformFunction' file='xsltInternals'>
       <info>Signature of the function associated to elements part of the stylesheet language like xsl:if or xsl:apply-templates.</info>
       <return type='void'/>

@@ -168,10 +168,12 @@ xsltEvalTemplateString
 xsltEvalAttrValueTemplate
 xsltEvalStaticAttrValueTemplate
 xsltEvalXPathString
+xsltEvalXPathStringNs
 xsltTemplateProcess
 xsltAttrListTemplateProcess
 xsltAttrTemplateProcess
 xsltAttrTemplateValueProcess
+xsltAttrTemplateValueProcessNode
 </SECTION>
 
 <SECTION>
@@ -250,6 +252,8 @@ xsltPrintErrorContext
 xsltMessage
 xsltSetGenericErrorFunc
 xsltSetGenericDebugFunc
+xsltSetTransformErrorFunc
+xsltTransformError
 xsltDocumentSortFunction
 xsltDoSortFunction
 xsltGetQNameURI

@@ -50,7 +50,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <table width="100%" border="0" cellspacing="1" cellpadding="3">
 <tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>API Indexes</b></center></td></tr>
 <tr><td bgcolor="#fffacd">
-<form action="http://xmlsoft.org/XSLT/search.php" enctype="application/x-www-form-urlencoded" method="GET">
+<form action="search.php" enctype="application/x-www-form-urlencoded" method="GET">
 <input name="query" type="TEXT" size="20" value=""><input name="submit" type="submit" value="Search ...">
 </form>
 <ul>
@@ -218,6 +218,24 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-preproc.html#XSLTSTYLEPRECOMPUTE">xsltStylePreCompute</a>
 <a href="html/libxslt-preproc.html#XSLTFREESTYLEPRECOMPS">xsltFreeStylePreComps</a>
 </p>
+<h2>Module security:</h2>
+<p>
+<a href="html/libxslt-security.html#XSLTSECURITYPREFS">xsltSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTSECURITYPREFSPTR">xsltSecurityPrefsPtr</a>
+<a href="html/libxslt-security.html#XSLTSECURITYOPTION">xsltSecurityOption</a>
+<a href="html/libxslt-security.html#XSLTSECURITYCHECK">xsltSecurityCheck</a>
+<a href="html/libxslt-security.html#XSLTNEWSECURITYPREFS">xsltNewSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTFREESECURITYPREFS">xsltFreeSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTSETSECURITYPREFS">xsltSetSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTSETDEFAULTSECURITYPREFS">xsltSetDefaultSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTGETDEFAULTSECURITYPREFS">xsltGetDefaultSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTSETCTXTSECURITYPREFS">xsltSetCtxtSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTSECURITYALLOW">xsltSecurityAllow</a>
+<a href="html/libxslt-security.html#XSLTSECURITYFORBID">xsltSecurityForbid</a>
+<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
+<a href="html/libxslt-security.html#XSLTCHECKREAD">xsltCheckRead</a>
+</p>
 <h2>Module templates:</h2>
 <p>
 <a href="html/libxslt-templates.html#XSLTEVALXPATHPREDICATE">xsltEvalXPathPredicate</a>
@@ -225,10 +243,12 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-templates.html#XSLTEVALATTRVALUETEMPLATE">xsltEvalAttrValueTemplate</a>
 <a href="html/libxslt-templates.html#XSLTEVALSTATICATTRVALUETEMPLATE">xsltEvalStaticAttrValueTemplate</a>
 <a href="html/libxslt-templates.html#XSLTEVALXPATHSTRING">xsltEvalXPathString</a>
+<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
 <a href="html/libxslt-templates.html#XSLTTEMPLATEPROCESS">xsltTemplateProcess</a>
 <a href="html/libxslt-templates.html#XSLTATTRLISTTEMPLATEPROCESS">xsltAttrListTemplateProcess</a>
 <a href="html/libxslt-templates.html#XSLTATTRTEMPLATEPROCESS">xsltAttrTemplateProcess</a>
 <a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESS">xsltAttrTemplateValueProcess</a>
+<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESSNODE">xsltAttrTemplateValueProcessNode</a>
 </p>
 <h2>Module transform:</h2>
 <p>
@@ -364,6 +384,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#XSLTMESSAGE">xsltMessage</a>
 <a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
 <a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
+<a href="html/libxslt-xsltutils.html#XSLTSETTRANSFORMERRORFUNC">xsltSetTransformErrorFunc</a>
+<a href="html/libxslt-xsltutils.html#XSLTTRANSFORMERROR">xsltTransformError</a>
 <a href="html/libxslt-xsltutils.html#XSLTDOCUMENTSORTFUNCTION">xsltDocumentSortFunction</a>
 <a href="html/libxslt-xsltutils.html#XSLTDOSORTFUNCTION">xsltDoSortFunction</a>
 <a href="html/libxslt-xsltutils.html#XSLTGETQNAMEURI">xsltGetQNameURI</a>

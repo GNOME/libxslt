@@ -50,7 +50,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <table width="100%" border="0" cellspacing="1" cellpadding="3">
 <tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>API Indexes</b></center></td></tr>
 <tr><td bgcolor="#fffacd">
-<form action="http://xmlsoft.org/XSLT/search.php" enctype="application/x-www-form-urlencoded" method="GET">
+<form action="search.php" enctype="application/x-www-form-urlencoded" method="GET">
 <input name="query" type="TEXT" size="20" value=""><input name="submit" type="submit" value="Search ...">
 </form>
 <ul>
@@ -82,10 +82,10 @@ A:link, A:visited, A:active { text-decoration: underline }
 </td></tr></table></td>
 <td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
 <h2 align="center">
-<a href="APIchunk0.html">A-T</a>
-<a href="APIchunk1.html">U-b</a>
-<a href="APIchunk2.html">c-e</a>
-<a href="APIchunk3.html">f-i</a>
+<a href="APIchunk0.html">A-S</a>
+<a href="APIchunk1.html">T-a</a>
+<a href="APIchunk2.html">b-d</a>
+<a href="APIchunk3.html">e-i</a>
 <a href="APIchunk4.html">k-o</a>
 <a href="APIchunk5.html">p-r</a>
 <a href="APIchunk6.html">s-t</a>
@@ -163,7 +163,13 @@ A:link, A:visited, A:active { text-decoration: underline }
 <dt>like</dt>
 <dd>
 <a href="html/libxslt-xsltconfig.html#LIBXSLT-DOTTED-VERSION-CAPS">LIBXSLT_DOTTED_VERSION</a>
+<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
+<a href="html/libxslt-security.html#XSLTSECURITYCHECK">xsltSecurityCheck</a>
 <a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
+</dd>
+<dt>line</dt>
+<dd>
+<a href="html/libxslt-xsltutils.html#XSLTTRANSFORMERROR">xsltTransformError</a>
 </dd>
 <dt>links</dt>
 <dd>
@@ -180,6 +186,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#XSLTDOSORTFUNCTION">xsltDoSortFunction</a>
 <a href="html/libxslt-xsltutils.html#XSLTDOCUMENTSORTFUNCTION">xsltDocumentSortFunction</a>
 <a href="html/libxslt-templates.html#XSLTEVALTEMPLATESTRING">xsltEvalTemplateString</a>
+<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
 <a href="html/libxslt-pattern.html#XSLTFREECOMPMATCHLIST">xsltFreeCompMatchList</a>
 <a href="html/libxslt-pattern.html#XSLTTESTCOMPMATCHLIST">xsltTestCompMatchList</a>
 </dd>
@@ -213,6 +220,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <dt>lookup</dt>
 <dd>
 <a href="html/libxslt-xsltutils.html#XSLTGETQNAMEURI">xsltGetQNameURI</a>
+<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
 </dd>
 </dl>
 <h2>Letter m:</h2>
@@ -238,6 +246,15 @@ A:link, A:visited, A:active { text-decoration: underline }
 <dt>make</dt>
 <dd>
 <a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT">xsltAllocateExtraCtxt</a>
+</dd>
+<dt>makes</dt>
+<dd>
+<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
+</dd>
+<dt>mapping</dt>
+<dd>
+<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESSNODE">xsltAttrTemplateValueProcessNode</a>
+<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
 </dd>
 <dt>match</dt>
 <dd>
@@ -285,11 +302,14 @@ A:link, A:visited, A:active { text-decoration: underline }
 <dt>message</dt>
 <dd>
 <a href="html/libxslt-xsltutils.html#XSLTMESSAGE">xsltMessage</a>
+<a href="html/libxslt-xsltutils.html#XSLTTRANSFORMERROR">xsltTransformError</a>
 </dd>
 <dt>messages</dt>
 <dd>
 <a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
 <a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
+<a href="html/libxslt-xsltutils.html#XSLTSETTRANSFORMERRORFUNC">xsltSetTransformErrorFunc</a>
+<a href="html/libxslt-xsltutils.html#XSLTTRANSFORMERROR">xsltTransformError</a>
 </dd>
 <dt>milliseconds</dt>
 <dd>
@@ -316,10 +336,12 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
 <a href="html/libxslt-transform.html#XSLHANDLEDEBUGGER">xslHandleDebugger</a>
 <a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESS">xsltAttrTemplateValueProcess</a>
+<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESSNODE">xsltAttrTemplateValueProcessNode</a>
 <a href="html/libxslt-templates.html#XSLTEVALATTRVALUETEMPLATE">xsltEvalAttrValueTemplate</a>
 <a href="html/libxslt-templates.html#XSLTEVALSTATICATTRVALUETEMPLATE">xsltEvalStaticAttrValueTemplate</a>
 <a href="html/libxslt-templates.html#XSLTEVALTEMPLATESTRING">xsltEvalTemplateString</a>
 <a href="html/libxslt-templates.html#XSLTEVALXPATHSTRING">xsltEvalXPathString</a>
+<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
 </dd>
 </dl>
 <h2>Letter n:</h2>
@@ -347,8 +369,13 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACE">xsltCopyNamespace</a>
 <a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST">xsltCopyNamespaceList</a>
 <a href="html/libxslt-templates.html#XSLTEVALXPATHPREDICATE">xsltEvalXPathPredicate</a>
+<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
 <a href="html/libxslt-namespaces.html#XSLTFREENAMESPACEALIASHASHES">xsltFreeNamespaceAliasHashes</a>
 <a href="html/libxslt-pattern.html#XSLTMATCHPATTERN">xsltMatchPattern</a>
+</dd>
+<dt>necessary</dt>
+<dd>
+<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
 </dd>
 <dt>need</dt>
 <dd>
@@ -378,30 +405,6 @@ A:link, A:visited, A:active { text-decoration: underline }
 <dt>negative</dt>
 <dd>
 <a href="html/libxslt-xsltutils.html#XSLTCALIBRATEADJUST">xsltCalibrateAdjust</a>
-</dd>
-<dt>new</dt>
-<dd>
-<a href="html/libxslt-variables.html#XSLTADDSTACKELEMLIST">xsltAddStackElemList</a>
-<a href="html/libxslt-templates.html#XSLTATTRLISTTEMPLATEPROCESS">xsltAttrListTemplateProcess</a>
-<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEPROCESS">xsltAttrTemplateProcess</a>
-<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESS">xsltAttrTemplateValueProcess</a>
-<a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACE">xsltCopyNamespace</a>
-<a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST">xsltCopyNamespaceList</a>
-<a href="html/libxslt-namespaces.html#XSLTGETNAMESPACE">xsltGetNamespace</a>
-<a href="html/libxslt-namespaces.html#XSLTGETSPECIALNAMESPACE">xsltGetSpecialNamespace</a>
-<a href="html/libxslt-documents.html#XSLTLOADDOCUMENT">xsltLoadDocument</a>
-<a href="html/libxslt-documents.html#XSLTLOADSTYLEDOCUMENT">xsltLoadStyleDocument</a>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
-<a href="html/libxslt-documents.html#XSLTNEWDOCUMENT">xsltNewDocument</a>
-<a href="html/libxslt-extensions.html#XSLTNEWELEMPRECOMP">xsltNewElemPreComp</a>
-<a href="html/libxslt-documents.html#XSLTNEWSTYLEDOCUMENT">xsltNewStyleDocument</a>
-<a href="html/libxslt-xsltinternals.html#XSLTNEWSTYLESHEET">xsltNewStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTNEWTRANSFORMCONTEXT">xsltNewTransformContext</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETDOC">xsltParseStylesheetDoc</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETFILE">xsltParseStylesheetFile</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
-<a href="html/libxslt-templates.html#XSLTTEMPLATEPROCESS">xsltTemplateProcess</a>
 </dd>
 <dt>newly</dt>
 <dd>
@@ -463,6 +466,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-imports.html#XSLTFINDTEMPLATE">xsltFindTemplate</a>
 <a href="html/libxslt-xsltutils.html#XSLTGETNSPROP">xsltGetNsProp</a>
 <a href="html/libxslt-xsltutils.html#XSLTGETQNAMEURI">xsltGetQNameURI</a>
+<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
 <a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
 <a href="html/libxslt-documents.html#XSLTLOADDOCUMENT">xsltLoadDocument</a>
 <a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
@@ -552,6 +556,22 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">xsltSaveResultToFd</a>
 <a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE">xsltSaveResultToFile</a>
 </dd>
+<dt>operation</dt>
+<dd>
+<a href="html/libxslt-security.html#XSLTSECURITYALLOW">xsltSecurityAllow</a>
+<a href="html/libxslt-security.html#XSLTSECURITYFORBID">xsltSecurityForbid</a>
+</dd>
+<dt>option</dt>
+<dd>
+<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTSECURITYOPTION">xsltSecurityOption</a>
+<a href="html/libxslt-security.html#XSLTSETSECURITYPREFS">xsltSetSecurityPrefs</a>
+</dd>
+<dt>options</dt>
+<dd>
+<a href="html/libxslt-security.html#XSLTCHECKREAD">xsltCheckRead</a>
+<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
+</dd>
 <dt>order</dt>
 <dd>
 <a href="html/libxslt-imports.html#XSLT-GET-IMPORT-INT-CAPS">XSLT_GET_IMPORT_INT</a>
@@ -568,8 +588,11 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP">xsltExtModuleElementPreComputeLookup</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULEFUNCTIONLOOKUP">xsltExtModuleFunctionLookup</a>
 <a href="html/libxslt-extensions.html#XSLTEXTMODULETOPLEVELLOOKUP">xsltExtModuleTopLevelLookup</a>
+<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
 <a href="html/libxslt-transform.html#XSLTGETXINCLUDEDEFAULT">xsltGetXIncludeDefault</a>
 <a href="html/libxslt-xsltinternals.html#XSLTISBLANK">xsltIsBlank</a>
+<a href="html/libxslt-security.html#XSLTSETCTXTSECURITYPREFS">xsltSetCtxtSecurityPrefs</a>
+<a href="html/libxslt-security.html#XSLTSETSECURITYPREFS">xsltSetSecurityPrefs</a>
 </dd>
 <dt>ouput</dt>
 <dd>
@@ -579,6 +602,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <dd>
 <a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
 <a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
+<a href="html/libxslt-xsltutils.html#XSLTSETTRANSFORMERRORFUNC">xsltSetTransformErrorFunc</a>
 </dd>
 <dt>output</dt>
 <dd>
@@ -600,10 +624,10 @@ A:link, A:visited, A:active { text-decoration: underline }
 </dd>
 </dl>
 <h2 align="center">
-<a href="APIchunk0.html">A-T</a>
-<a href="APIchunk1.html">U-b</a>
-<a href="APIchunk2.html">c-e</a>
-<a href="APIchunk3.html">f-i</a>
+<a href="APIchunk0.html">A-S</a>
+<a href="APIchunk1.html">T-a</a>
+<a href="APIchunk2.html">b-d</a>
+<a href="APIchunk3.html">e-i</a>
 <a href="APIchunk4.html">k-o</a>
 <a href="APIchunk5.html">p-r</a>
 <a href="APIchunk6.html">s-t</a>

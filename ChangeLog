@@ -1,3 +1,8 @@
+Fri Oct 18 13:40:12 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: preparing 1.0.22
+	* doc/*: upated and rebuilt the docs
+
 Thu Oct 17 16:32:44 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: fixed bug #86421 

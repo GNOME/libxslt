@@ -121,7 +121,7 @@ NAME="LIBXSLT-XSLTUTILS">xsltutils</H1
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN2100"
+NAME="AEN2176"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +129,7 @@ NAME="AEN2100"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN2103"><H2
+NAME="AEN2179"><H2
 >Synopsis</H2
 ><TABLE
 BORDER="0"
@@ -226,6 +226,35 @@ HREF="libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC"
 HREF="XMLGENERICERRORFUNC"
 >xmlGenericErrorFunc</GTKDOCLINK
 > handler);
+void        <A
+HREF="libxslt-xsltutils.html#XSLTSETTRANSFORMERRORFUNC"
+>xsltSetTransformErrorFunc</A
+>       (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             void *ctx,
+                                             <GTKDOCLINK
+HREF="XMLGENERICERRORFUNC"
+>xmlGenericErrorFunc</GTKDOCLINK
+> handler);
+void        <A
+HREF="libxslt-xsltutils.html#XSLTTRANSFORMERROR"
+>xsltTransformError</A
+>              (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             const char *msg,
+                                             ...);
 void        <A
 HREF="libxslt-xsltutils.html#XSLTDOCUMENTSORTFUNCTION"
 >xsltDocumentSortFunction</A
@@ -424,7 +453,7 @@ HREF="libxslt-xsltutils.html#XSLDROPCALL"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2178"
+NAME="AEN2261"
 ></A
 ><H2
 >Description</H2
@@ -434,14 +463,14 @@ NAME="AEN2178"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2181"
+NAME="AEN2264"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2183"
+NAME="AEN2266"
 ></A
 ><H3
 ><A
@@ -467,7 +496,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2188"
+NAME="AEN2271"
 ></A
 ><H3
 ><A
@@ -493,7 +522,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2193"
+NAME="AEN2276"
 ></A
 ><H3
 ><A
@@ -520,7 +549,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2199"><P
+NAME="AEN2282"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -556,7 +585,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2208"
+NAME="AEN2291"
 ></A
 ><H3
 ><A
@@ -583,7 +612,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2214"><P
+NAME="AEN2297"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -636,7 +665,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2227"
+NAME="AEN2310"
 ></A
 ><H3
 ><A
@@ -663,7 +692,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2233"><P
+NAME="AEN2316"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -699,7 +728,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2242"
+NAME="AEN2325"
 ></A
 ><H3
 ><A
@@ -754,7 +783,7 @@ default declaration values unless DTD use has been turned off.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2256"><P
+NAME="AEN2339"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -843,7 +872,7 @@ It's up to the caller to free the memory.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2277"
+NAME="AEN2360"
 ></A
 ><H3
 ><A
@@ -881,7 +910,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2286"><P
+NAME="AEN2369"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -951,7 +980,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2303"
+NAME="AEN2386"
 ></A
 ><H3
 ><A
@@ -989,7 +1018,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2312"><P
+NAME="AEN2395"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1059,7 +1088,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2329"
+NAME="AEN2412"
 ></A
 ><H3
 ><A
@@ -1121,7 +1150,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2341"><P
+NAME="AEN2424"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1174,7 +1203,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2354"
+NAME="AEN2437"
 ></A
 ><H3
 ><A
@@ -1236,7 +1265,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2366"><P
+NAME="AEN2449"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1289,7 +1318,266 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2379"
+NAME="AEN2462"
+></A
+><H3
+><A
+NAME="XSLTSETTRANSFORMERRORFUNC"
+></A
+>xsltSetTransformErrorFunc ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltSetTransformErrorFunc       (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             void *ctx,
+                                             <GTKDOCLINK
+HREF="XMLGENERICERRORFUNC"
+>xmlGenericErrorFunc</GTKDOCLINK
+> handler);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Function to reset the handler and the error context for out of
+context error messages specific to a given XSLT transromation.</P
+><P
+>This simply means that <TT
+CLASS="PARAMETER"
+><I
+>handler</I
+></TT
+> will be called for subsequent
+error messages while running the transformation.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN2472"><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the XSLT transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctx</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the new error handling context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>handler</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the new handler function</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2489"
+></A
+><H3
+><A
+NAME="XSLTTRANSFORMERROR"
+></A
+>xsltTransformError ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltTransformError              (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             const char *msg,
+                                             ...);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Display and format an error messages, gives file, line, position and
+extra parameters, will use the specific transformation context if available</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN2498"><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>msg</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the message to display/transmit</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>...</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  extra parameters for the message display</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2523"
 ></A
 ><H3
 ><A
@@ -1324,7 +1612,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2387"><P
+NAME="AEN2531"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1360,7 +1648,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2396"
+NAME="AEN2540"
 ></A
 ><H3
 ><A
@@ -1396,7 +1684,7 @@ requirement provided by the arry of nodes.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2404"><P
+NAME="AEN2548"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1466,7 +1754,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2421"
+NAME="AEN2565"
 ></A
 ><H3
 ><A
@@ -1525,7 +1813,7 @@ defined and hence has the same lifespan as the document holding it.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2434"><P
+NAME="AEN2578"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1602,7 +1890,7 @@ not prefixed.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2452"
+NAME="AEN2596"
 ></A
 ><H3
 ><A
@@ -1656,7 +1944,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2464"><P
+NAME="AEN2608"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1744,7 +2032,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2485"
+NAME="AEN2629"
 ></A
 ><H3
 ><A
@@ -1796,7 +2084,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2496"><P
+NAME="AEN2640"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -1901,7 +2189,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2521"
+NAME="AEN2665"
 ></A
 ><H3
 ><A
@@ -1956,7 +2244,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2533"><P
+NAME="AEN2677"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2044,7 +2332,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2554"
+NAME="AEN2698"
 ></A
 ><H3
 ><A
@@ -2091,7 +2379,7 @@ This does not close the descriptor.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2564"><P
+NAME="AEN2708"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2179,7 +2467,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2585"
+NAME="AEN2729"
 ></A
 ><H3
 ><A
@@ -2234,7 +2522,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2597"><P
+NAME="AEN2741"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2339,7 +2627,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2622"
+NAME="AEN2766"
 ></A
 ><H3
 ><A
@@ -2378,7 +2666,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2631"><P
+NAME="AEN2775"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2431,7 +2719,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2644"
+NAME="AEN2788"
 ></A
 ><H3
 ><A
@@ -2461,7 +2749,7 @@ HREF="LONG"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2651"><P
+NAME="AEN2795"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2499,7 +2787,7 @@ profiling</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2660"
+NAME="AEN2804"
 ></A
 ><H3
 ><A
@@ -2532,7 +2820,7 @@ HREF="libxslt-xsltutils.html#XSLTTIMESTAMP"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2668"><P
+NAME="AEN2812"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2568,7 +2856,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2677"
+NAME="AEN2821"
 ></A
 ><H3
 ><A
@@ -2594,7 +2882,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2682"
+NAME="AEN2826"
 ></A
 ><H3
 ><A
@@ -2631,7 +2919,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2687"
+NAME="AEN2831"
 ></A
 ><H3
 ><A
@@ -2671,7 +2959,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2696"><P
+NAME="AEN2840"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2758,7 +3046,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2717"
+NAME="AEN2861"
 ></A
 ><H3
 ><A
@@ -2790,7 +3078,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2724"><P
+NAME="AEN2868"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2861,7 +3149,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2741"
+NAME="AEN2885"
 ></A
 ><H3
 ><A
@@ -2887,7 +3175,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2746"
+NAME="AEN2890"
 ></A
 ><H3
 ><A
@@ -2913,7 +3201,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2751"><P
+NAME="AEN2895"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -2984,7 +3272,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2768"
+NAME="AEN2912"
 ></A
 ><H3
 ><A
@@ -3018,7 +3306,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2776"><P
+NAME="AEN2920"><P
 ></P
 ><TABLE
 BORDER="0"
@@ -3090,7 +3378,7 @@ WITH_XSLT_DEBUG_BREAKPOINTS is defined</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2793"
+NAME="AEN2937"
 ></A
 ><H3
 ><A

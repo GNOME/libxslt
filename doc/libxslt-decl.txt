@@ -1,14 +1,14 @@
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.21"
+#define LIBXSLT_DOTTED_VERSION "1.0.22"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10021
+#define LIBXSLT_VERSION 10022
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10021"
+#define LIBXSLT_VERSION_STRING "10022"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -593,6 +593,11 @@ xsltStylesheetPtr style,xmlNodePtr node,const xmlChar *name,const xmlChar *ns,in
 xsltTransformContextPtr ctxt,xmlXPathCompExprPtr comp
 </FUNCTION>
 <FUNCTION>
+<NAME>xsltEvalXPathStringNs</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xsltTransformContextPtr ctxt,xmlXPathCompExprPtr comp,int nsNr,xmlNsPtr *nsList
+</FUNCTION>
+<FUNCTION>
 <NAME>xsltTemplateProcess</NAME>
 <RETURNS>xmlNodePtr  *</RETURNS>
 xsltTransformContextPtr ctxt,xmlNodePtr node
@@ -611,6 +616,11 @@ xsltTransformContextPtr ctxt,xmlNodePtr target,xmlAttrPtr attr
 <NAME>xsltAttrTemplateValueProcess</NAME>
 <RETURNS>xmlChar  *</RETURNS>
 xsltTransformContextPtr ctxt,const xmlChar* attr
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltAttrTemplateValueProcessNode</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xsltTransformContextPtr ctxt,const xmlChar* str,xmlNodePtr node
 </FUNCTION>
 <FUNCTION>
 <NAME>xsltSetXIncludeDefault</NAME>
@@ -947,6 +957,16 @@ void *ctx,xmlGenericErrorFunc handler
 void *ctx,xmlGenericErrorFunc handler
 </FUNCTION>
 <FUNCTION>
+<NAME>xsltSetTransformErrorFunc</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,void *ctx,xmlGenericErrorFunc handler
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltTransformError</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xsltStylesheetPtr style,xmlNodePtr node,const char *msg,...
+</FUNCTION>
+<FUNCTION>
 <NAME>xsltDocumentSortFunction</NAME>
 <RETURNS>void 	</RETURNS>
 xmlNodeSetPtr list
@@ -1053,15 +1073,15 @@ void
 </FUNCTION>
 <MACRO>
 <NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.21"
+#define LIBXSLT_DOTTED_VERSION "1.0.22"
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10021
+#define LIBXSLT_VERSION 10022
 </MACRO>
 <MACRO>
 <NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10021"
+#define LIBXSLT_VERSION_STRING "10022"
 </MACRO>
 <MACRO>
 <NAME>WITH_XSLT_DEBUG</NAME>
@@ -1605,6 +1625,9 @@ struct xsltTransformContext {
 
     xsltDocumentPtr  styleList;		/* the stylesheet docs list */
     void                 * sec;		/* the security preferences if any */
+
+    xmlGenericErrorFunc  error;		/* a specific error handler */
+    void              * errctx;		/* context for the error handler */
 };
 </STRUCT>
 <MACRO>
