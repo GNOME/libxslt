@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = common dtd lib result test
+SUBDIRS = common html dtd lib result test
 
 all: # Avoid doing the test in normal pass
 
