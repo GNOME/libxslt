@@ -1,3 +1,8 @@
+Sat Nov 23 12:33:58 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltInternals.h: Alexey Efimov reported a portability
+	  problem when compiling on HP-UX
+
 Sat Nov 23 12:23:32 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/generator.py python/libxslt.c: fixes for compiling

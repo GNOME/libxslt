@@ -15,6 +15,7 @@
 #include <libxml/tree.h>
 #include <libxml/hash.h>
 #include <libxml/xpath.h>
+#include <libxml/xmlerror.h>
 #include <libxslt/xslt.h>
 #include "numbersInternals.h"
 
