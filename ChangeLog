@@ -1,3 +1,7 @@
+Sun Jan 16 00:09:11 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c: applied another patch from Joel Reed
+
 Sat Jan 15 13:54:28 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* tests/plugins/plugin.* tests/Makefile.am libxslt/extensions.c

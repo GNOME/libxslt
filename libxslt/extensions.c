@@ -320,7 +320,7 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     xmlModulePtr m;
     exsltRegisterFunction regfunc;
     xmlChar *ext_name;
-    xmlChar module_filename[PATH_MAX];
+    char module_filename[PATH_MAX];
     const xmlChar *ext_directory = NULL;
     const xmlChar *protocol = NULL;
     xmlChar *i, *regfunc_name;
@@ -343,7 +343,7 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     }
 
     /* transform extension namespace into a module name */
-    protocol = xmlStrstr(URI, "://");
+    protocol = xmlStrstr(URI, BAD_CAST "://");
     if (protocol == NULL) {
         ext_name = xmlStrdup(URI);
     } else {
@@ -364,16 +364,36 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
         *i = '\0';
 
     /* determine module directory */
-    ext_directory = getenv(BAD_CAST "LIBXSLT_PLUGINS_PATH");
+    ext_directory = (xmlChar *) getenv("LIBXSLT_PLUGINS_PATH");
+
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "LIBXSLT_PLUGINS_PATH is %s\n", ext_directory);
+#endif
+
     if (NULL == ext_directory)
-        ext_directory = LIBXSLT_DEFAULT_PLUGINS_PATH();
+        ext_directory = BAD_CAST LIBXSLT_DEFAULT_PLUGINS_PATH();
     if (NULL == ext_directory)
         return (-1);
 
     /* build the module filename, and confirm the module exists */
-    xmlStrPrintf(module_filename, sizeof(module_filename), "%s/%s%s",
+    xmlStrPrintf((xmlChar *) module_filename, sizeof(module_filename),
+                 BAD_CAST "%s/%s%s",
                  ext_directory, ext_name, LIBXML_MODULE_EXTENSION);
+
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+    xsltGenericDebug(xsltGenericDebugContext,
+                     "Attempting to load plugin: %s for URI: %s\n", 
+                     module_filename, URI);
+#endif
+
     if (1 != xmlCheckFilename(module_filename)) {
+
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+                     "xmlCheckFilename failed for plugin: %s\n", module_filename);
+#endif
+
         xmlFree(ext_name);
         return (-1);
     }
@@ -381,15 +401,21 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     /* attempt to open the module */
     m = xmlModuleOpen(module_filename, 0);
     if (NULL == m) {
+
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+                     "xmlModuleOpen failed for plugin: %s\n", module_filename);
+#endif
+
         xmlFree(ext_name);
         return (-1);
     }
 
     /* construct initialization func name */
     regfunc_name = xmlStrdup(ext_name);
-    regfunc_name = xmlStrcat(regfunc_name, "_init");
+    regfunc_name = xmlStrcat(regfunc_name, BAD_CAST "_init");
 
-    rc = xmlModuleSymbol(m, regfunc_name, (void **) &regfunc);
+    rc = xmlModuleSymbol(m, (const char *) regfunc_name, (void **) &regfunc);
     if (0 == rc) {
         /* call the module's init function */
         (*regfunc) ();
@@ -397,6 +423,13 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
         /* register this module in our hash */
         xmlHashAddEntry(xsltModuleHash, URI, (void *) m);
     } else {
+
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+                     "xmlModuleSymbol failed for plugin: %s, regfunc: %s\n", 
+                     module_filename, regfunc_name);
+#endif
+
         /* if regfunc not found unload the module immediately */
         xmlModuleClose(m);
     }
