@@ -243,14 +243,13 @@ platform, get in touch with me to upload the package. I will keep them in the
 
 <p>Libxslt is also available from CVS:</p>
 <ul>
-  <li><p>The <a
-    href="http://cvs.gnome.org/viewcvs/libxslt/">Gnome
-    CVS base</a>. Check the <a
+  <li><p>The <a href="http://cvs.gnome.org/viewcvs/libxslt/">Gnome CVS
+    base</a>. Check the <a
     href="http://developer.gnome.org/tools/cvs.html">Gnome CVS Tools</a>
     page; the CVS module is <b>libxslt</b>.</p>
   </li>
-  <li><a href="ftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gz">snapshots
-    from CVS</a> updated every hour are also provided</li>
+  <li><a href="ftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gz">snapshots from
+    CVS</a> updated every hour are also provided</li>
 </ul>
 
 <h2><a name="FAQ">FAQ</a></h2>
@@ -298,6 +297,21 @@ to the <a href="http://cvs.gnome.org/viewcvs/libxslt/">CVS</a> code base.</p>
 
 <p>Those are the public releases made:</p>
 
+<h3>1.1.9: Aug 22 2004</h3>
+<ul>
+  <li>build fixes: missing tests (William Brack), Python dependancies, Python
+    on 64bits boxes, --with-crypto flag (Rob Richards), </li>
+  <li>fixes: RVT key handling (William), Python binding (William and Sitsofe
+    Wheeler), key and XPath troubles (William), template priority on imports
+    (William), str:tokenize with empty strings (William), #default namespace
+    alias behaviour (William), doc ordering missing for main document
+    (William), 64bit bug (Andreas Schwab)</li>
+  <li>improvements: EXSLT date:sum added (Joel Reed), hook for document
+    loading for David Hyatt, xsltproc --nodtdattr to avoid defaulting DTD
+    attributes, extend xsltproc --version with CVS stamp (William).</li>
+  <li>Documentation: web page problem reported by Oliver Stoeneberg</li>
+</ul>
+
 <h3>1.1.8: July 5 2004</h3>
 <ul>
   <li>build fixes: Windows runtime options (Oliver Stoeneberg), Windows
@@ -306,7 +320,7 @@ to the <a href="http://cvs.gnome.org/viewcvs/libxslt/">CVS</a> code base.</p>
   <li>documentation: fix libxslt namespace name in doc (William)</li>
   <li>bug fixes: undefined namespace message (William Brack), search engine
     (William), multiple namespace fixups (William), namespace fix for key
-    evaluation (William), Python memory debug bindings, </li>
+    evaluation (William), Python memory debug bindings,</li>
   <li>improvements: crypto extensions for exslt (Joel Reed, William)</li>
 </ul>
 

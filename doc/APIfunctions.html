@@ -32,6 +32,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-security.html#xsltCheckWrite">xsltCheckWrite</a><br />
 <a href="html/libxslt-pattern.html#xsltCompilePattern">xsltCompilePattern</a><br />
 <a href="html/libxslt-transform.html#xsltCopyTextString">xsltCopyTextString</a><br />
+<a href="html/libxslt-documents.html#xsltDocLoaderFunc">xsltDocLoaderFunc</a><br />
 <a href="html/libxslt-templates.html#xsltEvalAttrValueTemplate">xsltEvalAttrValueTemplate</a><br />
 <a href="html/libxslt-variables.html#xsltEvalOneUserParam">xsltEvalOneUserParam</a><br />
 <a href="html/libxslt-templates.html#xsltEvalStaticAttrValueTemplate">xsltEvalStaticAttrValueTemplate</a><br />
@@ -83,7 +84,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#xsltGetUTF8Char">xsltGetUTF8Char</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSaveResultToString">xsltSaveResultToString</a><br />
 </p><h2>Type long:</h2><p><a href="html/libxslt-xsltutils.html#xsltCalibrateAdjust">xsltCalibrateAdjust</a><br />
-</p><h2>Type void *:</h2><p><a href="html/libxslt-xsltInternals.html#xsltEvalAVT">xsltEvalAVT</a><br />
+</p><h2>Type void *:</h2><p><a href="html/libxslt-documents.html#xsltDocLoaderFunc">xsltDocLoaderFunc</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltEvalAVT">xsltEvalAVT</a><br />
 <a href="html/libxslt-extensions.html#xsltExtShutdownFunction">xsltExtShutdownFunction</a><br />
 <a href="html/libxslt-xsltInternals.html#xsltFreeAVTList">xsltFreeAVTList</a><br />
 <a href="html/libxslt-pattern.html#xsltNormalizeCompSteps">xsltNormalizeCompSteps</a><br />
@@ -102,7 +104,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 </p><h2>Type xmlChar **:</h2><p><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
 <a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSaveResultToString">xsltSaveResultToString</a><br />
-</p><h2>Type xmlDictPtr:</h2><p><a href="html/libxslt-xsltutils.html#xsltSplitQName">xsltSplitQName</a><br />
+</p><h2>Type xmlDictPtr:</h2><p><a href="html/libxslt-documents.html#xsltDocLoaderFunc">xsltDocLoaderFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSplitQName">xsltSplitQName</a><br />
 </p><h2>Type xmlDocPtr:</h2><p><a href="html/libxslt-transform.html#xsltApplyStylesheet">xsltApplyStylesheet</a><br />
 <a href="html/libxslt-transform.html#xsltApplyStylesheetUser">xsltApplyStylesheetUser</a><br />
 <a href="html/libxslt-pattern.html#xsltCompilePattern">xsltCompilePattern</a><br />
@@ -237,6 +240,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-pattern.html#xsltTestCompMatchList">xsltTestCompMatchList</a><br />
 </p><h2>Type xsltDebugTraceCodes:</h2><p><a href="html/libxslt-xsltutils.html#xsltDebugSetDefaultTrace">xsltDebugSetDefaultTrace</a><br />
 </p><h2>Type xsltDecimalFormatPtr:</h2><p><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
+</p><h2>Type xsltDocLoaderFunc:</h2><p><a href="html/libxslt-documents.html#xsltSetLoaderFunc">xsltSetLoaderFunc</a><br />
 </p><h2>Type xsltDocumentPtr:</h2><p><a href="html/libxslt-keys.html#xsltFreeDocumentKeys">xsltFreeDocumentKeys</a><br />
 <a href="html/libxslt-keys.html#xsltInitCtxtKeys">xsltInitCtxtKeys</a><br />
 </p><h2>Type xsltElemPreCompDeallocator:</h2><p><a href="html/libxslt-extensions.html#xsltInitElemPreComp">xsltInitElemPreComp</a><br />
@@ -247,6 +251,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#xsltRegisterExtModuleFull">xsltRegisterExtModuleFull</a><br />
 </p><h2>Type xsltExtShutdownFunction:</h2><p><a href="html/libxslt-extensions.html#xsltRegisterExtModule">xsltRegisterExtModule</a><br />
 <a href="html/libxslt-extensions.html#xsltRegisterExtModuleFull">xsltRegisterExtModuleFull</a><br />
+</p><h2>Type xsltLoadType:</h2><p><a href="html/libxslt-documents.html#xsltDocLoaderFunc">xsltDocLoaderFunc</a><br />
 </p><h2>Type xsltNumberDataPtr:</h2><p><a href="html/libxslt-xsltInternals.html#xsltNumberFormat">xsltNumberFormat</a><br />
 </p><h2>Type xsltPreComputeFunction:</h2><p><a href="html/libxslt-extensions.html#xsltRegisterExtModuleElement">xsltRegisterExtModuleElement</a><br />
 </p><h2>Type xsltSecurityCheck:</h2><p><a href="html/libxslt-security.html#xsltSetSecurityPrefs">xsltSetSecurityPrefs</a><br />

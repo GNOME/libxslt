@@ -8,16 +8,17 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.7</version>
-    <last-release> May 17 2004</last-release>
+    <version>1.1.8</version>
+    <last-release> July 5 2004</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - build fix: warning about localtime_r on Solaris
-   - bug fix: UTF8 string tokenize (William Brack), subtle memory
-    corruption, linefeed after comment at document level (William),
-    disable-output-escaping problem (William), pattern compilation in deep
-    imported stylesheets (William), namespace extension prefix bug,
-    libxslt.m4 bug (Edward Rudd), namespace lookup for attribute, namespaced
-    DOCTYPE name
+    <changes>   - build fixes: Windows runtime options (Oliver Stoeneberg), Windows
+    binary package layout (Igor Zlatkovic), libgcrypt version test and link
+    (William)
+   - documentation: fix libxslt namespace name in doc (William)
+   - bug fixes: undefined namespace message (William Brack), search engine
+    (William), multiple namespace fixups (William), namespace fix for key
+    evaluation (William), Python memory debug bindings,
+   - improvements: crypto extensions for exslt (Joel Reed, William)
 
 </changes>
   </product>

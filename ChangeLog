@@ -1,3 +1,7 @@
+Sun Aug 22 17:19:49 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in NEWS doc/*: preparing release of 1.1.9
+
 Sat Aug 21 22:08:14 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* transform.c: Further enhancement for keys on exslt:node-sets.
