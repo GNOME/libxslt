@@ -26,10 +26,8 @@ var versionFile = ".\\config.msvc";
    is identical to the first. */
 var optsFileInXslt = srcDirXslt + "\\xsltconfig.h.in";
 var optsFileXslt = srcDirXslt + "\\xsltconfig.h";
-var optsFileXslt2 = srcDirXslt + "\\xsltwin32config.h";
 var optsFileInExslt = srcDirExslt + "\\exsltconfig.h.in";
 var optsFileExslt = srcDirExslt + "\\exsltconfig.h";
-var optsFileExslt2 = srcDirExslt + "\\exsltwin32config.h";
 /* Version strings for the binary distribution. Will be filled later 
    in the code. */
 var verMajorXslt;
@@ -246,7 +244,6 @@ function configureXslt()
 	}
 	ofi.Close();
 	of.Close();
-	fso.CopyFile(optsFileXslt, optsFileXslt2, true);
 }
 
 /* Configures libexslt. This one will generate exsltconfig.h from exsltconfig.h.in
@@ -277,7 +274,6 @@ function configureExslt()
 	}
 	ofi.Close();
 	of.Close();
-	fso.CopyFile(optsFileExslt, optsFileExslt2, true);
 }
 
 /* Creates the readme file for the binary distribution of 'bname', for the
