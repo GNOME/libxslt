@@ -4,10 +4,6 @@
                  *        *
                   ********
 
-Leak:
-  - find and fix memleak in xmlspec
-  => this is new ...
-
 Doc:
   - manpage and doc for xsltproc
 
@@ -19,17 +15,14 @@ Design:
     be a bit ugly ...
 
 Embedding Stylesheets:
-  - example in 2.7 would force to validate
+  - example in 2.7 would force to validate, we do it by default now
 
 Import:
 
-Extra functions:
-  -> document() should not be a problem since Result Tree Fragments are
-     implemented
-  => started, incomplete
 
 ID and Key support:
-  -> Id should be simple, key will probably requires some hash tables.
+  -> done but namespace support in keys is not defined
+  -> make sure keys are recomputed on new document input
 
 Pattern tester:
   -> try to optimize for ID scan and tests.
@@ -44,7 +37,8 @@ Error handling:
   -> catch recursion end of 5.4 ...
 
 Support Attribute value templates:
-  -> optimization by checking their existence at stylesheet parse time.
+  -> namespace support for attribute value templates is not done, need
+     a small API redesign
 
 Sorting:
   -> add support for imbricated sorts
@@ -56,6 +50,14 @@ Sorting:
                  *  DONE  *
                  *        *
                   ********
+
+ID and Key support:
+  -> Done
+
+Extra functions:
+  -> document() should not be a problem since Result Tree Fragments are
+     implemented
+  => Done
 
 Templates:
   -> check the built-in template rule for attributes
@@ -83,6 +85,9 @@ Support Attribute value templates:
      to handle most of it at the stylesheet parse time ...
   => Done for the most part need to check all attributes in XSLT constructs
      using them and use the dedicated readin function.
+  -> optimization by checking their existence at stylesheet parse time.
+  => done when building the preproc function
+
 
 Separate util module:
   -> macros, config, verbosity ?

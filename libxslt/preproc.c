@@ -160,6 +160,8 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
 	xmlFree(comp->numdata.format);
     if (comp->comp != NULL)
 	xmlXPathFreeCompExpr(comp->comp);
+    if (comp->nsList != NULL)
+	xmlFree(comp->nsList);
 
     memset(comp, -1, sizeof(xsltStylePreComp));
 
@@ -921,6 +923,8 @@ xsltStylePreCompute(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
     if (inst->_private != NULL) 
         return;
     if (IS_XSLT_ELEM(inst)) {
+	xsltStylePreCompPtr cur;
+
 	if (IS_XSLT_NAME(inst, "apply-templates")) {
 	    xsltApplyTemplatesComp(ctxt, inst);
 	} else if (IS_XSLT_NAME(inst, "value-of")) {
@@ -967,6 +971,21 @@ xsltStylePreCompute(xsltTransformContextPtr ctxt, xmlNodePtr inst) {
 	} else {
 	    xsltGenericError(xsltGenericDebugContext,
 		 "xsltStylePreCompute: unknown xslt:%s\n", inst->name);
+	}
+	/*
+	 * Add the namespace lookup here, this code can be shared by
+	 * all precomputations.
+	 */
+	cur = inst->_private;
+	if (cur != NULL) {
+	    int i = 0;
+
+	    cur->nsList = xmlGetNsList(inst->doc, inst);
+            if (cur->nsList != NULL) {
+		while (cur->nsList[i] != NULL)
+		    i++;
+	    }
+	    cur->nsNr = i;
 	}
     } else {
 	if (IS_XSLT_NAME(inst, "document")) {

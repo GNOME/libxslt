@@ -316,9 +316,12 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     if (comp == NULL)
 	goto error;
     ctxt->document = doc;
-    ctxt->node = (xmlNodePtr) doc->doc;
     ctxt->xpathCtxt->node = (xmlNodePtr) doc->doc;
     position = ctxt->xpathCtxt->proximityPosition;
+    ctxt->node = (xmlNodePtr) doc->doc;
+    /* TODO : clarify the use of namespaces in keys evaluation */
+    ctxt->xpathCtxt->namespaces = NULL;
+    ctxt->xpathCtxt->nsNr = 0;
     res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->proximityPosition = position;
     xmlXPathFreeCompExpr(comp);

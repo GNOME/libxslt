@@ -54,6 +54,9 @@ xsltEvalXPathPredicate(xsltTransformContextPtr ctxt,
 
     position = ctxt->xpathCtxt->proximityPosition;
     ctxt->xpathCtxt->node = ctxt->node;
+    /* TODO: do we need to propagate the namespaces here ? */
+    ctxt->xpathCtxt->namespaces = NULL;
+    ctxt->xpathCtxt->nsNr = 0;
     res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->proximityPosition = position;
     if (res != NULL) {
@@ -89,6 +92,9 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
     xmlXPathObjectPtr res;
 
     ctxt->xpathCtxt->node = ctxt->node;
+    /* TODO: do we need to propagate the namespaces here ? */
+    ctxt->xpathCtxt->namespaces = NULL;
+    ctxt->xpathCtxt->nsNr = 0;
     res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
     if (res != NULL) {
 	if (res->type != XPATH_STRING)

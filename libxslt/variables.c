@@ -259,9 +259,12 @@ int	oldProximityPosition, oldContextSize;
 	comp = xmlXPathCompile(elem->select);
 	if (comp == NULL)
 	    return(-1);
-	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
+	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
+	/* TODO: do we need to propagate the namespaces here ? */
+	ctxt->xpathCtxt->namespaces = NULL;
+	ctxt->xpathCtxt->nsNr = 0;
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;

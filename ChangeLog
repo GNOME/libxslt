@@ -1,3 +1,11 @@
+Tue Apr 17 10:10:56 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/keys.c libxslt/preproc.c libxslt/templates.c
+	  libxslt/transform.c libxslt/variables.c libxslt/xsltInternals.h:
+	  fixed for the most part the namespace handling problem in XPath
+	  expression computations.
+	* test/doc/ tests/general: added bug 5 and 6
+
 Thu Apr 12 14:40:22 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xslt.c: applied William M. Brack patch fixing the

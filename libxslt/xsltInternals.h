@@ -260,6 +260,8 @@ struct _xsltStylePreComp {
     xsltNumberData numdata;	/* number */
 
     xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
+    xmlNsPtr *nsList;		/* the namespaces in scope */
+    int nsNr;			/* the number of namespaces in scope */
 };
 
 /*
