@@ -34,6 +34,7 @@ EXTRA_DIST =	\
 	bug-27-.xml \
 	bug-28-.xml \
 	bug-29-.xml bug-29-.ent \
+	bug-30-.xml \
 	character.xml \
 	items.xml
 

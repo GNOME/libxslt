@@ -1,3 +1,11 @@
+Wed May 23 00:05:19 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/variables.c: Mark Vakoc found a bug in variable eval
+	  at the top template level 
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-30-* tests/docs/bug-30-*: added a specific
+	  regression test
+
 Tue May 22 18:52:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c: fixed the document() bug reported by

@@ -240,7 +240,7 @@ xsltStackLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
      */
     i = ctxt->varsNr - 1;
 
-    for (;i > 0;i--) {
+    for (;i >= 0;i--) {
 	cur = ctxt->varsTab[i];
 	while (cur != NULL) {
 	    if (xmlStrEqual(cur->name, name)) {
