@@ -42,8 +42,9 @@ check-local: tests
 dummy:
 
 tests: dummy
-	@(cd tests ; $(MAKE) tests)
-	@(if [ "@PYTHON_SUBDIR@" != "" ] ; then cd python ; $(MAKE) tests ; fi)
+	@echo '## Running the regression test suite'
+	@(cd tests ; $(MAKE) MAKEFLAGS+=--silent tests)
+	@(if [ "@PYTHON_SUBDIR@" != "" ] ; then cd python ; $(MAKE) MAKEFLAGS+=--silent tests ; fi)
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

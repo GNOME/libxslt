@@ -5,6 +5,11 @@ SUBDIRS=docs REC1 REC2 REC general namespaces keys numbers documents \
 
 all:
 
+# Each subdirectory has it's own Makefile to cater for the unique
+# requirements of that subdirectory.  In general, xsltproc will be
+# run on the *.xsl / *.xml file combinations, and the output of that
+# run will be compared with the "expected" output contained in *.out
+# and (if errors are expected) in *.err
 test tests:
 	@(cur=`pwd` ; for dir in $(SUBDIRS) ; do cd $$dir ; $(MAKE) CHECKER='$(CHECKER)' tests ; cd $$cur ; done)
 

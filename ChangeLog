@@ -1,3 +1,23 @@
+Sat Mar  6 23:05:11 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* Makefile.am, tests/Makefile.am, tests/REC/Makefile.am,
+	  tests/REC1/Makefile.am, tests/REC2/Makefile.am,
+	  tests/XSLTMark/Makefile.am, tests/docbook/Makefile.am,
+	  tests/exslt/common/Makefile.am, tests/exslt/date/Makefile.am,
+	  tests/exslt/functions/Makefile.am, tests/exslt/math/Makefile.am,
+	  tests/exslt/sets/Makefile.am, tests/exslt/strings/Makefile.am,
+	  tests/extensions/Makefile.am, tests/general/Makefile.am,
+	  tests/keys/Makefile.am, tests/multiple/Makefile.am,
+	  tests/namespaces/Makefile.am, tests/numbers/Makefile.am,
+	  tests/reports/Makefile.am, test/xmlspec/Makefile.am,
+	  tests/general/bug-60.err, tests/docbook/result/html/gdp-handbook.err,
+	  tests/REC/test-2.5-1.err:
+	  Major enhancement to "make tests". All but Python tests
+	  cleaned up to produce minimum summary output if no problems.
+	* tests/general/bug-145.xsl, tests/general/bug-145.err,
+	  tests/docs/Makefile.am, tests/docs/bug-145.xml:
+	  Added test case for bugzilla bug 135938
+	  
 Thu Mar  4 23:02:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltutils.h, libxslt/xsltutils.c, libxslt/preproc.c:
