@@ -182,9 +182,6 @@ class index:
 	      if self.functions.has_key(id):
 	          up = idx.functions[id]
 	          self.functions[id].update(None, up.type, up.info, up.extra)
-	      else:
-	          if idx.functions[id].static == 0:
-		      self.functions[id] = idx.functions[id]
 
      def analyze_dict(self, type, dict):
          count = 0

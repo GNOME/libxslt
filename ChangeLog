@@ -1,3 +1,11 @@
+Thu Dec 12 01:17:09 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/apibuild.py: fixed a bug in merging public info from
+	  C modules.
+	* win32/Makefile.msvc win32/configure.js: patch from Mark Vakoc
+	  the iconv option to configure.js didn't work, and 
+	  added zlib option needed when linking xsltproc statically
+
 Wed Dec 11 19:18:45 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/Makefile.am doc/apibuild.py doc/libexslt-api.xml: added

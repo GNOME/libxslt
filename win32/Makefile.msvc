@@ -304,6 +304,9 @@ APPLIBS = $(LIBS) libxml2_a.lib
 !if "$(WITH_ICONV)" == "1"
 APPLIBS = $(APPLIBS) iconv.lib
 !endif
+!if "$(WITH_ZLIB)" == "1"
+APPLIBS = $(APPLIBS) zlib.lib
+!endif
 {$(UTILS_SRCDIR)}.c{$(BINDIR)}.exe:
 	$(CC) /D "LIBXML_STATIC" /D "LIBXSLT_STATIC" /D "LIBEXSLT_STATIC" \
 		$(CFLAGS) /Fo$(UTILS_INTDIR)\ /c $< 

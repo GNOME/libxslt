@@ -44,6 +44,7 @@ var withXsltDebug = true;
 var withMemDebug = false;
 var withDebugger = true;
 var withIconv = true;
+var withZlib = false;
 /* Win32 build options. */
 var compiler = "msvc";
 var buildDebug = 0;
@@ -97,6 +98,7 @@ function usage()
 	txt += "  mem_debug:  Enable memory debugger (" + (withMemDebug? "yes" : "no")  + ")\n";
 	txt += "  debugger:   Enable external debugger support (" + (withDebugger? "yes" : "no")  + ")\n";
 	txt += "  iconv:      Use iconv library (" + (withIconv? "yes" : "no")  + ")\n";
+	txt += "  zlib:       Use zlib library (" + (withZlib? "yes" : "no") + ")\n";
 	txt += "\nWin32 build options, default value given in parentheses:\n\n";
 	txt += "  compiler:   Compiler to be used [msvc|mingw] (" + compiler + ")\n";
 	txt += "  debug:      Build unoptimised debug executables (" + (buildDebug? "yes" : "no")  + ")\n";
@@ -167,6 +169,7 @@ function discoverVersion()
 	vf.WriteLine("WITH_MEM_DEBUG=" + (withMemDebug? "1" : "0"));
 	vf.WriteLine("WITH_DEBUGGER=" + (withDebugger? "1" : "0"));
 	vf.WriteLine("WITH_ICONV=" + (withIconv? "1" : "0"));
+	vf.WriteLine("WITH_ZLIB=" + (withZlib? "1" : "0"));
 	vf.WriteLine("DEBUG=" + (buildDebug? "1" : "0"));
 	vf.WriteLine("STATIC=" + (buildStatic? "1" : "0"));
 	vf.WriteLine("PREFIX=" + buildPrefix);
@@ -317,7 +320,9 @@ for (i = 0; (i < WScript.Arguments.length) && (error == 0); i++) {
 		else if (opt == "debug")
 			buildDebug = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "iconv")
-			buildIconv = strToBool(arg.substring(opt.length + 1, arg.length));
+			withIconv = strToBool(arg.substring(opt.length + 1, arg.length));
+		else if (opt == "zlib")
+			withZlib  = strToBool(arg.substring(opt.length + 1, arg.length));
 		else if (opt == "compiler")
 			compiler = arg.substring(opt.length + 1, arg.length);
 		else if (opt == "static")
@@ -398,6 +403,7 @@ txtOut += "  Debugging module: " + boolToStr(withXsltDebug) + "\n";
 txtOut += "  Memory debugging: " + boolToStr(withMemDebug) + "\n";
 txtOut += "  Debugger support: " + boolToStr(withDebugger) + "\n";
 txtOut += "         Use iconv: " + boolToStr(withIconv) + "\n";
+txtOut += "         With zlib: " + boolToStr(withZlib) + "\n";
 txtOut += "\n";
 txtOut += "Win32 build configuration\n";
 txtOut += "-------------------------\n";
