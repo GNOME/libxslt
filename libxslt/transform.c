@@ -2597,7 +2597,7 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltCleanupTemplates(style);
 
 
-    if ((ctxt->type = XSLT_OUTPUT_XML) &&
+    if ((ctxt->type == XSLT_OUTPUT_XML) &&
 	((style->doctypePublic != NULL) ||
 	 (style->doctypeSystem != NULL))) {
 	root = xmlDocGetRootElement(res);

@@ -1,3 +1,10 @@
+Thu Apr 26 21:13:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: Tony Gorski found a bug pointed by
+	  a compiler on Tandem
+	* tests/documents/result.xhtml: this results in a small
+	  change in the output of this test
+
 Thu Apr 26 16:33:36 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* test/general/bug-14*.* test/docs/bug-14*.xml: added testcase from
