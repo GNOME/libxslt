@@ -1614,7 +1614,21 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		         "xsltDocumentElem: href/URI-Reference not found\n");
 	return;
     }
+
+    /*
+     * If the computation failed, it's likely that the URL wasn't escaped
+     */
     filename = xmlBuildURI(URL, (const xmlChar *) ctxt->outputFile);
+    if (filename == NULL) {
+	xmlChar *escURL;
+
+	escURL=xmlURIEscapeStr(URL, BAD_CAST ":/.?,");
+	if (escURL != NULL) {
+	    filename = xmlBuildURI(escURL, (const xmlChar *) ctxt->outputFile);
+	    xmlFree(escURL);
+	}
+    }
+
     if (filename == NULL) {
 	xsltPrintErrorContext(ctxt, NULL, inst);
 	xsltGenericError(xsltGenericErrorContext,
@@ -1623,6 +1637,10 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	xmlFree(URL);
 	return;
     }
+
+    /*
+     * Security checking: can we write to this resource
+     */
     if (ctxt->sec != NULL) {
 	ret = xsltCheckWrite(ctxt->sec, ctxt, filename);
 	if (ret == 0) {

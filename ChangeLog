@@ -1,3 +1,8 @@
+Mon Oct 14 09:27:01 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: added URI escaping in case the resource 
+	  target computation of exslt:element failed. Should fix #81837
+
 Tue Oct 15 12:42:25 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* README: updated the contact informations
