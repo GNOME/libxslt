@@ -18,3 +18,5 @@ stamp-h
 stamp-h.in
 xslt-config
 xsltConf.sh
+stamp-h1
+libexslt.pc

@@ -1,3 +1,9 @@
+2004-04-01  Johan Dahlin  <johan@gnome.org>
+
+	* python/.cvsignore: Add generated files, to make cvs silent.
+
+	* .cvsignore: Add missing libexslt.pc and stamp-h1
+
 Tue Mar 23 13:13:56 CET 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: prepare release of 1.1.5, made a hard dependancy
