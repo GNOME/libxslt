@@ -12,6 +12,7 @@ valgrind:
 	$(MAKE) CHECKER='valgrind -q' tests
 
 test tests: $(top_builddir)/xsltproc/xsltproc
+	@echo '## Running numbers tests'
 	@(echo > .memdump)
 	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/format-number.xsl $(srcdir)/format-number.xml > format-number.res ; \
 	diff $(srcdir)/format-number.out format-number.res ; \

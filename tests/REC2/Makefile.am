@@ -11,7 +11,9 @@ valgrind:
 	@echo '## Running the regression tests under Valgrind'
 	$(MAKE) CHECKER='valgrind -q' tests
 
+# Just 3 specific files tested, they either work or don't!
 test tests: $(top_builddir)/xsltproc/xsltproc
+	@echo '## Running REC2 tests'
 	@(echo > .memdump)
 	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/vrml.xsl $(srcdir)/data.xml > vrml.res ; \
 	diff $(srcdir)/vrml.xml vrml.res ; \

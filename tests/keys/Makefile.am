@@ -12,6 +12,7 @@ valgrind:
 	$(MAKE) CHECKER='valgrind -q' tests
 
 test tests: $(top_builddir)/xsltproc/xsltproc
+	@echo '## Running keys tests'
 	@(echo > .memdump)
 	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/month.xsl $(srcdir)/dates.xml > month.res ; \
 	if [ -r $(srcdir)/month.out ] ; \

@@ -20,26 +20,40 @@ valgrind:
 	$(MAKE) CHECKER='valgrind -q' tests
 
 test tests: $(top_builddir)/xsltproc/xsltproc
+	@echo '## Running reports tests'
 	@(echo > .memdump)
-	@(for i in $(srcdir)/*.xml ; do \
+	-@(for i in $(srcdir)/../docs/*.xml ; do \
 	  if [ -d $$i ] ; then continue ; fi ; \
 	  doc=`basename $$i .xml` ; \
-	  for j in $(srcdir)/$$doc.xsl ; do \
+	  for j in $(srcdir)/$$doc*.xsl ; do \
 	  if [ ! -f $$j ] ; then continue ; fi ; \
 	  if [ -d $$j ] ; then continue ; fi ; \
 	  name=`basename $$j .xsl`; \
 	  out=$(srcdir)/"$$name".out; \
 	  err=$(srcdir)/"$$name".err; \
-	  echo Running $$j on $$i ; \
-	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc \
+	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc \
 	              --stringparam test passed_value \
 		      --stringparam test2 passed_value2 \
 	              $$j $$i > result.$$name \
 	              2> err.$$name ; \
-	  if [ ! -f $$out ] ; \
-	  then cp result.$$name $$out; cp err.$$name $$err ; \
-	  else diff $$out result.$$name; diff $$err err.$$name; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
-	  rm -f result.$$name err.$$name ; \
+	  if [ ! -f $$out ] ; then \
+	  	cp result.$$name $$out ; \
+		if [ -s err.$$name ] ; then \
+			cp err.$$name $$err ; \
+		fi ; \
+	  else \
+	  	diff $$out result.$$name; \
+		if [ -s $$err ] ; then \
+	  		diff $$err err.$$name; \
+		else \
+			diff /dev/null err.$$name; \
+		fi ; \
+	  fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`;\
+	  if [ -n "$$log" ] ; then \
+	  	echo $$name result ; \
+		echo $$log ; \
+	  fi ; \
+	  rm -f result.$$name err.$$name; \
 	  done ; done)
 

@@ -15,8 +15,9 @@ valgrind:
 	$(MAKE) CHECKER='valgrind -q' tests
 
 test tests: $(top_builddir)/xsltproc/xsltproc
+	@echo '## Running extensions tests'
 	@(echo > .memdump)
-	@(for i in $(srcdir)/*.xml ; do \
+	-@(for i in $(srcdir)/../docs/*.xml ; do \
 	  if [ -d $$i ] ; then continue ; fi ; \
 	  doc=`basename $$i .xml` ; \
 	  for j in $(srcdir)/$$doc*.xsl ; do \
@@ -24,11 +25,27 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  if [ -d $$j ] ; then continue ; fi ; \
 	  name=`basename $$j .xsl`; \
 	  out=$(srcdir)/"$$name".out; \
-	  echo Running $$j on $$i ; \
-	  $(CHECKER) $(top_builddir)/xsltproc/xsltproc $$j $$i > result.$$name;\
-	  if [ ! -f $$out ] ; then cp result.$$name $$out ; \
-	  else diff $$out result.$$name; fi ; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
-	  rm -f result.$$name ; \
+	  err=$(srcdir)/"$$name".err; \
+	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc $$j $$i \
+	  	> result.$$name 2>err.$$name; \
+	  if [ ! -f $$out ] ; then \
+	  	cp result.$$name $$out ; \
+		if [ -s err.$$name ] ; then \
+			cp err.$$name $$err ; \
+		fi ; \
+	  else \
+	  	diff $$out result.$$name; \
+		if [ -s $$err ] ; then \
+	  		diff $$err err.$$name; \
+		else \
+			diff /dev/null err.$$name; \
+		fi ; \
+	  fi ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`;\
+	  if [ -n "$$log" ] ; then \
+	  	echo $$name result ; \
+		echo $$log ; \
+	  fi ; \
+	  rm -f result.$$name err.$$name; \
 	  done ; done)
 

@@ -48,18 +48,38 @@ test-current:
 	  done)
 	@rm -f current.xml
 
-test tests: $(top_builddir)/xsltproc/xsltproc test-current
+test-logall:
+	@echo '## Running exslt date tests'
+
+test tests: $(top_builddir)/xsltproc/xsltproc test-logall test-current
+	@echo '## Running exslt common tests'
 	@(echo > .memdump)
 	@(for i in $(srcdir)/*.xsl ; do \
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then continue ; fi ; \
-	  echo $$name.xml ; \
-	  $(top_builddir)/xsltproc/xsltproc $(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res;\
-	  if [ ! -f $(srcdir)/$$name.out ] ; then cp $$name.res $(srcdir)/$$name.out ; \
-	  else if  [ ! -s $$name.res ] ; then echo "Fatal error, no $$name.res\n" ; \
-	  else diff $(srcdir)/$$name.out $$name.res ; fi ; fi; \
-	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
-	  rm -f $$name.res ; \
+	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc \
+		$(srcdir)/$$name.xsl $(srcdir)/$$name.xml > $$name.res 2>$$name.bad;\
+	  if [ ! -f $(srcdir)/$$name.out ] ; then \
+		cp $$name.res $(srcdir)/$$name.out ; \
+		if [ -s $$name.bad ] ; then \
+			mv $$name.bad $(srcdir)/$$name.err ; \
+		fi ; \
+	  else \
+		if  [ ! -s $$name.res ] ; then \
+			echo "Fatal error, no $$name.res\n" ; \
+	  	else \
+			diff $(srcdir)/$$name.out $$name.res ; \
+			if [ -s $(srcdir)/$$name.err ] ; then \
+	  			diff $(srcdir)/$$name.err $$name.bad; \
+			else \
+				diff /dev/null $$name.bad; \
+			fi ; \
+		fi ; \
+	  fi; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`;\
+	  if [ -n "$$log" ] ; then \
+	  	echo $$name result ; \
+		echo $$log ; \
+	  fi ; \
+	  rm -f $$name.res $$name.bad; \
 	  done)
-
-

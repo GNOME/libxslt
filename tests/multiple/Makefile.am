@@ -35,6 +35,7 @@ valgrind:
 	$(MAKE) CHECKER='valgrind -q' tests
 
 test tests: $(top_builddir)/xsltproc/xsltproc
+	@echo '## Running multiple tests'
 	@(echo > .memdump)
 	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/dict.xsl $(srcdir)/dict.xml > dict.res ; \
 	diff $(srcdir)/result.xml dict.res; \
