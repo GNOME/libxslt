@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<doc><fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+    Employee employee1 belongs to group
+	group1</fo:block><fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+    Employee employee3 belongs to group
+	group1</fo:block><fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
+    Employee employee2 belongs to group
+	group2</fo:block></doc>

@@ -27,6 +27,10 @@ Extra functions:
 ID and Key support:
   -> Id should be simple, key will probably requires some hash tables.
 
+Templates:
+  -> check the built-in template rule for attributes
+  -> make sure @xxx matches are applied
+
 Pattern tester:
   -> try to optimize for ID scan and tests.
 
@@ -37,6 +41,7 @@ Error handling:
   -> check the version stuff, design a separate module for error interfacing
      and default handling, parsing vs. runtime, fatal / compat / warning,
      and lack of optionnal features.
+  -> catch recursion end of 5.4 ...
 
 Support Attribute value templates:
   -> optimization by checking their existence at stylesheet parse time.

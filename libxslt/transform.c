@@ -130,7 +130,7 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (node->nsDef != NULL)
 	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
 	if (node->ns != NULL) {
-	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, insert);
+	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
 	}
     } else {
 	xsltGenericError(xsltGenericErrorContext,

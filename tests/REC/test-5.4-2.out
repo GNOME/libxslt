@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<doc>
+<fo:inline-sequence xmlns:fo="http://www.w3.org/1999/XSL/Format">name1name2</fo:inline-sequence>
+</doc>
