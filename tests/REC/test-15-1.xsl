@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:test="http://example.org/"
 		xsl:extension-element-prefixes="test"
+		exclude-result-prefixes="test"
                 version='1.0'>
 <xsl:template match="/">
 <test:test>

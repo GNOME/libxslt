@@ -1,3 +1,28 @@
+Mon Jul  9 15:55:14 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xslt.c libxslt/xsltInternals.h:
+	  fixed exclude-result-prefixes handling and how namespaces
+	  propagate from the stylesheet to the result in general, this
+	  is a serious cleanup.
+	* tests/general/bug-3[67]-inc.xsl tests/general/bug-6-.xsl
+	  tests/general/itemschoose.out tests/namespaces/extra.xsl
+	  tests/REC/test-10-1.xsl tests/REC/test-10-2.xsl
+	  tests/REC/test-11.2-1.xsl tests/REC/test-11.2-2.xsl
+	  tests/REC/test-11.2-6.xsl tests/REC/test-15-1.xsl
+	  tests/REC/test-16.1-1.xsl tests/REC/test-16.1-2.xsl
+	  tests/REC/test-5.4-1.out tests/REC/test-5.4-2.out
+	  tests/REC/test-5.4-3.out tests/REC/test-5.4-4.out
+	  tests/REC/test-7.1.1-2.out tests/REC/test-7.1.1-2.xsl
+	  tests/REC/test-7.1.1-3.out tests/REC/test-7.1.1-3.xsl
+	  tests/REC/test-7.1.1.out tests/REC/test-7.1.3.xsl
+	  tests/REC/test-7.3.xsl tests/REC/test-7.4.xsl
+	  tests/REC/test-7.6.1-1.xsl tests/REC/test-7.6.1-2.xsl
+	  tests/REC/test-7.6.1-3.xsl tests/REC/test-7.6.2-1.xsl:
+	  fixed and rechecked all the tests where the namespace
+	  propagation was wrong either taht the rules were not applied
+	  correctly or that superfluous namespaces were declared in the
+	  stylesheets
+
 Sun Jul  8 22:12:02 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/extra.c libxslt/functions.c libxslt/transform.[ch]

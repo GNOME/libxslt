@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<doc>
+<doc xmlns:fo="http://www.w3.org/1999/XSL/Format">
     
-      <fo:list-item xmlns:fo="http://www.w3.org/1999/XSL/Format" indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem1</fo:list-item-body></fo:list-item>
-      <fo:list-item xmlns:fo="http://www.w3.org/1999/XSL/Format" indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem2</fo:list-item-body></fo:list-item>
-      <fo:list-item xmlns:fo="http://www.w3.org/1999/XSL/Format" indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem3</fo:list-item-body></fo:list-item>
-      <fo:list-item xmlns:fo="http://www.w3.org/1999/XSL/Format" indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem4</fo:list-item-body></fo:list-item>
-      <fo:list-item xmlns:fo="http://www.w3.org/1999/XSL/Format" indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem5</fo:list-item-body></fo:list-item>
-      <fo:list-item xmlns:fo="http://www.w3.org/1999/XSL/Format" indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem6</fo:list-item-body></fo:list-item>
-      <fo:list-item xmlns:fo="http://www.w3.org/1999/XSL/Format" indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>
+      <fo:list-item indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem1</fo:list-item-body></fo:list-item>
+      <fo:list-item indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem2</fo:list-item-body></fo:list-item>
+      <fo:list-item indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem3</fo:list-item-body></fo:list-item>
+      <fo:list-item indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem4</fo:list-item-body></fo:list-item>
+      <fo:list-item indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem5</fo:list-item-body></fo:list-item>
+      <fo:list-item indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>listitem6</fo:list-item-body></fo:list-item>
+      <fo:list-item indent-start="2pi"><fo:list-item-label><number format="i"/>. </fo:list-item-label><fo:list-item-body>
 	
 	  <fo:list-item indent-start="2pi"><fo:list-item-label><number format="a"/>. </fo:list-item-label><fo:list-item-body>
 	    

@@ -273,6 +273,7 @@ xsltFreeTemplate(xsltTemplatePtr template) {
     if (template->nameURI) xmlFree(template->nameURI);
     if (template->mode) xmlFree(template->mode);
     if (template->modeURI) xmlFree(template->modeURI);
+    if (template->inheritedNs) xmlFree(template->inheritedNs);
     memset(template, -1, sizeof(xsltTemplate));
     xmlFree(template);
 }
@@ -402,6 +403,91 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet)
  *		Parsing of an XSLT Stylesheet				*
  *									*
  ************************************************************************/
+
+/**
+ * xsltGetInheritedNsList:
+ * @style:  the stylesheet
+ * @template: the template
+ * @node:  the current node
+ *
+ * Search all the namespace applying to a given element except the ones 
+ * from excluded output prefixes currently in scope. Initialize the
+ * template inheritedNs list with it.
+ *
+ * Returns the number of entries found
+ */
+static int
+xsltGetInheritedNsList(xsltStylesheetPtr style,
+	               xsltTemplatePtr template,
+	               xmlNodePtr node)
+{
+    xmlNsPtr cur;
+    xmlNsPtr *ret = NULL;
+    int nbns = 0;
+    int maxns = 10;
+    int i;
+
+    if ((style == NULL) || (template == NULL) || (node == NULL) ||
+	(template->inheritedNsNr != 0) || (template->inheritedNs != NULL))
+	return(0);
+    while (node != NULL) {
+        if (node->type == XML_ELEMENT_NODE) {
+            cur = node->nsDef;
+            while (cur != NULL) {
+		if (xmlStrEqual(cur->href, XSLT_NAMESPACE))
+		    goto skip_ns;
+		for (i = 0;i < style->exclPrefixNr;i++) {
+		    if (xmlStrEqual(cur->href, style->exclPrefixTab[i]))
+			goto skip_ns;
+		}
+                if (ret == NULL) {
+                    ret =
+                        (xmlNsPtr *) xmlMalloc((maxns + 1) *
+                                               sizeof(xmlNsPtr));
+                    if (ret == NULL) {
+                        xmlGenericError(xmlGenericErrorContext,
+                                        "xmlGetNsList : out of memory!\n");
+                        return(0);
+                    }
+                    ret[nbns] = NULL;
+                }
+                for (i = 0; i < nbns; i++) {
+                    if ((cur->prefix == ret[i]->prefix) ||
+                        (xmlStrEqual(cur->prefix, ret[i]->prefix)))
+                        break;
+                }
+                if (i >= nbns) {
+                    if (nbns >= maxns) {
+                        maxns *= 2;
+                        ret = (xmlNsPtr *) xmlRealloc(ret,
+                                                      (maxns +
+                                                       1) *
+                                                      sizeof(xmlNsPtr));
+                        if (ret == NULL) {
+                            xmlGenericError(xmlGenericErrorContext,
+                                            "xmlGetNsList : realloc failed!\n");
+                            return(0);
+                        }
+                    }
+                    ret[nbns++] = cur;
+                    ret[nbns] = NULL;
+                }
+skip_ns:
+                cur = cur->next;
+            }
+        }
+        node = node->parent;
+    }
+    if (nbns != 0) {
+#ifdef WITH_XSLT_DEBUG_PARSING
+        xsltGenericDebug(xsltGenericDebugContext,
+                         "template has %d inherited namespaces\n", nbns);
+#endif
+	template->inheritedNsNr = nbns;
+	template->inheritedNs = ret;
+    }
+    return (nbns);
+}
 
 /**
  * xsltParseStylesheetOutput:
@@ -958,18 +1044,42 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    /*
 	     * Remove excluded prefixes
 	     */
-	    if ((cur->ns != NULL) && (style->exclPrefixNr > 0)) {
-		int i;
+	    if ((cur->nsDef != NULL) && (style->exclPrefixNr > 0)) {
+		xmlNsPtr ns = cur->nsDef, prev = NULL, next;
+		xmlNodePtr root = NULL;
+		int i, moved;
 
-		for (i = 0;i < style->exclPrefixNr;i++) {
-		    if (xmlStrEqual(cur->ns->href, style->exclPrefixTab[i])) {
-			for (;exclPrefixes > 0;exclPrefixes--)
-			    prefix = exclPrefixPop(style);
-			delete = cur;
-			goto skip_children;
+		root = xmlDocGetRootElement(cur->doc);
+		if ((root != NULL) && (root != cur)) {
+		    while (ns != NULL) {
+			moved = 0;
+			next = ns->next;
+			for (i = 0;i < style->exclPrefixNr;i++) {
+			    if (xmlStrEqual(ns->href,
+					    style->exclPrefixTab[i])) {
+				/*
+				 * Move the namespace definition on the root
+				 * element to avoid duplicating it without
+				 * loosing it.
+				 */
+				if (prev == NULL) {
+				    cur->nsDef = ns->next;
+				} else {
+				    prev->next = ns->next;
+				}
+				ns->next = root->nsDef;
+				root->nsDef = ns;
+				moved = 1;
+				break;
+			    }
+			}
+			if (moved == 0)
+			    prev = ns;
+			ns = next;
 		    }
 		}
 	    }
+
 	    /*
 	     * If we have prefixes locally, recurse and pop them up when
 	     * going back
@@ -1379,6 +1489,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xmlChar *mode = NULL;
     xmlChar *modeURI = NULL;
     double  priority;
+    int exclPrefixes;
 
     if (template == NULL)
 	return;
@@ -1392,6 +1503,16 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     ret->next = style->templates;
     style->templates = ret;
     ret->style = style;
+
+    /*
+     * Check excluded prefixes
+     */
+    exclPrefixes = xsltParseStylesheetExcludePrefix(style, template);
+
+    /*
+     * Get inherited namespaces
+     */
+    xsltGetInheritedNsList(style, ret, template);
 
     /*
      * Get arguments
@@ -1459,6 +1580,8 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xsltAddTemplate(style, ret, mode, modeURI);
 
 error:
+    for (;exclPrefixes > 0;exclPrefixes--)
+	exclPrefixPop(style);
     if (mode != NULL)
 	xmlFree(mode);
     if (modeURI != NULL)

@@ -500,7 +500,9 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (node->nsDef != NULL)
 		xsltCopyNamespaceList(ctxt, copy, node->nsDef);
 	}
-	if (node->ns != NULL) {
+	if (((node->type == XML_ELEMENT_NODE) ||
+	     (node->type == XML_ATTRIBUTE_NODE)) &&
+	    (node->ns != NULL)) {
 	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
 	}
     } else {
@@ -1166,6 +1168,41 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 attrs = xsltAttrListTemplateProcess(ctxt, copy,
                                                     cur->properties);
             }
+	    /*
+	     * Add extra namespaces inherited from the current template
+	     * if we are in the first level children
+	     */
+	    if ((oldInsert == insert) && (ctxt->templ != NULL) &&
+		(ctxt->templ->inheritedNs != NULL)) {
+		int i;
+		xmlNsPtr ns, ret;
+
+		for (i = 0;i < ctxt->templ->inheritedNsNr;i++) {
+		    ns = ctxt->templ->inheritedNs[i];
+		    if (ctxt->style->nsAliases != NULL) {
+			const xmlChar *URI;
+			URI = (const xmlChar *)
+				xmlHashLookup(ctxt->style->nsAliases,
+					      ns->href);
+			if (URI == NULL) {
+			    ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+			    if ((ret == NULL) ||
+				(!xmlStrEqual(ret->href, ns->href)))
+				xmlNewNs(copy, ns->href, ns->prefix);
+			} else if (!xmlStrEqual(URI, XSLT_NAMESPACE)) {
+			    ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+			    if ((ret == NULL) ||
+				(!xmlStrEqual(ret->href, URI)))
+				xmlNewNs(copy, URI, ns->prefix);
+			}
+		    } else {
+			ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+			if ((ret == NULL) ||
+			    (!xmlStrEqual(ret->href, ns->href)))
+			    xmlNewNs(copy, ns->href, ns->prefix);
+		    }
+		}
+	    }
         }
 
         /*
@@ -3368,7 +3405,8 @@ xsltRegisterAllElement(xsltTransformContextPtr ctxt)
     xsltRegisterExtElement(ctxt, (const xmlChar *) "copy-of",
                            XSLT_NAMESPACE, xsltCopyOf);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "message",
-                           XSLT_NAMESPACE, xsltMessage);
+                           XSLT_NAMESPACE,
+			   (xsltTransformFunction) xsltMessage);
 
     /*
      * Those don't have callable entry points but are registered anyway

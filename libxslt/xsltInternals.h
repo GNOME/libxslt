@@ -55,6 +55,9 @@ struct _xsltTemplate {
     xmlNodePtr content;	/* the template replacement value */
     xmlNodePtr elem;	/* the source element */
 
+    int inheritedNsNr;  /* number of inherited namespaces */
+    xmlNsPtr *inheritedNs;/* inherited non-excluded namespaces */
+
     /* Profiling informations */
     int nbCalls;        /* the number of time the template was called */
     unsigned long time; /* the time spent in this template */
