@@ -1,3 +1,7 @@
+Mon Feb 10 17:34:32 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: preparing release 1.0.26
+
 Fri Feb  7 15:47:20 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.c: fixing another bug in document(), bug #105450
