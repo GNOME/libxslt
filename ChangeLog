@@ -1,3 +1,9 @@
+Wed Dec  1 10:47:15 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/security.c xsltproc/xsltproc.c: applied patch from
+	  Aleksey Gurtovoy moving some stat() definition for Windows
+	  to the right place.
+
 Wed Dec  1 14:30:22 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xslt.c: applied patch from Mark Vakoc fixing bug with

@@ -75,17 +75,6 @@
 #include <sys/timeb.h>
 #endif
 
-#ifndef HAVE_STAT
-#  ifdef HAVE__STAT
-     /* MS C library seems to define stat and _stat. The definition
-      *         is identical. Still, mapping them to each other causes a warning. */
-#    ifndef _MSC_VER
-#      define stat(x,y) _stat(x,y)
-#    endif
-#    define HAVE_STAT
-#  endif
-#endif
-
 static int debug = 0;
 static int repeat = 0;
 static int timing = 0;
