@@ -6,6 +6,7 @@ $(top_builddir)/libxslt/xsltproc:
 EXTRA_DIST = \
     bug-1-.out bug-1-.xsl \
     bug-2-.out bug-2-.xsl \
+    bug-3-.out bug-3-.xsl \
     character.out character.xsl \
     character2.out character2.xsl \
     itemschoose.out itemschoose.xsl

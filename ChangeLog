@@ -1,3 +1,11 @@
+Wed Mar 14 15:51:36 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c: robert@xsl.00008.org pointed out a
+	  problem in xsl:copy-of in case of attributes
+	* tests/docs/Makefile.am tests/docs/bug-3-.xml
+	  tests/general/Makefile.am tests/general/bug-3-.*:
+	  added the test to the general regression suite
+
 Wed Mar 14 14:21:45 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c: applied and fixed ptittom@free.fr patch

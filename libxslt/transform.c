@@ -225,6 +225,38 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			xmlNodePtr insert);
 
 /**
+ * xsltCopyProp:
+ * @ctxt:  a XSLT process context
+ * @target:  the element where the attribute will be grafted
+ * @attr:  the attribute
+ *
+ * Do a copy of an attribute
+ *
+ * Returns: a new xmlAttrPtr, or NULL in case of error.
+ */
+xmlAttrPtr
+xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr target,
+	     xmlAttrPtr attr) {
+    xmlAttrPtr ret = NULL;
+    xmlNsPtr ns;
+    xmlChar *val;
+
+    if (attr == NULL)
+	return(NULL);
+
+    if (attr->ns != NULL) {
+	ns = xsltGetNamespace(ctxt, attr->parent, attr->ns, target);
+    } else {
+	ns = NULL;
+    }
+    val = xmlNodeListGetString(attr->doc, attr->children, 1);
+    ret = xmlSetNsProp(target, ns, attr->name, val);
+    if (val != NULL)
+	xmlFree(val);
+    return(ret);
+}
+
+/**
  * xsltCopyPropList:
  * @ctxt:  a XSLT process context
  * @target:  the element where the attributes will be grafted
@@ -1684,6 +1716,9 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			(list->nodeTab[i]->type == XML_HTML_DOCUMENT_NODE)) {
 			xsltCopyTreeList(ctxt, list->nodeTab[i]->children,
 				         ctxt->insert);
+		    } else if (list->nodeTab[i]->type == XML_ATTRIBUTE_NODE) {
+			xsltCopyProp(ctxt, ctxt->insert, 
+				     (xmlAttrPtr) list->nodeTab[i]);
 		    } else {
 			xsltCopyTree(ctxt, list->nodeTab[i], ctxt->insert);
 		    }
