@@ -3156,16 +3156,22 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		        (xmlStrEqual((xmlChar *)list->nodeTab[0]->doc->name,
 			   (const xmlChar *) " fake node libxslt")) &&
 			(list->nodeTab[0]->doc->psvi == NULL)) {
-			xmlDocPtr tmp;
-
 		        newDocPtr = xsltNewDocument(ctxt, 
 			       list->nodeTab[0]->doc);
 		        if (newDocPtr == NULL) {
 			    xsltTransformError(ctxt, NULL, inst,
 		    "xsltApplyTemplates : failed to allocate subdoc\n");
 		        }
-			tmp = (xmlDocPtr) list->nodeTab[0];
-			tmp->psvi = (xmlNodePtr)newDocPtr;
+			if (list->nodeTab[0]->type == XML_ELEMENT_NODE) {
+			    list->nodeTab[0]->psvi = (xmlNodePtr)newDocPtr;
+			} else
+			if ((list->nodeTab[0]->type == XML_DOCUMENT_NODE) ||
+			    (list->nodeTab[0]->type == XML_DOCUMENT_NODE)) {
+			    xmlDocPtr tmp;
+
+			    tmp = (xmlDocPtr) list->nodeTab[0];
+			    tmp->psvi = (xmlNodePtr)newDocPtr;
+			}
 			ctxt->document = newDocPtr;
 		    }
 		}

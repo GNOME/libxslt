@@ -1,3 +1,9 @@
+Thu Apr 22 08:38:35 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fix a problem where we updated an
+	  ELEMENT node psvi field as if it was a DOCUMENT one, leading
+	  to a subtle crash later, valgrind rules.
+
 The Apr 20 00:22:37 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/strings.c: fixed bug in UTF8 string tokenize
