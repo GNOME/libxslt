@@ -1,3 +1,14 @@
+Mon Dec  2 17:19:38 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c: applied patch from Josh Parsons fixing bug
+	  #100056
+	* tests/docs/Makefile.am tests/docs/bug-100.xml
+	  tests/general/Makefile.am tests/general/bug-100.*: added the
+	  example in the regression tests for this case
+	* tests/docs/Makefile.am tests/docs/bug-99.xml
+	  tests/general/Makefile.am tests/general/bug-99.*: this test
+	  covers an xsl:attribute namespace bug that Norm pointed out.
+
 Thu Nov 28 17:52:21 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltInternals.h libxslt/xsltutils.c libxslt/xsltutils.h

@@ -757,6 +757,9 @@ xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar *prefix) {
     if ((style == NULL) || (style->nsDefs == NULL))
 	return(0);
 
+    if (prefix == NULL)
+	prefix = BAD_CAST "#default";
+
     cur = (xsltExtDefPtr) style->nsDefs;
     while (cur != NULL) {
 	if (xmlStrEqual(prefix, cur->prefix))
