@@ -1,3 +1,8 @@
+Wed Aug  4 00:04:13 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* doc/downloads.html doc/xslt.html: fixed a couple of problems
+	  reported by Oliver Stoeneberg
+		
 Mon Aug  2 08:48:03 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/documents.c, libxslt/functions.c, libxslt/transform.c,
