@@ -360,7 +360,31 @@
 </xsl:template>
 
 <xsl:template match="citerefentry">
-  <xsl:call-template name="inline.charseq"/>
+  <xsl:choose>
+    <xsl:when test="$citerefentry.link != '0'">
+      <a>
+        <xsl:attribute name="href">
+          <xsl:call-template name="generate.citerefentry.link"/>
+        </xsl:attribute>
+        <xsl:call-template name="inline.charseq"/>
+      </a>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="inline.charseq"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="generate.citerefentry.link">
+  <!-- nop -->
+</xsl:template>
+
+<xsl:template name="x.generate.citerefentry.link">
+  <xsl:text>http://example.com/cgi-bin/man.cgi?</xsl:text>
+  <xsl:value-of select="refentrytitle"/>
+  <xsl:text>(</xsl:text>
+  <xsl:value-of select="manvolnum"/>
+  <xsl:text>)</xsl:text>
 </xsl:template>
 
 <xsl:template match="citetitle">
@@ -432,11 +456,22 @@
 
 <xsl:template match="trademark">
   <xsl:call-template name="inline.charseq"/>
-  <xsl:if test="@class">
-    <xsl:call-template name="dingbat">
-      <xsl:with-param name="dingbat" select="@class"/>
-    </xsl:call-template>
-  </xsl:if>
+  <xsl:choose>
+    <xsl:when test="@class = 'copyright'
+                    or @class = 'registered'">
+      <xsl:call-template name="dingbat">
+        <xsl:with-param name="dingbat" select="@class"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="@class = 'service'">
+      <sup>SM</sup>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="dingbat">
+        <xsl:with-param name="dingbat" select="'trademark'"/>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="firstterm">
@@ -444,7 +479,35 @@
 </xsl:template>
 
 <xsl:template match="glossterm">
-  <xsl:call-template name="inline.charseq"/>
+  <xsl:choose>
+    <xsl:when test="@linkend">
+      <xsl:variable name="targets" select="id(@linkend)"/>
+      <xsl:variable name="target" select="$targets[1]"/>
+
+      <xsl:call-template name="check.id.unique">
+        <xsl:with-param name="linkend" select="@linkend"/>
+      </xsl:call-template>
+
+      <a>
+        <xsl:if test="@id">
+          <xsl:attribute name="name">
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>
+        </xsl:if>
+
+        <xsl:attribute name="href">
+          <xsl:call-template name="href.target">
+            <xsl:with-param name="object" select="$target"/>
+          </xsl:call-template>
+        </xsl:attribute>
+
+        <xsl:call-template name="inline.italicseq"/>
+      </a>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="inline.italicseq"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="sgmltag">
@@ -463,7 +526,7 @@
 
   <xsl:choose>
     <xsl:when test="$class='attribute'">
-      <xsl:call-template name="inline.charseq"/>
+      <xsl:call-template name="inline.monoseq"/>
     </xsl:when>
     <xsl:when test="$class='attvalue'">
       <xsl:call-template name="inline.monoseq"/>
@@ -673,7 +736,16 @@
 
 <!-- ==================================================================== -->
 
-<xsl:template match="pob|street|city|state|postcode|country|phone|fax|otheraddr">
+<xsl:template match="pob|street|city|state|postcode|country|otheraddr">
+  <xsl:call-template name="inline.charseq"/>
+</xsl:template>
+
+<xsl:template match="phone|fax">
+  <xsl:call-template name="inline.charseq"/>
+</xsl:template>
+
+<!-- in Addresses, for example -->
+<xsl:template match="honorific|firstname|surname|lineage|othername">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 

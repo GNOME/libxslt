@@ -15,6 +15,14 @@
 
 <!-- ==================================================================== -->
 
+<xsl:template match="anchor">
+  <!-- FIXME: should this output an empty element with an ID? -->
+  <!-- what element!? -->
+  <!-- suppress -->
+</xsl:template>
+
+<!-- ==================================================================== -->
+
 <xsl:template match="xref">
   <xsl:variable name="targets" select="id(@linkend)"/>
   <xsl:variable name="target" select="$targets[1]"/>
@@ -34,7 +42,8 @@
     </xsl:when>
 
     <xsl:when test="$target/@xreflabel">
-      <fo:basic-link internal-destination="{@linkend}">
+      <fo:basic-link internal-destination="{@linkend}"
+                     xsl:use-attribute-sets="xref.properties">
 	<xsl:call-template name="xref.xreflabel">
 	  <xsl:with-param name="target" select="$target"/>
 	</xsl:call-template>
@@ -42,7 +51,8 @@
     </xsl:when>
 
     <xsl:otherwise>
-      <fo:basic-link internal-destination="{@linkend}">
+      <fo:basic-link internal-destination="{@linkend}"
+                     xsl:use-attribute-sets="xref.properties">
         <xsl:choose>
 	  <xsl:when test="@endterm">
 	    <xsl:variable name="etargets" select="id(@endterm)"/>
@@ -65,157 +75,6 @@
           <xsl:otherwise>
             <xsl:apply-templates select="$target" mode="xref-to"/>
           </xsl:otherwise>
-
-<!--
-          <xsl:when test="$refelem='figure'">
-            <xsl:call-template name="xref.figure">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='example'">
-            <xsl:call-template name="xref.example">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='table'">
-            <xsl:call-template name="xref.table">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='equation'">
-            <xsl:call-template name="xref.equation">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='cmdsynopsis'">
-            <xsl:call-template name="xref.cmdsynopsis">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='funcsynopsis'">
-            <xsl:call-template name="xref.funcsynopsis">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='dedication'">
-            <xsl:call-template name="xref.dedication">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='preface'">
-            <xsl:call-template name="xref.preface">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='chapter'">
-            <xsl:call-template name="xref.chapter">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='appendix'">
-            <xsl:call-template name="xref.appendix">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='bibliography'">
-            <xsl:call-template name="xref.bibliography">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='biblioentry'">
-            <xsl:call-template name="xref.biblioentry">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='bibliomixed'">
-            <xsl:call-template name="xref.biblioentry">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='glossary'">
-            <xsl:call-template name="xref.glossary">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='index'">
-            <xsl:call-template name="xref.index">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='section'
-                          or $refelem='simplesect'
-                          or $refelem='sect1'
-                          or $refelem='sect2'
-                          or $refelem='sect3'
-                          or $refelem='sect4'
-                          or $refelem='sect5'
-                          or $refelem='refsect1'
-                          or $refelem='refsect2'
-                          or $refelem='refsect3'">
-            <xsl:call-template name="xref.section">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='listitem' 
-                          and name($target/..)='orderedlist'">
-            <xsl:apply-templates select="$target" mode="xref"/>
-          </xsl:when>
-
-          <xsl:when test="$refelem='question'">
-            <xsl:call-template name="xref.question">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='answer'">
-            <xsl:call-template name="xref.answer">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='part'">
-            <xsl:call-template name="xref.part">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='reference'">
-            <xsl:call-template name="xref.reference">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:when test="$refelem='book'">
-            <xsl:call-template name="xref.book">
-              <xsl:with-param name="target" select="$target"/>
-            </xsl:call-template>
-          </xsl:when>
-
-          <xsl:otherwise>
-	    <xsl:message>
-	      <xsl:text>[Don't know what gentext to create for xref to: "</xsl:text>
-	      <xsl:value-of select="$refelem"/>
-	      <xsl:text>"]</xsl:text>
-	    </xsl:message>
-	    <xsl:text>???</xsl:text>
-          </xsl:otherwise>
--->
         </xsl:choose>
       </fo:basic-link>
     </xsl:otherwise>
@@ -224,149 +83,72 @@
 
 <!--- ==================================================================== -->
 
-<xsl:template name="cross-reference">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-  <xsl:param name="xref.text">
-    <xsl:call-template name="gentext.xref.text">
-      <xsl:with-param name="element.name" select="$refelem"/>
-      <xsl:with-param name="default">%g %n</xsl:with-param>
-    </xsl:call-template>
-  </xsl:param>
-
-  <xsl:call-template name="subst.xref.text">
-    <xsl:with-param name="xref.text" select="$xref.text"/>
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
-</xsl:template>
-
 <xsl:template match="*" mode="xref-to">
   <xsl:param name="target" select="."/>
   <xsl:param name="refelem" select="local-name($target)"/>
 
   <xsl:message>
-    <xsl:text>[Don't know what gentext to create for xref to: "</xsl:text>
+    <xsl:text>Don't know what gentext to create for xref to: "</xsl:text>
     <xsl:value-of select="$refelem"/>
-    <xsl:text>"]</xsl:text>
+    <xsl:text>"</xsl:text>
   </xsl:message>
   <xsl:text>???</xsl:text>
 </xsl:template>
 
 <xsl:template match="author" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
   <xsl:call-template name="person.name"/>
 </xsl:template>
 
 <xsl:template match="figure" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="example" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="table" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="equation" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="cmdsynopsis" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:variable name="command" select="($target//command)[1]"/>
-
-  <xsl:apply-templates select="$command" mode="xref"/>
+  <xsl:apply-templates select="(.//command)[1]" mode="xref"/>
 </xsl:template>
 
 <xsl:template match="funcsynopsis" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:variable name="func" select="($target//function)[1]"/>
-
-  <xsl:apply-templates select="$func" mode="xref"/>
+  <xsl:apply-templates select="(.//function)[1]" mode="xref"/>
 </xsl:template>
 
 <xsl:template match="dedication" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="preface" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="chapter" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="appendix" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="bibliography" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="biblioentry|bibliomixed" mode="xref-to">
   <!-- handles both biblioentry and bibliomixed -->
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
   <xsl:text>[</xsl:text>
   <xsl:choose>
-    <xsl:when test="local-name($target/*[1]) = 'abbrev'">
-      <xsl:apply-templates select="$target/*[1]"/>
+    <xsl:when test="local-name(*[1]) = 'abbrev'">
+      <xsl:apply-templates select="*[1]"/>
     </xsl:when>
     <xsl:otherwise>
       <xsl:value-of select="@id"/>
@@ -376,116 +158,42 @@
 </xsl:template>
 
 <xsl:template match="glossary" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="index" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="section|simplesect
                      |sect1|sect2|sect3|sect4|sect5
                      |refsect1|refsect2|refsect3" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:choose>
-    <xsl:when test="$section.autolabel">
-      <xsl:call-template name="gentext.element.name">
-        <xsl:with-param name="element.name" select="$refelem"/>
-      </xsl:call-template>
-      <xsl:text> </xsl:text>
-      <xsl:apply-templates select="$target" mode="label.content"/>
-
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:call-template name="gentext.element.name">
-        <xsl:with-param name="element.name">the section called</xsl:with-param>
-      </xsl:call-template>
-      <xsl:text> </xsl:text>
-      <xsl:call-template name="gentext.startquote"/>
-      <xsl:apply-templates select="$target" mode="title.content"/>
-      <xsl:call-template name="gentext.endquote"/>
-    </xsl:otherwise>
-  </xsl:choose>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
+  <!-- What about "in Chapter X"? -->
 </xsl:template>
 
 <xsl:template match="question" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="answer" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="part" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="reference" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:call-template name="cross-reference">
-    <xsl:with-param name="target" select="$target"/>
-  </xsl:call-template>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <xsl:template match="co" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-  <xsl:apply-templates select="$target" mode="callout-bug"/>
-</xsl:template>
-
-<xsl:template match="co" mode="conumber">
-  <xsl:number from="literallayout|programlisting|screen|synopsis"
-              level="single"
-              format="1"/>
+  <xsl:apply-templates select="." mode="callout-bug"/>
 </xsl:template>
 
 <xsl:template match="book" mode="xref-to">
-  <xsl:param name="target" select="."/>
-  <xsl:param name="refelem" select="local-name($target)"/>
-
-  <xsl:variable name="title">
-    <xsl:choose>
-      <xsl:when test="$target/title">
-        <xsl:apply-templates select="$target/title" mode="xref"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="$target/bookinfo/title"
-                             mode="xref"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <fo:inline font-style="italic">
-    <xsl:copy-of select="$title"/>
-  </fo:inline>
+  <xsl:apply-templates select="." mode="object.xref.markup"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -498,13 +206,15 @@
     <xsl:with-param name="linkend" select="@linkend"/>
   </xsl:call-template>
 
-  <fo:basic-link internal-destination="{@linkend}">
+  <fo:basic-link internal-destination="{@linkend}"
+                 xsl:use-attribute-sets="xref.properties">
     <xsl:apply-templates/>
   </fo:basic-link>
 </xsl:template>
 
 <xsl:template match="ulink">
-  <fo:basic-link external-destination="{@url}">
+  <fo:basic-link external-destination="{@url}"
+                 xsl:use-attribute-sets="xref.properties">
     <xsl:choose>
       <xsl:when test="count(child::node())=0">
 	<xsl:value-of select="@url"/>
@@ -515,9 +225,11 @@
     </xsl:choose>
   </fo:basic-link>
   <xsl:if test="count(child::node()) != 0">
-    <xsl:text> [</xsl:text>
-    <xsl:value-of select="@url"/>
-    <xsl:text>]</xsl:text>
+    <fo:inline hyphenate="false">
+      <xsl:text> [</xsl:text>
+      <xsl:value-of select="@url"/>
+      <xsl:text>]</xsl:text>
+    </fo:inline>
   </xsl:if>
 </xsl:template>
 
@@ -542,12 +254,12 @@
                     or local-name($target) = 'setindex'
                     or local-name($target) = 'colophon'">
       <xsl:call-template name="gentext.startquote"/>
-      <xsl:apply-templates select="$target" mode="title.content"/>
+      <xsl:apply-templates select="$target" mode="title.markup"/>
       <xsl:call-template name="gentext.endquote"/>
     </xsl:when>
     <xsl:otherwise>
       <fo:inline font-style="italic">
-        <xsl:apply-templates select="$target" mode="title.content"/>
+        <xsl:apply-templates select="$target" mode="title.markup"/>
       </fo:inline>
     </xsl:otherwise>
   </xsl:choose>
@@ -555,7 +267,7 @@
 
 <xsl:template name="number.xref">
   <xsl:param name="target" select="."/>
-  <xsl:apply-templates select="$target" mode="label.content"/>
+  <xsl:apply-templates select="$target" mode="label.markup"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -580,6 +292,22 @@
 
 <xsl:template match="function" mode="xref">
   <xsl:call-template name="inline.monoseq"/>
+</xsl:template>
+
+<xsl:template name="insert.page.citation">
+  <xsl:param name="id" select="'???'"/>
+  <xsl:if test="$insert.xref.page.number">
+    <xsl:text> </xsl:text>
+    <fo:inline keep-together.within-line="always">
+      <xsl:text>[</xsl:text>
+      <xsl:call-template name="gentext">
+        <xsl:with-param name="key" select="'page.citation'"/>
+      </xsl:call-template>
+      <xsl:text> </xsl:text>
+      <fo:page-number-citation ref-id="{$id}"/>
+      <xsl:text>]</xsl:text>
+    </fo:inline>
+  </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>

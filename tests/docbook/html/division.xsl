@@ -30,6 +30,7 @@
 
 <xsl:template match="set/setinfo"></xsl:template>
 <xsl:template match="set/title"></xsl:template>
+<xsl:template match="set/titleabbrev"></xsl:template>
 <xsl:template match="set/subtitle"></xsl:template>
 
 <!-- ==================================================================== -->
@@ -51,6 +52,7 @@
 
 <xsl:template match="book/bookinfo"></xsl:template>
 <xsl:template match="book/title"></xsl:template>
+<xsl:template match="book/titleabbrev"></xsl:template>
 <xsl:template match="book/subtitle"></xsl:template>
 
 <!-- ==================================================================== -->
@@ -78,7 +80,9 @@
 </xsl:template>
 
 <xsl:template match="part/docinfo"></xsl:template>
+<xsl:template match="part/partinfo"></xsl:template>
 <xsl:template match="part/title"></xsl:template>
+<xsl:template match="part/titleabbrev"></xsl:template>
 <xsl:template match="part/subtitle"></xsl:template>
 
 <xsl:template match="partintro">
@@ -94,8 +98,8 @@
 </xsl:template>
 
 <xsl:template match="partintro/title"></xsl:template>
-<xsl:template match="partintro/subtitle"></xsl:template>
 <xsl:template match="partintro/titleabbrev"></xsl:template>
+<xsl:template match="partintro/subtitle"></xsl:template>
 
 <xsl:template match="partintro/title" mode="partintro.title.mode">
   <xsl:variable name="id">

@@ -41,7 +41,10 @@
 
 <!-- ==================================================================== -->
 
-<xsl:template match="footnote/para[1]">
+<xsl:template match="footnote/para[1]
+                     |footnote/simpara[1]
+                     |footnote/formalpara[1]"
+              priority="2">
   <!-- this only works if the first thing in a footnote is a para, -->
   <!-- which is ok, because it usually is. -->
   <fo:block>

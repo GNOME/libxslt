@@ -1,6 +1,6 @@
 README for the DocBook Stylesheets
 
-These are XSL stylesheets for the DocBk XML DTD. (They would
+These are XSL stylesheets for the DocBook XML DTD. (They would
 also work for the DocBook DTD, modulo certain namecase problems
 and the fact that there aren't (yet) any XSL implementations
 that work with SGML source documents.)
@@ -9,25 +9,30 @@ As of version 1.0, most of the elements in DocBook are handled
 in some way or another, usually reasonably, but there's still
 lots of work to be done.
 
+For more information, see http://docbook.sourceforge.net/
+
 Manifest
 --------
 
-README    this file
-TODO      planned features not yet implemented (may be incomplete :-)
-BUGS      known problems (may also be incomplete :-)
-VERSION   the current version number (note that this is an XSL stylesheet,
-          included by both fo/docbook.xsl and html/docbook.xsl)
-WhatsNew  changes since the last public release (for a complete list
-          of changes, see the ChangeLog file(s))
-bin/      scripts and other tools that work with the stylesheets
-common/	  contains code common to both stylesheets
-contrib/  stylesheets contributed by others
-dtds/     dtds used by the stylesheets or stylesheet outputs
-fo/       a stylesheet that produces XSL FO result trees
-html/	  a stylesheet that produces HTML/XHTML result trees
-lib/      contains schema-independent functions
-template/ contains templates for building stylesheet customization layers
-test/     test documents
+README      this file
+TODO        planned features not yet implemented (may be incomplete :-)
+BUGS        known problems (may also be incomplete :-)
+VERSION     the current version number (note that this is an XSL stylesheet,
+            included by both fo/docbook.xsl and html/docbook.xsl)
+WhatsNew    changes since the last public release (for a complete list
+            of changes, see the ChangeLog file(s))
+common/	    contains code common to both stylesheets
+doc/        documentation
+docsrc/     documentation sources
+extensions/ Java extensions
+fo/         stylesheets that produce XSL FO
+html/	    stylesheets that produce HTML
+htmlhelp/   stylesheets that produce HTML Help 
+images/     images
+javahelp/   stylesheets that produce Java Help
+lib/        contains schema-independent functions
+template/   contains templates for building stylesheet customization layers
+xhtml/      stylesheets that produce XHTML
 
 Changes
 -------
@@ -55,12 +60,7 @@ using your favorite XSLT processor:
 Copyright
 ---------
 
-Copyright (C) 1999, 2000 Norman Walsh
-
-Ironically, assertion of copyright is done to make it _easier_
-to distribute these stylesheets.  (At least one organization,
-Software in the Public Interest, requires an explicit copyright
-statement in order to redistribute the software.)
+Copyright (C) 1999, 2000, 2001 Norman Walsh
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -102,6 +102,3 @@ Contacting the Author
 ---------------------
 
 These stylesheets are maintained by Norman Walsh, <ndw@nwalsh.com>.
-
-The best way to reach norm is by email.  You will find additional
-contact information at http://nwalsh.com/~ndw/

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="10pt" text-align="justify">
   <fo:layout-master-set>
     <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
       <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2599688" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2753077" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
@@ -89,11 +89,11 @@
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
-          <fo:block>Article Test Document Title</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" text-align="center" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Article Test Document Title</fo:block>
         </fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">nwalshNorman WalshOther CreditEdited bySomeother EditorSomeone Else</fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Copyright &#xA9; 1999 by Norman Walsh</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Copyright &#xA9; 1999 Norman Walsh</fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Apr. 26, 1999</fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block>
@@ -108,9 +108,9 @@ This article is just a test. This article is just a test.
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is a footnote<fo:footnote><fo:inline>[1]</fo:inline><fo:footnote-body font-size="8pt"><fo:block>[1] See?</fo:block></fo:footnote-body></fo:footnote>.</fo:block>
       <fo:table>
-        <fo:table-column column-number="1"/>
-        <fo:table-column column-number="2"/>
-        <fo:table-column column-number="3"/>
+        <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
+        <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2"/>
+        <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3"/>
         <fo:table-body>
           <fo:table-row>
             <fo:table-cell>
@@ -171,8 +171,8 @@ This article is just a test. This article is just a test.
           </fo:table-row>
         </fo:table-body>
       </fo:table>
-      <fo:block id="id2740637">
-        <fo:block font-size="16pt" font-weight="bold" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Appendix A. Appendix</fo:block>
+      <fo:block id="id2757771">
+        <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Appendix</fo:block>
         <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is just a test.</fo:block>
       </fo:block>
     </fo:flow>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="10pt" text-align="justify">
   <fo:layout-master-set>
     <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
       <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
@@ -85,7 +85,7 @@
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
-          <fo:block>Book Title</fo:block>
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Book Title</fo:block>
         </fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="14.4pt" font-weight="bold" font-family="Helvetica">
@@ -97,18 +97,21 @@
   </fo:page-sequence>
   <fo:page-sequence hyphenate="true" format="i" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
-      <fo:block>
+      <fo:block space-before.minimum="0.5em" space-before.optimum="1em" space-before.maximum="2em" space-after.minimum="0.5em" space-after.optimum="1em" space-after.maximum="2em">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
         </fo:block>
-        <fo:block>1.test<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="ch1"/></fo:block>
+        <fo:block text-align-last="justify" end-indent="2pc" last-line-end-indent="-2pc">
+          <fo:inline keep-with-next.within-line="always">1 test</fo:inline>
+          <fo:inline keep-together.within-line="always"> <fo:leader leader-pattern="dots" keep-with-next.within-line="always"/> <fo:basic-link internal-destination="ch1"><fo:page-number-citation ref-id="ch1"/></fo:basic-link></fo:inline>
+        </fo:block>
       </fo:block>
     </fo:flow>
   </fo:page-sequence>
   <fo:page-sequence id="ch1" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
     <fo:static-content flow-name="xsl-region-before">
       <fo:block text-align="center">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">1. test</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">Chapter 1. test</fo:block>
       </fo:block>
     </fo:static-content>
     <fo:static-content flow-name="xsl-region-after">
@@ -119,13 +122,13 @@
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
-          <fo:block>Chapter 1. test</fo:block>
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Chapter 1. test</fo:block>
         </fo:block>
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">How many &#xB0; can you &#xA9;.</fo:block>
-      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">And what about <fo:basic-link internal-destination="ch1">Chapter 1., <fo:inline font-style="italic">test</fo:inline></fo:basic-link>.</fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">And what about <fo:basic-link internal-destination="ch1">Chapter 1. test</fo:basic-link>.</fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">And what about ???.</fo:block>
-      <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
+      <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt">
 This is a program
 listing.
 </fo:block>

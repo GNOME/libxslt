@@ -23,7 +23,7 @@
     </xsl:call-template>
   </xsl:variable>
   <xsl:variable name="title">
-    <xsl:apply-templates select="$node" mode="title.ref"/>
+    <xsl:apply-templates select="$node" mode="title.markup"/>
   </xsl:variable>
 
   <xsl:if test="$passivetex.extensions != 0">
@@ -34,7 +34,8 @@
     </fotex:bookmark>
   </xsl:if>
 
-  <fo:block>
+  <fo:block keep-with-next.within-column="always"
+            hyphenate="false">
     <xsl:copy-of select="$title"/>
   </fo:block>
 </xsl:template>
@@ -122,7 +123,7 @@
     </fo:page-sequence>
   </xsl:if>
 
-  <xsl:if test="$generate.division.toc != '0'">
+  <xsl:if test="$generate.book.toc != '0'">
     <fo:page-sequence hyphenate="{$hyphenate}"
                       format="i"
                       master-name="{$master-name}">
@@ -145,7 +146,7 @@
     </fo:page-sequence>
   </xsl:if>
 
-  <xsl:if test="$generate.division.figure.lot != '0' and .//figure">
+  <xsl:if test="$generate.book.figure.lot != '0' and .//figure">
     <fo:page-sequence hyphenate="{$hyphenate}"
                       format="i"
                       master-name="{$master-name}">
@@ -171,7 +172,7 @@
     </fo:page-sequence>
   </xsl:if>
 
-  <xsl:if test="$generate.division.table.lot != '0' and .//table">
+  <xsl:if test="$generate.book.table.lot != '0' and .//table">
     <fo:page-sequence hyphenate="{$hyphenate}"
                       format="i"
                       master-name="{$master-name}">
@@ -197,7 +198,7 @@
     </fo:page-sequence>
   </xsl:if>
 
-  <xsl:if test="$generate.division.example.lot != '0' and .//example">
+  <xsl:if test="$generate.book.example.lot != '0' and .//example">
     <fo:page-sequence hyphenate="{$hyphenate}"
                       format="i"
                       master-name="{$master-name}">
@@ -223,7 +224,7 @@
     </fo:page-sequence>
   </xsl:if>
 
-  <xsl:if test="$generate.division.equation.lot != '0' and .//equation">
+  <xsl:if test="$generate.book.equation.lot != '0' and .//equation">
     <fo:page-sequence hyphenate="{$hyphenate}"
                       format="i"
                       master-name="{$master-name}">
@@ -299,7 +300,7 @@
   <xsl:call-template name="part.titlepage"/>
 </xsl:template>
 
-<xsl:template match="part/docinfo"></xsl:template>
+<xsl:template match="part/docinfo|partinfo"></xsl:template>
 <xsl:template match="part/title"></xsl:template>
 <xsl:template match="part/subtitle"></xsl:template>
 

@@ -24,7 +24,7 @@
   <xsl:param name="content">
     <xsl:apply-templates/>
   </xsl:param>
-  <fo:inline font-family="monospace">
+  <fo:inline font-family="{$monospace.font.family}">
     <xsl:copy-of select="$content"/>
   </fo:inline>
 </xsl:template>
@@ -51,7 +51,7 @@
   <xsl:param name="content">
     <xsl:apply-templates/>
   </xsl:param>
-  <fo:inline font-weight="bold" font-family="monospace">
+  <fo:inline font-weight="bold" font-family="{$monospace.font.family}">
     <xsl:copy-of select="$content"/>
   </fo:inline>
 </xsl:template>
@@ -60,7 +60,7 @@
   <xsl:param name="content">
     <xsl:apply-templates/>
   </xsl:param>
-  <fo:inline font-style="italic" font-family="monospace">
+  <fo:inline font-style="italic" font-family="{$monospace.font.family}">
     <xsl:copy-of select="$content"/>
   </fo:inline>
 </xsl:template>
@@ -118,6 +118,10 @@
 </xsl:template>
 
 <xsl:template match="computeroutput">
+  <xsl:call-template name="inline.monoseq"/>
+</xsl:template>
+
+<xsl:template match="constant">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
@@ -366,7 +370,7 @@
 
   <xsl:choose>
     <xsl:when test="$class='attribute'">
-      <xsl:call-template name="inline.charseq"/>
+      <xsl:call-template name="inline.monoseq"/>
     </xsl:when>
     <xsl:when test="$class='attvalue'">
       <xsl:call-template name="inline.monoseq"/>
@@ -419,12 +423,30 @@
         </xsl:with-param>
       </xsl:call-template>
     </xsl:when>
+    <xsl:when test="$class='xmlpi'">
+      <xsl:call-template name="inline.monoseq">
+        <xsl:with-param name="content">
+          <xsl:text>&lt;?</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>?&gt;</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
     <xsl:when test="$class='starttag'">
       <xsl:call-template name="inline.monoseq">
         <xsl:with-param name="content">
           <xsl:text>&lt;</xsl:text>
           <xsl:apply-templates/>
           <xsl:text>&gt;</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="$class='emptytag'">
+      <xsl:call-template name="inline.monoseq">
+        <xsl:with-param name="content">
+          <xsl:text>&lt;</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>/&gt;</xsl:text>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:when>
@@ -551,9 +573,22 @@
   </xsl:if>
 </xsl:template>
 
+<xsl:template match="productnumber">
+  <xsl:call-template name="inline.charseq"/>
+</xsl:template>
+
 <!-- ==================================================================== -->
 
-<xsl:template match="street|city|state|postcode|country|phone|fax|otheraddr">
+<xsl:template match="pob|street|city|state|postcode|country|otheraddr">
+  <xsl:call-template name="inline.charseq"/>
+</xsl:template>
+
+<xsl:template match="phone|fax">
+  <xsl:call-template name="inline.charseq"/>
+</xsl:template>
+
+<!-- in Addresses, for example -->
+<xsl:template match="honorific|firstname|surname|lineage|othername">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 

@@ -13,13 +13,16 @@
 
      ******************************************************************** -->
 
+<!-- ==================================================================== -->
+
 <xsl:template name="division.toc">
   <xsl:variable name="nodes"
                 select="part|reference|preface
                         |chapter|appendix
+                        |article
                         |bibliography|glossary|index"/>
   <xsl:if test="$nodes">
-    <fo:block>
+    <fo:block xsl:use-attribute-sets="toc.margin.properties">
       <xsl:call-template name="table.of.contents.titlepage"/>
       <xsl:apply-templates select="$nodes" mode="toc"/>
     </fo:block>
@@ -27,13 +30,15 @@
 </xsl:template>
 
 <xsl:template name="component.toc">
-  <xsl:variable name="nodes" select="section|sect1"/>
+  <xsl:variable name="nodes" select="section|sect1|refentry
+                                     |article|bibliography|glossary
+                                     |appendix"/>
   <xsl:if test="$nodes">
-    <fo:block>
+    <fo:block xsl:use-attribute-sets="toc.margin.properties">
       <fo:block>
          <fo:inline font-weight="bold">
-           <xsl:call-template name="gentext.element.name">
-             <xsl:with-param name="element.name">TableofContents</xsl:with-param>
+           <xsl:call-template name="gentext">
+             <xsl:with-param name="key">TableofContents</xsl:with-param>
            </xsl:call-template>
          </fo:inline>
        </fo:block>
@@ -42,20 +47,41 @@
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="part" mode="toc">
+<!-- ==================================================================== -->
+
+<xsl:template name="toc.line">
   <xsl:variable name="id">
     <xsl:call-template name="object.id"/>
   </xsl:variable>
 
-  <fo:block>
-    <xsl:apply-templates select="." mode="label.content"/>
-    <xsl:apply-templates select="." mode="title.content"/>
-    <fo:leader leader-pattern="dots" text-align-last="justify"/>
-    <fo:page-number-citation ref-id="{$id}"/>
+  <fo:block text-align-last="justify"
+            end-indent="2pc"
+            last-line-end-indent="-2pc">
+    <fo:inline keep-with-next.within-line="always">
+      <xsl:apply-templates select="." mode="label.markup"/>
+      <xsl:text> </xsl:text>
+      <xsl:apply-templates select="." mode="title.markup"/>
+    </fo:inline>
+    <fo:inline keep-together.within-line="always">
+      <xsl:text> </xsl:text>
+      <fo:leader leader-pattern="dots"
+                 keep-with-next.within-line="always"/>
+      <xsl:text> </xsl:text>
+      <fo:basic-link internal-destination="{$id}">
+<!--                     xsl:use-attribute-sets="xref.properties">-->
+        <fo:page-number-citation ref-id="{$id}"/>
+      </fo:basic-link>
+    </fo:inline>
   </fo:block>
+</xsl:template>
+
+<!-- ==================================================================== -->
+
+<xsl:template match="part" mode="toc">
+  <xsl:call-template name="toc.line"/>
 
   <xsl:if test="chapter|appendix|preface|reference">
-    <fo:block start-indent="2pc">
+    <fo:block start-indent="{count(ancestor::*)*2}pc">
       <xsl:apply-templates select="chapter|appendix|preface|reference"
                            mode="toc"/>
     </fo:block>
@@ -63,39 +89,25 @@
 </xsl:template>
 
 <xsl:template match="reference" mode="toc">
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id"/>
-  </xsl:variable>
-
-  <fo:block>
-    <xsl:apply-templates select="." mode="label.content"/>
-    <xsl:apply-templates select="." mode="title.content"/>
-    <fo:leader leader-pattern="dots" text-align-last="justify"/>
-    <fo:page-number-citation ref-id="{$id}"/>
-  </fo:block>
+  <xsl:call-template name="toc.line"/>
 
   <xsl:if test="refentry">
-    <fo:block start-indent="2pc">
+    <fo:block start-indent="{count(ancestor::*)*2}pc">
       <xsl:apply-templates select="refentry" mode="toc"/>
     </fo:block>
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="preface|chapter|appendix"
-              mode="toc">
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id"/>
-  </xsl:variable>
+<xsl:template match="refentry" mode="toc">
+  <xsl:call-template name="toc.line"/>
+</xsl:template>
 
-  <fo:block>
-    <xsl:apply-templates select="." mode="label.content"/>
-    <xsl:apply-templates select="." mode="title.content"/>
-    <fo:leader leader-pattern="dots" text-align-last="justify"/>
-    <fo:page-number-citation ref-id="{$id}"/>
-  </fo:block>
+<xsl:template match="preface|chapter|appendix|article"
+              mode="toc">
+  <xsl:call-template name="toc.line"/>
 
   <xsl:if test="section|sect1">
-    <fo:block start-indent="2pc">
+    <fo:block start-indent="{count(ancestor::*)*2}pc">
       <xsl:apply-templates select="section|sect1"
                            mode="toc"/>
     </fo:block>
@@ -104,19 +116,10 @@
 
 <xsl:template match="section|sect1|sect2|sect3|sect4|sect5"
               mode="toc">
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id"/>
-  </xsl:variable>
-
-  <fo:block>
-    <xsl:apply-templates select="." mode="label.content"/>
-    <xsl:apply-templates select="." mode="title.content"/>
-    <fo:leader leader-pattern="dots" text-align-last="justify"/>
-    <fo:page-number-citation ref-id="{$id}"/>
-  </fo:block>
+  <xsl:call-template name="toc.line"/>
 
   <xsl:if test="section|sect2|sect3|sect4|sect5">
-    <fo:block start-indent="2pc">
+    <fo:block start-indent="{count(ancestor::*)*2}pc">
       <xsl:apply-templates select="section|sect2|sect3|sect4|sect5"
                            mode="toc"/>
     </fo:block>
@@ -125,31 +128,13 @@
 
 <xsl:template match="bibliography|glossary"
               mode="toc">
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id"/>
-  </xsl:variable>
-
-  <fo:block>
-    <xsl:apply-templates select="." mode="label.content"/>
-    <xsl:apply-templates select="." mode="title.content"/>
-    <fo:leader leader-pattern="dots" text-align-last="justify"/>
-    <fo:page-number-citation ref-id="{$id}"/>
-  </fo:block>
+  <xsl:call-template name="toc.line"/>
 </xsl:template>
 
 <xsl:template match="index"
               mode="toc">
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id"/>
-  </xsl:variable>
-
   <xsl:if test="* or $generate.index">
-    <fo:block>
-      <xsl:apply-templates select="." mode="label.content"/>
-      <xsl:apply-templates select="." mode="title.content"/>
-      <fo:leader leader-pattern="dots" text-align-last="justify"/>
-      <fo:page-number-citation ref-id="{$id}"/>
-    </fo:block>
+    <xsl:call-template name="toc.line"/>
   </xsl:if>
 </xsl:template>
 
@@ -188,16 +173,7 @@
 </xsl:template>
 
 <xsl:template match="figure|table|example|equation" mode="toc">
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id"/>
-  </xsl:variable>
-
-  <fo:block>
-    <xsl:apply-templates select="." mode="label.content"/>
-    <xsl:apply-templates select="." mode="title.content"/>
-    <fo:leader leader-pattern="dots" text-align-last="justify"/>
-    <fo:page-number-citation ref-id="{$id}"/>
-  </fo:block>
+  <xsl:call-template name="toc.line"/>
 </xsl:template>
 
 <!-- ==================================================================== -->

@@ -1,8 +1,10 @@
 <?xml version='1.0'?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
-                xmlns:tbl="http://nwalsh.com/com.nwalsh.saxon6.Table"
-                exclude-result-prefixes="doc tbl"
+                xmlns:stbl="http://nwalsh.com/xslt/ext/com.nwalsh.saxon.Table"
+                xmlns:xtbl="com.nwalsh.xalan.Table"
+                xmlns:lxslt="http://xml.apache.org/xslt"
+                exclude-result-prefixes="doc stbl xtbl lxslt"
                 version='1.0'>
 
 <!-- ********************************************************************
@@ -14,6 +16,9 @@
      and other information.
 
      ******************************************************************** -->
+
+<lxslt:component prefix="xtbl"
+                 functions="adjustColumnWidths"/>
 
 <xsl:template match="tgroup">
   <table>
@@ -48,11 +53,14 @@
       <xsl:attribute name="width">100%</xsl:attribute>
     </xsl:if>
 
+<!-- this is wrong, align on tgroup gives the default alignment for table
+     cells, not the alignment for the table itself...
     <xsl:if test="@align">
       <xsl:attribute name="align">
         <xsl:value-of select="@align"/>
       </xsl:attribute>
     </xsl:if>
+-->
 
     <xsl:choose>
       <xsl:when test="../@frame='none'">
@@ -102,10 +110,26 @@
           <xsl:when test="contains($table.width, '%')">
             <xsl:value-of select="$table.width"/>
           </xsl:when>
-          <xsl:when test="contains($vendor, 'SAXON 6')
-                          and $saxon.extensions != 0
-                          and $saxon.tablecolumns != 0">
-            <xsl:value-of select="tbl:convertLength($table.width)"/>
+          <xsl:when test="$use.extensions != 0
+                          and $tablecolumns.extension != 0">
+            <xsl:choose>
+              <xsl:when test="contains($vendor, 'SAXON 6')">
+                <xsl:value-of select="stbl:convertLength($table.width)"/>
+              </xsl:when>
+              <xsl:when test="contains($vendor, 'SAXON 5')">
+                <!-- the saxon5 extension doesn't support this (yet) -->
+                <xsl:value-of select="$table.width"/>
+              </xsl:when>
+              <xsl:when test="contains($vendor, 'Apache Software Foundation')">
+                <xsl:value-of select="xtbl:convertLength($table.width)"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:message terminate="yes">
+                  <xsl:text>Don't know how to do convert lengths with </xsl:text>
+                  <xsl:value-of select="$vendor"/>
+                </xsl:message>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="$table.width"/>
@@ -115,17 +139,35 @@
     </xsl:if>
 
     <xsl:choose>
-      <xsl:when test="contains($vendor, 'SAXON 6')
-                      and $saxon.extensions != 0
-                      and $saxon.tablecolumns != 0">
-        <xsl:copy-of select="tbl:adjustColumnWidths($colgroup)"/>
+      <xsl:when test="$use.extensions != 0
+                      and $tablecolumns.extension != 0">
+        <xsl:choose>
+          <xsl:when test="contains($vendor, 'SAXON 6')">
+            <xsl:copy-of select="stbl:adjustColumnWidths($colgroup)"/>
+          </xsl:when>
+          <xsl:when test="contains($vendor, 'SAXON 5')">
+            <!-- the saxon5 extension doesn't support this (yet) -->
+            <xsl:copy-of select="$colgroup"/>
+          </xsl:when>
+          <xsl:when test="contains($vendor, 'Apache Software Foundation')">
+            <xsl:copy-of select="xtbl:adjustColumnWidths($colgroup)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message terminate="yes">
+              <xsl:text>Don't know how to do adjust column widths with </xsl:text>
+              <xsl:value-of select="$vendor"/>
+            </xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="$colgroup"/>
       </xsl:otherwise>
     </xsl:choose>
 
-    <xsl:apply-templates/>
+    <xsl:apply-templates select="thead"/>
+    <xsl:apply-templates select="tbody"/>
+    <xsl:apply-templates select="tfoot"/>
 
     <xsl:if test=".//footnote">
       <tr>
@@ -278,16 +320,9 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:call-template name="add-empty-entries">
-      <xsl:with-param name="number">
-        <xsl:choose>
-          <xsl:when test="$prev.ending.colnum = ''">0</xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$entry.colnum - $prev.ending.colnum - 1"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:with-param>
-    </xsl:call-template>
+    <!-- 1.31: removed add-empty-entries; there's no practical way for
+         XSLT to keep track of "overhang" from morerows in previous rows.
+         At least none that I can think of. -->
   </xsl:if>
 
   <xsl:element name="{$cellgi}">
@@ -341,38 +376,6 @@
     </xsl:choose>
   </xsl:element>
 </xsl:template>
-
-<xsl:template name="add-empty-entries">
-  <xsl:param name="number" select="'0'"/>
-  <xsl:choose>
-    <xsl:when test="$number &lt;= 0"></xsl:when>
-    <xsl:otherwise>
-      <td>&#160;</td>
-      <xsl:call-template name="add-empty-entries">
-        <xsl:with-param name="number" select="$number - 1"/>
-      </xsl:call-template>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<doc:template name="add-empty-entries" xmlns="">
-<refpurpose>Insert empty TDs into a table row</refpurpose>
-<refdescription>
-<para>This template inserts empty TDs into a table row.</para>
-</refdescription>
-<refparameter>
-<variablelist>
-<varlistentry><term>number</term>
-<listitem>
-<para>The number of empty TDs to add.</para>
-</listitem>
-</varlistentry>
-</variablelist>
-</refparameter>
-<refreturn>
-<para>Nothing</para>
-</refreturn>
-</doc:template>
 
 <xsl:template name="entry.colnum">
   <xsl:param name="entry" select="."/>
@@ -529,17 +532,27 @@ or nothing (the empty string)</para>
         <xsl:when test="$colspec.colnum=$countcol">
           <col>
             <xsl:if test="$colspec/@colwidth
-                          and $saxon.extensions != 0
-                          and $saxon.tablecolumns != 0">
+                          and $use.extensions != 0
+                          and $tablecolumns.extension != 0">
               <xsl:attribute name="width">
                 <xsl:value-of select="$colspec/@colwidth"/>
               </xsl:attribute>
             </xsl:if>
-            <xsl:if test="$colspec/@align">
-              <xsl:attribute name="align">
-                <xsl:value-of select="$colspec/@align"/>
-              </xsl:attribute>
-            </xsl:if>
+
+            <xsl:choose>
+              <xsl:when test="$colspec/@align">
+                <xsl:attribute name="align">
+                  <xsl:value-of select="$colspec/@align"/>
+                </xsl:attribute>
+              </xsl:when>
+              <!-- Suggested by Pavel ZAMPACH <zampach@nemcb.cz> -->
+              <xsl:when test="$colspecs/ancestor::tgroup/@align">
+                <xsl:attribute name="align">
+                  <xsl:value-of select="$colspecs/ancestor::tgroup/@align"/>
+                </xsl:attribute>
+              </xsl:when>
+            </xsl:choose>
+
             <xsl:if test="$colspec/@char">
               <xsl:attribute name="char">
                 <xsl:value-of select="$colspec/@char"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="10pt" text-align="justify">
   <fo:layout-master-set>
     <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
       <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
@@ -84,7 +84,7 @@
   <fo:page-sequence id="ch1" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
     <fo:static-content flow-name="xsl-region-before">
       <fo:block text-align="center">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">1. test</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">Chapter 1. test</fo:block>
       </fo:block>
     </fo:static-content>
     <fo:static-content flow-name="xsl-region-after">
@@ -95,19 +95,19 @@
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
-          <fo:block>Chapter 1. test</fo:block>
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Chapter 1. test</fo:block>
         </fo:block>
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">How many &#xB0; can you &#xA9;.</fo:block>
-      <fo:table-and-caption id="id2744368" keep-together.within-column="always">
+      <fo:table-and-caption id="id2760658" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
-          <fo:block font-weight="bold">Table 1.1. A Table</fo:block>
+          <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
         <fo:table table-layout="fixed">
-          <fo:table-column column-number="1"/>
-          <fo:table-column column-number="2" column-width="proportional-column-width(1.5)+2in"/>
-          <fo:table-column column-number="3" column-width="proportional-column-width(2)+4pt"/>
-          <fo:table-body>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="proportional-column-width(1.5)+2in"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="proportional-column-width(2)+4pt"/>
+          <fo:table-body border-top="0.5pt solid black " border-bottom="0.5pt solid black ">
             <fo:table-row>
               <fo:table-cell>
                 <fo:block>1</fo:block>
@@ -217,14 +217,132 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2787385" keep-together.within-column="always">
+      <fo:table-and-caption id="id2760695" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
-          <fo:block font-weight="bold">Table 1.2. A Table</fo:block>
+          <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
         <fo:table table-layout="fixed">
-          <fo:table-column column-number="1"/>
-          <fo:table-column column-number="2" column-width="proportional-column-width(1.5)"/>
-          <fo:table-column column-number="3" column-width="proportional-column-width(2)"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="proportional-column-width(1.5)"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="proportional-column-width(2)"/>
+          <fo:table-body>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt" number-rows-spanned="2">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt" number-columns-spanned="2">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt" number-columns-spanned="2">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+            <fo:table-row>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>1</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>2</fo:block>
+              </fo:table-cell>
+              <fo:table-cell border-left="0.5pt solid black " padding-left="2pt" border-right="0.5pt solid black " padding-right="2pt" border-top="0.5pt solid black " padding-top="2pt" border-bottom="0.5pt solid black " padding-bottom="2pt">
+                <fo:block>3</fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+          </fo:table-body>
+        </fo:table>
+      </fo:table-and-caption>
+      <fo:table-and-caption id="id2762608" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
+        <fo:table-caption>
+          <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
+        </fo:table-caption>
+        <fo:table>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1" column-width="2in"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="2in"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="3in"/>
           <fo:table-body>
             <fo:table-row>
               <fo:table-cell>
@@ -335,132 +453,14 @@
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:table-and-caption id="id2741794" keep-together.within-column="always">
+      <fo:table-and-caption id="id2759171" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
-          <fo:block font-weight="bold">Table 1.3. A Table</fo:block>
+          <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">A Table</fo:block>
         </fo:table-caption>
         <fo:table>
-          <fo:table-column column-number="1" column-width="2in"/>
-          <fo:table-column column-number="2" column-width="2in"/>
-          <fo:table-column column-number="3" column-width="3in"/>
-          <fo:table-body>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell number-rows-spanned="2">
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell number-columns-spanned="2">
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell number-columns-spanned="2">
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>1</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>2</fo:block>
-              </fo:table-cell>
-              <fo:table-cell>
-                <fo:block>3</fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-          </fo:table-body>
-        </fo:table>
-      </fo:table-and-caption>
-      <fo:table-and-caption id="id2742216" keep-together.within-column="always">
-        <fo:table-caption>
-          <fo:block font-weight="bold">Table 1.4. A Table</fo:block>
-        </fo:table-caption>
-        <fo:table>
-          <fo:table-column column-number="1"/>
-          <fo:table-column column-number="2" column-width="2in"/>
-          <fo:table-column column-number="3" column-width="3in"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="2in"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3" column-width="3in"/>
           <fo:table-body>
             <fo:table-row>
               <fo:table-cell>

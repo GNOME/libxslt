@@ -1,98 +1,69 @@
-2001-01-30  Norman Walsh  <ndw@nwalsh.com>
+2001-06-14  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* en.xml: Added index symbols entry
+	* subtitles.xsl: Support subtitle on article
 
-2001-01-28  Norman Walsh  <ndw@nwalsh.com>
+2001-05-23  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* common.xsl: Support suppressing anchors in referenced titles; support imageobjectco
+	* common.xsl: Fix dup. template bug with is.graphic.*
 
-	* hu.xml: Tweak chapter title xref template
+	* gentext.xsl: Workaround article/appendix formatting bug (HACK)
 
-2001-01-07  Norman Walsh  <ndw@nwalsh.com>
+	* labels.xsl: Label appendixes correctly in books and articles
 
-	* common.xsl: Added 'Chapter' and 'Appendix' to the gentext for chapter and appendix titles
+2001-05-21  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* et.xml, hu.xml, id.xml, ko.xml, sl.xml: Added dingbats
+	* labels.xsl: Tweak for section labels in articles
 
-	* l10n.xml, zh_tw.xml: Added traditional Chinese
+2001-05-12  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* l10n.xsl: Generalized 'gentext.element.name' to 'gentext' with key parameter
+	* common.xsl: Added refsect* to the section.level template
 
-2000-12-14  Norman Walsh  <ndw@nwalsh.com>
+2001-05-04  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* it.xml: Updated
+	* .cvsignore, Makefile, l10n.xml: Add Serbian localization
 
-2000-11-29  Norman Walsh  <ndw@nwalsh.com>
+2001-04-21  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* l10n.xsl: Changed variables to parameters
+	* common.xsl: My first crude attempts at support for qandaset
 
-2000-11-05  Norman Walsh  <ndw@nwalsh.com>
+2001-04-19  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* nl.xml: Updates
+	* gentext.xsl, titles.xsl: Fix bug #417193, make sure allow-anchors is properly propagated through substitute-markup
 
-2000-11-03  Norman Walsh  <ndw@nwalsh.com>
+2001-04-18  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* common.xsl: Parameterize wrappers around the parts of a title.ref
+	* titles.xsl: Suppress indexterms in no.anchor.mode
 
-2000-11-02  Norman Walsh  <ndw@nwalsh.com>
+2001-04-17  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* common.xsl: Remove HTML spans from common.xsl; that needs to be supported some other way (in the HTML stylesheets)
+	* labels.xsl: Move label.from.part parameter into param.xsl; default it to 0 so that chapters and appendixes are numbered monotonically throughout a book by default. Moved param.xsl up in the include list, just for good measure
 
-2000-10-30  Norman Walsh  <ndw@nwalsh.com>
+2001-04-16  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* common.xsl: Don't put the span around the label if text-only is true
+	* gentext.xsl: Fix bug in processing of subtitle content
 
-2000-10-29  Norman Walsh  <ndw@nwalsh.com>
+	* labels.xsl: Only label.from.part if there actually is a part
 
-	* common.xsl: Added label.this.section template to provide more specific control of section labelling; added spans around labels and titles for CSS styling
+	* titles.xsl: Don't put ulink, link, olink, or xref in titles if anchor's aren't allowed
 
-	* en.xml: Make dingbat quotes curly
+2001-04-15  Norman Walsh <nwalsh@users.sourceforge.net>
 
-2000-10-27  Norman Walsh  <ndw@nwalsh.com>
+	* gentext.xsl: Localize the textonly calculations by creating a object.title.markup.textonly mode
 
-	* cs.xml: Updates
+2001-04-03  Norman Walsh <nwalsh@users.sourceforge.net>
 
-2000-10-26  Norman Walsh  <ndw@nwalsh.com>
+	* gentext.xsl, labels.xsl, titles.xsl: Fix bug 412487, make XSL-generated callout marks honor callout mark parameters
 
-	* common.xsl: Changed text-only parameter to 0/1 from true()/false()
+	* titles.xsl: Restore no.anchor.mode and suppress footnotes in no.anchor.mode
 
-	* hu.xml: Updated
+2001-04-02  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* ko.xml: New file.
+	* .cvsignore, Makefile: New file.
 
-	* l10n.xml: Added Korean
-
-	* l10n.xsl: Handle empty gentext
-
-	* l10n.xsl: Fixed serious bug in gentext.element.name
-
-2000-10-23  Norman Walsh  <ndw@nwalsh.com>
-
-	* ca.xml, cs.xml, da.xml, de.xml, el.xml, es.xml, et.xml, fi.xml, fr.xml, hu.xml, id.xml, it.xml, ja.xml, no.xml, pl.xml, pt.xml, pt_br.xml, ro.xml, ru.xml, sk.xml, sl.xml, sv.xml: 
-	Fixed localization key errors and missing xrefs (thanks to Eva a Pavel ZAMPACHOVI)
-
-2000-10-19  Norman Walsh  <ndw@nwalsh.com>
-
-	* common.xsl: Documentation changes
-
-2000-10-17  Norman Walsh  <ndw@nwalsh.com>
-
-	* common.xsl: Updated documentation
-
-2000-10-16  Norman Walsh  <ndw@nwalsh.com>
-
-	* common.xsl: Added doc:reference
-
-2000-10-14  Norman Walsh  <ndw@nwalsh.com>
-
-	* common.xsl: Added filename-basename, select.mediaobject, and is.acceptable.mediaobject
-
-	* cs.xml: Updates
-
-2000-10-09  Norman Walsh  <ndw@nwalsh.com>
-
-	* LostLog, ca.xml, common.xsl, cs.xml, da.xml, de.xml, el.xml, en.xml, es.xml, et.xml, fi.xml, fr.xml, hu.xml, id.xml, it.xml, ja.xml, l10n.dtd, l10n.xml, l10n.xsl, nl.xml, no.xml, pl.xml, pt.xml, pt_br.xml, ro.xml, ru.xml, sk.xml, sl.xml, sv.xml, zh_cn.xml: 
+	* common.xsl, gentext.xsl, l10n.xml, l10n.xsl, labels.xsl, subtitles.xsl, titles.xsl: 
 	New file.
 
-	* common.xsl: Output '.' between section numbers
+	* gentext.xsl: Commented out debugging messages
+
+	* l10n.dtd: New file.
 

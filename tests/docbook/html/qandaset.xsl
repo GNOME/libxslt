@@ -68,11 +68,10 @@
     <xsl:attribute name="class">
       <xsl:value-of select="name(.)"/>
     </xsl:attribute>
-    <a name="{$id}">
-      <xsl:apply-templates select="parent::qandadiv" mode="label.content"/>
-      <xsl:text> </xsl:text>
-      <xsl:apply-templates/>
-    </a>
+    <a name="{$id}"/>
+    <xsl:apply-templates select="parent::qandadiv" mode="label.markup"/>
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates/>
   </xsl:element>
 </xsl:template>
 
@@ -83,23 +82,32 @@
 </xsl:template>
 
 <xsl:template match="question">
-  <xsl:variable name="firstch" select="(*[name(.)!='label'])[1]"/>
-  <xsl:variable name="restch" select="(*[name(.)!='label'])[position()!=1]"/>
+  <xsl:variable name="firstch" select="(*[name(.)!='label'
+                                          and name(.)!='indexterm'])[1]"/>
+  <xsl:variable name="restch" select="(*[name(.)!='label'
+                                         and name(.)!='indexterm'])[position()!=1]
+                                      |indexterm"/>
   <xsl:variable name="id">
-    <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="parent::*"/>
-    </xsl:call-template>
+    <xsl:call-template name="object.id"/>
   </xsl:variable>
 
   <div class="{name(.)}">
     <p>
-      <a name="{$id}">
-        <b>
-          <xsl:apply-templates select="." mode="label.content"/>
-          <xsl:text> </xsl:text>
-        </b>
-        <xsl:apply-templates select="$firstch" mode="no.wrapper.mode"/>
-      </a>
+      <xsl:if test="../@id">
+        <a>
+          <xsl:attribute name="name">
+            <xsl:call-template name="object.id">
+              <xsl:with-param name="object" select="parent::*"/>
+            </xsl:call-template>
+          </xsl:attribute>
+        </a>
+      </xsl:if>
+      <a name="{$id}"/>
+      <b>
+        <xsl:apply-templates select="." mode="label.markup"/>
+        <xsl:text> </xsl:text>
+      </b>
+      <xsl:apply-templates select="$firstch" mode="no.wrapper.mode"/>
     </p>
     <xsl:apply-templates select="$restch"/>
   </div>
@@ -108,11 +116,15 @@
 <xsl:template match="answer">
   <xsl:variable name="firstch" select="(*[name(.)!='label'])[1]"/>
   <xsl:variable name="restch" select="(*[name(.)!='label'])[position()!=1]"/>
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
 
   <div class="{name(.)}">
     <p>
+      <a name="{$id}"/>
       <b>
-        <xsl:apply-templates select="." mode="label.content"/>
+        <xsl:apply-templates select="." mode="label.markup"/>
         <xsl:text> </xsl:text>
       </b>
       <xsl:apply-templates select="$firstch" mode="no.wrapper.mode"/>
@@ -149,7 +161,7 @@
     </xsl:call-template>
   </xsl:variable>
 
-  <xsl:apply-templates select="parent::qandadiv" mode="label.content"/>
+  <xsl:apply-templates select="parent::qandadiv" mode="label.markup"/>
   <xsl:text> </xsl:text>
   <a>
     <xsl:attribute name="href">
@@ -167,20 +179,13 @@
 
 <xsl:template match="question" mode="qandatoc.mode">
   <xsl:variable name="firstch" select="(*[name(.)!='label'])[1]"/>
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="parent::*"/>
-    </xsl:call-template>
-  </xsl:variable>
 
   <dt>
-    <xsl:apply-templates select="." mode="label.content"/>
+    <xsl:apply-templates select="." mode="label.markup"/>
     <xsl:text> </xsl:text>
     <a>
       <xsl:attribute name="href">
-        <xsl:call-template name="href.target">
-          <xsl:with-param name="object" select="parent::*"/>
-        </xsl:call-template>
+        <xsl:call-template name="href.target"/>
       </xsl:attribute>
       <xsl:value-of select="$firstch"/>
     </a>

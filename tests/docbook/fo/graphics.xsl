@@ -2,10 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:text5="http://nwalsh.com/com.nwalsh.saxon.TextFactory"
-                xmlns:text6="http://nwalsh.com/com.nwalsh.saxon6.TextFactory"
-                exclude-result-prefixes="xlink text5 text6"
-                extension-element-prefixes="text5 text6"
+                xmlns:stext="http://nwalsh.com/xslt/ext/com.nwalsh.saxon.TextFactory"
+                xmlns:xtext="com.nwalsh.xalan.Text"
+                xmlns:lxslt="http://xml.apache.org/xslt"
+                exclude-result-prefixes="xlink stext xtext lxslt"
+                extension-element-prefixes="stext xtext"
                 version='1.0'>
 
 <!-- ********************************************************************
@@ -21,6 +22,40 @@
 
      ******************************************************************** -->
 
+<!-- ==================================================================== -->
+<!-- Graphic format tests for the FO backend -->
+
+<!--
+FIXME: make is.graphic.* work correctly depending on the backend!
+<xsl:param name="passivetex.extensions" select="0" doc:type='boolean'/>
+<xsl:param name="fop.extensions" select="0" doc:type='boolean'/>
+-->
+
+<xsl:template name="is.graphic.format">
+  <xsl:param name="format"></xsl:param>
+  <xsl:if test="$format = 'PNG'
+                or $format = 'PDF'
+                or $format = 'JPG'
+                or $format = 'JPEG'
+                or $format = 'linespecific'
+                or $format = 'GIF'
+                or $format = 'GIF87a'
+                or $format = 'GIF89a'
+                or $format = 'BMP'">1</xsl:if>
+</xsl:template>
+
+<xsl:template name="is.graphic.extension">
+  <xsl:param name="ext"></xsl:param>
+  <xsl:if test="$ext = 'png'
+                or $ext = 'pdf'
+                or $ext = 'jpeg'
+                or $ext = 'jpg'
+                or $ext = 'gif'
+                or $ext = 'bmp'">1</xsl:if>
+</xsl:template>
+
+<!-- ==================================================================== -->
+
 <xsl:template match="screenshot">
   <fo:block>
     <xsl:apply-templates/>
@@ -30,6 +65,8 @@
 <xsl:template match="screeninfo">
 </xsl:template>
 
+<!-- ==================================================================== -->
+<!-- Override these templates for FO -->
 <!-- ==================================================================== -->
 
 <xsl:template name="process.image">
@@ -43,6 +80,8 @@
         <xsl:value-of select="unparsed-entity-uri(@entityref)"/>
       </xsl:when>
       <xsl:when test="@fileref">
+        <!-- FIXME: is this right? What if @fileref is a relative -->
+        <!-- URI? What if @fileref contains backslashes? -->
         <xsl:text>file:</xsl:text>
         <xsl:value-of select="@fileref"/>
       </xsl:when>
@@ -113,9 +152,24 @@
        with contributions from the specified width and height). I'm not
        sure how to specify that... -->
 
-  <fo:external-graphic src="{$filename}"
-    content-width="{$width}" content-height="{$width}"
-    width="auto" height="auto"/>
+  <xsl:choose>
+    <xsl:when test="$passivetex.extensions != 0
+                    or $fop.extensions != 0
+                    or $arbortext.extensions != 0">
+      <fo:external-graphic src="{$filename}"
+                           content-width="{$width}"
+                           content-height="{$height}"
+                           width="auto"
+                           height="auto"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <fo:external-graphic src="url({$filename})"
+                           content-width="{$width}"
+                           content-height="{$height}"
+                           width="auto"
+                           height="auto"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -128,49 +182,40 @@
 
 <xsl:template match="inlinegraphic">
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
+  <xsl:variable name="filename">
+    <xsl:choose>
+      <xsl:when test="@entityref">
+        <xsl:value-of select="unparsed-entity-uri(@entityref)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="@fileref"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
   <xsl:choose>
     <xsl:when test="@format='linespecific'">
       <xsl:choose>
-        <xsl:when test="$saxon.extensions != '0'
-                        and $saxon.textinsert != '0'">
+        <xsl:when test="$use.extensions != '0'
+                        and $textinsert.extension != '0'">
           <xsl:choose>
-            <xsl:when test="@entityref">
-              <xsl:choose>
-                <xsl:when test="contains($vendor, 'SAXON 6')">
-                  <text6:insertfile href="{unparsed-entity-uri(@entityref)}"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <text5:insertfile href="{unparsed-entity-uri(@entityref)}"/>
-                </xsl:otherwise>
-              </xsl:choose>
+            <xsl:when test="contains($vendor, 'SAXON')">
+              <stext:insertfile href="{$filename}"/>
+            </xsl:when>
+            <xsl:when test="contains($vendor, 'Apache Software Foundation')">
+              <xtext:insertfile href="{$filename}"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:choose>
-                <xsl:when test="contains($vendor, 'SAXON 6')">
-                  <text6:insertfile href="{@fileref}"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <text5:insertfile href="{@fileref}"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:message terminate="yes">
+                <xsl:text>Don't know how to insert files with </xsl:text>
+                <xsl:value-of select="$vendor"/>
+              </xsl:message>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
         <xsl:otherwise>
-          <a xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad">
-            <xsl:choose>
-              <xsl:when test="@entityref">
-                <xsl:attribute name="href">
-                  <xsl:value-of select="unparsed-entity-uri(@entityref)"/>
-                </xsl:attribute>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:attribute name="href">
-                  <xsl:value-of select="@fileref"/>
-                </xsl:attribute>
-              </xsl:otherwise>
-            </xsl:choose>
-          </a>
+          <a xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"
+             href="{$filename}"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>
@@ -195,55 +240,46 @@
 
 <!-- ==================================================================== -->
 
+<xsl:template match="imageobjectco">
+  <xsl:apply-templates select="imageobject"/>
+  <xsl:apply-templates select="calloutlist"/>
+</xsl:template>
+
 <xsl:template match="imageobject">
   <xsl:apply-templates select="imagedata"/>
 </xsl:template>
 
 <xsl:template match="imagedata">
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
+  <xsl:variable name="filename">
+    <xsl:call-template name="mediaobject.filename">
+      <xsl:with-param name="object" select=".."/>
+    </xsl:call-template>
+  </xsl:variable>
+
   <xsl:choose>
     <xsl:when test="@format='linespecific'">
       <xsl:choose>
-        <xsl:when test="$saxon.extensions != '0'
-                        and $saxon.textinsert != '0'">
+        <xsl:when test="$use.extensions != '0'
+                        and $textinsert.extension != '0'">
           <xsl:choose>
-            <xsl:when test="@entityref">
-              <xsl:choose>
-                <xsl:when test="contains($vendor, 'SAXON 6')">
-                  <text6:insertfile href="{unparsed-entity-uri(@entityref)}"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <text5:insertfile href="{unparsed-entity-uri(@entityref)}"/>
-                </xsl:otherwise>
-              </xsl:choose>
+            <xsl:when test="contains($vendor, 'SAXON')">
+              <stext:insertfile href="{$filename}"/>
+            </xsl:when>
+            <xsl:when test="contains($vendor, 'Apache Software Foundation')">
+              <xtext:insertfile href="{$filename}"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:choose>
-                <xsl:when test="contains($vendor, 'SAXON 6')">
-                  <text6:insertfile href="{@fileref}"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <text5:insertfile href="{@fileref}"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:message terminate="yes">
+                <xsl:text>Don't know how to insert files with </xsl:text>
+                <xsl:value-of select="$vendor"/>
+              </xsl:message>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
         <xsl:otherwise>
-          <a xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad">
-            <xsl:choose>
-              <xsl:when test="@entityref">
-                <xsl:attribute name="href">
-                  <xsl:value-of select="unparsed-entity-uri(@entityref)"/>
-                </xsl:attribute>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:attribute name="href">
-                  <xsl:value-of select="@fileref"/>
-                </xsl:attribute>
-              </xsl:otherwise>
-            </xsl:choose>
-          </a>
+          <a xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"
+             href="{$filename}"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>

@@ -240,5 +240,56 @@
   </xsl:call-template>
 </xsl:template>
 
+<!-- ============================================================ -->
+
+<xsl:template name="gentext.template">
+  <xsl:param name="context" select="'default'"/>
+  <xsl:param name="name" select="'default'"/>
+  <xsl:param name="lang">
+    <xsl:call-template name="l10n.language"/>
+  </xsl:param>
+
+  <xsl:variable name="localization.node"
+                select="($l10n.xml/internationalization/localization[@language=$lang])[1]"/>
+
+  <xsl:if test="count($localization.node) = 0">
+    <xsl:message>
+      <xsl:text>No "</xsl:text>
+      <xsl:value-of select="$lang"/>
+      <xsl:text>" localization exists.</xsl:text>
+    </xsl:message>
+  </xsl:if>
+
+  <xsl:variable name="context.node"
+                select="$localization.node/context[@name=$context]"/>
+
+  <xsl:if test="count($context.node) = 0">
+    <xsl:message>
+      <xsl:text>No context named "</xsl:text>
+      <xsl:value-of select="$context"/>
+      <xsl:text>" exists in the "</xsl:text>
+      <xsl:value-of select="$lang"/>
+      <xsl:text>" localization.</xsl:text>
+    </xsl:message>
+  </xsl:if>
+
+  <xsl:variable name="template.node"
+                select="$context.node/template[@name=$name][1]"/>
+
+  <xsl:if test="count($template.node) = 0">
+    <xsl:message>
+      <xsl:text>No template named "</xsl:text>
+      <xsl:value-of select="$name"/>
+      <xsl:text>" exists in the context named "</xsl:text>
+      <xsl:value-of select="$context"/>
+      <xsl:text>" in the "</xsl:text>
+      <xsl:value-of select="$lang"/>
+      <xsl:text>" localization.</xsl:text>
+    </xsl:message>
+  </xsl:if>
+
+  <xsl:value-of select="$template.node/@text"/>
+</xsl:template>
+
 </xsl:stylesheet>
 

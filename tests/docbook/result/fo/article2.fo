@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="10pt" text-align="justify">
   <fo:layout-master-set>
     <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
       <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2599688" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2753077" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
@@ -89,18 +89,18 @@
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
-          <fo:block>Article Test Document Title</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" text-align="center" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Article Test Document Title</fo:block>
         </fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Norman Walsh</fo:block>
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Copyright &#xA9; 1999 by Norman Walsh</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Copyright &#xA9; 1999 Norman Walsh</fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">Apr. 26, 1999</fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This article is just a test. This <fo:inline font-style="italic">article</fo:inline>
 is just a test. 
-This <fo:inline font-weight="bold" font-family="monospace">article</fo:inline> is just a test.
-This <fo:inline font-family="monospace">&lt;ndw@nwalsh.com&gt;</fo:inline> is just a test. 
+This <fo:inline font-weight="bold" font-family="Courier">article</fo:inline> is just a test.
+This <fo:inline font-family="Courier">&lt;ndw@nwalsh.com&gt;</fo:inline> is just a test. 
 This article is just a test. This article is just a test. 
 This article is just a test. This article is just a test. 
 This article is just a test. This article is just a test. 
@@ -110,20 +110,20 @@ This article is just a test. This article is just a test.
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This article is just a test. This <fo:inline font-style="italic">article</fo:inline>
 is just a test. 
-This <fo:inline font-weight="bold" font-family="monospace">article</fo:inline> is just a test.
-This <fo:inline font-family="monospace">&lt;ndw@nwalsh.com&gt;</fo:inline> is just a test. 
+This <fo:inline font-weight="bold" font-family="Courier">article</fo:inline> is just a test.
+This <fo:inline font-family="Courier">&lt;ndw@nwalsh.com&gt;</fo:inline> is just a test. 
 This article is just a test. This article is just a test. 
 This article is just a test. This article is just a test. 
 This article is just a test. This article is just a test. 
 </fo:block>
-      <fo:table-and-caption id="id2741760" keep-together.within-column="always">
+      <fo:table-and-caption id="id2758816" keep-together.within-column="always" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em">
         <fo:table-caption>
-          <fo:block font-weight="bold">Table 1. This is a test table</fo:block>
+          <fo:block font-weight="bold" space-after.minimum="0.2em" space-after.optimum="0.5em" space-after.maximum="0.8em" keep-with-next.within-column="always" hyphenate="false">This is a test table</fo:block>
         </fo:table-caption>
         <fo:table table-layout="fixed">
-          <fo:table-column column-number="1"/>
-          <fo:table-column column-number="2" column-width="proportional-column-width(2)"/>
-          <fo:table-column column-number="3"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="1"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="2" column-width="proportional-column-width(2)"/>
+          <fo:table-column xmlns:fo="http://www.w3.org/1999/XSL/Format" column-number="3"/>
           <fo:table-header>
             <fo:table-row>
               <fo:table-cell>
@@ -225,8 +225,8 @@ This article is just a test. This article is just a test.
           </fo:table-body>
         </fo:table>
       </fo:table-and-caption>
-      <fo:list-block id="id2740645" provisional-distance-between-starts="3in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2740652" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2757772" provisional-distance-between-starts="1in" provisional-label-separation="0.25in" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2757778" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>term</fo:inline>
@@ -236,7 +236,7 @@ This article is just a test. This article is just a test.
             <fo:block>some text</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2740680" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2757807" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>term2a, </fo:inline>
@@ -247,7 +247,7 @@ This article is just a test. This article is just a test.
             <fo:block>some text</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2740714" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2757840" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>
               <fo:inline>term3</fo:inline>

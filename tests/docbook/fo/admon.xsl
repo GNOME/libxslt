@@ -26,7 +26,7 @@
 
 <xsl:template name="admon.graphic.width">
   <xsl:param name="node" select="."/>
-  <xsl:text>25</xsl:text>
+  <xsl:text>36pt</xsl:text>
 </xsl:template>
 
 <xsl:template name="admon.graphic">
@@ -44,7 +44,11 @@
 </xsl:template>
 
 <xsl:template name="graphical.admonition">
-  <fo:block>
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
+
+  <fo:block id="{$id}">
     <fo:table>
       <fo:table-body>
         <fo:table-row>
@@ -62,15 +66,7 @@
           </fo:table-cell>
           <fo:table-cell>
             <fo:block>
-              <xsl:choose>
-                <xsl:when test="./title">
-                  <xsl:apply-templates select="./title" 
-                                       mode="admonition.title.mode"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:call-template name="gentext.element.name"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:apply-templates select="." mode="object.title.markup"/>
             </fo:block>
           </fo:table-cell>
         </fo:table-row>
@@ -87,21 +83,19 @@
 </xsl:template>
 
 <xsl:template name="nongraphical.admonition">
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
+
   <fo:block space-before.minimum="0.8em"
             space-before.optimum="1em"
             space-before.maximum="1.2em"
             start-indent="0.25in"
-            end-indent="0.25in">
-    <xsl:choose>
-      <xsl:when test="./title">
-        <xsl:apply-templates select="./title" mode="admonition.title.mode"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <fo:block font-size="14pt" font-weight="bold" keep-with-next='true'>
-          <xsl:call-template name="gentext.element.name"/>
-        </fo:block>
-      </xsl:otherwise>
-    </xsl:choose>
+            end-indent="0.25in"
+            id="{$id}">
+    <fo:block font-size="14pt" font-weight="bold" keep-with-next='always'>
+      <xsl:apply-templates select="." mode="object.title.markup"/>
+    </fo:block>
 
     <xsl:apply-templates/>
   </fo:block>
@@ -114,7 +108,7 @@
 <xsl:template match="tip/title"></xsl:template>
 
 <xsl:template match="title" mode="admonition.title.mode">
-  <fo:block font-size="14pt" font-weight="bold" keep-with-next='true'>
+  <fo:block font-size="14pt" font-weight="bold" keep-with-next='always'>
     <xsl:apply-templates/>
   </fo:block>
 </xsl:template>

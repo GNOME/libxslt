@@ -110,7 +110,11 @@
 
 <xsl:template match="refname[1]">
   <xsl:if test="$refentry.generate.name != 0">
-    <h2><xsl:call-template name="gentext.element.name"/></h2>
+    <h2>
+      <xsl:call-template name="gentext">
+        <xsl:with-param name="key" select="'RefName'"/>
+      </xsl:call-template>
+    </h2>
   </xsl:if>
   <xsl:apply-templates/>
   <xsl:if test="following-sibling::refname">

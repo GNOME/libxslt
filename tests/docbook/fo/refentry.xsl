@@ -98,9 +98,7 @@
 
 <xsl:template match="refentry">
   <xsl:variable name="id">
-    <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="ancestor::reference"/>
-    </xsl:call-template>
+    <xsl:call-template name="object.id"/>
   </xsl:variable>
   <xsl:variable name="master-name">
     <xsl:call-template name="select.pagemaster"/>
@@ -125,7 +123,15 @@
 
     <fo:flow flow-name="xsl-region-body">
       <fo:block font-size="20pt" font-weight="bold">
-        <xsl:text>What about the title?</xsl:text>
+        <!-- FIXME: is this right? -->
+        <xsl:choose>
+          <xsl:when test="refmeta/refentrytitle">
+            <xsl:apply-templates select="refmeta/refentrytitle" mode="title"/>
+          </xsl:when>
+          <xsl:when test="refnamediv/refname">
+            <xsl:apply-templates select="refnamediv/refname" mode="title"/>
+          </xsl:when>
+        </xsl:choose>
       </fo:block>
       <xsl:apply-templates/>
     </fo:flow>
@@ -157,7 +163,9 @@
 <xsl:template match="refname">
   <xsl:if test="$refentry.generate.name != 0">
     <fo:block font-size="18pt" font-weight="bold">
-      <xsl:call-template name="gentext.element.name"/>
+      <xsl:call-template name="gentext">
+        <xsl:with-param name="key" select="'RefName'"/>
+      </xsl:call-template>
      </fo:block>
   </xsl:if>
   <xsl:apply-templates/>

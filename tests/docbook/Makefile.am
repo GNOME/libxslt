@@ -118,4 +118,4 @@ xhtmltests: $(top_builddir)/libxslt/xsltproc
 	  rm -f $$out ; done )
 
 dist-hook:
-	@(cd $(srcdir) ; tar -cf - --exclude CVS common html dtd lib xhtml fo result test) | (cd $(distdir); tar xf -)
+	@(cd $(srcdir) ; tar -cf - --exclude CVS common html dtd lib xhtml fo doc images template htmlhelp result test) | (cd $(distdir); tar xf -)

@@ -3,16 +3,16 @@
 <head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>DocBook V4.0 Example Document</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.29">
+<meta name="generator" content="DocBook XSL Stylesheets V1.40">
 </head>
-<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" id="id2599532">
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" id="id2764244">
 <div class="titlepage">
 <div><h1 class="title">
-<a name="id2599532"></a>DocBook V4.0 Example Document</h1></div>
+<a name="id2764244"></a>DocBook V4.0 Example Document</h1></div>
 <div><h3 class="author">Norman Walsh</h3></div>
 <div><div class="abstract">
 <p>
-<a name="id2848522"></a><b>Abstract</b>
+<a name="id2861696"></a><b>Abstract</b>
 </p>
 <p>This document demonstrates the new tags in DocBook V4.0.</p>
 <p>The focus of this document is to present examples of new elements,
@@ -24,27 +24,27 @@ included.</p>
 <div class="toc">
 <p><b>Table of Contents</b></p>
 <dl>
-<dt>1. <a href="#id2848547">Block-level Markup</a>
+<dt>1 <a href="#id2861722">Block-level Markup</a>
 </dt>
-<dt>2. <a href="#id2755926">Inline markup</a>
+<dt>2 <a href="#id2769271">Inline markup</a>
 </dt>
 </dl>
 </div>
-<div id="id2848547" class="chapter">
+<div class="chapter">
 <div class="titlepage"><div><h2 class="title">
-<a name="id2848547"></a>Chapter 1. Block-level Markup</h2></div></div>
+<a name="id2861722"></a>Chapter 1. Block-level Markup</h2></div></div>
 <p>There's a new simple-alternative for <tt>msgentry</tt>:
 <tt>simplemsgentry</tt>.</p>
 <div class="simplemsgentry">
-<a name="id2751017"></a><p>The text of a message</p>
+<a name="id2600532"></a><p>The text of a message</p>
 <div class="msgexplan">
-<a name="id2848605"></a><p>An explanation of the message.</p>
+<a name="id2861773"></a><p>An explanation of the message.</p>
 </div>
 </div>
 <div class="simplemsgentry">
-<a name="id2874737"></a><p>The text of a message</p>
+<a name="id2861786"></a><p>The text of a message</p>
 <div class="msgexplan">
-<a name="id2874754"></a><p>An explanation of the message.</p>
+<a name="id2887922"></a><p>An explanation of the message.</p>
 </div>
 </div>
 <p>Longer descriptions are possible in a <tt>revhistory</tt>:
@@ -69,22 +69,22 @@ included.</p>
 <p><b>Itemized List</b></p>
 <ul>
 <li><p>
-<a name="id2757400"></a>First thing</p></li>
+<a name="id2766994"></a>First thing</p></li>
 <li><p>
-<a name="id2757411"></a>Second thing</p></li>
+<a name="id2767138"></a>Second thing</p></li>
 <li><p>
-<a name="id2757421"></a>Third thing</p></li>
+<a name="id2767149"></a>Third thing</p></li>
 </ul>
 </div>
 <div class="itemizedlist">
 <p><b>Ordered List</b></p>
 <ul>
 <li><p>
-<a name="id2757445"></a>First thing</p></li>
+<a name="id2767173"></a>First thing</p></li>
 <li><p>
-<a name="id2757456"></a>Second thing</p></li>
+<a name="id2767183"></a>Second thing</p></li>
 <li><p>
-<a name="id2757466"></a>Third thing</p></li>
+<a name="id2767194"></a>Third thing</p></li>
 </ul>
 </div>
 <p>Linespecific environments can indicate line numbering:</p>
@@ -102,11 +102,11 @@ object-oriented programming language classes. Here's one example:</p>
                            <span class="methodparam"><span class="type">String </span><span class="parameter">file</span></span>)
     throws <span class="exceptionname">SAXException</span>;</div>}</pre>
 </div>
-<div id="id2755926" class="chapter">
+<div class="chapter">
 <div class="titlepage"><div><h2 class="title">
-<a name="id2755926"></a>Chapter 2. Inline markup</h2></div></div>
+<a name="id2769271"></a>Chapter 2. Inline markup</h2></div></div>
 <p>The <tt>sgmltag</tt> element has new
-class attribute values:
+<tt>class</tt> attribute values:
 <tt>xmlpi</tt> and
 <tt>emptytag</tt>. These produce
 <tt>&lt;?processing instructions?&gt;</tt>

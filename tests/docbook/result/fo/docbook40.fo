@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="10pt" text-align="justify">
   <fo:layout-master-set>
     <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
       <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
@@ -81,11 +81,11 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2599706" hyphenate="true" master-name="titlepage1" language="en">
+  <fo:page-sequence id="id2753077" hyphenate="true" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="24.8832pt" text-align="center" space-before="18.6624pt">
-          <fo:block>DocBook V4.0 Example Document</fo:block>
+          <fo:block keep-with-next.within-column="always" hyphenate="false">DocBook V4.0 Example Document</fo:block>
         </fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Helvetica" font-weight="bold" font-size="17.28pt" text-align="center" space-before="10.8pt" keep-with-next="always">Norman Walsh</fo:block>
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" break-after="page"/>
@@ -109,19 +109,25 @@ included.</fo:block>
   </fo:page-sequence>
   <fo:page-sequence hyphenate="true" format="i" master-name="titlepage1" language="en">
     <fo:flow flow-name="xsl-region-body">
-      <fo:block>
+      <fo:block space-before.minimum="0.5em" space-before.optimum="1em" space-before.maximum="2em" space-after.minimum="0.5em" space-after.optimum="1em" space-after.maximum="2em">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
           <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" space-after="1em" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">Table of Contents</fo:block>
         </fo:block>
-        <fo:block>1.Block-level Markup<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="id2836691"/></fo:block>
-        <fo:block>2.Inline markup<fo:leader leader-pattern="dots" text-align-last="justify"/><fo:page-number-citation ref-id="id2744075"/></fo:block>
+        <fo:block text-align-last="justify" end-indent="2pc" last-line-end-indent="-2pc">
+          <fo:inline keep-with-next.within-line="always">1 Block-level Markup</fo:inline>
+          <fo:inline keep-together.within-line="always"> <fo:leader leader-pattern="dots" keep-with-next.within-line="always"/> <fo:basic-link internal-destination="id2853792"><fo:page-number-citation ref-id="id2853792"/></fo:basic-link></fo:inline>
+        </fo:block>
+        <fo:block text-align-last="justify" end-indent="2pc" last-line-end-indent="-2pc">
+          <fo:inline keep-with-next.within-line="always">2 Inline markup</fo:inline>
+          <fo:inline keep-together.within-line="always"> <fo:leader leader-pattern="dots" keep-with-next.within-line="always"/> <fo:basic-link internal-destination="id2761135"><fo:page-number-citation ref-id="id2761135"/></fo:basic-link></fo:inline>
+        </fo:block>
       </fo:block>
     </fo:flow>
   </fo:page-sequence>
-  <fo:page-sequence id="id2836691" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
+  <fo:page-sequence id="id2853792" hyphenate="true" master-name="oneside1" language="en" initial-page-number="1">
     <fo:static-content flow-name="xsl-region-before">
       <fo:block text-align="center">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">1. Block-level Markup</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">Chapter 1. Block-level Markup</fo:block>
       </fo:block>
     </fo:static-content>
     <fo:static-content flow-name="xsl-region-after">
@@ -132,14 +138,14 @@ included.</fo:block>
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
-          <fo:block>Chapter 1. Block-level Markup</fo:block>
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Chapter 1. Block-level Markup</fo:block>
         </fo:block>
       </fo:block>
-      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">There's a new simple-alternative for <fo:inline font-family="monospace">msgentry</fo:inline>:
-<fo:inline font-family="monospace">simplemsgentry</fo:inline>.</fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">There's a new simple-alternative for <fo:inline font-family="Courier">msgentry</fo:inline>:
+<fo:inline font-family="Courier">simplemsgentry</fo:inline>.</fo:block>
       <fo:block color="red">&lt;simplemsgentry&gt;<fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">The text of a message</fo:block><fo:block><fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">An explanation of the message.</fo:block></fo:block>&lt;/simplemsgentry&gt;</fo:block>
       <fo:block color="red">&lt;simplemsgentry&gt;<fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">The text of a message</fo:block><fo:block><fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">An explanation of the message.</fo:block></fo:block>&lt;/simplemsgentry&gt;</fo:block>
-      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Longer descriptions are possible in a <fo:inline font-family="monospace">revhistory</fo:inline>:
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Longer descriptions are possible in a <fo:inline font-family="Courier">revhistory</fo:inline>:
 </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
 <fo:block color="red">&lt;revhistory&gt;<fo:block color="red">&lt;revision&gt;<fo:block color="red">&lt;revnumber&gt;2&lt;/revnumber&gt;</fo:block><fo:block color="red">&lt;date&gt;today&lt;/date&gt;</fo:block><fo:block color="red">&lt;authorinitials&gt;nwalsh&lt;/authorinitials&gt;</fo:block><fo:block color="red">&lt;revdescription&gt;
@@ -154,8 +160,8 @@ included.</fo:block>
 </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Ordered and itemized lists can have titles:</fo:block>
       <fo:block font-size="12pt" font-weight="bold">Itemized List</fo:block>
-      <fo:list-block id="id2741843" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2741853" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2758901" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+        <fo:list-item id="id2758912" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -163,7 +169,7 @@ included.</fo:block>
             <fo:block>First thing</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2745553" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2762659" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -171,7 +177,7 @@ included.</fo:block>
             <fo:block>Second thing</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2745564" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2762670" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -181,8 +187,8 @@ included.</fo:block>
         </fo:list-item>
       </fo:list-block>
       <fo:block font-size="12pt" font-weight="bold">Ordered List</fo:block>
-      <fo:list-block id="id2745576" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-        <fo:list-item id="id2745588" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+      <fo:list-block id="id2762682" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="1.5em" provisional-label-separation="0.2em">
+        <fo:list-item id="id2762693" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -190,7 +196,7 @@ included.</fo:block>
             <fo:block>First thing</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2745598" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2762704" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -198,7 +204,7 @@ included.</fo:block>
             <fo:block>Second thing</fo:block>
           </fo:list-item-body>
         </fo:list-item>
-        <fo:list-item id="id2745609" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
+        <fo:list-item id="id2762714" space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           <fo:list-item-label end-indent="label-end()">
             <fo:block>&#x2022;</fo:block>
           </fo:list-item-label>
@@ -208,21 +214,21 @@ included.</fo:block>
         </fo:list-item>
       </fo:list-block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Linespecific environments can indicate line numbering:</fo:block>
-      <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
+      <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt">
 &lt;!ENTITY % linespecific.attrib
 	&quot;format		NOTATION
 			(linespecific)	'linespecific'
          linenumbering	(numbered|unnumbered) 	#IMPLIED&quot;&gt;
 </fo:block>
-      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Added <fo:inline font-family="monospace">classsynopsis</fo:inline> for documenting
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Added <fo:inline font-family="Courier">classsynopsis</fo:inline> for documenting
 object-oriented programming language classes. Here's one example:</fo:block>
-      <fo:block color="red">&lt;classsynopsis&gt;<fo:block color="red">&lt;ooclass&gt;<fo:block color="red">&lt;modifier&gt;public&lt;/modifier&gt;</fo:block><fo:inline font-family="monospace">TextFileWriter</fo:inline>&lt;/ooclass&gt;</fo:block><fo:block color="red">&lt;ooclass&gt;<fo:inline font-family="monospace">HandlerBase</fo:inline>&lt;/ooclass&gt;</fo:block><fo:block color="red">&lt;fieldsynopsis&gt;<fo:block color="red">&lt;modifier&gt;private&lt;/modifier&gt;</fo:block>Writer<fo:inline font-family="monospace">writer</fo:inline>&lt;/fieldsynopsis&gt;</fo:block><fo:block color="red">&lt;fieldsynopsis&gt;<fo:block color="red">&lt;modifier&gt;public&lt;/modifier&gt;</fo:block>String<fo:inline font-family="monospace">writerName</fo:inline><fo:block color="red">&lt;initializer&gt;&quot;MyWriter&quot;&lt;/initializer&gt;</fo:block>&lt;/fieldsynopsis&gt;</fo:block><fo:block color="red">&lt;methodsynopsis&gt;<fo:block color="red">&lt;modifier&gt;static&lt;/modifier&gt;</fo:block><fo:block color="red">&lt;modifier&gt;public&lt;/modifier&gt;</fo:block>();<fo:inline font-family="monospace">write</fo:inline><fo:block color="red">&lt;methodparam&gt;ResultTreeFragment<fo:inline font-style="italic" font-family="monospace">frag</fo:inline>&lt;/methodparam&gt;</fo:block><fo:block color="red">&lt;methodparam&gt;String<fo:inline font-style="italic" font-family="monospace">file</fo:inline>&lt;/methodparam&gt;</fo:block><fo:inline font-family="monospace">SAXException</fo:inline>&lt;/methodsynopsis&gt;</fo:block>&lt;/classsynopsis&gt;</fo:block>
+      <fo:block color="red">&lt;classsynopsis&gt;<fo:block color="red">&lt;ooclass&gt;<fo:block color="red">&lt;modifier&gt;public&lt;/modifier&gt;</fo:block><fo:inline font-family="Courier">TextFileWriter</fo:inline>&lt;/ooclass&gt;</fo:block><fo:block color="red">&lt;ooclass&gt;<fo:inline font-family="Courier">HandlerBase</fo:inline>&lt;/ooclass&gt;</fo:block><fo:block color="red">&lt;fieldsynopsis&gt;<fo:block color="red">&lt;modifier&gt;private&lt;/modifier&gt;</fo:block>Writer<fo:inline font-family="Courier">writer</fo:inline>&lt;/fieldsynopsis&gt;</fo:block><fo:block color="red">&lt;fieldsynopsis&gt;<fo:block color="red">&lt;modifier&gt;public&lt;/modifier&gt;</fo:block>String<fo:inline font-family="Courier">writerName</fo:inline><fo:block color="red">&lt;initializer&gt;&quot;MyWriter&quot;&lt;/initializer&gt;</fo:block>&lt;/fieldsynopsis&gt;</fo:block><fo:block color="red">&lt;methodsynopsis&gt;<fo:block color="red">&lt;modifier&gt;static&lt;/modifier&gt;</fo:block><fo:block color="red">&lt;modifier&gt;public&lt;/modifier&gt;</fo:block>();<fo:inline font-family="Courier">write</fo:inline><fo:block color="red">&lt;methodparam&gt;ResultTreeFragment<fo:inline font-style="italic" font-family="Courier">frag</fo:inline>&lt;/methodparam&gt;</fo:block><fo:block color="red">&lt;methodparam&gt;String<fo:inline font-style="italic" font-family="Courier">file</fo:inline>&lt;/methodparam&gt;</fo:block><fo:inline font-family="Courier">SAXException</fo:inline>&lt;/methodsynopsis&gt;</fo:block>&lt;/classsynopsis&gt;</fo:block>
     </fo:flow>
   </fo:page-sequence>
-  <fo:page-sequence id="id2744075" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2761135" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-before">
       <fo:block text-align="center">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">2. Inline markup</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-size="10pt">Chapter 2. Inline markup</fo:block>
       </fo:block>
     </fo:static-content>
     <fo:static-content flow-name="xsl-region-after">
@@ -233,15 +239,15 @@ object-oriented programming language classes. Here's one example:</fo:block>
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-size="17.28pt" font-weight="bold" font-family="Helvetica">
-          <fo:block>Chapter 2. Inline markup</fo:block>
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Chapter 2. Inline markup</fo:block>
         </fo:block>
       </fo:block>
-      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">The <fo:inline font-family="monospace">sgmltag</fo:inline> element has new
-class attribute values:
-<fo:inline font-family="monospace">xmlpi</fo:inline> and
-<fo:inline font-family="monospace">emptytag</fo:inline>. These produce
-processing instructions
-and empty-tag markup
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">The <fo:inline font-family="Courier">sgmltag</fo:inline> element has new
+<fo:inline font-family="Courier">class</fo:inline> attribute values:
+<fo:inline font-family="Courier">xmlpi</fo:inline> and
+<fo:inline font-family="Courier">emptytag</fo:inline>. These produce
+<fo:inline font-family="Courier">&lt;?processing instructions?&gt;</fo:inline>
+and <fo:inline font-family="Courier">&lt;empty-tag/&gt;</fo:inline> markup
 suitable for XML.
 </fo:block>
     </fo:flow>

@@ -289,6 +289,7 @@ component that contains them.
 
 <!-- ==================================================================== -->
 <xsl:param name="chapter.autolabel" select="1" doc:type='boolean'/>
+<xsl:param name="appendix.autolabel" select="1" doc:type='boolean'/>
 
 <doc:param name="chapter.autolabel" xmlns="">
 <refpurpose>Are chapters and appendixes enumerated?</refpurpose>
@@ -510,7 +511,7 @@ SEE xref.xsl IF YOU NEED TO TURN IT OFF.</para>
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="spacing.paras" doc:type='boolean' select="'1'"/>
+<xsl:param name="spacing.paras" doc:type='boolean' select="'0'"/>
 
 <doc:param name="spacing.paras" xmlns="">
 <refpurpose>Insert additional &lt;p&gt; elements for spacing?</refpurpose>
@@ -680,23 +681,23 @@ be used.
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="saxon.extensions" select="'0'" doc:type='boolean'/>
+<xsl:param name="use.extensions" select="'0'" doc:type='boolean'/>
 
-<doc:param name="saxon.extensions" xmlns="">
-<refpurpose>Enable Saxon extensions</refpurpose>
+<doc:param name="use.extensions" xmlns="">
+<refpurpose>Enable extensions</refpurpose>
 <refdescription>
-<para>If non-zero, saxon extensions may be used. Each extension is
+<para>If non-zero, extensions may be used. Each extension is
 further controlled by its own parameter. But if
-<parameter>saxon.extensions</parameter> is zero, no extensions will
+<parameter>use.extensions</parameter> is zero, no extensions will
 be used.
 </para>
 </refdescription>
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="saxon.textinsert" select="'1'" doc:type='boolean'/>
+<xsl:param name="textinsert.extension" select="'1'" doc:type='boolean'/>
 
-<doc:param name="saxon.textinsert" xmlns="">
+<doc:param name="textinsert.extension" xmlns="">
 <refpurpose>Enable the textinsert extension element</refpurpose>
 <refdescription>
 <para>The textinsert extension element inserts the contents of a
@@ -709,6 +710,20 @@ a file into the result tree (as text).
 <xsl:param name="saxon.linenumbering" select="'1'" doc:type='boolean'/>
 
 <doc:param name="saxon.linenumbering" xmlns="">
+<refpurpose>Enable the line numbering extension</refpurpose>
+<refdescription>
+<para>If true, verbatim environments (elements that have the
+format='linespecific' notation attribute: address, literallayout,
+programlisting, screen, synopsis) that specify line numbering will
+have, surprise, line numbers.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="linenumbering.extension" select="'1'" doc:type='boolean'/>
+
+<doc:param name="linenumbering.extension" xmlns="">
 <refpurpose>Enable the line numbering extension</refpurpose>
 <refdescription>
 <para>If true, verbatim environments (elements that have the
@@ -758,6 +773,19 @@ the verbatim environment.
 <xsl:param name="saxon.callouts" select="'1'" doc:type='boolean'/>
 
 <doc:param name="saxon.callouts" xmlns="">
+<refpurpose>Enable the callout extension</refpurpose>
+<refdescription>
+<para>The callouts extension processes <sgmltag>areaset</sgmltag>
+elements in <sgmltag>ProgramListingCO</sgmltag> and other text-based
+callout elements.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="callouts.extension" select="'1'" doc:type='boolean'/>
+
+<doc:param name="callouts.extension" xmlns="">
 <refpurpose>Enable the callout extension</refpurpose>
 <refdescription>
 <para>The callouts extension processes <sgmltag>areaset</sgmltag>
@@ -833,9 +861,22 @@ in the CALS table.
 </doc:param>
 
 <!-- ==================================================================== -->
+<xsl:param name="tablecolumns.extension" select="'1'" doc:type='boolean'/>
+
+<doc:param name="tablecolumns.extension" xmlns="">
+<refpurpose>Enable the table columns extension function</refpurpose>
+<refdescription>
+<para>The table columns extension function adjusts the widths of table
+columns in the HTML result to more accurately reflect the specifications
+in the CALS table.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
 <xsl:param name="generate.set.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.set.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -846,7 +887,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.book.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.book.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -857,7 +898,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.part.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.part.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -868,7 +909,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.reference.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.reference.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -879,7 +920,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.preface.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.preface.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -890,7 +931,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.chapter.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.chapter.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -901,7 +942,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.appendix.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.appendix.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -912,7 +953,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.article.toc" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.article.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -923,10 +964,45 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.section.toc" select='0' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.section.toc" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="process.source.toc" select='0' doc:type='boolean'/>
+
+<doc:param name="process.source.toc" xmlns="">
+<refpurpose>FIXME:</refpurpose>
+<refdescription>
+<para>FIXME:
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="process.empty.source.toc" select='0' doc:type='boolean'/>
+
+<doc:param name="process.empty.source.toc" xmlns="">
+<refpurpose>FIXME:</refpurpose>
+<refdescription>
+<para>FIXME:
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="bridgehead.in.toc" select='0' doc:type='boolean'/>
+
+<doc:param name="bridgehead.in.toc" xmlns="">
+<refpurpose>Should bridgehead elements appear in the TOC?</refpurpose>
+<refdescription>
+<para>If non-zero, bridgeheads appear in the TOC. Note that this option
+is not fully supported and may be removed in a future version of the
+stylesheets.
 </para>
 </refdescription>
 </doc:param>
@@ -934,7 +1010,7 @@ in the CALS table.
 <!-- ==================================================================== -->
 <xsl:param name="generate.index" select='1' doc:type='boolean'/>
 
-<doc:param name="" xmlns="">
+<doc:param name="generate.index" xmlns="">
 <refpurpose>FIXME:</refpurpose>
 <refdescription>
 <para>FIXME:
@@ -943,5 +1019,134 @@ in the CALS table.
 </doc:param>
 
 <!-- ==================================================================== -->
+<xsl:param name="callout.unicode" select="0" doc:type='boolean'/>
+
+<doc:param name="callout.unicode" xmlns="">
+<refpurpose>FIXME:</refpurpose>
+<refdescription>
+<para>FIXME:
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="callout.unicode.start.character" select="10102"
+           doc:type='integer'/>
+
+<doc:param name="callout.unicode.start.character" xmlns="">
+<refpurpose>Number of the largest callout graphic</refpurpose>
+<refdescription>
+<para>If <parameter>callout.graphics</parameter>
+is non-zero, graphics are used to represent
+callout numbers. The value of
+<parameter>callout.graphics.number.limit</parameter>
+is
+the largest number for which a graphic exists. If the callout number
+exceeds this limit, the default presentation "(nnn)" will always
+be used.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="callout.unicode.number.limit" select="'10'"
+           doc:type='integer'/>
+
+<doc:param name="callout.unicode.number.limit" xmlns="">
+<refpurpose>Number of the largest callout graphic</refpurpose>
+<refdescription>
+<para>If <parameter>callout.graphics</parameter>
+is non-zero, graphics are used to represent
+callout numbers. The value of
+<parameter>callout.graphics.number.limit</parameter>
+is
+the largest number for which a graphic exists. If the callout number
+exceeds this limit, the default presentation "(nnn)" will always
+be used.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="use.id.as.filename" select="'0'" doc:type='boolean'/>
+
+<doc:param name="use.id.as.filename" xmlns="">
+<refpurpose>Use ID value of chunk elements as the filename?</refpurpose>
+<refdescription>
+<para>If <parameter>use.id.as.filename</parameter>
+is non-zero, the filename of chunk elements that have IDs will be
+derived from the ID value.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="inherit.keywords" select="'1'" doc:type='boolean'/>
+
+<doc:param name="inherit.keywords" xmlns="">
+<refpurpose>Inherit keywords from ancestor elements?</refpurpose>
+<refdescription>
+<para>If <parameter>inherit.keywords</parameter>
+is non-zero, the keyword <sgmltag>META</sgmltag> for each HTML
+<sgmltag>HEAD</sgmltag> element will include all of the keywords from
+ancestral elements. Otherwise, only the keywords from the current section
+will be used.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="label.from.part" select="'0'" doc:type='boolean'/>
+
+<doc:param name="label.from.part" xmlns="">
+<refpurpose>Renumber chapters in each part?</refpurpose>
+<refdescription>
+<para>If <parameter>label.from.part</parameter> is non-zero, components
+(<sgmltag>chapter</sgmltag>s, <sgmltag>appendixe</sgmltag>s, etc.)
+will be numbered from 1 in each <sgmltag>part</sgmltag>. Otherwise,
+they will be numbered monotonically throughout each
+<sgmltag>book</sgmltag>.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="citerefentry.link" select="'0'" doc:type='boolean'/>
+
+<doc:param name="citerefentry.link" xmlns="">
+<refpurpose>Generate URL links when cross-referencing RefEntrys?</refpurpose>
+<refdescription>
+<para>If true, a web link will be generated, presumably
+to an online man->HTML gateway. The text of the link is
+generated by the generate.citerefentry.link template.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="default.encoding" select="'ISO-8859-1'" doc:type='string'/>
+
+<doc:param name="default.encoding" xmlns="">
+<refpurpose>Encoding used in generated HTML pages</refpurpose>
+<refdescription>
+<para>This encoding is used in files generated by chunking stylesheet. Currently
+only Saxon is able to change output encoding.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="saxon.character.representation" select="'entity;decimal'" doc:type='string'/>
+
+<doc:param name="saxon.character.representation" xmlns="">
+<refpurpose>Saxon character representation used in generated HTML pages</refpurpose>
+<refdescription>
+<para>This character representation is used in files generated by chunking stylesheet. If
+you want to suppress entity references for characters with direct representation 
+in default.encoding, set this parameter to value <literal>native</literal>. 
+</para>
+</refdescription>
+</doc:param>
+
 
 </xsl:stylesheet>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="10pt" text-align="justify">
   <fo:layout-master-set>
     <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
       <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
@@ -90,15 +90,15 @@
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
         <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" font-family="Helvetica">
-          <fo:block keep-with-next="always">
-            <fo:block font-size="16pt" font-weight="bold" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Loops</fo:block>
+          <fo:block keep-with-next.within-column="always">
+            <fo:block font-size="16pt" font-weight="bold" font-family="Helvetica" space-before.minimum="1em" space-before.optimum="1.5em" space-before.maximum="2em">Loops</fo:block>
           </fo:block>
         </fo:block>
       </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-<fo:wrapper id="id2745670"><!--for loop, DSSSL and--></fo:wrapper>
-<fo:wrapper id="id2745680"><!--loops, implementing (DSSSL)--></fo:wrapper>
-<fo:wrapper id="id2745690"><!--tail recursion (DSSSL)--></fo:wrapper>
+<fo:wrapper id="id2761018"><!--for loop, DSSSL and--></fo:wrapper>
+<fo:wrapper id="id2761028"><!--loops, implementing (DSSSL)--></fo:wrapper>
+<fo:wrapper id="id2761038"><!--tail recursion (DSSSL)--></fo:wrapper>
 
 DSSSL doesn't have any construct that resembles the
 for loop that occurs in most imperative languages like C
@@ -107,82 +107,70 @@ functional languages for implementing a loop: tail recursion.
 </fo:block>
       <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
 Loops in DSSSL use a special form of
-<fo:inline font-family="monospace">let</fo:inline>. This loop counts from 1 to 10:
-<fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">
-(let <fo:block color="red">&lt;co&gt;&lt;/co&gt;</fo:block>loopvar <fo:block color="red">&lt;co&gt;&lt;/co&gt;</fo:block>((count 1))
-  <fo:block color="red">&lt;co&gt;&lt;/co&gt;</fo:block>(if (&gt; count 10)
-    <fo:block color="red">&lt;co&gt;&lt;/co&gt;</fo:block>#t
-    (<fo:block color="red">&lt;co&gt;&lt;/co&gt;</fo:block>loopvar <fo:block color="red">&lt;co&gt;&lt;/co&gt;</fo:block>(+ count 1))))</fo:block></fo:block>
-      <fo:block>
-        <fo:list-block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-          <fo:list-item>
+<fo:inline font-family="Courier">let</fo:inline>. This loop counts from 1 to 10:
+<fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt">
+(let <fo:inline id="dl1">&#x2776;</fo:inline>loopvar <fo:inline id="dl2">&#x2777;</fo:inline>((count 1))
+  <fo:inline id="dl3">&#x2778;</fo:inline>(if (&gt; count 10)
+    <fo:inline id="dl4">&#x2779;</fo:inline>#t
+    (<fo:inline id="dl5">&#x277A;</fo:inline>loopvar <fo:inline id="dl6">&#x277B;</fo:inline>(+ count 1))))</fo:block></fo:block>
+      <fo:block id="id2761211">
+        <fo:list-block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em" provisional-distance-between-starts="2.2em" provisional-label-separation="0.2em">
+          <fo:list-item id="id2761221">
             <fo:list-item-label end-indent="label-end()">
-              <fo:block>
-                <fo:external-graphic src="../images/callouts/1.png"/>
-              </fo:block>
+              <fo:block>&#x2776;</fo:block>
             </fo:list-item-label>
             <fo:list-item-body start-indent="body-start()">
-              <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This variable controls the loop. It is declared without an
-initial value, immediately after the <fo:inline font-family="monospace">let</fo:inline>
+              <fo:block>This variable controls the loop. It is declared without an
+initial value, immediately after the <fo:inline font-family="Courier">let</fo:inline>
 operand.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item>
+          <fo:list-item id="id2761361">
             <fo:list-item-label end-indent="label-end()">
-              <fo:block>
-                <fo:external-graphic src="../images/callouts/2.png"/>
-              </fo:block>
+              <fo:block>&#x2777;</fo:block>
             </fo:list-item-label>
             <fo:list-item-body start-indent="body-start()">
-              <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
-<fo:wrapper id="id2741855"><!--variables (DSSSL), local, defining after loop variable--></fo:wrapper>
+              <fo:block>
+<fo:wrapper id="id2761385"><!--variables (DSSSL), local, defining after loop variable--></fo:wrapper>
 
 Any number of additional local variables can be defined after
 the loop variable, just as they can in any other
-<fo:inline font-family="monospace">let</fo:inline> expression.</fo:block>
+<fo:inline font-family="Courier">let</fo:inline> expression.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item>
+          <fo:list-item id="id2761422">
             <fo:list-item-label end-indent="label-end()">
-              <fo:block>
-                <fo:external-graphic src="../images/callouts/3.png"/>
-              </fo:block>
+              <fo:block>&#x2778;</fo:block>
             </fo:list-item-label>
             <fo:list-item-body start-indent="body-start()">
-              <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">If you ever want the loop to end, you have to put some sort of a
+              <fo:block>If you ever want the loop to end, you have to put some sort of a
 test in it.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item>
+          <fo:list-item id="id2761190">
             <fo:list-item-label end-indent="label-end()">
-              <fo:block>
-                <fo:external-graphic src="../images/callouts/4.png"/>
-              </fo:block>
+              <fo:block>&#x2779;</fo:block>
             </fo:list-item-label>
             <fo:list-item-body start-indent="body-start()">
-              <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">This is the value that will be returned.</fo:block>
+              <fo:block>This is the value that will be returned.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item>
+          <fo:list-item id="id2853795">
             <fo:list-item-label end-indent="label-end()">
-              <fo:block>
-                <fo:external-graphic src="../images/callouts/5.png"/>
-              </fo:block>
+              <fo:block>&#x277A;</fo:block>
             </fo:list-item-label>
             <fo:list-item-body start-indent="body-start()">
-              <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">Note that you iterate the loop by using the loop variable as if
+              <fo:block>Note that you iterate the loop by using the loop variable as if
 it was a function name.</fo:block>
             </fo:list-item-body>
           </fo:list-item>
-          <fo:list-item>
+          <fo:list-item id="id2853828">
             <fo:list-item-label end-indent="label-end()">
-              <fo:block>
-                <fo:external-graphic src="../images/callouts/6.png"/>
-              </fo:block>
+              <fo:block>&#x277B;</fo:block>
             </fo:list-item-label>
             <fo:list-item-body start-indent="body-start()">
-              <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">The arguments to this function are the values that
-you want the local variables declared in <fo:basic-link internal-destination="dl2"><fo:external-graphic src="../images/callouts/2.png"/></fo:basic-link> to have
+              <fo:block>The arguments to this function are the values that
+you want the local variables declared in <fo:basic-link internal-destination="dl2">&#x2777;</fo:basic-link> to have
 in the next iteration.</fo:block>
             </fo:list-item-body>
           </fo:list-item>

@@ -330,7 +330,7 @@ borders, otherwise they don't.</para>
   <a href="{$href}">
     <xsl:variable name="targets" select="id(@linkend)"/>
     <xsl:variable name="target" select="$targets[1]"/>
-    <xsl:apply-templates select="$target" mode="title.content"/>
+    <xsl:apply-templates select="$target" mode="title.markup"/>
   </a>
   <xsl:text> ]</xsl:text>
 </xsl:template>

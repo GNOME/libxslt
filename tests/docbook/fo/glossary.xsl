@@ -118,13 +118,20 @@
 <xsl:template match="glossary/titleabbrev"></xsl:template>
 
 <xsl:template match="glossary/title" mode="component.title.mode">
-  <fo:block font-size="18pt" font-weight="bold">
+  <fo:block font-size="18pt"
+            font-weight="bold"
+            keep-with-next.within-column="always"
+            hyphenate="false">
     <xsl:apply-templates/>
   </fo:block>
 </xsl:template>
 
 <xsl:template match="glossary/subtitle" mode="component.title.mode">
-  <fo:block font-size="16pt" font-weight="bold" font-style="italic">
+  <fo:block font-size="16pt"
+            font-weight="bold"
+            font-style="italic"
+            keep-with-next.within-column="always"
+            hyphenate="false">
     <xsl:apply-templates/>
   </fo:block>
 </xsl:template>
@@ -174,13 +181,18 @@ GlossEntry ::=
 -->
 
 <xsl:template match="glossentry">
-  <fo:list-item>
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
+
+  <fo:list-item id="{$id}"
+                xsl:use-attribute-sets="normal.para.spacing">
     <xsl:apply-templates/>
   </fo:list-item>
 </xsl:template>
 
 <xsl:template match="glossentry/glossterm">
-  <fo:list-item-label>
+  <fo:list-item-label end-indent="label-end()">
     <fo:block>
       <xsl:apply-templates/>
     </fo:block>
@@ -200,10 +212,12 @@ GlossEntry ::=
   <xsl:variable name="otherterm" select="@otherterm"/>
   <xsl:variable name="targets" select="//node()[@id=$otherterm]"/>
   <xsl:variable name="target" select="$targets[1]"/>
-  <fo:list-item-body>
+  <fo:list-item-body start-indent="body-start()">
     <fo:block>
-      <xsl:call-template name="gentext.element.name"/>
-      <xsl:call-template name="gentext.space"/>
+      <xsl:call-template name="gentext.template">
+        <xsl:with-param name="context" select="'glossary'"/>
+        <xsl:with-param name="name" select="'see'"/>
+      </xsl:call-template>
       <xsl:choose>
         <xsl:when test="@otherterm">
           <xsl:apply-templates select="$target" mode="xref"/>
@@ -218,7 +232,18 @@ GlossEntry ::=
 </xsl:template>
 
 <xsl:template match="glossentry/glossdef">
-  <fo:list-item-body><xsl:apply-templates/></fo:list-item-body>
+  <fo:list-item-body start-indent="body-start()">
+    <xsl:apply-templates select="*[local-name(.) != 'glossseealso']"/>
+    <xsl:if test="glossseealso">
+      <fo:block>
+        <xsl:call-template name="gentext.template">
+          <xsl:with-param name="context" select="'glossary'"/>
+          <xsl:with-param name="name" select="'seealso'"/>
+        </xsl:call-template>
+        <xsl:apply-templates select="glossseealso"/>
+      </fo:block>
+    </xsl:if>
+  </fo:list-item-body>
 </xsl:template>
 
 <xsl:template match="glossentry/glossdef/para[1]">
@@ -231,19 +256,24 @@ GlossEntry ::=
   <xsl:variable name="otherterm" select="@otherterm"/>
   <xsl:variable name="targets" select="//node()[@id=$otherterm]"/>
   <xsl:variable name="target" select="$targets[1]"/>
-  <fo:block>
-    <xsl:call-template name="gentext.element.name"/>
-    <xsl:call-template name="gentext.space"/>
-    <xsl:choose>
-      <xsl:when test="@otherterm">
-        <xsl:apply-templates select="$target" mode="xref"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>.</xsl:text>
-  </fo:block>
+
+  <xsl:choose>
+    <xsl:when test="@otherterm">
+      <xsl:apply-templates select="$target" mode="xref"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
+
+  <xsl:choose>
+    <xsl:when test="position() = last()">
+      <xsl:text>.</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>, </xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -253,8 +283,21 @@ GlossEntry ::=
 </xsl:template>
 
 <xsl:template match="glossterm" mode="xref">
-  <xsl:apply-templates/>
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id">
+      <xsl:with-param name="object" select="parent::glossentry"/>
+    </xsl:call-template>
+  </xsl:variable>
+
+  <fo:basic-link internal-destination="{$id}"
+                 xsl:use-attribute-sets="xref.properties">
+    <xsl:apply-templates/>
+    <xsl:call-template name="insert.page.citation">
+      <xsl:with-param name="id" select="$id"/>
+    </xsl:call-template>
+  </fo:basic-link>
 </xsl:template>
+
 
 <!-- ==================================================================== -->
 

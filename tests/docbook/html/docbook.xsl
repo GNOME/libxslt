@@ -21,9 +21,14 @@
 <!-- ==================================================================== -->
 
 <xsl:include href="../VERSION"/>
+<xsl:include href="param.xsl"/>
 <xsl:include href="../lib/lib.xsl"/>
 <xsl:include href="../common/l10n.xsl"/>
 <xsl:include href="../common/common.xsl"/>
+<xsl:include href="../common/labels.xsl"/>
+<xsl:include href="../common/titles.xsl"/>
+<xsl:include href="../common/subtitles.xsl"/>
+<xsl:include href="../common/gentext.xsl"/>
 <xsl:include href="autotoc.xsl"/>
 <xsl:include href="lists.xsl"/>
 <xsl:include href="callout.xsl"/>
@@ -52,7 +57,6 @@
 <xsl:include href="synop.xsl"/>
 <xsl:include href="titlepage.xsl"/>
 <xsl:include href="titlepage.templates.xsl"/>
-<xsl:include href="param.xsl"/>
 <xsl:include href="pi.xsl"/>
 
 <!-- ==================================================================== -->
@@ -81,33 +85,9 @@
 
 <xsl:template name="head.content">
   <xsl:param name="node" select="."/>
-  <xsl:variable name="info" select="($node/docinfo
-                                     |$node/chapterinfo
-                                     |$node/appendixinfo
-                                     |$node/prefaceinfo
-                                     |$node/bookinfo
-                                     |$node/setinfo
-                                     |$node/articleinfo
-                                     |$node/artheader
-                                     |$node/sect1info
-                                     |$node/sect2info
-                                     |$node/sect3info
-                                     |$node/sect4info
-                                     |$node/sect5info
-                                     |$node/refsect1info
-                                     |$node/refsect2info
-                                     |$node/refsect3info
-                                     |$node/bibliographyinfo
-                                     |$node/glossaryinfo
-                                     |$node/indexinfo
-                                     |$node/refentryinfo
-                                     |$node/partinfo
-                                     |$node/referenceinfo)[1]"/>
 
   <title>
-    <xsl:apply-templates select="$node" mode="title.ref">
-      <xsl:with-param name="text-only" select="'1'"/>
-    </xsl:apply-templates>
+    <xsl:apply-templates select="$node" mode="object.title.markup.textonly"/>
   </title>
 
   <xsl:if test="$html.stylesheet">
@@ -127,10 +107,48 @@
 
   <meta name="generator" content="DocBook XSL Stylesheets V{$VERSION}"/>
 
-  <xsl:apply-templates select="$info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="." mode="head.keywords.content"/>
 </xsl:template>
 
+<!-- ============================================================ -->
+
+<xsl:template match="*" mode="head.keywords.content">
+  <xsl:apply-templates select="chapterinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="appendixinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="prefaceinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="bookinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="setinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="articleinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="artheader/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="sect1info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="sect2info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="sect3info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="sect4info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="sect5info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="refsect1info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="refsect2info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="refsect3info/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="bibliographyinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="glossaryinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="indexinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="refentryinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="partinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="referenceinfo/keywordset" mode="html.header"/>
+  <xsl:apply-templates select="docinfo/keywordset" mode="html.header"/>
+
+  <xsl:if test="$inherit.keywords != 0
+                and parent::*">
+    <xsl:apply-templates select="parent::*" mode="head.keywords.content"/>
+  </xsl:if>
+</xsl:template>
+
+<!-- ============================================================ -->
+
 <xsl:template name="user.head.content">
+  <xsl:param name="node" select="."/>
+</xsl:template>
+
+<xsl:template name="user.header.navigation">
   <xsl:param name="node" select="."/>
 </xsl:template>
 
@@ -139,6 +157,10 @@
 </xsl:template>
 
 <xsl:template name="user.footer.content">
+  <xsl:param name="node" select="."/>
+</xsl:template>
+
+<xsl:template name="user.footer.navigation">
   <xsl:param name="node" select="."/>
 </xsl:template>
 
@@ -171,7 +193,9 @@
     <xsl:call-template name="head.content">
       <xsl:with-param name="node" select="$doc"/>
     </xsl:call-template>
-    <xsl:call-template name="user.head.content"/>
+    <xsl:call-template name="user.head.content">
+      <xsl:with-param name="node" select="$doc"/>
+    </xsl:call-template>
   </head>
   <body xsl:use-attribute-sets="body.attrs">
     <xsl:call-template name="user.header.content">

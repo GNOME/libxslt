@@ -23,7 +23,7 @@
     </xsl:call-template>
   </xsl:variable>
   <xsl:variable name="title">
-    <xsl:apply-templates select="$node" mode="title.ref"/>
+    <xsl:apply-templates select="$node" mode="object.title.markup"/>
   </xsl:variable>
 
   <xsl:if test="$passivetex.extensions != 0">
@@ -34,7 +34,8 @@
     </fotex:bookmark>
   </xsl:if>
 
-  <fo:block>
+  <fo:block keep-with-next.within-column="always"
+            hyphenate="false">
     <xsl:copy-of select="$title"/>
   </fo:block>
 </xsl:template>
@@ -42,11 +43,15 @@
 <xsl:template name="component.subtitle">
   <xsl:param name="node" select="."/>
   <xsl:variable name="subtitle">
-    <xsl:apply-templates select="$node" mode="subtitle.content"/>
+    <xsl:apply-templates select="$node" mode="subtitle.markup"/>
   </xsl:variable>
 
   <xsl:if test="$subtitle != ''">
-    <fo:block font-size="16pt" font-weight="bold" font-style="italic">
+    <fo:block font-size="16pt"
+              font-weight="bold"
+              font-style="italic"
+              keep-with-next.within-column="always"
+              hyphenate="false">
       <xsl:copy-of select="$subtitle"/>
     </fo:block>
   </xsl:if>
@@ -179,7 +184,7 @@
   </fo:page-sequence>
 </xsl:template>
 
-<xsl:template match="chapter/docinfo"></xsl:template>
+<xsl:template match="chapter/docinfo|chapterinfo"></xsl:template>
 <xsl:template match="chapter/title"></xsl:template>
 <xsl:template match="chapter/titleabbrev"></xsl:template>
 <xsl:template match="chapter/subtitle"></xsl:template>
@@ -220,7 +225,7 @@
   </fo:page-sequence>
 </xsl:template>
 
-<xsl:template match="appendix/docinfo"></xsl:template>
+<xsl:template match="appendix/docinfo|appendixinfo"></xsl:template>
 <xsl:template match="appendix/title"></xsl:template>
 <xsl:template match="appendix/titleabbrev"></xsl:template>
 <xsl:template match="appendix/subtitle"></xsl:template>
@@ -342,7 +347,7 @@
     <xsl:call-template name="section.heading">
       <xsl:with-param name="level" select="2"/>
       <xsl:with-param name="title">
-        <xsl:apply-templates select="." mode="title.ref"/>
+        <xsl:apply-templates select="." mode="title.markup"/>
       </xsl:with-param>
     </xsl:call-template>
 

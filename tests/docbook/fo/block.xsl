@@ -42,7 +42,9 @@
 </xsl:template>
 
 <xsl:template match="formalpara/title">
-  <fo:inline font-weight="bold">
+  <fo:inline font-weight="bold"
+             keep-with-next.within-line="always"
+             padding-end="1em">
     <xsl:apply-templates/>
   </fo:inline>
 </xsl:template>
@@ -54,7 +56,7 @@
 <!-- ==================================================================== -->
 
 <xsl:template match="blockquote">
-  <fo:block start-indent="1in" end-indent="1in">
+  <fo:block start-indent="0.5in" end-indent="0.5in">
     <xsl:call-template name="semiformal.object"/>
   </fo:block>
 </xsl:template>
@@ -78,11 +80,13 @@
 <xsl:template match="sidebar">
   <fo:block>
     <xsl:if test="./title">
-      <fo:block font-weight="bold">
+      <fo:block font-weight="bold"
+                keep-with-next.within-column="always"
+                hyphenate="false">
         <xsl:apply-templates select="./title" mode="sidebar.title.mode"/>
       </fo:block>
     </xsl:if>
-  
+
     <xsl:apply-templates/>
   </fo:block>
 </xsl:template>
@@ -92,6 +96,25 @@
 
 <xsl:template match="sidebar/title" mode="sidebar.title.mode">
   <xsl:apply-templates/>
+</xsl:template>
+
+<!-- ==================================================================== -->
+
+<xsl:template match="abstract">
+  <fo:block>
+    <xsl:if test="@id">
+      <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+    </xsl:if>
+    <xsl:call-template name="formal.object.heading">
+      <xsl:with-param name="title">
+        <xsl:apply-templates select="." mode="title.markup"/>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:apply-templates/>
+  </fo:block>
+</xsl:template>
+
+<xsl:template match="abstract/title">
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -117,6 +140,7 @@
 </xsl:template>
 
 <xsl:template match="msgrel">
+  <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="msgtext">
@@ -127,11 +151,40 @@
   <xsl:call-template name="block.object"/>
 </xsl:template>
 
-<xsl:template match="msglevel|msgorig|msgaud">
+<xsl:template match="msglevel">
   <fo:block>
-    <fo:inline font-weight="bold">
-      <xsl:call-template name="gentext.element.name"/>
-      <xsl:text>: </xsl:text>
+    <fo:inline font-weight="bold"
+               keep-with-next.within-line="always">
+      <xsl:call-template name="gentext.template">
+        <xsl:with-param name="context" select="'msgset'"/>
+        <xsl:with-param name="name" select="'MsgLevel'"/>
+      </xsl:call-template>
+    </fo:inline>
+    <xsl:apply-templates/>
+  </fo:block>
+</xsl:template>
+
+<xsl:template match="msgorig">
+  <fo:block>
+    <fo:inline font-weight="bold"
+               keep-with-next.within-line="always">
+      <xsl:call-template name="gentext.template">
+        <xsl:with-param name="context" select="'msgset'"/>
+        <xsl:with-param name="name" select="'MsgOrig'"/>
+      </xsl:call-template>
+    </fo:inline>
+    <xsl:apply-templates/>
+  </fo:block>
+</xsl:template>
+
+<xsl:template match="msgaud">
+  <fo:block>
+    <fo:inline font-weight="bold"
+               keep-with-next.within-line="always">
+      <xsl:call-template name="gentext.template">
+        <xsl:with-param name="context" select="'msgset'"/>
+        <xsl:with-param name="name" select="'MsgAud'"/>
+      </xsl:call-template>
     </fo:inline>
     <xsl:apply-templates/>
   </fo:block>
@@ -142,7 +195,11 @@
 </xsl:template>
 
 <xsl:template match="msgexplan/title">
-  <fo:block font-weight="bold"><xsl:apply-templates/></fo:block>
+  <fo:block font-weight="bold"
+            keep-with-next.within-column="always"
+            hyphenate="false">
+    <xsl:apply-templates/>
+  </fo:block>
 </xsl:template>
 
 <!-- ==================================================================== -->

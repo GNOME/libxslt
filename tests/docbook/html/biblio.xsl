@@ -15,28 +15,10 @@
 <!-- ==================================================================== -->
 
 <xsl:template match="bibliography">
-  <div class="{name(.)}">
-    <xsl:call-template name="component.separator"/>
-    <xsl:choose>
-      <xsl:when test="./title">
-        <xsl:apply-templates select="./title" mode="component.title.mode"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <h2 class="title">
-          <a>
-            <xsl:attribute name="name">
-              <xsl:call-template name="object.id"/>
-            </xsl:attribute>
-            <xsl:call-template name="gentext.element.name"/>
-          </a>
-        </h2>
-      </xsl:otherwise>
-    </xsl:choose>
+  <xsl:variable name="id"><xsl:call-template name="object.id"/></xsl:variable>
 
-    <xsl:if test="./subtitle">
-      <xsl:apply-templates select="./subtitle" mode="component.title.mode"/>
-    </xsl:if>
-
+  <div id="{$id}" class="{name(.)}">
+    <xsl:call-template name="bibliography.titlepage"/>
     <xsl:apply-templates/>
     <xsl:call-template name="process.footnotes"/>
   </div>
@@ -334,7 +316,9 @@
 
 <xsl:template match="copyright" mode="bibliography.mode">
   <span class="{name(.)}">
-    <xsl:call-template name="gentext.element.name"/>
+    <xsl:call-template name="gentext">
+      <xsl:with-param name="key" select="'Copyright'"/>
+    </xsl:call-template>
     <xsl:call-template name="gentext.space"/>
     <xsl:call-template name="dingbat">
       <xsl:with-param name="dingbat">copyright</xsl:with-param>

@@ -21,16 +21,18 @@
 
 <t:titlepage element="article" wrapper="fo:block">
   <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     named-template="component.title"
 	     param:node="ancestor-or-self::article[1]"
+	     fo:text-align="center"
 	     fo:margin-left="-4pc"
 	     fo:keep-with-next="always"
 	     fo:font-size="&hsize5;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
-	      fo:font-family="{$title.font.family}"/>
+    <subtitle
+	      fo:font-family="{$title.font.family}"
+	      fo:text-align="center"/>
     <corpauthor/>
     <authorgroup/>
     <author/>
@@ -60,15 +62,17 @@
 
 <t:titlepage element="set" wrapper="fo:block">
   <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     named-template="division.title"
 	     param:node="ancestor-or-self::set[1]"
+	     fo:text-align="center"
 	     fo:font-size="&hsize5;"
 	     fo:space-before="&hsize5space;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
-	      fo:font-family="{$title.font.family}"/>
+    <subtitle
+	      fo:font-family="{$title.font.family}"
+	      fo:text-align="center"/>
     <corpauthor/>
     <authorgroup/>
     <author/>
@@ -98,14 +102,16 @@
 
   <t:titlepage element="book" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     named-template="division.title"
 	     param:node="ancestor-or-self::book[1]"
+	     fo:text-align="center"
 	     fo:font-size="&hsize5;"
 	     fo:space-before="&hsize5space;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
-      <subtitle predicate="[1]"
+      <subtitle
+		fo:text-align="center"
 		fo:font-size="&hsize4;"
 		fo:space-before="&hsize4space;"
 		fo:font-family="{$title.font.family}"/>
@@ -119,7 +125,7 @@
     </t:titlepage-content>
 
   <t:titlepage-content side="verso">
-      <title predicate="[1]"
+      <title
 	     fo:font-size="&hsize2;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
@@ -148,14 +154,16 @@
 
 <t:titlepage element="part" wrapper="fo:block">
   <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     named-template="division.title"
 	     param:node="ancestor-or-self::part[1]"
+	     fo:text-align="center"
 	     fo:font-size="&hsize5;"
 	     fo:space-before="&hsize5space;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
+	      fo:text-align="center"
 	      fo:font-size="&hsize4;"
 	      fo:space-before="&hsize4space;"
 	      fo:font-weight='bold'
@@ -178,13 +186,15 @@
 
 <t:titlepage element="partintro" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
+	   fo:text-align="center"
 	   fo:font-size="&hsize3;"
 	   fo:font-weight="bold"
 	   fo:margin-left="-4pc"
 	   fo:space-before="1em"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
+	      fo:text-align="center"
 	      fo:font-size="&hsize2;"
 	      fo:font-weight="bold"
 	      fo:font-style="italic"
@@ -218,15 +228,17 @@
 
 <t:titlepage element="reference" wrapper="fo:block">
   <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     named-template="division.title"
 	     param:node="ancestor-or-self::reference[1]"
+	     fo:text-align="center"
 	     fo:font-size="&hsize5;"
 	     fo:space-before="&hsize5space;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
-	      fo:font-family="{$title.font.family}"/>
+    <subtitle
+	      fo:font-family="{$title.font.family}"
+	      fo:text-align="center"/>
     <corpauthor/>
     <authorgroup/>
     <author/>
@@ -256,7 +268,7 @@
 
   <t:titlepage element="dedication" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
 	     named-template="component.title"
 	     param:node="ancestor-or-self::dedication[1]"
@@ -264,7 +276,7 @@
 	     fo:font-size="&hsize3;"
 	     fo:font-family="{$title.font.family}"
 	     fo:font-weight="bold"/>
-      <subtitle predicate="[1]"
+      <subtitle
 		fo:font-family="{$title.font.family}"/>
     </t:titlepage-content>
 
@@ -285,7 +297,7 @@
 
   <t:titlepage element="preface" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
 	     named-template="component.title"
 	     param:node="ancestor-or-self::preface[1]"
@@ -293,7 +305,7 @@
 	     fo:font-size="&hsize3;"
 	     fo:font-family="{$title.font.family}"
 	     fo:font-weight="bold"/>
-      <subtitle predicate="[1]"
+      <subtitle
 		fo:font-family="{$title.font.family}"/>
       <corpauthor/>
       <authorgroup/>
@@ -324,14 +336,14 @@
 
   <t:titlepage element="chapter" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     named-template="component.title"
 	     param:node="ancestor-or-self::chapter[1]"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
-      <subtitle predicate="[1]"
+      <subtitle
 		fo:space-before="0.5em"
 		fo:margin-left="-4pc"
 		fo:font-style="italic"
@@ -367,14 +379,14 @@
 
   <t:titlepage element="appendix" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     named-template="component.title"
 	     param:node="ancestor-or-self::appendix[1]"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
 	     fo:font-weight="bold"
 	     fo:font-family="{$title.font.family}"/>
-      <subtitle predicate="[1]"
+      <subtitle
 		fo:font-family="{$title.font.family}"/>
       <corpauthor/>
       <authorgroup/>
@@ -405,10 +417,10 @@
 
 <t:titlepage element="section" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
 	   fo:margin-left="-4pc"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
 	      fo:font-family="{$title.font.family}"/>
     <corpauthor/>
     <authorgroup/>
@@ -437,10 +449,10 @@
 
 <t:titlepage element="sect1" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
 	   fo:margin-left="-4pc"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
 	      fo:font-family="{$title.font.family}"/>
     <corpauthor/>
     <authorgroup/>
@@ -469,10 +481,10 @@
 
 <t:titlepage element="sect2" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
 	   fo:margin-left="-4pc"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
 	      fo:font-family="{$title.font.family}"/>
     <corpauthor/>
     <authorgroup/>
@@ -501,10 +513,10 @@
 
 <t:titlepage element="sect3" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
 	   fo:margin-left="-4pc"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
 	      fo:font-family="{$title.font.family}"/>
     <corpauthor/>
     <authorgroup/>
@@ -533,10 +545,10 @@
 
 <t:titlepage element="sect4" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
 	   fo:margin-left="-4pc"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
 	      fo:font-family="{$title.font.family}"/>
     <corpauthor/>
     <authorgroup/>
@@ -565,10 +577,10 @@
 
 <t:titlepage element="sect5" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
 	   fo:margin-left="-4pc"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
 	      fo:font-family="{$title.font.family}"/>
     <corpauthor/>
     <authorgroup/>
@@ -597,10 +609,10 @@
 
 <t:titlepage element="simplesect" wrapper="fo:block">
   <t:titlepage-content side="recto">
-    <title predicate="[1]"
+    <title
 	   fo:margin-left="-4pc"
 	   fo:font-family="{$title.font.family}"/>
-    <subtitle predicate="[1]"
+    <subtitle
 	      fo:font-family="{$title.font.family}"/>
     <corpauthor/>
     <authorgroup/>
@@ -631,7 +643,7 @@
 
   <t:titlepage element="bibliography" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
 	     named-template="component.title"
 	     param:node="ancestor-or-self::bibliography[1]"
@@ -639,7 +651,7 @@
 	     fo:font-size="&hsize3;"
 	     fo:font-family="{$title.font.family}"
 	     fo:font-weight="bold"/>
-      <subtitle predicate="[1]"
+      <subtitle
 		fo:font-family="{$title.font.family}"/>
     </t:titlepage-content>
 
@@ -660,15 +672,15 @@
 
   <t:titlepage element="glossary" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
 	     named-template="component.title"
-	     param:node="ancestor-or-self::bibliography[1]"
+	     param:node="ancestor-or-self::glossary[1]"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
 	     fo:font-family="{$title.font.family}"
 	     fo:font-weight="bold"/>
-      <subtitle predicate="[1]"
+      <subtitle
 		fo:font-family="{$title.font.family}"/>
     </t:titlepage-content>
 
@@ -689,15 +701,15 @@
 
   <t:titlepage element="index" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
 	     named-template="component.title"
-	     param:node="ancestor-or-self::bibliography[1]"
+	     param:node="ancestor-or-self::index[1]"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
 	     fo:font-family="{$title.font.family}"
 	     fo:font-weight="bold"/>
-      <subtitle predicate="[1]"
+      <subtitle
 		fo:font-family="{$title.font.family}"/>
     </t:titlepage-content>
 
@@ -718,10 +730,10 @@
 
   <t:titlepage element="table.of.contents" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
-	     named-template="gentext.element.name"
-	     param:element.name="'TableofContents'"
+	     named-template="gentext"
+	     param:key="'TableofContents'"
 	     fo:space-after="1em"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
@@ -744,10 +756,10 @@
 
   <t:titlepage element="list.of.tables" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
-	     named-template="gentext.element.name"
-	     param:element.name="'ListofTables'"
+	     named-template="gentext"
+	     param:key="'ListofTables'"
 	     fo:space-after="1em"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
@@ -770,10 +782,10 @@
 
   <t:titlepage element="list.of.figures" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
-	     named-template="gentext.element.name"
-	     param:element.name="'ListofFigures'"
+	     named-template="gentext"
+	     param:key="'ListofFigures'"
 	     fo:space-after="1em"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
@@ -796,10 +808,10 @@
 
   <t:titlepage element="list.of.examples" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
-	     named-template="gentext.element.name"
-	     param:element.name="'ListofExamples'"
+	     named-template="gentext"
+	     param:key="'ListofExamples'"
 	     fo:space-after="1em"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
@@ -822,10 +834,10 @@
 
   <t:titlepage element="list.of.equations" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
-	     named-template="gentext.element.name"
-	     param:element.name="'ListofEquations'"
+	     named-template="gentext"
+	     param:key="'ListofEquations'"
 	     fo:space-after="1em"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"
@@ -848,10 +860,10 @@
 
   <t:titlepage element="list.of.unknowns" wrapper="fo:block">
     <t:titlepage-content side="recto">
-      <title predicate="[1]"
+      <title
 	     force="1"
-	     named-template="gentext.element.name"
-	     param:element.name="'ListofUnknown'"
+	     named-template="gentext"
+	     param:key="'ListofUnknown'"
 	     fo:space-after="1em"
 	     fo:margin-left="-4pc"
 	     fo:font-size="&hsize3;"

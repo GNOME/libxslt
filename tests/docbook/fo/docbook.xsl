@@ -21,10 +21,14 @@
 <!-- ==================================================================== -->
 
 <xsl:include href="../VERSION"/>
+<xsl:include href="param.xsl"/>
 <xsl:include href="../lib/lib.xsl"/>
 <xsl:include href="../common/l10n.xsl"/>
 <xsl:include href="../common/common.xsl"/>
-<xsl:include href="param.xsl"/>
+<xsl:include href="../common/labels.xsl"/>
+<xsl:include href="../common/titles.xsl"/>
+<xsl:include href="../common/subtitles.xsl"/>
+<xsl:include href="../common/gentext.xsl"/>
 <xsl:include href="autotoc.xsl"/>
 <xsl:include href="lists.xsl"/>
 <xsl:include href="callout.xsl"/>
@@ -56,9 +60,15 @@
 <xsl:include href="pagesetup.xsl"/>
 <xsl:include href="pi.xsl"/>
 
+<xsl:include href="fop.xsl"/>
+
 <!-- ==================================================================== -->
 
 <xsl:template match="*">
+  <xsl:message>
+    <xsl:value-of select="name(.)"/>
+    <xsl:text> encountered, but no template matches.</xsl:text>
+  </xsl:message>
   <fo:block color="red">
     <xsl:text>&lt;</xsl:text>
     <xsl:value-of select="name(.)"/>
@@ -96,15 +106,10 @@
       <xsl:otherwise>[could not find document title]</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="docinfo" 
-                select="*[1]/artheader
-                        |*[1]/articleinfo
-                        |*[1]/sectioninfo
-                        |*[1]/sect1info"/>
 
-  <fo:root font-family="Times Roman"
-           font-size="12pt"
-           text-align="justify">
+  <fo:root font-family="{$body.font.family}"
+           font-size="{$body.font.size}"
+           text-align="{$alignment}">
     <xsl:call-template name="setup.pagemasters"/>
     <xsl:choose>
       <xsl:when test="$rootid != ''">
@@ -117,11 +122,17 @@
             </xsl:message>
           </xsl:when>
           <xsl:otherwise>
+            <xsl:if test="$fop.extensions != 0">
+              <xsl:apply-templates select="id($rootid)" mode="outline"/>
+            </xsl:if>
             <xsl:apply-templates select="id($rootid)"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
+        <xsl:if test="$fop.extensions != 0">
+          <xsl:apply-templates mode="outline"/>
+        </xsl:if>
         <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>

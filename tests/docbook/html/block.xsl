@@ -66,7 +66,7 @@
 
 <xsl:template match="formalpara/title">
   <b><xsl:apply-templates/></b>
-  <xsl:text> </xsl:text>
+  <xsl:call-template name="gentext.space"/>
 </xsl:template>
 
 <xsl:template match="formalpara/para">
@@ -146,7 +146,9 @@
   <div class="{name(.)}">
     <xsl:call-template name="formal.object.heading">
       <xsl:with-param name="title">
-        <xsl:apply-templates select="." mode="title.ref"/>
+        <xsl:apply-templates select="." mode="title.markup">
+          <xsl:with-param name="allow-anchors" select="'1'"/>
+        </xsl:apply-templates>
       </xsl:with-param>
     </xsl:call-template>
     <xsl:apply-templates/>
@@ -206,11 +208,37 @@
   <xsl:call-template name="block.object"/>
 </xsl:template>
 
-<xsl:template match="msglevel|msgorig|msgaud">
+<xsl:template match="msglevel">
   <p>
     <b>
-      <xsl:call-template name="gentext.element.name"/>
-      <xsl:text>: </xsl:text>
+      <xsl:call-template name="gentext.template">
+        <xsl:with-param name="context" select="'msgset'"/>
+        <xsl:with-param name="name" select="'MsgLevel'"/>
+      </xsl:call-template>
+    </b>
+    <xsl:apply-templates/>
+  </p>
+</xsl:template>
+
+<xsl:template match="msgorig">
+  <p>
+    <b>
+      <xsl:call-template name="gentext.template">
+        <xsl:with-param name="context" select="'msgset'"/>
+        <xsl:with-param name="name" select="'MsgOrig'"/>
+      </xsl:call-template>
+    </b>
+    <xsl:apply-templates/>
+  </p>
+</xsl:template>
+
+<xsl:template match="msgaud">
+  <p>
+    <b>
+      <xsl:call-template name="gentext.template">
+        <xsl:with-param name="context" select="'msgset'"/>
+        <xsl:with-param name="name" select="'MsgAud'"/>
+      </xsl:call-template>
     </b>
     <xsl:apply-templates/>
   </p>
@@ -231,7 +259,11 @@
     <table border="0" width="100%" summary="Revision history">
       <tr>
         <th align="left" valign="top" colspan="3">
-          <b><xsl:call-template name="gentext.element.name"/></b>
+          <b>
+            <xsl:call-template name="gentext">
+              <xsl:with-param name="key" select="'RevHistory'"/>
+            </xsl:call-template>
+          </b>
         </th>
       </tr>
       <xsl:apply-templates/>
@@ -247,8 +279,10 @@
   <tr>
     <td align="left">
       <xsl:if test="$revnumber">
-        <xsl:call-template name="gentext.element.name"/>
-        <xsl:text> </xsl:text>
+        <xsl:call-template name="gentext">
+          <xsl:with-param name="key" select="'Revision'"/>
+        </xsl:call-template>
+        <xsl:call-template name="gentext.space"/>
         <xsl:apply-templates select="$revnumber"/>
       </xsl:if>
     </td>

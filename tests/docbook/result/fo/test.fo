@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="12pt" text-align="justify">
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" font-family="Times Roman" font-size="10pt" text-align="justify">
   <fo:layout-master-set>
     <fo:simple-page-master master-name="blank" page-width="8.5in" page-height="11in" margin-top="1in" margin-bottom="1in" margin-left="10pc" margin-right="1in">
       <fo:region-body margin-bottom="24pt" margin-top="24pt"/>
@@ -81,7 +81,7 @@
       </fo:repeatable-page-master-alternatives>
     </fo:page-sequence-master>
   </fo:layout-master-set>
-  <fo:page-sequence id="id2599688" hyphenate="true" master-name="oneside1" language="en">
+  <fo:page-sequence id="id2756088" hyphenate="true" master-name="oneside1" language="en">
     <fo:static-content flow-name="xsl-region-after">
       <fo:block text-align="center" font-size="10pt">
         <fo:page-number xmlns:fo="http://www.w3.org/1999/XSL/Format"/>
@@ -89,14 +89,14 @@
     </fo:static-content>
     <fo:flow flow-name="xsl-region-body">
       <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format">
-        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
-          <fo:block>Article Title</fo:block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" text-align="center" margin-left="-4pc" keep-with-next="always" font-size="24.8832pt" font-weight="bold" font-family="Helvetica">
+          <fo:block keep-with-next.within-column="always" hyphenate="false">Article Title</fo:block>
         </fo:block>
       </fo:block>
-      <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em">This
+      <fo:block wrap-option="no-wrap" text-align="start" white-space-collapse="false" linefeed-treatment="preserve" font-family="Courier" font-size="9pt">This
   is                  With a line-annotation
     a 
-     screen<fo:block color="red">&lt;co&gt;&lt;/co&gt;</fo:block>
+     screen<fo:inline id="foo">&#x2776;</fo:inline>
      This
     is                With a line-annotation
   a 
@@ -105,8 +105,8 @@ This
   is                  With a line-annotation
     a 
      screen</fo:block>
-      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">What about <fo:basic-link internal-destination="foo"><fo:external-graphic src="../images/callouts/1.png"/></fo:basic-link>?</fo:block>
-      <fo:block color="red">&lt;mediaobjectco&gt;<fo:block color="red">&lt;imageobjectco&gt;<fo:external-graphic src="file:http://maps.example.com/EARTH?USA?MA?AMHERST" content-width="auto" content-height="auto" width="auto" height="auto"/>&lt;/imageobjectco&gt;</fo:block>&lt;/mediaobjectco&gt;</fo:block>
+      <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">What about <fo:basic-link internal-destination="foo">&#x2776;</fo:basic-link>?</fo:block>
+      <fo:block color="red">&lt;mediaobjectco&gt;<fo:external-graphic src="url(file:http://maps.example.com/EARTH?USA?MA?AMHERST)" content-width="auto" content-height="auto" width="auto" height="auto"/>&lt;/mediaobjectco&gt;</fo:block>
     </fo:flow>
   </fo:page-sequence>
 </fo:root>

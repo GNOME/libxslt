@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
 <title>Book Title</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.29">
+<meta name="generator" content="DocBook XSL Stylesheets V1.40">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" id="book">
 <div class="titlepage">
@@ -11,7 +11,7 @@
 <a name="book"></a>Book Title</h1></div>
 <div><h3 class="corpauthor">Some Corporation</h3></div>
 <div><h3 class="author">Norman Walsh</h3></div>
-<div><p class="copyright">Copyright © 1998 by Norman Walsh</p></div>
+<div><p class="copyright">Copyright © 1998 Norman Walsh</p></div>
 <div><div class="legalnotice">
 <p class="legalnotice-title"><b>Legal Notice</b></p>
 <p>This is a test document. You can do what you will with it.</p>
@@ -33,23 +33,24 @@
 <dt><a href="#bib1">A Test Bibliography</a></dt>
 <dt><a href="#gloss">Example Glossary</a></dt>
 <dt><a href="#index">Index</a></dt>
-<dt><a href="#id2753497">Index</a></dt>
+<dt><a href="#id2766550">Index</a></dt>
 </dl>
 </div>
-<div class="bibliography">
-<h2 class="title"><a name="bib1">A Test Bibliography</a></h2>
+<div id="bib1" class="bibliography">
+<div class="titlepage"><div><h2 class="title">
+<a name="bib1"></a>A Test Bibliography</h2></div></div>
 <p>The stock stylesheet attempts to do a Bibliography.  It probably needs
 a lot of tweaking.  It probably doesn't conform to any specific style.</p>
 <div class="bibliodiv">
-<h3 class="title"><a name="id2848637">Books</a></h3>
-<div id="id2848651" class="biblioentry">
-<a name="id2848651"></a><p>
-<span class="abbrev">[AhoSethiUllman96] </span><span class="authorgroup">Alfred V. Aho, Ravi Sethi, and Jeffrey D. Ullman. </span><span class="title"><I>Compilers, Principles, Techniques, and Tools</I>. </span><span class="publisher"><span class="publishername">Addison-Wesley Publishing Company. </span></span><span class="copyright">Copyright © 1996 Bell Telephone Laboratories, Inc.. </span><span class="isbn">0-201-10088-6. </span><span class="editor">James T. DeWolf. </span>
+<h3 class="title"><a name="id2861818">Books</a></h3>
+<div id="id2861831" class="biblioentry">
+<a name="id2861831"></a><p>
+<span class="abbrev">[AhoSethiUllman96] </span><span class="authorgroup">Alfred V. Aho,Ravi Sethi, and Jeffrey D. Ullman. </span><span class="title"><I>Compilers, Principles, Techniques, and Tools</I>. </span><span class="publisher"><span class="publishername">Addison-Wesley Publishing Company. </span></span><span class="copyright">Copyright © 1996 Bell Telephone Laboratories, Inc.. </span><span class="isbn">0-201-10088-6. </span><span class="editor">James T. DeWolf. </span>
 </p>
 </div>
 </div>
 <div class="bibliodiv">
-<h3 class="title"><a name="id2758022">Periodicals</a></h3>
+<h3 class="title"><a name="id2767042">Periodicals</a></h3>
 <div id="walsh97" class="biblioentry">
 <a name="walsh97"></a><p>
 <span class="abbrev">[Walsh97] </span><span class="biblioset">&#x201C;A Guide to XML&#x201D;. <span class="author">Norman Walsh. </span><span class="pubdate">1997. </span><span class="copyright">Copyright © 1997 ArborText, Inc.. </span><span class="pagenums">97-108. </span></span><span class="biblioset"><I>XML: Principles, Tools, and Techniques</I>. <span class="publisher"><span class="publishername">O'Reilly &amp; Associates, Inc.. </span></span><span class="issn">1085-2301. </span><span class="editor">Dan Connolly. </span></span>
@@ -65,8 +66,8 @@ a lot of tweaking.  It probably doesn't conform to any specific style.</p>
     <span class="corpname">The World Wide Web Consortium</span>.
     <span class="pubdate">Winter, 1996</span></span>.</p>
 </div>
-<div id="id2760720" class="biblioentry">
-<a name="id2760720"></a><p>
+<div id="id2771178" class="biblioentry">
+<a name="id2771178"></a><p>
 <span class="abbrev">[Abbrev] </span><span class="title"><I>A Really Full BiblioEntry</I>. </span><span class="subtitle">Subtitle. </span><span class="address">Any Street
 Anywhere, XX 99999
 USA. </span><span class="affiliation"><span class="shortaffil">shortaffil. </span><span class="jobtitle">jobtitle. </span><span class="orgname">orgname. </span><span class="orgdiv">orgdiv. </span><span class="address">Any Street
@@ -99,22 +100,25 @@ USA. </span></span><span class="publishername">PublisherName. </span><span class
 </div>
 </div>
 </div>
-<div class="glossary">
-<h2>Example Glossary</h2>
-<dl>
+<div id="gloss" class="glossary">
+<div class="titlepage"><div><h2 class="title">
+<a name="gloss"></a>Example Glossary</h2></div></div>
 <p>This is not a real glossary, it's just an example.</p>
 <div class="glossdiv">
 <h3 class="title">E</h3>
+<dl>
 <dt><a name="xml">Extensible Markup Language</a></dt>
 <dd>
 <p>Some reasonable definition here.</p>
 <p>See Also <a href="#sgml">Standard Generalized
   Markup Language</a>.</p>
 </dd>
+</dl>
 </div>
 <div class="glossdiv">
 <h3 class="title">S</h3>
-<dt><a name="id2752959">SGML</a></dt>
+<dl>
+<dt><a name="id2766016">SGML</a></dt>
 <dd><p>See <a href="#sgml">Standard Generalized
   Markup Language</a>.</p></dd>
 <dt><a name="sgml">Standard Generalized
@@ -123,11 +127,12 @@ USA. </span></span><span class="publishername">PublisherName. </span><span class
 <p>Some reasonable definition here.</p>
 <p>See Also <a href="#xml">Extensible Markup Language</a>.</p>
 </dd>
-</div>
 </dl>
 </div>
-<div class="index">
-<h2 class="title"><a name="index">Index</a></h2>
+</div>
+<div id="index" class="index">
+<div class="titlepage"><div><h2 class="title">
+<a name="index"></a>Index</h2></div></div>
 <p>This is a test index.</p>
 <p>
 <b>a formal para</b> this is a formal paragraph.</p>
@@ -174,8 +179,9 @@ USA. </span></span><span class="publishername">PublisherName. </span><span class
 </dl></dd>
 </dl></dd>
 </div>
-<div class="index">
-<h2 class="title"><a name="id2753497">Index</a></h2>
+<div id="id2766550" class="index">
+<div class="titlepage"><div><h2 class="title">
+<a name="id2766550"></a>Index</h2></div></div>
 <div class="indexdiv">Symbols<dl>
 <dt>!,
     <a href="c3.htm#aen10" target="_top">Index Term Sect 1</a>

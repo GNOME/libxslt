@@ -134,19 +134,7 @@
     <xsl:if test="title"> <!-- FIXME: add param for using default title? -->
       <xsl:call-template name="formal.object.heading">
         <xsl:with-param name="title">
-          <xsl:choose>
-            <xsl:when test="title">
-              <xsl:apply-templates select="title"
-                                   mode="titlepage.abstract.title.mode"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:call-template name="gentext.element.name">
-                <xsl:with-param name="element.name">
-                  <xsl:value-of select="name(.)"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:apply-templates select="." mode="title.markup"/>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:if>
@@ -166,7 +154,9 @@
 </xsl:template>
 
 <xsl:template match="affiliation" mode="titlepage.mode">
-  <xsl:apply-templates mode="titlepage.mode"/>
+  <fo:block>
+    <xsl:apply-templates mode="titlepage.mode"/>
+  </fo:block>
 </xsl:template>
 
 <xsl:template match="artpagenums" mode="titlepage.mode">
@@ -203,7 +193,25 @@
 </xsl:template>
 
 <xsl:template match="confgroup" mode="titlepage.mode">
-  <xsl:apply-templates mode="titlepage.mode"/>
+  <fo:block>
+    <xsl:apply-templates mode="titlepage.mode"/>
+  </fo:block>
+</xsl:template>
+
+<xsl:template match="confdates" mode="titlepage.mode">
+  <fo:block>
+    <xsl:apply-templates mode="titlepage.mode"/>
+  </fo:block>
+</xsl:template>
+
+<xsl:template match="conftitle" mode="titlepage.mode">
+  <fo:block>
+    <xsl:apply-templates mode="titlepage.mode"/>
+  </fo:block>
+</xsl:template>
+
+<xsl:template match="confnum" mode="titlepage.mode">
+  <!-- suppress -->
 </xsl:template>
 
 <xsl:template match="contractnum" mode="titlepage.mode">
@@ -222,7 +230,9 @@
   <xsl:variable name="years" select="year"/>
   <xsl:variable name="holders" select="holder"/>
 
-  <xsl:call-template name="gentext.element.name"/>
+  <xsl:call-template name="gentext">
+    <xsl:with-param name="key" select="'Copyright'"/>
+  </xsl:call-template>
   <xsl:call-template name="gentext.space"/>
   <xsl:call-template name="dingbat">
     <xsl:with-param name="dingbat">copyright</xsl:with-param>
@@ -230,8 +240,6 @@
   <xsl:call-template name="gentext.space"/>
   <xsl:apply-templates select="$years" mode="titlepage.mode"/>
   <xsl:if test="holder">
-    <xsl:call-template name="gentext.space"/>
-    <xsl:call-template name="gentext.by"/>
     <xsl:call-template name="gentext.space"/>
     <xsl:apply-templates select="$holders" mode="titlepage.mode"/>
   </xsl:if>
@@ -263,8 +271,10 @@
 
 <xsl:template match="edition" mode="titlepage.mode">
   <xsl:apply-templates mode="titlepage.mode"/>
-  <xsl:text> </xsl:text>
-  <xsl:call-template name="gentext.element.name"/>
+  <xsl:call-template name="gentext.space"/>
+  <xsl:call-template name="gentext">
+    <xsl:with-param name="key" select="'Edition'"/>
+  </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="editor" mode="titlepage.mode">
@@ -310,7 +320,9 @@
 </xsl:template>
 
 <xsl:template match="jobtitle" mode="titlepage.mode">
-  <xsl:apply-templates mode="titlepage.mode"/>
+  <fo:block>
+    <xsl:apply-templates mode="titlepage.mode"/>
+  </fo:block>
 </xsl:template>
 
 <xsl:template match="keywordset" mode="titlepage.mode">
@@ -319,21 +331,9 @@
 <xsl:template match="legalnotice" mode="titlepage.mode">
   <fo:block>
     <xsl:if test="title"> <!-- FIXME: add param for using default title? -->
-      <xsl:call-template name="formal.object.heading">
+    <xsl:call-template name="formal.object.heading">
         <xsl:with-param name="title">
-          <xsl:choose>
-            <xsl:when test="title">
-              <xsl:apply-templates select="title"
-                                   mode="legalnotice.abstract.title.mode"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:call-template name="gentext.element.name">
-                <xsl:with-param name="element.name">
-                  <xsl:value-of select="name(.)"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:apply-templates select="." mode="title.markup"/>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:if>
@@ -361,7 +361,9 @@
 </xsl:template>
 
 <xsl:template match="orgname" mode="titlepage.mode">
-  <xsl:apply-templates mode="titlepage.mode"/>
+  <fo:block>
+    <xsl:apply-templates mode="titlepage.mode"/>
+  </fo:block>
 </xsl:template>
 
 <xsl:template match="othercredit" mode="titlepage.mode">
@@ -393,6 +395,12 @@
   <xsl:apply-templates mode="titlepage.mode"/>
 </xsl:template>
 
+<xsl:template match="publisher" mode="titlepage.mode">
+  <fo:block>
+    <xsl:apply-templates mode="titlepage.mode"/>
+  </fo:block>
+</xsl:template>
+
 <xsl:template match="publishername" mode="titlepage.mode">
   <xsl:apply-templates mode="titlepage.mode"/>
 </xsl:template>
@@ -414,7 +422,9 @@
       <fo:table-row>
         <fo:table-cell number-columns-spanned="3">
           <fo:block>
-            <xsl:call-template name="gentext.element.name"/>
+            <xsl:call-template name="gentext">
+              <xsl:with-param name="key" select="'RevHistory'"/>
+            </xsl:call-template>
           </fo:block>
         </fo:table-cell>
       </fo:table-row>
@@ -432,8 +442,10 @@
     <fo:table-cell>
       <fo:block>
         <xsl:if test="$revnumber">
-          <xsl:call-template name="gentext.element.name"/>
-          <xsl:text> </xsl:text>
+          <xsl:call-template name="gentext">
+            <xsl:with-param name="key" select="'Revision'"/>
+          </xsl:call-template>
+          <xsl:call-template name="gentext.space"/>
           <xsl:apply-templates select="$revnumber[1]" mode="titlepage.mode"/>
         </xsl:if>
       </fo:block>
@@ -598,7 +610,7 @@
 
 <xsl:template match="authorgroup/corpauthor" mode="book.titlepage.verso.mode">
   <xsl:variable name="before" select="count(preceding-sibling::*)"/>
-  <xsl:variable name="after" select="count(preceding-sibling::*)"/>
+  <xsl:variable name="after" select="count(following-sibling::*)"/>
 
   <xsl:choose>
     <xsl:when test="$before &gt; 1">
@@ -609,7 +621,7 @@
     </xsl:when>
   </xsl:choose>
 
-  <xsl:if test="$after = 0">
+  <xsl:if test="$after = 0 and $before &gt; 0">
     <xsl:text> </xsl:text>
     <xsl:call-template name="gentext">
       <xsl:with-param name="key" select="'and'"/>
@@ -636,7 +648,7 @@
 <!-- part recto -->
 
 <xsl:template match="title" mode="part.titlepage.recto.mode">
-  <xsl:apply-templates select="ancestor::part" mode="title.ref"/>
+  <xsl:apply-templates select="ancestor::part" mode="title.markup"/>
 </xsl:template>
 
 <!-- ==================================================================== -->

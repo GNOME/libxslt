@@ -95,6 +95,7 @@ to be incomplete. Don't forget to read the source, too :-)</para>
 <xsl:param name="section.autolabel" select="0"/>
 <xsl:param name="section.label.includes.component.label" select="0"/>
 <xsl:param name="chapter.autolabel" select="1"/>
+<xsl:param name="appendix.autolabel" select="1"/>
 <xsl:param name="part.autolabel" select="1"/>
 <xsl:param name="preface.autolabel" select="0"/>
 
@@ -139,14 +140,15 @@ and the <sgmltag class="attribute">format</sgmltag> attribute is
 </doc:variable>
 
 <!-- ==================================================================== -->
-
-<xsl:attribute-set name="formal.title.attrs"
+<xsl:attribute-set name="formal.title.properties"
                    use-attribute-sets="normal.para.spacing">
   <xsl:attribute name="font-weight">bold</xsl:attribute>
   <xsl:attribute name="font-size">12pt</xsl:attribute>
+  <xsl:attribute name="hyphenate">false</xsl:attribute>
+  <xsl:attribute name="keep-with-next.within-column">always</xsl:attribute>
 </xsl:attribute-set>
 
-<doc:attribute-set name="formal.title.attrs" xmlns="">
+<doc:attribute-set name="formal.title.properties" xmlns="">
 <refpurpose>Properties of formal object titles</refpurpose>
 <refdescription>
 <para>This attribute set is used to specify the properties of formal
@@ -156,8 +158,7 @@ object titles.
 </doc:attribute-set>
 
 <!-- ==================================================================== -->
-
-<xsl:attribute-set name="component.title.attrs">
+<xsl:attribute-set name="component.title.properties">
   <xsl:attribute name="space-before.optimum">2em</xsl:attribute>
   <xsl:attribute name="space-before.minimum">1.8em</xsl:attribute>
   <xsl:attribute name="space-before.maximum">2.2em</xsl:attribute>
@@ -166,9 +167,11 @@ object titles.
   <xsl:attribute name="space-after.optimum">1.5em</xsl:attribute>
   <xsl:attribute name="space-after.minimum">1.3em</xsl:attribute>
   <xsl:attribute name="space-after.maximum">1.8em</xsl:attribute>
+  <xsl:attribute name="hyphenate">false</xsl:attribute>
+  <xsl:attribute name="keep-with-next.within-column">always</xsl:attribute>
 </xsl:attribute-set>
 
-<doc:attribute-set name="component.title.attrs" xmlns="">
+<doc:attribute-set name="component.title.properties" xmlns="">
 <refpurpose>Properties of component titles</refpurpose>
 <refdescription>
 <para>This attribute set is used to specify the properties of component
@@ -178,7 +181,80 @@ titles.
 </doc:attribute-set>
 
 <!-- ==================================================================== -->
+<xsl:attribute-set name="admonition.title.properties">
+  <xsl:attribute name="font-size">14pt</xsl:attribute>
+  <xsl:attribute name="font-weight">bold</xsl:attribute>
+  <xsl:attribute name="hyphenate">false</xsl:attribute>
+  <xsl:attribute name="keep-with-next.within-column">always</xsl:attribute>
+</xsl:attribute-set>
 
+<doc:attribute-set name="admonition.title.properties" xmlns="">
+<refpurpose>Properties of admonition titles</refpurpose>
+<refdescription>
+<para>This attribute set is used to specify the properties of admonition
+titles.
+</para>
+</refdescription>
+</doc:attribute-set>
+
+<!-- ==================================================================== -->
+<xsl:attribute-set name="toc.margin.properties">
+  <xsl:attribute name="space-before.minimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">1em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">2em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">1em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">2em</xsl:attribute>
+</xsl:attribute-set>
+
+<!-- ==================================================================== -->
+<xsl:attribute-set name="verbatim.properties">
+  <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">1em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
+</xsl:attribute-set>
+
+<!-- ==================================================================== -->
+<xsl:attribute-set name="monospace.verbatim.properties"
+                   use-attribute-sets="verbatim.properties">
+  <xsl:attribute name="font-family">
+    <xsl:value-of select="$monospace.font.family"/>
+  </xsl:attribute>
+  <xsl:attribute name="font-size">
+    <xsl:value-of select="$body.font.master * 0.9"/>
+    <xsl:text>pt</xsl:text>
+  </xsl:attribute>
+</xsl:attribute-set>
+
+<!-- ==================================================================== -->
+<xsl:attribute-set name="xref.properties">
+<!--
+  <xsl:attribute name="background-color">#F0F0F0</xsl:attribute>
+  <xsl:attribute name="padding-start">1pt</xsl:attribute>
+  <xsl:attribute name="padding-end">1pt</xsl:attribute>
+-->
+</xsl:attribute-set>
+
+<doc:attribute-set name="xref.properties" xmlns="">
+<refpurpose>Visual properties of hotlinks</refpurpose>
+<refdescription>
+<para>This attribute set is used to specify properties of xrefs
+</para>
+</refdescription>
+</doc:attribute-set>
+
+<!-- ==================================================================== -->
+<xsl:param name="insert.xref.page.number" select="0" doc:type='boolean'/>
+<doc:param name="insert.xref.page.number" xmlns="">
+<refpurpose>Turns page numbers in xrefs on and off</refpurpose>
+<refdescription>
+<para>When equal to 1, this parameter triggers generation of page
+number citations after xrefs.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
 <xsl:attribute-set name="normal.para.spacing">
   <xsl:attribute name="space-before.optimum">1em</xsl:attribute>
   <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
@@ -246,7 +322,7 @@ resolved.</para>
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="callout.graphics" select="'1'"/>
+<xsl:param name="callout.graphics" select="'0'"/>
 
 <doc:param name="callout.graphics" xmlns="">
 <refpurpose>Use graphics for callouts?</refpurpose>
@@ -254,6 +330,68 @@ resolved.</para>
 <para>If non-zero, callouts are presented with graphics (e.g., reverse-video
 circled numbers instead of "(1)", "(2)", etc.).
 Default graphics are provided in the distribution.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="callout.unicode" select="1"/>
+
+<doc:param name="callout.unicode" xmlns="">
+<refpurpose>First character to use for Unicode callouts</refpurpose>
+<refdescription>
+<para>If non-zero, callouts are presented with Unicode characters
+starting with the character specified. Zero indicates that Unicode
+callouts should not be used.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="callout.dingbats" select="'0'"/>
+
+<doc:param name="callout.dingbats" xmlns="">
+<refpurpose>Use Zapf Dingbats for callouts?</refpurpose>
+<refdescription>
+<para>If non-zero, callouts are presented with Zapf Dingbats.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="callout.unicode.start.character" select="10102"
+           doc:type='integer'/>
+
+<doc:param name="callout.unicode.start.character" xmlns="">
+<refpurpose>Number of the largest callout graphic</refpurpose>
+<refdescription>
+<para>If <parameter>callout.graphics</parameter>
+is non-zero, graphics are used to represent
+callout numbers. The value of
+<parameter>callout.graphics.number.limit</parameter>
+is
+the largest number for which a graphic exists. If the callout number
+exceeds this limit, the default presentation "(nnn)" will always
+be used.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="callout.unicode.number.limit" select="'10'"
+           doc:type='integer'/>
+
+<doc:param name="callout.unicode.number.limit" xmlns="">
+<refpurpose>Number of the largest callout graphic</refpurpose>
+<refdescription>
+<para>If <parameter>callout.graphics</parameter>
+is non-zero, graphics are used to represent
+callout numbers. The value of
+<parameter>callout.graphics.number.limit</parameter>
+is
+the largest number for which a graphic exists. If the callout number
+exceeds this limit, the default presentation "(nnn)" will always
+be used.
 </para>
 </refdescription>
 </doc:param>
@@ -299,23 +437,23 @@ be used.
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="saxon.extensions" select="'0'"/>
+<xsl:param name="use.extensions" select="'0'"/>
 
-<doc:param name="saxon.extensions" xmlns="">
-<refpurpose>Enable Saxon extensions</refpurpose>
+<doc:param name="use.extensions" xmlns="">
+<refpurpose>Enable extensions</refpurpose>
 <refdescription>
-<para>If non-zero, saxon extensions may be used. Each extension is
+<para>If non-zero, extensions may be used. Each extension is
 further controlled by its own parameter. But if
-<parameter>saxon.extensions</parameter> is zero, no extensions will
+<parameter>use.extensions</parameter> is zero, no extensions will
 be used.
 </para>
 </refdescription>
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="saxon.textinsert" select="'1'"/>
+<xsl:param name="textinsert.extension" select="'1'"/>
 
-<doc:param name="saxon.textinsert" xmlns="">
+<doc:param name="textinsert.extension" xmlns="">
 <refpurpose>Enable the textinsert extension element</refpurpose>
 <refdescription>
 <para>The textinsert extension element inserts the contents of a
@@ -325,9 +463,9 @@ a file into the result tree (as text).
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="saxon.linenumbering" select="'1'"/>
+<xsl:param name="linenumbering.extension" select="'1'"/>
 
-<doc:param name="saxon.linenumbering" xmlns="">
+<doc:param name="linenumbering.extension" xmlns="">
 <refpurpose>Enable the line numbering extension</refpurpose>
 <refdescription>
 <para>If true, verbatim environments (elements that have the
@@ -374,9 +512,9 @@ the verbatim environment.
 </doc:param>
 
 <!-- ==================================================================== -->
-<xsl:param name="saxon.callouts" select="'1'"/>
+<xsl:param name="callouts.extension" select="'1'"/>
 
-<doc:param name="saxon.callouts" xmlns="">
+<doc:param name="callouts.extension" xmlns="">
 <refpurpose>Enable the callout extension</refpurpose>
 <refdescription>
 <para>The callouts extension processes <sgmltag>areaset</sgmltag>
@@ -396,6 +534,44 @@ callout elements.
 the <literal>linerange</literal> <sgmltag class="attribute">unit</sgmltag>),
 it will appear in the default column.
 </para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="tablecolumns.extension" select="'1'" doc:type='boolean'/>
+
+<doc:param name="tablecolumns.extension" xmlns="">
+<refpurpose>Enable the table columns extension function</refpurpose>
+<refdescription>
+<para>The table columns extension function adjusts the widths of table
+columns in the HTML result to more accurately reflect the specifications
+in the CALS table.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="nominal.table.width" select="'6in'" doc:type='length'/>
+
+<doc:param name="nominal.table.width" xmlns="">
+<refpurpose>The (absolute) nominal width of tables</refpurpose>
+<refdescription>
+<para>In order to convert CALS column widths into FO column widths, it
+is sometimes necessary to have an absolute table width to use for conversion
+of mixed absolute and relative widths. This value must be an absolute
+length (not a percentage).</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="default.table.width" select="''" doc:type='length'/>
+
+<doc:param name="default.table.width" xmlns="">
+<refpurpose>The default width of tables</refpurpose>
+<refdescription>
+<para>If specified, this value will be used for the WIDTH attribute on
+tables that do not specify an alternate width (with the dbhtml processing
+instruction).</para>
 </refdescription>
 </doc:param>
 
@@ -831,7 +1007,7 @@ so that math can be performed on the font size by XSLT.
 <doc:param name="stylesheet.result.type" xmlns="">
 <refpurpose>Identifies the output format of this stylesheet</refpurpose>
 <refdescription>
-<para>The Saxon extension functions need to know if the output format
+<para>The extension functions need to know if the output format
 is HTML ('html') or XSL Formatting Objects ('fo'). This variable answers
 that question. Valid settings are 'html' or 'fo'.</para>
 </refdescription>
@@ -860,6 +1036,12 @@ of each division (sets, books, etc.)
 </para>
 </refdescription>
 </doc:param>
+
+<!-- ==================================================================== -->
+
+<xsl:param name="generate.book.toc" select="'1'" doc:type='boolean'/>
+<xsl:param name="process.source.toc" select='0' doc:type='boolean'/>
+<xsl:param name="process.empty.source.toc" select='0' doc:type='boolean'/>
 
 <!-- ==================================================================== -->
 <xsl:param name="generate.division.figure.lot" select="1" doc:type='boolean'/>
@@ -906,6 +1088,12 @@ of each division (sets, books, etc.)
 </doc:param>
 
 <!-- ==================================================================== -->
+<xsl:param name="generate.book.figure.lot" select="1" doc:type='boolean'/>
+<xsl:param name="generate.book.example.lot" select="1" doc:type='boolean'/>
+<xsl:param name="generate.book.equation.lot" select="1" doc:type='boolean'/>
+<xsl:param name="generate.book.table.lot" select="1" doc:type='boolean'/>
+
+<!-- ==================================================================== -->
 <xsl:param name="passivetex.extensions" select="0" doc:type='boolean'/>
 
 <doc:param name="passivetex.extensions" xmlns="">
@@ -920,6 +1108,32 @@ and sorted index terms.
 </doc:param>
 
 <!-- ==================================================================== -->
+<xsl:param name="arbortext.extensions" select="0" doc:type='boolean'/>
+
+<doc:param name="arbortext.extensions" xmlns="">
+<refpurpose>Enable Arbortext extensions?</refpurpose>
+<refdescription>
+<para>If non-zero,
+<ulink url="http://www.arbortext.com/">Arbortext</ulink>
+extensions will be used.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
+<xsl:param name="fop.extensions" select="0" doc:type='boolean'/>
+
+<doc:param name="fop.extensions" xmlns="">
+<refpurpose>Enable FOP extensions?</refpurpose>
+<refdescription>
+<para>If non-zero,
+<ulink url="http://xml.apache.org/fop/">FOP</ulink>
+extensions will be used. At present, this consists of PDF bookmarks.
+</para>
+</refdescription>
+</doc:param>
+
+<!-- ==================================================================== -->
 <xsl:param name="default.units" select="'pt'" doc:type='list'
            doc:list='cm mm in pt pc px em'/>
 
@@ -927,7 +1141,7 @@ and sorted index terms.
 <refpurpose>Default units for an unqualified dimension</refpurpose>
 <refdescription>
 <para>If an unqualified dimension is encountered (for example, in a
-graphic width), the <param>default-units</param> will be used for the
+graphic width), the <parameter>default-units</parameter> will be used for the
 units. Unqualified dimensions are not allowed in XSL Formatting Objects.
 </para>
 </refdescription>
@@ -936,6 +1150,21 @@ units. Unqualified dimensions are not allowed in XSL Formatting Objects.
 <!-- ==================================================================== -->
 
 <xsl:param name="generate.index" select="1" doc:type='boolean'/>
+
+<!-- ==================================================================== -->
+<xsl:param name="label.from.part" select="'0'" doc:type='boolean'/>
+
+<doc:param name="label.from.part" xmlns="">
+<refpurpose>Renumber chapters in each part?</refpurpose>
+<refdescription>
+<para>If <parameter>label.from.part</parameter> is non-zero, components
+(<sgmltag>chapter</sgmltag>s, <sgmltag>appendixe</sgmltag>s, etc.)
+will be numbered from 1 in each <sgmltag>part</sgmltag>. Otherwise,
+they will be numbered monotonically throughout each
+<sgmltag>book</sgmltag>.
+</para>
+</refdescription>
+</doc:param>
 
 </xsl:stylesheet>
 

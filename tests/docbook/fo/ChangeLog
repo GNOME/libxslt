@@ -1,172 +1,124 @@
-2001-01-30  Norman Walsh  <ndw@nwalsh.com>
+2001-06-14  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* index.xsl, param.xsl: Added support for indexing, with PassiveTeX support for sorted index page numbers
+	* sections.xsl: Bug fix: section autolabelling wasn't working in division bodies
 
-	* inline.xsl: Added varname
+	* titlepage.templates.xml: Changed text-alignment on centered titles to be 'center' rather than 'justify'
 
-2001-01-28  Norman Walsh  <ndw@nwalsh.com>
+	* xref.xsl: Added anchor template
 
-	* admon.xsl: Improve support for admon graphics
+2001-06-13  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* autotoc.xsl, index.xsl: First attempt at support for automatic indexing
+	* graphics.xsl, param.xsl: Support Arbortext extensions--at the moment, just to turn off the url() stuff in external graphic references
 
-	* biblio.xsl: Support shortaffil and jobtitle in bibliomixed
+	* titlepage.xsl: Bug fix: make a single author in an authorgroup work correctly
 
-	* graphics.xsl: Fix bug with content-width/content-height vs. width/height in graphics
+2001-06-08  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* lists.xsl: Improve list formatting; fix bug that caused fo:block to be omitted from list labels sometimes
+	* callout.xsl, inline.xsl, synop.xsl: Fixed some unparameterized references to specific font families
 
-	* pagesetup.xsl: Remove unnecessary rule; put region-after after region-before
+2001-06-04  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* param.xsl: Added admon.graphics.extension, default.units, and generate.index
+	* block.xsl: Made blockquote indent more reasonable
 
-	* sections.xsl: Keep section titles with next element
+	* graphics.xsl: Omit the url() wrapper around external-graphic srcs for FOP and PT
 
-	* table.xsl: Remove unnecessary doctype declaration
+2001-05-23  Norman Walsh <nwalsh@users.sourceforge.net>
 
-2001-01-12  Norman Walsh  <ndw@nwalsh.com>
+	* graphics.xsl: Fix dup. template bug with is.graphic.*
 
-	* autotoc.xsl: Removed debugging message
+	* titlepage.xsl: Add template for publisher
 
-	* biblio.xsl, component.xsl, division.xsl, glossary.xsl, index.xsl, refentry.xsl, sections.xsl, titlepage.templates.xml, titlepage.templates.xsl, titlepage.xsl: 
-	Fixed page-master bugs, started to support PassiveTeX bookmarks
+2001-05-21  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* inline.xsl: Generate proper I18N quote marks
+	* callout.xsl, verbatim.xsl: Move calculation of linenumber.* parameters into the number.rtf.lines template
 
-	* param.xsl: Added passivetex.extensions parameter
+	* titlepage.templates.xml: Reworked titlepage template processing to support use of more interesting
+	predicates.
+	
+	Note: in previous versions, at most one title, subtitle, or titleabbrev
+	element would be processed for each title page. In the new design, if you
+	have multiple title, subtitle, or titleabbrev elements inside an info
+	wrapper (you shouldn't!), they will all be processed.
 
-	* table.xsl: Renamed n-rows... and n-columns... properties to number-... in conformance with CR draft
+2001-05-18  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* verbatim.xsl: Use monospace.font.family parameter, added linefeed-treatment
+	* sections.xsl: Fix subtitle bug
 
-2001-01-07  Norman Walsh  <ndw@nwalsh.com>
+2001-05-12  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* autotoc.xsl: Format TOCs correctly, use new titlepage style, support LOTs
+	* sections.xsl: Calculate the heading level for bridgeheads
 
-	* component.xsl, division.xsl, sections.xsl, titlepage.templates.xml, titlepage.templates.xsl, titlepage.xsl: 
-	Extensive changes to better support page layout and title pages
+2001-05-04  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* docbook.xsl: Remove reference to obsolete file: titlepage.book.xsl
+	* docbook.xsl: Replace hardcoded values on fo:root with parameters
 
-	* footnote.xsl: Cleanup HTMLisms, add font size change
+2001-05-03  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* pagesetup.xsl: Page setup code
+	* biblio.xsl: Render author names correctly in bibliomixed mode
 
-	* param.xsl: New parameters for page size, font selection, etc.
+	* graphics.xsl: Tweak available graphics formats
 
-	* titlepage.book.xsl: Removed
+	* inline.xsl: Added support for class="xmlpi" and "emptytag".
+	Rendering of attributes is in sync with HTML stylesheet (monospace instead of normal).
 
-	* xref.xsl: Reworked to use modes instead of calling named templates; support xref to author
+	* param.xsl, verbatim.xsl: Created verbatim and monospace.verbatim property sets
 
-2000-12-14  Norman Walsh  <ndw@nwalsh.com>
+	* table.xsl: Process head/body/foot in the right order
 
-	* param.xsl: Fixed documentation typo
+2001-04-26  Norman Walsh <nwalsh@users.sourceforge.net>
 
-2000-11-29  Norman Walsh  <ndw@nwalsh.com>
+	* lists.xsl: Improve procedure step/substep enumeration
 
-	* biblio.xsl, component.xsl, division.xsl, glossary.xsl, index.xsl, pagesetup.xsl, refentry.xsl, sections.xsl: 
-	Misc. page setup fixes
+2001-04-21  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* callout.xsl, graphics.xsl, verbatim.xsl: Update support for Saxon6 extensions
+	* qandaset.xsl: My first crude attempts at support for qandaset
 
-	* component.xsl, division.xsl: New page setup code
+2001-04-20  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* docbook.xsl: New modules; new page setup code
+	* autoidx.xsl: Remove variable references from key functions; use entities instead.
 
-	* math.xsl: Pass MathML through to the backend...
+2001-04-19  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* pagesetup.xsl: New file.
+	* inline.xsl: Add template for constant
 
-	* param.xsl: Lots of new parameters for page setup
+2001-04-17  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* pi.xsl: New file.
+	* component.xsl, division.xsl: Add templates for partinfo, chapterinfo, and appendixinfo
 
-	* titlepage.book.xsl: Initial stabs at book titlepages
+	* component.xsl, pagesetup.xsl: Use the new gentext scheme for component titles and running headers
 
-	* xref.xsl: Replace bogus HTML element with an FO
+	* docbook.xsl: Print warning message when an unhandled tag is encountered
 
-2000-11-17  Norman Walsh  <ndw@nwalsh.com>
+	* docbook.xsl, param.xsl: Move label.from.part parameter into param.xsl; default it to 0 so that chapters and appendixes are numbered monotonically throughout a book by default. Moved param.xsl up in the include list, just for good measure
 
-	* block.xsl: Added template for highlights
+2001-04-16  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* callout.xsl, lists.xsl: Callout list marks didn't work
+	* glossary.xsl: Improve formatting of glossseealso
 
-2000-11-15  Norman Walsh  <ndw@nwalsh.com>
+	* table.xsl: Fix typo: used xsl:param where xsl:variable was required
 
-	* callout.xsl, graphics.xsl, param.xsl, verbatim.xsl: Saxon extension support for callouts and numbered verbatim environments
+2001-04-15  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* docbook.xsl: Support for rootid
+	* division.xsl: Use new toc/lot parameters
 
-2000-11-09  Norman Walsh  <ndw@nwalsh.com>
+	* docbook.xsl: Removed unused variable declaration
 
-	* glossary.xsl, index.xsl, refentry.xsl: Fixed flow-name (xsl-region-after not xsl-after)
+	* formal.xsl: Fixed typo
 
-2000-10-29  Norman Walsh  <ndw@nwalsh.com>
+	* param.xsl: Added some new parameters
 
-	* xref.xsl: fo:simple-link is now called fo:basic-link
+	* toc.xsl: Support DocBook toc markup
 
-2000-10-26  Norman Walsh  <ndw@nwalsh.com>
+2001-04-03  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* biblio.xsl: Use attribute sets; fixed missing ID
+	* callout.xsl: Fix bug 412487, make XSL-generated callout marks honor callout mark parameters
 
-	* block.xsl: Use attribute sets
+	* param.xsl: Documentation fixes
 
-	* component.xsl, division.xsl, footnote.xsl, glossary.xsl, index.xsl, sections.xsl: 
-	Fix footnotes; use fo:footnote FO
+2001-04-02  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* docbook.xsl: Turn off indenting; it breaks verbatim blocks
-
-	* fo.xsl, inline.xsl: Support trade, registered, and service dingbats
-
-	* formal.xsl: Fix keep error, use attribute sets
-
-	* graphics.xsl: Support the @format='linespecific' enbedding hack
-
-	* param.xsl: Added several attribute sets; removed check.idref (always check IDREFs)
-
-	* titlepage.xsl: Provide fo:table-column info for revision history tables
-
-	* verbatim.xsl: Fix white-space property name (white-space-collapse)
-
-	* xref.xsl: Update xref support
-
-2000-10-20  Norman Walsh  <ndw@nwalsh.com>
-
-	* Makefile: Use titlepage.xsl to generate title pages
-
-	* titlepage.templates.xsl: Generated from new titlepage.xsl
-
-2000-10-19  Norman Walsh  <ndw@nwalsh.com>
-
-	* Makefile, component.xsl, docbook.xsl, sections.xsl, titlepage.article.xsl, titlepage.book.xsl, titlepage.part.xsl, titlepage.reference.xsl, titlepage.section.xsl, titlepage.set.xsl, titlepage.templates.xml, titlepage.templates.xsl: 
-	Converted to template-driven title pages
-
-	* lists.xsl, synop.xsl: Added explicit priority to avoid conflict
-
-	* param.xsl, table.xsl: Documentation changes
-
-2000-10-17  Norman Walsh  <ndw@nwalsh.com>
-
-	* param.xsl: Updated documentation; changed variables to parameters
-
-	* table.xsl: Updated documentation
-
-2000-10-16  Norman Walsh  <ndw@nwalsh.com>
-
-	* param.xsl, table.xsl: Added doc:reference
-
-2000-10-14  Norman Walsh  <ndw@nwalsh.com>
-
-	* graphics.xsl: Rewrote support for graphics
-
-2000-10-12  Norman Walsh  <ndw@nwalsh.com>
-
-	* sections.xsl: Generate correct page-sequences for documents that begin at the section or sect1 level
-
-2000-10-09  Norman Walsh  <ndw@nwalsh.com>
-
-	* LostLog, admon.xsl, autotoc.xsl, biblio.xsl, block.xsl, callout.xsl, component.xsl, division.xsl, docbook.xsl, fo.xsl, footnote.xsl, formal.xsl, glossary.xsl, graphics.xsl, index.xsl, info.xsl, inline.xsl, keywords.xsl, lists.xsl, math.xsl, param.xsl, qandaset.xsl, refentry.xsl, sections.xsl, synop.xsl, table.xsl, titlepage.article.xsl, titlepage.book.xsl, titlepage.part.xsl, titlepage.reference.xsl, titlepage.section.xsl, titlepage.set.xsl, titlepage.xsl, toc.xsl, verbatim.xsl, xref.xsl: 
+	* .cvsignore, Makefile, admon.xsl, autoidx.xsl, autotoc.xsl, biblio.xsl, block.xsl, callout.xsl, component.xsl, division.xsl, docbook.xsl, fo.xsl, footnote.xsl, fop.xsl, formal.xsl, glossary.xsl, graphics.xsl, index.xsl, info.xsl, inline.xsl, keywords.xsl, lists.xsl, math.xsl, pagesetup.xsl, param.xsl, pi.xsl, qandaset.xsl, refentry.xsl, sections.xsl, synop.xsl, table.xsl, titlepage.templates.xml, titlepage.xsl, toc.xsl, verbatim.xsl, xref.xsl: 
 	New file.
 
-	* component.xsl: Add ID on appendix block
+	* Makefile: Use the cvstools version of saxon
 

@@ -65,7 +65,7 @@
 <xsl:template match="bibliography/titleabbrev"></xsl:template>
 
 <xsl:template match="bibliography/title" mode="component.title.mode">
-  <fo:block xsl:use-attribute-sets="component.title.attrs">
+  <fo:block xsl:use-attribute-sets="component.title.properties">
     <xsl:apply-templates/>
   </fo:block>
 </xsl:template>
@@ -99,7 +99,7 @@
 
 <xsl:template match="biblioentry">
   <xsl:variable name="id"><xsl:call-template name="object.id"/></xsl:variable>
-  <fo:block id="{$id}">
+  <fo:block id="{$id}" xsl:use-attribute-sets="normal.para.spacing">
     <xsl:apply-templates mode="bibliography.mode"/>
   </fo:block>
 </xsl:template>
@@ -303,7 +303,9 @@
 
 <xsl:template match="copyright" mode="bibliography.mode">
   <fo:inline>
-    <xsl:call-template name="gentext.element.name"/>
+    <xsl:call-template name="gentext">
+      <xsl:with-param name="key" select="'Copyright'"/>
+    </xsl:call-template>
     <xsl:call-template name="gentext.space"/>
     <xsl:call-template name="dingbat">
       <xsl:with-param name="dingbat">copyright</xsl:with-param>
@@ -563,6 +565,48 @@
   </fo:inline>
 </xsl:template>
 
+<xsl:template match="orgdiv" mode="bibliography.mode">
+  <fo:inline>
+    <xsl:apply-templates mode="bibliography.mode"/>
+    <xsl:value-of select="$biblioentry.item.separator"/>
+  </fo:inline>
+</xsl:template>
+
+<xsl:template match="collabname" mode="bibliography.mode">
+  <fo:inline>
+    <xsl:apply-templates mode="bibliography.mode"/>
+    <xsl:value-of select="$biblioentry.item.separator"/>
+  </fo:inline>
+</xsl:template>
+
+<xsl:template match="confdates" mode="bibliography.mode">
+  <fo:inline>
+    <xsl:apply-templates mode="bibliography.mode"/>
+    <xsl:value-of select="$biblioentry.item.separator"/>
+  </fo:inline>
+</xsl:template>
+
+<xsl:template match="conftitle" mode="bibliography.mode">
+  <fo:inline>
+    <xsl:apply-templates mode="bibliography.mode"/>
+    <xsl:value-of select="$biblioentry.item.separator"/>
+  </fo:inline>
+</xsl:template>
+
+<xsl:template match="confnum" mode="bibliography.mode">
+  <fo:inline>
+    <xsl:apply-templates mode="bibliography.mode"/>
+    <xsl:value-of select="$biblioentry.item.separator"/>
+  </fo:inline>
+</xsl:template>
+
+<xsl:template match="confsponsor" mode="bibliography.mode">
+  <fo:inline>
+    <xsl:apply-templates mode="bibliography.mode"/>
+    <xsl:value-of select="$biblioentry.item.separator"/>
+  </fo:inline>
+</xsl:template>
+
 <!-- ==================================================================== -->
 
 <xsl:template match="*" mode="bibliomixed.mode">
@@ -613,7 +657,7 @@
 
 <xsl:template match="author" mode="bibliomixed.mode">
   <fo:inline>
-    <xsl:apply-templates mode="bibliomixed.mode"/>
+    <xsl:call-template name="person.name"/>
   </fo:inline>
 </xsl:template>
 

@@ -20,7 +20,12 @@
       <xsl:apply-templates select="title"/>
     </xsl:if>
     <ul>
-    <xsl:apply-templates select="listitem"/>
+      <xsl:if test="@spacing='compact'">
+        <xsl:attribute name="compact">
+          <xsl:value-of select="@spacing"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates select="listitem"/>
     </ul>
   </div>
 </xsl:template>
@@ -399,11 +404,16 @@
 <!-- ==================================================================== -->
 
 <xsl:template match="procedure">
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
   <div class="{name(.)}">
+    <a name="{$id}"/>
     <xsl:if test="title">
       <xsl:apply-templates select="title" mode="procedure.title.mode"/>
     </xsl:if>
-    <ol><xsl:apply-templates/></ol>
+    <xsl:apply-templates select="*[local-name()!='step']"/>     
+    <ol><xsl:apply-templates select="step"/></ol>              
   </div>
 </xsl:template>
 
@@ -419,11 +429,32 @@
 </xsl:template>
 
 <xsl:template match="substeps">
-  <ol><xsl:apply-templates/></ol>
+  <xsl:variable name="depth" select="count(ancestor::substeps)"/>
+  <xsl:variable name="type" select="$depth mod 5"/>
+  <xsl:variable name="numeration">
+    <xsl:choose>
+      <xsl:when test="$type = 0">a</xsl:when>
+      <xsl:when test="$type = 1">i</xsl:when>
+      <xsl:when test="$type = 2">A</xsl:when>
+      <xsl:when test="$type = 3">I</xsl:when>
+      <xsl:when test="$type = 4">1</xsl:when>
+    </xsl:choose>
+  </xsl:variable>
+
+  <ol type="{$numeration}">
+    <xsl:apply-templates/>
+  </ol>
 </xsl:template>
 
 <xsl:template match="step">
-  <li><xsl:apply-templates/></li>
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
+
+  <li>
+    <a name="{$id}"/>
+    <xsl:apply-templates/>
+  </li>
 </xsl:template>
 
 <xsl:template match="step/title">
@@ -475,7 +506,11 @@
 <!-- ==================================================================== -->
 
 <xsl:template match="calloutlist">
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
   <div class="{name(.)}">
+    <a name="{$id}"/>
     <xsl:if test="./title">
       <p>
         <b>
@@ -504,10 +539,14 @@
 </xsl:template>
 
 <xsl:template match="callout">
+  <xsl:variable name="id">
+    <xsl:call-template name="object.id"/>
+  </xsl:variable>
   <xsl:choose>
     <xsl:when test="$callout.list.table != 0">
       <tr>
         <td width="5%" valign="top" align="left">
+          <a name="{$id}"/>
           <xsl:call-template name="callout.arearefs">
             <xsl:with-param name="arearefs" select="@arearefs"/>
           </xsl:call-template>
@@ -519,6 +558,7 @@
     </xsl:when>
     <xsl:otherwise>
       <dt>
+        <a name="{$id}"/>
         <xsl:call-template name="callout.arearefs">
           <xsl:with-param name="arearefs" select="@arearefs"/>
         </xsl:call-template>
@@ -556,10 +596,13 @@
   <xsl:variable name="targets" select="id($arearef)"/>
   <xsl:variable name="target" select="$targets[1]"/>
 
+  <xsl:call-template name="check.id.unique">
+    <xsl:with-param name="linkend" select="$arearef"/>
+  </xsl:call-template>
+
   <xsl:choose>
     <xsl:when test="count($target)=0">
-      <xsl:value-of select="$arearef"/>
-      <xsl:text>: ???</xsl:text>
+      <xsl:text>???</xsl:text>
     </xsl:when>
     <xsl:when test="local-name($target)='co'">
       <a>
