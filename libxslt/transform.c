@@ -817,7 +817,7 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((node->type == XML_TEXT_NODE) ||
 	(node->type == XML_CDATA_SECTION_NODE))
 	return(xsltCopyText(ctxt, insert, node));
-    copy = xmlCopyNode(node, 0);
+    copy = xmlDocCopyNode(node, insert->doc, 0);
     if (copy != NULL) {
 	copy->doc = ctxt->output;
 	xmlAddChild(insert, copy);
@@ -998,7 +998,7 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    copy = NULL;
 	return(copy);
     }
-    copy = xmlCopyNode(node, 0);
+    copy = xmlDocCopyNode(node, insert->doc, 0);
     if (copy != NULL) {
 	copy->doc = ctxt->output;
 	xmlAddChild(insert, copy);
@@ -2479,7 +2479,8 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		XSLT_TRACE(ctxt,XSLT_TRACE_COPY,xsltGenericDebug(xsltGenericDebugContext,
 				 "xsltCopy: PI %s\n", node->name));
 #endif
-		copy = xmlNewPI(node->name, node->content);
+		copy = xmlNewDocPI(ctxt->insert->doc, node->name,
+		                   node->content);
 		xmlAddChild(ctxt->insert, copy);
 		break;
 	    case XML_COMMENT_NODE:
@@ -2784,7 +2785,7 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 #endif
 
-    pi = xmlNewPI(name, value);
+    pi = xmlNewDocPI(ctxt->insert->doc, name, value);
     xmlAddChild(ctxt->insert, pi);
 
 error:

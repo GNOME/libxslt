@@ -1,3 +1,8 @@
+Wed Oct 27 00:00:07 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fix to force string interning on generated
+	  documents
+
 Sat Oct 23 09:36:12 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/crypto.c, libexslt/functions.c, libxslt/keys.c,
