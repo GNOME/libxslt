@@ -1,3 +1,8 @@
+Fri Mar  7 16:08:24 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c: valgrind pointed out an uninitialized
+	  variable use in format-number()
+
 Fri Mar  7 15:27:56 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-108.xml

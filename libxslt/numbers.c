@@ -1118,6 +1118,8 @@ OUTPUT_NUMBER:
     number = floor((scale * number + 0.5)) / scale;
     if ((self->grouping != NULL) && (self->grouping[0] != 0)) {
 	int sep, len;
+	
+	len = xmlStrlen(self->grouping);
 	sep = xsltGetUTF8Char(self->grouping, &len);
 	xsltNumberFormatDecimal(buffer, floor(number), self->zeroDigit[0],
 				format_info.integer_digits,
