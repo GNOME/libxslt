@@ -13,6 +13,13 @@
 #include "libxslt.h"
 
 #include <string.h>
+#ifdef HAVE_TIME_H
+#define __USE_XOPEN
+#include <time.h>
+#endif
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
 
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>
@@ -138,6 +145,9 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
     }
 }
 
+#if defined(HAVE_MKTIME) && defined(HAVE_LOCALTIME) && defined(HAVE_ASCTIME)
+#define WITH_LOCALTIME
+
 /**
  * xsltFunctionLocalTime:
  * @ctxt:  the XPath Parser context
@@ -147,23 +157,116 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
  *   string localTime(???)
  *
  * This function is available in Norm's extension namespace
+ * Code (and comments) contributed by Norm
  */
 static void
 xsltFunctionLocalTime(xmlXPathParserContextPtr ctxt, int nargs) {
-    if ((nargs < 0) || (nargs > 1)) {
-	xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
-        xsltGenericError(xsltGenericErrorContext,
-		"localTime() : invalid number of args %d\n", nargs);
-	ctxt->error = XPATH_INVALID_ARITY;
+    xmlXPathObjectPtr obj;
+    char *str;
+    char digits[5];
+    char result[17];
+    long int field;
+    time_t gmt, lmt;
+    struct tm gmt_tm;
+    struct tm *local_tm;
+ 
+    if (nargs != 1) {
+       xsltPrintErrorContext(xsltXPathGetTransformContext(ctxt), NULL, NULL);
+       xsltGenericError(xsltGenericErrorContext,
+                      "localTime() : invalid number of args %d\n", nargs);
+       ctxt->error = XPATH_INVALID_ARITY;
+       return;
+    }
+ 
+    obj = valuePop(ctxt);
+
+    if (obj->type != XPATH_STRING) {
+	obj = xmlXPathConvertString(obj);
+    }
+    if (obj == NULL) {
+	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
 	return;
     }
-    /* TODO : Norm's localTime() extension */
-    if (nargs == 1) {
-	xmlXPathStringFunction(ctxt, 1);
-    } else {
-	valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
-    }
+    
+    str = (char *) obj->stringval;
+
+    /* str = "$Date$" */
+    memset(digits, 0, sizeof(digits));
+    strncpy(digits, str+7, 4);
+    field = strtol(digits, NULL, 10);
+    gmt_tm.tm_year = field - 1900;
+
+    memset(digits, 0, sizeof(digits));
+    strncpy(digits, str+12, 2);
+    field = strtol(digits, NULL, 10);
+    gmt_tm.tm_mon = field - 1;
+
+    memset(digits, 0, sizeof(digits));
+    strncpy(digits, str+15, 2);
+    field = strtol(digits, NULL, 10);
+    gmt_tm.tm_mday = field;
+
+    memset(digits, 0, sizeof(digits));
+    strncpy(digits, str+18, 2);
+    field = strtol(digits, NULL, 10);
+    gmt_tm.tm_hour = field;
+
+    memset(digits, 0, sizeof(digits));
+    strncpy(digits, str+21, 2);
+    field = strtol(digits, NULL, 10);
+    gmt_tm.tm_min = field;
+
+    memset(digits, 0, sizeof(digits));
+    strncpy(digits, str+24, 2);
+    field = strtol(digits, NULL, 10);
+    gmt_tm.tm_sec = field;
+
+    /* Now turn gmt_tm into a time. */
+    gmt = mktime(&gmt_tm);
+
+
+    /*
+     * FIXME: it's been too long since I did manual memory management.
+     * (I swore never to do it again.) Does this introduce a memory leak?
+     */
+    local_tm = localtime(&gmt);
+
+    /*
+     * Calling localtime() has the side-effect of setting timezone.
+     * After we know the timezone, we can adjust for it
+     */
+    lmt = gmt - timezone;
+
+    /*
+     * FIXME: it's been too long since I did manual memory management.
+     * (I swore never to do it again.) Does this introduce a memory leak?
+     */
+    local_tm = localtime(&lmt);
+
+    /*
+     * Now convert local_tm back into a string. This doesn't introduce
+     * a memory leak, so says asctime(3).
+     */
+
+    str = asctime(local_tm);           /* "Tue Jun 26 05:02:16 2001" */
+                                       /*  0123456789 123456789 123 */
+
+    memset(result, 0, sizeof(result)); /* "Thu, 26 Jun 2001" */
+                                       /*  0123456789 12345 */
+
+    strncpy(result, str, 3);
+    strcpy(result+3, ", ");
+    strncpy(result+5, str+8, 2);
+    strcpy(result+7, " ");
+    strncpy(result+8, str+4, 3);
+    strcpy(result+11, " ");
+    strncpy(result+12, str+20, 4);
+
+    /* Ok, now result contains the string I want to send back. */
+    valuePush(ctxt, xmlXPathNewString((xmlChar *)result));
 }
+#endif
+
 
 /**
  * xsltRegisterExtras:
@@ -179,8 +282,10 @@ xsltRegisterExtras(xsltTransformContextPtr ctxt) {
 	                    XSLT_SAXON_NAMESPACE, xsltFunctionNodeSet);
     xsltRegisterExtFunction(ctxt, (const xmlChar *) "node-set",
 	                    XSLT_XT_NAMESPACE, xsltFunctionNodeSet);
+#ifdef WITH_LOCALTIME
     xsltRegisterExtFunction(ctxt, (const xmlChar *) "localTime",
 	                    XSLT_NORM_SAXON_NAMESPACE, xsltFunctionLocalTime);
+#endif
     xsltRegisterExtElement(ctxt, (const xmlChar *) "debug",
 	                    XSLT_LIBXSLT_NAMESPACE, xsltDebug);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "output",
