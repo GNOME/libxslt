@@ -410,6 +410,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    return(0);
 		if (step->value == NULL)
 		    continue;
+		if (step->value[0] != node->name[0])
+		    return(0);
 		if (!xmlStrEqual(step->value, node->name))
 		    return(0);
 
@@ -440,6 +442,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		if (step->value != NULL) {
 		    while (lst != NULL) {
 			if ((lst->type == XML_ELEMENT_NODE) &&
+			    (step->value[0] == lst->name[0]) &&
 			    (xmlStrEqual(step->value, lst->name)))
 			    break;
 			lst = lst->next;
@@ -454,6 +457,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    return(0);
 		if (step->value == NULL)
 		    continue;
+		if (step->value[0] != node->name[0])
+		    return(0);
 		if (!xmlStrEqual(step->value, node->name))
 		    return(0);
 
@@ -481,6 +486,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		    return(0);
 		if (step->value == NULL)
 		    continue;
+		if (step->value[0] != node->name[0])
+		    return(0);
 		if (!xmlStrEqual(step->value, node->name))
 		    return(0);
 		/* Namespace test */
@@ -519,7 +526,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		while (node != NULL) {
 		    if (node == NULL)
 			return(0);
-		    if (xmlStrEqual(step->value, node->name)) {
+		    if ((node->type == XML_ELEMENT_NODE) &&
+			(step->value[0] == node->name[0]) &&
+			(xmlStrEqual(step->value, node->name))) {
 			/* Namespace test */
 			if (node->ns == NULL) {
 			    if (step->value2 == NULL)
@@ -666,7 +675,9 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 			while (sibling != NULL) {
 			    if (sibling == previous)
 				break;
-			    if (xmlStrEqual(node->name, sibling->name)) {
+			    if ((node->type == XML_ELEMENT_NODE) &&
+				(node->name[0] == sibling->name[0]) &&
+				(xmlStrEqual(node->name, sibling->name))) {
 				if ((select->value2 == NULL) ||
 				    ((sibling->ns != NULL) &&
 				     (xmlStrEqual(select->value2,
@@ -719,8 +730,8 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 				if (siblings == node) {
 				    len++;
 				    pos = len;
-				} else if (xmlStrEqual(node->name,
-					   siblings->name)) {
+				} else if ((node->name[0] == siblings->name[0])
+			       && (xmlStrEqual(node->name, siblings->name))) {
 				    if ((select->value2 == NULL) ||
 					((siblings->ns != NULL) &&
 					 (xmlStrEqual(select->value2,
@@ -760,7 +771,7 @@ xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 		} else if ((select != NULL) && (select->op == XSLT_OP_ALL) &&
 			   (node->type == XML_ELEMENT_NODE)) {
 		    xmlNodePtr previous;
-		    int index, nocache;
+		    int index, nocache = 0;
 
 		    previous = (xmlNodePtr)
 			XSLT_RUNTIME_EXTRA(ctxt, select->previousExtra);
@@ -1864,7 +1875,6 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	    else
 		top = (xsltCompMatchPtr *) &(style->attrMatch);
 	    break;
-        case XSLT_OP_ELEM:
         case XSLT_OP_CHILD:
         case XSLT_OP_PARENT:
         case XSLT_OP_ANCESTOR:
@@ -1905,12 +1915,12 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	case XSLT_OP_TEXT:
 	    top = (xsltCompMatchPtr *) &(style->textMatch);
 	    break;
+        case XSLT_OP_ELEM:
 	case XSLT_OP_NODE:
 	    if (pat->steps[0].value != NULL)
 		name = pat->steps[0].value;
 	    else
 		top = (xsltCompMatchPtr *) &(style->elemMatch);
-	    
 	    break;
 	}
 	if (name != NULL) {

@@ -902,14 +902,16 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     /*
      * Handling of Elements: second pass, actual processing
      */
-    attrs = node->properties;
-    while (attrs != NULL) {
-	template = xsltGetTemplate(ctxt, (xmlNodePtr) attrs, NULL);
-	if (template) {
-	    xsltApplyOneTemplate(ctxt, node, template->content, template,
-		                 NULL);
+    if (node->type == XML_ELEMENT_NODE) {
+	attrs = node->properties;
+	while (attrs != NULL) {
+	    template = xsltGetTemplate(ctxt, (xmlNodePtr) attrs, NULL);
+	    if (template) {
+		xsltApplyOneTemplate(ctxt, node, template->content, template,
+				     NULL);
+	    }
+	    attrs = attrs->next;
 	}
-	attrs = attrs->next;
     }
     oldSize = ctxt->xpathCtxt->contextSize;
     oldPos = ctxt->xpathCtxt->proximityPosition;

@@ -1,3 +1,13 @@
+Thu Mar 21 17:19:56 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: found another stupid bug by step by 
+	  step processing of the code
+	* libxslt/pattern.c: idem, except that once stupid mistake
+	  ELEM vs NODE forced the templates to be stored in a list
+	  instead of a hash table, fixing this stupidity should
+	  again lead to a substantive improvement of processing speed.
+	  Like divide by 2 processing time for DocBook stylesheets.
+
 Thu Mar 21 00:25:12 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixing bug #75603
