@@ -106,8 +106,8 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
     xmlChar *fragment;
     xsltDocumentPtr xsltdoc;
     xmlDocPtr doc;
-    xmlXPathContextPtr xptrctxt;
-    xmlXPathObjectPtr object;
+    xmlXPathContextPtr xptrctxt = NULL;
+    xmlXPathObjectPtr object = NULL;
 
     tctxt = xsltXPathGetTransformContext(ctxt);
     if (tctxt == NULL) {
@@ -161,7 +161,7 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
     }
 	
     /* use XPointer of HTML location for fragment ID */
-    
+#ifdef LIBXML_XPTR_ENABLED
     xptrctxt = xmlXPtrNewContext(doc, NULL, NULL);
     if (xptrctxt == NULL) {
 	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
@@ -170,8 +170,10 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
     }
 
     object = xmlXPtrEval(fragment, xptrctxt);
+#endif
     xmlFree(fragment);
-    xmlXPathFreeContext(xptrctxt);
+	if (xptrctxt != NULL)
+    		xmlXPathFreeContext(xptrctxt);
 
     if (object == NULL)
 	goto out_fragment;
