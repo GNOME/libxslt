@@ -1,3 +1,9 @@
+Wed Jun 30 12:28:34 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/namespaces: some enhancement for fixing bug 142768
+	* tests/namespaces/Makefile.am, tests/namespaces/tst6*:
+	  added regression test for this bug
+
 Tue Jun 29 09:23:03 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* Makefile.am examples/xsltICUSort.c: seems I never commited to CVS

@@ -371,23 +371,32 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
     if (URI == NULL)
 	URI = ns->href;
 
+    /*
+     * If the parent is an XML_ELEMENT_NODE, and has the "equivalent"
+     * namespace as ns (either both default, or both with a prefix
+     * with the same href) then return the parent's ns record
+     */
     if ((out->parent != NULL) &&
 	(out->parent->type == XML_ELEMENT_NODE) &&
 	(out->parent->ns != NULL) &&
+	(((out->parent->ns->prefix == NULL) && (ns->prefix == NULL)) ||
+	 ((out->parent->ns->prefix != NULL) && (ns->prefix != NULL))) &&
 	(xmlStrEqual(out->parent->ns->href, URI)))
 	ret = out->parent->ns;
     else {
-	if (ns->prefix != NULL) {
-	    ret = xmlSearchNs(out->doc, out, ns->prefix);
-	    if ((ret == NULL) || (!xmlStrEqual(ret->href, URI))) {
-		ret = xmlSearchNsByHref(out->doc, out, URI);
-	    }
-	} else {
+        /*
+	 * do a standard namespace search for ns in the output doc
+	 */
+        ret = xmlSearchNs(out->doc, out, ns->prefix);
+	/*
+	 * if the search fails and it's not for the default prefix
+	 * do a search by href
+	 */
+	if ((ret == NULL) && (ns->prefix != NULL))
 	    ret = xmlSearchNsByHref(out->doc, out, URI);
 	}
-    }
 
-    if (ret == NULL) {
+    if (ret == NULL) {	/* if no success and an element node, create the ns */
 	if (out->type == XML_ELEMENT_NODE)
 	    ret = xmlNewNs(out, URI, ns->prefix);
     }
