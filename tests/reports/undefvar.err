@@ -4,3 +4,4 @@ xmlXPathCompOpEval: parameter error
 xmlXPathCompiledEval: 1 object left on the stack
 runtime error: file ./undefvar.xsl line 6 element value-of
 xsltValueOf: text copy failed
+no result for ./undefvar.xml

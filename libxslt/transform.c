@@ -3706,6 +3706,15 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if (profile != NULL) {
         xsltSaveProfiling(ctxt, profile);
     }
+
+    /*
+     * Be pedantic.
+     */
+    if ((ctxt != NULL) && (ctxt->state == XSLT_STATE_ERROR)) {
+	xmlFreeDoc(res);
+	res = NULL;
+    }
+
     if ((ctxt != NULL) && (userCtxt == NULL))
 	xsltFreeTransformContext(ctxt);
 

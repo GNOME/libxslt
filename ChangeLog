@@ -1,7 +1,19 @@
+Tue Oct 15 14:52:23 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: closing #94933, any error will make
+	  the transformation abort with  no result.
+	* tests/reports/tst-1.err tests/reports/tst-1.out 
+	  tests/reports/undefvar.err: this changed the regression tests
+	  output.
+	* tests/exslt/date/difference.1.out tests/exslt/date/seconds.1.out:
+	  updated the result accordingly to the fixes done last month.
+	* libxslt/namespaces.c: make sure to avoid duplicate namespace
+	  declarations in the result trees. May fix #93692 but it's unclear.
+
 Tue Oct 15 12:45:42 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: added a --path option to provide the
-	  enhancement requested by #79638, first cur at it, untested
+	  enhancement requested by #79638, first cut at it, untested
 	  yet.
 
 Tue Oct 15 13:02:40 CEST 2002 Daniel Veillard <daniel@veillard.com>

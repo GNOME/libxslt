@@ -197,7 +197,7 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
     while (style != NULL) {
 	if (style->nsAliases != NULL)
 	    URI = (const xmlChar *) 
-		xmlHashLookup(ctxt->style->nsAliases, ns->href);
+		xmlHashLookup(style->nsAliases, ns->href);
 	if (URI != NULL)
 	    break;
 
@@ -237,7 +237,7 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 xmlNsPtr
 xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	              xmlNsPtr cur) {
-    xmlNsPtr ret = NULL;
+    xmlNsPtr ret = NULL, tmp;
     xmlNsPtr p = NULL,q;
     const xmlChar *URI;
 
@@ -255,12 +255,22 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
     while (cur != NULL) {
 	if (cur->type != XML_NAMESPACE_DECL)
 	    break;
+
+	/*
+	 * Avoid duplicating namespace declrations on the tree
+	 */
 	if ((node != NULL) && (node->ns != NULL) &&
             (xmlStrEqual(node->ns->href, cur->href)) &&
             (xmlStrEqual(node->ns->prefix, cur->prefix))) {
 	    cur = cur->next;
 	    continue;
 	}
+	tmp = xmlSearchNs(node->doc, node, cur->prefix);
+	if ((tmp != NULL) && (xmlStrEqual(tmp->href, cur->href))) {
+	    cur = cur->next;
+	    continue;
+	}
+	
 	if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {
 	    /* TODO apply cascading */
 	    URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases,
