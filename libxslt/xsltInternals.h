@@ -39,7 +39,7 @@ struct _xsltStackElem {
     xmlChar *name;	/* the local part of the name QName */
     xmlChar *nameURI;	/* the URI part of the name QName */
     xmlChar *select;	/* the eval string */
-    xmlNodePtr tree;	/* the tree if no eval string */
+    xmlNodePtr tree;	/* the tree if no eval string or the location */
     xmlXPathObjectPtr value; /* The value if computed */
 };
 
@@ -95,6 +95,92 @@ struct _xsltDocument {
     int main;			/* is this the main document */
     xmlDocPtr doc;		/* the parsed document */
     void *keys;			/* key tables storage */
+};
+
+/*
+ * The in-memory structure corresponding to XSLT stylesheet constructs
+ * precomputed data.
+ */
+
+typedef struct _xsltTransformContext xsltTransformContext;
+typedef xsltTransformContext *xsltTransformContextPtr;
+
+typedef struct _xsltStylePreComp xsltStylePreComp;
+typedef xsltStylePreComp *xsltStylePreCompPtr;
+
+typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
+	                               xmlNodePtr node, xmlNodePtr inst,
+			               xsltStylePreCompPtr comp);
+
+typedef enum {
+    XSLT_FUNC_COPY=1,
+    XSLT_FUNC_SORT,
+    XSLT_FUNC_TEXT,
+    XSLT_FUNC_ELEMENT,
+    XSLT_FUNC_ATTRIBUTE,
+    XSLT_FUNC_COMMENT,
+    XSLT_FUNC_PI,
+    XSLT_FUNC_COPYOF,
+    XSLT_FUNC_VALUEOF,
+    XSLT_FUNC_NUMBER,
+    XSLT_FUNC_APPLYIMPORTS,
+    XSLT_FUNC_CALLTEMPLATE,
+    XSLT_FUNC_APPLYTEMPLATES,
+    XSLT_FUNC_CHOOSE,
+    XSLT_FUNC_IF,
+    XSLT_FUNC_FOREACH,
+    XSLT_FUNC_DOCUMENT,
+    XSLT_FUNC_WITHPARAM,
+    XSLT_FUNC_PARAM,
+    XSLT_FUNC_VARIABLE,
+    XSLT_FUNC_WHEN
+} xsltStyleType;
+
+struct _xsltStylePreComp {
+    struct _xsltStylePreComp *next;/* chained list */
+    xsltStyleType type;		/* type of the element */
+    xsltTransformFunction func; /* handling function */
+    xmlNodePtr inst;		/* the instruction */
+
+    /*
+     * Pre computed values
+     */
+
+    xmlChar *stype;             /* sort */
+    int      has_stype;		/* sort */
+    int      number;		/* sort */
+    xmlChar *order;             /* sort */
+    int      has_order;		/* sort */
+    int      descending;	/* sort */
+
+    xmlChar *use;		/* copy, element */
+    int      has_use;		/* copy, element */
+
+    int      noescape;		/* text */
+
+    xmlChar *name;		/* element, attribute, pi */
+    int      has_name;		/* element, attribute, pi */
+    xmlChar *ns;		/* element */
+    int      has_ns;		/* element */
+
+    xmlChar *mode;		/* apply-templates */
+    xmlChar *modeURI;		/* apply-templates */
+
+    xmlChar *test;		/* if */
+
+    xsltTemplatePtr templ;	/* call-template */
+
+    xmlChar *select;		/* sort, copy-of, value-of, apply-templates */
+
+    int      ver11;		/* document */
+    xmlChar *filename;		/* document URL */
+    int      has_filename;	/* document */
+
+    xsltNumberData numdata;	/* number */
+
+    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
+    xmlNsPtr *nsList;		/* the namespaces in scope */
+    int nsNr;			/* the number of namespaces in scope */
 };
 
 /*
@@ -179,89 +265,11 @@ struct _xsltStylesheet {
     xmlChar *doctypeSystem;     /* doctype-system string */
     int indent;			/* should output being indented */
     xmlChar *mediaType;		/* media-type string */
-};
-
-
-/*
- * The in-memory structure corresponding to XSLT stylesheet constructs
- * precomputed data.
- */
-
-typedef struct _xsltTransformContext xsltTransformContext;
-typedef xsltTransformContext *xsltTransformContextPtr;
-
-typedef struct _xsltStylePreComp xsltStylePreComp;
-typedef xsltStylePreComp *xsltStylePreCompPtr;
-
-typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
-	                               xmlNodePtr node, xmlNodePtr inst,
-			               xsltStylePreCompPtr comp);
-
-typedef enum {
-    XSLT_FUNC_COPY=1,
-    XSLT_FUNC_SORT,
-    XSLT_FUNC_TEXT,
-    XSLT_FUNC_ELEMENT,
-    XSLT_FUNC_ATTRIBUTE,
-    XSLT_FUNC_COMMENT,
-    XSLT_FUNC_PI,
-    XSLT_FUNC_COPYOF,
-    XSLT_FUNC_VALUEOF,
-    XSLT_FUNC_NUMBER,
-    XSLT_FUNC_APPLYIMPORTS,
-    XSLT_FUNC_CALLTEMPLATE,
-    XSLT_FUNC_APPLYTEMPLATES,
-    XSLT_FUNC_CHOOSE,
-    XSLT_FUNC_IF,
-    XSLT_FUNC_FOREACH,
-    XSLT_FUNC_DOCUMENT
-} xsltStyleType;
-
-struct _xsltStylePreComp {
-    struct _xsltStylePreComp *next;/* chained list */
-    xsltStyleType type;		/* type of the element */
-    xsltTransformFunction func; /* handling function */
-    xmlNodePtr inst;		/* the instruction */
 
     /*
-     * Pre computed values
+     * Precomputed blocks
      */
-
-    xmlChar *stype;             /* sort */
-    int      has_stype;		/* sort */
-    int      number;		/* sort */
-    xmlChar *order;             /* sort */
-    int      has_order;		/* sort */
-    int      descending;	/* sort */
-
-    xmlChar *use;		/* copy, element */
-    int      has_use;		/* copy, element */
-
-    int      noescape;		/* text */
-
-    xmlChar *name;		/* element, attribute, pi */
-    int      has_name;		/* element, attribute, pi */
-    xmlChar *ns;		/* element */
-    int      has_ns;		/* element */
-
-    xmlChar *mode;		/* apply-templates */
-    xmlChar *modeURI;		/* apply-templates */
-
-    xmlChar *test;		/* if */
-
-    xsltTemplatePtr templ;	/* call-template */
-
-    xmlChar *select;		/* sort, copy-of, value-of, apply-templates */
-
-    int      ver11;		/* document */
-    xmlChar *filename;		/* document URL */
-    int      has_filename;	/* document */
-
-    xsltNumberData numdata;	/* number */
-
-    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
-    xmlNsPtr *nsList;		/* the namespaces in scope */
-    int nsNr;			/* the number of namespaces in scope */
+    xsltStylePreCompPtr preComps;	/* list of precomputed blocks */
 };
 
 /*
@@ -292,11 +300,6 @@ struct _xsltTransformContext {
     int               varsNr;		/* Nb of variable list in the stack */
     int               varsMax;		/* Size of the variable list stack */
     xsltStackElemPtr *varsTab;		/* the variable list stack */
-
-    /*
-     * Precomputed blocks
-     */
-    xsltStylePreCompPtr preComps;	/* list of precomputed blocks */
 
     /*
      * Extensions

@@ -54,12 +54,6 @@ void			xsltFreeVariableHashes	(xsltTransformContextPtr ctxt);
 xmlXPathObjectPtr	xsltVariableLookup	(xsltTransformContextPtr ctxt,
 						 const xmlChar *name,
 						 const xmlChar *ns_uri);
-int			xsltRegisterVariable	(xsltTransformContextPtr ctxt,
-						 const xmlChar *name,
-						 const xmlChar *ns_uri,
-						 const xmlChar *select,
-						 xmlNodePtr tree,
-						 int param);
 xmlXPathObjectPtr	xsltXPathVariableLookup	(void *ctxt,
 						 const xmlChar *name,
 						 const xmlChar *ns_uri);

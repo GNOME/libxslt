@@ -214,7 +214,6 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
 	xmlFree(ctxt->varsTab);
     xsltFreeDocuments(ctxt);
     xsltFreeCtxtExts(ctxt);
-    xsltFreeStylePreComps(ctxt);
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
 }
@@ -876,20 +875,18 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 
 	if (IS_XSLT_ELEM(cur)) {
-	    if (cur->_private == NULL)
-		xsltStylePreCompute(ctxt, cur);
+	    xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
+	    if (info == NULL) {
+		xsltGenericError(xsltGenericDebugContext,
+		 "xsltApplyOneTemplate: %s was not compiled\n",
+				 cur->name);
+		goto skip_children;
+	    }
 	    
-	    if (cur->_private != NULL) {
-		xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
-		if (info->func != NULL) {
-		    ctxt->insert = insert;
-		    info->func(ctxt, node, cur, info);
-		    ctxt->insert = oldInsert;
-		} else {
-		    xsltGenericError(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: %s has _private without function\n",
-				     cur->name);
-		}
+	    if (info->func != NULL) {
+		ctxt->insert = insert;
+		info->func(ctxt, node, cur, info);
+		ctxt->insert = oldInsert;
 		goto skip_children;
 	    }
 
@@ -953,10 +950,6 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		 "xsltApplyOneTemplate: extension construct %s\n", cur->name);
 #endif
 
-		if (cur->_private == (void *) xsltExtMarker) {
-		    cur->_private = NULL;
-		    xsltStylePreCompute(ctxt, cur);
-		}
 		ctxt->insert = insert;
 		function(ctxt, node, cur, cur->_private);
 		ctxt->insert = oldInsert;
@@ -1195,8 +1188,9 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldNode;
 
     if (comp == NULL) {
-	xsltStylePreCompute(ctxt, inst);
-	comp = inst->_private;
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:sort : compilation had failed\n");
+	return;
     }
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
@@ -1560,8 +1554,9 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (ctxt->insert == NULL)
 	return;
     if (comp == NULL) {
-	xsltStylePreCompute(ctxt, inst);
-	comp = inst->_private;
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:attribute : compilation had failed\n");
+	return;
     }
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
@@ -1916,8 +1911,9 @@ xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	   xmlNodePtr inst, xsltStylePreCompPtr comp)
 {
     if (comp == NULL) {
-	xsltStylePreCompute(ctxt, inst);
-	comp = inst->_private;
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:number : compilation had failed\n");
+	return;
     }
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
@@ -1974,18 +1970,24 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltStackElemPtr params = NULL, param;
 
 
-    if (comp == NULL) {
-	xsltStylePreCompute(ctxt, inst);
-	comp = inst->_private;
-    }
     if (ctxt->insert == NULL)
 	return;
+    if (comp == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:call-template : compilation had failed\n");
+	return;
+    }
 
     /*
      * The template must have been precomputed
      */
-    if (comp->templ == NULL)
-	return;
+    if (comp->templ == NULL) {
+	comp->templ = xsltFindTemplate(ctxt, comp->name, comp->ns);
+	if (comp->templ == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xslt:call-template : template %s not found\n", comp->name);
+	}
+    }
 
     /*
      * Create a new frame but block access to variables
@@ -2039,8 +2041,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 
     if (comp == NULL) {
-	xsltStylePreCompute(ctxt, inst);
-	comp = inst->_private;
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:apply-templates : compilation had failed\n");
+	return;
     }
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
 	return;
@@ -2363,8 +2366,9 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int oldContextSize, oldProximityPosition;
 
     if (comp == NULL) {
-	xsltStylePreCompute(ctxt, inst);
-	comp = inst->_private;
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:if : compilation had failed\n");
+	return;
     }
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
 	return;
@@ -2439,8 +2443,9 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr oldNode = ctxt->node;
 
     if (comp == NULL) {
-	xsltStylePreCompute(ctxt, inst);
-	comp = inst->_private;
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:for-each : compilation had failed\n");
+	return;
     }
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
 	return;

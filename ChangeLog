@@ -1,3 +1,12 @@
+Sun Apr 29 11:47:58 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* preproc.[ch] templates.[ch] variables.[ch] xslt.c xsltInternals.h
+	  attributes.c extensions.[ch]: moved all stylesheet precomputation
+	  at stylesheet loading time (stylesheet transform should be thread
+	  safe now), improved params and variables evaluations (but optim
+	  is not complete yet).
+	* TODO: updated
+
 Sat Apr 28 16:28:45 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c : changed the way --repeat works when

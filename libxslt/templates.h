@@ -26,7 +26,7 @@ xmlChar *	xsltEvalAttrValueTemplate	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *ns);
-xmlChar *	xsltEvalStaticAttrValueTemplate	(xsltTransformContextPtr ctxt,
+xmlChar *	xsltEvalStaticAttrValueTemplate	(xsltStylesheetPtr style,
 						 xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *ns,

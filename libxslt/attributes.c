@@ -418,7 +418,10 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    while (style != NULL) {
 		values = xmlHashLookup2(style->attributeSets, ncname, prefix);
 		while (values != NULL) {
-		    xsltAttribute(ctxt, node, values->attr, NULL);
+		    if (values->attr != NULL) {
+			xsltAttribute(ctxt, node, values->attr,
+				      values->attr->_private);
+		    }
 		    values = values->next;
 		}
 		style = xsltNextImport(style);

@@ -49,7 +49,7 @@ if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
 fi
 
 AC_ARG_WITH(debug, [  --with-debug            Add the debugging code (on)])
-if test "$with_mem_debug" = "no" ; then
+if test "$with_debug" = "no" ; then
     echo Disabling debug support
     WITH_XSLT_DEBUG=0
 else    

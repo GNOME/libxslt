@@ -32,6 +32,7 @@
 #include "keys.h"
 #include "documents.h"
 #include "extensions.h"
+#include "preproc.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PARSING
@@ -293,6 +294,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     xsltFreeAttributeSetsHashes(sheet);
     xsltFreeNamespaceAliasHashes(sheet);
     xsltFreeStyleDocuments(sheet);
+    xsltFreeStylePreComps(sheet);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
     if (sheet->variables != NULL)
@@ -751,14 +753,16 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 }
 
 /**
- * xsltParseRemoveBlanks:
+ * xsltPrecomputeStylesheet:
  * @style:  the XSLT stylesheet
  *
  * Clean-up the stylesheet content from unwanted ignorable blank nodes
+ * and run the preprocessing of all XSLT constructs.
+ *
  * and process xslt:text
  */
 static void
-xsltParseRemoveBlanks(xsltStylesheetPtr style) {
+xsltPrecomputeStylesheet(xsltStylesheetPtr style) {
     xmlNodePtr cur, delete;
 
     /*
@@ -775,13 +779,14 @@ xsltParseRemoveBlanks(xsltStylesheetPtr style) {
 	if (delete != NULL) {
 #ifdef WITH_XSLT_DEBUG_BLANKS
 	    xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltParseRemoveBlanks: removing ignorable blank node\n");
+	     "xsltPrecomputeStylesheet: removing ignorable blank node\n");
 #endif
 	    xmlUnlinkNode(delete);
 	    xmlFreeNode(delete);
 	    delete = NULL;
 	}
 	if ((cur->type == XML_ELEMENT_NODE) && (IS_XSLT_ELEM(cur))) {
+	    xsltStylePreCompute(style, cur);
 	    if (IS_XSLT_NAME(cur, "text")) {
 		goto skip_children;
 	    }
@@ -830,7 +835,7 @@ skip_children:
     if (delete != NULL) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltParseRemoveBlanks: removing ignorable blank node\n");
+	 "xsltPrecomputeStylesheet: removing ignorable blank node\n");
 #endif
 	xmlUnlinkNode(delete);
 	xmlFreeNode(delete);
@@ -991,9 +996,9 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
 	} else if ((cur->ns != NULL) && (style->nsDefs != NULL)) {
 	    if (xsltCheckExtPrefix(style, cur->ns->prefix)) {
 		/*
-		 * Mark the element as being 'special'
+		 * okay this is an extension element compile it too
 		 */
-		cur->_private = (void *) xsltExtMarker;
+		xsltStylePreCompute(style, cur);
 	    }
 	}
 
@@ -1431,7 +1436,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	return(NULL);
     }
 
-    xsltParseRemoveBlanks(ret);
+    xsltPrecomputeStylesheet(ret);
     if ((IS_XSLT_ELEM(cur)) && 
 	((IS_XSLT_NAME(cur, "stylesheet")) ||
 	 (IS_XSLT_NAME(cur, "transform")))) {

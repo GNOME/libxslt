@@ -8,14 +8,8 @@ Doc:
   - manpage and doc for xsltproc
 
 Design:
-  - should transforms for a given stylesheet be thread clean,
-    or can a stylesheet be enriched with document specific
-    informations and cleaned up later ?
   - seems that saving back XSLT stylesheet from a compiled form might
     be a bit ugly ...
-
-Embedding Stylesheets:
-  - example in 2.7 would force to validate, we do it by default now
 
 Import:
 
@@ -50,6 +44,17 @@ Sorting:
                  *  DONE  *
                  *        *
                   ********
+
+Design:
+  - should transforms for a given stylesheet be thread clean,
+    -> the precompilation now occur only at stylesheet processing
+       time (except the binding for named templates and extension
+       functions which need to be computed once at run-time).
+       Multiple threads should be able to reuse the same stylesheet
+       now.
+
+Embedding Stylesheets:
+  - example in 2.7 would force to validate, we do it by default now
 
 ID and Key support:
   -> Done

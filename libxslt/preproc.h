@@ -19,9 +19,9 @@ extern "C" {
 /*
  * Interfaces
  */
-void		xsltStylePreCompute	(xsltTransformContextPtr ctxt,
+void		xsltStylePreCompute	(xsltStylesheetPtr style,
 					 xmlNodePtr inst);
-void		xsltFreeStylePreComps	(xsltTransformContextPtr ctxt);
+void		xsltFreeStylePreComps	(xsltStylesheetPtr style);
 #ifdef __cplusplus
 }
 #endif
