@@ -201,7 +201,7 @@ void	<a href="#xsltTransformFunction">xsltTransformFunction</a>		(<a href="libxs
     xmlChar *	encoding	: encoding string
     int	omitXmlDeclaration	: * Number formatting. *
     <a href="libxslt-xsltInternals.html#xsltDecimalFormatPtr">xsltDecimalFormatPtr</a>	decimalFormat
-    int	standalone	: standalone = &quot;yes&quot; | &quot;no&quot;
+    int	standalone	: standalone = "yes" | "no"
     xmlChar *	doctypePublic	: doctype-public string
     xmlChar *	doctypeSystem	: doctype-system string
     int	indent	: should output being indented
@@ -283,6 +283,7 @@ void	<a href="#xsltTransformFunction">xsltTransformFunction</a>		(<a href="libxs
     unsigned int	lasttuse	: * Per Context Debugging *
     int	debugStatus	: the context level debug status
     unsigned long *	traceCode	: pointer to the variable holding the mas
+    int	parserOptions	: parser options xmlParserOption
 }</pre><h3>Enum <a name="xsltTransformState" id="xsltTransformState">xsltTransformState</a></h3><pre class="programlisting">Enum xsltTransformState {
     <a name="XSLT_STATE_OK" id="XSLT_STATE_OK">XSLT_STATE_OK</a> = 0
     <a name="XSLT_STATE_ERROR" id="XSLT_STATE_ERROR">XSLT_STATE_ERROR</a> = 1
@@ -323,7 +324,7 @@ void	xsltElemPreCompDeallocator	(<a href="libxslt-xsltInternals.html#xsltElemPre
 </pre><p>parse an XSLT stylesheet building the associated structures except the processing not needed for imported documents.</p>
 <div class="variablelist"><table border="0"><col align="left" /><tbody><tr><td><span class="term"><i><tt>doc</tt></i>:</span></td><td>an xmlDoc parsed XML</td></tr><tr><td><span class="term"><i><tt>style</tt></i>:</span></td><td>pointer to parent stylesheet</td></tr><tr><td><span class="term"><i><tt>Returns</tt></i>:</span></td><td>a new XSLT stylesheet structure.</td></tr></tbody></table></div><h3><a name="xsltParseStylesheetOutput" id="xsltParseStylesheetOutput"></a>Function: xsltParseStylesheetOutput</h3><pre class="programlisting">void	xsltParseStylesheetOutput	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br />					 xmlNodePtr cur)<br />
 </pre><p>parse an XSLT stylesheet output element and record information related to the stylesheet output</p>
-<div class="variablelist"><table border="0"><col align="left" /><tbody><tr><td><span class="term"><i><tt>style</tt></i>:</span></td><td>the XSLT stylesheet</td></tr><tr><td><span class="term"><i><tt>cur</tt></i>:</span></td><td>the &quot;output&quot; element</td></tr></tbody></table></div><h3><a name="xsltParseStylesheetProcess" id="xsltParseStylesheetProcess"></a>Function: xsltParseStylesheetProcess</h3><pre class="programlisting"><a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a>	xsltParseStylesheetProcess	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> ret, <br />							 xmlDocPtr doc)<br />
+<div class="variablelist"><table border="0"><col align="left" /><tbody><tr><td><span class="term"><i><tt>style</tt></i>:</span></td><td>the XSLT stylesheet</td></tr><tr><td><span class="term"><i><tt>cur</tt></i>:</span></td><td>the "output" element</td></tr></tbody></table></div><h3><a name="xsltParseStylesheetProcess" id="xsltParseStylesheetProcess"></a>Function: xsltParseStylesheetProcess</h3><pre class="programlisting"><a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a>	xsltParseStylesheetProcess	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> ret, <br />							 xmlDocPtr doc)<br />
 </pre><p>parse an XSLT stylesheet adding the associated structures</p>
 <div class="variablelist"><table border="0"><col align="left" /><tbody><tr><td><span class="term"><i><tt>ret</tt></i>:</span></td><td>the XSLT stylesheet</td></tr><tr><td><span class="term"><i><tt>doc</tt></i>:</span></td><td>and xmlDoc parsed XML</td></tr><tr><td><span class="term"><i><tt>Returns</tt></i>:</span></td><td>the value of the 'ret' parameter if everything went right, NULL if something went amiss.</td></tr></tbody></table></div><h3><a name="xsltParseTemplateContent" id="xsltParseTemplateContent"></a>Function: xsltParseTemplateContent</h3><pre class="programlisting">void	xsltParseTemplateContent	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br />					 xmlNodePtr templ)<br />
 </pre><p>parse a template content-model Clean-up the template content from unwanted ignorable blank nodes and process xslt:text</p>

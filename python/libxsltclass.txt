@@ -138,6 +138,7 @@ Class transformCtxt()
     printErrorContext()
     profileInformation()
     saveProfiling()
+    setCtxtParseOptions()
 Class stylesheet()
     # accessors
     doc()

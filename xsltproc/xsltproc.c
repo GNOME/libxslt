@@ -414,6 +414,7 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	ctxt = xsltNewTransformContext(cur, doc);
 	if (ctxt == NULL)
 	    return;
+	xsltSetCtxtParseOptions(ctxt, options);
 	if (profile) {
 	    res = xsltApplyStylesheetUser(cur, doc, params, NULL,
 		                          stderr, ctxt);
@@ -749,6 +750,9 @@ main(int argc, char **argv)
         xmlLoadExtDtdDefaultValue = 0;
     xmlSubstituteEntitiesDefault(1);
     xmlLineNumbersDefault(1);
+#else
+    if (novalid != 0)
+	options = XML_PARSE_NOENT | XML_PARSE_NOCDATA;
 #endif
 
     /*

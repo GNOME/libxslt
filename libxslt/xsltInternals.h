@@ -523,8 +523,10 @@ struct _xsltTransformContext {
     /*
      * Per Context Debugging
      */
-    int debugStatus;				/* the context level debug status */
+    int debugStatus;			/* the context level debug status */
     unsigned long* traceCode;		/* pointer to the variable holding the mask */
+
+    int parserOptions;			/* parser options xmlParserOption */
 };
 
 /**

@@ -435,9 +435,10 @@
      <exports symbol='xsltSetGenericErrorFunc' type='function'/>
      <exports symbol='xsltSetDebuggerCallbacks' type='function'/>
      <exports symbol='xsltCalibrateAdjust' type='function'/>
+     <exports symbol='xsltSetGenericDebugFunc' type='function'/>
      <exports symbol='xsltDebugSetDefaultTrace' type='function'/>
      <exports symbol='xsltDropCallCallback' type='function'/>
-     <exports symbol='xsltSetGenericDebugFunc' type='function'/>
+     <exports symbol='xsltSetCtxtParseOptions' type='function'/>
      <exports symbol='xsltComputeSortResult' type='function'/>
      <exports symbol='xsltSetSortFunc' type='function'/>
      <exports symbol='xsltDocumentSortFunction' type='function'/>
@@ -888,6 +889,7 @@ informations are stored'/>
 *'/>
       <field name='debugStatus' type='int' info=' the context level debug status'/>
       <field name='traceCode' type='unsigned long *' info=' pointer to the variable holding the mask'/>
+      <field name='parserOptions' type='int' info=' parser options xmlParserOption'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -2070,6 +2072,12 @@ informations are stored'/>
       <arg name='sec' type='xsltSecurityPrefsPtr' info='the security block to use'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context'/>
       <arg name='value' type='const char *' info='unused'/>
+    </function>
+    <function name='xsltSetCtxtParseOptions' file='xsltutils'>
+      <info>Change the default parser option passed by the XSLT engine to the parser when using document() loading.</info>
+      <return type='int' info='the previous options or -1 in case of error'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
+      <arg name='options' type='int' info='a combination of libxml2 xmlParserOption'/>
     </function>
     <function name='xsltSetCtxtSecurityPrefs' file='security'>
       <info>Set the security preference for a specific transformation</info>

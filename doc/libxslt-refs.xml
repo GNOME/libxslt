@@ -320,6 +320,7 @@
     <reference name='xsltSecurityOption' href='html/libxslt-security.html#xsltSecurityOption'/>
     <reference name='xsltSecurityPrefs' href='html/libxslt-security.html#xsltSecurityPrefs'/>
     <reference name='xsltSecurityPrefsPtr' href='html/libxslt-security.html#xsltSecurityPrefsPtr'/>
+    <reference name='xsltSetCtxtParseOptions' href='html/libxslt-xsltutils.html#xsltSetCtxtParseOptions'/>
     <reference name='xsltSetCtxtSecurityPrefs' href='html/libxslt-security.html#xsltSetCtxtSecurityPrefs'/>
     <reference name='xsltSetCtxtSortFunc' href='html/libxslt-xsltutils.html#xsltSetCtxtSortFunc'/>
     <reference name='xsltSetDebuggerCallbacks' href='html/libxslt-xsltutils.html#xsltSetDebuggerCallbacks'/>
@@ -701,6 +702,7 @@
       <ref name='xsltSecurityOption'/>
       <ref name='xsltSecurityPrefs'/>
       <ref name='xsltSecurityPrefsPtr'/>
+      <ref name='xsltSetCtxtParseOptions'/>
       <ref name='xsltSetCtxtSecurityPrefs'/>
       <ref name='xsltSetCtxtSortFunc'/>
       <ref name='xsltSetDebuggerCallbacks'/>
@@ -766,24 +768,24 @@
       <ref name='xsltStyleExtInitFunction'/>
     </type>
     <type name='xmlAttrPtr'>
-      <ref name='xsltAttrTemplateProcess'/>
       <ref name='xsltAttrListTemplateProcess'/>
+      <ref name='xsltAttrTemplateProcess'/>
     </type>
     <type name='xmlChar *'>
       <ref name='xsltAttrTemplateValueProcess'/>
       <ref name='xsltEvalAttrValueTemplate'/>
       <ref name='xsltEvalTemplateString'/>
+      <ref name='xsltGetNsProp'/>
       <ref name='xsltAttrTemplateValueProcessNode'/>
       <ref name='xsltEvalXPathString'/>
       <ref name='xsltEvalXPathStringNs'/>
-      <ref name='xsltGetNsProp'/>
       <ref name='xsltEvalStaticAttrValueTemplate'/>
     </type>
     <type name='xmlDocPtr'>
       <ref name='xsltCreateRVT'/>
-      <ref name='xsltApplyStylesheet'/>
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltApplyStylesheetUser'/>
+      <ref name='xsltApplyStylesheet'/>
       <ref name='xsltGetProfileInformation'/>
     </type>
     <type name='xmlHashTablePtr'>
@@ -800,17 +802,17 @@
     </type>
     <type name='xmlNsPtr'>
       <ref name='xsltCopyNamespace'/>
+      <ref name='xsltGetSpecialNamespace'/>
       <ref name='xsltGetNamespace'/>
       <ref name='xsltCopyNamespaceList'/>
-      <ref name='xsltGetSpecialNamespace'/>
     </type>
     <type name='xmlXPathError'>
       <ref name='xsltFormatNumberConversion'/>
     </type>
     <type name='xmlXPathFunction'>
       <ref name='xsltExtFunctionLookup'/>
-      <ref name='xsltExtModuleFunctionLookup'/>
       <ref name='xsltXPathFunctionLookup'/>
+      <ref name='xsltExtModuleFunctionLookup'/>
     </type>
     <type name='xmlXPathObjectPtr'>
       <ref name='xsltXPathVariableLookup'/>
@@ -848,8 +850,8 @@
       <ref name='xsltGetSecurityPrefs'/>
     </type>
     <type name='xsltSecurityPrefsPtr'>
-      <ref name='xsltNewSecurityPrefs'/>
       <ref name='xsltGetDefaultSecurityPrefs'/>
+      <ref name='xsltNewSecurityPrefs'/>
     </type>
     <type name='xsltStackElemPtr'>
       <ref name='xsltParseStylesheetCallerParam'/>
@@ -1451,6 +1453,7 @@
       <ref name='xsltSecurityAllow'/>
       <ref name='xsltSecurityCheck'/>
       <ref name='xsltSecurityForbid'/>
+      <ref name='xsltSetCtxtParseOptions'/>
       <ref name='xsltSetCtxtSecurityPrefs'/>
       <ref name='xsltSetCtxtSortFunc'/>
       <ref name='xsltSetTransformErrorFunc'/>
@@ -1869,6 +1872,7 @@
       <ref name='xsltGetProfileInformation'/>
       <ref name='XSLT_TRACE_IF'/>
       <ref name='XSLT_TRACE_NONE'/>
+      <ref name='xsltSetCtxtParseOptions'/>
       <ref name='xsltSetDebuggerStatus'/>
       <ref name='XSLT_TRACE_TEMPLATES'/>
       <ref name='xsltSetSortFunc'/>
@@ -1913,6 +1917,9 @@
       <letter name='C'>
         <word name='CDTATA'>
           <ref name='xsltFindElemSpaceHandling'/>
+        </word>
+        <word name='Change'>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='Char'>
           <ref name='xsltGetUTF8Char'/>
@@ -3051,6 +3058,9 @@
         <word name='com'>
           <ref name='xsltFormatNumberConversion'/>
         </word>
+        <word name='combination'>
+          <ref name='xsltSetCtxtParseOptions'/>
+        </word>
         <word name='comment'>
           <ref name='xsltComment'/>
         </word>
@@ -3282,6 +3292,7 @@
           <ref name='xsltGetXIncludeDefault'/>
           <ref name='xsltRegisterAllElement'/>
           <ref name='xsltRegisterAllFunctions'/>
+          <ref name='xsltSetCtxtParseOptions'/>
           <ref name='xsltSetDefaultSecurityPrefs'/>
           <ref name='xsltSetSortFunc'/>
           <ref name='xsltSetXIncludeDefault'/>
@@ -3435,6 +3446,9 @@
           <ref name='_xsltElemPreComp'/>
           <ref name='xsltRegisterPersistRVT'/>
           <ref name='xsltRegisterTmpRVT'/>
+        </word>
+        <word name='engine'>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='entity'>
           <ref name='xsltGetNsProp'/>
@@ -4115,6 +4129,7 @@
         </word>
         <word name='libxml2'>
           <ref name='xsltGetUTF8Char'/>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='libxslt'>
           <ref name='XSLT_LIBXSLT_NAMESPACE'/>
@@ -4154,6 +4169,7 @@
         </word>
         <word name='loading'>
           <ref name='XSLT_PARSE_OPTIONS'/>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='local'>
           <ref name='_xsltStackElem'/>
@@ -4503,12 +4519,15 @@
         </word>
         <word name='option'>
           <ref name='xsltGetSecurityPrefs'/>
+          <ref name='xsltSetCtxtParseOptions'/>
           <ref name='xsltSetSecurityPrefs'/>
         </word>
         <word name='options'>
           <ref name='XSLT_PARSE_OPTIONS'/>
+          <ref name='_xsltTransformContext'/>
           <ref name='xsltCheckRead'/>
           <ref name='xsltCheckWrite'/>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='order'>
           <ref name='XSLT_GET_IMPORT_INT'/>
@@ -4638,7 +4657,9 @@
           <ref name='xsltRunStylesheetUser'/>
         </word>
         <word name='parser'>
+          <ref name='_xsltTransformContext'/>
           <ref name='xsltFreeTransformContext'/>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='parsing'>
           <ref name='xsltSetGenericDebugFunc'/>
@@ -4658,6 +4679,7 @@
         </word>
         <word name='passed'>
           <ref name='xsltApplyOneTemplate'/>
+          <ref name='xsltSetCtxtParseOptions'/>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
         </word>
@@ -4835,6 +4857,9 @@
         <word name='preserve-space'>
           <ref name='_xsltStylesheet'/>
           <ref name='xsltFindElemSpaceHandling'/>
+        </word>
+        <word name='previous'>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='printed'>
           <ref name='xslAddCall'/>
@@ -5818,6 +5843,7 @@
           <ref name='xsltEvalXPathStringNs'/>
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
       </letter>
     </chunk>
@@ -5908,6 +5934,7 @@
           <ref name='XSLT_PARSE_OPTIONS'/>
           <ref name='_xsltTransformContext'/>
           <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltSetCtxtParseOptions'/>
           <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathGetTransformContext'/>
           <ref name='xsltXPathVariableLookup'/>
@@ -6039,6 +6066,10 @@
         <word name='xmlNsPtr'>
           <ref name='xsltCopyNamespace'/>
           <ref name='xsltCopyNamespaceList'/>
+        </word>
+        <word name='xmlParserOption'>
+          <ref name='_xsltTransformContext'/>
+          <ref name='xsltSetCtxtParseOptions'/>
         </word>
         <word name='xmlReadxxx'>
           <ref name='XSLT_PARSE_OPTIONS'/>

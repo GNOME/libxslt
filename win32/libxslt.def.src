@@ -184,6 +184,7 @@ xsltSaveResultToFilename
 xsltSaveResultToString
 xsltSecurityAllow
 xsltSecurityForbid
+xsltSetCtxtParseOptions
 xsltSetCtxtSecurityPrefs
 xsltSetCtxtSortFunc
 xsltSetDebuggerCallbacks

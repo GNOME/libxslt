@@ -18,7 +18,7 @@ or libxslt wrappers or bindings:</p><ul><li><a href="http://mail.gnome.org/archi
     earlier version of the libxml/libxslt <a href="http://www.rexx.com/~dkuhlman">wrappers for Python</a></li>
   <li>Petr Kozelka provides <a href="http://sourceforge.net/projects/libxml2-pas">Pascal units to glue
     libxml2</a> with Kylix, Delphi and other Pascal compilers</li>
-  <li>Wai-Sun &quot;Squidster&quot; Chia provides <a href="http://www.rubycolor.org/arc/redist/">bindings for Ruby</a>  and
+  <li>Wai-Sun "Squidster" Chia provides <a href="http://www.rubycolor.org/arc/redist/">bindings for Ruby</a>  and
     libxml2 bindings are also available in Ruby through the <a href="http://libgdome-ruby.berlios.de/">libgdome-ruby</a> module
     maintained by Tobias Peters.</li>
   <li>Steve Ball and contributors maintains <a href="http://tclxml.sourceforge.net/">libxml2 and libxslt bindings for
@@ -47,7 +47,7 @@ build the bindings is python/generator.py in the source distribution.</p><p>To i
   <li>Otherwise use the <a href="ftp://xmlsoft.org/python/">libxml2-python
     module distribution</a> corresponding to your installed version of
     libxml2 and libxslt. Note that to install it you will need both libxml2
-    and libxslt installed and run &quot;python setup.py build install&quot; in the
+    and libxslt installed and run "python setup.py build install" in the
     module tree.</li>
 </ul><p>The distribution includes a set of examples and regression tests for the
 python bindings in the <code>python/tests</code> directory. Here are some
@@ -55,17 +55,17 @@ excepts from those tests:</p><h3>basic.py:</h3><p>This is a basic test of XSLT i
 document, transforming the document and saving the result.</p><pre>import libxml2
 import libxslt
 
-styledoc = libxml2.parseFile(&quot;test.xsl&quot;)
+styledoc = libxml2.parseFile("test.xsl")
 style = libxslt.parseStylesheetDoc(styledoc)
-doc = libxml2.parseFile(&quot;test.xml&quot;)
+doc = libxml2.parseFile("test.xml")
 result = style.applyStylesheet(doc, None)
-style.saveResultToFilename(&quot;foo&quot;, result, 0)
+style.saveResultToFilename("foo", result, 0)
 style.freeStylesheet()
 doc.freeDoc()
 result.freeDoc()</pre><p>The Python module is called libxslt, you will also need the libxml2 module
 for the operations on XML trees. Let's have a look at the objects manipulated
 in that example and how is the processing done:</p><ul><li><code>styledoc</code> : is a libxml2 document tree. It is obtained by
-    parsing the XML file &quot;test.xsl&quot; containing the stylesheet.</li>
+    parsing the XML file "test.xsl" containing the stylesheet.</li>
   <li><code>style</code> : this is a precompiled stylesheet ready to be used
     by the following transformations (note the plural form, multiple
     transformations can resuse the same stylesheet).</li>
@@ -78,7 +78,7 @@ in that example and how is the processing done:</p><ul><li><code>styledoc</code>
     stylesheet to the document. Note that some of the stylesheet informations
     may be related to the serialization of that document and as in this
     example a specific saveResultToFilename() method of the stylesheet should
-    be used to save it to a file (in that case to &quot;foo&quot;).</li>
+    be used to save it to a file (in that case to "foo").</li>
 </ul><p>Also note the need to explicitely deallocate documents with freeDoc()
 except for the stylesheet document which is freed when its compiled form is
 garbage collected.</p><h3>extfunc.py:</h3><p>This one is a far more complex test. It shows how to modify the behaviour
@@ -104,9 +104,9 @@ def f(ctx, str):
 
     return string.upper(str)
 
-libxslt.registerExtModuleFunction(&quot;foo&quot;, &quot;http://example.com/foo&quot;, f)</pre><p>This code defines and register an extension function. Note that the
+libxslt.registerExtModuleFunction("foo", "http://example.com/foo", f)</pre><p>This code defines and register an extension function. Note that the
 function can be bound to any name (foo) and how the binding is also
-associated to a namespace name &quot;http://example.com/foo&quot;. From an XSLT point
+associated to a namespace name "http://example.com/foo". From an XSLT point
 of view the function just returns an upper case version of the string passed
 as a parameter. But the first part of the function also read some contextual
 information from the current XSLT processing environement, in that case it
@@ -117,7 +117,7 @@ objects check the <a href="internals.html">libray internals description</a>.
 The pctxt is actually an object from a class derived from the
 libxml2.xpathParserContext() with just a couple more properties including the
 possibility to look up the XSLT transformation context from the XPath
-context.</p><pre>styledoc = libxml2.parseDoc(&quot;&quot;&quot;
+context.</p><pre>styledoc = libxml2.parseDoc("""
 &lt;xsl:stylesheet version='1.0'
   xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
   xmlns:foo='http://example.com/foo'
@@ -128,29 +128,29 @@ context.</p><pre>styledoc = libxml2.parseDoc(&quot;&quot;&quot;
     &lt;article&gt;&lt;xsl:value-of select='foo:foo($bar)'/&gt;&lt;/article&gt;
   &lt;/xsl:template&gt;
 &lt;/xsl:stylesheet&gt;
-&quot;&quot;&quot;)</pre><p>Here is a simple example of how to read an XML document from a python
+""")</pre><p>Here is a simple example of how to read an XML document from a python
 string with libxml2. Note how this stylesheet:</p><ul><li>Uses a global parameter <code>bar</code></li>
   <li>Reference the extension function f</li>
-  <li>how the Namespace name &quot;http://example.com/foo&quot; has to be bound to a
+  <li>how the Namespace name "http://example.com/foo" has to be bound to a
     prefix</li>
   <li>how that prefix is excluded from the output</li>
   <li>how the function is called from the select</li>
 </ul><pre>style = libxslt.parseStylesheetDoc(styledoc)
-doc = libxml2.parseDoc(&quot;&lt;doc/&gt;&quot;)
-result = style.applyStylesheet(doc, { &quot;bar&quot;: &quot;'success'&quot; })
+doc = libxml2.parseDoc("&lt;doc/&gt;")
+result = style.applyStylesheet(doc, { "bar": "'success'" })
 style.freeStylesheet()
 doc.freeDoc()</pre><p>that part is identical, to the basic example except that the
 transformation is passed a dictionnary of parameters. Note that the string
-passed &quot;success&quot; had to be quoted, otherwise it is interpreted as an XPath
-query for the childs of root named &quot;success&quot;.</p><pre>root = result.children
-if root.name != &quot;article&quot;:
-    print &quot;Unexpected root node name&quot;
+passed "success" had to be quoted, otherwise it is interpreted as an XPath
+query for the childs of root named "success".</p><pre>root = result.children
+if root.name != "article":
+    print "Unexpected root node name"
     sys.exit(1)
-if root.content != &quot;SUCCESS&quot;:
-    print &quot;Unexpected root node content, extension function failed&quot;
+if root.content != "SUCCESS":
+    print "Unexpected root node content, extension function failed"
     sys.exit(1)
 if nodeName != 'article':
-    print &quot;The function callback failed to access its context&quot;
+    print "The function callback failed to access its context"
     sys.exit(1)
 
 result.freeDoc()</pre><p>That part just verifies that the transformation worked, that the parameter

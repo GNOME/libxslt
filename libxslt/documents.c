@@ -193,7 +193,7 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
     }
 
 #ifdef XSLT_PARSE_OPTIONS
-    doc = xmlReadFile((const char *) URI, NULL, XSLT_PARSE_OPTIONS);
+    doc = xmlReadFile((const char *) URI, NULL, ctxt->parserOptions);
 #else
     doc = xmlParseFile((const char *) URI);
 #endif
@@ -203,7 +203,7 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
     if (ctxt->xinclude != 0) {
 #ifdef LIBXML_XINCLUDE_ENABLED
 #if LIBXML_VERSION >= 20603
-	xmlXIncludeProcessFlags(doc, XSLT_PARSE_OPTIONS);
+	xmlXIncludeProcessFlags(doc, ctxt->parserOptions);
 #else
 	xmlXIncludeProcess(doc);
 #endif

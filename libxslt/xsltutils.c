@@ -1031,6 +1031,34 @@ xsltSetCtxtSortFunc(xsltTransformContextPtr ctxt, xsltSortFunc handler) {
 
 /************************************************************************
  * 									*
+ * 				Parsing options				*
+ * 									*
+ ************************************************************************/
+
+/**
+ * xsltSetCtxtParseOptions:
+ * @ctxt:  a XSLT process context
+ * @options:  a combination of libxml2 xmlParserOption
+ * 
+ * Change the default parser option passed by the XSLT engine to the 
+ * parser when using document() loading.
+ *
+ * Returns the previous options or -1 in case of error
+ */
+int 
+xsltSetCtxtParseOptions(xsltTransformContextPtr ctxt, int options)
+{
+    int oldopts;
+
+    if (ctxt == NULL)
+        return(-1);
+    oldopts = ctxt->parserOptions;
+    ctxt->parserOptions = options;
+    return(oldopts);
+}
+
+/************************************************************************
+ * 									*
  * 				Output					*
  * 									*
  ************************************************************************/

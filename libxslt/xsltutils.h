@@ -161,6 +161,9 @@ XSLTPUBFUN void XSLTCALL
 						 const char *msg,
 						 ...);
 
+XSLTPUBFUN int XSLTCALL
+		xsltSetCtxtParseOptions		(xsltTransformContextPtr ctxt,
+						 int options);
 /*
  * Sorting.
  */
