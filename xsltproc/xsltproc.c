@@ -470,7 +470,9 @@ static void usage(const char *name) {
     printf("\t--output file or -o file: save to a given file\n");
     printf("\t--timing: display the time used\n");
     printf("\t--repeat: run the transformation 20 times\n");
+#ifdef LIBXML_DEBUG_ENABLED
     printf("\t--debug: dump the tree of the result instead\n");
+#endif
     printf("\t--dumpextensions: dump the registered extension elements and functions to stdout\n");
     printf("\t--novalid skip the Dtd loading phase\n");
     printf("\t--noout: do not dump the result\n");

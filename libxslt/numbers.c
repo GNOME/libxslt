@@ -215,7 +215,7 @@ xsltNumberFormatDecimal(xmlBufferPtr buffer,
 		break;
 	    }
 	    pointer -= len;
-	    strncpy((char *)pointer, temp_char, len);
+	    strncpy((char *)pointer, (const char *)temp_char, len);
 	}
 	number /= 10.0;
 	++i;

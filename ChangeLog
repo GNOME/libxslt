@@ -1,3 +1,12 @@
+Thu Sep 18 11:28:43 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.c libxslt/numbers.c: small fixes w.r.t.
+	  IS_XSLT_REAL_NODE change
+	* python/Makefile.am Makefile.am: some makefile "distclean"
+	  target improvement from Graham Wilson
+	* xsltproc/xsltproc.c: small fix from Alexey Efimov for options
+	  display.
+
 Mon Sep 15 07:41:14 PDT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltutils.h: Added XML_PI_NODE to the macro

@@ -47,6 +47,8 @@ xsltConf.sh: xsltConf.sh.in Makefile
 	       < $(srcdir)/xsltConf.sh.in > xsltConf.tmp \
 	&& mv xsltConf.tmp xsltConf.sh
 
+CLEANFILES = xsltConf.sh
+
 check-local: tests
 
 dummy:

@@ -53,7 +53,8 @@ API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml
 GENERATED= $(srcdir)/libxsltclass.py \
            $(srcdir)/libxslt-export.c \
 	   $(srcdir)/libxslt-py.c \
-	   $(srcdir)/libxslt-py.h
+	   $(srcdir)/libxslt-py.h \
+	   $(srcdir)/libxsltclass.txt
 
 $(GENERATED): gen_prog
 
@@ -69,6 +70,4 @@ endif
 tests test: all
 	cd tests && $(MAKE) tests
 
-clean:
-	rm -f $(GENERATED) *.o libxslt.so *.pyc libxslt.py gen_prog
-
+CLEANFILES= $(GENERATED) *.o libxslt.so *.pyc libxslt.py gen_prog

@@ -301,7 +301,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
             xmlNodePtr target;
 
             target = obj2->nodesetval->nodeTab[0];
-            if (target->type == XML_ATTRIBUTE_NODE) {
+            if ((target->type == XML_ATTRIBUTE_NODE) ||
+	        (target->type == XML_PI_NODE)) {
                 target = ((xmlAttrPtr) target)->parent;
             }
             base = xmlNodeGetBase(target->doc, target);
