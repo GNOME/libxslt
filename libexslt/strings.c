@@ -77,7 +77,17 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
             ret->boolval = 0; /* Freeing is not handled there anymore */
             for (cur = str, token = str; *cur != 0; cur += clen) {
 	        clen = xmlUTF8Size(cur);
-                for (delimiter = delimiters; *delimiter != 0;
+		if (*delimiters == 0) {	/* empty string case */
+		    xmlChar ctmp;
+		    ctmp = *(cur+clen);
+		    *(cur+clen) = 0;
+                    node = xmlNewDocRawNode(container, NULL,
+                                       (const xmlChar *) "token", cur);
+		    xmlAddChild((xmlNodePtr) container, node);
+		    xmlXPathNodeSetAddUnique(ret->nodesetval, node);
+                    *(cur+clen) = ctmp; /* restore the changed byte */
+                    token = cur + clen;
+                } else for (delimiter = delimiters; *delimiter != 0;
 				delimiter += xmlUTF8Size(delimiter)) {
                     if (!xmlUTF8Charcmp(cur, delimiter)) {
                         if (cur == token) {

@@ -1,3 +1,10 @@
+Mon Jul 26 17:03:22 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/strings.c: fixed str:tokenize for case when 2nd
+	  argument is an empty string (should produce a token for
+	  each char in the string).  Reported on the mailing list by
+	  Peter Pawlowski.
+
 Fri Jul 23 21:55:14 PDT 2004 William Brack <wbrack@mmm.com.hk>
 	* libxslt/imports.c: further enhancement for template priorities
 	  on imported stylesheets (better fix for bug 141279, fixes
