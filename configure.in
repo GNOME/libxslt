@@ -22,6 +22,8 @@ AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 AM_MAINTAINER_MODE
 
+AC_ARG_WITH(html-dir, [  --with-html-dir=PATH path to installed docs ])
+
 dnl
 dnl Check the environment
 dnl

@@ -153,7 +153,7 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
 	    terminate = 1;
-	} else if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
+	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
 	    terminate = 0;
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,

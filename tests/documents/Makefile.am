@@ -21,4 +21,8 @@ test tests: $(top_builddir)/libxslt/xsltproc
 	diff $(srcdir)/test.result result; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f result)
+	@($(top_builddir)/libxslt/xsltproc $(srcdir)/message.xsl $(srcdir)/message.xml > result 2>&1 ; \
+	diff $(srcdir)/message.result result; \
+	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
+	rm -f result)
 

@@ -1,3 +1,12 @@
+Mon Jul  9 22:02:40 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltutils.c: small fix for xsl:message by Stephane GUIBOU
+	* tests/documents/Makefile.am tests/documents/message.*: added
+	  a specific regression test
+	* libxslt/transform.c: fixed an infinite loop
+	* configure.in doc/Makefile.am: attempt to add --with-html-dir,
+	  this may work
+
 Mon Jul  9 15:55:14 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/transform.c libxslt/xslt.c libxslt/xsltInternals.h:

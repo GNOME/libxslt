@@ -3215,6 +3215,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
                     break;
                 if ((tmp->type == XML_TEXT_NODE) && (!xmlIsBlankNode(tmp)))
                     break;
+		tmp = tmp->next;
             }
             if (tmp == root) {
                 ctxt->type = XSLT_OUTPUT_HTML;
