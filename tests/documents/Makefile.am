@@ -11,9 +11,9 @@ EXTRA_DIST = bredfort.css index.xml system.xml \
 all: test
 
 test tests: $(top_builddir)/libxslt/xsltproc
-	@(rm -f .memdump ; touch .memdump)
-	@($(top_builddir)/libxslt/xsltproc bredfort.xsl index.xml > result ; \
-	diff result.xhtml result ; \
+	@(echo > .memdump)
+	@($(top_builddir)/libxslt/xsltproc $(srcdir)/bredfort.xsl $(srcdir)/index.xml > result ; \
+	diff $(srcdir)/result.xhtml result ; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	rm -f result)
 

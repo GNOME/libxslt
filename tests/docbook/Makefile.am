@@ -10,11 +10,12 @@ EXTRA_DIST = README VERSION
 tests: html
 
 html: $(top_builddir)/libxslt/xsltproc
-	@(for i in test/*.xml ; do \
+	@(echo > .memdump)
+	@(for i in $(srcdir)/test/*.xml ; do \
 	  echo $$i ; \
-	  out=result/html/`basename $$i .xml`.tst; \
-	  html=result/html/`basename $$i .xml`.html; \
-	  $(top_builddir)/libxslt/xsltproc --nonet html/docbook.xsl $$i > $$out ; \
+	  out=$(srcdir)/result/html/`basename $$i .xml`.tst; \
+	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
+	  $(top_builddir)/libxslt/xsltproc --nonet $(srcdir)/html/docbook.xsl $$i > $$out ; \
 	  if [ -f $$html ] ; then \
 	      grep -v id < $$html > $$html.noid ; \
 	      grep -v id < $$out > $$out.noid ; \

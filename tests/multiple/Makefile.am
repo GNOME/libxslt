@@ -21,12 +21,12 @@ EXTRA_DIST = dict.dtd  dict.xml  dict.xsl result.xml \
 all: test
 
 test tests: $(top_builddir)/libxslt/xsltproc
-	@(rm -f .memdump ; touch .memdump)
-	@($(top_builddir)/libxslt/xsltproc dict.xsl dict.xml > dict.res ; \
-	diff result.xml dict.res ; \
-	for i in out/letter*.orig ; do \
-	  diff $$i out/`basename $$i .orig`.html ; done ; \
-	diff out/titlepage.orig out/titlepage.html ; \
+	@(echo > .memdump)
+	@($(top_builddir)/libxslt/xsltproc $(srcdir)/dict.xsl $(srcdir)/dict.xml > dict.res ; \
+	diff $(srcdir)/result.xml dict.res ; \
+	for i in $(srcdir)/out/letter*.orig ; do \
+	  diff $$i $(srcdir)/out/`basename $$i .orig`.html ; done ; \
+	diff $(srcdir)/out/titlepage.orig $(srcdir)/out/titlepage.html ; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	rm -f dict.res)
 

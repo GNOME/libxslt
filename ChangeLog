@@ -1,3 +1,11 @@
+Sat May 19 17:41:23 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/documents/Makefile.am tests/general/Makefile.am 
+	  tests/multiple/Makefile.am tests/namespaces/Makefile.am 
+	  tests/numbers/Makefile.am tests/xmlspec/Makefile.am:
+	  Seems some of the changes I made for 0.9.0 Makefiles were
+	  not commited ...
+
 Sat May 19 17:23:54 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* configure.in: preparing 0.10.0 release

@@ -13,7 +13,7 @@ EXTRA_DIST = \
 all: test
 
 test tests: $(top_builddir)/libxslt/xsltproc
-	@(rm -f .memdump ; touch .memdump)
+	@(echo > .memdump)
 	@(for i in $(srcdir)/*.xml ; do \
 	  doc="`basename $$i .xml`" ; \
 	  j=$(srcdir)/"$$doc".xsl; \
