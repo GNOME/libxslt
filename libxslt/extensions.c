@@ -342,7 +342,7 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
  */
 int
 xsltRegisterExtFunction(xsltTransformContextPtr ctxt, const xmlChar *name,
-	                const xmlChar *URI, xmlXPathEvalFunc function) {
+	                const xmlChar *URI, xmlXPathFunction function) {
     if ((ctxt == NULL) || (name == NULL) ||
 	(URI == NULL) || (function == NULL))
 	return(-1);
@@ -954,6 +954,96 @@ xsltUnregisterAllExtModuleFunction (void) {
     xsltFunctionsHash = NULL;
 }
 
+
+/**
+ * xsltNewElemPreComp:
+ * @style:  the XSLT stylesheet
+ * @inst:  the element node
+ * @function: the transform function
+ *
+ * Creates and initializes an #xsltElemPreComp
+ *
+ * Returns the new and initialized #xsltElemPreComp
+ */
+xsltElemPreCompPtr
+xsltNewElemPreComp (xsltStylesheetPtr style, xmlNodePtr inst,
+		    xsltTransformFunction function) {
+    xsltElemPreCompPtr cur;
+
+    cur = (xsltElemPreCompPtr) xmlMalloc (sizeof(xsltElemPreComp));
+    if (cur == NULL) {
+	xsltPrintErrorContext(style, NULL, NULL);
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltNewExtElement : malloc failed\n");
+        return (NULL);
+    }
+    memset(cur, 0, sizeof(xsltElemPreComp));
+
+    xsltInitElemPreComp (cur, style, inst, function,
+			 (xsltElemPreCompDeallocator) xmlFree);
+
+    return (cur);
+}
+
+/**
+ * xsltInitElemPreComp:
+ * @comp:  an #xsltElemPreComp (or generally a derived structure)
+ * @style:  the XSLT stylesheet
+ * @inst:  the element node
+ * @function:  the transform function
+ * @freeFunc:  the @comp deallocator
+ *
+ * Initializes an existing #xsltElemPreComp structure. This is usefull
+ * when extending an #xsltElemPreComp to store precomputed data.
+ * This function MUST be called on any extension element precomputed
+ * data struct.
+ */
+void
+xsltInitElemPreComp (xsltElemPreCompPtr comp, xsltStylesheetPtr style,
+		     xmlNodePtr inst, xsltTransformFunction function,
+		     xsltElemPreCompDeallocator freeFunc) {
+    comp->type = XSLT_FUNC_EXTENSION;
+    comp->func = function;
+    comp->inst = inst;
+    comp->free = freeFunc;
+
+    comp->next = style->preComps;
+    style->preComps = comp;
+}
+
+/**
+ * xsltPreComputeExtModuleElement:
+ * @style:  the stylesheet
+ * @inst:  the element node
+ *
+ * Precomputes an extension module element
+ *
+ * Returns the precomputed data
+ */
+xsltElemPreCompPtr
+xsltPreComputeExtModuleElement (xsltStylesheetPtr style,
+				xmlNodePtr inst) {
+    xsltExtElementPtr ext;
+    xsltElemPreCompPtr comp = NULL;
+
+    if ((style == NULL) || (inst == NULL) ||
+	(inst->type != XML_ELEMENT_NODE) || (inst->ns == NULL))
+	return (NULL);
+
+    ext = (xsltExtElementPtr)
+	xmlHashLookup2 (xsltElementsHash, inst->name,
+			inst->ns->href);
+    if (ext == NULL)
+	return (NULL);
+
+    if (ext->precomp != NULL)
+	comp = ext->precomp(style, inst, ext->transform);
+    if (comp == NULL)
+	comp = xsltNewElemPreComp (style, inst, ext->transform);
+
+    return (comp);
+}
+
 /**
  * xsltRegisterExtModuleElement:
  * @name:  the element name
@@ -1106,7 +1196,7 @@ xsltUnregisterAllExtModuleElement (void) {
  */
 int
 xsltRegisterExtModuleTopLevel (const xmlChar *name, const xmlChar *URI,
-			       xsltPreComputeFunction function) {
+			       xsltTopLevelFunction function) {
     if ((name == NULL) || (URI == NULL) || (function == NULL))
 	return(-1);
 
@@ -1130,12 +1220,12 @@ xsltRegisterExtModuleTopLevel (const xmlChar *name, const xmlChar *URI,
  *
  * Returns the callback function if found, NULL otherwise.
  */
-xsltPreComputeFunction
+xsltTopLevelFunction
 xsltExtModuleTopLevelLookup (const xmlChar *name, const xmlChar *URI) {
     if ((xsltTopLevelsHash == NULL) || (name == NULL) || (URI == NULL))
 	return(NULL);
 
-    return((xsltPreComputeFunction)
+    return((xsltTopLevelFunction)
 	    xmlHashLookup2(xsltTopLevelsHash, name, URI));
 }
 
@@ -1244,8 +1334,11 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs ATTRIBUTE_UNUSED)
  *
  * Process a libxslt:test node
  */
-static void
-xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst) {
+static xsltElemPreCompPtr
+xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst,
+			  xsltTransformFunction function) {
+    xsltElemPreCompPtr ret;
+
     if (style == NULL) {
 	xsltPrintErrorContext(NULL, NULL, inst);
         xsltGenericError(xsltGenericErrorContext,
@@ -1272,6 +1365,8 @@ xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst) {
 	style->errors++;
         return;
     }
+    ret = xsltNewElemPreComp (style, inst, function);
+    return (ret);
 }
 
 /**
@@ -1286,7 +1381,7 @@ xsltExtElementPreCompTest(xsltStylesheetPtr style, xmlNodePtr inst) {
 static void
 xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,
                    xmlNodePtr inst,
-                   xsltStylePreCompPtr comp ATTRIBUTE_UNUSED)
+                   xsltElemPreCompPtr comp ATTRIBUTE_UNUSED)
 {
     xmlNodePtr comment;
 

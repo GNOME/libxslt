@@ -19,6 +19,8 @@ extern "C" {
 /*
  * Interfaces
  */
+extern const xmlChar *xsltExtMarker;
+
 void		xsltStylePreCompute	(xsltStylesheetPtr style,
 					 xmlNodePtr inst);
 void		xsltFreeStylePreComps	(xsltStylesheetPtr style);

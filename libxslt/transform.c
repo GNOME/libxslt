@@ -1129,8 +1129,12 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             /*
              * Flagged as an extension element
              */
-            function = (xsltTransformFunction)
-                xsltExtElementLookup(ctxt, cur->name, cur->ns->href);
+	    if (cur->_private == xsltExtMarker)
+		function = (xsltTransformFunction)
+		    xsltExtElementLookup(ctxt, cur->name, cur->ns->href);
+	    else
+		function = ((xsltElemPreCompPtr)cur->_private)->func;
+
             if (function == NULL) {
                 xmlNodePtr child;
                 int found = 0;

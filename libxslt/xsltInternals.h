@@ -107,14 +107,13 @@ typedef struct _xsltTransformContext xsltTransformContext;
 typedef xsltTransformContext *xsltTransformContextPtr;
 
 /**
- * xsltStylePreComp:
+ * xsltElemPreComp:
  *
- * The in-memory structure corresponding to XSLT stylesheet constructs
- * precomputed data.
+ * The in-memory structure corresponding to element precomputed data,
+ * designed to be extended by extension implementors.
  */
-
-typedef struct _xsltStylePreComp xsltStylePreComp;
-typedef xsltStylePreComp *xsltStylePreCompPtr;
+typedef struct _xsltElemPreComp xsltElemPreComp;
+typedef xsltElemPreComp *xsltElemPreCompPtr;
 
 /**
  * xsltTransformFunction:
@@ -129,7 +128,7 @@ typedef xsltStylePreComp *xsltStylePreCompPtr;
 typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
 	                               xmlNodePtr node,
 				       xmlNodePtr inst,
-			               xsltStylePreCompPtr comp);
+			               xsltElemPreCompPtr comp);
 
 typedef enum {
     XSLT_FUNC_COPY=1,
@@ -152,8 +151,33 @@ typedef enum {
     XSLT_FUNC_WITHPARAM,
     XSLT_FUNC_PARAM,
     XSLT_FUNC_VARIABLE,
-    XSLT_FUNC_WHEN
+    XSLT_FUNC_WHEN,
+    XSLT_FUNC_EXTENSION
 } xsltStyleType;
+
+/**
+ * xsltElemPreCompDeallocator:
+ * @comp:  the #xsltElemPreComp to free up
+ *
+ * Deallocates an #xsltElemPreComp structure
+ */
+typedef void (*xsltElemPreCompDeallocator) (xsltElemPreCompPtr comp);
+
+/**
+ * xsltElemPreComp:
+ *
+ * The in-memory structure corresponding to element precomputed data,
+ * designed to be extended by extension implementors.
+ */
+struct _xsltElemPreComp {
+    xsltElemPreCompPtr next;		/* chained list */
+    xsltStyleType type;			/* type of the element */
+    xsltTransformFunction func; 	/* handling function */
+    xmlNodePtr inst;			/* the instruction */
+
+    /* end of common part */
+    xsltElemPreCompDeallocator free;	/* the deallocator */
+};
 
 /**
  * xsltStylePreComp:
@@ -161,8 +185,10 @@ typedef enum {
  * The in-memory structure corresponding to XSLT stylesheet constructs
  * precomputed data.
  */
+typedef struct _xsltStylePreComp xsltStylePreComp;
+typedef xsltStylePreComp *xsltStylePreCompPtr;
 struct _xsltStylePreComp {
-    struct _xsltStylePreComp *next;/* chained list */
+    xsltElemPreCompPtr next;	/* chained list */
     xsltStyleType type;		/* type of the element */
     xsltTransformFunction func; /* handling function */
     xmlNodePtr inst;		/* the instruction */

@@ -29,6 +29,11 @@ struct _exsltFuncData {
     int error;			/* did an error occur? */
 };
 
+typedef struct _exsltFuncResultPreComp exsltFuncResultPreComp;
+struct _exsltFuncResultPreComp {
+    xsltElemPreComp comp;
+    xmlXPathCompExprPtr select;
+};
 
 static void exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt,
 				       int nargs);
@@ -159,6 +164,22 @@ exsltFuncNewFunctionData (void) {
     ret->content = NULL;
 
     return(ret);
+}
+
+/**
+ * exsltFreeFuncResultPreComp:
+ * @comp:  the #exsltFuncResultPreComp to free up
+ *
+ * Deallocates an #exsltFuncResultPreComp
+ */
+static void
+exsltFreeFuncResultPreComp (exsltFuncResultPreComp *comp) {
+    if (comp == NULL)
+	return;
+
+    if (comp->select != NULL)
+	xmlXPathFreeCompExpr (comp->select);
+    xmlFree(comp);
 }
 
 /**
@@ -348,14 +369,12 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
     xmlFree(name);
 }
 
-static void
-exsltFuncResultElem (xsltTransformContextPtr ctxt,
-	             xmlNodePtr node ATTRIBUTE_UNUSED, xmlNodePtr inst,
-		     xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
+static xsltElemPreCompPtr
+exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
+		     xsltTransformFunction function) {
     xmlNodePtr test;
     xmlChar *select;
-    exsltFuncData *data;
-    xmlXPathObjectPtr ret;
+    exsltFuncResultPreComp *ret;
 
     /*
      * "Validity" checking
@@ -371,7 +390,7 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	xsltGenericError(xsltGenericErrorContext,
 			 "exsltFuncResultElem: only xsl:fallback is "
 			 "allowed to follow func:result\n");
-	return;
+	return (NULL);
     }
     /* it is an error for a func:result element to not be a descendant
      * of func:function.
@@ -391,7 +410,7 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 		xsltGenericError(xsltGenericErrorContext,
 				 "func:result element not allowed within"
 				 " another func:result element\n");
-		return;
+		return (NULL);
 	    }
 	}
 	if (IS_XSLT_ELEM(test) &&
@@ -400,9 +419,46 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	    xsltGenericError(xsltGenericErrorContext,
 			     "func:result element not allowed within"
 			     " a variable binding element\n");
-	    return;
+	    return (NULL);
 	}
     }
+
+    /*
+     * Precomputation
+     */
+    ret = (exsltFuncResultPreComp *)
+	xmlMalloc (sizeof(exsltFuncResultPreComp));
+    if (ret == NULL) {
+	xsltPrintErrorContext(NULL, NULL, NULL);
+        xsltGenericError(xsltGenericErrorContext,
+                         "exsltFuncResultComp : malloc failed\n");
+        return (NULL);
+    }
+    memset(ret, 0, sizeof(exsltFuncResultPreComp));
+
+    xsltInitElemPreComp ((xsltElemPreCompPtr) ret, style, inst, function,
+		 (xsltElemPreCompDeallocator) exsltFreeFuncResultPreComp);
+    ret->select = NULL;
+
+    /*
+     * Precompute the select attribute
+     */
+    select = xmlGetNsProp(inst, (const xmlChar *) "select", NULL);
+    if (select != NULL) {
+	ret->select = xmlXPathCompile (select);
+	xmlFree(select);
+    }
+
+    return ((xsltElemPreCompPtr) ret);
+}
+
+static void
+exsltFuncResultElem (xsltTransformContextPtr ctxt,
+	             xmlNodePtr node ATTRIBUTE_UNUSED, xmlNodePtr inst,
+		     exsltFuncResultPreComp *comp) {
+    exsltFuncData *data;
+    xmlXPathObjectPtr ret;
+
     /* It is an error if instantiating the content of the
      * func:function element results in the instantiation of more than
      * one func:result elements.
@@ -419,12 +475,10 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	data->error = 1;
 	return;
     }
-
     /*
      * Processing
      */
-    select = xmlGetProp(inst, (const xmlChar *) "select");
-    if (select != NULL) {
+    if (comp->select != NULL) {
 	/* If the func:result element has a select attribute, then the
 	 * value of the attribute must be an expression and the
 	 * returned value is the object that results from evaluating
@@ -435,17 +489,15 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 			     "func:result content must be empty if it"
 			     " has a select attribute\n");
 	    data->error = 1;
-	    xmlFree(select);
 	    return;
 	}
-	ret = xmlXPathEvalExpression(select, ctxt->xpathCtxt);
-	xmlFree(select);
+	ret = xmlXPathCompiledEval(comp->select, ctxt->xpathCtxt);
 	if (ret == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 			     "exsltFuncResultElem: ret == NULL\n");
 	    return;
 	}
-    } else if (test->children != NULL) {
+    } else if (inst->children != NULL) {
 	/* If the func:result element does not have a select attribute
 	 * and has non-empty content (i.e. the func:result element has
 	 * one or more child nodes), then the content of the
@@ -494,7 +546,7 @@ exsltFuncRegister (void) {
 				   EXSLT_FUNCTIONS_NAMESPACE,
 				   exsltFuncFunctionComp);
     xsltRegisterExtModuleElement ((const xmlChar *) "result",
-				  EXSLT_FUNCTIONS_NAMESPACE,
-				  NULL,
-				  exsltFuncResultElem);
+			  EXSLT_FUNCTIONS_NAMESPACE,
+			  (xsltPreComputeFunction)exsltFuncResultComp,
+			  (xsltTransformFunction) exsltFuncResultElem);
 }

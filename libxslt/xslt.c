@@ -1682,7 +1682,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    continue;
 	}
 	if (!(IS_XSLT_ELEM(cur))) {
-	    xsltPreComputeFunction function;
+	    xsltTopLevelFunction function;
 
 	    function = xsltExtModuleTopLevelLookup(cur->name,
 						   cur->ns->href);

@@ -113,9 +113,20 @@ int	xsltUnregisterExtModuleFunction	(const xmlChar *name,
 /*
  * extension elements
  */
-typedef void
-	(*xsltPreComputeFunction)	(xsltStylesheetPtr ctxt,
-					 xmlNodePtr inst);
+typedef xsltElemPreCompPtr
+	(*xsltPreComputeFunction)	(xsltStylesheetPtr style,
+					 xmlNodePtr inst,
+					 xsltTransformFunction function);
+
+xsltElemPreCompPtr
+	xsltNewElemPreComp		(xsltStylesheetPtr style,
+					 xmlNodePtr inst,
+					 xsltTransformFunction function);
+void	xsltInitElemPreComp		(xsltElemPreCompPtr comp,
+					 xsltStylesheetPtr style,
+					 xmlNodePtr inst,
+					 xsltTransformFunction function,
+					 xsltElemPreCompDeallocator freeFunc);
 
 int	xsltRegisterExtModuleElement	(const xmlChar *name,
 					 const xmlChar *URI,
@@ -138,10 +149,14 @@ int	xsltUnregisterExtModuleElement	(const xmlChar *name,
 /*
  * top-level elements
  */
+typedef void
+	(*xsltTopLevelFunction)		(xsltStylesheetPtr style,
+					 xmlNodePtr inst);
+
 int	xsltRegisterExtModuleTopLevel	(const xmlChar *name,
 					 const xmlChar *URI,
-					 xsltPreComputeFunction function);
-xsltPreComputeFunction
+					 xsltTopLevelFunction function);
+xsltTopLevelFunction
 	xsltExtModuleTopLevelLookup	(const xmlChar *name,
 					 const xmlChar *URI);
 int	xsltUnregisterExtModuleTopLevel	(const xmlChar *name,
@@ -172,6 +187,9 @@ int		xsltInitCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeCtxtExts	(xsltTransformContextPtr ctxt);
 void		xsltFreeExts		(xsltStylesheetPtr style);
 
+xsltElemPreCompPtr
+	xsltPreComputeExtModuleElement	(xsltStylesheetPtr style,
+					 xmlNodePtr inst);
 
 /**
  * Test module http://xmlsoft.org/XSLT/

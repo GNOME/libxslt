@@ -1213,7 +1213,10 @@ xsltFreeStylePreComps(xsltStylesheetPtr style) {
     cur = style->preComps;
     while (cur != NULL) {
 	next = cur->next;
-	xsltFreeStylePreComp(cur);
+	if (cur->type == XSLT_FUNC_EXTENSION)
+	    ((xsltElemPreCompPtr)cur)->free(cur);
+	else
+	    xsltFreeStylePreComp(cur);
 	cur = next;
     }
 }
@@ -1341,20 +1344,16 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    cur->nsNr = i;
 	}
     } else {
+	/* FIXME */
 	if (IS_XSLT_NAME(inst, "document")) {
 	    xsltDocumentComp(style, inst);
 	} else {
-	    xsltPreComputeFunction function;
+	    inst->_private =
+		(void *) xsltPreComputeExtModuleElement(style, inst);
+
 	    /*
-	     * Precompute the element
-	     */
-	    function =
-		xsltExtModuleElementPreComputeLookup(inst->name,
-						     inst->ns->href);
-	    if (function != NULL)
-		function(style, inst);
-	    /*
-	     * Mark the element for later recognition.
+	     * Unknown element, maybe registered at the context
+	     * level. Mark it for later recognition.
 	     */
 	    if (inst->_private == NULL)
 		inst->_private = (void *) xsltExtMarker;

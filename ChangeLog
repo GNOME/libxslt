@@ -1,3 +1,11 @@
+Sun Aug  5 09:37:14 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libxslt/extensions.[ch] libxslt/preproc.[ch] libxslt/transform.c
+	  libxslt/xslt.c libxslt/xsltInternals.h: modified extension framework
+	  to easify extension element precomputation.
+	* libexslt/functions.c: uses the new framework and precomputes
+	  func:result elements.
+
 Sat Aug  4 20:42:32 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: bug fix on output="text" from Nicolas Marsgui
