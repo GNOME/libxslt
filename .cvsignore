@@ -1,6 +1,7 @@
 Makefile
 Makefile.in
 aclocal.m4
+autom4te.cache
 config.cache
 config.guess
 config.h
@@ -10,6 +11,7 @@ config.sub
 configure
 libtool
 libxslt.spec
+libxslt.pc
 ltconfig
 ltmain.sh
 stamp-h
