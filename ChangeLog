@@ -1,3 +1,8 @@
+Tue Sep  2 16:05:37 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/xsltexports.h libexslt/exsltexports.h: defined additional 
+	  macros which affect exports and added mingw section
+
 Mon Sep  1 23:02:12 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/function.c: patch from Mark Vadoc to allow compiling

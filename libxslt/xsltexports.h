@@ -42,6 +42,9 @@
     #endif
   #endif
   #define XSLTCALL __cdecl
+  #if !defined _REENTRANT
+    #define _REENTRANT
+  #endif
 #endif
 
 /* Windows platform with Borland compiler */
@@ -61,6 +64,16 @@
     #endif
   #endif
   #define XSLTCALL __cdecl
+  #if !defined _REENTRANT
+    #define _REENTRANT
+  #endif
+#endif
+
+/* Windows platform with GNU compiler (Mingw) */
+#if defined(_WIN32) && defined(__MINGW__)
+  #if !defined _REENTRANT
+    #define _REENTRANT
+  #endif
 #endif
 
 /* Cygwin platform, GNU compiler */
