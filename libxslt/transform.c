@@ -129,7 +129,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     len = list->nodeNr;
 
     /* TODO: process attributes as attribute value templates */
-    prop = xmlGetNsProp(inst, (const xmlChar *)"data-type", XSLT_NAMESPACE);
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"data-type");
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *) "text"))
 	    number = 0;
@@ -142,7 +142,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	xmlFree(prop);
     }
-    prop = xmlGetNsProp(inst, (const xmlChar *)"order", XSLT_NAMESPACE);
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"order");
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *) "ascending"))
 	    descending = 0;
@@ -160,9 +160,12 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     prop = xmlGetNsProp(inst, (const xmlChar *)"select", XSLT_NAMESPACE);
     if (prop == NULL) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xsltSort: select is not defined\n");
-	return;
+	prop = xmlNodeGetContent(inst);
+	if (prop == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+		 "xsltSort: select is not defined\n");
+	    return;
+	}
     }
 
     xpathParserCtxt = xmlXPathNewParserContext(prop, ctxt->xpathCtxt);
@@ -233,6 +236,86 @@ error:
 }
 
 /**
+ * xsltComment:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt comment node
+ *
+ * Process the xslt comment node on the source node
+ */
+void
+xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *value = NULL;
+    xmlNodePtr comment;
+
+    value = xsltEvalTemplateString(ctxt, node, inst);
+    /* TODO: check that there is no -- sequence and doesn't end up with - */
+#ifdef DEBUG_PROCESS
+    if (value == NULL)
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsl:comment: empty\n");
+    else
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsl:comment: content %s\n", value);
+#endif
+
+    comment = xmlNewComment(value);
+    xmlAddChild(ctxt->insert, comment);
+
+    if (value != NULL)
+	xmlFree(value);
+}
+
+/**
+ * xsltProcessingInstruction:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the xslt processing-instruction node
+ *
+ * Process the xslt processing-instruction node on the source node
+ */
+void
+xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+    xmlChar *ncname = NULL;
+    xmlChar *value = NULL;
+    xmlNodePtr pi;
+
+
+    if (ctxt->insert == NULL)
+	return;
+    ncname = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
+    if (ncname == NULL) {
+	xsltGenericError(xsltGenericErrorContext,
+	     "xslt:processing-instruction : name is missing\n");
+	goto error;
+    }
+    /* TODO: check that it's both an an NCName and a PITarget. */
+
+
+    value = xsltEvalTemplateString(ctxt, node, inst);
+    /* TODO: check that there is no ?> sequence */
+#ifdef DEBUG_PROCESS
+    if (value == NULL)
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsl:processing-instruction: %s empty\n", ncname);
+    else
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsl:processing-instruction: %s content %s\n", ncname, value);
+#endif
+
+    pi = xmlNewPI(ncname, value);
+    xmlAddChild(ctxt->insert, pi);
+
+error:
+    if (ncname != NULL)
+        xmlFree(ncname);
+    if (value != NULL)
+	xmlFree(value);
+}
+
+/**
  * xsltAttribute:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
@@ -258,14 +341,13 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xslt:attribute : node has already children\n");
 	return;
     }
-    prop = xmlGetNsProp(inst, (const xmlChar *)"namespace", XSLT_NAMESPACE);
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
     if (prop != NULL) {
-	/* TODO: attribute value template */
-	TODO
+	TODO /* xsl:attribute namespace */
 	xmlFree(prop);
 	return;
     }
-    prop = xmlGetNsProp(inst, (const xmlChar *)"name", XSLT_NAMESPACE);
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"name");
     if (prop == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xslt:attribute : name is missing\n");
@@ -898,9 +980,19 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		ctxt->insert = insert;
 		xsltAttribute(ctxt, node, cur);
 		ctxt->insert = oldInsert;
+		/*******
 	    } else if (IS_XSLT_NAME(cur, "element")) {
 		ctxt->insert = insert;
-		xsltAttribute(ctxt, node, cur);
+		xsltElement(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+		*******/
+	    } else if (IS_XSLT_NAME(cur, "comment")) {
+		ctxt->insert = insert;
+		xsltComment(ctxt, node, cur);
+		ctxt->insert = oldInsert;
+	    } else if (IS_XSLT_NAME(cur, "processing-instruction")) {
+		ctxt->insert = insert;
+		xsltProcessingInstruction(ctxt, node, cur);
 		ctxt->insert = oldInsert;
 	    } else if (IS_XSLT_NAME(cur, "variable")) {
 		if (has_variables == 0) {

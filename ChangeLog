@@ -1,3 +1,14 @@
+Wed Jan 24 16:59:05 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltInternals.h libxslt/pattern.c: fixed problems
+	  with non-named rules (*, ...) added accelerators
+	* libxslt/templates.[ch]: added xsltEvalTemplateString()
+	  and xsltEvalAttrValueTemplate() high level functions
+	* libxslt/transform.c: fixed the part where attributes
+	  had to be looked at as templates, added comment and
+	  PI generation
+	* TODO FEATURES: updated to reflect the new state
+
 Wed Jan 24 05:33:54 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.[ch] Makefile.am: added new module functions

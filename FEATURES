@@ -1,3 +1,7 @@
+       Status of implementation of the XSLT 1.0 Features:
+       ==================================================
+
+      $Id$
 
 Stylesheet Constructs:
 ======================
@@ -100,10 +104,10 @@ YES			namespace = { uri-reference }
 YES		    xsl:text
 YES			disable-output-escaping = "yes" | "no"
 
-		    xsl:processing-instruction
-			name = { ncname }
+YES		    xsl:processing-instruction
+YES			name = { ncname }
 
-NO		    xsl:comment
+YES		    xsl:comment
 
 NO		    xsl:copy
 NO			use-attribute-sets = qnames
@@ -208,4 +212,3 @@ NO		    boolean element-available(string)
 NO		    boolean function-available(string)
 
 Daniel.Veillard@imag.fr
-$Id$

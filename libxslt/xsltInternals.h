@@ -93,6 +93,14 @@ struct _xsltStylesheet {
     xsltTemplatePtr templates;	/* the ordered list of templates */
     void *templatesHash;	/* hash table or wherever compiled templates
 				   informations are stored */
+    void *rootMatch;		/* template based on / */
+    void *elemMatch;		/* template based on * */
+    void *attrMatch;		/* template based on @* */
+    void *parentMatch;		/* template based on .. */
+    void *textMatch;		/* template based on text() */
+    void *piMatch;		/* template based on processing-instruction() */
+    void *commentMatch;		/* template based on comment() */
+    
     /*
      * Output related stuff.
      */

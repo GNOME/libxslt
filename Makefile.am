@@ -25,7 +25,9 @@ xsltConf.sh: xsltConf.sh.in Makefile
 	       < $(srcdir)/xsltConf.sh.in > xsltConf.tmp \
 	&& mv xsltConf.tmp xsltConf.sh
 
-test tests:
+dummy:
+
+test tests: dummy
 	@(cd tests ; make test)
 
 cleantar:

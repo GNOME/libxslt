@@ -24,6 +24,7 @@
 #include "variables.h"
 #include "functions.h"
 #include "templates.h"
+#include "transform.h"
 
 #define DEBUG_TEMPLATES
 
@@ -85,6 +86,48 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, const xmlChar *expr) {
     xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltEvalXPathString: %s returns %s\n", expr, ret);
 #endif
+    return(ret);
+}
+
+/**
+ * xsltEvalTemplateString:
+ * @ctxt:  the XSLT transformation context
+ * @node:  the stylesheet node
+ * @parent:  the content parent
+ *
+ * Evaluate a template string value, i.e. the parent list is interpreter
+ * as template content and the resulting tree string value is returned
+ * This is needed for example by xsl:comment and xsl:processing-instruction
+ *
+ * Returns the computed string value or NULL, must be deallocated by the
+ *    caller.
+ */
+xmlChar *
+xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	               xmlNodePtr parent) {
+    xmlChar *ret;
+    xmlNodePtr oldInsert, insert = NULL;
+
+    if ((ctxt == NULL) || (node == NULL) || (parent == NULL))
+	return(NULL);
+
+    if (parent->children == NULL)
+	return(NULL);
+
+    insert = xmlNewDocNode(ctxt->output, NULL,
+	                   (const xmlChar *)"fake", NULL);
+    if (insert == NULL)
+	return(NULL);
+    oldInsert = ctxt->insert;
+    ctxt->insert = insert;
+
+    xsltApplyOneTemplate(ctxt, node, parent->children);
+
+    ctxt->insert = oldInsert;
+
+    ret = xmlNodeGetContent(insert);
+    if (insert != NULL)
+	xmlFreeNode(insert);
     return(ret);
 }
 
@@ -151,6 +194,47 @@ xsltAttrTemplateValueProcess(xsltTransformContextPtr ctxt, const xmlChar *str) {
 }
 
 /**
+ * xsltEvalAttrValueTemplate:
+ * @ctxt:  the XSLT transformation context
+ * @node:  the stylesheet node
+ * @name:  the attribute QName
+ *
+ * Evaluate a attribute value template, i.e. the attribute value can
+ * contain expressions contained in curly braces ({}) and those are
+ * substituted by they computed value.
+ *
+ * Returns the computed string value or NULL, must be deallocated by the
+ *    caller.
+ */
+xmlChar *
+xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	                  const xmlChar *name) {
+    xmlChar *ret;
+    xmlChar *expr;
+
+    if ((ctxt == NULL) || (node == NULL) || (name == NULL))
+	return(NULL);
+
+    expr = xmlGetNsProp(node, name, XSLT_NAMESPACE);
+    if (expr == NULL)
+	return(NULL);
+
+    /*
+     * TODO: accelerator if there is no AttrValueTemplate in the stylesheet
+     *       return expr directly
+     */
+
+    ret = xsltAttrTemplateValueProcess(ctxt, expr);
+#ifdef DEBUG_TEMPLATES
+    xsltGenericDebug(xsltGenericDebugContext,
+	 "xsltEvalXPathString: %s returns %s\n", expr, ret);
+#endif
+    if (expr != NULL)
+	xmlFree(expr);
+    return(ret);
+}
+
+/**
  * xsltAttrTemplateProcess:
  * @ctxt:  the XSLT transformation context
  * @target:  the result node
@@ -202,6 +286,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	xmlChar *in = xmlNodeListGetString(ctxt->doc, cur->children, 1);
 	xmlChar *out;
 
+	/* TODO: optimize if no template value was detected */
 	if (in != NULL) {
 	    xmlNodePtr child;
 

@@ -17,6 +17,12 @@
 extern "C" {
 #endif
 
+xmlChar *	xsltEvalTemplateString		(xsltTransformContextPtr ctxt,
+						 xmlNodePtr node,
+						 xmlNodePtr parent);
+xmlChar *	xsltEvalAttrValueTemplate	(xsltTransformContextPtr ctxt,
+						 xmlNodePtr node,
+						 const xmlChar *name);
 xmlChar *	xsltEvalXPathString		(xsltTransformContextPtr ctxt,
 						 const xmlChar *expr);
 xmlNodePtr *	xsltTemplateProcess		(xsltTransformContextPtr ctxt,
