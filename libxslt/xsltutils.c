@@ -671,6 +671,8 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 
     if ((buf == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
+    if (result->children == NULL)
+	return(0);
 
     if ((style->methodURI != NULL) &&
 	((style->method == NULL) ||
@@ -828,6 +830,8 @@ xsltSaveResultToFilename(const char *URL, xmlDocPtr result,
 
     if ((URL == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
+    if (result->children == NULL)
+	return(0);
 
     XSLT_GET_IMPORT_PTR(encoding, style, encoding)
     if (encoding != NULL) {
@@ -869,6 +873,8 @@ xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
 
     if ((file == NULL) || (result == NULL) || (style == NULL))
 	return(-1);
+    if (result->children == NULL)
+	return(0);
 
     XSLT_GET_IMPORT_PTR(encoding, style, encoding)
     if (encoding != NULL) {
@@ -911,6 +917,8 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
 
     if ((fd < 0) || (result == NULL) || (style == NULL))
 	return(-1);
+    if (result->children == NULL)
+	return(0);
 
     XSLT_GET_IMPORT_PTR(encoding, style, encoding)
     if (encoding != NULL) {

@@ -1278,6 +1278,9 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	} else if (IS_XSLT_NAME(inst, "decimal-format")) {
 	    /* no computation needed */
 	    return;
+	} else if (IS_XSLT_NAME(inst, "fallback")) {
+	    /* no computation needed */
+	    return;
 	} else if (IS_XSLT_NAME(inst, "document")) {
 	    xsltDocumentComp(style, inst);
 	} else {

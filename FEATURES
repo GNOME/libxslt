@@ -8,13 +8,13 @@ Stylesheet Constructs:
 
 YES			    xsl:stylesheet
 ?				id = id 
-NO				extension-element-prefixes = tokens 
+YES				extension-element-prefixes = tokens 
 NO				exclude-result-prefixes = tokens 
 YES				version = number
 
 YES			    xsl:transform
 ?				id = id 
-NO				extension-element-prefixes = tokens 
+YES				extension-element-prefixes = tokens 
 NO				exclude-result-prefixes = tokens 
 YES				version = number
 
@@ -181,7 +181,7 @@ YES				pattern-separator = char
 YES			    xsl:message
 YES				terminate = "yes" | "no"
 
-NO			    xsl:fallback
+YES			    xsl:fallback
 
 General:
 ========
@@ -197,9 +197,9 @@ YES				match="processing-instruction()|comment()"
 YES				Namespace
 YES				Mode
 
-NO			    Extension Elements
+YES			    Extension Elements
 
-NO			    Extension Functions
+YES			    Extension Functions
 
 YES			    Attribute Value Templates
 
@@ -208,8 +208,8 @@ YES			    Result Tree Fragments
 Functions:
 ==========
 
-PARTIAL			    node-set document(object, node-set?)
-PARTIAL			    node-set key(string, object)
+YES			    node-set document(object, node-set?)
+YES			    node-set key(string, object)
 YES			    string format-number(number, string, string?)
 YES			    node-set current() 
 YES			    string unparsed-entity-uri(string)

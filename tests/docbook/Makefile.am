@@ -58,7 +58,7 @@ single:
 xtchunk:
 	@(echo > .memdump)
 	@(for i in $(srcdir)/test/gdp-handbook.xml ; do \
-	  echo "Texting HTML chunking on $$i :" ; \
+	  echo "Testing HTML chunking on $$i :" ; \
 	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
 	  $(top_builddir)/libxslt/xsltproc -o $(srcdir)/result/xtchunk/html/gdp-handbook $(srcdir)/html/xtchunk.xsl $$i ; \
 	  for html in $(srcdir)/result/xtchunk/html/*.html ; do \

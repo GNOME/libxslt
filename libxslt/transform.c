@@ -865,7 +865,8 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
  */
 void
 xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	             xmlNodePtr list, int real) {
+                     xmlNodePtr list, int real)
+{
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
     xmlNodePtr oldCurrent = NULL;
@@ -873,16 +874,16 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlAttrPtr attrs;
 
     if (list == NULL)
-	return;
+        return;
     CHECK_STOPPED;
 
     if (ctxt->templNr >= xsltMaxDepth) {
-	xsltGenericError(xsltGenericErrorContext,
-		"xsltApplyOneTemplate: loop found ???\n");
-	xsltGenericError(xsltGenericErrorContext,
-		"try increasing xsltMaxDepth (--maxdepth)\n");
-	xsltDebug(ctxt, node, list, NULL);
-	return;
+        xsltGenericError(xsltGenericErrorContext,
+                         "xsltApplyOneTemplate: loop found ???\n");
+        xsltGenericError(xsltGenericErrorContext,
+                         "try increasing xsltMaxDepth (--maxdepth)\n");
+        xsltDebug(ctxt, node, list, NULL);
+        return;
     }
 
     /*
@@ -891,8 +892,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = insert = ctxt->insert;
     oldInst = ctxt->inst;
     if (real) {
-	oldCurrent = ctxt->node;
-	ctxt->node = node;
+        oldCurrent = ctxt->node;
+        ctxt->node = node;
     }
 
     /*
@@ -900,159 +901,189 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */
     cur = list;
     while (cur != NULL) {
-	ctxt->inst = cur;
-	/*
-	 * test, we must have a valid insertion point
-	 */
-	if (insert == NULL) {
+        ctxt->inst = cur;
+        /*
+         * test, we must have a valid insertion point
+         */
+        if (insert == NULL) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltApplyOneTemplate: insert == NULL !\n");
+            xsltGenericDebug(xsltGenericDebugContext,
+                             "xsltApplyOneTemplate: insert == NULL !\n");
 #endif
-	    if (real)
-		ctxt->node = oldCurrent;
-	    ctxt->inst = oldInst;
-	    return;
-	}
+            if (real)
+                ctxt->node = oldCurrent;
+            ctxt->inst = oldInst;
+            return;
+        }
 
-	if (IS_XSLT_ELEM(cur)) {
-	    /*
-	     * This is an XSLT node
-	     */
-	    xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
-	    if (info == NULL) {
-		if (IS_XSLT_NAME(cur, "message")) {
-		    xsltMessage(ctxt, node, cur);
-		} else {
-		    xsltGenericError(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: %s was not compiled\n",
-				     cur->name);
-		}
-		goto skip_children;
-	    }
-	    
-	    if (info->func != NULL) {
-		ctxt->insert = insert;
-		info->func(ctxt, node, cur, info);
-		ctxt->insert = oldInsert;
-		goto skip_children;
-	    }
+        if (IS_XSLT_ELEM(cur)) {
+            /*
+             * This is an XSLT node
+             */
+            xsltStylePreCompPtr info = (xsltStylePreCompPtr) cur->_private;
 
-	    if (IS_XSLT_NAME(cur, "variable")) {
-		xsltParseStylesheetVariable(ctxt, cur);
-	    } else if (IS_XSLT_NAME(cur, "param")) {
-		xsltParseStylesheetParam(ctxt, cur);
-	    } else if (IS_XSLT_NAME(cur, "message")) {
-		xsltMessage(ctxt, node, cur);
-	    } else {
-		xsltGenericError(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: problem with xsl:%s\n",
-	                         cur->name);
-	    }
-	    CHECK_STOPPED;
-	    goto skip_children;
-	} else if ((cur->type == XML_TEXT_NODE) ||
-		   (cur->type == XML_CDATA_SECTION_NODE)) {
-	    /*
-	     * This text comes from the stylesheet
-	     * For stylesheets, the set of whitespace-preserving
-	     * element names consists of just xsl:text.
-	     */
+            if (info == NULL) {
+                if (IS_XSLT_NAME(cur, "message")) {
+                    xsltMessage(ctxt, node, cur);
+                } else {
+                    xsltGenericError(xsltGenericDebugContext,
+                                "xsltApplyOneTemplate: %s was not compiled\n",
+                                     cur->name);
+                }
+                goto skip_children;
+            }
+
+            if (info->func != NULL) {
+                ctxt->insert = insert;
+                info->func(ctxt, node, cur, info);
+                ctxt->insert = oldInsert;
+                goto skip_children;
+            }
+
+            if (IS_XSLT_NAME(cur, "variable")) {
+                xsltParseStylesheetVariable(ctxt, cur);
+            } else if (IS_XSLT_NAME(cur, "param")) {
+                xsltParseStylesheetParam(ctxt, cur);
+            } else if (IS_XSLT_NAME(cur, "message")) {
+                xsltMessage(ctxt, node, cur);
+            } else {
+                xsltGenericError(xsltGenericDebugContext,
+                                 "xsltApplyOneTemplate: problem with xsl:%s\n",
+                                 cur->name);
+            }
+            CHECK_STOPPED;
+            goto skip_children;
+        } else if ((cur->type == XML_TEXT_NODE) ||
+                   (cur->type == XML_CDATA_SECTION_NODE)) {
+            /*
+             * This text comes from the stylesheet
+             * For stylesheets, the set of whitespace-preserving
+             * element names consists of just xsl:text.
+             */
 #ifdef WITH_XSLT_DEBUG_PROCESS
-	    if (cur->type == XML_CDATA_SECTION_NODE)
-		xsltGenericDebug(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: copy CDATA text %s\n",
-		                 cur->content);
-	    else if (cur->name == xmlStringTextNoenc)
-		xsltGenericDebug(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: copy unescaped text %s\n",
-		                 cur->content);
-	    else
-		xsltGenericDebug(xsltGenericDebugContext,
-		     "xsltApplyOneTemplate: copy text %s\n", cur->content);
+            if (cur->type == XML_CDATA_SECTION_NODE)
+                xsltGenericDebug(xsltGenericDebugContext,
+                                 "xsltApplyOneTemplate: copy CDATA text %s\n",
+                                 cur->content);
+            else if (cur->name == xmlStringTextNoenc)
+                xsltGenericDebug(xsltGenericDebugContext,
+                             "xsltApplyOneTemplate: copy unescaped text %s\n",
+                                 cur->content);
+            else
+                xsltGenericDebug(xsltGenericDebugContext,
+                                 "xsltApplyOneTemplate: copy text %s\n",
+                                 cur->content);
 #endif
-	    copy = xmlNewText(cur->content);
-	    if (copy != NULL) {
-		if ((cur->name == xmlStringTextNoenc) ||
-		    (cur->type == XML_CDATA_SECTION_NODE))
-		    copy->name = xmlStringTextNoenc;
-		xmlAddChild(insert, copy);
-	    } else {
-		xsltGenericError(xsltGenericErrorContext,
-			"xsltApplyOneTemplate: text copy failed\n");
-	    }
-	} else if ((cur->type == XML_ELEMENT_NODE) && 
-		   (cur->ns != NULL) && (cur->_private != NULL)) {
-	    xsltTransformFunction function;
-	    /*
-	     * Flagged as an extension element
-	     */
-	    function = (xsltTransformFunction)
-		xmlHashLookup2(ctxt->extElements, cur->name, cur->ns->href);
-	    if (function == NULL) {
-		xsltGenericError(xsltGenericErrorContext,
-			"xsltApplyOneTemplate: failed to find extension %s\n",
-			         cur->name);
-	    } else {
+            copy = xmlNewText(cur->content);
+            if (copy != NULL) {
+                if ((cur->name == xmlStringTextNoenc) ||
+                    (cur->type == XML_CDATA_SECTION_NODE))
+                    copy->name = xmlStringTextNoenc;
+                xmlAddChild(insert, copy);
+            } else {
+                xsltGenericError(xsltGenericErrorContext,
+                                 "xsltApplyOneTemplate: text copy failed\n");
+            }
+        } else if ((cur->type == XML_ELEMENT_NODE) &&
+                   (cur->ns != NULL) && (cur->_private != NULL)) {
+            xsltTransformFunction function;
+
+            /*
+             * Flagged as an extension element
+             */
+            function = (xsltTransformFunction)
+                xmlHashLookup2(ctxt->extElements, cur->name,
+                               cur->ns->href);
+            if (function == NULL) {
+                xmlNodePtr child;
+                int found = 0;
+
 #ifdef WITH_XSLT_DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltApplyOneTemplate: extension construct %s\n", cur->name);
+                xsltGenericDebug(xsltGenericDebugContext,
+                                "xsltApplyOneTemplate: unknown extension %s\n",
+                                 cur->name);
+#endif
+                /*
+                 * Search if there is fallbacks
+                 */
+                child = cur->children;
+                while (child != NULL) {
+                    if ((IS_XSLT_ELEM(child)) &&
+                        (IS_XSLT_NAME(child, "fallback"))) {
+                        found = 1;
+                        xsltApplyOneTemplate(ctxt, node, child->children,
+                                             1);
+                    }
+                    child = child->next;
+                }
+
+                if (!found) {
+                    xsltGenericError(xsltGenericErrorContext,
+                         "xsltApplyOneTemplate: failed to find extension %s\n",
+                                     cur->name);
+                }
+            } else {
+#ifdef WITH_XSLT_DEBUG_PROCESS
+                xsltGenericDebug(xsltGenericDebugContext,
+                              "xsltApplyOneTemplate: extension construct %s\n",
+                                 cur->name);
 #endif
 
-		ctxt->insert = insert;
-		function(ctxt, node, cur, cur->_private);
-		ctxt->insert = oldInsert;
-	    }
-	    goto skip_children;
-	} else if (cur->type == XML_ELEMENT_NODE) {
+                ctxt->insert = insert;
+                function(ctxt, node, cur, cur->_private);
+                ctxt->insert = oldInsert;
+            }
+            goto skip_children;
+        } else if (cur->type == XML_ELEMENT_NODE) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltApplyOneTemplate: copy node %s\n", cur->name);
+            xsltGenericDebug(xsltGenericDebugContext,
+                             "xsltApplyOneTemplate: copy node %s\n",
+                             cur->name);
 #endif
-	    copy = xsltCopyNode(ctxt, cur, insert);
-	    /*
-	     * all the attributes are directly inherited
-	     */
-	    if (cur->properties != NULL) {
-		attrs = xsltAttrListTemplateProcess(ctxt, copy,
-			                            cur->properties);
-	    }
-	}
+            copy = xsltCopyNode(ctxt, cur, insert);
+            /*
+             * all the attributes are directly inherited
+             */
+            if (cur->properties != NULL) {
+                attrs = xsltAttrListTemplateProcess(ctxt, copy,
+                                                    cur->properties);
+            }
+        }
 
-	/*
-	 * Skip to next node, in document order.
-	 */
-	if (cur->children != NULL) {
-	    if (cur->children->type != XML_ENTITY_DECL) {
-		cur = cur->children;
-		if (copy != NULL)
-		    insert = copy;
-		continue;
-	    }
-	}
-skip_children:
-	if (cur->next != NULL) {
-	    cur = cur->next;
-	    continue;
-	}
-	
-	do {
-	    cur = cur->parent;
-	    insert = insert->parent;
-	    if (cur == NULL)
-		break;
-	    if (cur == list->parent) {
-		cur = NULL;
-		break;
-	    }
-	    if (cur->next != NULL) {
-		cur = cur->next;
-		break;
-	    }
-	} while (cur != NULL);
+        /*
+         * Skip to next node, in document order.
+         */
+        if (cur->children != NULL) {
+            if (cur->children->type != XML_ENTITY_DECL) {
+                cur = cur->children;
+                if (copy != NULL)
+                    insert = copy;
+                continue;
+            }
+        }
+      skip_children:
+        if (cur->next != NULL) {
+            cur = cur->next;
+            continue;
+        }
+
+        do {
+            cur = cur->parent;
+            insert = insert->parent;
+            if (cur == NULL)
+                break;
+            if (cur == list->parent) {
+                cur = NULL;
+                break;
+            }
+            if (cur->next != NULL) {
+                cur = cur->next;
+                break;
+            }
+        } while (cur != NULL);
     }
     if (real)
-	ctxt->node = oldCurrent;
+        ctxt->node = oldCurrent;
     ctxt->inst = oldInst;
 }
 
