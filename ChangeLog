@@ -1,3 +1,10 @@
+Wed Mar 13 13:41:19 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-76.xml
+	  tests/general/Makefile.am tests/general/bug-76.*: added a 
+	  home brewed test for path computation elmininating duplicate
+	  in result sets.
+
 Sat Mar  9 11:53:39 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/Makefile.am: fixed a build problem in some environements
