@@ -1,3 +1,9 @@
+Tue Sep 17 18:01:22 CEST 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* libexslt/date.c: fixed date:difference() bugs, removed all
+	  type conversion warnings.
+	* libxslt/xsltutils.c: removed unused local variable.
+
 Sat Sep 14 16:17:51 MDT 2002 John Fleck <jfleck@inkstain.net>
 
 	* doc/xsltproc.html
