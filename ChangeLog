@@ -1,3 +1,8 @@
+Thu Jan 17 23:41:53 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/Makefile.am: jacob berkman pointed out that the
+	  Cygwin patch forgot to add libexslt.h to the tarball
+
 Thu Jan 17 23:39:00 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixed I18N problemes in the template parser

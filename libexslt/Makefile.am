@@ -20,7 +20,8 @@ libexslt_la_SOURCES =                   \
 	functions.c			\
 	strings.c			\
 	date.c				\
-	saxon.c
+	saxon.c				\
+	libexslt.h
 
 # The following DOES NOT WORK reliably. Sorry no prelinking to uninstalled
 # yet libraries.
