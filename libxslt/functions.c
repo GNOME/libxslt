@@ -140,7 +140,7 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
     
     if (xsltdoc == NULL) {
 	if ((URI == NULL) ||
-	    (URI[0] = '#') ||
+	    (URI[0] == '#') ||
 	    (xmlStrEqual(tctxt->style->doc->URL, URI))) {
 	    doc = tctxt->style->doc;
 	} else {

@@ -1,3 +1,8 @@
+Fri Feb  7 15:47:20 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/functions.c: fixing another bug in document(), bug #105450
+	* tests/documents/test_bad.result: Slight change to the output
+
 Fri Feb  7 15:34:24 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/functions.c: fixing a segfault in document(), bug #105418
