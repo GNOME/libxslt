@@ -421,6 +421,7 @@ tests/general/Makefile
 tests/reports/Makefile
 tests/extensions/Makefile
 tests/namespaces/Makefile
+tests/keys/Makefile
 tests/numbers/Makefile
 tests/documents/Makefile
 tests/xmlspec/Makefile

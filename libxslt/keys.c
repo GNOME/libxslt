@@ -357,6 +357,88 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 }
 
 /**
+ * xsltEvalXPathKeys:
+ * @ctxt:  the XSLT transformation context
+ * @comp:  the compiled XPath expression
+ *
+ * Process the expression using XPath to get the list of keys
+ *
+ * Returns the array of computed string value or NULL, must be deallocated
+ *         by the caller.
+ */
+static xmlChar **
+xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
+    xmlChar **ret = NULL;
+    xmlXPathObjectPtr res;
+    xmlNodePtr oldInst;
+    xmlNodePtr oldNode;
+    int	oldPos, oldSize;
+    int oldNsNr;
+    xmlNsPtr *oldNamespaces;
+
+    oldInst = ctxt->inst;
+    oldNode = ctxt->node;
+    oldPos = ctxt->xpathCtxt->proximityPosition;
+    oldSize = ctxt->xpathCtxt->contextSize;
+    oldNsNr = ctxt->xpathCtxt->nsNr;
+    oldNamespaces = ctxt->xpathCtxt->namespaces;
+
+    ctxt->xpathCtxt->node = ctxt->node;
+    /* TODO: do we need to propagate the namespaces here ? */
+    ctxt->xpathCtxt->namespaces = NULL;
+    ctxt->xpathCtxt->nsNr = 0;
+    res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
+    if (res != NULL) {
+	if (res->type == XPATH_NODESET) {
+	    int len, i, j;
+
+	    if (res->nodesetval != NULL)
+		len = res->nodesetval->nodeNr;
+	    if (len != 0) {
+		ret = (xmlChar **) xmlMalloc((len + 1) * sizeof(xmlChar *));
+		if (ret != NULL) {
+		    for (i = 0,j = 0;i < len;i++) {
+			ret[j] = xmlXPathCastNodeToString(
+				res->nodesetval->nodeTab[i]);
+			if (ret[j] != NULL)
+			    j++;
+		    }
+		    ret[j] = NULL;
+		}
+	    }
+	} else {
+	    if (res->type != XPATH_STRING)
+		res = xmlXPathConvertString(res);
+	    if (res->type == XPATH_STRING) {
+		ret = (xmlChar **) xmlMalloc(2 * sizeof(xmlChar *));
+		if (ret != NULL) {
+		    ret[0] = res->stringval;
+		    ret[1] = NULL;
+		    res->stringval = NULL;
+		}
+	    } else {
+		xsltPrintErrorContext(ctxt, NULL, NULL);
+		xsltGenericError(xsltGenericErrorContext,
+		     "xpath : string() function didn't return a String\n");
+	    }
+	}
+	xmlXPathFreeObject(res);
+    } else {
+	ctxt->state = XSLT_STATE_STOPPED;
+    }
+#ifdef WITH_XSLT_DEBUG_TEMPLATES
+    xsltGenericDebug(xsltGenericDebugContext,
+	 "xsltEvalXPathString: returns %s\n", ret);
+#endif
+    ctxt->inst = oldInst;
+    ctxt->node = oldNode;
+    ctxt->xpathCtxt->contextSize = oldSize;
+    ctxt->xpathCtxt->proximityPosition = oldPos;
+    ctxt->xpathCtxt->nsNr = oldNsNr;
+    ctxt->xpathCtxt->namespaces = oldNamespaces;
+    return(ret);
+}
+/**
  * xsltInitCtxtKey:
  * @ctxt: an XSLT transformation context
  * @doc:  an XSLT document
@@ -370,7 +452,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     int i;
     xmlNodeSetPtr nodelist = NULL, keylist;
     xmlXPathObjectPtr res = NULL;
-    xmlChar *str;
+    xmlChar *str, **list;
     xsltKeyTablePtr table;
     int	oldPos, oldSize;
     xmlNodePtr oldInst;
@@ -447,26 +529,34 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     for (i = 0;i < nodelist->nodeNr;i++) {
 	if (IS_XSLT_REAL_NODE(nodelist->nodeTab[i])) {
 	    ctxt->node = nodelist->nodeTab[i];
-	    str = xsltEvalXPathString(ctxt, keyd->usecomp);
-	    if (str != NULL) {
+
+	    list = xsltEvalXPathKeys(ctxt, keyd->usecomp);
+	    if (list != NULL) {
+		int index = 0;
+
+		str = list[index++];
+		while (str != NULL) {
 #ifdef WITH_XSLT_DEBUG_KEYS
-		xsltGenericDebug(xsltGenericDebugContext,
-		     "xsl:key : node associated to(%s,%s)\n",
-				 keyd->name, str);
+		    xsltGenericDebug(xsltGenericDebugContext,
+			 "xsl:key : node associated to(%s,%s)\n",
+				     keyd->name, str);
 #endif
-		keylist = xmlHashLookup(table->keys, str);
-		if (keylist == NULL) {
-		    keylist = xmlXPathNodeSetCreate(nodelist->nodeTab[i]);
-		    xmlHashAddEntry(table->keys, str, keylist);
-		} else {
-		    xmlXPathNodeSetAdd(keylist, nodelist->nodeTab[i]);
+		    keylist = xmlHashLookup(table->keys, str);
+		    if (keylist == NULL) {
+			keylist = xmlXPathNodeSetCreate(nodelist->nodeTab[i]);
+			xmlHashAddEntry(table->keys, str, keylist);
+		    } else {
+			xmlXPathNodeSetAdd(keylist, nodelist->nodeTab[i]);
+		    }
+		    nodelist->nodeTab[i]->_private = keyd;
+		    xmlFree(str);
+		    str = list[index++];
 		}
-		nodelist->nodeTab[i]->_private = keyd;
-		xmlFree(str);
+		xmlFree(list);
 #ifdef WITH_XSLT_DEBUG_KEYS
 	    } else {
 		xsltGenericDebug(xsltGenericDebugContext,
-		     "xsl:key : use %s failed to return a string\n",
+		     "xsl:key : use %s failed to return strings\n",
 				 keyd->use);
 #endif
 	    }

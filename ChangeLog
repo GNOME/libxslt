@@ -1,3 +1,9 @@
+Mon Apr 15 14:00:12 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c: fixed bug #78735
+	* configure.in tests/Makefile.am tests/keys/*:
+	  added the tests in a separate directory
+
 Mon Apr 15 00:01:07 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* tests/docs/Makefile.am tests/docs/bug-83.xml
