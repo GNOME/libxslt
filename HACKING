@@ -1,0 +1,19 @@
+         Rules for commits on the libxslt module
+         =======================================
+
+If what you are patching is a non-compilation issue either at compile
+time or linking time on one of the main Linux platforms, then feel free
+to patch first and send mail afterward, as long as it's a 'small fix'.
+
+Otherwise, oly Bjorn Reese (breese@users.sourceforge.net) and me
+(veillard@redhat.com) should commit there. Send a mail and if it's a
+bug issue, register it at bugzilla.gnome.org in the libxslt module.
+I check both my mail and the bug database on a very regular basis.
+if you don't get an answer within a week (which is highly unprobable)
+then commit your changes. This simply mean that I'm on holliday or
+on the road.
+
+  thanks in advance for following the rule,
+
+Daniel
+
