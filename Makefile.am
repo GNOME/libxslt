@@ -1,8 +1,8 @@
 ## don't bother compiling the breakpoint library unless it is needed
 if WITH_DEBUGGER
 SUBDIRS = \
-  	breakpoint \
   	libxslt \
+	breakpoint \
   	libexslt \
   	xsltproc \
   	tests \

@@ -15,10 +15,12 @@
  * implement "other" date/time extension functions
  */
 
+#include "libexslt/libexslt.h"
+
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef WIN32
+#if defined(WIN32) && !defined (__CYGWIN__)
 #include <win32config.h>
 #else
 #include "config.h"

@@ -1,3 +1,13 @@
+Thu Jan 17 10:40:03 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am libexslt/common.c libexslt/date.c libexslt/exslt.c
+	  libexslt/exslt.h libexslt/exsltconfig.h.in libexslt/functions.c
+	  libexslt/libexslt.h libexslt/math.c libexslt/saxon.c
+	  libexslt/sets.c libexslt/strings.c libxslt/libxslt.h
+	  libxslt/xslt.h libxslt/xsltconfig.h.in libxslt/xsltutils.c
+	  xsltproc/xsltproc.c: applied Robert Collins patch for 
+	  Cygwin support
+
 Thu Jan 17 10:34:39 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/Makefile.am configure.in: ugly way to keep

@@ -1,6 +1,8 @@
+#include "libexslt/libexslt.h"
+
 #include <libxml/xmlversion.h>
 
-#ifdef WIN32
+#if defined(WIN32) && !defined (__CYGWIN__)
 #include <win32config.h>
 #else
 #include "config.h"

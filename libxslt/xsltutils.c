@@ -35,7 +35,7 @@
 #include "transform.h"
 
 /* gettimeofday on Windows ??? */
-#ifdef WIN32
+#if defined(WIN32) && !defined(__CYGWIN__)
 #ifdef _MSC_VER
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")

@@ -9,7 +9,9 @@
 #ifndef __XSLT_LIBXSLT_H__
 #define __XSLT_LIBXSLT_H__
 
-#ifdef WIN32
+#define IN_LIBXSLT
+
+#if defined(WIN32) && !defined (__CYGWIN__)
 #include <win32config.h>
 #else
 #include "config.h"
@@ -23,7 +25,7 @@
 #endif
 
 #if !defined LIBXSLT_PUBLIC
-#if defined _MSC_VER && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
+#if (defined (__CYGWIN__) || defined _MSC_VER) && !defined IN_LIBXSLT && !defined LIBXSLT_STATIC
 #define LIBXSLT_PUBLIC __declspec(dllimport)
 #else
 #define LIBXSLT_PUBLIC 
