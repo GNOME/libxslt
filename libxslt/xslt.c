@@ -270,12 +270,9 @@ xsltDecimalFormatGetByName(xsltStylesheetPtr sheet, xmlChar *name)
 	     result != NULL;
 	     result = result->next) {
 	    if (xmlStrEqual(name, result->name))
-		return result; /* for */
+		return result;
 	}
-	if (sheet->next != NULL)
-	    sheet = sheet->next;
-	else
-	    sheet = sheet->imports;
+	sheet = xsltNextImport(sheet);
     }
     return result;
 }
