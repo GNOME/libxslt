@@ -131,9 +131,9 @@ struct _exsltDateVal {
 #define IS_LEAP(y)						\
 	(((y % 4 == 0) && (y % 100 != 0)) || (y % 400 == 0))
 
-static const long daysInMonth[12] =
+static const unsigned long daysInMonth[12] =
 	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-static const long daysInMonthLeap[12] =
+static const unsigned long daysInMonthLeap[12] =
 	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 #define MAX_DAYINMONTH(yr,mon)                                  \
@@ -158,9 +158,9 @@ static const long daysInMonthLeap[12] =
 #define SECS_PER_HOUR           (60 * SECS_PER_MIN)
 #define SECS_PER_DAY            (24 * SECS_PER_HOUR)
 
-static const long dayInYearByMonth[12] =
+static const unsigned long dayInYearByMonth[12] =
 	{ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
-static const long dayInLeapYearByMonth[12] =
+static const unsigned long dayInLeapYearByMonth[12] =
 	{ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
 
 #define DAY_IN_YEAR(day, month, year)				\
@@ -241,7 +241,7 @@ _exsltDateParseGYear (exsltDateValDatePtr dt, const xmlChar **str) {
 	    xmlChar tmp_buf[100], *tmp = tmp_buf;		\
 	    /* result is in reverse-order */			\
 	    while (year > 0) {					\
-		*tmp = '0' + (year % 10);			\
+		*tmp = '0' + (xmlChar)(year % 10);		\
 		year /= 10;					\
 		tmp++;						\
 	    }							\
@@ -1368,8 +1368,8 @@ _exsltDateDayInWeek(long yday, long yr)
 /*
  * macros for adding date/times and durations
  */
-#define FQUOTIENT(a,b)                  (floor(((double)a/(double)b)))
-#define MODULO(a,b)                     (a - FQUOTIENT(a,b) * b)
+#define FQUOTIENT(a,b)                  ((floor(((double)a/(double)b))))
+#define MODULO(a,b)                     ((a - FQUOTIENT(a,b) * b))
 #define FQUOTIENT_RANGE(a,low,high)     (FQUOTIENT((a-low),(high-low)))
 #define MODULO_RANGE(a,low,high)        ((MODULO((a-low),(high-low)))+low)
 
@@ -1416,8 +1416,8 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 
     /* month */
     carry  = d->mon + u->mon;
-    r->mon = MODULO_RANGE(carry, 1, 13);
-    carry  = FQUOTIENT_RANGE(carry, 1, 13);
+    r->mon = (unsigned int)MODULO_RANGE(carry, 1, 13);
+    carry  = (long)FQUOTIENT_RANGE(carry, 1, 13);
 
     /* year (may be modified later) */
     r->year = d->year + carry;
@@ -1434,20 +1434,20 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 
     /* seconds */
     r->sec = d->sec + u->sec;
-    carry  = FQUOTIENT((long)r->sec, 60);
+    carry  = (long)FQUOTIENT((long)r->sec, 60);
     if (r->sec != 0.0) {
         r->sec = MODULO(r->sec, 60.0);
     }
 
     /* minute */
     carry += d->min;
-    r->min = MODULO(carry, 60);
-    carry  = FQUOTIENT(carry, 60);
+    r->min = (unsigned int)MODULO(carry, 60);
+    carry  = (long)FQUOTIENT(carry, 60);
 
     /* hours */
     carry  += d->hour;
-    r->hour = MODULO(carry, 24);
-    carry   = FQUOTIENT(carry, 24);
+    r->hour = (unsigned int)MODULO(carry, 24);
+    carry   = (long)FQUOTIENT(carry, 24);
 
     /*
      * days
@@ -1466,21 +1466,21 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 
     while (1) {
         if (tempdays < 1) {
-            long tmon = MODULO_RANGE(r->mon-1, 1, 13);
-            long tyr  = r->year + FQUOTIENT_RANGE(r->mon-1, 1, 13);
+            long tmon = (long)MODULO_RANGE(r->mon-1, 1, 13);
+            long tyr  = r->year + (long)FQUOTIENT_RANGE(r->mon-1, 1, 13);
             if (tyr == 0)
                 tyr--;
             tempdays += MAX_DAYINMONTH(tyr, tmon);
             carry = -1;
-        } else if (tempdays > MAX_DAYINMONTH(r->year, r->mon)) {
+        } else if (tempdays > (long)MAX_DAYINMONTH(r->year, r->mon)) {
             tempdays = tempdays - MAX_DAYINMONTH(r->year, r->mon);
             carry = 1;
         } else
             break;
 
         temp = r->mon + carry;
-        r->mon = MODULO_RANGE(temp, 1, 13);
-        r->year = r->year + FQUOTIENT_RANGE(temp, 1, 13);
+        r->mon = (unsigned int)MODULO_RANGE(temp, 1, 13);
+        r->year = r->year + (long)FQUOTIENT_RANGE(temp, 1, 13);
         if (r->year == 0) {
             if (temp < 1)
                 r->year--;
@@ -1587,13 +1587,22 @@ _exsltDateDifference (exsltDateValPtr x, exsltDateValPtr y, int flag)
 
     if (((x->type == XS_GYEAR) || (x->type == XS_GYEARMONTH)) && (!flag)) {
         /* compute the difference in months */
-        ret->value.dur.mon = ((x->value.date.year * 12) + x->value.date.mon) -
-                             ((y->value.date.year * 12) + y->value.date.mon);
+        ret->value.dur.mon = ((y->value.date.year * 12) + y->value.date.mon) -
+                             ((x->value.date.year * 12) + x->value.date.mon);
+	/* The above will give a wrong result if x and y are on different sides
+	 of the September 1752. Resolution is welcome :-) */
     } else {
-        ret->value.dur.day  = _exsltDateCastYMToDays(x) -
-                              _exsltDateCastYMToDays(y);
-        ret->value.dur.day += x->value.date.day - y->value.date.day;
-        ret->value.dur.sec  = TIME_TO_NUMBER(x) - TIME_TO_NUMBER(y);
+        ret->value.dur.day  = _exsltDateCastYMToDays(y) -
+                              _exsltDateCastYMToDays(x);
+        ret->value.dur.day += y->value.date.day - x->value.date.day;
+        ret->value.dur.sec  = TIME_TO_NUMBER(y) - TIME_TO_NUMBER(x);
+	if (ret->value.dur.day > 0.0 && ret->value.dur.sec < 0.0) {
+	    ret->value.dur.day -= 1;
+	    ret->value.dur.sec = ret->value.dur.sec + SECS_PER_DAY;
+	} else if (ret->value.dur.day < 0.0 && ret->value.dur.sec > 0.0) {
+	    ret->value.dur.day += 1;
+	    ret->value.dur.sec = ret->value.dur.sec - SECS_PER_DAY;
+	}
     }
 
     return ret;
@@ -1626,7 +1635,7 @@ _exsltDateAddDuration (exsltDateValPtr x, exsltDateValPtr y)
 
     /* seconds */
     ret->value.dur.sec = x->value.dur.sec + y->value.dur.sec;
-    carry = FQUOTIENT(ret->value.dur.sec, SECS_PER_DAY);
+    carry = (long)FQUOTIENT(ret->value.dur.sec, SECS_PER_DAY);
     if (ret->value.dur.sec != 0.0) {
         ret->value.dur.sec = MODULO(ret->value.dur.sec, SECS_PER_DAY);
     }
