@@ -1,3 +1,8 @@
+Fri Oct 29 14:18:35 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: indicate - means stdin closing
+	  #156626
+
 Wed Oct 27 17:00:54 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: another dictionnary/string interning fix
