@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../xsltproc ;  xsltproc)
+	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
 EXTRA_DIST = dict.dtd  dict.xml  dict.xsl result.xml \
     out/lettera.orig out/letterb.orig \

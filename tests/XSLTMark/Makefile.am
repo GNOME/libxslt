@@ -48,7 +48,7 @@ EXTRA_DIST = \
   xslbenchdream.xml
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../xsltproc ;  xsltproc)
+	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
 all: alphabetize attsets avts axis backwards bottles breadth brutal chart \
   creation current dbonerow dbtail decoy depth encrypt functions game \

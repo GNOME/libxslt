@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 $(top_builddir)/xsltproc/xsltproc:
-	@(cd ../../../xsltproc ;  xsltproc)
+	@(cd ../../../xsltproc ; $(MAKE) xsltproc)
 
 EXTRA_DIST = 						\
 	highest.1.out  highest.1.xml  highest.1.xsl	\
