@@ -13,10 +13,6 @@
 
   <xsl:param name="module">libxslt</xsl:param>
 
-  <xsl:template match="item">
-    <li><xsl:value-of select="."/></li>
-  </xsl:template>
-
   <!-- The table of content for the HTML page -->
   <xsl:variable name="menu_name">API Menu</xsl:variable>
   <xsl:variable name="develtoc">
@@ -38,12 +34,19 @@
              href="index.html">API Menu</a></li>
     </ul>
   </xsl:variable>
+
+  <xsl:template match="item">
+    <li><xsl:value-of select="."/></li>
+  </xsl:template>
+
   <xsl:template match="entry">
     
     <p>
     <b><xsl:value-of select="@who"/></b>
        <xsl:text> </xsl:text>
        <xsl:value-of select="@date"/>
+       <xsl:text> </xsl:text>
+       <xsl:value-of select="@timezone"/>
     <ul>
       <xsl:apply-templates select="item"/>
     </ul>
