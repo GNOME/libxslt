@@ -574,8 +574,14 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 	if (count == NULL) {
 	    if ((node->type == cur->type) &&
 		/* FIXME: must use expanded-name instead of local name */
-		xmlStrEqual(node->name, cur->name))
-		cnt++;
+		xmlStrEqual(node->name, cur->name)) {
+		    if ((node->ns == cur->ns) ||
+		        ((node->ns != NULL) &&
+			 (cur->ns != NULL) &&
+		         (xmlStrEqual(node->ns->href,
+		             cur->ns->href) )))
+		        cnt++;
+	    }
 	} else {
 	    if (xsltTestCompMatchList(context, cur, countPat))
 		cnt++;
