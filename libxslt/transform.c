@@ -3279,6 +3279,7 @@ done:
     xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltApplyStripSpaces: removed %d ignorable blank node\n", nb);
 #endif
+    return;
 }
 
 /**

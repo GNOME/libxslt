@@ -1,3 +1,8 @@
+Sun Jan 27 13:54:10 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: avoid a problem with Sun's Workshop CC,
+	  closes bug #69809 submitted by Michael Kroell
+
 Fri Jan 25 15:31:23 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: added links to the Web site from usage()
