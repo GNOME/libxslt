@@ -14,6 +14,9 @@
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
+#ifdef HAVE_TIME_H
+#include <time.h>
+#endif
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif
@@ -112,6 +115,30 @@ static int errorno = 0;
  * Internal timing routines to remove the necessity to have unix-specific
  * function calls
  */
+#ifndef HAVE_GETTIMEOFDAY 
+#ifdef HAVE_SYS_TIMEB_H
+#ifdef HAVE_SYS_TIME_H
+#ifdef HAVE_FTIME
+
+int
+my_gettimeofday(struct timeval *tvp, void *tzp)
+{
+	struct timeb timebuffer;
+
+	ftime(&timebuffer);
+	if (tvp) {
+		tvp->tv_sec = timebuffer.time;
+		tvp->tv_usec = timebuffer.millitm * 1000L;
+	}
+	return (0);
+}
+#define HAVE_GETTIMEOFDAY 1
+#define gettimeofday my_gettimeofday
+
+#endif /* HAVE_FTIME */
+#endif /* HAVE_SYS_TIME_H */
+#endif /* HAVE_SYS_TIMEB_H */
+#endif /* !HAVE_GETTIMEOFDAY */
 
 #if defined(HAVE_GETTIMEOFDAY)
 static struct timeval begin, endtime;
@@ -152,6 +179,9 @@ static void endTimer(const char *format, ...)
  * This is obviously less accurate, but there's little we can do about
  * that.
  */
+#ifndef CLOCKS_PER_SEC
+#define CLOCKS_PER_SEC 100
+#endif
 
 clock_t begin, endtime;
 static void startTimer(void)
@@ -616,7 +646,7 @@ main(int argc, char **argv)
 done:
     xsltCleanupGlobals();
     xmlCleanupParser();
-#ifdef WITH_MEM_DEBUG
+#if 0
     xmlMemoryDump();
 #endif
     return(errorno);

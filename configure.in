@@ -102,9 +102,8 @@ dnl
 
 AC_CHECK_HEADERS(sys/types.h sys/time.h stdlib.h unistd.h string.h)
 AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h ansidecl.h)
-AC_CHECK_HEADERS(time.h sys/stat.h stdarg.h)
+AC_CHECK_HEADERS(sys/timeb.h time.h sys/stat.h stdarg.h)
 AC_CHECK_FUNCS(stat _stat)
-
 AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_ISNAN)]))
 
@@ -120,7 +119,7 @@ AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor,
 AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, fabs,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
 AC_CHECK_FUNCS(gettimeofday)
-AC_CHECK_FUNCS(mktime localtime asctime time gmtime)
+AC_CHECK_FUNCS(mktime localtime asctime time gmtime ftime)
 
 dnl
 dnl Perl is just needed for generating some data for XSLtmark
