@@ -1,3 +1,9 @@
+Tue Apr 10 12:10:25 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in: released 0.7.0
+	* tests/XSLTMark/Makefile.am: trying to solve some make distcheck
+	  problems
+
 Sun Apr  8 11:42:03 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/functions.c libxslt/keys.c libxslt/transform.c:

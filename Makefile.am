@@ -34,6 +34,6 @@ test tests: dummy
 cleantar:
 	@(rm -f libxslt*.tar.gz)
 
-rpm: cleantar distcheck
+rpm: cleantar dist
 	rpm -ta libxslt*.tar.gz
 
