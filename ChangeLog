@@ -1,3 +1,9 @@
+Thu Jan 17 10:34:39 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/Makefile.am configure.in: ugly way to keep
+	  the memory debugging active on my devel workstation
+	  by bypassing libtool completely
+
 Tue Jan 15 12:00:18 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/templates.c: fixed bug #68751
