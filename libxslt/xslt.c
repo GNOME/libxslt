@@ -298,9 +298,10 @@ xsltFreeStylesheetList(xsltStylesheetPtr sheet) {
  * Free up the memory allocated by @sheet
  */
 void
-xsltFreeStylesheet(xsltStylesheetPtr sheet) {
+xsltFreeStylesheet(xsltStylesheetPtr sheet)
+{
     if (sheet == NULL)
-	return;
+        return;
 
     xsltFreeKeys(sheet);
     xsltFreeExts(sheet);
@@ -312,24 +313,31 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     xsltFreeStyleDocuments(sheet);
     xsltFreeStylePreComps(sheet);
     if (sheet->doc != NULL)
-	xmlFreeDoc(sheet->doc);
+        xmlFreeDoc(sheet->doc);
     if (sheet->variables != NULL)
-	xsltFreeStackElemList(sheet->variables);
+        xsltFreeStackElemList(sheet->variables);
     if (sheet->stripSpaces != NULL)
-	xmlHashFree(sheet->stripSpaces, NULL);
-    if (sheet->nsHash != NULL) 
-	xmlHashFree(sheet->nsHash, NULL);
+        xmlHashFree(sheet->stripSpaces, NULL);
+    if (sheet->nsHash != NULL)
+        xmlHashFree(sheet->nsHash, NULL);
 
-    if (sheet->method != NULL) xmlFree(sheet->method);
-    if (sheet->methodURI != NULL) xmlFree(sheet->methodURI);
-    if (sheet->version != NULL) xmlFree(sheet->version);
-    if (sheet->encoding != NULL) xmlFree(sheet->encoding);
-    if (sheet->doctypePublic != NULL) xmlFree(sheet->doctypePublic);
-    if (sheet->doctypeSystem != NULL) xmlFree(sheet->doctypeSystem);
-    if (sheet->mediaType != NULL) xmlFree(sheet->mediaType);
+    if (sheet->method != NULL)
+        xmlFree(sheet->method);
+    if (sheet->methodURI != NULL)
+        xmlFree(sheet->methodURI);
+    if (sheet->version != NULL)
+        xmlFree(sheet->version);
+    if (sheet->encoding != NULL)
+        xmlFree(sheet->encoding);
+    if (sheet->doctypePublic != NULL)
+        xmlFree(sheet->doctypePublic);
+    if (sheet->doctypeSystem != NULL)
+        xmlFree(sheet->doctypeSystem);
+    if (sheet->mediaType != NULL)
+        xmlFree(sheet->mediaType);
 
     if (sheet->imports != NULL)
-	xsltFreeStylesheetList(sheet->imports);
+        xsltFreeStylesheetList(sheet->imports);
 
     memset(sheet, -1, sizeof(xsltStylesheet));
     xmlFree(sheet);
@@ -351,157 +359,176 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
  */
 
 void
-xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur) {
-    xmlChar *elements, *prop;
-    xmlChar *element, *end;
+xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
+{
+    xmlChar *elements,
+     *prop;
+    xmlChar *element,
+     *end;
 
     if ((cur == NULL) || (style == NULL))
-	return;
+        return;
 
-    prop = xsltGetNsProp(cur, (const xmlChar *)"version", XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *) "version", XSLT_NAMESPACE);
     if (prop != NULL) {
-	if (style->version != NULL) xmlFree(style->version);
-	style->version  = prop;
+        if (style->version != NULL)
+            xmlFree(style->version);
+        style->version = prop;
     }
 
-    prop = xsltGetNsProp(cur, (const xmlChar *)"encoding", XSLT_NAMESPACE);
+    prop =
+        xsltGetNsProp(cur, (const xmlChar *) "encoding", XSLT_NAMESPACE);
     if (prop != NULL) {
-	if (style->encoding != NULL) xmlFree(style->encoding);
-	style->encoding  = prop;
+        if (style->encoding != NULL)
+            xmlFree(style->encoding);
+        style->encoding = prop;
     }
 
     /* relaxed to support xt:document */
-    prop = xmlGetProp(cur, (const xmlChar *)"method");
+    prop = xmlGetProp(cur, (const xmlChar *) "method");
     if (prop != NULL) {
-	xmlChar *ncname;
-	xmlChar *prefix = NULL;
+        xmlChar *ncname;
+        xmlChar *prefix = NULL;
 
-	if (style->method != NULL) xmlFree(style->method);
-	style->method = NULL;
-	if (style->methodURI != NULL) xmlFree(style->methodURI);
-	style->methodURI = NULL;
+        if (style->method != NULL)
+            xmlFree(style->method);
+        style->method = NULL;
+        if (style->methodURI != NULL)
+            xmlFree(style->methodURI);
+        style->methodURI = NULL;
 
-	ncname = xmlSplitQName2(prop, &prefix);
-	if (ncname != NULL) {
-	    if (prefix != NULL) {
-		xmlNsPtr ns;
+        ncname = xmlSplitQName2(prop, &prefix);
+        if (ncname != NULL) {
+            if (prefix != NULL) {
+                xmlNsPtr ns;
 
-		ns = xmlSearchNs(cur->doc, cur, prefix);
-		if (ns == NULL) {
-		    xsltGenericError(xsltGenericErrorContext,
-			"no namespace bound to prefix %s\n", prefix);
-		    style->warnings++;
-		    xmlFree(prefix);
-		    xmlFree(ncname);
-		    style->method = prop;
-		} else {
-		    style->methodURI = xmlStrdup(ns->href);
-		    style->method = ncname;
-		    xmlFree(prefix);
-		    xmlFree(prop);
-		}
-	    } else {
-		style->method = ncname;
-		xmlFree(prop);
-	    }
-	} else {
-	    if ((xmlStrEqual(prop, (const xmlChar *)"xml")) ||
-		(xmlStrEqual(prop, (const xmlChar *)"html")) ||
-		(xmlStrEqual(prop, (const xmlChar *)"text"))) {
-		style->method  = prop;
-	    } else {
-		xsltGenericError(xsltGenericErrorContext,
-		    "invalid value for method: %s\n", prop);
-		style->warnings++;
-	    }
-	}
+                ns = xmlSearchNs(cur->doc, cur, prefix);
+                if (ns == NULL) {
+                    xsltGenericError(xsltGenericErrorContext,
+                                     "no namespace bound to prefix %s\n",
+                                     prefix);
+                    style->warnings++;
+                    xmlFree(prefix);
+                    xmlFree(ncname);
+                    style->method = prop;
+                } else {
+                    style->methodURI = xmlStrdup(ns->href);
+                    style->method = ncname;
+                    xmlFree(prefix);
+                    xmlFree(prop);
+                }
+            } else {
+                style->method = ncname;
+                xmlFree(prop);
+            }
+        } else {
+            if ((xmlStrEqual(prop, (const xmlChar *) "xml")) ||
+                (xmlStrEqual(prop, (const xmlChar *) "html")) ||
+                (xmlStrEqual(prop, (const xmlChar *) "text"))) {
+                style->method = prop;
+            } else {
+                xsltGenericError(xsltGenericErrorContext,
+                                 "invalid value for method: %s\n", prop);
+                style->warnings++;
+            }
+        }
     }
 
-    prop = xsltGetNsProp(cur, (const xmlChar *)"doctype-system", XSLT_NAMESPACE);
+    prop =
+        xsltGetNsProp(cur, (const xmlChar *) "doctype-system",
+                      XSLT_NAMESPACE);
     if (prop != NULL) {
-	if (style->doctypeSystem != NULL) xmlFree(style->doctypeSystem);
-	style->doctypeSystem  = prop;
+        if (style->doctypeSystem != NULL)
+            xmlFree(style->doctypeSystem);
+        style->doctypeSystem = prop;
     }
 
-    prop = xsltGetNsProp(cur, (const xmlChar *)"doctype-public", XSLT_NAMESPACE);
+    prop =
+        xsltGetNsProp(cur, (const xmlChar *) "doctype-public",
+                      XSLT_NAMESPACE);
     if (prop != NULL) {
-	if (style->doctypePublic != NULL) xmlFree(style->doctypePublic);
-	style->doctypePublic  = prop;
+        if (style->doctypePublic != NULL)
+            xmlFree(style->doctypePublic);
+        style->doctypePublic = prop;
     }
 
-    prop = xsltGetNsProp(cur, (const xmlChar *)"standalone",
-	                XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *) "standalone",
+                         XSLT_NAMESPACE);
     if (prop != NULL) {
-	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
-	    style->standalone = 1;
-	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
-	    style->standalone = 0;
-	} else {
-	    xsltGenericError(xsltGenericErrorContext,
-		"invalid value for standalone: %s\n", prop);
-	    style->warnings++;
-	}
-	xmlFree(prop);
+        if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
+            style->standalone = 1;
+        } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
+            style->standalone = 0;
+        } else {
+            xsltGenericError(xsltGenericErrorContext,
+                             "invalid value for standalone: %s\n", prop);
+            style->warnings++;
+        }
+        xmlFree(prop);
     }
 
-    prop = xsltGetNsProp(cur, (const xmlChar *)"indent",
-	                XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *) "indent", XSLT_NAMESPACE);
     if (prop != NULL) {
-	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
-	    style->indent = 1;
-	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
-	    style->indent = 0;
-	} else {
-	    xsltGenericError(xsltGenericErrorContext,
-		"invalid value for indent: %s\n", prop);
-	    style->warnings++;
-	}
-	xmlFree(prop);
+        if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
+            style->indent = 1;
+        } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
+            style->indent = 0;
+        } else {
+            xsltGenericError(xsltGenericErrorContext,
+                             "invalid value for indent: %s\n", prop);
+            style->warnings++;
+        }
+        xmlFree(prop);
     }
 
-    prop = xsltGetNsProp(cur, (const xmlChar *)"omit-xml-declaration",
-	                XSLT_NAMESPACE);
+    prop = xsltGetNsProp(cur, (const xmlChar *) "omit-xml-declaration",
+                         XSLT_NAMESPACE);
     if (prop != NULL) {
-	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
-	    style->omitXmlDeclaration = 1;
-	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
-	    style->omitXmlDeclaration = 0;
-	} else {
-	    xsltGenericError(xsltGenericErrorContext,
-		"invalid value for omit-xml-declaration: %s\n", prop);
-	    style->warnings++;
-	}
-	xmlFree(prop);
+        if (xmlStrEqual(prop, (const xmlChar *) "yes")) {
+            style->omitXmlDeclaration = 1;
+        } else if (xmlStrEqual(prop, (const xmlChar *) "no")) {
+            style->omitXmlDeclaration = 0;
+        } else {
+            xsltGenericError(xsltGenericErrorContext,
+                             "invalid value for omit-xml-declaration: %s\n",
+                             prop);
+            style->warnings++;
+        }
+        xmlFree(prop);
     }
 
-    elements = xsltGetNsProp(cur, (const xmlChar *)"cdata-section-elements",
-	                    XSLT_NAMESPACE);
+    elements =
+        xsltGetNsProp(cur, (const xmlChar *) "cdata-section-elements",
+                      XSLT_NAMESPACE);
     if (elements != NULL) {
-	if (style->stripSpaces == NULL)
-	    style->stripSpaces = xmlHashCreate(10);
-	if (style->stripSpaces == NULL)
-	    return;
+        if (style->stripSpaces == NULL)
+            style->stripSpaces = xmlHashCreate(10);
+        if (style->stripSpaces == NULL)
+            return;
 
-	element = elements;
-	while (*element != 0) {
-	    while (IS_BLANK(*element)) element++;
-	    if (*element == 0)
-		break;
-	    end = element;
-	    while ((*end != 0) && (!IS_BLANK(*end))) end++;
-	    element = xmlStrndup(element, end - element);
-	    if (element) {
+        element = elements;
+        while (*element != 0) {
+            while (IS_BLANK(*element))
+                element++;
+            if (*element == 0)
+                break;
+            end = element;
+            while ((*end != 0) && (!IS_BLANK(*end)))
+                end++;
+            element = xmlStrndup(element, end - element);
+            if (element) {
 #ifdef WITH_XSLT_DEBUG_PARSING
-		xsltGenericDebug(xsltGenericDebugContext,
-		    "add cdata section output element %s\n", element);
+                xsltGenericDebug(xsltGenericDebugContext,
+                                 "add cdata section output element %s\n",
+                                 element);
 #endif
-		xmlHashAddEntry(style->stripSpaces, element,
-			        (xmlChar *) "cdata");
-		xmlFree(element);
-	    }
-	    element = end;
-	}
-	xmlFree(elements);
+                xmlHashAddEntry(style->stripSpaces, element,
+                                (xmlChar *) "cdata");
+                xmlFree(element);
+            }
+            element = end;
+        }
+        xmlFree(elements);
     }
 }
 

@@ -10,7 +10,8 @@
 #ifndef __XML_XSLT_TRANSFORM_H__
 #define __XML_XSLT_TRANSFORM_H__
 
-#include <libxml/tree.h>
+#include <libxml/parser.h>
+#include <libxml/xmlIO.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,6 +29,12 @@ int		xsltGetXIncludeDefault	(void);
 xmlDocPtr	xsltApplyStylesheet	(xsltStylesheetPtr style,
 					 xmlDocPtr doc,
 					 const char **params);
+int		xsltRunStylesheet	(xsltStylesheetPtr style,
+					 xmlDocPtr doc,
+					 const char **params,
+					 const char *output,
+					 xmlSAXHandlerPtr SAX,
+					 xmlOutputBufferPtr IObuf);
 void		xsltApplyOneTemplate	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr list,

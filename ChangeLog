@@ -1,3 +1,20 @@
+Mon Jun 25 12:41:30 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.[ch] libxslt/xslt.c libxslt/xsltInternals.h:
+	  added a new interface xsltRunStylesheet() for a more flexible
+	  handling of the output and trying to adhere to xsl:document
+	  filename generation semantic if one knows the URL of the output,
+	  also add IObuf capacity and SAX for output but is currently not
+	  implemented.
+	* libxslt/xsltproc.c: added a -o or --output filename argument
+	  to test xsltRunStylesheet() or provide a base when generating
+	  multiple outputs
+	* tests/docbook/Makefile.am tests/docbook/result/xtchunk/html/*:
+	  updated tests to add DocBook xt:document based chunking
+	* tests/multiple/Makefile.am: cleaned up the makefile a bit
+	* tests/multiple/out/*.html: the new xt:document now generate
+	  the DOCTYPE if available as is the case for HTML
+
 Mon Jun 25 08:45:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
 
 	* Removed some redundant code in xsltDefaultProcessOneNode

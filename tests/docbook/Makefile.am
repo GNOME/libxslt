@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-all: single # Avoid doing the test in normal pass
+all: single xtchunk # Avoid doing the test in normal pass
 
 $(top_builddir)/libxslt/xsltproc:
 	@(cd ../../libxslt ; make xsltproc)
@@ -53,6 +53,25 @@ single:
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true; \
 	  rm -f $$out ; \
 	  echo ; \
+	  done )
+
+xtchunk:
+	@(echo > .memdump)
+	@(for i in $(srcdir)/test/gdp-handbook.xml ; do \
+	  echo "Texting HTML chunking on $$i :" ; \
+	  html=$(srcdir)/result/html/`basename $$i .xml`.html; \
+	  $(top_builddir)/libxslt/xsltproc -o $(srcdir)/result/xtchunk/html/gdp-handbook $(srcdir)/html/xtchunk.xsl $$i ; \
+	  for html in $(srcdir)/result/xtchunk/html/*.html ; do \
+	      orig=$(srcdir)/result/xtchunk/html/`basename $$html .html`.orig ;\
+	      if [ -f $$orig ] ; then \
+		  grep -v id < $$html > $$html.noid ; \
+		  grep -v id < $$orig > $$orig.noid ; \
+		  diff $$orig.noid $$html.noid ; \
+		  rm -f $$html.noid $$orig.noid $$html; \
+	      else mv $$html $$orig ; fi ; \
+	  done ; \
+	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true; \
+	  rm -f $(srcdir)/result/xtchunk/html/gdp-handbook ; \
 	  done )
 
 #

@@ -366,6 +366,8 @@ struct _xsltTransformContext {
     xmlNodePtr inst;			/* the instruction in the stylesheet */
 
     int xinclude;			/* should XInclude be processed */
+
+    const char *      outputFile;	/* the output URI if known */
 };
 
 /**
