@@ -1,6 +1,7 @@
 SUBDIRS = \
 	libxslt \
-	tests
+	tests \
+	doc
 
 confexecdir=$(libdir)
 confexec_DATA = xsltConf.sh

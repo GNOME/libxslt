@@ -1,0 +1,174 @@
+<html>
+<head>
+  <title>The XML C library for Gnome</title>
+  <meta name="GENERATOR" content="amaya V4.1">
+  <meta http-equiv="Content-Type" content="text/html">
+</head>
+
+<body bgcolor="#ffffff">
+<p><a href="http://www.gnome.org/"><img src="smallfootonly.gif"
+alt="Gnome Logo"></a><a href="http://www.w3.org/Status"><img src="w3c.png"
+alt="W3C Logo"></a></p>
+
+<h1 align="center">The XSLT C library for Gnome</h1>
+
+<h2 style="text-align: center">libxslt</h2>
+
+<p></p>
+<ul>
+  <li><a href="#Introducti">Introduction</a></li>
+  <li><a href="#Documentat">Documentation</a></li>
+  <li><a href="#Reporting">Reporting bugs and getting help</a></li>
+  <li><a href="#help">how to help</a></li>
+  <li><a href="#Downloads">Downloads</a></li>
+  <li><a href="#News">News</a></li>
+  <li><a href="#XML">The xsltproc command</a></li>
+  <li><a href="#XSLT">The programming API</a></li>
+</ul>
+
+<h2><a name="Introducti">Introduction</a></h2>
+
+<p>This document describes <a href="http://xmlsoft.org/XSLT/">libxslt</a>, the
+<a href="http://www.w3.org/TR/xslt">XSLT</a> C library developped for the <a
+href="http://www.gnome.org/">Gnome</a> project. </p>
+
+<p>Here are some key points about libxslt:</p>
+<ul>
+  <li>Libxslt is a C implementation</li>
+  <li>Libxslt is based on libxml for XML parsing, tree manipulation and XPath
+    support</li>
+  <li>It is written in plain C, making as few assumptions as possible, and
+    sticking closely to ANSI C/POSIX for easy embedding. Should works on
+    Linux/Unix/Windows.</li>
+  <li>This library is released under the <a
+    href="http://www.gnu.org/copyleft/lesser.html">GNU LGPL</a>. If you are
+    not happy with this, drop me a mail.</li>
+</ul>
+
+<h2><a name="Documentat">Documentation</a></h2>
+
+<p>There are some on-line resources about using libxml:</p>
+<ol>
+  <li>Check the <a href="http://xmlsoft.org/html/libxml-lib.html">API
+    documentation</a> automatically extracted from code comments (using <a
+    href="http://cvs.gnome.org/bonsai/rview.cgi?cvsroot=/cvs/gnome&amp;dir=gtk-doc">gtk
+    doc</a>).</li>
+  <li>:ook at the <a href="/messages/">mailing-list archive</a>.</li>
+</ol>
+
+<h2><a name="Reporting">Reporting bugs and getting help</a></h2>
+
+<p>Well, bugs or missing features are always possible, and I will make a point
+of fixing them in a timely fashion. The best way to report a bug is to use the
+<a href="http://bugs.gnome.org/db/pa/lgnome-xml.html">Gnome bug tracking
+database</a> (make sure to use the "libxslt" module name). I look at reports
+there regularly and it's good to have a reminder when a bug is still open.
+Check the <a href="http://bugs.gnome.org/Reporting.html">instructions on
+reporting bugs</a> and be sure to specify that the bug is for the package
+libxslt.</p>
+
+<p>There is also a mailing-list <a
+href="mailto:xml@rpmfind.net">xml@rpmfind.net</a> for libxml and libxslt, with
+an <a href="http://xmlsoft.org/messages">on-line archive</a>. To subscribe to
+this majordomo based list, send a mail message to <a
+href="mailto:majordomo@rpmfind.net">majordomo@rpmfind.net</a> with "subscribe
+xml" in the <strong>content</strong> of the message.</p>
+
+<p>Alternatively, you can just send the bug to the <a
+href="mailto:xml@rpmfind.net">xml@rpmfind.net</a> list, if it's really libxml
+related I will approve it..</p>
+
+<p>Of course, bugs reports with a suggested patch for fixing them will
+probably be processed faster.</p>
+
+<p>If you're looking for help, a quick look at <a
+href="http://xmlsoft.org/messages/#407">the list archive</a> may actually
+provide the answer, I usually send source samples when answering libxml usage
+questions. The <a href="http://xmlsoft.org/html/book1.html">auto-generated
+documentantion</a> is not as polished as I would like (I need to learn more
+about Docbook), but it's a good starting point.</p>
+
+<h2><a name="help">How to help</a></h2>
+
+<p>You can help the project in various ways, the best thing to do first is to
+subscribe to the mailing-list as explained before, check the <a
+href="http://xmlsoft.org/messages/">archives </a>and the <a
+href="http://bugs.gnome.org/db/pa/lgnome-xml.html">Gnome bug
+database:</a>:</p>
+<ol>
+  <li>provide patches when you find problems</li>
+  <li>provide the diffs when you port libxslt to a new platform. They may not
+    be integrated in all cases but help pinpointing portability problems
+  and</li>
+  <li>provice documentation fixes (either as patches to the code comments or
+    as HTML diffs).</li>
+  <li>provide new documentations pieces (translations, examples, etc ...)</li>
+  <li>Check the TODO file and try to close one of the items</li>
+  <li>take one of the points raised in the archive or the bug database and
+    provide a fix. <a href="mailto:Daniel.Veillard@w3.org">Get in touch with
+    me </a>before to avoid synchronization problems and check that the
+    suggested fix will fit in nicely :-)</li>
+</ol>
+
+<h2><a name="Downloads">Downloads</a></h2>
+
+<p>The latest versions of libxslt can be found on <a
+href="ftp://rpmfind.net/pub/libxml/">rpmfind.net</a> or on the <a
+href="ftp://ftp.gnome.org/pub/GNOME/MIRRORS.html">Gnome FTP server</a> either
+as a <a href="ftp://ftp.gnome.org/pub/GNOME/unstable/sources/libxml/">source
+archive</a> or <a
+href="ftp://ftp.gnome.org/pub/GNOME/contrib/redhat/SRPMS/">RPM packages</a>.
+(NOTE that you need both the <a
+href="http://rpmfind.net/linux/RPM/libxml2.html">libxml2</a> and <a
+href="http://rpmfind.net/linux/RPM/libxml2-devel.html">libxml2-devel</a>   
+packages installed to compile applications using libxml.)</p>
+
+<p><a name="Contribs">Contribs:</a></p>
+
+<p>I do accept external contributions, especially if compiling on another
+platform, get in touch with me to upload the package. I will keep them in the
+<a href="ftp://rpmfind.net/pub/libxml/contribs/">contrib directory</a></p>
+
+<p>Libxslt is also available from CVS:</p>
+<ul>
+  <li><p>The <a
+    href="http://cvs.gnome.org/bonsai/rview.cgi?cvsroot=/cvs/gnome&amp;dir=libxslt">Gnome
+    CVS base</a>. Check the <a
+    href="http://developer.gnome.org/tools/cvs.html">Gnome CVS Tools</a> page;
+    the CVS module is <b>libxslt</b>.</p>
+  </li>
+</ul>
+
+<h2><a name="News">News</a></h2>
+
+<h3>CVS only : check the <a
+href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
+for a really accurate description</h3>
+
+<h3>0.0.1: Jan 25 2000</h3>
+<ul>
+  <li>first alpha version released at the same time as libxml2-2.2.12</li>
+  <li>Framework in place, should work on simple examples, but far from being
+    feature complete</li>
+</ul>
+
+<h2>The xsltproc command</h2>
+
+<p>This program is the simplest way to use libxslt from the command line, it
+takes as first argument the path or URL to an XSLT stylesheet. the next
+arguments are filenames or URIs of the inputs to be processed. The output of
+the processing is redirected on the standard output.</p>
+
+<h2>The programming API</h2>
+
+<p>@@TODO</p>
+
+<h2><a name="Contributi">Contributions</a></h2>
+
+<p></p>
+
+<p><a href="mailto:Daniel.Veillard@imag.fr">Daniel Veillard</a></p>
+
+<p>$Id$</p>
+</body>
+</html>

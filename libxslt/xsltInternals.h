@@ -120,7 +120,7 @@ struct _xsltStylesheet {
 /*
  * The in-memory structure corresponding to an XSLT Transformation
  */
-typedef enum xsltOutputType {
+typedef enum {
     XSLT_OUTPUT_XML = 0,
     XSLT_OUTPUT_HTML,
     XSLT_OUTPUT_TEXT

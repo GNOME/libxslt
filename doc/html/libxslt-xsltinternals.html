@@ -1,0 +1,1016 @@
+<HTML
+><HEAD
+><TITLE
+>xsltInternals</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.44"><LINK
+REL="HOME"
+TITLE="Gnome XSLT Library Reference Manual"
+HREF="book1.html"><LINK
+REL="UP"
+TITLE="Libxslt Library Reference"
+HREF="libxslt-lib.html"><LINK
+REL="PREVIOUS"
+TITLE="transform"
+HREF="libxslt-transform.html"><LINK
+REL="NEXT"
+TITLE="xsltutils"
+HREF="libxslt-xsltutils.html"></HEAD
+><BODY
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+BGCOLOR="#000000"
+CELLPADDING="1"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="4"
+ALIGN="center"
+><FONT
+COLOR="#FFFFFF"
+SIZE="5"
+>Gnome XSLT Library Reference Manual</FONT
+></TH
+></TR
+><TR
+><TD
+WIDTH="25%"
+BGCOLOR="#C00000"
+ALIGN="left"
+><A
+HREF="libxslt-transform.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>&#60;&#60;&#60; Previous Page</B
+></FONT
+></A
+></TD
+><TD
+WIDTH="25%"
+BGCOLOR="#0000C0"
+ALIGN="center"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+><A
+HREF="book1.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Home</B
+></FONT
+></A
+></B
+></FONT
+></TD
+><TD
+WIDTH="25%"
+BGCOLOR="#00C000"
+ALIGN="center"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+><A
+HREF="libxslt-lib.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Up</B
+></FONT
+></A
+></B
+></FONT
+></TD
+><TD
+WIDTH="25%"
+BGCOLOR="#C00000"
+ALIGN="right"
+><A
+HREF="libxslt-xsltutils.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Next Page &#62;&#62;&#62;</B
+></FONT
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><H1
+><A
+NAME="LIBXSLT-XSLTINTERNALS"
+>xsltInternals</A
+></H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN765"
+></A
+><H2
+>Name</H2
+>xsltInternals&nbsp;--&nbsp;</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN768"
+></A
+><H2
+>Synopsis</H2
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="SYNOPSIS"
+>&#13;
+
+enum        <A
+HREF="libxslt-xsltinternals.html#XSLTELEM"
+>xsltElem</A
+>;
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEM"
+>xsltStackElem</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
+>xsltStackElemPtr</A
+>;
+#define     <A
+HREF="libxslt-xsltinternals.html#XSLT-PAT-NO-PRIORITY-CAPS"
+>XSLT_PAT_NO_PRIORITY</A
+>
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTTEMPLATE"
+>xsltTemplate</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
+>xsltTemplatePtr</A
+>;
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEET"
+>xsltStylesheet</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+>;
+enum        <A
+HREF="libxslt-xsltinternals.html#XSLTOUTPUTTYPE"
+>xsltOutputType</A
+>;
+struct      <A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXT"
+>xsltTransformContext</A
+>;
+typedef     <A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+>;
+<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> <A
+HREF="libxslt-xsltinternals.html#XSLTPARSESTYLESHEETFILE"
+>xsltParseStylesheetFile</A
+>   (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *filename);
+void        <A
+HREF="libxslt-xsltinternals.html#XSLTFREESTYLESHEET"
+>xsltFreeStylesheet</A
+>              (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> sheet);
+int         <A
+HREF="libxslt-xsltinternals.html#XSLTISBLANK"
+>xsltIsBlank</A
+>                     (<GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *str);
+void        <A
+HREF="libxslt-xsltinternals.html#XSLTFREESTACKELEMLIST"
+>xsltFreeStackElemList</A
+>           (<A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
+>xsltStackElemPtr</A
+> elem);</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN791"
+></A
+><H2
+>Description</H2
+><P
+></P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN794"
+></A
+><H2
+>Details</H2
+><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN796"
+></A
+><H3
+><A
+NAME="XSLTELEM"
+></A
+>enum xsltElem</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef enum {
+    XSLT_ELEM_VARIABLE=1,
+    XSLT_ELEM_PARAM
+} xsltElem;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN801"
+></A
+><H3
+><A
+NAME="XSLTSTACKELEM"
+></A
+>struct xsltStackElem</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltStackElem {
+    struct _xsltStackElem *next;/* chained list */
+    xsltElem type;	/* type of the element */
+    int computed;	/* was the evaluation done */
+    xmlChar *name;	/* the local part of the name QName */
+    xmlChar *nameURI;	/* the URI part of the name QName */
+    xmlChar *select;	/* the eval string */
+    xmlNodePtr tree;	/* the tree if no eval string */
+    xmlXPathObjectPtr value; /* The value if computed */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN806"
+></A
+><H3
+><A
+NAME="XSLTSTACKELEMPTR"
+></A
+>xsltStackElemPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltStackElem *xsltStackElemPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN811"
+></A
+><H3
+><A
+NAME="XSLT-PAT-NO-PRIORITY-CAPS"
+></A
+>XSLT_PAT_NO_PRIORITY</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define XSLT_PAT_NO_PRIORITY -12345789</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN816"
+></A
+><H3
+><A
+NAME="XSLTTEMPLATE"
+></A
+>struct xsltTemplate</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltTemplate {
+    struct _xsltTemplate *next;/* chained list sorted by priority */
+    xmlChar *match;	/* the matching string */
+    int priority;	/* as given from the stylesheet, not computed */
+    xmlChar *name;	/* the local part of the name QName */
+    xmlChar *nameURI;	/* the URI part of the name QName */
+    xmlChar *mode;	/* the local part of the mode QName */
+    xmlChar *modeURI;	/* the URI part of the mode QName */
+    xmlNodePtr content;	/* the template replacement value */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN821"
+></A
+><H3
+><A
+NAME="XSLTTEMPLATEPTR"
+></A
+>xsltTemplatePtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltTemplate *xsltTemplatePtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN826"
+></A
+><H3
+><A
+NAME="XSLTSTYLESHEET"
+></A
+>struct xsltStylesheet</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltStylesheet {
+    /*
+     * The stylesheet import relation is kept as a tree
+     */
+    struct _xsltStylesheet *parent;
+    struct _xsltStylesheet *imports;
+
+    /*
+     * General data on the style sheet document
+     */
+    xmlDocPtr doc;		/* the parsed XML stylesheet */
+    xmlHashTablePtr stripSpaces;/* the hash table of the strip-space
+				   preserve space and cdata-section elements */
+
+    /*
+     * Global variable or parameters
+     */
+    xsltStackElemPtr variables; /* linked list of param and variables */
+
+    /*
+     * Template descriptions
+     */
+    xsltTemplatePtr templates;	/* the ordered list of templates */
+    void *templatesHash;	/* hash table or wherever compiled templates
+				   informations are stored */
+    void *rootMatch;		/* template based on / */
+    void *elemMatch;		/* template based on * */
+    void *attrMatch;		/* template based on @* */
+    void *parentMatch;		/* template based on .. */
+    void *textMatch;		/* template based on text() */
+    void *piMatch;		/* template based on processing-instruction() */
+    void *commentMatch;		/* template based on comment() */
+    
+    /*
+     * Output related stuff.
+     */
+    xmlChar *method;		/* the output method */
+    xmlChar *methodURI;		/* associated namespace if any */
+    xmlChar *version;		/* version string */
+    xmlChar *encoding;		/* encoding string */
+    int omitXmlDeclaration;     /* omit-xml-declaration = "yes" | "no" */
+    int standalone;             /* standalone = "yes" | "no" */
+    xmlChar *doctypePublic;     /* doctype-public string */
+    xmlChar *doctypeSystem;     /* doctype-system string */
+    int indent;			/* should output being indented */
+    xmlChar *mediaType;		/* media-type string */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN831"
+></A
+><H3
+><A
+NAME="XSLTSTYLESHEETPTR"
+></A
+>xsltStylesheetPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltStylesheet *xsltStylesheetPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN836"
+></A
+><H3
+><A
+NAME="XSLTOUTPUTTYPE"
+></A
+>enum xsltOutputType</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef enum {
+    XSLT_OUTPUT_XML = 0,
+    XSLT_OUTPUT_HTML,
+    XSLT_OUTPUT_TEXT
+} xsltOutputType;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN841"
+></A
+><H3
+><A
+NAME="XSLTTRANSFORMCONTEXT"
+></A
+>struct xsltTransformContext</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltTransformContext {
+    xsltStylesheetPtr style;		/* the stylesheet used */
+    xsltOutputType type;		/* the type of output */
+
+    xmlDocPtr doc;			/* the current doc */
+    xmlNodePtr node;			/* the current node */
+    xmlNodeSetPtr nodeList;		/* the current node list */
+
+    xmlDocPtr output;			/* the resulting document */
+    xmlNodePtr insert;			/* the insertion node */
+
+    xmlXPathContextPtr xpathCtxt;	/* the XPath context */
+    void *variablesHash;		/* hash table or wherever variables
+				   	   informations are stored */
+    xmlDocPtr extraDocs;		/* extra docs parsed by document() */
+};</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN846"
+></A
+><H3
+><A
+NAME="XSLTTRANSFORMCONTEXTPTR"
+></A
+>xsltTransformContextPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltTransformContext *xsltTransformContextPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN851"
+></A
+><H3
+><A
+NAME="XSLTPARSESTYLESHEETFILE"
+></A
+>xsltParseStylesheetFile ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> xsltParseStylesheetFile   (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *filename);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Load and parse an XSLT stylesheet</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>filename</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the filename/URL to the stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>a new XSLT stylesheet structure.</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN872"
+></A
+><H3
+><A
+NAME="XSLTFREESTYLESHEET"
+></A
+>xsltFreeStylesheet ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltFreeStylesheet              (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> sheet);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Free up the memory allocated by <TT
+CLASS="PARAMETER"
+><I
+>sheet</I
+></TT
+></P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>sheet</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT stylesheet</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN889"
+></A
+><H3
+><A
+NAME="XSLTISBLANK"
+></A
+>xsltIsBlank ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltIsBlank                     (<GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *str);</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>str</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a string</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>1 if the string is NULL or made of blanks chars, 0 otherwise</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN909"
+></A
+><H3
+><A
+NAME="XSLTFREESTACKELEMLIST"
+></A
+>xsltFreeStackElemList ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltFreeStackElemList           (<A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
+>xsltStackElemPtr</A
+> elem);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Free up the memory allocated by <TT
+CLASS="PARAMETER"
+><I
+>elem</I
+></TT
+></P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>elem</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT stack element</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><BR
+CLEAR="all"><BR><TABLE
+WIDTH="100%"
+BORDER="0"
+BGCOLOR="#000000"
+CELLPADDING="1"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="25%"
+BGCOLOR="#C00000"
+ALIGN="left"
+><A
+HREF="libxslt-transform.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>&#60;&#60;&#60; Previous Page</B
+></FONT
+></A
+></TD
+><TD
+WIDTH="25%"
+BGCOLOR="#0000C0"
+ALIGN="center"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+><A
+HREF="book1.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Home</B
+></FONT
+></A
+></B
+></FONT
+></TD
+><TD
+WIDTH="25%"
+BGCOLOR="#00C000"
+ALIGN="center"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+><A
+HREF="libxslt-lib.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Up</B
+></FONT
+></A
+></B
+></FONT
+></TD
+><TD
+WIDTH="25%"
+BGCOLOR="#C00000"
+ALIGN="right"
+><A
+HREF="libxslt-xsltutils.html"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>Next Page &#62;&#62;&#62;</B
+></FONT
+></A
+></TD
+></TR
+><TR
+><TD
+COLSPAN="2"
+ALIGN="left"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>transform</B
+></FONT
+></TD
+><TD
+COLSPAN="2"
+ALIGN="right"
+><FONT
+COLOR="#FFFFFF"
+SIZE="3"
+><B
+>xsltutils</B
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

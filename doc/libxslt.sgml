@@ -1,0 +1,76 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity xslt SYSTEM "sgml/xslt.sgml">
+<!entity functions SYSTEM "sgml/functions.sgml">
+<!entity pattern SYSTEM "sgml/pattern.sgml">
+<!entity templates SYSTEM "sgml/templates.sgml">
+<!entity transform SYSTEM "sgml/transform.sgml">
+<!entity xsltInternals SYSTEM "sgml/xsltInternals.sgml">
+<!entity xsltutils SYSTEM "sgml/xsltutils.sgml">
+]>
+
+<book>
+  <bookinfo>
+    <title>Gnome XSLT Library Reference Manual</title>
+    <authorgroup>
+      <author>
+        <firstname>Daniel</firstname>
+        <surname>Veillard</surname>
+        <affiliation>
+	  <address>
+	    <email>Daniel.Veillard@imag.fr</email>
+	  </address>
+        </affiliation>
+      </author>
+    </authorgroup>
+    <copyright>
+      <year>2001</year>
+      <holder>Daniel Veillard</holder>
+    </copyright>	
+
+    <legalnotice>
+      <para>Permission is granted to make and distribute verbatim
+      copies of this manual provided the copyright notice and this
+      permission notice are preserved on all copies.</para>
+
+      <para>Permission is granted to copy and distribute modified
+      versions of this manual under the conditions for verbatim
+      copying, provided also that the entire resulting derived work is
+      distributed under the terms of a permission notice identical to
+      this one.</para>
+
+      <para>Permission is granted to copy and distribute translations
+      of this manual into another language, under the above conditions
+      for modified versions.</para>
+    </legalnotice>
+
+    <abstract>
+      <para>This manual documents the interfaces of the libxslt
+      library and has some short notes to help get you up to speed
+      with using the library.</para>
+    </abstract>
+  </bookinfo>
+
+  <chapter id="libxslt-notes">
+     <title>Libxml Programming Notes</title>
+
+     <para>Libxml is an XSLT toolkit library, it allows to transform
+     XML documents. It uses the XML parser, tree and XPath functionnalities
+     of libxml2</para>
+  </chapter>
+  <chapter id="libxslt-lib">
+    <title>Libxslt Library Reference</title>
+
+    <para>This section contains the API reference for libxslt. All
+    the public interfaces are documented here. This reference guide is
+    build by extracting comments from the code sources. </para>
+
+    &xslt;
+    &functions;
+    &pattern;
+    &templates;
+    &transform;
+    &xsltInternals;
+    &xsltutils;
+  </chapter>
+</book>
+
