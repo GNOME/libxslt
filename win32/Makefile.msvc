@@ -125,7 +125,9 @@ EXSLT_OBJS = $(EXSLT_INTDIR)\common.obj\
 	$(EXSLT_INTDIR)\math.obj\
 	$(EXSLT_INTDIR)\saxon.obj\
 	$(EXSLT_INTDIR)\sets.obj\
-	$(EXSLT_INTDIR)\strings.obj
+	$(EXSLT_INTDIR)\strings.obj\
+	$(EXSLT_INTDIR)\dynamic.obj
+
 
 # Xsltproc and friends executables.
 UTILS = $(BINDIR)\xsltproc.exe
@@ -160,6 +162,7 @@ install : all
 	copy $(BINDIR)\$(EXSLT_A) $(LIBPREFIX)
 	copy $(BINDIR)\$(EXSLT_IMP) $(LIBPREFIX)
 	copy $(BINDIR)\*.exe $(BINPREFIX)
+	copy $(BINDIR)\*.pdb $(BINPREFIX)
 
 # This is a target for me, to make a binary distribution. Not for the public use,
 # keep your hands off :-)

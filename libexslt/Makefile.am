@@ -21,7 +21,8 @@ libexslt_la_SOURCES =                   \
 	strings.c			\
 	date.c				\
 	saxon.c				\
-	libexslt.h
+	libexslt.h			\
+	dynamic.c
 
 # The following DOES NOT WORK reliably. Sorry no prelinking to uninstalled
 # yet libraries.

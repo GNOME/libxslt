@@ -1,3 +1,11 @@
+Thu May 30 23:35:47 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* win32/Makefile.msvc libexslt/Makefile.am libexslt/date.c
+	  libexslt/dynamic.c libexslt/exslt.c libexslt/exslt.h: applied
+	  a patch from Mark Vakoc to implement the EXSLT
+	  object dyn:evaluate(string) extension function, and a small fix
+	  to date.c
+
 Mon May 27 23:24:57 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: preparing 1.0.18

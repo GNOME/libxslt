@@ -38,5 +38,6 @@ exsltRegisterAll (void) {
     exsltStrRegister();
     exsltDateRegister();
     exsltSaxonRegister();
+    exsltDynRegister();
 }
 
