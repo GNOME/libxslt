@@ -1,3 +1,11 @@
+Thu Nov  7 11:18:42 MST 2002 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.xml
+	* doc/xsltproc.1
+	clarifying --catalog option and xsltproc's use of 
+	XML_CATALOG_FILES and /etc/xml/catalog. fixes
+	http://bugzilla.gnome.org/show_bug.cgi?id=97891
+	
 Mon Nov  4 06:55:36 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: remove the use of snprintf, and use

@@ -256,13 +256,12 @@
 	<term>
       <option>--catalogs</option></term>
 	<listitem>
-	  <simpara>Use catalogs to resolve the location of
-      external entities. This speeds DTD resolution. By having a
-      catalog file point to a local version of the DTD,
-      <application>xsltproc</application> does not have to use the
-      Internet to fetch the DTD. <application>xsltproc</application>
-      uses the catalog identified by the environmental variable
-      <envar>SGML_CATALOG_FILES</envar>.
+	  <simpara>Use the <acronym>SGML</acronym> catalog specified in
+      <envar>SGML_CATALOG_FILES</envar> to resolve the location of
+	    external entities. By default, <application>xsltproc</application>
+	    looks for the catalog specified in
+      <envar>XML_CATALOG_FILES</envar>. If that is not specified, it uses
+      <filename>/etc/xml/catalog</filename>.
     </simpara>
 	</listitem>
       </varlistentry>
