@@ -1,3 +1,11 @@
+Mon Jun 10 14:55:31 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c: patch from Richard Jinks t correct a bug in
+	  xsl:number level="multiple"
+	* tests/docs/Makefile.am tests/docs/bug-84.xml
+	  tests/general/Makefile.am tests/general/bug-84.*: added a 
+	  specific example in the regression tests
+
 Fri May 31 09:33:09 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/dynamic.c: turned a function static

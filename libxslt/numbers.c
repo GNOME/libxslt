@@ -536,7 +536,8 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 		xsltTestCompMatchList(context, ancestor, fromPat))
 		break; /* for */
 	    
-	    if ((count == NULL) ||
+	    if ((count == NULL && node->type == ancestor->type && 
+		xmlStrEqual(node->name, ancestor->name)) ||
 		xsltTestCompMatchList(context, ancestor, countPat)) {
 		/* count(preceding-sibling::*) */
 		cnt = 0;
