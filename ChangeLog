@@ -1,3 +1,8 @@
+Fri Aug  6 11:05:31 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: added date:sum routine supplied by Joel
+	  Reed
+
 Wed Aug  4 00:04:13 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* doc/downloads.html doc/xslt.html: fixed a couple of problems

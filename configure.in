@@ -253,7 +253,8 @@ dnl
 if [[ "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ]] || \
    [[ "${LOGNAME}" = "bill" -a "`pwd`" = "/home/bill/gnomecvs/xsltest" ]]
    then
-    if test "${with_mem_debug}" = "" ; then
+    if test "${with_mem_debug}" = "" ;
+    then
 	with_mem_debug="yes"
     fi
     CFLAGS="-Wall -g -O -ansi -pedantic -W -Wunused -Wimplicit -Wreturn-type -Wswitch -Wcomment -Wtrigraphs -Wformat -Wchar-subscripts -Wuninitialized -Wparentheses -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline "
