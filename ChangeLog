@@ -1,3 +1,11 @@
+Sat Jun 15 15:44:58 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c libxslt/numbersInternals.h: applied a
+	  patch from Ken Neighbors fixing some format-number inconsistencies
+	* tests/numbers/format-number.out tests/numbers/format-number.xml
+	  tests/numbers/format-number.xsl: the patch also included
+	  updates to the regression tests
+
 Mon Jun 10 14:55:31 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c: patch from Richard Jinks t correct a bug in

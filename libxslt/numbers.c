@@ -109,16 +109,19 @@ xsltNumberFormatDecimal(xmlBufferPtr buffer,
     /* Build buffer from back */
     pointer = &temp_string[sizeof(temp_string)];
     *(--pointer) = 0;
-    for (i = 1; i < (int)sizeof(temp_string); i++) {
-	*(--pointer) = digit_zero + (int)fmod(number, 10.0);
-	number /= 10.0;
+    i = 0;
+    while (pointer > temp_string) {
 	if ((i >= width) && (fabs(number) < 1.0))
 	    break; /* for */
-	if ((groupingCharacter != 0) &&
+	if ((i > 0) && (groupingCharacter != 0) &&
 	    (digitsPerGroup > 0) &&
 	    ((i % digitsPerGroup) == 0)) {
 	    *(--pointer) = groupingCharacter;
 	}
+	if (pointer > temp_string)
+	    *(--pointer) = digit_zero + (int)fmod(number, 10.0);
+	number /= 10.0;
+	++i;
     }
     xmlBufferCat(buffer, pointer);
 }
@@ -871,11 +874,13 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 	return XPATH_MEMORY_ERROR;
     }
 
+    format_info.integer_hash = 0;
     format_info.integer_digits = 0;
     format_info.frac_digits = 0;
     format_info.frac_hash = 0;
     format_info.group = -1;
     format_info.multiplier = 1;
+    format_info.add_decimal = FALSE;
     format_info.is_multiplier_set = FALSE;
     format_info.is_negative_pattern = FALSE;
 
@@ -906,6 +911,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 		found_error = 1;
 		goto OUTPUT_NUMBER;
 	    }
+	    format_info.integer_hash++;
 	    if (format_info.group >= 0)
 		format_info.group++;
 	} else if (*the_format == self->zeroDigit[0]) {
@@ -934,8 +940,10 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     }
 
     /* We have finished the integer part, now work on fraction */
-    if (*the_format == self->decimalPoint[0])
+    if (*the_format == self->decimalPoint[0]) {
+        format_info.add_decimal = TRUE;
 	the_format++;		/* Skip over the decimal */
+    }
     
     while (*the_format != 0) {
 	
@@ -1070,11 +1078,13 @@ OUTPUT_NUMBER:
                 "xsltFormatNumberConversion : error in format string, using default\n");
 	default_sign = (number < 0.0) ? 1 : 0;
 	prefix_length = suffix_length = 0;
+	format_info.integer_hash = 0;
 	format_info.integer_digits = 1;
 	format_info.frac_digits = 1;
 	format_info.frac_hash = 4;
 	format_info.group = -1;
 	format_info.multiplier = 1;
+	format_info.add_decimal = TRUE;
     }
 
     /* Ready to output our number.  First see if "default sign" is required */
@@ -1105,9 +1115,26 @@ OUTPUT_NUMBER:
 				format_info.group,
 				(xmlChar) ',');
 
+    /* Special case: java treats '.#' like '.0', '.##' like '.0#', etc. */
+    if ((format_info.integer_digits + format_info.integer_hash +
+	 format_info.frac_digits == 0) && (format_info.frac_hash > 0)) {
+        ++format_info.frac_digits;
+	--format_info.frac_hash;
+    }
+
+    /* Add leading zero, if required */
+    if ((floor(number) == 0) &&
+	(format_info.integer_digits + format_info.frac_digits == 0)) {
+        xmlBufferAdd(buffer, self->zeroDigit, 1);
+    }
+
     /* Next the fractional part, if required */
-    if (format_info.frac_digits + format_info.frac_hash > 0) {
-	number -= floor(number);
+    if (format_info.frac_digits + format_info.frac_hash == 0) {
+        if (format_info.add_decimal)
+	    xmlBufferAdd(buffer, self->decimalPoint, 1);
+    }
+    else {
+      number -= floor(number);
 	if ((number != 0) || (format_info.frac_digits != 0)) {
 	    xmlBufferAdd(buffer, self->decimalPoint, 1);
 	    number = floor(scale * number + 0.5);
