@@ -85,7 +85,7 @@
     </ul>
   </xsl:variable>
   <xsl:variable name="api">
-    <form action="http://xmlsoft.org/XSLT/search.php"
+    <form action="search.php"
           enctype="application/x-www-form-urlencoded" method="GET">
       <input name="query" type="TEXT" size="20" value=""/>
       <input name="submit" type="submit" value="Search ..."/>
