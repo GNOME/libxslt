@@ -508,6 +508,9 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
     XSLT_GET_IMPORT_PTR(method, style, method)
     XSLT_GET_IMPORT_PTR(encoding, style, encoding)
 
+    if ((method == NULL) && (result->type == XML_HTML_DOCUMENT_NODE))
+	method = (const xmlChar *) "html";
+
     if (method == NULL)
 	root = xmlDocGetRootElement(result);
     else

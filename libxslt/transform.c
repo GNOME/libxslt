@@ -2491,6 +2491,63 @@ error:
  *									*
  ************************************************************************/
 
+#ifdef XSLT_GENERATE_HTML_DOCTYPE
+typedef struct xsltHTMLVersion {
+    const char *version;
+    const char *public;
+    const char *system;
+} xsltHTMLVersion;
+
+static xsltHTMLVersion xsltHTMLVersions[] = {
+    { "4.01frame", "-//W3C//DTD HTML 4.01 Frameset//EN",
+      "http://www.w3.org/TR/1999/REC-html401-19991224/frameset.dtd"},
+    { "4.01strict", "-//W3C//DTD HTML 4.01//EN",
+      "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd"},
+    { "4.01trans", "-//W3C//DTD HTML 4.01 Transitional//EN",
+      "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"},
+    { "4.01", "-//W3C//DTD HTML 4.01 Transitional//EN",
+      "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"},
+    { "4.0strict", "-//W3C//DTD HTML 4.01//EN",
+      "http://www.w3.org/TR/html4/strict.dtd"},
+    { "4.0trans", "-//W3C//DTD HTML 4.01 Transitional//EN",
+      "http://www.w3.org/TR/html4/loose.dtd"},
+    { "4.0frame", "-//W3C//DTD HTML 4.01 Frameset//EN",
+      "http://www.w3.org/TR/html4/frameset.dtd"},
+    { "4.0", "-//W3C//DTD HTML 4.01 Transitional//EN",
+      "http://www.w3.org/TR/html4/loose.dtd"},
+    { "3.2", "-//W3C//DTD HTML 3.2//EN", NULL }
+};
+
+/**
+ * xsltGetHTMLIDs:
+ * @version:  the version string
+ * @public:  used to return the public ID
+ * @system:  used to return the system ID
+ *
+ * Returns -1 if not found, 0 otherwise and the system and public
+ *         Identifier for this given verion of HTML
+ */
+static int
+xsltGetHTMLIDs(const xmlChar *version, const xmlChar **public,
+	            const xmlChar **system) {
+    unsigned int i;
+    if (version == NULL)
+	return(-1);
+    for (i = 0;i < (sizeof(xsltHTMLVersions)/sizeof(xsltHTMLVersions[1]));
+	 i++) {
+	if (!xmlStrcasecmp(version,
+		           (const xmlChar *) xsltHTMLVersions[i].version)) {
+	    if (public != NULL)
+		*public = (const xmlChar *) xsltHTMLVersions[i].public;
+	    if (system != NULL)
+		*system = (const xmlChar *) xsltHTMLVersions[i].system;
+	    return(0);
+	}
+    }
+    return(-1);
+}
+#endif
+
 /**
  * xsltApplyStylesheet:
  * @style:  a parsed XSLT stylesheet
@@ -2509,6 +2566,10 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltTransformContextPtr ctxt = NULL;
     xmlNodePtr root;
     const xmlChar *method;
+    const xmlChar *doctypePublic;
+    const xmlChar *doctypeSystem;
+    const xmlChar *version;
+
 
     if ((style == NULL) || (doc == NULL))
 	return(NULL);
@@ -2516,17 +2577,26 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltRegisterExtras(ctxt);
     if (ctxt == NULL)
 	return(NULL);
+
     XSLT_GET_IMPORT_PTR(method, style, method)
+    XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
+    XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
+    XSLT_GET_IMPORT_PTR(version, style, version)
+
     if ((method != NULL) &&
 	(!xmlStrEqual(method, (const xmlChar *) "xml"))) {
-	const xmlChar *doctypePublic;
-	const xmlChar *doctypeSystem;
-
-	XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
-	XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
 	if (xmlStrEqual(method, (const xmlChar *) "html")) {
 	    ctxt->type = XSLT_OUTPUT_HTML;
-	    res = htmlNewDoc(doctypeSystem, doctypePublic);
+	    if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+		res = htmlNewDoc(doctypeSystem, doctypePublic);
+	    else {
+		if (version == NULL)
+		    version = (const xmlChar *) "4.0";
+#ifdef XSLT_GENERATE_HTML_DOCTYPE
+		xsltGetHTMLIDs(version, &doctypePublic, &doctypeSystem);
+#endif
+		res = htmlNewDoc(doctypeSystem, doctypePublic);
+	    }
 	    if (res == NULL)
 		goto error;
 	} else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
@@ -2573,17 +2643,48 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltCleanupTemplates(style);
 
 
-    if (ctxt->type == XSLT_OUTPUT_XML) {
-	const xmlChar *doctypePublic;
-	const xmlChar *doctypeSystem;
+    root = xmlDocGetRootElement(res);
+    if (root != NULL) {
+	/*
+	 * Apply the default selection of the method
+	 */
+	if ((method == NULL) &&
+	    (root->ns == NULL) &&
+	    (!xmlStrcasecmp(root->name, (const xmlChar *) "html"))) {
+	    xmlNodePtr tmp;
+	    tmp = res->children;
+	    while ((tmp != NULL) && (tmp != root)) {
+		if (tmp->type == XML_ELEMENT_NODE)
+		    break;
+		if ((tmp->type == XML_TEXT_NODE) && (!xmlIsBlankNode(tmp)))
+		    break;
+	    }
+	    if (tmp == root) {
+		ctxt->type = XSLT_OUTPUT_HTML;
+		res->type = XML_HTML_DOCUMENT_NODE;
+		if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+		    res->intSubset = xmlCreateIntSubset(res, root->name,
+				 doctypePublic, doctypeSystem);
+#ifdef XSLT_GENERATE_HTML_DOCTYPE
+		else {
+		    if (version == NULL)
+			version = (const xmlChar *) "4.0";
+		    xsltGetHTMLIDs(version, &doctypePublic, &doctypeSystem);
+		    if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+			res->intSubset = xmlCreateIntSubset(res, root->name,
+				     doctypePublic, doctypeSystem);
+		}
+#endif
+	    }
 
-	XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
-	XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
-	root = xmlDocGetRootElement(res);
-	if ((root != NULL) &&
-	    ((doctypePublic != NULL) || (doctypeSystem != NULL)))
-	    res->intSubset = xmlCreateIntSubset(res, root->name,
-		         doctypePublic, doctypeSystem);
+	}
+	if (ctxt->type == XSLT_OUTPUT_XML) {
+	    XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
+	    XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
+	    if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+		res->intSubset = xmlCreateIntSubset(res, root->name,
+			     doctypePublic, doctypeSystem);
+	}
     }
     xmlXPathFreeNodeSet(ctxt->nodeList);
     xsltFreeTransformContext(ctxt);

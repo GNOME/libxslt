@@ -1,3 +1,15 @@
+Sat May 12 12:39:54 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/transform.c libxslt/xsltutils.c: fixed the default
+	  detection method to generate HTML documents 
+	* tests/REC/test-2.5-1.out tests/REC/test-8-1.out
+	  tests/REC/test-9.1-2.out tests/REC2/html.xml tests/XSLTMark/game.out
+	  tests/XSLTMark/html.out tests/XSLTMark/products.out
+	  tests/XSLTMark/xslbench1.out tests/XSLTMark/xslbench2.out
+	  tests/XSLTMark/xslbench3.out tests/general/bug-15-.out
+	  tests/general/bug-5-.out: updated a number of tests output
+	  accordingly
+
 Sat May 12 09:43:10 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: use LIBXML_DOCB_ENABLED, William M. Brack
