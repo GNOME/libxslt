@@ -1,3 +1,8 @@
+Fri Sep 24 09:17:22 PDT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: fixed problem with empty sets, etc.
+	  (see discussion on mailing list)
+
 Sat Sep 18 17:08:31 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: fixed problem with timezone offset

@@ -2748,20 +2748,28 @@ exsltDateSumFunction (xmlXPathParserContextPtr ctxt, int nargs)
     if (xmlXPathCheckError (ctxt))
 	return;
 
-    if ((ns == NULL) || (ns->nodeNr == 0))
+    if ((ns == NULL) || (ns->nodeNr == 0)) {
+	xmlXPathReturnEmptyString (ctxt);
 	return;
+    }
 
     total = exsltDateCreateDate (XS_DURATION);
+    if (total == NULL)
+        return;
 
     for (i = 0; i < ns->nodeNr; i++) {
 
 	tmp = xmlXPathCastNodeToString (ns->nodeTab[i]);
-	if (tmp == NULL)
+	if (tmp == NULL) {
+	    exsltDateFreeDate (total);
 	    return;
+	}
 
 	x = exsltDateParseDuration (tmp);
 	if (x == NULL) {
 	    xmlFree (tmp);
+	    exsltDateFreeDate (total);
+	    xmlXPathReturnEmptyString (ctxt);
 	    return;
 	}
 
