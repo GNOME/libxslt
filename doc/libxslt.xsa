@@ -8,15 +8,21 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.0.30</version>
-    <last-release> May 4 2003</last-release>
+    <version>1.0.31</version>
+    <last-release> Jul 6 2003</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - Fixes and new APIs to handle Result Value Trees and avoid leaks
-   - Fixes for: EXSLT math pow() function (Charles Bozeman), global
-    parameter and global variables mismatch, a segfault on pattern
-    compilation errors, namespace copy in xsl:copy-of, python generator
-    problem, OpenVMS trio update, premature call to xsltFreeStackElem (Igor),
-    current node when templates applies to attributes
+    <changes>   - bugfixes: xsl:copy on namespace nodes, AVT for xsl:sort order, fix for
+    the debugger (Keith Isdale), output filename limitation, trio.h and
+    triodef.h added (Albert Chin), EXSLT node-set (Peter Breitenlohner),
+    xsltChoose and whitespace (Igor Zlatkovic),
+    stylesheet compilation (Igor Zlatkovic), NaN and sort (William Brack),
+    RVT bug introduced in 1.0.30
+  
+   - avoid generating &amp;quot; (fix in libxml2-2.5.8) 
+   - fix 64bit cleaness problem and compilation troubles introduced in
+  1.0.30
+   - Windows makefile generation (Igor Zlatkovic)
+   - HP-UX portability fix
 
 </changes>
   </product>
