@@ -1,3 +1,7 @@
+Wed Aug 27 12:07:13 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/*.h: realigned parameters after taint
+
 Wed Aug 27 09:59:54 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libxslt/xsltexports.h libexslt/exsltexports.h: fixed defs for 

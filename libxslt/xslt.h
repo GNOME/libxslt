@@ -75,7 +75,8 @@ XSLTPUBVAR const int xsltLibxmlVersion;
 /*
  * Global cleanup function.
  */
-XSLTPUBFUN void XSLTCALL	xsltCleanupGlobals	(void);
+XSLTPUBFUN void XSLTCALL	
+		xsltCleanupGlobals	(void);
 
 #ifdef __cplusplus
 }

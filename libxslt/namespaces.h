@@ -19,22 +19,29 @@ extern "C" {
 XSLTPUBFUN void XSLTCALL
 		xsltNamespaceAlias	(xsltStylesheetPtr style,
 					 xmlNodePtr node);
-XSLTPUBFUN xmlNsPtr XSLTCALL	xsltGetNamespace	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlNsPtr XSLTCALL	
+		xsltGetNamespace	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr cur,
 					 xmlNsPtr ns,
 					 xmlNodePtr out);
-XSLTPUBFUN xmlNsPtr XSLTCALL	xsltGetSpecialNamespace	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlNsPtr XSLTCALL	
+		xsltGetSpecialNamespace	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr cur,
 					 const xmlChar *URI,
 					 const xmlChar *prefix,
 					 xmlNodePtr out);
-XSLTPUBFUN xmlNsPtr XSLTCALL	xsltCopyNamespace	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlNsPtr XSLTCALL	
+		xsltCopyNamespace	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNsPtr cur);
-XSLTPUBFUN xmlNsPtr XSLTCALL	xsltCopyNamespaceList	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlNsPtr XSLTCALL	
+		xsltCopyNamespaceList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNsPtr cur);
-XSLTPUBFUN void XSLTCALL		xsltFreeNamespaceAliasHashes(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL		
+		xsltFreeNamespaceAliasHashes
+					(xsltStylesheetPtr style);
+
 #ifdef __cplusplus
 }
 #endif

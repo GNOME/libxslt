@@ -46,15 +46,22 @@ extern "C" {
 /*
  * Module interfaces
  */
-XSLTPUBFUN int XSLTCALL			xsltParseStylesheetImport(xsltStylesheetPtr style,
+XSLTPUBFUN int XSLTCALL			
+			xsltParseStylesheetImport(xsltStylesheetPtr style,
 						  xmlNodePtr cur);
-XSLTPUBFUN int XSLTCALL			xsltParseStylesheetInclude(xsltStylesheetPtr style,
+XSLTPUBFUN int XSLTCALL			
+			xsltParseStylesheetInclude
+						 (xsltStylesheetPtr style,
 						  xmlNodePtr cur);
-XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltNextImport		 (xsltStylesheetPtr style);
-XSLTPUBFUN int XSLTCALL			xsltNeedElemSpaceHandling(xsltTransformContextPtr ctxt);
-XSLTPUBFUN int XSLTCALL			xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
+			xsltNextImport		 (xsltStylesheetPtr style);
+XSLTPUBFUN int XSLTCALL			
+			xsltNeedElemSpaceHandling(xsltTransformContextPtr ctxt);
+XSLTPUBFUN int XSLTCALL			
+			xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt,
 						  xmlNodePtr node);
-XSLTPUBFUN xsltTemplatePtr XSLTCALL		xsltFindTemplate	 (xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltTemplatePtr XSLTCALL		
+			xsltFindTemplate	 (xsltTransformContextPtr ctxt,
 						  const xmlChar *name,
 						  const xmlChar *nameURI);
 

@@ -24,14 +24,18 @@ XSLTPUBFUN int XSLTCALL
 					 const xmlChar *match,
 					 const xmlChar *use,
 					 xmlNodePtr inst);
-XSLTPUBFUN xmlNodeSetPtr XSLTCALL	xsltGetKey		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlNodeSetPtr XSLTCALL	
+		xsltGetKey		(xsltTransformContextPtr ctxt,
 					 const xmlChar *name,
 					 const xmlChar *nameURI,
 					 const xmlChar *value);
-XSLTPUBFUN void XSLTCALL		xsltInitCtxtKeys	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+		xsltInitCtxtKeys	(xsltTransformContextPtr ctxt,
 					 xsltDocumentPtr doc);
-XSLTPUBFUN void XSLTCALL		xsltFreeKeys		(xsltStylesheetPtr style);
-XSLTPUBFUN void XSLTCALL		xsltFreeDocumentKeys	(xsltDocumentPtr doc);
+XSLTPUBFUN void XSLTCALL		
+		xsltFreeKeys		(xsltStylesheetPtr style);
+XSLTPUBFUN void XSLTCALL		
+		xsltFreeDocumentKeys	(xsltDocumentPtr doc);
 
 #ifdef __cplusplus
 }

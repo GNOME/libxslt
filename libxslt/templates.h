@@ -18,42 +18,53 @@
 extern "C" {
 #endif
 
-XSLTPUBFUN int XSLTCALL		xsltEvalXPathPredicate		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN int XSLTCALL		
+		xsltEvalXPathPredicate		(xsltTransformContextPtr ctxt,
 						 xmlXPathCompExprPtr comp,
 		                                 xmlNsPtr *nsList,
 						 int nsNr);
-XSLTPUBFUN xmlChar * XSLTCALL	xsltEvalTemplateString		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlChar * XSLTCALL	
+		xsltEvalTemplateString		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 xmlNodePtr parent);
-XSLTPUBFUN xmlChar * XSLTCALL	xsltEvalAttrValueTemplate	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlChar * XSLTCALL	
+		xsltEvalAttrValueTemplate	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *ns);
-XSLTPUBFUN xmlChar * XSLTCALL	xsltEvalStaticAttrValueTemplate	(xsltStylesheetPtr style,
+XSLTPUBFUN xmlChar * XSLTCALL	
+		xsltEvalStaticAttrValueTemplate	(xsltStylesheetPtr style,
 						 xmlNodePtr node,
 						 const xmlChar *name,
 						 const xmlChar *ns,
 						 int *found);
 
 /* TODO: this is obviously broken ... the namespaces should be passed too ! */
-XSLTPUBFUN xmlChar * XSLTCALL	xsltEvalXPathString		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlChar * XSLTCALL	
+		xsltEvalXPathString		(xsltTransformContextPtr ctxt,
 						 xmlXPathCompExprPtr comp);
-XSLTPUBFUN xmlChar * XSLTCALL	xsltEvalXPathStringNs		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlChar * XSLTCALL	
+		xsltEvalXPathStringNs		(xsltTransformContextPtr ctxt,
 						 xmlXPathCompExprPtr comp,
 						 int nsNr,
 						 xmlNsPtr *nsList);
 
-XSLTPUBFUN xmlNodePtr * XSLTCALL	xsltTemplateProcess		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlNodePtr * XSLTCALL	
+		xsltTemplateProcess		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node);
-XSLTPUBFUN xmlAttrPtr XSLTCALL	xsltAttrListTemplateProcess	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlAttrPtr XSLTCALL	
+		xsltAttrListTemplateProcess	(xsltTransformContextPtr ctxt,
 						 xmlNodePtr target,
 						 xmlAttrPtr cur);
-XSLTPUBFUN xmlAttrPtr XSLTCALL	xsltAttrTemplateProcess		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlAttrPtr XSLTCALL	
+		xsltAttrTemplateProcess		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr target,
 						 xmlAttrPtr attr);
-XSLTPUBFUN xmlChar * XSLTCALL	xsltAttrTemplateValueProcess	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlChar * XSLTCALL	
+		xsltAttrTemplateValueProcess	(xsltTransformContextPtr ctxt,
 						 const xmlChar* attr);
-XSLTPUBFUN xmlChar * XSLTCALL	xsltAttrTemplateValueProcessNode(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlChar * XSLTCALL	
+		xsltAttrTemplateValueProcessNode(xsltTransformContextPtr ctxt,
 						 const xmlChar* str,
 						 xmlNodePtr node);
 #ifdef __cplusplus

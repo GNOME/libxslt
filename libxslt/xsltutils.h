@@ -102,20 +102,26 @@ XSLTPUBVAR void *xsltGenericErrorContext;
 XSLTPUBVAR xmlGenericErrorFunc xsltGenericDebug;
 XSLTPUBVAR void *xsltGenericDebugContext;
 
-XSLTPUBFUN void XSLTCALL		xsltPrintErrorContext		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+		xsltPrintErrorContext		(xsltTransformContextPtr ctxt,
 	                                         xsltStylesheetPtr style,
 						 xmlNodePtr node);
-XSLTPUBFUN void XSLTCALL		xsltMessage			(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+    		xsltMessage			(xsltTransformContextPtr ctxt,
 						 xmlNodePtr node,
 						 xmlNodePtr inst);
-XSLTPUBFUN void XSLTCALL		xsltSetGenericErrorFunc		(void *ctx,
+XSLTPUBFUN void XSLTCALL		
+    		xsltSetGenericErrorFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
-XSLTPUBFUN void XSLTCALL		xsltSetGenericDebugFunc		(void *ctx,
+XSLTPUBFUN void XSLTCALL		
+    		xsltSetGenericDebugFunc		(void *ctx,
 						 xmlGenericErrorFunc handler);
-XSLTPUBFUN void XSLTCALL		xsltSetTransformErrorFunc	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+    		xsltSetTransformErrorFunc	(xsltTransformContextPtr ctxt,
 						 void *ctx,
 						 xmlGenericErrorFunc handler);
-XSLTPUBFUN void XSLTCALL		xsltTransformError		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+    		xsltTransformError		(xsltTransformContextPtr ctxt,
 						 xsltStylesheetPtr style,
 						 xmlNodePtr node,
 						 const char *msg,
@@ -125,43 +131,55 @@ XSLTPUBFUN void XSLTCALL		xsltTransformError		(xsltTransformContextPtr ctxt,
  * Sorting.
  */
 
-XSLTPUBFUN void XSLTCALL		xsltDocumentSortFunction	(xmlNodeSetPtr list);
-XSLTPUBFUN void XSLTCALL		xsltSetSortFunc			(xsltSortFunc handler);
-XSLTPUBFUN void XSLTCALL		xsltSetCtxtSortFunc		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+    		xsltDocumentSortFunction	(xmlNodeSetPtr list);
+XSLTPUBFUN void XSLTCALL		
+    		xsltSetSortFunc			(xsltSortFunc handler);
+XSLTPUBFUN void XSLTCALL		
+    		xsltSetCtxtSortFunc		(xsltTransformContextPtr ctxt,
 						 xsltSortFunc handler);
-XSLTPUBFUN void XSLTCALL		xsltDefaultSortFunction		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+    		xsltDefaultSortFunction		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr *sorts,
 						 int nbsorts);
-XSLTPUBFUN void XSLTCALL		xsltDoSortFunction		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+    		xsltDoSortFunction		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr * sorts,
 						 int nbsorts);
-XSLTPUBFUN xmlXPathObjectPtr * XSLTCALL xsltComputeSortResult	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlXPathObjectPtr * XSLTCALL 
+    		xsltComputeSortResult		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr sort);
 
 /*
  * QNames handling.
  */
 
-XSLTPUBFUN const xmlChar * XSLTCALL xsltGetQNameURI			(xmlNodePtr node,
+XSLTPUBFUN const xmlChar * XSLTCALL 
+    		xsltGetQNameURI			(xmlNodePtr node,
 						 xmlChar **name);
 
 /*
  * Output, reuse libxml I/O buffers.
  */
-XSLTPUBFUN int XSLTCALL		xsltSaveResultTo		(xmlOutputBufferPtr buf,
+XSLTPUBFUN int XSLTCALL		
+    		xsltSaveResultTo		(xmlOutputBufferPtr buf,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
-XSLTPUBFUN int XSLTCALL		xsltSaveResultToFilename	(const char *URI,
+XSLTPUBFUN int XSLTCALL		
+    		xsltSaveResultToFilename	(const char *URI,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style,
 						 int compression);
-XSLTPUBFUN int XSLTCALL		xsltSaveResultToFile		(FILE *file,
+XSLTPUBFUN int XSLTCALL		
+    		xsltSaveResultToFile		(FILE *file,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
-XSLTPUBFUN int XSLTCALL		xsltSaveResultToFd		(int fd,
+XSLTPUBFUN int XSLTCALL		
+    		xsltSaveResultToFd		(int fd,
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
-XSLTPUBFUN int XSLTCALL             xsltSaveResultToString          (xmlChar **doc_txt_ptr, 
+XSLTPUBFUN int XSLTCALL             
+    		xsltSaveResultToString          (xmlChar **doc_txt_ptr, 
                                                  int * doc_txt_len, 
                                                  xmlDocPtr result, 
                                                  xsltStylesheetPtr style);
@@ -169,12 +187,16 @@ XSLTPUBFUN int XSLTCALL             xsltSaveResultToString          (xmlChar **d
 /*
  * Profiling.
  */
-XSLTPUBFUN void XSLTCALL		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+    		xsltSaveProfiling		(xsltTransformContextPtr ctxt,
 						 FILE *output);
-XSLTPUBFUN xmlDocPtr XSLTCALL	xsltGetProfileInformation	(xsltTransformContextPtr ctxt);
+XSLTPUBFUN xmlDocPtr XSLTCALL	
+    		xsltGetProfileInformation	(xsltTransformContextPtr ctxt);
 
-XSLTPUBFUN long XSLTCALL		xsltTimestamp			(void);
-XSLTPUBFUN void XSLTCALL		xsltCalibrateAdjust		(long delta);
+XSLTPUBFUN long XSLTCALL		
+    		xsltTimestamp			(void);
+XSLTPUBFUN void XSLTCALL		
+    		xsltCalibrateAdjust		(long delta);
 
 /**
  * XSLT_TIMESTAMP_TICS_PER_SEC:
@@ -207,10 +229,13 @@ typedef void (*xsltHandleDebuggerCallback) (xmlNodePtr cur, xmlNodePtr node,
 typedef int (*xsltAddCallCallback) (xsltTemplatePtr templ, xmlNodePtr source);
 typedef void (*xsltDropCallCallback) (void);
 
-XSLTPUBFUN int XSLTCALL		xsltSetDebuggerCallbacks	(int no, void *block);
-XSLTPUBFUN int XSLTCALL		xslAddCall			(xsltTemplatePtr templ,
+XSLTPUBFUN int XSLTCALL		
+		xsltSetDebuggerCallbacks	(int no, void *block);
+XSLTPUBFUN int XSLTCALL		
+		xslAddCall			(xsltTemplatePtr templ,
 						 xmlNodePtr source);
-XSLTPUBFUN void XSLTCALL		xslDropCall			(void);
+XSLTPUBFUN void XSLTCALL		
+		xslDropCall			(void);
 
 #ifdef __cplusplus
 }

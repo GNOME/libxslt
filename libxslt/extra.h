@@ -58,14 +58,17 @@ extern "C" {
 XSLTPUBFUN void XSLTCALL
 		xsltFunctionNodeSet	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL		xsltDebug		(xsltTransformContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL		
+		xsltDebug		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr inst,
 					 xsltStylePreCompPtr comp);
 
 
-XSLTPUBFUN void XSLTCALL		xsltRegisterExtras	(xsltTransformContextPtr ctxt);
-XSLTPUBFUN void XSLTCALL		xsltRegisterAllExtras	(void);
+XSLTPUBFUN void XSLTCALL		
+		xsltRegisterExtras	(xsltTransformContextPtr ctxt);
+XSLTPUBFUN void XSLTCALL		
+		xsltRegisterAllExtras	(void);
 
 #ifdef __cplusplus
 }

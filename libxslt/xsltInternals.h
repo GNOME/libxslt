@@ -544,42 +544,63 @@ struct _xsltTransformContext {
 xsltDecimalFormatPtr	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
 						   xmlChar *name);
  */
-XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltNewStylesheet	(void);
-XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltParseStylesheetFile	(const xmlChar* filename);
-XSLTPUBFUN void XSLTCALL			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
-XSLTPUBFUN int XSLTCALL			xsltIsBlank		(xmlChar *str);
-XSLTPUBFUN void XSLTCALL			xsltFreeStackElemList	(xsltStackElemPtr elem);
-XSLTPUBFUN xsltDecimalFormatPtr XSLTCALL	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
-						   xmlChar *name);
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
+			xsltNewStylesheet	(void);
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
+			xsltParseStylesheetFile	(const xmlChar* filename);
+XSLTPUBFUN void XSLTCALL			
+			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
+XSLTPUBFUN int XSLTCALL			
+			xsltIsBlank		(xmlChar *str);
+XSLTPUBFUN void XSLTCALL			
+			xsltFreeStackElemList	(xsltStackElemPtr elem);
+XSLTPUBFUN xsltDecimalFormatPtr XSLTCALL	
+			xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
+						 xmlChar *name);
 
-XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltParseStylesheetProcess(xsltStylesheetPtr ret,
-	                                         xmlDocPtr doc);
-XSLTPUBFUN void XSLTCALL			xsltParseStylesheetOutput(xsltStylesheetPtr style,
-						  xmlNodePtr cur);
-XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltParseStylesheetDoc	(xmlDocPtr doc);
-XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltParseStylesheetImportedDoc(xmlDocPtr doc);
-XSLTPUBFUN xsltStylesheetPtr XSLTCALL	xsltLoadStylesheetPI	(xmlDocPtr doc);
-XSLTPUBFUN void XSLTCALL 			xsltNumberFormat	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
+			xsltParseStylesheetProcess(xsltStylesheetPtr ret,
+						 xmlDocPtr doc);
+XSLTPUBFUN void XSLTCALL			
+			xsltParseStylesheetOutput(xsltStylesheetPtr style,
+						 xmlNodePtr cur);
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
+			xsltParseStylesheetDoc	(xmlDocPtr doc);
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
+			xsltParseStylesheetImportedDoc(xmlDocPtr doc);
+XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
+			xsltLoadStylesheetPI	(xmlDocPtr doc);
+XSLTPUBFUN void XSLTCALL 			
+			xsltNumberFormat	(xsltTransformContextPtr ctxt,
 						 xsltNumberDataPtr data,
 						 xmlNodePtr node);
-XSLTPUBFUN xmlXPathError XSLTCALL		 xsltFormatNumberConversion(xsltDecimalFormatPtr self,
+XSLTPUBFUN xmlXPathError XSLTCALL		 
+			xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 						 xmlChar *format,
 						 double number,
 						 xmlChar **result);
 
-XSLTPUBFUN void XSLTCALL			xsltParseTemplateContent(xsltStylesheetPtr style,
+XSLTPUBFUN void XSLTCALL			
+			xsltParseTemplateContent(xsltStylesheetPtr style,
 						 xmlNodePtr templ);
-XSLTPUBFUN int XSLTCALL			xsltAllocateExtra	(xsltStylesheetPtr style);
-XSLTPUBFUN int XSLTCALL			xsltAllocateExtraCtxt	(xsltTransformContextPtr ctxt);
+XSLTPUBFUN int XSLTCALL			
+			xsltAllocateExtra	(xsltStylesheetPtr style);
+XSLTPUBFUN int XSLTCALL			
+			xsltAllocateExtraCtxt	(xsltTransformContextPtr ctxt);
 /*
  * Extra functions for Result Value Trees
  */
-XSLTPUBFUN xmlDocPtr XSLTCALL		xsltCreateRVT		(xsltTransformContextPtr ctxt);
-XSLTPUBFUN int XSLTCALL			xsltRegisterTmpRVT	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN xmlDocPtr XSLTCALL		
+			xsltCreateRVT		(xsltTransformContextPtr ctxt);
+XSLTPUBFUN int XSLTCALL			
+			xsltRegisterTmpRVT	(xsltTransformContextPtr ctxt,
 						 xmlDocPtr RVT);
-XSLTPUBFUN int XSLTCALL			xsltRegisterPersistRVT	(xsltTransformContextPtr ctxt,
+XSLTPUBFUN int XSLTCALL			
+			xsltRegisterPersistRVT	(xsltTransformContextPtr ctxt,
 						 xmlDocPtr RVT);
-XSLTPUBFUN void XSLTCALL			xsltFreeRVTs		(xsltTransformContextPtr ctxt);
+XSLTPUBFUN void XSLTCALL			
+			xsltFreeRVTs		(xsltTransformContextPtr ctxt);
+			
 #ifdef __cplusplus
 }
 #endif

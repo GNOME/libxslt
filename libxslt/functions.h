@@ -30,36 +30,45 @@ extern "C" {
 	(void *)(ctxt->xpathCtxt));
 
 XSLTPUBFUN xmlXPathFunction XSLTCALL
-	xsltXPathFunctionLookup	(xmlXPathContextPtr ctxt,
-				 const xmlChar *name,
-				 const xmlChar *ns_uri);
+	xsltXPathFunctionLookup		(xmlXPathContextPtr ctxt,
+					 const xmlChar *name,
+					 const xmlChar *ns_uri);
 
 /*
  * Interfaces for the functions implementations.
  */
 
-XSLTPUBFUN void XSLTCALL	xsltDocumentFunction		(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltDocumentFunction		(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL	xsltKeyFunction			(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltKeyFunction			(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL	xsltUnparsedEntityURIFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltUnparsedEntityURIFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL	xsltFormatNumberFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltFormatNumberFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL	xsltGenerateIdFunction		(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltGenerateIdFunction		(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL	xsltSystemPropertyFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltSystemPropertyFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL	xsltElementAvailableFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltElementAvailableFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
-XSLTPUBFUN void XSLTCALL	xsltFunctionAvailableFunction	(xmlXPathParserContextPtr ctxt,
+XSLTPUBFUN void XSLTCALL	
+	xsltFunctionAvailableFunction	(xmlXPathParserContextPtr ctxt,
 					 int nargs);
 
 /*
  * And the registration
  */
 
-XSLTPUBFUN void XSLTCALL	xsltRegisterAllFunctions	(xmlXPathContextPtr ctxt);
+XSLTPUBFUN void XSLTCALL	
+	xsltRegisterAllFunctions	(xmlXPathContextPtr ctxt);
 
 #ifdef __cplusplus
 }
