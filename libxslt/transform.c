@@ -2326,6 +2326,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodeSetPtr list = NULL, oldlist;
     xmlXPathParserContextPtr xpathParserCtxt = NULL;
     int i, oldProximityPosition, oldContextSize;
+    /* xmlNodePtr oldInsert = ctxt->insert; */
+    xmlNodePtr oldNode = ctxt->node;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -2389,11 +2391,13 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
+	/* ctxt->insert = oldInsert; */
 	varsPush(ctxt, NULL);
 	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement, 0);
 	xsltFreeStackElemList(varsPop(ctxt));
     }
     ctxt->nodeList = oldlist;
+    ctxt->node = oldNode;
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 
