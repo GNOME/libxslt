@@ -114,6 +114,19 @@
      <exports symbol='_xsltNumberData' type='struct'/>
      <exports symbol='_xsltFormatNumberInfo' type='struct'/>
     </file>
+    <file name='pattern'>
+     <exports symbol='xsltCompMatch' type='typedef'/>
+     <exports symbol='xsltCompMatchPtr' type='typedef'/>
+     <exports symbol='xsltNormalizeCompSteps' type='function'/>
+     <exports symbol='xsltAddTemplate' type='function'/>
+     <exports symbol='xsltCompilePattern' type='function'/>
+     <exports symbol='xsltFreeCompMatchList' type='function'/>
+     <exports symbol='xsltMatchPattern' type='function'/>
+     <exports symbol='xsltFreeTemplateHashes' type='function'/>
+     <exports symbol='xsltCleanupTemplates' type='function'/>
+     <exports symbol='xsltGetTemplate' type='function'/>
+     <exports symbol='xsltTestCompMatchList' type='function'/>
+    </file>
     <file name='preproc'>
      <exports symbol='xsltExtMarker' type='variable'/>
      <exports symbol='xsltFreeStylePreComps' type='function'/>
@@ -318,20 +331,41 @@
     <file name='xsltutils'>
      <exports symbol='IS_XSLT_REAL_NODE' type='macro'/>
      <exports symbol='IS_XSLT_ELEM' type='macro'/>
+     <exports symbol='XSLT_TRACE' type='macro'/>
      <exports symbol='IS_XSLT_NAME' type='macro'/>
      <exports symbol='XSLT_TIMESTAMP_TICS_PER_SEC' type='macro'/>
      <exports symbol='XSLT_STRANGE' type='macro'/>
      <exports symbol='XSLT_TODO' type='macro'/>
-     <exports symbol='XSLT_DEBUG_RUN' type='enum'/>
-     <exports symbol='XSLT_DEBUG_STEPOUT' type='enum'/>
-     <exports symbol='XSLT_DEBUG_INIT' type='enum'/>
-     <exports symbol='XSLT_DEBUG_NONE' type='enum'/>
-     <exports symbol='XSLT_DEBUG_RUN_RESTART' type='enum'/>
-     <exports symbol='XSLT_DEBUG_QUIT' type='enum'/>
+     <exports symbol='XSLT_TRACE_PROCESS_NODE' type='enum'/>
+     <exports symbol='XSLT_TRACE_KEYS' type='enum'/>
+     <exports symbol='XSLT_TRACE_APPLY_TEMPLATE' type='enum'/>
      <exports symbol='XSLT_DEBUG_CONT' type='enum'/>
+     <exports symbol='XSLT_TRACE_VALUE_OF' type='enum'/>
      <exports symbol='XSLT_DEBUG_STEP' type='enum'/>
-     <exports symbol='XSLT_DEBUG_STOP' type='enum'/>
      <exports symbol='XSLT_DEBUG_NEXT' type='enum'/>
+     <exports symbol='XSLT_TRACE_COPY_OF' type='enum'/>
+     <exports symbol='XSLT_TRACE_FOR_EACH' type='enum'/>
+     <exports symbol='XSLT_DEBUG_STEPOUT' type='enum'/>
+     <exports symbol='XSLT_DEBUG_RUN' type='enum'/>
+     <exports symbol='XSLT_TRACE_STRIP_SPACES' type='enum'/>
+     <exports symbol='XSLT_DEBUG_STOP' type='enum'/>
+     <exports symbol='XSLT_TRACE_APPLY_TEMPLATES' type='enum'/>
+     <exports symbol='XSLT_TRACE_COPY' type='enum'/>
+     <exports symbol='XSLT_TRACE_CHOOSE' type='enum'/>
+     <exports symbol='XSLT_DEBUG_INIT' type='enum'/>
+     <exports symbol='XSLT_TRACE_COPY_TEXT' type='enum'/>
+     <exports symbol='XSLT_DEBUG_RUN_RESTART' type='enum'/>
+     <exports symbol='XSLT_TRACE_NONE' type='enum'/>
+     <exports symbol='XSLT_TRACE_ALL' type='enum'/>
+     <exports symbol='XSLT_DEBUG_NONE' type='enum'/>
+     <exports symbol='XSLT_TRACE_PI' type='enum'/>
+     <exports symbol='XSLT_TRACE_COMMENT' type='enum'/>
+     <exports symbol='XSLT_TRACE_VARIABLES' type='enum'/>
+     <exports symbol='XSLT_DEBUG_QUIT' type='enum'/>
+     <exports symbol='XSLT_TRACE_CALL_TEMPLATE' type='enum'/>
+     <exports symbol='XSLT_TRACE_IF' type='enum'/>
+     <exports symbol='XSLT_TRACE_TEMPLATES' type='enum'/>
+     <exports symbol='xsltDebugTraceCodes' type='typedef'/>
      <exports symbol='xsltDebugStatusCodes' type='typedef'/>
      <exports symbol='xsltGenericError' type='variable'/>
      <exports symbol='xsltGenericDebug' type='variable'/>
@@ -340,11 +374,12 @@
      <exports symbol='xsltGenericDebugContext' type='variable'/>
      <exports symbol='xsltTimestamp' type='function'/>
      <exports symbol='xsltSaveResultToFile' type='function'/>
-     <exports symbol='xsltSetDebuggerStatus' type='function'/>
      <exports symbol='xsltSetTransformErrorFunc' type='function'/>
      <exports symbol='xsltSetGenericErrorFunc' type='function'/>
      <exports symbol='xsltSetDebuggerCallbacks' type='function'/>
      <exports symbol='xsltCalibrateAdjust' type='function'/>
+     <exports symbol='xsltDebugSetDefaultTrace' type='function'/>
+     <exports symbol='xsltDropCallCallback' type='function'/>
      <exports symbol='xsltSetGenericDebugFunc' type='function'/>
      <exports symbol='xsltComputeSortResult' type='function'/>
      <exports symbol='xsltSetSortFunc' type='function'/>
@@ -361,14 +396,15 @@
      <exports symbol='xsltSaveResultToFilename' type='function'/>
      <exports symbol='xsltGetQNameURI' type='function'/>
      <exports symbol='xsltAddCallCallback' type='function'/>
-     <exports symbol='xslDropCall' type='function'/>
+     <exports symbol='xsltSetDebuggerStatus' type='function'/>
      <exports symbol='xsltSaveResultTo' type='function'/>
      <exports symbol='xsltSaveProfiling' type='function'/>
      <exports symbol='xsltSaveResultToString' type='function'/>
      <exports symbol='xsltHandleDebuggerCallback' type='function'/>
      <exports symbol='xsltDoSortFunction' type='function'/>
+     <exports symbol='xsltDebugGetDefaultTrace' type='function'/>
      <exports symbol='xsltMessage' type='function'/>
-     <exports symbol='xsltDropCallCallback' type='function'/>
+     <exports symbol='xslDropCall' type='function'/>
      <exports symbol='xsltGetProfileInformation' type='function'/>
     </file>
   </files>
@@ -466,6 +502,8 @@
     <macro name='XSLT_TODO' file='xsltutils'>
       <info>Macro to flag unimplemented blocks.</info>
     </macro>
+    <macro name='XSLT_TRACE' file='xsltutils'>
+    </macro>
     <macro name='XSLT_XALAN_NAMESPACE' file='extra'>
       <info>This is the Apache project XALAN processor namespace for extensions.</info>
     </macro>
@@ -517,7 +555,29 @@
     <enum name='XSLT_STATE_ERROR' file='xsltInternals' value='1' type='xsltTransformState'/>
     <enum name='XSLT_STATE_OK' file='xsltInternals' value='0' type='xsltTransformState'/>
     <enum name='XSLT_STATE_STOPPED' file='xsltInternals' value='2' type='xsltTransformState'/>
+    <enum name='XSLT_TRACE_ALL' file='xsltutils' value='-1' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_APPLY_TEMPLATE' file='xsltutils' value='4' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_APPLY_TEMPLATES' file='xsltutils' value='512' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_CALL_TEMPLATE' file='xsltutils' value='256' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_CHOOSE' file='xsltutils' value='1024' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_COMMENT' file='xsltutils' value='16' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_COPY' file='xsltutils' value='8' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_COPY_OF' file='xsltutils' value='64' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_COPY_TEXT' file='xsltutils' value='1' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_FOR_EACH' file='xsltutils' value='4096' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_IF' file='xsltutils' value='2048' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_KEYS' file='xsltutils' value='32768' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_NONE' file='xsltutils' value='0' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_PI' file='xsltutils' value='32' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_PROCESS_NODE' file='xsltutils' value='2' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_STRIP_SPACES' file='xsltutils' value='8192' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_TEMPLATES' file='xsltutils' value='16384' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_VALUE_OF' file='xsltutils' value='128' type='xsltDebugTraceCodes'/>
+    <enum name='XSLT_TRACE_VARIABLES' file='xsltutils' value='65536' type='xsltDebugTraceCodes'/>
+    <struct name='xsltCompMatch' file='pattern' type='struct _xsltCompMatch'/>
+    <typedef name='xsltCompMatchPtr' file='pattern' type='xsltCompMatch *'/>
     <typedef name='xsltDebugStatusCodes' file='xsltutils' type='enum'/>
+    <typedef name='xsltDebugTraceCodes' file='xsltutils' type='enum'/>
     <struct name='xsltDecimalFormat' file='xsltInternals' type='struct _xsltDecimalFormat'>
       <field name='next' type='struct _xsltDecimalFormat *' info=' chained list'/>
       <field name='name' type='xmlChar *' info=' Used for interpretation of pattern'/>
@@ -538,6 +598,7 @@
       <field name='main' type='int' info=' is this the main document'/>
       <field name='doc' type='xmlDocPtr' info=' the parsed document'/>
       <field name='keys' type='void *' info=' key tables storage'/>
+      <field name='includes' type='struct _xsltDocument *' info=' subsidiary includes'/>
     </struct>
     <typedef name='xsltDocumentPtr' file='xsltInternals' type='xsltDocument *'/>
     <struct name='xsltElemPreComp' file='xsltInternals' type='struct _xsltElemPreComp'>
@@ -692,7 +753,9 @@ informations are stored'/>
       <field name='_private' type='void *' info='* Extensions.
 *'/>
       <field name='extInfos' type='xmlHashTablePtr' info=' the extension data'/>
-      <field name='extrasNr' type='int' info=' the number of extras required'/>
+      <field name='extrasNr' type='int' info='* For keeping track of nested includes
+*'/>
+      <field name='includes' type='xsltDocumentPtr' info=' points to last nested include'/>
     </struct>
     <typedef name='xsltStylesheetPtr' file='xsltInternals' type='xsltStylesheet *'/>
     <struct name='xsltTemplate' file='xsltInternals' type='struct _xsltTemplate'>
@@ -767,6 +830,7 @@ informations are stored'/>
       <field name='lasttuse' type='unsigned int' info='* Per Context Debugging
 *'/>
       <field name='debugStatus' type='int' info=' the context level debug status'/>
+      <field name='traceCode' type='unsigned long *' info=' pointer to the variable holding the mask'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -819,6 +883,14 @@ informations are stored'/>
       <return type='int' info='0 in case of success, -1 in case of failure.'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='xn XSLT transformation context'/>
       <arg name='elems' type='xsltStackElemPtr' info='a stack element list'/>
+    </function>
+    <function name='xsltAddTemplate' file='pattern'>
+      <info>Register the XSLT pattern associated to @cur</info>
+      <return type='int' info='-1 in case of error, 0 otherwise'/>
+      <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet'/>
+      <arg name='cur' type='xsltTemplatePtr' info='an XSLT template'/>
+      <arg name='mode' type='const xmlChar *' info='the mode name or NULL'/>
+      <arg name='modeURI' type='const xmlChar *' info='the mode URI or NULL'/>
     </function>
     <function name='xsltAllocateExtra' file='xsltInternals'>
       <info>Allocate an extra runtime information slot statically while compiling the stylesheet and return its number</info>
@@ -966,6 +1038,11 @@ informations are stored'/>
       <info>Unregister all global variables set up by the XSLT library</info>
       <return type='void'/>
     </function>
+    <function name='xsltCleanupTemplates' file='pattern'>
+      <info>Cleanup the state of the templates used by the stylesheet and the ones it imports.</info>
+      <return type='void'/>
+      <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet'/>
+    </function>
     <function name='xsltComment' file='transform'>
       <info>Process the xslt comment node on the source node</info>
       <return type='void'/>
@@ -973,6 +1050,15 @@ informations are stored'/>
       <arg name='node' type='xmlNodePtr' info='the node in the source tree.'/>
       <arg name='inst' type='xmlNodePtr' info='the xslt comment node'/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information'/>
+    </function>
+    <function name='xsltCompilePattern' file='pattern'>
+      <info>Compile the XSLT pattern and generates a list of precompiled form suitable for fast matching.  [1] Pattern ::= LocationPathPattern | Pattern &apos;|&apos; LocationPathPattern</info>
+      <return type='xsltCompMatchPtr' info='the generated pattern list or NULL in case of failure'/>
+      <arg name='pattern' type='const xmlChar *' info='an XSLT pattern'/>
+      <arg name='doc' type='xmlDocPtr' info='the containing document'/>
+      <arg name='node' type='xmlNodePtr' info='the containing element'/>
+      <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
+      <arg name='runtime' type='xsltTransformContextPtr' info='the transformation context, if done at run-time'/>
     </function>
     <function name='xsltComputeSortResult' file='xsltutils'>
       <info>reorder the current node list accordingly to the set of sorting requirement provided by the array of nodes.</info>
@@ -1035,6 +1121,15 @@ informations are stored'/>
       <info>Dumps a list of the registered XSLT extension functions and elements</info>
       <return type='void'/>
       <arg name='output' type='FILE *' info='the FILE * for the output, if NULL stdout is used'/>
+    </function>
+    <function name='xsltDebugGetDefaultTrace' file='xsltutils'>
+      <info></info>
+      <return type='xsltDebugTraceCodes' info=''/>
+    </function>
+    <function name='xsltDebugSetDefaultTrace' file='xsltutils'>
+      <info></info>
+      <return type='void'/>
+      <arg name='val' type='xsltDebugTraceCodes' info=''/>
     </function>
     <function name='xsltDecimalFormatGetByName' file='xsltInternals'>
       <info>Find decimal-format by name</info>
@@ -1266,6 +1361,11 @@ informations are stored'/>
       <return type='void'/>
       <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet'/>
     </function>
+    <function name='xsltFreeCompMatchList' file='pattern'>
+      <info>Free up the memory allocated by all the elements of @comp</info>
+      <return type='void'/>
+      <arg name='comp' type='xsltCompMatchPtr' info='an XSLT comp list'/>
+    </function>
     <function name='xsltFreeCtxtExts' file='extensions'>
       <info>Free the XSLT extension data</info>
       <return type='void'/>
@@ -1330,6 +1430,11 @@ informations are stored'/>
       <info>Free up the memory allocated by @sheet</info>
       <return type='void'/>
       <arg name='sheet' type='xsltStylesheetPtr' info='an XSLT stylesheet'/>
+    </function>
+    <function name='xsltFreeTemplateHashes' file='pattern'>
+      <info>Free up the memory used by xsltAddTemplate/xsltGetTemplate mechanism</info>
+      <return type='void'/>
+      <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet'/>
     </function>
     <function name='xsltFreeTransformContext' file='transform'>
       <info>Free up the memory allocated by @ctxt</info>
@@ -1423,6 +1528,13 @@ informations are stored'/>
       <arg name='prefix' type='const xmlChar *' info='the suggested prefix'/>
       <arg name='out' type='xmlNodePtr' info='the output node (or its parent)'/>
     </function>
+    <function name='xsltGetTemplate' file='pattern'>
+      <info>Finds the template applying to this node, if @style is non-NULL it means one needs to look for the next imported template in scope.</info>
+      <return type='xsltTemplatePtr' info='the xsltTemplatePtr or NULL if not found'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
+      <arg name='node' type='xmlNodePtr' info='the node being processed'/>
+      <arg name='style' type='xsltStylesheetPtr' info='the current style'/>
+    </function>
     <function name='xsltGetUTF8Char' file='xsltutils'>
       <info>Read one UTF8 Char from @utf Function copied from libxml2 xmlGetUTF8Char() ... to discard ultimately and use the original API</info>
       <return type='int' info='the char value or -1 in case of error and update @len with the number of bytes used'/>
@@ -1497,6 +1609,15 @@ informations are stored'/>
       <return type='xsltStylesheetPtr' info='a new XSLT stylesheet structure or NULL if not found.'/>
       <arg name='doc' type='xmlDocPtr' info='a document to process'/>
     </function>
+    <function name='xsltMatchPattern' file='pattern'>
+      <info></info>
+      <return type='int' info=''/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info=''/>
+      <arg name='node' type='xmlNodePtr' info=''/>
+      <arg name='pattern' type='const xmlChar *' info=''/>
+      <arg name='ctxtdoc' type='xmlDocPtr' info=''/>
+      <arg name='ctxtnode' type='xmlNodePtr' info=''/>
+    </function>
     <function name='xsltMessage' file='xsltutils'>
       <info>Process and xsl:message construct</info>
       <return type='void'/>
@@ -1552,6 +1673,13 @@ informations are stored'/>
       <info>Find the next stylesheet in import precedence.</info>
       <return type='xsltStylesheetPtr' info='the next stylesheet or NULL if it was the last one'/>
       <arg name='cur' type='xsltStylesheetPtr' info='the current XSLT stylesheet'/>
+    </function>
+    <function name='xsltNormalizeCompSteps' file='pattern'>
+      <info>This is a hashtable scanner function to normalize the compiled steps of an imported stylesheet.</info>
+      <return type='void'/>
+      <arg name='payload' type='void *' info='pointer to template hash table entry'/>
+      <arg name='data' type='void *' info='pointer to the stylesheet'/>
+      <arg name='name' type='const xmlChar *' info='template match name'/>
     </function>
     <function name='xsltNumber' file='transform'>
       <info>Process the xslt number node on the source node</info>
@@ -2011,6 +2139,13 @@ informations are stored'/>
       <return type='xmlNodePtr *' info='the computed tree replacement'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context'/>
       <arg name='node' type='xmlNodePtr' info='the attribute template node'/>
+    </function>
+    <function name='xsltTestCompMatchList' file='pattern'>
+      <info>Test wether the node matches one of the patterns in the list</info>
+      <return type='int' info='1 if it matches, 0 if it doesn&apos;t and -1 in case of failure'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
+      <arg name='node' type='xmlNodePtr' info='a node'/>
+      <arg name='comp' type='xsltCompMatchPtr' info='the precompiled pattern list'/>
     </function>
     <function name='xsltText' file='transform'>
       <info>Process the xslt text node on the source node</info>

@@ -1,12 +1,4 @@
 ## Process this file with automake to produce Makefile.in
-EXTRA_DIST = 			\
-	libxslt-api.xml		\
-	libexslt-api.xml	\
-	libxslt-decl.txt	\
-	xsltproc.xml		\
-	apibuild.py		\
-	libxslt.xsa		\
-	news.xsl
 
 # The name of the module.
 DOC_MODULE=libxslt-$(VERSION)
@@ -28,18 +20,29 @@ PAGES= API.html bugs.html contribs.html docs.html downloads.html \
 APIPAGES=APIconstructors.html APIfiles.html APIfunctions.html \
     APIsymbols.html APIchunk0.html
 
+EXTRA_DIST = 			\
+	libxslt-api.xml		\
+	libexslt-api.xml	\
+	libxslt-decl.txt	\
+	xsltproc.xml		\
+	apibuild.py		\
+	libxslt.xsa		\
+	news.xsl
+
 man_MANS = xsltproc.1
 
-all : $(PAGES) $(top_srcdir)/NEWS libxslt.xsa $(man_MANS)
+all: web $(top_srcdir)/NEWS libxslt.xsa $(man_MANS)
 
-tests:
+api: libxslt-api.xml libxslt-refs.xml $(APIPAGES) $(srcdir)/html/index.html $(WIN32_DIR)/libxslt.def.src
 
-web: $(PAGES) $(APIPAGES)
+web: $(PAGES)
 
 $(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
+	  echo "Rebuilding the HTML Web pages from xslt.html" ; \
 	  $(bindir)/xsltproc --nonet --html $(srcdir)/site.xsl $(srcdir)/xslt.html > index.html ; fi )
 	-@(if [ -x $(bindir)/xmllint ] ; then \
+	  echo "Validating the HTML Web pages" ; \
 	  $(bindir)/xmllint --nonet --valid --noout $(PAGES) ; fi );
 
 $(top_srcdir)/NEWS: $(top_srcdir)/doc/news.xsl $(top_srcdir)/doc/news.html
@@ -50,31 +53,30 @@ libxslt.xsa: $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
 	  $(bindir)/xsltproc --nonet $(top_srcdir)/doc/xsa.xsl $(top_srcdir)/doc/news.html > libxslt.xsa ; fi );
 
-$(APIPAGES): libxslt-refs.xml site.xsl api.xsl
+$(APIPAGES): libxslt-refs.xml site.xsl api.xsl $(top_srcdir)/doc/site.xsl $(top_srcdir)/doc/api.xsl
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
-	  $(bindir)/xsltproc --nonet --html $(srcdir)/api.xsl $(srcdir)/xslt.html ; fi );
+	  echo "Rebuilding the HTML API pages from libxslt-refs.xml" ; \
+	  $(bindir)/xsltproc --nonet --html $(top_srcdir)/doc/api.xsl \
+			     $(top_srcdir)/doc/xslt.html ; fi );
+	-@(if [ -x $(bindir)/xmllint ] ; then \
+	  echo "Validating the HTML API pages" ; \
+	  $(bindir)/xmllint --nonet --valid --noout API*.html ; fi );
 
+$(srcdir)/html/index.html: libxslt-api.xml $(srcdir)/newapi.xsl
+	-@(if [ -x $(bindir)/xsltproc ] ; then \
+	  echo "Rebuilding the HTML pages from the XSLT API" ; \
+	  $(bindir)/xsltproc \
+	  --nonet $(srcdir)/newapi.xsl libxslt-api.xml ; fi )
+	-@(if [ -x $(bindir)/xmllint ] ; then \
+	  echo "Validating the resulting XHTML pages" ; \
+	  $(bindir)/xmllint --nonet --valid --noout html/*.html ; fi );
+
+libxslt-api.xml libxslt-refs.xml: apibuild.py ../libxslt/*.h \
+		../libxslt/*.c ../libexslt/*.h ../libexslt/*.c
+	-(./apibuild.py)
+	
 xsltproc.1: xsltproc.xml
 	-@(xsltproc --nonet xsltproc.xml)
-
-scan:
-	-gtkdoc-scan --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --ignore-headers="acconfig.h config.h win32config.h"
-#	gtkdoc-scan --module=libexslt --source-dir=$(DOC_SOURCE_DIR)/libexslt --ignore-headers="acconfig.h config.h win32config.h"
-
-templates: scan
-	-gtkdoc-mktmpl --module=libxslt
-#	gtkdoc-mktmpl --module=libexslt
-
-xml:
-	if test -d xml ; then rm xml/* ; else mkdir xml ; fi
-	-gtkdoc-mkdb --module=libxslt --source-dir=$(DOC_SOURCE_DIR)/libxslt --output-format=xml --main-sgml-file=$(DOC_MAIN_XML_FILE)
-
-html:
-	if ! test -d html ; then mkdir html ; fi
-	-cd html && gtkdoc-mkhtml libxslt ../$(DOC_MAIN_XML_FILE)
-	   
-libxslt-api.xml libexslt-api.xml: apibuild.py ../libxslt/*.h ../libxslt/*.c ../libexslt/*.h ../libexslt/*.c
-	-(./apibuild.py)
 
 $(WIN32_DIR)/libxslt.def.src: libxslt-api.xml
 	-@(if [ -x $(bindir)/xsltproc ] ; then \
@@ -94,12 +96,7 @@ clean-local:
 maintainer-clean-local: clean
 	rm -rf libxslt-decl-list.txt libxslt-decl.txt 
 
-libxslt-decl-list.txt : templates
-
-libxslt-sections.txt : scan
-	cp libxslt-decl-list.txt libxslt-sections.txt
-
-rebuild: libxslt-sections.txt templates xml html
+rebuild: api all
 
 install-data-local: 
 	$(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)
@@ -111,9 +108,8 @@ install-data-local:
 	-@INSTALL@ -m 0644 $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR)/html
 	$(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)/tutorial
 	-@INSTALL@ -m 0644 $(srcdir)/tutorial/* $(DESTDIR)$(TARGET_DIR)/tutorial
-	-(cd $(DESTDIR); gtkdoc-fixxref --module=libxslt --html-dir=$(HTML_DIR))
 
 dist-hook:
 	(cd $(srcdir) ; tar cvf - *.1 *.html site.xsl news.xsl xsa.xsl *.gif html/*.html html/*.png tutorial/libxslt*) | (cd $(distdir); tar xf -)
 
-.PHONY : html xml templates scan
+.PHONY : html xml

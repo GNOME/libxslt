@@ -1,3 +1,12 @@
+Sun Nov 30 22:44:07 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* doc/newapi.xsl, doc/api.xsl, doc/apibuild.py, doc/site.xsl,
+	  Makefile.am: adapted the libxml files for libxslt.
+	* doc/API*.html, doc/html/*.html, doc/libxslt-api.xml,
+	  doc/libexslt-api.xml, doc/libxslt-refs.xml,
+	  win32/libxslt.def.src, win32/libexslt.def.src: regenerated
+	  the docs.
+
 Sun Nov 30 18:48:27 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: change initialisation of external functions

@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <api name='libexslt'>
   <files>
-    <file name='exsltexports'>
-     <exports symbol='EXSLTCALL'/>
-     <exports symbol='EXSLTPUBFUN'/>
-     <exports symbol='EXSLTPUBVAR'/>
-     <exports symbol='LIBEXSLT_PUBLIC'/>
-     <exports symbol='_REENTRANT'/>
-    </file>
     <file name='exslt'>
-     <exports symbol='EXSLT_COMMON_NAMESPACE'/>
-     <exports symbol='EXSLT_DATE_NAMESPACE'/>
-     <exports symbol='EXSLT_DYNAMIC_NAMESPACE'/>
-     <exports symbol='EXSLT_FUNCTIONS_NAMESPACE'/>
-     <exports symbol='EXSLT_MATH_NAMESPACE'/>
-     <exports symbol='EXSLT_SETS_NAMESPACE'/>
-     <exports symbol='EXSLT_STRINGS_NAMESPACE'/>
-     <exports symbol='SAXON_NAMESPACE'/>
-     <exports symbol='exsltCommonRegister'/>
-     <exports symbol='exsltDateRegister'/>
-     <exports symbol='exsltDynRegister'/>
-     <exports symbol='exsltFuncRegister'/>
-     <exports symbol='exsltLibexsltVersion'/>
-     <exports symbol='exsltLibraryVersion'/>
-     <exports symbol='exsltLibxmlVersion'/>
-     <exports symbol='exsltLibxsltVersion'/>
-     <exports symbol='exsltMathRegister'/>
-     <exports symbol='exsltRegisterAll'/>
-     <exports symbol='exsltSaxonRegister'/>
-     <exports symbol='exsltSetsRegister'/>
-     <exports symbol='exsltStrRegister'/>
+     <exports symbol='EXSLT_COMMON_NAMESPACE' type='macro'/>
+     <exports symbol='EXSLT_DATE_NAMESPACE' type='macro'/>
+     <exports symbol='EXSLT_FUNCTIONS_NAMESPACE' type='macro'/>
+     <exports symbol='EXSLT_STRINGS_NAMESPACE' type='macro'/>
+     <exports symbol='EXSLT_SETS_NAMESPACE' type='macro'/>
+     <exports symbol='EXSLT_DYNAMIC_NAMESPACE' type='macro'/>
+     <exports symbol='SAXON_NAMESPACE' type='macro'/>
+     <exports symbol='EXSLT_MATH_NAMESPACE' type='macro'/>
+     <exports symbol='exsltLibxmlVersion' type='variable'/>
+     <exports symbol='exsltLibexsltVersion' type='variable'/>
+     <exports symbol='exsltLibraryVersion' type='variable'/>
+     <exports symbol='exsltLibxsltVersion' type='variable'/>
+     <exports symbol='exsltDynRegister' type='function'/>
+     <exports symbol='exsltCommonRegister' type='function'/>
+     <exports symbol='exsltMathRegister' type='function'/>
+     <exports symbol='exsltStrRegister' type='function'/>
+     <exports symbol='exsltFuncRegister' type='function'/>
+     <exports symbol='exsltSaxonRegister' type='function'/>
+     <exports symbol='exsltSetsRegister' type='function'/>
+     <exports symbol='exsltDateRegister' type='function'/>
+     <exports symbol='exsltRegisterAll' type='function'/>
+    </file>
+    <file name='exsltexports'>
+     <exports symbol='LIBEXSLT_PUBLIC' type='macro'/>
+     <exports symbol='_REENTRANT' type='macro'/>
+     <exports symbol='EXSLTCALL' type='macro'/>
+     <exports symbol='EXSLTPUBFUN' type='macro'/>
+     <exports symbol='EXSLTPUBVAR' type='macro'/>
     </file>
   </files>
   <symbols>

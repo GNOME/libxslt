@@ -3,6 +3,9 @@
   <xsl:output method="xml" encoding="ISO-8859-1" indent="yes"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+
+  <xsl:variable name="href_base" select="''"/>
+  
 <!--
  - returns the filename associated to an ID in the original file
  -->
@@ -93,17 +96,17 @@
   </xsl:variable>
   <xsl:variable name="api">
     <ul>
-      <li><a href="APIchunk0.html">Alphabetic</a></li>
-      <li><a href="APIconstructors.html">Constructors</a></li>
-      <li><a href="APIfunctions.html">Functions/Types</a></li>
-      <li><a href="APIfiles.html">Modules</a></li>
-      <li><a href="APIsymbols.html">Symbols</a></li>
+      <li><a href="{$href_base}APIchunk0.html">Alphabetic</a></li>
+      <li><a href="{$href_base}APIconstructors.html">Constructors</a></li>
+      <li><a href="{$href_base}APIfunctions.html">Functions/Types</a></li>
+      <li><a href="{$href_base}APIfiles.html">Modules</a></li>
+      <li><a href="{$href_base}APIsymbols.html">Symbols</a></li>
     </ul>
   </xsl:variable>
   <xsl:variable name="related">
     <ul>
-      <li><a href="tutorial/libxslttutorial.html">Tutorial</a></li>
-      <li><a href="xsltproc.html">Man page for xsltproc</a></li>
+      <li><a href="{$href_base}tutorial/libxslttutorial.html">Tutorial</a></li>
+      <li><a href="{$href_base}xsltproc.html">Man page for xsltproc</a></li>
       <li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li>
       <li><a href="http://xmlsoft.org/">XML libxml</a></li>
       <li><a href="http://phd.cs.unibo.it/gdome2/">DOM gdome2</a></li>
@@ -117,7 +120,7 @@
       <li><a href="http://www.mod-xslt.com/mod-xslt/">Apache module</a></li>
     </ul>
   </xsl:variable>
-  <xsl:template name="toc">
+  <xsl:template name="develtoc">
     <table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000">
       <tr>
         <td>
@@ -199,13 +202,13 @@ A:link, A:visited, A:active { text-decoration: underline }
     <table border="0" width="100%" cellpadding="5" cellspacing="0" align="center">
     <tr>
     <td width="120">
-    <a href="http://swpat.ffii.org/"><img src="epatents.png" alt="Action against software patents"/></a>
+    <a href="http://swpat.ffii.org/"><img src="{$href_base}epatents.png" alt="Action against software patents"/></a>
     </td>
     <td width="100">
-    <a href="http://www.gnome.org/"><img src="gnome2.png" alt="Gnome2 Logo"/></a>
-    <a href="http://www.redhat.com"><img src="redhat.gif" alt="Red Hat Logo"/></a>
+    <a href="http://www.gnome.org/"><img src="{$href_base}gnome2.png" alt="Gnome2 Logo"/></a>
+    <a href="http://www.redhat.com"><img src="{$href_base}redhat.gif" alt="Red Hat Logo"/></a>
     <div align="left">
-    <a href="http://xmlsoft.org/XSLT/"><img src="Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo"/></a>
+    <a href="http://xmlsoft.org/XSLT/"><img src="{$href_base}Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo"/></a>
     </div>
     </td>
     <td>
@@ -295,7 +298,7 @@ A:link, A:visited, A:active { text-decoration: underline }
                 <table border="0" cellspacing="0" cellpadding="2" width="100%">
                   <tr>
                     <td valign="top" width="200" bgcolor="#8b7765">
-                      <xsl:call-template name="toc"/>
+                      <xsl:call-template name="develtoc"/>
                     </td>
                     <td valign="top" bgcolor="#8b7765">
                       <table border="0" cellspacing="0" cellpadding="1" width="100%">
@@ -349,7 +352,7 @@ A:link, A:visited, A:active { text-decoration: underline }
             <table border="0" cellspacing="0" cellpadding="2" width="100%">
               <tr>
                 <td valign="top" width="200" bgcolor="#8b7765">
-                  <xsl:call-template name="toc"/>
+                  <xsl:call-template name="develtoc"/>
                 </td>
                 <td valign="top" bgcolor="#8b7765">
                   <table border="0" cellspacing="0" cellpadding="1" width="100%">

@@ -49,6 +49,8 @@ xsltCopyTextString
 xsltCreateRVT
 xsltDebug
 xsltDebugDumpExtensions
+xsltDebugGetDefaultTrace
+xsltDebugSetDefaultTrace
 xsltDecimalFormatGetByName
 xsltDefaultSortFunction
 xsltDoSortFunction

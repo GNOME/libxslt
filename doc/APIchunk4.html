@@ -1,639 +1,229 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<style type="text/css"><!--
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><style type="text/css">
 TD {font-family: Verdana,Arial,Helvetica}
 BODY {font-family: Verdana,Arial,Helvetica; margin-top: 2em; margin-left: 0em; margin-right: 0em}
 H1 {font-family: Verdana,Arial,Helvetica}
 H2 {font-family: Verdana,Arial,Helvetica}
 H3 {font-family: Verdana,Arial,Helvetica}
 A:link, A:visited, A:active { text-decoration: underline }
---></style>
-<title>API Alphabetic Index k-o for libxslt</title>
-</head>
-<body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000">
-<table border="0" width="100%" cellpadding="5" cellspacing="0" align="center"><tr>
-<td width="100">
-<a href="http://www.gnome.org/"><img src="gnome2.png" alt="Gnome2 Logo"></a><a href="http://www.redhat.com"><img src="redhat.gif" alt="Red Hat Logo"></a><div align="left"><a href="http://xmlsoft.org/XSLT/"><img src="Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo"></a></div>
-</td>
-<td><table border="0" width="90%" cellpadding="2" cellspacing="0" align="center" bgcolor="#000000"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="3" bgcolor="#fffacd"><tr><td align="center">
-<h1>The XSLT C library for Gnome</h1>
-<h2>API Alphabetic Index k-o for libxslt</h2>
-</td></tr></table></td></tr></table></td>
-</tr></table>
-<table border="0" cellpadding="4" cellspacing="0" width="100%" align="center"><tr><td bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="2" width="100%"><tr>
-<td valign="top" width="200" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td>
-<table width="100%" border="0" cellspacing="1" cellpadding="3">
-<tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>Main Menu</b></center></td></tr>
-<tr><td bgcolor="#fffacd"><ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="intro.html">Introduction</a></li>
-<li><a href="docs.html">Documentation</a></li>
-<li><a href="bugs.html">Reporting bugs and getting help</a></li>
-<li><a href="help.html">How to help</a></li>
-<li><a href="downloads.html">Downloads</a></li>
-<li><a href="FAQ.html">FAQ</a></li>
-<li><a href="news.html">News</a></li>
-<li><a href="xsltproc2.html">The xsltproc tool</a></li>
-<li><a href="docbook.html">DocBook</a></li>
-<li><a href="API.html">The programming API</a></li>
-<li><a href="python.html">Python and bindings</a></li>
-<li><a href="internals.html">Library internals</a></li>
-<li><a href="extensions.html">Writing extensions</a></li>
-<li><a href="contribs.html">Contributions</a></li>
-<li>
-<a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a>
-</li>
-</ul></td></tr>
-</table>
-<table width="100%" border="0" cellspacing="1" cellpadding="3">
-<tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>API Indexes</b></center></td></tr>
-<tr><td bgcolor="#fffacd">
-<form action="search.php" enctype="application/x-www-form-urlencoded" method="GET">
-<input name="query" type="TEXT" size="20" value=""><input name="submit" type="submit" value="Search ...">
-</form>
-<ul>
-<li><a href="APIchunk0.html">Alphabetic</a></li>
-<li><a href="APIconstructors.html">Constructors</a></li>
-<li><a href="APIfunctions.html">Functions/Types</a></li>
-<li><a href="APIfiles.html">Modules</a></li>
-<li><a href="APIsymbols.html">Symbols</a></li>
-</ul>
-</td></tr>
-</table>
-<table width="100%" border="0" cellspacing="1" cellpadding="3">
-<tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>Related links</b></center></td></tr>
-<tr><td bgcolor="#fffacd"><ul>
-<li><a href="tutorial/libxslttutorial.html">Tutorial</a></li>
-<li><a href="xsltproc.html">Man page for xsltproc</a></li>
-<li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li>
-<li><a href="http://xmlsoft.org/">XML libxml</a></li>
-<li><a href="http://phd.cs.unibo.it/gdome2/">DOM gdome2</a></li>
-<li><a href="ftp://xmlsoft.org/">FTP</a></li>
-<li><a href="http://www.zlatkovic.com/projects/libxml/">Windows binaries</a></li>
-<li><a href="http://garypennington.net/libxml2/">Solaris binaries</a></li>
-<li><a href="http://www.zveno.com/open_source/libxml2xslt.html">MacOsX binaries</a></li>
-<li><a href="http://sourceforge.net/projects/libxml2-pas/">Pascal bindings</a></li>
-<li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li>
-<li><a href="http://xsldbg.sourceforge.net/">Xsldbg Debugger</a></li>
-</ul></td></tr>
-</table>
-</td></tr></table></td>
-<td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
-<h2 align="center">
-<a href="APIchunk0.html">A-S</a>
-<a href="APIchunk1.html">T-a</a>
-<a href="APIchunk2.html">b-d</a>
-<a href="APIchunk3.html">e-i</a>
-<a href="APIchunk4.html">k-o</a>
-<a href="APIchunk5.html">p-r</a>
-<a href="APIchunk6.html">s-t</a>
-</h2>
-<h2>Letter k:</h2>
-<dl>
-<dt>kept</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTCOMPMATCH">xsltCompMatch</a>
-</dd>
-<dt>key</dt>
-<dd>
-<a href="html/libxslt-keys.html#XSLTADDKEY">xsltAddKey</a>
-<a href="html/libxslt-keys.html#XSLTGETKEY">xsltGetKey</a>
-<a href="html/libxslt-functions.html#XSLTKEYFUNCTION">xsltKeyFunction</a>
-<a href="html/libxslt-documents.html#XSLTNEWDOCUMENT">xsltNewDocument</a>
-<a href="html/libxslt-documents.html#XSLTNEWSTYLEDOCUMENT">xsltNewStyleDocument</a>
-</dd>
-<dt>keys</dt>
-<dd>
-<a href="html/libxslt-keys.html#XSLTFREEDOCUMENTKEYS">xsltFreeDocumentKeys</a>
-<a href="html/libxslt-keys.html#XSLTFREEKEYS">xsltFreeKeys</a>
-<a href="html/libxslt-keys.html#XSLTINITCTXTKEYS">xsltInitCtxtKeys</a>
-</dd>
-</dl>
-<h2>Letter l:</h2>
-<dl>
-<dt>label</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#CHECK-STOPPEDE-CAPS">CHECK_STOPPEDE</a>
-</dd>
-<dt>language</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
-</dd>
-<dt>last</dt>
-<dd>
-<a href="html/libxslt-imports.html#XSLTNEXTIMPORT">xsltNextImport</a>
-</dd>
-<dt>lead</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEET">xsltApplyStylesheet</a>
-</dd>
-<dt>left</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTAPPLYONETEMPLATE">xsltApplyOneTemplate</a>
-</dd>
-<dt>level</dt>
-<dd>
-<a href="html/libxslt-variables.html#XSLTADDSTACKELEMLIST">xsltAddStackElemList</a>
-</dd>
-<dt>libc</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#DEBUG-MEMORY-CAPS">DEBUG_MEMORY</a>
-</dd>
-<dt>library</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#DEBUG-MEMORY-CAPS">DEBUG_MEMORY</a>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
-<a href="html/libxslt-xslt.html#XSLTCLEANUPGLOBALS">xsltCleanupGlobals</a>
-<a href="html/libxslt-extensions.html#XSLTREGISTEREXTMODULE">xsltRegisterExtModule</a>
-<a href="html/libxslt-extensions.html#XSLTREGISTEREXTMODULEFULL">xsltRegisterExtModuleFull</a>
-<a href="html/libxslt-extensions.html#XSLTUNREGISTEREXTMODULE">xsltUnregisterExtModule</a>
-</dd>
-<dt>libxml</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#DEBUG-MEMORY-LOCATION-CAPS">DEBUG_MEMORY_LOCATION</a>
-</dd>
-<dt>libxslt</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#DEBUG-MEMORY-CAPS">DEBUG_MEMORY</a>
-<a href="html/libxslt-xsltconfig.html#DEBUG-MEMORY-LOCATION-CAPS">DEBUG_MEMORY_LOCATION</a>
-<a href="html/libxslt-extra.html#XSLT-LIBXSLT-NAMESPACE-CAPS">XSLT_LIBXSLT_NAMESPACE</a>
-</dd>
-<dt>like</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-DOTTED-VERSION-CAPS">LIBXSLT_DOTTED_VERSION</a>
-<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
-<a href="html/libxslt-security.html#XSLTSECURITYCHECK">xsltSecurityCheck</a>
-<a href="html/libxslt-xsltinternals.html#XSLTTRANSFORMFUNCTION">xsltTransformFunction</a>
-</dd>
-<dt>line</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTTRANSFORMERROR">xsltTransformError</a>
-</dd>
-<dt>links</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
-</dd>
-<dt>list</dt>
-<dd>
-<a href="html/libxslt-variables.html#XSLTADDSTACKELEMLIST">xsltAddStackElemList</a>
-<a href="html/libxslt-attributes.html#XSLTAPPLYATTRIBUTESET">xsltApplyAttributeSet</a>
-<a href="html/libxslt-templates.html#XSLTATTRLISTTEMPLATEPROCESS">xsltAttrListTemplateProcess</a>
-<a href="html/libxslt-pattern.html#XSLTCOMPILEPATTERN">xsltCompilePattern</a>
-<a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST">xsltCopyNamespaceList</a>
-<a href="html/libxslt-extensions.html#XSLTDEBUGDUMPEXTENSIONS">xsltDebugDumpExtensions</a>
-<a href="html/libxslt-xsltutils.html#XSLTDOSORTFUNCTION">xsltDoSortFunction</a>
-<a href="html/libxslt-xsltutils.html#XSLTDOCUMENTSORTFUNCTION">xsltDocumentSortFunction</a>
-<a href="html/libxslt-templates.html#XSLTEVALTEMPLATESTRING">xsltEvalTemplateString</a>
-<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
-<a href="html/libxslt-pattern.html#XSLTFREECOMPMATCHLIST">xsltFreeCompMatchList</a>
-<a href="html/libxslt-pattern.html#XSLTTESTCOMPMATCHLIST">xsltTestCompMatchList</a>
-</dd>
-<dt>literal</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">xsltParseTemplateContent</a>
-</dd>
-<dt>load</dt>
-<dd>
-<a href="html/libxslt-documents.html#XSLTLOADDOCUMENT">xsltLoadDocument</a>
-<a href="html/libxslt-documents.html#XSLTLOADSTYLEDOCUMENT">xsltLoadStyleDocument</a>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
-</dd>
-<dt>loaded</dt>
-<dd>
-<a href="html/libxslt-documents.html#XSLTFREEDOCUMENTS">xsltFreeDocuments</a>
-<a href="html/libxslt-documents.html#XSLTFREESTYLEDOCUMENTS">xsltFreeStyleDocuments</a>
-<a href="html/libxslt-transform.html#XSLTSETXINCLUDEDEFAULT">xsltSetXIncludeDefault</a>
-<a href="html/libxslt-extensions.html#XSLTSHUTDOWNCTXTEXTS">xsltShutdownCtxtExts</a>
-<a href="html/libxslt-extensions.html#XSLTSHUTDOWNEXTS">xsltShutdownExts</a>
-</dd>
-<dt>locate</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
-</dd>
-<dt>look</dt>
-<dd>
-<a href="html/libxslt-keys.html#XSLTGETKEY">xsltGetKey</a>
-<a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
-</dd>
-<dt>lookup</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTGETQNAMEURI">xsltGetQNameURI</a>
-<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
-</dd>
-</dl>
-<h2>Letter m:</h2>
-<dl>
-<dt>macro</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#ATTRIBUTE-UNUSED-CAPS">ATTRIBUTE_UNUSED</a>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
-<a href="html/libxslt-imports.html#XSLT-GET-IMPORT-INT-CAPS">XSLT_GET_IMPORT_INT</a>
-<a href="html/libxslt-imports.html#XSLT-GET-IMPORT-PTR-CAPS">XSLT_GET_IMPORT_PTR</a>
-<a href="html/libxslt-functions.html#XSLT-REGISTER-FUNCTION-LOOKUP-CAPS">XSLT_REGISTER_FUNCTION_LOOKUP</a>
-<a href="html/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS">XSLT_REGISTER_VARIABLE_LOOKUP</a>
-</dd>
-<dt>made</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTISBLANK">xsltIsBlank</a>
-</dd>
-<dt>main</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEET">xsltRunStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
-</dd>
-<dt>make</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTALLOCATEEXTRACTXT">xsltAllocateExtraCtxt</a>
-</dd>
-<dt>makes</dt>
-<dd>
-<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
-</dd>
-<dt>mapping</dt>
-<dd>
-<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESSNODE">xsltAttrTemplateValueProcessNode</a>
-<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
-</dd>
-<dt>match</dt>
-<dd>
-<a href="html/libxslt-keys.html#XSLTADDKEY">xsltAddKey</a>
-</dd>
-<dt>matches</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTMATCHPATTERN">xsltMatchPattern</a>
-<a href="html/libxslt-pattern.html#XSLTTESTCOMPMATCHLIST">xsltTestCompMatchList</a>
-</dd>
-<dt>matching</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTCOMPILEPATTERN">xsltCompilePattern</a>
-</dd>
-<dt>may</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLADDCALL">xslAddCall</a>
-<a href="html/libxslt-transform.html#XSLTAPPLYONETEMPLATE">xsltApplyOneTemplate</a>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEET">xsltApplyStylesheet</a>
-</dd>
-<dt>means</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
-</dd>
-<dt>mechanism</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTFREETEMPLATEHASHES">xsltFreeTemplateHashes</a>
-</dd>
-<dt>memory</dt>
-<dd>
-<a href="html/libxslt-attributes.html#XSLTFREEATTRIBUTESETSHASHES">xsltFreeAttributeSetsHashes</a>
-<a href="html/libxslt-pattern.html#XSLTFREECOMPMATCHLIST">xsltFreeCompMatchList</a>
-<a href="html/libxslt-extensions.html#XSLTFREEEXTS">xsltFreeExts</a>
-<a href="html/libxslt-keys.html#XSLTFREEKEYS">xsltFreeKeys</a>
-<a href="html/libxslt-namespaces.html#XSLTFREENAMESPACEALIASHASHES">xsltFreeNamespaceAliasHashes</a>
-<a href="html/libxslt-xsltinternals.html#XSLTFREESTACKELEMLIST">xsltFreeStackElemList</a>
-<a href="html/libxslt-preproc.html#XSLTFREESTYLEPRECOMPS">xsltFreeStylePreComps</a>
-<a href="html/libxslt-xsltinternals.html#XSLTFREESTYLESHEET">xsltFreeStylesheet</a>
-<a href="html/libxslt-pattern.html#XSLTFREETEMPLATEHASHES">xsltFreeTemplateHashes</a>
-<a href="html/libxslt-transform.html#XSLTFREETRANSFORMCONTEXT">xsltFreeTransformContext</a>
-<a href="html/libxslt-xsltutils.html#XSLTGETNSPROP">xsltGetNsProp</a>
-</dd>
-<dt>message</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTMESSAGE">xsltMessage</a>
-<a href="html/libxslt-xsltutils.html#XSLTTRANSFORMERROR">xsltTransformError</a>
-</dd>
-<dt>messages</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETTRANSFORMERRORFUNC">xsltSetTransformErrorFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTTRANSFORMERROR">xsltTransformError</a>
-</dd>
-<dt>milliseconds</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTTIMESTAMP">xsltTimestamp</a>
-</dd>
-<dt>mode</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTADDTEMPLATE">xsltAddTemplate</a>
-</dd>
-<dt>modified</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
-</dd>
-<dt>modules</dt>
-<dd>
-<a href="html/libxslt-functions.html#XSLT-REGISTER-FUNCTION-LOOKUP-CAPS">XSLT_REGISTER_FUNCTION_LOOKUP</a>
-<a href="html/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS">XSLT_REGISTER_VARIABLE_LOOKUP</a>
-<a href="html/libxslt-extensions.html#XSLTINITCTXTEXTS">xsltInitCtxtExts</a>
-<a href="html/libxslt-extensions.html#XSLTSHUTDOWNCTXTEXTS">xsltShutdownCtxtExts</a>
-<a href="html/libxslt-extensions.html#XSLTSHUTDOWNEXTS">xsltShutdownExts</a>
-</dd>
-<dt>must</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
-<a href="html/libxslt-transform.html#XSLHANDLEDEBUGGER">xslHandleDebugger</a>
-<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESS">xsltAttrTemplateValueProcess</a>
-<a href="html/libxslt-templates.html#XSLTATTRTEMPLATEVALUEPROCESSNODE">xsltAttrTemplateValueProcessNode</a>
-<a href="html/libxslt-templates.html#XSLTEVALATTRVALUETEMPLATE">xsltEvalAttrValueTemplate</a>
-<a href="html/libxslt-templates.html#XSLTEVALSTATICATTRVALUETEMPLATE">xsltEvalStaticAttrValueTemplate</a>
-<a href="html/libxslt-templates.html#XSLTEVALTEMPLATESTRING">xsltEvalTemplateString</a>
-<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRING">xsltEvalXPathString</a>
-<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
-</dd>
-</dl>
-<h2>Letter n:</h2>
-<dl>
-<dt>name:</dt>
-<dd>
-<a href="html/libxslt-variables.html#XSLTEVALONEUSERPARAM">xsltEvalOneUserParam</a>
-<a href="html/libxslt-variables.html#XSLTQUOTEONEUSERPARAM">xsltQuoteOneUserParam</a>
-</dd>
-<dt>named</dt>
-<dd>
-<a href="html/libxslt-imports.html#XSLTFINDTEMPLATE">xsltFindTemplate</a>
-</dd>
-<dt>names</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEET">xsltApplyStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEETUSER">xsltApplyStylesheetUser</a>
-<a href="html/libxslt-transform.html#XSLTPROFILESTYLESHEET">xsltProfileStylesheet</a>
-<a href="html/libxslt-variables.html#XSLTQUOTEUSERPARAMS">xsltQuoteUserParams</a>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEET">xsltRunStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
-</dd>
-<dt>namespaces</dt>
-<dd>
-<a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACE">xsltCopyNamespace</a>
-<a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST">xsltCopyNamespaceList</a>
-<a href="html/libxslt-templates.html#XSLTEVALXPATHPREDICATE">xsltEvalXPathPredicate</a>
-<a href="html/libxslt-templates.html#XSLTEVALXPATHSTRINGNS">xsltEvalXPathStringNs</a>
-<a href="html/libxslt-namespaces.html#XSLTFREENAMESPACEALIASHASHES">xsltFreeNamespaceAliasHashes</a>
-<a href="html/libxslt-pattern.html#XSLTMATCHPATTERN">xsltMatchPattern</a>
-</dd>
-<dt>necessary</dt>
-<dd>
-<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
-</dd>
-<dt>need</dt>
-<dd>
-<a href="html/libxslt-variables.html#XSLTEVALGLOBALVARIABLES">xsltEvalGlobalVariables</a>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
-</dd>
-<dt>needed</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
-<a href="html/libxslt-templates.html#XSLTEVALTEMPLATESTRING">xsltEvalTemplateString</a>
-<a href="html/libxslt-namespaces.html#XSLTGETNAMESPACE">xsltGetNamespace</a>
-<a href="html/libxslt-namespaces.html#XSLTGETSPECIALNAMESPACE">xsltGetSpecialNamespace</a>
-<a href="html/libxslt-functions.html#XSLTXPATHFUNCTIONLOOKUP">xsltXPathFunctionLookup</a>
-<a href="html/libxslt-extensions.html#XSLTXPATHGETTRANSFORMCONTEXT">xsltXPathGetTransformContext</a>
-<a href="html/libxslt-variables.html#XSLTXPATHVARIABLELOOKUP">xsltXPathVariableLookup</a>
-</dd>
-<dt>needing</dt>
-<dd>
-<a href="html/libxslt-attributes.html#XSLTPARSESTYLESHEETATTRIBUTESET">xsltParseStylesheetAttributeSet</a>
-<a href="html/libxslt-imports.html#XSLTPARSESTYLESHEETIMPORT">xsltParseStylesheetImport</a>
-<a href="html/libxslt-imports.html#XSLTPARSESTYLESHEETINCLUDE">xsltParseStylesheetInclude</a>
-</dd>
-<dt>needs</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
-</dd>
-<dt>negative</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTCALIBRATEADJUST">xsltCalibrateAdjust</a>
-</dd>
-<dt>newly</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTNEWSTYLESHEET">xsltNewStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTNEWTRANSFORMCONTEXT">xsltNewTransformContext</a>
-</dd>
-<dt>next</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
-<a href="html/libxslt-imports.html#XSLTNEXTIMPORT">xsltNextImport</a>
-</dd>
-<dt>node-set</dt>
-<dd>
-<a href="html/libxslt-functions.html#XSLTDOCUMENTFUNCTION">xsltDocumentFunction</a>
-<a href="html/libxslt-extra.html#XSLTFUNCTIONNODESET">xsltFunctionNodeSet</a>
-<a href="html/libxslt-functions.html#XSLTKEYFUNCTION">xsltKeyFunction</a>
-</dd>
-<dt>node-set?</dt>
-<dd>
-<a href="html/libxslt-functions.html#XSLTDOCUMENTFUNCTION">xsltDocumentFunction</a>
-<a href="html/libxslt-functions.html#XSLTGENERATEIDFUNCTION">xsltGenerateIdFunction</a>
-</dd>
-<dt>nodelist</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTAPPLYONETEMPLATE">xsltApplyOneTemplate</a>
-</dd>
-<dt>nodes</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTDOSORTFUNCTION">xsltDoSortFunction</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSETEMPLATECONTENT">xsltParseTemplateContent</a>
-<a href="html/libxslt-transform.html#XSLTSORT">xsltSort</a>
-</dd>
-<dt>nodeset</dt>
-<dd>
-<a href="html/libxslt-keys.html#XSLTGETKEY">xsltGetKey</a>
-</dd>
-<dt>non-NULL</dt>
-<dd>
-<a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACE">xsltCopyNamespace</a>
-<a href="html/libxslt-namespaces.html#XSLTCOPYNAMESPACELIST">xsltCopyNamespaceList</a>
-<a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
-</dd>
-<dt>non-wellformed</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEET">xsltApplyStylesheet</a>
-</dd>
-<dt>nor</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
-</dd>
-<dt>not</dt>
-<dd>
-<a href="html/libxslt-functions.html#XSLT-REGISTER-FUNCTION-LOOKUP-CAPS">XSLT_REGISTER_FUNCTION_LOOKUP</a>
-<a href="html/libxslt-variables.html#XSLT-REGISTER-VARIABLE-LOOKUP-CAPS">XSLT_REGISTER_VARIABLE_LOOKUP</a>
-<a href="html/libxslt-transform.html#XSLTAPPLYONETEMPLATE">xsltApplyOneTemplate</a>
-<a href="html/libxslt-templates.html#XSLTEVALSTATICATTRVALUETEMPLATE">xsltEvalStaticAttrValueTemplate</a>
-<a href="html/libxslt-transform.html#XSLTEXTELEMENTLOOKUP">xsltExtElementLookup</a>
-<a href="html/libxslt-imports.html#XSLTFINDELEMSPACEHANDLING">xsltFindElemSpaceHandling</a>
-<a href="html/libxslt-imports.html#XSLTFINDTEMPLATE">xsltFindTemplate</a>
-<a href="html/libxslt-xsltutils.html#XSLTGETNSPROP">xsltGetNsProp</a>
-<a href="html/libxslt-xsltutils.html#XSLTGETQNAMEURI">xsltGetQNameURI</a>
-<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
-<a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
-<a href="html/libxslt-documents.html#XSLTLOADDOCUMENT">xsltLoadDocument</a>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
-<a href="html/libxslt-imports.html#XSLTNEEDELEMSPACEHANDLING">xsltNeedElemSpaceHandling</a>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEET">xsltRunStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">xsltSaveResultToFd</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE">xsltSaveResultToFile</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
-<a href="html/libxslt-transform.html#XSLTSORT">xsltSort</a>
-<a href="html/libxslt-variables.html#XSLTVARIABLELOOKUP">xsltVariableLookup</a>
-<a href="html/libxslt-functions.html#XSLTXPATHFUNCTIONLOOKUP">xsltXPathFunctionLookup</a>
-<a href="html/libxslt-variables.html#XSLTXPATHVARIABLELOOKUP">xsltXPathVariableLookup</a>
-</dd>
-<dt>nothing</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
-</dd>
-<dt>null</dt>
-<dd>
-<a href="html/libxslt-variables.html#XSLTEVALONEUSERPARAM">xsltEvalOneUserParam</a>
-<a href="html/libxslt-variables.html#XSLTQUOTEONEUSERPARAM">xsltQuoteOneUserParam</a>
-</dd>
-<dt>number:</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-VERSION-CAPS">LIBXSLT_VERSION</a>
-</dd>
-</dl>
-<h2>Letter o:</h2>
-<dl>
-<dt>object</dt>
-<dd>
-<a href="html/libxslt-functions.html#XSLTDOCUMENTFUNCTION">xsltDocumentFunction</a>
-<a href="html/libxslt-functions.html#XSLTKEYFUNCTION">xsltKeyFunction</a>
-<a href="html/libxslt-functions.html#XSLTSYSTEMPROPERTYFUNCTION">xsltSystemPropertyFunction</a>
-</dd>
-<dt>obtained</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTO">xsltSaveResultTo</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">xsltSaveResultToFd</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE">xsltSaveResultToFile</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILENAME">xsltSaveResultToFilename</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOSTRING">xsltSaveResultToString</a>
-</dd>
-<dt>occcur</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLHANDLEDEBUGGER">xslHandleDebugger</a>
-</dd>
-<dt>off</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLDROPCALL">xslDropCall</a>
-</dd>
-<dt>old</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTGETQNAMEURI">xsltGetQNameURI</a>
-</dd>
-<dt>once</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI">xsltLoadStylesheetPI</a>
-</dd>
-<dt>one</dt>
-<dd>
-<a href="html/libxslt-extensions.html#XSLTCHECKEXTPREFIX">xsltCheckExtPrefix</a>
-<a href="html/libxslt-pattern.html#XSLTGETTEMPLATE">xsltGetTemplate</a>
-<a href="html/libxslt-imports.html#XSLTNEXTIMPORT">xsltNextImport</a>
-<a href="html/libxslt-xsltinternals.html#XSLTNUMBERFORMAT">xsltNumberFormat</a>
-<a href="html/libxslt-pattern.html#XSLTTESTCOMPMATCHLIST">xsltTestCompMatchList</a>
-</dd>
-<dt>one:</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#IS-XSLT-REAL-NODE-CAPS">IS_XSLT_REAL_NODE</a>
-</dd>
-<dt>ones</dt>
-<dd>
-<a href="html/libxslt-pattern.html#XSLTCLEANUPTEMPLATES">xsltCleanupTemplates</a>
-</dd>
-<dt>only</dt>
-<dd>
-<a href="html/libxslt-xsltconfig.html#DEBUG-MEMORY-CAPS">DEBUG_MEMORY</a>
-<a href="html/libxslt-xsltconfig.html#DEBUG-MEMORY-LOCATION-CAPS">DEBUG_MEMORY_LOCATION</a>
-<a href="html/libxslt-xsltconfig.html#LIBXSLT-PUBLIC-CAPS">LIBXSLT_PUBLIC</a>
-<a href="html/libxslt-transform.html#XSLTEXTELEMENTLOOKUP">xsltExtElementLookup</a>
-</dd>
-<dt>open</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFD">xsltSaveResultToFd</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTOFILE">xsltSaveResultToFile</a>
-</dd>
-<dt>operation</dt>
-<dd>
-<a href="html/libxslt-security.html#XSLTSECURITYALLOW">xsltSecurityAllow</a>
-<a href="html/libxslt-security.html#XSLTSECURITYFORBID">xsltSecurityForbid</a>
-</dd>
-<dt>option</dt>
-<dd>
-<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
-<a href="html/libxslt-security.html#XSLTSECURITYOPTION">xsltSecurityOption</a>
-<a href="html/libxslt-security.html#XSLTSETSECURITYPREFS">xsltSetSecurityPrefs</a>
-</dd>
-<dt>options</dt>
-<dd>
-<a href="html/libxslt-security.html#XSLTCHECKREAD">xsltCheckRead</a>
-<a href="html/libxslt-security.html#XSLTCHECKWRITE">xsltCheckWrite</a>
-</dd>
-<dt>order</dt>
-<dd>
-<a href="html/libxslt-imports.html#XSLT-GET-IMPORT-INT-CAPS">XSLT_GET_IMPORT_INT</a>
-<a href="html/libxslt-imports.html#XSLT-GET-IMPORT-PTR-CAPS">XSLT_GET_IMPORT_PTR</a>
-<a href="html/libxslt-xsltutils.html#XSLTDOCUMENTSORTFUNCTION">xsltDocumentSortFunction</a>
-</dd>
-<dt>otherwise</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLADDCALL">xslAddCall</a>
-<a href="html/libxslt-pattern.html#XSLTADDTEMPLATE">xsltAddTemplate</a>
-<a href="html/libxslt-extensions.html#XSLTCHECKEXTPREFIX">xsltCheckExtPrefix</a>
-<a href="html/libxslt-templates.html#XSLTEVALXPATHPREDICATE">xsltEvalXPathPredicate</a>
-<a href="html/libxslt-extensions.html#XSLTEXTMODULEELEMENTLOOKUP">xsltExtModuleElementLookup</a>
-<a href="html/libxslt-extensions.html#XSLTEXTMODULEELEMENTPRECOMPUTELOOKUP">xsltExtModuleElementPreComputeLookup</a>
-<a href="html/libxslt-extensions.html#XSLTEXTMODULEFUNCTIONLOOKUP">xsltExtModuleFunctionLookup</a>
-<a href="html/libxslt-extensions.html#XSLTEXTMODULETOPLEVELLOOKUP">xsltExtModuleTopLevelLookup</a>
-<a href="html/libxslt-security.html#XSLTGETSECURITYPREFS">xsltGetSecurityPrefs</a>
-<a href="html/libxslt-transform.html#XSLTGETXINCLUDEDEFAULT">xsltGetXIncludeDefault</a>
-<a href="html/libxslt-xsltinternals.html#XSLTISBLANK">xsltIsBlank</a>
-<a href="html/libxslt-security.html#XSLTSETCTXTSECURITYPREFS">xsltSetCtxtSecurityPrefs</a>
-<a href="html/libxslt-security.html#XSLTSETSECURITYPREFS">xsltSetSecurityPrefs</a>
-</dd>
-<dt>ouput</dt>
-<dd>
-<a href="html/libxslt-xsltinternals.html#XSLTFORMATNUMBERCONVERSION">xsltFormatNumberConversion</a>
-</dd>
-<dt>out</dt>
-<dd>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICDEBUGFUNC">xsltSetGenericDebugFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETGENERICERRORFUNC">xsltSetGenericErrorFunc</a>
-<a href="html/libxslt-xsltutils.html#XSLTSETTRANSFORMERRORFUNC">xsltSetTransformErrorFunc</a>
-</dd>
-<dt>output</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEET">xsltApplyStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEETUSER">xsltApplyStylesheetUser</a>
-<a href="html/libxslt-extensions.html#XSLTDEBUGDUMPEXTENSIONS">xsltDebugDumpExtensions</a>
-<a href="html/libxslt-namespaces.html#XSLTGETNAMESPACE">xsltGetNamespace</a>
-<a href="html/libxslt-namespaces.html#XSLTGETSPECIALNAMESPACE">xsltGetSpecialNamespace</a>
-<a href="html/libxslt-xsltinternals.html#XSLTPARSESTYLESHEETOUTPUT">xsltParseStylesheetOutput</a>
-<a href="html/libxslt-transform.html#XSLTPROFILESTYLESHEET">xsltProfileStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEET">xsltRunStylesheet</a>
-<a href="html/libxslt-transform.html#XSLTRUNSTYLESHEETUSER">xsltRunStylesheetUser</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVEPROFILING">xsltSaveProfiling</a>
-<a href="html/libxslt-xsltutils.html#XSLTSAVERESULTTO">xsltSaveResultTo</a>
-</dd>
-<dt>own</dt>
-<dd>
-<a href="html/libxslt-transform.html#XSLTAPPLYSTYLESHEETUSER">xsltApplyStylesheetUser</a>
-</dd>
-</dl>
-<h2 align="center">
-<a href="APIchunk0.html">A-S</a>
-<a href="APIchunk1.html">T-a</a>
-<a href="APIchunk2.html">b-d</a>
-<a href="APIchunk3.html">e-i</a>
-<a href="APIchunk4.html">k-o</a>
-<a href="APIchunk5.html">p-r</a>
-<a href="APIchunk6.html">s-t</a>
-</h2>
-<p><a href="bugs.html">Daniel Veillard</a></p>
-</td></tr></table></td></tr></table></td></tr></table></td>
-</tr></table></td></tr></table>
-</body>
-</html>
+</style><title>API Alphabetic Index g-i for libxslt</title></head><body bgcolor="#8b7765" text="#000000" link="#000000" vlink="#000000"><table border="0" width="100%" cellpadding="5" cellspacing="0" align="center"><tr><td width="120"><a href="http://swpat.ffii.org/"><img src="epatents.png" alt="Action against software patents" /></a></td><td width="100"><a href="http://www.gnome.org/"><img src="gnome2.png" alt="Gnome2 Logo" /></a><a href="http://www.redhat.com"><img src="redhat.gif" alt="Red Hat Logo" /></a><div align="left"><a href="http://xmlsoft.org/XSLT/"><img src="Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo" /></a></div></td><td><table border="0" width="90%" cellpadding="2" cellspacing="0" align="center" bgcolor="#000000"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="3" bgcolor="#fffacd"><tr><td align="center"><h1>The XSLT C library for Gnome</h1><h2>API Alphabetic Index g-i for libxslt</h2></td></tr></table></td></tr></table></td></tr></table><table border="0" cellpadding="4" cellspacing="0" width="100%" align="center"><tr><td bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="2" width="100%"><tr><td valign="top" width="200" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="3"><tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>Main Menu</b></center></td></tr><tr><td bgcolor="#fffacd"><form action="search.php" enctype="application/x-www-form-urlencoded" method="get"><input name="query" type="text" size="20" value="" /><input name="submit" type="submit" value="Search ..." /></form><ul><li><a href="index.html">Home</a></li><li><a href="intro.html">Introduction</a></li><li><a href="docs.html">Documentation</a></li><li><a href="bugs.html">Reporting bugs and getting help</a></li><li><a href="help.html">How to help</a></li><li><a href="downloads.html">Downloads</a></li><li><a href="FAQ.html">FAQ</a></li><li><a href="news.html">News</a></li><li><a href="xsltproc2.html">The xsltproc tool</a></li><li><a href="docbook.html">DocBook</a></li><li><a href="API.html">The programming API</a></li><li><a href="python.html">Python and bindings</a></li><li><a href="internals.html">Library internals</a></li><li><a href="extensions.html">Writing extensions</a></li><li><a href="contribs.html">Contributions</a></li><li><a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a></li></ul></td></tr></table><table width="100%" border="0" cellspacing="1" cellpadding="3"><tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>Related links</b></center></td></tr><tr><td bgcolor="#fffacd"><ul><li><a href="tutorial/libxslttutorial.html">Tutorial</a></li><li><a href="xsltproc.html">Man page for xsltproc</a></li><li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li><li><a href="http://xmlsoft.org/">XML libxml</a></li><li><a href="http://phd.cs.unibo.it/gdome2/">DOM gdome2</a></li><li><a href="ftp://xmlsoft.org/">FTP</a></li><li><a href="http://www.zlatkovic.com/projects/libxml/">Windows binaries</a></li><li><a href="http://garypennington.net/libxml2/">Solaris binaries</a></li><li><a href="http://www.zveno.com/open_source/libxml2xslt.html">MacOsX binaries</a></li><li><a href="http://sourceforge.net/projects/libxml2-pas/">Pascal bindings</a></li><li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li><li><a href="http://xsldbg.sourceforge.net/">Xsldbg Debugger</a></li><li><a href="http://www.mod-xslt.com/mod-xslt/">Apache module</a></li></ul></td></tr></table><table width="100%" border="0" cellspacing="1" cellpadding="3"><tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>API Indexes</b></center></td></tr><tr><td bgcolor="#fffacd"><ul><li><a href="APIchunk0.html">Alphabetic</a></li><li><a href="APIconstructors.html">Constructors</a></li><li><a href="APIfunctions.html">Functions/Types</a></li><li><a href="APIfiles.html">Modules</a></li><li><a href="APIsymbols.html">Symbols</a></li></ul></td></tr></table></td></tr></table></td><td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd"><h2 align="center"><a href="APIchunk0.html">A-P</a>
+<a href="APIchunk1.html">Q-a</a>
+<a href="APIchunk2.html">b-c</a>
+<a href="APIchunk3.html">d-f</a>
+<a href="APIchunk4.html">g-i</a>
+<a href="APIchunk5.html">j-n</a>
+<a href="APIchunk6.html">o-p</a>
+<a href="APIchunk7.html">q-s</a>
+<a href="APIchunk8.html">t-w</a>
+</h2><h2>Letter g:</h2><dl><dt>gathering</dt><dd><a href="html/libxslt-xsltutils.html#xsltTimestamp">xsltTimestamp</a><br />
+</dd><dt>general</dt><dd><a href="html/libxslt-functions.html#XSLT_REGISTER_FUNCTION_LOOKUP">XSLT_REGISTER_FUNCTION_LOOKUP</a><br />
+<a href="html/libxslt-variables.html#XSLT_REGISTER_VARIABLE_LOOKUP">XSLT_REGISTER_VARIABLE_LOOKUP</a><br />
+</dd><dt>generally</dt><dd><a href="html/libxslt-extensions.html#xsltInitElemPreComp">xsltInitElemPreComp</a><br />
+</dd><dt>generate</dt><dd><a href="html/libxslt-xsltInternals.html#xsltLoadStylesheetPI">xsltLoadStylesheetPI</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheet">xsltRunStylesheet</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheetUser">xsltRunStylesheetUser</a><br />
+</dd><dt>generate-id</dt><dd><a href="html/libxslt-functions.html#xsltGenerateIdFunction">xsltGenerateIdFunction</a><br />
+</dd><dt>generated</dt><dd><a href="html/libxslt-pattern.html#xsltCompilePattern">xsltCompilePattern</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheet">xsltRunStylesheet</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheetUser">xsltRunStylesheetUser</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSaveResultToString">xsltSaveResultToString</a><br />
+</dd><dt>generates</dt><dd><a href="html/libxslt-pattern.html#xsltCompilePattern">xsltCompilePattern</a><br />
+</dd><dt>get</dt><dd><a href="html/libxslt-xsltutils.html#xsltDoSortFunction">xsltDoSortFunction</a><br />
+<a href="html/libxslt-templates.html#xsltEvalXPathString">xsltEvalXPathString</a><br />
+<a href="html/libxslt-templates.html#xsltEvalXPathStringNs">xsltEvalXPathStringNs</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetNsProp">xsltGetNsProp</a><br />
+<a href="html/libxslt-security.html#xsltGetSecurityPrefs">xsltGetSecurityPrefs</a><br />
+</dd><dt>given</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltTemplate">_xsltTemplate</a><br />
+<a href="html/libxslt-templates.html#xsltAttrTemplateProcess">xsltAttrTemplateProcess</a><br />
+<a href="html/libxslt-templates.html#xsltAttrTemplateValueProcess">xsltAttrTemplateValueProcess</a><br />
+<a href="html/libxslt-templates.html#xsltAttrTemplateValueProcessNode">xsltAttrTemplateValueProcessNode</a><br />
+<a href="html/libxslt-extensions.html#xsltCheckExtPrefix">xsltCheckExtPrefix</a><br />
+<a href="html/libxslt-extensions.html#xsltGetExtData">xsltGetExtData</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltLoadStylesheetPI">xsltLoadStylesheetPI</a><br />
+<a href="html/libxslt-transform.html#xsltProfileStylesheet">xsltProfileStylesheet</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetTransformErrorFunc">xsltSetTransformErrorFunc</a><br />
+<a href="html/libxslt-extensions.html#xsltStyleGetExtData">xsltStyleGetExtData</a><br />
+<a href="html/libxslt-templates.html#xsltTemplateProcess">xsltTemplateProcess</a><br />
+<a href="html/libxslt-variables.html#xsltVariableLookup">xsltVariableLookup</a><br />
+</dd><dt>gives</dt><dd><a href="html/libxslt-xsltutils.html#xsltTransformError">xsltTransformError</a><br />
+</dd><dt>giving</dt><dd><a href="html/libxslt-variables.html#xsltEvalOneUserParam">xsltEvalOneUserParam</a><br />
+<a href="html/libxslt-variables.html#xsltQuoteOneUserParam">xsltQuoteOneUserParam</a><br />
+</dd><dt>global</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
+<a href="html/libxslt-xslt.html#xsltCleanupGlobals">xsltCleanupGlobals</a><br />
+<a href="html/libxslt-xsltutils.html#xsltDoSortFunction">xsltDoSortFunction</a><br />
+<a href="html/libxslt-variables.html#xsltEvalGlobalVariables">xsltEvalGlobalVariables</a><br />
+<a href="html/libxslt-variables.html#xsltEvalOneUserParam">xsltEvalOneUserParam</a><br />
+<a href="html/libxslt-variables.html#xsltEvalUserParams">xsltEvalUserParams</a><br />
+<a href="html/libxslt-variables.html#xsltFreeGlobalVariables">xsltFreeGlobalVariables</a><br />
+<a href="html/libxslt-keys.html#xsltInitCtxtKeys">xsltInitCtxtKeys</a><br />
+<a href="html/libxslt-variables.html#xsltQuoteOneUserParam">xsltQuoteOneUserParam</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetCtxtSortFunc">xsltSetCtxtSortFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetSortFunc">xsltSetSortFunc</a><br />
+</dd><dt>goto</dt><dd><a href="html/libxslt-xsltInternals.html#CHECK_STOPPEDE">CHECK_STOPPEDE</a><br />
+</dd><dt>grafted</dt><dd><a href="html/libxslt-templates.html#xsltAttrListTemplateProcess">xsltAttrListTemplateProcess</a><br />
+</dd><dt>group</dt><dd><a href="html/libxslt-numbersInternals.html#_xsltFormatNumberInfo">_xsltFormatNumberInfo</a><br />
+</dd><dt>grouping</dt><dd><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
+</dd></dl><h2>Letter h:</h2><dl><dt>handle</dt><dd><a href="html/libxslt-transform.html#xsltApplyOneTemplate">xsltApplyOneTemplate</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetGenericDebugFunc">xsltSetGenericDebugFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetGenericErrorFunc">xsltSetGenericErrorFunc</a><br />
+</dd><dt>handler</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
+<a href="html/libxslt-documents.html#xsltNewDocument">xsltNewDocument</a><br />
+<a href="html/libxslt-documents.html#xsltNewStyleDocument">xsltNewStyleDocument</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheet">xsltRunStylesheet</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheetUser">xsltRunStylesheetUser</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetCtxtSortFunc">xsltSetCtxtSortFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetGenericDebugFunc">xsltSetGenericDebugFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetGenericErrorFunc">xsltSetGenericErrorFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetSortFunc">xsltSetSortFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetTransformErrorFunc">xsltSetTransformErrorFunc</a><br />
+</dd><dt>handles</dt><dd><a href="html/libxslt-namespaces.html#xsltCopyNamespace">xsltCopyNamespace</a><br />
+<a href="html/libxslt-namespaces.html#xsltCopyNamespaceList">xsltCopyNamespaceList</a><br />
+</dd><dt>handling</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltElemPreComp">_xsltElemPreComp</a><br />
+<a href="html/libxslt-xsltInternals.html#_xsltStylePreComp">_xsltStylePreComp</a><br />
+<a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetGenericDebugFunc">xsltSetGenericDebugFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetGenericErrorFunc">xsltSetGenericErrorFunc</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSetTransformErrorFunc">xsltSetTransformErrorFunc</a><br />
+</dd><dt>has</dt><dd><a href="html/libxslt-templates.html#xsltEvalStaticAttrValueTemplate">xsltEvalStaticAttrValueTemplate</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetNsProp">xsltGetNsProp</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
+</dd><dt>hash</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltStylesheet">_xsltStylesheet</a><br />
+<a href="html/libxslt-variables.html#xsltEvalOneUserParam">xsltEvalOneUserParam</a><br />
+<a href="html/libxslt-variables.html#xsltEvalUserParams">xsltEvalUserParams</a><br />
+<a href="html/libxslt-extensions.html#xsltGetExtInfo">xsltGetExtInfo</a><br />
+<a href="html/libxslt-pattern.html#xsltNormalizeCompSteps">xsltNormalizeCompSteps</a><br />
+<a href="html/libxslt-variables.html#xsltQuoteOneUserParam">xsltQuoteOneUserParam</a><br />
+</dd><dt>hashtable</dt><dd><a href="html/libxslt-pattern.html#xsltNormalizeCompSteps">xsltNormalizeCompSteps</a><br />
+</dd><dt>have</dt><dd><a href="html/libxslt-variables.html#xsltEvalOneUserParam">xsltEvalOneUserParam</a><br />
+</dd><dt>helps</dt><dd><a href="html/libxslt-xsltexports.html#XSLTPUBFUN">XSLTPUBFUN</a><br />
+</dd><dt>hence</dt><dd><a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
+</dd><dt>holding</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
+</dd><dt>hosting</dt><dd><a href="html/libxslt-templates.html#xsltAttrTemplateValueProcessNode">xsltAttrTemplateValueProcessNode</a><br />
+</dd><dt>html</dt><dd><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
+</dd><dt>http:</dt><dd><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
+</dd></dl><h2>Letter i:</h2><dl><dt>ifdef</dt><dd><a href="html/libxslt-xsltexports.html#XSLTPUBFUN">XSLTPUBFUN</a><br />
+</dd><dt>ignorable</dt><dd><a href="html/libxslt-transform.html#xsltApplyStripSpaces">xsltApplyStripSpaces</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltIsBlank">xsltIsBlank</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltParseTemplateContent">xsltParseTemplateContent</a><br />
+</dd><dt>implementation</dt><dd><a href="html/libxslt-extensions.html#xsltRegisterExtElement">xsltRegisterExtElement</a><br />
+<a href="html/libxslt-extensions.html#xsltRegisterExtFunction">xsltRegisterExtFunction</a><br />
+</dd><dt>implemented</dt><dd><a href="html/libxslt-transform.html#xsltRunStylesheet">xsltRunStylesheet</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheetUser">xsltRunStylesheetUser</a><br />
+</dd><dt>import</dt><dd><a href="html/libxslt-imports.html#XSLT_GET_IMPORT_INT">XSLT_GET_IMPORT_INT</a><br />
+<a href="html/libxslt-imports.html#XSLT_GET_IMPORT_PTR">XSLT_GET_IMPORT_PTR</a><br />
+<a href="html/libxslt-imports.html#xsltFindElemSpaceHandling">xsltFindElemSpaceHandling</a><br />
+<a href="html/libxslt-imports.html#xsltFindTemplate">xsltFindTemplate</a><br />
+<a href="html/libxslt-imports.html#xsltNextImport">xsltNextImport</a><br />
+<a href="html/libxslt-imports.html#xsltParseStylesheetImport">xsltParseStylesheetImport</a><br />
+</dd><dt>imported</dt><dd><a href="html/libxslt-pattern.html#xsltGetTemplate">xsltGetTemplate</a><br />
+<a href="html/libxslt-pattern.html#xsltNormalizeCompSteps">xsltNormalizeCompSteps</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltParseStylesheetImportedDoc">xsltParseStylesheetImportedDoc</a><br />
+</dd><dt>imports</dt><dd><a href="html/libxslt-pattern.html#xsltCleanupTemplates">xsltCleanupTemplates</a><br />
+</dd><dt>in-scope</dt><dd><a href="html/libxslt-templates.html#xsltEvalXPathStringNs">xsltEvalXPathStringNs</a><br />
+</dd><dt>include</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltStylesheet">_xsltStylesheet</a><br />
+<a href="html/libxslt-imports.html#xsltParseStylesheetInclude">xsltParseStylesheetInclude</a><br />
+</dd><dt>included</dt><dd><a href="html/libxslt-xsltutils.html#xsltSaveResultToFilename">xsltSaveResultToFilename</a><br />
+</dd><dt>includes</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltDocument">_xsltDocument</a><br />
+<a href="html/libxslt-xsltInternals.html#_xsltStylesheet">_xsltStylesheet</a><br />
+</dd><dt>inclusive</dt><dd><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
+</dd><dt>indented</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltStylesheet">_xsltStylesheet</a><br />
+</dd><dt>index</dt><dd><a href="">nr</a><br />
+</dd><dt>indicator</dt><dd><a href="html/libxslt-templates.html#xsltEvalStaticAttrValueTemplate">xsltEvalStaticAttrValueTemplate</a><br />
+</dd><dt>information</dt><dd><a href="html/libxslt-xsltInternals.html#XSLT_RUNTIME_EXTRA">XSLT_RUNTIME_EXTRA</a><br />
+<a href="html/libxslt-xsltInternals.html#XSLT_RUNTIME_EXTRA_FREE">XSLT_RUNTIME_EXTRA_FREE</a><br />
+<a href="html/libxslt-xsltInternals.html#XSLT_RUNTIME_EXTRA_LST">XSLT_RUNTIME_EXTRA_LST</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltAllocateExtra">xsltAllocateExtra</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltAllocateExtraCtxt">xsltAllocateExtraCtxt</a><br />
+<a href="html/libxslt-transform.html#xsltApplyImports">xsltApplyImports</a><br />
+<a href="html/libxslt-transform.html#xsltApplyTemplates">xsltApplyTemplates</a><br />
+<a href="html/libxslt-transform.html#xsltAttribute">xsltAttribute</a><br />
+<a href="html/libxslt-transform.html#xsltCallTemplate">xsltCallTemplate</a><br />
+<a href="html/libxslt-transform.html#xsltChoose">xsltChoose</a><br />
+<a href="html/libxslt-transform.html#xsltComment">xsltComment</a><br />
+<a href="html/libxslt-transform.html#xsltCopy">xsltCopy</a><br />
+<a href="html/libxslt-transform.html#xsltCopyOf">xsltCopyOf</a><br />
+<a href="html/libxslt-transform.html#xsltDocumentElem">xsltDocumentElem</a><br />
+<a href="html/libxslt-transform.html#xsltElement">xsltElement</a><br />
+<a href="html/libxslt-transform.html#xsltForEach">xsltForEach</a><br />
+<a href="html/libxslt-transform.html#xsltIf">xsltIf</a><br />
+<a href="html/libxslt-transform.html#xsltNumber">xsltNumber</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltParseStylesheetOutput">xsltParseStylesheetOutput</a><br />
+<a href="html/libxslt-transform.html#xsltProcessingInstruction">xsltProcessingInstruction</a><br />
+<a href="html/libxslt-transform.html#xsltSort">xsltSort</a><br />
+<a href="html/libxslt-transform.html#xsltText">xsltText</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltTransformFunction">xsltTransformFunction</a><br />
+<a href="html/libxslt-transform.html#xsltValueOf">xsltValueOf</a><br />
+</dd><dt>informations</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltStylesheet">_xsltStylesheet</a><br />
+<a href="html/libxslt-xsltInternals.html#_xsltTemplate">_xsltTemplate</a><br />
+<a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
+<a href="html/libxslt-extra.html#xsltDebug">xsltDebug</a><br />
+<a href="html/libxslt-imports.html#xsltFindElemSpaceHandling">xsltFindElemSpaceHandling</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetProfileInformation">xsltGetProfileInformation</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltNumberFormat">xsltNumberFormat</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSaveProfiling">xsltSaveProfiling</a><br />
+</dd><dt>inherited</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltTemplate">_xsltTemplate</a><br />
+</dd><dt>initial</dt><dd><a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
+</dd><dt>initialization</dt><dd><a href="html/libxslt-extensions.html#xsltExtInitFunction">xsltExtInitFunction</a><br />
+<a href="html/libxslt-extensions.html#xsltRegisterExtModule">xsltRegisterExtModule</a><br />
+<a href="html/libxslt-extensions.html#xsltRegisterExtModuleFull">xsltRegisterExtModuleFull</a><br />
+<a href="html/libxslt-extensions.html#xsltStyleExtInitFunction">xsltStyleExtInitFunction</a><br />
+</dd><dt>initialized</dt><dd><a href="html/libxslt-extensions.html#xsltInitCtxtExts">xsltInitCtxtExts</a><br />
+<a href="html/libxslt-keys.html#xsltInitCtxtKeys">xsltInitCtxtKeys</a><br />
+<a href="html/libxslt-extensions.html#xsltNewElemPreComp">xsltNewElemPreComp</a><br />
+</dd><dt>initializes</dt><dd><a href="html/libxslt-extensions.html#xsltNewElemPreComp">xsltNewElemPreComp</a><br />
+</dd><dt>input</dt><dd><a href="html/libxslt-transform.html#xsltApplyStripSpaces">xsltApplyStripSpaces</a><br />
+<a href="html/libxslt-namespaces.html#xsltGetNamespace">xsltGetNamespace</a><br />
+<a href="html/libxslt-namespaces.html#xsltGetSpecialNamespace">xsltGetSpecialNamespace</a><br />
+<a href="html/libxslt-keys.html#xsltInitCtxtKeys">xsltInitCtxtKeys</a><br />
+<a href="html/libxslt-transform.html#xsltNewTransformContext">xsltNewTransformContext</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltTransformFunction">xsltTransformFunction</a><br />
+</dd><dt>insertion</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
+</dd><dt>instances</dt><dd><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
+</dd><dt>instead</dt><dd><a href="html/libxslt-extra.html#xsltRegisterExtras">xsltRegisterExtras</a><br />
+</dd><dt>instruction</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltElemPreComp">_xsltElemPreComp</a><br />
+<a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
+<a href="html/libxslt-keys.html#xsltAddKey">xsltAddKey</a><br />
+<a href="html/libxslt-extra.html#xsltDebug">xsltDebug</a><br />
+<a href="html/libxslt-preproc.html#xsltDocumentComp">xsltDocumentComp</a><br />
+<a href="html/libxslt-transform.html#xsltDocumentElem">xsltDocumentElem</a><br />
+<a href="html/libxslt-xsltutils.html#xsltMessage">xsltMessage</a><br />
+<a href="html/libxslt-preproc.html#xsltStylePreCompute">xsltStylePreCompute</a><br />
+</dd><dt>integer</dt><dd><a href="html/libxslt-numbersInternals.html#_xsltFormatNumberInfo">_xsltFormatNumberInfo</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
+</dd><dt>interface</dt><dd><a href="html/libxslt-transform.html#xsltRunStylesheet">xsltRunStylesheet</a><br />
+<a href="html/libxslt-transform.html#xsltRunStylesheetUser">xsltRunStylesheetUser</a><br />
+</dd><dt>intergers</dt><dd><a href="html/libxslt-imports.html#XSLT_GET_IMPORT_INT">XSLT_GET_IMPORT_INT</a><br />
+</dd><dt>internally</dt><dd><a href="html/libxslt-xsltutils.html#XSLT_STRANGE">XSLT_STRANGE</a><br />
+</dd><dt>interpretation</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltDecimalFormat">_xsltDecimalFormat</a><br />
+</dd><dt>interpreter</dt><dd><a href="html/libxslt-templates.html#xsltEvalTemplateString">xsltEvalTemplateString</a><br />
+<a href="html/libxslt-extensions.html#xsltXPathGetTransformContext">xsltXPathGetTransformContext</a><br />
+</dd><dt>interpretor</dt><dd><a href="html/libxslt-functions.html#xsltXPathFunctionLookup">xsltXPathFunctionLookup</a><br />
+<a href="html/libxslt-variables.html#xsltXPathVariableLookup">xsltXPathVariableLookup</a><br />
+</dd><dt>into</dt><dd><a href="html/libxslt-xsltutils.html#xsltSetDebuggerCallbacks">xsltSetDebuggerCallbacks</a><br />
+</dd><dt>item</dt><dd><a href="html/libxslt-xsltutils.html#xslDropCall">xslDropCall</a><br />
+</dd><dt>item1</dt><dd><a href="html/libxslt-xsltutils.html#xsltGetProfileInformation">xsltGetProfileInformation</a><br />
+</dd><dt>item2|item3</dt><dd><a href="html/libxslt-xsltutils.html#xsltGetProfileInformation">xsltGetProfileInformation</a><br />
+</dd><dt>its</dt><dd><a href="html/libxslt-xsltInternals.html#xsltAllocateExtra">xsltAllocateExtra</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltAllocateExtraCtxt">xsltAllocateExtraCtxt</a><br />
+<a href="html/libxslt-transform.html#xsltApplyStylesheetUser">xsltApplyStylesheetUser</a><br />
+<a href="html/libxslt-variables.html#xsltFreeGlobalVariables">xsltFreeGlobalVariables</a><br />
+<a href="html/libxslt-namespaces.html#xsltGetNamespace">xsltGetNamespace</a><br />
+<a href="html/libxslt-namespaces.html#xsltGetSpecialNamespace">xsltGetSpecialNamespace</a><br />
+<a href="html/libxslt-variables.html#xsltParseGlobalParam">xsltParseGlobalParam</a><br />
+<a href="html/libxslt-variables.html#xsltParseGlobalVariable">xsltParseGlobalVariable</a><br />
+<a href="html/libxslt-variables.html#xsltParseStylesheetCallerParam">xsltParseStylesheetCallerParam</a><br />
+<a href="html/libxslt-variables.html#xsltParseStylesheetParam">xsltParseStylesheetParam</a><br />
+<a href="html/libxslt-variables.html#xsltParseStylesheetVariable">xsltParseStylesheetVariable</a><br />
+</dd><dt>itself</dt><dd><a href="html/libxslt-xsltInternals.html#xsltLoadStylesheetPI">xsltLoadStylesheetPI</a><br />
+</dd></dl><h2 align="center"><a href="APIchunk0.html">A-P</a>
+<a href="APIchunk1.html">Q-a</a>
+<a href="APIchunk2.html">b-c</a>
+<a href="APIchunk3.html">d-f</a>
+<a href="APIchunk4.html">g-i</a>
+<a href="APIchunk5.html">j-n</a>
+<a href="APIchunk6.html">o-p</a>
+<a href="APIchunk7.html">q-s</a>
+<a href="APIchunk8.html">t-w</a>
+</h2><p><a href="bugs.html">Daniel Veillard</a></p></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></body></html>
