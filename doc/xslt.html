@@ -221,10 +221,9 @@ platform, get in touch with me to upload the package. I will keep them in the
     <p>i.e. the string value is surrounded by " and ' then terminated by '
     and ". Libxslt interpret the parameter values as XPath expressions, so
     the string -&gt;<code>alpha</code>&lt;- is intepreted as the node set
-    matching this string. You really want            
-    -&gt;<code>'alpha'</code>&lt;- to be passed to the processor. And to
-    allow this you need to escape the quotes at the shell level using
-    -&gt;<code>"'alpha'"</code>&lt;- .</p>
+    matching this string. You really want -&gt;<code>'alpha'</code>&lt;- to
+    be passed to the processor. And to allow this you need to escape the
+    quotes at the shell level using -&gt;<code>"'alpha'"</code>&lt;- .</p>
   </li>
 </ol>
 
@@ -233,6 +232,20 @@ platform, get in touch with me to upload the package. I will keep them in the
 <h3>CVS only : check the <a
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
+
+<h3>1.0.9: Dec 7 2001</h3>
+<ul>
+  <li>Makefile patches from Peter Williams</li>
+  <li>attempt to fix the compilation problem associated to prelinking</li>
+  <li>obsoleted libxsltbreakpoint now deprecated and frozen to 1.0.8 API</li>
+  <li>xsltproc return codes are now significant, John Fleck updated the
+    documentation</li>
+  <li>patch to allow as much as 40 steps in patterns (Marc Tardif), should be
+    made dynamic really</li>
+  <li>fixed a bug raised by Nik Clayton when using doctypes with HTML
+  output</li>
+  <li>patches from Keith Isdale to interface with xsltdebugger</li>
+</ul>
 
 <h3>1.0.8: Nov 26 2001</h3>
 <ul>
