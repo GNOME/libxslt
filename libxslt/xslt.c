@@ -1178,6 +1178,11 @@ xsltParseStylesheetExcludePrefix(xsltStylesheetPtr style, xmlNodePtr cur) {
 static void
 xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlNodePtr delete;
+    int internalize = 0;
+
+    if ((style != NULL) && (cur != NULL) && (cur->doc != NULL) &&
+        (style->dict != NULL) && (cur->doc->dict == style->dict))
+	internalize = 1;
 
     /*
      * This content comes from the stylesheet
@@ -1197,6 +1202,33 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	}
 	if (cur->type == XML_ELEMENT_NODE) {
 	    int exclPrefixes;
+
+	    /*
+	     * Internalize attributes values.
+	     */
+	    if ((internalize) && (cur->properties != NULL)) {
+	        xmlAttrPtr prop = cur->properties;
+		xmlNodePtr txt;
+
+		while (prop != NULL) {
+		    txt = prop->children;
+		    if ((txt != NULL) && (txt->type == XML_TEXT_NODE) &&
+		        (txt->content != NULL) &&
+			(!xmlDictOwns(style->dict, txt->content))) {
+			xmlChar *old = (xmlChar *) txt->content;
+
+			/*
+			 * internalize the text string, goal is to speed
+			 * up operations and minimize used space by compiled
+			 * stylesheets.
+			 */
+			txt->content = (xmlChar *)
+			               xmlDictLookup(style->dict, old, -1);
+			xmlFree(old);
+		    }
+		    prop = prop->next;
+		}
+	    }
 
 	    exclPrefixes = xsltParseStylesheetExcludePrefix(style, cur);
 	    if (IS_XSLT_ELEM(cur)) {
@@ -1264,6 +1296,17 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		if (xmlNodeGetSpacePreserve(cur) != 1) {
 		    delete = cur;
 		}
+	    } else if ((cur->content != NULL) && (internalize) &&
+	               (!xmlDictOwns(style->dict, cur->content))) {
+		xmlChar *old = (xmlChar *) cur->content;
+
+		/*
+		 * internalize the text string, goal is to speed
+		 * up operations and minimize used space by compiled
+		 * stylesheets.
+		 */
+		cur->content = (xmlChar *) xmlDictLookup(style->dict, old, -1);
+		xmlFree(old);
 	    }
 	} else if ((cur->type != XML_ELEMENT_NODE) &&
 		   (cur->type != XML_CDATA_SECTION_NODE)) {
