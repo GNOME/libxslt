@@ -236,7 +236,8 @@ xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
 		if (descending)
 		    tst = !tst;
 	    } else {
-		tst = xmlStrcmp(results[i]->stringval, results[j]->stringval);
+		tst = (xmlStrcmp(results[i]->stringval,
+			         results[j]->stringval)) > 0; 
 		if (descending)
 		    tst = !tst;
 	    }

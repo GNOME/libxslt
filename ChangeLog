@@ -1,3 +1,9 @@
+Wed Jan 31 21:42:43 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-[9-10]*: added more tests
+	* tests/REC2/html.xml libxslt/xsltutils.c libxslt/transform.c:
+	  fixed sorting
+
 Wed Jan 31 19:25:38 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/REC/test-[7-9]*: added more tests

@@ -246,6 +246,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int number = 0;
     int len = 0;
     int i;
+    xmlNodePtr oldNode;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
 	return;
@@ -307,11 +308,13 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
     start = xpathParserCtxt->cur;
+    oldNode = ctxt->node;
     for (i = 0;i < len;i++) {
 	xpathParserCtxt->cur = start;
-	node = ctxt->node = list->nodeTab[i];
+	ctxt->xpathCtxt->contextSize = len;
 	ctxt->xpathCtxt->proximityPosition = i + 1;
-	valuePush(xpathParserCtxt, xmlXPathNewNodeSet(node));
+	ctxt->node = list->nodeTab[i];
+	ctxt->xpathCtxt->node = ctxt->node;
 	xmlXPathEvalExpr(xpathParserCtxt);
 	xmlXPathStringFunction(xpathParserCtxt, 1);
 	if (number)
@@ -348,6 +351,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	}
     }
+    ctxt->node = oldNode;
 
     xsltSortFunction(list, &results[0], descending, number);
 
@@ -1094,9 +1098,14 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
      * handle and skip the xsl:sort
      */
     replacement = inst->children;
-    while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
+    if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
 	xsltSort(ctxt, node, replacement);
 	replacement = replacement->next;
+	while (IS_XSLT_ELEM(replacement) &&
+	       (IS_XSLT_NAME(replacement, "sort"))) {
+	    TODO /* imbricated sorts */
+	    replacement = replacement->next;
+	}
     }
 
     for (i = 0;i < list->nodeNr;i++) {

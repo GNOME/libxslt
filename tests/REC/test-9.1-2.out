@@ -1,0 +1,9 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><table><tbody>
+<tr>item1</tr>
+<tr bgcolor="yellow">item2</tr>
+<tr>item3</tr>
+<tr bgcolor="yellow">item4</tr>
+<tr>item5</tr>
+<tr bgcolor="yellow">item6</tr>
+</tbody></table></body></html>
