@@ -91,7 +91,10 @@
   #undef EXSLTPUBFUN
   #undef EXSLTPUBVAR
   #undef EXSLTCALL
+/*
   #if defined(IN_LIBEXSLT) && !defined(LIBEXSLT_STATIC)
+*/
+  #if !defined(LIBEXSLT_STATIC)
     #define EXSLTPUBFUN __declspec(dllexport)
     #define EXSLTPUBVAR __declspec(dllexport) extern
   #else
