@@ -1,3 +1,8 @@
+Sun Jul  6 23:57:35 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: releasing 1.0.31
+	* doc/*: update and rebuild of the docs
+
 Sun Jul  6 18:31:56 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixing bug #115913 for xsl:copy with namespace
