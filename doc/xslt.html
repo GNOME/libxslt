@@ -240,6 +240,21 @@ platform, get in touch with me to upload the package. I will keep them in the
 
 <h2><a name="FAQ">FAQ</a></h2>
 <ol>
+  <li><em>Troubles compiling or linking programs using libxslt</em>
+    <p>Usually the problem comes from the fact that the compiler doesn't get
+    the right compilation or linking flags. There is a small shell script
+    <code>xslt-config</code> which is installed as part of libxslt usual
+    install process which provides those flags. Use</p>
+    <p><code>xslt-config --cflags</code></p>
+    <p>to get the compilation flags and</p>
+    <p><code>xslt-config --libs</code></p>
+    <p>to get the linker flags. Usually this is done directly from the
+    Makefile as:</p>
+    <p><code>CFLAGS=`xslt-config --cflags`</code></p>
+    <p><code>LIBS=`xslt-config --libs`</code></p>
+    <p>Note also that if you use the EXSLT extensions from the program then
+    you should prepend <code>-lexslt</code> to the LIBS options</p>
+  </li>
   <li><em>passing parameters on the xsltproc command line doesn't work</em>
     <p><em>xsltproc --param test alpha foo.xsl foo.xml</em></p>
     <p><em>the param does not get passed and ends up as ""</em></p>
@@ -273,7 +288,7 @@ for a really accurate description</h3>
   <li>bug fixes: Result Value Tree handling, XML IDs, keys(), extra namespace
     declarations with xsl:elements.</li>
   <li>portability: python and trio fixes (Albert Chin), python on Solaris
-    (Ben Phillips) </li>
+    (Ben Phillips)</li>
 </ul>
 
 <h3>1.0.28: Mar 24 2003</h3>
@@ -771,6 +786,7 @@ orchis:~ -&gt;</pre>
 <h2><a name="DocBook">DocBook</a></h2>
 
 <p><img src="duck.png" align="right" alt="The duck picture"></p>
+
 <p><a href="http://www.oasis-open.org/committees/docbook/">DocBook</a> is an
 XML/SGML vocabulary particularly well suited to books and papers about
 computer hardware and software.</p>

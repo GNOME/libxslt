@@ -15,7 +15,7 @@
    - bug fixes: Result Value Tree handling, XML IDs, keys(), extra namespace
     declarations with xsl:elements.
    - portability: python and trio fixes (Albert Chin), python on Solaris
-    (Ben Phillips) 
+    (Ben Phillips)
 
 </changes>
   </product>
