@@ -3070,10 +3070,11 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			            list->nodeTab[i]->doc->doc);
 		ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
-		if (ctxt->document != NULL) {
+		if ((ctxt->document != NULL) &&
+		    (ctxt->document->doc != NULL)) {
 		    xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
-		 ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
+		   ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
 		} else {
 		    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltApplyTemplates: Changing document - Return tree fragment\n");
@@ -3426,7 +3427,8 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			            list->nodeTab[i]->doc->doc);
 		ctxt->xpathCtxt->node = list->nodeTab[i];
 #ifdef WITH_XSLT_DEBUG_PROCESS
-		if (ctxt->document != NULL) {
+		if ((ctxt->document != NULL) &&
+		    (ctxt->document->doc != NULL)) {
 		    xsltGenericDebug(xsltGenericDebugContext,
 	     "xsltForEach: Changing document - context doc %s, xpathdoc %s\n",
 		 ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);

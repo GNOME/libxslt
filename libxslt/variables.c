@@ -367,7 +367,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    container = xmlNewDoc(NULL);
 	    if (container == NULL)
 		return(NULL);
-	    container->name = xmlStrdup(BAD_CAST " fake node libxslt");
+	    container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
 	    container->doc = container;
 	    container->parent = NULL;
 
@@ -379,7 +379,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    ctxt->insert = oldInsert;
 	    ctxt->output = oldoutput;
 
-	    result = xmlXPathNewValueTree(container);
+	    result = xmlXPathNewValueTree((xmlNodePtr) container);
 	    if (result == NULL) {
 		result = xmlXPathNewCString("");
 	    } else {
@@ -504,7 +504,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    container = xmlNewDoc(NULL);
 	    if (container == NULL)
 		return(NULL);
-	    container->name = xmlStrdup(BAD_CAST " fake node libxslt");
+	    container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
 	    container->doc = container;
 	    container->parent = NULL;
 
@@ -516,7 +516,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	    ctxt->insert = oldInsert;
 	    ctxt->output = oldoutput;
 
-	    result = xmlXPathNewValueTree(container);
+	    result = xmlXPathNewValueTree((xmlNodePtr) container);
 	    if (result == NULL) {
 		result = xmlXPathNewCString("");
 	    } else {
@@ -557,13 +557,14 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
     xsltStackElemPtr elem;
     xsltStylesheetPtr style;
 
-    if (ctxt == NULL)
+    if ((ctxt == NULL) || (ctxt->document == NULL))
 	return(-1);
  
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
 	"Registering global variables\n");
 #endif
+
     ctxt->node = (xmlNodePtr) ctxt->document->doc;
     ctxt->xpathCtxt->contextSize = 1;
     ctxt->xpathCtxt->proximityPosition = 1;

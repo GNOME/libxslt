@@ -1,3 +1,14 @@
+Mon Apr  7 14:39:01 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/keys.c libxslt/templates.c libxslt/transform.c
+	  libxslt/variables.c: Fixes bug #110023 reported by Mark Vakoc and
+	  other places where ctxt->document pointer may be used without 
+	  checking it agaisnt NULL.
+	* tests/docs/Makefile.am tests/docs/bug-115.*
+	  tests/general/Makefile.am tests/general/bug-115*: added the
+	  example in the regression tests for that bug.
+	* libxslt/trio.h libxslt/triodef.h: update of Trio from Bjorn Reese
+
 Tue Apr  1 13:39:26 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in NEWS: preparing 1.0.29 release

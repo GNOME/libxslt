@@ -330,7 +330,8 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
     xmlNodeSetPtr ret;
     xsltKeyTablePtr table;
 
-    if ((ctxt == NULL) || (name == NULL) || (value == NULL))
+    if ((ctxt == NULL) || (name == NULL) || (value == NULL) ||
+	(ctxt->document == NULL))
 	return(NULL);
 
 #ifdef WITH_XSLT_DEBUG_KEYS
