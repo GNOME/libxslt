@@ -189,6 +189,7 @@
      <exports symbol='_xsltTransformContext'/>
      <exports symbol='xsltAllocateExtra'/>
      <exports symbol='xsltAllocateExtraCtxt'/>
+     <exports symbol='xsltCreateRVT'/>
      <exports symbol='xsltDecimalFormat'/>
      <exports symbol='xsltDecimalFormatGetByName'/>
      <exports symbol='xsltDecimalFormatPtr'/>
@@ -198,6 +199,7 @@
      <exports symbol='xsltElemPreCompDeallocator'/>
      <exports symbol='xsltElemPreCompPtr'/>
      <exports symbol='xsltFormatNumberConversion'/>
+     <exports symbol='xsltFreeRVTs'/>
      <exports symbol='xsltFreeStackElemList'/>
      <exports symbol='xsltFreeStylesheet'/>
      <exports symbol='xsltIsBlank'/>
@@ -211,6 +213,8 @@
      <exports symbol='xsltParseStylesheetOutput'/>
      <exports symbol='xsltParseStylesheetProcess'/>
      <exports symbol='xsltParseTemplateContent'/>
+     <exports symbol='xsltRegisterPersistRVT'/>
+     <exports symbol='xsltRegisterTmpRVT'/>
      <exports symbol='xsltRuntimeExtra'/>
      <exports symbol='xsltRuntimeExtraPtr'/>
      <exports symbol='xsltSortFunc'/>
@@ -743,7 +747,10 @@ informations are stored'/>
       <field name='sec' type='void *' info=' the security preferences if any'/>
       <field name='error' type='xmlGenericErrorFunc' info=' a specific error handler'/>
       <field name='errctx' type='void *' info=' context for the error handler'/>
-      <field name='sortfunc' type='xsltSortFunc' info=' a ctxt specific sort routine'/>
+      <field name='sortfunc' type='xsltSortFunc' info='* handling of temporary Result Value Tree
+*'/>
+      <field name='tmpRVT' type='xmlDocPtr' info=' list of RVT without persistance'/>
+      <field name='persistRVT' type='xmlDocPtr' info=' list of persistant RVTs'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -1008,6 +1015,11 @@ informations are stored'/>
       <arg name='node' type='xmlNodePtr' info='the node in the source tree.'/>
       <arg name='inst' type='xmlNodePtr' info='the xslt copy-of node'/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information'/>
+    </function>
+    <function name='xsltCreateRVT' file='xsltInternals'>
+      <info>Create a result value tree</info>
+      <return type='xmlDocPtr' info='the result value tree or NULL in case of error'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context'/>
     </function>
     <function name='xsltDebug' file='extra'>
       <info>Process an debug node</info>
@@ -1291,6 +1303,11 @@ informations are stored'/>
       <info>Free up the memory used by namespaces aliases</info>
       <return type='void'/>
       <arg name='style' type='xsltStylesheetPtr' info='an XSLT stylesheet'/>
+    </function>
+    <function name='xsltFreeRVTs' file='xsltInternals'>
+      <info>Free all the registered result value tree of the transformation</info>
+      <return type='void'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context'/>
     </function>
     <function name='xsltFreeSecurityPrefs' file='security'>
       <info>Free up a security preference block</info>
@@ -1775,9 +1792,21 @@ informations are stored'/>
       <return type='void'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
     </function>
+    <function name='xsltRegisterPersistRVT' file='xsltInternals'>
+      <info>Register the result value tree for destruction at the end of the processing</info>
+      <return type='int' info='0 in case of success and -1 in case of error.'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context'/>
+      <arg name='RVT' type='xmlDocPtr' info='a result value tree'/>
+    </function>
     <function name='xsltRegisterTestModule' file='extensions'>
       <info>Registers the test module</info>
       <return type='void'/>
+    </function>
+    <function name='xsltRegisterTmpRVT' file='xsltInternals'>
+      <info>Register the result value tree for destruction at the end of the context</info>
+      <return type='int' info='0 in case of success and -1 in case of error.'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='an XSLT transformation context'/>
+      <arg name='RVT' type='xmlDocPtr' info='a result value tree'/>
     </function>
     <function name='xsltResolveStylesheetAttributeSet' file='attributes'>
       <info>resolve the references between attribute sets.</info>

@@ -8,14 +8,15 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.0.29</version>
-    <last-release> Apr 1 2003</last-release>
+    <version>1.0.30</version>
+    <last-release> May 4 2003</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - performance improvements especially for large flat documents
-   - bug fixes: Result Value Tree handling, XML IDs, keys(), extra namespace
-    declarations with xsl:elements.
-   - portability: python and trio fixes (Albert Chin), python on Solaris
-    (Ben Phillips)
+    <changes>   - Fixes and new APIs to handle Result Value Trees and avoid leaks
+   - Fixes for: EXSLT math pow() function (Charles Bozeman), global
+    parameter and global variables mismatch, a segfault on pattern
+    compilation errors, namespace copy in xsl:copy-of, python generator
+    problem, OpenVMS trio update, premature call to xsltFreeStackElem (Igor),
+    current node when templates applies to attributes
 
 </changes>
   </product>

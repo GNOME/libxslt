@@ -134,6 +134,10 @@ Class transformCtxt()
 
     # functions from module xsltInternals
     allocateExtraCtxt()
+    createRVT()
+    freeRVTs()
+    registerPersistRVT()
+    registerTmpRVT()
 
     # functions from module xsltutils
     message()

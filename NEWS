@@ -10,6 +10,15 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.0.30: May 4 2003:
+   - Fixes and new APIs to handle Result Value Trees and avoid leaks
+   - Fixes for: EXSLT math pow() function (Charles Bozeman), global
+    parameter and global variables mismatch, a segfault on pattern
+    compilation errors, namespace copy in xsl:copy-of, python generator
+    problem, OpenVMS trio update, premature call to xsltFreeStackElem (Igor),
+    current node when templates applies to attributes
+
+
 1.0.29: Apr 1 2003:
    - performance improvements especially for large flat documents
    - bug fixes: Result Value Tree handling, XML IDs, keys(), extra namespace
