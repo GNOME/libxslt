@@ -557,17 +557,17 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (copy != NULL) {
 	copy->doc = ctxt->output;
 	xmlAddChild(insert, copy);
+	if (((node->type == XML_ELEMENT_NODE) ||
+	     (node->type == XML_ATTRIBUTE_NODE)) &&
+	    (node->ns != NULL)) {
+	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
+	}
 	if (node->type == XML_ELEMENT_NODE) {
 	    /*
 	     * Add namespaces as they are needed
 	     */
 	    if (node->nsDef != NULL)
 		xsltCopyNamespaceList(ctxt, copy, node->nsDef);
-	}
-	if (((node->type == XML_ELEMENT_NODE) ||
-	     (node->type == XML_ATTRIBUTE_NODE)) &&
-	    (node->ns != NULL)) {
-	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
 	}
     } else {
 	xsltPrintErrorContext(ctxt, NULL, node);
@@ -678,11 +678,11 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	/*
 	 * Add namespaces as they are needed
 	 */
-	if (node->nsDef != NULL)
-	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
 	if (node->ns != NULL) {
 	    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
 	}
+	if (node->nsDef != NULL)
+	    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
 	if (node->properties != NULL)
 	    copy->properties = xsltCopyPropList(ctxt, copy,
 					       node->properties);

@@ -1,3 +1,9 @@
+Mon May 27 19:14:46 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/namespaces.c libxslt/transform.c: fix bug #81099 about
+	  duplicated namespace declarations, this might not be as generic as
+	  it should but works well for DocBook stylesheets
+
 Sat May 25 12:07:45 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt.pc.in: fix bug #82970

@@ -255,6 +255,12 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
     while (cur != NULL) {
 	if (cur->type != XML_NAMESPACE_DECL)
 	    break;
+	if ((node != NULL) && (node->ns != NULL) &&
+            (xmlStrEqual(node->ns->href, cur->href)) &&
+            (xmlStrEqual(node->ns->prefix, cur->prefix))) {
+	    cur = cur->next;
+	    continue;
+	}
 	if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {
 	    /* TODO apply cascading */
 	    URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases,
