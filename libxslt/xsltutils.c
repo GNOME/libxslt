@@ -291,6 +291,8 @@ xsltPrintErrorContext(xsltTransformContextPtr ctxt,
     const xmlChar *name = NULL;
     const char *type = "error";
 
+    if (ctxt != NULL)
+	ctxt->state = XSLT_STATE_ERROR;
     if ((node == NULL) && (ctxt != NULL))
 	node = ctxt->inst;
 

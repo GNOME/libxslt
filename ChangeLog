@@ -1,3 +1,9 @@
+Sun Jan 20 14:15:55 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.xml libxslt/xsltutils.c xsltproc/xsltproc.c:
+	  Fixed RH bug #57496, xsltproc was not returning error
+	  code on internal runtime errors. Should return 9 now.
+
 Fri Jan 18 09:43:16 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/math.c: Charlie Bozeman provided the implementation

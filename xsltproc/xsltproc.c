@@ -205,6 +205,7 @@ static void endTimer(char *format, ...)
 static void
 xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
     xmlDocPtr res;
+    xsltTransformContextPtr ctxt;
 
 #ifdef LIBXML_XINCLUDE_ENABLED
     if (xinclude) {
@@ -239,11 +240,19 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 		    doc = xmlParseFile(filename);
 	    }
 	}
+	ctxt = xsltNewTransformContext(cur, doc);
+	if (ctxt == NULL)
+	    return;
 	if (profile) {
-	    res = xsltProfileStylesheet(cur, doc, params, stderr);
+	    res = xsltApplyStylesheetUser(cur, doc, params, NULL,
+		                          stderr, ctxt);
 	} else {
-	    res = xsltApplyStylesheet(cur, doc, params);
+	    res = xsltApplyStylesheetUser(cur, doc, params, NULL,
+		                          NULL, ctxt);
 	}
+	if (ctxt->state == XSLT_STATE_ERROR)
+	    errorno = 9;
+	xsltFreeTransformContext(ctxt);
 	if (timing) {
 	    if (repeat)
 		endTimer("Applying stylesheet %d times", repeat);
