@@ -9,10 +9,9 @@ import time
 import posix
 import string
 import libxml2
-import libxslt
-
 # Memory debug specific
 libxml2.debugMemory(1)
+import libxslt
 
 debug = 0
 repeat = 0

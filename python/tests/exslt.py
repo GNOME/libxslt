@@ -1,10 +1,9 @@
 #!/usr/bin/python -u
 import sys
 import libxml2
-import libxslt
-
 # Memory debug specific
-#libxml2.debugMemory(1)
+libxml2.debugMemory(1)
+import libxslt
 
 
 styledoc = libxml2.parseDoc(
@@ -49,10 +48,9 @@ if stringval != expect:
   sys.exit(255)
     
 # Memory debug specific
-#libxslt.cleanup()
-#if libxml2.debugMemory(1) == 0:
-#    print "OK"
-#else:
-#    print "Memory leak %d bytes" % (libxml2.debugMemory(1))
-#    libxml2.dumpMemory()
-print "OK"
+libxslt.cleanup()
+if libxml2.debugMemory(1) == 0:
+    print "OK"
+else:
+    print "Memory leak %d bytes" % (libxml2.debugMemory(1))
+    libxml2.dumpMemory()

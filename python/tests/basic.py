@@ -1,10 +1,10 @@
 #!/usr/bin/python -u
 import sys
 import libxml2
-import libxslt
-
 # Memory debug specific
 libxml2.debugMemory(1)
+import libxslt
+
 
 
 styledoc = libxml2.parseFile("test.xsl")

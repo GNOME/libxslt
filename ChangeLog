@@ -1,3 +1,10 @@
+Sun Nov 24 15:49:58 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/tests/*.py: enable libxml2 memory debug before
+	  loading libxslt since libxslt initialization now includes
+	  EXSLT registration which initialize the libxml2 library and
+	  allocate memory
+
 Sun Nov 24 13:58:48 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxsl.py: updated with new version from Stéphane Bidoul

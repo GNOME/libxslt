@@ -2,10 +2,9 @@
 import sys
 import string
 import libxml2
-import libxslt
-
 # Memory debug specific
 libxml2.debugMemory(1)
+import libxslt
 
 nodeName = None
 
