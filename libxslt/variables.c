@@ -311,8 +311,6 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
 	}
-	ctxt->xpathCtxt->namespaces = NULL;
-	ctxt->xpathCtxt->nsNr = 0;
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
