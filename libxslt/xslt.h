@@ -44,6 +44,15 @@ extern "C" {
 #define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
 
 /**
+ * LIBXSLT_PUBLIC:
+ *
+ * Macro used on Windows to tag public identifiers from shared libraries
+ */
+#ifndef LIBXSLT_PUBLIC
+#define LIBXSLT_PUBLIC
+#endif
+
+/**
  * xsltMaxDepth:
  *
  * This value is used to detect templates loops

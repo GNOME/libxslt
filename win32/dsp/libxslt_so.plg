@@ -1,0 +1,82 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: libxslt_so - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\IGOR~1.RAV\LOCALS~1\Temp\RSPE6.tmp" with contents
+[
+/nologo /MD /W3 /O2 /I "../.." /I "../../libxslt" /I "../../../gnome-xml/include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "IN_LIBXSLT" /Fo"libxslt_so/" /Fd"libxslt_so/" /FD /c 
+"C:\home\igor\src\libxslt\libxslt\attributes.c"
+"C:\home\igor\src\libxslt\libxslt\documents.c"
+"C:\home\igor\src\libxslt\libxslt\extensions.c"
+"C:\home\igor\src\libxslt\libxslt\extra.c"
+"C:\home\igor\src\libxslt\libxslt\functions.c"
+"C:\home\igor\src\libxslt\libxslt\imports.c"
+"C:\home\igor\src\libxslt\libxslt\keys.c"
+"C:\home\igor\src\libxslt\libxslt\namespaces.c"
+"C:\home\igor\src\libxslt\libxslt\numbers.c"
+"C:\home\igor\src\libxslt\libxslt\pattern.c"
+"C:\home\igor\src\libxslt\libxslt\preproc.c"
+"C:\home\igor\src\libxslt\libxslt\templates.c"
+"C:\home\igor\src\libxslt\libxslt\transform.c"
+"C:\home\igor\src\libxslt\libxslt\variables.c"
+"C:\home\igor\src\libxslt\libxslt\xslt.c"
+"C:\home\igor\src\libxslt\libxslt\xsltutils.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\IGOR~1.RAV\LOCALS~1\Temp\RSPE6.tmp" 
+Creating temporary file "C:\DOCUME~1\IGOR~1.RAV\LOCALS~1\Temp\RSPE7.tmp" with contents
+[
+libxml2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"libxslt_so/libxslt.pdb" /machine:I386 /def:".\libxslt.def" /out:"libxslt_so/libxslt.dll" /implib:"libxslt_so/libxslt.lib" /libpath:"../../../gnome-xml/win32/dsp/libxml2_so" 
+.\libxslt_so\attributes.obj
+.\libxslt_so\documents.obj
+.\libxslt_so\extensions.obj
+.\libxslt_so\extra.obj
+.\libxslt_so\functions.obj
+.\libxslt_so\imports.obj
+.\libxslt_so\keys.obj
+.\libxslt_so\namespaces.obj
+.\libxslt_so\numbers.obj
+.\libxslt_so\pattern.obj
+.\libxslt_so\preproc.obj
+.\libxslt_so\templates.obj
+.\libxslt_so\transform.obj
+.\libxslt_so\variables.obj
+.\libxslt_so\xslt.obj
+.\libxslt_so\xsltutils.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\IGOR~1.RAV\LOCALS~1\Temp\RSPE7.tmp"
+<h3>Output Window</h3>
+Compiling...
+attributes.c
+documents.c
+extensions.c
+extra.c
+functions.c
+imports.c
+keys.c
+namespaces.c
+numbers.c
+pattern.c
+preproc.c
+templates.c
+transform.c
+variables.c
+xslt.c
+xsltutils.c
+Generating Code...
+C:\home\igor\src\libxslt\libxslt\xsltutils.c(1135) : warning C4700: local variable 'cur' used without having been initialized
+C:\home\igor\src\libxslt\libxslt\numbers.c(257) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\home\igor\src\libxslt\libxslt\numbers.c(263) : warning C4761: integral size mismatch in argument; conversion supplied
+Linking...
+   Creating library libxslt_so/libxslt.lib and object libxslt_so/libxslt.exp
+
+
+
+<h3>Results</h3>
+libxslt.dll - 0 error(s), 3 warning(s)
+</pre>
+</body>
+</html>

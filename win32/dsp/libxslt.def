@@ -2,41 +2,53 @@
 LIBRARY libxslt
 EXPORTS
 
-	xsltNewStylesheet
-	xsltParseStylesheetFile
-	xsltFreeStylesheet
-	xsltIsBlank
-	xsltFreeStackElemList
-	xsltDecimalFormatGetByName
-	xsltParseStylesheetProcess
-	xsltParseStylesheetOutput
-	xsltParseStylesheetDoc
-	xsltNumberFormat
-	xsltFormatNumberConversion
-	xsltProfileStylesheet
-	
 	xsltParseStylesheetAttributeSet
 	xsltFreeAttributeSetsHashes
 	xsltApplyAttributeSet
 
  	xsltNewDocument
  	xsltLoadDocument
- 	xsltFreeDocuments
+ 	xsltFindDocument
+	xsltFreeDocuments
  	xsltLoadStyleDocument
  	xsltNewStyleDocument
  	xsltFreeStyleDocuments
 
-  	xsltRegisterExtPrefix
-  	xsltCheckExtPrefix
-  	xsltRegisterExtFunction
-  	xsltRegisterExtElement
-  	xsltFreeCtxtExts
-  	xsltFreeExts
-	xsltGetExtData
-	xsltShutdownCtxtExts
-	xsltXPathGetTransformContext
-	xsltUnregisterExtModule
 	xsltRegisterExtModule
+	xsltRegisterExtModuleFull
+	xsltUnregisterExtModule
+	xsltGetExtData
+	xsltStyleGetExtData
+	xsltShutdownCtxtExts
+	xsltShutdownExts
+	xsltXPathGetTransformContext
+	xsltRegisterExtModuleFunction
+	xsltExtModuleFunctionLookup
+	xsltUnregisterExtModuleFunction
+	xsltNewElemPreComp
+	xsltInitElemPreComp
+	xsltRegisterExtModuleElement
+	xsltExtElementLookup
+	xsltExtModuleElementLookup
+	xsltExtModuleElementPreComputeLookup
+	xsltUnregisterExtModuleElement
+	xsltRegisterExtModuleTopLevel
+	xsltExtModuleTopLevelLookup
+	xsltUnregisterExtModuleTopLevel
+	xsltRegisterExtFunction
+	xsltRegisterExtElement
+	xsltRegisterExtPrefix
+	xsltCheckExtPrefix
+	xsltInitCtxtExts
+	xsltFreeCtxtExts
+	xsltFreeExts
+	xsltPreComputeExtModuleElement
+	xsltRegisterTestModule
+
+	xsltFunctionNodeSet
+	xsltDebug
+	xsltRegisterExtras
+	xsltRegisterAllExtras
 
  	xsltDocumentFunction
  	xsltKeyFunction
@@ -51,6 +63,7 @@ EXPORTS
 	xsltParseStylesheetImport
 	xsltParseStylesheetInclude
 	xsltNextImport
+	xsltNeedElemSpaceHandling
 	xsltFindElemSpaceHandling
 	xsltFindTemplate
 
@@ -63,7 +76,7 @@ EXPORTS
 	xsltNamespaceAlias
 	xsltGetNamespace
 	xsltGetSpecialNamespace
-	xsltCopyNamespaceList
+	xsltCopyNamespace
 	xsltCopyNamespaceList
 	xsltFreeNamespaceAliasHashes
 
@@ -75,6 +88,7 @@ EXPORTS
 	xsltFreeTemplateHashes
 	xsltCleanupTemplates
 
+	xsltDocumentComp
 	xsltStylePreCompute
 	xsltFreeStylePreComps
 
@@ -88,7 +102,16 @@ EXPORTS
 	xsltAttrTemplateProcess
 	xsltAttrTemplateValueProcess
 
+	xsltSetXIncludeDefault
+	xsltGetXIncludeDefault
+	xsltNewTransformContext
+	xsltFreeTransformContext
+	xsltApplyStylesheetUser
+	xsltApplyStripSpaces
+	xsltExtElementLookup
 	xsltApplyStylesheet
+	xsltProfileStylesheet
+	xsltRunStylesheet
 	xsltApplyOneTemplate
 	xsltDocumentElem
 	xsltSort
@@ -107,6 +130,8 @@ EXPORTS
 	xsltChoose
 	xsltIf
 	xsltForEach
+	xsltRegisterAllElement
+	xslHandleDebugger
 
 	xsltEvalGlobalVariables
 	xsltEvalUserParams
@@ -123,41 +148,43 @@ EXPORTS
 	xsltVariableLookup
 	xsltXPathVariableLookup
 
+	xsltMaxDepth DATA
+	xsltEngineVersion DATA
+	xsltLibxsltVersion DATA
+	xsltLibxmlVersion DATA
+	xsltCleanupGlobals
+
+	xsltNewStylesheet
+	xsltParseStylesheetFile
+	xsltFreeStylesheet
+	xsltIsBlank
+	xsltFreeStackElemList
+	xsltDecimalFormatGetByName
+	xsltParseStylesheetProcess
+	xsltParseStylesheetOutput
+	xsltParseStylesheetDoc
+	xsltLoadStylesheetPI
+	xsltNumberFormat
+	xsltFormatNumberConversion
+	xsltParseTemplateContent
+
+	xsltGetNsProp
+	xsltGenericError DATA
+	xsltGenericErrorContext DATA
+	xsltGenericDebug DATA
+	xsltGenericDebugContext DATA
+	xsltPrintErrorContext
 	xsltMessage
 	xsltSetGenericErrorFunc
 	xsltSetGenericDebugFunc
 	xsltDocumentSortFunction
 	xsltDoSortFunction
+	xsltGetQNameURI
 	xsltSaveResultTo
 	xsltSaveResultToFilename
 	xsltSaveResultToFile
 	xsltSaveResultToFd
+	xsltSaveProfiling
+	xsltTimestamp
+	xsltCalibrateAdjust
 
-	xsltMaxDepth
-	xsltSetXIncludeDefault
-	xsltLibxmlVersion
-	xsltLibxsltVersion
-	xsltEngineVersion DATA
-
-	xsltRunStylesheet
-	xsltLoadStylesheetPI
-	xsltRegisterAllElement
-	
-	xsltGenericError DATA
-	xsltGenericErrorContext DATA
-	xsltGenericDebug DATA
-	xsltGenericDebugContext DATA
-
-	xsltFunctionNodeSet
-	
-	xsltRegisterExtModuleElement
-	xsltRegisterExtModuleFunction
-	xsltRegisterExtModuleTopLevel
-	xsltRegisterExtModuleFull
-	xsltStyleGetExtData
-	xsltParseTemplateContent
-	xsltRegisterTestModule
-	xsltCleanupGlobals
-	xsltDocumentComp
-	xsltInitElemPreComp
-	xsltPrintErrorContext

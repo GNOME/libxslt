@@ -1080,6 +1080,12 @@ xslHandleDebugger(xmlNodePtr cur, xmlNodePtr node,
             break;
     }
 }
+#else
+void
+xslHandleDebugger(xmlNodePtr cur, xmlNodePtr node,
+                  xsltTemplatePtr templ, xsltTransformContextPtr ctxt)
+{
+}
 #endif
 
 

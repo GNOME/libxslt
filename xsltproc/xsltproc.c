@@ -54,6 +54,10 @@
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
 #define gettimeofday(p1,p2)
+#define HAVE_TIME_H
+#include <time.h>
+#define HAVE_STDARG_H
+#include <stdarg.h>
 #endif /* _MS_VER */
 #else /* WIN32 */
 #if defined(HAVE_SYS_TIME_H)

@@ -1,3 +1,9 @@
+Mon Nov 12 22:46:26 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* win32/dsp/* xsltproc/xsltproc.c libxslt/transform.c: Patches
+	  from Igor for Windows
+	* libxslt/xslt.h: try to fix the  LIBXSLT_PUBLIC mess
+
 Sun Nov 11 21:15:05 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixing bug #64298 reported by T. V. Raman
