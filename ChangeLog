@@ -1,3 +1,9 @@
+Wed Mar 26 22:41:00 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* tests/docs/Makefile.am tests/docs/bug-113.*
+	  tests/general/Makefile.am tests/general/bug-113*: added an
+	  example in the regression tests for bug #109160 fixed in libxml2
+
 Wed Mar 26 21:43:30 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in python/Makefile.am python/libxslt.c libxslt/xsltutils.c
