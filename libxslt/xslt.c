@@ -89,13 +89,13 @@ xsltNewDecimalFormat(xmlChar *name)
 	self->name = name;
 	
 	/* Default values */
-	self->digit = xmlStrdup(BAD_CAST("0"));
+	self->digit = xmlStrdup(BAD_CAST("#"));
 	self->patternSeparator = xmlStrdup(BAD_CAST(";"));
 	self->decimalPoint = xmlStrdup(BAD_CAST("."));
 	self->grouping = xmlStrdup(BAD_CAST(","));
 	self->percent = xmlStrdup(BAD_CAST("%"));
 	self->permille = xmlStrdup(BAD_CAST("?"));
-	self->zeroDigit = xmlStrdup(BAD_CAST("#"));
+	self->zeroDigit = xmlStrdup(BAD_CAST("0"));
 	self->minusSign = xmlStrdup(BAD_CAST("-"));
 	self->infinity = xmlStrdup(BAD_CAST("Infinity"));
 	self->noNumber = xmlStrdup(BAD_CAST("NaN"));
@@ -811,7 +811,8 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style) {
 		    delete = cur;
 		}
 	    }
-	} else if (cur->type != XML_ELEMENT_NODE) {
+	} else if ((cur->type != XML_ELEMENT_NODE) &&
+		   (cur->type != XML_CDATA_SECTION_NODE)) {
 	    delete = cur;
 	    goto skip_children;
 	}
