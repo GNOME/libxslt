@@ -630,6 +630,48 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 /************************************************************************
  *									*
+ *		Error/fallback processing				*
+ *									*
+ ************************************************************************/
+
+/**
+ * xsltApplyFallbacks:
+ * @ctxt:  a XSLT process context
+ * @node:  the node in the source tree.
+ * @inst:  the node generating the error
+ *
+ * Process possible xsl:fallback nodes present under @inst
+ *
+ * Returns the number of xsl:fallback element found and processed
+ */
+static int
+xsltApplyFallbacks(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	           xmlNodePtr inst) {
+
+    xmlNodePtr child;
+    int ret = 0;
+    
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
+	return(ret);
+
+    child = inst->children;
+    while (child != NULL) {
+        if ((IS_XSLT_ELEM(child)) &&
+            (xmlStrEqual(child->name, BAD_CAST "fallback"))) {
+#ifdef WITH_XSLT_DEBUG_PARSING
+	    xsltGenericDebug(xsltGenericDebugContext,
+			     "applying xsl:fallback\n");
+#endif
+	    ret++;
+	    xsltApplyOneTemplate(ctxt, node, child->children, NULL, NULL);
+	}
+	child = child->next;
+    }
+    return(ret);
+}
+
+/************************************************************************
+ *									*
  *			Default processing				*
  *									*
  ************************************************************************/
@@ -1076,9 +1118,16 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 if (IS_XSLT_NAME(cur, "message")) {
                     xsltMessage(ctxt, node, cur);
                 } else {
-                    xsltGenericError(xsltGenericDebugContext,
+		    /*
+		     * That's an error try to apply one of the fallback cases
+		     */
+		    ctxt->insert = insert;
+		    if (!xsltApplyFallbacks(ctxt, node, cur)) {
+			xsltGenericError(xsltGenericDebugContext,
                                 "xsltApplyOneTemplate: %s was not compiled\n",
                                      cur->name);
+		    }
+		    ctxt->insert = oldInsert;
                 }
                 goto skip_children;
             }
