@@ -1,3 +1,9 @@
+Wed Nov 24 10:51:51 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/variables.c, libxslt/xsltInternals.h: enhanced the
+	  evaluation of global variables to take account of possible
+	  changes to the current document (bug 158372).
+	  
 Mon Nov 22 08:10:18 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: small change to previous fix for bug 153137,

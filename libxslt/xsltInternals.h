@@ -311,6 +311,7 @@ struct _xsltStackElem {
     const xmlChar *select;	/* the eval string */
     xmlNodePtr tree;		/* the tree if no eval string or the location */
     xmlXPathObjectPtr value;	/* The value if computed */
+    xmlDocPtr doc;		/* The document used to compute the value */
 };
 
 /*

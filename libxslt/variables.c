@@ -570,7 +570,8 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 
     if ((ctxt == NULL) || (elem == NULL))
 	return(NULL);
-    if (elem->computed)
+    /* For pre-computation, need to correlate with the current document */
+    if ((elem->computed) && (elem->doc == ctxt->xpathCtxt->doc))
 	return(elem->value);
 
 
@@ -578,6 +579,12 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
 	"Evaluating global variable %s\n", elem->name));
 #endif
+
+    /* If document has changed, destroy the old value */
+    if (elem->value != NULL) {
+        xmlXPathFreeObject(elem->value);
+	elem->value = NULL;
+    }
 
 #ifdef WITH_DEBUGGER
     if ((ctxt->debugStatus != XSLT_DEBUG_NONE) &&
@@ -687,6 +694,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     if (result != NULL) {
 	elem->value = result;
 	elem->computed = 1;
+	elem->doc = ctxt->xpathCtxt->doc;
     }
     elem->name = name;
     return(result);
