@@ -1,3 +1,8 @@
+Sun Jul  8 15:40:44 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/xsltproc.c: avoid generating CDATA node in document
+	  tree when parsed, force generation of text nodes instead.
+
 Sun Jul  8 14:39:27 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/extensions.html: fixed a number of typo found by Dan York

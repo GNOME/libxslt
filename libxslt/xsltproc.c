@@ -290,6 +290,12 @@ main(int argc, char **argv)
 
         }
     }
+    /*
+     * disable CDATA from being built in the document tree
+     */
+    xmlDefaultSAXHandlerInit();
+    xmlDefaultSAXHandler.cdataBlock = NULL;
+
     if ((cur != NULL) && (cur->errors == 0)) {
         for (; i < argc; i++) {
             if (timing)
