@@ -1,3 +1,11 @@
+Sat Mar 16 23:48:21 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/common.c libxslt/pattern.c  libxslt/transform.c
+	  libxslt/variables.c: chaing result tree values which may
+	  be deallocated and must not be kept in the template 
+	  pattern lookup cache. Thanks to Valgrin to allow finding
+	  the real problem in bug #74857
+
 Wed Mar 13 15:17:51 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/*.h doc/* python/*: applied another cleanup comment

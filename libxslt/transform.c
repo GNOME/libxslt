@@ -2863,10 +2863,13 @@ error:
     ctxt->node = oldNode;
     ctxt->mode = oldMode;
     ctxt->modeURI = oldModeURI;
-    if (res != NULL)
-	xmlXPathFreeObject(res);
     if (list != NULL)
 	xmlXPathFreeNodeSet(list);
+    /*
+     * res must be deallocated after list
+     */
+    if (res != NULL)
+	xmlXPathFreeObject(res);
 }
 
 

@@ -37,8 +37,7 @@ exsltNodeSetFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     }
 
     strval = xmlXPathPopString (ctxt);
-    retNode = xmlNewDocText (xsltXPathGetTransformContext(ctxt)->output,
-			     strval);
+    retNode = xmlNewDocText (NULL, strval);
     ret = xmlXPathNewValueTree (retNode);
     ret->type = XPATH_NODESET;
 
