@@ -1,3 +1,9 @@
+Wed Jan  7 20:12:14 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* doc/api.xsl, doc/site.xsl, doc/search.php: a little
+	  cleanup of scripts, assuring page tables are consistent.
+	* doc/*: api docs rebuilt with enhanced scripts.
+
 Tue Jan  6 23:38:47 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* configure.in: fixed Bug130593.

@@ -20,7 +20,18 @@
   <!-- href_base gives the location of 'base documentation' files 
        and is often changed by importing stylesheets -->
   <xsl:variable name="href_base" select="''"/>
-  
+
+  <xsl:variable name="home_base">
+    <xsl:choose>
+      <xsl:when test="$dirname != ''">
+        <xsl:value-of select = "'../'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select = "''"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
 <!--
  - returns the filename associated to an ID in the original file
  -->
@@ -84,7 +95,7 @@
  - The table of content
  -->
   <xsl:variable name="toc">
-    <form action="search.php"
+    <form action="{$home_base}search.php"
           enctype="application/x-www-form-urlencoded" method="get">
       <input name="query" type="text" size="20" value=""/>
       <input name="submit" type="submit" value="Search ..."/>
@@ -109,7 +120,7 @@
 
       <xsl:choose>
         <xsl:when test="$dirname != ''">
-	  <li><a href="{$href_base}index.html" style="font-weight:bold">libxslt</a></li>
+	  <li><a href="../index.html" style="font-weight:bold">libxslt</a></li>
 	</xsl:when>
 	<xsl:otherwise>
 	  <li><a href="EXSLT/index.html" style="font-weight:bold">libexslt</a></li>
@@ -340,7 +351,7 @@ A:link, A:visited, A:active { text-decoration: underline }
                                   <table border="0" cellpadding="3" cellspacing="1" width="100%">
                                     <tr>
                                       <td bgcolor="#fffacd">
-                                        <xsl:apply-templates mode="subfile" select="$header/following-sibling::*[preceding-sibling::h2[1] = $header         and name() != 'h2' ]"/>
+                                        <xsl:apply-templates mode="subfile" select="$header/following-sibling::*[preceding-sibling::h2[1] = $header         and name() != 'h2' and position() != last()]"/>
 					<p><a href="bugs.html">Daniel Veillard</a></p>
                                       </td>
                                     </tr>
