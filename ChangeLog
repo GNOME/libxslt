@@ -1,3 +1,10 @@
+Tue Jul 10 18:03:36 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt/xsltwin32config.h: releaseing 1.0.0
+	* win32/libxslt/libxslt.def: added another entry point
+	* libxslt/transform.c: fixed a comment block
+	* doc/xslt.html doc/html/*: updated and regenerated the docs
+
 Tue Jul 10 17:25:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* win32/libxslt/libxslt.def: added missing functions

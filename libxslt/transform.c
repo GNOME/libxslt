@@ -3356,7 +3356,7 @@ xsltRunStylesheet(xsltStylesheetPtr style, xmlDocPtr doc,
 }
 
 /**
- * xsltRegisterAllElements:
+ * xsltRegisterAllElement:
  * @ctxt:  the XPath context
  *
  * Registers all default XSLT elements in this context

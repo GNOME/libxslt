@@ -122,7 +122,7 @@ NAME="LIBXSLT-XSLTUTILS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN1711"
+NAME="AEN1776"
 ></A
 ><H2
 >Name</H2
@@ -130,7 +130,7 @@ NAME="AEN1711"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN1714"
+NAME="AEN1779"
 ></A
 ><H2
 >Synopsis</H2
@@ -313,7 +313,25 @@ HREF="XMLDOCPTR"
                                              <A
 HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 >xsltStylesheetPtr</A
-> style);</PRE
+> style);
+void        <A
+HREF="libxslt-xsltutils.html#XSLTSAVEPROFILING"
+>xsltSaveProfiling</A
+>               (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="FILE-CAPS"
+>FILE</GTKDOCLINK
+> *output);
+<GTKDOCLINK
+HREF="LONG"
+>long</GTKDOCLINK
+>        <A
+HREF="libxslt-xsltutils.html#XSLTTIMESTAMP"
+>xsltTimestamp</A
+>                   (void);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -321,7 +339,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1761"
+NAME="AEN1831"
 ></A
 ><H2
 >Description</H2
@@ -331,14 +349,14 @@ NAME="AEN1761"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1764"
+NAME="AEN1834"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1766"
+NAME="AEN1836"
 ></A
 ><H3
 ><A
@@ -366,7 +384,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1772"
+NAME="AEN1842"
 ></A
 ><H3
 ><A
@@ -394,7 +412,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1778"
+NAME="AEN1848"
 ></A
 ><H3
 ><A
@@ -421,7 +439,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1784"
+NAME="AEN1854"
 ></A
 ><P
 ></P
@@ -459,7 +477,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1793"
+NAME="AEN1863"
 ></A
 ><H3
 ><A
@@ -486,7 +504,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1799"
+NAME="AEN1869"
 ></A
 ><P
 ></P
@@ -541,7 +559,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1812"
+NAME="AEN1882"
 ></A
 ><H3
 ><A
@@ -596,7 +614,7 @@ default declaration values unless DTD use has been turned off.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1826"
+NAME="AEN1896"
 ></A
 ><P
 ></P
@@ -684,7 +702,7 @@ It's up to the caller to free the memory.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1847"
+NAME="AEN1917"
 ></A
 ><H3
 ><A
@@ -710,7 +728,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1852"
+NAME="AEN1922"
 ></A
 ><H3
 ><A
@@ -736,7 +754,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1857"
+NAME="AEN1927"
 ></A
 ><H3
 ><A
@@ -762,7 +780,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1862"
+NAME="AEN1932"
 ></A
 ><H3
 ><A
@@ -788,7 +806,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1867"
+NAME="AEN1937"
 ></A
 ><H3
 ><A
@@ -826,7 +844,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1876"
+NAME="AEN1946"
 ></A
 ><P
 ></P
@@ -898,7 +916,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1893"
+NAME="AEN1963"
 ></A
 ><H3
 ><A
@@ -960,7 +978,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1905"
+NAME="AEN1975"
 ></A
 ><P
 ></P
@@ -1015,7 +1033,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1918"
+NAME="AEN1988"
 ></A
 ><H3
 ><A
@@ -1048,7 +1066,7 @@ CLASS="PARAMETER"
 >handler</I
 ></TT
 > will be called for subsequent
-error messages while not parsing nor validating. And <TT
+error messages while not parsing or validating. And <TT
 CLASS="PARAMETER"
 ><I
 >ctx</I
@@ -1077,7 +1095,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1930"
+NAME="AEN2000"
 ></A
 ><P
 ></P
@@ -1132,7 +1150,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1943"
+NAME="AEN2013"
 ></A
 ><H3
 ><A
@@ -1167,7 +1185,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1951"
+NAME="AEN2021"
 ></A
 ><P
 ></P
@@ -1205,7 +1223,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1960"
+NAME="AEN2030"
 ></A
 ><H3
 ><A
@@ -1241,7 +1259,7 @@ requirement provided by the arry of nodes.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1968"
+NAME="AEN2038"
 ></A
 ><P
 ></P
@@ -1313,7 +1331,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1985"
+NAME="AEN2055"
 ></A
 ><H3
 ><A
@@ -1344,7 +1362,7 @@ HREF="XMLCHAR"
 ></TR
 ></TABLE
 ><P
->This function analyze <TT
+>This function analyzes <TT
 CLASS="PARAMETER"
 ><I
 >name</I
@@ -1372,7 +1390,7 @@ defined and hence has the same lifespan as the document holding it.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1998"
+NAME="AEN2068"
 ></A
 ><P
 ></P
@@ -1448,7 +1466,7 @@ not prefixed.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2016"
+NAME="AEN2086"
 ></A
 ><H3
 ><A
@@ -1502,7 +1520,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2028"
+NAME="AEN2098"
 ></A
 ><P
 ></P
@@ -1589,7 +1607,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2049"
+NAME="AEN2119"
 ></A
 ><H3
 ><A
@@ -1641,7 +1659,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2060"
+NAME="AEN2130"
 ></A
 ><P
 ></P
@@ -1745,7 +1763,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2085"
+NAME="AEN2155"
 ></A
 ><H3
 ><A
@@ -1800,7 +1818,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2097"
+NAME="AEN2167"
 ></A
 ><P
 ></P
@@ -1876,7 +1894,7 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of byte written or -1 in case of failure.</TD
+>the number of bytes written or -1 in case of failure.</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1887,7 +1905,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2118"
+NAME="AEN2188"
 ></A
 ><H3
 ><A
@@ -1934,7 +1952,7 @@ This does not close the descriptor.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN2128"
+NAME="AEN2198"
 ></A
 ><P
 ></P
@@ -2010,7 +2028,168 @@ CLASS="EMPHASIS"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->the number of byte written or -1 in case of failure.</TD
+>the number of bytes written or -1 in case of failure.</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2219"
+></A
+><H3
+><A
+NAME="XSLTSAVEPROFILING"
+></A
+>xsltSaveProfiling ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltSaveProfiling               (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="FILE-CAPS"
+>FILE</GTKDOCLINK
+> *output);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Save the profiling informations on <TT
+CLASS="PARAMETER"
+><I
+>output</I
+></TT
+></P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN2228"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>output</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a FILE * for saving the informations</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN2241"
+></A
+><H3
+><A
+NAME="XSLTTIMESTAMP"
+></A
+>xsltTimestamp ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><GTKDOCLINK
+HREF="LONG"
+>long</GTKDOCLINK
+>        xsltTimestamp                   (void);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Used for gathering profiling data</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN2248"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the number of milliseconds since the beginning of the
+profiling</TD
 ></TR
 ></TBODY
 ></TABLE

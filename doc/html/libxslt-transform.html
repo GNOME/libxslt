@@ -122,7 +122,7 @@ NAME="LIBXSLT-TRANSFORM"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN929"
+NAME="AEN928"
 ></A
 ><H2
 >Name</H2
@@ -130,7 +130,7 @@ NAME="AEN929"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN932"
+NAME="AEN931"
 ></A
 ><H2
 >Synopsis</H2
@@ -168,6 +168,25 @@ HREF="XMLDOCPTR"
 >xmlDocPtr</GTKDOCLINK
 > doc,
                                              const char **params);
+<GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+>   <A
+HREF="libxslt-transform.html#XSLTPROFILESTYLESHEET"
+>xsltProfileStylesheet</A
+>           (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc,
+                                             const char **params,
+                                             <GTKDOCLINK
+HREF="FILE-CAPS"
+>FILE</GTKDOCLINK
+> *output);
 int         <A
 HREF="libxslt-transform.html#XSLTRUNSTYLESHEET"
 >xsltRunStylesheet</A
@@ -204,7 +223,14 @@ HREF="XMLNODEPTR"
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
 > list,
-                                             int real);
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
+>xsltTemplatePtr</A
+> templ,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
+>xsltStackElemPtr</A
+> params);
 void        <A
 HREF="libxslt-transform.html#XSLTDOCUMENTELEM"
 >xsltDocumentElem</A
@@ -527,7 +553,14 @@ HREF="XMLNODEPTR"
                                              <A
 HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 >xsltStylePreCompPtr</A
-> comp);</PRE
+> comp);
+void        <A
+HREF="libxslt-transform.html#XSLTREGISTERALLELEMENT"
+>xsltRegisterAllElement</A
+>          (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -535,7 +568,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1035"
+NAME="AEN1043"
 ></A
 ><H2
 >Description</H2
@@ -545,14 +578,14 @@ NAME="AEN1035"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN1038"
+NAME="AEN1046"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1040"
+NAME="AEN1048"
 ></A
 ><H3
 ><A
@@ -579,7 +612,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1046"
+NAME="AEN1054"
 ></A
 ><P
 ></P
@@ -617,7 +650,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1055"
+NAME="AEN1063"
 ></A
 ><H3
 ><A
@@ -644,7 +677,7 @@ CLASS="PROGRAMLISTING"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1061"
+NAME="AEN1069"
 ></A
 ><P
 ></P
@@ -680,7 +713,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1070"
+NAME="AEN1078"
 ></A
 ><H3
 ><A
@@ -719,7 +752,7 @@ NOTE: This may lead to a non-wellformed output XML wise !</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1079"
+NAME="AEN1087"
 ></A
 ><P
 ></P
@@ -806,7 +839,154 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1100"
+NAME="AEN1108"
+></A
+><H3
+><A
+NAME="XSLTPROFILESTYLESHEET"
+></A
+>xsltProfileStylesheet ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+>   xsltProfileStylesheet           (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style,
+                                             <GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc,
+                                             const char **params,
+                                             <GTKDOCLINK
+HREF="FILE-CAPS"
+>FILE</GTKDOCLINK
+> *output);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Apply the stylesheet to the document and dump the profiling to
+the given output.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN1118"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a parsed XSLT stylesheet</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>doc</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a parsed XML document</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>params</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a NULL terminated arry of parameters names/values tuples</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>output</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a FILE * for the profiling output</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the result document or NULL in case of error</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1143"
 ></A
 ><H3
 ><A
@@ -885,7 +1065,7 @@ since the interface uses only UTF8</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1116"
+NAME="AEN1159"
 ></A
 ><P
 ></P
@@ -1024,7 +1204,7 @@ error.</TD
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1149"
+NAME="AEN1192"
 ></A
 ><H3
 ><A
@@ -1052,18 +1232,27 @@ HREF="XMLNODEPTR"
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
 > list,
-                                             int real);</PRE
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
+>xsltTemplatePtr</A
+> templ,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTACKELEMPTR"
+>xsltStackElemPtr</A
+> params);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Process the apply-templates node on the source node</P
+>Process the apply-templates node on the source node, if params are passed
+they are pushed on the variable stack but not popped, it's left to the
+caller to handle them back (they may be reused).</P
 ><P
 ></P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1158"
+NAME="AEN1203"
 ></A
 ><P
 ></P
@@ -1134,14 +1323,31 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->real</I
+>templ</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
-> is this a real template processing</TD
+> if is this a real template processing, the template processed</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>params</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a set of parameters for the template or NULL</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1152,7 +1358,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1179"
+NAME="AEN1228"
 ></A
 ><H3
 ><A
@@ -1194,7 +1400,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1189"
+NAME="AEN1238"
 ></A
 ><P
 ></P
@@ -1272,7 +1478,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1283,7 +1489,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1210"
+NAME="AEN1259"
 ></A
 ><H3
 ><A
@@ -1326,7 +1532,7 @@ called directly</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1220"
+NAME="AEN1269"
 ></A
 ><P
 ></P
@@ -1404,7 +1610,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1415,7 +1621,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1241"
+NAME="AEN1290"
 ></A
 ><H3
 ><A
@@ -1457,7 +1663,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1251"
+NAME="AEN1300"
 ></A
 ><P
 ></P
@@ -1535,7 +1741,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1546,7 +1752,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1272"
+NAME="AEN1321"
 ></A
 ><H3
 ><A
@@ -1588,7 +1794,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1282"
+NAME="AEN1331"
 ></A
 ><P
 ></P
@@ -1666,7 +1872,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1677,7 +1883,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1303"
+NAME="AEN1352"
 ></A
 ><H3
 ><A
@@ -1719,7 +1925,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1313"
+NAME="AEN1362"
 ></A
 ><P
 ></P
@@ -1797,7 +2003,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1808,7 +2014,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1334"
+NAME="AEN1383"
 ></A
 ><H3
 ><A
@@ -1850,7 +2056,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1344"
+NAME="AEN1393"
 ></A
 ><P
 ></P
@@ -1928,7 +2134,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1939,7 +2145,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1365"
+NAME="AEN1414"
 ></A
 ><H3
 ><A
@@ -1981,7 +2187,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1375"
+NAME="AEN1424"
 ></A
 ><P
 ></P
@@ -2059,7 +2265,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2070,7 +2276,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1396"
+NAME="AEN1445"
 ></A
 ><H3
 ><A
@@ -2112,7 +2318,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1406"
+NAME="AEN1455"
 ></A
 ><P
 ></P
@@ -2190,7 +2396,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2201,7 +2407,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1427"
+NAME="AEN1476"
 ></A
 ><H3
 ><A
@@ -2243,7 +2449,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1437"
+NAME="AEN1486"
 ></A
 ><P
 ></P
@@ -2321,7 +2527,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2332,7 +2538,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1458"
+NAME="AEN1507"
 ></A
 ><H3
 ><A
@@ -2374,7 +2580,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1468"
+NAME="AEN1517"
 ></A
 ><P
 ></P
@@ -2452,7 +2658,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2463,7 +2669,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1489"
+NAME="AEN1538"
 ></A
 ><H3
 ><A
@@ -2505,7 +2711,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1499"
+NAME="AEN1548"
 ></A
 ><P
 ></P
@@ -2583,7 +2789,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2594,7 +2800,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1520"
+NAME="AEN1569"
 ></A
 ><H3
 ><A
@@ -2636,7 +2842,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1530"
+NAME="AEN1579"
 ></A
 ><P
 ></P
@@ -2714,7 +2920,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2725,7 +2931,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1551"
+NAME="AEN1600"
 ></A
 ><H3
 ><A
@@ -2767,7 +2973,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1561"
+NAME="AEN1610"
 ></A
 ><P
 ></P
@@ -2845,7 +3051,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2856,7 +3062,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1582"
+NAME="AEN1631"
 ></A
 ><H3
 ><A
@@ -2898,7 +3104,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1592"
+NAME="AEN1641"
 ></A
 ><P
 ></P
@@ -2976,7 +3182,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2987,7 +3193,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1613"
+NAME="AEN1662"
 ></A
 ><H3
 ><A
@@ -3029,7 +3235,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1623"
+NAME="AEN1672"
 ></A
 ><P
 ></P
@@ -3107,7 +3313,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -3118,7 +3324,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1644"
+NAME="AEN1693"
 ></A
 ><H3
 ><A
@@ -3160,7 +3366,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1654"
+NAME="AEN1703"
 ></A
 ><P
 ></P
@@ -3238,7 +3444,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -3249,7 +3455,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN1675"
+NAME="AEN1724"
 ></A
 ><H3
 ><A
@@ -3291,7 +3497,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLEPRECOMPPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN1685"
+NAME="AEN1734"
 ></A
 ><P
 ></P
@@ -3369,7 +3575,75 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->  precomputed informations</TD
+>  precomputed information</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN1755"
+></A
+><H3
+><A
+NAME="XSLTREGISTERALLELEMENT"
+></A
+>xsltRegisterAllElement ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltRegisterAllElement          (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Registers all default XSLT elements in this context</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN1762"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the XPath context</TD
 ></TR
 ></TBODY
 ></TABLE

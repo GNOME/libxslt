@@ -122,7 +122,7 @@ NAME="LIBXSLT-XSLTINTERNALS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN3163"
+NAME="AEN3271"
 ></A
 ><H2
 >Name</H2
@@ -130,7 +130,7 @@ NAME="AEN3163"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN3166"
+NAME="AEN3274"
 ></A
 ><H2
 >Synopsis</H2
@@ -341,6 +341,16 @@ HREF="libxslt-xsltinternals.html#XSLTPARSESTYLESHEETDOC"
 HREF="XMLDOCPTR"
 >xmlDocPtr</GTKDOCLINK
 > doc);
+<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> <A
+HREF="libxslt-xsltinternals.html#XSLTLOADSTYLESHEETPI"
+>xsltLoadStylesheetPI</A
+>      (<GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc);
 void        <A
 HREF="libxslt-xsltinternals.html#XSLTNUMBERFORMAT"
 >xsltNumberFormat</A
@@ -385,7 +395,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3231"
+NAME="AEN3342"
 ></A
 ><H2
 >Description</H2
@@ -395,14 +405,14 @@ NAME="AEN3231"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN3234"
+NAME="AEN3345"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3236"
+NAME="AEN3347"
 ></A
 ><H3
 ><A
@@ -430,7 +440,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3242"
+NAME="AEN3353"
 ></A
 ><H3
 ><A
@@ -458,7 +468,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3248"
+NAME="AEN3359"
 ></A
 ><H3
 ><A
@@ -485,6 +495,13 @@ CLASS="PROGRAMLISTING"
     xmlChar *modeURI;	/* the URI part of the mode QName */
     xmlNodePtr content;	/* the template replacement value */
     xmlNodePtr elem;	/* the source element */
+
+    int inheritedNsNr;  /* number of inherited namespaces */
+    xmlNsPtr *inheritedNs;/* inherited non-excluded namespaces */
+
+    /* Profiling informations */
+    int nbCalls;        /* the number of time the template was called */
+    unsigned long time; /* the time spent in this template */
 };</PRE
 ></TD
 ></TR
@@ -497,7 +514,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3254"
+NAME="AEN3365"
 ></A
 ><H3
 ><A
@@ -523,7 +540,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3259"
+NAME="AEN3370"
 ></A
 ><H3
 ><A
@@ -567,7 +584,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3265"
+NAME="AEN3376"
 ></A
 ><H3
 ><A
@@ -593,7 +610,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3270"
+NAME="AEN3381"
 ></A
 ><H3
 ><A
@@ -626,7 +643,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3276"
+NAME="AEN3387"
 ></A
 ><H3
 ><A
@@ -652,7 +669,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3281"
+NAME="AEN3392"
 ></A
 ><H3
 ><A
@@ -681,6 +698,7 @@ CLASS="PROGRAMLISTING"
     int               varsNr;		/* Nb of variable list in the stack */
     int               varsMax;		/* Size of the variable list stack */
     xsltStackElemPtr *varsTab;		/* the variable list stack */
+    int               varsBase;		/* the var base for current templ */
 
     /*
      * Extensions
@@ -715,6 +733,12 @@ CLASS="PROGRAMLISTING"
     int xinclude;			/* should XInclude be processed */
 
     const char *      outputFile;	/* the output URI if known */
+
+    int profile;                        /* is this run profiled */
+    long             prof;		/* the current profiled value */
+    int              profNr;		/* Nb of templates in the stack */
+    int              profMax;		/* Size of the templtaes stack */
+    long            *profTab;		/* the profile template stack */
 };</PRE
 ></TD
 ></TR
@@ -725,7 +749,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3286"
+NAME="AEN3397"
 ></A
 ><H3
 ><A
@@ -751,7 +775,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3291"
+NAME="AEN3402"
 ></A
 ><H3
 ><A
@@ -825,7 +849,7 @@ precomputed data.</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3297"
+NAME="AEN3408"
 ></A
 ><H3
 ><A
@@ -851,7 +875,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3302"
+NAME="AEN3413"
 ></A
 ><H3
 ><A
@@ -894,7 +918,7 @@ stylesheet language like xsl:if or xsl:apply-templates.</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3312"
+NAME="AEN3423"
 ></A
 ><P
 ></P
@@ -983,7 +1007,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3333"
+NAME="AEN3444"
 ></A
 ><H3
 ><A
@@ -1031,7 +1055,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3338"
+NAME="AEN3449"
 ></A
 ><H3
 ><A
@@ -1066,7 +1090,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3343"
+NAME="AEN3454"
 ></A
 ><H3
 ><A
@@ -1092,7 +1116,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3348"
+NAME="AEN3459"
 ></A
 ><H3
 ><A
@@ -1192,7 +1216,7 @@ CLASS="PROGRAMLISTING"
     int warnings;		/* number of warnings found at compilation */
     int errors;			/* number of errors found at compilation */
 
-    xmlChar  *exclPrefix;	/* array of excluded prefixes */
+    xmlChar  *exclPrefix;	/* last excluded prefixes */
     xmlChar **exclPrefixTab;	/* array of excluded prefixes */
     int       exclPrefixNr;	/* number of excluded prefixes in scope */
     int       exclPrefixMax;	/* size of the array */
@@ -1206,7 +1230,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3353"
+NAME="AEN3464"
 ></A
 ><H3
 ><A
@@ -1232,7 +1256,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3358"
+NAME="AEN3469"
 ></A
 ><H3
 ><A
@@ -1262,7 +1286,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3363"
+NAME="AEN3474"
 ></A
 ><H3
 ><A
@@ -1292,7 +1316,7 @@ CLASS="PROGRAMLISTING"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3368"
+NAME="AEN3479"
 ></A
 ><H3
 ><A
@@ -1321,7 +1345,7 @@ will return from the function</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3374"
+NAME="AEN3485"
 ></A
 ><H3
 ><A
@@ -1350,7 +1374,7 @@ will goto the error: label</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3380"
+NAME="AEN3491"
 ></A
 ><H3
 ><A
@@ -1379,7 +1403,7 @@ will return from the function with a 0 value</P
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3386"
+NAME="AEN3497"
 ></A
 ><H3
 ><A
@@ -1409,7 +1433,7 @@ HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3393"
+NAME="AEN3504"
 ></A
 ><P
 ></P
@@ -1445,7 +1469,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3402"
+NAME="AEN3513"
 ></A
 ><H3
 ><A
@@ -1478,7 +1502,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3410"
+NAME="AEN3521"
 ></A
 ><P
 ></P
@@ -1531,7 +1555,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3423"
+NAME="AEN3534"
 ></A
 ><H3
 ><A
@@ -1566,7 +1590,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3431"
+NAME="AEN3542"
 ></A
 ><P
 ></P
@@ -1604,7 +1628,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3440"
+NAME="AEN3551"
 ></A
 ><H3
 ><A
@@ -1634,7 +1658,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3447"
+NAME="AEN3558"
 ></A
 ><P
 ></P
@@ -1687,7 +1711,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3460"
+NAME="AEN3571"
 ></A
 ><H3
 ><A
@@ -1722,7 +1746,7 @@ CLASS="PARAMETER"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3468"
+NAME="AEN3579"
 ></A
 ><P
 ></P
@@ -1760,7 +1784,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3477"
+NAME="AEN3588"
 ></A
 ><H3
 ><A
@@ -1798,7 +1822,7 @@ HREF="XMLCHAR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3486"
+NAME="AEN3597"
 ></A
 ><P
 ></P
@@ -1868,7 +1892,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3503"
+NAME="AEN3614"
 ></A
 ><H3
 ><A
@@ -1906,7 +1930,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3512"
+NAME="AEN3623"
 ></A
 ><P
 ></P
@@ -1976,7 +2000,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3529"
+NAME="AEN3640"
 ></A
 ><H3
 ><A
@@ -2011,7 +2035,7 @@ information related to the stylesheet output</P
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3537"
+NAME="AEN3648"
 ></A
 ><P
 ></P
@@ -2055,7 +2079,7 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
->&nbsp;</TD
+>  the "output" element</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -2066,7 +2090,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3550"
+NAME="AEN3661"
 ></A
 ><H3
 ><A
@@ -2099,7 +2123,7 @@ HREF="XMLDOCPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3558"
+NAME="AEN3669"
 ></A
 ><P
 ></P
@@ -2152,7 +2176,104 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3571"
+NAME="AEN3682"
+></A
+><H3
+><A
+NAME="XSLTLOADSTYLESHEETPI"
+></A
+>xsltLoadStylesheetPI ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> xsltLoadStylesheetPI      (<GTKDOCLINK
+HREF="XMLDOCPTR"
+>xmlDocPtr</GTKDOCLINK
+> doc);</PRE
+></TD
+></TR
+></TABLE
+><P
+>This function tries to locate the stylesheet PI in the given document
+If found, and if contained within the document, it will extract 
+that subtree to build the stylesheet to process <TT
+CLASS="PARAMETER"
+><I
+>doc</I
+></TT
+> (doc itself will
+be modified). If found but referencing an external document it will
+attempt to load it and generate a stylesheet from it. In both cases,
+the resulting stylesheet and the document need to be freed once the
+transformation is done.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3691"
+></A
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>doc</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>a new XSLT stylesheet structure or NULL if not found.</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN3704"
 ></A
 ><H3
 ><A
@@ -2190,7 +2311,7 @@ HREF="XMLNODEPTR"
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3580"
+NAME="AEN3713"
 ></A
 ><P
 ></P
@@ -2262,7 +2383,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN3597"
+NAME="AEN3730"
 ></A
 ><H3
 ><A
@@ -2341,7 +2462,7 @@ X      any other characters can be used in the prefix or suffix
 ><DIV
 CLASS="INFORMALTABLE"
 ><A
-NAME="AEN3615"
+NAME="AEN3748"
 ></A
 ><P
 ></P
