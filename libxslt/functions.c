@@ -347,7 +347,6 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
      */
     val = (unsigned long)((char *)cur - (char *)0);
     val /= sizeof(xmlNode);
-    val |= 0xFFFFFF;
     sprintf((char *)str, "id%ld", val);
     valuePush(ctxt, xmlXPathNewString(str));
 }
