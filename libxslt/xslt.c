@@ -375,6 +375,7 @@ xsltNewStylesheet(void) {
     cur->extInfos = NULL;
     cur->extrasNr = 0;
     cur->internalized = 1;
+    cur->literal_result = 0;
     cur->dict = xmlDictCreate();
 #ifdef WITH_XSLT_DEBUG
     xsltGenericDebug(xsltGenericDebugContext,
@@ -1901,8 +1902,6 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	xmlFree(prop);
     }
 
-    xsltParseStylesheetExtPrefix(style, top);
-
     cur = top->children;
 
     /*
@@ -2048,9 +2047,6 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	return(NULL);
     }
     xsltParseStylesheetExcludePrefix(ret, cur);
-    if (!ret->nopreproc)
-	xsltPrecomputeStylesheet(ret, cur);
-
     if ((IS_XSLT_ELEM(cur)) && 
 	((IS_XSLT_NAME(cur, "stylesheet")) ||
 	 (IS_XSLT_NAME(cur, "transform")))) {
@@ -2058,6 +2054,16 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	xsltGenericDebug(xsltGenericDebugContext,
 		"xsltParseStylesheetProcess : found stylesheet\n");
 #endif
+	ret->literal_result = 0;
+
+	xsltParseStylesheetExtPrefix(ret, cur);
+    } else {
+	ret->literal_result = 1;
+    }
+    if (!ret->nopreproc)
+	xsltPrecomputeStylesheet(ret, cur);
+
+    if (ret->literal_result == 0) {
 
 	xsltParseStylesheetTop(ret, cur);
     } else {
@@ -2105,6 +2111,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	template->elem = (xmlNodePtr) doc;
 	template->content = doc->children;
 	xsltAddTemplate(ret, template, NULL, NULL);
+	ret->literal_result = 1;
     }
 
     return(ret);

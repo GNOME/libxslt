@@ -48,6 +48,158 @@ const xmlChar *xsltExtMarker = (const xmlChar *) "Extension Element";
 
 /************************************************************************
  *									*
+ *			Grammar checks					*
+ *									*
+ ************************************************************************/
+
+/**
+ * xsltCheckTopLevelElement:
+ * @style: the XSLT stylesheet
+ * @inst: the XSLT instruction
+ * @err: raise an error or not
+ *
+ * Check that the instruction is instanciated as a top level element.
+ *
+ * Returns -1 in case of error, 0 if failed and 1 in case of success
+ */
+static int
+xsltCheckTopLevelElement(xsltStylesheetPtr style, xmlNodePtr inst, int err) {
+    xmlNodePtr parent;
+    if ((style == NULL) || (inst == NULL) || (inst->ns == NULL))
+        return(-1);
+    
+    parent = inst->parent;
+    if (parent == NULL) {
+        if (err) {
+	    xsltTransformError(NULL, style, inst,
+		    "internal problem: element has no parent\n");
+	    style->errors++;
+	}
+	return(0);
+    }
+    if ((parent->ns == NULL) ||
+        ((parent->ns != inst->ns) &&
+	 (!xmlStrEqual(parent->ns->href, inst->ns->href))) ||
+	((!xmlStrEqual(parent->name, BAD_CAST "stylesheet")) &&
+	 (!xmlStrEqual(parent->name, BAD_CAST "transform")))) {
+	if (err) {
+	    xsltTransformError(NULL, style, inst,
+		    "element %s only allowed as child of stylesheet\n",
+			       inst->name);
+	    style->errors++;
+	}
+	return(0);
+    }
+    return(1);
+}
+
+/**
+ * xsltCheckInstructionElement:
+ * @style: the XSLT stylesheet
+ * @inst: the XSLT instruction
+ *
+ * Check that the instruction is instanciated as an instruction element.
+ */
+static void
+xsltCheckInstructionElement(xsltStylesheetPtr style, xmlNodePtr inst) {
+    xmlNodePtr parent;
+    int has_ext;
+
+    if ((style == NULL) || (inst == NULL) || (inst->ns == NULL) ||
+        (style->literal_result))
+        return;
+
+    has_ext = (style->extInfos != NULL);
+    
+    parent = inst->parent;
+    if (parent == NULL) {
+	xsltTransformError(NULL, style, inst,
+		"internal problem: element has no parent\n");
+	style->errors++;
+	return;
+    }
+    while ((parent != NULL) && (parent->type != XML_DOCUMENT_NODE)) {
+        if (((parent->ns == inst->ns) ||
+	     ((parent->ns != NULL) &&
+	      (xmlStrEqual(parent->ns->href, inst->ns->href)))) &&
+	    ((xmlStrEqual(parent->name, BAD_CAST "template")) ||
+	     (xmlStrEqual(parent->name, BAD_CAST "param")) ||
+	     (xmlStrEqual(parent->name, BAD_CAST "attribute")) ||
+	     (xmlStrEqual(parent->name, BAD_CAST "variable")))) {
+	    return;
+	}
+
+	/*
+	 * if we are within an extension element all bets are off
+	 * about the semantic there e.g. xsl:param within func:function
+	 */
+	if ((has_ext) && (parent->ns != NULL) &&
+	    (xmlHashLookup(style->extInfos, parent->ns->href) != NULL))
+	    return;
+	
+        parent = parent->parent;
+    }
+    xsltTransformError(NULL, style, inst,
+	    "element %s only allowed within a template, variable or param\n",
+		           inst->name);
+    style->errors++;
+}
+
+/**
+ * xsltCheckParentElement:
+ * @style: the XSLT stylesheet
+ * @inst: the XSLT instruction
+ * @allow1: allowed parent1
+ * @allow2: allowed parent2
+ *
+ * Check that the instruction is instanciated as the childre of one of the
+ * possible parents.
+ */
+static void
+xsltCheckParentElement(xsltStylesheetPtr style, xmlNodePtr inst,
+                       const xmlChar *allow1, const xmlChar *allow2) {
+    xmlNodePtr parent;
+
+    if ((style == NULL) || (inst == NULL) || (inst->ns == NULL) ||
+        (style->literal_result))
+        return;
+
+    parent = inst->parent;
+    if (parent == NULL) {
+	xsltTransformError(NULL, style, inst,
+		"internal problem: element has no parent\n");
+	style->errors++;
+	return;
+    }
+    if (((parent->ns == inst->ns) ||
+	 ((parent->ns != NULL) &&
+	  (xmlStrEqual(parent->ns->href, inst->ns->href)))) &&
+	((xmlStrEqual(parent->name, allow1)) ||
+	 (xmlStrEqual(parent->name, allow2)))) {
+	return;
+    }
+
+    if (style->extInfos != NULL) {
+	while ((parent != NULL) && (parent->type != XML_DOCUMENT_NODE)) {
+	    /*
+	     * if we are within an extension element all bets are off
+	     * about the semantic there e.g. xsl:param within func:function
+	     */
+	    if ((parent->ns != NULL) &&
+		(xmlHashLookup(style->extInfos, parent->ns->href) != NULL))
+		return;
+	    
+	    parent = parent->parent;
+	}
+    }
+    xsltTransformError(NULL, style, inst,
+		       "element %s is not allowed within that context\n",
+		       inst->name);
+    style->errors++;
+}
+
+/************************************************************************
+ *									*
  *			handling of precomputed data			*
  *									*
  ************************************************************************/
@@ -1192,91 +1344,129 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	xsltStylePreCompPtr cur;
 
 	if (IS_XSLT_NAME(inst, "apply-templates")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltApplyTemplatesComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "with-param")) {
+	    xsltCheckParentElement(style, inst, BAD_CAST "apply-templates",
+	                           BAD_CAST "call-template");
 	    xsltWithParamComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "value-of")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltValueOfComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "copy")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltCopyComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "copy-of")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltCopyOfComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "if")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltIfComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "when")) {
+	    xsltCheckParentElement(style, inst, BAD_CAST "choose", NULL);
 	    xsltWhenComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "choose")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltChooseComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "for-each")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltForEachComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "apply-imports")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltApplyImportsComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "attribute")) {
+	    xmlNodePtr parent = inst->parent;
+
+	    if ((parent == NULL) || (parent->ns == NULL) ||
+		((parent->ns != inst->ns) &&
+		 (!xmlStrEqual(parent->ns->href, inst->ns->href))) ||
+		(!xmlStrEqual(parent->name, BAD_CAST "attribute-set"))) {
+		xsltCheckInstructionElement(style, inst);
+	    }
 	    xsltAttributeComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "element")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltElementComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "text")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltTextComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "sort")) {
+	    xsltCheckParentElement(style, inst, BAD_CAST "apply-templates",
+	                           BAD_CAST "for-each");
 	    xsltSortComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "comment")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltCommentComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "number")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltNumberComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "processing-instruction")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltProcessingInstructionComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "call-template")) {
+	    xsltCheckInstructionElement(style, inst);
 	    xsltCallTemplateComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "param")) {
+	    if (xsltCheckTopLevelElement(style, inst, 0) == 0)
+	        xsltCheckInstructionElement(style, inst);
 	    xsltParamComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "variable")) {
+	    if (xsltCheckTopLevelElement(style, inst, 0) == 0)
+	        xsltCheckInstructionElement(style, inst);
 	    xsltVariableComp(style, inst);
 	} else if (IS_XSLT_NAME(inst, "otherwise")) {
-	    /* no computation needed */
+	    xsltCheckParentElement(style, inst, BAD_CAST "choose", NULL);
+	    xsltCheckInstructionElement(style, inst);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "template")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "output")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "preserve-space")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "strip-space")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
-	} else if (IS_XSLT_NAME(inst, "stylesheet")) {
-	    /* no computation needed */
-	    return;
-	} else if (IS_XSLT_NAME(inst, "transform")) {
-	    /* no computation needed */
+	} else if ((IS_XSLT_NAME(inst, "stylesheet")) ||
+	           (IS_XSLT_NAME(inst, "transform"))) {
+	    xmlNodePtr parent = inst->parent;
+
+	    if ((parent == NULL) || (parent->type != XML_DOCUMENT_NODE)) {
+		xsltTransformError(NULL, style, inst,
+		    "element %s only allowed only as root element\n",
+				   inst->name);
+		style->errors++;
+	    }
 	    return;
 	} else if (IS_XSLT_NAME(inst, "key")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "message")) {
-	    /* no computation needed */
+	    xsltCheckInstructionElement(style, inst);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "attribute-set")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "namespace-alias")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "include")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "import")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "decimal-format")) {
-	    /* no computation needed */
+	    xsltCheckTopLevelElement(style, inst, 1);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "fallback")) {
-	    /* no computation needed */
+	    xsltCheckInstructionElement(style, inst);
 	    return;
 	} else if (IS_XSLT_NAME(inst, "document")) {
+	    xsltCheckInstructionElement(style, inst);
 	    inst->psvi = (void *) xsltDocumentComp(style, inst,
 				(xsltTransformFunction) xsltDocumentElem);
 	} else {

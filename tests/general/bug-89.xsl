@@ -44,9 +44,12 @@ la valeur nulle -->
 </xsl:call-template>
 </xsl:when>
 <xsl:when test="$action='repl'">
+<xsl:choose>
 <xsl:when test="$action='del'">
 <xsl:call-template name="del"/>
-</xsl:when> <xsl:call-template name="add">
+</xsl:when>
+</xsl:choose>
+<xsl:call-template name="add">
 <xsl:with-param name="type">toto</xsl:with-param>
 </xsl:call-template>
 </xsl:when> </xsl:choose>

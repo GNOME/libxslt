@@ -1,6 +1,14 @@
+Tue Mar 29 15:13:59 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c libxslt/xslt.c libxslt/xsltInternals.h: 
+	  added DTD like checking when compiling stylesheets, closes
+	  bug #160402 and a long term TODO
+	* tests/general/bug-89.xsl: thos spotted a misconstruct of one
+	  of the test cases where <xsl:when> was not within <xsl:choose>
+
 Mon Mar 21 20:56:43 MST 2005 John Fleck (jfleck@inkstain.net)
 
-	* doc/xsltproc.xml, xsltproc.html, xsltproc.1
+	* doc/xsltproc.xml, xsltproc.html, xsltproc.1:
 	update documentation to reflect addition of --nodtdattr
 	command line flag. Bug #171098
 

@@ -447,6 +447,10 @@ struct _xsltStylesheet {
      * all document text strings were internalized
      */
     int internalized;
+    /*
+     * Literal Result Element as Stylesheet c.f. section 2.3
+     */
+    int literal_result;
 };
 
 /*
