@@ -1,6 +1,7 @@
 # Note that this is NOT a relocatable package
 %define ver      @VERSION@
 %define prefix   /usr
+%define datadir  %{prefix}/share
 
 Summary: Library providing the Gnome XSLT engine
 Name: libxslt
@@ -69,9 +70,9 @@ fi
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/usr/man/man1
-install -d $RPM_BUILD_ROOT/usr/man/man4
-make prefix=$RPM_BUILD_ROOT%{prefix} install
+install -d $RPM_BUILD_ROOT%{datadir}/man/man1
+install -d $RPM_BUILD_ROOT%{datadir}/man/man4
+make prefix=$RPM_BUILD_ROOT%{prefix} mandir=$RPM_BUILD_ROOT%{datadir}/man install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -85,6 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %doc AUTHORS ChangeLog NEWS README COPYING COPYING.LIB TODO FEATURES
 %doc doc/*.html doc/html doc/tutorial
+%doc %{prefix}/share/man/man1/xsltproc.1*
 
 %{prefix}/lib/lib*.so.*
 %{prefix}/bin/xsltproc
