@@ -403,14 +403,16 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	oldContextSize = ctxt->xpathCtxt->contextSize;
 	oldInst = ctxt->inst;
-	if (precomp != NULL)
+	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
-	else
+	    ctxt->xpathCtxt->namespaces = precomp->nsList;
+	    ctxt->xpathCtxt->nsNr = precomp->nsNr;
+	} else {
 	    ctxt->inst = NULL;
+	    ctxt->xpathCtxt->namespaces = NULL;
+	    ctxt->xpathCtxt->nsNr = 0;
+	}
 	ctxt->xpathCtxt->node = (xmlNodePtr) ctxt->node;
-	/* TODO: do we need to propagate the namespaces here ? */
-	ctxt->xpathCtxt->namespaces = NULL;
-	ctxt->xpathCtxt->nsNr = 0;
 	result = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;

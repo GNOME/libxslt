@@ -1,4 +1,12 @@
-Mon Jun 11 09:35:53 CEST 2001 John Fleck <jfleck@inkstain.net>
+Tue Jun 12 07:42:35 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/variables.c: fixed bug #55670, namespaces must
+	  be propagated when evaluating global variables.
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-36-* tests/docs/bug-36-*: added a specific
+	  regression test for #55670 
+
+Mon Jun 11 09:35:53 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/xslt.html: linked to the tutorial
 
