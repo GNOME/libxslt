@@ -308,8 +308,6 @@ xsltUnparsedEntityURIFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     obj = valuePop(ctxt);
     if (obj->type != XPATH_STRING) {
-	xsltGenericError(xsltGenericErrorContext,
-	    "unparsed-entity-uri() : invalid arg expecting a string\n");
 	obj = xmlXPathConvertString(obj);
     }
 
@@ -413,10 +411,8 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	obj = valuePop(ctxt);
 	nodelist = obj->nodesetval;
 	if ((nodelist == NULL) || (nodelist->nodeNr <= 0)) {
-	    ctxt->error = XPATH_INVALID_TYPE;
-	    xsltGenericError(xsltGenericErrorContext,
-		"generate-id() : got an empty node-set\n");
 	    xmlXPathFreeObject(obj);
+	    valuePush(ctxt, xmlXPathNewCString(""));
 	    return;
 	}
 	cur = nodelist->nodeTab[0];

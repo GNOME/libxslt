@@ -1230,6 +1230,7 @@ xsltSort(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		res = xmlXPathConvertString(res);
 	    if (comp->number)
 		res = xmlXPathConvertNumber(res);
+	    res->index = i;	/* Save original pos for dupl resolv */
 	    if (comp->number) {
 		if (res->type == XPATH_NUMBER) {
 		    results[i] = res;
@@ -2039,15 +2040,15 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		list = res->nodesetval;
 		res->nodesetval = NULL;
 	     } else {
-		list == NULL;
+		list = NULL;
 	     }
-	     if (list == NULL) {
+	}
+	if (list == NULL) {
 #ifdef DEBUG_PROCESS
-		xsltGenericDebug(xsltGenericDebugContext,
-		    "xsltApplyTemplates: select didn't evaluate to a node list\n");
+	    xsltGenericDebug(xsltGenericDebugContext,
+		"xsltApplyTemplates: select didn't evaluate to a node list\n");
 #endif
-		goto error;
-	    }
+	    goto error;
 	}
     } else {
 	/*
@@ -2419,13 +2420,13 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (res != NULL) {
 	if (res->type == XPATH_NODESET)
 	    list = res->nodesetval;
-	else {
+    }
+    if (list == NULL) {
 #ifdef DEBUG_PROCESS
-	    xsltGenericDebug(xsltGenericDebugContext,
-		"xsltForEach: select didn't evaluate to a node list\n");
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "xsltForEach: select didn't evaluate to a node list\n");
 #endif
-	    goto error;
-	}
+	goto error;
     }
 
 #ifdef DEBUG_PROCESS

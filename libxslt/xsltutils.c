@@ -240,17 +240,24 @@ xsltSortFunction(xmlNodeSetPtr list, xmlXPathObjectPtr *results,
 	    while (j >= 0) {
 		if (results[j] == NULL)
 		    tst = 1;
-		else if (number) {
-		    tst = (results[j]->floatval > results[j + incr]->floatval);
+		else {
+		    if (number) {
+			if (results[j]->floatval == results[j + incr]->floatval)
+			    tst = 0;
+			else if (results[j]->floatval > 
+				results[j + incr]->floatval)
+			    tst = 1;
+			else tst = -1;
+		    } else {
+			tst = xmlStrcmp(results[j]->stringval,
+				     results[j + incr]->stringval); 
+		    }
+		    if (tst == 0)
+			tst = results[j]->index > results[j + incr]->index;
 		    if (descending)
-			tst = !tst;
-		} else {
-		    tst = (xmlStrcmp(results[j]->stringval,
-				     results[j + incr]->stringval)) > 0; 
-		    if (descending)
-			tst = !tst;
+			tst = -tst;
 		}
-		if (tst) {
+		if (tst > 0) {
 		    tmp = results[j];
 		    results[j] = results[j + incr];
 		    results[j + incr] = tmp;
