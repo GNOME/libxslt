@@ -1,3 +1,10 @@
+Fri Jul  6 17:42:06 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* doc/extensions.html doc/internals.html doc/xslt.html:
+	  added a documentation on writing libxslt extensions, and
+	  added links to the main page
+	* libxslt/functions.c libxslt/xsltInternals.h
+
 Fri Jul  6 14:30:00 HKT 2001 William Brack <wbrack@mmm.com.hk>
 
 	* cleaned up many comments and error messages

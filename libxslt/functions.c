@@ -722,7 +722,7 @@ xsltExtFunctionTest(xmlXPathParserContextPtr ctxt, int nargs)
  * @inst:  the instruction in the stylesheet
  * @comp:  precomputed informations
  *
- * Process an debug node
+ * Process a libxslt:test node
  */
 static void
 xsltExtElementTest(xsltTransformContextPtr ctxt, xmlNodePtr node,

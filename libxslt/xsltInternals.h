@@ -120,7 +120,8 @@ typedef xsltStylePreComp *xsltStylePreCompPtr;
  * stylesheet language like xsl:if or xsl:apply-templates.
  */
 typedef void (*xsltTransformFunction) (xsltTransformContextPtr ctxt,
-	                               xmlNodePtr node, xmlNodePtr inst,
+	                               xmlNodePtr node,
+				       xmlNodePtr inst,
 			               xsltStylePreCompPtr comp);
 
 typedef enum {
