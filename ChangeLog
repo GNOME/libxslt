@@ -1,3 +1,8 @@
+Thu Dec  2 21:10:31 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	*doc/xslt.html, doc/downloads.html: changed the download link
+	 on the web page for cvs snapshot
+	 
 Wed Dec  1 22:37:55 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/extensions.c, libxslt/functions.c, libxslt/numbers.c,
