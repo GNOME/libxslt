@@ -1,3 +1,9 @@
+Wed Aug  1 13:58:21 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.c: well one need one \n after DOCTYPE
+	* test//*/*.out: the output of some tests changed, looks better
+	  actually
+
 Wed Aug  1 13:21:18 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: avoid extra \n when serializing top

@@ -9,17 +9,12 @@ a
          h
          i
       j
-      
-<FOLLOWING>n
+      <FOLLOWING>n
       o
          p
       q
       r
-   </FOLLOWING>
-<PRECEDING>d</PRECEDING>
-<EMPTY></EMPTY>
-<EMPTY></EMPTY>
-<ANCESTOR2>a
+   </FOLLOWING><PRECEDING>d</PRECEDING><EMPTY></EMPTY><EMPTY></EMPTY><ANCESTOR2>a
    b
       c
          d
@@ -39,20 +34,14 @@ a
       r
    s
    t
-</ANCESTOR2>
-<TRICKY>e</TRICKY>
-k
+</ANCESTOR2><TRICKY>e</TRICKY>k
    l
-   
-<FOLLOWINGSIBLING1>n
+   <FOLLOWINGSIBLING1>n
       o
          p
       q
       r
-   </FOLLOWINGSIBLING1>
-<FOLLOWINGSIBLING2>t</FOLLOWINGSIBLING2>
-<FOLLOWINGSIBLING3></FOLLOWINGSIBLING3>
-m
+   </FOLLOWINGSIBLING1><FOLLOWINGSIBLING2>t</FOLLOWINGSIBLING2><FOLLOWINGSIBLING3></FOLLOWINGSIBLING3>m
    n
       o
          p

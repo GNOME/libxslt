@@ -885,8 +885,11 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    while (child != NULL) {
 		xmlNodeDumpOutput(buf, result, child, 0, (indent == 1),
 			          (const char *) encoding);
+		if (child->type == XML_DTD_NODE)
+		    xmlOutputBufferWriteString(buf, "\n");
 		child = child->next;
 	    }
+	    xmlOutputBufferWriteString(buf, "\n");
 	}
 	xmlOutputBufferFlush(buf);
     }
