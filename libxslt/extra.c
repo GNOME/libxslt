@@ -146,11 +146,10 @@ xsltFunctionNodeSet(xmlXPathParserContextPtr ctxt, int nargs){
 }
 
 /*
- * Seems FreeBSD decided not to provide the timezone libc varaible
- * C.f bug report #59570 http://bugzilla.gnome.org/show_bug.cgi?id=59570
+ * Okay the following really seems unportable and since it's not
+ * part of any standard I'm not too ashamed to do this
  */
-#ifndef __FreeBSD__
-
+#if defined(linux) || defined(__sun)
 #if defined(HAVE_MKTIME) && defined(HAVE_LOCALTIME) && defined(HAVE_ASCTIME)
 #define WITH_LOCALTIME
 
@@ -268,7 +267,7 @@ xsltFunctionLocalTime(xmlXPathParserContextPtr ctxt, int nargs) {
     valuePush(ctxt, xmlXPathNewString((xmlChar *)result));
 }
 #endif
-#endif /* __FreeBSD__ */
+#endif /* linux or sun */
 
 
 /**
