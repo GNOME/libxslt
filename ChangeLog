@@ -1,3 +1,7 @@
+Mon Dec 23 15:43:59 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxslt.c: patch from Stéphane Bidoul for Python 2.1
+
 Sun Dec 22 22:54:04 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* vms/build_xslt.com libxslt/xsltconfig.h.in libxslt/xsltutils.c:
