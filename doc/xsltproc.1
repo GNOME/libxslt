@@ -1,0 +1,185 @@
+.\"
+.\" This page was created on 2001-08-28 20:39:41 by makeman.pl
+.\" ``makeman.pl'' is part of the ``MakeMan'' project.
+.\" For more information, please see http://mama.sourceforge.net
+.\"
+.TH xsltproc 1 
+
+.SH NAME
+xsltproc \- command line xslt processor
+
+.SH SYNOPSIS
+\fBxsltproc\fR
+[ \fI\-V\fR ] [ \fI\-v\fR ] [ \fI\-o \fR ] [ \fI\-\-timing\fR ] [ \fI\-\-repeat\fR ] [ \fI\-\-debug\fR ] [ \fI\-\-novalid\fR ] [ \fI\-\-noout\fR ] [ \fI\-\-maxdepth \fR ] [ \fI\-\-html\fR ] [ \fI\-\-docbook\fR ] [ \fI\-\-param \fR ] [ \fI\-\-nonet\fR ] [ \fI\-\-warnnet\fR ] [ \fI\-\-catalogs\fR ] [ \fI\-\-xinclude\fR ] [ \fI\-\-profile\fR ] [ \fIstylesheet\fR ] [ \fIfile1\fR ] [ \fIfile2\fR ] [ \fI....\fR ] 
+
+.SH "Introduction"
+
+.PP
+
+xsltproc is a command line tool for applying
+XSLT stylesheets to XML
+documents. It is part of libxslt, the XSLT C
+library for GNOME. While it was developed as part of the GNOME project, it
+can operate independently of the GNOME desktop.
+
+
+.PP
+
+xsltproc is invoked from the command line with
+the name of the stylesheet to be used followed by the name of the file or
+files to which the stylesheet is to be applied.
+
+
+.PP
+
+If a stylesheet is included in an XML document with a
+Stylesheet Processing Instruction, no stylesheet need be named at the
+command line. xsltproc will automatically
+detect the included stylesheet and use it.
+
+
+.PP
+
+By default, output is to stdout. You can specify a file for output using
+the \-o option.
+
+
+.SH "Options"
+
+.PP
+
+\-V or \-\-version \- Show the version of
+libxml and libxslt used.
+
+
+.PP
+
+\-v or \-\-verbose \- Output each step taken
+by xsltproc in processing the stylesheet and the document.
+
+
+.PP
+
+\-o or \-\-output
+\fIfile\fR \- Direct output to the file named
+\fIfile\fR. For multiple outputs, also known as
+"chunking", \-o directory/ directs the
+output files to a specified directory. The directory must already exist.
+
+
+.PP
+
+\-\-timing \- Display the time used for parsing the
+stylesheet, parsing the document and applying the stylesheet and saving
+the result. Displayed in milliseconds.
+
+
+.PP
+
+\-\-repeat \- Run the transformation 20 times. Used for
+timing tests.
+
+
+.PP
+
+\-\-debug \- Output an XML tree of the
+transformed document for debugging purposes.
+
+
+.PP
+
+\-\-novalid \- Skip loading the document's DTD.
+
+
+.PP
+
+\-\-noout \- Do not output the result.
+
+
+.PP
+
+\-\-maxdepth \fIvalue\fR \- Adjust the
+maximum depth of the template stack before
+libxslt concludes it is in an infinite
+loop. The default is 500.
+
+
+.PP
+
+\-\-html \- The input document is an HTML
+file.
+
+
+.PP
+
+\-\-docbook \- The input document is DocBook
+SGML.
+
+
+.PP
+
+\-\-param \fIname\fR
+\fIvalue\fR \- Pass a parameter of name
+\fIname\fR and value
+\fIvalue\fR to the stylesheet. You may pass multiple
+name/value pairs up to a maximum of 8.
+
+.PP
+
+If the value being passed is a string rather than a node identifier,
+it must be escaped in quotes, as follows:	
+
+.PP
+
+xsltproc \-\-param rootid '"introduction"'
+\fIstylesheet\fR \fIfile\fR	
+
+
+
+.PP
+
+\-\-nonet \- Do not use the Internet to fetch DTD's or
+entities.
+
+
+.PP
+
+\-\-warnnet \- Output notification when DTD's or entities
+are fetched over the Internet.
+
+
+.PP
+
+\-\-catalogs \- Use catalogs to resolve the location of
+external entities. This speeds DTD resolution. By having a
+catalog file point to a local version of the DTD,
+xsltproc does not have to use the
+Internet to fetch the DTD. xsltproc
+uses the catalog identified by the environmental variable
+SGML_CATALOG_FILES.
+
+
+.PP
+
+\-\-xinclude \- Process the input document using the
+Xinclude specification. More details on this can be found in the Xinclude
+specification: http://www.w3.org/TR/xinclude/ (Link to \fIhttp://www.w3.org/TR/xinclude/\fR)
+
+
+.PP
+
+\-\-profile or \-\-norman \- Output profiling
+information detailing the amount of time spent in each part of the
+stylesheet. This is useful in optimizing stylesheet performance.
+
+
+.SH "More Information"
+
+.PP
+
+.IP
+libxml web page: http://www.xmlsoft.org/ (Link to \fIhttp://www.xmlsoft.org/\fR)
+.IP
+W3C XSLT page: http://www.w3.org/TR/xslt (Link to \fIhttp://www.w3.org/TR/xslt\fR)
+
+

@@ -1,3 +1,8 @@
+Wed Aug 29 21:05:43 MDT 2001 John Fleck <jfleck@inkstain.net>
+
+	* doc/xsltproc.1 - added xsltproc man page (note: this has not
+	been added into the build yet)
+
 Wed Aug 29 22:58:58 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* doc/tutorial/libxslt_tutorial.c doc/tutorial/libxslttutorial.html
