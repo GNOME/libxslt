@@ -1,3 +1,7 @@
+Sun Feb 10 16:21:09 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixing bug #70281
+
 Sun Feb 10 15:10:56 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/numbers.c: trying to fix #68759
