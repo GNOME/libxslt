@@ -1,3 +1,7 @@
+Mon Dec 16 19:31:16 CET 2002 Igor Zlatkovic <igor@stud.fh-frankfurt.de>
+
+	* win32/libxslt.def.src: added more exports for Stephane Bidoul
+	
 Fri Dec 13 14:50:12 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/apibuild.py doc/libexslt-api.xml doc/libxslt-api.xml: updated
