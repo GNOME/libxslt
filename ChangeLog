@@ -1,3 +1,8 @@
+Wed Aug 21 18:59:28 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxslt.c: fixed the parameter order when calling
+	  Python based extensions.
+
 Wed Aug 21 13:48:07 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c libxslt/xslt.c: fixed bug #89258 and a bit of
