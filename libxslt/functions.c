@@ -137,7 +137,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs){
     if (obj->stringval == NULL) {
 	valuePush(ctxt, xmlXPathNewNodeSet(NULL));
     } else {
-	if ((obj2 != NULL) && (obj2->nodesetval != NULL)) {
+	if ((obj2 != NULL) && (obj2->nodesetval != NULL) &&
+	      (obj2->nodesetval->nodeNr > 0)) {
 	    xmlNodePtr target;
 
 	    target = obj2->nodesetval->nodeTab[0];

@@ -2093,8 +2093,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     int nbsorts = 0;
     int newdoc = 0;
     xmlNodePtr sorts[XSLT_MAX_SORT];
-    xmlDocPtr oldXDocPtr, newXDocPtr;
-    xsltDocumentPtr oldCDocPtr, newCDocPtr;
+    xmlDocPtr oldXDocPtr;
+    xsltDocumentPtr oldCDocPtr;
 
     if (comp == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
@@ -2124,8 +2124,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
      * well as the xpath and context documents, may be changed
      * so we save their initial state and will restore on exit
      */
-    newXDocPtr = oldXDocPtr = ctxt->xpathCtxt->doc;
-    newCDocPtr = oldCDocPtr = ctxt->document;
+    oldXDocPtr = ctxt->xpathCtxt->doc;
+    oldCDocPtr = ctxt->document;
     oldContextSize = ctxt->xpathCtxt->contextSize;
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 
@@ -2149,22 +2149,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (res != NULL) {
 	    if (res->type == XPATH_NODESET) {
 		list = res->nodesetval;
-		/* For a 'select' nodeset, need to check if document has changed */
-		if ( (res->nodesetval!=NULL) &&
-		     (res->nodesetval->nodeTab!=NULL) &&
-		     (res->nodesetval->nodeTab[0]->doc!=NULL) &&
-		     (res->nodesetval->nodeTab[0]->doc->doc!=NULL) &&
-		     (res->nodesetval->nodeTab[0]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
-		    newXDocPtr=res->nodesetval->nodeTab[0]->doc->doc;
-		    /* The nodeset is from another document, so must change */
-		    if ((newCDocPtr = xsltFindDocument(ctxt,newXDocPtr))==NULL) { 
-	    		xsltGenericError(xsltGenericErrorContext,
-		 		"xsl:apply-templates : can't find doc\n");
-	    		goto error;
-		    }
-		    /* Can't actually do the change yet, so set flag for later */
-		    newdoc = 1;
-		}
 		res->nodesetval = NULL;
 	     } else {
 		list = NULL;
@@ -2275,23 +2259,28 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	xsltDoSortFunction(ctxt, sorts, nbsorts);
     }
 
-
-    /* The original 'select' may have required a change of document*/
-    if (newdoc) {
-#ifdef WITH_XSLT_DEBUG_PROCESS
-	xsltGenericDebug(xsltGenericDebugContext,
-     "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
-	     newCDocPtr->doc->URL, newXDocPtr->URL);
-#endif
-
-	ctxt->document = newCDocPtr;
-	ctxt->xpathCtxt->doc = newXDocPtr;
-	ctxt->xpathCtxt->node = list->nodeTab[0];
-    }
-
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
+	/* For a 'select' nodeset, need to check if document has changed */
+	if ( (list->nodeTab[i]->doc!=NULL) &&
+	     (list->nodeTab[i]->doc->doc!=NULL) &&
+	     (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
+	    /* The nodeset is from another document, so must change */
+	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
+	    if ((ctxt->document =
+		  xsltFindDocument(ctxt,list->nodeTab[i]->doc->doc))==NULL) { 
+    		xsltGenericError(xsltGenericErrorContext,
+	 		"xsl:apply-templates : can't find doc\n");
+    		goto error;
+	    }
+	    ctxt->xpathCtxt->node = list->nodeTab[i];
+#ifdef WITH_XSLT_DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
+	     ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
+#endif
+	}
 	varsPush(ctxt, params);
 	xsltProcessOneNode(ctxt, list->nodeTab[i]);
 	tmp = varsPop(ctxt);
@@ -2575,28 +2564,6 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
     ctxt->xpathCtxt->contextSize = list->nodeNr;
 
-    /* For a 'select' nodeset, need to check if document has changed */
-    if (list->nodeTab!=NULL) {
-	if ( (res->nodesetval!=NULL) &&
-	     (res->nodesetval->nodeTab!=NULL) &&
-	     (res->nodesetval->nodeTab[0]->doc!=NULL) &&
-	     (res->nodesetval->nodeTab[0]->doc->doc!=NULL) &&
-	     (res->nodesetval->nodeTab[0]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
-	    newXDocPtr=res->nodesetval->nodeTab[0]->doc->doc;
-	    /* The nodeset is from another document, so must change */
-	    if ((newCDocPtr = xsltFindDocument(ctxt,newXDocPtr))==NULL) {
-	    	xsltGenericError(xsltGenericErrorContext,
-		 	"xsl:for-each : can't find document\n");
-	    	goto error;
-	    }
-	    ctxt->document = newCDocPtr;
-	    ctxt->xpathCtxt->doc = newXDocPtr;
-	    ctxt->xpathCtxt->node = list->nodeTab[0];
-	    ctxt->xpathCtxt->contextSize = list->nodeNr;
-	    ctxt->xpathCtxt->proximityPosition = 0;
-	}
-    }
-
     /* 
      * handle and skip the xsl:sort
      */
@@ -2619,6 +2586,25 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     for (i = 0;i < list->nodeNr;i++) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->proximityPosition = i + 1;
+	/* For a 'select' nodeset, need to check if document has changed */
+	if ( (list->nodeTab[i]->doc!=NULL) &&
+	     (list->nodeTab[i]->doc->doc!=NULL) &&
+	     (list->nodeTab[i]->doc->doc)!=ctxt->xpathCtxt->doc) {	  
+	    /* The nodeset is from another document, so must change */
+	    ctxt->xpathCtxt->doc=list->nodeTab[i]->doc->doc;
+	    if ((ctxt->document =
+		  xsltFindDocument(ctxt,list->nodeTab[i]->doc->doc))==NULL) { 
+    		xsltGenericError(xsltGenericErrorContext,
+	 		"xsl:apply-templates : can't find doc\n");
+    		goto error;
+	    }
+	    ctxt->xpathCtxt->node = list->nodeTab[i];
+#ifdef WITH_XSLT_DEBUG_PROCESS
+	xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltApplyTemplates: Changing document - context doc %s, xpathdoc %s\n",
+	     ctxt->document->doc->URL, ctxt->xpathCtxt->doc->URL);
+#endif
+	}
 	/* ctxt->insert = oldInsert; */
 	varsPush(ctxt, NULL);
 	xsltApplyOneTemplate(ctxt, list->nodeTab[i], replacement, 0);
