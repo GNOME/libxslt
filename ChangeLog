@@ -1,3 +1,8 @@
+Tue Aug 31 11:41:11 CEST 2004 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: added missing descriptions
+	  for --path as well as --load-trace, fixes Red Hat bug #106545
+
 Fri Aug 27 20:52:52 PDT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/keys.c: fixed small problem with key initialisation
