@@ -1871,10 +1871,19 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
 	    xsltNamespaceAlias(style, cur);
 	} else {
-	    xsltTransformError(NULL, style, cur,
+            if ((style != NULL) && (style->doc->version != NULL) && (!strncmp(style->doc->version,"1.0",3))) {
+	        xsltTransformError(NULL, style, cur,
+			"xsltParseStylesheetTop: unknown %s element\n",
+			cur->name);
+	        if (style != NULL) style->errors++;
+	    }
+	    else {
+                /* do Forwards-Compatible Processing */
+	        xsltTransformError(NULL, style, cur,
 			"xsltParseStylesheetTop: ignoring unknown %s element\n",
 			cur->name);
-	    if (style != NULL) style->warnings++;
+	        if (style != NULL) style->warnings++;
+            }
 	}
 	cur = cur->next;
     }
