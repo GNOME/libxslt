@@ -1,3 +1,9 @@
+Mon Nov  1 15:57:24 CET 2004 Daniel Veillard <daniel@veillard.com>
+
+	* tests/general/bug-155.*, tests/general/Makefile.am,
+	  tests/docs/bug-155*, tests/docs/Makefile.am: added a test case
+	  provided by Markus Bertheau breaking on libxml2-2.6.15
+
 Fri Oct 29 17:03:26 CEST 2004 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in NEWS doc/*: preparing release of libxslt-1.1.12
