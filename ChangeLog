@@ -1,3 +1,8 @@
+Sat May 31 17:18:21 CEST 2003 Igor Zlatkovic <igor@zlatkovic.com>
+
+	* libxslt/xslt.c: fixed a possible crash when the document
+	  wasn't a proper stylesheet.
+
 Tue May 20 12:14:12 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/variables.c: fixes a 64bits cleanliness issue #113318
