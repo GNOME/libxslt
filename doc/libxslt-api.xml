@@ -265,7 +265,7 @@
      <exports symbol='WITH_XSLT_DEBUG'/>
      <exports symbol='DEBUG_MEMORY'/>
      <exports symbol='DEBUG_MEMORY_LOCATION'/>
-     <exports symbol='WITH_XSLT_DEBUGGER'/>
+     <exports symbol='WITH_DEBUGGER'/>
      <exports symbol='ATTRIBUTE_UNUSED'/>
      <exports symbol='LIBXSLT_PUBLIC'/>
     </file>
@@ -334,11 +334,10 @@
     <macro name='LIBXSLT_VERSION_STRING' file='xsltwin32config'>
       <info>the version number string, 1.2.3 value is &quot;1002003&quot;</info>
     </macro>
+    <macro name='WITH_DEBUGGER' file='xsltconfig'>
+    </macro>
     <macro name='WITH_XSLT_DEBUG' file='xsltwin32config'>
       <info>Activate the compilation of the debug reporting. Speed penalty is insignifiant and being able to run xsltpoc -v is useful. On by default</info>
-    </macro>
-    <macro name='WITH_XSLT_DEBUGGER' file='xsltconfig'>
-      <info>Activate the compilation of the debugger support. Speed penalty is insignifiant. On by default unless --without-debugger is passed to configure</info>
     </macro>
     <const name='XSLT_DEBUG_CONT' file='xsltutils'/>
     <const name='XSLT_DEBUG_INIT' file='xsltutils'/>

@@ -15,7 +15,7 @@
     <reference name='LIBXSLT_VERSION' href='html/libxslt-xsltconfig.html#LIBXSLT-VERSION-CAPS'/>
     <reference name='LIBXSLT_VERSION_STRING' href='html/libxslt-xsltconfig.html#LIBXSLT-VERSION-STRING-CAPS'/>
     <reference name='WITH_XSLT_DEBUG' href='html/libxslt-xsltconfig.html#WITH-XSLT-DEBUG-CAPS'/>
-    <reference name='WITH_XSLT_DEBUGGER' href='html/libxslt-xsltconfig.html#WITH-XSLT-DEBUGGER-CAPS'/>
+    <reference name='WITH_XSLT_DEBUGGER' href='html/libxslt-index.html#WITH-XSLT-DEBUGGER-CAPS'/>
     <reference name='XSLT_DEFAULT_URL' href='html/libxslt-xslt.html#XSLT-DEFAULT-URL-CAPS'/>
     <reference name='XSLT_DEFAULT_VENDOR' href='html/libxslt-xslt.html#XSLT-DEFAULT-VENDOR-CAPS'/>
     <reference name='XSLT_DEFAULT_VERSION' href='html/libxslt-xslt.html#XSLT-DEFAULT-VERSION-CAPS'/>
@@ -1369,7 +1369,7 @@
       <ref name='WITH_XSLT_DEBUG'/>
       <ref name='DEBUG_MEMORY'/>
       <ref name='DEBUG_MEMORY_LOCATION'/>
-      <ref name='WITH_XSLT_DEBUGGER'/>
+      <ref name='WITH_DEBUGGER'/>
       <ref name='ATTRIBUTE_UNUSED'/>
       <ref name='LIBXSLT_PUBLIC'/>
     </file>
