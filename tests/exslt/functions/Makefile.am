@@ -11,7 +11,7 @@ EXTRA_DIST = 						\
 	function.5.out  function.5.xml  function.5.xsl  \
 	function.6.out  function.6.xml  function.6.xsl
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

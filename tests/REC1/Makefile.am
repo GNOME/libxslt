@@ -5,7 +5,7 @@ $(top_builddir)/xsltproc/xsltproc:
 
 EXTRA_DIST = doc.xsl doc.xml doc.dtd result.xml
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

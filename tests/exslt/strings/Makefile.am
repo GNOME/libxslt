@@ -6,7 +6,7 @@ $(top_builddir)/xsltproc/xsltproc:
 EXTRA_DIST = 						\
 	tokenize.1.xml tokenize.1.xsl tokenize.1.out
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

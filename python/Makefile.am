@@ -1,4 +1,4 @@
-# SUBDIRS= . tests
+SUBDIRS= . tests
 
 LIBS=-L../libxslt/.libs -L../libxslt -lxslt -L../libexslt/.libs -L../libexslt -lexslt $(PYTHON_SITE_PACKAGES)/_libxml.so $(LIBXML_LIBS)
 INCLUDES=-I/usr/include/python$(PYTHON_VERSION) -I$(PYTHON_INCLUDES) $(LIBXML_CFLAGS) -I$(top_srcdir)
@@ -61,7 +61,7 @@ GENERATED= $(srcdir)/libxsltclass.py \
 $(GENERATED): $(srcdir)/$(GENERATE) $(API_DESC)
 	cd $(srcdir) && $(PYTHON) $(GENERATE)
 
-tests: all
+tests test: all
 	cd tests && $(MAKE) tests
 
 clean:

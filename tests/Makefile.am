@@ -5,8 +5,11 @@ SUBDIRS=docs REC1 REC2 REC general namespaces numbers documents \
 
 all:
 
-test tests: all docbook_tests
+test tests:
+	@(cur=`pwd` ; for dir in $(SUBDIRS) ; do cd $$dir ; make tests ; cd $$cur ; done)
+
+full: tests docbook_tests
 
 docbook_tests:
-	@(cd docbook ; $(MAKE) tests)
+	@(cd docbook ; $(MAKE) full)
 

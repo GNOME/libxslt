@@ -10,7 +10,7 @@ EXTRA_DIST = bredfort.css index.xml system.xml \
 	     message.xml message.xsl message.result
 
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

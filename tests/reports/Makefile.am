@@ -9,7 +9,7 @@ EXTRA_DIST = \
 	undefvar.xml undefvar.xsl undefvar.out undefvar.err
 
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

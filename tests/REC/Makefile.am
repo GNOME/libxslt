@@ -72,7 +72,7 @@ EXTRA_DIST = 						\
     stand-2.7-1.out  stand-2.7-1.xml
 
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

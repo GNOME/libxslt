@@ -10,7 +10,7 @@ EXTRA_DIST = \
     extra.out extra.xml extra.xsl \
     extra2.out extra2.xml extra2.xsl
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

@@ -50,7 +50,8 @@ check-local: tests
 dummy:
 
 tests: dummy
-	@(cd tests ; $(MAKE) test)
+	@(cd tests ; $(MAKE) tests)
+	@(cd python ; $(MAKE) tests)
 
 cleantar:
 	@(rm -f libxslt*.tar.gz)

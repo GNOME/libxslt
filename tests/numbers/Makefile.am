@@ -5,7 +5,7 @@ $(top_builddir)/xsltproc/xsltproc:
 
 EXTRA_DIST = format-number.xsl format-number.xml format-number.out
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

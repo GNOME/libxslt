@@ -8,7 +8,7 @@ EXTRA_DIST = \
     list.xml list.xsl list.out
 
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

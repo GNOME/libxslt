@@ -50,7 +50,10 @@ EXTRA_DIST = \
 $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
-all: alphabetize attsets avts axis backwards bottles breadth brutal chart \
+all:
+
+tests test: \
+  alphabetize attsets avts axis backwards bottles breadth brutal chart \
   creation current dbonerow dbtail decoy depth encrypt functions game \
   html identity inventory metric number oddtemplate patterns prettyprint \
   priority products queens reverser stringsort summarize total tower trend \

@@ -9,7 +9,7 @@ EXTRA_DIST = 						\
 	node-set.3.xml node-set.3.xsl node-set.3.out	\
 	object-type.1.xml object-type.1.xsl object-type.1.out
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

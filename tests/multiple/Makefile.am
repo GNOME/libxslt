@@ -28,7 +28,7 @@ GENERATED = \
 	out/letterw.html out/letterx.html out/lettery.html out/letterz.html \
 	out/titlepage.html
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

@@ -1,3 +1,12 @@
+Wed Feb  6 11:29:31 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* Makefile.am configure.in tests/Makefile.am tests/*/Makefile.am
+	  tests/*/*/Makefile.am: refactored make tests, make all now don't
+	  run the test suite
+	* python/Makefile.am: added tests
+	* python/tests/basic.py python/tests/Makefile.am: added the first
+	  basic test, memory debug included
+
 Wed Feb  6 00:20:57 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in python/Makefile.am: attempst to tweak to get

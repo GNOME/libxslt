@@ -1,13 +1,15 @@
 ## Process this file with automake to produce Makefile.in
 
-all: single xtchunk # Avoid doing the test in normal pass
+all:
+
+tests: single xtchunk # Avoid doing the test in normal pass
 
 $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
 EXTRA_DIST = README VERSION
 
-tests: htmltests xhtmltests fotests
+full: tests htmltests xhtmltests fotests
 
 #
 # a single tests to check that stuff ain't broken

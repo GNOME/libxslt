@@ -4,4 +4,5 @@ SUBDIRS=common functions math sets strings
 
 all:
 
-test tests: all
+test tests:
+	@(cur=`pwd` ; for dir in $(SUBDIRS) ; do cd $$dir ; make tests ; cd $$cur ; done)

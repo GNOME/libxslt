@@ -80,7 +80,7 @@ EXTRA_DIST = \
     inner.xsl
 
 
-all: test
+all:
 
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@(echo > .memdump)

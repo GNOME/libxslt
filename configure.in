@@ -385,6 +385,7 @@ libexslt/Makefile
 libexslt/exsltconfig.h
 xsltproc/Makefile
 python/Makefile
+python/tests/Makefile
 tests/Makefile
 tests/docs/Makefile
 tests/REC1/Makefile
