@@ -398,7 +398,9 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			    xmlChar *count,
 			    xmlChar *from,
 			    double *array,
-			    int max)
+			    int max,
+			    xmlDocPtr doc,
+			    xmlNodePtr elem)
 {
     int amount = 0;
     int cnt = 0;
@@ -410,11 +412,11 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
     xsltCompMatchPtr fromPat;
 
     if (count != NULL)
-	countPat = xsltCompilePattern(count);
+	countPat = xsltCompilePattern(count, doc, elem);
     else
 	countPat = NULL;
     if (from != NULL)
-	fromPat = xsltCompilePattern(from);
+	fromPat = xsltCompilePattern(from, doc, elem);
     else
 	fromPat = NULL;
     context->xpathCtxt->node = node;
@@ -474,7 +476,9 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 				 xmlChar *count,
 				 xmlChar *from,
 				 double *array,
-				 int max)
+				 int max,
+				 xmlDocPtr doc,
+				 xmlNodePtr elem)
 {
     int amount = 0;
     int cnt;
@@ -485,11 +489,11 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
     xsltCompMatchPtr fromPat;
 
     if (count != NULL)
-	countPat = xsltCompilePattern(count);
+	countPat = xsltCompilePattern(count, doc, elem);
     else
 	countPat = NULL;
     if (from != NULL)
-	fromPat = xsltCompilePattern(from);
+	fromPat = xsltCompilePattern(from, doc, elem);
     else
 	fromPat = NULL;
     context->xpathCtxt->node = node;
@@ -608,7 +612,9 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 						      data->count,
 						      data->from,
 						      &number,
-						      1);
+						      1,
+						      data->doc,
+						      data->node);
 	    if (amount == 1) {
 		xsltNumberFormatInsertNumbers(data,
 					      &number,
@@ -625,7 +631,9 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 						      data->count,
 						      data->from,
 						      numarray,
-						      max);
+						      max,
+						      data->doc,
+						      data->node);
 	    if (amount > 0) {
 		xsltNumberFormatInsertNumbers(data,
 					      numarray,
@@ -640,7 +648,9 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 						 data->count,
 						 data->from,
 						 &number,
-						 1);
+						 1,
+						 data->doc,
+						 data->node);
 	    if (amount > 0) {
 		xsltNumberFormatInsertNumbers(data,
 					      &number,

@@ -165,6 +165,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
 	return(NULL);
     }
     XSLT_REGISTER_VARIABLE_LOOKUP(cur);
+    cur->xpathCtxt->nsHash = style->nsHash;
     docu = xsltNewDocument(cur, doc);
     if (docu == NULL) {
         xsltGenericError(xsltGenericErrorContext,
@@ -189,8 +190,10 @@ void
 xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     if (ctxt == NULL)
 	return;
-    if (ctxt->xpathCtxt != NULL)
+    if (ctxt->xpathCtxt != NULL) {
+	ctxt->xpathCtxt->nsHash = NULL;
 	xmlXPathFreeContext(ctxt->xpathCtxt);
+    }
     if (ctxt->templTab != NULL)
 	xmlFree(ctxt->templTab);
     if (ctxt->varsTab != NULL)
@@ -977,6 +980,8 @@ xsltNumber(xsltTransformContextPtr ctxt,
 
     memset(&numdata, 0, sizeof(numdata));
     
+    numdata.doc = cur->doc;
+    numdata.node = cur;
     numdata.value = xmlGetNsProp(cur, (const xmlChar *)"value", XSLT_NAMESPACE);
     
     prop = xmlGetNsProp(cur, (const xmlChar *)"format", XSLT_NAMESPACE);
@@ -2337,9 +2342,9 @@ xsltApplyStylesheet(xsltStylesheetPtr style, xmlDocPtr doc) {
      */
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
+    xsltEvalGlobalVariables(ctxt);
     ctxt->node = (xmlNodePtr) doc;
     varsPush(ctxt, NULL);
-    xsltEvalGlobalVariables(ctxt);
     xsltProcessOneNode(ctxt, ctxt->node);
     xsltFreeStackElemList(varsPop(ctxt));
 

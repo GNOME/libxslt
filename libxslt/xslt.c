@@ -295,6 +295,8 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
 	xsltFreeStackElemList(sheet->variables);
     if (sheet->stripSpaces != NULL)
 	xmlHashFree(sheet->stripSpaces, NULL);
+    if (sheet->nsHash != NULL) 
+	xmlHashFree(sheet->nsHash, NULL);
 
     if (sheet->method != NULL) xmlFree(sheet->method);
     if (sheet->methodURI != NULL) xmlFree(sheet->methodURI);
@@ -762,6 +764,86 @@ skip_children:
 }
 
 /**
+ * xsltGatherNamespaces:
+ * @style:  the XSLT stylesheet
+ *
+ * Browse the stylesheet and buit the namspace hash table which
+ * will be used for XPath interpretation. If needed do a bit of normalization
+ */
+
+void
+xsltGatherNamespaces(xsltStylesheetPtr style) {
+    xmlNodePtr cur;
+    const xmlChar *URI;
+
+    /* 
+     * TODO: basically if the stylesheet uses the same prefix for different
+     *       patterns, well they may be in problem, hopefully they will get
+     *       a warning first.
+     */
+    cur = xmlDocGetRootElement(style->doc);
+    while (cur != NULL) {
+	if (cur->type == XML_ELEMENT_NODE) {
+	    xmlNsPtr ns = cur->nsDef;
+	    while (ns != NULL) {
+		if (ns->prefix != NULL) {
+		    if (style->nsHash == NULL) {
+			style->nsHash = xmlHashCreate(10);
+			if (style->nsHash == NULL) {
+			    xsltGenericError(xsltGenericErrorContext,
+		 "xsltGatherNamespaces: failed to create hash table\n");
+			    return;
+			}
+		    }
+		    URI = xmlHashLookup(style->nsHash, ns->prefix);
+		    if ((URI != NULL) && (!xmlStrEqual(URI, ns->href))) {
+			xsltGenericError(xsltGenericErrorContext,
+	     "Namespaces prefix %s used for multiple namespaces\n");
+		    } else if (URI == NULL) {
+			xmlHashUpdateEntry(style->nsHash, ns->prefix,
+			    (void *) ns->href, (xmlHashDeallocator)xmlFree);
+
+#ifdef DEBUG_PARSING
+			xsltGenericDebug(xsltGenericDebugContext,
+		 "Added namespace: %s mapped to %s\n", ns->prefix, ns->href);
+#endif
+		    }
+		}
+		ns = ns->next;
+	    }
+	}
+
+	/*
+	 * Skip to next node
+	 */
+	if (cur->children != NULL) {
+	    if (cur->children->type != XML_ENTITY_DECL) {
+		cur = cur->children;
+		continue;
+	    }
+	}
+	if (cur->next != NULL) {
+	    cur = cur->next;
+	    continue;
+	}
+	
+	do {
+	    cur = cur->parent;
+	    if (cur == NULL)
+		break;
+	    if (cur == (xmlNodePtr) style->doc) {
+		cur = NULL;
+		break;
+	    }
+	    if (cur->next != NULL) {
+		cur = cur->next;
+		break;
+	    }
+	} while (cur != NULL);
+    }
+}
+
+/**
  * xsltParseTemplateContent:
  * @style:  the XSLT stylesheet
  * @ret:  the "template" structure
@@ -781,6 +863,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xsltTemplatePtr ret,
      * For stylesheets, the set of whitespace-preserving
      * element names consists of just xsl:text.
      */
+    ret->elem = template;
     cur = template->children;
     delete = NULL;
     while (cur != NULL) {
@@ -1334,6 +1417,7 @@ xsltParseStylesheetDoc(xmlDocPtr doc) {
 	return(NULL);
     
     ret->doc = doc;
+    xsltGatherNamespaces(ret);
     xsltParseStylesheetProcess(ret, doc);
 
     return(ret);

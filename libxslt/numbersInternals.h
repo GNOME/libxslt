@@ -28,6 +28,8 @@ typedef struct _xsltNumberData {
     xmlChar *format;
     int digitsPerGroup;
     xmlChar groupingCharacter;
+    xmlDocPtr doc;
+    xmlNodePtr node;
 } xsltNumberData, *xsltNumberDataPtr;
 
 xmlXPathError xsltFormatNumberConversion(xsltDecimalFormatPtr, xmlChar *,

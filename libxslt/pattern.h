@@ -25,7 +25,9 @@ typedef xsltCompMatch *xsltCompMatchPtr;
  * Pattern related interfaces
  */
 
-xsltCompMatchPtr xsltCompilePattern	(const xmlChar *pattern);
+xsltCompMatchPtr xsltCompilePattern	(const xmlChar *pattern,
+					 xmlDocPtr doc,
+					 xmlNodePtr node);
 void		 xsltFreeCompMatchList	(xsltCompMatchPtr comp);
 int		 xsltTestCompMatchList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
@@ -42,10 +44,11 @@ xsltTemplatePtr	xsltGetTemplate		(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xsltStylesheetPtr style);
 void		xsltFreeTemplateHashes	(xsltStylesheetPtr style);
+#if 0
 int		xsltMatchPattern	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 const xmlChar *pattern);
-
+#endif
 #ifdef __cplusplus
 }
 #endif

@@ -53,12 +53,13 @@ struct _xsltTemplate {
     struct _xsltTemplate *next;/* chained list sorted by priority */
     struct _xsltStylesheet *style;/* the containing stylesheet */
     xmlChar *match;	/* the matching string */
-    int priority;	/* as given from the stylesheet, not computed */
+    float priority;	/* as given from the stylesheet, not computed */
     xmlChar *name;	/* the local part of the name QName */
     xmlChar *nameURI;	/* the URI part of the name QName */
     xmlChar *mode;	/* the local part of the mode QName */
     xmlChar *modeURI;	/* the URI part of the mode QName */
     xmlNodePtr content;	/* the template replacement value */
+    xmlNodePtr elem;	/* the source element */
 };
 
 /*
@@ -148,6 +149,11 @@ struct _xsltStylesheet {
      * Attribute sets
      */
     xmlHashTablePtr attributeSets;/* the attribute sets hash tables */
+
+    /*
+     * Attribute sets
+     */
+    xmlHashTablePtr nsHash;     /* the set of namespaces in use */
 
     /*
      * Key definitions
