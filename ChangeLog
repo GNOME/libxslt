@@ -1,3 +1,8 @@
+Sun Jul  6 18:09:13 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c: fix bug #115778 for attribute value template
+	  on xsl:sort order
+
 Sun Jul  6 17:22:35 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/documents.c libxslt/transform.c: applied patch from

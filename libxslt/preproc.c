@@ -337,7 +337,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     comp->case_order = xsltEvalStaticAttrValueTemplate(style, inst,
 			      (const xmlChar *)"case-order",
-			      XSLT_NAMESPACE, &comp->has_order);
+			      XSLT_NAMESPACE, &comp->has_use);
     if (comp->case_order != NULL) {
 	if (xmlStrEqual(comp->case_order, (const xmlChar *) "upper-first"))
 	    comp->lower_first = 0;
