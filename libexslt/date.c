@@ -123,9 +123,9 @@ static const int dayInLeapYearByMonth[12] =
 	{ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
 
 #define DAY_IN_YEAR(day, month, year)				\
-	(IS_LEAP(year) ?					\
-		dayInLeapYearByMonth[month - 1] :		\
-		dayInYearByMonth[month - 1])
+        ((IS_LEAP(year) ?					\
+                dayInLeapYearByMonth[month - 1] :		\
+                dayInYearByMonth[month - 1]) + day)
 
 #define DAY_IN_WEEK(yday, yr)					\
 	(((yr-1)+((yr-1)/4)-((yr-1)/100)+((yr-1)/400)+yday) % 7)
@@ -1274,6 +1274,62 @@ exsltDateWeekInYear (const xmlChar *dateTime) {
 }
 
 /**
+ * exsltDateWeekInMonth:
+ * @dateTime: a date/time string
+ *
+ * Implements the EXSLT - Dates and Times week-in-month() function
+ *    number date:week-in-month (string?)
+ * The date:week-in-month function returns the week in a month of a
+ * date as a number. If no argument is given, then the current local
+ * date/time, as returned by date:date-time is used the default
+ * argument. For the purposes of numbering, the first day of the month
+ * is in week 1 and new weeks begin on a Monday (so the first and last
+ * weeks in a month will often have less than 7 days in them).
+ * The date/time string specified as the argument is a right-truncated
+ * string in the format defined as the lexical representation of
+ * xs:dateTime in one of the formats defined in [XML Schema Part 2:
+ * Datatypes].  The permitted formats are as follows:
+ *  - xs:dateTime (CCYY-MM-DDThh:mm:ss)
+ *  - xs:date (CCYY-MM-DD)
+ * If the date/time string is not in one of these formats, then NaN is
+ * returned.
+ */
+static double
+exsltDateWeekInMonth (const xmlChar *dateTime) {
+    exsltDatePtr dt;
+    int fdiy, fdiw, ret;
+
+    if (dateTime == NULL) {
+#ifdef WITH_TIME
+	dt = exsltDateCurrent();
+	if (dt == NULL)
+#endif
+	    return xmlXPathNAN;
+    } else {
+	dt = exsltDateParse(dateTime);
+	if (dt == NULL)
+	    return xmlXPathNAN;
+	if ((dt->type != XS_DATETIME) && (dt->type != XS_DATE)) {
+	    exsltDateFreeDate(dt);
+	    return xmlXPathNAN;
+	}
+    }
+
+    fdiy = DAY_IN_YEAR(1, dt->mon, dt->year);
+    /* 0=Mon, 1=Tue, etc. */
+    fdiw = DAY_IN_WEEK(fdiy, dt->year);
+
+    /* adjust the fdiw value so that Sunday is last-day-in-week */
+    fdiw = (fdiw != 0 ? (fdiw - 1) : 6);
+
+    ret = ((dt->day + fdiw) / 7) + 1;
+
+    exsltDateFreeDate(dt);
+
+    return (double) ret;
+}
+
+/**
  * exsltDateDayInYear:
  * @dateTime: a date/time string
  *
@@ -1419,8 +1475,8 @@ exsltDateDayOfWeekInMonth (const xmlChar *dateTime) {
  * exsltDateDayInWeek:
  * @dateTime: a date/time string
  *
- * Implements the EXSLT - Dates and Times day-in-month() function:
- *    number date:day-in-month (string?)
+ * Implements the EXSLT - Dates and Times day-in-week() function:
+ *    number date:day-in-week (string?)
  * Returns the day of the week given in a date as a number.  If no
  * argument is given, then the current local date/time, as returned by
  * date:date-time is used the default argument.
@@ -1971,6 +2027,15 @@ exsltDateMonthAbbreviationFunction (xmlXPathParserContextPtr ctxt,
 X_IN_Y(Week,Year)
 
 /**
+ * exsltDateWeekInMonthFunction:
+ * @ctxt: an XPath parser context
+ * @nargs : the number of arguments
+ *
+ * Wraps #exsltDateWeekInMonthYear for use by the XPath engine
+ */
+X_IN_Y(Week,Month)
+
+/**
  * exsltDateDayInYearFunction:
  * @ctxt: an XPath parser context
  * @nargs : the number of arguments
@@ -2145,6 +2210,9 @@ exsltDateRegister(void)
     xsltRegisterExtModuleFunction((const xmlChar *) "week-in-year",
 			  (const xmlChar *) EXSLT_DATE_NAMESPACE,
 			  exsltDateWeekInYearFunction);
+    xsltRegisterExtModuleFunction((const xmlChar *) "week-in-month",
+			  (const xmlChar *) EXSLT_DATE_NAMESPACE,
+			  exsltDateWeekInMonthFunction);
     xsltRegisterExtModuleFunction((const xmlChar *) "day-in-year",
 			  (const xmlChar *) EXSLT_DATE_NAMESPACE,
 			  exsltDateDayInYearFunction);
