@@ -121,7 +121,7 @@ NAME="LIBXSLT-KEYS"
 ><DIV
 CLASS="REFNAMEDIV"
 ><A
-NAME="AEN2013"
+NAME="AEN2307"
 ></A
 ><H2
 >Name</H2
@@ -129,7 +129,7 @@ NAME="AEN2013"
 ><DIV
 CLASS="REFSYNOPSISDIV"
 ><A
-NAME="AEN2016"
+NAME="AEN2310"
 ></A
 ><H2
 >Synopsis</H2
@@ -147,9 +147,9 @@ CLASS="SYNOPSIS"
 int         <A
 HREF="libxslt-keys.html#XSLTADDKEY"
 >xsltAddKey</A
->                      (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
+>                      (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 > style,
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
@@ -195,21 +195,25 @@ HREF="libxslt-keys.html#XSLTINITCTXTKEYS"
 >                (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt);
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XSLTDOCUMENTPTR"
+>xsltDocumentPtr</GTKDOCLINK
+> doc);
 void        <A
 HREF="libxslt-keys.html#XSLTFREEKEYS"
 >xsltFreeKeys</A
->                    (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
+>                    (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 > style);
 void        <A
-HREF="libxslt-keys.html#XSLTFREECTXTKEYS"
->xsltFreeCtxtKeys</A
->                (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt);</PRE
+HREF="libxslt-keys.html#XSLTFREEDOCUMENTKEYS"
+>xsltFreeDocumentKeys</A
+>            (<GTKDOCLINK
+HREF="XSLTDOCUMENTPTR"
+>xsltDocumentPtr</GTKDOCLINK
+> doc);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -217,7 +221,7 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2037"
+NAME="AEN2332"
 ></A
 ><H2
 >Description</H2
@@ -227,14 +231,14 @@ NAME="AEN2037"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN2040"
+NAME="AEN2335"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2042"
+NAME="AEN2337"
 ></A
 ><H3
 ><A
@@ -250,9 +254,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->int         xsltAddKey                      (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
+>int         xsltAddKey                      (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 > style,
                                              const <GTKDOCLINK
 HREF="XMLCHAR"
@@ -396,7 +400,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2082"
+NAME="AEN2377"
 ></A
 ><H3
 ><A
@@ -540,7 +544,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2118"
+NAME="AEN2413"
 ></A
 ><H3
 ><A
@@ -559,7 +563,11 @@ CLASS="PROGRAMLISTING"
 >void        xsltInitCtxtKeys                (<A
 HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
 >xsltTransformContextPtr</A
-> ctxt);</PRE
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XSLTDOCUMENTPTR"
+>xsltDocumentPtr</GTKDOCLINK
+> doc);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -594,7 +602,24 @@ CLASS="PARAMETER"
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
-> an XSLT transformation context</TD
+>  an XSLT transformation context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>doc</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT document</TD
 ></TR
 ></TABLE
 ><P
@@ -604,7 +629,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2134"
+NAME="AEN2434"
 ></A
 ><H3
 ><A
@@ -620,9 +645,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltFreeKeys                    (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
+>void        xsltFreeKeys                    (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 > style);</PRE
 ></TD
 ></TR
@@ -667,13 +692,13 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN2150"
+NAME="AEN2450"
 ></A
 ><H3
 ><A
-NAME="XSLTFREECTXTKEYS"
+NAME="XSLTFREEDOCUMENTKEYS"
 ></A
->xsltFreeCtxtKeys ()</H3
+>xsltFreeDocumentKeys ()</H3
 ><TABLE
 BORDER="0"
 BGCOLOR="#D6E8FF"
@@ -683,15 +708,13 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltFreeCtxtKeys                (<A
-HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
->xsltTransformContextPtr</A
-> ctxt);</PRE
+>void        xsltFreeDocumentKeys            (<GTKDOCLINK
+HREF="XSLTDOCUMENTPTR"
+>xsltDocumentPtr</GTKDOCLINK
+> doc);</PRE
 ></TD
 ></TR
 ></TABLE
-><P
->Free up all the space used by the key tables</P
 ><P
 ></P
 ><DIV
@@ -713,14 +736,14 @@ VALIGN="TOP"
 ><TT
 CLASS="PARAMETER"
 ><I
->ctxt</I
+>doc</I
 ></TT
 >&nbsp;:</TD
 ><TD
 WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
-> an XSLT transformation context</TD
+>&#13;</TD
 ></TR
 ></TABLE
 ><P

@@ -1,3 +1,8 @@
+Thu Feb 15 17:40:28 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxlst/functions.c: fixed ID generation
+	* doc/xslt.html doc/html/*.html: updated/regenerated the doc
+
 Thu Feb 15 13:34:42 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/numbers.c: removed a couple of memleaks

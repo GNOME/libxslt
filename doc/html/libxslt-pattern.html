@@ -144,12 +144,52 @@ CELLPADDING="6"
 CLASS="SYNOPSIS"
 >&#13;
 
+struct      <A
+HREF="libxslt-pattern.html#XSLTCOMPMATCH"
+>xsltCompMatch</A
+>;
+typedef     <A
+HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
+>xsltCompMatchPtr</A
+>;
+<A
+HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
+>xsltCompMatchPtr</A
+> <A
+HREF="libxslt-pattern.html#XSLTCOMPILEPATTERN"
+>xsltCompilePattern</A
+>         (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *pattern);
+void        <A
+HREF="libxslt-pattern.html#XSLTFREECOMPMATCHLIST"
+>xsltFreeCompMatchList</A
+>           (<A
+HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
+>xsltCompMatchPtr</A
+> comp);
+int         <A
+HREF="libxslt-pattern.html#XSLTTESTCOMPMATCHLIST"
+>xsltTestCompMatchList</A
+>           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             <A
+HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
+>xsltCompMatchPtr</A
+> comp);
 int         <A
 HREF="libxslt-pattern.html#XSLTADDTEMPLATE"
 >xsltAddTemplate</A
->                 (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
+>                 (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 > style,
                                              <A
 HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
@@ -176,14 +216,33 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node);
+> node,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style);
 void        <A
 HREF="libxslt-pattern.html#XSLTFREETEMPLATEHASHES"
 >xsltFreeTemplateHashes</A
->          (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
-> style);</PRE
+>          (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style);
+int         <A
+HREF="libxslt-pattern.html#XSLTMATCHPATTERN"
+>xsltMatchPattern</A
+>                (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *pattern);</PRE
 ></TD
 ></TR
 ></TABLE
@@ -191,7 +250,7 @@ HREF="XSLTSTYLESHEETPTR"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN327"
+NAME="AEN343"
 ></A
 ><H2
 >Description</H2
@@ -201,14 +260,338 @@ NAME="AEN327"
 ><DIV
 CLASS="REFSECT1"
 ><A
-NAME="AEN330"
+NAME="AEN346"
 ></A
 ><H2
 >Details</H2
 ><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN332"
+NAME="AEN348"
+></A
+><H3
+><A
+NAME="XSLTCOMPMATCH"
+></A
+>struct xsltCompMatch</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>struct xsltCompMatch;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN353"
+></A
+><H3
+><A
+NAME="XSLTCOMPMATCHPTR"
+></A
+>xsltCompMatchPtr</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef xsltCompMatch *xsltCompMatchPtr;</PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN358"
+></A
+><H3
+><A
+NAME="XSLTCOMPILEPATTERN"
+></A
+>xsltCompilePattern ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+><A
+HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
+>xsltCompMatchPtr</A
+> xsltCompilePattern         (const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *pattern);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Compile the XSLT pattern and generates a list of precompiled form suitable
+for fast matching.</P
+><P
+>[1] Pattern ::= LocationPathPattern | Pattern '|' LocationPathPattern</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>pattern</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>the generated pattern list or NULL in case of failure</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN380"
+></A
+><H3
+><A
+NAME="XSLTFREECOMPMATCHLIST"
+></A
+>xsltFreeCompMatchList ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>void        xsltFreeCompMatchList           (<A
+HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
+>xsltCompMatchPtr</A
+> comp);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Free up the memory allocated by all the elements of <TT
+CLASS="PARAMETER"
+><I
+>comp</I
+></TT
+></P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>comp</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  an XSLT comp list</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN397"
+></A
+><H3
+><A
+NAME="XSLTTESTCOMPMATCHLIST"
+></A
+>xsltTestCompMatchList ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltTestCompMatchList           (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             <A
+HREF="libxslt-pattern.html#XSLTCOMPMATCHPTR"
+>xsltCompMatchPtr</A
+> comp);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Test wether the node matches one of the patterns in the list</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  a XSLT process context</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> a node</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>comp</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> the precompiled pattern list</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>1 if it matches, 0 if it doesn't and -1 in case of failure</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN427"
 ></A
 ><H3
 ><A
@@ -224,9 +607,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->int         xsltAddTemplate                 (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
+>int         xsltAddTemplate                 (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 > style,
                                              <A
 HREF="libxslt-xsltinternals.html#XSLTTEMPLATEPTR"
@@ -354,7 +737,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN368"
+NAME="AEN463"
 ></A
 ><H3
 ><A
@@ -380,12 +763,22 @@ HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
                                              <GTKDOCLINK
 HREF="XMLNODEPTR"
 >xmlNodePtr</GTKDOCLINK
-> node);</PRE
+> node,
+                                             <A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
+> style);</PRE
 ></TD
 ></TR
 ></TABLE
 ><P
->Finds the template applying to this node</P
+>Finds the template applying to this node, if <TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+> is non-NULL
+it means one need to look for the next imported template in scope.</P
 ><P
 ></P
 ><DIV
@@ -438,6 +831,23 @@ VALIGN="TOP"
 WIDTH="20%"
 ALIGN="RIGHT"
 VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>style</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>  the current style</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
 ><I
 CLASS="EMPHASIS"
 >Returns</I
@@ -456,7 +866,7 @@ VALIGN="TOP"
 ><HR><DIV
 CLASS="REFSECT2"
 ><A
-NAME="AEN394"
+NAME="AEN495"
 ></A
 ><H3
 ><A
@@ -472,9 +882,9 @@ CELLPADDING="6"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->void        xsltFreeTemplateHashes          (<GTKDOCLINK
-HREF="XSLTSTYLESHEETPTR"
->xsltStylesheetPtr</GTKDOCLINK
+>void        xsltFreeTemplateHashes          (<A
+HREF="libxslt-xsltinternals.html#XSLTSTYLESHEETPTR"
+>xsltStylesheetPtr</A
 > style);</PRE
 ></TD
 ></TR
@@ -510,6 +920,126 @@ WIDTH="80%"
 ALIGN="LEFT"
 VALIGN="TOP"
 > an XSLT stylesheet</TD
+></TR
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN511"
+></A
+><H3
+><A
+NAME="XSLTMATCHPATTERN"
+></A
+>xsltMatchPattern ()</H3
+><TABLE
+BORDER="0"
+BGCOLOR="#D6E8FF"
+WIDTH="100%"
+CELLPADDING="6"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int         xsltMatchPattern                (<A
+HREF="libxslt-xsltinternals.html#XSLTTRANSFORMCONTEXTPTR"
+>xsltTransformContextPtr</A
+> ctxt,
+                                             <GTKDOCLINK
+HREF="XMLNODEPTR"
+>xmlNodePtr</GTKDOCLINK
+> node,
+                                             const <GTKDOCLINK
+HREF="XMLCHAR"
+>xmlChar</GTKDOCLINK
+> *pattern);</PRE
+></TD
+></TR
+></TABLE
+><P
+>Determine if a node matches a pattern.</P
+><P
+></P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><TABLE
+BORDER="0"
+WIDTH="100%"
+BGCOLOR="#FFD0D0"
+CELLSPACING="0"
+CELLPADDING="4"
+CLASS="CALSTABLE"
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>ctxt</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>node</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> a node in the source tree</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><TT
+CLASS="PARAMETER"
+><I
+>pattern</I
+></TT
+>&nbsp;:</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+> an XSLT pattern</TD
+></TR
+><TR
+><TD
+WIDTH="20%"
+ALIGN="RIGHT"
+VALIGN="TOP"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+> :</TD
+><TD
+WIDTH="80%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&#13;</TD
 ></TR
 ></TABLE
 ><P

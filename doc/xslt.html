@@ -144,6 +144,25 @@ platform, get in touch with me to upload the package. I will keep them in the
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
 
+<p>0.2.0: Feb 15 2000</p>
+<ul>
+  <li>second beta version, released at the same time as libxml2-2.3.1</li>
+  <li>getting close to feature completion, lot of bug fixes, some in the HTML
+    and XPath support of libxml</li>
+  <li>start becoming usable for real work. This version can now regenerate the
+    XML 2e HTML from the original XML sources and the associated stylesheets
+    (in <a href="http://www.w3.org/TR/REC-xml#b4d250b6c21">section I of the
+    XML REC</a>)</li>
+  <li>Still misses extension element/function/prefixes support. Support of
+    key() and document() is not complete</li>
+</ul>
+
+<h3>0.1.0: Feb 8 2000</h3>
+<ul>
+  <li>first beta version, released at the same time as libxml2-2.3.0</li>
+  <li>lots of bug fixes, first "testing" version, but incomplete</li>
+</ul>
+
 <h3>0.0.1: Jan 25 2000</h3>
 <ul>
   <li>first alpha version released at the same time as libxml2-2.2.12</li>
@@ -162,7 +181,28 @@ the processing is redirected on the standard output.</p>
 
 <p>@@TODO</p>
 
+<p>check the<a href="libxslt-lib.html"> generated pages</a> and the source of
+xsltproc.c, basically done in a few steps:</p>
+<ol>
+  <li>configure the parser for XSLT:
+    <p>xmlSubstituteEntitiesDefault(1);</p>
+    <p>xmlLoadExtDtdDefaultValue = 1; </p>
+  </li>
+  <li>parse the stylesheet with xsltParseStylesheetFile()</li>
+  <li>parse the document with xmlParseFile()</li>
+  <li>apply the stylesheet using xsltApplyStylesheet()</li>
+  <li>save the result using xsltSaveResultToFile() if needed set
+    xmlIndentTreeOutput to 1</li>
+</ol>
+
+<p>Steps 2,3, and 5 will probably need to be changed depending on you
+processing needs and environment for example if reading/saving from/to
+memory</p>
+
 <h2><a name="Contributi">Contributions</a></h2>
+<ul>
+  <li>Bjorn Reese is the author of the number support</li>
+</ul>
 
 <p></p>
 
