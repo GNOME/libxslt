@@ -139,6 +139,10 @@ void 		xsltForEach		(xsltTransformContextPtr ctxt,
 					 xsltStylePreCompPtr comp);
 void		xsltRegisterAllElement	(xsltTransformContextPtr ctxt);
 
+xmlNodePtr	xsltCopyTextString	(xsltTransformContextPtr ctxt,
+					 xmlNodePtr target,
+					 const xmlChar *string,
+					 int noescape);
 /*
  * Hook for the debugger if activated.
  */

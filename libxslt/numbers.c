@@ -619,7 +619,6 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 		 xmlNodePtr node)
 {
     xmlBufferPtr output = NULL;
-    xmlNodePtr copy = NULL;
     int amount, i;
     double number;
     xsltFormat tokens;
@@ -711,10 +710,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 	}
     }
     /* Insert number as text node */
-    copy = xmlNewText(xmlBufferContent(output));
-    if (copy != NULL) {
-	xmlAddChild(ctxt->insert, copy);
-    }
+    xsltCopyTextString(ctxt, ctxt->insert, xmlBufferContent(output), 0);
 
     if (tokens.start != NULL)
 	xmlFree(tokens.start);

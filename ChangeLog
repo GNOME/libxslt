@@ -1,3 +1,10 @@
+Wed Jul 16 10:46:35 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/numbers.c libxslt/transform.c libxslt/transform.h
+	  libxslt/xsltInternals.h: optimize text node coalescing by 
+	  caching info about the last text node generated and doing
+	  fast alloc/copy of the text. Should fix #115273
+
 Mon Jul 14 13:00:00 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* fixed bug 113520, incorrect result for date:seconds
@@ -5,7 +12,7 @@ Mon Jul 14 13:00:00 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 Sat Jul 12 20:35:28 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
-	* fixed bug 114764, trouble with globals and RVT's
+	* fixed bug 114764: trouble with globals and RVT's
 	  with minor changes in variables.c and transform.c
 	  so that any global instantiated with an RVT gets
 	  uninitialized when the RVT is destroyed.

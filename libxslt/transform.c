@@ -478,6 +478,57 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt,
                         xmlNodePtr node, xmlNodePtr insert, int literal);
 
 /**
+ * xsltAddTextString:
+ * @ctxt:  a XSLT process context
+ * @target:  the text node where the text will be attached
+ * @string:  the text string
+ * @len:  the string length in byte
+ *
+ * Extend the current text node with the new string, it handle coalescing
+ *
+ * Returns: the text node
+ */
+static xmlNodePtr
+xsltAddTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
+		  const xmlChar *string, int len) {
+    /*
+     * optimization
+     */
+    if ((len <= 0) || (string == NULL) || (target == NULL))
+        return(target);
+
+    if (ctxt->lasttext == target->content) {
+
+	if (ctxt->lasttuse + len >= ctxt->lasttsize) {
+	    xmlChar *newbuf;
+	    int size;
+
+	    size = ctxt->lasttsize + len + 100;
+	    size *= 2;
+	    newbuf = (xmlChar *) xmlRealloc(target->content,size);
+	    if (newbuf == NULL) {
+		xsltTransformError(ctxt, NULL, target,
+		 "xsltCopyText: text allocation failed\n");
+		return(NULL);
+	    }
+	    ctxt->lasttsize = size;
+	    ctxt->lasttext = newbuf;
+	    target->content = newbuf;
+	}
+	memcpy(&(target->content[ctxt->lasttuse]), string, len);
+	ctxt->lasttuse += len;
+	target->content[ctxt->lasttuse] = 0;
+    } else {
+	xmlNodeAddContent(target, string);
+	ctxt->lasttext = target->content;
+	len = xmlStrlen(target->content);
+	ctxt->lasttsize = len;
+	ctxt->lasttuse = len;
+    }
+    return(target);
+}
+
+/**
  * xsltCopyTextString:
  * @ctxt:  a XSLT process context
  * @target:  the element where the text will be attached
@@ -488,10 +539,11 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt,
  *
  * Returns: a new xmlNodePtr, or NULL in case of error.
  */
-static xmlNodePtr
+xmlNodePtr
 xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
-	     const xmlChar *string, int noescape) {
+	           const xmlChar *string, int noescape) {
     xmlNodePtr copy;
+    int len;
 
     if (string == NULL)
 	return(NULL);
@@ -503,6 +555,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 #endif
 
     /* handle coalescing of text nodes here */
+    len = xmlStrlen(string);
     if ((ctxt->type == XSLT_OUTPUT_XML) &&
 	(ctxt->style->cdataSection != NULL) &&
 	(target != NULL) &&
@@ -510,35 +563,35 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 		       target->name) != NULL)) {
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_CDATA_SECTION_NODE)) {
-	    xmlNodeAddContent(target->last, string);
-	    return(target->last);
+	    return(xsltAddTextString(ctxt, target->last, string, len));
 	}
-	copy = xmlNewCDataBlock(ctxt->output, string,
-				xmlStrlen(string));
+	copy = xmlNewCDataBlock(ctxt->output, string, len);
     } else if (noescape) {
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
 	    (target->last->name == xmlStringTextNoenc)) {
-	    xmlNodeAddContent(target->last, string);
-	    return(target->last);
+	    return(xsltAddTextString(ctxt, target->last, string, len));
 	}
-	copy = xmlNewText(string);
+	copy = xmlNewTextLen(string, len);
 	copy->name = xmlStringTextNoenc;
     } else {
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
 	    (target->last->name == xmlStringText)) {
-	    xmlNodeAddContent(target->last, string);
-	    return(target->last);
+	    return(xsltAddTextString(ctxt, target->last, string, len));
 	}
-	copy = xmlNewText(string);
+	copy = xmlNewTextLen(string, len);
     }
     if (copy != NULL) {
 	if (target != NULL)
 	    xmlAddChild(target, copy);
+	ctxt->lasttext = copy->content;
+	ctxt->lasttsize = len;
+	ctxt->lasttuse = len;
     } else {
 	xsltTransformError(ctxt, NULL, target,
 			 "xsltCopyTextString: text copy failed\n");
+	ctxt->lasttext = NULL;
     }
     return(copy);
 }
@@ -579,7 +632,6 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 			 cur->content);
 #endif
 
-    /* TODO: handle coalescing of text nodes here */
     if ((ctxt->type == XSLT_OUTPUT_XML) &&
 	(ctxt->style->cdataSection != NULL) &&
 	(target != NULL) &&
@@ -587,17 +639,23 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 		       target->name) != NULL)) {
 	copy = xmlNewCDataBlock(ctxt->output, cur->content,
 				xmlStrlen(cur->content));
+	ctxt->lasttext = NULL;
     } else {
+        unsigned int len;
+
+	len = xmlStrlen(cur->content);
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
 	    (target->last->name == xmlStringText) &&
 	    (cur->name != xmlStringTextNoenc)) {
-	    xmlNodeAddContent(target->last, cur->content);
-	    return(target->last);
+	    return(xsltAddTextString(ctxt, target->last, cur->content, len));
 	}
-	copy = xmlNewText(cur->content);
+	copy = xmlNewTextLen(cur->content, len);
 	if (cur->name == xmlStringTextNoenc)
 	    copy->name = xmlStringTextNoenc;
+	ctxt->lasttext = copy->content;
+	ctxt->lasttsize = len;
+	ctxt->lasttuse = len;
     }
     if (copy != NULL) {
 	if (target != NULL)
@@ -1021,10 +1079,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	     "xsltDefaultProcessOneNode: copy CDATA %s\n",
 		node->content);
 #endif
-	    copy = xmlNewDocText(ctxt->output, node->content);
-	    if (copy != NULL) {
-		xmlAddChild(ctxt->insert, copy);
-	    } else {
+	    copy = xsltCopyText(ctxt, ctxt->insert, node);
+	    if (copy == NULL) {
 		xsltTransformError(ctxt, NULL, node,
 		 "xsltDefaultProcessOneNode: cdata copy failed\n");
 	    }
@@ -1039,10 +1095,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		 "xsltDefaultProcessOneNode: copy text %s\n",
 			node->content);
 #endif
-	    copy = xmlCopyNode(node, 0);
-	    if (copy != NULL) {
-		xmlAddChild(ctxt->insert, copy);
-	    } else {
+	    copy = xsltCopyText(ctxt, ctxt->insert, node);
+	    if (copy == NULL) {
 		xsltTransformError(ctxt, NULL, node,
 		 "xsltDefaultProcessOneNode: text copy failed\n");
 	    }
@@ -1170,10 +1224,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		     "xsltDefaultProcessOneNode: copy CDATA %s\n",
 				     cur->content);
 #endif
-		    copy = xmlNewDocText(ctxt->output, cur->content);
-		    if (copy != NULL) {
-			xmlAddChild(ctxt->insert, copy);
-		    } else {
+		    copy = xsltCopyText(ctxt, ctxt->insert, cur);
+		    if (copy == NULL) {
 			xsltTransformError(ctxt, NULL, cur,
 			    "xsltDefaultProcessOneNode: cdata copy failed\n");
 		    }
@@ -1201,10 +1253,8 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 		     "xsltDefaultProcessOneNode: copy text %s\n",
 					 cur->content);
 #endif
-		    copy = xmlCopyNode(cur, 0);
-		    if (copy != NULL) {
-			xmlAddChild(ctxt->insert, copy);
-		    } else {
+		    copy = xsltCopyText(ctxt, ctxt->insert, cur);
+		    if (copy == NULL) {
 			xsltTransformError(ctxt, NULL, cur,
 			    "xsltDefaultProcessOneNode: text copy failed\n");
 		    }

@@ -505,6 +505,13 @@ struct _xsltTransformContext {
     xmlDocPtr       tmpRVT;		/* list of RVT without persistance */
     xmlDocPtr       persistRVT;		/* list of persistant RVTs */
     int             ctxtflags;          /* context processing flags */
+
+    /*
+     * Speed optimization when coalescing text nodes
+     */
+    const xmlChar  *lasttext;		/* last text node content */
+    unsigned int    lasttsize;		/* last text node size */
+    unsigned int    lasttuse;		/* last text node use */
 };
 
 /**
