@@ -1,3 +1,10 @@
+Tue Jan 13 00:33:50 HKT 2004 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: changed to assure comment which
+	  preceeds root node is output after DTD (Bug 130433)
+	* test/exslt/common/node-set.4.*: added test case for
+	  Bug 130922
+
 Mon Jan 12 12:51:45 HKT 2004 William Brack <wbrack@mmm.com.hk>
 
 	* doc/site.xsl: Changed logo spacing to avoid stacking

@@ -3855,7 +3855,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 {
     xmlDocPtr res = NULL;
     xsltTransformContextPtr ctxt = NULL;
-    xmlNodePtr root;
+    xmlNodePtr root, node;
     const xmlChar *method;
     const xmlChar *doctypePublic;
     const xmlChar *doctypeSystem;
@@ -4068,11 +4068,17 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
         }
         if (ctxt->type == XSLT_OUTPUT_XML) {
             XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
-                XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
-                if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+            XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
+            if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
+		/* Need a small "hack" here to assure DTD comes before
+		   possible comment nodes */
+		node = res->children;
+		res->children = NULL;
                 res->intSubset = xmlCreateIntSubset(res, root->name,
                                                     doctypePublic,
                                                     doctypeSystem);
+		res->children->next = node;
+	    }
         }
     }
     xmlXPathFreeNodeSet(ctxt->nodeList);
