@@ -2328,7 +2328,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		xsltGenericDebug(xsltGenericDebugContext,
 				 "xsltCopy: namespace declaration\n");
 #endif
-                xsltCopyNamespace(ctxt, ctxt->insert, node);
+                xsltCopyNamespace(ctxt, ctxt->insert, (xmlNsPtr) node);
 		break;
 	    default:
 		break;

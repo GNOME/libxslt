@@ -1,3 +1,10 @@
+Thu Jul 10 15:47:33 CEST 2003 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: simple cast missing Peter Breitenlohner
+	* breakpoint/Makefile.am: added deps to libxslt
+	* tests/exslt/common/Makefile.am: integrated William Brack test
+	  in the regression suite
+
 Wed Jul  9 21:27:43 HKT 2003 William Brack <wbrack@mmm.com.hk>
 
 	* fixed bug 114812, trouble with imported exslt functions

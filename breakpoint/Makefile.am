@@ -6,7 +6,7 @@ libxsltbreakpoint_la_SOURCES = 	\
 	deprecated.c
 
 libxsltbreakpoint_la_LIBADD =
-libxsltbreakpoint_la_LDFLAGS = -version-info @LIBXSLTBREAK_VERSION_INFO@
+libxsltbreakpoint_la_LDFLAGS = -version-info @LIBXSLTBREAK_VERSION_INFO@ $(top_builddir)/libxslt/libxslt.la
 
 clean:
 	rm -f *.lo
