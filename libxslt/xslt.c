@@ -1983,12 +1983,14 @@ xsltParseStylesheetImportedDoc(xmlDocPtr doc) {
 	xsltFreeStylesheet(ret);
 	ret = NULL;
     }
-    if (ret->errors != 0) {
-	ret->doc = NULL;
-	xsltFreeStylesheet(ret);
-	ret = NULL;
+    if (ret != NULL) {
+	if (ret->errors != 0) {
+	    ret->doc = NULL;
+	    xsltFreeStylesheet(ret);
+	    ret = NULL;
+	}
     }
-
+    
     return(ret);
 }
 
