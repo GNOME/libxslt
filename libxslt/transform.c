@@ -928,6 +928,8 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    copy = xmlNewText(cur->content);
 	    if (copy != NULL) {
+		if (cur->name == xmlStringTextNoenc)
+		    copy->name = xmlStringTextNoenc;
 		xmlAddChild(insert, copy);
 	    } else {
 		xsltGenericError(xsltGenericErrorContext,

@@ -1,3 +1,14 @@
+Sun Apr 22 22:46:03 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* transform.c: fixed a bug introduced on handling #53401
+
+Sun Apr 22 22:27:09 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* transform.c: fixed #53401
+	* configure.in libxslt/*.c: allowed to suppress debug reporting
+	  functionalities but it brings not noticeable improvements
+	* doc/xslt.html doc/html/*: updated and regenerated docs
+
 Wed Apr 18 15:24:50 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/general/bug-5-.out tests/multiple/out/*.orig
