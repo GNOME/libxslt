@@ -1751,12 +1751,10 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
             if (tmp == root) {
                 ctxt->type = XSLT_OUTPUT_HTML;
                 res->type = XML_HTML_DOCUMENT_NODE;
-                if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+                if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
                     res->intSubset = xmlCreateIntSubset(res, root->name,
                                                         doctypePublic,
                                                         doctypeSystem);
-		if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
-		    res = htmlNewDoc(doctypeSystem, doctypePublic);
 #ifdef XSLT_GENERATE_HTML_DOCTYPE
 		} else if (version != NULL) {
                     xsltGetHTMLIDs(version, &doctypePublic,
@@ -3455,12 +3453,10 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             if (tmp == root) {
                 ctxt->type = XSLT_OUTPUT_HTML;
                 res->type = XML_HTML_DOCUMENT_NODE;
-                if (((doctypePublic != NULL) || (doctypeSystem != NULL)))
+                if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
                     res->intSubset = xmlCreateIntSubset(res, root->name,
                                                         doctypePublic,
                                                         doctypeSystem);
-		if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
-		    res = htmlNewDoc(doctypeSystem, doctypePublic);
 #ifdef XSLT_GENERATE_HTML_DOCTYPE
 		} else if (version != NULL) {
                     xsltGetHTMLIDs(version, &doctypePublic,

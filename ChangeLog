@@ -1,3 +1,8 @@
+Fri Nov 30 18:59:50 CET 2001 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: Nik Clayton found a bug introduced in
+	  1.0.8 when using doctypes for HTML output
+
 Fri Nov 30 12:59:05 CET 2001 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attributes.c libxslt/transform.c libxslt/xsltutils.c
