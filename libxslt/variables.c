@@ -363,6 +363,8 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 	"Evaluating global variables\n");
 #endif
     ctxt->node = (xmlNodePtr) ctxt->document->doc;
+    ctxt->xpathCtxt->contextSize = 1;
+    ctxt->xpathCtxt->proximityPosition = 1;
     style = ctxt->style;
     while (style != NULL) {
 	elem = style->variables;

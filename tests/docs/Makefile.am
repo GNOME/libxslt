@@ -8,6 +8,20 @@ EXTRA_DIST =	\
 	bug-1-.xml \
 	bug-2-.xml \
 	bug-3-.xml \
+	bug-4-.xml \
+	bug-5-.xml \
+	bug-6-.xml \
+	bug-7-.xml \
+	bug-8-.xml \
+	bug-9-.xml \
+	bug-10-.xml \
+	bug-11-.xml \
+	bug-12-.xml \
+	bug-13-.xml \
+	bug-14-.xml \
+	bug-15-.xml \
+	bug-16-.xml \
+	bug-17-.xml \
 	character.xml \
 	items.xml
 

@@ -1,3 +1,9 @@
+Sun Apr 29 18:54:03 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/variables.c: fixing bug #53769
+	* tests/general tests/docs: added new examples from the
+	  bug reports to the regression tests, updated the Makefiles
+
 Sun Apr 29 11:47:58 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* preproc.[ch] templates.[ch] variables.[ch] xslt.c xsltInternals.h

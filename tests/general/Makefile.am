@@ -7,6 +7,20 @@ EXTRA_DIST = \
     bug-1-.out bug-1-.xsl \
     bug-2-.out bug-2-.xsl \
     bug-3-.out bug-3-.xsl \
+    bug-4-.out bug-4-.xsl \
+    bug-5-.out bug-5-.xsl \
+    bug-6-.out bug-6-.xsl \
+    bug-7-.out bug-7-.xsl \
+    bug-8-.out bug-8-.xsl \
+    bug-9-.out bug-9-.xsl \
+    bug-10-.out bug-10-.xsl \
+    bug-11-.out bug-11-.xsl \
+    bug-12-.out bug-12-.xsl \
+    bug-13-.out bug-13-.xsl \
+    bug-14-.out bug-14-.xsl \
+    bug-15-.out bug-15-.xsl \
+    bug-16-.out bug-16-.xsl \
+    bug-17-.out bug-17-.xsl \
     character.out character.xsl \
     character2.out character2.xsl \
     itemschoose.out itemschoose.xsl
