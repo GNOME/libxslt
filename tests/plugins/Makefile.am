@@ -9,6 +9,8 @@ $(top_builddir)/xsltproc/xsltproc:
 
 EXTRA_DIST = plugin.out	plugin.xml plugin.xsl
 
+INCLUDES = -I$(top_srcdir) -I../../libxslt
+
 noinst_LTLIBRARIES = xmlsoft_org_xslt_testplugin.la
 
 xmlsoft_org_xslt_testplugin_la_CFLAGS = -DMODULE_COMPILE $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
