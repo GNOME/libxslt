@@ -73,12 +73,12 @@ CPPFLAGS = /nologo
 # The compiler and its options.
 CC = cl.exe
 CFLAGS = /nologo /D "WIN32" /D "_WINDOWS" /D "_MBCS" /W3 /MD
-CFLAGS = $(CFLAGS) /I$(BASEDIR) /I$(XSLT_SRCDIR)
+CFLAGS = $(CFLAGS) /I$(BASEDIR) /I$(XSLT_SRCDIR) /I$(INCPREFIX)
 
 # The linker and its options.
 LD = link.exe
 LDFLAGS = /nologo
-LDFLAGS = $(LDFLAGS) /LIBPATH:$(BINDIR)
+LDFLAGS = $(LDFLAGS) /LIBPATH:$(BINDIR) /LIBPATH:$(LIBPREFIX)
 LIBS =
 !if "$(STATIC)" == "1"
 LIBS = libxml2_a.lib iconv_a.lib wsock32.lib
