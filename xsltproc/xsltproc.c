@@ -574,6 +574,9 @@ main(int argc, char **argv)
     exsltRegisterAll();
     xsltRegisterTestModule();
 
+    if (dumpextensions) 
+	xsltDebugDumpExtensions(NULL);
+
     for (i = 1; i < argc; i++) {
         if ((!strcmp(argv[i], "-maxdepth")) ||
             (!strcmp(argv[i], "--maxdepth"))) {
@@ -594,9 +597,6 @@ main(int argc, char **argv)
             i += 2;
             continue;
         }
-    if (dumpextensions) 
-	xsltDebugDumpExtensions(NULL);
-
         if ((argv[i][0] != '-') || (strcmp(argv[i], "-") == 0)) {
             if (timing)
                 startTimer();

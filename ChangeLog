@@ -1,3 +1,7 @@
+Thu May 16 19:38:24 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: moved the extension dump out of the loop
+
 Thu May 16 19:31:35 CEST 2002 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.[ch]  xsltproc/xsltproc.c win32/libxslt.def.src:
