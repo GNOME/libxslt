@@ -1,3 +1,8 @@
+Thu Jan 20 21:05:27 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* tests/plugins/Makefile.am tests/plugins/testplugin.c: applied
+	  patch 10 from Joel Reed
+
 Wed Jan 19 10:08:55 HKT 2005 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltwin32config.h, libxslt/xsltwin32config.h.in:

@@ -311,7 +311,7 @@ xsltExtStyleShutdownTest(xsltStylesheetPtr style ATTRIBUTE_UNUSED,
  */
 
 void
-xmlsoft_org_xslt_testplugin_init(void)
+XSLTPUBFUN xmlsoft_org_xslt_testplugin_init(void)
 {
     xsltRegisterExtModuleFull((const xmlChar *) XSLT_TESTPLUGIN_URL,
                               xsltExtInitTest, xsltExtShutdownTest,
