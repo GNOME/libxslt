@@ -1,3 +1,8 @@
+Wed May  9 10:43:53 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in tests/docbook/Makefile.am tests/docbook/**/Makefile.am:
+	  try to remove the unneeded docbook Makefile stuff 
+
 Tue May  8 16:18:19 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* doc/xslt.html: fixed a link error

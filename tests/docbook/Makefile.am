@@ -1,7 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = common html dtd lib result test
-
 all: # Avoid doing the test in normal pass
 
 $(top_builddir)/libxslt/xsltproc:
@@ -25,3 +23,6 @@ html: $(top_builddir)/libxslt/xsltproc
 	  else mv $$out $$html ; fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0";\
 	  rm -f $$out ; done )
+
+dist-hook:
+	@(cd $(srcdir) ; tar -cf - --exclude CVS common html dtd lib result test) | (cd $(distdir); tar xf -)
