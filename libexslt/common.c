@@ -9,7 +9,6 @@
 #include <libxslt/extra.h>
 
 #include "exslt.h"
-#include "utils.h"
 
 static void
 exsltObjectTypeFunction (xmlXPathParserContextPtr ctxt, int nargs) {

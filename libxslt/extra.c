@@ -189,6 +189,4 @@ xsltRegisterExtras(xsltTransformContextPtr ctxt) {
 	                    XSLT_XT_NAMESPACE, xsltDocumentElem);
     xsltRegisterExtElement(ctxt, (const xmlChar *) "document",
 	                    XSLT_NAMESPACE, xsltDocumentElem);
-    xsltRegisterExtElement(ctxt, (const xmlChar *) "document",
-	                    XSLT_EXSLT_COMMON_NAMESPACE, xsltDocumentElem);
 }

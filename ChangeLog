@@ -1,3 +1,13 @@
+2001-07-17  Thomas Broyer <tbroyer@ltgt.net>
+
+	* libexslt/.cvsignore libexslt/Makefile.am libexslt/utils.[ch]
+	  libexslt/common.c libexslt/functions.c libexslt/math.c
+	  libexslt/sets.c: removed utils.[ch] as their content is
+	  integrated in libxml
+	* libexslt/sets.c: uses the new libxml functions
+	* libxslt/extra.[ch]: removed exsl:document
+	* AUTHORS: added /me
+
 2001-07-16  Thomas Broyer <tbroyer@ltgt.net>
 
 	* libexslt/.cvsignore: some more generated files to ignore

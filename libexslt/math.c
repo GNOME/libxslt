@@ -7,10 +7,6 @@
 #include <libxslt/extensions.h>
 
 #include "exslt.h"
-#include "utils.h"
-
-/* TODO: cleanup when headers change have propagated in a libxml release */
-extern double xmlXPathNAN;
 
 /**
  * exsltMathMin:

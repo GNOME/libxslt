@@ -9,7 +9,6 @@
 #include <libxslt/extensions.h>
 
 #include "exslt.h"
-#include "utils.h"
 
 typedef struct _exsltFuncFunctionData exsltFuncFunctionData;
 struct _exsltFuncFunctionData {
