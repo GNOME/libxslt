@@ -207,23 +207,23 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     list = cur->children;
     delete = NULL;
     while (list != NULL) {
-	if (IS_XSLT_ELEM(cur)) {
-	    if (!IS_XSLT_NAME(cur, "attribute")) {
+	if (IS_XSLT_ELEM(list)) {
+	    if (!IS_XSLT_NAME(list, "attribute")) {
 		xsltGenericError(xsltGenericErrorContext,
 		    "xslt:attribute-set : unexpected child xsl:%s\n",
-		                 cur->name);
-		delete = cur;
+		                 list->name);
+		delete = list;
 	    } else {
 #ifdef DEBUG_PARSING
 		xsltGenericDebug(xsltGenericDebugContext,
 		    "add attribute to list %s\n", ncname);
 #endif
-                values = xsltAddAttrElemList(values, cur);
+                values = xsltAddAttrElemList(values, list);
 	    }
 	} else {
 	    xsltGenericError(xsltGenericErrorContext,
-		"xslt:attribute-set : unexpected child %s\n", cur->name);
-	    delete = cur;
+		"xslt:attribute-set : unexpected child %s\n", list->name);
+	    delete = list;
 	}
 	list = list->next;
     }
@@ -316,16 +316,16 @@ xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	prop = NULL;
 	prefix = NULL;
     }
-    if (xmlStrEqual(ncname, (const xmlChar *) "xmlns")) {
-	xsltGenericError(xsltGenericErrorContext,
-	     "xslt:attribute : xmlns forbidden\n");
+    if ((prefix != NULL) && (xmlStrEqual(prefix, (const xmlChar *)"xmlns"))) {
+#ifdef DEBUG_PARSING
+	    xsltGenericDebug(xsltGenericDebugContext,
+		 "xslt:attribute : xmlns prefix forbidden\n");
+#endif
 	goto error;
     }
     prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"namespace");
     if (prop != NULL) {
 	TODO /* xsl:attribute namespace */
-	xmlFree(prop);
-	return;
     } else {
 	if (prefix != NULL) {
 	    ns = xmlSearchNs(inst->doc, inst, prefix);

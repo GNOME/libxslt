@@ -1,3 +1,10 @@
+Tue Jan 30 18:55:49 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* tests/REC/test-7.*: added more tests
+	* libxslt/namespaces.[ch] libxslt/pattern.c libxslt/attributes.c
+	  libxslt/templates.c libxslt/transform.c libxslt/xslt.c: fixing bugs
+	  raised by said tests
+
 Tue Jan 30 15:16:56 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* TODO: updated

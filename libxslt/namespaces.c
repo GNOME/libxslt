@@ -139,11 +139,6 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 
     if ((ctxt == NULL) || (cur == NULL) || (out == NULL) || (ns == NULL))
 	return(NULL);
-    if ((out->type == XML_ELEMENT_NODE) && (out->ns != NULL) &&
-	 ((out->ns->href != NULL) && (ns->href != NULL) &&
-	  (xmlStrEqual(out->ns->href, ns->href)))) {
-	return(out->ns);
-    }
 
     /* TODO apply cascading */
     if (ctxt->style->nsAliases != NULL) {
@@ -153,10 +148,17 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
     } else
 	URI = ns->href;
 
-    ret = xmlSearchNsByHref(out->doc, out, URI);
+    if ((out->parent != NULL) &&
+	(out->parent->type == XML_ELEMENT_NODE) &&
+	(out->parent->ns != NULL) &&
+	(xmlStrEqual(out->parent->ns->href, URI)))
+	ret = out->parent->ns;
+    else
+	ret = xmlSearchNsByHref(out->doc, out, URI);
+
     if (ret == NULL) {
 	if (out->type == XML_ELEMENT_NODE)
-	    ret = xmlNewNs(out, ns->href, ns->prefix);
+	    ret = xmlNewNs(out, URI, ns->prefix);
     }
     return(ret);
 }
@@ -202,3 +204,16 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
     return(ret);
 }
 
+
+/**
+ * xsltFreeNamespaceAliasHashes:
+ * @style: an XSLT stylesheet
+ *
+ * Free up the memory used by namespaces aliases
+ */
+void
+xsltFreeNamespaceAliasHashes(xsltStylesheetPtr style) {
+    if (style->nsAliases != NULL)
+	xmlHashFree((xmlHashTablePtr) style->nsAliases, NULL);
+    style->nsAliases = NULL;
+}

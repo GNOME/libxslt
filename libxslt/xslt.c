@@ -264,6 +264,7 @@ xsltFreeStylesheet(xsltStylesheetPtr sheet) {
     xsltFreeDecimalFormatList(sheet);
     xsltFreeTemplateList(sheet->templates);
     xsltFreeAttributeSetsHashes(sheet);
+    xsltFreeNamespaceAliasHashes(sheet);
     if (sheet->doc != NULL)
 	xmlFreeDoc(sheet->doc);
     if (sheet->variables != NULL)

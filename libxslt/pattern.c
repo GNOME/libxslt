@@ -1263,7 +1263,7 @@ xsltGetTemplate(xsltStylesheetPtr style, xmlNodePtr node) {
 	    case XML_NAMESPACE_DECL:
 	    case XML_XINCLUDE_START:
 	    case XML_XINCLUDE_END:
-		return(NULL);
+		break;
 	    default:
 		return(NULL);
 

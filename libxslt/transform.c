@@ -31,6 +31,7 @@
 #include "transform.h"
 #include "variables.h"
 #include "namespaces.h"
+#include "attributes.h"
 #include "templates.h"
 
 #define DEBUG_PROCESS
@@ -1036,6 +1037,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	             xmlNodePtr list) {
     xmlNodePtr cur = NULL, insert, copy = NULL;
     xmlNodePtr oldInsert;
+    xmlAttrPtr attrs;
     int has_variables = 0;
 
     CHECK_STOPPED;
@@ -1153,11 +1155,18 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    copy = xsltCopyNode(ctxt, cur, insert);
 	    /*
 	     * all the attributes are directly inherited
-	     * TODO: Do the substitution of {} XPath expressions !!!
 	     */
-	    if (cur->properties != NULL)
-		copy->properties = xsltAttrListTemplateProcess(ctxt,
-			                       copy, cur->properties);
+	    if (cur->properties != NULL) {
+		attrs = xsltAttrListTemplateProcess(ctxt, copy,
+			                            cur->properties);
+		if (copy->properties != NULL) {
+		    xmlAttrPtr cur = copy->properties;
+		    while (cur->next != NULL)
+			cur = cur->next;
+		    cur->next = attrs;
+		} else
+		    copy->properties = attrs;
+	    }
 	}
 
 	/*
@@ -1391,6 +1400,7 @@ error:
 void
 xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xsltTemplatePtr template;
+    xmlNodePtr oldNode;
 
     template = xsltGetTemplate(ctxt->style, node);
     /*
@@ -1409,7 +1419,10 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	return;
     }
 
+    oldNode = ctxt->node;
+    ctxt->node = node;
     xsltApplyOneTemplate(ctxt, node, template->content);
+    ctxt->node = oldNode;
 }
 
 /**

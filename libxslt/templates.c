@@ -26,6 +26,7 @@
 #include "templates.h"
 #include "transform.h"
 #include "namespaces.h"
+#include "attributes.h"
 
 #define DEBUG_TEMPLATES
 
@@ -257,9 +258,19 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
 
     if ((cur->ns != NULL) &&
 	(xmlStrEqual(cur->ns->href, XSLT_NAMESPACE))) {
-	/* TODO: check for replacement namespaces */
-	return(NULL);
+	if (xmlStrEqual(cur->name, (const xmlChar *)"use-attribute-sets")) {
+	    xmlChar *in;
+
+	    in = xmlNodeListGetString(ctxt->doc, cur->children, 1);
+	    if (in != NULL) {
+		xsltApplyAttributeSet(ctxt, ctxt->node, NULL, in);
+		xmlFree(in);
+	    }
+	    return(NULL);
+
+	}
     }
+    /* TODO: check for replacement namespaces */
 
     ret = xmlNewDocProp(ctxt->output, cur->name, NULL);
     if (ret == NULL) return(NULL);
@@ -304,7 +315,10 @@ xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt,
 	                    xmlNodePtr target, xmlAttrPtr cur) {
     xmlAttrPtr ret = NULL;
     xmlAttrPtr p = NULL,q;
+    xmlNodePtr oldInsert;
 
+    oldInsert = ctxt->insert;
+    ctxt->insert = target;
     while (cur != NULL) {
         q = xsltAttrTemplateProcess(ctxt, target, cur);
 	if (q != NULL) {
@@ -320,6 +334,7 @@ xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt,
 	}
 	cur = cur->next;
     }
+    ctxt->insert = oldInsert;
     return(ret);
 }
 

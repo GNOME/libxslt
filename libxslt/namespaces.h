@@ -24,6 +24,7 @@ xmlNsPtr	xsltGetNamespace	(xsltTransformContextPtr ctxt,
 xmlNsPtr	xsltCopyNamespaceList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNsPtr cur);
+void		xsltFreeNamespaceAliasHashes(xsltStylesheetPtr style);
 #ifdef __cplusplus
 }
 #endif
