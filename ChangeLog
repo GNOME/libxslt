@@ -1,3 +1,9 @@
+Thu Aug 23 23:18:44 CEST 2001 Daniel Veillard <daniel@veillard.com>
+
+	* config.h.in configure.in xsltproc/xsltproc.c: complete test
+	  of a DocBook XSLt transform with --nonet, need stat(), added
+	  checking in configure.
+
 Thu Aug 23 17:37:40 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: catalog integration, cleanup with

@@ -12,6 +12,9 @@
 #undef HAVE_FLOOR
 #undef HAVE_FABS
 
+/* Define if you have the _stat function.  */
+#undef HAVE__STAT
+
 /* Define if you have the asctime function.  */
 #undef HAVE_ASCTIME
 
@@ -23,6 +26,9 @@
 
 /* Define if you have the mktime function.  */
 #undef HAVE_MKTIME
+
+/* Define if you have the stat function.  */
+#undef HAVE_STAT
 
 /* Define if you have the <ansidecl.h> header file.  */
 #undef HAVE_ANSIDECL_H
@@ -47,6 +53,9 @@
 
 /* Define if you have the <string.h> header file.  */
 #undef HAVE_STRING_H
+
+/* Define if you have the <sys/stat.h> header file.  */
+#undef HAVE_SYS_STAT_H
 
 /* Define if you have the <sys/time.h> header file.  */
 #undef HAVE_SYS_TIME_H

@@ -90,6 +90,34 @@ static const char *params[16 + 1];
 static int nbparams = 0;
 static const char *output = NULL;
 
+#ifdef LIBXML_CATALOG_ENABLED
+static int xsltNoNetExists(const char *URL) {
+#ifdef HAVE_STAT
+    int ret;
+    struct stat info;
+    const char *path;
+
+    if (URL == NULL)
+	return(0);
+
+    if (!xmlStrncmp(BAD_CAST URL, BAD_CAST "file://localhost", 16))
+	path = &URL[16];
+    else if (!xmlStrncmp(BAD_CAST URL, BAD_CAST "file:///", 8)) {
+#ifdef _WIN32
+	path = &URL[8];
+#else
+	path = &URL[7];
+#endif
+    } else 
+	path = URL;
+    ret = stat(path, &info);
+    if (ret == 0)
+	return(1);
+#endif
+    return(0);
+}
+#endif
+
 static xmlParserInputPtr
 xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
                                xmlParserCtxtPtr ctxt) {
@@ -97,9 +125,6 @@ xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
     xmlChar *resource = NULL;
 
 #ifdef LIBXML_CATALOG_ENABLED
-#ifdef HAVE_STAT
-    struct stat info;
-#endif
     xmlCatalogAllow pref;
 
     /*
@@ -108,11 +133,7 @@ xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
      */
     pref = xmlCatalogGetDefaults();
 
-    if ((pref != XML_CATA_ALLOW_NONE)
-#ifdef HAVE_STAT
-        && ((URL == NULL) || (stat(URL, &info) < 0))
-#endif
-	) {
+    if ((pref != XML_CATA_ALLOW_NONE) && (!xsltNoNetExists(URL))) {
 	/*
 	 * Do a local lookup
 	 */
@@ -138,11 +159,7 @@ xsltNoNetExternalEntityLoader(const char *URL, const char *ID,
 	/*
 	 * TODO: do an URI lookup on the reference
 	 */
-	if ((resource != NULL)
-#ifdef HAVE_STAT
-            && (stat((const char *) resource, &info) < 0)
-#endif
-	    ) {
+	if ((resource != NULL) && (!xsltNoNetExists((const char *)resource))) {
 	    xmlChar *tmp = NULL;
 
 	    if ((ctxt->catalogs != NULL) &&
