@@ -2,7 +2,7 @@
 %define ver      @VERSION@
 %define prefix   /usr
 
-Summary: Library providing XSLT support
+Summary: Library providing the Gnome XSLT engine
 Name: libxslt
 Version: %ver
 Release: 1
@@ -19,10 +19,10 @@ Docdir: %{prefix}/doc
 This C library allows to transform XML files into other XML files
 (or HTML, text, ...) using the standard XSLT stylesheet transformation
 mechanism. To use it you need to have a version of libxml2 >= 2.3.8
-installed.
+installed. The xsltproc command is a command line interface to the XSLT engine
 
 %package devel
-Summary: Libraries, includes, etc. to develop XML and HTML applications
+Summary: Libraries, includes, etc. to embed the Gnome XSLT engine
 Group: Development/Libraries
 Requires: libxslt = %{version}
 Requires: libxml2-devel >= 2.3.10
