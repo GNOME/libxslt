@@ -1,3 +1,7 @@
+Mon Jan 22 20:24:36 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* configure.in libxslt.spec.in: first try to get a spec file
+
 Mon Jan 22 19:37:00 CET 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* libxslt/xsltproc.c: avoid segfault when stylesheet is inproper

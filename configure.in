@@ -74,7 +74,7 @@ dnl
 dnl find libxml
 dnl
 XML_CONFIG="xml-config"
-AC_MSG_CHECKING(for libxml libraries >= 2.x) 
+AC_MSG_CHECKING(for libxml libraries >= 2.2.12) 
 if test "x$LIBXML_PREFIX" != "x"
 then
 	if ${LIBXML_PREFIX}/bin/xml-config --libs print > /dev/null 2>&1
@@ -91,13 +91,13 @@ dnl
 if test "x$XML_CONFIG" != "x"
 then
 	vers=`$XML_CONFIG --version | sed -e 's/libxml //' | awk 'BEGIN { FS = "."; } { printf "%d", ($1 * 1000 + $2) * 1000 + $3;}'`
-	if test "$vers" -ge 2000000
+	if test "$vers" -ge 2002012
 	then
 		LIBXML_LIBS="`$XML_CONFIG --libs`"
 		LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
 		AC_MSG_RESULT(found)
 	else
-		AC_MSG_ERROR(You need at least libxml 2.x for this version of libxml)
+		AC_MSG_ERROR(You need at least libxml 2.2.12 for this version of libxml)
 	fi
 else
 	AC_MSG_ERROR(Could not find libxml anywhere.)
@@ -124,4 +124,5 @@ tests/Makefile
 tests/REC1/Makefile
 tests/REC2/Makefile
 xslt-config
+libxslt.spec
 ])
