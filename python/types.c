@@ -1,4 +1,8 @@
 /*
+xmlParserInputPtr xmlNoNetExternalEntityLoader(const char *URL,
+	                                       const char *ID,
+					       xmlParserCtxtPtr ctxt);
+
  * types.c: converter functions between the internal representation
  *          and the Python objects
  *

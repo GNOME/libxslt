@@ -88,10 +88,6 @@
 #  endif
 #endif
 
-xmlParserInputPtr xmlNoNetExternalEntityLoader(const char *URL,
-	                                       const char *ID,
-					       xmlParserCtxtPtr ctxt);
-
 static int debug = 0;
 static int repeat = 0;
 static int timing = 0;

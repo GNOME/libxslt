@@ -1,3 +1,9 @@
+Thu Aug  7 21:02:07 HKT 2003 William Brack <wbrack@mmm.com.hk>
+
+	* breakpoint/Makefile.am: removed ref to libxslt.la
+	* numbers.c transform.c python/libxml_wrap.h python/types.c
+	  xlstproc/xsltproc.c: Minor cleanup of warning errors
+
 Mon Aug  4 22:43:05 CEST 2003 Daniel Veillard <daniel@veillard.com>
 
 	* doc/libxslt-api.xml doc/* doc/html/*: revuilt the API and docs

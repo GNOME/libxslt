@@ -2235,9 +2235,6 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *									*
  ************************************************************************/
 
-void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	                xsltStackElemPtr params);
-
 /**
  * xsltSort:
  * @ctxt:  a XSLT process context
