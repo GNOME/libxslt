@@ -54,6 +54,10 @@ struct _xsltTemplate {
     xmlChar *modeURI;	/* the URI part of the mode QName */
     xmlNodePtr content;	/* the template replacement value */
     xmlNodePtr elem;	/* the source element */
+
+    /* Profiling informations */
+    int nbCalls;        /* the number of time the template was called */
+    unsigned long time; /* the time spent in this template */
 };
 
 /**
@@ -310,7 +314,7 @@ struct _xsltStylesheet {
     int warnings;		/* number of warnings found at compilation */
     int errors;			/* number of errors found at compilation */
 
-    xmlChar  *exclPrefix;	/* array of excluded prefixes */
+    xmlChar  *exclPrefix;	/* last excluded prefixes */
     xmlChar **exclPrefixTab;	/* array of excluded prefixes */
     int       exclPrefixNr;	/* number of excluded prefixes in scope */
     int       exclPrefixMax;	/* size of the array */
@@ -379,6 +383,8 @@ struct _xsltTransformContext {
     int xinclude;			/* should XInclude be processed */
 
     const char *      outputFile;	/* the output URI if known */
+
+    int profile;                        /* is this run profiled */
 };
 
 /**

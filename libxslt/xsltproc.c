@@ -64,6 +64,7 @@ static int html = 0;
 #ifdef LIBXML_XINCLUDE_ENABLED
 static int xinclude = 0;
 #endif
+static int profile = 0;
 static int nonet;
 static xmlExternalEntityLoader defaultLoader = NULL;
 
@@ -113,6 +114,7 @@ static void usage(const char *name) {
 #ifdef LIBXML_XINCLUDE_ENABLED
     printf("      --xinclude : do XInclude processing on document intput\n");
 #endif
+    printf("      --profile : dump profiling informations \n");
 }
 
 int
@@ -187,6 +189,9 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-timing")) ||
                    (!strcmp(argv[i], "--timing"))) {
             timing++;
+        } else if ((!strcmp(argv[i], "-profile")) ||
+                   (!strcmp(argv[i], "--profile"))) {
+            profile++;
         } else if ((!strcmp(argv[i], "-warnnet")) ||
                    (!strcmp(argv[i], "--warnnet"))) {
             xmlSetExternalEntityLoader(xsltNoNetExternalEntityLoader);
@@ -351,7 +356,11 @@ main(int argc, char **argv)
                             doc = xmlParseFile(argv[i]);
                     }
                 }
-                res = xsltApplyStylesheet(cur, doc, params);
+		if (profile) {
+		    res = xsltProfileStylesheet(cur, doc, params, stderr);
+		} else {
+		    res = xsltApplyStylesheet(cur, doc, params);
+		}
                 if (timing) {
                     long msec;
 

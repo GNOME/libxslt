@@ -939,3 +939,99 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
     return(ret);
 }
 
+/************************************************************************
+ * 									*
+ * 		Generating proviling output				*
+ * 									*
+ ************************************************************************/
+
+#define MAX_TEMPLATES 10000
+
+/**
+ * xsltSaveProfiling:
+ * @ctxt:  an XSLT context
+ * @output:  a FILE * for saving the informations
+ *
+ * Save the profiling informations on @output
+ */
+void
+xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
+    int nb, i,j;
+    int max;
+    int total;
+    xsltTemplatePtr *templates;
+    xsltStylesheetPtr style;
+    xsltTemplatePtr template;
+
+    if ((output == NULL) || (ctxt == NULL))
+	return;
+    if (ctxt->profile == 0)
+	return;
+
+    nb = 0;
+    max = MAX_TEMPLATES;
+    templates = xmlMalloc(max * sizeof(xsltTemplatePtr));
+    if (templates == NULL)
+	return;
+
+    style = ctxt->style;
+    while (style != NULL) {
+	template = style->templates;
+	while (template != NULL) {
+	    if (nb >= max)
+		break;
+
+	    templates[nb++] = template;
+	    template = template->next;
+	}
+
+	style = xsltNextImport(style);
+    }
+
+    for (i = 0;i < nb -1;i++) {
+	for (j = i + 1; j < nb; j++) {
+	    if (templates[i]->nbCalls <= templates[j]->nbCalls) {
+		template = templates[j];
+		templates[j] = templates[i];
+		templates[i] = template;
+	    }
+	}
+    }
+
+    fprintf(output, "%6s%20s%20s%10s NbCalls\n\n",
+	    "number", "match", "name", "mode");
+    total = 0;
+    for (i = 0;i < nb;i++) {
+	fprintf(output, "%5d ", i);
+	if (templates[i]->match != NULL) {
+	    if (xmlStrlen(templates[i]->match) > 20)
+		fprintf(output, "%s\n%26s", templates[i]->match, "");
+	    else
+		fprintf(output, "%20s", templates[i]->match);
+	} else {
+	    fprintf(output, "%20s", "");
+	}
+	if (templates[i]->name != NULL) {
+	    if (xmlStrlen(templates[i]->name) > 20)
+		fprintf(output, "%s\n%46s", templates[i]->name, "");
+	    else
+		fprintf(output, "%20s", templates[i]->name);
+	} else {
+	    fprintf(output, "%20s", "");
+	}
+	if (templates[i]->mode != NULL) {
+	    if (xmlStrlen(templates[i]->mode) > 10)
+		fprintf(output, "%s\n%56s", templates[i]->mode, "");
+	    else
+		fprintf(output, "%10s", templates[i]->mode);
+	} else {
+	    fprintf(output, "%10s", "");
+	}
+	fprintf(output, " %6d\n", templates[i]->nbCalls);
+	total += templates[i]->nbCalls;
+    }
+    fprintf(output, "\n%30s%26s %6d\n", "Total", "", total);
+
+    xmlFree(templates);
+}
+

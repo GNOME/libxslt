@@ -347,7 +347,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	     * This is a result tree fragment.
 	     */
 	    xmlNodePtr container;
-	    xmlNodePtr oldInsert, oldNode;
+	    xmlNodePtr oldInsert;
 
 	    container = xmlNewDocNode(ctxt->output, NULL,
 		                      (const xmlChar *) "fake", NULL);
@@ -355,11 +355,9 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 		return(NULL);
 
 	    oldInsert = ctxt->insert;
-	    oldNode = ctxt->node;
 	    ctxt->insert = container;
-	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, 0);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, NULL, NULL);
 	    ctxt->insert = oldInsert;
-	    ctxt->node = oldNode;
 
 	    result = xmlXPathNewValueTree(container);
 	    if (result == NULL) {
@@ -462,7 +460,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	     * This is a result tree fragment.
 	     */
 	    xmlNodePtr container;
-	    xmlNodePtr oldInsert, oldNode;
+	    xmlNodePtr oldInsert;
 
 	    container = xmlNewDocNode(ctxt->output, NULL,
 		                      (const xmlChar *) "fake", NULL);
@@ -470,11 +468,9 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 		return(NULL);
 
 	    oldInsert = ctxt->insert;
-	    oldNode = ctxt->node;
 	    ctxt->insert = container;
-	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, 0);
+	    xsltApplyOneTemplate(ctxt, ctxt->node, elem->tree, NULL, NULL);
 	    ctxt->insert = oldInsert;
-	    ctxt->node = oldNode;
 
 	    result = xmlXPathNewValueTree(container);
 	    if (result == NULL) {
@@ -847,7 +843,7 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 	else
 	    xsltGenericDebug(xsltGenericDebugContext,
-		     "param %s defined by caller", comp->name);
+		     "param %s defined by caller\n", comp->name);
 #endif
 	return(0);
     }

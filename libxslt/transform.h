@@ -29,6 +29,10 @@ int		xsltGetXIncludeDefault	(void);
 xmlDocPtr	xsltApplyStylesheet	(xsltStylesheetPtr style,
 					 xmlDocPtr doc,
 					 const char **params);
+xmlDocPtr	xsltProfileStylesheet	(xsltStylesheetPtr style,
+					 xmlDocPtr doc,
+					 const char **params,
+					 FILE * output);
 int		xsltRunStylesheet	(xsltStylesheetPtr style,
 					 xmlDocPtr doc,
 					 const char **params,
@@ -38,7 +42,8 @@ int		xsltRunStylesheet	(xsltStylesheetPtr style,
 void		xsltApplyOneTemplate	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,
 					 xmlNodePtr list,
-					 int real);
+					 xsltTemplatePtr templ,
+					 xsltStackElemPtr params);
 void 		xsltDocumentElem	(xsltTransformContextPtr ctxt,
 	                                 xmlNodePtr node,
 					 xmlNodePtr inst,

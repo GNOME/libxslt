@@ -1,4 +1,16 @@
-Sat Jul  7 11:20:59 CEST 2001 Wiliam Brack <wbrack@mmm.com.hk>
+Sat Jul  7 18:58:56 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
+
+	* libxslt/templates.c libxslt/transform.c libxslt/transform.h
+	  libxslt/variables.c: big cleanup on the way templates or 
+	  template fragments are processed, cleanup of stack building
+	* tests/docs/Makefile.am tests/general/Makefile.am
+	  tests/general/bug-4[1-8]-* tests/docs/bug-4[1-8]-*: added a
+	  series of regression test for the variable/params lookups
+	* libxslt/transform.c libxslt/xsltutils.[ch] libxslt/xsltproc.c:
+	  started working on profiling code, there is just invocation counting
+	  yet but the framework is in place.
+
+Sat Jul  7 11:20:59 CEST 2001 Daniel Veillard <Daniel.Veillard@imag.fr>
 
 	* tests/docs/Makefile.am tests/general/Makefile.am
 	  tests/general/bug-40-* tests/docs/bug-40-*: added a specific

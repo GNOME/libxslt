@@ -169,8 +169,8 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 xmlChar *
 xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	               xmlNodePtr parent) {
-    xmlChar *ret;
     xmlNodePtr oldInsert, insert = NULL;
+    xmlChar *ret;
 
     if ((ctxt == NULL) || (node == NULL) || (parent == NULL))
 	return(NULL);
@@ -185,7 +185,7 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = ctxt->insert;
     ctxt->insert = insert;
 
-    xsltApplyOneTemplate(ctxt, node, parent->children, 0);
+    xsltApplyOneTemplate(ctxt, node, parent->children, NULL, NULL);
 
     ctxt->insert = oldInsert;
 
