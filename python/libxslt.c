@@ -24,10 +24,10 @@
 #endif
 
 /* #define DEBUG */
-#define DEBUG_XPATH */
+/* #define DEBUG_XPATH */
 /* #define DEBUG_ERROR */
 /* #define DEBUG_MEMORY */
-#define DEBUG_EXTENSIONS */
+/* #define DEBUG_EXTENSIONS */
 
 void initlibxsltmod(void);
 
