@@ -151,7 +151,7 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
     else
 	ret = xmlSearchNsByHref(out->doc, out, URI);
 
-    if (ret == NULL) {
+    if ((ret == NULL) || (ret->prefix == NULL)) {
 	if (prefix == NULL) {
 	    do {
 		sprintf(nprefix, "ns%d", prefixno++);
