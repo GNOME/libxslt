@@ -4,6 +4,9 @@
  *           entry points where an automatically generated stub is either
  *           unpractical or would not match cleanly the Python model.
  *
+ * If compiled with MERGED_MODULES, the entry point will be used to
+ * initialize both the libxml2 and the libxslt wrappers
+ *
  * See Copyright for the status of this software.
  *
  * daniel@veillard.com
@@ -352,8 +355,17 @@ static PyMethodDef libxsltMethods[] = {
     { NULL }
 };
 
+#ifdef MERGED_MODULES
+extern void initlibxml2mod(void);
+#endif
+
 void initlibxsltmod(void) {
     PyObject *m;
+
+#ifdef MERGED_MODULES
+    initlibxml2mod();
+#endif
+
     m = Py_InitModule("libxsltmod", libxsltMethods);
     /* libxslt_xmlErrorInitialize(); */
     /*
@@ -365,5 +377,7 @@ void initlibxsltmod(void) {
     xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
     /* xmlDefaultSAXHandlerInit(); */
     xmlDefaultSAXHandler.cdataBlock = NULL;
+
 }
+
 

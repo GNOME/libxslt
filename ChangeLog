@@ -1,3 +1,15 @@
+Fri Feb 22 23:44:57 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* python/generator.py python/libxslt.c: changes for the 'usual'
+	  setup.py to allow building a libxml2-python
+	  module based on the same code. The initialization is however
+	  different the 2 .so files fo libxml2 and libxslt are identical and
+	  they entry point initialize both libraries. this is done to avoid
+	  some possible nasty problem since the Python don't merge the maps
+	  of all shared modules.
+	* python/libxsl.py: attempt to cope with the shared library loading
+	  problem when both modules are not merged.
+
 Thu Feb 21 12:59:59 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/site.xml doc/xslt.html doc/python.html doc/*.html: added
