@@ -155,10 +155,10 @@ except: print 0"`
 	then
 	    echo Found libxml2-python module
 	else
-	    echo Missing libxml2-python
+	    echo Warning: Missing libxml2-python
 	fi
     fi
-    if test "$PYTHON_VERSION" != "" -a "$LIBXML2_PYTHON" = "1"
+    if test "$PYTHON_VERSION" != ""
     then
 	if test -r $with_python/include/python$PYTHON_VERSION/Python.h -a \
 	   -d $with_python/lib/python$PYTHON_VERSION/site-packages

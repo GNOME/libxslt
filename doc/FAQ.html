@@ -75,21 +75,23 @@ A:link, A:visited, A:active { text-decoration: underline }
 </table>
 </td></tr></table></td>
 <td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd">
-<ol><li>
+<ol>
+<li>
 <em>passing parameters on the xsltproc command line doesn't work</em>
     <p><em>xsltproc --param test alpha foo.xsl foo.xml</em></p>
-<p><em>the param does not get passed and ends up as &quot;&quot;</em></p>
-<p>In a nutshell do a double escaping at the shell prompt:</p>
-<p>xsltproc --param test &quot;'alpha'&quot; foo.xsl foo.xml</p>
-<p>i.e. the string value is surrounded by &quot; and ' then terminated by '
+    <p><em>the param does not get passed and ends up as &quot;&quot;</em></p>
+    <p>In a nutshell do a double escaping at the shell prompt:</p>
+    <p>xsltproc --param test &quot;'alpha'&quot; foo.xsl foo.xml</p>
+    <p>i.e. the string value is surrounded by &quot; and ' then terminated by '
     and &quot;. Libxslt interpret the parameter values as XPath expressions, so
     the string -&gt;<code>alpha</code>&lt;- is intepreted as the node set
     matching this string. You really want -&gt;<code>'alpha'</code>&lt;- to
     be passed to the processor. And to allow this you need to escape the
     quotes at the shell level using -&gt;<code>&quot;'alpha'&quot;</code>&lt;- .</p>
-<p>or use</p>
-<p>xsltproc --stringparam test alpha foo.xsl foo.xml</p>
-</li></ol>
+    <p>or use</p>
+    <p>xsltproc --stringparam test alpha foo.xsl foo.xml</p>
+  </li>
+</ol>
 <p><a href="bugs.html">Daniel Veillard</a></p>
 </td></tr></table></td></tr></table></td></tr></table></td>
 </tr></table></td></tr></table>
