@@ -8,16 +8,22 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.2</version>
-    <last-release> Dec 24 2003</last-release>
+    <version>1.1.3</version>
+    <last-release> Feb 16 2004</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - Documentation fixes (John Fleck, William Brack), EXSLT documentation
-    (William Brack)
-   - Windows compilation fixes for MSVC and Mingw (Igor Zlatkovic)
-   - Bug fixes: exslt:date returning NULL strings (William Brack),
-    namespaces output (William Brack),  key and namespace definition problem,
-    passing options down to the document() parser, xsl:number fixes (William
-    Brack)
+    <changes>   - Rewrote the Attribute Value Template code, new XPath compilation
+    interfaces, dictionnary reuses for XSLT with potential for serious
+    performance improvements. 
+   - bug fixes: portability (William Brack), key() in node-set() results
+    (William), comment before doctype (William), math and node-set() problems
+    (William), cdata element and default namespace (William), behaviour on
+    unknown XSLT elements (Stefan Kost), priority of "//foo" patterns
+    (William), xsl:element and xsl:attribute QName check (William), comments
+    with -- (William), attribute namespace (William), check for ?&gt; in PI
+    (William)
+   - Documentations: cleanup (John Fleck and William) 
+   - Python: patch for OS-X (Gianni Ceccarelli), enums export (Stephane
+    bidoul)
 
 </changes>
   </product>

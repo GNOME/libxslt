@@ -569,12 +569,6 @@ struct _xsltTransformContext {
 #define CHECK_STOPPED0 if (ctxt->state == XSLT_STATE_STOPPED) return(0);
 
 /*
- * internal value used to indicate attribute value templates
- */
-
-XSLTPUBVAR void *xsltIsAttVT;
-
-/*
  * Functions associated to the internal types
 xsltDecimalFormatPtr	xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
 						   xmlChar *name);

@@ -99,12 +99,14 @@ useful resources:</p>
 
 <p>Well, bugs or missing features are always possible, and I will make a
 point of fixing them in a timely fashion. The best way to report a bug is to
-use the <a href="http://bugzilla.gnome.org/enter_bug.cgi?product=libxslt">Gnome
-bug tracking database</a> (make sure to use the "libxslt" module name). Before
-      filing a bug, check the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">list of existing libxslt bugs</a> to
-	  make sure it hasn't already been filed. I
-look at reports there regularly and it's good to have a reminder when a bug
-is still open. Be sure to specify that the bug is for the package libxslt.</p>
+use the <a
+href="http://bugzilla.gnome.org/enter_bug.cgi?product=libxslt">Gnome bug
+tracking database</a> (make sure to use the "libxslt" module name). Before
+filing a bug, check the <a
+href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">list of existing
+libxslt bugs</a> to make sure it hasn't already been filed. I look at reports
+there regularly and it's good to have a reminder when a bug is still open. Be
+sure to specify that the bug is for the package libxslt.</p>
 
 <p>For small problems you can try to get help on IRC, the #xml channel on
 irc.gnome.org (port 6667) usually have a few person subscribed which may help
@@ -288,6 +290,23 @@ platform, get in touch with me to upload the package. I will keep them in the
 <h3>CVS only : check the <a
 href="http://cvs.gnome.org/lxr/source/libxslt/ChangeLog">Changelog</a> file
 for a really accurate description</h3>
+
+<h3>1.1.3: Feb 16 2004</h3>
+<ul>
+  <li>Rewrote the Attribute Value Template code, new XPath compilation
+    interfaces, dictionnary reuses for XSLT with potential for serious
+    performance improvements. </li>
+  <li>bug fixes: portability (William Brack), key() in node-set() results
+    (William), comment before doctype (William), math and node-set() problems
+    (William), cdata element and default namespace (William), behaviour on
+    unknown XSLT elements (Stefan Kost), priority of "//foo" patterns
+    (William), xsl:element and xsl:attribute QName check (William), comments
+    with -- (William), attribute namespace (William), check for ?&gt; in PI
+    (William)</li>
+  <li>Documentations: cleanup (John Fleck and William) </li>
+  <li>Python: patch for OS-X (Gianni Ceccarelli), enums export (Stephane
+    bidoul)</li>
+</ul>
 
 <h3>1.1.2: Dec 24 2003</h3>
 <ul>

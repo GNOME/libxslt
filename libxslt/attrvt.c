@@ -32,12 +32,6 @@
 #define WITH_XSLT_DEBUG_AVT
 #endif
 
-static struct xsltIsAttVTStruct {
-    int key;
-} xsltIsAttVTStruct = { 0xdeadbeef };
-
-void *xsltIsAttVT = (void *) &xsltIsAttVTStruct;
-
 #define MAX_AVT_SEG 10
 
 typedef struct _xsltAttrVT xsltAttrVT;

@@ -24,6 +24,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 </p><h2>Type const unsigned char *:</h2><p><a href="html/libxslt-xsltutils.html#xsltGetUTF8Char">xsltGetUTF8Char</a><br />
 </p><h2>Type const xmlChar *:</h2><p><a href="html/libxslt-keys.html#xsltAddKey">xsltAddKey</a><br />
 <a href="html/libxslt-pattern.html#xsltAddTemplate">xsltAddTemplate</a><br />
+<a href="html/libxslt-attributes.html#xsltApplyAttributeSet">xsltApplyAttributeSet</a><br />
 <a href="html/libxslt-templates.html#xsltAttrTemplateValueProcess">xsltAttrTemplateValueProcess</a><br />
 <a href="html/libxslt-templates.html#xsltAttrTemplateValueProcessNode">xsltAttrTemplateValueProcessNode</a><br />
 <a href="html/libxslt-extensions.html#xsltCheckExtPrefix">xsltCheckExtPrefix</a><br />
@@ -43,6 +44,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#xsltExtModuleTopLevelLookup">xsltExtModuleTopLevelLookup</a><br />
 <a href="html/libxslt-extensions.html#xsltExtShutdownFunction">xsltExtShutdownFunction</a><br />
 <a href="html/libxslt-imports.html#xsltFindTemplate">xsltFindTemplate</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetCNsProp">xsltGetCNsProp</a><br />
 <a href="html/libxslt-extensions.html#xsltGetExtData">xsltGetExtData</a><br />
 <a href="html/libxslt-extensions.html#xsltGetExtInfo">xsltGetExtInfo</a><br />
 <a href="html/libxslt-keys.html#xsltGetKey">xsltGetKey</a><br />
@@ -62,6 +64,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#xsltRegisterExtModuleFunction">xsltRegisterExtModuleFunction</a><br />
 <a href="html/libxslt-extensions.html#xsltRegisterExtModuleTopLevel">xsltRegisterExtModuleTopLevel</a><br />
 <a href="html/libxslt-extensions.html#xsltRegisterExtPrefix">xsltRegisterExtPrefix</a><br />
+<a href="html/libxslt-xsltutils.html#xsltSplitQName">xsltSplitQName</a><br />
 <a href="html/libxslt-extensions.html#xsltStyleExtInitFunction">xsltStyleExtInitFunction</a><br />
 <a href="html/libxslt-extensions.html#xsltStyleExtShutdownFunction">xsltStyleExtShutdownFunction</a><br />
 <a href="html/libxslt-extensions.html#xsltStyleGetExtData">xsltStyleGetExtData</a><br />
@@ -70,14 +73,18 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-extensions.html#xsltUnregisterExtModuleFunction">xsltUnregisterExtModuleFunction</a><br />
 <a href="html/libxslt-extensions.html#xsltUnregisterExtModuleTopLevel">xsltUnregisterExtModuleTopLevel</a><br />
 <a href="html/libxslt-variables.html#xsltVariableLookup">xsltVariableLookup</a><br />
+<a href="html/libxslt-xsltutils.html#xsltXPathCompile">xsltXPathCompile</a><br />
 <a href="html/libxslt-functions.html#xsltXPathFunctionLookup">xsltXPathFunctionLookup</a><br />
 <a href="html/libxslt-variables.html#xsltXPathVariableLookup">xsltXPathVariableLookup</a><br />
+</p><h2>Type const xmlChar **:</h2><p><a href="html/libxslt-xsltutils.html#xsltSplitQName">xsltSplitQName</a><br />
 </p><h2>Type double:</h2><p><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
 </p><h2>Type int *:</h2><p><a href="html/libxslt-templates.html#xsltEvalStaticAttrValueTemplate">xsltEvalStaticAttrValueTemplate</a><br />
 <a href="html/libxslt-xsltutils.html#xsltGetUTF8Char">xsltGetUTF8Char</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSaveResultToString">xsltSaveResultToString</a><br />
 </p><h2>Type long:</h2><p><a href="html/libxslt-xsltutils.html#xsltCalibrateAdjust">xsltCalibrateAdjust</a><br />
-</p><h2>Type void *:</h2><p><a href="html/libxslt-extensions.html#xsltExtShutdownFunction">xsltExtShutdownFunction</a><br />
+</p><h2>Type void *:</h2><p><a href="html/libxslt-xsltInternals.html#xsltEvalAVT">xsltEvalAVT</a><br />
+<a href="html/libxslt-extensions.html#xsltExtShutdownFunction">xsltExtShutdownFunction</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltFreeAVTList">xsltFreeAVTList</a><br />
 <a href="html/libxslt-pattern.html#xsltNormalizeCompSteps">xsltNormalizeCompSteps</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSetDebuggerCallbacks">xsltSetDebuggerCallbacks</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSetGenericDebugFunc">xsltSetGenericDebugFunc</a><br />
@@ -87,13 +94,14 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-variables.html#xsltXPathVariableLookup">xsltXPathVariableLookup</a><br />
 </p><h2>Type xmlAttrPtr:</h2><p><a href="html/libxslt-templates.html#xsltAttrListTemplateProcess">xsltAttrListTemplateProcess</a><br />
 <a href="html/libxslt-templates.html#xsltAttrTemplateProcess">xsltAttrTemplateProcess</a><br />
-</p><h2>Type xmlChar *:</h2><p><a href="html/libxslt-attributes.html#xsltApplyAttributeSet">xsltApplyAttributeSet</a><br />
-<a href="html/libxslt-xsltInternals.html#xsltDecimalFormatGetByName">xsltDecimalFormatGetByName</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltCompileAttr">xsltCompileAttr</a><br />
+</p><h2>Type xmlChar *:</h2><p><a href="html/libxslt-xsltInternals.html#xsltDecimalFormatGetByName">xsltDecimalFormatGetByName</a><br />
 <a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
 <a href="html/libxslt-xsltInternals.html#xsltIsBlank">xsltIsBlank</a><br />
 </p><h2>Type xmlChar **:</h2><p><a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
 <a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSaveResultToString">xsltSaveResultToString</a><br />
+</p><h2>Type xmlDictPtr:</h2><p><a href="html/libxslt-xsltutils.html#xsltSplitQName">xsltSplitQName</a><br />
 </p><h2>Type xmlDocPtr:</h2><p><a href="html/libxslt-transform.html#xsltApplyStylesheet">xsltApplyStylesheet</a><br />
 <a href="html/libxslt-transform.html#xsltApplyStylesheetUser">xsltApplyStylesheetUser</a><br />
 <a href="html/libxslt-pattern.html#xsltCompilePattern">xsltCompilePattern</a><br />
@@ -146,11 +154,13 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-preproc.html#xsltDocumentComp">xsltDocumentComp</a><br />
 <a href="html/libxslt-transform.html#xsltDocumentElem">xsltDocumentElem</a><br />
 <a href="html/libxslt-transform.html#xsltElement">xsltElement</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltEvalAVT">xsltEvalAVT</a><br />
 <a href="html/libxslt-templates.html#xsltEvalAttrValueTemplate">xsltEvalAttrValueTemplate</a><br />
 <a href="html/libxslt-templates.html#xsltEvalStaticAttrValueTemplate">xsltEvalStaticAttrValueTemplate</a><br />
 <a href="html/libxslt-templates.html#xsltEvalTemplateString">xsltEvalTemplateString</a><br />
 <a href="html/libxslt-imports.html#xsltFindElemSpaceHandling">xsltFindElemSpaceHandling</a><br />
 <a href="html/libxslt-transform.html#xsltForEach">xsltForEach</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetCNsProp">xsltGetCNsProp</a><br />
 <a href="html/libxslt-namespaces.html#xsltGetNamespace">xsltGetNamespace</a><br />
 <a href="html/libxslt-xsltutils.html#xsltGetNsProp">xsltGetNsProp</a><br />
 <a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
@@ -280,6 +290,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-transform.html#xsltApplyStylesheetUser">xsltApplyStylesheetUser</a><br />
 <a href="html/libxslt-extensions.html#xsltCheckExtPrefix">xsltCheckExtPrefix</a><br />
 <a href="html/libxslt-pattern.html#xsltCleanupTemplates">xsltCleanupTemplates</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltCompileAttr">xsltCompileAttr</a><br />
 <a href="html/libxslt-pattern.html#xsltCompilePattern">xsltCompilePattern</a><br />
 <a href="html/libxslt-xsltInternals.html#xsltDecimalFormatGetByName">xsltDecimalFormatGetByName</a><br />
 <a href="html/libxslt-preproc.html#xsltDocumentComp">xsltDocumentComp</a><br />
@@ -292,6 +303,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-preproc.html#xsltFreeStylePreComps">xsltFreeStylePreComps</a><br />
 <a href="html/libxslt-xsltInternals.html#xsltFreeStylesheet">xsltFreeStylesheet</a><br />
 <a href="html/libxslt-pattern.html#xsltFreeTemplateHashes">xsltFreeTemplateHashes</a><br />
+<a href="html/libxslt-xsltutils.html#xsltGetCNsProp">xsltGetCNsProp</a><br />
 <a href="html/libxslt-extensions.html#xsltGetExtInfo">xsltGetExtInfo</a><br />
 <a href="html/libxslt-pattern.html#xsltGetTemplate">xsltGetTemplate</a><br />
 <a href="html/libxslt-extensions.html#xsltInitElemPreComp">xsltInitElemPreComp</a><br />
@@ -330,6 +342,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-preproc.html#xsltStylePreCompute">xsltStylePreCompute</a><br />
 <a href="html/libxslt-extensions.html#xsltTopLevelFunction">xsltTopLevelFunction</a><br />
 <a href="html/libxslt-xsltutils.html#xsltTransformError">xsltTransformError</a><br />
+<a href="html/libxslt-xsltutils.html#xsltXPathCompile">xsltXPathCompile</a><br />
 </p><h2>Type xsltTemplatePtr:</h2><p><a href="html/libxslt-xsltutils.html#xslAddCall">xslAddCall</a><br />
 <a href="html/libxslt-transform.html#xslHandleDebugger">xslHandleDebugger</a><br />
 <a href="html/libxslt-xsltutils.html#xsltAddCallCallback">xsltAddCallCallback</a><br />
@@ -369,6 +382,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#xsltDoSortFunction">xsltDoSortFunction</a><br />
 <a href="html/libxslt-transform.html#xsltDocumentElem">xsltDocumentElem</a><br />
 <a href="html/libxslt-transform.html#xsltElement">xsltElement</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltEvalAVT">xsltEvalAVT</a><br />
 <a href="html/libxslt-templates.html#xsltEvalAttrValueTemplate">xsltEvalAttrValueTemplate</a><br />
 <a href="html/libxslt-variables.html#xsltEvalGlobalVariables">xsltEvalGlobalVariables</a><br />
 <a href="html/libxslt-variables.html#xsltEvalOneUserParam">xsltEvalOneUserParam</a><br />

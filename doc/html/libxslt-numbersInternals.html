@@ -23,11 +23,11 @@ A:link, A:visited, A:active { text-decoration: underline }
     char	is_multiplier_set	: Flag to catch multiple occurences of pe
     char	is_negative_pattern	: Flag for processing -ve prefix/suffix
 }</pre><h3><a name="xsltNumberData" id="xsltNumberData">Structure xsltNumberData</a></h3><pre class="programlisting">Structure xsltNumberData<br />struct _xsltNumberData {
-    xmlChar *	level
-    xmlChar *	count
-    xmlChar *	from
-    xmlChar *	value
-    xmlChar *	format
+    const xmlChar *	level
+    const xmlChar *	count
+    const xmlChar *	from
+    const xmlChar *	value
+    const xmlChar *	format
     int	has_format
     int	digitsPerGroup
     int	groupingCharacter

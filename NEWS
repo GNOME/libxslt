@@ -10,6 +10,22 @@ http://cvs.gnome.org/lxr/source/libxslt/ChangeLog
  file
 for a really accurate description:
 
+1.1.3: Feb 16 2004:
+   - Rewrote the Attribute Value Template code, new XPath compilation
+    interfaces, dictionnary reuses for XSLT with potential for serious
+    performance improvements. 
+   - bug fixes: portability (William Brack), key() in node-set() results
+    (William), comment before doctype (William), math and node-set() problems
+    (William), cdata element and default namespace (William), behaviour on
+    unknown XSLT elements (Stefan Kost), priority of "//foo" patterns
+    (William), xsl:element and xsl:attribute QName check (William), comments
+    with -- (William), attribute namespace (William), check for ?> in PI
+    (William)
+   - Documentations: cleanup (John Fleck and William) 
+   - Python: patch for OS-X (Gianni Ceccarelli), enums export (Stephane
+    bidoul)
+
+
 1.1.2: Dec 24 2003:
    - Documentation fixes (John Fleck, William Brack), EXSLT documentation
     (William Brack)

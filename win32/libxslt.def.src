@@ -39,6 +39,7 @@ xsltChoose
 xsltCleanupGlobals
 xsltCleanupTemplates
 xsltComment
+xsltCompileAttr
 xsltCompilePattern
 xsltComputeSortResult
 xsltCopy
@@ -60,6 +61,7 @@ xsltDocumentFunction
 xsltDocumentSortFunction
 xsltElement
 xsltElementAvailableFunction
+xsltEvalAVT
 xsltEvalAttrValueTemplate
 xsltEvalGlobalVariables
 xsltEvalOneUserParam
@@ -81,6 +83,7 @@ xsltFindTemplate
 xsltForEach
 xsltFormatNumberConversion
 xsltFormatNumberFunction
+xsltFreeAVTList
 xsltFreeAttributeSetsHashes
 xsltFreeCompMatchList
 xsltFreeCtxtExts
@@ -101,6 +104,7 @@ xsltFreeTransformContext
 xsltFunctionAvailableFunction
 xsltFunctionNodeSet
 xsltGenerateIdFunction
+xsltGetCNsProp
 xsltGetDebuggerStatus
 xsltGetDefaultSecurityPrefs
 xsltGetExtData
@@ -199,6 +203,7 @@ xsltSetXIncludeDefault
 xsltShutdownCtxtExts
 xsltShutdownExts
 xsltSort
+xsltSplitQName
 xsltStyleGetExtData
 xsltStylePreCompute
 xsltSystemPropertyFunction
@@ -214,6 +219,7 @@ xsltUnregisterExtModuleFunction
 xsltUnregisterExtModuleTopLevel
 xsltValueOf
 xsltVariableLookup
+xsltXPathCompile
 xsltXPathFunctionLookup
 xsltXPathGetTransformContext
 xsltXPathVariableLookup

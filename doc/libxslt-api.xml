@@ -348,25 +348,28 @@
      <exports symbol='_xsltDocument' type='struct'/>
      <exports symbol='_xsltRuntimeExtra' type='struct'/>
      <exports symbol='_xsltStylesheet' type='struct'/>
+     <exports symbol='xsltNumberFormat' type='function'/>
      <exports symbol='xsltElemPreCompDeallocator' type='function'/>
      <exports symbol='xsltRegisterPersistRVT' type='function'/>
      <exports symbol='xsltParseStylesheetImportedDoc' type='function'/>
      <exports symbol='xsltFreeStackElemList' type='function'/>
+     <exports symbol='xsltCompileAttr' type='function'/>
      <exports symbol='xsltAllocateExtra' type='function'/>
-     <exports symbol='xsltNumberFormat' type='function'/>
+     <exports symbol='xsltFreeAVTList' type='function'/>
      <exports symbol='xsltFreeRVTs' type='function'/>
      <exports symbol='xsltRegisterTmpRVT' type='function'/>
      <exports symbol='xsltAllocateExtraCtxt' type='function'/>
      <exports symbol='xsltIsBlank' type='function'/>
-     <exports symbol='xsltParseStylesheetFile' type='function'/>
+     <exports symbol='xsltSortFunc' type='function'/>
      <exports symbol='xsltParseTemplateContent' type='function'/>
      <exports symbol='xsltNewStylesheet' type='function'/>
      <exports symbol='xsltFormatNumberConversion' type='function'/>
      <exports symbol='xsltDecimalFormatGetByName' type='function'/>
      <exports symbol='xsltTransformFunction' type='function'/>
-     <exports symbol='xsltSortFunc' type='function'/>
+     <exports symbol='xsltParseStylesheetFile' type='function'/>
      <exports symbol='xsltParseStylesheetDoc' type='function'/>
      <exports symbol='xsltLoadStylesheetPI' type='function'/>
+     <exports symbol='xsltEvalAVT' type='function'/>
      <exports symbol='xsltFreeStylesheet' type='function'/>
      <exports symbol='xsltCreateRVT' type='function'/>
      <exports symbol='xsltParseStylesheetProcess' type='function'/>
@@ -435,6 +438,7 @@
      <exports symbol='xsltSetGenericErrorFunc' type='function'/>
      <exports symbol='xsltSetDebuggerCallbacks' type='function'/>
      <exports symbol='xsltCalibrateAdjust' type='function'/>
+     <exports symbol='xsltXPathCompile' type='function'/>
      <exports symbol='xsltSetGenericDebugFunc' type='function'/>
      <exports symbol='xsltDebugSetDefaultTrace' type='function'/>
      <exports symbol='xsltDropCallCallback' type='function'/>
@@ -452,6 +456,7 @@
      <exports symbol='xsltSetCtxtSortFunc' type='function'/>
      <exports symbol='xsltGetNsProp' type='function'/>
      <exports symbol='xsltSaveResultToFilename' type='function'/>
+     <exports symbol='xsltGetCNsProp' type='function'/>
      <exports symbol='xsltGetQNameURI' type='function'/>
      <exports symbol='xsltAddCallCallback' type='function'/>
      <exports symbol='xsltSetDebuggerStatus' type='function'/>
@@ -459,6 +464,7 @@
      <exports symbol='xsltSaveProfiling' type='function'/>
      <exports symbol='xsltSaveResultToString' type='function'/>
      <exports symbol='xsltHandleDebuggerCallback' type='function'/>
+     <exports symbol='xsltSplitQName' type='function'/>
      <exports symbol='xsltDoSortFunction' type='function'/>
      <exports symbol='xsltDebugGetDefaultTrace' type='function'/>
      <exports symbol='xsltMessage' type='function'/>
@@ -680,11 +686,11 @@
     </struct>
     <typedef name='xsltFormatNumberInfoPtr' file='numbersInternals' type='xsltFormatNumberInfo *'/>
     <struct name='xsltNumberData' file='numbersInternals' type='struct _xsltNumberData'>
-      <field name='level' type='xmlChar *' info=''/>
-      <field name='count' type='xmlChar *' info=''/>
-      <field name='from' type='xmlChar *' info=''/>
-      <field name='value' type='xmlChar *' info=''/>
-      <field name='format' type='xmlChar *' info=''/>
+      <field name='level' type='const xmlChar *' info=''/>
+      <field name='count' type='const xmlChar *' info=''/>
+      <field name='from' type='const xmlChar *' info=''/>
+      <field name='value' type='const xmlChar *' info=''/>
+      <field name='format' type='const xmlChar *' info=''/>
       <field name='has_format' type='int' info=''/>
       <field name='digitsPerGroup' type='int' info=''/>
       <field name='groupingCharacter' type='int' info=''/>
@@ -708,9 +714,9 @@
       <field name='next' type='struct _xsltStackElem *' info=' chained list'/>
       <field name='comp' type='xsltStylePreCompPtr' info=' the compiled form'/>
       <field name='computed' type='int' info=' was the evaluation done'/>
-      <field name='name' type='xmlChar *' info=' the local part of the name QName'/>
-      <field name='nameURI' type='xmlChar *' info=' the URI part of the name QName'/>
-      <field name='select' type='xmlChar *' info=' the eval string'/>
+      <field name='name' type='const xmlChar *' info=' the local part of the name QName'/>
+      <field name='nameURI' type='const xmlChar *' info=' the URI part of the name QName'/>
+      <field name='select' type='const xmlChar *' info=' the eval string'/>
       <field name='tree' type='xmlNodePtr' info=' the tree if no eval string or the location'/>
       <field name='value' type='xmlXPathObjectPtr' info=' The value if computed'/>
     </struct>
@@ -721,30 +727,30 @@
       <field name='func' type='xsltTransformFunction' info=' handling function'/>
       <field name='inst' type='xmlNodePtr' info='* Pre computed values.
 *'/>
-      <field name='stype' type='xmlChar *' info=' sort'/>
+      <field name='stype' type='const xmlChar *' info=' sort'/>
       <field name='has_stype' type='int' info=' sort'/>
       <field name='number' type='int' info=' sort'/>
-      <field name='order' type='xmlChar *' info=' sort'/>
+      <field name='order' type='const xmlChar *' info=' sort'/>
       <field name='has_order' type='int' info=' sort'/>
       <field name='descending' type='int' info=' sort'/>
-      <field name='lang' type='xmlChar *' info=' sort'/>
+      <field name='lang' type='const xmlChar *' info=' sort'/>
       <field name='has_lang' type='int' info=' sort'/>
-      <field name='case_order' type='xmlChar *' info=' sort'/>
+      <field name='case_order' type='const xmlChar *' info=' sort'/>
       <field name='lower_first' type='int' info=' sort'/>
-      <field name='use' type='xmlChar *' info=' copy, element'/>
+      <field name='use' type='const xmlChar *' info=' copy, element'/>
       <field name='has_use' type='int' info=' copy, element'/>
       <field name='noescape' type='int' info=' text'/>
-      <field name='name' type='xmlChar *' info=' element, attribute, pi'/>
+      <field name='name' type='const xmlChar *' info=' element, attribute, pi'/>
       <field name='has_name' type='int' info=' element, attribute, pi'/>
-      <field name='ns' type='xmlChar *' info=' element'/>
+      <field name='ns' type='const xmlChar *' info=' element'/>
       <field name='has_ns' type='int' info=' element'/>
-      <field name='mode' type='xmlChar *' info=' apply-templates'/>
-      <field name='modeURI' type='xmlChar *' info=' apply-templates'/>
-      <field name='test' type='xmlChar *' info=' if'/>
+      <field name='mode' type='const xmlChar *' info=' apply-templates'/>
+      <field name='modeURI' type='const xmlChar *' info=' apply-templates'/>
+      <field name='test' type='const xmlChar *' info=' if'/>
       <field name='templ' type='xsltTemplatePtr' info=' call-template'/>
-      <field name='select' type='xmlChar *' info=' sort, copy-of, value-of, apply-templates'/>
+      <field name='select' type='const xmlChar *' info=' sort, copy-of, value-of, apply-templates'/>
       <field name='ver11' type='int' info=' document'/>
-      <field name='filename' type='xmlChar *' info=' document URL'/>
+      <field name='filename' type='const xmlChar *' info=' document URL'/>
       <field name='has_filename' type='int' info=' document'/>
       <field name='numdata' type='xsltNumberData' info=' number'/>
       <field name='comp' type='xmlXPathCompExprPtr' info=' a precompiled XPath expression'/>
@@ -813,7 +819,11 @@ informations are stored'/>
       <field name='extInfos' type='xmlHashTablePtr' info=' the extension data'/>
       <field name='extrasNr' type='int' info='* For keeping track of nested includes
 *'/>
-      <field name='includes' type='xsltDocumentPtr' info=' points to last nested include'/>
+      <field name='includes' type='xsltDocumentPtr' info='* dictionnary: shared between stylesheet, context and documents.
+*'/>
+      <field name='dict' type='xmlDictPtr' info='* precompiled attribute value templates.
+*'/>
+      <field name='attVTs' type='void *' info=''/>
     </struct>
     <typedef name='xsltStylesheetPtr' file='xsltInternals' type='xsltStylesheet *'/>
     <struct name='xsltTemplate' file='xsltInternals' type='struct _xsltTemplate'>
@@ -889,7 +899,9 @@ informations are stored'/>
 *'/>
       <field name='debugStatus' type='int' info=' the context level debug status'/>
       <field name='traceCode' type='unsigned long *' info=' pointer to the variable holding the mask'/>
-      <field name='parserOptions' type='int' info=' parser options xmlParserOption'/>
+      <field name='parserOptions' type='int' info='* dictionnary: shared between stylesheet, context and documents.
+*'/>
+      <field name='dict' type='xmlDictPtr' info=''/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -967,7 +979,7 @@ informations are stored'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT stylesheet'/>
       <arg name='node' type='xmlNodePtr' info='the node in the source tree.'/>
       <arg name='inst' type='xmlNodePtr' info='the xslt attribute node'/>
-      <arg name='attributes' type='xmlChar *' info='the set list.'/>
+      <arg name='attributes' type='const xmlChar *' info='the set list.'/>
     </function>
     <function name='xsltApplyImports' file='transform'>
       <info>Process the xslt apply-imports node on the source node</info>
@@ -1109,6 +1121,12 @@ informations are stored'/>
       <arg name='node' type='xmlNodePtr' info='the node in the source tree.'/>
       <arg name='inst' type='xmlNodePtr' info='the xslt comment node'/>
       <arg name='comp' type='xsltStylePreCompPtr' info='precomputed information'/>
+    </function>
+    <function name='xsltCompileAttr' file='xsltInternals'>
+      <info>Precompile an attribute in a stylesheet, basically it checks if it is an attrubute value template, and if yes establish some structures needed to process it at transformation time.</info>
+      <return type='void'/>
+      <arg name='style' type='xsltStylesheetPtr' info='a XSLT process context'/>
+      <arg name='attr' type='xmlAttrPtr' info='the attribute coming from the stylesheet.'/>
     </function>
     <function name='xsltCompilePattern' file='pattern'>
       <info>Compile the XSLT pattern and generates a list of precompiled form suitable for fast matching.  [1] Pattern ::= LocationPathPattern | Pattern &apos;|&apos; LocationPathPattern</info>
@@ -1259,6 +1277,13 @@ informations are stored'/>
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context'/>
       <arg name='nargs' type='int' info='the number of arguments'/>
     </function>
+    <function name='xsltEvalAVT' file='xsltInternals'>
+      <info>Process the given AVT, and return the new string value.</info>
+      <return type='xmlChar *' info='the computed string value or NULL, must be deallocated by the caller.'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context'/>
+      <arg name='avt' type='void *' info='the prevompiled attribute value template info'/>
+      <arg name='node' type='xmlNodePtr' info='the node hosting the attribute'/>
+    </function>
     <function name='xsltEvalAttrValueTemplate' file='templates'>
       <info>Evaluate a attribute value template, i.e. the attribute value can contain expressions contained in curly braces ({}) and those are substituted by they computed value.</info>
       <return type='xmlChar *' info='the computed string value or NULL, must be deallocated by the caller.'/>
@@ -1281,7 +1306,7 @@ informations are stored'/>
     </function>
     <function name='xsltEvalStaticAttrValueTemplate' file='templates'>
       <info>Check if an attribute value template has a static value, i.e. the attribute value does not contain expressions contained in curly braces ({})</info>
-      <return type='xmlChar *' info='the static string value or NULL, must be deallocated by the caller.'/>
+      <return type='const xmlChar *' info='the static string value or NULL, must be deallocated by the caller.'/>
       <arg name='style' type='xsltStylesheetPtr' info='the XSLT stylesheet'/>
       <arg name='node' type='xmlNodePtr' info='the stylesheet node'/>
       <arg name='name' type='const xmlChar *' info='the attribute Name'/>
@@ -1415,6 +1440,11 @@ informations are stored'/>
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context'/>
       <arg name='nargs' type='int' info='the number of arguments'/>
     </function>
+    <function name='xsltFreeAVTList' file='xsltInternals'>
+      <info>Free up the memory associated to the attribute value templates</info>
+      <return type='void'/>
+      <arg name='avt' type='void *' info='pointer to an list of AVT structures'/>
+    </function>
     <function name='xsltFreeAttributeSetsHashes' file='attributes'>
       <info>Free up the memory used by attribute sets</info>
       <return type='void'/>
@@ -1517,6 +1547,14 @@ informations are stored'/>
       <return type='void'/>
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context'/>
       <arg name='nargs' type='int' info='the number of arguments'/>
+    </function>
+    <function name='xsltGetCNsProp' file='xsltutils'>
+      <info>Similar to xmlGetNsProp() but with a slightly different semantic  Search and get the value of an attribute associated to a node This attribute has to be anchored in the namespace specified, or has no namespace and the element is in that namespace.  This does the entity substitution. This function looks in DTD attribute declaration for #FIXED or default declaration values unless DTD use has been turned off.</info>
+      <return type='const xmlChar *' info='the attribute value or NULL if not found. The string is allocated in the stylesheet dictionnary.'/>
+      <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
+      <arg name='node' type='xmlNodePtr' info='the node'/>
+      <arg name='name' type='const xmlChar *' info='the attribute name'/>
+      <arg name='nameSpace' type='const xmlChar *' info='the URI of the namespace'/>
     </function>
     <function name='xsltGetDebuggerStatus' file='xsltutils'>
       <info>Get xslDebugStatus.</info>
@@ -2168,6 +2206,13 @@ informations are stored'/>
       <arg name='sorts' type='xmlNodePtr *' info='the node-set to sort'/>
       <arg name='nbsorts' type='int' info='the number of sorts'/>
     </functype>
+    <function name='xsltSplitQName' file='xsltutils'>
+      <info>Split QNames into prefix and local names, both allocated from a dictionnary.</info>
+      <return type='const xmlChar *' info='the localname or NULL in case of error.'/>
+      <arg name='dict' type='xmlDictPtr' info='a dictionnary'/>
+      <arg name='name' type='const xmlChar *' info='the full QName'/>
+      <arg name='prefix' type='const xmlChar **' info='the return value'/>
+    </function>
     <functype name='xsltStyleExtInitFunction' file='extensions'>
       <info>A function called at initialization time of an XSLT extension module.</info>
       <return type='void *' info='a pointer to the module specific data for this transformation.'/>
@@ -2290,6 +2335,12 @@ informations are stored'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context'/>
       <arg name='name' type='const xmlChar *' info='the variable name'/>
       <arg name='ns_uri' type='const xmlChar *' info='the variable namespace URI'/>
+    </function>
+    <function name='xsltXPathCompile' file='xsltutils'>
+      <info>Compile an XPath expression</info>
+      <return type='xmlXPathCompExprPtr' info='the xmlXPathCompExprPtr resulting from the compilation or NULL. the caller has to free the object.'/>
+      <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
+      <arg name='str' type='const xmlChar *' info='the XPath expression'/>
     </function>
     <function name='xsltXPathFunctionLookup' file='functions'>
       <info>This is the entry point when a function is needed by the XPath interpretor.</info>
