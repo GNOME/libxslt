@@ -161,12 +161,12 @@
     </function>
     <function name='xsltStylesheetGetDoctypePublic' file='python_accessor'>
       <info>Get the output PUBLIC of a stylesheet</info>
-      <return type='xmlChar *' info="The output PUBLIC" field="doctypePublic"/>
+      <return type='const xmlChar *' info="The output PUBLIC" field="doctypePublic"/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
     </function>
     <function name='xsltStylesheetGetDoctypeSystem' file='python_accessor'>
       <info>Get the output SYSTEM of a stylesheet</info>
-      <return type='xmlChar *' info="The output SYSTEM" field="doctypeSystem"/>
+      <return type='const xmlChar *' info="The output SYSTEM" field="doctypeSystem"/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
     </function>
     <function name='xsltStylesheetGetPrivate' file='python_accessor'>
