@@ -341,6 +341,8 @@ static void usage(const char *name) {
     printf("\t--xinclude : do XInclude processing on document intput\n");
 #endif
     printf("\t--profile or --norman : dump profiling informations \n");
+    printf("\nProject libxslt home page: http://xmlsoft.org/XSLT/\n");
+    printf("To report bugs and get help: http://xmlsoft.org/XSLT/bugs.html\n");
 }
 
 int

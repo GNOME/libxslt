@@ -1,3 +1,7 @@
+Fri Jan 25 15:31:23 CET 2002 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: added links to the Web site from usage()
+
 Wed Jan 23 23:13:37 CET 2002 Daniel Veillard <daniel@veillard.com>
 
 	* doc/API*.html doc/parsedecl.py doc/*.xsl parsedecl.py: generated
