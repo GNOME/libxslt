@@ -206,8 +206,22 @@ xsltNumberFormatTokenize(xmlChar *format,
     default_token.token = (xmlChar)'0';
     default_token.width = 1;
     default_token.filling = BAD_CAST(".");
-    
-    for (cnt = 0; cnt < array_max; cnt++) {
+
+    /*
+     * Parse initial non-alphanumeric token
+     * Always use an empty token for that
+     */
+    while (! (IS_LETTER(format[index]) || IS_DIGIT(format[index]))) {
+	 if (format[index] == 0)
+	      break; /* while */
+	 index++;
+    }
+    if (index > 0)
+	 array[0].filling = xmlStrndup(format, index);
+    else
+	 array[0].filling = NULL;    
+
+    for (cnt = 1; cnt < array_max; cnt++) {
 	if (format[index] == 0) {
 	    break; /* for */
 	} else if (IS_DIGIT_ONE(format[index]) ||
@@ -288,12 +302,20 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
     int is_last_default_token = 0;
 
     minmax = (array_max >= numbers_max) ? numbers_max : array_max;
+
+    /*
+     * Handle initial non-alphanumeric token
+     */
+    token = &(*array)[0];
+    if (token->filling != NULL)
+	 xmlBufferCat(buffer, token->filling);
+
     for (i = 0; i < numbers_max; i++) {
 	/* Insert number */
 	number = numbers[(numbers_max - 1) - i];
-	if (i < array_max) {
-	  token = &(*array)[i];
-	} else if (array_max > 0) {
+	if (i + 1 < array_max) {
+	  token = &(*array)[i + 1];
+	} else if (array_max > 1) {
 	  token = &(*array)[array_max - 1];
 	} else {
 	  token = &default_token;

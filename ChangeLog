@@ -1,3 +1,8 @@
+Sun Oct 14 17:17:03 CEST 2001 Thomas Broyer <tbroyer@ltgt.net>
+
+	* libxslt/numbers.c tests/REC/test-7.7-4.out: implement initial
+	  non-alphanumeric token handling in number formatting.
+
 Wed Oct 10 11:58:41 CEST 2001 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: releasing 1.0.5
