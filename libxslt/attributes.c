@@ -170,6 +170,7 @@ xsltAddAttrElemList(xsltAttrElemPtr list, xmlNodePtr attr) {
 	    return(cur);
 	if (cur->next == NULL) {
 	    cur->next = xsltNewAttrElem(attr);
+	    return(list);
 	}
 	cur = next;
     }
@@ -372,14 +373,16 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		values2->set = ncname2;
 		values2->ns = prefix2;
 		values = xsltMergeAttrElemList(values, values2);
+		xsltFreeAttrElem(values2);
+	    } else {
+		if (ncname2 != NULL)
+		    xmlFree(ncname2);
+		if (prefix2 != NULL)
+		    xmlFree(prefix2);
 	    }
 
 	    if (attrib != NULL)
 		xmlFree(attrib);
-	    if (ncname2 != NULL)
-		xmlFree(ncname2);
-	    if (prefix2 != NULL)
-		xmlFree(prefix2);
 	}
 	attrib = endattr;
     }

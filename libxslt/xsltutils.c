@@ -1081,7 +1081,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	} else {
 	    htmlSetMetaEncoding(result, (const xmlChar *) "UTF-8");
 	}
-	if (indent != 0)
+	if (indent == -1)
 	    indent = 1;
 	htmlDocContentDumpFormatOutput(buf, result, (const char *) encoding,
 		                       indent);

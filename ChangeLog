@@ -1,3 +1,10 @@
+Thu Jan  9 18:17:40 CET 2003 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: tried to fix #102800 for good. Reenabled
+	  memory debug checking which got deactivated at some point ?!?
+	* libexslt/date.c libxslt/attributes.c: fixing some memory leaks
+	* libxslt/xsltutils.c: very small change on HTML indentation handling
+
 Thu Jan  9 14:28:19 CET 2003 Daniel Veillard <daniel@veillard.com>
 
 	* tests/REC/test-8-1.xsl tests/REC/test-9.1-2.xsl 

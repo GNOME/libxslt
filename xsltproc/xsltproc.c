@@ -547,7 +547,13 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "-output")) ||
                    (!strcmp(argv[i], "--output"))) {
             i++;
+#if defined(WIN32)
+	    output = xmlNormalizeWindowsPath(argv[i]);
+            if (output == NULL)
+		output = xmlStrdup(argv[i]);
+#else
             output = argv[i];
+#endif
         } else if ((!strcmp(argv[i], "-V")) ||
                    (!strcmp(argv[i], "-version")) ||
                    (!strcmp(argv[i], "--version"))) {
@@ -815,17 +821,19 @@ main(int argc, char **argv)
 	    xsltProcess(doc, cur, argv[i]);
         }
     }
+done:
     if (cur != NULL)
         xsltFreeStylesheet(cur);
     for (i = 0;i < nbstrparams;i++)
 	xmlFree(strparams[i]);
-done:
-    xsltCleanupGlobals();
-    xmlCleanupParser();
-#if 0
-    xmlMemoryDump();
+#if defined(WIN32)
+    if (output != NULL)
+	xmlFree(output);
 #endif
     xsltFreeSecurityPrefs(sec);
+    xsltCleanupGlobals();
+    xmlCleanupParser();
+    xmlMemoryDump();
     return(errorno);
 }
 
