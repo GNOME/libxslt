@@ -876,6 +876,218 @@ void *ctxt,const xmlChar *name,const xmlChar *ns_uri
 void
 </FUNCTION>
 <MACRO>
+<NAME>XSLT_TODO</NAME>
+#define XSLT_TODO 							\
+    xsltGenericError(xsltGenericErrorContext,				\
+	    "Unimplemented block at %s:%d\n",				\
+            __FILE__, __LINE__);
+</MACRO>
+<MACRO>
+<NAME>XSLT_STRANGE</NAME>
+#define XSLT_STRANGE 							\
+    xsltGenericError(xsltGenericErrorContext,				\
+	    "Internal error at %s:%d\n",				\
+            __FILE__, __LINE__);
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_ELEM</NAME>
+#define IS_XSLT_ELEM(n)							\
+    (((n) != NULL) && ((n)->ns != NULL) &&				\
+     (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_NAME</NAME>
+#define IS_XSLT_NAME(n, val)						\
+    (xmlStrEqual((n)->name, (const xmlChar *) (val)))
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_REAL_NODE</NAME>
+#define IS_XSLT_REAL_NODE(n)						\
+    (((n) != NULL) &&							\
+     (((n)->type == XML_ELEMENT_NODE) ||				\
+      ((n)->type == XML_TEXT_NODE) ||					\
+      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
+      ((n)->type == XML_DOCUMENT_NODE) ||				\
+      ((n)->type == XML_HTML_DOCUMENT_NODE) ||				\
+      ((n)->type == XML_DOCB_DOCUMENT_NODE)))
+</MACRO>
+<MACRO>
+<NAME>IS_XSLT_REAL_NODE</NAME>
+#define IS_XSLT_REAL_NODE(n)						\
+    (((n) != NULL) &&							\
+     (((n)->type == XML_ELEMENT_NODE) ||				\
+      ((n)->type == XML_TEXT_NODE) ||					\
+      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
+      ((n)->type == XML_DOCUMENT_NODE) ||				\
+      ((n)->type == XML_HTML_DOCUMENT_NODE)))
+</MACRO>
+<FUNCTION>
+<NAME>xsltGetNsProp</NAME>
+<RETURNS>xmlChar  *</RETURNS>
+xmlNodePtr node,const xmlChar *name,const xmlChar *nameSpace
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltPrintErrorContext</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xsltStylesheetPtr style,xmlNodePtr node
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltMessage</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetGenericErrorFunc</NAME>
+<RETURNS>void 	</RETURNS>
+void *ctx,xmlGenericErrorFunc handler
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSetGenericDebugFunc</NAME>
+<RETURNS>void 	</RETURNS>
+void *ctx,xmlGenericErrorFunc handler
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDocumentSortFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xmlNodeSetPtr list
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltDoSortFunction</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,xmlNodePtr *sorts,int nbsorts
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltGetQNameURI</NAME>
+<RETURNS>const xmlChar  *</RETURNS>
+xmlNodePtr node,xmlChar **name
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultTo</NAME>
+<RETURNS>int 	</RETURNS>
+xmlOutputBufferPtr buf,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultToFilename</NAME>
+<RETURNS>int 	</RETURNS>
+const char *URI,xmlDocPtr result,xsltStylesheetPtr style,int compression
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultToFile</NAME>
+<RETURNS>int 	</RETURNS>
+FILE *file,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultToFd</NAME>
+<RETURNS>int 	</RETURNS>
+int fd,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveResultToString</NAME>
+<RETURNS>int  </RETURNS>
+xmlChar **doc_txt_ptr,int * doc_txt_len,xmlDocPtr result,xsltStylesheetPtr style
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltSaveProfiling</NAME>
+<RETURNS>void 	</RETURNS>
+xsltTransformContextPtr ctxt,FILE *output
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltTimestamp</NAME>
+<RETURNS>long 	</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>xsltCalibrateAdjust</NAME>
+<RETURNS>void 	</RETURNS>
+long delta
+</FUNCTION>
+<MACRO>
+<NAME>XSLT_TIMESTAMP_TICS_PER_SEC</NAME>
+#define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
+</MACRO>
+<ENUM>
+<NAME>xsltDebugStatusCodes</NAME>
+typedef enum {
+    XSLT_DEBUG_NONE = 0, /* no debugging allowed */
+    XSLT_DEBUG_INIT,
+    XSLT_DEBUG_STEP,
+    XSLT_DEBUG_STEPOUT,
+    XSLT_DEBUG_NEXT,
+    XSLT_DEBUG_STOP,
+    XSLT_DEBUG_CONT,
+    XSLT_DEBUG_RUN,
+    XSLT_DEBUG_RUN_RESTART,
+    XSLT_DEBUG_QUIT
+} xsltDebugStatusCodes;
+</ENUM>
+<USER_FUNCTION>
+<NAME>xsltHandleDebuggerCallback</NAME>
+<RETURNS>void </RETURNS>
+xmlNodePtr cur, xmlNodePtr node,
+			xsltTemplatePtr templ, xsltTransformContextPtr ctxt
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>xsltAddCallCallback</NAME>
+<RETURNS>int </RETURNS>
+xsltTemplatePtr templ, xmlNodePtr source
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>xsltDropCallCallback</NAME>
+<RETURNS>void </RETURNS>
+void
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>xsltSetDebuggerCallbacks</NAME>
+<RETURNS>int 	</RETURNS>
+int no, void *block
+</FUNCTION>
+<FUNCTION>
+<NAME>xslAddCall</NAME>
+<RETURNS>int 	</RETURNS>
+xsltTemplatePtr templ,xmlNodePtr source
+</FUNCTION>
+<FUNCTION>
+<NAME>xslDropCall</NAME>
+<RETURNS>void 	</RETURNS>
+void
+</FUNCTION>
+<MACRO>
+<NAME>LIBXSLT_DOTTED_VERSION</NAME>
+#define LIBXSLT_DOTTED_VERSION "1.0.20"
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_VERSION</NAME>
+#define LIBXSLT_VERSION 10020
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_VERSION_STRING</NAME>
+#define LIBXSLT_VERSION_STRING "10020"
+</MACRO>
+<MACRO>
+<NAME>WITH_XSLT_DEBUG</NAME>
+#define WITH_XSLT_DEBUG
+</MACRO>
+<MACRO>
+<NAME>DEBUG_MEMORY</NAME>
+#define DEBUG_MEMORY
+</MACRO>
+<MACRO>
+<NAME>DEBUG_MEMORY_LOCATION</NAME>
+#define DEBUG_MEMORY_LOCATION
+</MACRO>
+<MACRO>
+<NAME>ATTRIBUTE_UNUSED</NAME>
+#define ATTRIBUTE_UNUSED
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_PUBLIC</NAME>
+#define LIBXSLT_PUBLIC __declspec(dllimport)
+</MACRO>
+<MACRO>
+<NAME>LIBXSLT_PUBLIC</NAME>
+#define LIBXSLT_PUBLIC 
+</MACRO>
+<MACRO>
 <NAME>XSLT_MAX_SORT</NAME>
 #define XSLT_MAX_SORT 5
 </MACRO>
@@ -1402,215 +1614,3 @@ xsltStylesheetPtr style
 <RETURNS>int 	</RETURNS>
 xsltTransformContextPtr ctxt
 </FUNCTION>
-<MACRO>
-<NAME>XSLT_TODO</NAME>
-#define XSLT_TODO 							\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Unimplemented block at %s:%d\n",				\
-            __FILE__, __LINE__);
-</MACRO>
-<MACRO>
-<NAME>XSLT_STRANGE</NAME>
-#define XSLT_STRANGE 							\
-    xsltGenericError(xsltGenericErrorContext,				\
-	    "Internal error at %s:%d\n",				\
-            __FILE__, __LINE__);
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_ELEM</NAME>
-#define IS_XSLT_ELEM(n)							\
-    (((n) != NULL) && ((n)->ns != NULL) &&				\
-     (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_NAME</NAME>
-#define IS_XSLT_NAME(n, val)						\
-    (xmlStrEqual((n)->name, (const xmlChar *) (val)))
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_REAL_NODE</NAME>
-#define IS_XSLT_REAL_NODE(n)						\
-    (((n) != NULL) &&							\
-     (((n)->type == XML_ELEMENT_NODE) ||				\
-      ((n)->type == XML_TEXT_NODE) ||					\
-      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
-      ((n)->type == XML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_HTML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_DOCB_DOCUMENT_NODE)))
-</MACRO>
-<MACRO>
-<NAME>IS_XSLT_REAL_NODE</NAME>
-#define IS_XSLT_REAL_NODE(n)						\
-    (((n) != NULL) &&							\
-     (((n)->type == XML_ELEMENT_NODE) ||				\
-      ((n)->type == XML_TEXT_NODE) ||					\
-      ((n)->type == XML_ATTRIBUTE_NODE) ||				\
-      ((n)->type == XML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_HTML_DOCUMENT_NODE)))
-</MACRO>
-<FUNCTION>
-<NAME>xsltGetNsProp</NAME>
-<RETURNS>xmlChar  *</RETURNS>
-xmlNodePtr node,const xmlChar *name,const xmlChar *nameSpace
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltPrintErrorContext</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xsltStylesheetPtr style,xmlNodePtr node
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltMessage</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr node,xmlNodePtr inst
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSetGenericErrorFunc</NAME>
-<RETURNS>void 	</RETURNS>
-void *ctx,xmlGenericErrorFunc handler
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSetGenericDebugFunc</NAME>
-<RETURNS>void 	</RETURNS>
-void *ctx,xmlGenericErrorFunc handler
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltDocumentSortFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xmlNodeSetPtr list
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltDoSortFunction</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,xmlNodePtr *sorts,int nbsorts
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltGetQNameURI</NAME>
-<RETURNS>const xmlChar  *</RETURNS>
-xmlNodePtr node,xmlChar **name
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultTo</NAME>
-<RETURNS>int 	</RETURNS>
-xmlOutputBufferPtr buf,xmlDocPtr result,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultToFilename</NAME>
-<RETURNS>int 	</RETURNS>
-const char *URI,xmlDocPtr result,xsltStylesheetPtr style,int compression
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultToFile</NAME>
-<RETURNS>int 	</RETURNS>
-FILE *file,xmlDocPtr result,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultToFd</NAME>
-<RETURNS>int 	</RETURNS>
-int fd,xmlDocPtr result,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveResultToString</NAME>
-<RETURNS>int  </RETURNS>
-xmlChar **doc_txt_ptr,int * doc_txt_len,xmlDocPtr result,xsltStylesheetPtr style
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltSaveProfiling</NAME>
-<RETURNS>void 	</RETURNS>
-xsltTransformContextPtr ctxt,FILE *output
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltTimestamp</NAME>
-<RETURNS>long 	</RETURNS>
-void
-</FUNCTION>
-<FUNCTION>
-<NAME>xsltCalibrateAdjust</NAME>
-<RETURNS>void 	</RETURNS>
-long delta
-</FUNCTION>
-<MACRO>
-<NAME>XSLT_TIMESTAMP_TICS_PER_SEC</NAME>
-#define XSLT_TIMESTAMP_TICS_PER_SEC 100000l
-</MACRO>
-<ENUM>
-<NAME>xsltDebugStatusCodes</NAME>
-typedef enum {
-    XSLT_DEBUG_NONE = 0, /* no debugging allowed */
-    XSLT_DEBUG_INIT,
-    XSLT_DEBUG_STEP,
-    XSLT_DEBUG_STEPOUT,
-    XSLT_DEBUG_NEXT,
-    XSLT_DEBUG_STOP,
-    XSLT_DEBUG_CONT,
-    XSLT_DEBUG_RUN,
-    XSLT_DEBUG_RUN_RESTART,
-    XSLT_DEBUG_QUIT
-} xsltDebugStatusCodes;
-</ENUM>
-<USER_FUNCTION>
-<NAME>xsltHandleDebuggerCallback</NAME>
-<RETURNS>void </RETURNS>
-xmlNodePtr cur, xmlNodePtr node,
-			xsltTemplatePtr templ, xsltTransformContextPtr ctxt
-</USER_FUNCTION>
-<USER_FUNCTION>
-<NAME>xsltAddCallCallback</NAME>
-<RETURNS>int </RETURNS>
-xsltTemplatePtr templ, xmlNodePtr source
-</USER_FUNCTION>
-<USER_FUNCTION>
-<NAME>xsltDropCallCallback</NAME>
-<RETURNS>void </RETURNS>
-void
-</USER_FUNCTION>
-<FUNCTION>
-<NAME>xsltSetDebuggerCallbacks</NAME>
-<RETURNS>int 	</RETURNS>
-int no, void *block
-</FUNCTION>
-<FUNCTION>
-<NAME>xslAddCall</NAME>
-<RETURNS>int 	</RETURNS>
-xsltTemplatePtr templ,xmlNodePtr source
-</FUNCTION>
-<FUNCTION>
-<NAME>xslDropCall</NAME>
-<RETURNS>void 	</RETURNS>
-void
-</FUNCTION>
-<MACRO>
-<NAME>LIBXSLT_DOTTED_VERSION</NAME>
-#define LIBXSLT_DOTTED_VERSION "1.0.20"
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_VERSION</NAME>
-#define LIBXSLT_VERSION 10020
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_VERSION_STRING</NAME>
-#define LIBXSLT_VERSION_STRING "10020"
-</MACRO>
-<MACRO>
-<NAME>WITH_XSLT_DEBUG</NAME>
-#define WITH_XSLT_DEBUG
-</MACRO>
-<MACRO>
-<NAME>DEBUG_MEMORY</NAME>
-#define DEBUG_MEMORY
-</MACRO>
-<MACRO>
-<NAME>DEBUG_MEMORY_LOCATION</NAME>
-#define DEBUG_MEMORY_LOCATION
-</MACRO>
-<MACRO>
-<NAME>ATTRIBUTE_UNUSED</NAME>
-#define ATTRIBUTE_UNUSED
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_PUBLIC</NAME>
-#define LIBXSLT_PUBLIC __declspec(dllimport)
-</MACRO>
-<MACRO>
-<NAME>LIBXSLT_PUBLIC</NAME>
-#define LIBXSLT_PUBLIC 
-</MACRO>

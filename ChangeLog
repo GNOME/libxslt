@@ -1,7 +1,14 @@
+Wed Sep 25 11:16:06 CEST 2002 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed a disable output escaping bug for
+	  HTML output introduced in 1.0.20 and raised by Mario Weilguni
+	* tests/docs/Makefile.am tests/docs/bug-91.xml
+	  tests/general/Makefile.am tests/general/bug-91.*: added the
+	  example in the regression tests for this case
+
 Tue Sep 24 20:33:08 MDT 2002 John Fleck <jfleck@inkstain.net>
 
-	* doc/xlst.html
-	changing link on ftp.gnome.org
+	* doc/xlst.html: changing link on ftp.gnome.org
 
 Mon Sep 23 10:14:38 CEST 2002 Daniel Veillard <daniel@veillard.com>
 

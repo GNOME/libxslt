@@ -377,7 +377,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	}
 	copy = xmlNewCDataBlock(ctxt->output, string,
 				xmlStrlen(string));
-    } else if ((noescape) && (ctxt->type == XSLT_OUTPUT_XML)) {
+    } else if (noescape) {
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
 	    (target->last->name == xmlStringTextNoenc)) {

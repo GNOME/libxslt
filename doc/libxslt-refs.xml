@@ -737,9 +737,9 @@
       <ref name='xsltFormatNumberConversion'/>
     </type>
     <type name='xmlChar **'>
-      <ref name='xsltFormatNumberConversion'/>
       <ref name='xsltGetQNameURI'/>
       <ref name='xsltSaveResultToString'/>
+      <ref name='xsltFormatNumberConversion'/>
     </type>
     <type name='xmlDocPtr'>
       <ref name='xsltNewDocument'/>
@@ -753,14 +753,14 @@
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltRunStylesheet'/>
       <ref name='xsltRunStylesheetUser'/>
-      <ref name='xsltParseStylesheetProcess'/>
-      <ref name='xsltParseStylesheetDoc'/>
-      <ref name='xsltLoadStylesheetPI'/>
       <ref name='xsltSaveResultTo'/>
       <ref name='xsltSaveResultToFilename'/>
       <ref name='xsltSaveResultToFile'/>
       <ref name='xsltSaveResultToFd'/>
       <ref name='xsltSaveResultToString'/>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetDoc'/>
+      <ref name='xsltLoadStylesheetPI'/>
     </type>
     <type name='xmlGenericErrorFunc'>
       <ref name='xsltSetGenericErrorFunc'/>
@@ -845,11 +845,6 @@
       <ref name='xsltParseStylesheetVariable'/>
       <ref name='xsltParseStylesheetParam'/>
       <ref name='xsltParseStylesheetCallerParam'/>
-      <ref name='xsltTransformFunction'/>
-      <ref name='xsltTransformFunction'/>
-      <ref name='xsltParseStylesheetOutput'/>
-      <ref name='xsltNumberFormat'/>
-      <ref name='xsltParseTemplateContent'/>
       <ref name='xsltGetNsProp'/>
       <ref name='xsltPrintErrorContext'/>
       <ref name='xsltMessage'/>
@@ -859,6 +854,11 @@
       <ref name='xsltHandleDebuggerCallback'/>
       <ref name='xsltAddCallCallback'/>
       <ref name='xslAddCall'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltParseStylesheetOutput'/>
+      <ref name='xsltNumberFormat'/>
+      <ref name='xsltParseTemplateContent'/>
     </type>
     <type name='xmlNodePtr *'>
       <ref name='xsltDoSortFunction'/>
@@ -1013,18 +1013,18 @@
       <ref name='xsltRunStylesheetUser'/>
       <ref name='xsltParseGlobalVariable'/>
       <ref name='xsltParseGlobalParam'/>
-      <ref name='xsltFreeStylesheet'/>
-      <ref name='xsltDecimalFormatGetByName'/>
-      <ref name='xsltParseStylesheetProcess'/>
-      <ref name='xsltParseStylesheetOutput'/>
-      <ref name='xsltParseTemplateContent'/>
-      <ref name='xsltAllocateExtra'/>
       <ref name='xsltPrintErrorContext'/>
       <ref name='xsltSaveResultTo'/>
       <ref name='xsltSaveResultToFilename'/>
       <ref name='xsltSaveResultToFile'/>
       <ref name='xsltSaveResultToFd'/>
       <ref name='xsltSaveResultToString'/>
+      <ref name='xsltFreeStylesheet'/>
+      <ref name='xsltDecimalFormatGetByName'/>
+      <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetOutput'/>
+      <ref name='xsltParseTemplateContent'/>
+      <ref name='xsltAllocateExtra'/>
     </type>
     <type name='xsltTemplatePtr'>
       <ref name='xsltAddTemplate'/>
@@ -1112,14 +1112,14 @@
       <ref name='xsltAddStackElemList'/>
       <ref name='xsltFreeGlobalVariables'/>
       <ref name='xsltVariableLookup'/>
-      <ref name='xsltTransformFunction'/>
-      <ref name='xsltNumberFormat'/>
-      <ref name='xsltAllocateExtraCtxt'/>
       <ref name='xsltPrintErrorContext'/>
       <ref name='xsltMessage'/>
       <ref name='xsltDoSortFunction'/>
       <ref name='xsltSaveProfiling'/>
       <ref name='xsltHandleDebuggerCallback'/>
+      <ref name='xsltTransformFunction'/>
+      <ref name='xsltNumberFormat'/>
+      <ref name='xsltAllocateExtraCtxt'/>
     </type>
     <type name='xsltTransformFunction'>
       <ref name='xsltNewElemPreComp'/>
