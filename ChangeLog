@@ -1,3 +1,9 @@
+Sat May  7 11:28:41 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/libexslt.3: applied patch from Jonathan Wakely to fix
+	  the namespace name for the EXSLT date and time functions in the man
+	  page.
+
 Wed Apr  6 23:58:12 CEST 2005 Igor Zlatkovic <igor@zlatkovic.com>
 
 	* libexslt/exslt.c libexslt/libexslt.h: Windows build cleanups,
