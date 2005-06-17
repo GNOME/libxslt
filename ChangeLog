@@ -1,3 +1,8 @@
+2005-06-17  Federico Mena Quintero  <federico@ximian.com>
+
+	* libxslt/xsltwin32config.h: Removed from CVS; this is a generated
+	file anyway and it breaks jhbuild all the time.
+
 Sat May  7 11:28:41 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/libexslt.3: applied patch from Jonathan Wakely to fix
