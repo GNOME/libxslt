@@ -1204,8 +1204,6 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 		goto OUTPUT_NUMBER;
 	    }
 
-	    /* Next skip over the -ve number info */
-	    the_format += prefix_length;
 	    while (*the_format != 0) {
 		if ( (xsltUTF8Charcmp(the_format, (self)->percent) == 0) ||
 		     (xsltUTF8Charcmp(the_format, (self)->permille)== 0) ) {
