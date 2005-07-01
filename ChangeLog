@@ -1,3 +1,8 @@
+2005-06-30  Federico Mena Quintero  <federico@ximian.com>
+
+	* libxslt/xsltwin32config.h: Added this file back.  We'll have to
+	figure out a way to make jhbuild not get CVS conflicts with it.
+
 Thu Jun 30 14:09:55 PDT 2005 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/numbers.c: fixed bug in negative prefix (bug 309209)
