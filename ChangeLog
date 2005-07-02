@@ -1,3 +1,10 @@
+Sat Jul  2 02:32:24 PDT 2005 <wbrack@mmm.com.hk>
+
+	* libxslt/numbers.c: further fixes for bug 309209, changing
+	  behaviour of format-number.
+	* libxslt/xslt.c: changed definition of per-mille character from
+	  '?' to Unicode #2030 (UTF-8 '‰') (ref XSLT spec 12.3)
+	  
 2005-06-30  Federico Mena Quintero  <federico@ximian.com>
 
 	* libxslt/xsltwin32config.h: Added this file back.  We'll have to

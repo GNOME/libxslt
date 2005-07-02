@@ -181,6 +181,7 @@ static xsltDecimalFormatPtr
 xsltNewDecimalFormat(xmlChar *name)
 {
     xsltDecimalFormatPtr self;
+    static xmlChar permille[4] = {0xe2, 0x80, 0xb0};	/* UTF8 for 0x2030 */
 
     self = xmlMalloc(sizeof(xsltDecimalFormat));
     if (self != NULL) {
@@ -193,7 +194,7 @@ xsltNewDecimalFormat(xmlChar *name)
 	self->decimalPoint = xmlStrdup(BAD_CAST("."));
 	self->grouping = xmlStrdup(BAD_CAST(","));
 	self->percent = xmlStrdup(BAD_CAST("%"));
-	self->permille = xmlStrdup(BAD_CAST("?"));
+	self->permille = xmlStrdup(BAD_CAST(permille));
 	self->zeroDigit = xmlStrdup(BAD_CAST("0"));
 	self->minusSign = xmlStrdup(BAD_CAST("-"));
 	self->infinity = xmlStrdup(BAD_CAST("Infinity"));
