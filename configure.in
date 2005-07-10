@@ -583,6 +583,7 @@ tests/exslt/math/Makefile
 tests/exslt/sets/Makefile
 tests/exslt/strings/Makefile
 tests/exslt/date/Makefile
+tests/exslt/dynamic/Makefile
 tests/plugins/Makefile
 doc/Makefile
 xslt-config

@@ -1,3 +1,11 @@
+Sun Jul 10 16:17:53 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltwin32config.h*: try to avoid generating conflicts
+	* libexslt/dynamic.c: applied patch from Mark Vakoc to implement
+	  dyn:map
+	* configure.in tests/exslt/Makefile.am tests/exslt/dynamic/*:
+	  added test for dyn:map to the regression suite
+
 Sat Jul  2 02:32:24 PDT 2005 <wbrack@mmm.com.hk>
 
 	* libxslt/numbers.c: further fixes for bug 309209, changing
