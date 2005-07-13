@@ -181,7 +181,8 @@ static xsltDecimalFormatPtr
 xsltNewDecimalFormat(xmlChar *name)
 {
     xsltDecimalFormatPtr self;
-    static xmlChar permille[4] = {0xe2, 0x80, 0xb0};	/* UTF8 for 0x2030 */
+    /* UTF-8 for 0x2030 */
+    static const xmlChar permille[4] = {0xe2, 0x80, 0xb0, 0};
 
     self = xmlMalloc(sizeof(xsltDecimalFormat));
     if (self != NULL) {

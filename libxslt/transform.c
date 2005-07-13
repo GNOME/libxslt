@@ -474,6 +474,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->sec = xsltGetDefaultSecurityPrefs();
     cur->debugStatus = xslDebugStatus;
     cur->traceCode = (unsigned long*) &xsltDefaultTrace;
+    cur->xinclude = xsltGetXIncludeDefault();
 
     return(cur);
 }
