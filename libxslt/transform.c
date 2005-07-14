@@ -730,7 +730,16 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	    return NULL;
 	if (cur->name == xmlStringTextNoenc)
 	    copy->name = xmlStringTextNoenc;
-	copy->content = cur->content;
+	/*
+	 * Must confirm that content is in dict
+	 * (bug 302821)
+	 */
+	if (xmlDictOwns(ctxt->dict, cur->content))
+	    copy->content = cur->content;
+	else {
+	    if ((copy->content = xmlStrdup(cur->content)) == NULL)
+		return NULL;
+	}
     } else {
         /*
 	 * normal processing. keep counters to extend the text node
