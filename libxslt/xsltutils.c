@@ -1921,13 +1921,18 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
  */
 xmlXPathCompExprPtr
 xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
-    xmlXPathContext xctxt;
+    xmlXPathContextPtr xctxt;
     xmlXPathCompExprPtr ret;
 
-    memset(&xctxt, 0, sizeof(xctxt));
     if (style != NULL)
-	xctxt.dict = style->dict;
-    ret = xmlXPathCtxtCompile(&xctxt, str);
+	xctxt = xmlXPathNewContext(style->doc);
+    else
+	xctxt = xmlXPathNewContext(NULL);
+    memset(xctxt, 0, sizeof(xctxt));
+    if (style != NULL)
+	xctxt->dict = style->dict;
+    ret = xmlXPathCtxtCompile(xctxt, str);
+    xmlXPathFreeContext(xctxt);
     /*
      * TODO: there is a lot of optimizations which should be possible
      *       like variable slot precomputations, function precomputations, etc.
