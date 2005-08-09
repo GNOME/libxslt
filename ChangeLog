@@ -1,3 +1,8 @@
+Tue Aug  9 22:13:18 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* tests/plugins/Makefile.am: try to get rid of complaints from
+	  jhbuild newbies.
+
 Sun Aug  7 16:04:47 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: fixed a bug when size of xmlXPathContext
