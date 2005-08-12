@@ -1,3 +1,9 @@
+Fri Aug 12 12:17:10 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* tests/general/bug-163.*, tests/general/Makefile.am,
+	  tests/docs/bug-163.*, tests/docs/Makefile.am: check fix for
+	  #310692
+
 Tue Aug  9 22:13:18 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* tests/plugins/Makefile.am: try to get rid of complaints from
