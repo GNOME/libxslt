@@ -1,3 +1,8 @@
+Thu Aug 25 13:29:20 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xslt.c: libxslt should deallocate directly text node content
+	  use xmlSetNodeContent(..., NULL)
+
 Fri Aug 12 12:17:10 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* tests/general/bug-163.*, tests/general/Makefile.am,

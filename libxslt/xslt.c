@@ -1218,17 +1218,19 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		    if ((txt != NULL) && (txt->type == XML_TEXT_NODE) &&
 		        (txt->content != NULL) &&
 			(!xmlDictOwns(style->dict, txt->content))) {
-			xmlChar *old = (xmlChar *) txt->content;
+			xmlChar *tmp;
 
 			/*
 			 * internalize the text string, goal is to speed
 			 * up operations and minimize used space by compiled
 			 * stylesheets.
 			 */
-			txt->content = (xmlChar *)
-			               xmlDictLookup(style->dict, old, -1);
-			if (old != txt->content)
-			    xmlFree(old);
+			tmp = (xmlChar *) xmlDictLookup(style->dict,
+			                                txt->content, -1);
+			if (tmp != txt->content) {
+			    xmlNodeSetContent(txt, NULL);
+			    txt->content = tmp;
+			}
 		    }
 		    prop = prop->next;
 		}
@@ -1302,15 +1304,16 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		}
 	    } else if ((cur->content != NULL) && (internalize) &&
 	               (!xmlDictOwns(style->dict, cur->content))) {
-		xmlChar *old = (xmlChar *) cur->content;
+		xmlChar *tmp;
 
 		/*
 		 * internalize the text string, goal is to speed
 		 * up operations and minimize used space by compiled
 		 * stylesheets.
 		 */
-		cur->content = (xmlChar *) xmlDictLookup(style->dict, old, -1);
-		xmlFree(old);
+		tmp = (xmlChar *) xmlDictLookup(style->dict, cur->content, -1);
+		xmlNodeSetContent(cur, NULL);
+		cur->content = tmp;
 	    }
 	} else if ((cur->type != XML_ELEMENT_NODE) &&
 		   (cur->type != XML_CDATA_SECTION_NODE)) {
@@ -1537,11 +1540,14 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 				 * internalize the text string
 				 */
 				if (text->doc->dict != NULL) {
-				    xmlChar *old = (xmlChar *) text->content;
-				    text->content = 
-					(xmlChar *) xmlDictLookup(
-						text->doc->dict, old, -1);
-				    xmlFree(old);
+				    const xmlChar *tmp;
+				    
+				    tmp = xmlDictLookup(text->doc->dict,
+				                        text->content, -1);
+				    if (tmp != text->content) {
+				        xmlNodeSetContent(text, NULL);
+					text->content = (xmlChar *) tmp;
+				    }
 				}
 			    }
 
