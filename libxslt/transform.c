@@ -758,6 +758,7 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	ctxt->lasttuse = len;
     }
     if (copy != NULL) {
+        copy->doc = target->doc;
 	if (target != NULL)
 	    xmlAddChild(target, copy);
     } else {

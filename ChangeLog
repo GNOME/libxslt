@@ -1,3 +1,8 @@
+Wed Aug 31 13:49:51 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: fixed 314936 a dictionnary issue on text
+	  node merging, which probably fixed #311267 too.
+
 Thu Aug 25 13:29:20 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: libxslt should deallocate directly text node content
