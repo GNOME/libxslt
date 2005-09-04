@@ -10,6 +10,20 @@ ChangeLog.html
 to the CVS at 
 http://cvs.gnome.org/viewcvs/libxslt/
  code base.Those are the public releases made:
+1.1.15: Sep 04 2005:
+   - build fixes: Windows build cleanups and updates (Igor Zlatkovic), remove
+      jhbuild warnings
+   - bug fixes: negative number formatting (William Brack), number formatting
+      per mille definition (William Brack), XInclude default values (William),
+      text copy bugs (William), bug related to xmlXPathContext size, reuse
+      libxml2 memory management for text nodes, dictionnary text bug, forbid
+      variables in match (needs libxml2-2.6.21)
+   - improvements: EXSLT dyn:map (Mark Vakoc), 
+  
+   - documentation: EXSLT date and time functions namespace in man (Jonathan
+      Wakely)
+
+
 1.1.14: Apr 02 2005:
    - bug fixes: text node on stylesheet document without a dictionary
       (William Brack), more checking of XSLT syntax, calling xsltInit() multiple

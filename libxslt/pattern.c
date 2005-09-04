@@ -307,7 +307,6 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	    xctxt = xmlXPathNewContext(ctxt->style->doc);
 	else
 	    xctxt = xmlXPathNewContext(NULL);
-	memset(xctxt, 0, sizeof(xctxt));
 #ifdef XML_XPATH_NOVAR
 	xctxt->flags = XML_XPATH_NOVAR;
 #endif

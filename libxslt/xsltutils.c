@@ -1928,7 +1928,6 @@ xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
 	xctxt = xmlXPathNewContext(style->doc);
     else
 	xctxt = xmlXPathNewContext(NULL);
-    memset(xctxt, 0, sizeof(xctxt));
     if (style != NULL)
 	xctxt->dict = style->dict;
     ret = xmlXPathCtxtCompile(xctxt, str);
@@ -1940,6 +1939,7 @@ xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
      
     return(ret);
 }
+
 /************************************************************************
  * 									*
  * 		Hooks for the debugger					*
