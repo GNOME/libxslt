@@ -65,6 +65,9 @@ rm -fr %{buildroot}
 
 %makeinstall
 
+rm -fr $RPM_BUILD_ROOT%{_libdir}/*.la \
+       $RPM_BUILD_ROOT%{_libdir}/python*/site-packages/libxsltmod*a
+
 %clean
 rm -fr %{buildroot}
 
@@ -107,7 +110,7 @@ rm -fr %{buildroot}
 %defattr(-, root, root)
 
 %doc AUTHORS ChangeLog.gz NEWS README Copyright FEATURES
-%{_libdir}/python*/site-packages/libxslt.py
+%{_libdir}/python*/site-packages/libxslt.py*
 %{_libdir}/python*/site-packages/libxsltmod*
 %doc python/TODO
 %doc python/libxsltclass.txt
