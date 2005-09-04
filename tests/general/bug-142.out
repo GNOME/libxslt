@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"><body><div id="post6" xml:lang="ja"><h3><a href="2004/01/26/6">他の日本語の伝言</a></h3>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"><body><div id="post6"><h3><a href="2004/01/26/6">他の日本語の伝言</a></h3>
       <p>この伝言は日本語で書いて、翻訳がある。<span xml:lang="fr">couhin ?</span></p>
       <p>Et on a une petite phrase en français.</p>
     </div>
     Test
-  <div id="post4" xml:lang="ja"><h3><a href="2004/01/25/4">日本語の伝言</a></h3>
+  <div id="post4"><h3><a href="2004/01/25/4">日本語の伝言</a></h3>
       <p>この伝言は日本語で書いて、翻訳がない。実は少しだけ。</p>
       <p>あいうえおかきくけこさしすせそ…</p>
-    </div><div id="post3" xml:lang="ja"><h3><a href="2005/08/12/3"/></h3></div><div id="post2" xml:lang="ja"><h3><a href="2004/01/25/2">間違い</a></h3>
+    </div><div id="post3"><h3><a href="2005/08/12/3"/></h3></div><div id="post2"><h3><a href="2004/01/25/2">間違い</a></h3>
       <p>Quelques tests d'erreurs :</p>
       <ul>
 	Un paragraphe dans la liste
@@ -18,7 +18,7 @@
 	<li>une <span xml:lang="fr">翻訳</span> sans xml:lang="ja"</li>
 	<li>20040125</li>
       </ul>
-    </div><div id="post1" xml:lang="ja"><h3><a href="2004/01/25/1">サンプル</a></h3>
+    </div><div id="post1"><h3><a href="2004/01/25/1">サンプル</a></h3>
       <p>Ceci est un <span xml:lang="ja">テスト</span>.</p>
       <ul>
 	<li>Voici une liste,</li>

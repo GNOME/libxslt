@@ -1,3 +1,11 @@
+Mon Sep  5 00:07:40 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixed #303289 variable in match are forbidden
+	* tests/general/bug-89.xsl: had to fix that test which was doing this
+	* tests/general/bug-142.out tests/general/bug-152.out
+	  tests/namespaces/tst7.out: small output change on libxml2-2.6.21
+	  new way of serializing encoding meta in HTML
+
 Wed Aug 31 13:49:51 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: fixed 314936 a dictionnary issue on text

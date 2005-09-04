@@ -301,7 +301,25 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	    xsltAllocateExtra(ctxt->style);
     }
     if (op == XSLT_OP_PREDICATE) {
-	comp->steps[comp->nbStep].comp = xsltXPathCompile(ctxt->style, value);
+	xmlXPathContextPtr xctxt;
+
+	if (ctxt->style != NULL)
+	    xctxt = xmlXPathNewContext(ctxt->style->doc);
+	else
+	    xctxt = xmlXPathNewContext(NULL);
+	memset(xctxt, 0, sizeof(xctxt));
+#ifdef XML_XPATH_NOVAR
+	xctxt->flags = XML_XPATH_NOVAR;
+#endif
+	if (ctxt->style != NULL)
+	    xctxt->dict = ctxt->style->dict;
+	comp->steps[comp->nbStep].comp = xmlXPathCtxtCompile(xctxt, value);
+	xmlXPathFreeContext(xctxt);
+	if (comp->steps[comp->nbStep].comp == NULL) {
+	    xsltTransformError(NULL, ctxt->style, ctxt->elem,
+		    "Failed to compile predicate\n");
+	    ctxt->style->errors++;
+	}
     }
     comp->nbStep++;
     return (0);

@@ -30,7 +30,7 @@
 <!-- effacer ! -->
 </xsl:template>
 
-<xsl:template match="*[attribute::id and @id=$targetId]">
+<xsl:template match="*[attribute::id and @id='']">
 <!-- attribute::type pour éviter de confondre l'absence d'attibute et
 la valeur nulle -->
 <xsl:choose>
