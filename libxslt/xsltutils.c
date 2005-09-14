@@ -776,6 +776,7 @@ xsltGetQNameURI2(xsltStylesheetPtr style, xmlNodePtr node,
  * @list:  the node set
  *
  * reorder the current node list @list accordingly to the document order
+ * This function is slow, obsolete and should not be used anymore.
  */
 void
 xsltDocumentSortFunction(xmlNodeSetPtr list) {

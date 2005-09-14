@@ -1,3 +1,10 @@
+Wed Sep 14 14:30:03 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: removed a superfluous second sorting of
+	  the node set on xsl:copy-of, fixes #316288
+	* libxslt/xsltutils.c: marked xsltDocumentSortFunction as slow,
+	  obsolete and deprecated :-)
+
 Sat Sep 10 14:35:06 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: check environment for PYTHON, fixes #315367

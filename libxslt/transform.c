@@ -2924,8 +2924,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 	    list = res->nodesetval;
 	    if (list != NULL) {
-		/* sort the list in document order */
-		xsltDocumentSortFunction(list);
+		/* the list is already sorted in document order by XPath */
 		/* append everything in this order under ctxt->insert */
 		for (i = 0;i < list->nodeNr;i++) {
 		    if (list->nodeTab[i] == NULL)
