@@ -1,3 +1,8 @@
+Thu Sep 22 21:51:22 HKT 2005 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: fixed problem in internal XPath compilation
+	  of patterns including variables, fixes #316861
+
 Wed Sep 14 14:30:03 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: removed a superfluous second sorting of

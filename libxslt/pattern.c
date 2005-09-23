@@ -268,6 +268,7 @@ xsltFreeParserContext(xsltParserContextPtr ctxt) {
  * @op:  an op
  * @value:  the first value
  * @value2:  the second value
+ * @novar:  flag to set XML_XPATH_NOVAR
  *
  * Add an step to an XSLT Compiled Match
  *
@@ -275,7 +276,7 @@ xsltFreeParserContext(xsltParserContextPtr ctxt) {
  */
 static int
 xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
-                 xsltOp op, xmlChar * value, xmlChar * value2)
+                 xsltOp op, xmlChar * value, xmlChar * value2, int novar)
 {
     if (comp->nbStep >= 40) {
         xsltTransformError(NULL, NULL, NULL,
@@ -308,7 +309,8 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	else
 	    xctxt = xmlXPathNewContext(NULL);
 #ifdef XML_XPATH_NOVAR
-	xctxt->flags = XML_XPATH_NOVAR;
+	if (novar != 0)
+	    xctxt->flags = XML_XPATH_NOVAR;
 #endif
 	if (ctxt->style != NULL)
 	    xctxt->dict = ctxt->style->dict;
@@ -317,7 +319,8 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	if (comp->steps[comp->nbStep].comp == NULL) {
 	    xsltTransformError(NULL, ctxt->style, ctxt->elem,
 		    "Failed to compile predicate\n");
-	    ctxt->style->errors++;
+	    if (ctxt->style != NULL)
+		ctxt->style->errors++;
 	}
     }
     comp->nbStep++;
@@ -1181,8 +1184,8 @@ xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #define NEXT ((*ctxt->cur) ?  ctxt->cur++: ctxt->cur)
 
 
-#define PUSH(op, val, val2) 						\
-    if (xsltCompMatchAdd(ctxt, ctxt->comp, (op), (val), (val2))) goto error;
+#define PUSH(op, val, val2, novar) 						\
+    if (xsltCompMatchAdd(ctxt, ctxt->comp, (op), (val), (val2), (novar))) goto error;
 
 #define SWAP() 						\
     xsltSwapTopCompMatch(ctxt->comp);
@@ -1358,6 +1361,7 @@ xsltScanQName(xsltParserContextPtr ctxt, xmlChar **prefix) {
  * @ctxt:  the compilation context
  * @name:  a preparsed name
  * @aid:  whether id/key are allowed there
+ * @novar:  flag to prohibit xslt var
  *
  * Compile the XSLT LocationIdKeyPattern
  * [3] IdKeyPattern ::= 'id' '(' Literal ')'
@@ -1370,7 +1374,8 @@ xsltScanQName(xsltParserContextPtr ctxt, xmlChar **prefix) {
  *                 | 'processing-instruction' '(' Literal ')'
  */
 static void
-xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
+xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
+		int aid, int novar) {
     xmlChar *lit = NULL;
     xmlChar *lit2 = NULL;
 
@@ -1394,7 +1399,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	}
 	NEXT;
-	PUSH(XSLT_OP_ID, lit, NULL);
+	PUSH(XSLT_OP_ID, lit, NULL, novar);
     } else if ((aid) && (xmlStrEqual(name, (const xmlChar *)"key"))) {
 	NEXT;
 	SKIP_BLANKS;
@@ -1422,7 +1427,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	}
 	NEXT;
 	/* TODO: support namespace in keys */
-	PUSH(XSLT_OP_KEY, lit, lit2);
+	PUSH(XSLT_OP_KEY, lit, lit2, novar);
     } else if (xmlStrEqual(name, (const xmlChar *)"processing-instruction")) {
 	NEXT;
 	SKIP_BLANKS;
@@ -1439,7 +1444,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    }
 	}
 	NEXT;
-	PUSH(XSLT_OP_PI, lit, NULL);
+	PUSH(XSLT_OP_PI, lit, NULL, novar);
     } else if (xmlStrEqual(name, (const xmlChar *)"text")) {
 	NEXT;
 	SKIP_BLANKS;
@@ -1450,7 +1455,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	}
 	NEXT;
-	PUSH(XSLT_OP_TEXT, NULL, NULL);
+	PUSH(XSLT_OP_TEXT, NULL, NULL, novar);
     } else if (xmlStrEqual(name, (const xmlChar *)"comment")) {
 	NEXT;
 	SKIP_BLANKS;
@@ -1461,7 +1466,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	}
 	NEXT;
-	PUSH(XSLT_OP_COMMENT, NULL, NULL);
+	PUSH(XSLT_OP_COMMENT, NULL, NULL, novar);
     } else if (xmlStrEqual(name, (const xmlChar *)"node")) {
 	NEXT;
 	SKIP_BLANKS;
@@ -1472,7 +1477,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name, int aid) {
 	    return;
 	}
 	NEXT;
-	PUSH(XSLT_OP_NODE, NULL, NULL);
+	PUSH(XSLT_OP_NODE, NULL, NULL, novar);
     } else if (aid) {
 	xsltTransformError(NULL, NULL, NULL,
 	    "xsltCompileIdKeyPattern : expecting 'key' or 'id' or node type\n");
@@ -1493,6 +1498,7 @@ error:
  * xsltCompileStepPattern:
  * @ctxt:  the compilation context
  * @token:  a posible precompiled name
+ * @novar: flag to prohibit xslt variables from pattern
  *
  * Compile the XSLT StepPattern and generates a precompiled
  * form suitable for fast matching.
@@ -1511,7 +1517,7 @@ error:
  */
 
 static void
-xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
+xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token, int novar) {
     xmlChar *name = NULL;
     const xmlChar *URI = NULL;
     xmlChar *URL = NULL;
@@ -1524,7 +1530,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	NEXT;
 	if (CUR == '*') {
 	    NEXT;
-	    PUSH(XSLT_OP_ATTR, NULL, NULL);
+	    PUSH(XSLT_OP_ATTR, NULL, NULL, novar);
 	    goto parse_predicate;
 	}
 	token = xsltScanQName(ctxt, &prefix);
@@ -1544,7 +1550,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	if (token == NULL) {
 	    if (CUR == '*') {
 		NEXT;
-		PUSH(XSLT_OP_ATTR, NULL, URL);
+		PUSH(XSLT_OP_ATTR, NULL, URL, novar);
 		return;
 	    }
 	    xsltTransformError(NULL, NULL, NULL,
@@ -1552,7 +1558,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    ctxt->error = 1;
 	    goto error;
 	}
-	PUSH(XSLT_OP_ATTR, token, URL);
+	PUSH(XSLT_OP_ATTR, token, URL, novar);
 	goto parse_predicate;
     }
     if (token == NULL)
@@ -1560,7 +1566,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
     if (token == NULL) {
 	if (CUR == '*') {
 	    NEXT;
-	    PUSH(XSLT_OP_ALL, token, NULL);
+	    PUSH(XSLT_OP_ALL, token, NULL, novar);
 	    goto parse_predicate;
 	} else {
 	    xsltTransformError(NULL, NULL, NULL,
@@ -1573,7 +1579,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 
     SKIP_BLANKS;
     if (CUR == '(') {
-	xsltCompileIdKeyPattern(ctxt, token, 0);
+	xsltCompileIdKeyPattern(ctxt, token, 0, novar);
 	if (ctxt->error)
 	    goto error;
     } else if (CUR == ':') {
@@ -1600,7 +1606,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	    if (token == NULL) {
 		if (CUR == '*') {
 		    NEXT;
-		    PUSH(XSLT_OP_NS, URL, NULL);
+		    PUSH(XSLT_OP_NS, URL, NULL, novar);
 		} else {
 		    xsltTransformError(NULL, NULL, NULL,
 			    "xsltCompileStepPattern : Name expected\n");
@@ -1608,7 +1614,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		    goto error;
 		}
 	    } else {
-		PUSH(XSLT_OP_ELEM, token, URL);
+		PUSH(XSLT_OP_ELEM, token, URL, novar);
 	    }
 	} else {
 	    NEXT;
@@ -1618,7 +1624,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		if (token == NULL) {
 	            if (CUR == '*') {
             	        NEXT;
-	                PUSH(XSLT_OP_ALL, token, NULL);
+	                PUSH(XSLT_OP_ALL, token, NULL, novar);
 	                goto parse_predicate;
 	            } else {
 		        xsltTransformError(NULL, NULL, NULL,
@@ -1636,7 +1642,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		    if (URI != NULL)
 			URL = xmlStrdup(URI);
 		}
-		PUSH(XSLT_OP_CHILD, name, URL);
+		PUSH(XSLT_OP_CHILD, name, URL, novar);
 	    } else if (xmlStrEqual(token, (const xmlChar *) "attribute")) {
 		xmlFree(token);
 		token = xsltScanName(ctxt);
@@ -1655,7 +1661,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 		    if (URI != NULL)
 			URL = xmlStrdup(URI);
 		}
-		PUSH(XSLT_OP_ATTR, name, URL);
+		PUSH(XSLT_OP_ATTR, name, URL, novar);
 	    } else {
 		xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileStepPattern : 'child' or 'attribute' expected\n");
@@ -1666,7 +1672,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	}
     } else if (CUR == '*') {
 	NEXT;
-	PUSH(XSLT_OP_ALL, token, NULL);
+	PUSH(XSLT_OP_ALL, token, NULL, novar);
     } else {
 	URI = xsltGetQNameURI(ctxt->elem, &token);
 	if (token == NULL) {
@@ -1675,7 +1681,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token) {
 	}
 	if (URI != NULL)
 	    URL = xmlStrdup(URI);
-	PUSH(XSLT_OP_ELEM, token, URL);
+	PUSH(XSLT_OP_ELEM, token, URL, novar);
     }
 parse_predicate:
     SKIP_BLANKS;
@@ -1713,7 +1719,7 @@ parse_predicate:
 	    return;
         }
 	ret = xmlStrndup(q, CUR_PTR - q);
-	PUSH(XSLT_OP_PREDICATE, ret, NULL);
+	PUSH(XSLT_OP_PREDICATE, ret, NULL, novar);
 	/* push the predicate lower than local test */
 	SWAP();
 	NEXT;
@@ -1731,6 +1737,7 @@ error:
  * xsltCompileRelativePathPattern:
  * @comp:  the compilation context
  * @token:  a posible precompiled name
+ * @novar:  flag to prohibit xslt variables
  *
  * Compile the XSLT RelativePathPattern and generates a precompiled
  * form suitable for fast matching.
@@ -1740,24 +1747,24 @@ error:
  *                           | RelativePathPattern '//' StepPattern
  */
 static void
-xsltCompileRelativePathPattern(xsltParserContextPtr ctxt, xmlChar *token) {
-    xsltCompileStepPattern(ctxt, token);
+xsltCompileRelativePathPattern(xsltParserContextPtr ctxt, xmlChar *token, int novar) {
+    xsltCompileStepPattern(ctxt, token, novar);
     if (ctxt->error)
 	goto error;
     SKIP_BLANKS;
     while ((CUR != 0) && (CUR != '|')) {
 	if ((CUR == '/') && (NXT(1) == '/')) {
-	    PUSH(XSLT_OP_ANCESTOR, NULL, NULL);
+	    PUSH(XSLT_OP_ANCESTOR, NULL, NULL, novar);
 	    NEXT;
 	    NEXT;
 	    SKIP_BLANKS;
-	    xsltCompileStepPattern(ctxt, NULL);
+	    xsltCompileStepPattern(ctxt, NULL, novar);
 	} else if (CUR == '/') {
-	    PUSH(XSLT_OP_PARENT, NULL, NULL);
+	    PUSH(XSLT_OP_PARENT, NULL, NULL, novar);
 	    NEXT;
 	    SKIP_BLANKS;
 	    if ((CUR != 0) && (CUR != '|')) {
-		xsltCompileRelativePathPattern(ctxt, NULL);
+		xsltCompileRelativePathPattern(ctxt, NULL, novar);
 	    }
 	} else {
 	    ctxt->error = 1;
@@ -1773,6 +1780,7 @@ error:
 /**
  * xsltCompileLocationPathPattern:
  * @ctxt:  the compilation context
+ * @novar:  flag to prohibit xslt variables
  *
  * Compile the XSLT LocationPathPattern and generates a precompiled
  * form suitable for fast matching.
@@ -1782,7 +1790,7 @@ error:
  *                           | '//'? RelativePathPattern
  */
 static void
-xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
+xsltCompileLocationPathPattern(xsltParserContextPtr ctxt, int novar) {
     SKIP_BLANKS;
     if ((CUR == '/') && (NXT(1) == '/')) {
 	/*
@@ -1792,22 +1800,22 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	NEXT;
 	NEXT;
 	ctxt->comp->priority = 0.5;	/* '//' means not 0 priority */
-	xsltCompileRelativePathPattern(ctxt, NULL);
+	xsltCompileRelativePathPattern(ctxt, NULL, novar);
     } else if (CUR == '/') {
 	/*
 	 * We need to find root as the parent
 	 */
 	NEXT;
 	SKIP_BLANKS;
-	PUSH(XSLT_OP_ROOT, NULL, NULL);
+	PUSH(XSLT_OP_ROOT, NULL, NULL, novar);
 	if ((CUR != 0) && (CUR != '|')) {
-	    PUSH(XSLT_OP_PARENT, NULL, NULL);
-	    xsltCompileRelativePathPattern(ctxt, NULL);
+	    PUSH(XSLT_OP_PARENT, NULL, NULL, novar);
+	    xsltCompileRelativePathPattern(ctxt, NULL, novar);
 	}
     } else if (CUR == '*') {
-	xsltCompileRelativePathPattern(ctxt, NULL);
+	xsltCompileRelativePathPattern(ctxt, NULL, novar);
     } else if (CUR == '@') {
-	xsltCompileRelativePathPattern(ctxt, NULL);
+	xsltCompileRelativePathPattern(ctxt, NULL, novar);
     } else {
 	xmlChar *name;
 	name = xsltScanName(ctxt);
@@ -1819,34 +1827,35 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt) {
 	}
 	SKIP_BLANKS;
 	if ((CUR == '(') && !xmlXPathIsNodeType(name)) {
-	    xsltCompileIdKeyPattern(ctxt, name, 1);
+	    xsltCompileIdKeyPattern(ctxt, name, 1, novar);
 	    if ((CUR == '/') && (NXT(1) == '/')) {
-		PUSH(XSLT_OP_ANCESTOR, NULL, NULL);
+		PUSH(XSLT_OP_ANCESTOR, NULL, NULL, novar);
 		NEXT;
 		NEXT;
 		SKIP_BLANKS;
-		xsltCompileRelativePathPattern(ctxt, NULL);
+		xsltCompileRelativePathPattern(ctxt, NULL, novar);
 	    } else if (CUR == '/') {
-		PUSH(XSLT_OP_PARENT, NULL, NULL);
+		PUSH(XSLT_OP_PARENT, NULL, NULL, novar);
 		NEXT;
 		SKIP_BLANKS;
-		xsltCompileRelativePathPattern(ctxt, NULL);
+		xsltCompileRelativePathPattern(ctxt, NULL, novar);
 	    }
 	    return;
 	}
-	xsltCompileRelativePathPattern(ctxt, name);
+	xsltCompileRelativePathPattern(ctxt, name, novar);
     }
 error:
     return;
 }
 
 /**
- * xsltCompilePattern:
+ * xsltCompilePatternInternal:
  * @pattern: an XSLT pattern
  * @doc:  the containing document
  * @node:  the containing element
  * @style:  the stylesheet
  * @runtime:  the transformation context, if done at run-time
+ * @novar:  flag to prohibit xslt variables
  *
  * Compile the XSLT pattern and generates a list of precompiled form suitable
  * for fast matching.
@@ -1856,10 +1865,10 @@ error:
  * Returns the generated pattern list or NULL in case of failure
  */
 
-xsltCompMatchPtr
-xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
+static xsltCompMatchPtr
+xsltCompilePatternInternal(const xmlChar *pattern, xmlDocPtr doc,
 	           xmlNodePtr node, xsltStylesheetPtr style,
-		   xsltTransformContextPtr runtime) {
+		   xsltTransformContextPtr runtime, int novar) {
     xsltParserContextPtr ctxt = NULL;
     xsltCompMatchPtr element, first = NULL, previous = NULL;
     int current, start, end, level, j;
@@ -1938,7 +1947,7 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 	 This may be changed by xsltCompileLocationPathPattern.
 	 */
 	element->priority = 0;
-	xsltCompileLocationPathPattern(ctxt);
+	xsltCompileLocationPathPattern(ctxt, novar);
 	if (ctxt->error) {
 	    xsltTransformError(NULL, style, node,
 			     "xsltCompilePattern : failed to compile '%s'\n",
@@ -2013,6 +2022,29 @@ error:
     return(NULL);
 }
 
+/**
+ * xsltCompilePattern:
+ * @pattern: an XSLT pattern
+ * @doc:  the containing document
+ * @node:  the containing element
+ * @style:  the stylesheet
+ * @runtime:  the transformation context, if done at run-time
+ *
+ * Compile the XSLT pattern and generates a list of precompiled form suitable
+ * for fast matching.
+ *
+ * [1] Pattern ::= LocationPathPattern | Pattern '|' LocationPathPattern
+ *
+ * Returns the generated pattern list or NULL in case of failure
+ */
+
+xsltCompMatchPtr
+xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
+	           xmlNodePtr node, xsltStylesheetPtr style,
+		   xsltTransformContextPtr runtime) {
+    return (xsltCompilePatternInternal(pattern, doc, node, style, runtime, 0));
+}
+
 /************************************************************************
  *									*
  *			Module interfaces				*
@@ -2041,7 +2073,8 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	return(-1);
 
     priority = cur->priority;
-    pat = xsltCompilePattern(cur->match, style->doc, cur->elem, style, NULL);
+    pat = xsltCompilePatternInternal(cur->match, style->doc, cur->elem,
+		    style, NULL, 1);
     while (pat) {
 	next = pat->next;
 	pat->next = NULL;
