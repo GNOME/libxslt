@@ -85,6 +85,7 @@ rm -fr %{buildroot}
 %doc doc/EXSLT
 %doc %{_mandir}/man1/xsltproc.1*
 %{_libdir}/lib*.so.*
+%{_libdir}/libxslt-plugins
 %{prefix}/bin/xsltproc
 
 %files devel

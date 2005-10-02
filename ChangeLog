@@ -1,3 +1,9 @@
+Sun Oct  2 11:52:44 CEST 2005 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libxslt/Makefile.am libxslt/xsltconfig.h.in
+	  libxslt.spec.in tests/plugins/Makefile.am xslt-config.in: applied
+	  patch from Joel Reed to ease plugin integration
+
 Thu Sep 22 21:51:22 HKT 2005 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: fixed problem in internal XPath compilation

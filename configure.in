@@ -480,7 +480,7 @@ dnl setup default module path
 dnl
 module_prefix=$prefix
 test "x$module_prefix" = xNONE && module_prefix=$ac_default_prefix
-LIBXSLT_DEFAULT_PLUGINS_PATH="\"$module_prefix/lib/libxslt/$LIBXSLT_MAJOR_VERSION.$LIBXSLT_MINOR_VERSION\""
+LIBXSLT_DEFAULT_PLUGINS_PATH="$module_prefix/lib/libxslt-plugins"
 AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
 
 dnl
