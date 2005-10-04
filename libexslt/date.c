@@ -2141,8 +2141,8 @@ exsltDateWeekInYear (const xmlChar *dateTime)
      */
     fdiw = (_exsltDateDayInWeek(fdiy, dt->value.date.year) + 6) % 7;
 
-    ret = DAY_IN_YEAR(dt->value.date.day, dt->value.date.mon,
-                      dt->value.date.year) / 7;
+    ret = (DAY_IN_YEAR(dt->value.date.day, dt->value.date.mon,
+                      dt->value.date.year) + fdiw) / 7;
 
     /* ISO 8601 adjustment, 3 is Thu */
     if (fdiw <= 3)

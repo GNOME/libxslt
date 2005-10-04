@@ -1,3 +1,10 @@
+Tue Oct  4 20:37:09 HKT 2005 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: applied fix to date:week-in-year posted to
+	  the mailing list by Thomas Broyer
+	* tests/exslt/date/date.1.out, tests/exslt/date/datetime.1.out:
+	  updated to reflect above fix
+
 Sun Oct  2 11:52:44 CEST 2005 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt/Makefile.am libxslt/xsltconfig.h.in
