@@ -1,3 +1,7 @@
+Sun Nov  6 19:22:45 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/attrvt.c: added a missing parameter to a debug function
+
 Tue Oct  4 20:37:09 HKT 2005 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: applied fix to date:week-in-year posted to

@@ -196,7 +196,7 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
     if (attr->psvi != NULL) {
 #ifdef WITH_XSLT_DEBUG_AVT
 	xsltGenericDebug(xsltGenericDebugContext,
-			"AVT %s: already compiled\n");
+			"AVT %s: already compiled\n", attr->name);
 #endif
         return;
     }
