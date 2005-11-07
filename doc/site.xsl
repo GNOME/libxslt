@@ -161,7 +161,7 @@
       <li><a href="ftp://xmlsoft.org/">FTP</a></li>
       <li><a href="http://www.zlatkovic.com/projects/libxml/">Windows binaries</a></li>
       <li><a href="http://garypennington.net/libxml2/">Solaris binaries</a></li>
-      <li><a href="http://www.zveno.com/open_source/libxml2xslt.html">MacOsX binaries</a></li>
+      <li><a href="http://www.explain.com.au/oss/libxml2xslt.html">MacOsX binaries</a></li>
       <li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li>
       <li><a href="http://www.zend.com/php5/articles/php5-xmlphp.php#Heading17">XSLT with PHP</a></li>
       <li><a href="http://www.mod-xslt2.com/">Apache module</a></li>
