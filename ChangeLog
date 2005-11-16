@@ -1,3 +1,8 @@
+Wed Nov 16 12:47:25 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/functions.c: fix an problem raised by Ralf Junker in the
+	  use of xmlHashScanFull() fixes bug #321582
+	
 Sun Nov  6 19:22:45 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/attrvt.c: added a missing parameter to a debug function

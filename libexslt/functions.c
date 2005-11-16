@@ -68,7 +68,8 @@ static exsltFuncFunctionData *exsltFuncNewFunctionData(void);
 static void
 exsltFuncRegisterFunc (exsltFuncFunctionData *data,
 		       xsltTransformContextPtr ctxt,
-		       const xmlChar *URI, const xmlChar *name) {
+		       const xmlChar *URI, const xmlChar *name,
+		       ATTRIBUTE_UNUSED const xmlChar *ignored) {
     if ((data == NULL) || (ctxt == NULL) || (URI == NULL) || (name == NULL))
 	return;
 
@@ -92,7 +93,8 @@ exsltFuncRegisterFunc (exsltFuncFunctionData *data,
 static void
 exsltFuncRegisterImportFunc (exsltFuncFunctionData *data,
 			     exsltFuncImportRegData *ch,
-			     const xmlChar *URI, const xmlChar *name) {
+			     const xmlChar *URI, const xmlChar *name,
+			     ATTRIBUTE_UNUSED const xmlChar *ignored) {
     exsltFuncFunctionData *func=NULL;
 
     if ((data == NULL) || (ch == NULL) || (URI == NULL) || (name == NULL))
@@ -102,8 +104,7 @@ exsltFuncRegisterImportFunc (exsltFuncFunctionData *data,
     	return;
 
     /* Check if already present */
-    func = (exsltFuncFunctionData*)xmlHashLookup2(ch->hash,
-    	   URI, name);
+    func = (exsltFuncFunctionData*)xmlHashLookup2(ch->hash, URI, name);
     if (func == NULL) {		/* Not yet present - copy it in */
     	func = exsltFuncNewFunctionData();
 	memcpy(func, data, sizeof(exsltFuncFunctionData));
