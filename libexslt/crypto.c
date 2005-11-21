@@ -317,7 +317,9 @@ exsltCryptoCryptoApiRc4Decrypt (xmlXPathParserContextPtr ctxt,
 #define PLATFORM_MD5 GCRY_MD_MD5
 #define PLATFORM_SHA1 GCRY_MD_SHA1
 
+#ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>		/* needed by gcrypt.h 4 Jul 04 */
+#endif
 #include <gcrypt.h>
 
 static void
