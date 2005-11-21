@@ -89,7 +89,8 @@ struct _exsltDateValDate {
     unsigned int	min	:6;	/* 0 <=  min    <= 59	*/
     double		sec;
     unsigned int	tz_flag	:1;	/* is tzo explicitely set? */
-    int			tzo	:11;	/* -1440 <= tzo <= 1440 */
+    signed int		tzo	:12;	/* -1440 <= tzo <= 1440
+    					   currently only -840 to +840 are needed */
 };
 
 /* Duration value */

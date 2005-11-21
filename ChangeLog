@@ -1,3 +1,9 @@
+Mon Nov 21 12:05:41 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.c: Albert Chin posted a patch to fix a problem on
+	  Solaris with dates, extended bitfield size too to match libxml2
+	  code from xmlschemastypes.c
+
 Wed Nov 16 12:47:25 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/functions.c: fix an problem raised by Ralf Junker in the
