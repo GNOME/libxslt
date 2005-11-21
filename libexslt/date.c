@@ -1518,8 +1518,8 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 
     while (1) {
         if (tempdays < 1) {
-            long tmon = (long)MODULO_RANGE(r->mon-1, 1, 13);
-            long tyr  = r->year + (long)FQUOTIENT_RANGE(r->mon-1, 1, 13);
+            long tmon = (long)MODULO_RANGE((int)r->mon-1, 1, 13);
+            long tyr  = r->year + (long)FQUOTIENT_RANGE((int)r->mon-1, 1, 13);
             if (tyr == 0)
                 tyr--;
             tempdays += MAX_DAYINMONTH(tyr, tmon);

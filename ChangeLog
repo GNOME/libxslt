@@ -1,3 +1,8 @@
+Mon Nov 21 12:22:21 CET 2005 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.c: Albert Chin found another signed/unsigned problem
+	  in the date and time code raised on IRIX 6.5
+
 Mon Nov 21 12:08:05 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/crypto.c: patch from Albert Chin needed for HP-UX
