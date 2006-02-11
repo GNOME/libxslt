@@ -1,3 +1,12 @@
+Sat Feb 11 13:10:01 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.c: fix xsltSaveResultToString comment
+	* libxslt/transform.c: detect loops when computing variables, should
+	  fix bug #330772
+	* doc/xsltproc.xml doc/xsltproc.1: fix typo in man page
+	* tests/namespaces/tst7.out tests/general/bug-152.out: small output
+	  changes due to libxml2 xhtml meta handling modification
+
 Mon Nov 21 12:22:21 CET 2005 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/date.c: Albert Chin found another signed/unsigned problem

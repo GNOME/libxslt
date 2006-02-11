@@ -1544,9 +1544,9 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
  * @style:  the stylesheet
  *
  * Save the result @result obtained by applying the @style stylesheet
- * to a file or @URL
+ * to a new allocated string.
  *
- * Returns the number of byte written or -1 in case of failure.
+ * Returns 0 in case of success and -1 in case of error
  */
 int
 xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len, 

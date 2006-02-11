@@ -1554,7 +1554,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
         return;
     CHECK_STOPPED;
 
-    if (ctxt->templNr >= xsltMaxDepth) {
+    if ((ctxt->templNr >= xsltMaxDepth) ||
+        (ctxt->varsNr >= 5 * xsltMaxDepth)) {
         xsltTransformError(ctxt, NULL, list,
                          "xsltApplyOneTemplate: loop found ???\n");
         xsltGenericError(xsltGenericErrorContext,

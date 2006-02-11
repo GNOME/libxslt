@@ -250,7 +250,7 @@
 	<term> <option>--path</option> <replaceable>paths</replaceable></term>
 	<listitem>
 	  <simpara>
-	    Use the list (separated by space or column) of filesystem paths 
+	    Use the list (separated by space or colon) of filesystem paths 
 	specified by <replaceable>paths</replaceable> to load
         <acronym>DTDs</acronym>, entities or documents.
 	  </simpara>
