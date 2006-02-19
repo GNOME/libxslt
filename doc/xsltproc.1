@@ -24,25 +24,28 @@ xsltproc \- command line xslt processor
 .ad l
 .hy 0
 .HP 9
-\fBxsltproc\fR [\fB\-V\fR | \fB\-v\fR | \fB\-o\ \fIfile\fR\fR | \fB\-\-timing\fR | \fB\-\-repeat\fR | \fB\-\-debug\fR | \fB\-\-novalid\fR | \fB\-\-noout\fR | \fB\-\-maxdepth\ \fIval\fR\fR | \fB\-\-html\fR | \fB\-\-param\ \fIname\fR\ \fIvalue\fR\fR | \fB\-\-stringparam\ \fIname\fR\ \fIvalue\fR\fR | \fB\-\-nonet\fR | \fB\-\-path\ \fIpaths\fR\fR | \fB\-\-load\-trace\fR | \fB\-\-catalogs\fR | \fB\-\-xinclude\fR | \fB\-\-profile\fR | \fB\-\-dumpextensions\fR | \fB\-\-nowrite\fR | \fB\-\-nomkdir\fR | \fB\-\-writesubtree\fR | \fB\-\-nodtdattr\fR] [\fB\fIstylesheet\fR\fR] [\fIfile1\fR] [\fIfile2\fR] [\fI\&.\&.\&.\&.\fR]
+\fBxsltproc\fR [[\fB\fB\-V\fR\fR | \fB\fB\-\-version\fR\fR] [\fB\fB\-v\fR\fR | \fB\fB\-\-verbose\fR\fR] | \fB{\fB\fB\-o\fR\fR\ |\ \fB\fB\-\-output\fR\fR}\ \fIFILE\fR\fR | \fB\fB\-\-timing\fR\fR | \fB\fB\-\-repeat\fR\fR | \fB\fB\-\-debug\fR\fR | \fB\fB\-\-novalid\fR\fR | \fB\fB\-\-noout\fR\fR | \fB\fB\-\-maxdepth\ \fIVALUE\fR\fR\fR | \fB\fB\-\-html\fR\fR | \fB\fB\-\-param\ \fIPARAMNAME\fR\ \fIPARAMVALUE\fR\ \fR\fR | \fB\fB\-\-stringparam\ \fIPARAMNAME\fR\ \fIPARAMVALUE\fR\ \fR\fR | \fB\fB\-\-nonet\fR\fR | \fB\fB\-\-path\ "\fIPATHS\fR"\fR\fR | \fB\fB\-\-load\-trace\fR\fR | \fB\fB\-\-catalogs\fR\fR | \fB\fB\-\-xinclude\fR\fR [\fB\fB\-\-profile\fR\fR | \fB\fB\-\-norman\fR\fR] | \fB\fB\-\-dumpextensions\fR\fR | \fB\fB\-\-nowrite\fR\fR | \fB\fB\-\-nomkdir\fR\fR | \fB\fB\-\-writesubtree\ \fIPATH\fR\fR\fR | \fB\fB\-\-nodtdattr\fR\fR] [\fISTYLESHEET\fR] {\fIFILE\fR...}
 .ad
 .hy
 
-.SH "INTRODUCTION"
+.SH "DESCRIPTION"
 
 .PP
- xsltproc is a command line tool for applying XSLT stylesheets to XML documents\&. It is part of libxslt, the XSLT C library for GNOME\&. While it was developed as part of the GNOME project, it can operate independently of the GNOME desktop\&.
+\fBxsltproc\fR is a command line tool for applying XSLT stylesheets to XML documents\&. It is part of libxslt, the XSLT C library for GNOME\&. While it was developed as part of the GNOME project, it can operate independently of the GNOME desktop\&.
 
 .PP
- xsltproc is invoked from the command line with the name of the stylesheet to be used followed by the name of the file or files to which the stylesheet is to be applied\&. It will use the standard input if a filename provided is \- \&.
+\fBxsltproc\fR is invoked from the command line with the name of the stylesheet to be used followed by the name of the file or files to which the stylesheet is to be applied\&. It will use the standard input if a filename provided is \- \&.
 
 .PP
-If a stylesheet is included in an XML document with a Stylesheet Processing Instruction, no stylesheet need be named at the command line\&. xsltproc will automatically detect the included stylesheet and use it\&.
+If a stylesheet is included in an XML document with a Stylesheet Processing Instruction, no stylesheet need be named at the command line\&. \fBxsltproc\fR will automatically detect the included stylesheet and use it\&.
 
 .PP
 By default, output is to stdout\&. You can specify a file for output using the \fB\-o\fR option\&.
 
-.SH "COMMAND LINE OPTIONS"
+.SH "OPTIONS"
+
+.PP
+\fBxsltproc\fR currently accepts the following options:
 
 .TP
 \fB\-V\fR or \fB\-\-version\fR
@@ -50,11 +53,11 @@ Show the version of libxml and libxslt used\&.
 
 .TP
 \fB\-v\fR or \fB\-\-verbose\fR
-Output each step taken by xsltproc in processing the stylesheet and the document\&.
+Output each step taken by \fBxsltproc\fR in processing the stylesheet and the document\&.
 
 .TP
-\fB\-o\fR or \fB\-\-output\fR \fIfile\fR
-Direct output to the file named \fIfile\fR\&. For multiple outputs, also known as "chunking", \fB\-o\fR  \fBdirectory/\fR directs the output files to a specified directory\&. The directory must already exist\&.
+\fB\-o\fR or \fB\-\-output\fR \fIFILE\fR
+Direct output to the file named \fIFILE\fR\&. For multiple outputs, also known as "chunking", \fB\-o \fIDIRECTORY/\fR\fR directs the output files to a specified directory\&. The directory must already exist\&.
 
 .TP
 \fB\-\-timing\fR
@@ -77,7 +80,7 @@ Skip loading the document's DTD\&.
 Do not output the result\&.
 
 .TP
-\fB\-\-maxdepth\fR \fIvalue\fR
+\fB\-\-maxdepth \fIVALUE\fR\fR
 Adjust the maximum depth of the template stack before libxslt concludes it is in an infinite loop\&. The default is 500\&.
 
 .TP
@@ -85,19 +88,19 @@ Adjust the maximum depth of the template stack before libxslt concludes it is in
 The input document is an HTML file\&.
 
 .TP
-\fB\-\-param\fR \fIname\fR \fIvalue\fR
-Pass a parameter of name \fIname\fR and value \fIvalue\fR to the stylesheet\&. You may pass multiple name/value pairs up to a maximum of 32\&. If the value being passed is a string rather than a node identifier, use \fB\-\-stringparam\fR instead\&.
+\fB\-\-param \fIPARAMNAME\fR \fIPARAMVALUE\fR\fR
+Pass a parameter of name \fIPARAMNAME\fR and value \fIPARAMVALUE\fR to the stylesheet\&. You may pass multiple name/value pairs up to a maximum of 32\&. If the value being passed is a string rather than a node identifier, use \fB\-\-stringparam\fR instead\&.
 
 .TP
-\fB\-\-stringparam\fR \fIname\fR \fIvalue\fR
-Pass a paramenter of name \fIname\fR and value \fIvalue\fR where \fIvalue\fR is a string rather than a node identifier\&. (Note: The string must be utf\-8\&.)
+\fB\-\-stringparam \fIPARAMNAME\fR \fIPARAMVALUE\fR\fR
+Pass a paramenter of name \fIPARAMNAME\fR and value \fIPARAMVALUE\fR where \fIPARAMVALUE\fR is a string rather than a node identifier\&. (Note: The string must be utf\-8\&.)
 
 .TP
 \fB\-\-nonet\fR
-Do not use the Internet to fetch DTD's, entities or documents\&.
+Do not use the Internet to fetch DTDs, entities or documents\&.
 
 .TP
-\fB\-\-path\fR \fIpaths\fR
+\fB\-\-path "\fIPATHS\fR"\fR
 Use the list (separated by space or colon) of filesystem paths specified by \fIpaths\fR to load DTDs, entities or documents\&.
 
 .TP
@@ -106,11 +109,11 @@ Display to stderr all the documents loaded during the processing\&.
 
 .TP
 \fB\-\-catalogs\fR
-Use the SGML catalog specified in \fBSGML_CATALOG_FILES\fR to resolve the location of external entities\&. By default, xsltproc looks for the catalog specified in \fBXML_CATALOG_FILES\fR\&. If that is not specified, it uses \fI/etc/xml/catalog\fR\&.
+Use the SGML catalog specified in \fBSGML_CATALOG_FILES\fR to resolve the location of external entities\&. By default, \fBxsltproc\fR looks for the catalog specified in \fBXML_CATALOG_FILES\fR\&. If that is not specified, it uses \fI/etc/xml/catalog\fR\&.
 
 .TP
 \fB\-\-xinclude\fR
-Process the input document using the Xinclude specification\&. More details on this can be found in the Xinclude specification: http://www\&.w3\&.org/TR/xinclude/: \fIhttp://www.w3.org/TR/xinclude/\fR 
+Process the input document using the Xinclude specification\&. More details on this can be found in the Xinclude specification: \fIhttp://www.w3.org/TR/xinclude/\fR 
 
 .TP
 \fB\-\-profile\fR or \fB\-\-norman\fR
@@ -129,58 +132,76 @@ Refuses to write to any file or resource\&.
 Refuses to create directories\&.
 
 .TP
-\fB\-\-writesubtree\fR \fIpath\fR
-Allow file write only within the \fIpath\fR subtree\&.
+\fB\-\-writesubtree \fIPATH\fR\fR
+Allow file write only within the \fIPATH\fR subtree\&.
 
 .TP
 \fB\-\-nodtdattr\fR
 Do not apply default attributes from the document's DTD\&.
 
-.SH "RETURN VALUES"
+.SH "ENVIRONMENT"
+
+.TP
+\fBSGML_CATALOG_FILES\fR
+\&.\&.\&.
+
+.TP
+\fBXML_CATALOG_FILES\fR
+\&.\&.\&.
+
+.SH "DIAGNOSTICS"
 
 .PP
-xsltproc's return codes provide information that can be used when calling it from scripts\&.
+\fBxsltproc\fR's return codes provide information that can be used when calling it from scripts\&.
+
+.TP
+\fB0\fR
+normal
+
+.TP
+\fB1\fR
+no argument
+
+.TP
+\fB2\fR
+too many parameters
+
+.TP
+\fB3\fR
+unknown option
+
+.TP
+\fB4\fR
+failed to parse the stylesheet
+
+.TP
+\fB5\fR
+error in the stylesheet
+
+.TP
+\fB6\fR
+error in one of the documents
+
+.TP
+\fB7\fR
+unsupported xsl:output method
+
+.TP
+\fB8\fR
+string parameter contains both quote and double\-quotes
+
+.TP
+\fB9\fR
+internal processing error
+
+.TP
+\fB10\fR
+processing was stopped by a terminating message
+
+.SH "SEE ALSO"
 
 .PP
-0: normal
-
-.PP
-1: no argument
-
-.PP
-2: too many parameters
-
-.PP
-3: unknown option
-
-.PP
-4: failed to parse the stylesheet
-
-.PP
-5: error in the stylesheet
-
-.PP
-6: error in one of the documents
-
-.PP
-7: unsupported xsl:output method
-
-.PP
-8: string parameter contains both quote and double\-quotes
-
-.PP
-9: internal processing error
-
-.PP
-10: processing was stopped by a terminating message
-
-.SH "MORE INFORMATION"
-
-.PP
-libxml web page:http://www\&.xmlsoft\&.org/: \fIhttp://www.xmlsoft.org/\fR
-
-.PP
-W3C XSLT page:http://www\&.w3\&.org/TR/xslt: \fIhttp://www.w3.org/TR/xslt\fR
+More information can be found at the libxml web pages at \fIhttp://www.xmlsoft.org/\fR and the W3C XSLT pages at \fIhttp://www.w3.org/TR/xslt\fR\&.
 
 .SH AUTHOR
 John Fleck.

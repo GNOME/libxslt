@@ -1,3 +1,8 @@
+Sun Feb 19 22:40:58 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: improvement of the man page
+	  by Daniel Leidert, c.f. #331779
+
 Sat Feb 11 13:10:01 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: fix xsltSaveResultToString comment

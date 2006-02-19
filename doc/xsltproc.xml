@@ -3,6 +3,8 @@
    href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+    
+    <!ENTITY xsltproc "<command>xsltproc</command>">
 ]>
 
 <refentry>
@@ -33,51 +35,68 @@
   <refsynopsisdiv>
     <cmdsynopsis>
       <command>xsltproc</command>
-      <group>
-	<arg>-V</arg>
-	<arg>-v</arg>
-	<arg>-o <replaceable>file</replaceable></arg>
-	<arg>--timing</arg>
-	<arg>--repeat</arg>
-	<arg>--debug</arg>
-	<arg>--novalid</arg>
-	<arg>--noout</arg>
-	<arg>--maxdepth <replaceable>val</replaceable></arg>
-	<arg>--html</arg>
-	<arg>--param <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
-	<arg>--stringparam <replaceable>name</replaceable> <replaceable>value</replaceable></arg>
-	<arg>--nonet</arg>
-	<arg>--path <replaceable>paths</replaceable></arg>
-	<arg>--load-trace</arg>
-	<arg>--catalogs</arg>
-	<arg>--xinclude</arg>
-	<arg>--profile</arg>
-	<arg>--dumpextensions</arg>
-	<arg>--nowrite</arg>
-	<arg>--nomkdir</arg>
-	<arg>--writesubtree</arg>
-	<arg>--nodtdattr</arg>
+      <group choice='opt'>
+        <group choice='opt'>
+          <arg choice='plain'><option>-V</option></arg>
+          <arg choice='plain'><option>--version</option></arg>
+        </group>
+        <group choice='opt'>
+          <arg choice='plain'><option>-v</option></arg>
+          <arg choice='plain'><option>--verbose</option></arg>
+        </group>
+        <arg choice="opt">
+          <group choice='req'>
+            <arg choice='plain'><option>-o</option></arg>
+            <arg choice='plain'><option>--output</option></arg>
+          </group>
+          <replaceable class="option">FILE</replaceable>
+        </arg>
+        <arg choice='plain'><option>--timing</option></arg>
+        <arg choice='plain'><option>--repeat</option></arg>
+        <arg choice='plain'><option>--debug</option></arg>
+        <arg choice='plain'><option>--novalid</option></arg>
+        <arg choice='plain'><option>--noout</option></arg>
+        <arg choice='plain'><option>--maxdepth <replaceable class="option">VALUE</replaceable></option></arg>
+        <arg choice='plain'><option>--html</option></arg>
+        <arg choice='plain'><option>--param
+         <replaceable class="option">PARAMNAME</replaceable>
+         <replaceable class="option">PARAMVALUE</replaceable>
+        </option></arg>
+        <arg choice='plain'><option>--stringparam
+         <replaceable class="option">PARAMNAME</replaceable>
+         <replaceable class="option">PARAMVALUE</replaceable>
+        </option></arg>
+        <arg choice='plain'><option>--nonet</option></arg>
+        <arg choice='plain'><option>--path "<replaceable class="option">PATHS</replaceable>"</option></arg>
+        <arg choice='plain'><option>--load-trace</option></arg>
+        <arg choice='plain'><option>--catalogs</option></arg>
+        <arg choice='plain'><option>--xinclude</option></arg>
+        <group choice='opt'>
+          <arg choice='plain'><option>--profile</option></arg>
+          <arg choice='plain'><option>--norman</option></arg>
+        </group>
+        <arg choice='plain'><option>--dumpextensions</option></arg>
+        <arg choice='plain'><option>--nowrite</option></arg>
+        <arg choice='plain'><option>--nomkdir</option></arg>
+        <arg choice='plain'><option>--writesubtree <replaceable>PATH</replaceable></option></arg>
+        <arg choice='plain'><option>--nodtdattr</option></arg>
       </group>
-      <arg><option><replaceable>stylesheet</replaceable></option></arg>
-      <arg><replaceable>file1</replaceable></arg>
-      <arg><replaceable>file2</replaceable></arg>
-      <arg><replaceable>....</replaceable></arg>
+      <arg choice="opt"><replaceable>STYLESHEET</replaceable></arg>
+      <arg choice="req" rep="repeat"><replaceable>FILE</replaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
 
   <refsect1 id="introduction">
-    <title>Introduction</title>
-    <para>
-      <application>xsltproc</application> is a command line tool for applying
-      <acronym>XSLT</acronym> stylesheets to <acronym>XML</acronym>
+    <title>DESCRIPTION</title>
+    <para>&xsltproc; is a command line tool for applying <acronym>XSLT</acronym>
+      stylesheets to <acronym>XML</acronym>
       documents. It is part of <application>libxslt</application>, the XSLT C
       library for GNOME. While it was developed as part of the GNOME project, it
       can operate independently of the GNOME desktop.
    </para>
 
-    <para>
-      <application>xsltproc</application> is invoked from the command line with
+    <para>&xsltproc; is invoked from the command line with
       the name of the stylesheet to be used followed by the name of the file or
       files to which the stylesheet is to be applied. It will use the standard
       input if a filename provided is - .
@@ -86,7 +105,7 @@
     <para>
       If a stylesheet is included in an <acronym>XML</acronym> document with a
       Stylesheet Processing Instruction, no stylesheet need be named at the
-      command line. <application>xsltproc</application> will automatically
+      command line. &xsltproc; will automatically
       detect the included stylesheet and use it.
     </para>
 
@@ -97,15 +116,14 @@
   </refsect1>
 
   <refsect1 id="options">
-    <title>Command Line Options</title>
-    
+    <title>OPTIONS</title>
+    <para>&xsltproc; currently accepts the following options:</para>
     <variablelist>
       <varlistentry>
 	<term><option>-V</option> or <option>--version</option></term>
 	<listitem>
-	  <simpara>Show the version of
-      <application>libxml</application> and <application>libxslt</application> used.
-    </simpara>
+	  <simpara>Show the version of <application>libxml</application>
+	    and <application>libxslt</application> used.</simpara>
 	</listitem>
       </varlistentry>
 
@@ -114,22 +132,21 @@
 	<term>
       <option>-v</option> or <option>--verbose</option></term>
 	<listitem>
-	  <simpara>Output each step taken
-      by <application>xsltproc</application> in processing the stylesheet and the document.
-    </simpara>
+	  <simpara>Output each step taken by &xsltproc; in processing the
+	    stylesheet and the document.</simpara>
 	</listitem>
       </varlistentry>
 
     
       <varlistentry>
 	<term>
-      <option>-o</option> or <option>--output</option> <replaceable>file</replaceable></term>
+      <option>-o</option> or <option>--output</option> <replaceable>FILE</replaceable></term>
 	<listitem>
 	  <simpara>Direct output to the file named
-      <replaceable>file</replaceable>. For multiple outputs, also known as
-      "chunking", <option>-o</option> <option>directory/</option> directs the
-      output files to a specified directory. The directory must already exist.
-    </simpara>
+      <replaceable>FILE</replaceable>. For multiple outputs, also known as
+      "chunking", <option>-o <replaceable>DIRECTORY/</replaceable></option>
+      directs the output files to a specified directory. The directory must
+      already exist.</simpara>
 	</listitem>
       </varlistentry>
 
@@ -172,8 +189,7 @@
 	<term>
       <option>--novalid</option></term>
 	<listitem>
-	  <simpara>Skip loading the document's <acronym>DTD</acronym>.
-    </simpara>
+	  <simpara>Skip loading the document's <acronym>DTD</acronym>.</simpara>
 	</listitem>
       </varlistentry>
 
@@ -182,20 +198,18 @@
 	<term>
       <option>--noout</option></term>
 	<listitem>
-	  <simpara>Do not output the result.
-    </simpara>
+	  <simpara>Do not output the result.</simpara>
 	</listitem>
       </varlistentry>
 
     
       <varlistentry>
 	<term>
-      <option>--maxdepth</option> <replaceable>value</replaceable></term>
+      <option>--maxdepth <replaceable>VALUE</replaceable></option></term>
 	<listitem>
 	  <simpara>Adjust the
-      maximum depth of the template stack before
-      <application>libxslt</application> concludes it is in an infinite
-      loop. The default is 500.
+      maximum depth of the template stack before <application>libxslt</application>
+      concludes it is in an infinite loop. The default is 500.
     </simpara>
 	</listitem>
       </varlistentry>
@@ -206,32 +220,29 @@
       <option>--html</option></term>
 	<listitem>
 	  <simpara>The input document is an <acronym>HTML</acronym>
-      file.
-    </simpara>
+      file.</simpara>
 	</listitem>
       </varlistentry>
 
       <varlistentry>
 	<term>
-      <option>--param</option> <replaceable>name</replaceable> <replaceable>value</replaceable></term>
+      <option>--param <replaceable>PARAMNAME</replaceable> <replaceable>PARAMVALUE</replaceable></option></term>
 	<listitem>
-	  <simpara>Pass a parameter of name
-      <replaceable>name</replaceable> and value
-      <replaceable>value</replaceable> to the stylesheet. You may pass multiple
-      name/value pairs up to a maximum of 32. If the value being passed is a
-	    string rather than a node identifier, use
-	    <option>--stringparam</option> instead.
-	  </simpara>
+	  <simpara>Pass a parameter of name <replaceable>PARAMNAME</replaceable> and
+	    value <replaceable>PARAMVALUE</replaceable> to the stylesheet. You may pass
+	    multiple name/value pairs up to a maximum of 32. If the value being passed
+	    is a string rather than a node identifier, use <option>--stringparam</option>
+	    instead.</simpara>
       	</listitem>
       </varlistentry>
 
       <varlistentry>
 	<term>
-	  <option>--stringparam</option> <replaceable>name</replaceable> <replaceable>value</replaceable></term>
+	  <option>--stringparam <replaceable>PARAMNAME</replaceable> <replaceable>PARAMVALUE</replaceable></option></term>
 	<listitem>
-	  <simpara>Pass a paramenter of name <replaceable>name</replaceable> and
-	    value <replaceable>value</replaceable> where
-	    <replaceable>value</replaceable> is a string rather than a node
+	  <simpara>Pass a paramenter of name <replaceable>PARAMNAME</replaceable> and
+	    value <replaceable>PARAMVALUE</replaceable>
+	    where <replaceable>PARAMVALUE</replaceable> is a string rather than a node
 	    identifier. (Note: The string must be utf-8.) </simpara>
 	</listitem>
       </varlistentry>
@@ -240,19 +251,18 @@
 	<term>
       <option>--nonet</option></term>
 	<listitem>
-	  <simpara>Do not use the Internet to fetch DTD's,
-      entities or documents.
-    </simpara>
+	  <simpara>Do not use the Internet to fetch <acronym>DTD</acronym>s,
+      entities or documents.</simpara>
 	</listitem>
       </varlistentry>
     
       <varlistentry>
-	<term> <option>--path</option> <replaceable>paths</replaceable></term>
+	<term><option>--path "<replaceable>PATHS</replaceable>"</option></term>
 	<listitem>
 	  <simpara>
 	    Use the list (separated by space or colon) of filesystem paths 
-	specified by <replaceable>paths</replaceable> to load
-        <acronym>DTDs</acronym>, entities or documents.
+	specified by <replaceable>paths</replaceable> to
+	load <acronym>DTDs</acronym>, entities or documents.
 	  </simpara>
 	</listitem>
       </varlistentry>
@@ -270,12 +280,11 @@
 	<term>
       <option>--catalogs</option></term>
 	<listitem>
-	  <simpara>Use the <acronym>SGML</acronym> catalog specified in
-      <envar>SGML_CATALOG_FILES</envar> to resolve the location of
-	    external entities. By default, <application>xsltproc</application>
-	    looks for the catalog specified in
-      <envar>XML_CATALOG_FILES</envar>. If that is not specified, it uses
-      <filename>/etc/xml/catalog</filename>.
+	  <simpara>Use the <acronym>SGML</acronym> catalog specified
+	    in <envar>SGML_CATALOG_FILES</envar> to resolve the location of
+	    external entities. By default, &xsltproc;
+	    looks for the catalog specified in <envar>XML_CATALOG_FILES</envar>.
+	    If that is not specified, it uses <filename>/etc/xml/catalog</filename>.
     </simpara>
 	</listitem>
       </varlistentry>
@@ -287,8 +296,7 @@
 	<listitem>
 	  <simpara>Process the input document using the
       Xinclude specification. More details on this can be found in the Xinclude
-      specification: <ulink
-      url="http://www.w3.org/TR/xinclude/">http://www.w3.org/TR/xinclude/</ulink>
+      specification: <ulink url="http://www.w3.org/TR/xinclude/"/>
     </simpara>
 	</listitem>
       </varlistentry>
@@ -300,8 +308,8 @@
 	<listitem>
 	  <simpara>Output profiling
       information detailing the amount of time spent in each part of the
-      stylesheet. This is useful in optimizing stylesheet performance.
-    </simpara>
+      stylesheet. This is useful in optimizing stylesheet
+      performance.</simpara>
 	</listitem>
       </varlistentry>
 
@@ -309,8 +317,7 @@
 	<term>
       <option>--dumpextensions</option></term>
 	<listitem>
-	  <simpara>Dumps the list of all registered extensions on stdout.
-    </simpara>
+	  <simpara>Dumps the list of all registered extensions on stdout.</simpara>
 	</listitem>
       </varlistentry>
 
@@ -318,8 +325,7 @@
 	<term>
       <option>--nowrite</option></term>
 	<listitem>
-	  <simpara>Refuses to write to any file or resource.
-    </simpara>
+	  <simpara>Refuses to write to any file or resource.</simpara>
 	</listitem>
       </varlistentry>
     
@@ -327,18 +333,16 @@
 	<term>
       <option>--nomkdir</option></term>
 	<listitem>
-	  <simpara>Refuses to create directories.
-    </simpara>
+	  <simpara>Refuses to create directories.</simpara>
 	</listitem>
       </varlistentry>
     
       <varlistentry>
 	<term>
-      <option>--writesubtree</option> <replaceable>path</replaceable></term>
+      <option>--writesubtree <replaceable>PATH</replaceable></option></term>
 	<listitem>
-	  <simpara>Allow file write only within the
-	  <replaceable>path</replaceable> subtree.
-    </simpara>
+	  <simpara>Allow file write only within
+	  the <replaceable>PATH</replaceable> subtree.</simpara>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -346,42 +350,110 @@
 	  <option>--nodtdattr</option>
 	</term>
 	<listitem>
-	  <simpara>Do not apply default attributes from the document's
-	  <acronym>DTD</acronym>.
-	  </simpara>
+	  <simpara>Do not apply default attributes from the
+	  document's <acronym>DTD</acronym>.</simpara>
 	</listitem>
       </varlistentry>
     
     </variablelist>
   </refsect1>
 
-  <refsect1 id="return">
-    <title>Return values</title>
-    <para><application>xsltproc</application>'s return codes provide information
-    that can be used when calling it from scripts.</para>
-
-    <para>0: normal</para>
-    <para>1: no argument</para>
-    <para>2: too many parameters</para>
-    <para>3: unknown option</para>
-    <para>4: failed to parse the stylesheet</para>
-    <para>5: error in the stylesheet</para>
-    <para>6: error in one of the documents</para>
-    <para>7: unsupported xsl:output method</para>
-    <para>8: string parameter contains both quote and double-quotes</para>
-    <para>9: internal processing error</para>
-    <para>10: processing was stopped by a terminating message</para>
+  <refsect1 id="envar">
+    <title>ENVIRONMENT</title>
+    <variablelist>
+      <varlistentry>
+        <term><envar>SGML_CATALOG_FILES</envar></term>
+        <listitem>
+           <para>...</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><envar>XML_CATALOG_FILES</envar></term>
+        <listitem>
+           <para>...</para>
+        </listitem>
+      </varlistentry>    
+    </variablelist>
   </refsect1>
 
-
+  <refsect1 id="return">
+    <title>DIAGNOSTICS</title>
+    <para>&xsltproc;'s return codes provide information
+    that can be used when calling it from scripts.</para>
+    <variablelist>
+      <varlistentry>
+        <term><errorcode>0</errorcode></term>
+        <listitem>
+           <para>normal</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>1</errorcode></term>
+        <listitem>
+           <para>no argument</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>2</errorcode></term>
+        <listitem>
+           <para>too many parameters</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>3</errorcode></term>
+        <listitem>
+           <para>unknown option</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>4</errorcode></term>
+        <listitem>
+           <para>failed to parse the stylesheet</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>5</errorcode></term>
+        <listitem>
+           <para>error in the stylesheet</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>6</errorcode></term>
+        <listitem>
+           <para>error in one of the documents</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>7</errorcode></term>
+        <listitem>
+           <para>unsupported xsl:output method</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>8</errorcode></term>
+        <listitem>
+           <para>string parameter contains both quote and double-quotes</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>9</errorcode></term>
+        <listitem>
+           <para>internal processing error</para>
+        </listitem>
+      </varlistentry>    
+      <varlistentry>
+        <term><errorcode>10</errorcode></term>
+        <listitem>
+           <para>processing was stopped by a terminating message</para>
+        </listitem>
+      </varlistentry>    
+    </variablelist>
+  </refsect1>
 
   <refsect1 id="moreinfo">
-    <title>More Information</title>
-    
-	  <para><application>libxml web page: </application><ulink url="http://www.xmlsoft.org/">http://www.xmlsoft.org/</ulink></para>
-	
-	  <para>W3C <acronym>XSLT page: </acronym><ulink url="http://www.w3.org/TR/xslt">http://www.w3.org/TR/xslt</ulink></para>
-	
-  
+    <title>SEE ALSO</title>
+    <para>More information can be found at the <application>libxml</application> web pages
+    at <ulink url="http://www.xmlsoft.org/"/> and the W3C <acronym>XSLT</acronym>
+    pages at <ulink url="http://www.w3.org/TR/xslt"/>.</para>
   </refsect1>
 </refentry>
