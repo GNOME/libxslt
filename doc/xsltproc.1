@@ -17,14 +17,14 @@
 .el .ne 3
 .IP "\\$1" \\$2
 ..
-.TH "XSLTPROC" 1 "" "" "xsltproc Manual"
+.TH "XSLTPROC" 1 "2006-02-20" "libxslt" "xsltproc Manual"
 .SH NAME
-xsltproc \- command line xslt processor
+xsltproc \- command line XSLT processor
 .SH "SYNOPSIS"
 .ad l
 .hy 0
 .HP 9
-\fBxsltproc\fR [[\fB\fB\-V\fR\fR | \fB\fB\-\-version\fR\fR] [\fB\fB\-v\fR\fR | \fB\fB\-\-verbose\fR\fR] | \fB{\fB\fB\-o\fR\fR\ |\ \fB\fB\-\-output\fR\fR}\ \fIFILE\fR\fR | \fB\fB\-\-timing\fR\fR | \fB\fB\-\-repeat\fR\fR | \fB\fB\-\-debug\fR\fR | \fB\fB\-\-novalid\fR\fR | \fB\fB\-\-noout\fR\fR | \fB\fB\-\-maxdepth\ \fIVALUE\fR\fR\fR | \fB\fB\-\-html\fR\fR | \fB\fB\-\-param\ \fIPARAMNAME\fR\ \fIPARAMVALUE\fR\ \fR\fR | \fB\fB\-\-stringparam\ \fIPARAMNAME\fR\ \fIPARAMVALUE\fR\ \fR\fR | \fB\fB\-\-nonet\fR\fR | \fB\fB\-\-path\ "\fIPATHS\fR"\fR\fR | \fB\fB\-\-load\-trace\fR\fR | \fB\fB\-\-catalogs\fR\fR | \fB\fB\-\-xinclude\fR\fR [\fB\fB\-\-profile\fR\fR | \fB\fB\-\-norman\fR\fR] | \fB\fB\-\-dumpextensions\fR\fR | \fB\fB\-\-nowrite\fR\fR | \fB\fB\-\-nomkdir\fR\fR | \fB\fB\-\-writesubtree\ \fIPATH\fR\fR\fR | \fB\fB\-\-nodtdattr\fR\fR] [\fISTYLESHEET\fR] {\fIFILE\fR...}
+\fBxsltproc\fR [[\fB\fB\-V\fR\fR | \fB\fB\-\-version\fR\fR] [\fB\fB\-v\fR\fR | \fB\fB\-\-verbose\fR\fR] [{\fB\fB\-o\fR\fR | \fB\fB\-\-output\fR\fR} {\fB\fIFILE\fR\fR | \fB\fIDIRECTORY\fR\fR}] | \fB\fB\-\-timing\fR\fR | \fB\fB\-\-repeat\fR\fR | \fB\fB\-\-debug\fR\fR | \fB\fB\-\-novalid\fR\fR | \fB\fB\-\-noout\fR\fR | \fB\fB\-\-maxdepth\ \fIVALUE\fR\fR\fR | \fB\fB\-\-html\fR\fR | \fB\fB\-\-param\ \fIPARAMNAME\fR\ \fIPARAMVALUE\fR\ \fR\fR | \fB\fB\-\-stringparam\ \fIPARAMNAME\fR\ \fIPARAMVALUE\fR\ \fR\fR | \fB\fB\-\-nonet\fR\fR | \fB\fB\-\-path\ \fI"PATHS"\fR\fR\fR | \fB\fB\-\-load\-trace\fR\fR | \fB\fB\-\-catalogs\fR\fR | \fB\fB\-\-xinclude\fR\fR [\fB\fB\-\-profile\fR\fR | \fB\fB\-\-norman\fR\fR] | \fB\fB\-\-dumpextensions\fR\fR | \fB\fB\-\-nowrite\fR\fR | \fB\fB\-\-nomkdir\fR\fR | \fB\fB\-\-writesubtree\ \fIPATH\fR\fR\fR | \fB\fB\-\-nodtdattr\fR\fR] [\fISTYLESHEET\fR] {\fB\fIXML\-FILE\fR\fR | \fB\-\fR}
 .ad
 .hy
 
@@ -37,107 +37,110 @@ xsltproc \- command line xslt processor
 \fBxsltproc\fR is invoked from the command line with the name of the stylesheet to be used followed by the name of the file or files to which the stylesheet is to be applied\&. It will use the standard input if a filename provided is \- \&.
 
 .PP
-If a stylesheet is included in an XML document with a Stylesheet Processing Instruction, no stylesheet need be named at the command line\&. \fBxsltproc\fR will automatically detect the included stylesheet and use it\&.
+If a stylesheet is included in an XML document with a Stylesheet Processing Instruction, no stylesheet need to be named at the command line\&. \fBxsltproc\fR will automatically detect the included stylesheet and use it\&.
 
 .PP
-By default, output is to stdout\&. You can specify a file for output using the \fB\-o\fR option\&.
+By default, output is to \fIstdout\fR\&. You can specify a file for output using the \fB\-o\fR or \fB\-\-output\fR option\&.
+
+.PP
+More information can be found at the libxml web pages at \fIhttp://www.xmlsoft.org/\fR and the W3C XSLT pages at \fIhttp://www.w3.org/TR/xslt\fR\&.
 
 .SH "OPTIONS"
 
 .PP
-\fBxsltproc\fR currently accepts the following options:
-
-.TP
-\fB\-V\fR or \fB\-\-version\fR
-Show the version of libxml and libxslt used\&.
-
-.TP
-\fB\-v\fR or \fB\-\-verbose\fR
-Output each step taken by \fBxsltproc\fR in processing the stylesheet and the document\&.
-
-.TP
-\fB\-o\fR or \fB\-\-output\fR \fIFILE\fR
-Direct output to the file named \fIFILE\fR\&. For multiple outputs, also known as "chunking", \fB\-o \fIDIRECTORY/\fR\fR directs the output files to a specified directory\&. The directory must already exist\&.
-
-.TP
-\fB\-\-timing\fR
-Display the time used for parsing the stylesheet, parsing the document and applying the stylesheet and saving the result\&. Displayed in milliseconds\&.
-
-.TP
-\fB\-\-repeat\fR
-Run the transformation 20 times\&. Used for timing tests\&.
-
-.TP
-\fB\-\-debug\fR
-Output an XML tree of the transformed document for debugging purposes\&.
-
-.TP
-\fB\-\-novalid\fR
-Skip loading the document's DTD\&.
-
-.TP
-\fB\-\-noout\fR
-Do not output the result\&.
-
-.TP
-\fB\-\-maxdepth \fIVALUE\fR\fR
-Adjust the maximum depth of the template stack before libxslt concludes it is in an infinite loop\&. The default is 500\&.
-
-.TP
-\fB\-\-html\fR
-The input document is an HTML file\&.
-
-.TP
-\fB\-\-param \fIPARAMNAME\fR \fIPARAMVALUE\fR\fR
-Pass a parameter of name \fIPARAMNAME\fR and value \fIPARAMVALUE\fR to the stylesheet\&. You may pass multiple name/value pairs up to a maximum of 32\&. If the value being passed is a string rather than a node identifier, use \fB\-\-stringparam\fR instead\&.
-
-.TP
-\fB\-\-stringparam \fIPARAMNAME\fR \fIPARAMVALUE\fR\fR
-Pass a paramenter of name \fIPARAMNAME\fR and value \fIPARAMVALUE\fR where \fIPARAMVALUE\fR is a string rather than a node identifier\&. (Note: The string must be utf\-8\&.)
-
-.TP
-\fB\-\-nonet\fR
-Do not use the Internet to fetch DTDs, entities or documents\&.
-
-.TP
-\fB\-\-path "\fIPATHS\fR"\fR
-Use the list (separated by space or colon) of filesystem paths specified by \fIpaths\fR to load DTDs, entities or documents\&.
-
-.TP
-\fB\-\-load\-trace\fR
-Display to stderr all the documents loaded during the processing\&.
+\fBxsltproc\fR accepts the following options (in alphabetical order):
 
 .TP
 \fB\-\-catalogs\fR
 Use the SGML catalog specified in \fBSGML_CATALOG_FILES\fR to resolve the location of external entities\&. By default, \fBxsltproc\fR looks for the catalog specified in \fBXML_CATALOG_FILES\fR\&. If that is not specified, it uses \fI/etc/xml/catalog\fR\&.
 
 .TP
-\fB\-\-xinclude\fR
-Process the input document using the Xinclude specification\&. More details on this can be found in the Xinclude specification: \fIhttp://www.w3.org/TR/xinclude/\fR 
-
-.TP
-\fB\-\-profile\fR or \fB\-\-norman\fR
-Output profiling information detailing the amount of time spent in each part of the stylesheet\&. This is useful in optimizing stylesheet performance\&.
+\fB\-\-debug\fR
+Output an XML tree of the transformed document for debugging purposes\&.
 
 .TP
 \fB\-\-dumpextensions\fR
-Dumps the list of all registered extensions on stdout\&.
+Dumps the list of all registered extensions on \fIstdout\fR\&.
 
 .TP
-\fB\-\-nowrite\fR
-Refuses to write to any file or resource\&.
+\fB\-\-html\fR
+The input document is an HTML file\&.
+
+.TP
+\fB\-\-load\-trace\fR
+Display all the documents loaded during the processing to \fIstderr\fR\&.
+
+.TP
+\fB\-\-maxdepth \fIVALUE\fR\fR
+Adjust the maximum depth of the template stack before libxslt concludes it is in an infinite loop\&. The default is 500\&.
+
+.TP
+\fB\-\-nodtdattr\fR
+Do not apply default attributes from the document's DTD\&.
 
 .TP
 \fB\-\-nomkdir\fR
 Refuses to create directories\&.
 
 .TP
+\fB\-\-nonet\fR
+Do not use the Internet to fetch DTDs, entities or documents\&.
+
+.TP
+\fB\-\-noout\fR
+Do not output the result\&.
+
+.TP
+\fB\-\-novalid\fR
+Skip loading the document's DTD\&.
+
+.TP
+\fB\-\-nowrite\fR
+Refuses to write to any file or resource\&.
+
+.TP
+\fB\-o\fR or \fB\-\-output\fR \fIFILE\fR | \fIDIRECTORY\fR
+Direct output to the given \fIFILE\fR\&. Using the option with a \fIDIRECTORY\fR directs the output files to the specified directory\&. This can be useful for multiple outputs (also known as "chunking") or manpage processing\&. Note: The given directory must already exist\&.
+
+.TP
+\fB\-\-param \fIPARAMNAME\fR \fIPARAMVALUE\fR\fR
+Pass a parameter of name \fIPARAMNAME\fR and value \fIPARAMVALUE\fR to the stylesheet\&. You may pass multiple name/value pairs up to a maximum of 32\&. If the value being passed is a string rather than a node identifier, use \fB\-\-stringparam\fR instead\&.
+
+.TP
+\fB\-\-path \fI"PATHS"\fR\fR
+Use the (space\- or colon\-separated) list of filesystem paths specified by \fIPATHS\fR to load DTDs, entities or documents\&. Enclose space\-separated lists by quotation marks\&.
+
+.TP
+\fB\-\-profile\fR or \fB\-\-norman\fR
+Output profiling information detailing the amount of time spent in each part of the stylesheet\&. This is useful in optimizing stylesheet performance\&.
+
+.TP
+\fB\-\-repeat\fR
+Run the transformation 20 times\&. Used for timing tests\&.
+
+.TP
+\fB\-\-stringparam \fIPARAMNAME\fR \fIPARAMVALUE\fR\fR
+Pass a paramenter of name \fIPARAMNAME\fR and value \fIPARAMVALUE\fR where \fIPARAMVALUE\fR is a string rather than a node identifier\&. Note: The string must be UTF\-8 encoded\&.
+
+.TP
+\fB\-\-timing\fR
+Display the time used for parsing the stylesheet, parsing the document and applying the stylesheet and saving the result\&. Displayed in milliseconds\&.
+
+.TP
+\fB\-v\fR or \fB\-\-verbose\fR
+Output each step taken by \fBxsltproc\fR in processing the stylesheet and the document\&.
+
+.TP
+\fB\-V\fR or \fB\-\-version\fR
+Show the version of libxml and libxslt used\&.
+
+.TP
 \fB\-\-writesubtree \fIPATH\fR\fR
 Allow file write only within the \fIPATH\fR subtree\&.
 
 .TP
-\fB\-\-nodtdattr\fR
-Do not apply default attributes from the document's DTD\&.
+\fB\-\-xinclude\fR
+Process the input document using the Xinclude specification\&. More details on this can be found in the Xinclude specification: \fIhttp://www.w3.org/TR/xinclude/\fR 
 
 .SH "ENVIRONMENT"
 
@@ -156,52 +159,47 @@ Do not apply default attributes from the document's DTD\&.
 
 .TP
 \fB0\fR
-normal
+No error (normal operation)
 
 .TP
 \fB1\fR
-no argument
+No argument
 
 .TP
 \fB2\fR
-too many parameters
+Too many parameters
 
 .TP
 \fB3\fR
-unknown option
+Unknown option
 
 .TP
 \fB4\fR
-failed to parse the stylesheet
+Failed to parse the stylesheet
 
 .TP
 \fB5\fR
-error in the stylesheet
+Error in the stylesheet
 
 .TP
 \fB6\fR
-error in one of the documents
+Error in one of the documents
 
 .TP
 \fB7\fR
-unsupported xsl:output method
+Unsupported xsl:output method
 
 .TP
 \fB8\fR
-string parameter contains both quote and double\-quotes
+String parameter contains both quote and double\-quotes
 
 .TP
 \fB9\fR
-internal processing error
+Internal processing error
 
 .TP
 \fB10\fR
-processing was stopped by a terminating message
-
-.SH "SEE ALSO"
-
-.PP
-More information can be found at the libxml web pages at \fIhttp://www.xmlsoft.org/\fR and the W3C XSLT pages at \fIhttp://www.w3.org/TR/xslt\fR\&.
+Processing was stopped by a terminating message
 
 .SH AUTHOR
-John Fleck.
+John Fleck <jfleck@inkstain\&.net>.

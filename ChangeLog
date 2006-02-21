@@ -1,3 +1,7 @@
+Tue Feb 21 20:21:07 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: new update from Daniel Leidert
+
 Tue Feb 21 17:59:11 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c libxslt/xslt.c libxslt/xslt.h
