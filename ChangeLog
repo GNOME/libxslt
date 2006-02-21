@@ -1,3 +1,9 @@
+Tue Feb 21 17:59:11 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c libxslt/xslt.c libxslt/xslt.h
+	  libxslt/xsltInternals.h: applied patch from Christopher R. Palmer
+	  to avoid a race condition in xsltInit()
+
 Sun Feb 19 22:40:58 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.1 doc/xsltproc.xml: improvement of the man page

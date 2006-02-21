@@ -148,9 +148,26 @@ exclPrefixPop(xsltStylesheetPtr style)
  * Initializes the processor (e.g. registers built-in extensions,
  * etc.)
  */
-static void
+
+static int initialized = 0;
+
+void
 xsltInit (void) {
-    xsltRegisterAllExtras();
+    if (initialized == 0) {
+	initialized = 1;
+        xsltRegisterAllExtras();
+    }
+}
+
+/**
+ * xsltUninit
+ *
+ * Uninitializes the processor.
+ */
+
+void
+xsltUninit (void) {
+    initialized = 0;
 }
 
 /**

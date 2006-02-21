@@ -694,6 +694,14 @@ XSLTPUBFUN xmlChar * XSLTCALL
 						 xmlNodePtr node);
 XSLTPUBFUN void XSLTCALL
 			xsltFreeAVTList		(void *avt);
+
+/*
+ * Extra function for successful xsltCleanupGlobals / xsltInit sequence.
+ */
+
+XSLTPUBFUN void XSLTCALL
+			xsltUninit		(void);
+
 #ifdef __cplusplus
 }
 #endif

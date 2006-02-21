@@ -1881,6 +1881,8 @@ xsltCleanupGlobals(void)
         xmlHashFree(xsltModuleHash, NULL);
         xsltModuleHash = NULL;
     }
+
+    xsltUninit();
 }
 
 static void
