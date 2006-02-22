@@ -401,7 +401,9 @@ libxml_xmlXPathObjectPtrWrap(xmlXPathObjectPtr obj)
         case XPATH_RANGE:
         case XPATH_LOCATIONSET:
         default:
+#ifdef DEBUG
             printf("Unable to convert XPath object type %d\n", obj->type);
+#endif
             Py_INCREF(Py_None);
             ret = Py_None;
     }
@@ -446,7 +448,9 @@ libxml_xmlXPathObjectPtrConvert(PyObject * obj)
 
             cur = NULL;
             if (PyCObject_Check(node)) {
+#ifdef DEBUG
                 printf("Got a CObject\n");
+#endif
                 cur = PyxmlNode_Get(node);
             } else if (PyInstance_Check(node)) {
                 PyInstanceObject *inst = (PyInstanceObject *) node;
@@ -466,7 +470,9 @@ libxml_xmlXPathObjectPtrConvert(PyObject * obj)
                     }
                     }
             } else {
+#ifdef DEBUG
                 printf("Unknown object in Python return list\n");
+#endif
             }
             if (cur != NULL) {
                 xmlXPathNodeSetAdd(set, cur);
@@ -474,7 +480,9 @@ libxml_xmlXPathObjectPtrConvert(PyObject * obj)
         }
         ret = xmlXPathWrapNodeSet(set);
     } else {
+#ifdef DEBUG
         printf("Unable to convert Python Object to XPath");
+#endif
     }
     Py_DECREF(obj);
     return (ret);

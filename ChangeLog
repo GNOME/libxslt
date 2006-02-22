@@ -1,3 +1,8 @@
+Wed Feb 22 16:09:10 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* python/types.c: Nic Ferrier found debug statement left in the
+	  XPath conversion code
+
 Tue Feb 21 20:21:07 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.1 doc/xsltproc.xml: new update from Daniel Leidert
