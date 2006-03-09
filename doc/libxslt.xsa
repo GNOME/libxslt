@@ -12,14 +12,13 @@
     <last-release> Apr 02 2005</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
     <changes>   - bug fixes: text node on stylesheet document without a dictionary
-      (William Brack), more checking of XSLT syntax, calling xsltInit() multiple
-      times, mode values interning raised by Mark Vakoc, bug in pattern
-      matching with ancestors, bug in patterna matching with cascading select,
-      xinclude and document() problem, build outside of source tree (Mike
-      Castle)
+    (William Brack), more checking of XSLT syntax, calling xsltInit()
+    multiple times, mode values interning raised by Mark Vakoc, bug in
+    pattern matching with ancestors, bug in patterna matching with cascading
+    select, xinclude and document() problem, build outside of source tree
+    (Mike Castle)
    - improvement: added a --nodict mode to xsltproc to check problems for
-      docuemtns without dictionnaries
-
+    docuemtns without dictionnaries
 
 </changes>
   </product>
