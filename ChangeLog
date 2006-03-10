@@ -1,3 +1,11 @@
+Fri Mar 10 12:49:18 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/crypto.c libexslt/date.c libexslt/saxon.c
+	  libxslt/attributes.c libxslt/imports.c libxslt/pattern.c
+	  libxslt/preproc.c libxslt/transform.c libxslt/variables.c
+	  libxslt/xslt.c libxslt/xsltutils.c: various assorted small cleanups
+	  based on the Coverity reports
+
 Wed Feb 22 16:09:10 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* python/types.c: Nic Ferrier found debug statement left in the

@@ -1198,8 +1198,11 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlNodePtr delete;
     int internalize = 0;
 
-    if ((style != NULL) && (cur != NULL) && (cur->doc != NULL) &&
-        (style->dict != NULL) && (cur->doc->dict == style->dict))
+    if ((style == NULL) || (cur == NULL))
+        return;
+
+    if ((cur->doc != NULL) && (style->dict != NULL) &&
+        (cur->doc->dict == style->dict))
 	internalize = 1;
     else
         style->internalized = 0;
@@ -1393,6 +1396,8 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
     xmlNodePtr cur;
     const xmlChar *URI;
 
+    if (style == NULL)
+        return;
     /* 
      * TODO: basically if the stylesheet uses the same prefix for different
      *       patterns, well they may be in problem, hopefully they will get
@@ -1409,7 +1414,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 			if (style->nsHash == NULL) {
 			    xsltTransformError(NULL, style, cur,
 		 "xsltGatherNamespaces: failed to create hash table\n");
-			    if (style != NULL) style->errors++;
+			    style->errors++;
 			    return;
 			}
 		    }
@@ -1417,7 +1422,7 @@ xsltGatherNamespaces(xsltStylesheetPtr style) {
 		    if ((URI != NULL) && (!xmlStrEqual(URI, ns->href))) {
 			xsltTransformError(NULL, style, cur,
 	     "Namespaces prefix %s used for multiple namespaces\n",ns->prefix);
-			if (style != NULL) style->warnings++;
+			style->warnings++;
 		    } else if (URI == NULL) {
 			xmlHashUpdateEntry(style->nsHash, ns->prefix,
 			    (void *) ns->href, (xmlHashDeallocator)xmlFree);
@@ -1513,7 +1518,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 						(const xmlChar *)"no")){
 			    xsltTransformError(NULL, style, cur,
 	     "xsl:text: disable-output-escaping allows only yes or no\n");
-			    if (style != NULL) style->warnings++;
+			    style->warnings++;
 
 			}
 			xmlFree(prop);
@@ -1528,7 +1533,7 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 			     (text->type != XML_CDATA_SECTION_NODE)) {
 			    xsltTransformError(NULL, style, cur,
 		 "xsltParseTemplateContent: xslt:text content problem\n");
-			    if (style != NULL) style->errors++;
+			    style->errors++;
 			    break;
 			}
 			if ((noesc) && (text->type != XML_CDATA_SECTION_NODE))
@@ -1540,14 +1545,6 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 		     * replace xsl:text by the list of childs
 		     */
 		    if (text == NULL) {
-		        int internalize = 0;
-			if ((style != NULL) && (text != NULL) &&
-			    (text->doc != NULL) && (style->dict != NULL) &&
-			    (text->doc->dict == style->dict))
-			    internalize = 1;
-			else
-			    style->internalized = 0;
-
 			text = cur->children;
 			while (text != NULL) {
 			    if ((text->content != NULL) &&

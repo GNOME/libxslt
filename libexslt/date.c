@@ -553,12 +553,12 @@ _exsltDateParseTime (exsltDateValDatePtr dt, const xmlChar **str)
 static int
 _exsltDateParseTimeZone (exsltDateValDatePtr dt, const xmlChar **str)
 {
-    const xmlChar *cur = *str;
+    const xmlChar *cur;
     int ret = 0;
 
     if (str == NULL)
 	return -1;
-
+    cur = *str;
     switch (*cur) {
     case 0:
 	dt->tz_flag = 0;
@@ -1522,6 +1522,14 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
             long tyr  = r->year + (long)FQUOTIENT_RANGE((int)r->mon-1, 1, 13);
             if (tyr == 0)
                 tyr--;
+	    /*
+	     * Coverity detected an overrun in daysInMonth 
+	     * of size 12 at position 12 with index variable "((r)->mon - 1)"
+	     */
+	    if (tmon < 0)
+	        tmon = 0;
+	    if (tmon > 12)
+	        tmon = 12;
             tempdays += MAX_DAYINMONTH(tyr, tmon);
             carry = -1;
         } else if (tempdays > (long)MAX_DAYINMONTH(r->year, r->mon)) {

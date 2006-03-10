@@ -621,15 +621,24 @@ exsltCryptoRc4EncryptFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 /* encrypt it */
     bin_len = str_len;
     bin = xmlStrdup (str);
+    if (bin == NULL) {
+	xmlXPathReturnEmptyString (ctxt);
+	goto done;
+    }
     PLATFORM_RC4_ENCRYPT (ctxt, padkey, str, str_len, bin, bin_len);
 
 /* encode it */
     hex_len = str_len * 2 + 1;
     hex = xmlMallocAtomic (hex_len);
+    if (hex == NULL) {
+	xmlXPathReturnEmptyString (ctxt);
+	goto done;
+    }
 
     exsltCryptoBin2Hex (bin, str_len, hex, hex_len);
     xmlXPathReturnString (ctxt, hex);
 
+done:
     if (key != NULL)
 	xmlFree (key);
     if (str != NULL)

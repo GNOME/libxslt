@@ -578,16 +578,15 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
     const xmlChar *URL = NULL;
 
 
-    if (ctxt->insert == NULL)
-        return;
-    if (comp == NULL) {
+    if ((comp == NULL) || (ctxt == NULL)) {
         xsltTransformError(ctxt, NULL, inst,
                          "xsl:attribute : compilation failed\n");
         return;
     }
+    if (ctxt->insert == NULL)
+        return;
 
-    if ((ctxt == NULL) || (node == NULL) || (inst == NULL)
-        || (comp == NULL))
+    if ((node == NULL) || (inst == NULL) || (comp == NULL))
         return;
     if (!comp->has_name) {
         return;

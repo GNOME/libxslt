@@ -477,8 +477,12 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
-	    xsltTransformError(ctxt, NULL, precomp->inst,
-		"Evaluating variable %s failed\n", elem->name);
+	    if (precomp == NULL)
+		xsltTransformError(ctxt, NULL, NULL,
+		    "Evaluating variable %s failed\n", elem->name);
+	    else
+		xsltTransformError(ctxt, NULL, precomp->inst,
+		    "Evaluating variable %s failed\n", elem->name);
 	    ctxt->state = XSLT_STATE_STOPPED;
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
@@ -617,8 +621,12 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	if ((precomp == NULL) || (precomp->comp == NULL))
 	    xmlXPathFreeCompExpr(comp);
 	if (result == NULL) {
-	    xsltTransformError(ctxt, NULL, precomp->inst,
-		"Evaluating global variable %s failed\n", elem->name);
+	    if (precomp == NULL)
+		xsltTransformError(ctxt, NULL, NULL,
+		    "Evaluating global variable %s failed\n", elem->name);
+	    else
+		xsltTransformError(ctxt, NULL, precomp->inst,
+		    "Evaluating global variable %s failed\n", elem->name);
 	    ctxt->state = XSLT_STATE_STOPPED;
 #ifdef WITH_XSLT_DEBUG_VARIABLE
 #ifdef LIBXML_DEBUG_ENABLED
@@ -1021,11 +1029,8 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
     elem = xsltNewStackElem();
     if (elem != NULL) {
 	elem->name = name;
-	if (value != NULL)
-	    elem->select = xmlDictLookup(ctxt->dict, value, -1);
-	else
-	    elem->select = NULL;
-	if (href)
+	elem->select = xmlDictLookup(ctxt->dict, value, -1);
+	if (href != NULL)
 	    elem->nameURI = xmlDictLookup(ctxt->dict, href, -1);
 	elem->tree = NULL;
 	elem->computed = 1;

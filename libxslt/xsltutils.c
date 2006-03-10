@@ -286,7 +286,8 @@ xsltGetUTF8Char(const unsigned char *utf, int *len) {
     return(c);
 
 error:
-    *len = 0;
+    if (len != NULL)
+	*len = 0;
     return(-1);
 }
 

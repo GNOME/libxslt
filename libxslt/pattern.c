@@ -740,8 +740,6 @@ restart:
 		    continue;
 		}
 		while (node != NULL) {
-		    if (node == NULL)
-			goto rollback;
 		    if ((node->type == XML_ELEMENT_NODE) &&
 			(step->value[0] == node->name[0]) &&
 			(xmlStrEqual(step->value, node->name))) {

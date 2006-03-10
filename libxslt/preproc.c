@@ -217,11 +217,14 @@ static xsltStylePreCompPtr
 xsltNewStylePreComp(xsltStylesheetPtr style, xsltStyleType type) {
     xsltStylePreCompPtr cur;
 
+    if (style == NULL)
+        return(NULL);
+
     cur = (xsltStylePreCompPtr) xmlMalloc(sizeof(xsltStylePreComp));
     if (cur == NULL) {
 	xsltTransformError(NULL, style, NULL,
 		"xsltNewStylePreComp : malloc failed\n");
-	if (style != NULL) style->errors++;
+	style->errors++;
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltStylePreComp));
@@ -275,7 +278,7 @@ xsltNewStylePreComp(xsltStylesheetPtr style, xsltStyleType type) {
 	if (cur->func == NULL) {
 	    xsltTransformError(NULL, style, NULL,
 		    "xsltNewStylePreComp : no function for type %d\n", type);
-	    if (style != NULL) style->errors++;
+	    style->errors++;
 	}
     }
     cur->next = style->preComps;

@@ -758,9 +758,10 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	ctxt->lasttuse = len;
     }
     if (copy != NULL) {
-        copy->doc = target->doc;
-	if (target != NULL)
+	if (target != NULL) {
+	    copy->doc = target->doc;
 	    xmlAddChild(target, copy);
+	}
     } else {
 	xsltTransformError(ctxt, NULL, target,
 			 "xsltCopyText: text copy failed\n");
@@ -857,7 +858,7 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     xmlNodePtr insert) {
     xmlNodePtr copy;
 
-    if (node->type == XML_DTD_NODE)
+    if ((node->type == XML_DTD_NODE) || (insert == NULL))
 	return(NULL);
     if ((node->type == XML_TEXT_NODE) ||
 	(node->type == XML_CDATA_SECTION_NODE))
@@ -877,8 +878,8 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     (node->type == XML_ATTRIBUTE_NODE)) {
 	    if (node->ns != NULL) {
 		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
-	    } else if ((insert != NULL) && (insert->type == XML_ELEMENT_NODE) &&
-		     (insert->ns != NULL)) {
+	    } else if ((insert->type == XML_ELEMENT_NODE) &&
+		       (insert->ns != NULL)) {
 		xmlNsPtr defaultNs;
 
 		defaultNs = xmlSearchNs(insert->doc, insert, NULL);
@@ -1520,6 +1521,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
     long start = 0;
 
+    if (ctxt == NULL) return;
+
 #ifdef WITH_DEBUGGER
     if (ctxt->debugStatus != XSLT_DEBUG_NONE) {
         if (templ) {
@@ -1550,7 +1553,7 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 #endif
 
-    if ((ctxt == NULL) || (list == NULL))
+    if (list == NULL)
         return;
     CHECK_STOPPED;
 
@@ -3497,7 +3500,6 @@ error:
 void
 xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	   xmlNodePtr inst, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
-    xmlChar *prop = NULL;
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement, when;
     int doit = 1;
@@ -3587,9 +3589,6 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		                 NULL, NULL, 0);
 	    goto done;
 	}
-	if (prop != NULL)
-	    xmlFree(prop);
-	prop = NULL;
 	if (res != NULL)
 	    xmlXPathFreeObject(res);
 	res = NULL;
@@ -3620,8 +3619,6 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 done:
 error:
-    if (prop != NULL)
-	xmlFree(prop);
     if (res != NULL)
 	xmlXPathFreeObject(res);
 }
@@ -3714,7 +3711,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr replacement;
     xmlNodeSetPtr list = NULL, oldList;
     int i, oldProximityPosition, oldContextSize;
-    xmlNodePtr oldNode = ctxt->node;
+    xmlNodePtr oldNode;
     int nbsorts = 0;
     xmlNodePtr sorts[XSLT_MAX_SORT];
     xmlDocPtr oldXDocPtr;
@@ -3729,6 +3726,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsl:for-each : compilation failed\n");
 	return;
     }
+    oldNode = ctxt->node;
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
     XSLT_TRACE(ctxt,XSLT_TRACE_FOR_EACH,xsltGenericDebug(xsltGenericDebugContext,
@@ -4303,7 +4301,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if ((res != NULL) && (ctxt != NULL) && (output != NULL)) {
 	int ret;
 
-	ret = xsltCheckWrite(userCtxt->sec, userCtxt, (const xmlChar *) output);
+	ret = xsltCheckWrite(ctxt->sec, ctxt, (const xmlChar *) output);
 	if (ret == 0) {
 	    xsltTransformError(ctxt, NULL, NULL,
 		     "xsltApplyStylesheet: forbidden to save to %s\n",
