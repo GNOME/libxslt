@@ -1,3 +1,8 @@
+Wed Mar 29 12:16:41 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: Charles Hardin pointed an OOM condition where
+	  a NULL pointer could be dereferenced, closes #336394
+
 Fri Mar 10 12:49:18 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/crypto.c libexslt/date.c libexslt/saxon.c

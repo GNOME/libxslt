@@ -638,7 +638,8 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	    return(xsltAddTextString(ctxt, target->last, string, len));
 	}
 	copy = xmlNewTextLen(string, len);
-	copy->name = xmlStringTextNoenc;
+	if (copy != NULL)
+	    copy->name = xmlStringTextNoenc;
     } else {
 	if ((target != NULL) && (target->last != NULL) &&
 	    (target->last->type == XML_TEXT_NODE) &&
