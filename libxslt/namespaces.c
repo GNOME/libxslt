@@ -69,15 +69,13 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
     xmlNsPtr rNs;
     const xmlChar *rhref;
 
-    sprefix = xsltGetNsProp(node, (const xmlChar *)"stylesheet-prefix",
-	                   XSLT_NAMESPACE);
+    sprefix = xmlGetNsProp(node, (const xmlChar *)"stylesheet-prefix", NULL);
     if (sprefix == NULL) {
 	xsltTransformError(NULL, style, node,
 	    "namespace-alias: stylesheet-prefix attribute missing\n");
 	return;
     }
-    rprefix = xsltGetNsProp(node, (const xmlChar *)"result-prefix",
-	                   XSLT_NAMESPACE);
+    rprefix = xmlGetNsProp(node, (const xmlChar *)"result-prefix", NULL);
     if (rprefix == NULL) {
 	xsltTransformError(NULL, style, node,
 	    "namespace-alias: result-prefix attribute missing\n");

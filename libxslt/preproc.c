@@ -329,6 +329,17 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
     xsltStylePreCompPtr comp;
     const xmlChar *filename = NULL;
 
+    /*
+    * As of 2006-03-30, this function is currently defined in Libxslt
+    * to be used for:
+    * (in libxslt/extra.c)
+    * "output" in XSLT_SAXON_NAMESPACE
+    * "write" XSLT_XALAN_NAMESPACE
+    * "document" XSLT_XT_NAMESPACE
+    * "document" XSLT_NAMESPACE
+    * (in libexslt/common.c)
+    * "document" in EXSLT_COMMON_NAMESPACE
+    */
     comp = xsltNewStylePreComp(style, XSLT_FUNC_DOCUMENT);
     if (comp == NULL)
 	return (NULL);
@@ -340,36 +351,68 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Found saxon:output extension\n");
 #endif
+	/*
+	* The element "output" is in the namespace XSLT_SAXON_NAMESPACE
+	*   (http://icl.com/saxon)
+	* The @file is in no namespace.
+	*/
 	filename = xsltEvalStaticAttrValueTemplate(style, inst,
 			 (const xmlChar *)"file",
-			 XSLT_SAXON_NAMESPACE, &comp->has_filename);
+			 NULL, &comp->has_filename);
     } else if (xmlStrEqual(inst->name, (const xmlChar *) "write")) {
 #ifdef WITH_XSLT_DEBUG_EXTRA
 	xsltGenericDebug(xsltGenericDebugContext,
 	    "Found xalan:write extension\n");
 #endif
-	comp->ver11 = 0; /* the filename need to be interpreted */
+	/* the filename need to be interpreted */
+	/*
+	* TODO: Is "filename need to be interpreted" meant to be a todo?
+	*   Where will be the filename of xalan:write be processed?
+	*/
     } else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
-	filename = xsltEvalStaticAttrValueTemplate(style, inst,
-			 (const xmlChar *)"href",
-			 XSLT_XT_NAMESPACE, &comp->has_filename);
-	if (comp->has_filename == 0) {
+	if (inst->ns != NULL) {
+	    if (xmlStrEqual(inst->ns->href, XSLT_NAMESPACE)) {
+		/* Mark the instruction as being of XSLT version 1.1. */
+		comp->ver11 = 1;
 #ifdef WITH_XSLT_DEBUG_EXTRA
-	    xsltGenericDebug(xsltGenericDebugContext,
-		"Found xslt11:document construct\n");
-#endif
-	    filename = xsltEvalStaticAttrValueTemplate(style, inst,
-			     (const xmlChar *)"href",
-			     XSLT_NAMESPACE, &comp->has_filename);
-	    comp->ver11 = 1;
-	} else {
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "Found xslt11:document construct\n");
+#endif	    		
+	    } else {		
+		if (xmlStrEqual(inst->ns->href,
+		    (const xmlChar *)"http://exslt.org/common")) {
+		    /* EXSLT. */
 #ifdef WITH_XSLT_DEBUG_EXTRA
-	    xsltGenericDebug(xsltGenericDebugContext,
-		"Found xt:document extension\n");
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"Found exslt:document extension\n");
 #endif
-	    comp->ver11 = 0;
+		} else if (xmlStrEqual(inst->ns->href, XSLT_XT_NAMESPACE)) {
+		    /* James Clark's XT. */
+#ifdef WITH_XSLT_DEBUG_EXTRA
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"Found xt:document extension\n");
+#endif
+		}
+	    }
 	}
-    }
+	/*
+	* The element "document" is used in conjunction with the
+	* following namespaces:
+	* 1) XSLT_NAMESPACE (http://www.w3.org/1999/XSL/Transform version 1.1)
+	*    <!ELEMENT xsl:document %template;>
+	*    <!ATTLIST xsl:document
+	*       href %avt; #REQUIRED
+	* 2) EXSLT_COMMON_NAMESPACE (http://exslt.org/common)
+	*    <exsl:document
+	*       href = { uri-reference }
+	* 3) XSLT_XT_NAMESPACE (http://www.jclark.com/xt)
+	*     Example: <xt:document method="xml" href="myFile.xml">
+	*		
+	* In all cases @href is in no namespace.
+	*/
+	filename = xsltEvalStaticAttrValueTemplate(style, inst,
+	    (const xmlChar *)"href", NULL, &comp->has_filename);
+    }		
     if (!comp->has_filename) {
 	goto error;
     }
@@ -398,6 +441,14 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 
     if ((style == NULL) || (inst == NULL))
 	return;
+    /*
+    * <xsl:sort
+    *   select = string-expression
+    *   lang = { nmtoken }
+    *   data-type = { "text" | "number" | qname-but-not-ncname }
+    *   order = { "ascending" | "descending" }
+    *   case-order = { "upper-first" | "lower-first" } />
+    */
     comp = xsltNewStylePreComp(style, XSLT_FUNC_SORT);
     if (comp == NULL)
 	return;
@@ -406,7 +457,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 
     comp->stype = xsltEvalStaticAttrValueTemplate(style, inst,
 			 (const xmlChar *)"data-type",
-			 XSLT_NAMESPACE, &comp->has_stype);
+			 NULL, &comp->has_stype);
     if (comp->stype != NULL) {
 	if (xmlStrEqual(comp->stype, (const xmlChar *) "text"))
 	    comp->number = 0;
@@ -421,7 +472,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     comp->order = xsltEvalStaticAttrValueTemplate(style, inst,
 			      (const xmlChar *)"order",
-			      XSLT_NAMESPACE, &comp->has_order);
+			      NULL, &comp->has_order);
     if (comp->order != NULL) {
 	if (xmlStrEqual(comp->order, (const xmlChar *) "ascending"))
 	    comp->descending = 0;
@@ -436,7 +487,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     comp->case_order = xsltEvalStaticAttrValueTemplate(style, inst,
 			      (const xmlChar *)"case-order",
-			      XSLT_NAMESPACE, &comp->has_use);
+			      NULL, &comp->has_use);
     if (comp->case_order != NULL) {
 	if (xmlStrEqual(comp->case_order, (const xmlChar *) "upper-first"))
 	    comp->lower_first = 0;
@@ -452,7 +503,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 
     comp->lang = xsltEvalStaticAttrValueTemplate(style, inst,
 				 (const xmlChar *)"lang",
-				 XSLT_NAMESPACE, &comp->has_lang);
+				 NULL, &comp->has_lang);
 
     comp->select = xsltGetCNsProp(style, inst,(const xmlChar *)"select", XSLT_NAMESPACE);
     if (comp->select == NULL) {
@@ -553,6 +604,14 @@ static void
 xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
+    /*
+    * <xsl:element
+    *   name = { qname }
+    *   namespace = { uri-reference }
+    *   use-attribute-sets = qnames>
+    *   <!-- Content: template -->
+    * </xsl:element>
+    */
     if ((style == NULL) || (inst == NULL))
 	return;
     comp = xsltNewStylePreComp(style, XSLT_FUNC_ELEMENT);
@@ -563,7 +622,7 @@ xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 
     comp->name = xsltEvalStaticAttrValueTemplate(style, inst,
 				 (const xmlChar *)"name",
-				 XSLT_NAMESPACE, &comp->has_name);
+				 NULL, &comp->has_name);
     if (comp->name != NULL) {
 	if (xmlValidateQName(comp->name, 0)) {
 	    xsltTransformError(NULL, style, inst,
@@ -573,7 +632,7 @@ xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     comp->ns = xsltEvalStaticAttrValueTemplate(style, inst,
 			 (const xmlChar *)"namespace",
-			 XSLT_NAMESPACE, &comp->has_ns);
+			 NULL, &comp->has_ns);
     if (comp->has_ns == 0) {
 	xmlNsPtr defaultNs;
 
@@ -585,7 +644,7 @@ xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     comp->use = xsltEvalStaticAttrValueTemplate(style, inst,
 		       (const xmlChar *)"use-attribute-sets",
-		       XSLT_NAMESPACE, &comp->has_use);
+		       NULL, &comp->has_use);
 }
 
 /**
@@ -599,6 +658,13 @@ static void
 xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 
+    /*
+    * <xsl:attribute
+    *   name = { qname }
+    *   namespace = { uri-reference }>
+    *   <!-- Content: template -->
+    * </xsl:attribute>
+    */
     if ((style == NULL) || (inst == NULL))
 	return;
     comp = xsltNewStylePreComp(style, XSLT_FUNC_ATTRIBUTE);
@@ -612,7 +678,7 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
      */
     comp->name = xsltEvalStaticAttrValueTemplate(style, inst,
 				 (const xmlChar *)"name",
-				 XSLT_NAMESPACE, &comp->has_name);
+				 NULL, &comp->has_name);
     if (comp->name != NULL) {
 	if (xmlValidateQName(comp->name, 0)) {
 	    xsltTransformError(NULL, style, inst,
@@ -622,7 +688,7 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     comp->ns = xsltEvalStaticAttrValueTemplate(style, inst,
 			 (const xmlChar *)"namespace",
-			 XSLT_NAMESPACE, &comp->has_ns);
+			 NULL, &comp->has_ns);
 
 }
 

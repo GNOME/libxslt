@@ -173,6 +173,15 @@ xsltGetNsProp(xmlNodePtr node, const xmlChar *name, const xmlChar *nameSpace) {
 	return(NULL);
 
     prop = node->properties;
+    /*
+    * TODO: Substitute xmlGetProp() for xmlGetNsProp(), since the former
+    * is not namespace-aware and will return an attribute with equal
+    * name regardless of its namespace.
+    * Example:
+    *   <xsl:element foo:name="myName"/>
+    *   So this would return "myName" even if an attribute @name
+    *   in the XSLT was requested.
+    */
     if (nameSpace == NULL)
 	return(xmlGetProp(node, name));
     while (prop != NULL) {
@@ -314,7 +323,7 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
     if ((ctxt == NULL) || (inst == NULL))
 	return;
 
-    prop = xsltGetNsProp(inst, (const xmlChar *)"terminate", XSLT_NAMESPACE);
+    prop = xmlGetNsProp(inst, (const xmlChar *)"terminate", NULL);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
 	    terminate = 1;

@@ -1,3 +1,21 @@
+Thu Mar 30 17:11:53 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/xslt.c libxslt/xsltutils.c libxslt/preproc.c
+	  libxslt/namespaces.c libxslt/imports.c
+	  libxslt/attributes.c: Eliminated usage of xsltGetNsProp() in cases
+	  where an attribute with a specific namespace is requested.
+	  xsltGetNsProp() uses xmlGetProp() which is not namespace aware
+	  and thus will return the first attribute with the requested
+	  name but of arbitrary namespace.
+	  Changed retrieval of the attributes "exclude-result-prefixes"
+	  and "extension-element-prefixes", which are expected to be in
+	  no namespace on XSLT elements and in the XSLT namespace on
+	  literal result elements or extension elements.
+	  Additional change: for XSLT elements the attribute
+	  "exclude-result-prefixes" is only allowed on xsl:stylesheet
+	  and xsl:transform. This attribute was previously processed on
+	  all XSLT elements.
+
 Wed Mar 29 12:16:41 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: Charles Hardin pointed an OOM condition where
