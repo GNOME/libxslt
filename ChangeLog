@@ -1,3 +1,16 @@
+Thu Mar 30 17:23:52 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* tests/general/bug-36-inc.xsl tests/general/bug-37-inc.xsl
+	  tests/general/bug-65-inc.xsl tests/general/bug-100.xsl
+	  tests/REC/test-15-1.xsl tests/REC/test-7.1.1-3.xsl
+	  tests/namespaces/extra2.xsl tests/extensions/module.xsl
+	  tests/plugins/plugin.xsl python/tests/extelem.py
+	  python/tests/extfunc.py: Fixed regression tests wrt
+	  usage of the attributes "exclude-result-prefixes"
+	  and "extension-element-prefixes". test-7.1.1-3.xsl fails
+	  now, since the code still does not exclude ns-decls
+	  correctly.
+
 Thu Mar 30 17:11:53 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/xslt.c libxslt/xsltutils.c libxslt/preproc.c
