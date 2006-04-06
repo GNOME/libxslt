@@ -25,9 +25,11 @@
 			</address>
 		</affiliation>
 	</author>
-	<releaseinfo>This is release 0.4 of the xsltproc Manual.</releaseinfo>
 	<!-- date should be the date of the latest change or the release version -->
-	<date>2006-02-20</date>
+	<date>2006-03-05</date>
+	<!-- still a bit buggy output, will talk to docbook-xsl upstream to fix this -->
+	<!-- <releaseinfo>This is release 0.4 of the xsltproc Manual.</releaseinfo> -->
+	<!-- <edition>0.4</edition> -->
 </refentryinfo>
 
 <refmeta>
@@ -43,54 +45,56 @@
 <refsynopsisdiv>
 	<cmdsynopsis>
 		<command>xsltproc</command>
-		<group choice='opt'>
-			<group choice='opt'>
-				<arg choice='plain'><option>-V</option></arg>
-				<arg choice='plain'><option>--version</option></arg>
-			</group>
-			<group choice='opt'>
-				<arg choice='plain'><option>-v</option></arg>
-				<arg choice='plain'><option>--verbose</option></arg>
+		<group choice="opt">
+			<group choice="opt">
+				<arg choice="plain"><option>-V</option></arg>
+				<arg choice="plain"><option>--version</option></arg>
 			</group>
 			<group choice="opt">
-				<group choice='req'>
-					<arg choice='plain'><option>-o</option></arg>
-					<arg choice='plain'><option>--output</option></arg>
+				<arg choice="plain"><option>-v</option></arg>
+				<arg choice="plain"><option>--verbose</option></arg>
+			</group>
+			<group choice="opt">
+				<group choice="req">
+					<arg choice="plain"><option>-o</option></arg>
+					<arg choice="plain"><option>--output</option></arg>
 				</group>
-				<group choice='req'>
-					<arg choice='plain'><replaceable class="option">FILE</replaceable></arg>
-					<arg choice='plain'><replaceable class="option">DIRECTORY</replaceable></arg>
+				<group choice="req">
+					<arg choice="plain"><replaceable class="option">FILE</replaceable></arg>
+					<arg choice="plain"><replaceable class="option">DIRECTORY</replaceable></arg>
 				</group>
 			</group>
-			<arg choice='plain'><option>--timing</option></arg>
-			<arg choice='plain'><option>--repeat</option></arg>
-			<arg choice='plain'><option>--debug</option></arg>
-			<arg choice='plain'><option>--novalid</option></arg>
-			<arg choice='plain'><option>--noout</option></arg>
-			<arg choice='plain'><option>--maxdepth <replaceable class="option">VALUE</replaceable></option></arg>
-			<arg choice='plain'><option>--html</option></arg>
-			<arg choice='plain'><option>--param
+			<arg choice="plain"><option>--timing</option></arg>
+			<arg choice="plain"><option>--repeat</option></arg>
+			<arg choice="plain"><option>--debug</option></arg>
+			<arg choice="plain"><option>--novalid</option></arg>
+			<arg choice="plain"><option>--noout</option></arg>
+			<arg choice="plain"><option>--maxdepth <replaceable class="option">VALUE</replaceable></option></arg>
+			<arg choice="plain"><option>--html</option></arg>
+			<arg choice="plain"><option>--param
 			 <replaceable class="option">PARAMNAME</replaceable>
 			 <replaceable class="option">PARAMVALUE</replaceable>
 			</option></arg>
-			<arg choice='plain'><option>--stringparam
+			<arg choice="plain"><option>--stringparam
 			 <replaceable class="option">PARAMNAME</replaceable>
 			 <replaceable class="option">PARAMVALUE</replaceable>
 			</option></arg>
-			<arg choice='plain'><option>--nonet</option></arg>
-			<arg choice='plain'><option>--path <replaceable class="option">"PATHS"</replaceable></option></arg>
-			<arg choice='plain'><option>--load-trace</option></arg>
-			<arg choice='plain'><option>--catalogs</option></arg>
-			<arg choice='plain'><option>--xinclude</option></arg>
-			<group choice='opt'>
-				<arg choice='plain'><option>--profile</option></arg>
-				<arg choice='plain'><option>--norman</option></arg>
-			</group>
-			<arg choice='plain'><option>--dumpextensions</option></arg>
-			<arg choice='plain'><option>--nowrite</option></arg>
-			<arg choice='plain'><option>--nomkdir</option></arg>
-			<arg choice='plain'><option>--writesubtree <replaceable>PATH</replaceable></option></arg>
-			<arg choice='plain'><option>--nodtdattr</option></arg>
+			<arg choice="plain"><option>--nonet</option></arg>
+			<arg choice="plain"><option>--path "<replaceable class="option">PATH(S)</replaceable>"</option></arg>
+			<arg choice="plain"><option>--load-trace</option></arg>
+			<arg choice="plain"><option>--catalogs</option></arg>
+			<arg choice="plain"><option>--xinclude</option></arg>
+			<arg choice="plain">			
+				<group choice="opt">
+					<arg choice="plain"><option>--profile</option></arg>
+					<arg choice="plain"><option>--norman</option></arg>
+				</group>
+			</arg>
+			<arg choice="plain"><option>--dumpextensions</option></arg>
+			<arg choice="plain"><option>--nowrite</option></arg>
+			<arg choice="plain"><option>--nomkdir</option></arg>
+			<arg choice="plain"><option>--writesubtree <replaceable>PATH</replaceable></option></arg>
+			<arg choice="plain"><option>--nodtdattr</option></arg>
 		</group>
 		<arg choice="opt"><replaceable>STYLESHEET</replaceable></arg>
 		<group choice="req">
@@ -100,12 +104,15 @@
 	</cmdsynopsis>
 </refsynopsisdiv>
 
-<refsect1 id="introduction">
+<refsect1 id="description">
 	<title>DESCRIPTION</title>
 	<para>
 		&xsltproc; is a command line tool for applying <acronym>XSLT</acronym>
 		stylesheets to <acronym>XML</acronym> documents. It is part
-		of <application>libxslt</application>, the XSLT C library for GNOME.
+		of <citerefentry>
+			<refentrytitle>libxslt</refentrytitle>
+			<manvolnum>3</manvolnum>
+		</citerefentry>, the XSLT C library for GNOME.
 		While it was developed as part of the GNOME project, it can operate
 		independently of the GNOME desktop.
 	</para>
@@ -126,10 +133,21 @@
 		You can specify a file for output using
 		the <option>-o</option> or <option>--output</option> option.
 	</para>
-	<para>
-		More information can be found at the <application>libxml</application> web pages
-		at <ulink url="http://www.xmlsoft.org/"/> and the W3C <acronym>XSLT</acronym>
-		pages at <ulink url="http://www.w3.org/TR/xslt"/>.
+	<para>More information can be found at
+		<itemizedlist>
+			<listitem>
+				<para><citerefentry>
+						<refentrytitle>libxml</refentrytitle>
+						<manvolnum>3</manvolnum>
+					</citerefentry> web page <ulink url="http://www.xmlsoft.org/"/>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					W3C <acronym>XSLT</acronym> page <ulink url="http://www.w3.org/TR/xslt"/>
+				</para>
+			</listitem>
+		</itemizedlist>
 	</para>
 </refsect1>
 
@@ -195,8 +213,10 @@
 	<listitem>
 		<para>
 			Adjust the maximum depth of the template stack
-			before <application>libxslt</application> concludes it is in an
-			infinite loop. The default is 500.
+			before <citerefentry>
+			<refentrytitle>libxslt</refentrytitle>
+			<manvolnum>3</manvolnum>
+		</citerefentry> concludes it is in an infinite loop. The default is 500.
 		</para>
 	</listitem>
 		</varlistentry>
@@ -283,7 +303,7 @@
 		</varlistentry>
 
 		<varlistentry>
-	<term><option>--path <replaceable>"PATHS"</replaceable></option></term>
+	<term><option>--path "<replaceable>PATH(S)</replaceable>"</option></term>
 	<listitem>
 		<para>
 			Use the (space- or colon-separated) list of filesystem paths specified
@@ -351,8 +371,13 @@
 	<term><option>-V</option> or <option>--version</option></term>
 	<listitem>
 		<para>
-			Show the version of <application>libxml</application>
-			and <application>libxslt</application> used.
+			Show the version of <citerefentry>
+			<refentrytitle>libxml</refentrytitle>
+			<manvolnum>3</manvolnum>
+		</citerefentry> and <citerefentry>
+			<refentrytitle>libxslt</refentrytitle>
+			<manvolnum>3</manvolnum>
+		</citerefentry> used.
 		</para>
 	</listitem>
 		</varlistentry>
@@ -381,113 +406,98 @@
 	</variablelist>
 </refsect1>
 
-<refsect1 id="envar">
+<refsect1 id="environment">
 	<title>ENVIRONMENT</title>
 	<variablelist>
 
 		<varlistentry>
 	<term><envar>SGML_CATALOG_FILES</envar></term>
 	<listitem>
-		<para>...</para>
+		<para>to be written ...</para>
 	</listitem>
 		</varlistentry>
 
 		<varlistentry>
 	<term><envar>XML_CATALOG_FILES</envar></term>
 	<listitem>
-		<para>...</para>
+		<para>
+			Catalog behavior can be changed by redirecting queries to the user's
+			own set of catalogs. This can be done by setting
+			the <envar>XML_CATALOG_FILES</envar> environment variable to a list
+			of catalogs. An empty one should deactivate loading the
+			default <filename>/etc/xml/catalog</filename> default catalog.
+		</para>
 	</listitem>
 		</varlistentry>
 
 	</variablelist>
 </refsect1>
 
-<refsect1 id="return">
+<refsect1 id="diagnostics">
 	<title>DIAGNOSTICS</title>
 	<para>
 		&xsltproc;'s return codes provide information that can be used when
 		calling it from scripts.
 	</para>
-	<variablelist>
+	<segmentedlist>
+		<!-- <title>Error codes</title> -->
+		<segtitle>Errorcode</segtitle>
+		<segtitle>Error</segtitle>
+		<seglistitem>
+			<seg><errorcode>0</errorcode></seg>
+			<seg>No error</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>1</errorcode></seg>
+			<seg>No argument</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>2</errorcode></seg>
+			<seg>Too many parameters</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>3</errorcode></seg>
+			<seg>Unknown option</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>4</errorcode></seg>
+			<seg>Failed to parse the stylesheet</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>5</errorcode></seg>
+			<seg>Error in the stylesheet</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>6</errorcode></seg>
+			<seg>Error in one of the documents</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>7</errorcode></seg>
+			<seg>Unsupported xsl:output method</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>8</errorcode></seg>
+			<seg>String parameter contains both quote and double-quotes</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>9</errorcode></seg>
+			<seg>Internal processing error</seg>
+		</seglistitem>
+		<seglistitem>
+			<seg><errorcode>10</errorcode></seg>
+			<seg>Processing was stopped by a terminating message</seg>
+		</seglistitem>
+	</segmentedlist>
+</refsect1>
 
-		<varlistentry>
-	<term><errorcode>0</errorcode></term>
-	<listitem>
-		<para>No error (normal operation)</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>1</errorcode></term>
-	<listitem>
-		<para>No argument</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>2</errorcode></term>
-	<listitem>
-		<para>Too many parameters</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>3</errorcode></term>
-	<listitem>
-		<para>Unknown option</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>4</errorcode></term>
-	<listitem>
-		<para>Failed to parse the stylesheet</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>5</errorcode></term>
-	<listitem>
-		<para>Error in the stylesheet</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>6</errorcode></term>
-	<listitem>
-		<para>Error in one of the documents</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>7</errorcode></term>
-	<listitem>
-		<para>Unsupported xsl:output method</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>8</errorcode></term>
-	<listitem>
-		<para>String parameter contains both quote and double-quotes</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>9</errorcode></term>
-	<listitem>
-		<para>Internal processing error</para>
-	</listitem>
-		</varlistentry>
-
-		<varlistentry>
-	<term><errorcode>10</errorcode></term>
-	<listitem>
-		<para>Processing was stopped by a terminating message</para>
-	</listitem>
-		</varlistentry>
-
-	</variablelist>
+<refsect1 id="seealso">
+	<title>SEE ALSO</title>
+	<para>
+		<citerefentry>
+			<refentrytitle>libxslt</refentrytitle>
+			<manvolnum>3</manvolnum>
+		</citerefentry>
+	</para>
 </refsect1>
 
 </refentry>

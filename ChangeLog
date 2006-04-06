@@ -1,3 +1,8 @@
+Thu Apr  6 10:16:59 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: applied man page improvement
+	  from Daniel Leidert
+
 Thu Mar 30 17:23:52 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* tests/general/bug-36-inc.xsl tests/general/bug-37-inc.xsl
