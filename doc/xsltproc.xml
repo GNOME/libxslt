@@ -439,55 +439,86 @@
 		&xsltproc;'s return codes provide information that can be used when
 		calling it from scripts.
 	</para>
-	<segmentedlist>
-		<!-- <title>Error codes</title> -->
-		<segtitle>Errorcode</segtitle>
-		<segtitle>Error</segtitle>
-		<seglistitem>
-			<seg><errorcode>0</errorcode></seg>
-			<seg>No error</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>1</errorcode></seg>
-			<seg>No argument</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>2</errorcode></seg>
-			<seg>Too many parameters</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>3</errorcode></seg>
-			<seg>Unknown option</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>4</errorcode></seg>
-			<seg>Failed to parse the stylesheet</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>5</errorcode></seg>
-			<seg>Error in the stylesheet</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>6</errorcode></seg>
-			<seg>Error in one of the documents</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>7</errorcode></seg>
-			<seg>Unsupported xsl:output method</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>8</errorcode></seg>
-			<seg>String parameter contains both quote and double-quotes</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>9</errorcode></seg>
-			<seg>Internal processing error</seg>
-		</seglistitem>
-		<seglistitem>
-			<seg><errorcode>10</errorcode></seg>
-			<seg>Processing was stopped by a terminating message</seg>
-		</seglistitem>
-	</segmentedlist>
+	<variablelist>
+
+		<varlistentry>
+	<term><errorcode>0</errorcode></term>
+	<listitem>
+		<para>No error (normal operation)</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>1</errorcode></term>
+	<listitem>
+		<para>No argument</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>2</errorcode></term>
+	<listitem>
+		<para>Too many parameters</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>3</errorcode></term>
+	<listitem>
+		<para>Unknown option</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>4</errorcode></term>
+	<listitem>
+		<para>Failed to parse the stylesheet</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>5</errorcode></term>
+	<listitem>
+		<para>Error in the stylesheet</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>6</errorcode></term>
+	<listitem>
+		<para>Error in one of the documents</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>7</errorcode></term>
+	<listitem>
+		<para>Unsupported xsl:output method</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>8</errorcode></term>
+	<listitem>
+		<para>String parameter contains both quote and double-quotes</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>9</errorcode></term>
+	<listitem>
+		<para>Internal processing error</para>
+	</listitem>
+		</varlistentry>
+
+		<varlistentry>
+	<term><errorcode>10</errorcode></term>
+	<listitem>
+		<para>Processing was stopped by a terminating message</para>
+	</listitem>
+		</varlistentry>
+
+	</variablelist>
 </refsect1>
 
 <refsect1 id="seealso">
