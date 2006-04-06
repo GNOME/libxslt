@@ -43,7 +43,7 @@
 </refnamediv>
 
 <refsynopsisdiv>
-	<cmdsynopsis>
+	<cmdsynopsis sepchar="|">
 		<command>xsltproc</command>
 		<group choice="opt">
 			<group choice="opt">
