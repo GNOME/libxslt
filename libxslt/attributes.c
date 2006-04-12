@@ -565,9 +565,15 @@ xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style) {
  */
 static void
 xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
-                      xmlNodePtr inst, xsltStylePreCompPtr comp,
-                      int fromset)
-{
+                      xmlNodePtr inst,
+		      xsltStylePreCompPtr castedComp,
+                      int fromset) {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemAttributePtr comp =
+	(xsltStyleItemAttributePtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlChar *prop = NULL;
     xmlChar *namespace;
     const xmlChar *name = NULL;

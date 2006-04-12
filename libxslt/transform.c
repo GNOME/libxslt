@@ -1960,8 +1960,13 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
-                 xmlNodePtr inst, xsltStylePreCompPtr comp)
+                 xmlNodePtr inst, xsltStylePreCompPtr castedComp)
 {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemDocumentPtr comp = (xsltStyleItemDocumentPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xsltStylesheetPtr style = NULL;
     int ret;
     xmlChar *filename = NULL, *prop, *elements;
@@ -1983,6 +1988,11 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (comp->filename == NULL) {
 
         if (xmlStrEqual(inst->name, (const xmlChar *) "output")) {
+	    /*
+	    * The element "output" is in the namespace XSLT_SAXON_NAMESPACE
+	    *   (http://icl.com/saxon)
+	    * The @file is in no namespace.
+	    */
 #ifdef WITH_XSLT_DEBUG_EXTRA
             xsltGenericDebug(xsltGenericDebugContext,
                              "Found saxon:output extension\n");
@@ -1990,6 +2000,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
             URL = xsltEvalAttrValueTemplate(ctxt, inst,
                                                  (const xmlChar *) "file",
                                                  XSLT_SAXON_NAMESPACE);
+	     
 	    if (URL == NULL)
 		URL = xsltEvalAttrValueTemplate(ctxt, inst,
                                                  (const xmlChar *) "href",
@@ -2009,6 +2020,9 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 		/*
 		 * Trying to handle bug #59212
+		 * The value of the "select" attribute is an
+		 * XPath expression.
+		 * (see http://xml.apache.org/xalan-j/extensionslib.html#redirect) 
 		 */
 		cmp = xmlXPathCompile(URL);
                 val = xsltEvalXPathString(ctxt, cmp);
@@ -2452,7 +2466,12 @@ xsltSort(xsltTransformContextPtr ctxt,
  */
 void
 xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp) {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemCopyPtr comp = (xsltStyleItemCopyPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlNodePtr copy, oldInsert;
 
     oldInsert = ctxt->insert;
@@ -2647,7 +2666,12 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
  */
 void
 xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	    xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	    xmlNodePtr inst, xsltStylePreCompPtr castedComp) {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemElementPtr comp = (xsltStyleItemElementPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlChar *prop = NULL, *attributes = NULL, *namespace;
     const xmlChar *name;
     const xmlChar *prefix;
@@ -2670,7 +2694,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if (comp->name == NULL) {
 	prop = xsltEvalAttrValueTemplate(ctxt, inst,
-		      (const xmlChar *)"name", XSLT_NAMESPACE);
+		      (const xmlChar *)"name", NULL);
 	if (prop == NULL) {
 	    xsltTransformError(ctxt, NULL, inst,
 		 "xsl:element : name is missing\n");
@@ -2705,7 +2729,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     if ((comp->ns == NULL) && (comp->has_ns)) {
 	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
-		(const xmlChar *)"namespace", XSLT_NAMESPACE);
+		(const xmlChar *)"namespace", NULL);
 	if (namespace != NULL) {
 	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
 		                         ctxt->insert);
@@ -2758,7 +2782,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xsltApplyAttributeSet(ctxt, node, inst, comp->use);
 	} else {
 	    attributes = xsltEvalAttrValueTemplate(ctxt, inst,
-		       (const xmlChar *)"use-attribute-sets", XSLT_NAMESPACE);
+		       (const xmlChar *)"use-attribute-sets", NULL);
 	    if (attributes != NULL) {
 		xsltApplyAttributeSet(ctxt, node, inst, attributes);
 		xmlFree(attributes);
@@ -2827,7 +2851,12 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp) {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemPIPtr comp = (xsltStyleItemPIPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     const xmlChar *name;
     xmlChar *value = NULL;
     xmlNodePtr pi;
@@ -2839,7 +2868,7 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     if (comp->name == NULL) {
 	name = xsltEvalAttrValueTemplate(ctxt, inst,
-			    (const xmlChar *)"name", XSLT_NAMESPACE);
+			    (const xmlChar *)"name", NULL);
 	if (name == NULL) {
 	    xsltTransformError(ctxt, NULL, inst,
 		 "xsl:processing-instruction : name is missing\n");
@@ -2888,7 +2917,12 @@ error:
  */
 void
 xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp) {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemCopyOfPtr comp = (xsltStyleItemCopyOfPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlXPathObjectPtr res = NULL;
     xmlNodeSetPtr list = NULL;
     int i;
@@ -2914,8 +2948,18 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNsNr = ctxt->xpathCtxt->nsNr;
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
+#ifdef XSLT_REFACTORED
+    if (comp->inScopeNS != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    } else {
+	ctxt->xpathCtxt->namespaces = NULL;
+	ctxt->xpathCtxt->nsNr = 0;
+    }
+#else
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
+#endif
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     ctxt->xpathCtxt->contextSize = oldContextSize;
@@ -2989,7 +3033,13 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleItemValueOfPtr comp = (xsltStyleItemValueOfPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr copy = NULL;
     int oldProximityPosition, oldContextSize;
@@ -3014,8 +3064,18 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNsNr = ctxt->xpathCtxt->nsNr;
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
+#ifdef XSLT_REFACTORED
+    if (comp->inScopeNS != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    } else {
+	ctxt->xpathCtxt->namespaces = NULL;
+	ctxt->xpathCtxt->nsNr = 0;
+    }
+#else
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
+#endif
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     ctxt->xpathCtxt->contextSize = oldContextSize;
@@ -3057,8 +3117,13 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	   xmlNodePtr inst, xsltStylePreCompPtr comp)
+	   xmlNodePtr inst, xsltStylePreCompPtr castedComp)
 {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemNumberPtr comp = (xsltStyleItemNumberPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, inst,
 	     "xsl:number : compilation failed\n");
@@ -3111,7 +3176,14 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleItemCallTemplatePtr comp =
+	(xsltStyleItemCallTemplatePtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlNodePtr cur = NULL;
     xsltStackElemPtr params = NULL, param;
 
@@ -3155,6 +3227,11 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
             xslHandleDebugger(cur, node, comp->templ, ctxt);
 #endif
 	if (ctxt->state == XSLT_STATE_STOPPED) break;
+	/*
+	* TODO: The "with-param"s could be part of the "call-template"
+	*   structure. Avoid to "search" for params dynamically
+	*   in the XML tree every time.
+	*/
 	if (IS_XSLT_ELEM(cur)) {
 	    if (IS_XSLT_NAME(cur, "with-param")) {
 		param = xsltParseStylesheetCallerParam(ctxt, cur);
@@ -3198,7 +3275,14 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  */
 void
 xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleItemApplyTemplatesPtr comp =
+	(xsltStyleItemApplyTemplatesPtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlNodePtr cur, delete = NULL, oldNode;
     xmlXPathObjectPtr res = NULL;
     xmlNodeSetPtr list = NULL, oldList;
@@ -3260,8 +3344,18 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 
 	ctxt->xpathCtxt->node = node;
+#ifdef XSLT_REFACTORED
+	if (comp->inScopeNS != NULL) {
+	    ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
+	    ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+	} else {
+	    ctxt->xpathCtxt->namespaces = NULL;
+	    ctxt->xpathCtxt->nsNr = 0;
+	}
+#else
 	ctxt->xpathCtxt->namespaces = comp->nsList;
 	ctxt->xpathCtxt->nsNr = comp->nsNr;
+#endif
 	res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->contextSize = oldContextSize;
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
@@ -3398,7 +3492,12 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     while (cur!=NULL) {
 #ifdef WITH_DEBUGGER
         if (ctxt->debugStatus != XSLT_DEBUG_NONE)
+#ifdef XSLT_REFACTORED
+            xslHandleDebugger(cur, node, NULL, ctxt);
+#else
+	    /* TODO: Isn't comp->templ always NULL for apply-template? */
             xslHandleDebugger(cur, node, comp->templ, ctxt);
+#endif
 #endif
         if (ctxt->state == XSLT_STATE_STOPPED) break;
         if (IS_XSLT_ELEM(cur)) {
@@ -3500,7 +3599,8 @@ error:
  */
 void
 xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	   xmlNodePtr inst, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED) {
+	   xmlNodePtr inst, xsltStylePreCompPtr comp ATTRIBUTE_UNUSED)
+{
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement, when;
     int doit = 1;
@@ -3528,7 +3628,12 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     while ((IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when")))
 	    || xmlIsBlankNode(replacement)) {
+#ifdef XSLT_REFACTORED
+	xsltStyleItemWhenPtr wcomp =
+	    (xsltStyleItemWhenPtr) replacement->psvi;
+#else
 	xsltStylePreCompPtr wcomp = replacement->psvi;
+#endif
 
 	if (xmlIsBlankNode(replacement)) {
 	    replacement = replacement->next;
@@ -3545,7 +3650,12 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 #ifdef WITH_DEBUGGER
         if (xslDebugStatus != XSLT_DEBUG_NONE)
+#ifdef XSLT_REFACTORED
+            xslHandleDebugger(when, node, NULL, ctxt);
+#else
+	    /* TODO: Isn't comp->templ always NULL for xsl:choose? */
             xslHandleDebugger(when, node, comp->templ, ctxt);
+#endif
 #endif
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -3558,8 +3668,18 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	oldNsNr = ctxt->xpathCtxt->nsNr;
 	oldNamespaces = ctxt->xpathCtxt->namespaces;
   	ctxt->xpathCtxt->node = node;
+#ifdef XSLT_REFACTORED
+	if (wcomp->inScopeNS != NULL) {
+	    ctxt->xpathCtxt->namespaces = wcomp->inScopeNS->list;
+	    ctxt->xpathCtxt->nsNr = wcomp->inScopeNS->number;
+	} else {
+	    ctxt->xpathCtxt->namespaces = NULL;
+	    ctxt->xpathCtxt->nsNr = 0;
+	}
+#else
 	ctxt->xpathCtxt->namespaces = wcomp->nsList;
 	ctxt->xpathCtxt->nsNr = wcomp->nsNr;
+#endif
   	res = xmlXPathCompiledEval(wcomp->comp, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	ctxt->xpathCtxt->contextSize = oldContextSize;
@@ -3598,7 +3718,12 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "otherwise"))) {
 #ifdef WITH_DEBUGGER
         if (xslDebugStatus != XSLT_DEBUG_NONE)
+#ifdef XSLT_REFACTORED
+            xslHandleDebugger(replacement, node, NULL, ctxt);
+#else
+	    /* TODO: Isn't comp->templ always NULL for xsl:otherwise? */
             xslHandleDebugger(replacement, node, comp->templ, ctxt);
+#endif
 #endif
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -3635,7 +3760,12 @@ error:
  */
 void
 xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp){
+#ifdef XSLT_REFACTORED
+	xsltStyleItemIfPtr comp = (xsltStyleItemIfPtr) castedComp;
+#else
+	xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlXPathObjectPtr res = NULL;
     int doit = 1;
     int oldContextSize, oldProximityPosition;
@@ -3660,8 +3790,18 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNsNr = ctxt->xpathCtxt->nsNr;
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
+#ifdef XSLT_REFACTORED
+    if (comp->inScopeNS != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    } else {
+	ctxt->xpathCtxt->namespaces = NULL;
+	ctxt->xpathCtxt->nsNr = 0;
+    }
+#else
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
+#endif
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
@@ -3707,7 +3847,13 @@ error:
  */
 void
 xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr comp) {
+	           xmlNodePtr inst, xsltStylePreCompPtr castedComp)
+{
+#ifdef XSLT_REFACTORED
+	xsltStyleItemForEachPtr comp = (xsltStyleItemForEachPtr) castedComp;
+#else
+	xsltStylePreCompPtr comp = castedComp;
+#endif
     xmlXPathObjectPtr res = NULL;
     xmlNodePtr replacement;
     xmlNodeSetPtr list = NULL, oldList;
@@ -3739,8 +3885,18 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNsNr = ctxt->xpathCtxt->nsNr;
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
+#ifdef XSLT_REFACTORED
+    if (comp->inScopeNS != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    } else {
+	ctxt->xpathCtxt->namespaces = NULL;
+	ctxt->xpathCtxt->nsNr = 0;
+    }
+#else
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
+#endif   
     oldCDocPtr = ctxt->document;
     oldXDocPtr = ctxt->xpathCtxt->doc;
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);

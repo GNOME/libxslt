@@ -26,6 +26,23 @@
 extern "C" {
 #endif
 
+
+/**
+ * XSLT_REFACTORED:
+ *
+ * Internal define to enable the refactored parts of Libxslt
+ * mostly related to pre-computation.
+ */
+/* #define XSLT_REFACTORED */
+
+/**
+ * XSLT_REFACTORED_PARSING:
+ *
+ * Internal define to enable the refactored parts of Libxslt
+ * related to parsing.
+ */
+/* #define XSLT_REFACTORED_PARSING */
+
 /**
  * XSLT_MAX_SORT:
  *
@@ -150,6 +167,14 @@ struct _xsltDocument {
     int preproc;		/* pre-processing already done */
 };
 
+/*
+ * The in-memory structure corresponding to an XSLT Stylesheet.
+ * NOTE: most of the content is simply linked from the doc tree
+ *       structure, no specific allocation is made.
+ */
+typedef struct _xsltStylesheet xsltStylesheet;
+typedef xsltStylesheet *xsltStylesheetPtr;
+
 typedef struct _xsltTransformContext xsltTransformContext;
 typedef xsltTransformContext *xsltTransformContextPtr;
 
@@ -210,7 +235,8 @@ typedef enum {
     XSLT_FUNC_PARAM,
     XSLT_FUNC_VARIABLE,
     XSLT_FUNC_WHEN,
-    XSLT_FUNC_EXTENSION
+    XSLT_FUNC_EXTENSION,
+    XSLT_FUNC_OTHERWISE,
 } xsltStyleType;
 
 /**
@@ -224,14 +250,18 @@ typedef void (*xsltElemPreCompDeallocator) (xsltElemPreCompPtr comp);
 /**
  * xsltElemPreComp:
  *
- * The in-memory structure corresponding to element precomputed data,
- * designed to be extended by extension implementors.
+ * The basic structure for compiled items of the AST of the XSLT processor.
+ * This structure is also intended to be extended by extension implementors.
+ * TODO: This is somehow not nice, since it has a "free" field, which
+ *   derived stylesheet-structs do not have.
  */
 struct _xsltElemPreComp {
-    xsltElemPreCompPtr next;		/* chained list */
+    xsltElemPreCompPtr next;		/* next item in the global chained
+					   list hold by xsltStylesheet. */
     xsltStyleType type;			/* type of the element */
     xsltTransformFunction func; 	/* handling function */
-    xmlNodePtr inst;			/* the instruction */
+    xmlNodePtr inst;			/* the node in the stylesheet's tree
+					   corresponding to this item */
 
     /* end of common part */
     xsltElemPreCompDeallocator free;	/* the deallocator */
@@ -240,13 +270,668 @@ struct _xsltElemPreComp {
 /**
  * xsltStylePreComp:
  *
+ * The abstract basic structure for items of the
+ * AST of the XSLT processor.
+ * The AST includes:
+ * 1) compiled forms of XSLT instructions (xsl:if, xsl:attribute, etc.)
+ * 2) compiled forms of literal result elements
+ */
+typedef struct _xsltStylePreComp xsltStylePreComp;
+typedef xsltStylePreComp *xsltStylePreCompPtr;
+
+/*************************
+ * Refactored structures *
+ *************************/
+#ifdef XSLT_REFACTORED
+
+typedef struct _xsltNsList xsltNsList;
+
+typedef xsltNsList *xsltNsListPtr;
+struct _xsltNsList {
+    xmlNsPtr *list;
+    int number;
+};
+
+#if 0
+/*
+ * TODO: xsltBasicItem is not used yet; maybe never will be used, since
+ * xsltElemPreCompPtr is acting as the base type for the compiled
+ * items of a stylesheet. It seems not practical to try to change
+ * this type to xsltBasicItemPtr, since xsltElemPreCompPtr is
+ * used already used too massively (e.g. xsltStylesheet->preComps) and
+ * for extension functions.
+ */
+/**
+ * xsltBasicItem:
+ *
+ * The basic structure for all items of the AST of the XSLT processor.
+ */
+typedef struct _xsltBasicItem xsltBasicItem;
+
+typedef xsltBasicItem *xsltBasicItemPtr;
+struct _xsltBasicItem {
+    xsltBasicASTItemPtr next;
+    xsltStyleType type;
+};
+#endif
+
+/**
+ * XSLT_ITEM_COMPATIBILITY_FIELDS:
+ * 
+ * Fields for API compatibility to the structure
+ * _xsltElemPreComp which is used for extension functions.
+ * TODO: Evaluate if we really need such a compatibility.
+ */
+#define XSLT_ITEM_COMPATIBILITY_FIELDS \
+    xsltElemPreCompPtr next;\
+    xsltStyleType type;\
+    xsltTransformFunction func;\
+    xmlNodePtr inst;
+
+/**
+ * XSLT_ITEM_NAVIGATION_FIELDS:
+ *
+ * Currently empty.
+ * TODO: It is intended to hold navigational fields in the future.
+ */
+#define XSLT_ITEM_NAVIGATION_FIELDS
+/*
+    xsltStylePreCompPtr parent;\
+    xsltStylePreCompPtr children;\
+    xsltStylePreCompPtr nextItem; 
+*/
+
+/**
+ * XSLT_ITEM_NSINSCOPE_FIELDS:
+ *
+ * The in-scope namespaces.
+ */
+#define XSLT_ITEM_NSINSCOPE_FIELDS xsltNsListPtr inScopeNS;
+
+/**
+ * XSLT_ITEM_COMMON_FIELDS:
+ *
+ * Common fields used for all items.
+ */
+#define XSLT_ITEM_COMMON_FIELDS \
+    XSLT_ITEM_COMPATIBILITY_FIELDS \
+    XSLT_ITEM_NAVIGATION_FIELDS \
+    XSLT_ITEM_NSINSCOPE_FIELDS
+
+/**
+ * _xsltStylePreComp: 
+ *
+ * The abstract basic structure for items of the XSLT processor.
+ * This includes:
+ * 1) compiled forms of XSLT instructions (e.g. xsl:if, xsl:attribute, etc.)
+ * 2) compiled forms of literal result elements
+ * 3) various properties for XSLT instructions (e.g. xsl:when,
+ *    xsl:with-param)
+ *
+ * REVISIT TODO: Keep this structure equal to the fields
+ *   defined by XSLT_ITEM_COMMON_FIELDS
+ */
+struct _xsltStylePreComp {
+    xsltElemPreCompPtr next;    /* next item in the global chained
+				   list hold by xsltStylesheet */
+    xsltStyleType type;         /* type of the item */ 
+    xsltTransformFunction func; /* handling function */
+    xmlNodePtr inst;		/* the node in the stylesheet's tree
+				   corresponding to this item. */
+    /* Currenlty to navigational fields. */
+    xsltNsListPtr inScopeNS;
+};
+
+/**
+ * xsltStyleBasicEmptyItem:
+ * 
+ * Abstract structure only used as a short-cut for
+ * XSLT items with no extra fields.
+ * NOTE that it is intended that this structure looks the same as
+ *  _xsltStylePreComp.
+ */
+typedef struct _xsltStyleBasicEmptyItem xsltStyleBasicEmptyItem;
+typedef xsltStyleBasicEmptyItem *xsltStyleBasicEmptyItemPtr;
+
+struct _xsltStyleBasicEmptyItem {
+    XSLT_ITEM_COMMON_FIELDS
+};
+
+/**
+ * xsltStyleBasicExpressionItem:
+ * 
+ * Abstract structure only used as a short-cut for
+ * XSLT items with just an expression.
+ */
+typedef struct _xsltStyleBasicExpressionItem xsltStyleBasicExpressionItem;
+typedef xsltStyleBasicExpressionItem *xsltStyleBasicExpressionItemPtr;
+
+struct _xsltStyleBasicExpressionItem {
+    XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *select; /* TODO: Change this to "expression". */
+    xmlXPathCompExprPtr comp; /* TODO: Change this to compExpr. */
+};
+
+/************************************************************************
+ *									*
+ * XSLT-instructions/declarations                                       *
+ *									*
+ ************************************************************************/
+
+/**
+ * xsltStyleItemElement:
+ * 
+ * <!-- Category: instruction -->
+ * <xsl:element
+ *  name = { qname }
+ *  namespace = { uri-reference }
+ *  use-attribute-sets = qnames>
+ *  <!-- Content: template -->
+ * </xsl:element>
+ */
+typedef struct _xsltStyleItemElement xsltStyleItemElement;
+typedef xsltStyleItemElement *xsltStyleItemElementPtr;
+
+struct _xsltStyleItemElement {
+    XSLT_ITEM_COMMON_FIELDS 
+
+    const xmlChar *use;		/* copy, element */
+    int      has_use;		/* copy, element */
+    const xmlChar *name;	/* element, attribute, pi */
+    int      has_name;		/* element, attribute, pi */
+    const xmlChar *ns;		/* element */
+    int      has_ns;		/* element */
+
+};
+
+/**
+ * xsltStyleItemAttribute:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:attribute
+ *  name = { qname }
+ *  namespace = { uri-reference }>
+ *  <!-- Content: template -->
+ * </xsl:attribute>
+ */
+typedef struct _xsltStyleItemAttribute xsltStyleItemAttribute;
+typedef xsltStyleItemAttribute *xsltStyleItemAttributePtr;
+
+struct _xsltStyleItemAttribute {
+    XSLT_ITEM_COMMON_FIELDS
+    const xmlChar *name;	/* element, attribute, pi */
+    int      has_name;		/* element, attribute, pi */
+    const xmlChar *ns;		/* element  attribute */
+    int      has_ns;		/* element  attribute */
+};
+
+/**
+ * xsltStyleItemText:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:text
+ *  disable-output-escaping = "yes" | "no">
+ *  <!-- Content: #PCDATA -->
+ * </xsl:text>
+ */
+typedef struct _xsltStyleItemText xsltStyleItemText;
+typedef xsltStyleItemText *xsltStyleItemTextPtr;
+
+struct _xsltStyleItemText {
+    XSLT_ITEM_COMMON_FIELDS
+    int      noescape;		/* text */
+};
+
+/**
+ * xsltStyleItemComment:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:comment>
+ *  <!-- Content: template -->
+ * </xsl:comment>
+ */
+typedef xsltStyleBasicEmptyItem xsltStyleItemComment;
+typedef xsltStyleItemComment *xsltStyleItemCommentPtr;
+
+/**
+ * xsltStyleItemPI:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:processing-instruction
+ *  name = { ncname }>
+ *  <!-- Content: template -->
+ * </xsl:processing-instruction>
+ */
+typedef struct _xsltStyleItemPI xsltStyleItemPI;
+typedef xsltStyleItemPI *xsltStyleItemPIPtr;
+
+struct _xsltStyleItemPI {
+    XSLT_ITEM_COMMON_FIELDS
+    const xmlChar *name;
+    int      has_name;
+};
+
+/**
+ * xsltStyleItemApplyImports:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:apply-imports />
+ */
+typedef xsltStyleBasicEmptyItem xsltStyleItemApplyImports;
+typedef xsltStyleItemApplyImports *xsltStyleItemApplyImportsPtr;
+
+/**
+ * xsltStyleItemApplyTemplates:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:apply-templates
+ *  select = node-set-expression
+ *  mode = qname>
+ *  <!-- Content: (xsl:sort | xsl:with-param)* -->
+ * </xsl:apply-templates>
+ */
+typedef struct _xsltStyleItemApplyTemplates xsltStyleItemApplyTemplates;
+typedef xsltStyleItemApplyTemplates *xsltStyleItemApplyTemplatesPtr;
+
+struct _xsltStyleItemApplyTemplates {
+   XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *mode;	/* apply-templates */
+    const xmlChar *modeURI;	/* apply-templates */
+    const xmlChar *select;	/* sort, copy-of, value-of, apply-templates */
+    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
+    /* TODO: with-params */
+};
+
+/**
+ * xsltStyleItemCallTemplate:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:call-template
+ *  name = qname>
+ *  <!-- Content: xsl:with-param* -->
+ * </xsl:call-template>
+ */
+typedef struct _xsltStyleItemCallTemplate xsltStyleItemCallTemplate;
+typedef xsltStyleItemCallTemplate *xsltStyleItemCallTemplatePtr;
+
+struct _xsltStyleItemCallTemplate {
+    XSLT_ITEM_COMMON_FIELDS
+
+    xsltTemplatePtr templ;	/* call-template */
+    const xmlChar *name;	/* element, attribute, pi */
+    int      has_name;		/* element, attribute, pi */
+    const xmlChar *ns;		/* element */
+    int      has_ns;		/* element */
+    /* TODO: with-params */
+};
+
+/**
+ * xsltStyleItemCopy:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:copy
+ *  use-attribute-sets = qnames>
+ *  <!-- Content: template -->
+ * </xsl:copy>
+ */
+typedef struct _xsltStyleItemCopy xsltStyleItemCopy;
+typedef xsltStyleItemCopy *xsltStyleItemCopyPtr;
+
+struct _xsltStyleItemCopy {
+   XSLT_ITEM_COMMON_FIELDS
+    const xmlChar *use;		/* copy, element */
+    int      has_use;		/* copy, element */    
+};
+
+/**
+ * xsltStyleItemIf:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:if
+ *  test = boolean-expression>
+ *  <!-- Content: template -->
+ * </xsl:if>
+ */
+typedef struct _xsltStyleItemIf xsltStyleItemIf;
+typedef xsltStyleItemIf *xsltStyleItemIfPtr;
+
+struct _xsltStyleItemIf {
+    XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *test;	/* if */
+    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
+};
+
+
+/**
+ * xsltStyleItemCopyOf:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:copy-of
+ *  select = expression />
+ */
+typedef xsltStyleBasicExpressionItem xsltStyleItemCopyOf;
+typedef xsltStyleItemCopyOf *xsltStyleItemCopyOfPtr;
+
+/**
+ * xsltStyleItemValueOf:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:value-of
+ *  select = string-expression
+ *  disable-output-escaping = "yes" | "no" />
+ */
+typedef struct _xsltStyleItemValueOf xsltStyleItemValueOf;
+typedef xsltStyleItemValueOf *xsltStyleItemValueOfPtr;
+
+struct _xsltStyleItemValueOf {
+    XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *select;
+    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
+    int      noescape;
+};
+
+/**
+ * xsltStyleItemNumber:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:number
+ *  level = "single" | "multiple" | "any"
+ *  count = pattern
+ *  from = pattern
+ *  value = number-expression
+ *  format = { string }
+ *  lang = { nmtoken }
+ *  letter-value = { "alphabetic" | "traditional" }
+ *  grouping-separator = { char }
+ *  grouping-size = { number } />
+ */
+typedef struct _xsltStyleItemNumber xsltStyleItemNumber;
+typedef xsltStyleItemNumber *xsltStyleItemNumberPtr;
+
+struct _xsltStyleItemNumber {
+    XSLT_ITEM_COMMON_FIELDS
+    xsltNumberData numdata;	/* number */
+};
+
+/**
+ * xsltStyleItemChoose:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:choose>
+ *  <!-- Content: (xsl:when+, xsl:otherwise?) -->
+ * </xsl:choose>
+ */
+typedef xsltStyleBasicEmptyItem xsltStyleItemChoose;
+typedef xsltStyleItemChoose *xsltStyleItemChoosePtr;
+
+/**
+ * xsltStyleItemFallback:
+ *
+ * <!-- Category: instruction -->
+ *  <xsl:fallback>
+ *  <!-- Content: template -->
+ * </xsl:fallback>
+ */
+typedef xsltStyleBasicEmptyItem xsltStyleItemFallback;
+typedef xsltStyleItemFallback *xsltStyleItemFallbackPtr;
+
+/**
+ * xsltStyleItemForEach:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:for-each
+ *   select = node-set-expression>
+ *   <!-- Content: (xsl:sort*, template) -->
+ * </xsl:for-each>
+ */
+typedef xsltStyleBasicExpressionItem xsltStyleItemForEach;
+typedef xsltStyleItemForEach *xsltStyleItemForEachPtr;
+
+/**
+ * xsltStyleItemMessage:
+ *
+ * <!-- Category: instruction -->
+ * <xsl:message
+ *   terminate = "yes" | "no">
+ *   <!-- Content: template -->
+ * </xsl:message>
+ */
+typedef struct _xsltStyleItemMessage xsltStyleItemMessage;
+typedef xsltStyleItemMessage *xsltStyleItemMessagePtr;
+
+struct _xsltStyleItemMessage {
+    XSLT_ITEM_COMMON_FIELDS    
+    int terminate;
+};
+
+/**
+ * xsltStyleItemDocument:
+ *
+ * NOTE: This is not an instruction of XSLT 1.0.
+ */
+typedef struct _xsltStyleItemDocument xsltStyleItemDocument;
+typedef xsltStyleItemDocument *xsltStyleItemDocumentPtr;
+
+struct _xsltStyleItemDocument {
+    XSLT_ITEM_COMMON_FIELDS
+    int      ver11;		/* assigned: in xsltDocumentComp;
+                                  read: nowhere;
+                                  TODO: Check if we need. */
+    const xmlChar *filename;	/* document URL */
+    int has_filename;
+};   
+
+/************************************************************************
+ *									*
+ * Non-instructions (actually properties of instructions/declarations)  *
+ *									*
+ ************************************************************************/
+
+/**
+ * xsltStyleBasicItemVariable:
+ *
+ * Basic struct for xsl:variable, xsl:param and xsl:with-param.
+ * It's currently important to have equal fields, since
+ * xsltParseStylesheetCallerParam() is used with xsl:with-param from
+ * the xslt side and with xsl:param from the exslt side (in
+ * exsltFuncFunctionFunction()).
+ *
+ * FUTURE NOTE: In XSLT 2.0 xsl:param, xsl:variable and xsl:with-param
+ *   have additional different fields.
+ */
+typedef struct _xsltStyleBasicItemVariable xsltStyleBasicItemVariable;
+typedef xsltStyleBasicItemVariable *xsltStyleBasicItemVariablePtr;
+
+struct _xsltStyleBasicItemVariable {
+    XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *select;
+    xmlXPathCompExprPtr comp;
+
+    const xmlChar *name;
+    int      has_name;
+    const xmlChar *ns;
+    int      has_ns;
+};
+
+/**
+ * xsltStyleItemVariable:
+ *
+ * <!-- Category: top-level-element -->
+ * <xsl:param
+ *   name = qname
+ *   select = expression>
+ *   <!-- Content: template -->
+ * </xsl:param>
+ */
+typedef xsltStyleBasicItemVariable xsltStyleItemVariable;
+typedef xsltStyleItemVariable *xsltStyleItemVariablePtr;
+
+/**
+ * xsltStyleItemParam:
+ *
+ * <!-- Category: top-level-element -->
+ * <xsl:param
+ *   name = qname
+ *   select = expression>
+ *   <!-- Content: template -->
+ * </xsl:param>
+ */
+typedef xsltStyleBasicItemVariable xsltStyleItemParam;
+typedef xsltStyleItemParam *xsltStyleItemParamPtr;
+
+/**
+ * xsltStyleItemWithParam:
+ *
+ * <xsl:with-param
+ *  name = qname
+ *  select = expression>
+ *  <!-- Content: template -->
+ * </xsl:with-param>
+ */
+typedef xsltStyleBasicItemVariable xsltStyleItemWithParam;
+typedef xsltStyleItemWithParam *xsltStyleItemWithParamPtr;
+
+/**
+ * xsltStyleItemSort:
+ *
+ * Reflects the XSLT xsl:sort item.
+ * Allowed parents: xsl:apply-templates, xsl:for-each
+ * <xsl:sort
+ *   select = string-expression
+ *   lang = { nmtoken }
+ *   data-type = { "text" | "number" | qname-but-not-ncname }
+ *   order = { "ascending" | "descending" }
+ *   case-order = { "upper-first" | "lower-first" } />
+ */
+typedef struct _xsltStyleItemSort xsltStyleItemSort;
+typedef xsltStyleItemSort *xsltStyleItemSortPtr;
+
+struct _xsltStyleItemSort {
+    XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *stype;       /* sort */
+    int      has_stype;		/* sort */
+    int      number;		/* sort */
+    const xmlChar *order;	/* sort */
+    int      has_order;		/* sort */
+    int      descending;	/* sort */
+    const xmlChar *lang;	/* sort */
+    int      has_lang;		/* sort */
+    const xmlChar *case_order;	/* sort */
+    int      lower_first;	/* sort */
+
+    const xmlChar *use;
+    int      has_use;
+
+    const xmlChar *select;	/* sort, copy-of, value-of, apply-templates */
+
+    xmlXPathCompExprPtr comp;	/* a precompiled XPath expression */
+};
+
+
+/**
+ * xsltStyleItemWhen:
+ * 
+ * <xsl:when
+ *   test = boolean-expression>
+ *   <!-- Content: template -->
+ * </xsl:when>
+ * Allowed parent: xsl:choose
+ */
+typedef struct _xsltStyleItemWhen xsltStyleItemWhen;
+typedef xsltStyleItemWhen *xsltStyleItemWhenPtr;
+
+struct _xsltStyleItemWhen {
+    XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *test;
+    xmlXPathCompExprPtr comp;
+};
+
+/**
+ * xsltStyleItemOtherwise:
+ *
+ * Allowed parent: xsl:choose
+ * <xsl:otherwise>
+ *   <!-- Content: template -->
+ * </xsl:otherwise>
+ */
+typedef struct _xsltStyleItemOtherwise xsltStyleItemOtherwise;
+typedef xsltStyleItemOtherwise *xsltStyleItemOtherwisePtr;
+
+struct _xsltStyleItemOtherwise {
+    XSLT_ITEM_COMMON_FIELDS
+};
+
+/*
+ * Literal result elements.
+ * TODO: Not used yet.
+ */
+typedef struct _xsltStyleItemLRE xsltStyleItemLRE;
+typedef xsltStyleItemLRE *xsltStyleItemLREPtr;
+struct _xsltStyleItemLRE {
+    XSLT_ITEM_COMMON_FIELDS
+};
+
+/************************************************************************
+ *									*
+ *  Compile-time structures for *internal* use only                     *
+ *									*
+ ************************************************************************/
+
+/**
+ * xsltCompilerNodeInfo:
+ *
+ * Per-node information during compile-time.
+ */
+typedef struct _xsltCompilerNodeInfo xsltCompilerNodeInfo;
+typedef xsltCompilerNodeInfo *xsltCompilerNodeInfoPtr;
+struct _xsltCompilerNodeInfo {
+    xsltCompilerNodeInfoPtr next;
+    xsltCompilerNodeInfoPtr prev;
+    xmlNodePtr node;
+    int depth;
+    xsltNsListPtr inScopeNS; /* The in-scope namespaces for the current
+                                position in the node-tree */
+    xsltTemplatePtr templ;   /* The owning template */
+    xsltElemPreCompPtr item; /* The compiled information */
+};
+
+#define XSLT_CCTXT(style) ((xsltCompilerCtxtPtr) style->compCtxt)
+
+typedef struct _xsltCompilerCtxt xsltCompilerCtxt;
+typedef xsltCompilerCtxt *xsltCompilerCtxtPtr;
+struct _xsltCompilerCtxt {
+    void *errorCtxt;             /* user specific error context */
+    int warnings;		/* TODO: number of warnings found at
+                                   compilation */
+    int errors;			/* TODO: number of errors found at
+                                   compilation */
+    xsltStylesheetPtr sheet;
+    /* TODO: structured/unstructured error contexts. */
+    int depth; /* TODO: current depth in the stylesheets node-tree */
+    
+    xsltCompilerNodeInfoPtr inode;
+    xsltCompilerNodeInfoPtr inodeList;
+    xsltCompilerNodeInfoPtr inodeLast;
+};   
+
+#else /* XSLT_REFACTORED */
+/*
+* The old structures before refactoring.
+*/
+
+/**
+ * _xsltStylePreComp:
+ *
  * The in-memory structure corresponding to XSLT stylesheet constructs
  * precomputed data.
  */
-typedef struct _xsltStylePreComp xsltStylePreComp;
-
-typedef xsltStylePreComp *xsltStylePreCompPtr;
-
 struct _xsltStylePreComp {
     xsltElemPreCompPtr next;	/* chained list */
     xsltStyleType type;		/* type of the element */
@@ -298,11 +983,12 @@ struct _xsltStylePreComp {
     int nsNr;			/* the number of namespaces in scope */
 };
 
+#endif /* XSLT_REFACTORED */
+
 /*
  * The in-memory structure corresponding to an XSLT Variable
  * or Param.
  */
-
 typedef struct _xsltStackElem xsltStackElem;
 typedef xsltStackElem *xsltStackElemPtr;
 struct _xsltStackElem {
@@ -317,12 +1003,10 @@ struct _xsltStackElem {
 };
 
 /*
- * The in-memory structure corresponding to an XSLT Stylesheet.
- * NOTE: most of the content is simply linked from the doc tree
- *       structure, no specific allocation is made.
+ * TODO: We need a field to anchor an stylesheet compilation context, since,
+ *   due to historical reasons, various compile-time function take only the
+ *   stylesheet as argument and not a compilation context.
  */
-typedef struct _xsltStylesheet xsltStylesheet;
-typedef xsltStylesheet *xsltStylesheetPtr;
 struct _xsltStylesheet {
     /*
      * The stylesheet import relation is kept as a tree.
@@ -451,6 +1135,16 @@ struct _xsltStylesheet {
      * Literal Result Element as Stylesheet c.f. section 2.3
      */
     int literal_result;
+#ifdef XSLT_REFACTORED
+    /*
+    * Compilation context used during compile-time.
+    */
+    void * compCtxt;
+    /*
+    * Namespace lists.
+    */
+    void *inScopeNamespaces;    
+#endif    
 };
 
 /*
@@ -695,6 +1389,17 @@ XSLTPUBFUN xmlChar * XSLTCALL
 XSLTPUBFUN void XSLTCALL
 			xsltFreeAVTList		(void *avt);
 
+/************************************************************************
+ *									*
+ *  Compile-time functions for *internal* use only                      *
+ *									*
+ ************************************************************************/
+
+#ifdef XSLT_REFACTORED
+XSLTPUBFUN xsltNsListPtr XSLTCALL
+			xsltCompilerGetInScopeNSInfo(xsltCompilerCtxtPtr cctxt,
+						     xmlNodePtr node);
+#endif /* XSLT_REFACTORED */
 /*
  * Extra function for successful xsltCleanupGlobals / xsltInit sequence.
  */

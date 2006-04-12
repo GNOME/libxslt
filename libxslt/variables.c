@@ -424,7 +424,14 @@ xsltAddStackElemList(xsltTransformContextPtr ctxt, xsltStackElemPtr elems) {
  */
 static xmlXPathObjectPtr
 xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
-	         xsltStylePreCompPtr precomp) {
+	         xsltStylePreCompPtr castedComp)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleItemVariablePtr precomp =
+	(xsltStyleItemVariablePtr) castedComp;
+#else
+    xsltStylePreCompPtr precomp = castedComp;
+#endif   
     xmlXPathObjectPtr result = NULL;
     int oldProximityPosition, oldContextSize;
     xmlNodePtr oldInst, oldNode;
@@ -459,8 +466,18 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	oldNamespaces = ctxt->xpathCtxt->namespaces;
 	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
+#ifdef XSLT_REFACTORED
+	    if (precomp->inScopeNS != NULL) {
+		ctxt->xpathCtxt->namespaces = precomp->inScopeNS->list;
+		ctxt->xpathCtxt->nsNr = precomp->inScopeNS->number;
+	    } else {
+		ctxt->xpathCtxt->namespaces = NULL;
+		ctxt->xpathCtxt->nsNr = 0;
+	    }
+#else
 	    ctxt->xpathCtxt->namespaces = precomp->nsList;
 	    ctxt->xpathCtxt->nsNr = precomp->nsNr;
+#endif
 	} else {
 	    ctxt->inst = NULL;
 	    ctxt->xpathCtxt->namespaces = NULL;
@@ -549,9 +566,14 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
  * Returns the XPath Object value or NULL in case of error
  */
 static xmlXPathObjectPtr
-xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
+xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt)
+{
     xmlXPathObjectPtr result = NULL;
+#ifdef XSLT_REFACTORED
+    xsltStyleBasicItemVariablePtr precomp;
+#else
     xsltStylePreCompPtr precomp;
+#endif    
     int oldProximityPosition, oldContextSize;
     xmlDocPtr oldDoc;
     xmlNodePtr oldInst;
@@ -579,7 +601,11 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
     name = elem->name;
     elem->name = BAD_CAST "  being computed ... ";
 
+#ifdef XSLT_REFACTORED
+    precomp = (xsltStyleBasicItemVariablePtr) elem->comp;
+#else
     precomp = elem->comp;
+#endif
     if (elem->select != NULL) {
 	xmlXPathCompExprPtr comp = NULL;
 
@@ -601,8 +627,18 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt) {
 	
 	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
+#ifdef XSLT_REFACTORED
+	    if (precomp->inScopeNS != NULL) {
+		ctxt->xpathCtxt->namespaces = precomp->inScopeNS->list;
+		ctxt->xpathCtxt->nsNr = precomp->inScopeNS->number;
+	    } else {
+		ctxt->xpathCtxt->namespaces = NULL;
+		ctxt->xpathCtxt->nsNr = 0;
+	    }
+#else
 	    ctxt->xpathCtxt->namespaces = precomp->nsList;
 	    ctxt->xpathCtxt->nsNr = precomp->nsNr;
+#endif
 	} else {
 	    ctxt->inst = NULL;
 	    ctxt->xpathCtxt->namespaces = NULL;
@@ -1175,8 +1211,16 @@ xsltQuoteOneUserParam(xsltTransformContextPtr ctxt,
  * Returns the xsltStackElemPtr or NULL in case of error
  */
 static xsltStackElemPtr
-xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
-		  xmlNodePtr tree) {
+xsltBuildVariable(xsltTransformContextPtr ctxt,
+		  xsltStylePreCompPtr castedComp,
+		  xmlNodePtr tree)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleBasicItemVariablePtr comp =
+	(xsltStyleBasicItemVariablePtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif 
     xsltStackElemPtr elem;
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
@@ -1191,7 +1235,7 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
     elem = xsltNewStackElem();
     if (elem == NULL)
 	return(NULL);
-    elem->comp = comp;
+    elem->comp = (xsltStylePreCompPtr) comp;
     elem->name = comp->name;
     if (comp->select != NULL)
 	elem->select = comp->select;
@@ -1201,7 +1245,8 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 	elem->nameURI = comp->ns;
     elem->tree = tree;
     if (elem->computed == 0) {
-	elem->value = xsltEvalVariable(ctxt, elem, comp);
+	elem->value = xsltEvalVariable(ctxt, elem,
+	    (xsltStylePreCompPtr) comp);
 	if (elem->value != NULL)
 	    elem->computed = 1;
     }
@@ -1215,13 +1260,22 @@ xsltBuildVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
  * @tree:  the tree if select is NULL
  * @param:  this is a parameter actually
  *
- * Computes and register a new variable value. 
+ * Computes and register a new variable value.
+ * TODO: Is this intended for xsl:param as well?
  *
  * Returns 0 in case of success, -1 in case of error
  */
 static int
-xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
-		     xmlNodePtr tree, int param) {
+xsltRegisterVariable(xsltTransformContextPtr ctxt,
+		     xsltStylePreCompPtr castedComp,
+		     xmlNodePtr tree, int param)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleBasicItemVariablePtr comp =
+	(xsltStyleBasicItemVariablePtr) castedComp;
+#else
+    xsltStylePreCompPtr comp = castedComp;
+#endif
     xsltStackElemPtr elem;
     int present;
 
@@ -1244,7 +1298,7 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt, xsltStylePreCompPtr comp,
 #endif
 	return(0);
     }
-    elem = xsltBuildVariable(ctxt, comp, tree);
+    elem = xsltBuildVariable(ctxt, (xsltStylePreCompPtr) comp, tree);
     xsltAddStackElem(ctxt, elem);
     return(0);
 }
@@ -1344,14 +1398,23 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
  */
 
 xsltStackElemPtr
-xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
+xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleBasicItemVariablePtr comp;
+#else
+    xsltStylePreCompPtr comp;
+#endif
     xmlNodePtr tree = NULL;
     xsltStackElemPtr elem = NULL;
-    xsltStylePreCompPtr comp;
-
+    
     if ((cur == NULL) || (ctxt == NULL))
 	return(NULL);
+#ifdef XSLT_REFACTORED
+    comp = (xsltStyleBasicItemVariablePtr) cur->psvi;
+#else
     comp = (xsltStylePreCompPtr) cur->psvi;
+#endif     
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
 	    "xsl:param : compilation error\n");
@@ -1379,7 +1442,7 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 	tree = cur;
     }
 
-    elem = xsltBuildVariable(ctxt, comp, tree);
+    elem = xsltBuildVariable(ctxt, (xsltStylePreCompPtr) comp, tree);
 
     return(elem);
 }
@@ -1394,14 +1457,23 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
  */
 
 void
-xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
+xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleItemVariablePtr comp;
+#else
     xsltStylePreCompPtr comp;
+#endif
 
     if ((cur == NULL) || (style == NULL))
 	return;
 
     xsltStylePreCompute(style, cur);
+#ifdef XSLT_REFACTORED
+    comp = (xsltStyleItemVariablePtr) cur->psvi;
+#else
     comp = (xsltStylePreCompPtr) cur->psvi;
+#endif
     if (comp == NULL) {
 	xsltTransformError(NULL, style, cur,
 	     "xsl:variable : compilation failed\n");
@@ -1422,8 +1494,9 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
 	"Registering global variable %s\n", comp->name);
 #endif
 
-    xsltRegisterGlobalVariable(style, comp->name, comp->ns, comp->select,
-	                       cur->children, comp, NULL);
+    xsltRegisterGlobalVariable(style, comp->name, comp->ns,
+	comp->select, cur->children, (xsltStylePreCompPtr) comp,
+	NULL);
 }
 
 /**
@@ -1437,13 +1510,21 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur) {
 
 void
 xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
+#ifdef XSLT_REFACTORED
+    xsltStyleItemParamPtr comp;
+#else
     xsltStylePreCompPtr comp;
+#endif
 
     if ((cur == NULL) || (style == NULL))
 	return;
 
     xsltStylePreCompute(style, cur);
+#ifdef XSLT_REFACTORED
+    comp = (xsltStyleItemParamPtr) cur->psvi;
+#else
     comp = (xsltStylePreCompPtr) cur->psvi;
+#endif    
     if (comp == NULL) {
 	xsltTransformError(NULL, style, cur,
 	     "xsl:param : compilation failed\n");
@@ -1465,8 +1546,9 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
 	"Registering global param %s\n", comp->name);
 #endif
 
-    xsltRegisterGlobalVariable(style, comp->name, comp->ns, comp->select,
-	                       cur->children, comp, NULL);
+    xsltRegisterGlobalVariable(style, comp->name, comp->ns,
+	comp->select, cur->children, (xsltStylePreCompPtr) comp,
+	NULL);
 }
 
 /**
@@ -1479,13 +1561,22 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
  */
 
 void
-xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
+xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleItemVariablePtr comp;
+#else
     xsltStylePreCompPtr comp;
+#endif
 
     if ((cur == NULL) || (ctxt == NULL))
 	return;
 
+#ifdef XSLT_REFACTORED
+    comp = (xsltStyleItemVariablePtr) cur->psvi;
+#else
     comp = (xsltStylePreCompPtr) cur->psvi;
+#endif   
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
 	     "xsl:variable : compilation failed\n");
@@ -1503,7 +1594,7 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 	"Registering variable %s\n", comp->name));
 #endif
 
-    xsltRegisterVariable(ctxt, comp, cur->children, 0);
+    xsltRegisterVariable(ctxt, (xsltStylePreCompPtr) comp, cur->children, 0);
 }
 
 /**
@@ -1516,13 +1607,21 @@ xsltParseStylesheetVariable(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
  */
 
 void
-xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
+xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur)
+{
+#ifdef XSLT_REFACTORED
+    xsltStyleItemParamPtr comp;
+#else
     xsltStylePreCompPtr comp;
+#endif
 
     if ((cur == NULL) || (ctxt == NULL))
 	return;
-
+#ifdef XSLT_REFACTORED
+    comp = (xsltStyleItemParamPtr) cur->psvi;
+#else
     comp = (xsltStylePreCompPtr) cur->psvi;
+#endif 
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
 	     "xsl:param : compilation failed\n");
@@ -1540,7 +1639,7 @@ xsltParseStylesheetParam(xsltTransformContextPtr ctxt, xmlNodePtr cur) {
 	"Registering param %s\n", comp->name));
 #endif
 
-    xsltRegisterVariable(ctxt, comp, cur->children, 1);
+    xsltRegisterVariable(ctxt, (xsltStylePreCompPtr) comp, cur->children, 1);
 }
 
 /**
