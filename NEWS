@@ -10,6 +10,24 @@ ChangeLog.html
 to the CVS at 
 http://cvs.gnome.org/viewcvs/libxslt/
  code base.Those are the public releases made:
+1.1.16: May 01 2006:
+   - portability fixes: EXSLT date/time on Solaris and IRIX (Albert Chin),
+      HP-UX  build (Albert Chin), 
+  
+   - build fixes: Python detection(Joseph Sacco), plugin configurei
+      (Joel Reed)
+   - bug fixes: pattern compilation fix(William Brack), EXSLT date/time
+      fix (Thomas Broyer), EXSLT function bug, potential loop on variable
+      eval, startup race (Christopher Palmer), debug statement left in python
+      (Nic Ferrier), various cleanup based on Coverity reports), error on
+      Out of memory condition (Charles Hardin), various namespace prefixes
+      fixes (Kasimier Buchcik), 
+   - improvement: speed up sortingi, start of internals refactoring (Kasimier
+      Buchcik)
+   - documentation: man page fixes and updates (Daniel Leidert)
+
+
+
 1.1.15: Sep 04 2005:
    - build fixes: Windows build cleanups and updates (Igor Zlatkovic),
     remove jhbuild warnings

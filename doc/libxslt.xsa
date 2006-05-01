@@ -8,17 +8,19 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.14</version>
-    <last-release> Apr 02 2005</last-release>
+    <version>1.1.15</version>
+    <last-release> Sep 04 2005</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - bug fixes: text node on stylesheet document without a dictionary
-    (William Brack), more checking of XSLT syntax, calling xsltInit()
-    multiple times, mode values interning raised by Mark Vakoc, bug in
-    pattern matching with ancestors, bug in patterna matching with cascading
-    select, xinclude and document() problem, build outside of source tree
-    (Mike Castle)
-   - improvement: added a --nodict mode to xsltproc to check problems for
-    docuemtns without dictionnaries
+    <changes>   - build fixes: Windows build cleanups and updates (Igor Zlatkovic),
+    remove jhbuild warnings
+   - bug fixes: negative number formatting (William Brack), number
+    formatting per mille definition (William Brack), XInclude default values
+    (William), text copy bugs (William), bug related to xmlXPathContext size,
+    reuse libxml2 memory management for text nodes, dictionnary text bug,
+    forbid variables in match (needs libxml2-2.6.21)
+   - improvements: EXSLT dyn:map (Mark Vakoc),
+   - documentation: EXSLT date and time functions namespace in man (Jonathan
+    Wakely)
 
 </changes>
   </product>

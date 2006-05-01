@@ -1297,7 +1297,7 @@ informations are stored'/>
       <arg name='nargs' type='int' info='the number of arguments'/>
     </function>
     <function name='xsltDocumentSortFunction' file='xsltutils'>
-      <info>reorder the current node list @list accordingly to the document order</info>
+      <info>reorder the current node list @list accordingly to the document order This function is slow, obsolete and should not be used anymore.</info>
       <return type='void'/>
       <arg name='list' type='xmlNodeSetPtr' info='the node set'/>
     </function>
