@@ -1,3 +1,11 @@
+Thu May  4 22:55:26 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* tests/exslt/common/node-set.5.out
+	  tests/exslt/sets/difference.1.out
+	  tests/exslt/functions/function.6.out: Changed regression test
+	  results (bug #340684). Those will now produce regression
+	  errors; so we need to fix the processor.
+
 Mon May  1 17:39:27 EDT 2006 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in NEWS doc//*: preparing release of 1.1.16, updated and
