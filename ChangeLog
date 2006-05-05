@@ -1,3 +1,12 @@
+Fri May  5 14:31:53 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* tests/exslt/common/node-set.5.out
+	  tests/exslt/sets/difference.1.out
+	  tests/exslt/functions/function.6.out: Reverting the
+	  changes; I'll rather change the processing stylesheet
+	  documents in a way that they will produce the same results
+	  for broken and stricter whitespace-stripping.
+
 Thu May  4 22:55:26 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* tests/exslt/common/node-set.5.out
