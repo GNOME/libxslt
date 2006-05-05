@@ -469,12 +469,19 @@ xsltFreeExts(xsltStylesheetPtr style)
 /**
  * xsltRegisterExtPrefix:
  * @style: an XSLT stylesheet
- * @prefix: the prefix used
+ * @prefix: the prefix used (optional)
  * @URI: the URI associated to the extension
- *
+ * 
  * Registers an extension namespace
+ * This is called from xslt.c during compile-time.
+ * The given prefix is not needed.
+ * Called by:
+ *   xsltParseExtElemPrefixes() (new function)
+ *   xsltRegisterExtPrefix() (old function)
  *
- * Returns 0 in case of success, -1 in case of failure
+ * Returns 0 in case of success, 1 if the @URI was already
+ *         registered as an extension namespace and
+ *         -1 in case of failure
  */
 int
 xsltRegisterExtPrefix(xsltStylesheetPtr style,
@@ -482,7 +489,7 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
 {
     xsltExtDefPtr def, ret;
 
-    if ((style == NULL) || (prefix == NULL) | (URI == NULL))
+    if ((style == NULL) || (URI == NULL))
         return (-1);
 
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
@@ -491,11 +498,22 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
                      URI);
 #endif
     def = (xsltExtDefPtr) style->nsDefs;
+#ifdef XSLT_REFACTORED
+    /*
+    * The extension is associated with a namespace name.
+    */
+    while (def != NULL) {
+        if (xmlStrEqual(URI, def->URI))
+            return (1);
+        def = def->next;
+    }
+#else
     while (def != NULL) {
         if (xmlStrEqual(prefix, def->prefix))
             return (-1);
         def = def->next;
     }
+#endif
     ret = xsltNewExtDef(prefix, URI);
     if (ret == NULL)
         return (-1);
@@ -506,6 +524,12 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
      * check wether there is an extension module with a stylesheet
      * initialization function.
      */
+#ifdef XSLT_REFACTORED
+    /*
+    * Don't initialize modules based on specified namespaced via
+    * the attribute "[xsl:]extension-element-prefixes".
+    */
+#else
     if (xsltExtensionsHash != NULL) {
         xsltExtModulePtr module;
 
@@ -515,11 +539,11 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
                 module = xmlHashLookup(xsltExtensionsHash, URI);
             }
         }
-
         if (module != NULL) {
             xsltStyleGetExtData(style, URI);
         }
     }
+#endif
     return (0);
 }
 
@@ -600,7 +624,163 @@ xsltFreeCtxtExts(xsltTransformContextPtr ctxt)
 }
 
 /**
+ * xsltStyleGetStylesheetExtData:
+ * @style: an XSLT stylesheet
+ * @URI:  the URI associated to the exension module
+ *
+ * Fires the compile-time initialization callback
+ * of an extension module and returns a container
+ * holding the user-data (retrieved via the callback).
+ *
+ * Returns the create module-data container
+ *         or NULL if such a module was not registered.
+ */
+static xsltExtDataPtr
+xsltStyleInitializeStylesheetModule(xsltStylesheetPtr style,
+				     const xmlChar * URI)
+{
+    xsltExtDataPtr dataContainer;
+    void *userData = NULL;
+    xsltExtModulePtr module;
+    
+    if ((style == NULL) || (URI == NULL))	
+	return(NULL);
+
+    if (xsltExtensionsHash == NULL) {
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "Not registered extension module: %s\n", URI);
+#endif
+	return(NULL);
+    }
+
+    module = xmlHashLookup(xsltExtensionsHash, URI);
+    if (module == NULL) {
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "Not registered extension module: %s\n", URI);
+#endif
+	return (NULL);
+    }
+    /*
+    * The specified module was registered so initialize it.
+    */
+    if (style->extInfos == NULL) {
+	style->extInfos = xmlHashCreate(10);
+	if (style->extInfos == NULL)
+	    return (NULL);
+    }
+    /*
+    * Fire the initialization callback if available.
+    */
+    if (module->styleInitFunc == NULL) {
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "Initializing module with *no* callback: %s\n", URI);
+#endif
+    } else {
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+	xsltGenericDebug(xsltGenericDebugContext,
+	    "Initializing module with callback: %s\n", URI);
+#endif
+	/*
+	* Fire the initialization callback.
+	*/
+	userData = module->styleInitFunc(style, URI);
+    }    
+    /*
+    * Store the user-data in the context of the given stylesheet.
+    */
+    dataContainer = xsltNewExtData(module, userData);
+    if (dataContainer == NULL)
+	return (NULL);
+
+    if (xmlHashAddEntry(style->extInfos, URI,
+	(void *) dataContainer) < 0)
+    {
+	xsltTransformError(NULL, style, NULL,	    
+	    "Failed to register module '%s'.\n", URI);
+	style->errors++;
+	if (module->styleShutdownFunc)
+	    module->styleShutdownFunc(style, URI, userData);
+	xsltFreeExtData(dataContainer);
+	return (NULL);
+    }
+
+    return(dataContainer);
+}
+
+/**
  * xsltStyleGetExtData:
+ * @style: an XSLT stylesheet
+ * @URI:  the URI associated to the exension module
+ *
+ * Retrieve the data associated to the extension module
+ * in this given stylesheet.
+ * Called by:
+ *   xsltRegisterExtPrefix(),
+ *   ( xsltExtElementPreCompTest(), xsltExtInitTest )
+ *
+ * Returns the pointer or NULL if not present
+ */
+void *
+xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI)
+{
+    xsltExtDataPtr dataContainer = NULL;
+    xsltStylesheetPtr tmpStyle;
+
+    if ((style == NULL) || (URI == NULL) ||
+	(xsltExtensionsHash == NULL))
+	return (NULL);
+
+    
+#ifdef XSLT_REFACTORED
+    /*
+    * This is intended for global storage, so only the main
+    * stylesheet will hold the data.
+    */
+    tmpStyle = style;
+    while (tmpStyle->parent != NULL)
+	tmpStyle = tmpStyle->parent;
+    if (tmpStyle->extInfos != NULL) {
+	dataContainer =
+	    (xsltExtDataPtr) xmlHashLookup(tmpStyle->extInfos, URI);
+	if (dataContainer != NULL) {
+	    /*
+	    * The module was already initialized in the context
+	    * of this stylesheet; just return the user-data that
+	    * comes with it.
+	    */
+	    return(dataContainer->extData);
+	}
+    }
+#else
+    /*
+    * Old behaviour.
+    */
+    tmpStyle = style;
+    while (tmpStyle != NULL) {
+	if (tmpStyle->extInfos != NULL) {
+	    dataContainer =
+		(xsltExtDataPtr) xmlHashLookup(tmpStyle->extInfos, URI);
+	    if (dataContainer != NULL) {
+		return(dataContainer->extData);
+	    }
+	}
+	tmpStyle = xsltNextImport(tmpStyle);
+    }
+    tmpStyle = style;
+#endif
+
+    dataContainer =
+        xsltStyleInitializeStylesheetModule(tmpStyle, URI);
+    if (dataContainer != NULL)
+	return (dataContainer->extData);
+    return(NULL);
+}
+
+/**
+ * xsltStyleGetExtDataPerStylesheetLevel:
  * @style: an XSLT stylesheet
  * @URI:  the URI associated to the exension module
  *
@@ -610,72 +790,31 @@ xsltFreeCtxtExts(xsltTransformContextPtr ctxt)
  * Returns the pointer or NULL if not present
  */
 void *
-xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI)
+xsltStyleStylesheetLevelGetExtData(xsltStylesheetPtr style,
+				   const xmlChar * URI)
 {
-    xsltExtDataPtr data = NULL;
-    xsltStylesheetPtr tmp;
+    xsltExtDataPtr dataContainer = NULL;
 
+    if ((style == NULL) || (URI == NULL) ||
+	(xsltExtensionsHash == NULL))
+	return (NULL);
 
-    if ((style == NULL) || (URI == NULL))
-        return (NULL);
+    if (style->extInfos != NULL) {
+	dataContainer = (xsltExtDataPtr) xmlHashLookup(style->extInfos, URI);
+	/*
+	* The module was already initialized in the context
+	* of this stylesheet; just return the user-data that
+	* comes with it.
+	*/
+	if (dataContainer)
+	    return(dataContainer->extData);
+    }  
 
-    tmp = style;
-    while (tmp != NULL) {
-        if (tmp->extInfos != NULL) {
-            data = (xsltExtDataPtr) xmlHashLookup(tmp->extInfos, URI);
-            if (data != NULL)
-                break;
-        }
-        tmp = xsltNextImport(tmp);
-    }
-    if (data == NULL) {
-        if (style->extInfos == NULL) {
-            style->extInfos = xmlHashCreate(10);
-            if (style->extInfos == NULL)
-                return (NULL);
-        }
-    }
-    if (data == NULL) {
-        void *extData;
-        xsltExtModulePtr module;
-
-        module = xmlHashLookup(xsltExtensionsHash, URI);
-        if (module == NULL) {
-#ifdef WITH_XSLT_DEBUG_EXTENSIONS
-            xsltGenericDebug(xsltGenericDebugContext,
-                             "Not registered extension module: %s\n", URI);
-#endif
-            return (NULL);
-        } else {
-            if (module->styleInitFunc == NULL) {
-#ifdef WITH_XSLT_DEBUG_EXTENSIONS
-                xsltGenericDebug(xsltGenericDebugContext,
-                                 "Registering style module: %s\n", URI);
-#endif
-                extData = NULL;
-            } else {
-#ifdef WITH_XSLT_DEBUG_EXTENSIONS
-                xsltGenericDebug(xsltGenericDebugContext,
-                                 "Initializing module: %s\n", URI);
-#endif
-                extData = module->styleInitFunc(style, URI);
-            }
-
-            data = xsltNewExtData(module, extData);
-            if (data == NULL)
-                return (NULL);
-            if (xmlHashAddEntry(style->extInfos, URI, (void *) data) < 0) {
-                xsltGenericError(xsltGenericErrorContext,
-                                 "Failed to register module data: %s\n",
-                                 URI);
-                if (module->styleShutdownFunc)
-                    module->styleShutdownFunc(style, URI, extData);
-                xsltFreeExtData(data);
-                return (NULL);
-            }
-        }
-    }
-    return (data->extData);
+    dataContainer =
+        xsltStyleInitializeStylesheetModule(style, URI);
+    if (dataContainer != NULL)
+	return (dataContainer->extData);
+    return(NULL);
 }
 
 /**
@@ -939,8 +1078,13 @@ xsltShutdownExt(xsltExtDataPtr data, xsltStylesheetPtr style,
                      "Shutting down module : %s\n", URI);
 #endif
     module->styleShutdownFunc(style, URI, data->extData);
-    xmlHashRemoveEntry(style->extInfos, URI,
-                       (xmlHashDeallocator) xsltFreeExtData);
+    /*
+    * Don't remove the entry from the hash table here, since
+    * this will produce segfaults - this fixes bug #340624.
+    *
+    * xmlHashRemoveEntry(style->extInfos, URI,
+    *   (xmlHashDeallocator) xsltFreeExtData);
+    */    
 }
 
 /**
@@ -964,29 +1108,59 @@ xsltShutdownExts(xsltStylesheetPtr style)
 /**
  * xsltCheckExtPrefix:
  * @style: the stylesheet
- * @prefix: the namespace prefix (possibly NULL)
+ * @URI: the namespace URI (possibly NULL)
  *
- * Check if the given prefix is one of the declared extensions
+ * Check if the given prefix is one of the declared extensions.
+ * This is intended to be called only at compile-time.
+ * Called by:
+ *  xsltGetInheritedNsList() (xslt.c)
+ *  xsltParseTemplateContent (xslt.c)
  *
  * Returns 1 if this is an extension, 0 otherwise
  */
 int
-xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar * prefix)
-{
+xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar * URI)
+{    
+#ifdef XSLT_REFACTORED
+    if ((style == NULL) || (style->compCtxt == NULL) ||
+	(XSLT_CCTXT(style)->inode == NULL) ||
+	(XSLT_CCTXT(style)->inode->extElemNs == NULL))
+        return (0);    
+    /*
+    * Lookup the extension namespaces registered
+    * at the current node in the stylesheet's tree.
+    */
+    if (XSLT_CCTXT(style)->inode->extElemNs != NULL) {
+	int i;
+	xsltPointerListPtr list = XSLT_CCTXT(style)->inode->extElemNs;
+
+	for (i = 0; i < list->number; i++) {
+	    if (xmlStrEqual((const xmlChar *) list->items[i],
+		URI))
+	    {
+		return(1);
+	    }	    
+	}
+    }
+#else
     xsltExtDefPtr cur;
 
     if ((style == NULL) || (style->nsDefs == NULL))
         return (0);
-
-    if (prefix == NULL)
-        prefix = BAD_CAST "#default";
-
+    if (URI == NULL)
+        URI = BAD_CAST "#default";
     cur = (xsltExtDefPtr) style->nsDefs;
     while (cur != NULL) {
-        if (xmlStrEqual(prefix, cur->prefix))
+	/*
+	* TODO: This is the old behaviour and it won't work
+	*  correctly, since it works with the namespace prefix,
+	*  but it should work with the namespace name.
+	*/
+        if (xmlStrEqual(URI, cur->prefix))
             return (1);
         cur = cur->next;
     }
+#endif
     return (0);
 }
 
@@ -1281,13 +1455,39 @@ xsltPreComputeExtModuleElement(xsltStylesheetPtr style, xmlNodePtr inst)
 
     ext = (xsltExtElementPtr)
         xmlHashLookup2(xsltElementsHash, inst->name, inst->ns->href);
+    /*
+    * EXT TODO: Now what?
+    */
     if (ext == NULL)
         return (NULL);
 
-    if (ext->precomp != NULL)
+    if (ext->precomp != NULL) {
+	/*
+	* REVISIT TODO: Check if the text below is correct.
+	* This will return a xsltElemPreComp structure or NULL.
+	* 1) If the the author of the extension needs a
+	*  custom structure to hold the specific values of
+	*  this extension, he will derive a structure based on
+	*  xsltElemPreComp; thus we obviously *cannot* refactor
+	*  the xsltElemPreComp structure, since all already derived
+	*  user-defined strucures will break.
+	*  Example: For the extension xsl:document,
+	*   in xsltDocumentComp() (preproc.c), the structure
+	*   xsltStyleItemDocument is allocated, filled with
+	*   specific values and returned.
+	* 2) If the author needs no values to be stored in
+	*  this structure, then he'll return NULL;
+	*/
         comp = ext->precomp(style, inst, ext->transform);
-    if (comp == NULL)
+    }
+    if (comp == NULL) {
+	/*
+	* Default creation of a xsltElemPreComp structure, if
+	* the author of this extension did not create a custom
+	* structure.
+	*/
         comp = xsltNewElemPreComp(style, inst, ext->transform);
+    }
 
     return (comp);
 }
@@ -1552,6 +1752,13 @@ xmlHashTablePtr
 xsltGetExtInfo(xsltStylesheetPtr style, const xmlChar * URI)
 {
     xsltExtDataPtr data;
+
+    /*
+    * TODO: Why do we have a return type of xmlHashTablePtr?
+    *   Is the user-allocated data for extension modules expected
+    *   to be a xmlHashTablePtr only? Or is this intended for
+    *   the EXSLT module only?
+    */
 
     if (style != NULL && style->extInfos != NULL) {
         data = xmlHashLookup(style->extInfos, URI);

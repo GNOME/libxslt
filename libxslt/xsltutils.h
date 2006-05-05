@@ -298,31 +298,6 @@ XSLTPUBFUN int XSLTCALL
 XSLTPUBFUN void XSLTCALL		
 		xslDropCall			(void);
 
-#ifdef XSLT_REFACTORED
-/**
- * xsltPointerList:
- *
- * Pointer-list for various purposes.
- */
-typedef struct _xsltPointerList xsltPointerList;
-typedef xsltPointerList *xsltPointerListPtr;
-struct _xsltPointerList {
-    void **items;
-    int number;
-    int size;
-};
-
-XSLTPUBFUN xsltPointerListPtr XSLTCALL
-		xsltPointerListCreate		(void);
-XSLTPUBFUN void XSLTCALL
-		xsltPointerListFree		(xsltPointerListPtr list);
-XSLTPUBFUN void XSLTCALL
-		xsltPointerListClear		(xsltPointerListPtr list);
-XSLTPUBFUN int XSLTCALL
-		xsltPointerListAdd		(xsltPointerListPtr list,
-						 void *item);
-#endif /* XSLT_REFACTOR */
-
 #ifdef __cplusplus
 }
 #endif

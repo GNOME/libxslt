@@ -128,6 +128,10 @@ exsltFuncRegisterImportFunc (exsltFuncFunctionData *data,
  * @URI: the namespace URI for the extension
  *
  * Initializes the EXSLT - Functions module.
+ * Called at transformation-time; merges all
+ * functions declared in the import tree taking
+ * import precedence into account, i.e. overriding
+ * functions with lower import precedence.
  *
  * Returns the data for this transformation
  */
@@ -170,8 +174,9 @@ exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
  * @ctxt: an XSLT transformation context
  * @URI: the namespace URI for the extension
  * @data: the module data to free up
- *
+ *  
  * Shutdown the EXSLT - Functions module
+ * Called at transformation-time.
  */
 static void
 exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
@@ -188,6 +193,7 @@ exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
  * @URI: the namespace URI for the extension
  *
  * Allocates the stylesheet data for EXSLT - Function
+ * Called at compile-time.
  *
  * Returns the allocated data
  */
@@ -201,9 +207,10 @@ exsltFuncStyleInit (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
  * exsltFuncStyleShutdown:
  * @style: an XSLT stylesheet
  * @URI: the namespace URI for the extension
- * @data: the stylesheet data to free up
+ * @data: the stylesheet data to free up 
  *
  * Shutdown the EXSLT - Function module
+ * Called at compile-time.
  */
 static void
 exsltFuncStyleShutdown (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
@@ -431,8 +438,19 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
      * Register the function data such that it can be retrieved
      * by exslFuncFunctionFunction
      */
-    data = (xmlHashTablePtr) xsltStyleGetExtData (style,
-						  EXSLT_FUNCTIONS_NAMESPACE);
+#ifdef XSLT_REFACTORED
+    /*
+    * Ensure that the hash table will be stored in the *current*
+    * stylesheet level in order to correctly evaluate the
+    * import precedence.
+    */
+    data = (xmlHashTablePtr)
+	xsltStyleStylesheetLevelGetExtData(style,
+	    EXSLT_FUNCTIONS_NAMESPACE);
+#else
+    data = (xmlHashTablePtr)
+	xsltStyleGetExtData (style, EXSLT_FUNCTIONS_NAMESPACE);
+#endif
     if (data == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 			 "exsltFuncFunctionComp: no stylesheet data\n");
@@ -441,9 +459,10 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
     }
 
     if (xmlHashAddEntry2 (data, ns->href, name, func) < 0) {
-	xsltGenericError(xsltGenericErrorContext,
-			 "Failed to register function {%s}%s\n",
+	xsltTransformError(NULL, style, inst,
+	    "Failed to register function {%s}%s\n",
 			 ns->href, name);
+	style->errors++;
     } else {
 	xsltGenericDebug(xsltGenericDebugContext,
 			 "exsltFuncFunctionComp: register {%s}%s\n",

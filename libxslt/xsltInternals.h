@@ -26,7 +26,6 @@
 extern "C" {
 #endif
 
-
 /**
  * XSLT_REFACTORED:
  *
@@ -34,6 +33,54 @@ extern "C" {
  * mostly related to pre-computation.
  */
 /* #define XSLT_REFACTORED */
+
+#ifdef XSLT_REFACTORED
+
+extern const xmlChar *xsltConstNamespaceNameXSLT;
+
+/**
+ * IS_XSLT_ELEM_FAST:
+ *
+ * Checks that the element pertains to XSLT namespace.
+ */
+#define IS_XSLT_ELEM_FAST(e) \
+    (((e) != NULL) && ((e)->type == XML_ELEMENT_NODE) && \
+     ((e)->ns != NULL) && ((e)->ns->href == xsltConstNamespaceNameXSLT))
+
+#define IS_IN_XSLT_NS(e) \
+    (((e)->ns != NULL) && ((e)->ns->href == xsltConstNamespaceNameXSLT))
+
+#define XSLT_HAS_INTERNAL_NSMAP(s) \
+    (((s) != NULL) && ((s)->principal) && \
+     ((s)->principal->principalData) && \
+     ((s)->principal->principalData->nsMap))
+
+#define XSLT_GET_INTERNAL_NSMAP(s) ((s)->principal->principalData->nsMap)
+
+/**
+ * XSLT_REFACTORED_MANDATORY_VERSION:
+ *
+ * TODO: Currently disabled to surpress regression test failures, since
+ *  the old behaviour was that a missing version attribute
+ *  produced a only a warning and not an error, which was incerrect.
+ *  So the regression tests need to be fixed if this is enabled.
+ */
+/* #define XSLT_REFACTORED_MANDATORY_VERSION */
+
+/**
+ * xsltPointerList:
+ *
+ * Pointer-list for various purposes.
+ */
+typedef struct _xsltPointerList xsltPointerList;
+typedef xsltPointerList *xsltPointerListPtr;
+struct _xsltPointerList {
+    void **items;
+    int number;
+    int size;
+};
+
+#endif
 
 /**
  * XSLT_REFACTORED_PARSING:
@@ -110,8 +157,8 @@ struct _xsltTemplate {
     struct _xsltStylesheet *style;/* the containing stylesheet */
     xmlChar *match;	/* the matching string */
     float priority;	/* as given from the stylesheet, not computed */
-    xmlChar *name;	/* the local part of the name QName */
-    xmlChar *nameURI;	/* the URI part of the name QName */
+    const xmlChar *name; /* the local part of the name QName */
+    const xmlChar *nameURI; /* the URI part of the name QName */
     const xmlChar *mode;/* the local part of the mode QName */
     const xmlChar *modeURI;/* the URI part of the mode QName */
     xmlNodePtr content;	/* the template replacement value */
@@ -236,7 +283,13 @@ typedef enum {
     XSLT_FUNC_VARIABLE,
     XSLT_FUNC_WHEN,
     XSLT_FUNC_EXTENSION,
+#ifdef XSLT_REFACTORED
     XSLT_FUNC_OTHERWISE,
+    XSLT_FUNC_FALLBACK,
+    XSLT_FUNC_MESSAGE,
+    XSLT_FUNC_INCLUDE,
+    XSLT_FUNC_ATTRSET
+#endif
 } xsltStyleType;
 
 /**
@@ -258,7 +311,7 @@ typedef void (*xsltElemPreCompDeallocator) (xsltElemPreCompPtr comp);
 struct _xsltElemPreComp {
     xsltElemPreCompPtr next;		/* next item in the global chained
 					   list hold by xsltStylesheet. */
-    xsltStyleType type;			/* type of the element */
+    xsltStyleType type;		/* type of the element */
     xsltTransformFunction func; 	/* handling function */
     xmlNodePtr inst;			/* the node in the stylesheet's tree
 					   corresponding to this item */
@@ -270,50 +323,43 @@ struct _xsltElemPreComp {
 /**
  * xsltStylePreComp:
  *
- * The abstract basic structure for items of the
- * AST of the XSLT processor.
- * The AST includes:
+ * The abstract basic structure for items of the XSLT processor.
+ * This includes:
  * 1) compiled forms of XSLT instructions (xsl:if, xsl:attribute, etc.)
  * 2) compiled forms of literal result elements
+ * 3) compiled forms of extension elements
  */
 typedef struct _xsltStylePreComp xsltStylePreComp;
 typedef xsltStylePreComp *xsltStylePreCompPtr;
 
-/*************************
- * Refactored structures *
- *************************/
 #ifdef XSLT_REFACTORED
 
-typedef struct _xsltNsList xsltNsList;
+/*
+* Some pointer-list utility functions.
+*/
+XSLTPUBFUN xsltPointerListPtr XSLTCALL
+		xsltPointerListCreate		(int initialSize);
+XSLTPUBFUN void XSLTCALL
+		xsltPointerListFree		(xsltPointerListPtr list);
+XSLTPUBFUN void XSLTCALL
+		xsltPointerListClear		(xsltPointerListPtr list);
+XSLTPUBFUN int XSLTCALL
+		xsltPointerListAddSize		(xsltPointerListPtr list,						 
+						 void *item,
+						 int initialSize);
 
+/************************************************************************
+ *									*
+ * Refactored structures                                                *
+ *									*
+ ************************************************************************/
+
+typedef struct _xsltNsList xsltNsList;
 typedef xsltNsList *xsltNsListPtr;
 struct _xsltNsList {
     xmlNsPtr *list;
     int number;
 };
-
-#if 0
-/*
- * TODO: xsltBasicItem is not used yet; maybe never will be used, since
- * xsltElemPreCompPtr is acting as the base type for the compiled
- * items of a stylesheet. It seems not practical to try to change
- * this type to xsltBasicItemPtr, since xsltElemPreCompPtr is
- * used already used too massively (e.g. xsltStylesheet->preComps) and
- * for extension functions.
- */
-/**
- * xsltBasicItem:
- *
- * The basic structure for all items of the AST of the XSLT processor.
- */
-typedef struct _xsltBasicItem xsltBasicItem;
-
-typedef xsltBasicItem *xsltBasicItemPtr;
-struct _xsltBasicItem {
-    xsltBasicASTItemPtr next;
-    xsltStyleType type;
-};
-#endif
 
 /**
  * XSLT_ITEM_COMPATIBILITY_FIELDS:
@@ -346,7 +392,7 @@ struct _xsltBasicItem {
  *
  * The in-scope namespaces.
  */
-#define XSLT_ITEM_NSINSCOPE_FIELDS xsltNsListPtr inScopeNS;
+#define XSLT_ITEM_NSINSCOPE_FIELDS xsltNsListPtr inScopeNs;
 
 /**
  * XSLT_ITEM_COMMON_FIELDS:
@@ -378,8 +424,8 @@ struct _xsltStylePreComp {
     xsltTransformFunction func; /* handling function */
     xmlNodePtr inst;		/* the node in the stylesheet's tree
 				   corresponding to this item. */
-    /* Currenlty to navigational fields. */
-    xsltNsListPtr inScopeNS;
+    /* Currently no navigational fields. */
+    xsltNsListPtr inScopeNs;
 };
 
 /**
@@ -868,14 +914,72 @@ struct _xsltStyleItemOtherwise {
     XSLT_ITEM_COMMON_FIELDS
 };
 
+typedef struct _xsltStyleItemInclude xsltStyleItemInclude;
+typedef xsltStyleItemInclude *xsltStyleItemIncludePtr;
+
+struct _xsltStyleItemInclude {
+    XSLT_ITEM_COMMON_FIELDS
+    xsltDocumentPtr include;
+};
+
+/************************************************************************
+ *									*
+ *  Extension elements                                                  *
+ *									*
+ ************************************************************************/
+
+/*
+ * xsltStyleItemExtElement:
+ *
+ * Reflects extension elements.
+ *
+ * NOTE: Due to the fact that the structure xsltElemPreComp is most
+ * probably already heavily in use out there by users, so we cannot
+ * easily change it, we'll create an intermediate structure which will
+ * hold an xsltElemPreCompPtr.
+ * BIG NOTE: The only problem I see here is that the user processes the
+ *  content of the stylesheet tree, possibly he'll lookup the node->psvi
+ *  fields in order to find subsequent extension functions.
+ *  In this case, the user's code will break, since the node->psvi
+ *  field will hold now the xsltStyleItemExtElementPtr and not
+ *  the xsltElemPreCompPtr.
+ *  However the place where the structure is anchored in the node-tree,
+ *  namely node->psvi, has beed already once been moved from node->_private
+ *  to node->psvi, so we have a precedent here, which, I think, should allow
+ *  us to change such semantics without headaches.
+ */
+typedef struct _xsltStyleItemExtElement xsltStyleItemExtElement;
+typedef xsltStyleItemExtElement *xsltStyleItemExtElementPtr;
+struct _xsltStyleItemExtElement {
+    XSLT_ITEM_COMMON_FIELDS
+    xsltElemPreCompPtr item;   
+};
+
+/************************************************************************
+ *									*
+ *  Literal result elements                                             *
+ *									*
+ ************************************************************************/
+
 /*
  * Literal result elements.
- * TODO: Not used yet.
  */
-typedef struct _xsltStyleItemLRE xsltStyleItemLRE;
-typedef xsltStyleItemLRE *xsltStyleItemLREPtr;
-struct _xsltStyleItemLRE {
+typedef struct _xsltStyleItemLRElement xsltStyleItemLRElement;
+typedef xsltStyleItemLRElement *xsltStyleItemLRElementPtr;
+struct _xsltStyleItemLRElement {
     XSLT_ITEM_COMMON_FIELDS
+    xsltPointerListPtr exclResultNs;
+};
+
+typedef struct _xsltNsMap xsltNsMap;
+typedef xsltNsMap *xsltNsMapPtr;
+struct _xsltNsMap {
+    xsltNsMapPtr next; /* next in the list */
+    xmlDocPtr doc;
+    xmlNodePtr elem; /* the element holding the ns-decl */
+    xmlNsPtr ns; /* the xmlNs structure holding the XML namespace name */
+    const xmlChar *origNsName; /* the original XML namespace name */
+    const xmlChar *newNsName; /* the mapped XML namespace name */    
 };
 
 /************************************************************************
@@ -883,6 +987,13 @@ struct _xsltStyleItemLRE {
  *  Compile-time structures for *internal* use only                     *
  *									*
  ************************************************************************/
+
+typedef struct _xsltPrincipalStylesheetData xsltPrincipalStylesheetData;
+typedef xsltPrincipalStylesheetData *xsltPrincipalStylesheetDataPtr;
+
+#define XSLT_ELEMENT_CATEGORY_XSLT 0
+#define XSLT_ELEMENT_CATEGORY_EXTENSION 1
+#define XSLT_ELEMENT_CATEGORY_LR 2
 
 /**
  * xsltCompilerNodeInfo:
@@ -896,29 +1007,68 @@ struct _xsltCompilerNodeInfo {
     xsltCompilerNodeInfoPtr prev;
     xmlNodePtr node;
     int depth;
-    xsltNsListPtr inScopeNS; /* The in-scope namespaces for the current
-                                position in the node-tree */
     xsltTemplatePtr templ;   /* The owning template */
+    int category;	     /* XSLT element, LR-element or
+                                extension element */
+    xsltStyleType type;
     xsltElemPreCompPtr item; /* The compiled information */
+    xsltNsListPtr inScopeNs; /* The in-scope namespaces for the current
+                                position in the node-tree */
+    xsltPointerListPtr exclResultNs; /* The current excluded
+				      result namespaces */
+    xsltPointerListPtr extElemNs;
+    int preserveWhitespace;
+    int stripWhitespace;
+    int isRoot; /* whether this is the stylesheet's root node */
+    int forwardsCompat; /* whether forwards-compatible mode is enabled */
+    /* whether the content of an extension element was processed */
+    int extContentHandled;
+    /* the type of the current child */
+    xsltStyleType curChildType;
 };
 
-#define XSLT_CCTXT(style) ((xsltCompilerCtxtPtr) style->compCtxt)
+#define XSLT_CCTXT(style) ((xsltCompilerCtxtPtr) style->compCtxt) 
+
+typedef enum {
+    XSLT_ERROR_SEVERITY_ERROR = 0,
+    XSLT_ERROR_SEVERITY_WARNING
+} xsltErrorSeverityType;
 
 typedef struct _xsltCompilerCtxt xsltCompilerCtxt;
 typedef xsltCompilerCtxt *xsltCompilerCtxtPtr;
 struct _xsltCompilerCtxt {
-    void *errorCtxt;             /* user specific error context */
+    void *errorCtxt;            /* user specific error context */
+    /*
+    * used for error/warning reports; e.g. XSLT_ERROR_SEVERITY_WARNING */
+    xsltErrorSeverityType errSeverity;		
     int warnings;		/* TODO: number of warnings found at
                                    compilation */
     int errors;			/* TODO: number of errors found at
                                    compilation */
-    xsltStylesheetPtr sheet;
+    xmlDictPtr dict;
+    xsltStylesheetPtr style;
+    int simplified; /* whether this is a simplified stylesheet */
     /* TODO: structured/unstructured error contexts. */
-    int depth; /* TODO: current depth in the stylesheets node-tree */
+    int depth; /* Current depth of processing */
     
     xsltCompilerNodeInfoPtr inode;
     xsltCompilerNodeInfoPtr inodeList;
     xsltCompilerNodeInfoPtr inodeLast;
+    xsltPointerListPtr tmpList; /* Used for various purposes */
+    /*
+    * The XSLT version as specified by the stylesheet's root element.
+    */
+    int isInclude;
+    int hasForwardsCompat; /* whether forwards-compatible mode was used
+			     in a parsing episode */
+    int maxNodeInfos; /* just for the interest */
+    /* 
+    * In order to keep the old behaviour, applying strict rules of
+    * the spec can be turned off. This has effect only on special
+    * mechanisms like whitespace-stripping in the stylesheet.
+    */
+    int strict;
+    xsltPrincipalStylesheetDataPtr psData;    
 };   
 
 #else /* XSLT_REFACTORED */
@@ -1002,10 +1152,39 @@ struct _xsltStackElem {
     xmlXPathObjectPtr value;	/* The value if computed */
 };
 
+#ifdef XSLT_REFACTORED
+
+struct _xsltPrincipalStylesheetData {
+    /*
+    * Namespace dictionary for ns-prefixes and ns-names:
+    * TODO: Shared between stylesheets, and XPath mechanisms.
+    *   Not used yet.
+    */
+    xmlDictPtr namespaceDict;
+    /*
+    * Global list of in-scope namespaces.
+    */
+    void *inScopeNamespaces;
+    /*
+    * Global list of information for [xsl:]excluded-result-prefixes.
+    */
+    void *exclResultNamespaces;
+    /*
+    * Global list of information for [xsl:]extension-element-prefixes.
+    */
+    void *extElemNamespaces;
+    /*
+    * Namespace name map to get rid of string comparison of namespace names.
+    */
+    xsltNsMapPtr nsMap;
+};
+
+    
+#endif
 /*
- * TODO: We need a field to anchor an stylesheet compilation context, since,
- *   due to historical reasons, various compile-time function take only the
- *   stylesheet as argument and not a compilation context.
+ * Note that we added a @compCtxt field to anchor an stylesheet compilation
+ * context, since, due to historical reasons, various compile-time function
+ * take only the stylesheet as argument and not a compilation context.
  */
 struct _xsltStylesheet {
     /*
@@ -1059,13 +1238,22 @@ struct _xsltStylesheet {
     /*
      * Namespaces.
      */
-    xmlHashTablePtr nsHash;     /* the set of namespaces in use */
-    void           *nsDefs;     /* the namespaces defined */
+    xmlHashTablePtr nsHash;     /* the set of namespaces in use:
+                                   ATTENTION: This is used for
+                                   execution of XPath expressions; unfortunately
+                                   it restricts the stylesheet to have distinct
+                                   prefixes.
+				   TODO: We need to get rid of this.    
+				 */
+    void           *nsDefs;     /* ATTENTION TODO: This is currently used to store
+				   xsltExtDefPtr (in extensions.c) and
+                                   *not* xmlNsPtr.
+				 */
 
     /*
      * Key definitions.
      */
-    void *keys;				/* key definitions */
+    void *keys;			/* key definitions */
 
     /*
      * Output related stuff.
@@ -1112,7 +1300,7 @@ struct _xsltStylesheet {
     xsltDocumentPtr includes;	/* points to last nested include */
 
     /*
-     * dictionnary: shared between stylesheet, context and documents.
+     * dictionary: shared between stylesheet, context and documents.
      */
     xmlDictPtr dict;
     /*
@@ -1135,16 +1323,18 @@ struct _xsltStylesheet {
      * Literal Result Element as Stylesheet c.f. section 2.3
      */
     int literal_result;
+    /*
+    * The principal stylesheet
+    */
+    xsltStylesheetPtr principal;
 #ifdef XSLT_REFACTORED
     /*
     * Compilation context used during compile-time.
     */
-    void * compCtxt;
-    /*
-    * Namespace lists.
-    */
-    void *inScopeNamespaces;    
-#endif    
+    xsltCompilerCtxtPtr compCtxt; /* TODO: Change this to (void *). */
+
+    xsltPrincipalStylesheetDataPtr principalData;    
+#endif
 };
 
 /*
@@ -1323,13 +1513,13 @@ XSLTPUBFUN xsltStylesheetPtr XSLTCALL
 XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
 			xsltParseStylesheetFile	(const xmlChar* filename);
 XSLTPUBFUN void XSLTCALL			
-			xsltFreeStylesheet	(xsltStylesheetPtr sheet);
+			xsltFreeStylesheet	(xsltStylesheetPtr style);
 XSLTPUBFUN int XSLTCALL			
 			xsltIsBlank		(xmlChar *str);
 XSLTPUBFUN void XSLTCALL			
 			xsltFreeStackElemList	(xsltStackElemPtr elem);
 XSLTPUBFUN xsltDecimalFormatPtr XSLTCALL	
-			xsltDecimalFormatGetByName(xsltStylesheetPtr sheet,
+			xsltDecimalFormatGetByName(xsltStylesheetPtr style,
 						 xmlChar *name);
 
 XSLTPUBFUN xsltStylesheetPtr XSLTCALL	
@@ -1389,23 +1579,32 @@ XSLTPUBFUN xmlChar * XSLTCALL
 XSLTPUBFUN void XSLTCALL
 			xsltFreeAVTList		(void *avt);
 
-/************************************************************************
- *									*
- *  Compile-time functions for *internal* use only                      *
- *									*
- ************************************************************************/
-
-#ifdef XSLT_REFACTORED
-XSLTPUBFUN xsltNsListPtr XSLTCALL
-			xsltCompilerGetInScopeNSInfo(xsltCompilerCtxtPtr cctxt,
-						     xmlNodePtr node);
-#endif /* XSLT_REFACTORED */
 /*
  * Extra function for successful xsltCleanupGlobals / xsltInit sequence.
  */
 
 XSLTPUBFUN void XSLTCALL
 			xsltUninit		(void);
+
+/************************************************************************
+ *									*
+ *  Compile-time functions for *internal* use only                      *
+ *									*
+ ************************************************************************/
+
+#ifdef XSLT_REFACTORED  
+XSLTPUBFUN void XSLTCALL
+			xsltParseSequenceConstructor(
+						 xsltCompilerCtxtPtr cctxt,
+						 xmlNodePtr start);
+XSLTPUBFUN int XSLTCALL
+			xsltParseAnyXSLTElem	(xsltCompilerCtxtPtr cctxt,
+						 xmlNodePtr elem);
+XSLTPUBFUN int XSLTCALL
+			xsltRestoreDocumentNamespaces(
+						 xsltNsMapPtr ns,
+						 xmlDocPtr doc);
+#endif /* XSLT_REFACTORED */
 
 #ifdef __cplusplus
 }

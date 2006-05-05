@@ -1624,7 +1624,11 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
             xslHandleDebugger(cur, node, templ, ctxt);
 #endif
 
+#ifdef XSLT_REFACTORED
+	if (IS_XSLT_ELEM_FAST(cur)) {
+#else
         if (IS_XSLT_ELEM(cur)) {
+#endif
             /*
              * This is an XSLT node
              */
@@ -2949,9 +2953,9 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
 #ifdef XSLT_REFACTORED
-    if (comp->inScopeNS != NULL) {
-	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    if (comp->inScopeNs != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;
@@ -3065,9 +3069,9 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
 #ifdef XSLT_REFACTORED
-    if (comp->inScopeNS != NULL) {
-	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    if (comp->inScopeNs != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;
@@ -3232,7 +3236,11 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	*   structure. Avoid to "search" for params dynamically
 	*   in the XML tree every time.
 	*/
+#ifdef XSLT_REFACTORED
+	if (IS_XSLT_ELEM_FAST(cur)) {
+#else
 	if (IS_XSLT_ELEM(cur)) {
+#endif
 	    if (IS_XSLT_NAME(cur, "with-param")) {
 		param = xsltParseStylesheetCallerParam(ctxt, cur);
 		if (param != NULL) {
@@ -3345,9 +3353,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
 	ctxt->xpathCtxt->node = node;
 #ifdef XSLT_REFACTORED
-	if (comp->inScopeNS != NULL) {
-	    ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
-	    ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+	if (comp->inScopeNs != NULL) {
+	    ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
+	    ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
 	} else {
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
@@ -3500,7 +3508,11 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 #endif
         if (ctxt->state == XSLT_STATE_STOPPED) break;
+#ifdef XSLT_REFACTORED
+	if (IS_XSLT_ELEM_FAST(cur)) {
+#else
         if (IS_XSLT_ELEM(cur)) {
+#endif
             if (IS_XSLT_NAME(cur, "with-param")) {
                 param = xsltParseStylesheetCallerParam(ctxt, cur);
 		if (param != NULL) {
@@ -3620,13 +3632,23 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     "xsl:choose: empty content not allowed\n");
 	goto error;
     }
-    if (((!IS_XSLT_ELEM(replacement)) || (!IS_XSLT_NAME(replacement, "when")))
+#ifdef XSLT_REFACTORED
+    if (((!IS_XSLT_ELEM_FAST(replacement)) ||
+#else
+    if (((!IS_XSLT_ELEM(replacement)) ||
+#endif
+	(!IS_XSLT_NAME(replacement, "when")))
 	    && (!xmlIsBlankNode(replacement))) {
 	xsltTransformError(ctxt, NULL, inst,
 	     "xsl:choose: xsl:when expected first\n");
 	goto error;
     }
-    while ((IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "when")))
+#ifdef XSLT_REFACTORED
+    while ((IS_XSLT_ELEM_FAST(replacement) &&
+#else
+    while ((IS_XSLT_ELEM(replacement) &&
+#endif    
+	(IS_XSLT_NAME(replacement, "when")))
 	    || xmlIsBlankNode(replacement)) {
 #ifdef XSLT_REFACTORED
 	xsltStyleItemWhenPtr wcomp =
@@ -3669,9 +3691,9 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	oldNamespaces = ctxt->xpathCtxt->namespaces;
   	ctxt->xpathCtxt->node = node;
 #ifdef XSLT_REFACTORED
-	if (wcomp->inScopeNS != NULL) {
-	    ctxt->xpathCtxt->namespaces = wcomp->inScopeNS->list;
-	    ctxt->xpathCtxt->nsNr = wcomp->inScopeNS->number;
+	if (wcomp->inScopeNs != NULL) {
+	    ctxt->xpathCtxt->namespaces = wcomp->inScopeNs->list;
+	    ctxt->xpathCtxt->nsNr = wcomp->inScopeNs->number;
 	} else {
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
@@ -3715,7 +3737,12 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	res = NULL;
 	replacement = replacement->next;
     }
-    if (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "otherwise"))) {
+#ifdef XSLT_REFACTORED
+    if (IS_XSLT_ELEM_FAST(replacement) &&
+#else
+    if (IS_XSLT_ELEM(replacement) &&
+#endif	
+	(IS_XSLT_NAME(replacement, "otherwise"))) {
 #ifdef WITH_DEBUGGER
         if (xslDebugStatus != XSLT_DEBUG_NONE)
 #ifdef XSLT_REFACTORED
@@ -3791,9 +3818,9 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
 #ifdef XSLT_REFACTORED
-    if (comp->inScopeNS != NULL) {
-	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    if (comp->inScopeNs != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;
@@ -3886,9 +3913,9 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldNamespaces = ctxt->xpathCtxt->namespaces;
     ctxt->xpathCtxt->node = node;
 #ifdef XSLT_REFACTORED
-    if (comp->inScopeNS != NULL) {
-	ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+    if (comp->inScopeNs != NULL) {
+	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;
@@ -3933,7 +3960,12 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
      * handle and skip the xsl:sort
      */
     replacement = inst->children;
-    while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
+#ifdef XSLT_REFACTORED
+    while (IS_XSLT_ELEM_FAST(replacement) &&
+#else
+    while (IS_XSLT_ELEM(replacement) &&
+#endif
+	(IS_XSLT_NAME(replacement, "sort"))) {
 	if (nbsorts >= XSLT_MAX_SORT) {
 	    xsltGenericError(xsltGenericErrorContext,
 		"xsl:for-each: too many sorts\n");

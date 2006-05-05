@@ -369,6 +369,14 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     xsltGenericDebug(xsltGenericDebugContext,
 	"   resulting pattern %s\n", pattern);
 #endif
+    /*    
+    * XSLT-1: "It is an error for the value of either the use
+    *  attribute or the match attribute to contain a
+    *  VariableReference."
+    * TODO: We should report a variable-reference at compile-time.
+    *   Maybe a search for "$", if it occurs outside of quotation
+    *   marks, could be sufficient.
+    */
     key->comp = xsltXPathCompile(style, pattern);
     if (key->comp == NULL) {
 	xsltTransformError(NULL, style, inst,

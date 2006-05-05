@@ -52,6 +52,11 @@ const xmlChar *xsltExtMarker = (const xmlChar *) "Extension Element";
  *									*
  ************************************************************************/
 
+#ifdef XSLT_REFACTORED
+    /*
+    * Grammar checks are now performed in xslt.c.
+    */
+#else
 /**
  * xsltCheckTopLevelElement:
  * @style: the XSLT stylesheet
@@ -197,6 +202,7 @@ xsltCheckParentElement(xsltStylesheetPtr style, xmlNodePtr inst,
 		       inst->name);
     style->errors++;
 }
+#endif
 
 /************************************************************************
  *									*
@@ -350,7 +356,6 @@ xsltNewStylePreComp(xsltStylesheetPtr style, xsltStyleType type) {
 	case XSLT_FUNC_PARAM:	    
 	case XSLT_FUNC_VARIABLE:	    
 	case XSLT_FUNC_WHEN:
-	case XSLT_FUNC_OTHERWISE:
 	    break;
 	default:
 	if (cur->func == NULL) {
@@ -518,7 +523,8 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
     * "output" in XSLT_SAXON_NAMESPACE
     * "write" XSLT_XALAN_NAMESPACE
     * "document" XSLT_XT_NAMESPACE
-    * "document" XSLT_NAMESPACE
+    * "document" XSLT_NAMESPACE (from the abandoned old working
+    *                            draft of XSLT 1.1)
     * (in libexslt/common.c)
     * "document" in EXSLT_COMMON_NAMESPACE
     */
@@ -544,6 +550,8 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
 	*   (http://icl.com/saxon)
 	* The @file is in no namespace; it is an AVT.
 	*   (http://www.computerwizards.com/saxon/doc/extensions.html#saxon:output)
+	*
+	* TODO: Do we need not to check the namespace here?
 	*/
 	filename = xsltEvalStaticAttrValueTemplate(style, inst,
 			 (const xmlChar *)"file",
@@ -557,6 +565,10 @@ xsltDocumentComp(xsltStylesheetPtr style, xmlNodePtr inst,
 	/*
 	* TODO: Is "filename need to be interpreted" meant to be a todo?
 	*   Where will be the filename of xalan:write be processed?
+	*
+	* TODO: Do we need not to check the namespace here?
+	*   The extension ns is "http://xml.apache.org/xalan/redirect".
+	*   See http://xml.apache.org/xalan-j/extensionslib.html.
 	*/
     } else if (xmlStrEqual(inst->name, (const xmlChar *) "document")) {
 	if (inst->ns != NULL) {
@@ -770,10 +782,16 @@ xsltCopyComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	comp->has_use = 1;
 }
 
+#ifdef XSLT_REFACTORED
+    /* Enable if ever needed for xsl:text. */
+#else
 /**
  * xsltTextComp:
  * @style: an XSLT compiled stylesheet
  * @inst:  the xslt text node
+ *
+ * TODO: This function is obsolete, since xsl:text won't
+ *  be compiled, but removed from the tree.
  *
  * Process the xslt text node on the source node
  */
@@ -807,13 +825,14 @@ xsltTextComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	if (xmlStrEqual(prop, (const xmlChar *)"yes")) {
 	    comp->noescape = 1;
 	} else if (!xmlStrEqual(prop,
-				(const xmlChar *)"no")){
+	    (const xmlChar *)"no")){
 	    xsltTransformError(NULL, style, inst,
-"xsl:text: disable-output-escaping allows only yes or no\n");
+		"xsl:text: disable-output-escaping allows only yes or no\n");
 	    if (style != NULL) style->warnings++;
 	}
     }
 }
+#endif /* else of XSLT_REFACTORED */
 
 /**
  * xsltElementComp:
@@ -1774,85 +1793,6 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
 }
 
-#ifdef XSLT_REFACTORED
-
-/*
-* xsltCompilerGetInScopeNSInfo:
-*
-* Create and store the list of in-scope namespaces for the given
-* node in the stylesheet. If there are no changes in the in-scope
-* namespaces then the last ns-info of the ancestor axis will be returned.
-* Compilation-time only.
-*
-* Returns the ns-info or NULL if there are no namespaces in scope.
-*/
-xsltNsListPtr
-xsltCompilerGetInScopeNSInfo(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
-{
-    xsltNsListPtr nsi = NULL;
-    xmlNsPtr *list = NULL;
-    /*
-    * Create a new ns-list for this position in the node-tree.
-    * xmlGetNsList() will return NULL, if there are no ns-decls in the
-    * tree. Note that the ns-decl for the XML namespace is not added
-    * to the resulting list; the XPath module handles the XML namespace
-    * internally.
-    */
-    list = xmlGetNsList(node->doc, node);
-    if (list == NULL)
-	return(NULL);
-    /*
-    * Initialize the list hold by the stylesheet.
-    */
-    if (cctxt->sheet->inScopeNamespaces == NULL) {
-	cctxt->sheet->inScopeNamespaces = xsltPointerListCreate();
-	if (cctxt->sheet->inScopeNamespaces == NULL) {	    
-	    xsltTransformError(NULL, cctxt->sheet, NULL,
-		"xsltCompilerGetInScopeNSInfo: malloc failed.\n");	    
-	    goto internal_err;	    
-	}
-    }
-    /*
-    * Create the info-structure.
-    */
-    nsi = (xsltNsListPtr) xmlMalloc(sizeof(xsltNsList));
-    if (nsi == NULL) {	
-	xsltTransformError(NULL, cctxt->sheet, NULL,
-	    "xsltCompilerGetInScopeNSInfo: malloc failed.\n");
-	goto internal_err;
-    }
-    memset(nsi, 0, sizeof(xsltNsList));
-    nsi->list = list;
-    /*
-    * Eval the number of ns-decls; this is used to speed up
-    * XPath-context initialization.
-    */
-    while (list[nsi->number] != NULL)
-	nsi->number++;
-    /*
-    * Store the ns-list in the stylesheet.
-    */
-    if (xsltPointerListAdd(
-	(xsltPointerListPtr)cctxt->sheet->inScopeNamespaces,
-	(void *) nsi) == -1)
-    {	
-	xmlFree(nsi);
-	nsi = NULL;
-	xsltTransformError(NULL, cctxt->sheet, NULL,
-	    "xsltCompilerGetInScopeNSInfo: failed to add ns-info.\n");
-	goto internal_err;
-    }     
-
-    return(nsi);
-
-internal_err:
-    if (list != NULL)
-	xmlFree(list);    
-    cctxt->sheet->errors++;
-    return(NULL);
-}
-#endif /* XSLT_REFACTORED */
-
 /************************************************************************
  *									*
  *		    Generic interface					*
@@ -1870,10 +1810,11 @@ xsltFreeStylePreComps(xsltStylesheetPtr style) {
     xsltElemPreCompPtr cur, next;
 
     if (style == NULL)
-	return;
+	return;        
+    
     cur = style->preComps;
     while (cur != NULL) {
-	next = cur->next;
+	next = cur->next;		
 	if (cur->type == XSLT_FUNC_EXTENSION)
 	    cur->free(cur);
 	else
@@ -1881,6 +1822,221 @@ xsltFreeStylePreComps(xsltStylesheetPtr style) {
 	cur = next;
     }
 }
+
+#ifdef XSLT_REFACTORED
+
+/**
+ * xsltStylePreCompute:
+ * @style:  the XSLT stylesheet
+ * @node:  the element in the XSLT namespace
+ *
+ * Precompute an XSLT element.
+ * This expects the type of the element to be already
+ * set in style->compCtxt->inode->type;
+ */
+void
+xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr node) {
+    /*    
+    * The xsltXSLTElemMarker marker was set beforehand by
+    *  the parsing mechanism for all elements in the XSLT namespace.
+    */
+    if (style == NULL) {
+	if (node != NULL)
+	    node->psvi = NULL;
+	return;
+    }
+    if (node == NULL)
+	return;
+    if (! IS_XSLT_ELEM_FAST(node))
+	return;
+
+    node->psvi = NULL;
+    if (XSLT_CCTXT(style)->inode->type != 0) {
+	switch (XSLT_CCTXT(style)->inode->type) {
+	    case XSLT_FUNC_APPLYTEMPLATES:
+		xsltApplyTemplatesComp(style, node);
+		break;
+	    case XSLT_FUNC_WITHPARAM:			   
+		xsltWithParamComp(style, node);
+		break;
+	    case XSLT_FUNC_VALUEOF:	    
+		xsltValueOfComp(style, node);
+		break;
+	    case XSLT_FUNC_COPY:	    
+		xsltCopyComp(style, node);
+		break;
+	    case XSLT_FUNC_COPYOF:
+		xsltCopyOfComp(style, node);
+		break;
+	    case XSLT_FUNC_IF:	    
+		xsltIfComp(style, node);
+		break;
+	    case XSLT_FUNC_CHOOSE:	    
+		xsltChooseComp(style, node);
+		break;
+	    case XSLT_FUNC_WHEN:	    
+		xsltWhenComp(style, node);
+		break;
+	    case XSLT_FUNC_OTHERWISE:	    
+		/* NOP yet */
+		return;
+	    case XSLT_FUNC_FOREACH:	    
+		xsltForEachComp(style, node);
+		break;
+	    case XSLT_FUNC_APPLYIMPORTS:	    
+		xsltApplyImportsComp(style, node);
+		break;
+	    case XSLT_FUNC_ATTRIBUTE:	    
+		xsltAttributeComp(style, node);
+		break;
+	    case XSLT_FUNC_ELEMENT:	    
+		xsltElementComp(style, node);
+		break;
+	    case XSLT_FUNC_SORT:	    
+		xsltSortComp(style, node);
+		break;
+	    case XSLT_FUNC_COMMENT:	    
+		xsltCommentComp(style, node);
+		break;
+	    case XSLT_FUNC_NUMBER:	    
+		xsltNumberComp(style, node);
+		break;
+	    case XSLT_FUNC_PI:	    
+		xsltProcessingInstructionComp(style, node);
+		break;
+	    case XSLT_FUNC_CALLTEMPLATE:	    
+		xsltCallTemplateComp(style, node);
+		break;
+	    case XSLT_FUNC_PARAM:	    
+		xsltParamComp(style, node);
+		break;
+	    case XSLT_FUNC_VARIABLE:	    
+		xsltVariableComp(style, node);
+		break;
+	    case XSLT_FUNC_FALLBACK:	    
+		/* NOP yet */
+		return;
+	    case XSLT_FUNC_DOCUMENT:	    
+		/* The extra one */
+		node->psvi = (void *) xsltDocumentComp(style, node,
+		    (xsltTransformFunction) xsltDocumentElem);
+		break;
+	    case XSLT_FUNC_MESSAGE:
+		/* NOP yet */
+		return;
+	    default:
+		/*
+		* NOTE that xsl:text, xsl:template, xsl:stylesheet,
+		*  xsl:transform, xsl:import, xsl:include are not expected
+		*  to be handed over to this function.
+		*/
+		xsltTransformError(NULL, style, node,
+		    "Internal error: (xsltStylePreCompute) cannot handle "
+		    "the XSLT element '%s'.\n", node->name);
+		style->errors++;
+		return;
+	}
+    } else {
+	/*
+	* Fallback to string comparison.
+	*/	
+	if (IS_XSLT_NAME(node, "apply-templates")) {
+	    xsltApplyTemplatesComp(style, node);
+	} else if (IS_XSLT_NAME(node, "with-param")) {
+	    xsltWithParamComp(style, node);
+	} else if (IS_XSLT_NAME(node, "value-of")) {
+	    xsltValueOfComp(style, node);
+	} else if (IS_XSLT_NAME(node, "copy")) {
+	    xsltCopyComp(style, node);
+	} else if (IS_XSLT_NAME(node, "copy-of")) {
+	    xsltCopyOfComp(style, node);
+	} else if (IS_XSLT_NAME(node, "if")) {
+	    xsltIfComp(style, node);
+	} else if (IS_XSLT_NAME(node, "choose")) {
+	    xsltChooseComp(style, node);
+	} else if (IS_XSLT_NAME(node, "when")) {
+	    xsltWhenComp(style, node);	
+	} else if (IS_XSLT_NAME(node, "otherwise")) {
+	    /* NOP yet */
+	    return;
+	} else if (IS_XSLT_NAME(node, "for-each")) {
+	    xsltForEachComp(style, node);
+	} else if (IS_XSLT_NAME(node, "apply-imports")) {
+	    xsltApplyImportsComp(style, node);
+	} else if (IS_XSLT_NAME(node, "attribute")) {
+	    xsltAttributeComp(style, node);
+	} else if (IS_XSLT_NAME(node, "element")) {
+	    xsltElementComp(style, node);
+	} else if (IS_XSLT_NAME(node, "sort")) {
+	    xsltSortComp(style, node);
+	} else if (IS_XSLT_NAME(node, "comment")) {
+	    xsltCommentComp(style, node);
+	} else if (IS_XSLT_NAME(node, "number")) {
+	    xsltNumberComp(style, node);
+	} else if (IS_XSLT_NAME(node, "processing-instruction")) {
+	    xsltProcessingInstructionComp(style, node);
+	} else if (IS_XSLT_NAME(node, "call-template")) {
+	    xsltCallTemplateComp(style, node);
+	} else if (IS_XSLT_NAME(node, "param")) {
+	    xsltParamComp(style, node);
+	} else if (IS_XSLT_NAME(node, "variable")) {
+	    xsltVariableComp(style, node);
+	} else if (IS_XSLT_NAME(node, "fallback")) {
+	    /* NOP yet */
+	    return;
+	} else if (IS_XSLT_NAME(node, "document")) {
+	    /* The extra one */
+	    node->psvi = (void *) xsltDocumentComp(style, node,
+		(xsltTransformFunction) xsltDocumentElem);	
+	} else if (IS_XSLT_NAME(node, "output")) {
+	    /* Top-level */
+	    return;
+	} else if (IS_XSLT_NAME(node, "preserve-space")) {
+	    /* Top-level */
+	    return;
+	} else if (IS_XSLT_NAME(node, "strip-space")) {
+	    /* Top-level */
+	    return;	
+	} else if (IS_XSLT_NAME(node, "key")) {
+	    /* Top-level */
+	    return;
+	} else if (IS_XSLT_NAME(node, "message")) {
+	    return;
+	} else if (IS_XSLT_NAME(node, "attribute-set")) {
+	    /* Top-level */
+	    return;
+	} else if (IS_XSLT_NAME(node, "namespace-alias")) {
+	    /* Top-level */
+	    return;
+	} else if (IS_XSLT_NAME(node, "decimal-format")) {
+	    /* Top-level */
+	    return;
+	} else if (IS_XSLT_NAME(node, "include")) {
+	    /* Top-level */	    	    
+	} else {
+	    /*
+	    * NOTE that xsl:text, xsl:template, xsl:stylesheet,
+	    *  xsl:transform, xsl:import, xsl:include are not expected
+	    *  to be handed over to this function.
+	    */
+	    xsltTransformError(NULL, style, node,
+		"Internal error: (xsltStylePreCompute) cannot handle "
+		"the XSLT element '%s'.\n", node->name);
+		style->errors++;
+	    return;
+	}	
+    }
+    /*
+    * Assign the current list of in-scope namespaces to the
+    * item. This is needed for XPath expressions.
+    */
+    if (node->psvi != NULL) {
+	((xsltStylePreCompPtr) node->psvi)->inScopeNs =
+	    XSLT_CCTXT(style)->inode->inScopeNs;
+    }
+}
+
+#else
 
 /**
  * xsltStylePreCompute:
@@ -1895,10 +2051,14 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
     * URGENT TODO: Normally inst->psvi Should never be reserved here,
     *   BUT: since if we include the same stylesheet from
     *   multiple imports, then the stylesheet will be parsed
-    *   again. We simply must not try to compute the stylesheet again.    
+    *   again. We simply must not try to compute the stylesheet again.
+    * TODO: Get to the point where we don't need to query the
+    *   namespace- and local-name of the node, but can evaluate this
+    *   using cctxt->style->inode->category;
     */
-    if (inst->psvi != NULL) 
-        return;
+    if (inst->psvi != NULL)
+	return;
+
     if (IS_XSLT_ELEM(inst)) {
 	xsltStylePreCompPtr cur;
 
@@ -1965,7 +2125,7 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	} else if (IS_XSLT_NAME(inst, "call-template")) {
 	    xsltCheckInstructionElement(style, inst);
 	    xsltCallTemplateComp(style, inst);
-	} else if (IS_XSLT_NAME(inst, "param")) {
+	} else if (IS_XSLT_NAME(inst, "param")) {	   
 	    if (xsltCheckTopLevelElement(style, inst, 0) == 0)
 	        xsltCheckInstructionElement(style, inst);
 	    xsltParamComp(style, inst);
@@ -2034,18 +2194,7 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    if (style != NULL) style->warnings++;
 	}
 	
-	
 	cur = (xsltStylePreCompPtr) inst->psvi;
-
-#ifdef XSLT_REFACTORED
-	/*
-	* Assign the current list of in-scope namespaces to the
-	* item. This is needed for XPath expressions.
-	*/
-	if (cur != NULL) {
-	    cur->inScopeNS = XSLT_CCTXT(style)->inode->inScopeNS;	    	    
-	}
-#else
 	/*
 	* A ns-list is build for every XSLT item in the
 	* node-tree. This is needed for XPath expressions.
@@ -2060,7 +2209,6 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    }
 	    cur->nsNr = i;
 	}
-#endif
     } else {
 	inst->psvi =
 	    (void *) xsltPreComputeExtModuleElement(style, inst);
@@ -2073,3 +2221,4 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    inst->psvi = (void *) xsltExtMarker;
     }
 }
+#endif /* XSLT_REFACTORED */

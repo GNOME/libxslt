@@ -46,6 +46,7 @@
 #include "templates.h"
 #include "imports.h"
 #include "transform.h"
+#include "preproc.h"
 
 #define WITH_XSLT_DEBUG_ATTRIBUTES
 #ifdef WITH_XSLT_DEBUG
@@ -143,6 +144,11 @@ xsltFreeAttrElemList(xsltAttrElemPtr list) {
     }
 }
 
+#ifdef XSLT_REFACTORED
+    /*
+    * This was moved to xsltParseStylesheetAttributeSet().
+    */
+#else
 /**
  * xsltAddAttrElemList:
  * @list:  an XSLT AttrElem list
@@ -161,7 +167,7 @@ xsltAddAttrElemList(xsltAttrElemPtr list, xmlNodePtr attr) {
     if (list == NULL)
 	return(xsltNewAttrElem(attr));
     cur = list;
-    while (cur != NULL) {
+    while (cur != NULL) {	
 	next = cur->next;
 	if (cur->attr == attr)
 	    return(cur);
@@ -173,6 +179,7 @@ xsltAddAttrElemList(xsltAttrElemPtr list, xmlNodePtr attr) {
     }
     return(list);
 }
+#endif /* XSLT_REFACTORED */
 
 /**
  * xsltMergeAttrElemList:
@@ -185,7 +192,8 @@ xsltAddAttrElemList(xsltAttrElemPtr list, xmlNodePtr attr) {
  * Returns the new list pointer
  */
 static xsltAttrElemPtr
-xsltMergeAttrElemList(xsltAttrElemPtr list, xsltAttrElemPtr old) {
+xsltMergeAttrElemList(xsltStylesheetPtr style,
+		      xsltAttrElemPtr list, xsltAttrElemPtr old) {
     xsltAttrElemPtr cur;
     int add;
 
@@ -233,19 +241,23 @@ xsltMergeAttrElemList(xsltAttrElemPtr list, xsltAttrElemPtr old) {
 	}
 
 	if (add == 1) {
+	    /*
+	    * Changed to use the string-dict, rather than duplicating
+	    * @set and @ns; this fixes bug #340400.
+	    */
 	    if (cur == NULL) {
 		list = xsltNewAttrElem(old->attr);
 		if (old->set != NULL) {
-		    list->set = xmlStrdup(old->set);
+		    list->set = xmlDictLookup(style->dict, old->set, -1);
 		    if (old->ns != NULL)
-			list->ns = xmlStrdup(old->ns);
+			list->ns = xmlDictLookup(style->dict, old->ns, -1);
 		}
 	    } else if (add) {
 		cur->next = xsltNewAttrElem(old->attr);
 		if (old->set != NULL) {
-		    cur->next->set = xmlStrdup(old->set);
+		    cur->next->set = xmlDictLookup(style->dict, old->set, -1);
 		    if (old->ns != NULL)
-			cur->next->ns = xmlStrdup(old->ns);
+			cur->next->ns = xmlDictLookup(style->dict, old->ns, -1);
 		}
 	    }
 	}
@@ -273,24 +285,23 @@ void
 xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     const xmlChar *ncname;
     const xmlChar *prefix;
-    const xmlChar *attrib, *endattr;
-    xmlChar *prop;
-    xmlChar *attributes;
-    xmlNodePtr list;
-    xsltAttrElemPtr values;
+    xmlChar *value;
+    xmlNodePtr child;
+    xsltAttrElemPtr attrItems;
 
     if ((cur == NULL) || (style == NULL))
 	return;
 
-    prop = xmlGetNsProp(cur, (const xmlChar *)"name", NULL);
-    if (prop == NULL) {
+    value = xmlGetNsProp(cur, (const xmlChar *)"name", NULL);
+    if (value == NULL) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xsl:attribute-set : name is missing\n");
 	return;
     }
 
-    ncname = xsltSplitQName(style->dict, prop, &prefix);
-    xmlFree(prop);
+    ncname = xsltSplitQName(style->dict, value, &prefix);
+    xmlFree(value);
+    value = NULL;
 
     if (style->attributeSets == NULL) {
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
@@ -302,80 +313,141 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     if (style->attributeSets == NULL)
 	return;
 
-    values = xmlHashLookup2(style->attributeSets, ncname, prefix);
+    attrItems = xmlHashLookup2(style->attributeSets, ncname, prefix);
 
     /*
-     * check the children list
-     */
-    list = cur->children;
-    while (list != NULL) {
-	if (IS_XSLT_ELEM(list)) {
-	    if (!IS_XSLT_NAME(list, "attribute")) {
-		xsltGenericError(xsltGenericErrorContext,
-		    "xsl:attribute-set : unexpected child xsl:%s\n",
-		                 list->name);
-	    } else {
-#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
-		xsltGenericDebug(xsltGenericDebugContext,
-		    "add attribute to list %s\n", ncname);
-#endif
-                values = xsltAddAttrElemList(values, list);
-	    }
+    * Parse the content. Only xsl:attribute elements are allowed.
+    */
+    child = cur->children;
+    while (child != NULL) {
+	/*
+	* Report invalid nodes.
+	*/
+	if ((child->type != XML_ELEMENT_NODE) ||
+	    (child->ns == NULL) ||
+	    (! IS_XSLT_ELEM(child)))
+	{
+	    if (child->type == XML_ELEMENT_NODE)
+		xsltTransformError(NULL, style, child,
+			"xsl:attribute-set : unexpected child %s\n",
+		                 child->name);
+	    else
+		xsltTransformError(NULL, style, child,
+			"xsl:attribute-set : child of unexpected type\n");
+	} else if (!IS_XSLT_NAME(child, "attribute")) {
+	    xsltTransformError(NULL, style, child,
+		"xsl:attribute-set : unexpected child xsl:%s\n",
+		child->name);
 	} else {
-	    xsltGenericError(xsltGenericErrorContext,
-		"xsl:attribute-set : unexpected child %s\n", list->name);
-	}
-	list = list->next;
-    }
+#ifdef XSLT_REFACTORED
+	    xsltAttrElemPtr nextAttr, curAttr;
 
-    /*
-     * Check a possible use-attribute-sets definition
-     */
-    /* TODO check recursion */
-
-    attributes = xmlGetNsProp(cur, (const xmlChar *)"use-attribute-sets",
-	NULL);
-    if (attributes == NULL) {
-	goto done;
-    }
-
-    attrib = attributes;
-    while (*attrib != 0) {
-	while (IS_BLANK(*attrib)) attrib++;
-	if (*attrib == 0)
-	    break;
-        endattr = attrib;
-	while ((*endattr != 0) && (!IS_BLANK(*endattr))) endattr++;
-	attrib = xmlDictLookup(style->dict, attrib, endattr - attrib);
-	if (attrib) {
-	    const xmlChar *ncname2 = NULL;
-	    const xmlChar *prefix2 = NULL;
-	    xsltAttrElemPtr values2;
+	    /*
+	    * Process xsl:attribute
+	    * ---------------------
+	    */
 
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
 	    xsltGenericDebug(xsltGenericDebugContext,
-		"xsl:attribute-set : %s adds use %s\n", ncname, attrib);
+		"add attribute to list %s\n", ncname);
 #endif
-	    ncname2 = xsltSplitQName(style->dict, attrib, &prefix2);
-	    values2 = xsltNewAttrElem(NULL);
-	    if (values2 != NULL) {
-		values2->set = ncname2;
-		values2->ns = prefix2;
-		values = xsltMergeAttrElemList(values, values2);
-		xsltFreeAttrElem(values2);
+	    /*
+	    * The following was taken over from
+	    * xsltAddAttrElemList().
+	    */
+	    if (attrItems == NULL) {
+		attrItems = xsltNewAttrElem(child);
+	    } else {
+		curAttr = attrItems;
+		while (curAttr != NULL) {
+		    nextAttr = curAttr->next;
+		    if (curAttr->attr == child) {
+			/*
+			* URGENT TODO: Can somebody explain
+			*  why attrItems is set to curAttr
+			*  here? Is this somehow related to
+			*  avoidance of recursions?
+			*/
+			attrItems = curAttr;
+			goto next_child;
+		    }
+		    if (curAttr->next == NULL)			
+			curAttr->next = xsltNewAttrElem(child);
+		    curAttr = nextAttr;
+		}
 	    }
+	    /*
+	    * Parse the xsl:attribute and its content.
+	    */
+	    xsltParseAnyXSLTElem(XSLT_CCTXT(style), child);
+#else
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
+	    xsltGenericDebug(xsltGenericDebugContext,
+		"add attribute to list %s\n", ncname);
+#endif
+	    /*
+	    * OLD behaviour:
+	    */
+	    attrItems = xsltAddAttrElemList(attrItems, child);
+#endif
 	}
-	attrib = endattr;
-    }
-    xmlFree(attributes);
 
-done:
+#ifdef XSLT_REFACTORED
+next_child:
+#endif
+	child = child->next;
+    }
+
+    /*
+    * Process attribue "use-attribute-sets".
+    */
+    /* TODO check recursion */    
+    value = xmlGetNsProp(cur, (const xmlChar *)"use-attribute-sets",
+	NULL);
+    if (value != NULL) {
+	const xmlChar *curval, *endval;
+	curval = value;
+	while (*curval != 0) {
+	    while (IS_BLANK(*curval)) curval++;
+	    if (*curval == 0)
+		break;
+	    endval = curval;
+	    while ((*endval != 0) && (!IS_BLANK(*endval))) endval++;
+	    curval = xmlDictLookup(style->dict, curval, endval - curval);
+	    if (curval) {
+		const xmlChar *ncname2 = NULL;
+		const xmlChar *prefix2 = NULL;
+		xsltAttrElemPtr refAttrItems;
+		
+#ifdef WITH_XSLT_DEBUG_ATTRIBUTES
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "xsl:attribute-set : %s adds use %s\n", ncname, curval);
+#endif
+		ncname2 = xsltSplitQName(style->dict, curval, &prefix2);
+		refAttrItems = xsltNewAttrElem(NULL);
+		if (refAttrItems != NULL) {
+		    refAttrItems->set = ncname2;
+		    refAttrItems->ns = prefix2;
+		    attrItems = xsltMergeAttrElemList(style,
+			attrItems, refAttrItems);
+		    xsltFreeAttrElem(refAttrItems);
+		}
+	    }
+	    curval = endval;
+	}
+	xmlFree(value);
+	value = NULL;
+    }
+
     /*
      * Update the value
      */
-    if (values == NULL)
-	values = xsltNewAttrElem(NULL);
-    xmlHashUpdateEntry2(style->attributeSets, ncname, prefix, values, NULL);
+    /*
+    * TODO: Why is this dummy entry needed.?
+    */
+    if (attrItems == NULL)
+	attrItems = xsltNewAttrElem(NULL);
+    xmlHashUpdateEntry2(style->attributeSets, ncname, prefix, attrItems, NULL);
 #ifdef WITH_XSLT_DEBUG_ATTRIBUTES
     xsltGenericDebug(xsltGenericDebugContext,
 	"updated attribute list %s\n", ncname);
@@ -447,15 +519,12 @@ xsltResolveSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
 		    /*
 		     * Then merge
 		     */
-		    xsltMergeAttrElemList(values, refs);
+		    xsltMergeAttrElemList(style, values, refs);
 		    /*
 		     * Then suppress the reference
 		     */
-		    xmlFree((char *)tmp->set);
 		    tmp->set = NULL;
-		    if (tmp->ns != NULL) {
-			xmlFree((char *)tmp->ns);
-		    }
+		    tmp->ns = NULL;
 		}
 	    }
 	}
@@ -492,7 +561,7 @@ xsltMergeSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
 	        "xsl:attribute-set : logic error merging from imports for"
 		" attribute-set %s\n", name);
 	} else {
-	    topSet = xsltMergeAttrElemList(topSet, values);
+	    topSet = xsltMergeAttrElemList(style, topSet, values);
 	    xmlHashUpdateEntry2(style->attributeSets, name, ns, topSet, NULL);
 	}
 	xsltFreeAttrElemList(values);

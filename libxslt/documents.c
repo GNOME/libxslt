@@ -192,18 +192,42 @@ xsltNewStyleDocument(xsltStylesheetPtr style, xmlDocPtr doc) {
 
 /**
  * xsltFreeStyleDocuments:
- * @style: an XSLT style sheet
+ * @style: an XSLT stylesheet (representing a stylesheet-level)
  *
- * Free up all the space used by the loaded documents
+ * Frees the node-trees (and xsltDocument structures) of all
+ * stylesheet-modules of the stylesheet-level represented by
+ * the given @style. 
  */
 void	
 xsltFreeStyleDocuments(xsltStylesheetPtr style) {
     xsltDocumentPtr doc, cur;
+#ifdef XSLT_REFACTORED
+    xsltNsMapPtr nsMap;
+#endif
+    
+    if (style == NULL)
+	return;
+
+#ifdef XSLT_REFACTORED
+    if (XSLT_HAS_INTERNAL_NSMAP(style))
+	nsMap = XSLT_GET_INTERNAL_NSMAP(style);
+    else
+	nsMap = NULL;    
+#endif
 
     cur = style->docList;
     while (cur != NULL) {
 	doc = cur;
 	cur = cur->next;
+
+#ifdef XSLT_REFACTORED
+	/*
+	* Restore all changed namespace URIs of ns-decls.
+	*/
+	if (nsMap)
+	    xsltRestoreDocumentNamespaces(nsMap, doc->doc);
+#endif
+
 	xsltFreeDocumentKeys(doc);
 	if (!doc->main)
 	    xmlFreeDoc(doc->doc);

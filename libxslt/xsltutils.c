@@ -303,6 +303,49 @@ error:
 #ifdef XSLT_REFACTORED
 
 /**
+ * xsltPointerListAddSize:
+ * @list: the pointer list structure
+ * @item: the item to be stored
+ * @initialSize: the initial size of the list
+ *
+ * Adds an item to the list.
+ *
+ * Returns the position of the added item in the list or
+ *         -1 in case of an error.
+ */
+int
+xsltPointerListAddSize(xsltPointerListPtr list,		       
+		       void *item,
+		       int initialSize)
+{
+    if (list->items == NULL) {
+	if (initialSize <= 0)
+	    initialSize = 1;
+	list->items = (void **) xmlMalloc(
+	    initialSize * sizeof(void *));
+	if (list->items == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+	     "xsltPointerListAddSize: memory allocation failure.\n");
+	    return(-1);
+	}
+	list->number = 0;
+	list->size = initialSize;
+    } else if (list->size <= list->number) {
+	list->size *= 2;
+	list->items = (void **) xmlRealloc(list->items,
+	    list->size * sizeof(void *));
+	if (list->items == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+	     "xsltPointerListAddSize: memory re-allocation failure.\n");
+	    list->size = 0;
+	    return(-1);
+	}
+    }
+    list->items[list->number++] = item;
+    return(0);
+}
+
+/**
  * xsltPointerListCreate:
  *
  * Creates an xsltPointerList structure.
@@ -310,7 +353,7 @@ error:
  * Returns a xsltPointerList structure or NULL in case of an error.
  */
 xsltPointerListPtr
-xsltPointerListCreate(void)
+xsltPointerListCreate(int initialSize)
 {
     xsltPointerListPtr ret;
 
@@ -321,6 +364,10 @@ xsltPointerListCreate(void)
 	return (NULL);
     }
     memset(ret, 0, sizeof(xsltPointerList));
+    if (initialSize > 0) {
+	xsltPointerListAddSize(ret, NULL, initialSize);
+	ret->number = 0;
+    }
     return (ret);
 }
 
@@ -356,76 +403,6 @@ xsltPointerListClear(xsltPointerListPtr list)
     list->number = 0;
     list->size = 0;
 }
-
-/**
- * xsltPointerListAdd:
- *
- * Adds an item to the list.
- *
- * Returns the position of the added item in the list or
- *         -1 in case of an error.
- */
-int
-xsltPointerListAdd(xsltPointerListPtr list, void *item)
-{
-    if (list->items == NULL) {
-	list->items = (void **) xmlMalloc(
-	    20 * sizeof(void *));
-	if (list->items == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-	     "xsltPointerListAdd: memory allocation failure.\n");
-	    return(-1);
-	}
-	list->number = 0;
-	list->size = 20;
-    } else if (list->size <= list->number) {
-	list->size *= 2;
-	list->items = (void **) xmlRealloc(list->items,
-	    list->size * sizeof(void *));
-	if (list->items == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-	     "xsltPointerListAdd: memory re-allocation failure.\n");
-	    list->size = 0;
-	    return(-1);
-	}
-    }
-    list->items[list->number++] = item;
-    return(0);
-}
-
-#if 0 /* TODO: Not used yet. Enable if ever needed. */
-static int
-xsltPointerListAddSize(xsltPointerListPtr list,
-		       int initialSize,
-		       void *item)
-{
-    if (list->items == NULL) {
-	if (initialSize <= 0)
-	    initialSize = 1;
-	list->items = (void **) xmlMalloc(
-	    initialSize * sizeof(void *));
-	if (list->items == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-	     "xsltPointerListAddSize: memory allocation failure.\n");
-	    return(-1);
-	}
-	list->number = 0;
-	list->size = initialSize;
-    } else if (list->size <= list->number) {
-	list->size *= 2;
-	list->items = (void **) xmlRealloc(list->items,
-	    list->size * sizeof(void *));
-	if (list->items == NULL) {
-	    xsltGenericError(xsltGenericErrorContext,
-	     "xsltPointerListAddSize: memory re-allocation failure.\n");
-	    list->size = 0;
-	    return(-1);
-	}
-    }
-    list->items[list->number++] = item;
-    return(0);
-}
-#endif
 
 #endif /* XSLT_REFACTORED */
 
@@ -650,8 +627,16 @@ xsltPrintErrorContext(xsltTransformContextPtr ctxt,
     
     if (ctxt != NULL)
 	type = "runtime error";
-    else if (style != NULL)
+    else if (style != NULL) {
+#ifdef XSLT_REFACTORED
+	if (XSLT_CCTXT(style)->errSeverity == XSLT_ERROR_SEVERITY_WARNING)
+	    type = "compilation warning";
+	else
+	    type = "compilation error";
+#else
 	type = "compilation error";
+#endif
+    }
 
     if ((file != NULL) && (line != 0) && (name != NULL))
 	error(errctx, "%s: file %s line %d element %s\n",
@@ -1008,9 +993,9 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
 	ctxt->node = list->nodeTab[i];
 	ctxt->xpathCtxt->node = ctxt->node;
 #ifdef XSLT_REFACTORED
-	if (comp->inScopeNS != NULL) {
-	    ctxt->xpathCtxt->namespaces = comp->inScopeNS->list;
-	    ctxt->xpathCtxt->nsNr = comp->inScopeNS->number;
+	if (comp->inScopeNs != NULL) {
+	    ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
+	    ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
 	} else {
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;

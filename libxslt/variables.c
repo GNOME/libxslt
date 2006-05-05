@@ -467,9 +467,9 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
 #ifdef XSLT_REFACTORED
-	    if (precomp->inScopeNS != NULL) {
-		ctxt->xpathCtxt->namespaces = precomp->inScopeNS->list;
-		ctxt->xpathCtxt->nsNr = precomp->inScopeNS->number;
+	    if (precomp->inScopeNs != NULL) {
+		ctxt->xpathCtxt->namespaces = precomp->inScopeNs->list;
+		ctxt->xpathCtxt->nsNr = precomp->inScopeNs->number;
 	    } else {
 		ctxt->xpathCtxt->namespaces = NULL;
 		ctxt->xpathCtxt->nsNr = 0;
@@ -628,9 +628,9 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt)
 	if (precomp != NULL) {
 	    ctxt->inst = precomp->inst;
 #ifdef XSLT_REFACTORED
-	    if (precomp->inScopeNS != NULL) {
-		ctxt->xpathCtxt->namespaces = precomp->inScopeNS->list;
-		ctxt->xpathCtxt->nsNr = precomp->inScopeNS->number;
+	    if (precomp->inScopeNs != NULL) {
+		ctxt->xpathCtxt->namespaces = precomp->inScopeNs->list;
+		ctxt->xpathCtxt->nsNr = precomp->inScopeNs->number;
 	    } else {
 		ctxt->xpathCtxt->namespaces = NULL;
 		ctxt->xpathCtxt->nsNr = 0;
@@ -1389,10 +1389,12 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
 /**
  * xsltParseStylesheetCallerParam:
  * @ctxt:  the XSLT transformation context
- * @cur:  the "param" element
+ * @cur:  the "xsl:with-param" element
  *
  * parse an XSLT transformation param declaration, compute
  * its value but doesn't record it.
+ * NOTE that this is also called with an *xsl:param* element
+ * from exsltFuncFunctionFunction(). 
  *
  * Returns the new xsltStackElemPtr or NULL
  */
@@ -1417,19 +1419,19 @@ xsltParseStylesheetCallerParam(xsltTransformContextPtr ctxt, xmlNodePtr cur)
 #endif     
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
-	    "xsl:param : compilation error\n");
+	    "xsl:with-param : compilation error\n");
 	return(NULL);
     }
 
     if (comp->name == NULL) {
 	xsltTransformError(ctxt, NULL, cur,
-	    "xsl:param : missing name attribute\n");
+	    "xsl:with-param : missing name attribute\n");
 	return(NULL);
     }
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
-	    "Handling param %s\n", comp->name));
+	    "Handling xsl:with-param %s\n", comp->name));
 #endif
 
     if (comp->select == NULL) {
@@ -1467,11 +1469,15 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur)
 
     if ((cur == NULL) || (style == NULL))
 	return;
-
-    xsltStylePreCompute(style, cur);
+    
 #ifdef XSLT_REFACTORED
+    /*
+    * Note that xsltStylePreCompute() will be called from
+    * xslt.c only.
+    */
     comp = (xsltStyleItemVariablePtr) cur->psvi;
 #else
+    xsltStylePreCompute(style, cur);
     comp = (xsltStylePreCompPtr) cur->psvi;
 #endif
     if (comp == NULL) {
@@ -1486,8 +1492,15 @@ xsltParseGlobalVariable(xsltStylesheetPtr style, xmlNodePtr cur)
 	return;
     }
 
+    /*
+    * Parse the content (a sequence constructor) of xsl:variable.
+    */
     if (cur->children != NULL) {
+#ifdef XSLT_REFACTORED	
+        xsltParseSequenceConstructor(XSLT_CCTXT(style), cur->children);
+#else
         xsltParseTemplateContent(style, cur);
+#endif
     }
 #ifdef WITH_XSLT_DEBUG_VARIABLE
     xsltGenericDebug(xsltGenericDebugContext,
@@ -1518,11 +1531,15 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
 
     if ((cur == NULL) || (style == NULL))
 	return;
-
-    xsltStylePreCompute(style, cur);
+    
 #ifdef XSLT_REFACTORED
+    /*
+    * Note that xsltStylePreCompute() will be called from
+    * xslt.c only.
+    */
     comp = (xsltStyleItemParamPtr) cur->psvi;
 #else
+    xsltStylePreCompute(style, cur);
     comp = (xsltStylePreCompPtr) cur->psvi;
 #endif    
     if (comp == NULL) {
@@ -1537,8 +1554,15 @@ xsltParseGlobalParam(xsltStylesheetPtr style, xmlNodePtr cur) {
 	return;
     }
 
+    /*
+    * Parse the content (a sequence constructor) of xsl:param.
+    */
     if (cur->children != NULL) {
+#ifdef XSLT_REFACTORED	
+        xsltParseSequenceConstructor(XSLT_CCTXT(style), cur->children);
+#else
         xsltParseTemplateContent(style, cur);
+#endif
     }
 
 #ifdef WITH_XSLT_DEBUG_VARIABLE
