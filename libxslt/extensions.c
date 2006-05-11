@@ -1152,9 +1152,10 @@ xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar * URI)
     cur = (xsltExtDefPtr) style->nsDefs;
     while (cur != NULL) {
 	/*
-	* TODO: This is the old behaviour and it won't work
-	*  correctly, since it works with the namespace prefix,
-	*  but it should work with the namespace name.
+	* NOTE: This was change to work on namespace names rather
+	* than namespace prefixes. This fixes bug #339583.
+	* TODO: Consider renaming the field "prefix" of xsltExtDef
+	*  to "href".
 	*/
         if (xmlStrEqual(URI, cur->prefix))
             return (1);

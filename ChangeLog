@@ -1,3 +1,8 @@
+Thu May 11 22:12:22 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/extensions.c: Changed a comment to indicate that a
+	  specific bug was already fixed.
+	  
 Fri May  5 23:10:47 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/xsltInternals.h libxslt/attributes.c
