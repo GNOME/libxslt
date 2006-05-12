@@ -2063,22 +2063,50 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
  */
 xmlXPathCompExprPtr
 xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
-    xmlXPathContextPtr xctxt;
+    xmlXPathContextPtr xpathCtxt;
     xmlXPathCompExprPtr ret;
 
-    if (style != NULL)
-	xctxt = xmlXPathNewContext(style->doc);
-    else
-	xctxt = xmlXPathNewContext(NULL);
-    if (style != NULL)
-	xctxt->dict = style->dict;
-    ret = xmlXPathCtxtCompile(xctxt, str);
-    xmlXPathFreeContext(xctxt);
+    if (style != NULL) {
+#ifdef XSLT_REFACTORED_XPATHCOMP
+	if (XSLT_CCTXT(style)) {
+	    /*
+	    * Proposed by Jerome Pesenti
+	    * --------------------------
+	    * For better efficiency we'll reuse the compilation
+	    * context's XPath context. For the common stylesheet using
+	    * XPath expressions this will reduce compilation time to
+	    * about 50%.
+	    *
+	    * See http://mail.gnome.org/archives/xslt/2006-April/msg00037.html
+	    */
+	    xpathCtxt = XSLT_CCTXT(style)->xpathCtxt;
+	    xpathCtxt->doc = style->doc;
+	} else
+	    xpathCtxt = xmlXPathNewContext(style->doc);	
+#else
+	xpathCtxt = xmlXPathNewContext(style->doc);
+#endif
+	xpathCtxt->dict = style->dict;
+    } else {
+	xpathCtxt = xmlXPathNewContext(NULL);
+    }
+    /*
+    * Compile the expression.
+    */
+    ret = xmlXPathCtxtCompile(xpathCtxt, str);
+
+#ifdef XSLT_REFACTORED_XPATHCOMP
+    if ((style == NULL) || (! XSLT_CCTXT(style))) {
+	xmlXPathFreeContext(xpathCtxt);
+    }
+#else
+    xmlXPathFreeContext(xpathCtxt);
+#endif
     /*
      * TODO: there is a lot of optimizations which should be possible
      *       like variable slot precomputations, function precomputations, etc.
      */
-     
+
     return(ret);
 }
 

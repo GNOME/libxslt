@@ -26,29 +26,46 @@
 extern "C" {
 #endif
 
+#define XSLT_IS_TEXT_NODE(n) (((n) != NULL) && \
+    (((n)->type == XML_TEXT_NODE) || \
+     ((n)->type == XML_CDATA_SECTION_NODE)))
+
 /**
  * XSLT_REFACTORED:
  *
- * Internal define to enable the refactored parts of Libxslt
- * mostly related to pre-computation.
+ * Internal define to enable the refactored parts of Libxslt.
  */
 /* #define XSLT_REFACTORED */
 
 #ifdef XSLT_REFACTORED
 
-extern const xmlChar *xsltConstNamespaceNameXSLT;
+/* TODO: REMOVE: #define XSLT_REFACTORED_EXCLRESNS */
+
+/* TODO: REMOVE: #define XSLT_REFACTORED_NSALIAS */
 
 /**
- * IS_XSLT_ELEM_FAST:
+ * XSLT_REFACTORED_XSLT_NSCOMP
  *
- * Checks that the element pertains to XSLT namespace.
+ * Internal define to enable the pointer-comparison of
+ * namespaces of XSLT elements. 
  */
-#define IS_XSLT_ELEM_FAST(e) \
-    (((e) != NULL) && ((e)->type == XML_ELEMENT_NODE) && \
-     ((e)->ns != NULL) && ((e)->ns->href == xsltConstNamespaceNameXSLT))
+#define XSLT_REFACTORED_XSLT_NSCOMP
 
-#define IS_IN_XSLT_NS(e) \
-    (((e)->ns != NULL) && ((e)->ns->href == xsltConstNamespaceNameXSLT))
+/**
+ * XSLT_REFACTORED_XPATHCOMP
+ *
+ * Internal define to enable the optimization of the
+ * compilation of XPath expressions.
+ */
+#define XSLT_REFACTORED_XPATHCOMP
+
+#ifdef XSLT_REFACTORED_XSLT_NSCOMP
+
+extern const xmlChar *xsltConstNamespaceNameXSLT;
+
+#define IS_XSLT_ELEM_FAST(n) \
+    (((n) != NULL) && ((n)->ns != NULL) && \
+    ((n)->ns->href == xsltConstNamespaceNameXSLT))
 
 #define XSLT_HAS_INTERNAL_NSMAP(s) \
     (((s) != NULL) && ((s)->principal) && \
@@ -56,6 +73,16 @@ extern const xmlChar *xsltConstNamespaceNameXSLT;
      ((s)->principal->principalData->nsMap))
 
 #define XSLT_GET_INTERNAL_NSMAP(s) ((s)->principal->principalData->nsMap)
+
+#else /* XSLT_REFACTORED_XSLT_NSCOMP */
+
+#define IS_XSLT_ELEM_FAST(n) \
+    (((n) != NULL) && ((n)->ns != NULL) && \
+     (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
+
+
+#endif /* XSLT_REFACTORED_XSLT_NSCOMP */
+
 
 /**
  * XSLT_REFACTORED_MANDATORY_VERSION:
@@ -288,7 +315,9 @@ typedef enum {
     XSLT_FUNC_FALLBACK,
     XSLT_FUNC_MESSAGE,
     XSLT_FUNC_INCLUDE,
-    XSLT_FUNC_ATTRSET
+    XSLT_FUNC_ATTRSET,
+    XSLT_FUNC_LITERAL_RESULT_ELEMENT,
+    XSLT_FUNC_UNKOWN_FORWARDS_COMPAT,
 #endif
 } xsltStyleType;
 
@@ -354,9 +383,9 @@ XSLTPUBFUN int XSLTCALL
  *									*
  ************************************************************************/
 
-typedef struct _xsltNsList xsltNsList;
-typedef xsltNsList *xsltNsListPtr;
-struct _xsltNsList {
+typedef struct _xsltNsListContainer xsltNsListContainer;
+typedef xsltNsListContainer *xsltNsListContainerPtr;
+struct _xsltNsListContainer {
     xmlNsPtr *list;
     int number;
 };
@@ -392,7 +421,7 @@ struct _xsltNsList {
  *
  * The in-scope namespaces.
  */
-#define XSLT_ITEM_NSINSCOPE_FIELDS xsltNsListPtr inScopeNs;
+#define XSLT_ITEM_NSINSCOPE_FIELDS xsltNsListContainerPtr inScopeNs;
 
 /**
  * XSLT_ITEM_COMMON_FIELDS:
@@ -425,7 +454,7 @@ struct _xsltStylePreComp {
     xmlNodePtr inst;		/* the node in the stylesheet's tree
 				   corresponding to this item. */
     /* Currently no navigational fields. */
-    xsltNsListPtr inScopeNs;
+    xsltNsListContainerPtr inScopeNs;
 };
 
 /**
@@ -924,6 +953,19 @@ struct _xsltStyleItemInclude {
 
 /************************************************************************
  *									*
+ *  XSLT elements in forwards-compatible mode                           *
+ *									*
+ ************************************************************************/
+
+typedef struct _xsltStyleItemUknown xsltStyleItemUknown;
+typedef xsltStyleItemUknown *xsltStyleItemUknownPtr;
+struct _xsltStyleItemUknown {
+    XSLT_ITEM_COMMON_FIELDS
+};
+
+
+/************************************************************************
+ *									*
  *  Extension elements                                                  *
  *									*
  ************************************************************************/
@@ -961,15 +1003,50 @@ struct _xsltStyleItemExtElement {
  *									*
  ************************************************************************/
 
-/*
- * Literal result elements.
- */
-typedef struct _xsltStyleItemLRElement xsltStyleItemLRElement;
-typedef xsltStyleItemLRElement *xsltStyleItemLRElementPtr;
-struct _xsltStyleItemLRElement {
-    XSLT_ITEM_COMMON_FIELDS
-    xsltPointerListPtr exclResultNs;
+typedef struct _xsltEffectiveNs xsltEffectiveNs;
+typedef xsltEffectiveNs *xsltEffectiveNsPtr;
+struct _xsltEffectiveNs {
+    xsltEffectiveNsPtr next; /* next item in the list */
+    const xmlChar *prefix;
+    const xmlChar *nsName;
 };
+
+/*
+ * Info for literal result elements.
+ * This will be set on the elem->psvi field and will be
+ * shared by literal result elements, which have the same
+ * excluded result namespaces; i.e., this *won't* be created uniquely
+ * for every literal result element.
+ */
+typedef struct _xsltStyleItemLRElementInfo xsltStyleItemLRElementInfo;
+typedef xsltStyleItemLRElementInfo *xsltStyleItemLRElementInfoPtr;
+struct _xsltStyleItemLRElementInfo {
+    XSLT_ITEM_COMMON_FIELDS
+    /*
+    * @effectiveNs is the set of effective ns-nodes
+    *  on the literal result element, which will be added to the result
+    *  element if not already existing in the result tree.
+    *  This means that excluded namespaces (via exclude-result-prefixes,
+    *  extension-element-prefixes and the XSLT namespace) not added
+    *  to the set.
+    *  Namespace-aliasing was applied on the @effectiveNs.
+    */
+    xsltEffectiveNsPtr effectiveNs;
+};
+
+#ifdef XSLT_REFACTORED
+
+typedef struct _xsltNsAlias xsltNsAlias;
+typedef xsltNsAlias *xsltNsAliasPtr;
+struct _xsltNsAlias {
+    xsltNsAliasPtr next; /* next in the list */    
+    xmlNsPtr literalNs;
+    xmlNsPtr targetNs;
+    xmlDocPtr docOfTargetNs;
+};
+#endif
+
+#ifdef XSLT_REFACTORED_XSLT_NSCOMP
 
 typedef struct _xsltNsMap xsltNsMap;
 typedef xsltNsMap *xsltNsMapPtr;
@@ -981,6 +1058,7 @@ struct _xsltNsMap {
     const xmlChar *origNsName; /* the original XML namespace name */
     const xmlChar *newNsName; /* the mapped XML namespace name */    
 };
+#endif
 
 /************************************************************************
  *									*
@@ -990,6 +1068,13 @@ struct _xsltNsMap {
 
 typedef struct _xsltPrincipalStylesheetData xsltPrincipalStylesheetData;
 typedef xsltPrincipalStylesheetData *xsltPrincipalStylesheetDataPtr;
+
+typedef struct _xsltNsList xsltNsList;
+typedef xsltNsList *xsltNsListPtr;
+struct _xsltNsList {
+    xsltNsListPtr next; /* next in the list */
+    xmlNsPtr ns;
+};
 
 #define XSLT_ELEMENT_CATEGORY_XSLT 0
 #define XSLT_ELEMENT_CATEGORY_EXTENSION 1
@@ -1012,11 +1097,22 @@ struct _xsltCompilerNodeInfo {
                                 extension element */
     xsltStyleType type;
     xsltElemPreCompPtr item; /* The compiled information */
-    xsltNsListPtr inScopeNs; /* The in-scope namespaces for the current
-                                position in the node-tree */
-    xsltPointerListPtr exclResultNs; /* The current excluded
-				      result namespaces */
+    /* The current in-scope namespaces */
+    xsltNsListContainerPtr inScopeNs;
+    /* The current excluded result namespaces */
+    xsltPointerListPtr exclResultNs; 
+    /* The current extension instruction namespaces */
     xsltPointerListPtr extElemNs;
+    /* The current info for literal result elements. */
+    xsltStyleItemLRElementInfoPtr litResElemInfo;
+    /* 
+    * Set to 1 if in-scope namespaces changed,
+    *  or excluded result namespaces changed,
+    *  or extension element namespaces changed.
+    * This will trigger creation of new infos
+    *  for literal result elements.
+    */
+    int nsChanged;
     int preserveWhitespace;
     int stripWhitespace;
     int isRoot; /* whether this is the stylesheet's root node */
@@ -1024,7 +1120,7 @@ struct _xsltCompilerNodeInfo {
     /* whether the content of an extension element was processed */
     int extContentHandled;
     /* the type of the current child */
-    xsltStyleType curChildType;
+    xsltStyleType curChildType;    
 };
 
 #define XSLT_CCTXT(style) ((xsltCompilerCtxtPtr) style->compCtxt) 
@@ -1068,7 +1164,13 @@ struct _xsltCompilerCtxt {
     * mechanisms like whitespace-stripping in the stylesheet.
     */
     int strict;
-    xsltPrincipalStylesheetDataPtr psData;    
+    xsltPrincipalStylesheetDataPtr psData;
+#ifdef XSLT_REFACTORED_XPATHCOMP
+    xmlXPathContextPtr xpathCtxt;
+#endif
+    xsltStyleItemUknownPtr unknownItem;
+    int hasNsAliases; /* Indicator if there was an xsl:namespace-alias. */
+    xsltNsAliasPtr nsAliases;
 };   
 
 #else /* XSLT_REFACTORED */
@@ -1164,19 +1266,21 @@ struct _xsltPrincipalStylesheetData {
     /*
     * Global list of in-scope namespaces.
     */
-    void *inScopeNamespaces;
+    xsltPointerListPtr inScopeNamespaces;
     /*
     * Global list of information for [xsl:]excluded-result-prefixes.
     */
-    void *exclResultNamespaces;
+    xsltPointerListPtr exclResultNamespaces;
     /*
     * Global list of information for [xsl:]extension-element-prefixes.
     */
-    void *extElemNamespaces;
+    xsltPointerListPtr extElemNamespaces;
+#ifdef XSLT_REFACTORED_XSLT_NSCOMP
     /*
     * Namespace name map to get rid of string comparison of namespace names.
     */
     xsltNsMapPtr nsMap;
+#endif
 };
 
     
@@ -1227,6 +1331,7 @@ struct _xsltStylesheet {
     
     /*
      * Namespace aliases.
+     * NOTE: Not used in the refactored code.
      */
     xmlHashTablePtr nsAliases;	/* the namespace alias hash tables */
 
@@ -1237,6 +1342,7 @@ struct _xsltStylesheet {
 
     /*
      * Namespaces.
+     * TODO: Eliminate this.
      */
     xmlHashTablePtr nsHash;     /* the set of namespaces in use:
                                    ATTENTION: This is used for
@@ -1309,6 +1415,7 @@ struct _xsltStylesheet {
     void *attVTs;
     /*
      * if namespace-alias has an alias for the default stylesheet prefix
+     * NOTE: Not used in the refactored code.
      */
     const xmlChar *defaultAlias;
     /*
@@ -1600,10 +1707,12 @@ XSLTPUBFUN void XSLTCALL
 XSLTPUBFUN int XSLTCALL
 			xsltParseAnyXSLTElem	(xsltCompilerCtxtPtr cctxt,
 						 xmlNodePtr elem);
+#ifdef XSLT_REFACTORED_XSLT_NSCOMP
 XSLTPUBFUN int XSLTCALL
 			xsltRestoreDocumentNamespaces(
 						 xsltNsMapPtr ns,
 						 xmlDocPtr doc);
+#endif
 #endif /* XSLT_REFACTORED */
 
 #ifdef __cplusplus

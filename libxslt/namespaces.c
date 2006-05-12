@@ -52,6 +52,32 @@
  *									*
  ************************************************************************/
 
+#ifdef XSLT_REFACTORED  
+static xsltNsAliasPtr
+xsltNewNsAlias(xsltCompilerCtxtPtr cctxt)
+{
+    xsltNsAliasPtr ret;
+
+    if (cctxt == NULL)
+	return(NULL);
+
+    ret = (xsltNsAliasPtr) xmlMalloc(sizeof(xsltNsAlias));
+    if (ret == NULL) {
+	xsltTransformError(NULL, cctxt->style, NULL,
+	    "Internal error in xsltNewNsAlias(): Memory allocation failed.\n");
+	cctxt->style->errors++;
+	return(NULL);
+    }
+    memset(ret, 0, sizeof(xsltNsAlias));    
+    /*
+    * TODO: Store the item at current stylesheet-level.
+    */
+    ret->next = cctxt->nsAliases;
+    cctxt->nsAliases = ret;       
+
+    return(ret);
+}
+#endif /* XSLT_REFACTORED */
 /**
  * xsltNamespaceAlias:
  * @style:  the XSLT stylesheet
@@ -61,46 +87,163 @@
  * them as well as the corresponding namespace.
  */
 void
-xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
-    xmlChar *sprefix;
-    xmlNsPtr sNs;
-    const xmlChar *shref;
-    xmlChar *rprefix;
-    xmlNsPtr rNs;
-    const xmlChar *rhref;
+xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node)
+{
+    xmlChar *resultPrefix = NULL;
+    xmlChar *stylePrefix = NULL;
+    xmlNsPtr literalNs = NULL;
+    xmlNsPtr targetNs = NULL;
+ 
+#ifdef XSLT_REFACTORED 
+    xsltNsAliasPtr alias;
 
-    sprefix = xmlGetNsProp(node, (const xmlChar *)"stylesheet-prefix", NULL);
-    if (sprefix == NULL) {
+    if ((style == NULL) || (node == NULL))
+	return;
+
+    /*
+    * SPEC XSLT 1.0:
+    *  "If a namespace URI is declared to be an alias for multiple
+    *  different namespace URIs, then the declaration with the highest
+    *  import precedence is used. It is an error if there is more than
+    *  one such declaration. An XSLT processor may signal the error;
+    *  if it does not signal the error, it must recover by choosing,
+    *  from amongst the declarations with the highest import precedence,
+    *  the one that occurs last in the stylesheet."
+    *
+    * SPEC TODO: Check for the errors mentioned above.
+    */
+    /*
+    * NOTE that the XSLT 2.0 also *does* use the NULL namespace if
+    *  "#default" is used and there's no default namespace is scope.
+    *  I.e., this is *not* an error. 
+    *  Most XSLT 1.0 implementations work this way.
+    *  The XSLT 1.0 spec has nothing to say on the subject. 
+    */
+    /*
+    * Attribute "stylesheet-prefix".
+    */
+    stylePrefix = xmlGetNsProp(node, (const xmlChar *)"stylesheet-prefix", NULL);
+    if (stylePrefix == NULL) {
+	xsltTransformError(NULL, style, node,
+	    "The attribute 'stylesheet-prefix' is missing.\n");
+	return;
+    }
+    if (xmlStrEqual(stylePrefix, (const xmlChar *)"#default"))
+	literalNs = xmlSearchNs(node->doc, node, NULL);	
+    else {
+	literalNs = xmlSearchNs(node->doc, node, stylePrefix);
+	if (literalNs == NULL) {
+	    xsltTransformError(NULL, style, node,
+	        "Attribute 'stylesheet-prefix': There's no namespace "
+		"declaration in scope for the prefix '%s'.\n",
+		    stylePrefix);
+	    goto error;
+	}
+    }
+    /*
+    * Attribute "result-prefix".
+    */
+    resultPrefix = xmlGetNsProp(node, (const xmlChar *)"result-prefix", NULL);
+    if (resultPrefix == NULL) {
+	xsltTransformError(NULL, style, node,
+	    "The attribute 'result-prefix' is missing.\n");
+	goto error;
+    }        
+    if (xmlStrEqual(resultPrefix, (const xmlChar *)"#default"))
+	targetNs = xmlSearchNs(node->doc, node, NULL);
+    else {
+	targetNs = xmlSearchNs(node->doc, node, resultPrefix);
+
+        if (targetNs == NULL) {
+	   xsltTransformError(NULL, style, node,
+	        "Attribute 'result-prefix': There's no namespace "
+		"declaration in scope for the prefix '%s'.\n",
+		    stylePrefix);
+	    goto error;
+	}
+    }
+    /*
+     *
+     * Same alias for multiple different target namespace URIs:
+     *  TODO: The one with the highest import precedence is used.
+     *  Example:
+     *  <xsl:namespace-alias stylesheet-prefix="foo"
+     *                       result-prefix="bar"/>
+     *
+     *  <xsl:namespace-alias stylesheet-prefix="foo"
+     *                       result-prefix="zar"/>
+     *
+     * Same target namespace URI for multiple different aliases:
+     *  All alias-definitions will be used.
+     *  Example:
+     *  <xsl:namespace-alias stylesheet-prefix="bar"
+     *                       result-prefix="foo"/>
+     *
+     *  <xsl:namespace-alias stylesheet-prefix="zar"
+     *                       result-prefix="foo"/>
+     * Cases using #default:
+     *  <xsl:namespace-alias stylesheet-prefix="#default"
+     *                       result-prefix="#default"/>
+     *  TODO: Has this an effect at all?
+     *
+     *  <xsl:namespace-alias stylesheet-prefix="foo"
+     *                       result-prefix="#default"/>
+     *  From namespace to no namespace.
+     *
+     *  <xsl:namespace-alias stylesheet-prefix="#default"
+     *                       result-prefix="foo"/>
+     *  From no namespace to namespace.
+     */
+    
+	
+	/*
+	* Store the ns-node in the alias-object.
+	*/
+	alias = xsltNewNsAlias(XSLT_CCTXT(style));
+	if (alias == NULL)
+	    return;
+	alias->literalNs = literalNs;
+	alias->targetNs = targetNs;
+	XSLT_CCTXT(style)->hasNsAliases = 1;
+
+
+#else /* XSLT_REFACTORED */
+    const xmlChar *literalNsName;
+    const xmlChar *targetNsName;
+    
+
+    if ((style == NULL) || (node == NULL))
+	return;
+
+    stylePrefix = xmlGetNsProp(node, (const xmlChar *)"stylesheet-prefix", NULL);
+    if (stylePrefix == NULL) {
 	xsltTransformError(NULL, style, node,
 	    "namespace-alias: stylesheet-prefix attribute missing\n");
 	return;
     }
-    rprefix = xmlGetNsProp(node, (const xmlChar *)"result-prefix", NULL);
-    if (rprefix == NULL) {
+    resultPrefix = xmlGetNsProp(node, (const xmlChar *)"result-prefix", NULL);
+    if (resultPrefix == NULL) {
 	xsltTransformError(NULL, style, node,
 	    "namespace-alias: result-prefix attribute missing\n");
 	goto error;
     }
     
-    if (xmlStrEqual(sprefix, (const xmlChar *)"#default")) {
-        /*
-	 * Do we have a default namespace previously declared?
-	 */
-	sNs = xmlSearchNs(node->doc, node, NULL);
-	if (sNs == NULL)
-	    shref = NULL;	/* No - set NULL */
-	else
-	    shref = sNs->href;	/* Yes - set for nsAlias table */
+    if (xmlStrEqual(stylePrefix, (const xmlChar *)"#default")) {
+	literalNs = xmlSearchNs(node->doc, node, NULL);
+	if (literalNs == NULL) {
+	    literalNsName = NULL;
+	} else
+	    literalNsName = literalNs->href; /* Yes - set for nsAlias table */
     } else {
-	sNs = xmlSearchNs(node->doc, node, sprefix);
+	literalNs = xmlSearchNs(node->doc, node, stylePrefix);
  
-	if ((sNs == NULL) || (sNs->href == NULL)) {
+	if ((literalNs == NULL) || (literalNs->href == NULL)) {
 	    xsltTransformError(NULL, style, node,
 	        "namespace-alias: prefix %s not bound to any namespace\n",
-					sprefix);
+					stylePrefix);
 	    goto error;
 	} else
-	    shref = sNs->href;
+	    literalNsName = literalNs->href;
     }
 
     /*
@@ -108,30 +251,43 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
      * been explicitly declared the special value UNDEFINED_DEFAULT_NS is
      * put into the nsAliases table
      */
-    if (xmlStrEqual(rprefix, (const xmlChar *)"#default")) {
-	rNs = xmlSearchNs(node->doc, node, NULL);
-	if (rNs == NULL)
-	    rhref = UNDEFINED_DEFAULT_NS;
-	else
-	    rhref = rNs->href;
+    if (xmlStrEqual(resultPrefix, (const xmlChar *)"#default")) {
+	targetNs = xmlSearchNs(node->doc, node, NULL);
+	if (targetNs == NULL) {
+	    targetNsName = UNDEFINED_DEFAULT_NS;
+	} else
+	    targetNsName = targetNs->href;
     } else {
-	rNs = xmlSearchNs(node->doc, node, rprefix);
+	targetNs = xmlSearchNs(node->doc, node, resultPrefix);
 
-        if ((rNs == NULL) || (rNs->href == NULL)) {
+        if ((targetNs == NULL) || (targetNs->href == NULL)) {
 	    xsltTransformError(NULL, style, node,
 	        "namespace-alias: prefix %s not bound to any namespace\n",
-					rprefix);
+					resultPrefix);
 	    goto error;
 	} else
-	    rhref = rNs->href;
+	    targetNsName = targetNs->href;
     }
     /*
-     * Special case if #default is used for stylesheet and no default has
-     * been explicitly declared.  We use style->defaultAlias for this
-     */
-    if (shref == NULL) {
-        if (rNs != NULL)
-            style->defaultAlias = rNs->href;
+     * Special case: if #default is used for
+     *  the stylesheet-prefix (literal namespace) and there's no default
+     *  namespace in scope, we'll use style->defaultAlias for this.
+     */   
+    if (literalNsName == NULL) {
+        if (targetNs != NULL) {
+	    /*
+	    * BUG TODO: Is it not sufficient to have only 1 field for
+	    *  this, since subsequently alias declarations will
+	    *  overwrite this.	    
+	    *  Example:
+	    *   <xsl:namespace-alias result-prefix="foo"
+	    *                        stylesheet-prefix="#default"/>
+	    *   <xsl:namespace-alias result-prefix="bar"
+	    *                        stylesheet-prefix="#default"/>
+	    *  The mapping for "foo" won't be visible anymore.
+	    */
+            style->defaultAlias = targetNs->href;
+	}
     } else {
         if (style->nsAliases == NULL)
 	    style->nsAliases = xmlHashCreate(10);
@@ -140,15 +296,16 @@ xsltNamespaceAlias(xsltStylesheetPtr style, xmlNodePtr node) {
 	        "namespace-alias: cannot create hash table\n");
 	    goto error;
         }
-        xmlHashAddEntry((xmlHashTablePtr) style->nsAliases,
-	            shref, (void *) rhref);
+	xmlHashAddEntry((xmlHashTablePtr) style->nsAliases,
+	    literalNsName, (void *) targetNsName);
     }
+#endif /* else of XSLT_REFACTORED */
 
 error:
-    if (sprefix != NULL)
-	xmlFree(sprefix);
-    if (rprefix != NULL)
-	xmlFree(rprefix);
+    if (stylePrefix != NULL)
+	xmlFree(stylePrefix);
+    if (resultPrefix != NULL)
+	xmlFree(resultPrefix);
 }
 
 /**
@@ -255,27 +412,39 @@ xsltSearchPlainNsByHref(xmlDocPtr doc, xmlNodePtr node, const xmlChar * href)
  * and add a new namespace decalaration on the node
  * Handle namespace aliases and make sure the prefix is not NULL, this
  * is needed for attributes.
+ * Called from:
+ *   xsltAttrTemplateProcess() (templates.c)
+ *   xsltCopyProp() (transform.c)
  *
  * Returns the namespace node to use or NULL
  */
 xmlNsPtr
 xsltGetPlainNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
-                      xmlNsPtr ns, xmlNodePtr out) {
-    xsltStylesheetPtr style;
+                      xmlNsPtr ns, xmlNodePtr out) {    
     xmlNsPtr ret;
     const xmlChar *URI = NULL; /* the replacement URI */
 
     if ((ctxt == NULL) || (cur == NULL) || (out == NULL) || (ns == NULL))
 	return(NULL);
 
-    style = ctxt->style;
-    while (style != NULL) {
-	if (style->nsAliases != NULL)
-	    URI = (const xmlChar *) xmlHashLookup(style->nsAliases, ns->href);
-	if (URI != NULL)
-	    break;
-
-	style = xsltNextImport(style);
+#ifdef XSLT_REFACTORED
+    /*
+    * Namespace exclusion and ns-aliasing is performed at
+    * compilation-time in the refactored code.
+    */
+    URI = ns->href;
+#else
+    {
+	xsltStylesheetPtr style;
+	style = ctxt->style;
+	while (style != NULL) {
+	    if (style->nsAliases != NULL)
+		URI = (const xmlChar *) xmlHashLookup(style->nsAliases, ns->href);
+	    if (URI != NULL)
+		break;
+	    
+	    style = xsltNextImport(style);
+	}
     }
 
     if (URI == UNDEFINED_DEFAULT_NS) {
@@ -289,6 +458,7 @@ xsltGetPlainNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
 
     if (URI == NULL)
 	URI = ns->href;
+#endif
 
     if ((out->parent != NULL) &&
 	(out->parent->type == XML_ELEMENT_NODE) &&
@@ -351,8 +521,9 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
 	(out->parent->type == XML_ELEMENT_NODE) &&
 	(out->parent->ns != NULL) &&
 	(xmlStrEqual(out->parent->ns->href, URI)))
+    {
 	ret = out->parent->ns;
-    else 
+    } else 
 	ret = xmlSearchNsByHref(out->doc, out, URI);
 
     if ((ret == NULL) || (ret->prefix == NULL)) {
@@ -381,6 +552,9 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
  * @ns:  the namespace
  * @out:  the output node (or its parent)
  *
+ * REFACTORED NOTE: Won't be used anymore in the refactored code
+ *  for literal result elements/attributes.
+ *
  * Find the right namespace value for this prefix, if needed create
  * and add a new namespace decalaration on the node
  * Handle namespace aliases
@@ -389,27 +563,38 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
  */
 xmlNsPtr
 xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
-	         xmlNodePtr out) {
-    xsltStylesheetPtr style;
+	         xmlNodePtr out) {    
     xmlNsPtr ret;
     const xmlChar *URI = NULL; /* the replacement URI */
 
     if ((ctxt == NULL) || (cur == NULL) || (out == NULL) || (ns == NULL))
 	return(NULL);
-
-    style = ctxt->style;
-    while (style != NULL) {
-	if (style->nsAliases != NULL)
-	    URI = (const xmlChar *) 
+    
+#ifdef XSLT_REFACTORED
+    /*
+    * Namespace exclusion and ns-aliasing is performed at
+    * compilation-time in the refactored code.    
+    */
+    URI = ns->href;
+#else
+    {
+	xsltStylesheetPtr style;
+	style = ctxt->style;
+	while (style != NULL) {
+	    if (style->nsAliases != NULL)
+		URI = (const xmlChar *) 
 		xmlHashLookup(style->nsAliases, ns->href);
-	if (URI != NULL)
-	    break;
-
-	style = xsltNextImport(style);
+	    if (URI != NULL)
+		break;
+	    
+	    style = xsltNextImport(style);
+	}
     }
 
     if (URI == UNDEFINED_DEFAULT_NS) {
         xmlNsPtr dflt;
+	/*
+	*/
 	dflt = xmlSearchNs(cur->doc, cur, NULL);
 	if (dflt != NULL)
 	    URI = dflt->href;
@@ -417,7 +602,7 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
 	    return NULL;
     } else if (URI == NULL)
 	URI = ns->href;
-
+#endif
     /*
      * If the parent is an XML_ELEMENT_NODE, and has the "equivalent"
      * namespace as ns (either both default, or both with a prefix
@@ -468,7 +653,14 @@ xsltGetNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur, xmlNsPtr ns,
  *
  * Do a copy of an namespace list. If @node is non-NULL the
  * new namespaces are added automatically. This handles namespaces
- * aliases
+ * aliases.
+ * This function is intended only for *internal* use at
+ * transformation-time. Use it *only* for copying ns-decls of
+ * literal result elements.
+ * 
+ * Called by:
+ *   xsltCopyTree() (transform.c)
+ *   xsltCopyNode() (transform.c)
  *
  * Returns: a new xmlNsPtr, or NULL in case of error.
  */
@@ -476,8 +668,7 @@ xmlNsPtr
 xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	              xmlNsPtr cur) {
     xmlNsPtr ret = NULL, tmp;
-    xmlNsPtr p = NULL,q;
-    const xmlChar *URI;
+    xmlNsPtr p = NULL,q;    
 
     if (cur == NULL)
 	return(NULL);
@@ -495,12 +686,13 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    break;
 
 	/*
-	 * Avoid duplicating namespace declrations on the tree
+	 * Avoid duplicating namespace declarations in the tree if
+	 * a matching declaration is in scope.
 	 */
 	if (node != NULL) {
 	    if ((node->ns != NULL) &&
-        	(xmlStrEqual(node->ns->href, cur->href)) &&
-        	(xmlStrEqual(node->ns->prefix, cur->prefix))) {
+		(xmlStrEqual(node->ns->prefix, cur->prefix)) &&
+        	(xmlStrEqual(node->ns->href, cur->href))) {
 		cur = cur->next;
 		continue;
 	    }
@@ -510,8 +702,21 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		continue;
 	    }
 	}
-	
+#ifdef XSLT_REFACTORED
+	/*
+	* Namespace exclusion and ns-aliasing is performed at
+	* compilation-time in the refactored code.
+	*/
+	q = xmlNewNs(node, cur->href, cur->prefix);
+	if (p == NULL) {
+	    ret = p = q;
+	} else {
+	    p->next = q;
+	    p = q;
+	}
+#else
 	if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {
+	    const xmlChar *URI;
 	    /* TODO apply cascading */
 	    URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases,
 		                                  cur->href);
@@ -529,6 +734,7 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		p = q;
 	    }
 	}
+#endif
 	cur = cur->next;
     }
     return(ret);
@@ -550,8 +756,7 @@ xmlNsPtr
 xsltCopyNamespace(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	          xmlNsPtr cur) {
     xmlNsPtr ret = NULL;
-    const xmlChar *URI;
-
+    
     if (cur == NULL)
 	return(NULL);
     if (cur->type != XML_NAMESPACE_DECL)
@@ -563,7 +768,16 @@ xsltCopyNamespace(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((node != NULL) && (node->type != XML_ELEMENT_NODE))
 	node = NULL;
 
+#ifdef XSLT_REFACTORED
+    /*
+    * Namespace exclusion and ns-aliasing is performed at
+    * compilation-time in the refactored code.
+    */
+    ret = xmlNewNs(node, cur->href, cur->prefix);	
+#else
     if (!xmlStrEqual(cur->href, XSLT_NAMESPACE)) {
+	const xmlChar *URI;
+
 	URI = (const xmlChar *) xmlHashLookup(ctxt->style->nsAliases,
 					      cur->href);
 	if (URI == UNDEFINED_DEFAULT_NS)
@@ -574,6 +788,7 @@ xsltCopyNamespace(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    ret = xmlNewNs(node, cur->href, cur->prefix);
 	}
     }
+#endif
     return(ret);
 }
 

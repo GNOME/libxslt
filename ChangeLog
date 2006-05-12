@@ -1,3 +1,16 @@
+Fri May 12 23:23:06 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/documents.c libxslt/namespaces.c
+	  libxslt/preproc.c libxslt/transform.c
+	  libxslt/xslt.c libxslt/xsltInternals.h libxslt/xsltutils.c:
+	  Next step of refactoring. For more details see bug #341588.
+	  I applied the suggestion of Jerome Pesenti to the refactored
+	  (still IDFEDed out with XSLT_REFACTORED) code: The XPath
+	  compilation context (accessible via the compilation context)
+	  is now reused for compilation of expressions at
+	  compilation-time; this should reduce compilation time to 50%
+	  for avarage stylesheets.
+
 Thu May 11 22:12:22 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/extensions.c: Changed a comment to indicate that a

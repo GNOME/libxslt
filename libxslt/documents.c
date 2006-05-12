@@ -201,33 +201,31 @@ xsltNewStyleDocument(xsltStylesheetPtr style, xmlDocPtr doc) {
 void	
 xsltFreeStyleDocuments(xsltStylesheetPtr style) {
     xsltDocumentPtr doc, cur;
-#ifdef XSLT_REFACTORED
+#ifdef XSLT_REFACTORED_XSLT_NSCOMP
     xsltNsMapPtr nsMap;
 #endif
     
     if (style == NULL)
 	return;
 
-#ifdef XSLT_REFACTORED
+#ifdef XSLT_REFACTORED_XSLT_NSCOMP
     if (XSLT_HAS_INTERNAL_NSMAP(style))
 	nsMap = XSLT_GET_INTERNAL_NSMAP(style);
     else
 	nsMap = NULL;    
-#endif
+#endif   
 
     cur = style->docList;
     while (cur != NULL) {
 	doc = cur;
 	cur = cur->next;
-
-#ifdef XSLT_REFACTORED
+#ifdef XSLT_REFACTORED_XSLT_NSCOMP
 	/*
 	* Restore all changed namespace URIs of ns-decls.
 	*/
 	if (nsMap)
 	    xsltRestoreDocumentNamespaces(nsMap, doc->doc);
 #endif
-
 	xsltFreeDocumentKeys(doc);
 	if (!doc->main)
 	    xmlFreeDoc(doc->doc);
