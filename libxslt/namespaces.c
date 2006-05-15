@@ -509,10 +509,34 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr cur,
 	return(NULL);
 
     if ((prefix == NULL) && (URI[0] == 0)) {
+	/*
+	* This tries to "undeclare" a default namespace.
+	* This fixes a part of bug #302020:
+	*  1) Added a check whether the queried ns-decl
+	*     is already an "undeclaration" of the default
+	*     namespace.
+	*  2) This fires an error if the default namespace
+	*     couldn't be "undeclared".	
+	*/
 	ret = xmlSearchNs(out->doc, out, NULL);
-	if (ret != NULL) {
-	    ret = xmlNewNs(out, URI, prefix);
+	if ((ret == NULL) ||
+	    (ret->href == NULL) || (ret->href[0] == 0))
 	    return(ret);
+
+	if (ret != NULL) {
+	    xmlNsPtr newns;
+
+	    newns = xmlNewNs(out, URI, prefix);
+	    if (newns == NULL) {
+		xsltTransformError(ctxt, NULL, cur,
+		    "Namespace fixup error: Failed to undeclare "
+		    "the default namespace '%s'.\n",
+		    ret->href);
+	    }
+	    /*
+	    * TODO: Why does this try to return an xmlns="" at all?
+	    */
+	    return(newns);
 	}
 	return(NULL);
     }

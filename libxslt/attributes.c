@@ -708,7 +708,10 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
         namespace = xsltEvalAttrValueTemplate(ctxt, inst,
                                               (const xmlChar *)
                                               "namespace", XSLT_NAMESPACE);
-        if (namespace != NULL) {
+	/*
+	* This fixes bug #302020: check also for the empty string.
+	*/
+        if ((namespace != NULL) && (*namespace != 0)) {
             ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
                                          ctxt->insert);
             xmlFree(namespace);
@@ -746,7 +749,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (attr != NULL)
 	    return;
     }
-    value = xsltEvalTemplateString(ctxt, node, inst);
+    value = xsltEvalTemplateString(ctxt, node, inst); /* OPTIMIZE TODO: expensive! */
     if (value == NULL) {
         if (ns) {
             attr = xmlSetNsProp(ctxt->insert, ns, name,
