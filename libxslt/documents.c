@@ -153,11 +153,24 @@ xsltNewDocument(xsltTransformContextPtr ctxt, xmlDocPtr doc) {
     memset(cur, 0, sizeof(xsltDocument));
     cur->doc = doc;
     if (ctxt != NULL) {
-        if (!xmlStrEqual((xmlChar *)doc->name, BAD_CAST " fake node libxslt")) {
+        if (! XSLT_IS_RES_TREE_FRAG(doc)) {
 	    cur->next = ctxt->docList;
 	    ctxt->docList = cur;
 	}
+#ifdef XSLT_REFACTORED_KEYCOMP
+	/*
+	* A key with a specific name for a specific document
+	* will only be computed if there's a call to the key()
+	* function using that specific name for that specific
+	* document. I.e. computation of keys will be done in
+	* xsltGetKey() (keys.c) on an on-demand basis.
+	*/
+#else
+	/*
+	* Old behaviour.
+	*/
 	xsltInitCtxtKeys(ctxt, cur);
+#endif
     }
     return(cur);
 }

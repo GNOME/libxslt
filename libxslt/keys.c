@@ -32,30 +32,6 @@
 #define WITH_XSLT_DEBUG_KEYS
 #endif
 
-typedef struct _xsltKeyDef xsltKeyDef;
-typedef xsltKeyDef *xsltKeyDefPtr;
-struct _xsltKeyDef {
-    struct _xsltKeyDef *next;
-    xmlNodePtr inst;
-    xmlChar *name;
-    xmlChar *nameURI;
-    xmlChar *match;
-    xmlChar *use;
-    xmlXPathCompExprPtr comp;
-    xmlXPathCompExprPtr usecomp;
-    xmlNsPtr *nsList;           /* the namespaces in scope */
-    int nsNr;                   /* the number of namespaces in scope */
-};
-
-typedef struct _xsltKeyTable xsltKeyTable;
-typedef xsltKeyTable *xsltKeyTablePtr;
-struct _xsltKeyTable {
-    struct _xsltKeyTable *next;
-    xmlChar *name;
-    xmlChar *nameURI;
-    xmlHashTablePtr keys;
-};
-
 
 /************************************************************************
  * 									*
@@ -415,6 +391,9 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	   const xmlChar *nameURI, const xmlChar *value) {
     xmlNodeSetPtr ret;
     xsltKeyTablePtr table;
+#ifdef XSLT_REFACTORED_KEYCOMP
+    int found = 0;
+#endif
 
     if ((ctxt == NULL) || (name == NULL) || (value == NULL) ||
 	(ctxt->document == NULL))
@@ -426,15 +405,62 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 #endif
     table = (xsltKeyTablePtr) ctxt->document->keys;
     while (table != NULL) {
-	if (xmlStrEqual(table->name, name) &&
-	    (((nameURI == NULL) && (table->nameURI == NULL)) ||
-	     ((nameURI != NULL) && (table->nameURI != NULL) &&
-	      (xmlStrEqual(table->nameURI, nameURI))))) {
+	if (((nameURI != NULL) == (table->nameURI != NULL)) &&
+	    xmlStrEqual(table->name, name) &&
+	    xmlStrEqual(table->nameURI, nameURI))
+	{
+#ifdef XSLT_REFACTORED_KEYCOMP
+	    found = 1;
+#endif
 	    ret = (xmlNodeSetPtr)xmlHashLookup(table->keys, value);
 	    return(ret);
 	}
 	table = table->next;
     }
+#ifdef XSLT_REFACTORED_KEYCOMP
+    if (! found) {
+	xsltStylesheetPtr style = ctxt->style;	
+	xsltKeyDefPtr keyd;
+	/*
+	* This might be the first call to the key with the specified
+	* name and the specified document.
+	* Find all keys with a matching name and compute them for the
+	* current tree.
+	*/
+	found = 0;
+	while (style != NULL) {
+	    keyd = (xsltKeyDefPtr) style->keys;
+	    while (keyd != NULL) {
+		if (((nameURI != NULL) == (keyd->nameURI != NULL)) &&
+		    xmlStrEqual(keyd->name, name) &&
+		    xmlStrEqual(keyd->nameURI, nameURI))
+		{
+		    found = 1;
+		    xsltInitCtxtKey(ctxt, ctxt->document, keyd);
+		}
+		keyd = keyd->next;		
+	    }	    
+	    style = xsltNextImport(style);
+	}
+	if (found) {
+	    /*
+	    * The key was computed, so look it up.
+	    */
+	    table = (xsltKeyTablePtr) ctxt->document->keys;
+	    while (table != NULL) {
+		if (((nameURI != NULL) == (table->nameURI != NULL)) &&
+		    xmlStrEqual(table->name, name) &&
+		    xmlStrEqual(table->nameURI, nameURI))
+		{
+		    ret = (xmlNodeSetPtr)xmlHashLookup(table->keys, value);
+		    return(ret);
+		}
+		table = table->next;
+	    }
+
+	}
+    }
+#endif
     return(NULL);
 }
 
@@ -521,6 +547,7 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
     ctxt->xpathCtxt->namespaces = oldNamespaces;
     return(ret);
 }
+
 /**
  * xsltInitCtxtKey:
  * @ctxt: an XSLT transformation context
@@ -529,7 +556,7 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
  *
  * Computes the key tables this key and for the current input document.
  */
-static void
+int
 xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
 	        xsltKeyDefPtr keyd) {
     int i;
@@ -545,6 +572,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr doc,
     int oldNsNr;
     xmlNsPtr *oldNamespaces;
 
+    doc->nbKeysComputed++;
     /*
      * Evaluate the nodelist
      */
@@ -700,6 +728,7 @@ error:
     ctxt->node = oldNode;
     if (res != NULL)
 	xmlXPathFreeObject(res);
+    return(0);
 }
 
 /**
@@ -709,6 +738,7 @@ error:
  *
  * Computes all the keys tables for the current input document.
  * Should be done before global varibales are initialized.
+ * NOTE: Not used anymore in the refactored code.
  */
 void
 xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr doc) {

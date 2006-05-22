@@ -18,6 +18,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xmlerror.h>
 #include <libxml/dict.h>
+#include <libxml/xmlstring.h>
 #include <libxslt/xslt.h>
 #include "xsltexports.h"
 #include "numbersInternals.h"
@@ -26,9 +27,39 @@
 extern "C" {
 #endif
 
-#define XSLT_IS_TEXT_NODE(n) (((n) != NULL) && \
+#define XSLT_IS_TEXT_NODE(n) ((n != NULL) && \
     (((n)->type == XML_TEXT_NODE) || \
      ((n)->type == XML_CDATA_SECTION_NODE)))
+
+
+#if 0
+
+extern const xmlChar *xsltDocFragFake;
+
+#define XSLT_MARK_RES_TREE_FRAG(n) (n)->psvi = (void *) xsltDocFragFake;
+
+#define XSLT_IS_RES_TREE_FRAG(n) \
+    ((n != NULL) && ((n)->type == XML_DOCUMENT_NODE) && \
+     ((n)->psvi == xsltDocFragFake))
+
+#else
+
+#define XSLT_MARK_RES_TREE_FRAG(n) \
+    (n)->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
+
+#define XSLT_IS_RES_TREE_FRAG(n) \
+    ((n != NULL) && ((n)->type == XML_DOCUMENT_NODE) && \
+     ((n)->name != NULL) && ((n)->name[0] == ' ') && \
+    xmlStrEqual(BAD_CAST (n)->name, BAD_CAST " fake node libxslt"))
+
+#endif
+
+/**
+ * XSLT_REFACTORED_KEYCOMP:
+ *
+ * Internal define to enable on-demand xsl:key computation.
+ */
+#define XSLT_REFACTORED_KEYCOMP
 
 /**
  * XSLT_REFACTORED:
@@ -36,9 +67,9 @@ extern "C" {
  * Internal define to enable the refactored parts of Libxslt.
  */
 /* #define XSLT_REFACTORED */
+/* ==================================================================== */
 
 #ifdef XSLT_REFACTORED
-
 /* TODO: REMOVE: #define XSLT_REFACTORED_EXCLRESNS */
 
 /* TODO: REMOVE: #define XSLT_REFACTORED_NSALIAS */
@@ -67,6 +98,10 @@ extern const xmlChar *xsltConstNamespaceNameXSLT;
     (((n) != NULL) && ((n)->ns != NULL) && \
     ((n)->ns->href == xsltConstNamespaceNameXSLT))
 
+#define IS_XSLT_ATTR_FAST(a) \
+    (((a) != NULL) && ((a)->ns != NULL) && \
+    ((a)->ns->href == xsltConstNamespaceNameXSLT))
+
 #define XSLT_HAS_INTERNAL_NSMAP(s) \
     (((s) != NULL) && ((s)->principal) && \
      ((s)->principal->principalData) && \
@@ -79,6 +114,10 @@ extern const xmlChar *xsltConstNamespaceNameXSLT;
 #define IS_XSLT_ELEM_FAST(n) \
     (((n) != NULL) && ((n)->ns != NULL) && \
      (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
+
+#define IS_XSLT_ATTR_FAST(a) \
+    (((a) != NULL) && ((a)->ns != NULL) && \
+     (xmlStrEqual((a)->ns->href, XSLT_NAMESPACE)))
 
 
 #endif /* XSLT_REFACTORED_XSLT_NSCOMP */
@@ -191,6 +230,10 @@ struct _xsltTemplate {
     xmlNodePtr content;	/* the template replacement value */
     xmlNodePtr elem;	/* the source element */
 
+    /*
+    * TODO: @inheritedNsNr and @inheritedNs won't be used in the
+    *  refactored code.
+    */
     int inheritedNsNr;  /* number of inherited namespaces */
     xmlNsPtr *inheritedNs;/* inherited non-excluded namespaces */
 
@@ -239,6 +282,42 @@ struct _xsltDocument {
     void *keys;			/* key tables storage */
     struct _xsltDocument *includes; /* subsidiary includes */
     int preproc;		/* pre-processing already done */
+    int nbKeysComputed;
+};
+
+/**
+ * xsltKeyDef:
+ *
+ * Representation of an xsl:key.
+ */
+typedef struct _xsltKeyDef xsltKeyDef;
+typedef xsltKeyDef *xsltKeyDefPtr;
+struct _xsltKeyDef {
+    struct _xsltKeyDef *next;
+    xmlNodePtr inst;
+    xmlChar *name;
+    xmlChar *nameURI;
+    xmlChar *match;
+    xmlChar *use;
+    xmlXPathCompExprPtr comp;
+    xmlXPathCompExprPtr usecomp;
+    xmlNsPtr *nsList;           /* the namespaces in scope */
+    int nsNr;                   /* the number of namespaces in scope */
+};
+
+/**
+ * xsltKeyTable:
+ *
+ * Holds the computed keys for key definitions of the same QName.
+ * Is owned by an xsltDocument.
+ */
+typedef struct _xsltKeyTable xsltKeyTable;
+typedef xsltKeyTable *xsltKeyTablePtr;
+struct _xsltKeyTable {
+    struct _xsltKeyTable *next;
+    xmlChar *name;
+    xmlChar *nameURI;
+    xmlHashTablePtr keys;
 };
 
 /*
@@ -1006,9 +1085,15 @@ struct _xsltStyleItemExtElement {
 typedef struct _xsltEffectiveNs xsltEffectiveNs;
 typedef xsltEffectiveNs *xsltEffectiveNsPtr;
 struct _xsltEffectiveNs {
+    xsltEffectiveNsPtr nextInStore; /* storage next */
     xsltEffectiveNsPtr next; /* next item in the list */
     const xmlChar *prefix;
     const xmlChar *nsName;
+    /* 
+    * Indicates if eclared on the literal result element; dunno if really
+    * needed.
+    */
+    int holdByElem;
 };
 
 /*
@@ -1032,6 +1117,7 @@ struct _xsltStyleItemLRElementInfo {
     *  Namespace-aliasing was applied on the @effectiveNs.
     */
     xsltEffectiveNsPtr effectiveNs;
+
 };
 
 #ifdef XSLT_REFACTORED
@@ -1078,7 +1164,7 @@ struct _xsltNsList {
 
 #define XSLT_ELEMENT_CATEGORY_XSLT 0
 #define XSLT_ELEMENT_CATEGORY_EXTENSION 1
-#define XSLT_ELEMENT_CATEGORY_LR 2
+#define XSLT_ELEMENT_CATEGORY_LRE 2
 
 /**
  * xsltCompilerNodeInfo:
@@ -1157,7 +1243,8 @@ struct _xsltCompilerCtxt {
     int isInclude;
     int hasForwardsCompat; /* whether forwards-compatible mode was used
 			     in a parsing episode */
-    int maxNodeInfos; /* just for the interest */
+    int maxNodeInfos; /* TEMP TODO: just for the interest */
+    int maxLREs;  /* TEMP TODO: just for the interest */
     /* 
     * In order to keep the old behaviour, applying strict rules of
     * the spec can be turned off. This has effect only on special
@@ -1170,7 +1257,7 @@ struct _xsltCompilerCtxt {
 #endif
     xsltStyleItemUknownPtr unknownItem;
     int hasNsAliases; /* Indicator if there was an xsl:namespace-alias. */
-    xsltNsAliasPtr nsAliases;
+    xsltNsAliasPtr nsAliases;    
 };   
 
 #else /* XSLT_REFACTORED */
@@ -1275,6 +1362,7 @@ struct _xsltPrincipalStylesheetData {
     * Global list of information for [xsl:]extension-element-prefixes.
     */
     xsltPointerListPtr extElemNamespaces;
+    xsltEffectiveNsPtr effectiveNs;
 #ifdef XSLT_REFACTORED_XSLT_NSCOMP
     /*
     * Namespace name map to get rid of string comparison of namespace names.
@@ -1562,6 +1650,8 @@ struct _xsltTransformContext {
      * all document text strings are internalized
      */
     int internalized;
+    int nbKeys;
+    int hasTemplKeyPatterns;
 };
 
 /**
@@ -1714,6 +1804,16 @@ XSLTPUBFUN int XSLTCALL
 						 xmlDocPtr doc);
 #endif
 #endif /* XSLT_REFACTORED */
+
+/************************************************************************
+ *									*
+ *  Transformation-time functions for *internal* use only               *
+ *									*
+ ************************************************************************/
+XSLTPUBFUN int XSLTCALL
+			xsltInitCtxtKey		(xsltTransformContextPtr ctxt,
+						 xsltDocumentPtr doc,
+						 xsltKeyDefPtr keyd);
 
 #ifdef __cplusplus
 }

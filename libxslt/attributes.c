@@ -38,6 +38,7 @@
 #include <libxml/hash.h>
 #include <libxml/xmlerror.h>
 #include <libxml/uri.h>
+#include <libxml/parserInternals.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
@@ -64,6 +65,9 @@
 /*
  * Useful macros
  */
+#ifdef IS_BLANK
+#undef IS_BLANK
+#endif
 
 #define IS_BLANK(c) (((c) == 0x20) || ((c) == 0x09) || ((c) == 0xA) ||	\
                      ((c) == 0x0D))
@@ -626,7 +630,7 @@ xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style) {
  * xsltAttributeInternal:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
- * @inst:  the xslt attribute node
+ * @inst:  the xsl:attribute element
  * @comp:  precomputed information
  * @fromset:  the attribute comes from an attribute-set
  *
@@ -749,26 +753,81 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (attr != NULL)
 	    return;
     }
-    value = xsltEvalTemplateString(ctxt, node, inst); /* OPTIMIZE TODO: expensive! */
-    if (value == NULL) {
-        if (ns) {
-            attr = xmlSetNsProp(ctxt->insert, ns, name,
-                                (const xmlChar *) "");
-        } else {
-            attr =
-                xmlSetProp(ctxt->insert, name, (const xmlChar *) "");
-        }
+    
+    if (inst->children == NULL) {
+	/*
+	* No content.
+	*/
+	attr = xmlSetNsProp(ctxt->insert, ns, name, (const xmlChar *) "");
+    } else if ((inst->children->next == NULL) && 
+	    ((inst->children->type == XML_TEXT_NODE) ||
+	     (inst->children->type == XML_CDATA_SECTION_NODE)))
+    {
+	xmlNodePtr origTxt = inst->children, copyTxt;
+	/*
+	* Optimization: if the content is just 1 text node, then
+	* just need to copy it over, or just assign it to the result
+	* if the string is shared.
+	* NOTE that xmlSetNsProp() will query if this is an ID attribute :-/
+	*/
+	attr = xmlSetNsProp(ctxt->insert, ns, name, NULL);
+	if (attr == NULL) /* TODO: report error */
+	    goto internal_err;
+	/*
+	* This was taken over from xsltCopyText() (transform.c).
+	*/
+	if (ctxt->internalized &&
+	    (ctxt->insert->doc != NULL) &&
+	    (ctxt->insert->doc->dict == ctxt->dict))
+	{
+	    copyTxt = xmlNewText(NULL);
+	    if (copyTxt == NULL) /* TODO: report error */
+		goto internal_err;
+	    /*
+	    * This is a safe scenario where we don't need to lookup
+	    * the dict.
+	    */
+	    copyTxt->content = origTxt->content;
+	    /*
+	    * Copy "disable-output-escaping" information.
+	    */
+	    if (origTxt->name == xmlStringTextNoenc)
+		copyTxt->name = xmlStringTextNoenc;				
+	} else {
+	    /*
+	    * Copy the value.
+	    */
+	    copyTxt = xmlNewText(origTxt->content);
+	    if (copyTxt == NULL) /* TODO: report error */
+		goto internal_err;
+	    if (origTxt->name == xmlStringTextNoenc)
+		copyTxt->name = xmlStringTextNoenc;		
+	}
+	if (copyTxt != NULL) {	    
+	    copyTxt->doc = attr->doc;
+	    xmlAddChild((xmlNodePtr) attr, copyTxt);	    
+	}
     } else {
-        if (ns) {
-            attr = xmlSetNsProp(ctxt->insert, ns, name, value);
-        } else {
-            attr = xmlSetProp(ctxt->insert, name, value);
-        }
+	/*
+	* The sequence constructor might be complex, so instantiate it.
+	*/
+	value = xsltEvalTemplateString(ctxt, node, inst);
+	if (value != NULL) {
+	    attr = xmlSetNsProp(ctxt->insert, ns, name, value);
+	    xmlFree(value);
+	} else {
+	    /*
+	    * TODO: Do we have to add the empty string to the attr?
+	    */
+	    attr = xmlSetNsProp(ctxt->insert, ns, name,
+		(const xmlChar *) "");	    
+	    
+	}
     }
 
 error:
-    if (value != NULL)
-        xmlFree(value);
+internal_err:
+    return;    
 }
 
 /**

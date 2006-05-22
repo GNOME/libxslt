@@ -494,8 +494,7 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
 
 #ifdef WITH_XSLT_DEBUG_EXTENSIONS
     xsltGenericDebug(xsltGenericDebugContext,
-                     "Registering extension prefix %s : %s\n", prefix,
-                     URI);
+	"Registering extension namespace '%s'.\n", URI);
 #endif
     def = (xsltExtDefPtr) style->nsDefs;
 #ifdef XSLT_REFACTORED

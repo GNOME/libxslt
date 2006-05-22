@@ -370,20 +370,6 @@ xsltNewStylePreComp(xsltStylesheetPtr style, xsltStyleType type) {
     return(cur);
 }
 
-#ifdef XSLT_REFACTORED
-static void
-xsltLREEffectiveNsNodesFree(xsltEffectiveNsPtr first)
-{
-    xsltEffectiveNsPtr tmp;
-
-    while (first != NULL) {
-	tmp = first;
-	first = first->next;
-	xmlFree(tmp);
-    }
-}
-#endif
-
 /**
  * xsltFreeStylePreComp:
  * @comp:  an XSLT Style precomputed block
@@ -399,12 +385,7 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
     * URGENT TODO: Implement destructors.
     */
     switch (comp->type) {
-	case XSLT_FUNC_LITERAL_RESULT_ELEMENT: {
-		xsltStyleItemLRElementInfoPtr item =
-		    (xsltStyleItemLRElementInfoPtr) comp;
-		if (item->effectiveNs)
-		    xsltLREEffectiveNsNodesFree(item->effectiveNs);
-	    }
+	case XSLT_FUNC_LITERAL_RESULT_ELEMENT:
 	    break;
 	case XSLT_FUNC_COPY:
             break;

@@ -1,3 +1,27 @@
+Mon May 22 10:32:57 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/attributes.c libxslt/documents.c
+	  libxslt/extensions.c libxslt/keys.c libxslt/pattern.c
+	  libxslt/preproc.c libxslt/templates.c
+	  libxslt/transform.c libxslt/variables.c
+	  libxslt/xslt.c libxslt/xsltInternals.h:
+	  Next tiny step of refactoring - mostly bug fixes and
+	  cosmetic changes.
+	  Changes outside of the refactored code:
+	  1) Optimized xsl:attribute if the content consists of
+	   just 1 text node.
+	  2) Optimized computation of xsl:key. The keys will now be
+	   computed for a specific document not until the first call
+	   of a key() function; here only the keys with the specific
+	   name used by key() are computed. This means that this
+	   now avoids computation of all keys for all loaded
+	   input documents (even if no key() was called on them).
+	   One exception is the scenario where a key() is used in
+	   a template's match pattern; in this case all keys are
+	   computed for a document if there's a chance that
+	   a "keyed" template could match a node (this could still
+	   be optimized a bit).
+
 Mon May 15 22:32:13 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/namespaces.c libxslt/attributes.c:

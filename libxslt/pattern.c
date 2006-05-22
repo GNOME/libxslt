@@ -466,11 +466,7 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
     int isRVT;
 
     doc = node->doc;
-    if ((doc != NULL) &&
-	(doc->name != NULL) &&
-	(doc->name[0] == ' ') &&
-	(xmlStrEqual(BAD_CAST doc->name,
-		     BAD_CAST " fake node libxslt")))
+    if (XSLT_IS_RES_TREE_FRAG(doc))
 	isRVT = 1;
     else
 	isRVT = 0;
@@ -825,11 +821,7 @@ restart:
 		}
 
 		doc = node->doc;
-		if ((doc != NULL) &&
-		    (doc->name != NULL) &&
-		    (doc->name[0] == ' ') &&
-		    (xmlStrEqual(BAD_CAST doc->name,
-		    		 BAD_CAST " fake node libxslt")))
+		if (XSLT_IS_RES_TREE_FRAG(doc))
 		    isRVT = 1;
 		else
 		    isRVT = 0;
@@ -1424,7 +1416,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	    return;
 	}
 	NEXT;
-	/* TODO: support namespace in keys */
+	/* URGENT TODO: support namespace in keys */
 	PUSH(XSLT_OP_KEY, lit, lit2, novar);
     } else if (xmlStrEqual(name, (const xmlChar *)"processing-instruction")) {
 	NEXT;
@@ -2217,6 +2209,71 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
     return(0);
 }
 
+#ifdef XSLT_REFACTORED_KEYCOMP
+static int
+xsltComputeAllKeys(xsltTransformContextPtr ctxt,
+		xsltDocumentPtr document)
+{
+    xsltStylesheetPtr style, style2;
+    xsltKeyDefPtr keyd, keyd2;
+    xsltKeyTablePtr table;
+
+    if ((ctxt == NULL) || (document == NULL))
+	return(-1);
+ 
+    if (document->nbKeysComputed == ctxt->nbKeys)
+	return(0);
+    /*
+    * TODO: This could be further optimized
+    */
+    style = ctxt->style;
+    while (style) {
+	keyd = (xsltKeyDefPtr) style->keys;
+	while (keyd != NULL) {	    
+	    /*
+	    * Check if keys with this QName have been already
+	    * computed.
+	    */
+	    table = (xsltKeyTablePtr) document->keys;
+	    while (table) {
+		if (((keyd->nameURI != NULL) == (table->nameURI != NULL)) &&
+		    xmlStrEqual(keyd->name, table->name) &&
+		    xmlStrEqual(keyd->nameURI, table->nameURI))
+		{
+		    break;
+		}		
+		table = table->next;
+	    }
+	    if (table == NULL) {
+		/*
+		* Keys with this QName have not been yet computed.
+		*/
+		style2 = ctxt->style;
+		while (style2 != NULL) {
+		    keyd2 = (xsltKeyDefPtr) style2->keys;
+		    while (keyd2 != NULL) {
+			if (((keyd2->nameURI != NULL) ==
+			     (keyd->nameURI != NULL)) &&
+			    xmlStrEqual(keyd2->name, keyd->name) &&
+			    xmlStrEqual(keyd2->nameURI, keyd->nameURI))
+			{
+			    xsltInitCtxtKey(ctxt, document, keyd2);
+			    if (document->nbKeysComputed == ctxt->nbKeys)
+				return(0);
+			}
+			keyd2 = keyd2->next;		
+		    }	    
+		    style2 = xsltNextImport(style2);
+		}
+	    }	    
+	    keyd = keyd->next;
+	}
+	style = xsltNextImport(style);
+    }
+    return(0);
+}
+#endif
+
 /**
  * xsltGetTemplate:
  * @ctxt:  a XSLT process context
@@ -2403,6 +2460,9 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	}
 
+#ifdef XSLT_REFACTORED_KEYCOMP
+keyed_match:
+#endif
 	if (keyed) {
 	    list = curstyle->keyMatch;
 	    while ((list != NULL) &&
@@ -2416,6 +2476,41 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		list = list->next;
 	    }
 	}
+#ifdef XSLT_REFACTORED_KEYCOMP	
+	else if (ctxt->hasTemplKeyPatterns &&
+	    (ctxt->document->nbKeysComputed < ctxt->nbKeys))
+	{
+	    /*
+	    * Compute all remaining keys for this document.
+	    *
+	    * REVISIT TODO: I think this could be further optimized.	    
+	    */
+	    xsltComputeAllKeys(ctxt, ctxt->document);
+
+	    switch (node->type) {
+		case XML_ELEMENT_NODE:		    
+		    if (node->psvi != NULL) keyed = 1;
+		    break;
+		case XML_ATTRIBUTE_NODE:
+		    if (((xmlAttrPtr) node)->psvi != NULL) keyed = 1;
+		    break;
+		case XML_TEXT_NODE:
+		case XML_CDATA_SECTION_NODE:
+		case XML_COMMENT_NODE:
+		case XML_PI_NODE:		
+		    if (node->psvi != NULL) keyed = 1;
+		    break;
+		case XML_DOCUMENT_NODE:
+		case XML_HTML_DOCUMENT_NODE:
+		    if (((xmlDocPtr) node)->psvi != NULL) keyed = 1;
+		    break;		
+		default:
+		    break;
+	    }
+	    if (keyed)
+		goto keyed_match;
+	}
+#endif /* XSLT_REFACTORED_KEYCOMP */
 	if (ret != NULL)
 	    return(ret);
 

@@ -36,6 +36,10 @@
 #define WITH_XSLT_DEBUG_VARIABLE
 #endif
 
+#ifdef XSLT_REFACTORED
+const xmlChar *xsltDocFragFake = (const xmlChar *) " fake node libxslt";
+#endif
+
 /************************************************************************
  *									*
  *			Result Value Tree interfaces			*
@@ -54,6 +58,9 @@ xsltCreateRVT(xsltTransformContextPtr ctxt)
 {
     xmlDocPtr container;
 
+    /*
+    * TODO: Couldn't we use an XML_DOCUMENT_FRAG_NODE for this?
+    */
     if (ctxt == NULL) return(NULL);
 
     container = xmlNewDoc(NULL);
@@ -66,7 +73,7 @@ xsltCreateRVT(xsltTransformContextPtr ctxt)
                      "reusing transformation dict for RVT\n");
 #endif
 
-    container->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
+    XSLT_MARK_RES_TREE_FRAG(container);
     container->doc = container;
     container->parent = NULL;
     return(container);

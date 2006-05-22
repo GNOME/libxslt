@@ -202,6 +202,12 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (parent->children == NULL)
 	return(NULL);
 
+    /*
+    * This creates a temporary element-node to add the resulting
+    * text content to.
+    * OPTIMIZE TODO: Keep such an element-node in the transformation
+    *  context to avoid creating it every time.
+    */
     insert = xmlNewDocNode(ctxt->output, NULL,
 	                   (const xmlChar *)"fake", NULL);
     if (insert == NULL) {
@@ -211,7 +217,7 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
     oldInsert = ctxt->insert;
     ctxt->insert = insert;
-
+    /* OPTIMIZE TODO: if parent->children consists only of text-nodes. */
     xsltApplyOneTemplate(ctxt, node, parent->children, NULL, NULL);
 
     ctxt->insert = oldInsert;

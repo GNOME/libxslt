@@ -709,7 +709,7 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	 ((target->ns != NULL) &&
 	  (xmlHashLookup2(ctxt->style->cdataSection,
 	                  target->name, target->ns->href) != NULL)))) {
-	/*
+	/* OPTIMIZE TODO: xsltCopyText() is also used for attribute content. 
 	 * nodes which must be output as CDATA due to the stylesheet
 	 */
 	copy = xmlNewCDataBlock(ctxt->output, cur->content,
@@ -731,7 +731,7 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	    return NULL;
 	if (cur->name == xmlStringTextNoenc)
 	    copy->name = xmlStringTextNoenc;
-	/*
+	/* OPTIMIZE TODO: get rid of xmlDictOwns() in safe cases; e.g. attribute values don't need the lookup
 	 * Must confirm that content is in dict
 	 * (bug 302821)
 	 */
@@ -1046,9 +1046,8 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
         case XML_XINCLUDE_START:
         case XML_XINCLUDE_END:
             return(NULL);
-    }
-    if ((node->name != NULL) && (node->name[0] == ' ') &&
-	(xmlStrEqual(node->name, (const xmlChar *) " fake node libxslt"))) {
+    }    
+    if (XSLT_IS_RES_TREE_FRAG(node)) {
 	if (node->children != NULL)
 	    copy = xsltCopyTreeList(ctxt, node->children, insert, 0);
 	else
@@ -1482,8 +1481,9 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 }
 
+#ifdef XSLT_REFACTORED
 /**
-* xsltTransLREAcquireInScopeNs:
+* xsltTransLREUndeclareDefaultNs:
 * @ctxt:  the transformation context
 * @cur:  the literal result element
 * @ns:  the namespace
@@ -1500,16 +1500,102 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 * Returns the acquired ns-declaration
 *         or NULL in case of an API or internal error.
 */
-xmlNsPtr
-xsltTransLREAcquireInScopeNs(xsltTransformContextPtr ctxt,			     
-			     xmlNodePtr cur, xmlNsPtr literalNs,
-			     xmlNodePtr resultElem)
+static int
+xsltTransLREUndeclareResultDefaultNs(xsltTransformContextPtr ctxt,
+				     xmlNodePtr cur,
+				     xmlNodePtr resultElem)
+{
+    xmlNsPtr ns;
+    /*
+    * OPTIMIZE TODO: This all could be optimized by keeping track of
+    *  the ns-decls currently in-scope via a specialized context.
+    */
+    /*
+    * Search on the result element itself.
+    */
+    if (resultElem->nsDef != NULL) {
+	ns = resultElem->nsDef;
+	do {
+	    if (ns->prefix == NULL) {
+		if ((ns->href != NULL) && (ns->href[0] != 0)) {
+		    /*
+		    * Raise a namespace normalization error.
+		    */
+		    xsltTransformError(ctxt, NULL, cur,
+			"Namespace normalization error: Cannot undeclare "
+			"the default namespace, since the default namespace "
+			"'%s' is already declared on the result element.\n",
+			ns->href);
+		    return(1);
+		} else {
+		    /*
+		    * The default namespace was undeclared on the
+		    * result element.
+		    */
+		    return(0);
+		}
+		break;
+	    }
+	    ns = ns->next;
+	} while (ns != NULL);
+    }
+
+    if ((resultElem->parent != NULL) &&
+	(resultElem->parent->type == XML_ELEMENT_NODE))
+    {
+	/*
+	* The parent element is in no namespace, so assume
+	* that there is no default namespace in scope.
+	*/
+	if (resultElem->parent->ns == NULL)
+	    return(0);
+
+	ns = xmlSearchNs(resultElem->doc, resultElem->parent,
+	    NULL);
+	/*
+	* Fine if there's no default ns is scope, or if the
+	* default ns was undeclared.
+	*/
+	if ((ns == NULL) || (ns->href == NULL) || (ns->href[0] == 0))
+	    return(0);
+
+	/*
+	* Undeclare the default namespace.
+	*/
+	ns = xmlNewNs(resultElem, BAD_CAST "", NULL);
+	/* TODO: Check result */	
+	return(0);
+    }
+    return(0);
+}
+
+/**
+* xsltTransLREAcquireResultInScopeNs:
+* @ctxt:  the transformation context
+* @cur:  the literal result element
+* @ns:  the namespace
+* @out:  the output node (or its parent)
+*
+*
+* Find a matching (prefix and ns-name) ns-declaration
+*  for the given @ns in the result tree.
+* If none is found then a new ns-declaration will be
+*  added to @out. If, in this case, the given prefix is already
+*  in use, then a ns-declaration with a modified ns-prefix
+*  be we created.
+*
+* Returns the acquired ns-declaration
+*         or NULL in case of an API or internal error.
+*/
+static xmlNsPtr
+xsltTransLREAcquireResultInScopeNs(xsltTransformContextPtr ctxt,
+				   xmlNodePtr cur, xmlNsPtr literalNs,
+				   xmlNodePtr resultElem)
 {    
     xmlNsPtr ns;
     int prefixOccupied = 0;
 
-    if ((ctxt == NULL) || (cur == NULL) ||
-	(resultElem == NULL) || (literalNs == NULL))
+    if ((ctxt == NULL) || (cur == NULL) || (resultElem == NULL))
 	return(NULL);
     
     /*
@@ -1607,13 +1693,13 @@ xsltTransLREAcquireInScopeNs(xsltTransformContextPtr ctxt,
 	*  1) If keeping the prefix: create a new ns-decl.
 	*  2) If reusal: first lookup ns-names; then fallback
 	*     to creation of a new ns-decl.
+	* REVISIT TODO: this currently uses case 2) since this
+	*  is the way it used to be before refactoring.
 	*/
-#if 0
 	ns = xmlSearchNsByHref(resultElem->doc, resultElem,
 	    literalNs->href);
 	if (ns != NULL)
 	    return(ns);
-#endif
 	/*
 	* Create the ns-decl on the current result element.
 	*/
@@ -1662,6 +1748,8 @@ xsltTransLREAcquireInScopeNs(xsltTransformContextPtr ctxt,
     }
     return(NULL);    
 }
+
+#endif /* XSLT_REFACTORED */
 
 /**
  * xsltApplyOneTemplate:
@@ -1901,16 +1989,14 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			    * declarations; thus lookup if there is already
 			    * such a ns-decl in the result.
 			    */			    
-			    ns = xmlSearchNs(copy->doc, copy,
-				effNs->prefix);
+			    ns = xmlSearchNs(copy->doc, copy, effNs->prefix);
 			    if ((ns != NULL) &&
 				(xmlStrEqual(ns->href, effNs->nsName)))
 			    {
 				effNs = effNs->next;
 				continue;			    
 			    }
-			    ns = xmlNewNs(copy, effNs->nsName,
-				effNs->prefix);
+			    ns = xmlNewNs(copy, effNs->nsName, effNs->prefix);
 			    if (ns == NULL) {
 				xsltTransformError(ctxt, NULL, cur,
 				    "Internal error in xsltApplyOneTemplateInt(): "
@@ -1945,23 +2031,33 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			*  OLD: copy->ns = xsltGetNamespace(ctxt, cur,
 			*                     cur->ns, copy);
 			*/
-			copy->ns = xsltTransLREAcquireInScopeNs(ctxt,
-			    cur, cur->ns, copy);						
-		    } else if ((insert->type == XML_ELEMENT_NODE) &&
-			(insert->ns != NULL))
-		    {
-			xmlNsPtr defaultNs;
-
+			copy->ns = xsltTransLREAcquireResultInScopeNs(ctxt,
+			    cur, cur->ns, copy);
+		    } else {
 			/*
 			* Undeclare the default namespace if needed.
+			* This can be skipped, if:
+			* 1) If the result element has no ns-decls, in which
+			*    case the result element abviously does not
+			*    declare a default namespace.
+			* 2) AND there's either no parent, or the parent
+			*   is in no namespace; this means there's no
+			*   default namespace is scope to care about.
+			*
 			* REVISIT TODO: This might result in massive
 			*  generation of ns-decls if nodes in a default
 			*  namespaces are mixed with nodes in no namespace.
 			*  
-			*/			
+			*/
+			if (copy->nsDef ||
+			    ((insert != NULL) && (insert->ns != NULL)))
+			    xsltTransLREUndeclareResultDefaultNs(ctxt,
+				cur, copy);
+#if 0
 			defaultNs = xmlSearchNs(insert->doc, insert, NULL);
 			if ((defaultNs != NULL) && (defaultNs->href != NULL))
 			    xmlNewNs(copy, BAD_CAST "", NULL);
+#endif
 		    }
 		}
 		/*
@@ -3101,8 +3197,12 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    case XML_HTML_DOCUMENT_NODE:
 		break;
 	    case XML_ELEMENT_NODE:
-		if (xmlStrEqual(node->name, BAD_CAST " fake node libxslt"))
-		    return;
+		/*
+		* NOTE: The "fake" is a doc-node, not an element node.
+		* OLD:
+		*   if (xmlStrEqual(node->name, BAD_CAST " fake node libxslt"))
+		*    return;
+		*/		
 
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		XSLT_TRACE(ctxt,XSLT_TRACE_COPY,xsltGenericDebug(xsltGenericDebugContext,
@@ -3383,6 +3483,10 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	if (comp->use != NULL) {
 	    xsltApplyAttributeSet(ctxt, node, inst, comp->use);
 	} else {
+	    /*
+	    * BUG TODO: use-attribute-sets is not a value template.
+	    *  use-attribute-sets = qnames
+	    */
 	    attributes = xsltEvalAttrValueTemplate(ctxt, inst,
 		       (const xmlChar *)"use-attribute-sets", NULL);
 	    if (attributes != NULL) {
@@ -3980,8 +4084,9 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		if ((list != NULL) && (ctxt->document->keys != NULL)) {
 		    if ((list->nodeNr != 0) &&
 		        (list->nodeTab[0]->doc != NULL) &&
-		        (xmlStrEqual((xmlChar *)list->nodeTab[0]->doc->name,
-			   (const xmlChar *) " fake node libxslt")) &&
+
+		        XSLT_IS_RES_TREE_FRAG(list->nodeTab[0]->doc) &&
+
 			(list->nodeTab[0]->doc->_private == NULL)) {
 			    list->nodeTab[0]->doc->_private = xsltNewDocument(
 			    	ctxt, list->nodeTab[0]->doc);
@@ -4769,6 +4874,45 @@ done:
     return;
 }
 
+#ifdef XSLT_REFACTORED_KEYCOMP
+static int
+xsltCountKeys(xsltTransformContextPtr ctxt)
+{
+    xsltStylesheetPtr style;
+    xsltKeyDefPtr keyd;
+
+    if (ctxt == NULL)
+	return(-1);    
+
+    /*
+    * Do we have those nastly templates with a key() in the match pattern?
+    */
+    ctxt->hasTemplKeyPatterns = 0;
+    style = ctxt->style;
+    while (style != NULL) {
+	if (style->keyMatch != NULL) {
+	    ctxt->hasTemplKeyPatterns = 1;
+	    break;
+	}
+	style = xsltNextImport(style);
+    }
+    /*
+    * Count number of key declarations.
+    */
+    ctxt->nbKeys = 0;
+    style = ctxt->style;
+    while (style != NULL) {
+	keyd = style->keys;
+	while (keyd) {
+	    ctxt->nbKeys++;
+	    keyd = keyd->next;
+	}
+	style = xsltNextImport(style);
+    }        
+    return(ctxt->nbKeys);
+}
+#endif /* XSLT_REFACTORED_KEYCOMP */
+
 /**
  * xsltApplyStylesheetInternal:
  * @style:  a parsed XSLT stylesheet
@@ -4963,6 +5107,9 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if (params != NULL)
         xsltEvalUserParams(ctxt, params);
     xsltEvalGlobalVariables(ctxt);
+#ifdef XSLT_REFACTORED_KEYCOMP    
+    xsltCountKeys(ctxt);
+#endif
     ctxt->node = (xmlNodePtr) doc;
     varsPush(ctxt, NULL);
     ctxt->varsBase = ctxt->varsNr - 1;
