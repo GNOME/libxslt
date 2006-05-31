@@ -4575,7 +4575,8 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 		    if (text == NULL) {
 			text = cur->children;
 			while (text != NULL) {
-			    if ((text->content != NULL) &&
+			    if ((style->internalized) &&
+			        (text->content != NULL) &&
 			        (!xmlDictOwns(style->dict, text->content))) {
 
 				/*

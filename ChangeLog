@@ -1,3 +1,14 @@
+Wed May 31 22:32:44 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/transform.c: Fixed a difference in processing of
+	  xsl:value-of and  xsl:text wrt to merging of strings of
+	  output-escaped text-nodes. This difference made the
+	  optimized string-merging mechanism run out of sync, which
+	  led to segfaults in subsequent string reallocations. See
+	  bug #343411, reported by Grzegorz Kaczor.
+	* xslt.c: Added check for ctxt->internalized when we parse
+	  xsl:text and internalize the strings.
+
 Mon May 22 10:32:57 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/attributes.c libxslt/documents.c

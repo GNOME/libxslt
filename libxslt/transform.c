@@ -709,31 +709,48 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	 ((target->ns != NULL) &&
 	  (xmlHashLookup2(ctxt->style->cdataSection,
 	                  target->name, target->ns->href) != NULL)))) {
-	/* OPTIMIZE TODO: xsltCopyText() is also used for attribute content. 
-	 * nodes which must be output as CDATA due to the stylesheet
-	 */
+	/* 
+	* OPTIMIZE TODO: xsltCopyText() is also used for attribute content.	
+	*/
+	/*
+	* TODO: Since this doesn't merge adjacent CDATA-section nodes,
+	* we'll get: <![CDATA[x]]><!CDATA[y]]>.
+	*/
 	copy = xmlNewCDataBlock(ctxt->output, cur->content,
 				xmlStrlen(cur->content));
 	ctxt->lasttext = NULL;
-    } else if ((target != NULL) && (target->last != NULL) &&
-	    (target->last->type == XML_TEXT_NODE) &&
-	    (target->last->name == xmlStringText) &&
-	    (cur->name != xmlStringTextNoenc)) {
+    } else if ((target != NULL) &&
+	(target->last != NULL) &&
+	/* both escaped or both non-escaped text-nodes */
+	(((target->last->type == XML_TEXT_NODE) &&
+	(target->last->name == cur->name)) ||
+        /* non-escaped text nodes and CDATA-section nodes */
+	(((target->last->type == XML_CDATA_SECTION_NODE) &&
+	(cur->name == xmlStringTextNoenc)))))
+    {
 	/*
 	 * we are appending to an existing text node
 	 */
 	return(xsltAddTextString(ctxt, target->last, cur->content,
-	                         xmlStrlen(cur->content)));
-    } else if ((interned) && (target != NULL) && (target->doc != NULL) &&
-               (target->doc->dict == ctxt->dict)) {
+	    xmlStrlen(cur->content)));
+    } else if ((interned) && (target != NULL) &&
+	(target->doc != NULL) &&
+	(target->doc->dict == ctxt->dict))
+    {        
+	/*
+	* TODO: DO we want to use this also for "text" output?
+	*/
         copy = xmlNewTextLen(NULL, 0);
 	if (copy == NULL)
-	    return NULL;
+	    return NULL;	
 	if (cur->name == xmlStringTextNoenc)
 	    copy->name = xmlStringTextNoenc;
-	/* OPTIMIZE TODO: get rid of xmlDictOwns() in safe cases; e.g. attribute values don't need the lookup
-	 * Must confirm that content is in dict
-	 * (bug 302821)
+	
+	/* OPTIMIZE TODO: get rid of xmlDictOwns() in safe cases;
+	 *  e.g. attribute values don't need the lookup.
+	 *
+	 * Must confirm that content is in dict (bug 302821)
+	 * TODO: Check if bug 302821 still applies here.
 	 */
 	if (xmlDictOwns(ctxt->dict, cur->content))
 	    copy->content = cur->content;
