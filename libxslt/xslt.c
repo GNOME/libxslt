@@ -1763,7 +1763,10 @@ xsltTreeAcquireStoredNs(xmlDocPtr doc,
 
     if (doc == NULL)
 	return (NULL);
-    ns = xsltTreeEnsureXMLDecl(doc);
+    if (doc->oldNs != NULL)
+	ns = doc->oldNs;
+    else
+	ns = xsltTreeEnsureXMLDecl(doc);
     if (ns == NULL)
 	return (NULL);
     if (ns->next != NULL) {

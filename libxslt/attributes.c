@@ -632,7 +632,7 @@ xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style) {
  * @node:  the node in the source tree.
  * @inst:  the xsl:attribute element
  * @comp:  precomputed information
- * @fromset:  the attribute comes from an attribute-set
+ * @fromAttributeSet:  the attribute comes from an attribute-set
  *
  * Process the xslt attribute node on the source node
  */
@@ -640,59 +640,113 @@ static void
 xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
                       xmlNodePtr inst,
 		      xsltStylePreCompPtr castedComp,
-                      int fromset) {
+                      int fromAttributeSet) {
 #ifdef XSLT_REFACTORED
     xsltStyleItemAttributePtr comp =
 	(xsltStyleItemAttributePtr) castedComp;
+    /*
+    * TODO: Change the fields of the compiled struct:
+    *  1) @name (char)
+    *  2) @nameType (String, AVT)
+    *  3) @nsName (char)
+    *  4) nsNameType (None, String, AVT)
+    */
 #else
     xsltStylePreCompPtr comp = castedComp;
 #endif
-    xmlChar *prop = NULL;
-    xmlChar *namespace;
-    const xmlChar *name = NULL;
-    const xmlChar *prefix = NULL;
+    xmlNodePtr targetElem;
+    xmlChar *prop = NULL;    
+    const xmlChar *name = NULL, *prefix = NULL, *nsName = NULL;
     xmlChar *value = NULL;
     xmlNsPtr ns = NULL;
-    xmlAttrPtr attr;
-    const xmlChar *URL = NULL;
+    xmlAttrPtr attr;    
 
-
-    if ((comp == NULL) || (ctxt == NULL)) {
-        xsltTransformError(ctxt, NULL, inst,
-                         "xsl:attribute : compilation failed\n");
+    if ((ctxt == NULL) || (node == NULL) || (inst == NULL))
         return;
-    }
+    /*
+    * BIG NOTE: This previously used xsltGetSpecialNamespace() and
+    *  xsltGetNamespace(), but since both are not appropriate, we
+    *  will process namespace lookup here to avoid adding yet another
+    *  ns-lookup function to namespaces.c.
+    */
+    /*
+    * SPEC XSLT 1.0: Error cases:
+    * - Creating nodes other than text nodes during the instantiation of
+    *   the content of the xsl:attribute element; implementations may
+    *   either signal the error or ignore the offending nodes."
+    */
+
+    if (comp == NULL) {
+        xsltTransformError(ctxt, NULL, inst,
+	    "Internal error in xsltAttributeInternal(): "
+	    "The instruction was no compiled.\n");
+        return;
+    }    
+    /*
+    * TODO: Shouldn't ctxt->insert == NULL be treated as an internal error?
+    *   So report an internal error?
+    */
     if (ctxt->insert == NULL)
+        return;    
+    /*
+    * SPEC XSLT 1.0:
+    *  "Adding an attribute to a node that is not an element;
+    *  implementations may either signal the error or ignore the attribute."
+    *
+    * TODO: I think we should signal such errors in the future, and maybe
+    *  provide an option to ignore such errors.
+    */
+    targetElem = ctxt->insert;
+    if (targetElem->type != XML_ELEMENT_NODE)
+	return;
+    
+    /*
+    * SPEC XSLT 1.0:
+    * "Adding an attribute to an element after children have been added
+    *  to it; implementations may either signal the error or ignore the
+    *  attribute."
+    *
+    * TODO: We should decide whether not to report such errors or
+    *  to ignore them; note that we *ignore* if the parent is not an
+    *  element, but here we report an error.
+    */
+    if (targetElem->children != NULL) {
+	/*
+	* NOTE: Ah! This seems to be intended to support streamed
+	*  result generation!.
+	*/
+        xsltTransformError(ctxt, NULL, inst,
+	    "xsl:attribute: Cannot add attributes to an "
+	    "element if children have been already added "
+	    "to the element.\n");
+        return;
+    }
+
+    /*
+    * Process the name
+    * ----------------
+    */
+    if (!comp->has_name) /* TODO: raise error */
         return;
 
-    if ((node == NULL) || (inst == NULL) || (comp == NULL))
-        return;
-    if (!comp->has_name) {
-        return;
-    }
-    if (ctxt->insert->children != NULL) {
-        xsltTransformError(ctxt, NULL, inst,
-                         "xsl:attribute : node already has children\n");
-        return;
-    }
 #ifdef WITH_DEBUGGER
-    if (ctxt->debugStatus != XSLT_DEBUG_NONE) {
+    if (ctxt->debugStatus != XSLT_DEBUG_NONE)
         xslHandleDebugger(inst, node, NULL, ctxt);
-    }
 #endif
 
     if (comp->name == NULL) {
-        prop =
-            xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *) "name",
-                                      XSLT_NAMESPACE);
+	/* TODO: fix attr acquisition wrt to the XSLT namespace */
+        prop = xsltEvalAttrValueTemplate(ctxt, inst,
+	    (const xmlChar *) "name", XSLT_NAMESPACE);
         if (prop == NULL) {
             xsltTransformError(ctxt, NULL, inst,
-                             "xsl:attribute : name is missing\n");
+		"xsl:attribute: The attribute 'name' is missing.\n");
             goto error;
         }
 	if (xmlValidateQName(prop, 0)) {
 	    xsltTransformError(ctxt, NULL, inst,
-			    "xsl:attribute : invalid QName\n");
+		"xsl:attribute: The effective name '%s' is not a "
+		"valid QName.\n", prop);
 	    /* we fall through to catch any further errors, if possible */
 	}
 	name = xsltSplitQName(ctxt->dict, prop, &prefix);
@@ -704,59 +758,211 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (!xmlStrncasecmp(prefix, (xmlChar *) "xmlns", 5)) {
 #ifdef WITH_XSLT_DEBUG_PARSING
         xsltGenericDebug(xsltGenericDebugContext,
-                         "xsltAttribute: xmlns prefix forbidden\n");
+	    "xsltAttribute: xmlns prefix forbidden\n");
 #endif
+	/*
+	* SPEC XSLT 1.0:
+	*  "It is an error if the string that results from instantiating
+	*  the attribute value template is not a QName or is the string
+	*  xmlns. An XSLT processor may signal the error; if it does not
+	*  signal the error, it must recover by not adding the attribute
+	*  to the result tree."
+	* TODO: Decide which way to go here.
+	*/
         goto error;
     }
-    if ((comp->ns == NULL) && (comp->has_ns)) {
-        namespace = xsltEvalAttrValueTemplate(ctxt, inst,
-                                              (const xmlChar *)
-                                              "namespace", XSLT_NAMESPACE);
-	/*
-	* This fixes bug #302020: check also for the empty string.
-	*/
-        if ((namespace != NULL) && (*namespace != 0)) {
-            ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
-                                         ctxt->insert);
-            xmlFree(namespace);
-        } else {
-            if (prefix != NULL) {
-                ns = xmlSearchNs(inst->doc, inst, prefix);
-                if (ns == NULL) {
-                    xsltTransformError(ctxt, NULL, inst,
-			 "xsl:attribute : no namespace bound to prefix %s\n",
-                                     prefix);
-                } else {
-                    ns = xsltGetNamespace(ctxt, inst, ns, ctxt->insert);
-                }
-            }
-        }
-    } else if (comp->ns != NULL) {
-        ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
-                                     ctxt->insert);
+    /*
+    * Process namespace semantics
+    * ---------------------------
+    *
+    * Evaluate the namespace name.
+    */
+    if (comp->has_ns) {	 
+	if (comp->ns != NULL) {
+	    if (comp->ns[0] != 0)
+		nsName = comp->ns;
+	} else {
+	    xmlChar *tmpNsName;
+	    /*
+	    * Eval the AVT.
+	    */
+	    /* TODO: check attr acquisition wrt to the XSLT namespace */
+	    tmpNsName = xsltEvalAttrValueTemplate(ctxt, inst,
+		(const xmlChar *) "namespace", XSLT_NAMESPACE);	
+	    /*
+	    * This fixes bug #302020: The AVT might also evaluate to the 
+	    * empty string; this means that the empty string also indicates
+	    * "no namespace".
+	    * SPEC XSLT 1.0:
+	    *  "If the string is empty, then the expanded-name of the
+	    *  attribute has a null namespace URI."
+	    */
+	    if ((tmpNsName != NULL) && (tmpNsName[0] != 0))
+		nsName = xmlDictLookup(ctxt->dict, BAD_CAST tmpNsName, -1);
+	    xmlFree(tmpNsName);		
+	};	    
     } else if (prefix != NULL) {
-	xmlNsPtr tmp;
-	tmp = xmlSearchNs(inst->doc, inst, prefix);
-	if (tmp != NULL) {
-	    ns = xsltGetNamespace(ctxt, inst, tmp, ctxt->insert);
-	}
+	/*
+	* SPEC XSLT 1.0:
+	*  "If the namespace attribute is not present, then the QName is
+	*  expanded into an expanded-name using the namespace declarations
+	*  in effect for the xsl:attribute element, *not* including any
+	*  default namespace declaration."
+	*/	
+	ns = xmlSearchNs(inst->doc, inst, prefix);
+	if (ns == NULL) {
+	    /*
+	    * Note that this is treated as an error now (checked with
+	    *  Saxon, Xalan-J and MSXML).
+	    */
+	    xsltTransformError(ctxt, NULL, inst,
+		"xsl:attribute: The effective prefix '%s', has no "
+		"namespace binding in scope in the stylesheet; "
+		"this is an error, since the namespace was not "
+		"specified by the instruction itself.\n", prefix);
+	} else
+	    nsName = ns->href;	
     }
 
-    if ((fromset) && (ns != NULL))
-        URL = ns->href;
-
-    if (fromset) {
-	if (URL != NULL)
-	    attr = xmlHasNsProp(ctxt->insert, name, URL);
-	else
-	    attr = xmlHasProp(ctxt->insert, name);
+    if (fromAttributeSet) {
+	/*
+	* I think this tries to ensure that xsl:attribute(s) coming
+	* from an xsl:attribute-set won't override attribute of
+	* literal result elements or of explicit xsl:attribute(s).
+	*/
+	attr = xmlHasNsProp(targetElem, name, nsName);
 	if (attr != NULL)
 	    return;
     }
-    
+
+    /*
+    * Something about ns-prefixes:
+    * SPEC XSLT 1.0:
+    *  "XSLT processors may make use of the prefix of the QName specified
+    *  in the name attribute when selecting the prefix used for outputting
+    *  the created attribute as XML; however, they are not required to do
+    *  so and, if the prefix is xmlns, they must not do so"
+    */        
+    /*
+    * Find/create a matching ns-decl in the result tree.
+    */
+    ns = NULL;
+#if 0
+    if (0) {	
+	/*
+	* OPTIMIZE TODO: How do we know if we are adding to a
+	*  fragment or not?
+	*
+	* If we are adding to a result tree fragment (i.e., not to the
+	* actual result tree), we'll don't bother searching for the
+	* ns-decl, but just store it in the dummy-doc of the result
+	* tree fragment.
+	*/
+	if (nsName != NULL) {
+	    ns = xsltTreeAcquireStoredNs(ctxt->document->doc, nsName,
+		prefix);
+	}
+    }
+#endif
+    if (nsName != NULL) {
+	/*
+	* The owner-element might be in the same namespace.
+	*/
+	if ((targetElem->ns != NULL) &&
+	    (targetElem->ns->prefix != NULL) &&	    
+	    xmlStrEqual(targetElem->ns->href, nsName))
+	{
+	    ns = targetElem->ns;
+	    goto namespace_finished;
+	}
+	if (prefix != NULL) {
+	    /*
+	    * Search by ns-prefix.
+	    */
+	    ns = xmlSearchNs(targetElem->doc, targetElem, prefix);
+	    if ((ns != NULL) && (xmlStrEqual(ns->href, nsName))) {
+		goto namespace_finished;
+	    }
+	}
+	/*
+	* Fallback to a search by ns-name.
+	*/	
+	ns = xmlSearchNsByHref(targetElem->doc, targetElem, nsName);
+	if ((ns != NULL) && (ns->prefix != NULL)) {
+	    goto namespace_finished;
+	}
+	/*
+	* OK, we need to declare the namespace on the target element.
+	*/
+	if (prefix) {
+	    if (targetElem->nsDef != NULL) {
+		ns = targetElem->nsDef;
+		do {
+		    if ((ns->prefix) && xmlStrEqual(ns->prefix, prefix)) {
+			/*
+			* The prefix is aready occupied.
+			*/
+			break;
+		    }
+		    ns = ns->next;
+		} while (ns != NULL);
+		if (ns == NULL) {
+		    ns = xmlNewNs(targetElem, nsName, prefix);
+		    goto namespace_finished;
+		}
+	    }
+	}
+	/*
+	* Generate a new prefix.
+	*/
+	{
+	    const xmlChar *basepref = prefix;
+	    xmlChar pref[30];
+	    int counter = 0;
+	    
+	    if (prefix != NULL)
+		basepref = prefix;
+	    else
+		basepref = xmlStrdup(BAD_CAST "ns");
+	    
+	    do {
+		snprintf((char *) pref, 30, "%s_%d",
+		    basepref, counter++);
+		ns = xmlSearchNs(targetElem->doc, targetElem, BAD_CAST pref);
+		if (counter > 1000) {
+		    xsltTransformError(ctxt, NULL, inst,
+		    	"Namespace fixup error: Failed to compute a "
+			"new unique ns-prefix for the generated attribute "
+			"{%s}%s'.\n", nsName, name);		    			
+		    ns = NULL;
+		    break;
+		}
+	    } while (ns != NULL);
+	    if (basepref != prefix)
+		xmlFree((xmlChar *)basepref);
+	    ns = xmlNewNs(targetElem, nsName, BAD_CAST pref);
+	}
+
+namespace_finished:
+
+	if (ns == NULL) {
+	    xsltTransformError(ctxt, NULL, inst,
+		"Namespace fixup error: Failed to acquire an in-scope "
+		"namespace binding of the generated attribute '{%s}%s'.\n",
+		nsName, name);
+	    /*
+	    * TODO: Should we just stop here?
+	    */
+	}
+    }
+    /*
+    * Construction of the value
+    * -------------------------
+    */
     if (inst->children == NULL) {
 	/*
 	* No content.
+	* TODO: Do we need to put the empty string in ?
 	*/
 	attr = xmlSetNsProp(ctxt->insert, ns, name, (const xmlChar *) "");
     } else if ((inst->children->next == NULL) && 
@@ -768,11 +974,10 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	* Optimization: if the content is just 1 text node, then
 	* just need to copy it over, or just assign it to the result
 	* if the string is shared.
-	* NOTE that xmlSetNsProp() will query if this is an ID attribute :-/
 	*/
 	attr = xmlSetNsProp(ctxt->insert, ns, name, NULL);
-	if (attr == NULL) /* TODO: report error */
-	    goto internal_err;
+	if (attr == NULL) /* TODO: report error ? */
+	    goto error;
 	/*
 	* This was taken over from xsltCopyText() (transform.c).
 	*/
@@ -782,7 +987,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	{
 	    copyTxt = xmlNewText(NULL);
 	    if (copyTxt == NULL) /* TODO: report error */
-		goto internal_err;
+		goto error;
 	    /*
 	    * This is a safe scenario where we don't need to lookup
 	    * the dict.
@@ -790,22 +995,29 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    copyTxt->content = origTxt->content;
 	    /*
 	    * Copy "disable-output-escaping" information.
+	    * TODO: Does this have any effect for attribute values
+	    *  anyway?
 	    */
 	    if (origTxt->name == xmlStringTextNoenc)
-		copyTxt->name = xmlStringTextNoenc;				
+		copyTxt->name = xmlStringTextNoenc;
 	} else {
 	    /*
 	    * Copy the value.
 	    */
 	    copyTxt = xmlNewText(origTxt->content);
 	    if (copyTxt == NULL) /* TODO: report error */
-		goto internal_err;
+		goto error;
+	    /*
+	    * Copy "disable-output-escaping" information.
+	    * TODO: Does this have any effect for attribute values
+	    *  anyway?
+	    */
 	    if (origTxt->name == xmlStringTextNoenc)
-		copyTxt->name = xmlStringTextNoenc;		
+		copyTxt->name = xmlStringTextNoenc;
 	}
-	if (copyTxt != NULL) {	    
+	if (copyTxt != NULL) {
 	    copyTxt->doc = attr->doc;
-	    xmlAddChild((xmlNodePtr) attr, copyTxt);	    
+	    xmlAddChild((xmlNodePtr) attr, copyTxt);
 	}
     } else {
 	/*
@@ -820,13 +1032,11 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    * TODO: Do we have to add the empty string to the attr?
 	    */
 	    attr = xmlSetNsProp(ctxt->insert, ns, name,
-		(const xmlChar *) "");	    
-	    
+		(const xmlChar *) "");
 	}
     }
 
 error:
-internal_err:
     return;    
 }
 

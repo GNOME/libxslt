@@ -42,14 +42,15 @@ const xmlChar *xsltDocFragFake = (const xmlChar *) " fake node libxslt";
 
 /************************************************************************
  *									*
- *			Result Value Tree interfaces			*
+ *  Result Value Tree (Result Tree Fragment) interfaces			*
  *									*
  ************************************************************************/
 /**
  * xsltCreateRVT:
  * @ctxt:  an XSLT transformation context
  *
- * Create a result value tree
+ * Create a Result Value Tree
+ * (the XSLT 1.0 term for this is "Result Tree Fragment") 
  *
  * Returns the result value tree or NULL in case of error
  */
@@ -59,8 +60,9 @@ xsltCreateRVT(xsltTransformContextPtr ctxt)
     xmlDocPtr container;
 
     /*
-    * TODO: Couldn't we use an XML_DOCUMENT_FRAG_NODE for this?
-    */
+    * Question: Why is this function public?
+    * Answer: It is called by the EXSLT module.
+    */    
     if (ctxt == NULL) return(NULL);
 
     container = xmlNewDoc(NULL);
@@ -82,9 +84,10 @@ xsltCreateRVT(xsltTransformContextPtr ctxt)
 /**
  * xsltRegisterTmpRVT:
  * @ctxt:  an XSLT transformation context
- * @RVT:  a result value tree
+ * @RVT:  a result value tree (Result Tree Fragment)
  *
- * Register the result value tree for destruction at the end of the context
+ * Register the result value tree (XSLT 1.0 term: Result Tree Fragment)
+ * for destruction at the end of the context
  *
  * Returns 0 in case of success and -1 in case of error.
  */
@@ -103,9 +106,10 @@ xsltRegisterTmpRVT(xsltTransformContextPtr ctxt, xmlDocPtr RVT)
 /**
  * xsltRegisterPersistRVT:
  * @ctxt:  an XSLT transformation context
- * @RVT:  a result value tree
+ * @RVT:  a result value tree (Result Tree Fragment)
  *
- * Register the result value tree for destruction at the end of the processing
+ * Register the result value tree (XSLT 1.0 term: Result Tree Fragment)
+ * for destruction at the end of the processing
  *
  * Returns 0 in case of success and -1 in case of error.
  */
@@ -125,7 +129,8 @@ xsltRegisterPersistRVT(xsltTransformContextPtr ctxt, xmlDocPtr RVT)
  * xsltFreeRVTs:
  * @ctxt:  an XSLT transformation context
  *
- * Free all the registered result value tree of the transformation
+ * Free all the registered result value tree (Result Tree Fragment)
+ * of the transformation
  */
 void
 xsltFreeRVTs(xsltTransformContextPtr ctxt)
@@ -613,6 +618,14 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt)
 #else
     precomp = elem->comp;
 #endif
+
+    /*
+    * OPTIMIZE TODO: We should consider if instantiating global vars/params
+    *  on a on-demand basis would be better. The vars/params don't
+    *  need to be evaluated if never called; and in the case of
+    *  global params, if values for such params are provided by the
+    *  user.
+    */
     if (elem->select != NULL) {
 	xmlXPathCompExprPtr comp = NULL;
 

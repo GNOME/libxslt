@@ -366,8 +366,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     if (cur->templTab == NULL) {
 	xsltTransformError(NULL, NULL, (xmlNodePtr) doc,
 		"xsltNewTransformContext: out of memory\n");
-	xmlFree(cur);
-	return(NULL);
+	goto internal_err;
     }
     cur->templNr = 0;
     cur->templMax = 5;
@@ -381,9 +380,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     if (cur->varsTab == NULL) {
         xmlGenericError(xmlGenericErrorContext,
 		"xsltNewTransformContext: out of memory\n");
-	xmlFree(cur->templTab);
-	xmlFree(cur);
-	return(NULL);
+	goto internal_err;
     }
     cur->varsNr = 0;
     cur->varsMax = 5;
@@ -404,14 +401,15 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     if (cur->xpathCtxt == NULL) {
 	xsltTransformError(NULL, NULL, (xmlNodePtr) doc,
 		"xsltNewTransformContext : xmlXPathNewContext failed\n");
-	xmlFree(cur->templTab);
-	xmlFree(cur->varsTab);
-	xmlFree(cur);
-	return(NULL);
+	goto internal_err;
     }
     cur->xpathCtxt->proximityPosition = 0;
     cur->xpathCtxt->contextSize = 0;
-
+    /*
+    * Create an XPath cache.
+    */
+    if (xmlXPathContextSetCache(cur->xpathCtxt, 1, -1, 0) == -1)
+	goto internal_err;
     /*
      * Initialize the extras array
      */
@@ -422,11 +420,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
 	if (cur->extras == NULL) {
 	    xmlGenericError(xmlGenericErrorContext,
 		    "xsltNewTransformContext: out of memory\n");
-	    xmlFree(cur->xpathCtxt);
-	    xmlFree(cur->varsTab);
-	    xmlFree(cur->templTab);
-	    xmlFree(cur);
-	    return(NULL);
+	    goto internal_err;
 	}
 	cur->extrasNr = style->extrasNr;
 	for (i = 0;i < cur->extrasMax;i++) {
@@ -462,10 +456,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     if (docu == NULL) {
 	xsltTransformError(cur, NULL, (xmlNodePtr)doc,
 		"xsltNewTransformContext : xsltNewDocument failed\n");
-	xmlFree(cur->templTab);
-	xmlFree(cur->varsTab);
-	xmlFree(cur);
-	return(NULL);
+	goto internal_err;
     }
     docu->main = 1;
     cur->document = docu;
@@ -477,6 +468,11 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->xinclude = xsltGetXIncludeDefault();
 
     return(cur);
+
+internal_err:
+    if (cur != NULL)
+	xsltFreeTransformContext(cur);
+    return(NULL);
 }
 
 /**
@@ -778,6 +774,11 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
     if (copy != NULL) {
 	if (target != NULL) {
 	    copy->doc = target->doc;
+	    /*
+	    * MAYBE TODO: Maybe we should reset the ctxt->lasttext here
+	    *  to ensure that the optimized text-merging mechanism
+	    *  won't interfere with normal node-merging in any case.
+	    */
 	    xmlAddChild(target, copy);
 	}
     } else {
@@ -790,35 +791,190 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 /**
  * xsltCopyProp:
  * @ctxt:  a XSLT process context
- * @target:  the element where the attribute will be grafted
- * @attr:  the attribute
+ * @targetElem:  the element where the attribute will be grafted
+ * @attr: the attribute to be copied
  *
  * Do a copy of an attribute
  *
  * Returns: a new xmlAttrPtr, or NULL in case of error.
  */
 static xmlAttrPtr
-xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr target,
-	     xmlAttrPtr attr) {
-    xmlAttrPtr ret = NULL;
-    xmlNsPtr ns;
-    xmlChar *val;
+xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr targetElem,
+	     xmlAttrPtr attr)
+{
+    xmlAttrPtr attrCopy;
+    xmlChar *value;
+#ifdef XSLT_REFACTORED 
+    xmlNodePtr txtNode;
+#endif
 
     if (attr == NULL)
 	return(NULL);
-    if (target->type != XML_ELEMENT_NODE)
-	return(NULL);
 
+    if (targetElem->type != XML_ELEMENT_NODE) {
+	/*
+	* TODO: Hmm, it would be better to have the node at hand of the
+	*  instruction which lead to this here.
+	*/
+	xsltTransformError(ctxt, NULL, NULL,
+	    "Result tree construction error: cannot set an attribute node "
+	    "on a non-element node.\n");
+	return(NULL);
+    }    
+
+#ifdef XSLT_REFACTORED
+    /*
+    * Create the attribute node.
+    */
     if (attr->ns != NULL) {
-	ns = xsltGetPlainNamespace(ctxt, attr->parent, attr->ns, target);
+	xmlNsPtr ns = NULL;
+	const xmlChar *prefix = attr->ns->prefix;
+	
+	/*
+	* Process namespace semantics
+	*
+	* RESTRUCTURE TODO: This is the same code as in
+	*  xsltAttributeInternal() (attributes.c), but I currently
+	*  don't want to add yet another ns-lookup function.
+	*/
+	if ((targetElem->ns != NULL) &&
+	    (targetElem->ns->prefix != NULL) &&
+	    xmlStrEqual(targetElem->ns->href, attr->ns->href))
+	{
+	    ns = targetElem->ns;
+	    goto namespace_finished;
+	}
+	if (prefix != NULL) {
+	    /*
+	    * Search by ns-prefix.
+	    */
+	    ns = xmlSearchNs(targetElem->doc, targetElem, prefix);
+	    if ((ns != NULL) &&
+		(xmlStrEqual(ns->href, attr->ns->href)))
+	    {
+		goto namespace_finished;
+	    }
+	}
+	/*
+	* Fallback to a search by ns-name.
+	*/	
+	ns = xmlSearchNsByHref(targetElem->doc, targetElem, attr->ns->href);
+	if ((ns != NULL) && (ns->prefix != NULL)) {
+	    goto namespace_finished;
+	}
+	/*
+	* OK, we need to declare the namespace on the target element.
+	*/
+	if (prefix) {
+	    if (targetElem->nsDef != NULL) {
+		ns = targetElem->nsDef;
+		do {
+		    if ((ns->prefix) && xmlStrEqual(ns->prefix, prefix)) {
+			/*
+			* The prefix aready occupied.
+			*/
+			break;
+		    }
+		    ns = ns->next;
+		} while (ns != NULL);
+		if (ns == NULL) {
+		    ns = xmlNewNs(targetElem, attr->ns->href, prefix);
+		    goto namespace_finished;
+		}
+	    }
+	}
+	/*
+	* Generate a new prefix.
+	*/
+	{
+	    const xmlChar *basepref = prefix;
+	    xmlChar pref[30];
+	    int counter = 0;
+	    
+	    if (prefix != NULL)
+		basepref = prefix;
+	    else
+		basepref = xmlStrdup(BAD_CAST "ns");
+	    
+	    do {
+		snprintf((char *) pref, 30, "%s_%d",
+		    basepref, counter++);
+		ns = xmlSearchNs(targetElem->doc,
+		    (xmlNodePtr) attr, BAD_CAST pref);
+		if (counter > 1000) {
+		    xsltTransformError(ctxt, NULL, (xmlNodePtr) attr,
+			"Namespace fixup error: Failed to compute a "
+			"new unique ns-prefix for the copied attribute "
+			"{%s}%s'.\n", attr->ns->href, attr->name);
+		    ns = NULL;
+		    break;
+		}
+	    } while (ns != NULL);
+	    if (basepref != prefix)
+		xmlFree((xmlChar *)basepref);
+	    ns = xmlNewNs(targetElem, attr->ns->href, BAD_CAST pref);
+	}
+
+namespace_finished:
+
+	if (ns == NULL) {
+	    xsltTransformError(ctxt, NULL, (xmlNodePtr) attr,
+		"Namespace fixup error: Failed to acquire an in-scope "
+		"namespace binding of the copied attribute '{%s}%s'.\n",
+		attr->ns->href, attr->name);
+	    /*
+	    * TODO: Should we just stop here?
+	    */
+	}
+	attrCopy = xmlSetNsProp(targetElem, ns, attr->name, NULL);
     } else {
-	ns = NULL;
+	attrCopy = xmlSetNsProp(targetElem, NULL, attr->name, NULL);
     }
-    val = xmlNodeListGetString(attr->doc, attr->children, 1);
-    ret = xmlSetNsProp(target, ns, attr->name, val);
-    if (val != NULL)
-	xmlFree(val);
-    return(ret);
+    if (attrCopy == NULL)	
+	return(NULL);    
+    /*
+    * NOTE: This was optimized according to bug #342695.
+    * TODO: Can this further be optimized, if source and target
+    *  share the same dict and attr->children is just 1 text node
+    *  which is in the dict? How probable is such a case?
+    */
+    value = xmlNodeListGetString(attr->doc, attr->children, 1);
+    if (value != NULL) {
+	txtNode = xmlNewDocText(targetElem->doc, NULL);
+	if (txtNode == NULL)
+	    return(NULL);
+	if ((targetElem->doc != NULL) &&
+	    (targetElem->doc->dict != NULL))
+	{
+	    txtNode->content =
+		(xmlChar *) xmlDictLookup(targetElem->doc->dict,
+		    BAD_CAST value, -1);
+	    xmlFree(value);	    
+	} else
+	    txtNode->content = value;
+	attrCopy->children = txtNode;
+    }
+    /*
+    * URGENT TODO: Do we need to create an empty text node if the value
+    *  is the empty string?
+    */    
+
+#else /* not XSLT_REFACTORED */
+
+    value = xmlNodeListGetString(attr->doc, attr->children, 1);
+    if (attr->ns != NULL) {
+	xmlNsPtr ns;
+	ns = xsltGetPlainNamespace(ctxt, attr->parent, attr->ns, targetElem);
+	attrCopy = xmlSetNsProp(targetElem, ns, attr->name, value);
+    } else {
+	attrCopy = xmlSetNsProp(targetElem, NULL, attr->name, value);
+    }
+    if (value != NULL)
+	xmlFree(value);
+
+#endif /* not XSLT_REFACTORED */
+
+    return(attrCopy);
 }
 
 /**
@@ -1015,7 +1171,8 @@ xsltCopyNamespaceListInternal(xmlNodePtr node, xmlNsPtr cur) {
  * Make a copy of the full tree under the element node @node
  * and insert it as last child of @insert
  * For literal result element, some of the namespaces may not be copied
- * over according to section 7.1 .
+ * over according to section 7.1.
+ * TODO: Why is this a public function?
  *
  * Returns a pointer to the new tree, or NULL in case of error
  */
@@ -1089,13 +1246,11 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    (node->type == XML_ATTRIBUTE_NODE)) {
 	    xmlNsPtr *nsList, *cur, ns;
 	    /*
-	     * must add in any new namespaces in scope for the node
-	     * REVISIT:
-	     *   Question: Do we really have to add every namespace in scope?
-	     *   Answer: I think yes, since if we are only adding the
-	     *     ns-decls which are declared on this element and actually
-	     *     referenced by this element/attribute, then we would miss
-	     *     ns-decls for QName in element/attribute content.
+	     * Must add any new namespaces in scope for the node.
+	     * TODO: Since we try to reuse existing in-scope ns-decls by
+	     *  using xmlSearchNsByHref(), this will eventually change
+	     *  the prefix of an original ns-binding; thus it might
+	     *  break QNames in element/attribute content.
 	     */
 	    nsList = xmlGetNsList(node->doc, node);
 	    if (nsList != NULL) {
@@ -1108,9 +1263,15 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		}
 		xmlFree(nsList);
 	    }
-	    if (node->ns != NULL)
-		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
-	    else if ((insert->type == XML_ELEMENT_NODE) && (insert->ns != NULL)) {
+	    if (node->ns != NULL) {
+		/*
+		* This will map  copy->ns to one of the newly created
+		* in-scope ns-decls.
+		*/
+		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);		
+	    } else if ((insert->type == XML_ELEMENT_NODE) &&
+		(insert->ns != NULL))
+	    {
 		xmlNsPtr defaultNs;
 
 		defaultNs = xmlSearchNs(insert->doc, insert, NULL);
@@ -1588,10 +1749,10 @@ xsltTransLREUndeclareResultDefaultNs(xsltTransformContextPtr ctxt,
 
 /**
 * xsltTransLREAcquireResultInScopeNs:
-* @ctxt:  the transformation context
-* @cur:  the literal result element
-* @ns:  the namespace
-* @out:  the output node (or its parent)
+* @ctxt: the transformation context
+* @cur: the literal result element (in the stylesheet)
+* @literalNs: the namespace (in the stylsheet)
+* @resultElem: the generated result element
 *
 *
 * Find a matching (prefix and ns-name) ns-declaration
@@ -1606,7 +1767,8 @@ xsltTransLREUndeclareResultDefaultNs(xsltTransformContextPtr ctxt,
 */
 static xmlNsPtr
 xsltTransLREAcquireResultInScopeNs(xsltTransformContextPtr ctxt,
-				   xmlNodePtr cur, xmlNsPtr literalNs,
+				   xmlNodePtr cur,
+				   xmlNsPtr literalNs,
 				   xmlNodePtr resultElem)
 {    
     xmlNsPtr ns;
@@ -3188,7 +3350,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltStylePreCompPtr comp = castedComp;
 #endif
     xmlNodePtr copy, oldInsert;
-
+   
     oldInsert = ctxt->insert;
     if (ctxt->insert != NULL) {
 	switch (node->type) {
@@ -3631,12 +3793,12 @@ error:
 
 /**
  * xsltCopyOf:
- * @ctxt:  a XSLT process context
- * @node:  the node in the source tree.
- * @inst:  the xslt copy-of node
- * @comp:  precomputed information
+ * @ctxt:  an XSLT transformation context
+ * @node:  the current node in the source tree
+ * @inst:  the element node of the XSLT copy-of instruction 
+ * @comp:  precomputed information of the XSLT copy-of instruction
  *
- * Process the xslt copy-of node on the source node
+ * Process the XSLT copy-of instruction.
  */
 void
 xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
@@ -3661,11 +3823,32 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     }
 
+     /*
+    * SPEC XSLT 1.0:
+    *  "The xsl:copy-of element can be used to insert a result tree
+    *  fragment into the result tree, without first converting it to
+    *  a string as xsl:value-of does (see [7.6.1 Generating Text with
+    *  xsl:value-of]). The required select attribute contains an
+    *  expression. When the result of evaluating the expression is a
+    *  result tree fragment, the complete fragment is copied into the
+    *  result tree. When the result is a node-set, all the nodes in the
+    *  set are copied in document order into the result tree; copying
+    *  an element node copies the attribute nodes, namespace nodes and
+    *  children of the element node as well as the element node itself;
+    *  a root node is copied by copying its children. When the result
+    *  is neither a node-set nor a result tree fragment, the result is
+    *  converted to a string and then inserted into the result tree,
+    *  as with xsl:value-of.
+    */
+
 #ifdef WITH_XSLT_DEBUG_PROCESS
     XSLT_TRACE(ctxt,XSLT_TRACE_COPY_OF,xsltGenericDebug(xsltGenericDebugContext,
 	 "xsltCopyOf: select %s\n", comp->select));
 #endif
 
+    /*
+    * Set up the XPath evaluation context.
+    */
     oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
     oldContextSize = ctxt->xpathCtxt->contextSize;
     oldNsNr = ctxt->xpathCtxt->nsNr;
@@ -3683,57 +3866,79 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
 #endif
+    /*
+    * Evaluate the "select" expression.
+    */
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
+    /*
+    * Revert the XPath evaluation context to previous state.
+    */
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->nsNr = oldNsNr;
     ctxt->xpathCtxt->namespaces = oldNamespaces;
+
     if (res != NULL) {
 	if (res->type == XPATH_NODESET) {
+	    /*
+	    * Node-set
+	    * --------
+	    */
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	    XSLT_TRACE(ctxt,XSLT_TRACE_COPY_OF,xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltCopyOf: result is a node set\n"));
 #endif
 	    list = res->nodesetval;
 	    if (list != NULL) {
-		/* the list is already sorted in document order by XPath */
-		/* append everything in this order under ctxt->insert */
+		xmlNodePtr cur;
+		/*
+		* The list is already sorted in document order by XPath.
+		* Append everything in this order under ctxt->insert.
+		*/
 		for (i = 0;i < list->nodeNr;i++) {
-		    if (list->nodeTab[i] == NULL)
+		    cur = list->nodeTab[i];
+		    if (cur == NULL)
 			continue;
-		    if ((list->nodeTab[i]->type == XML_DOCUMENT_NODE) ||
-			(list->nodeTab[i]->type == XML_HTML_DOCUMENT_NODE)) {
-			xsltCopyTreeList(ctxt, list->nodeTab[i]->children,
-				         ctxt->insert, 0);
-		    } else if (list->nodeTab[i]->type == XML_ATTRIBUTE_NODE) {
-			xsltCopyProp(ctxt, ctxt->insert, 
-				     (xmlAttrPtr) list->nodeTab[i]);
+		    if ((cur->type == XML_DOCUMENT_NODE) ||
+			(cur->type == XML_HTML_DOCUMENT_NODE))
+		    {
+			xsltCopyTreeList(ctxt, cur->children, ctxt->insert, 0);
+		    } else if (cur->type == XML_ATTRIBUTE_NODE) {
+			xsltCopyProp(ctxt, ctxt->insert, (xmlAttrPtr) cur);
 		    } else {
-			xsltCopyTree(ctxt, list->nodeTab[i], ctxt->insert, 0);
+			xsltCopyTree(ctxt, cur, ctxt->insert, 0);
 		    }
 		}
 	    }
 	} else if (res->type == XPATH_XSLT_TREE) {
+	    /*
+	    * Result tree fragment
+	    * --------------------
+	    */
 #ifdef WITH_XSLT_DEBUG_PROCESS
 	    XSLT_TRACE(ctxt,XSLT_TRACE_COPY_OF,xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltCopyOf: result is a result tree fragment\n"));
 #endif
+	    /*
+	    * TODO: Is list->nodeTab[0] is an xmlDocPtr?
+	    */
 	    list = res->nodesetval;
 	    if ((list != NULL) && (list->nodeTab != NULL) &&
 		(list->nodeTab[0] != NULL) &&
-		(IS_XSLT_REAL_NODE(list->nodeTab[0]))) {
+		(IS_XSLT_REAL_NODE(list->nodeTab[0])))
+	    {
 		xsltCopyTreeList(ctxt, list->nodeTab[0]->children,
 			         ctxt->insert, 0);
 	    }
 	} else {
-	    /* convert to a string */
+	    /* Convert to a string. */
 	    res = xmlXPathConvertString(res);
 	    if ((res != NULL) && (res->type == XPATH_STRING)) {
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		XSLT_TRACE(ctxt,XSLT_TRACE_COPY_OF,xsltGenericDebug(xsltGenericDebugContext,
 		     "xsltCopyOf: result %s\n", res->stringval));
 #endif
-		/* append content as text node */
+		/* Append content as text node. */
 		xsltCopyTextString(ctxt, ctxt->insert, res->stringval, 0);
 	    }
 	}
@@ -5193,6 +5398,10 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
             }
             if (tmp == root) {
                 ctxt->type = XSLT_OUTPUT_HTML;
+		/*
+		* REVISIT TODO: XML_HTML_DOCUMENT_NODE is set after the
+		*  transformation on the doc, but functions like
+		*/
                 res->type = XML_HTML_DOCUMENT_NODE;
                 if (((doctypePublic != NULL) || (doctypeSystem != NULL))) {
                     res->intSubset = xmlCreateIntSubset(res, doctype,

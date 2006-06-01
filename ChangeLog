@@ -1,3 +1,12 @@
+Thu Jun  1 13:58:19 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/attributes.c libxslt/variables.c
+	  libxslt/transform.c libxslt/xslt.c:
+	  Next step in the refactored code: enhanced xsl:attribute;
+	  enhanced xsltCopyProp.
+	  Added the creation of an XPath cache in
+	  xsltNewTransformContext().
+
 Wed May 31 22:32:44 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/transform.c: Fixed a difference in processing of
