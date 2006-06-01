@@ -223,7 +223,7 @@ except: print 0"`
     fi
     if test "$with_python" != ""
     then
-        pythondir=$(PYTHON_SITE_PACKAGES)
+        pythondir='$(PYTHON_SITE_PACKAGES)'
     else
         pythondir='$(libdir)/python$(PYTHON_VERSION)/site-packages'
     fi
