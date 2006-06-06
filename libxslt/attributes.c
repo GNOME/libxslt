@@ -918,7 +918,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	{
 	    const xmlChar *basepref = prefix;
 	    xmlChar pref[30];
-	    int counter = 0;
+	    int counter = 1;
 	    
 	    if (prefix != NULL)
 		basepref = prefix;
@@ -926,7 +926,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		basepref = xmlStrdup(BAD_CAST "ns");
 	    
 	    do {
-		snprintf((char *) pref, 30, "%s_%d",
+		snprintf((char *) pref, 30, "%s%d",
 		    basepref, counter++);
 		ns = xmlSearchNs(targetElem->doc, targetElem, BAD_CAST pref);
 		if (counter > 1000) {
