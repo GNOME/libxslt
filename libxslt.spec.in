@@ -27,6 +27,7 @@ Group: Development/Libraries
 Requires: libxslt = %{version}
 Requires: libxml2-devel >= 2.5.6
 Requires: libgcrypt-devel
+Requires: pkgconfig
 
 %description devel
 This C library allows to transform XML files into other XML files
@@ -122,28 +123,3 @@ rm -fr %{buildroot}
 %changelog
 * @RELDATE@ Daniel Veillard <veillard@redhat.com>
 - upstream release @VERSION@ see http://xmlsoft.org/XSLT/news.html
-
-* Sun Nov  2 2003 Daniel Veillard <veillard@redhat.com>
-- cleanup, removal of the deprecated breakpoint library and
-  automated libxml2 dependancy level in the generated spec file.
-
-* Wed Oct 23 2002 Daniel Veillard <veillard@redhat.com>
-- revamped the spec file, cleaned up some rpm building problems
-
-* Wed Sep  4 2002 Daniel Veillard <veillard@redhat.com>
-
-- library paths fixed for x86-64
-
-* Fri Feb  8 2002 Daniel.Veillard <veillard@redhat.com>
-
-- added the python module
-- changed the Licence to MIT
-
-* Sat Nov 10 2001 Daniel.Veillard <daniel@veillard.com>
-
-- cleaned up the specfile
-
-* Mon Jan 22 2001 Daniel.Veillard <daniel@veillard.com>
-
-- created based on libxml2 spec file
-
