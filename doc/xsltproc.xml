@@ -26,7 +26,7 @@
 		</affiliation>
 	</author>
 	<!-- date should be the date of the latest change or the release version -->
-	<date>2006-03-05</date>
+	<date>$Date$</date>
 	<!-- still a bit buggy output, will talk to docbook-xsl upstream to fix this -->
 	<!-- <releaseinfo>This is release 0.4 of the xsltproc Manual.</releaseinfo> -->
 	<!-- <edition>0.4</edition> -->
@@ -280,10 +280,22 @@
 			the option with a <replaceable>DIRECTORY</replaceable> directs the
 			output files to the specified directory. This can be
 			useful for multiple outputs (also known as "chunking") or manpage
-			processing. <emphasis role="bold">Note:</emphasis> The given
-			directory <emphasis role="bold">must</emphasis>
-			already exist.
+			processing.
 		</para>
+		<important>
+			<para>
+				The given directory <emphasis role="bold">must</emphasis> already exist.
+			</para>
+		</important>
+		<note>
+			<para>
+				Make sure that <replaceable>FILE</replaceable>
+				and <replaceable>DIRECTORY</replaceable> follow the <quote>URI reference
+				computation</quote> as described in RFC 2396 and laters. This means, that
+				e.g. <option>-o directory</option> will maybe not work,
+				but <option>-o directory/</option> will.
+			</para>
+		</note>
 	</listitem>
 		</varlistentry>
 

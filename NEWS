@@ -10,6 +10,14 @@ ChangeLog.html
 to the CVS at 
 http://cvs.gnome.org/viewcvs/libxslt/
  code base.Those are the public releases made:
+1.1.17: Jun 6 2006:
+   - portability fixes: python detection
+   - bug fixes: some regression tests, attribute/namespaces output (Kasimier
+    Buchcik), problem in mixed xsl:value-of and xsl:text uses (Kasimier)
+   - improvements: internal refactoring (Kasimier Buchcik), use of the XPath
+    object cache in libxml2-2.6.25 (Kasimier)
+
+
 1.1.16: May 01 2006:
    - portability fixes: EXSLT date/time on Solaris and IRIX (Albert Chin),
       HP-UX  build (Albert Chin), 

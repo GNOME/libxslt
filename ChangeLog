@@ -1,3 +1,8 @@
+Mon Jun 12 16:34:15 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: more info about --output
+	  from Daniel Leidert c.f. #344654
+
 Tue Jun  6 17:16:33 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt.spec.in doc//*: preparing release of 1.1.17

@@ -2,7 +2,7 @@
 .\" It was generated using the DocBook XSL Stylesheets (version 1.69.1).
 .\" Instead of manually editing it, you probably should edit the DocBook XML
 .\" source for it and then use the DocBook XSL Stylesheets to regenerate it.
-.TH "XSLTPROC" "1" "2006\-03\-05" "libxslt" ""
+.TH "XSLTPROC" "1" "$Date$" "libxslt" ""
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
@@ -117,10 +117,32 @@ Direct output to the given
 \fIFILE\fR. Using the option with a
 \fIDIRECTORY\fR
 directs the output files to the specified directory. This can be useful for multiple outputs (also known as "chunking") or manpage processing.
-\fBNote:\fR
+.sp
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+\fBImportant\fR
 The given directory
 \fBmust\fR
 already exist.
+.sp
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+\fBNote\fR
+Make sure that
+\fIFILE\fR
+and
+\fIDIRECTORY\fR
+follow the
+\(lqURI reference computation\(rq
+as described in RFC 2396 and laters. This means, that e.g.
+\fB\-o directory\fR
+will maybe not work, but
+\fB\-o directory/\fR
+will.
 .TP
 \fB\-\-param \fR\fB\fIPARAMNAME\fR\fR\fB \fR\fB\fIPARAMVALUE\fR\fR
 Pass a parameter of name
