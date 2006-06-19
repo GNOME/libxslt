@@ -75,6 +75,12 @@ const xmlChar *xsltLiteralResultMarker =
 */
 const xmlChar *xsltXSLTTextMarker = (const xmlChar *) "XSLT Text Element";
 
+/*
+* xsltXSLTAttrMarker:
+* Marker for XSLT attribute on Literal Result Elements.
+*/
+const xmlChar *xsltXSLTAttrMarker = (const xmlChar *) "LRE XSLT Attr";
+
 #endif
 
 /*
@@ -1151,6 +1157,9 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
             xmlFree(style->methodURI);
         style->methodURI = NULL;
 
+	/*
+	* TODO: Don't use xsltGetQNameURI().
+	*/
 	URI = xsltGetQNameURI(cur, &prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
@@ -1260,6 +1269,9 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 		} else {
 		    const xmlChar *URI;
 
+		    /*
+		    * TODO: Don't use xsltGetQNameURI().
+		    */
 		    URI = xsltGetQNameURI(cur, &element);
 		    if (element == NULL) {
 			/*
@@ -1470,6 +1482,9 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    } else {
 		const xmlChar *URI;
 
+		/*
+		* TODO: Don't use xsltGetQNameURI().
+		*/
                 URI = xsltGetQNameURI(cur, &element);
 
 		xmlHashAddEntry2(style->stripSpaces, element, URI,
@@ -1606,6 +1621,9 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    } else {
 		const xmlChar *URI;
 
+		/*
+		* TODO: Don't use xsltGetQNameURI().
+		*/
                 URI = xsltGetQNameURI(cur, &element);
 
 		xmlHashAddEntry2(style->stripSpaces, element, URI,
@@ -1994,7 +2012,7 @@ xsltLREBuildEffectiveNsNodes(xsltCompilerCtxtPtr cctxt,
     extElemNs = cctxt->inode->extElemNs;
     exclResultNs = cctxt->inode->exclResultNs;
 
-    for (i = 0; i < item->inScopeNs->number; i++) {
+    for (i = 0; i < item->inScopeNs->totalNumber; i++) {
 	ns = item->inScopeNs->list[i];
 	/*
 	* Skip namespaces designated as excluded namespaces
@@ -2064,7 +2082,14 @@ xsltLREBuildEffectiveNsNodes(xsltCompilerCtxtPtr cctxt,
 		    * Recognized as an namespace alias; convert it to
 		    * the target namespace.
 		    */
-		    ns = alias->literalNs;
+		    if (alias->targetNs != NULL)
+			ns = alias->literalNs;
+		    else {
+			/*
+			* The target is the NULL namespace.
+			*/
+			goto skip_ns;
+		    }
 		    break;
 		}
 		alias = alias->next;
@@ -2354,7 +2379,8 @@ static xsltNsListContainerPtr
 xsltCompilerBuildInScopeNsList(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
 {
     xsltNsListContainerPtr nsi = NULL;
-    xmlNsPtr *list = NULL;
+    xmlNsPtr *list = NULL, ns;
+    int i, maxns = 5;
     /*
     * Create a new ns-list for this position in the node-tree.
     * xmlGetNsList() will return NULL, if there are no ns-decls in the
@@ -2362,26 +2388,75 @@ xsltCompilerBuildInScopeNsList(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
     * to the resulting list; the XPath module handles the XML namespace
     * internally.
     */
-    list = xmlGetNsList(node->doc, node);
-    if (list == NULL)
+    while (node != NULL) {
+        if (node->type == XML_ELEMENT_NODE) {
+            ns = node->nsDef;
+            while (ns != NULL) {
+                if (nsi == NULL) {
+		    nsi = (xsltNsListContainerPtr)
+			xmlMalloc(sizeof(xsltNsListContainer));
+		    if (nsi == NULL) {
+			xsltTransformError(NULL, cctxt->style, NULL,
+			    "xsltCompilerBuildInScopeNsList: "
+			    "malloc failed!\n");
+			goto internal_err;
+		    }
+		    memset(nsi, 0, sizeof(xsltNsListContainer));
+                    nsi->list =
+                        (xmlNsPtr *) xmlMalloc(maxns * sizeof(xmlNsPtr));
+                    if (nsi->list == NULL) {
+			xsltTransformError(NULL, cctxt->style, NULL,
+			    "xsltCompilerBuildInScopeNsList: "
+			    "malloc failed!\n");
+			goto internal_err;
+                    }
+                    nsi->list[0] = NULL;
+                }
+		/*
+		* Skip shadowed namespace bindings.
+		*/
+                for (i = 0; i < nsi->totalNumber; i++) {
+                    if ((ns->prefix == nsi->list[i]->prefix) ||
+                        (xmlStrEqual(ns->prefix, nsi->list[i]->prefix)))
+		    break;
+                }
+                if (i >= nsi->totalNumber) {
+                    if (nsi->totalNumber >= maxns) {
+                        maxns *= 2;
+			nsi->list =
+			    (xmlNsPtr *) xmlRealloc(nsi->list,
+				maxns * sizeof(xmlNsPtr));
+                        if (nsi->list == NULL) {
+                            xsltTransformError(NULL, cctxt->style, NULL,
+				"xsltCompilerBuildInScopeNsList: "
+				"realloc failed!\n");
+				goto internal_err;
+                        }
+                    }
+                    nsi->list[nsi->totalNumber++] = ns;
+                    nsi->list[nsi->totalNumber] = NULL;
+                }
+
+                ns = ns->next;
+            }
+        }
+        node = node->parent;
+    }
+    if (nsi == NULL)
 	return(NULL);
     /*
-    * Create the info-structure.
+    * Move the default namespace to last position.
     */
-    nsi = (xsltNsListContainerPtr) xmlMalloc(sizeof(xsltNsListContainer));
-    if (nsi == NULL) {	
-	xsltTransformError(NULL, cctxt->style, NULL,
-	    "xsltCompilerBuildInScopeNsList: malloc failed.\n");
-	goto internal_err;
+    nsi->xpathNumber = nsi->totalNumber;
+    for (i = 0; i < nsi->totalNumber; i++) {
+	if (nsi->list[i]->prefix == NULL) {
+	    ns = nsi->list[i];
+	    nsi->list[i] = nsi->list[nsi->totalNumber-1];
+	    nsi->list[nsi->totalNumber-1] = ns;
+	    nsi->xpathNumber--;
+	    break;
+	}
     }
-    memset(nsi, 0, sizeof(xsltNsListContainer));
-    nsi->list = list;
-    /*
-    * Eval the number of ns-decls; this is used to speed up
-    * XPath-context initialization.
-    */
-    while (list[nsi->number] != NULL)
-	nsi->number++;
     /*
     * Store the ns-list in the stylesheet.
     */
@@ -2551,19 +2626,36 @@ xsltParseExclResultPrefixes(xsltCompilerCtxtPtr cctxt, xmlNodePtr node,
 			    int instrCategory)
 {    
     xsltPointerListPtr list = NULL;
-    xmlChar *value = NULL;
+    xmlChar *value;
+    xmlAttrPtr attr;
 
     if ((cctxt == NULL) || (node == NULL))
 	return(NULL);
-    
-    if (instrCategory == XSLT_ELEMENT_CATEGORY_XSLT)
-	value = xmlGetNsProp(node, BAD_CAST "exclude-result-prefixes", NULL);
-    else
-	value = xmlGetNsProp(node, BAD_CAST "exclude-result-prefixes",
-	    XSLT_NAMESPACE);
 
-    if (value == NULL)
+    if (instrCategory == XSLT_ELEMENT_CATEGORY_XSLT)
+	attr = xmlHasNsProp(node, BAD_CAST "exclude-result-prefixes", NULL);
+    else
+	attr = xmlHasNsProp(node, BAD_CAST "exclude-result-prefixes",
+	    XSLT_NAMESPACE);
+    if (attr == NULL)	
 	return(def);
+
+    if (attr && (instrCategory == XSLT_ELEMENT_CATEGORY_LRE)) {
+	/*
+	* Mark the XSLT attr.
+	*/
+	attr->psvi = (void *) xsltXSLTAttrMarker;
+    }
+
+    if ((attr->children != NULL) &&	
+	(attr->children->content != NULL))
+	value = attr->children->content;
+    else {
+	xsltTransformError(NULL, cctxt->style, node,
+	    "Attribute 'exclude-result-prefixes': Invalid value.\n");
+	cctxt->style->errors++;
+	return(def);
+    }        
 
     if (xsltParseNsPrefixList(cctxt, cctxt->tmpList, node,
 	BAD_CAST value) != 0)
@@ -2592,9 +2684,7 @@ xsltParseExclResultPrefixes(xsltCompilerCtxtPtr cctxt, xmlNodePtr node,
     if (cctxt->inode != NULL)
 	cctxt->inode->nsChanged = 1;
 
-exit:
-    if (value != NULL)
-	xmlFree(value);
+exit:    
     if (list != NULL)
 	return(list);
     else
@@ -2631,6 +2721,13 @@ xsltParseExtElemPrefixes(xsltCompilerCtxtPtr cctxt, xmlNodePtr node,
 	    XSLT_NAMESPACE);
     if (attr == NULL)	
 	return(def);
+
+    if (attr && (instrCategory == XSLT_ELEMENT_CATEGORY_LRE)) {
+	/*
+	* Mark the XSLT attr.
+	*/
+	attr->psvi = (void *) xsltXSLTAttrMarker;
+    }
 
     if ((attr->children != NULL) &&	
 	(attr->children->content != NULL))
@@ -2677,20 +2774,12 @@ xsltParseExtElemPrefixes(xsltCompilerCtxtPtr cctxt, xmlNodePtr node,
     if (cctxt->inode != NULL)
 	cctxt->inode->nsChanged = 1;
 
-exit:
-    if (attr && (instrCategory == XSLT_ELEMENT_CATEGORY_LRE)) {
-	/*
-	* Remove the XSLT attribute from the literal result element.
-	*/
-	xmlUnlinkNode((xmlNodePtr) attr);
-	xmlFreeProp(attr);
-    }
+exit:    
     if (list != NULL)
 	return(list);
     else
 	return(def);
 }
-
 
 /*
 * xsltParseAttrXSLTVersion:
@@ -2721,6 +2810,8 @@ xsltParseAttrXSLTVersion(xsltCompilerCtxtPtr cctxt, xmlNodePtr node,
 
     if (attr == NULL)	
 	return(0);
+
+    attr->psvi = (void *) xsltXSLTAttrMarker;
 
     if ((attr->children != NULL) &&	
 	(attr->children->content != NULL))
@@ -2758,34 +2849,12 @@ xsltParseAttrXSLTVersion(xsltCompilerCtxtPtr cctxt, xmlNodePtr node,
 
     if (attr && (instrCategory == XSLT_ELEMENT_CATEGORY_LRE)) {
 	/*
-	* Remove the XSLT attribute from the literal result element.
+	* Set a marker on XSLT attributes.
 	*/
-	xmlUnlinkNode((xmlNodePtr) attr);
-	xmlFreeProp(attr);
+	attr->psvi = (void *) xsltXSLTAttrMarker;
     }
     return(1);
 }
-
-#if 0
-static int
-xsltParseRemoveXSLTAttrs(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
-{
-    if (node->properties == NULL)
-	return(0);
-    else {
-	xmlAttrPtr tmpattr, attr = node->properties;
-	do {	    
-	    if (IS_XSLT_ATTR_FAST(attr)) {
-		tmpattr = attr;
-		attr = attr->next;
-		xmlUnlinkNode((xmlNodePtr) tmpattr);
-		xmlFreeProp(tmpattr);
-	    } else
-		attr = attr->next;
-	} while (attr != NULL);
-    }
-}
-#endif
 
 static int
 xsltParsePreprocessStylesheetTree(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
@@ -4358,6 +4427,7 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
 		    cur->psvi = NULL;
 		    cctxt->inode->category = XSLT_ELEMENT_CATEGORY_LRE;
 		    if (cur->properties != NULL) {
+			xmlAttrPtr attr = cur->properties;
 			/*
 			* Attribute "xsl:exclude-result-prefixes".
 			*/
@@ -4371,24 +4441,35 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
 			xsltParseAttrXSLTVersion(cctxt, cur,
 			    XSLT_ELEMENT_CATEGORY_LRE);
 			/*
-			* Report invalid XSLT attributes.
+			* Report invalid XSLT attributes.			
+			* For XSLT 1.0 only xsl:use-attribute-sets is allowed
+			* next to xsl:version, xsl:exclude-result-prefixes and
+			* xsl:extension-element-prefixes.
+			*
+			* Mark all XSLT attributes, in order to skip such
+			* attributes when instantiating the LRE.
 			*/
-			if (cur->properties) {
-			    xmlAttrPtr attr = cur->properties;
-
-			    do {
-				if (IS_XSLT_ATTR_FAST(attr) &&
-				    (! xmlStrEqual(attr->name,
-					BAD_CAST "use-attribute-sets")))
+			do {
+			    if ((attr->psvi != xsltXSLTAttrMarker) &&
+				IS_XSLT_ATTR_FAST(attr))
+			    {				    
+				if (! xmlStrEqual(attr->name,
+				    BAD_CAST "use-attribute-sets"))
 				{				
-				    xsltTransformError(NULL, cctxt->style, cur,
+				    xsltTransformError(NULL, cctxt->style,
+					cur,
 					"Unknown XSLT attribute '%s'.\n",
-					attr->name);				
-				     cctxt->style->errors++;
+					attr->name);
+				    cctxt->style->errors++;
+				} else {
+				    /*
+				    * XSLT attr marker.
+				    */
+				    attr->psvi = (void *) xsltXSLTAttrMarker;
 				}
-				attr = attr->next;
-			    } while (attr != NULL);			    
-			}
+			    }
+			    attr = attr->next;
+			} while (attr != NULL);
 		    }
 		    /*
 		    * Create/reuse info for the literal result element.
@@ -4732,6 +4813,9 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     if (prop != NULL) {
         const xmlChar *URI;
 
+	/*
+	* TODO: Don't use xsltGetQNameURI().
+	*/
 	URI = xsltGetQNameURI(key, &prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
@@ -4826,69 +4910,7 @@ xsltParseXSLTTemplate(xsltCompilerCtxtPtr cctxt, xmlNodePtr templNode) {
 
     templ->next = cctxt->style->templates;
     cctxt->style->templates = templ;
-    templ->style = cctxt->style;
-   
-
-    /*
-    * Get inherited namespaces.
-    */
-    if (cctxt->inode->inScopeNs != NULL) {
-	int i, j;
-	xmlNsPtr ns;
-	xsltPointerListPtr extElemNs = cctxt->inode->extElemNs;
-	xsltPointerListPtr exclResultNs = cctxt->inode->exclResultNs;
-	xsltNsListContainerPtr inScopeNs = cctxt->inode->inScopeNs;
-
-	for (i = 0; i < inScopeNs->number; i++) {
-	    ns = inScopeNs->list[i];
-	    /*
-	    * Exclude the XSLT namespace.
-	    */
-	    if (xmlStrEqual(ns->href, XSLT_NAMESPACE))
-		goto skip_ns;
-	    /*
-	    * Exclude excluded result namespaces.
-	    */
-	    if (exclResultNs) {
-		for (j = 0; j < exclResultNs->number; j++)
-		    if (xmlStrEqual(ns->href, BAD_CAST exclResultNs->items[j]))
-			goto skip_ns;		
-	    }
-	    /*
-	    * Exclude extension-element namespaces.
-	    */
-	    if (extElemNs) {
-		for (j = 0; j < extElemNs->number; j++)
-		    if (xmlStrEqual(ns->href, BAD_CAST extElemNs->items[j]))
-			goto skip_ns;
-	    }
-	    /*
-	    * Add the xmlNs item.
-	    */
-	    if (templ->inheritedNs == NULL) {
-		templ->inheritedNs = (xmlNsPtr *) xmlMalloc(
-		    inScopeNs->number * sizeof(xmlNsPtr));
-		if (templ->inheritedNs == NULL) {
-		    xmlGenericError(xmlGenericErrorContext,
-			"xsltGetInheritedNsList : out of memory!\n");
-		    cctxt->style->errors++;
-		    goto error;
-		}
-		memset(templ->inheritedNs, 0,
-		    inScopeNs->number * sizeof(xmlNsPtr));
-	    }
-	    templ->inheritedNs[templ->inheritedNsNr++] = ns;
-skip_ns:
-	    {}
-	}	
-#ifdef WITH_XSLT_DEBUG_PARSING
-	if (templ->inheritedNsNr != 0) {
-	    xsltGenericDebug(xsltGenericDebugContext,
-		"xsl:template has %d inherited namespaces\n",
-		templ->inheritedNsNr);
-	}
-#endif
-    }
+    templ->style = cctxt->style;  
 
     /*
     * Attribute "mode".
@@ -4900,6 +4922,8 @@ skip_ns:
 	/*
 	* TODO: We need a standardized function for extraction
 	*  of namespace names and local names from QNames.
+	*  Don't use xsltGetQNameURI() as it cannot channeö
+	*  reports through the context.
 	*/
 	modeURI = xsltGetQNameURI(templNode, &prop);
 	if (prop == NULL) {
@@ -4949,6 +4973,9 @@ skip_ns:
         const xmlChar *nameURI;
 	xsltTemplatePtr curTempl;
 	
+	/*
+	* TODO: Don't use xsltGetQNameURI().
+	*/
 	nameURI = xsltGetQNameURI(templNode, &prop);
 	if (prop == NULL) {
 	    cctxt->style->errors++;
@@ -5056,6 +5083,9 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     if (prop != NULL) {
         const xmlChar *URI;
 
+	/*
+	* TODO: Don't use xsltGetQNameURI().
+	*/
 	URI = xsltGetQNameURI(template, &prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
@@ -5092,6 +5122,9 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
         const xmlChar *URI;
 	xsltTemplatePtr cur;
 	
+	/*
+	* TODO: Don't use xsltGetQNameURI().
+	*/
 	URI = xsltGetQNameURI(template, &prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;

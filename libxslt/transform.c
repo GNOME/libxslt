@@ -82,6 +82,20 @@ int xsltMaxDepth = 5000;
 #define IS_BLANK_NODE(n)						\
     (((n)->type == XML_TEXT_NODE) && (xsltIsBlank((n)->content)))
 
+
+/*
+* Forward declarations
+*/
+
+static xmlNsPtr
+xsltCopyNamespaceListInternal(xmlNodePtr node, xmlNsPtr cur);
+
+static xmlNodePtr
+xsltCopyTreeInternal(xsltTransformContextPtr ctxt,
+		     xmlNodePtr invocNode,
+		     xmlNodePtr node,
+		     xmlNodePtr insert, int isLRE, int topElemVisited);
+
 /**
  * templPush:
  * @ctxt: the transformation context
@@ -615,15 +629,18 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
     len = xmlStrlen(string);
     if ((ctxt->type == XSLT_OUTPUT_XML) &&
 	(ctxt->style->cdataSection != NULL) &&
-	(target != NULL) && (target->type == XML_ELEMENT_NODE) &&
+	(target != NULL) &&
+	(target->type == XML_ELEMENT_NODE) &&
 	(((target->ns == NULL) && 
 	  (xmlHashLookup2(ctxt->style->cdataSection,
 		          target->name, NULL) != NULL)) ||
 	 ((target->ns != NULL) &&
 	  (xmlHashLookup2(ctxt->style->cdataSection,
-	                  target->name, target->ns->href) != NULL)))) {
+	                  target->name, target->ns->href) != NULL))))
+    {
 	if ((target != NULL) && (target->last != NULL) &&
-	    (target->last->type == XML_CDATA_SECTION_NODE)) {
+	    (target->last->type == XML_CDATA_SECTION_NODE))
+	{
 	    return(xsltAddTextString(ctxt, target->last, string, len));
 	}
 	copy = xmlNewCDataBlock(ctxt->output, string, len);
@@ -711,6 +728,7 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	/*
 	* TODO: Since this doesn't merge adjacent CDATA-section nodes,
 	* we'll get: <![CDATA[x]]><!CDATA[y]]>.
+	* TODO: Reported in #321505.
 	*/
 	copy = xmlNewCDataBlock(ctxt->output, cur->content,
 				xmlStrlen(cur->content));
@@ -789,136 +807,51 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 }
 
 /**
- * xsltCopyProp:
+ * xsltShallowCopyAttr:
  * @ctxt:  a XSLT process context
- * @targetElem:  the element where the attribute will be grafted
+ * @invocNode: responsible node in the stylesheet; used for error reports
+ * @target:  the element where the attribute will be grafted
  * @attr: the attribute to be copied
  *
- * Do a copy of an attribute
+ * Do a copy of an attribute.
+ * Called by:
+ *  - xsltCopyTreeInternal()
+ *  - xsltCopyOf()
+ *  - xsltCopy()
  *
  * Returns: a new xmlAttrPtr, or NULL in case of error.
  */
 static xmlAttrPtr
-xsltCopyProp(xsltTransformContextPtr ctxt, xmlNodePtr targetElem,
-	     xmlAttrPtr attr)
+xsltShallowCopyAttr(xsltTransformContextPtr ctxt, xmlNodePtr invocNode,
+	     xmlNodePtr target, xmlAttrPtr attr)
 {
-    xmlAttrPtr attrCopy;
+    xmlAttrPtr copy;
     xmlChar *value;
-#ifdef XSLT_REFACTORED 
-    xmlNodePtr txtNode;
-#endif
 
     if (attr == NULL)
 	return(NULL);
 
-    if (targetElem->type != XML_ELEMENT_NODE) {
-	/*
-	* TODO: Hmm, it would be better to have the node at hand of the
-	*  instruction which lead to this here.
-	*/
-	xsltTransformError(ctxt, NULL, NULL,
-	    "Result tree construction error: cannot set an attribute node "
-	    "on a non-element node.\n");
+    if (target->type != XML_ELEMENT_NODE) {
+	xsltTransformError(ctxt, NULL, invocNode,
+	    "Cannot add an attribute node to a non-element node.\n");
 	return(NULL);
-    }    
+    }
+    
+    if (target->children != NULL) {
+	xsltTransformError(ctxt, NULL, invocNode,
+	    "Attribute nodes must be added before "
+	    "any child nodes to an element.\n");
+	return(NULL);
+    }
 
-#ifdef XSLT_REFACTORED
-    /*
-    * Create the attribute node.
-    */
+    value = xmlNodeListGetString(attr->doc, attr->children, 1);
     if (attr->ns != NULL) {
-	xmlNsPtr ns = NULL;
-	const xmlChar *prefix = attr->ns->prefix;
-	
-	/*
-	* Process namespace semantics
-	*
-	* RESTRUCTURE TODO: This is the same code as in
-	*  xsltAttributeInternal() (attributes.c), but I currently
-	*  don't want to add yet another ns-lookup function.
-	*/
-	if ((targetElem->ns != NULL) &&
-	    (targetElem->ns->prefix != NULL) &&
-	    xmlStrEqual(targetElem->ns->href, attr->ns->href))
-	{
-	    ns = targetElem->ns;
-	    goto namespace_finished;
-	}
-	if (prefix != NULL) {
-	    /*
-	    * Search by ns-prefix.
-	    */
-	    ns = xmlSearchNs(targetElem->doc, targetElem, prefix);
-	    if ((ns != NULL) &&
-		(xmlStrEqual(ns->href, attr->ns->href)))
-	    {
-		goto namespace_finished;
-	    }
-	}
-	/*
-	* Fallback to a search by ns-name.
-	*/	
-	ns = xmlSearchNsByHref(targetElem->doc, targetElem, attr->ns->href);
-	if ((ns != NULL) && (ns->prefix != NULL)) {
-	    goto namespace_finished;
-	}
-	/*
-	* OK, we need to declare the namespace on the target element.
-	*/
-	if (prefix) {
-	    if (targetElem->nsDef != NULL) {
-		ns = targetElem->nsDef;
-		do {
-		    if ((ns->prefix) && xmlStrEqual(ns->prefix, prefix)) {
-			/*
-			* The prefix aready occupied.
-			*/
-			break;
-		    }
-		    ns = ns->next;
-		} while (ns != NULL);
-		if (ns == NULL) {
-		    ns = xmlNewNs(targetElem, attr->ns->href, prefix);
-		    goto namespace_finished;
-		}
-	    }
-	}
-	/*
-	* Generate a new prefix.
-	*/
-	{
-	    const xmlChar *basepref = prefix;
-	    xmlChar pref[30];
-	    int counter = 0;
-	    
-	    if (prefix != NULL)
-		basepref = prefix;
-	    else
-		basepref = xmlStrdup(BAD_CAST "ns");
-	    
-	    do {
-		snprintf((char *) pref, 30, "%s_%d",
-		    basepref, counter++);
-		ns = xmlSearchNs(targetElem->doc,
-		    (xmlNodePtr) attr, BAD_CAST pref);
-		if (counter > 1000) {
-		    xsltTransformError(ctxt, NULL, (xmlNodePtr) attr,
-			"Namespace fixup error: Failed to compute a "
-			"new unique ns-prefix for the copied attribute "
-			"{%s}%s'.\n", attr->ns->href, attr->name);
-		    ns = NULL;
-		    break;
-		}
-	    } while (ns != NULL);
-	    if (basepref != prefix)
-		xmlFree((xmlChar *)basepref);
-	    ns = xmlNewNs(targetElem, attr->ns->href, BAD_CAST pref);
-	}
+	xmlNsPtr ns; 
 
-namespace_finished:
-
+	ns = xsltGetSpecialNamespace(ctxt, invocNode,
+	    attr->ns->href, attr->ns->prefix, target);
 	if (ns == NULL) {
-	    xsltTransformError(ctxt, NULL, (xmlNodePtr) attr,
+	    xsltTransformError(ctxt, NULL, invocNode,
 		"Namespace fixup error: Failed to acquire an in-scope "
 		"namespace binding of the copied attribute '{%s}%s'.\n",
 		attr->ns->href, attr->name);
@@ -926,115 +859,155 @@ namespace_finished:
 	    * TODO: Should we just stop here?
 	    */
 	}
-	attrCopy = xmlSetNsProp(targetElem, ns, attr->name, NULL);
+	/*
+	* Note that xmlSetNsProp() will take care of duplicates
+	* and assigns the new namespace even to a duplicate.
+	*/
+	copy = xmlSetNsProp(target, ns, attr->name, value);
     } else {
-	attrCopy = xmlSetNsProp(targetElem, NULL, attr->name, NULL);
+	copy = xmlSetNsProp(target, NULL, attr->name, value);
     }
-    if (attrCopy == NULL)	
-	return(NULL);    
+    if (value != NULL)
+	xmlFree(value);
+
+    if (copy == NULL)
+	return(NULL);
+
+#if 0
     /*
     * NOTE: This was optimized according to bug #342695.
     * TODO: Can this further be optimized, if source and target
     *  share the same dict and attr->children is just 1 text node
     *  which is in the dict? How probable is such a case?
     */
+    /*
+    * TODO: Do we need to create an empty text node if the value
+    *  is the empty string?
+    */
     value = xmlNodeListGetString(attr->doc, attr->children, 1);
     if (value != NULL) {
-	txtNode = xmlNewDocText(targetElem->doc, NULL);
+	txtNode = xmlNewDocText(target->doc, NULL);
 	if (txtNode == NULL)
 	    return(NULL);
-	if ((targetElem->doc != NULL) &&
-	    (targetElem->doc->dict != NULL))
+	if ((target->doc != NULL) &&
+	    (target->doc->dict != NULL))
 	{
 	    txtNode->content =
-		(xmlChar *) xmlDictLookup(targetElem->doc->dict,
+		(xmlChar *) xmlDictLookup(target->doc->dict,
 		    BAD_CAST value, -1);
-	    xmlFree(value);	    
+	    xmlFree(value);
 	} else
 	    txtNode->content = value;
-	attrCopy->children = txtNode;
+	copy->children = txtNode;
     }
-    /*
-    * URGENT TODO: Do we need to create an empty text node if the value
-    *  is the empty string?
-    */    
+#endif
 
-#else /* not XSLT_REFACTORED */
-
-    value = xmlNodeListGetString(attr->doc, attr->children, 1);
-    if (attr->ns != NULL) {
-	xmlNsPtr ns;
-	ns = xsltGetPlainNamespace(ctxt, attr->parent, attr->ns, targetElem);
-	attrCopy = xmlSetNsProp(targetElem, ns, attr->name, value);
-    } else {
-	attrCopy = xmlSetNsProp(targetElem, NULL, attr->name, value);
-    }
-    if (value != NULL)
-	xmlFree(value);
-
-#endif /* not XSLT_REFACTORED */
-
-    return(attrCopy);
+    return(copy);
 }
 
 /**
- * xsltCopyPropList:
+ * xsltCopyAttrListNoOverwrite:
  * @ctxt:  a XSLT process context
- * @target:  the element where the properties will be grafted
- * @cur:  the first property
+ * @invocNode: responsible node in the stylesheet; used for error reports
+ * @target:  the element where the new attributes will be grafted
+ * @attr:  the first attribute in the list to be copied
  *
- * Do a copy of a properties list.
+ * Copies a list of attribute nodes, starting with @attr, over to the
+ * @target element node.
  *
- * Returns: a new xmlAttrPtr, or NULL in case of error.
+ * Called by:
+ *  - xsltCopyTreeInternal()
+ *
+ * Returns 0 on success and -1 on errors and internal errors.
  */
-static xmlAttrPtr
-xsltCopyPropList(xsltTransformContextPtr ctxt, xmlNodePtr target,
-	         xmlAttrPtr cur) {
-    xmlAttrPtr ret = NULL;
-    xmlAttrPtr p = NULL,q;
-    xmlNsPtr ns;
+static int
+xsltCopyAttrListNoOverwrite(xsltTransformContextPtr ctxt,
+			    xmlNodePtr invocNode,
+			    xmlNodePtr target, xmlAttrPtr attr)
+{
+    xmlAttrPtr last = NULL, copy;
+    xmlNsPtr origNs = NULL, copyNs = NULL;
+    xmlChar *value = NULL;
 
-    while (cur != NULL) {
-	if (cur->ns != NULL) {
-	    ns = xsltGetNamespace(ctxt, cur->parent, cur->ns, target);
+    /*
+    * Don't use xmlCopyProp() here, since it will try to
+    * reconciliate namespaces.
+    */
+    while (attr != NULL) {
+	/*
+	* Find a namespace node in the tree of @target.
+	* Avoid searching for the same ns.
+	*/
+	if (attr->ns != origNs) {
+	    origNs = attr->ns;
+	    if (attr->ns != NULL) {
+		copyNs = xsltGetSpecialNamespace(ctxt, invocNode,
+		    attr->ns->href, attr->ns->prefix, target);
+		if (copyNs == NULL)
+		    return(-1);
+	    } else
+		copyNs = NULL;
+	}
+	if (attr->children)
+	    value = xmlNodeListGetString(attr->doc, attr->children, 1);
+	/*
+	* REVISIT: I think xmlNewDocProp() is the only attr function
+	* which does not eval if the attr is of type ID. This is good,
+	* since we don't need this.
+	*/
+	copy = xmlNewDocProp(target->doc, attr->name, BAD_CAST value);
+	if (copy == NULL)
+	    return(-1);
+	copy->parent = target;
+	copy->ns = copyNs;
+	
+	if (last == NULL) {
+	    target->properties = copy;
+	    last = copy;
 	} else {
-	    ns = NULL;
+	    last->next = copy;
+	    copy->prev = last;
+	    last = copy;
 	}
-        q = xmlCopyProp(target, cur);
-	if (q != NULL) {
-	    q->ns = ns;
-	    if (p == NULL) {
-		ret = p = q;
-	    } else {
-		p->next = q;
-		q->prev = p;
-		p = q;
-	    }
+	/*
+	* OPTIMIZE TODO: How to avoid this intermediate string?
+	*/
+	if (value != NULL) {
+	    xmlFree(value);
+	    value = NULL;
 	}
-	cur = cur->next;
-    }
-    return(ret);
+	attr = attr->next;
+    }    
+    return(0);
 }
 
 /**
- * xsltCopyNode:
- * @ctxt:  a XSLT process context
- * @node:  the element node in the source tree.
- * @insert:  the parent in the result tree.
+ * xsltShallowCopyElem:
+ * @ctxt:  the XSLT process context
+ * @node:  the element node in the source tree
+ *         or the Literal Result Element
+ * @insert:  the parent in the result tree
+ * @isLRE: if @node is a Literal Result Element
  *
  * Make a copy of the element node @node
- * and insert it as last child of @insert
- * Intended *only* for copying literal result elements and
- * text-nodes.
+ * and insert it as last child of @insert.
+ *
+ * URGENT TODO: The problem with this one (for the non-refactored code)
+ * is that it is used for both, Literal Result Elements *and*
+ * copying input nodes.
+ *
+ * BIG NOTE: This is only called for XML_ELEMENT_NODEs.
+ *
  * Called from:
- *   xsltApplyOneTemplateInt()
- *   xsltCopy()
+ *   xsltApplyOneTemplateInt() (for Literal Result Elements - which is a problem)
+ *   xsltCopy() (for shallow-copying elements via xsl:copy)
  *
  * Returns a pointer to the new node, or NULL in case of error
  */
 static xmlNodePtr
-xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	     xmlNodePtr insert) {
+xsltShallowCopyElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
+		    xmlNodePtr insert, int isLRE)
+{
     xmlNodePtr copy;
 
     if ((node->type == XML_DTD_NODE) || (insert == NULL))
@@ -1042,33 +1015,59 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if ((node->type == XML_TEXT_NODE) ||
 	(node->type == XML_CDATA_SECTION_NODE))
 	return(xsltCopyText(ctxt, insert, node, 0));
+
     copy = xmlDocCopyNode(node, insert->doc, 0);
     if (copy != NULL) {
 	copy->doc = ctxt->output;
 	xmlAddChild(insert, copy);
+
 	if (node->type == XML_ELEMENT_NODE) {
 	    /*
 	     * Add namespaces as they are needed
 	     */
-	    if (node->nsDef != NULL)
-		xsltCopyNamespaceList(ctxt, copy, node->nsDef);
-	}
-	if ((node->type == XML_ELEMENT_NODE) ||
-	     (node->type == XML_ATTRIBUTE_NODE)) {
-	    if (node->ns != NULL) {
-		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
-	    } else if ((insert->type == XML_ELEMENT_NODE) &&
-		       (insert->ns != NULL)) {
-		xmlNsPtr defaultNs;
+	    if (node->nsDef != NULL) {
+		/*
+		* TODO: Remove the LRE case in the refactored code
+		* gets enabled.
+		*/
+		if (isLRE)
+		    xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+		else
+		    xsltCopyNamespaceListInternal(copy, node->nsDef);
+	    }
 
-		defaultNs = xmlSearchNs(insert->doc, insert, NULL);
-		if (defaultNs != NULL)
-		    xmlNewNs(copy, BAD_CAST "", NULL);
+	    /*
+	    * URGENT TODO: The problem with this is that it does not
+	    *  copy over all namespace nodes in scope.
+	    *  The damn thing about this is, that we would need to
+	    *  use the xmlGetNsList(), for every single node; this is
+	    *  also done in xsltCopyTreeInternal(), but only for the top node.
+	    */
+	    if (node->ns != NULL) {
+		if (isLRE) {
+		    /*
+		    * REVISIT TODO: Since the non-refactored code still does
+		    *  ns-aliasing, we need to call xsltGetNamespace() here.
+		    *  Remove this when ready.
+		    */
+		    copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);
+		} else {
+		    copy->ns = xsltGetSpecialNamespace(ctxt,
+			node, node->ns->href, node->ns->prefix, copy);
+		    
+		}
+	    } else if ((insert->type == XML_ELEMENT_NODE) &&
+		       (insert->ns != NULL))
+	    {
+		/*
+		* "Undeclare" the default namespace.
+		*/
+		xsltGetSpecialNamespace(ctxt, node, NULL, NULL, copy);
 	    }
 	}
     } else {
 	xsltTransformError(ctxt, NULL, node,
-		"xsltCopyNode: copy %s failed\n", node->name);
+		"xsltShallowCopyElem: copy %s failed\n", node->name);
     }
     return(copy);
 }
@@ -1076,24 +1075,31 @@ xsltCopyNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 /**
  * xsltCopyTreeList:
  * @ctxt:  a XSLT process context
+ * @invocNode: responsible node in the stylesheet; used for error reports
  * @list:  the list of element nodes in the source tree.
  * @insert:  the parent in the result tree.
  * @literal:  is this a literal result element list
  *
  * Make a copy of the full list of tree @list
  * and insert it as last children of @insert
- * For literal result element, some of the namespaces may not be copied
- * over according to section 7.1 .
+ *
+ * NOTE: Not to be used for Literal Result Elements.
+ *
+ * Used by:
+ *  - xsltCopyOf()
  *
  * Returns a pointer to the new list, or NULL in case of error
  */
 static xmlNodePtr
-xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
-	     xmlNodePtr insert, int literal) {
+xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr invocNode,
+		 xmlNodePtr list,
+		 xmlNodePtr insert, int isLRE, int topElemVisited)
+{
     xmlNodePtr copy, ret = NULL;
 
     while (list != NULL) {
-	copy = xsltCopyTree(ctxt, list, insert, literal);
+	copy = xsltCopyTreeInternal(ctxt, invocNode,
+	    list, insert, isLRE, topElemVisited);
 	if (copy != NULL) {
 	    if (ret == NULL) {
 		ret = copy;
@@ -1112,73 +1118,183 @@ xsltCopyTreeList(xsltTransformContextPtr ctxt, xmlNodePtr list,
  * Do a copy of a namespace list. If @node is non-NULL the
  * new namespaces are added automatically.
  * Called by:
- *   xsltCopyTree()
+ *   xsltCopyTreeInternal()
  *
- * TODO: What is the exact difference between this function
+ * QUESTION: What is the exact difference between this function
  *  and xsltCopyNamespaceList() in "namespaces.c"?
+ * ANSWER: xsltCopyNamespaceList() tries to apply ns-aliases.
  *
  * Returns: a new xmlNsPtr, or NULL in case of error.
  */
 static xmlNsPtr
-xsltCopyNamespaceListInternal(xmlNodePtr node, xmlNsPtr cur) {
+xsltCopyNamespaceListInternal(xmlNodePtr elem, xmlNsPtr ns) {
     xmlNsPtr ret = NULL;
-    xmlNsPtr p = NULL,q;
+    xmlNsPtr p = NULL, q, luNs;
 
-    if (cur == NULL)
+    if (ns == NULL)
 	return(NULL);
-    if (cur->type != XML_NAMESPACE_DECL)
-	return(NULL);
-
     /*
      * One can add namespaces only on element nodes
      */
-    if ((node != NULL) && (node->type != XML_ELEMENT_NODE))
-	node = NULL;
+    if ((elem != NULL) && (elem->type != XML_ELEMENT_NODE))
+	elem = NULL;
 
-    while (cur != NULL) {
-	if (cur->type != XML_NAMESPACE_DECL)
+    do {
+	if (ns->type != XML_NAMESPACE_DECL)
 	    break;
-
 	/*
-	 * Avoid duplicating namespace declarations on the tree
+	 * Avoid duplicating namespace declarations on the tree.
 	 */
-	if ((node != NULL) && (node->ns != NULL) &&
-            (xmlStrEqual(node->ns->href, cur->href)) &&
-            (xmlStrEqual(node->ns->prefix, cur->prefix))) {
-	    cur = cur->next;
-	    continue;
-	}
-	
-	q = xmlNewNs(node, cur->href, cur->prefix);
+	if (elem != NULL) {	    
+	    if ((elem->ns != NULL) &&
+		xmlStrEqual(elem->ns->prefix, ns->prefix) &&
+		xmlStrEqual(elem->ns->href, ns->href))
+	    {
+		ns = ns->next;
+		continue;
+	    }
+	    luNs = xmlSearchNs(elem->doc, elem, ns->prefix);
+	    if ((luNs != NULL) && (xmlStrEqual(luNs->href, ns->href)))
+	    {
+		ns = ns->next;
+		continue;
+	    }
+	}	    	
+	q = xmlNewNs(elem, ns->href, ns->prefix);
 	if (p == NULL) {
 	    ret = p = q;
 	} else if (q != NULL) {
 	    p->next = q;
 	    p = q;
 	}
-	cur = cur->next;
-    }
+	ns = ns->next;	
+    } while (ns != NULL);
     return(ret);
 }
 
 /**
- * xsltCopyTree:
- * @ctxt:  a XSLT process context
- * @node:  the element node in the source tree.
- * @insert:  the parent in the result tree.
- * @literal:  is this a literal result element list
+ * xsltShallowCopyNsNode:
+ * @ctxt:  the XSLT transformation context
+ * @invocNode: responsible node in the stylesheet; used for error reports
+ * @insert:  the target element node in the result tree
+ * @ns: the namespace node
+ *
+ * This is used for copying ns-nodes with xsl:copy-of and xsl:copy.
+ *
+ * Returns a new/existing ns-node, or NULL.
+ */
+static int
+xsltShallowCopyNsNode(xsltTransformContextPtr ctxt,
+		      xmlNodePtr invocNode,
+		      xmlNodePtr insert,
+		      xmlNsPtr ns)
+{
+    xmlNsPtr tmpns;
+
+    if ((insert == NULL) || (insert->type != XML_ELEMENT_NODE))
+	return(-1);
+    
+    if (insert->children != NULL) {
+	xsltTransformError(ctxt, NULL, invocNode,
+	    "Namespace nodes must be added before "
+	    "any child nodes are added to an element.\n");
+	return(1);
+    }
+    /*    
+    *
+    * BIG NOTE: Xalan-J simply overwrites any ns-decls with
+    * an equal prefix. We definitively won't do that.
+    *
+    * MSXML 4.0 and the .NET ignores ns-decls for which an
+    * equal prefix is already in use.
+    *
+    * Saxon raises an error like:
+    * "net.sf.saxon.xpath.DynamicError: Cannot create two namespace
+    * nodes with the same name".
+    *
+    * NOTE: We'll currently follow MSXML here.
+    * REVISIT TODO: Check if it's better to follow Saxon here.
+    */
+    if (ns->prefix == NULL) {
+	/*
+	* If we are adding ns-nodes to an element using e.g.
+	* <xsl:copy-of select="/foo/namespace::*">, then we need
+	* to ensure that we don't incorrectly declare a default
+	* namespace on an element in no namespace, which otherwise
+	* would move the element incorrectly into a namespace, if
+	* the node tree is serialized.
+	*/
+	if (insert->ns == NULL)
+	    goto occupied;
+    } else if ((ns->prefix[0] == 'x') &&
+	xmlStrEqual(ns->prefix, BAD_CAST "xml"))
+    {
+	return(0);
+    }
+
+    if (insert->nsDef != NULL) {
+	tmpns = insert->nsDef;
+	do {
+	    if ((tmpns->prefix == NULL) == (ns->prefix == NULL)) {		
+		if ((tmpns->prefix == ns->prefix) ||
+		    xmlStrEqual(tmpns->prefix, ns->prefix))
+		{
+		    /*
+		    * Same prefix.
+		    */
+		    if (xmlStrEqual(tmpns->href, ns->href))
+			return(0);
+		    goto occupied;
+		}
+	    }
+	    tmpns = tmpns->next;
+	} while (tmpns != NULL);
+    }
+    tmpns = xmlSearchNs(insert->doc, insert, ns->prefix);
+    if ((tmpns != NULL) && xmlStrEqual(tmpns->href, ns->href))
+	return(0);
+    /*
+    * Declare a new namespace.
+    * TODO: The problem (wrt efficiency) with this xmlNewNs() is
+    * that it will again search the already declared namespaces
+    * for a duplicate :-/
+    */
+    xmlNewNs(insert, ns->href, ns->prefix);
+    return(0);    
+
+occupied:
+    /*
+    * TODO: We could as well raise an error here (like Saxon does),
+    * or at least generate a warning.
+    */
+    return(0);
+}
+
+/**
+ * xsltCopyTreeInternal:
+ * @ctxt:  the XSLT transformation context
+ * @invocNode: responsible node in the stylesheet; used for error reports
+ * @node:  the element node in the source tree
+ * @insert:  the parent in the result tree
+ * @isLRE:  indicates if @node is a Literal Result Element
+ * @topElemVisited: indicates if a top-most element was already processed
  *
  * Make a copy of the full tree under the element node @node
  * and insert it as last child of @insert
- * For literal result element, some of the namespaces may not be copied
- * over according to section 7.1.
- * TODO: Why is this a public function?
+ *
+ * NOTE: Not to be used for Literal Result Elements.
+ *
+ * Used by:
+ *  - xsltCopyOf()
  *
  * Returns a pointer to the new tree, or NULL in case of error
  */
-xmlNodePtr
-xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
-		     xmlNodePtr insert, int literal) {
+static xmlNodePtr
+xsltCopyTreeInternal(xsltTransformContextPtr ctxt,
+		     xmlNodePtr invocNode,
+		     xmlNodePtr node,
+		     xmlNodePtr insert, int isLRE, int topElemVisited)
+{
     xmlNodePtr copy;
 
     if (node == NULL)
@@ -1203,12 +1319,10 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    return(xsltCopyTextString(ctxt, insert, node->content, 0));
         case XML_ATTRIBUTE_NODE:
 	    return((xmlNodePtr)
-		   xsltCopyProp(ctxt, insert, (xmlAttrPtr) node));
+		xsltShallowCopyAttr(ctxt, invocNode, insert, (xmlAttrPtr) node));
         case XML_NAMESPACE_DECL:
-	    if (insert->type != XML_ELEMENT_NODE)
-		return(NULL);
-	    return((xmlNodePtr)
-		   xsltCopyNamespaceList(ctxt, insert, (xmlNsPtr) node));
+	    return((xmlNodePtr) xsltShallowCopyNsNode(ctxt, invocNode,
+		insert, (xmlNsPtr) node));
 	    
         case XML_DOCUMENT_TYPE_NODE:
         case XML_DOCUMENT_FRAG_NODE:
@@ -1223,7 +1337,8 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }    
     if (XSLT_IS_RES_TREE_FRAG(node)) {
 	if (node->children != NULL)
-	    copy = xsltCopyTreeList(ctxt, node->children, insert, 0);
+	    copy = xsltCopyTreeList(ctxt, invocNode,
+		node->children, insert, 0, 0);
 	else
 	    copy = NULL;
 	return(copy);
@@ -1237,64 +1352,155 @@ xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	 */
 	if (insert->last != copy)
 	    return(insert->last);
-
 	copy->next = NULL;
-	/*
-	 * Add namespaces as they are needed
-	 */
-	if ((node->type == XML_ELEMENT_NODE) ||
-	    (node->type == XML_ATTRIBUTE_NODE)) {
-	    xmlNsPtr *nsList, *cur, ns;
+
+	if (node->type == XML_ELEMENT_NODE) {	    
 	    /*
-	     * Must add any new namespaces in scope for the node.
-	     * TODO: Since we try to reuse existing in-scope ns-decls by
-	     *  using xmlSearchNsByHref(), this will eventually change
-	     *  the prefix of an original ns-binding; thus it might
-	     *  break QNames in element/attribute content.
-	     */
-	    nsList = xmlGetNsList(node->doc, node);
-	    if (nsList != NULL) {
-		cur = nsList;
-		while (*cur != NULL) {
-		    ns = xmlSearchNsByHref(insert->doc, insert, (*cur)->href);
-		    if (ns == NULL)
-			xmlNewNs(copy, (*cur)->href, (*cur)->prefix);
-		    cur++;
-		}
-		xmlFree(nsList);
-	    }
-	    if (node->ns != NULL) {
+	    * Copy in-scope namespace nodes.
+	    *
+	    * REVISIT: Since we try to reuse existing in-scope ns-decls by
+	    *  using xmlSearchNsByHref(), this will eventually change
+	    *  the prefix of an original ns-binding; thus it might
+	    *  break QNames in element/attribute content.
+	    * OPTIMIZE TODO: If we had a xmlNsPtr * on the transformation
+	    *  context, plus a ns-lookup function, which writes directly
+	    *  to a given list, then we wouldn't need to create/free the
+	    *  nsList every time.
+	    */
+	    if ((topElemVisited == 0) &&
+		(node->parent != NULL) &&
+		(node->parent->type != XML_DOCUMENT_NODE) &&
+		(node->parent->type != XML_HTML_DOCUMENT_NODE))
+	    {
+		xmlNsPtr *nsList, *curns, ns;
+		
 		/*
-		* This will map  copy->ns to one of the newly created
-		* in-scope ns-decls.
+		* If this is a top-most element in a tree to be
+		* copied, then we need to ensure that all in-scope
+		* namespaces are copied over. For nodes deeper in the
+		* tree, it is sufficient to reconcile only the ns-decls
+		* (node->nsDef entries).
 		*/
-		copy->ns = xsltGetNamespace(ctxt, node, node->ns, copy);		
+		
+		nsList = xmlGetNsList(node->doc, node);
+		if (nsList != NULL) {
+		    curns = nsList;
+		    do {
+			/*
+			* Search by prefix first in order to break as less
+			* QNames in element/attribute content as possible.
+			*/
+			ns = xmlSearchNs(insert->doc, insert,
+			    (*curns)->prefix);
+			
+			if ((ns == NULL) ||
+			    (! xmlStrEqual(ns->href, (*curns)->href)))
+			{
+			    ns = NULL;
+			    /*
+			    * Search by namespace name.
+			    * REVISIT TODO: Currently disabled.
+			    */
+#if 0
+			    ns = xmlSearchNsByHref(insert->doc,
+				insert, (*curns)->href);
+#endif
+			}
+			if (ns == NULL) {
+			    /*
+			    * Declare a new namespace on the copied element.
+			    */
+			    ns = xmlNewNs(copy, (*curns)->href,
+				(*curns)->prefix);
+			    /* TODO: Handle errors */
+			}
+			if (node->ns == *curns) {
+			    /*
+			    * If this was the original's namespace then set
+			    * the generated counterpart on the copy.
+			    */
+			    copy->ns = ns;
+			}
+			curns++;
+		    } while (*curns != NULL);
+		    xmlFree(nsList);
+		}
+	    } else if (node->nsDef != NULL) {		
+		/*
+		* Copy over all namespace declaration attributes.		
+		*/
+		if (node->nsDef != NULL) {
+		    if (isLRE)
+			xsltCopyNamespaceList(ctxt, copy, node->nsDef);
+		    else
+			xsltCopyNamespaceListInternal(copy, node->nsDef);
+		}
+	    }
+	    /*
+	    * Set the namespace.
+	    */
+	    if (node->ns != NULL) {
+		if (copy->ns == NULL) {
+		    /*
+		    * This will map copy->ns to one of the newly created
+		    * in-scope ns-decls, OR create a new ns-decl on @copy.
+		    */
+		    copy->ns = xsltGetSpecialNamespace(ctxt, invocNode,
+			node->ns->href, node->ns->prefix, copy);
+		}
 	    } else if ((insert->type == XML_ELEMENT_NODE) &&
 		(insert->ns != NULL))
 	    {
-		xmlNsPtr defaultNs;
-
-		defaultNs = xmlSearchNs(insert->doc, insert, NULL);
-		if (defaultNs != NULL)
-		    xmlNewNs(copy, BAD_CAST "", NULL);
+		/*
+		* "Undeclare" the default namespace on @copy with xmlns="".
+		*/
+		xsltGetSpecialNamespace(ctxt, invocNode, NULL, NULL, copy);
 	    }
+	    /*
+	    * Copy attribute nodes.
+	    */
+	    if (node->properties != NULL) {
+		xsltCopyAttrListNoOverwrite(ctxt, invocNode,
+		    copy, node->properties);
+	    }
+	    if (topElemVisited == 0)
+		topElemVisited = 1;
 	}
-	if (node->nsDef != NULL) {
-	    if (literal)
-	        xsltCopyNamespaceList(ctxt, copy, node->nsDef);
-	    else
-	        xsltCopyNamespaceListInternal(copy, node->nsDef);
+	/*
+	* Copy the subtree.
+	*/
+	if (node->children != NULL) {
+	    xsltCopyTreeList(ctxt, invocNode,
+		node->children, copy, isLRE, topElemVisited);
 	}
-	if (node->properties != NULL)
-	    copy->properties = xsltCopyPropList(ctxt, copy,
-					       node->properties);
-	if (node->children != NULL)
-	    xsltCopyTreeList(ctxt, node->children, copy, literal);
     } else {
-	xsltTransformError(ctxt, NULL, node,
-		"xsltCopyTree: copy %s failed\n", node->name);
+	xsltTransformError(ctxt, NULL, invocNode,
+	    "xsltCopyTreeInternal: Copying of '%s' failed.\n", node->name);
     }
     return(copy);
+}
+
+/**
+ * xsltCopyTree:
+ * @ctxt:  the XSLT transformation context
+ * @node:  the element node in the source tree
+ * @insert:  the parent in the result tree
+ * @literal:  indicates if @node is a Literal Result Element
+ *
+ * Make a copy of the full tree under the element node @node
+ * and insert it as last child of @insert
+ * For literal result element, some of the namespaces may not be copied
+ * over according to section 7.1.
+ * TODO: Why is this a public function?
+ *
+ * Returns a pointer to the new tree, or NULL in case of error
+ */
+xmlNodePtr
+xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
+	     xmlNodePtr insert, int literal)
+{
+    return(xsltCopyTreeInternal(ctxt, node, node, insert, literal, 0));
+    
 }
 
 /************************************************************************
@@ -1659,277 +1865,6 @@ xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 }
 
-#ifdef XSLT_REFACTORED
-/**
-* xsltTransLREUndeclareDefaultNs:
-* @ctxt:  the transformation context
-* @cur:  the literal result element
-* @ns:  the namespace
-* @out:  the output node (or its parent)
-*
-*
-* Find a matching (prefix and ns-name) ns-declaration
-*  for the given @ns in the result tree.
-* If none is found then a new ns-declaration will be
-*  added to @out. If, in this case, the given prefix is already
-*  in use, then a ns-declaration with a modified ns-prefix
-*  be we created.
-*
-* Returns the acquired ns-declaration
-*         or NULL in case of an API or internal error.
-*/
-static int
-xsltTransLREUndeclareResultDefaultNs(xsltTransformContextPtr ctxt,
-				     xmlNodePtr cur,
-				     xmlNodePtr resultElem)
-{
-    xmlNsPtr ns;
-    /*
-    * OPTIMIZE TODO: This all could be optimized by keeping track of
-    *  the ns-decls currently in-scope via a specialized context.
-    */
-    /*
-    * Search on the result element itself.
-    */
-    if (resultElem->nsDef != NULL) {
-	ns = resultElem->nsDef;
-	do {
-	    if (ns->prefix == NULL) {
-		if ((ns->href != NULL) && (ns->href[0] != 0)) {
-		    /*
-		    * Raise a namespace normalization error.
-		    */
-		    xsltTransformError(ctxt, NULL, cur,
-			"Namespace normalization error: Cannot undeclare "
-			"the default namespace, since the default namespace "
-			"'%s' is already declared on the result element.\n",
-			ns->href);
-		    return(1);
-		} else {
-		    /*
-		    * The default namespace was undeclared on the
-		    * result element.
-		    */
-		    return(0);
-		}
-		break;
-	    }
-	    ns = ns->next;
-	} while (ns != NULL);
-    }
-
-    if ((resultElem->parent != NULL) &&
-	(resultElem->parent->type == XML_ELEMENT_NODE))
-    {
-	/*
-	* The parent element is in no namespace, so assume
-	* that there is no default namespace in scope.
-	*/
-	if (resultElem->parent->ns == NULL)
-	    return(0);
-
-	ns = xmlSearchNs(resultElem->doc, resultElem->parent,
-	    NULL);
-	/*
-	* Fine if there's no default ns is scope, or if the
-	* default ns was undeclared.
-	*/
-	if ((ns == NULL) || (ns->href == NULL) || (ns->href[0] == 0))
-	    return(0);
-
-	/*
-	* Undeclare the default namespace.
-	*/
-	ns = xmlNewNs(resultElem, BAD_CAST "", NULL);
-	/* TODO: Check result */	
-	return(0);
-    }
-    return(0);
-}
-
-/**
-* xsltTransLREAcquireResultInScopeNs:
-* @ctxt: the transformation context
-* @cur: the literal result element (in the stylesheet)
-* @literalNs: the namespace (in the stylsheet)
-* @resultElem: the generated result element
-*
-*
-* Find a matching (prefix and ns-name) ns-declaration
-*  for the given @ns in the result tree.
-* If none is found then a new ns-declaration will be
-*  added to @out. If, in this case, the given prefix is already
-*  in use, then a ns-declaration with a modified ns-prefix
-*  be we created.
-*
-* Returns the acquired ns-declaration
-*         or NULL in case of an API or internal error.
-*/
-static xmlNsPtr
-xsltTransLREAcquireResultInScopeNs(xsltTransformContextPtr ctxt,
-				   xmlNodePtr cur,
-				   xmlNsPtr literalNs,
-				   xmlNodePtr resultElem)
-{    
-    xmlNsPtr ns;
-    int prefixOccupied = 0;
-
-    if ((ctxt == NULL) || (cur == NULL) || (resultElem == NULL))
-	return(NULL);
-    
-    /*
-    * OPTIMIZE TODO: This all could be optimized by keeping track of
-    *  the ns-decls currently in-scope via a specialized context.
-    */
-    /*
-    * NOTE: Namespace exclusion and ns-aliasing is performed at
-    * compilation-time in the refactored code; so this need not be done
-    * here.
-    */
-    /*
-    * First: search on the result element itself.
-    */
-    if (resultElem->nsDef != NULL) {
-	ns = resultElem->nsDef;
-	do {
-	    if ((ns->prefix == NULL) == (literalNs->prefix == NULL)) {
-		if (literalNs->prefix == NULL) {
-		    if (xmlStrEqual(ns->href, literalNs->href))
-			return(ns);
-		    prefixOccupied = 1;
-		    break;
-		} else if ((ns->prefix[0] == literalNs->prefix[0]) &&
-		     xmlStrEqual(ns->prefix, literalNs->prefix))
-		{
-		    if (xmlStrEqual(ns->href, literalNs->href))
-			return(ns);
-		    prefixOccupied = 1;
-		    break;
-		}
-	    }
-	    ns = ns->next;
-	} while (ns != NULL);
-    }
-    if (prefixOccupied) {
-	/*
-	* If the ns-prefix is occupied by an other ns-decl on the
-	* result element, then this means:
-	* 1) The desired prefix is shadowed
-	* 2) There's no way around changing the prefix	
-	*
-	* Try a desperate search for an in-scope ns-decl
-	* with a matching ns-name before we use the last option,
-	* which is to recreate the ns-decl with a modified prefix.
-	*/
-	ns = xmlSearchNsByHref(resultElem->doc, resultElem, literalNs->href);
-	if (ns != NULL)
-	    return(ns);
-
-	/*
-	* Fallback to changing the prefix.
-	*/    
-    } else if ((resultElem->parent != NULL) &&
-	(resultElem->parent->type == XML_ELEMENT_NODE)) {
-	/*
-	* Try to find a matching ns-decl in the ancestor-axis.
-	*
-	* Check the common case: The parent element of the current
-	* result element is in the same namespace (with an equal ns-prefix).
-	*/     
-	if ((resultElem->parent->ns != NULL) &&
-	    ((resultElem->parent->ns->prefix == NULL) ==
-	     (literalNs->prefix == NULL)))
-	{
-	    ns = resultElem->parent->ns;
-	    
-	    if (literalNs->prefix == NULL) {
-		if (xmlStrEqual(ns->href, literalNs->href))
-		    return(ns);
-	    } else if ((ns->prefix[0] == literalNs->prefix[0]) &&
-		xmlStrEqual(ns->prefix, literalNs->prefix) &&
-		xmlStrEqual(ns->href, literalNs->href))
-	    {
-		return(ns);
-	    }
-	}
-	/*
-	* Lookup the remaining in-scope namespaces.
-	*/    
-	ns = xmlSearchNs(resultElem->doc, resultElem->parent,
-	    literalNs->prefix);
-	if ((ns != NULL) && xmlStrEqual(ns->href, literalNs->href))
-	    return(ns);
-	ns = NULL;
-	/*
-	* Either no matching ns-prefix was found or the namespace is
-	* shadowed.
-	* Create a new ns-decl on the current result element.
-	*
-	* SPEC TODO: Hmm, we could also try to reuse an in-scope
-	*  namespace with a matching ns-name but a different
-	*  ns-prefix.
-	*  What has higher precedence? 
-	*  1) If keeping the prefix: create a new ns-decl.
-	*  2) If reusal: first lookup ns-names; then fallback
-	*     to creation of a new ns-decl.
-	* REVISIT TODO: this currently uses case 2) since this
-	*  is the way it used to be before refactoring.
-	*/
-	ns = xmlSearchNsByHref(resultElem->doc, resultElem,
-	    literalNs->href);
-	if (ns != NULL)
-	    return(ns);
-	/*
-	* Create the ns-decl on the current result element.
-	*/
-	ns = xmlNewNs(resultElem, literalNs->href, literalNs->prefix);
-	/* TODO: check errors */
-	return(ns);
-    } else if ((resultElem->parent == NULL) ||
-	(resultElem->parent->type != XML_ELEMENT_NODE))
-    {
-	/*
-	* This is the root of the tree.
-	*/
-	ns = xmlNewNs(resultElem, literalNs->href, literalNs->prefix);
-	/* TODO: Check result */
-	return(ns);
-    }
-    /*
-    * Fallback: we need to generate a new prefix and declare the namespace
-    * on the result element.
-    */
-    {
-	xmlChar prefix[30];
-	int counter = 0;
-	
-	/*
-	* Comment copied from xslGetNamespace():
-	*  "For an element node, if we don't find it, or it's the default
-	*  and this element already defines a default (bug 165560), we
-	*  need to create it."
-	*/		
-	do {
-	    snprintf((char *) prefix, 30, "%s_%d",
-		literalNs->prefix, counter++);
-	    ns = xmlSearchNs(resultElem->doc, resultElem, BAD_CAST prefix);
-	    if (counter > 1000) {
-		xsltTransformError(ctxt, NULL, cur,
-		    "Internal error in xsltTransLREAcquireInScopeNs(): "		    
-		    "Failed to compute a unique ns-prefix for the "
-		    "result element");
-		return(NULL);
-	    }
-	} while (ns != NULL);
-	ns = xmlNewNs(resultElem, literalNs->href, BAD_CAST prefix);
-	/* TODO: Check result */
-	return(ns);
-    }
-    return(NULL);    
-}
-
-#endif /* XSLT_REFACTORED */
-
 /**
  * xsltApplyOneTemplate:
  * @ctxt:  a XSLT process context
@@ -2138,7 +2073,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		/*
 		* Copy the raw element-node.
-		* OLD: if ((copy = xsltCopyNode(ctxt, cur, insert)) == NULL)
+		* OLD: if ((copy = xsltShallowCopyElem(ctxt, cur, insert))
+		*     == NULL)
 		*   goto error;
 		*/		
 		copy = xmlDocCopyNode(cur, insert->doc, 0);
@@ -2200,43 +2136,34 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    if (cur->ns != NULL) {
 			/*
 			* If there's no such ns-decl in the result tree,
-			* then xsltGetNamespace() will create a ns-decl
-			* on the copied node.
-			*/
-			/*
-			* REVISIT TODO: Changed to use
-			*  xsltTransLREAcquireInScopeNs() instead of
-			*  xsltGetNamespace().
-			*  OLD: copy->ns = xsltGetNamespace(ctxt, cur,
-			*                     cur->ns, copy);
-			*/
-			copy->ns = xsltTransLREAcquireResultInScopeNs(ctxt,
-			    cur, cur->ns, copy);
+			* then xsltGetSpecialNamespace() will
+			* create a ns-decl on the copied node.
+			*/			
+			copy->ns = xsltGetSpecialNamespace(ctxt, cur,
+			    cur->ns->href, cur->ns->prefix, copy);			    
 		    } else {
 			/*
 			* Undeclare the default namespace if needed.
-			* This can be skipped, if:
-			* 1) If the result element has no ns-decls, in which
-			*    case the result element abviously does not
-			*    declare a default namespace.
-			* 2) AND there's either no parent, or the parent
-			*   is in no namespace; this means there's no
-			*   default namespace is scope to care about.
+			* This can be skipped, if the result element has
+			*  no ns-decls, in which case the result element
+			*  obviously does not declare a default namespace;
+			*  AND there's either no parent, or the parent
+			*  element is in no namespace; this means there's no
+			*  default namespace is scope to care about.
 			*
-			* REVISIT TODO: This might result in massive
+			* REVISIT: This might result in massive
 			*  generation of ns-decls if nodes in a default
 			*  namespaces are mixed with nodes in no namespace.
 			*  
 			*/
 			if (copy->nsDef ||
-			    ((insert != NULL) && (insert->ns != NULL)))
-			    xsltTransLREUndeclareResultDefaultNs(ctxt,
-				cur, copy);
-#if 0
-			defaultNs = xmlSearchNs(insert->doc, insert, NULL);
-			if ((defaultNs != NULL) && (defaultNs->href != NULL))
-			    xmlNewNs(copy, BAD_CAST "", NULL);
-#endif
+			    ((insert != NULL) &&
+			     (insert->type == XML_ELEMENT_NODE) &&
+			     (insert->ns != NULL)))
+			{
+			    xsltGetSpecialNamespace(ctxt, cur,
+				NULL, NULL, copy);
+			}
 		    }
 		}
 		/*
@@ -2245,118 +2172,11 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		*  is processed to produce an attribute for the element in
 		*  the result tree."
 		* TODO: Refactor this, since it still uses ns-aliasing.
+		* NOTE: See bug #341325.
 		*/
 		if (cur->properties != NULL) {
 		    xsltAttrListTemplateProcess(ctxt, copy, cur->properties);
 		}
-		/*
-		* OLD-COMMENT: "Add extra namespaces inherited from the
-		*   current template if we are in the first level children
-		*   and this is a "real" template.
-		*
-		* SPEC XSLT 2.0:
-		*  "The following namespaces are designated as excluded
-		*   namespaces:
-		*  - The XSLT namespace URI
-		*      (http://www.w3.org/1999/XSL/Transform)
-		*  - A namespace URI declared as an extension namespace
-		*  - A namespace URI designated by using an
-		*      [xsl:]exclude-result-prefixes
-		*
-		* TODO:
-		*  XSLT 1.0
-		*   1) Supply all in-scope namespaces
-		*   2) Skip excluded namespaces (see above)
-		*   3) Apply namespace aliasing
-		*
-		*  XSLT 2.0 (will generate
-		*            redundant namespaces in some cases):
-		*   1) Supply all in-scope namespaces
-		*   2) Skip excluded namespaces if *not* target-namespace
-		*      of an namespace alias
-		*   3) Apply namespace aliasing
-		*
-		* NOTE: See bug #341325.
-		*/
-#if 0		
-		if ((templ != NULL) && (oldInsert == insert) &&
-		    (ctxt->templ != NULL) &&
-		    (ctxt->templ->inheritedNs != NULL)) {
-		    int i;
-		    xmlNsPtr ns, ret;
-		    
-		    for (i = 0; i < ctxt->templ->inheritedNsNr; i++) {
-			const xmlChar *URI = NULL;
-			xsltStylesheetPtr style;
-
-			ns = ctxt->templ->inheritedNs[i];
-			/*
-			* Apply namespace aliasing.
-			*
-			* TODO: Compute the effective value of namespace
-			*  aliases at compilation-time in order to avoid
-			*  the lookup in the import-tree here.
-			*/
-			style = ctxt->style;
-			while (style != NULL) {
-			    if (style->nsAliases != NULL)
-				URI = (const xmlChar *) 
-				    xmlHashLookup(style->nsAliases, ns->href);
-			    if (URI != NULL)
-				break;
-			    
-			    style = xsltNextImport(style);
-			}
-			if (URI == UNDEFINED_DEFAULT_NS) {
-			    xmlNsPtr defaultNs;
-
-			    defaultNs = xmlSearchNs(cur->doc, cur, NULL);
-			    if (defaultNs == NULL) {
-				/*
-				* TODO: Should not happen; i.e., it is
-				*  an error at compilation-time if there's
-				*  no default namespace in scope if
-				*  "#default" is used.
-				*/
-				continue;
-			    } else
-				URI = defaultNs->href;
-			}
-			
-			if (URI == NULL) {
-			    /*
-			    * There was no matching namespace-alias, so
-			    * just create a matching ns-decl if not
-			    * already in scope.
-			    */
-			    ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-			    if ((ret == NULL) ||
-				(!xmlStrEqual(ret->href, ns->href)))
-				xmlNewNs(copy, ns->href, ns->prefix);
-			} else if (!xmlStrEqual(URI, XSLT_NAMESPACE)) {
-			    ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-			    if ((ret == NULL) ||
-				(!xmlStrEqual(ret->href, URI))) {
-				/*
-				* Here we create a namespace
-				* declaration with the literal namespace
-				* prefix and with the target namespace name.
-				* TODO: We should consider to fix this and
-				*  use the *target* namespace prefix, not the
-				*  literal one (see bug #341325).
-				*/
-				xmlNewNs(copy, URI, ns->prefix);
-			    }
-			}
-		    }
-		    if (copy->ns != NULL) {
-			/*
-			* Fix the node namespace if needed
-			*/
-			copy->ns = xsltGetNamespace(ctxt, copy, copy->ns, copy);
-		    }
-		}
-#endif
 	    } else if (IS_XSLT_ELEM_FAST(cur)) {
 		/*
 		* XSLT instructions
@@ -2512,8 +2332,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
                     ctxt->insert = insert;
                     if (!xsltApplyFallbacks(ctxt, node, cur)) {
                         xsltGenericError(xsltGenericErrorContext,
-                                         "xsltApplyOneTemplate: %s was not compiled\n",
-                                         cur->name);
+			    "xsltApplyOneTemplate: %s was not compiled\n",
+			    cur->name);
                     }
                     ctxt->insert = oldInsert;
                 }
@@ -2547,8 +2367,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 xsltMessage(ctxt, node, cur);
             } else {
                 xsltGenericError(xsltGenericErrorContext,
-                                 "xsltApplyOneTemplate: problem with xsl:%s\n",
-                                 cur->name);
+		    "xsltApplyOneTemplate: problem with xsl:%s\n",
+		    cur->name);
             }
             goto skip_children;
         } else if ((cur->type == XML_TEXT_NODE) ||
@@ -2635,15 +2455,8 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
                              "xsltApplyOneTemplate: copy node %s\n",
                              cur->name));
 #endif
-            if ((copy = xsltCopyNode(ctxt, cur, insert)) == NULL)
-		goto error;
-            /*
-             * all the attributes are directly inherited
-             */
-            if (cur->properties != NULL) {
-                xsltAttrListTemplateProcess(ctxt, copy,
-					    cur->properties);
-            }
+            if ((copy = xsltShallowCopyElem(ctxt, cur, insert, 1)) == NULL)
+		goto error;            
             /*
              * Add extra namespaces inherited from the current template
              * if we are in the first level children and this is a
@@ -2657,36 +2470,36 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
                 for (i = 0; i < ctxt->templ->inheritedNsNr; i++) {
 		    const xmlChar *URI = NULL;
 		    xsltStylesheetPtr style;
-                    ns = ctxt->templ->inheritedNs[i];
+                    ns = ctxt->templ->inheritedNs[i];		    
+		    
+		    /* Note that the XSLT namespace was already excluded
+		    * in xsltGetInheritedNsList().
+		    */
+#if 0
+		    if (xmlStrEqual(ns->href, XSLT_NAMESPACE))
+			continue;
+#endif
 		    style = ctxt->style;
 		    while (style != NULL) {
-		      if (style->nsAliases != NULL)
-			URI = (const xmlChar *) 
-			  xmlHashLookup(style->nsAliases, ns->href);
-		      if (URI != NULL)
-			break;
-		      
-		      style = xsltNextImport(style);
+			if (style->nsAliases != NULL)
+			    URI = (const xmlChar *) 
+				xmlHashLookup(style->nsAliases, ns->href);
+			if (URI != NULL)
+			    break;
+			
+			style = xsltNextImport(style);
 		    }
-		    		    
-		    if (URI == UNDEFINED_DEFAULT_NS) {
-		      xmlNsPtr dflt;
-		      dflt = xmlSearchNs(cur->doc, cur, NULL);
-		      if (dflt == NULL)
-		        continue;
-		      else
-		        URI = dflt->href;
-		    }
-
-		    if (URI == NULL) {
-		      ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-		      if ((ret == NULL) ||
-			  (!xmlStrEqual(ret->href, ns->href)))
-			xmlNewNs(copy, ns->href, ns->prefix);
-		    } else if (!xmlStrEqual(URI, XSLT_NAMESPACE)) {
-		      ret = xmlSearchNs(copy->doc, copy, ns->prefix);
-		      if ((ret == NULL) ||
-			  (!xmlStrEqual(ret->href, URI)))
+		    if (URI == UNDEFINED_DEFAULT_NS)
+			continue;
+		    if (URI == NULL)
+			URI = ns->href;
+		    /*
+		    * TODO: The following will still be buggy for the
+		    * non-refactored code.
+		    */
+		    ret = xmlSearchNs(copy->doc, copy, ns->prefix);
+		    if ((ret == NULL) || (!xmlStrEqual(ret->href, URI)))
+		    {
 			xmlNewNs(copy, URI, ns->prefix);
 		    }
                 }
@@ -2694,8 +2507,14 @@ xsltApplyOneTemplateInt(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    /*
 		     * Fix the node namespace if needed
 		     */
-		    copy->ns = xsltGetNamespace(ctxt, copy, copy->ns, copy);
+		    copy->ns = xsltGetNamespace(ctxt, cur, copy->ns, copy);
 		}
+            }
+	    /*
+             * all the attributes are directly inherited
+             */
+            if (cur->properties != NULL) {
+                xsltAttrListTemplateProcess(ctxt, copy, cur->properties);
             }
         }
 #endif /* else of XSLT_REFACTORED */
@@ -3334,16 +3153,17 @@ xsltSort(xsltTransformContextPtr ctxt,
 
 /**
  * xsltCopy:
- * @ctxt:  a XSLT process context
- * @node:  the node in the source tree.
- * @inst:  the xslt copy node
- * @comp:  precomputed information
+ * @ctxt:  an XSLT process context
+ * @node:  the node in the source tree
+ * @inst:  the element node of the XSLT-copy instruction
+ * @comp:  computed information of the XSLT-copy instruction
  *
- * Execute the xsl:copy instruction on the source node.
+ * Execute the XSLT-copy instruction on the source node.
  */
 void
 xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	           xmlNodePtr inst, xsltStylePreCompPtr castedComp) {
+	 xmlNodePtr inst, xsltStylePreCompPtr castedComp)
+{
 #ifdef XSLT_REFACTORED
     xsltStyleItemCopyPtr comp = (xsltStyleItemCopyPtr) castedComp;
 #else
@@ -3377,8 +3197,8 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		break;
 	    case XML_ELEMENT_NODE:
 		/*
-		* NOTE: The "fake" is a doc-node, not an element node.
-		* OLD:
+		* REVISIT NOTE: The "fake" is a doc-node, not an element node.
+		* REMOVED:
 		*   if (xmlStrEqual(node->name, BAD_CAST " fake node libxslt"))
 		*    return;
 		*/		
@@ -3387,7 +3207,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		XSLT_TRACE(ctxt,XSLT_TRACE_COPY,xsltGenericDebug(xsltGenericDebugContext,
 				 "xsltCopy: node %s\n", node->name));
 #endif
-		copy = xsltCopyNode(ctxt, node, ctxt->insert);
+		copy = xsltShallowCopyElem(ctxt, node, ctxt->insert, 0);
 		ctxt->insert = copy;
 		if (comp->use != NULL) {
 		    xsltApplyAttributeSet(ctxt, node, inst, comp->use);
@@ -3398,62 +3218,13 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		XSLT_TRACE(ctxt,XSLT_TRACE_COPY,xsltGenericDebug(xsltGenericDebugContext,
 				 "xsltCopy: attribute %s\n", node->name));
 #endif
-		if (ctxt->insert->type == XML_ELEMENT_NODE) {
-		    xmlAttrPtr attr = (xmlAttrPtr) node, ret = NULL, cur;
-
-		    if (attr->ns != NULL) {
-			if (!xmlStrEqual(attr->ns->href, XSLT_NAMESPACE)) {
-			    ret = xmlCopyProp(ctxt->insert, attr);
-			    ret->ns = xsltGetNamespace(ctxt, node, attr->ns,
-						       ctxt->insert);
-			} 
-		    } else
-			ret = xmlCopyProp(ctxt->insert, attr);
-
-		    if (ret != NULL) {
-			cur = ctxt->insert->properties;
-			if (cur != NULL) {
-			    /*
-			     * Avoid duplicates and insert at the end
-			     * of the attribute list
-			     */
-			    while (cur->next != NULL) {
-				if ((xmlStrEqual(cur->name, ret->name)) &&
-                                    (((cur->ns == NULL) && (ret->ns == NULL)) ||
-				     ((cur->ns != NULL) && (ret->ns != NULL) &&
-				      (xmlStrEqual(cur->ns->href,
-						   ret->ns->href))))) {
-				    xmlFreeProp(ret);
-				    return;
-				}
-				cur = cur->next;
-			    }
-			    if ((xmlStrEqual(cur->name, ret->name)) &&
-				(((cur->ns == NULL) && (ret->ns == NULL)) ||
-				 ((cur->ns != NULL) && (ret->ns != NULL) &&
-				  (xmlStrEqual(cur->ns->href,
-					       ret->ns->href))))) {
-				xmlNodePtr tmp;
-
-				/*
-				 * Attribute already exists,
-				 * update it with the new value
-				 */
-				tmp = cur->children;
-				cur->children = ret->children;
-				ret->children = tmp;
-				tmp = cur->last;
-				cur->last = ret->last;
-				ret->last = tmp;
-				xmlFreeProp(ret);
-				return;
-			    }
-			    cur->next = ret;
-			    ret->prev = cur;
-			} else
-			    ctxt->insert->properties = ret;
-		    }
-		}
+		/*
+		* REVISIT: We could also raise an error if the parent is not
+		* an element node.
+		* OPTIMIZE TODO: Can we set the value/children of the
+		* attribute without an intermediate copy of the string value?
+		*/
+		xsltShallowCopyAttr(ctxt, inst, ctxt->insert, (xmlAttrPtr) node);		
 		break;
 	    }
 	    case XML_PI_NODE:
@@ -3477,8 +3248,8 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		XSLT_TRACE(ctxt,XSLT_TRACE_COPY,xsltGenericDebug(xsltGenericDebugContext,
 				 "xsltCopy: namespace declaration\n"));
-#endif
-                xsltCopyNamespace(ctxt, ctxt->insert, (xmlNsPtr)node);
+#endif		
+		xsltShallowCopyNsNode(ctxt, inst, ctxt->insert, (xmlNsPtr)node);		     
 		break;
 	    default:
 		break;
@@ -3553,20 +3324,20 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #else
     xsltStylePreCompPtr comp = castedComp;
 #endif
-    xmlChar *prop = NULL, *attributes = NULL, *namespace;
-    const xmlChar *name;
-    const xmlChar *prefix;
-    xmlNsPtr ns = NULL, oldns = NULL;
+    xmlChar *prop = NULL;
+    const xmlChar *name, *prefix = NULL, *nsName = NULL;    
     xmlNodePtr copy;
     xmlNodePtr oldInsert;
-    int generateDefault = 0;
-
 
     if (ctxt->insert == NULL)
 	return;
-    if (!comp->has_name) {
-	return;
-    }
+
+    /* 
+    * A comp->has_name == 0 indicates that we need to skip this instruction,
+    * since it was evaluated to be invalid already during compilation.
+    */
+    if (!comp->has_name)
+        return;
 
     /*
      * stack and saves
@@ -3574,24 +3345,42 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldInsert = ctxt->insert;
 
     if (comp->name == NULL) {
-	prop = xsltEvalAttrValueTemplate(ctxt, inst,
-		      (const xmlChar *)"name", NULL);
-	if (prop == NULL) {
-	    xsltTransformError(ctxt, NULL, inst,
-		 "xsl:element : name is missing\n");
-	    return;
-	}
+	/* TODO: fix attr acquisition wrt to the XSLT namespace */
+        prop = xsltEvalAttrValueTemplate(ctxt, inst,
+	    (const xmlChar *) "name", XSLT_NAMESPACE);
+        if (prop == NULL) {
+            xsltTransformError(ctxt, NULL, inst,
+		"xsl:element: The attribute 'name' is missing.\n");
+            goto error;
+        }
 	if (xmlValidateQName(prop, 0)) {
 	    xsltTransformError(ctxt, NULL, inst,
-		    "xsl:element : invalid name\n");
-	    /* we fall through to catch any other errors if possible */
+		"xsl:element: The effective name '%s' is not a "
+		"valid QName.\n", prop);
+	    /* we fall through to catch any further errors, if possible */
 	}
 	name = xsltSplitQName(ctxt->dict, prop, &prefix);
 	xmlFree(prop);
+	if ((prefix != NULL) &&
+	    (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)))
+	{
+	    /*
+	    * TODO: Should we really disallow an "xml" prefix?
+	    */
+	    goto error;
+	}
     } else {
+	/*
+	* The "name" value was static.
+	*/
+#ifdef XSLT_REFACTORED
+	prefix = comp->nsPrefix;
+	name = comp->name;
+#else	
 	name = xsltSplitQName(ctxt->dict, comp->name, &prefix);
+#endif
     }
-
+    
     /*
      * Create the new element
      */
@@ -3605,79 +3394,105 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    "xsl:element : creation of %s failed\n", name);
 	return;
     }
-    xmlAddChild(ctxt->insert, copy);
+    xmlAddChild(ctxt->insert, copy);    
+
+    /*
+    * Namespace
+    * ---------
+    */
+    if (comp->has_ns) {	 
+	if (comp->ns != NULL) {
+	    /*
+	    * No AVT; just plain text for the namespace name.
+	    */
+	    if (comp->ns[0] != 0)
+		nsName = comp->ns;
+	} else {
+	    xmlChar *tmpNsName;
+	    /*
+	    * Eval the AVT.
+	    */
+	    /* TODO: check attr acquisition wrt to the XSLT namespace */
+	    tmpNsName = xsltEvalAttrValueTemplate(ctxt, inst,
+		(const xmlChar *) "namespace", XSLT_NAMESPACE);	
+	    /*
+	    * SPEC XSLT 1.0:
+	    *  "If the string is empty, then the expanded-name of the
+	    *  attribute has a null namespace URI."
+	    */
+	    if ((tmpNsName != NULL) && (tmpNsName[0] != 0))
+		nsName = xmlDictLookup(ctxt->dict, BAD_CAST tmpNsName, -1);
+	    xmlFree(tmpNsName);		
+	};	    
+    } else {
+	xmlNsPtr ns;
+	/*
+	* SPEC XSLT 1.0:
+	*  "If the namespace attribute is not present, then the QName is
+	*  expanded into an expanded-name using the namespace declarations
+	*  in effect for the xsl:element element, including any default
+	*  namespace declaration.
+	*/	
+	ns = xmlSearchNs(inst->doc, inst, prefix);
+	if (ns == NULL) {
+	    /*
+	    * TODO: Check this in the compilation layer in case it's a
+	    * static value.
+	    */
+	    if (prefix != NULL) {
+		xsltTransformError(ctxt, NULL, inst,
+		    "xsl:element: The QName '%s:%s' has no "
+		    "namespace binding in scope in the stylesheet; "
+		    "this is an error, since the namespace was not "
+		    "specified by the instruction itself.\n", prefix, name);
+	    }
+	} else
+	    nsName = ns->href;	
+    }
+    /*
+    * Find/create a matching ns-decl in the result tree.
+    */
+    if (nsName != NULL) {
+	copy->ns = xsltGetSpecialNamespace(ctxt, inst, nsName, prefix, copy);
+    } else if ((copy->parent != NULL) &&
+	(copy->parent->type == XML_ELEMENT_NODE) &&
+	(copy->parent->ns != NULL))
+    {
+	/*
+	* "Undeclare" the default namespace.
+	*/
+	xsltGetSpecialNamespace(ctxt, inst, NULL, NULL, copy);
+    }
+
     ctxt->insert = copy;
-
-    if ((comp->ns == NULL) && (comp->has_ns)) {
-	namespace = xsltEvalAttrValueTemplate(ctxt, inst,
-		(const xmlChar *)"namespace", NULL);
-	if (namespace != NULL) {
-	    ns = xsltGetSpecialNamespace(ctxt, inst, namespace, prefix,
-		                         ctxt->insert);
-	    xmlFree(namespace);
-	}
-    } else if ((comp->ns != NULL) && (prefix == NULL) && (comp->has_ns)) {
-	generateDefault = 1;
-    } else if (comp->ns != NULL) {
-	ns = xsltGetSpecialNamespace(ctxt, inst, comp->ns, prefix,
-				     ctxt->insert);
-    }
-    if ((ns == NULL) && (prefix != NULL)) {
-	if (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)) {
-#ifdef WITH_XSLT_DEBUG_PARSING
-	    xsltGenericDebug(xsltGenericDebugContext,
-		 "xsltElement: xml prefix forbidden\n");
-#endif
-	    return;
-	}
-	oldns = xmlSearchNs(inst->doc, inst, prefix);
-	if (oldns == NULL) {
-	    xsltTransformError(ctxt, NULL, inst,
-		"xsl:element : no namespace bound to prefix %s\n", prefix);
-	} else {
-	    ns = xsltGetNamespace(ctxt, inst, oldns, ctxt->insert);
-	}
-    }
-
-    if (generateDefault == 1) {
-	xmlNsPtr defaultNs = NULL;
-
-	if ((oldInsert != NULL) && (oldInsert->type == XML_ELEMENT_NODE))
-	    defaultNs = xmlSearchNs(oldInsert->doc, oldInsert, NULL);
-	if ((defaultNs == NULL) || (!xmlStrEqual(defaultNs->href, comp->ns))) {
-	    ns = xmlNewNs(ctxt->insert, comp->ns, NULL);
-	    ctxt->insert->ns = ns;
-	} else {
-	    ctxt->insert->ns = defaultNs;
-	}
-    } else if ((ns == NULL) && (oldns != NULL)) {
-	/* very specific case xsltGetNamespace failed */
-        ns = xmlNewNs(ctxt->insert, oldns->href, oldns->prefix);
-	ctxt->insert->ns = ns;
-    } else
-        ctxt->insert->ns = ns;
-
 
     if (comp->has_use) {
 	if (comp->use != NULL) {
 	    xsltApplyAttributeSet(ctxt, node, inst, comp->use);
 	} else {
+	    xmlChar *attrSets = NULL;
 	    /*
 	    * BUG TODO: use-attribute-sets is not a value template.
 	    *  use-attribute-sets = qnames
 	    */
-	    attributes = xsltEvalAttrValueTemplate(ctxt, inst,
-		       (const xmlChar *)"use-attribute-sets", NULL);
-	    if (attributes != NULL) {
-		xsltApplyAttributeSet(ctxt, node, inst, attributes);
-		xmlFree(attributes);
+	    attrSets = xsltEvalAttrValueTemplate(ctxt, inst,
+		(const xmlChar *)"use-attribute-sets", NULL);
+	    if (attrSets != NULL) {
+		xsltApplyAttributeSet(ctxt, node, inst, attrSets);
+		xmlFree(attrSets);
 	    }
 	}
     }
-    
-    xsltApplyOneTemplateInt(ctxt, ctxt->node, inst->children, NULL, NULL, 0);
+    /*
+    * Instantiate the sequence constructor.
+    */
+    if (inst->children != NULL)
+	xsltApplyOneTemplateInt(ctxt, ctxt->node, inst->children,
+	    NULL, NULL, 0);
 
+error:
     ctxt->insert = oldInsert;
+    return;    
 }
 
 
@@ -3857,7 +3672,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef XSLT_REFACTORED
     if (comp->inScopeNs != NULL) {
 	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->xpathNumber;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;
@@ -3902,17 +3717,20 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    if ((cur->type == XML_DOCUMENT_NODE) ||
 			(cur->type == XML_HTML_DOCUMENT_NODE))
 		    {
-			xsltCopyTreeList(ctxt, cur->children, ctxt->insert, 0);
+			xsltCopyTreeList(ctxt, inst,
+			    cur->children, ctxt->insert, 0, 0);
 		    } else if (cur->type == XML_ATTRIBUTE_NODE) {
-			xsltCopyProp(ctxt, ctxt->insert, (xmlAttrPtr) cur);
+			xsltShallowCopyAttr(ctxt, inst,
+			    ctxt->insert, (xmlAttrPtr) cur);
 		    } else {
-			xsltCopyTree(ctxt, cur, ctxt->insert, 0);
+			xsltCopyTreeInternal(ctxt, inst,
+			    cur, ctxt->insert, 0, 0);
 		    }
 		}
 	    }
 	} else if (res->type == XPATH_XSLT_TREE) {
 	    /*
-	    * Result tree fragment
+	    * Result tree fragment (e.g. via <xsl:variable ...><foo/></xsl:variable>)
 	    * --------------------
 	    */
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -3927,8 +3745,8 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		(list->nodeTab[0] != NULL) &&
 		(IS_XSLT_REAL_NODE(list->nodeTab[0])))
 	    {
-		xsltCopyTreeList(ctxt, list->nodeTab[0]->children,
-			         ctxt->insert, 0);
+		xsltCopyTreeList(ctxt, inst,
+		    list->nodeTab[0]->children, ctxt->insert, 0, 0);
 	    }
 	} else {
 	    /* Convert to a string. */
@@ -3995,7 +3813,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef XSLT_REFACTORED
     if (comp->inScopeNs != NULL) {
 	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->xpathNumber;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;
@@ -4279,7 +4097,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef XSLT_REFACTORED
 	if (comp->inScopeNs != NULL) {
 	    ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
-	    ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
+	    ctxt->xpathCtxt->nsNr = comp->inScopeNs->xpathNumber;
 	} else {
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
@@ -4618,7 +4436,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef XSLT_REFACTORED
 	if (wcomp->inScopeNs != NULL) {
 	    ctxt->xpathCtxt->namespaces = wcomp->inScopeNs->list;
-	    ctxt->xpathCtxt->nsNr = wcomp->inScopeNs->number;
+	    ctxt->xpathCtxt->nsNr = wcomp->inScopeNs->xpathNumber;
 	} else {
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
@@ -4745,7 +4563,7 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef XSLT_REFACTORED
     if (comp->inScopeNs != NULL) {
 	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->xpathNumber;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;
@@ -4754,6 +4572,10 @@ xsltIf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     ctxt->xpathCtxt->namespaces = comp->nsList;
     ctxt->xpathCtxt->nsNr = comp->nsNr;
 #endif
+    /*
+    * OPTIMIZE TODO: Use a specialized function, which returns only
+    *  true/false.
+    */
     res = xmlXPathCompiledEval(comp->comp, ctxt->xpathCtxt);
     ctxt->xpathCtxt->contextSize = oldContextSize;
     ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
@@ -4840,7 +4662,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #ifdef XSLT_REFACTORED
     if (comp->inScopeNs != NULL) {
 	ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
-	ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
+	ctxt->xpathCtxt->nsNr = comp->inScopeNs->xpathNumber;
     } else {
 	ctxt->xpathCtxt->namespaces = NULL;
 	ctxt->xpathCtxt->nsNr = 0;

@@ -481,7 +481,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr elem,
 #ifdef XSLT_REFACTORED
 	    if (precomp->inScopeNs != NULL) {
 		ctxt->xpathCtxt->namespaces = precomp->inScopeNs->list;
-		ctxt->xpathCtxt->nsNr = precomp->inScopeNs->number;
+		ctxt->xpathCtxt->nsNr = precomp->inScopeNs->xpathNumber;
 	    } else {
 		ctxt->xpathCtxt->namespaces = NULL;
 		ctxt->xpathCtxt->nsNr = 0;
@@ -650,7 +650,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt)
 #ifdef XSLT_REFACTORED
 	    if (precomp->inScopeNs != NULL) {
 		ctxt->xpathCtxt->namespaces = precomp->inScopeNs->list;
-		ctxt->xpathCtxt->nsNr = precomp->inScopeNs->number;
+		ctxt->xpathCtxt->nsNr = precomp->inScopeNs->xpathNumber;
 	    } else {
 		ctxt->xpathCtxt->namespaces = NULL;
 		ctxt->xpathCtxt->nsNr = 0;

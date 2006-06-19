@@ -45,8 +45,8 @@ XSLTPUBFUN xmlNsPtr XSLTCALL
 					 xmlNodePtr out);
 XSLTPUBFUN xmlNsPtr XSLTCALL	
 		xsltCopyNamespace	(xsltTransformContextPtr ctxt,
-					 xmlNodePtr node,
-					 xmlNsPtr cur);
+					 xmlNodePtr elem,
+					 xmlNsPtr ns);
 XSLTPUBFUN xmlNsPtr XSLTCALL	
 		xsltCopyNamespaceList	(xsltTransformContextPtr ctxt,
 					 xmlNodePtr node,

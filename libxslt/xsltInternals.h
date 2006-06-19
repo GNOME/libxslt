@@ -70,6 +70,9 @@ extern const xmlChar *xsltDocFragFake;
 /* ==================================================================== */
 
 #ifdef XSLT_REFACTORED
+
+extern const xmlChar *xsltXSLTAttrMarker;
+
 /* TODO: REMOVE: #define XSLT_REFACTORED_EXCLRESNS */
 
 /* TODO: REMOVE: #define XSLT_REFACTORED_NSALIAS */
@@ -80,7 +83,7 @@ extern const xmlChar *xsltDocFragFake;
  * Internal define to enable the pointer-comparison of
  * namespaces of XSLT elements. 
  */
-#define XSLT_REFACTORED_XSLT_NSCOMP
+/* #define XSLT_REFACTORED_XSLT_NSCOMP */
 
 /**
  * XSLT_REFACTORED_XPATHCOMP
@@ -466,7 +469,8 @@ typedef struct _xsltNsListContainer xsltNsListContainer;
 typedef xsltNsListContainer *xsltNsListContainerPtr;
 struct _xsltNsListContainer {
     xmlNsPtr *list;
-    int number;
+    int totalNumber;
+    int xpathNumber;    
 };
 
 /**
@@ -590,13 +594,13 @@ typedef xsltStyleItemElement *xsltStyleItemElementPtr;
 struct _xsltStyleItemElement {
     XSLT_ITEM_COMMON_FIELDS 
 
-    const xmlChar *use;		/* copy, element */
-    int      has_use;		/* copy, element */
-    const xmlChar *name;	/* element, attribute, pi */
-    int      has_name;		/* element, attribute, pi */
-    const xmlChar *ns;		/* element */
-    int      has_ns;		/* element */
-
+    const xmlChar *use;
+    int      has_use;
+    const xmlChar *name;    
+    int      has_name;
+    const xmlChar *ns;
+    const xmlChar *nsPrefix;
+    int      has_ns;
 };
 
 /**
@@ -614,10 +618,11 @@ typedef xsltStyleItemAttribute *xsltStyleItemAttributePtr;
 
 struct _xsltStyleItemAttribute {
     XSLT_ITEM_COMMON_FIELDS
-    const xmlChar *name;	/* element, attribute, pi */
-    int      has_name;		/* element, attribute, pi */
-    const xmlChar *ns;		/* element  attribute */
-    int      has_ns;		/* element  attribute */
+    const xmlChar *name;
+    int      has_name;
+    const xmlChar *ns;
+    const xmlChar *nsPrefix;
+    int      has_ns;
 };
 
 /**
@@ -689,7 +694,7 @@ typedef struct _xsltStyleItemApplyTemplates xsltStyleItemApplyTemplates;
 typedef xsltStyleItemApplyTemplates *xsltStyleItemApplyTemplatesPtr;
 
 struct _xsltStyleItemApplyTemplates {
-   XSLT_ITEM_COMMON_FIELDS
+    XSLT_ITEM_COMMON_FIELDS
 
     const xmlChar *mode;	/* apply-templates */
     const xmlChar *modeURI;	/* apply-templates */

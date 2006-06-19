@@ -1,3 +1,71 @@
+Mon Jun 19 13:33:50 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/attributes.c libxslt/attrvt.c libxslt/namespaces.c
+	  libxslt/namespaces.h libxslt/preproc.c libxslt/templates.c
+	  libxslt/transform.c libxslt/variables.c libxslt/xslt.c
+	  libxslt/xsltInternals.h libxslt/xsltutils.c:
+	  Merged all the namespace lookup/create/disable functions
+	  into xsltGetSpecialNamespace(). Changed xsltGetNamespace()
+	  and xsltGetPlainNamespace() to call xsltGetSpecialNamespace(),
+	  but kept the ns-aliasing mechanism; the ns-aliasing needs
+	  to be removed when we move to the refactored code, which
+	  applies ns-alias only at compilaton time.
+	  Refactored xsltElementComp() (preproc.c); enhanced error reports.
+	  Fixed: if the "namespace" attribute was not given, then this
+	  performed incorrectly only a lookup for a default namespace;
+	  i.e., without taking any prefix on the "name" attribute into
+	  account.
+	  Refactored xsltElement() (transform.c); enhanced error reports.
+	  Refactored xsltAttributeComp() (preproc.c). Added namespace
+	  lookup as in xsltElementComp(). Enhanced error reports.
+	  Refactored xsltAttribute() (transform.c); enhanced error reports.
+	  xsltCopyTreeInternal(): eliminated the need to call xmlGetNsList()
+	  for every element in the tree; this needs to be done only for
+	  the top-most elements. For subsequent elements reconcile only
+	  the ns-declarations. Disallowed setting of ns-declarations if
+	  children have been already added to an element.
+	  Removed ns-aliasing code where necessary.
+	  xsltCopyProp(): disallowed setting of attribute nodes if
+	  children have been already added to an element.
+	  xsltCopy(): removed the incorrect skipping of attributes in the
+	  XSLT namespace. Removed the incorrect ns-aliasing for attributes.
+	  Changed to use the introduced function xsltShallowCopyAttr().
+	  xsltShallowCopyAttr():  Centralized all attribute-copy related
+	  code in this function. It will now be called by
+	  xsltCopyTreeInternal(), xsltCopyOf() and xsltCopy().
+	  xsltCopyAttrListNoOverwrite(): Renamed. Refactored. Optimized to
+	  use xsltGetSpecialNamespace() and xmlNewDocProp().
+	  Further substitution of various scattered namespace-lookup
+	  related code for the use of xsltGetSpecialNamespace().
+	  xsltAttrTemplateProcess(): Refactored. Removed the incorrect
+	  processing of attribute-sets. Attribute sets need to be applied
+	  before adding any normal attribute of the literal result element;
+	  this is now done in  xsltAttrListTemplateProcess(). Fixed to
+	  ensure that the ns-prefix of the overwriting attribute is used.
+	  xsltAttrListTemplateProcess(): Refactored. Moved semantics from
+	  xsltAttrTemplateProcess() over to this function in order to
+	  optimize processing of multiple attributes. This does not call
+	  xsltAttrTemplateProcess() anymore.
+	  Fixed: do not exclude the XSLT namespace after ns-aliasing have
+	  beed applied.
+	  The IFDEFed-out refactored code fixes the following issues:
+	  - #313711: namespace collision with namespace-alias (reported
+	              by by Oleg Paraschenko)
+	  - #338214: Incorrect scope for exclude-result-prefixes
+	  - #341392: Excluding namespace declarations of literal result
+	             elements.
+	  - #341325: Namespace aliasing and resulting namespace prefixes
+	  Already enabled fixes:
+	  - #344183: xsl:copy misses to copy attributes in the XSLT namespace
+	  - #341463: Namespace-alias using #default for result-prefix with no
+	  	     default namespace in scope
+	  - #313890: namespace collision with xsl:element and xsl:attribute,
+	  	     reported by Oleg Paraschenko
+	  - #344176: xsl:copy misses to set an element's namespace-URI in
+	             some cases
+	  - #305739: the "name" QName of xsl:element is incorrectly always
+	  	     resolved to the default namespace
+
 Mon Jun 12 16:34:15 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.1 doc/xsltproc.xml: more info about --output

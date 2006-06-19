@@ -995,7 +995,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
 #ifdef XSLT_REFACTORED
 	if (comp->inScopeNs != NULL) {
 	    ctxt->xpathCtxt->namespaces = comp->inScopeNs->list;
-	    ctxt->xpathCtxt->nsNr = comp->inScopeNs->number;
+	    ctxt->xpathCtxt->nsNr = comp->inScopeNs->xpathNumber;
 	} else {
 	    ctxt->xpathCtxt->namespaces = NULL;
 	    ctxt->xpathCtxt->nsNr = 0;
