@@ -1,3 +1,11 @@
+Wed Jun 21 15:13:27 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* tests/docs/bug-54.xml tests/general/bug-54.out
+	  tests/general/bug-99.out tests/general/bug-136.out
+	  tests/REC/test-7.1.3.xsl tests/REC/test-7.1.4.xsl
+	  tests/REC/test-7.3.xsl tests/REC/test-7.4.xsl:
+	  Fixed incorrect regression tests/results.
+
 Mon Jun 19 13:33:50 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/attributes.c libxslt/attrvt.c libxslt/namespaces.c
