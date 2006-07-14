@@ -1,3 +1,16 @@
+Fri Jul 14 18:16:59 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/attributes.c libxslt/documents.c
+	  libxslt/functions.c libxslt/keys.c libxslt/namespaces.c
+	  libxslt/pattern.c libxslt/preproc.c libxslt/templates.c
+	  libxslt/templates.h libxslt/transform.c
+	  libxslt/variables.c libxslt/xslt.c
+	  libxslt/xsltInternals.h libxslt/xsltutils.c
+	  libxslt/xsltutils.h libexslt/common.c libexslt/dynamic.c
+	  libexslt/functions.c libexslt/strings.c:
+	  Committing again, since I forgot to switch from win to linux
+	  linebreaks in the files.
+						    
 Fri Jul 14 17:55:42 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/attributes.c libxslt/documents.c
