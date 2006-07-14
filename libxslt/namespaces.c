@@ -44,8 +44,6 @@
 #include "namespaces.h"
 #include "imports.h"
 
-
-
 /************************************************************************
  *									*
  *			Module interfaces				*
@@ -617,7 +615,7 @@ declare_new_prefix:
  *  - xsltCopyPropList() (*not*  anymore)
  *  - xsltShallowCopyElement()
  *  - xsltCopyTreeInternal() (*not*  anymore)
- *  - xsltApplyOneTemplateInt() (*not* in the refactored code),
+ *  - xsltApplySequenceConstructor() (*not* in the refactored code),
  *  - xsltElement() (*not* anymore)
  *
  * Returns a namespace declaration or NULL in case of

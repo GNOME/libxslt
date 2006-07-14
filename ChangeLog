@@ -1,3 +1,64 @@
+Fri Jul 14 17:55:42 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/attributes.c libxslt/documents.c
+	  libxslt/functions.c libxslt/keys.c libxslt/namespaces.c
+	  libxslt/pattern.c libxslt/preproc.c libxslt/templates.c
+	  libxslt/templates.h libxslt/transform.c libxslt/variables.c
+	  libxslt/xslt.c libxslt/xsltInternals.h libxslt/xsltutils.c
+	  libxslt/xsltutils.h libexslt/common.c libexslt/dynamic.c
+	  libexslt/functions.c libexslt/strings.c:
+	  Refactored xsltValueOf(). Changed to use xmlXPathCastToString()
+	  directly, rather than creating an intermediate object with
+	  xmlXPathConvertString(). This now does not add a text-node to
+	  the result if the string is empty (this has impact on
+	  serialization, since an empty text-node is serialized as
+	  <foo></foo>, and now it will be serialized as <foo/>).
+	  Refactored other functions in transform.c:
+	  Mostly code cleanup/restructuring. Minimized number of
+	  function variables for instruction which eat up function stack
+	  memory when recursing templates (xsltIf(), xsltChoose(),
+	  xsltApplyTemplates(),  xsltCallTemplate()).
+	  Changed XSLT tests to use xmlXPathCompiledEvalToBoolean().
+	  Implemented redefinition checks at compilation-time and
+	  eliminating them at transformation time in the refactored code
+	  paths.
+	  Introduced the field @currentTemplateRule on xsltTransformContext to
+	  reflect the "Current Template Rule" as defined by the spec.
+	  NOTE that ctxt->currentTemplateRule and ctxt->templ is not the
+	  same; the former is the "Current Template Rule" as defined by the
+	  XSLT spec, the latter is simply the template struct being
+	  currently processed by Libxslt.
+	  Added XML_COMMENT_NODE and XML_CDATA_SECTION_NODE to the macro
+	  IS_XSLT_REAL_NODE.
+	  Misc code cleanup/restructuring and everything else I already forgot.
+	  Refactored lifetime of temporary result tree fragments.
+	  Substituted all calls to the now deprecated xsltRegisterTmpRVT()
+	  for the new xsltRegisterLocalRVT().
+	  Fragments of xsl:variable and xsl:param are freed when the
+	  variable/pram is freed.
+	  Fragments created when evaluating a "select" of xsl:varible and
+	  xsl:param are also bound to the lifetime of the var/param.
+	  EXSLT's func:function now uses the following functions to let take
+	  care the transformation's garbage collector of returned tree
+	  fragments:
+	    xsltExtensionInstructionResultRegister(),
+	    xsltExtensionInstructionResultFinalize()
+	  Fixes:
+	  #339222 - xsl:param at invalid position inside an xsl:template is
+	            not catched
+	  #346015 - Non-declared caller-parameters are accepted
+	  #160400 - Compiles invalid XSLT; unbound variable accepted
+	  #308441 - namespaced parameters become unregistered
+	  #307103 - problem with proximity position in predicates of match
+	            patterns
+	  #328218 - problem with exsl:node-set() when converting strings
+	            to node sets
+	  #318088 - infinite recursion detection
+	  #321505 - Multiple contiguous CDATA in output
+	  #334493 - "--param" option does not have root context
+	  #114377 - weird func:result/xsl:variable/exsl:node-set interaction
+	  #150309 - Regression caused by fix for 142768
+
 Wed Jun 21 15:13:27 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* tests/docs/bug-54.xml tests/general/bug-54.out

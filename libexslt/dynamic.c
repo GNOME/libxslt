@@ -149,7 +149,7 @@ exsltDynMapFunction(xmlXPathParserContextPtr ctxt, int nargs)
 	 */
     container = xsltCreateRVT(xsltXPathGetTransformContext(ctxt));
     if (container != NULL)
-        xsltRegisterTmpRVT(xsltXPathGetTransformContext(ctxt), container);
+        xsltRegisterLocalRVT(xsltXPathGetTransformContext(ctxt), container);
 
     if (nodeset && nodeset->nodeNr > 0) {
         xmlXPathNodeSetSort(nodeset);

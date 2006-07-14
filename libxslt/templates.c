@@ -180,28 +180,28 @@ xsltEvalXPathString(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp) {
 /**
  * xsltEvalTemplateString:
  * @ctxt:  the XSLT transformation context
- * @currentNode:  the current node in the source tree
- * @parent:  the content parent
+ * @contextNode:  the current node in the source tree
+ * @inst:  the XSLT instruction (xsl:comment, xsl:processing-instruction)
  *
- * Evaluate a template string value, i.e. the parent list is interpreted
- * as template content and the resulting tree string value is returned
- * This is needed for example by xsl:comment and xsl:processing-instruction
+ * Processes the sequence constructor of the given instruction on
+ * @contextNode and converts the resulting tree to a string.
+ * This is needed by e.g. xsl:comment and xsl:processing-instruction.
  *
- * Returns the computed string value or NULL, must be deallocated by the
- *    caller.
+ * Returns the computed string value or NULL; it's up to the caller to
+ *         free the result.
  */
 xmlChar *
 xsltEvalTemplateString(xsltTransformContextPtr ctxt,
-		       xmlNodePtr currentNode,
-	               xmlNodePtr parent)
+		       xmlNodePtr contextNode,
+	               xmlNodePtr inst)
 {
     xmlNodePtr oldInsert, insert = NULL;
     xmlChar *ret;
 
-    if ((ctxt == NULL) || (currentNode == NULL) || (parent == NULL))
+    if ((ctxt == NULL) || (contextNode == NULL) || (inst == NULL))
 	return(NULL);
 
-    if (parent->children == NULL)
+    if (inst->children == NULL)
 	return(NULL);
 
     /*
@@ -213,14 +213,16 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt,
     insert = xmlNewDocNode(ctxt->output, NULL,
 	                   (const xmlChar *)"fake", NULL);
     if (insert == NULL) {
-	xsltTransformError(ctxt, NULL, currentNode,
+	xsltTransformError(ctxt, NULL, contextNode,
 		"Failed to create temporary node\n");
 	return(NULL);
     }
     oldInsert = ctxt->insert;
     ctxt->insert = insert;
-    /* OPTIMIZE TODO: if parent->children consists only of text-nodes. */
-    xsltApplyOneTemplate(ctxt, currentNode, parent->children, NULL, NULL);
+    /*
+    * OPTIMIZE TODO: if inst->children consists only of text-nodes.
+    */
+    xsltApplyOneTemplate(ctxt, contextNode, inst->children, NULL, NULL);
 
     ctxt->insert = oldInsert;
 
@@ -603,7 +605,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
  * Copies all non XSLT-attributes over to the @target element
  * and evaluates Attribute Value Templates.
  *
- * Called by xsltApplyOneTemplateInt() (transform.c).
+ * Called by xsltApplySequenceConstructor() (transform.c).
  *
  * Returns a new list of attribute nodes, or NULL in case of error.
  *         (Don't assign the result to @target->properties; if

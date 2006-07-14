@@ -32,6 +32,7 @@
 #include "templates.h"
 #include "keys.h"
 #include "pattern.h"
+#include "documents.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PATTERN
@@ -858,7 +859,8 @@ restart:
 				(previous->name != NULL) &&
 				(sibling->name != NULL) &&
 				(previous->name[0] == sibling->name[0]) &&
-				(xmlStrEqual(previous->name, sibling->name))) {
+				(xmlStrEqual(previous->name, sibling->name)))
+			    {
 				if ((sel->value2 == NULL) ||
 				    ((sibling->ns != NULL) &&
 				     (xmlStrEqual(sel->value2,
@@ -874,11 +876,20 @@ restart:
 			    while (sibling != NULL) {
 				if (sibling == previous)
 				    break;
-				if ((sel->value2 == NULL) ||
-				    ((sibling->ns != NULL) &&
-				     (xmlStrEqual(sel->value2,
-						  sibling->ns->href))))
-				    indx--;
+				if ((previous->type == XML_ELEMENT_NODE) &&
+				    (previous->name != NULL) &&
+				    (sibling->name != NULL) &&
+				    (previous->name[0] == sibling->name[0]) &&
+				    (xmlStrEqual(previous->name, sibling->name)))
+				{
+				    if ((sel->value2 == NULL) ||
+					((sibling->ns != NULL) &&
+					(xmlStrEqual(sel->value2,
+					sibling->ns->href))))
+				    {
+					indx--;
+				    }
+				}
 				sibling = sibling->next;
 			    }
 			}
@@ -2211,17 +2222,34 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 
 #ifdef XSLT_REFACTORED_KEYCOMP
 static int
-xsltComputeAllKeys(xsltTransformContextPtr ctxt,
-		xsltDocumentPtr document)
+xsltComputeAllKeys(xsltTransformContextPtr ctxt, xmlNodePtr contextNode)
 {
     xsltStylesheetPtr style, style2;
     xsltKeyDefPtr keyd, keyd2;
     xsltKeyTablePtr table;
 
-    if ((ctxt == NULL) || (document == NULL))
+    if ((ctxt == NULL) || (contextNode == NULL)) {
+	xsltTransformError(ctxt, NULL, ctxt->inst,
+	    "Internal error in xsltComputeAllKeys(): "
+	    "Bad arguments.\n");
 	return(-1);
- 
-    if (document->nbKeysComputed == ctxt->nbKeys)
+    }
+    
+    if (ctxt->document == NULL) {
+	/*
+	* The document info will only be NULL if we have a RTF.
+	*/
+	if (contextNode->doc->_private != NULL)
+	    goto doc_info_mismatch;
+	/*
+	* On-demand creation of the document info (needed for keys).
+	*/
+	ctxt->document = xsltNewDocument(ctxt, contextNode->doc);
+	if (ctxt->document == NULL)
+	    return(-1);
+    }
+
+    if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
 	return(0);
     /*
     * TODO: This could be further optimized
@@ -2229,12 +2257,12 @@ xsltComputeAllKeys(xsltTransformContextPtr ctxt,
     style = ctxt->style;
     while (style) {
 	keyd = (xsltKeyDefPtr) style->keys;
-	while (keyd != NULL) {	    
+	while (keyd != NULL) {
 	    /*
 	    * Check if keys with this QName have been already
 	    * computed.
 	    */
-	    table = (xsltKeyTablePtr) document->keys;
+	    table = (xsltKeyTablePtr) ctxt->document->keys;
 	    while (table) {
 		if (((keyd->nameURI != NULL) == (table->nameURI != NULL)) &&
 		    xmlStrEqual(keyd->name, table->name) &&
@@ -2257,20 +2285,28 @@ xsltComputeAllKeys(xsltTransformContextPtr ctxt,
 			    xmlStrEqual(keyd2->name, keyd->name) &&
 			    xmlStrEqual(keyd2->nameURI, keyd->nameURI))
 			{
-			    xsltInitCtxtKey(ctxt, document, keyd2);
-			    if (document->nbKeysComputed == ctxt->nbKeys)
+			    xsltInitCtxtKey(ctxt, ctxt->document, keyd2);
+			    if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
 				return(0);
 			}
-			keyd2 = keyd2->next;		
-		    }	    
+			keyd2 = keyd2->next;
+		    }
 		    style2 = xsltNextImport(style2);
 		}
-	    }	    
+	    }
 	    keyd = keyd->next;
 	}
 	style = xsltNextImport(style);
     }
     return(0);
+
+doc_info_mismatch:
+    xsltTransformError(ctxt, NULL, ctxt->inst,
+	"Internal error in xsltComputeAllKeys(): "
+	"The context's document info doesn't match the "
+	"document info of the current result tree.\n");
+    ctxt->state = XSLT_STATE_STOPPED;
+    return(-1);
 }
 #endif
 
@@ -2287,7 +2323,8 @@ xsltComputeAllKeys(xsltTransformContextPtr ctxt,
  */
 xsltTemplatePtr
 xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	        xsltStylesheetPtr style) {
+	        xsltStylesheetPtr style)
+{
     xsltStylesheetPtr curstyle;
     xsltTemplatePtr ret = NULL;
     const xmlChar *name = NULL;
@@ -2478,14 +2515,16 @@ keyed_match:
 	}
 #ifdef XSLT_REFACTORED_KEYCOMP	
 	else if (ctxt->hasTemplKeyPatterns &&
-	    (ctxt->document->nbKeysComputed < ctxt->nbKeys))
+	    ((ctxt->document == NULL) ||
+	     (ctxt->document->nbKeysComputed < ctxt->nbKeys)))
 	{
 	    /*
 	    * Compute all remaining keys for this document.
 	    *
-	    * REVISIT TODO: I think this could be further optimized.	    
+	    * REVISIT TODO: I think this could be further optimized.
 	    */
-	    xsltComputeAllKeys(ctxt, ctxt->document);
+	    if (xsltComputeAllKeys(ctxt, node) == -1)
+		goto error;
 
 	    switch (node->type) {
 		case XML_ELEMENT_NODE:		    
@@ -2519,6 +2558,8 @@ keyed_match:
 	 */
 	curstyle = xsltNextImport(curstyle);
     }
+
+error:
     return(NULL);
 }
 

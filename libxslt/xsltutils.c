@@ -876,9 +876,16 @@ xsltGetQNameURI2(xsltStylesheetPtr style, xmlNodePtr node,
     qname = xmlStrndup(*name, len);
     ns = xmlSearchNs(node->doc, node, qname);
     if (ns == NULL) {
-        xsltGenericError(xsltGenericErrorContext,
+	if (style) {
+	    xsltTransformError(NULL, style, node,
+		"No namespace bound to prefix '%s'.\n",
+		qname);
+	    style->errors++;
+	} else {
+	    xsltGenericError(xsltGenericErrorContext,
                 "%s : no namespace bound to prefix %s\n",
 		*name, qname);
+	}
         *name = NULL;
         xmlFree(qname);
         return(NULL);

@@ -72,10 +72,12 @@ extern "C" {
     (((n) != NULL) &&							\
      (((n)->type == XML_ELEMENT_NODE) ||				\
       ((n)->type == XML_TEXT_NODE) ||					\
+      ((n)->type == XML_CDATA_SECTION_NODE) ||				\
       ((n)->type == XML_ATTRIBUTE_NODE) ||				\
       ((n)->type == XML_DOCUMENT_NODE) ||				\
       ((n)->type == XML_HTML_DOCUMENT_NODE) ||				\
-      ((n)->type == XML_PI_NODE)))
+      ((n)->type == XML_COMMENT_NODE) ||				\
+      ((n)->type == XML_PI_NODE)))      
 
 /*
  * Our own version of namespaced atributes lookup.

@@ -410,7 +410,9 @@ xsltLoadStyleDocument(xsltStylesheetPtr style, const xmlChar *URI) {
  * @ctxt: an XSLT transformation context
  * @doc: a parsed XML document
  *
- * Try to find a document within the XSLT transformation context
+ * Try to find a document within the XSLT transformation context.
+ * This will not find document infos for temporary
+ * Result Tree Fragments.
  *
  * Returns the desired xsltDocumentPtr or NULL in case of error
  */

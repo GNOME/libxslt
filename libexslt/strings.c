@@ -71,10 +71,9 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
 
     container = xsltCreateRVT(tctxt);
     if (container != NULL) {
-        xsltRegisterTmpRVT(tctxt, container);
+        xsltRegisterLocalRVT(tctxt, container);
         ret = xmlXPathNewNodeSet(NULL);
         if (ret != NULL) {
-            ret->boolval = 0; /* Freeing is not handled there anymore */
             for (cur = str, token = str; *cur != 0; cur += clen) {
 	        clen = xmlUTF8Size(cur);
 		if (*delimiters == 0) {	/* empty string case */
@@ -174,12 +173,14 @@ exsltStrSplitFunction(xmlXPathParserContextPtr ctxt, int nargs) {
 	goto fail;
     }
 
+    /*
+    * OPTIMIZE TODO: We are creating an xmlDoc for every split!
+    */
     container = xsltCreateRVT(tctxt);
     if (container != NULL) {
-        xsltRegisterTmpRVT(tctxt, container);
+        xsltRegisterLocalRVT(tctxt, container);
         ret = xmlXPathNewNodeSet(NULL);
         if (ret != NULL) {
-            ret->boolval = 0; /* Freeing is not handled there anymore */
             for (cur = str, token = str; *cur != 0; cur++) {
 		if (delimiterLength == 0) {
 		    if (cur != token) {

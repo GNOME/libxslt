@@ -1007,7 +1007,7 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 				 NULL, &comp->has_name);
     if (! comp->has_name) {
 	xsltTransformError(NULL, style, inst,
-	    "xsl:attribute: The attribute 'name' is missing.\n");
+	    "XSLT-attribute: The attribute 'name' is missing.\n");
 	style->errors++;
 	return;
     }    
@@ -1303,6 +1303,9 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     } else {
         const xmlChar *URI;
 
+	/*
+	* @prop will be in the string dict afterwards, @URI not.
+	*/
 	URI = xsltGetQNameURI2(style, inst, &prop);
 	if (prop == NULL) {
 	    if (style != NULL) style->errors++;
@@ -1310,7 +1313,12 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    comp->name = prop;
 	    comp->has_name = 1;
 	    if (URI != NULL) {
-		comp->ns = xmlStrdup(URI);
+		/*
+		* Fixes bug #308441: Put the ns-name in the dict
+		* in order to pointer compare names during XPath's
+		* variable lookup.
+		*/
+		comp->ns = xmlDictLookup(style->dict, URI, -1);
 		comp->has_ns = 1;
 	    } else {
 		comp->has_ns = 0;
@@ -1530,7 +1538,7 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    comp->name = prop;
 	    comp->has_name = 1;
 	    if (URI != NULL) {
-		comp->ns = URI;
+		comp->ns = xmlDictLookup(style->dict, URI, -1);
 		comp->has_ns = 1;
 	    } else {
 		comp->has_ns = 0;
@@ -1791,6 +1799,7 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
     const xmlChar *prop;
+    const xmlChar *URI;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1804,51 +1813,65 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 
     if (comp == NULL)
 	return;
+
     inst->psvi = comp;
     comp->inst = inst;
-
     /*
      * The full template resolution can be done statically
      */
+
+    /*
+    * Attribute "name".
+    */
     prop = xsltGetCNsProp(style, inst, (const xmlChar *)"name", XSLT_NAMESPACE);
     if (prop == NULL) {
 	xsltTransformError(NULL, style, inst,
-	     "xsl:variable : name is missing\n");
-	if (style != NULL) style->errors++;
-    } else {
-        const xmlChar *URI;
-
-	URI = xsltGetQNameURI2(style, inst, &prop);
-	if (prop == NULL) {
-	    if (style != NULL) style->errors++;
-	} else {
-	    comp->name = prop;
-	    comp->has_name = 1;
-	    if (URI != NULL) {
-		comp->ns = xmlDictLookup(style->dict, URI, -1);
-		comp->has_ns = 1;
-	    } else {
-		comp->has_ns = 0;
-	    }
-	}
+	     "XSLT-variable: The attribute 'name' is missing.\n");
+	style->errors++;
+	goto error;
+    }    
+    if (xmlValidateQName(prop, 0)) {
+	xsltTransformError(NULL, style, inst,
+	    "XSLT-variable: The value '%s' of the attribute 'name' is "
+	    "not a valid QName.\n", prop);
+	style->errors++;
+	goto error;
     }
+    URI = xsltGetQNameURI2(style, inst, &prop);
+    if (prop == NULL) {
+	goto error;
+    }
+    comp->name = prop;
+    comp->has_name = 1;
 
+    if (URI != NULL) {
+	comp->ns = xmlDictLookup(style->dict, URI, -1);
+	comp->has_ns = 1;
+    } else {
+	comp->has_ns = 0;
+    }
+    /*
+    * Attribute "select".
+    */
     comp->select = xsltGetCNsProp(style, inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xsltXPathCompile(style, comp->select);
 	if (comp->comp == NULL) {
 	    xsltTransformError(NULL, style, inst,
-		 "xsl:variable : could not compile select expression '%s'\n",
-			     comp->select);
-	    if (style != NULL) style->errors++;
+		"XSLT-variable: Failed to compile the XPath expression '%s'.\n",
+		comp->select);
+	    style->errors++;
 	}
 	if (inst->children != NULL) {
 	    xsltTransformError(NULL, style, inst,
-	"xsl:variable : content should be empty since select is present \n");
-	    if (style != NULL) style->warnings++;
+		"XSLT-variable: The must be no child nodes, since the "
+		"attribute 'select' was specified.\n");
+	    style->errors++;
 	}
     }
+error:
+    return;
 }
 
 /**
@@ -1900,7 +1923,7 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    comp->name = prop;
 	    comp->has_name = 1;
 	    if (URI != NULL) {
-		comp->ns = xmlStrdup(URI);
+		comp->ns = xmlDictLookup(style->dict, URI, -1);
 		comp->has_ns = 1;
 	    } else {
 		comp->has_ns = 0;

@@ -638,7 +638,7 @@ xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style) {
  */
 static void
 xsltAttributeInternal(xsltTransformContextPtr ctxt,
-		      xmlNodePtr currentNode,
+		      xmlNodePtr contextNode,
                       xmlNodePtr inst,
 		      xsltStylePreCompPtr castedComp,
                       int fromAttributeSet)
@@ -656,7 +656,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
     xmlNsPtr ns = NULL;
     xmlAttrPtr attr;    
 
-    if ((ctxt == NULL) || (currentNode == NULL) || (inst == NULL))
+    if ((ctxt == NULL) || (contextNode == NULL) || (inst == NULL))
         return;
 
     /* 
@@ -681,9 +681,9 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
     if (comp == NULL) {
         xsltTransformError(ctxt, NULL, inst,
 	    "Internal error in xsltAttributeInternal(): "
-	    "The instruction was no compiled.\n");
+	    "The XSLT 'attribute' instruction was not compiled.\n");
         return;
-    }    
+    }
     /*
     * TODO: Shouldn't ctxt->insert == NULL be treated as an internal error?
     *   So report an internal error?
@@ -731,7 +731,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
 
 #ifdef WITH_DEBUGGER
     if (ctxt->debugStatus != XSLT_DEBUG_NONE)
-        xslHandleDebugger(inst, currentNode, NULL, ctxt);
+        xslHandleDebugger(inst, contextNode, NULL, ctxt);
 #endif
 
     if (comp->name == NULL) {
@@ -875,8 +875,10 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
 	* tree fragment.
 	*/
 	if (nsName != NULL) {
-	    ns = xsltTreeAcquireStoredNs(ctxt->document->doc, nsName,
-		prefix);
+	    /*
+	    * TODO: Get the doc of @targetElem.
+	    */
+	    ns = xsltTreeAcquireStoredNs(some doc, nsName, prefix);
 	}
     }
 #endif
@@ -980,7 +982,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
 	/*
 	* The sequence constructor might be complex, so instantiate it.
 	*/
-	value = xsltEvalTemplateString(ctxt, currentNode, inst);
+	value = xsltEvalTemplateString(ctxt, contextNode, inst);
 	if (value != NULL) {
 	    attr = xmlSetNsProp(ctxt->insert, ns, name, value);
 	    xmlFree(value);

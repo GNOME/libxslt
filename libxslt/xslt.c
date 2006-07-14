@@ -54,7 +54,7 @@ const int xsltLibxmlVersion = LIBXML_VERSION;
 
 #ifdef XSLT_REFACTORED
 
-const xmlChar *xsltConstNamespaceNameXSLT= (const xmlChar *) XSLT_NAMESPACE;
+const xmlChar *xsltConstNamespaceNameXSLT = (const xmlChar *) XSLT_NAMESPACE;
 
 /*
 * xsltLiteralResultMarker:
@@ -486,6 +486,24 @@ xsltNewNamespaceMapItem(xsltCompilerCtxtPtr cctxt,
 #endif /* XSLT_REFACTORED_XSLT_NSCOMP */
 
 /**
+ * xsltCompilerVarInfoFree: 
+ * @cctxt: the compilation context
+ * 
+ * Frees the list of information for vars/params.
+ */
+static void
+xsltCompilerVarInfoFree(xsltCompilerCtxtPtr cctxt)
+{
+    xsltVarInfoPtr ivar = cctxt->ivars, ivartmp;    
+
+    while (ivar) {
+	ivartmp = ivar;
+	ivar = ivar->next;
+	xmlFree(ivartmp);
+    }
+}
+
+/**
  * xsltCompilerCtxtFree:
  *
  * Free an XSLT compiler context. 
@@ -522,6 +540,9 @@ xsltCompilationCtxtFree(xsltCompilerCtxtPtr cctxt)
 #endif
     if (cctxt->nsAliases != NULL)
 	xsltFreeNsAliasList(cctxt->nsAliases);
+
+    if (cctxt->ivars)
+	xsltCompilerVarInfoFree(cctxt);
 
     xmlFree(cctxt);
 }
@@ -1022,17 +1043,7 @@ xsltGetInheritedNsList(xsltStylesheetPtr style,
     xmlNsPtr *ret = NULL;
     int nbns = 0;
     int maxns = 10;
-    int i;
-
-    /*
-    * TODO: This will gather the ns-decls of elements even if
-    * outside xsl:stylesheet. Example:
-    * <doc xmlns:foo="urn:test:foo">
-    *  	<xsl:stylesheet ...    
-    * </doc>
-    * Will have foo="urn:test:foo" in the list.
-    * Is this OK?
-    */
+    int i;    
 
     if ((style == NULL) || (template == NULL) || (node == NULL) ||
 	(template->inheritedNsNr != 0) || (template->inheritedNs != NULL))
@@ -2026,6 +2037,63 @@ xsltLREBuildEffectiveNsNodes(xsltCompilerCtxtPtr cctxt,
 	*/
 	if (xmlStrEqual(ns->href, XSLT_NAMESPACE))
 	    goto skip_ns;
+
+	/*
+	* Apply namespace aliasing
+	* ------------------------
+	*
+	* SPEC XSLT 2.0
+	*  "- A namespace node whose string value is a literal namespace
+	*     URI is not copied to the result tree.
+	*   - A namespace node whose string value is a target namespace URI
+	*     is copied to the result tree, whether or not the URI
+	*     identifies an excluded namespace."
+	* 
+	* NOTE: The ns-aliasing machanism is non-cascading.
+	*  (checked with Saxon, Xalan and MSXML .NET).
+	* URGENT TODO: is style->nsAliases the effective list of
+	*  ns-aliases, or do we need to lookup the whole
+	*  import-tree?
+	* TODO: Get rid of import-tree lookup.
+	*/
+	if (cctxt->hasNsAliases) {
+	    xsltNsAliasPtr alias;
+	    /*
+	    * First check for being a target namespace.
+	    */
+	    alias = cctxt->nsAliases;
+	    do {
+		/*
+		* TODO: Is xmlns="" handled already?
+		*/
+		if ((alias->targetNs != NULL) &&
+		    (xmlStrEqual(alias->targetNs->href, ns->href)))
+		{
+		    /*
+		    * Recognized as a target namespace; use it regardless
+		    * if excluded otherwise.
+		    */
+		    goto add_effective_ns;
+		}
+		alias = alias->next;
+	    } while (alias != NULL);
+
+	    alias = cctxt->nsAliases;
+	    do {
+		/*
+		* TODO: Is xmlns="" handled already?
+		*/
+		if ((alias->literalNs != NULL) &&
+		    (xmlStrEqual(alias->literalNs->href, ns->href)))
+		{
+		    /*
+		    * Recognized as an namespace alias; do not use it.
+		    */
+		    goto skip_ns;
+		}
+		alias = alias->next;
+	    } while (alias != NULL);
+	}
 	
 	/*
 	* Exclude excluded result namespaces.
@@ -2043,6 +2111,8 @@ xsltLREBuildEffectiveNsNodes(xsltCompilerCtxtPtr cctxt,
 		if (xmlStrEqual(ns->href, BAD_CAST extElemNs->items[j]))
 		    goto skip_ns;
 	}
+
+add_effective_ns:
 	/*
 	* OPTIMIZE TODO: This information may not be needed.
 	*/
@@ -2058,43 +2128,7 @@ xsltLREBuildEffectiveNsNodes(xsltCompilerCtxtPtr cctxt,
 	    } while (tmpns != NULL);	    
 	} else
 	    holdByElem = 0;
-	/*
-	* Apply namespace aliasing
-	* ------------------------
-	* 
-	* NOTE: The ns-aliasing machanism is non-cascading.
-	*  (checked with Saxon, Xalan and MSXML .NET).
-	* URGENT TODO: is style->nsAliases the effective list of
-	*  ns-aliases, or do we need to lookup the whole
-	*  import-tree?
-	* TODO: Get rid of import-tree lookup.
-	*/
-	if (cctxt->hasNsAliases) {
-	    xsltNsAliasPtr alias = cctxt->nsAliases;
-	    do {
-		/*
-		* TODO: What to do with xmlns="" ?
-		*/
-		if ((alias->literalNs != NULL) &&
-		    (xmlStrEqual(alias->literalNs->href, ns->href)))
-		{
-		    /*
-		    * Recognized as an namespace alias; convert it to
-		    * the target namespace.
-		    */
-		    if (alias->targetNs != NULL)
-			ns = alias->literalNs;
-		    else {
-			/*
-			* The target is the NULL namespace.
-			*/
-			goto skip_ns;
-		    }
-		    break;
-		}
-		alias = alias->next;
-	    } while (alias != NULL);		
-	}
+	
 	
 	/*
 	* Add the effective namespace declaration.
@@ -2179,6 +2213,69 @@ xsltLREInfoCreate(xsltCompilerCtxtPtr cctxt,
     cctxt->inode->nsChanged = 0;
     cctxt->maxLREs++;
     return(0);
+}
+
+/**
+ * xsltCompilerVarInfoPush: 
+ * @cctxt: the compilation context
+ * 
+ * Pushes a new var/param info onto the stack.
+ *
+ * Returns the acquired variable info.
+ */ 
+static xsltVarInfoPtr
+xsltCompilerVarInfoPush(xsltCompilerCtxtPtr cctxt,
+				  xmlNodePtr inst,
+				  const xmlChar *name,
+				  const xmlChar *nsName)
+{
+    xsltVarInfoPtr ivar;
+
+    if ((cctxt->ivar != NULL) && (cctxt->ivar->next != NULL)) {
+	ivar = cctxt->ivar->next;
+    } else if ((cctxt->ivar == NULL) && (cctxt->ivars != NULL)) {
+	ivar = cctxt->ivars;
+    } else {
+	ivar = (xsltVarInfoPtr) xmlMalloc(sizeof(xsltVarInfo));
+	if (ivar == NULL) {
+	    xsltTransformError(NULL, cctxt->style, inst,
+		"xsltParseInScopeVarPush: xmlMalloc() failed!\n");
+	    cctxt->style->errors++;
+	    return(NULL);
+	}
+	/* memset(retVar, 0, sizeof(xsltInScopeVar)); */
+	if (cctxt->ivars == NULL) {
+	    cctxt->ivars = ivar;
+	    ivar->prev = NULL;
+	} else {
+	    cctxt->ivar->next = ivar;
+	    ivar->prev = cctxt->ivar;
+	}
+	cctxt->ivar = ivar;
+	ivar->next = NULL;
+    }
+    ivar->depth = cctxt->depth;
+    ivar->name = name;
+    ivar->nsName = nsName;
+    return(ivar);
+}
+
+/**
+ * xsltCompilerVarInfoPop: 
+ * @cctxt: the compilation context
+ * 
+ * Pops all var/param infos from the stack, which
+ * have the current depth.
+ */ 
+static void
+xsltCompilerVarInfoPop(xsltCompilerCtxtPtr cctxt)
+{
+
+    while ((cctxt->ivar != NULL) &&
+	(cctxt->ivar->depth > cctxt->depth))
+    {
+	cctxt->ivar = cctxt->ivar->prev;
+    }
 }
 
 /*
@@ -2316,6 +2413,12 @@ xsltCompilerNodePop(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
 	"xsltCompilerNodePop: Depth mismatch.\n");
 	goto mismatch;
     }
+    /*
+    * Pop information of variables.
+    */
+    if ((cctxt->ivar) && (cctxt->ivar->depth > cctxt->depth))
+	xsltCompilerVarInfoPop(cctxt);
+
     cctxt->depth--;
     cctxt->inode = cctxt->inode->prev;
     if (cctxt->inode != NULL)
@@ -2421,7 +2524,7 @@ xsltCompilerBuildInScopeNsList(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
 		    break;
                 }
                 if (i >= nsi->totalNumber) {
-                    if (nsi->totalNumber >= maxns) {
+                    if (nsi->totalNumber +1 >= maxns) {
                         maxns *= 2;
 			nsi->list =
 			    (xmlNsPtr *) xmlRealloc(nsi->list,
@@ -3684,6 +3787,17 @@ xsltGetXSLTElementTypeByNode(xsltCompilerCtxtPtr cctxt,
     return(0);
 }
 
+/**
+ * xsltParseAnyXSLTElem:
+ *
+ * @cctxt: the compilation context
+ * @elem: the element node of the XSLT instruction
+ *
+ * Parses, validates the content models and compiles XSLT instructions.
+ *
+ * Returns 0 if everything's fine;
+ *         -1 on API or internal errors.
+ */ 
 int
 xsltParseAnyXSLTElem(xsltCompilerCtxtPtr cctxt, xmlNodePtr elem)
 {
@@ -3718,12 +3832,16 @@ xsltParseAnyXSLTElem(xsltCompilerCtxtPtr cctxt, xmlNodePtr elem)
 	cctxt->inode->inScopeNs =
 	    xsltCompilerBuildInScopeNsList(cctxt, elem);
     /*
-    * xsltStylePreCompute(): Precompute the XSLT-instruction.
+    * xsltStylePreCompute():
     *  This will compile the information found on the current
     *  element's attributes. NOTE that this won't process the
-    *  children of the current element.
+    *  children of the instruction.
     */
     xsltStylePreCompute(cctxt->style, elem);
+    /*
+    * TODO: How to react on errors in xsltStylePreCompute() ?
+    */
+
     /*
     * Validate the content model of the XSLT-element.
     */
@@ -3777,6 +3895,28 @@ xsltParseAnyXSLTElem(xsltCompilerCtxtPtr cctxt, xmlNodePtr elem)
 	    /* EMPTY */
 	    goto empty_content;
 	case XSLT_FUNC_PARAM:
+	    /*
+	    * Check for redefinition.
+	    */
+	    if ((elem->psvi != NULL) && (cctxt->ivar != NULL)) {
+		xsltVarInfoPtr ivar = cctxt->ivar;
+
+		do {
+		    if ((ivar->name ==
+			 ((xsltStyleItemParamPtr) elem->psvi)->name) &&
+			(ivar->nsName ==
+			 ((xsltStyleItemParamPtr) elem->psvi)->ns))
+		    {
+			elem->psvi = NULL;
+			xsltTransformError(NULL, cctxt->style, elem,
+			    "Redefinition of variable or parameter '%s'.\n",
+			    ivar->name);
+			cctxt->style->errors++;
+			goto error;
+		    }
+		    ivar = ivar->prev;
+		} while (ivar != NULL);
+	    }
 	    /*  <!-- Content: template --> */
 	    goto sequence_constructor;
 	case XSLT_FUNC_PI:
@@ -3792,6 +3932,28 @@ xsltParseAnyXSLTElem(xsltCompilerCtxtPtr cctxt, xmlNodePtr elem)
 	    /* EMPTY */
 	    goto empty_content;
 	case XSLT_FUNC_VARIABLE:
+	    /*
+	    * Check for redefinition.
+	    */
+	    if ((elem->psvi != NULL) && (cctxt->ivar != NULL)) {
+		xsltVarInfoPtr ivar = cctxt->ivar;		
+
+		do {
+		    if ((ivar->name ==
+			 ((xsltStyleItemVariablePtr) elem->psvi)->name) &&
+			(ivar->nsName ==
+			 ((xsltStyleItemVariablePtr) elem->psvi)->ns))
+		    {
+			elem->psvi = NULL;
+			xsltTransformError(NULL, cctxt->style, elem,
+			    "Redefinition of variable or parameter '%s'.\n",
+			    ivar->name);
+			cctxt->style->errors++;
+			goto error;
+		    }
+		    ivar = ivar->prev;
+		} while (ivar != NULL);
+	    }
 	    /* <!-- Content: template --> */
 	    goto sequence_constructor;
 	case XSLT_FUNC_WHEN:
@@ -3998,9 +4160,30 @@ for_each:
     goto exit;
 
 sequence_constructor:
+    /*
+    * Parse the sequence constructor.
+    */
     if (elem->children != NULL)
 	xsltParseSequenceConstructor(cctxt, elem->children);
-    
+
+    /*
+    * Register information for vars/params. Only needed if there
+    * are any following siblings.
+    */
+    if ((elem->next != NULL) &&
+	((cctxt->inode->type == XSLT_FUNC_VARIABLE) ||
+	 (cctxt->inode->type == XSLT_FUNC_PARAM)))
+    {	
+	if ((elem->psvi != NULL) &&
+	    (((xsltStyleBasicItemVariablePtr) elem->psvi)->name))
+	{	
+	    xsltCompilerVarInfoPush(cctxt, elem,
+		((xsltStyleBasicItemVariablePtr) elem->psvi)->name,
+		((xsltStyleBasicItemVariablePtr) elem->psvi)->ns);
+	}
+    }
+
+error:
 exit:
     xsltCompilerNodePop(cctxt, elem);
     return(0);
@@ -4010,6 +4193,16 @@ internal_err:
     return(-1);
 }
 
+/**
+ * xsltForwardsCompatUnkownItemCreate:
+ *
+ * @cctxt: the compilation context 
+ *
+ * Creates a compiled representation of the unknown
+ * XSLT instruction.
+ *
+ * Returns the compiled representation.
+ */ 
 static xsltStyleItemUknownPtr
 xsltForwardsCompatUnkownItemCreate(xsltCompilerCtxtPtr cctxt)
 {
@@ -4033,6 +4226,20 @@ xsltForwardsCompatUnkownItemCreate(xsltCompilerCtxtPtr cctxt)
     return(item);
 }
 
+/**
+ * xsltParseUnknownXSLTElem:
+ *
+ * @cctxt: the compilation context
+ * @node: the element of the unknown XSLT instruction
+ *
+ * Parses an unknown XSLT element.
+ * If forwards compatible mode is enabled this will allow
+ * such an unknown XSLT and; otherwise it is rejected.
+ *
+ * Returns 1 in the unknown XSLT instruction is rejected,
+ *         0 if everything's fine and
+ *         -1 on API or internal errors.
+ */ 
 static int
 xsltParseUnknownXSLTElem(xsltCompilerCtxtPtr cctxt,
 			    xmlNodePtr node)
@@ -4053,7 +4260,7 @@ xsltParseUnknownXSLTElem(xsltCompilerCtxtPtr cctxt,
 	xsltTransformError(NULL, cctxt->style, node,
 	    "Unknown XSLT element '%s'.\n", node->name);
 	cctxt->style->errors++;
-	return(0);
+	return(1);
     }
     /*
     * Forwards-compatible mode.
@@ -4106,6 +4313,7 @@ xsltParseUnknownXSLTElem(xsltCompilerCtxtPtr cctxt,
     }
     return(0);
 }
+
 /**
  * xsltParseSequenceConstructor:
  *
@@ -4374,10 +4582,12 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
 		    
 		    if (cur->psvi == NULL) {
 			/*
-			* OLD COMMENT: "Unknown element, maybe registered at the
-			*  context level. Mark it for later recognition."
+			* OLD COMMENT: "Unknown element, maybe registered
+			*  at the context level. Mark it for later
+			*  recognition."
 			* QUESTION: What does the xsltExtMarker mean?
-			*  ANSWER: It is used in xsltApplyOneTemplateInt() at
+			*  ANSWER: It is used in
+			*   xsltApplySequenceConstructor() at
 			*   transformation-time to look out for extension
 			*   registered in the transformation context.
 			*/
@@ -4400,7 +4610,7 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
 		    *    transformation-time only, then there's no way of
 		    *    knowing that content shall be valid, and we'll
 		    *    process the content the same way.
-		    *  2) If author *does* set the flag, then we'll assume
+		    *  2) If the author *does* set the flag, then we'll assume
 		    *   that the author has handled the parsing him/herself
 		    *   (e.g. called xsltParseSequenceConstructor(), etc.
 		    *   explicitely in his/her code).
@@ -4526,8 +4736,8 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
  * @templ:  the node containing the content to be parsed
  *
  * Parses and compiles the content-model of an xsl:template element.
- * Note that this is *not* the "template" (or "sequence constructor"
- *  in XSLT 2.0) content model. Since it allows addional xsl:param
+ * Note that this is *not* the "template" content model (or "sequence
+ *  constructor" in XSLT 2.0); it it allows addional xsl:param
  *  elements as immediate children of @templ.
  *
  * Called by: 

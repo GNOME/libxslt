@@ -27,32 +27,19 @@
 extern "C" {
 #endif
 
+/* #define XSLT_DEBUG_PROFILE_CACHE */
+
 #define XSLT_IS_TEXT_NODE(n) ((n != NULL) && \
     (((n)->type == XML_TEXT_NODE) || \
      ((n)->type == XML_CDATA_SECTION_NODE)))
 
-
-#if 0
-
-extern const xmlChar *xsltDocFragFake;
-
-#define XSLT_MARK_RES_TREE_FRAG(n) (n)->psvi = (void *) xsltDocFragFake;
-
-#define XSLT_IS_RES_TREE_FRAG(n) \
-    ((n != NULL) && ((n)->type == XML_DOCUMENT_NODE) && \
-     ((n)->psvi == xsltDocFragFake))
-
-#else
 
 #define XSLT_MARK_RES_TREE_FRAG(n) \
     (n)->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
 
 #define XSLT_IS_RES_TREE_FRAG(n) \
     ((n != NULL) && ((n)->type == XML_DOCUMENT_NODE) && \
-     ((n)->name != NULL) && ((n)->name[0] == ' ') && \
-    xmlStrEqual(BAD_CAST (n)->name, BAD_CAST " fake node libxslt"))
-
-#endif
+     ((n)->name != NULL) && ((n)->name[0] == ' '))
 
 /**
  * XSLT_REFACTORED_KEYCOMP:
@@ -62,6 +49,14 @@ extern const xmlChar *xsltDocFragFake;
 #define XSLT_REFACTORED_KEYCOMP
 
 /**
+ * XSLT_FAST_IF:
+ *
+ * Internal define to enable usage of xmlXPathCompiledEvalToBoolean()
+ * for XSLT "tests"; e.g. in <xsl:if test="/foo/bar">
+ */
+#define XSLT_FAST_IF
+
+/**
  * XSLT_REFACTORED:
  *
  * Internal define to enable the refactored parts of Libxslt.
@@ -69,9 +64,12 @@ extern const xmlChar *xsltDocFragFake;
 /* #define XSLT_REFACTORED */
 /* ==================================================================== */
 
+#define XSLT_REFACTORED_VARS
+
 #ifdef XSLT_REFACTORED
 
 extern const xmlChar *xsltXSLTAttrMarker;
+
 
 /* TODO: REMOVE: #define XSLT_REFACTORED_EXCLRESNS */
 
@@ -243,6 +241,7 @@ struct _xsltTemplate {
     /* Profiling informations */
     int nbCalls;        /* the number of time the template was called */
     unsigned long time; /* the time spent in this template */
+    void *params;       /* xsl:param instructions */
 };
 
 /**
@@ -275,7 +274,6 @@ struct _xsltDecimalFormat {
  *
  * Data structure associated to a parsed document.
  */
-
 typedef struct _xsltDocument xsltDocument;
 typedef xsltDocument *xsltDocumentPtr;
 struct _xsltDocument {
@@ -478,6 +476,8 @@ struct _xsltNsListContainer {
  * 
  * Fields for API compatibility to the structure
  * _xsltElemPreComp which is used for extension functions.
+ * Note that @next is used for storage; it does not reflect a next
+ * sibling in the tree.
  * TODO: Evaluate if we really need such a compatibility.
  */
 #define XSLT_ITEM_COMPATIBILITY_FIELDS \
@@ -940,8 +940,20 @@ typedef xsltStyleItemVariable *xsltStyleItemVariablePtr;
  *   <!-- Content: template -->
  * </xsl:param>
  */
-typedef xsltStyleBasicItemVariable xsltStyleItemParam;
+typedef struct _xsltStyleItemParam xsltStyleItemParam;
 typedef xsltStyleItemParam *xsltStyleItemParamPtr;
+
+struct _xsltStyleItemParam {
+    XSLT_ITEM_COMMON_FIELDS
+
+    const xmlChar *select;
+    xmlXPathCompExprPtr comp;
+
+    const xmlChar *name;
+    int      has_name;
+    const xmlChar *ns;
+    int      has_ns;    
+};
 
 /**
  * xsltStyleItemWithParam:
@@ -1167,6 +1179,21 @@ struct _xsltNsList {
     xmlNsPtr ns;
 };
 
+/*
+* xsltVarInfo:
+*
+* Used at compilation time for parameters and variables.
+*/
+typedef struct _xsltVarInfo xsltVarInfo;
+typedef xsltVarInfo *xsltVarInfoPtr;
+struct _xsltVarInfo {
+    xsltVarInfoPtr next; /* next in the list */
+    xsltVarInfoPtr prev;
+    int depth; /* the depth in the tree */
+    const xmlChar *name;
+    const xmlChar *nsName;
+};
+
 #define XSLT_ELEMENT_CATEGORY_XSLT 0
 #define XSLT_ELEMENT_CATEGORY_EXTENSION 1
 #define XSLT_ELEMENT_CATEGORY_LRE 2
@@ -1194,6 +1221,7 @@ struct _xsltCompilerNodeInfo {
     xsltPointerListPtr exclResultNs; 
     /* The current extension instruction namespaces */
     xsltPointerListPtr extElemNs;
+
     /* The current info for literal result elements. */
     xsltStyleItemLRElementInfoPtr litResElemInfo;
     /* 
@@ -1262,7 +1290,9 @@ struct _xsltCompilerCtxt {
 #endif
     xsltStyleItemUknownPtr unknownItem;
     int hasNsAliases; /* Indicator if there was an xsl:namespace-alias. */
-    xsltNsAliasPtr nsAliases;    
+    xsltNsAliasPtr nsAliases;
+    xsltVarInfoPtr ivars; /* Storage of local in-scope variables/params. */
+    xsltVarInfoPtr ivar; /* topmost local variable/param. */
 };   
 
 #else /* XSLT_REFACTORED */
@@ -1329,6 +1359,10 @@ struct _xsltStylePreComp {
 
 #endif /* XSLT_REFACTORED */
 
+
+#define XSLT_VAR_GLOBAL 1<<0
+#define XSLT_VAR_IN_SELECT 1<<1
+#define XSLT_TCTXT_VARIABLE(c) ((xsltStackElemPtr) (c)->contextVariable)
 /*
  * The in-memory structure corresponding to an XSLT Variable
  * or Param.
@@ -1342,8 +1376,16 @@ struct _xsltStackElem {
     const xmlChar *name;	/* the local part of the name QName */
     const xmlChar *nameURI;	/* the URI part of the name QName */
     const xmlChar *select;	/* the eval string */
-    xmlNodePtr tree;		/* the tree if no eval string or the location */
+    xmlNodePtr tree;		/* the sequence constructor if no eval
+				    string or the location */
     xmlXPathObjectPtr value;	/* The value if computed */
+    xmlDocPtr fragment;		/* The Result Tree Fragments (needed for XSLT 1.0)
+				   which are bound to the variable's lifetime. */
+    int level;                  /* the depth in the tree;
+                                   -1 if persistent (e.g. a given xsl:with-param) */
+    xsltTransformContextPtr context; /* The transformation context; needed to cache
+                                        the variables */
+    int flags;
 };
 
 #ifdef XSLT_REFACTORED
@@ -1537,6 +1579,21 @@ struct _xsltStylesheet {
 #endif
 };
 
+typedef struct _xsltTransformCache xsltTransformCache;
+typedef xsltTransformCache *xsltTransformCachePtr;
+struct _xsltTransformCache {
+    xmlDocPtr RVT;
+    int nbRVT;
+    xsltStackElemPtr stackItems;
+    int nbStackItems;
+#ifdef XSLT_DEBUG_PROFILE_CACHE
+    int dbgCachedRVTs;
+    int dbgReusedRVTs;
+    int dbgCachedVars;
+    int dbgReusedVars;
+#endif
+};
+
 /*
  * The in-memory structure corresponding to an XSLT Transformation.
  */
@@ -1579,7 +1636,7 @@ struct _xsltTransformContext {
 
     xsltDocumentPtr docList;		/* the document list */
 
-    xsltDocumentPtr document;		/* the current document */
+    xsltDocumentPtr document;		/* the current source document; can be NULL if an RTF */
     xmlNodePtr node;			/* the current node being processed */
     xmlNodeSetPtr nodeList;		/* the current node list */
     /* xmlNodePtr current;			the node */
@@ -1623,6 +1680,7 @@ struct _xsltTransformContext {
 
     /*
      * handling of temporary Result Value Tree
+     * (XSLT 1.0 term: "Result Tree Fragment")
      */
     xmlDocPtr       tmpRVT;		/* list of RVT without persistance */
     xmlDocPtr       persistRVT;		/* list of persistant RVTs */
@@ -1647,8 +1705,8 @@ struct _xsltTransformContext {
      */
     xmlDictPtr dict;
     /*
-     * temporary storage for doc ptr, currently only used for
-     * global var evaluation
+     * The current source doc; one of: the initial source doc, a RTF
+     * or a source doc aquired via the document() function.
      */
     xmlDocPtr		tmpDoc;
     /*
@@ -1656,7 +1714,16 @@ struct _xsltTransformContext {
      */
     int internalized;
     int nbKeys;
-    int hasTemplKeyPatterns;
+    int hasTemplKeyPatterns;    
+    xsltTemplatePtr currentTemplateRule; /* the Current Template Rule */    
+    xmlNodePtr initialContextNode;
+    xmlDocPtr initialContextDoc;
+    xsltTransformCachePtr cache;
+    void *contextVariable; /* the current variable item */
+    xmlDocPtr localRVT; /* list of local tree fragments; will be freed when
+			   the instruction which created the fragment
+                           exits */
+    xmlDocPtr localRVTBase;    
 };
 
 /**
@@ -1763,11 +1830,31 @@ XSLTPUBFUN int XSLTCALL
 			xsltRegisterTmpRVT	(xsltTransformContextPtr ctxt,
 						 xmlDocPtr RVT);
 XSLTPUBFUN int XSLTCALL			
+			xsltRegisterLocalRVT	(xsltTransformContextPtr ctxt,
+						 xmlDocPtr RVT);
+XSLTPUBFUN int XSLTCALL			
 			xsltRegisterPersistRVT	(xsltTransformContextPtr ctxt,
 						 xmlDocPtr RVT);
-XSLTPUBFUN void XSLTCALL			
+XSLTPUBFUN int XSLTCALL
+			xsltExtensionInstructionResultRegister(
+						 xsltTransformContextPtr ctxt,
+						 xmlXPathObjectPtr obj);
+XSLTPUBFUN int XSLTCALL
+			xsltExtensionInstructionResultFinalize(
+						 xsltTransformContextPtr ctxt);
+XSLTPUBFUN void XSLTCALL
 			xsltFreeRVTs		(xsltTransformContextPtr ctxt);
-			
+XSLTPUBFUN void XSLTCALL
+			xsltReleaseRVT		(xsltTransformContextPtr ctxt,
+						 xmlDocPtr RVT);
+XSLTPUBFUN int XSLTCALL
+			xsltTransStorageAdd	(xsltTransformContextPtr ctxt,
+						 void *id,
+						 void *data);
+XSLTPUBFUN void * XSLTCALL
+			xsltTransStorageRemove	(xsltTransformContextPtr ctxt,
+						 void *id);
+
 /*
  * Extra functions for Attribute Value Templates
  */
