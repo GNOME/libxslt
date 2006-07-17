@@ -1,3 +1,13 @@
+Mon Jul 17 11:15:23 PDT 2006 William Brack <wbrack@mmm.com.hk>
+
+	* Updated tests affected by recent library changes -
+	  tests/general/bug-1-.out, tests/general/bug-24-.out,
+	  tests/keys/month.out : (<t></t> now becomes <t/>);
+	  tests/general/bug-41-.xsl and tests/general/bug-43.xsl :
+	  call-template and apply-template, where the template has
+	  no parameter but one is supplied (var should not be affected)
+	  tests/general/bug-145.err : changed error text
+	  
 Fri Jul 14 18:16:59 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/attributes.c libxslt/documents.c
