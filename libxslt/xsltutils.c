@@ -1383,7 +1383,13 @@ xsltSetCtxtParseOptions(xsltTransformContextPtr ctxt, int options)
     if (ctxt == NULL)
         return(-1);
     oldopts = ctxt->parserOptions;
+    if (ctxt->xinclude)
+        oldopts |= XML_PARSE_XINCLUDE;
     ctxt->parserOptions = options;
+    if (options & XML_PARSE_XINCLUDE)
+        ctxt->xinclude = 1;
+    else
+        ctxt->xinclude = 0;
     return(oldopts);
 }
 

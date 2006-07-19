@@ -1,3 +1,9 @@
+Wed Jul 19 15:06:39 EDT 2006 Daniel Veillard <daniel@veillard.com>
+
+	* python/types.c: fix float and boolean XPath conversions
+	* libxslt/xsltutils.c: try to fix Stephane Bidoul attempt
+	  at setting XInclude support.
+
 Mon Jul 17 11:15:23 PDT 2006 William Brack <wbrack@mmm.com.hk>
 
 	* Updated tests affected by recent library changes -
