@@ -843,12 +843,13 @@ xsltFreeStylesheetList(xsltStylesheetPtr style) {
  * @node: the element where the stylesheet is rooted at
  *
  * Actually @node need not be the document-element, but
- * currently Libxslt does not support embedeed stylesheets.
+ * currently Libxslt does not support embedded stylesheets.
  *
  * Returns 0 if OK, -1 on API or internal errors.
  */
 static int
-xsltCleanupStylesheetTree(xmlDocPtr doc, xmlNodePtr rootElem)
+xsltCleanupStylesheetTree(xmlDocPtr doc ATTRIBUTE_UNUSED,
+			  xmlNodePtr rootElem ATTRIBUTE_UNUSED)
 {    
 #if 0 /* TODO: Currently disabled, since probably not needed. */
     xmlNodePtr cur;

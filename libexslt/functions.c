@@ -57,7 +57,7 @@ static void exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt,
 				       int nargs);
 static exsltFuncFunctionData *exsltFuncNewFunctionData(void);
 
-static const xmlChar *exsltResultDataID = (const xmlChar *) "EXSLT Result";
+/*static const xmlChar *exsltResultDataID = (const xmlChar *) "EXSLT Result";*/
 
 /**
  * exsltFuncRegisterFunc:

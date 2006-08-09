@@ -1,3 +1,11 @@
+Wed Aug  9 13:22:13 PDT 2006 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: Fixed problem with cleanup of RVT's, should
+	  clear bug350085; cleaned up most warnings (still a problem in
+	  xsltShallowCopyNsNode)
+	* trivial warning cleanup in libxslt/[extensions.c, namespaces.c,
+	  xslt.c and xsltInternals.h] and libexslt/functions.c
+
 Fri Aug  4 14:50:41 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* python/generator.py: fixed the conversion of long parameters

@@ -813,8 +813,8 @@ xsltCopyNamespaceList(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * Returns: a new xmlNsPtr, or NULL in case of an error.
  */
 xmlNsPtr
-xsltCopyNamespace(xsltTransformContextPtr ctxt, xmlNodePtr elem,
-	          xmlNsPtr ns)
+xsltCopyNamespace(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
+		  xmlNodePtr elem, xmlNsPtr ns)
 {    
     if ((ns == NULL) || (ns->type != XML_NAMESPACE_DECL))
 	return(NULL);

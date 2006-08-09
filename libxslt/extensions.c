@@ -324,7 +324,7 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     const xmlChar *ext_directory = NULL;
     const xmlChar *protocol = NULL;
     xmlChar *i, *regfunc_name;
-    int rc, seen_before;
+    int rc;
 
     /* check for bad inputs */
     if (URI == NULL)
@@ -337,8 +337,7 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     }
 
     /* have we attempted to register this module already? */
-    seen_before = (int) xmlHashLookup(xsltModuleHash, URI);
-    if (0 != seen_before) {
+    if (xmlHashLookup(xsltModuleHash, URI) != NULL) {
         return (-1);
     }
 
@@ -778,8 +777,9 @@ xsltStyleGetExtData(xsltStylesheetPtr style, const xmlChar * URI)
     return(NULL);
 }
 
+#ifdef XSLT_REFACTORED
 /**
- * xsltStyleGetExtDataPerStylesheetLevel:
+ * xsltStyleStylesheetLevelGetExtData:
  * @style: an XSLT stylesheet
  * @URI:  the URI associated to the exension module
  *
@@ -815,6 +815,7 @@ xsltStyleStylesheetLevelGetExtData(xsltStylesheetPtr style,
 	return (dataContainer->extData);
     return(NULL);
 }
+#endif
 
 /**
  * xsltGetExtData:

@@ -1316,6 +1316,10 @@ xsltShallowCopyNsNode(xsltTransformContextPtr ctxt,
 		      xmlNodePtr insert,
 		      xmlNsPtr ns)
 {
+    /*
+     * TODO: Contrary to header comments, this is declared as int.  
+     * be modified to return a node pointer, or NULL if any error
+     */
     xmlNsPtr tmpns;
 
     if ((insert == NULL) || (insert->type != XML_ELEMENT_NODE))
@@ -3016,13 +3020,13 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     * was not called by the extension author.
     */
     if (oldLocalFragmentTop != ctxt->localRVT) {
-	xmlDocPtr cur = ctxt->localRVT, tmp;
+	xmlDocPtr curdoc = ctxt->localRVT, tmp;
 
 	do {
-	    tmp = cur;
-	    cur = (xmlDocPtr) cur->next;
+	    tmp = curdoc;
+	    curdoc = (xmlDocPtr) curdoc->next;
 	    xsltReleaseRVT(ctxt, tmp);
-	} while (cur != oldLocalFragmentTop);
+	} while (curdoc != oldLocalFragmentTop);
     }
     ctxt->localRVT = oldLocalFragmentTop;
 
@@ -3033,11 +3037,11 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     * of the obsolete xsltRegisterTmpRVT().    
     */
     if (ctxt->tmpRVT) {
-	xmlDocPtr cur = ctxt->tmpRVT, tmp;
+	xmlDocPtr curdoc = ctxt->tmpRVT, tmp;
 
-	while (cur != NULL) {
-	    tmp = cur;
-	    cur = (xmlDocPtr) cur->next;
+	while (curdoc != NULL) {
+	    tmp = curdoc;
+	    curdoc = (xmlDocPtr) curdoc->next;
 	    xsltReleaseRVT(ctxt, tmp);
 	}	
     }
@@ -6013,10 +6017,19 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
         }
         vptr = vptr->next;
     }
+#if 0
+    /*
+     * code disabled by wmb; awaiting kb's review
+     * problem is that global variable(s) may contain xpath objects
+     * from doc associated with RVT, so can't be freed at this point.
+     * xsltFreeTransformContext includes a call to xsltFreeRVTs, so
+     * I assume this shouldn't be required at this point.
+     */
     /*
     * Free all remaining tree fragments.
     */
     xsltFreeRVTs(ctxt);
+#endif
     /*
      * Do some post processing work depending on the generated output
      */
