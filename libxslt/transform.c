@@ -1205,7 +1205,8 @@ xsltShallowCopyElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @invocNode: responsible node in the stylesheet; used for error reports
  * @list:  the list of element nodes in the source tree.
  * @insert:  the parent in the result tree.
- * @literal:  is this a literal result element list
+ * @isLRE:  is this a literal result element list
+ * @topElemVisited: indicates if a top-most element was already processed
  *
  * Make a copy of the full list of tree @list
  * and insert it as last children of @insert
@@ -1310,7 +1311,7 @@ xsltCopyNamespaceListInternal(xmlNodePtr elem, xmlNsPtr ns) {
  *
  * Returns a new/existing ns-node, or NULL.
  */
-static int
+static xmlNsPtr
 xsltShallowCopyNsNode(xsltTransformContextPtr ctxt,
 		      xmlNodePtr invocNode,
 		      xmlNodePtr insert,
@@ -1323,13 +1324,13 @@ xsltShallowCopyNsNode(xsltTransformContextPtr ctxt,
     xmlNsPtr tmpns;
 
     if ((insert == NULL) || (insert->type != XML_ELEMENT_NODE))
-	return(-1);
+	return(NULL);
     
     if (insert->children != NULL) {
 	xsltTransformError(ctxt, NULL, invocNode,
 	    "Namespace nodes must be added before "
 	    "any child nodes are added to an element.\n");
-	return(1);
+	return(NULL);
     }
     /*    
     *
@@ -1360,7 +1361,10 @@ xsltShallowCopyNsNode(xsltTransformContextPtr ctxt,
     } else if ((ns->prefix[0] == 'x') &&
 	xmlStrEqual(ns->prefix, BAD_CAST "xml"))
     {
-	return(0);
+	/*
+	* The XML namespace is built in.
+	*/
+	return(NULL);
     }
 
     if (insert->nsDef != NULL) {
@@ -1374,7 +1378,7 @@ xsltShallowCopyNsNode(xsltTransformContextPtr ctxt,
 		    * Same prefix.
 		    */
 		    if (xmlStrEqual(tmpns->href, ns->href))
-			return(0);
+			return(NULL);
 		    goto occupied;
 		}
 	    }
@@ -1383,22 +1387,21 @@ xsltShallowCopyNsNode(xsltTransformContextPtr ctxt,
     }
     tmpns = xmlSearchNs(insert->doc, insert, ns->prefix);
     if ((tmpns != NULL) && xmlStrEqual(tmpns->href, ns->href))
-	return(0);
+	return(NULL);
     /*
     * Declare a new namespace.
     * TODO: The problem (wrt efficiency) with this xmlNewNs() is
     * that it will again search the already declared namespaces
     * for a duplicate :-/
     */
-    xmlNewNs(insert, ns->href, ns->prefix);
-    return(0);    
+    return(xmlNewNs(insert, ns->href, ns->prefix));
 
 occupied:
     /*
     * TODO: We could as well raise an error here (like Saxon does),
     * or at least generate a warning.
     */
-    return(0);
+    return(NULL);
 }
 
 /**

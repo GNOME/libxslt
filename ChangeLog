@@ -1,3 +1,15 @@
+Thu Aug 10 13:27:48 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/transform.c: As suggested by Bill, I changed
+	  xsltShallowCopyNsNode() to return an xmlNsPtr instead of
+	  an int. The fix of bug #350085 is OK; i.e. the removal
+	  of the call to xsltFreeRVTs() in
+	  xsltApplyStylesheetInternal(). I think I tried to clear
+	  the transformation context as much as possible, in case
+	  it is reused; Daniel informed me on the list that reusing
+	  the context is not intended, so no need anymore to try
+	  to free the fragments immediately after the transformation.
+
 Wed Aug  9 13:22:13 PDT 2006 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: Fixed problem with cleanup of RVT's, should
