@@ -1,3 +1,10 @@
+Thu Aug 10 15:54:02 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net
+
+	* libxslt/transform.c libxslt/variables.c
+	  libxslt/xsltInternals.h: Fixed restoring the context doc
+	  for XPath in xsltForEach(). Eliminated the use of @tmpDoc
+	  of the transformation context.
+
 Thu Aug 10 13:40:35 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/preproc.c: Added missing QName-validation of some

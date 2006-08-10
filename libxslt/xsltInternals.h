@@ -1705,11 +1705,7 @@ struct _xsltTransformContext {
      * dictionnary: shared between stylesheet, context and documents.
      */
     xmlDictPtr dict;
-    /*
-     * The current source doc; one of: the initial source doc, a RTF
-     * or a source doc aquired via the document() function.
-     */
-    xmlDocPtr		tmpDoc;
+    xmlDocPtr		tmpDoc; /* Obsolete; not used in the library. */
     /*
      * all document text strings are internalized
      */

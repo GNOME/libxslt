@@ -1490,16 +1490,7 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	    int oldXPProximityPosition, oldXPContextSize, oldXPNsNr;
 	    xmlNsPtr *oldXPNamespaces;
 	    xmlXPathContextPtr xpctxt = ctxt->xpathCtxt;
-	    /*
-	    * SPEC XSLT 1.0:
-	    * "At top-level, the expression or template specifying the
-	    *  variable value is evaluated with the same context as that used
-	    *  to process the root node of the source document: the current
-	    *  node is the root node of the source document and the current
-	    *  node list is a list containing just the root node of the source
-	    *  document."
-	    */
-	    xpctxt->doc = ctxt->tmpDoc;
+	   
 	    /*
 	    * Save context states.
 	    */
@@ -1509,9 +1500,18 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 	    oldXPContextSize = xpctxt->contextSize;
 	    oldXPNamespaces = xpctxt->namespaces;
 	    oldXPNsNr = xpctxt->nsNr;
-	    
-	    xpctxt->node = ctxt->initialContextNode;
-	    xpctxt->doc = ctxt->initialContextDoc;
+
+	    /*
+	    * SPEC XSLT 1.0:
+	    * "At top-level, the expression or template specifying the
+	    *  variable value is evaluated with the same context as that used
+	    *  to process the root node of the source document: the current
+	    *  node is the root node of the source document and the current
+	    *  node list is a list containing just the root node of the source
+	    *  document."
+	    */
+	    xpctxt->doc = ctxt->initialContextDoc;	    
+	    xpctxt->node = ctxt->initialContextNode;	    
 	    xpctxt->contextSize = 1;
 	    xpctxt->proximityPosition = 1;
 	    /* 

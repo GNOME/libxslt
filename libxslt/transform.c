@@ -4636,7 +4636,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltStackElemPtr withParams = NULL;
     int oldXPProximityPosition, oldXPContextSize;
     const xmlChar *oldMode, *oldModeURI;
-    xmlDocPtr oldDoc;
+    xmlDocPtr oldXPDoc;
     xsltDocumentPtr oldDocInfo;
     xmlXPathContextPtr xpctxt;
 
@@ -4662,7 +4662,6 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldMode = ctxt->mode;
     oldModeURI = ctxt->modeURI;    
     oldDocInfo = ctxt->document;
-    oldDoc = ctxt->tmpDoc;
     oldList = ctxt->nodeList;    
 
     /*
@@ -4672,6 +4671,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
      */    
     oldXPContextSize = xpctxt->contextSize;
     oldXPProximityPosition = xpctxt->proximityPosition;
+    oldXPDoc = xpctxt->doc;
 
     /*
     * Set up contexts.
@@ -4989,11 +4989,10 @@ error:
     /*
     * Restore context states.
     */
-    xpctxt->doc = oldDoc;
+    xpctxt->doc = oldXPDoc;
     xpctxt->contextSize = oldXPContextSize;
     xpctxt->proximityPosition = oldXPProximityPosition;
-    
-    ctxt->tmpDoc = oldDoc;
+
     ctxt->document = oldDocInfo;
     ctxt->nodeList = oldList;
     ctxt->node = oldContextNode;
@@ -5401,7 +5400,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
     int oldXPProximityPosition, oldXPContextSize;
     xmlNodePtr oldContextNode;
     xsltTemplatePtr oldCurTemplRule;    
-    xmlDocPtr oldSourceDoc;
+    xmlDocPtr oldXPDoc;
     xsltDocumentPtr oldDocInfo;
     xmlXPathContextPtr xpctxt;
 
@@ -5435,8 +5434,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
     * Save context states.
     */
     oldDocInfo = ctxt->document;
-    oldList = ctxt->nodeList;
-    oldSourceDoc = ctxt->tmpDoc;
+    oldList = ctxt->nodeList;    
     oldContextNode = ctxt->node;
     /*
     * The "current template rule" is cleared for the instantiation of
@@ -5445,6 +5443,7 @@ xsltForEach(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
     oldCurTemplRule = ctxt->currentTemplateRule;
     ctxt->currentTemplateRule = NULL;
 
+    oldXPDoc = xpctxt->doc;
     oldXPProximityPosition = xpctxt->proximityPosition;
     oldXPContextSize = xpctxt->contextSize;
     /*
@@ -5574,13 +5573,12 @@ error:
     /*
     * Restore old states.
     */
-    ctxt->tmpDoc = oldSourceDoc;
     ctxt->document = oldDocInfo;
     ctxt->nodeList = oldList;
     ctxt->node = oldContextNode;
     ctxt->currentTemplateRule = oldCurTemplRule;
 
-    xpctxt->doc = oldSourceDoc;
+    xpctxt->doc = oldXPDoc;
     xpctxt->contextSize = oldXPContextSize;
     xpctxt->proximityPosition = oldXPProximityPosition;
 }
@@ -5961,7 +5959,6 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     /*
     * Evaluate global params and user-provided params.
     */
-    ctxt->tmpDoc = doc;
     ctxt->node = (xmlNodePtr) doc;
     if (ctxt->globalVars == NULL)
 	ctxt->globalVars = xmlHashCreate(20);
@@ -5974,7 +5971,6 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltCountKeys(ctxt);
 #endif
 
-    ctxt->tmpDoc = doc;
     ctxt->node = (xmlNodePtr) doc;
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;    
