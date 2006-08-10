@@ -1256,6 +1256,66 @@ xsltValueOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     }
 }
 
+static void
+xsltGetQNameProperty(xsltStylesheetPtr style, xmlNodePtr inst,
+		     const xmlChar *propName,
+		     int mandatory,
+		     int *hasProp, const xmlChar **nsName,
+		     const xmlChar** localName)
+{
+    const xmlChar *prop;
+
+    if (nsName)
+	*nsName = NULL;
+    if (localName)
+	*localName = NULL;
+    if (hasProp)
+	*hasProp = 0;
+
+    prop = xsltGetCNsProp(style, inst, propName, XSLT_NAMESPACE);
+    if (prop == NULL) {
+	if (mandatory) {
+	    xsltTransformError(NULL, style, inst,
+		"The attribute '%s' is missing.\n", propName);
+	    style->errors++;
+	    return;
+	}
+    } else {
+        const xmlChar *URI;
+
+	if (xmlValidateQName(prop, 0)) {
+	    xsltTransformError(NULL, style, inst,
+		"The value '%s' of the attribute "
+		"'%s' is not a valid QName.\n", prop, propName);
+	    style->errors++;
+	    return;
+	} else {
+	    /*
+	    * @prop will be in the string dict afterwards, @URI not.
+	    */
+	    URI = xsltGetQNameURI2(style, inst, &prop);
+	    if (prop == NULL) {
+		style->errors++;
+	    } else {
+		*localName = prop;
+		if (hasProp)
+		    *hasProp = 1;
+		if (URI != NULL) {
+		    /*
+		    * Fixes bug #308441: Put the ns-name in the dict
+		    * in order to pointer compare names during XPath's
+		    * variable lookup.
+		    */
+		    if (nsName)
+			*nsName = xmlDictLookup(style->dict, URI, -1);
+		    /* comp->has_ns = 1; */
+		}
+	    }
+	}
+    }
+    return;
+}
+
 /**
  * xsltWithParamComp:
  * @style: an XSLT compiled stylesheet
@@ -1276,7 +1336,6 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #else
     xsltStylePreCompPtr comp;
 #endif
-    const xmlChar *prop;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1293,53 +1352,30 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->inst = inst;
 
     /*
-     * The full namespace resolution can be done statically
-     */
-    prop = xsltGetCNsProp(style, inst, (const xmlChar *)"name", XSLT_NAMESPACE);
-    if (prop == NULL) {
-	xsltTransformError(NULL, style, inst,
-	     "xsl:with-param : name is missing\n");
-	if (style != NULL) style->errors++;
-    } else {
-        const xmlChar *URI;
-
-	/*
-	* @prop will be in the string dict afterwards, @URI not.
-	*/
-	URI = xsltGetQNameURI2(style, inst, &prop);
-	if (prop == NULL) {
-	    if (style != NULL) style->errors++;
-	} else {
-	    comp->name = prop;
-	    comp->has_name = 1;
-	    if (URI != NULL) {
-		/*
-		* Fixes bug #308441: Put the ns-name in the dict
-		* in order to pointer compare names during XPath's
-		* variable lookup.
-		*/
-		comp->ns = xmlDictLookup(style->dict, URI, -1);
-		comp->has_ns = 1;
-	    } else {
-		comp->has_ns = 0;
-	    }
-	}
-    }
-
+    * Attribute "name".
+    */
+    xsltGetQNameProperty(style, inst, BAD_CAST "name",
+	1, &(comp->has_name), &(comp->ns), &(comp->name));
+    if (comp->ns)
+	comp->has_ns = 1;
+    /*
+    * Attribute "select".
+    */
     comp->select = xsltGetCNsProp(style, inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xsltXPathCompile(style, comp->select);
 	if (comp->comp == NULL) {
 	    xsltTransformError(NULL, style, inst,
-		 "xsl:param : could not compile select expression '%s'\n",
-			     comp->select);
-	    if (style != NULL) style->errors++;
+		 "XSLT-with-param: Failed to compile select "
+		 "expression '%s'\n", comp->select);
+	    style->errors++;
 	}
 	if (inst->children != NULL) {
 	    xsltTransformError(NULL, style, inst,
-	    "xsl:param : content should be empty since select is present \n");
-	    if (style != NULL) style->warnings++;
+		"XSLT-with-param: The content should be empty since "
+		"the attribute select is present.\n");
+	    style->warnings++;
 	}
     }
 }
@@ -1503,7 +1539,6 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #else
     xsltStylePreCompPtr comp;
 #endif
-    const xmlChar *prop;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1521,31 +1556,12 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->inst = inst;
 
     /*
-     * The full template resolution can be done statically
+     * Attribute "name".
      */
-    prop = xsltGetCNsProp(style, inst, (const xmlChar *)"name", XSLT_NAMESPACE);
-    if (prop == NULL) {
-	xsltTransformError(NULL, style, inst,
-	     "xsl:call-template : name is missing\n");
-	if (style != NULL) style->errors++;
-    } else {
-        const xmlChar *URI;
-
-	URI = xsltGetQNameURI2(style, inst, &prop);
-	if (prop == NULL) {
-	    if (style != NULL) style->errors++;
-	} else {
-	    comp->name = prop;
-	    comp->has_name = 1;
-	    if (URI != NULL) {
-		comp->ns = xmlDictLookup(style->dict, URI, -1);
-		comp->has_ns = 1;
-	    } else {
-		comp->has_ns = 0;
-	    }
-	}
-	comp->templ = NULL;
-    }
+    xsltGetQNameProperty(style, inst, BAD_CAST "name",
+	1, &(comp->has_name), &(comp->ns), &(comp->name));
+    if (comp->ns)
+	comp->has_ns = 1;
 }
 
 /**
@@ -1562,7 +1578,6 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #else
     xsltStylePreCompPtr comp;
 #endif
-    const xmlChar *prop;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1580,36 +1595,24 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->inst = inst;
 
     /*
-     * Get mode if any
+     * Attribute "mode".
      */
-    prop = xsltGetCNsProp(style, inst, (const xmlChar *)"mode", XSLT_NAMESPACE);
-    if (prop != NULL) {
-        const xmlChar *URI;
-
-	URI = xsltGetQNameURI2(style, inst, &prop);
-	if (prop == NULL) {
-	    if (style != NULL) style->errors++;
-	} else {
-	    comp->mode = xmlDictLookup(style->dict, prop, -1);
-	    if (URI != NULL) {
-		comp->modeURI = xmlDictLookup(style->dict, URI, -1);
-	    } else {
-		comp->modeURI = NULL;
-	    }
-	}
-    }
-    comp->select = xsltGetCNsProp(style, inst, (const xmlChar *)"select",
-	                        XSLT_NAMESPACE);
+    xsltGetQNameProperty(style, inst, BAD_CAST "mode",
+	0, NULL, &(comp->modeURI), &(comp->mode));
+    /*
+    * Attribute "select".
+    */
+    comp->select = xsltGetCNsProp(style, inst, BAD_CAST "select",
+	XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xsltXPathCompile(style, comp->select);
 	if (comp->comp == NULL) {
 	    xsltTransformError(NULL, style, inst,
-     "xsl:apply-templates : could not compile select expression '%s'\n",
-			     comp->select);
-	    if (style != NULL) style->errors++;
+		"XSLT-apply-templates: could not compile select "
+		"expression '%s'\n", comp->select);
+	     style->errors++;
 	}
     }
-
     /* TODO: handle (or skip) the xsl:sort and xsl:with-param */
 }
 
@@ -1798,8 +1801,6 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #else
     xsltStylePreCompPtr comp;
 #endif
-    const xmlChar *prop;
-    const xmlChar *URI;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1823,33 +1824,10 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     /*
     * Attribute "name".
     */
-    prop = xsltGetCNsProp(style, inst, (const xmlChar *)"name", XSLT_NAMESPACE);
-    if (prop == NULL) {
-	xsltTransformError(NULL, style, inst,
-	     "XSLT-variable: The attribute 'name' is missing.\n");
-	style->errors++;
-	goto error;
-    }    
-    if (xmlValidateQName(prop, 0)) {
-	xsltTransformError(NULL, style, inst,
-	    "XSLT-variable: The value '%s' of the attribute 'name' is "
-	    "not a valid QName.\n", prop);
-	style->errors++;
-	goto error;
-    }
-    URI = xsltGetQNameURI2(style, inst, &prop);
-    if (prop == NULL) {
-	goto error;
-    }
-    comp->name = prop;
-    comp->has_name = 1;
-
-    if (URI != NULL) {
-	comp->ns = xmlDictLookup(style->dict, URI, -1);
-	comp->has_ns = 1;
-    } else {
-	comp->has_ns = 0;
-    }
+    xsltGetQNameProperty(style, inst, BAD_CAST "name",
+	1, &(comp->has_name), &(comp->ns), &(comp->name));
+    if (comp->ns)
+	comp->has_ns = 1;    
     /*
     * Attribute "select".
     */
@@ -1870,8 +1848,6 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	    style->errors++;
 	}
     }
-error:
-    return;
 }
 
 /**
@@ -1888,7 +1864,6 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #else
     xsltStylePreCompPtr comp;
 #endif
-    const xmlChar *prop;
 
     if ((style == NULL) || (inst == NULL))
 	return;
@@ -1906,45 +1881,30 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->inst = inst;
 
     /*
-     * The full template resolution can be done statically
+     * Attribute "name".
      */
-    prop = xsltGetCNsProp(style, inst, (const xmlChar *)"name", XSLT_NAMESPACE);
-    if (prop == NULL) {
-	xsltTransformError(NULL, style, inst,
-	     "xsl:param : name is missing\n");
-	if (style != NULL) style->errors++;
-    } else {
-        const xmlChar *URI;
-
-	URI = xsltGetQNameURI2(style, inst, &prop);
-	if (prop == NULL) {
-	    if (style != NULL) style->errors++;
-	} else {
-	    comp->name = prop;
-	    comp->has_name = 1;
-	    if (URI != NULL) {
-		comp->ns = xmlDictLookup(style->dict, URI, -1);
-		comp->has_ns = 1;
-	    } else {
-		comp->has_ns = 0;
-	    }
-	}
-    }
-
+    xsltGetQNameProperty(style, inst, BAD_CAST "name",
+	1, &(comp->has_name), &(comp->ns), &(comp->name));
+    if (comp->ns)
+	comp->has_ns = 1;
+    /*
+    * Attribute "select".
+    */
     comp->select = xsltGetCNsProp(style, inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
 	comp->comp = xsltXPathCompile(style, comp->select);
 	if (comp->comp == NULL) {
 	    xsltTransformError(NULL, style, inst,
-		 "xsl:param : could not compile select expression '%s'\n",
-			     comp->select);
-	    if (style != NULL) style->errors++;
+		"XSLT-param: could not compile select expression '%s'.\n",
+		comp->select);
+	    style->errors++;
 	}
 	if (inst->children != NULL) {
 	    xsltTransformError(NULL, style, inst,
-	"xsl:param : content should be empty since select is present \n");
-	    if (style != NULL) style->warnings++;
+		"XSLT-param: The content should be empty since the "
+		"attribute 'select' is present.\n");
+	    style->warnings++;
 	}
     }
 }

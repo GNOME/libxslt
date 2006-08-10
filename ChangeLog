@@ -1,3 +1,9 @@
+Thu Aug 10 13:40:35 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
+
+	* libxslt/preproc.c: Added missing QName-validation of some
+	  attributes of XSLT-elements. This fixes bug #304921, reported
+	  by Frans Englich.
+
 Thu Aug 10 13:27:48 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net>
 
 	* libxslt/transform.c: As suggested by Bill, I changed
