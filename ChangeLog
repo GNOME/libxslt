@@ -1,3 +1,8 @@
+Wed Aug 16 17:39:04 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: --xinclude should also force XInclude
+	  processing on the stylesheets themselves, raised by Daniel Leidert
+
 Thu Aug 10 15:54:02 CEST 2006 Kasimier Buchcik <libxml2-cvs@cazic.net
 
 	* libxslt/transform.c libxslt/variables.c

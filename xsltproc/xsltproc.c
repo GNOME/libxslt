@@ -777,6 +777,18 @@ main(int argc, char **argv)
 	    style = xmlReadFile((const char *) argv[i], NULL, options);
             if (timing) 
 		endTimer("Parsing stylesheet %s", argv[i]);
+            if (style != NULL) {
+		if (timing)
+		    startTimer();
+#if LIBXML_VERSION >= 20603
+		xmlXIncludeProcessFlags(style, XSLT_PARSE_OPTIONS);
+#else
+		xmlXIncludeProcess(style);
+#endif
+		if (timing) {
+		    endTimer("XInclude processing %s", argv[i]);
+		}
+	    }
 	    if (style == NULL) {
 		fprintf(stderr,  "cannot parse %s\n", argv[i]);
 		cur = NULL;
