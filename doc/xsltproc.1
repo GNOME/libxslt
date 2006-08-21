@@ -39,19 +39,6 @@ By default, output is to
 or
 \fB\-\-output\fR
 option.
-.PP
-More information can be found at
-.TP 3
-\(bu
-\fBlibxml\fR(3)
-web page
-\fI\%http://www.xmlsoft.org/\fR
-.TP
-\(bu
-W3C
-XSLT
-page
-\fI\%http://www.w3.org/TR/xslt\fR
 .SH "OPTIONS"
 .PP
 \fBxsltproc\fR
@@ -166,7 +153,7 @@ Output profiling information detailing the amount of time spent in each part of 
 Run the transformation 20 times. Used for timing tests.
 .TP
 \fB\-\-stringparam \fR\fB\fIPARAMNAME\fR\fR\fB \fR\fB\fIPARAMVALUE\fR\fR
-Pass a paramenter of name
+Pass a parameter of name
 \fIPARAMNAME\fR
 and value
 \fIPARAMVALUE\fR
@@ -197,22 +184,29 @@ Allow file write only within the
 subtree.
 .TP
 \fB\-\-xinclude\fR
-Process the input document using the Xinclude specification. More details on this can be found in the Xinclude specification:
+Process the input document using the XInclude specification. More details on this can be found in the XInclude specification:
 \fI\%http://www.w3.org/TR/xinclude/\fR
 .SH "ENVIRONMENT"
 .TP
 \fBSGML_CATALOG_FILES\fR
-to be written ...
+SGML
+catalog behavior can be changed by redirecting queries to the user's own set of catalogs. This can be done by setting the
+\fBSGML_CATALOG_FILES\fR
+environment variable to a list of catalogs. An empty one should deactivate loading the default
+\fI/etc/sgml/catalog\fR
+catalog.
 .TP
 \fBXML_CATALOG_FILES\fR
-Catalog behavior can be changed by redirecting queries to the user's own set of catalogs. This can be done by setting the
+XML
+catalog behavior can be changed by redirecting queries to the user's own set of catalogs. This can be done by setting the
 \fBXML_CATALOG_FILES\fR
 environment variable to a list of catalogs. An empty one should deactivate loading the default
 \fI/etc/xml/catalog\fR
-default catalog.
+catalog.
 .SH "DIAGNOSTICS"
 .PP
-\fBxsltproc\fR's return codes provide information that can be used when calling it from scripts.
+\fBxsltproc\fR
+return codes provide information that can be used when calling it from scripts.
 .TP
 \fB0\fR
 No error (normal operation)
@@ -248,6 +242,20 @@ Internal processing error
 Processing was stopped by a terminating message
 .SH "SEE ALSO"
 .PP
+\fBlibxml\fR(3),
 \fBlibxslt\fR(3)
+.PP
+More information can be found at
+.TP 3
+\(bu
+\fBlibxml\fR(3)
+web page
+\fI\%http://www.xmlsoft.org/\fR
+.TP
+\(bu
+W3C
+XSLT
+page
+\fI\%http://www.w3.org/TR/xslt\fR
 .SH "AUTHOR"
 John Fleck <jfleck@inkstain.net>. 

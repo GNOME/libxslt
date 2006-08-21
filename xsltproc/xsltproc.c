@@ -511,7 +511,7 @@ static void usage(const char *name) {
     printf("\t         file:///etc/xml/catalog are activated by default\n");
 #endif
 #ifdef LIBXML_XINCLUDE_ENABLED
-    printf("\t--xinclude : do XInclude processing on document intput\n");
+    printf("\t--xinclude : do XInclude processing on document input\n");
 #endif
     printf("\t--load-trace : print trace of all external entites loaded\n");
     printf("\t--profile or --norman : dump profiling informations \n");
