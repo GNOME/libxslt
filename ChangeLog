@@ -1,3 +1,11 @@
+Wed Oct 11 23:16:10 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* python/libxslt-python-api.xml: applied fix for accessor functions
+	  of a stylesheet returning pointers to immutable strings, patch
+	  from #320540
+	* xsltproc/xsltproc.c: fix the xinclude on stylehseet problem
+	  by adding a new parameter to xsltproc names --xincludestyle
+
 Wed Oct 11 22:27:37 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: apply patch from Gary Coady to compile when

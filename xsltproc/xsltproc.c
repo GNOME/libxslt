@@ -85,6 +85,7 @@ static int html = 0;
 static int load_trace = 0;
 #ifdef LIBXML_XINCLUDE_ENABLED
 static int xinclude = 0;
+static int xincludestyle = 0;
 #endif
 static int profile = 0;
 
@@ -514,6 +515,7 @@ static void usage(const char *name) {
 #endif
 #ifdef LIBXML_XINCLUDE_ENABLED
     printf("\t--xinclude : do XInclude processing on document input\n");
+    printf("\t--xincludestyle : do XInclude processing on stylesheets\n");
 #endif
     printf("\t--load-trace : print trace of all external entites loaded\n");
     printf("\t--profile or --norman : dump profiling informations \n");
@@ -652,6 +654,9 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i], "-xinclude")) ||
                    (!strcmp(argv[i], "--xinclude"))) {
             xinclude++;
+        } else if ((!strcmp(argv[i], "-xincludestyle")) ||
+                   (!strcmp(argv[i], "--xincludestyle"))) {
+            xincludestyle++;
             xsltSetXIncludeDefault(1);
 #endif
         } else if ((!strcmp(argv[i], "-load-trace")) ||
@@ -779,16 +784,18 @@ main(int argc, char **argv)
 	    style = xmlReadFile((const char *) argv[i], NULL, options);
             if (timing) 
 		endTimer("Parsing stylesheet %s", argv[i]);
-            if (style != NULL) {
-		if (timing)
-		    startTimer();
+	    if (xincludestyle) {
+		if (style != NULL) {
+		    if (timing)
+			startTimer();
 #if LIBXML_VERSION >= 20603
-		xmlXIncludeProcessFlags(style, XSLT_PARSE_OPTIONS);
+		    xmlXIncludeProcessFlags(style, XSLT_PARSE_OPTIONS);
 #else
-		xmlXIncludeProcess(style);
+		    xmlXIncludeProcess(style);
 #endif
-		if (timing) {
-		    endTimer("XInclude processing %s", argv[i]);
+		    if (timing) {
+			endTimer("XInclude processing %s", argv[i]);
+		    }
 		}
 	    }
 	    if (style == NULL) {

@@ -141,22 +141,22 @@
     </function>
     <function name='xsltStylesheetGetMethod' file='python_accessor'>
       <info>Get the output method of a stylesheet</info>
-      <return type='xmlChar *' info="The output method" field="method"/>
+      <return type='const xmlChar *' info="The output method" field="method"/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
     </function>
     <function name='xsltStylesheetGetMethodURI' file='python_accessor'>
       <info>Get the output method URI of a stylesheet</info>
-      <return type='xmlChar *' info="The output method URI" field="methodURI"/>
+      <return type='const xmlChar *' info="The output method URI" field="methodURI"/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
     </function>
     <function name='xsltStylesheetGetVersion' file='python_accessor'>
       <info>Get the output version of a stylesheet</info>
-      <return type='xmlChar *' info="The output version" field="version"/>
+      <return type='const xmlChar *' info="The output version" field="version"/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
     </function>
     <function name='xsltStylesheetGetEncoding' file='python_accessor'>
       <info>Get the output encoding of a stylesheet</info>
-      <return type='xmlChar *' info="The output encoding" field="encoding"/>
+      <return type='const xmlChar *' info="The output encoding" field="encoding"/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
     </function>
     <function name='xsltStylesheetGetDoctypePublic' file='python_accessor'>
