@@ -61,4 +61,4 @@ xsltproc: all
 	@(cd ../xsltproc ; $(MAKE))
 
 install-exec-hook:
-	$(mkinstalldirs) "$(libdir)/libxslt-plugins"
+	$(mkinstalldirs) "$(DESTDIR)$(libdir)/libxslt-plugins"

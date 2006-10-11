@@ -25,14 +25,14 @@ extern "C" {
 /**
  * LIBXSLT_VERSION:
  *
- * the version number: 1.2.3 value is 1002003
+ * the version number: 1.2.3 value is 10203
  */
 #define LIBXSLT_VERSION @LIBXSLT_VERSION_NUMBER@
 
 /**
  * LIBXSLT_VERSION_STRING:
  *
- * the version number string, 1.2.3 value is "1002003"
+ * the version number string, 1.2.3 value is "10203"
  */
 #define LIBXSLT_VERSION_STRING "@LIBXSLT_VERSION_NUMBER@"
 

@@ -1,3 +1,11 @@
+Wed Oct 11 21:37:27 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/Makefile.am: a missing DESTDIR
+	* python/Makefile.am: fix reference to build paths in python module
+	* libexslt/exsltconfig.h.in libxslt/xsltconfig.h.in: fix the header
+	  comments on version values, the 3 are patches from Peter
+	  Breitenlohner   and should fix #340995
+
 Wed Oct 11 11:16:34 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/security.c: applied cleanup patch from Mikhail Zabaluev
