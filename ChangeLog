@@ -1,3 +1,8 @@
+Wed Oct 11 11:16:34 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/security.c: applied cleanup patch from Mikhail Zabaluev
+	  which should finish fixing #337486
+
 Wed Oct 11 09:55:06 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/security.c: applied fix from Shane Corgatelli to pass
