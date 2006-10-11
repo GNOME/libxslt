@@ -1,3 +1,9 @@
+Wed Oct 11 22:27:37 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* xsltproc/xsltproc.c: apply patch from Gary Coady to compile when
+	  libxml2 has no xinclude support #319886
+	* docs/*: renamed Gnome to GNOME fixes #352159
+
 Wed Oct 11 21:37:27 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/Makefile.am: a missing DESTDIR

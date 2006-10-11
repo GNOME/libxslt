@@ -258,7 +258,7 @@ A:link, A:visited, A:active { text-decoration: underline }
           <a href="http://swpat.ffii.org/"><img src="{$logo_base}epatents.png" alt="Action against software patents"/></a>
         </td>
         <td width="180">
-          <a href="http://www.gnome.org/"><img src="{$logo_base}gnome2.png" alt="Gnome2 Logo"/></a>
+          <a href="http://www.gnome.org/"><img src="{$logo_base}gnome2.png" alt="GNOME2 Logo"/></a>
           <a href="http://www.w3.org/Status"><img src="{$logo_base}w3c.png" alt="W3C logo"/></a>
           <a href="http://www.redhat.com"><img src="{$logo_base}redhat.gif" alt="Red Hat Logo"/></a>
           <div align="left">
