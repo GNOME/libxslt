@@ -360,7 +360,7 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
 	 */
 	check = xsltGetSecurityPrefs(sec, XSLT_SECPREF_WRITE_NETWORK);
 	if (check != NULL) {
-	    ret = check(sec, ctxt, uri->path);
+	    ret = check(sec, ctxt, (const char *)URL);
 	    if (ret == 0) {
 		xsltTransformError(ctxt, NULL, NULL,
 			     "File write for %s refused\n", URL);
@@ -420,7 +420,7 @@ xsltCheckRead(xsltSecurityPrefsPtr sec,
 	 */
 	check = xsltGetSecurityPrefs(sec, XSLT_SECPREF_READ_NETWORK);
 	if (check != NULL) {
-	    ret = check(sec, ctxt, uri->path);
+	    ret = check(sec, ctxt, (const char *)URL);
 	    if (ret == 0) {
 		xsltTransformError(ctxt, NULL, NULL,
 			     "Network file read for %s refused\n", URL);
