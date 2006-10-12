@@ -746,7 +746,7 @@ static exsltDateValPtr
 exsltDateCurrent (void)
 {
     struct tm *localTm, *gmTm;
-    time_t secs;
+    time_t secs, gsecs;
 #if HAVE_LOCALTIME_R
     struct tm localTmS;
 #endif
@@ -787,11 +787,15 @@ exsltDateCurrent (void)
     gmTm = gmtime(&secs);
 #endif
     ret->value.date.tz_flag = 0;
+#if 0
     ret->value.date.tzo = (((ret->value.date.day * 1440) +
                             (ret->value.date.hour * 60) +
                              ret->value.date.min) -
                            ((gmTm->tm_mday * 1440) + (gmTm->tm_hour * 60) +
                              gmTm->tm_min));
+#endif
+    gsecs = mktime(gmTm);
+    ret->value.date.tzo = (secs - gsecs) / 60;
 
     return ret;
 }

@@ -1,3 +1,8 @@
+Thu Oct 12 23:12:24 HKT 2006 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/date.c: fixed end-of-month problem in exsltDateCurrent
+	  (#359246)
+
 Thu Oct 12 14:39:37 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/preproc.c: applied patch from Mike Hommey fixing 2 
