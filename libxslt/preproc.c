@@ -1441,14 +1441,14 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltTransformError(NULL, style, cur,
 			 "xsl:number : invalid value %s for level\n", prop);
 	    if (style != NULL) style->warnings++;
-	    xmlFree((void *)(prop));
 	}
     }
     
     prop = xsltGetCNsProp(style, cur, (const xmlChar *)"lang", XSLT_NAMESPACE);
     if (prop != NULL) {
+	    xsltTransformError(NULL, style, cur,
+		 "xsl:number : lang attribute not implemented\n");
 	XSLT_TODO; /* xsl:number lang attribute */
-	xmlFree((void *)prop);
     }
     
     prop = xsltGetCNsProp(style, cur, (const xmlChar *)"letter-value", XSLT_NAMESPACE);

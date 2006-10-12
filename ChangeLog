@@ -1,3 +1,8 @@
+Thu Oct 12 14:39:37 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/preproc.c: applied patch from Mike Hommey fixing 2 
+	  erroneous xmlFree() and adding a message on an unsupported feature
+
 Wed Oct 11 23:16:10 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* python/libxslt-python-api.xml: applied fix for accessor functions
