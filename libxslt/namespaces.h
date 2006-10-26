@@ -22,6 +22,11 @@ extern "C" {
  * Used within nsAliases hashtable when the default namespace is required
  * but it's not been explicitly defined
  */
+/**
+ * UNDEFINED_DEFAULT_NS:
+ *
+ * Special value for undefined namespace, internal
+ */
 #define	UNDEFINED_DEFAULT_NS	(const xmlChar *) -1L
 
 XSLTPUBFUN void XSLTCALL

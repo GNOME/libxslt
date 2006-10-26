@@ -1,3 +1,11 @@
+Thu Oct 26 15:31:01 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* NEWS configure.in doc//*: preparing release of libxslt-1.1.18,
+	  this bumps libxml2 requirement to 1.6.27
+	* libexslt/date.c libxslt/namespaces.h libxslt/xslt.c 
+	  libxslt/xsltInternals.h: cosmetic cleanups to restore the
+	  API extraction
+
 Thu Oct 26 10:36:43 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* doc//*: removed all remaining references to the old Wiki

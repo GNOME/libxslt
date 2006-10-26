@@ -8,24 +8,14 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.16</version>
-    <last-release> May 01 2006</last-release>
+    <version>1.1.17</version>
+    <last-release> Jun 6 2006</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - portability fixes: EXSLT date/time on Solaris and IRIX (Albert Chin),
-      HP-UX  build (Albert Chin), 
-  
-   - build fixes: Python detection(Joseph Sacco), plugin configurei
-      (Joel Reed)
-   - bug fixes: pattern compilation fix(William Brack), EXSLT date/time
-      fix (Thomas Broyer), EXSLT function bug, potential loop on variable
-      eval, startup race (Christopher Palmer), debug statement left in python
-      (Nic Ferrier), various cleanup based on Coverity reports), error on
-      Out of memory condition (Charles Hardin), various namespace prefixes
-      fixes (Kasimier Buchcik), 
-   - improvement: speed up sortingi, start of internals refactoring (Kasimier
-      Buchcik)
-   - documentation: man page fixes and updates (Daniel Leidert)
-
+    <changes>   - portability fixes: python detection
+   - bug fixes: some regression tests, attribute/namespaces output (Kasimier
+    Buchcik), problem in mixed xsl:value-of and xsl:text uses (Kasimier)
+   - improvements: internal refactoring (Kasimier Buchcik), use of the XPath
+    object cache in libxml2-2.6.25 (Kasimier)
 
 </changes>
   </product>

@@ -203,15 +203,13 @@ exclPrefixPop(xsltStylesheetPtr style)
  *									*
  ************************************************************************/
 
+static int initialized = 0;
 /**
  * xsltInit:
  *
  * Initializes the processor (e.g. registers built-in extensions,
  * etc.)
  */
-
-static int initialized = 0;
-
 void
 xsltInit (void) {
     if (initialized == 0) {
@@ -221,11 +219,10 @@ xsltInit (void) {
 }
 
 /**
- * xsltUninit
+ * xsltUninit:
  *
  * Uninitializes the processor.
  */
-
 void
 xsltUninit (void) {
     initialized = 0;
@@ -2285,10 +2282,12 @@ xsltCompilerVarInfoPop(xsltCompilerCtxtPtr cctxt)
 * @cctxt: the compilation context
 * @node: the node to be pushed (this can also be the doc-node)
 *
+* 
+*
 * Returns the current node info structure or
 *         NULL in case of an internal error.
 */
-xsltCompilerNodeInfoPtr
+static xsltCompilerNodeInfoPtr
 xsltCompilerNodePush(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
 {    
     xsltCompilerNodeInfoPtr inode, iprev;

@@ -29,14 +29,29 @@ extern "C" {
 
 /* #define XSLT_DEBUG_PROFILE_CACHE */
 
+/**
+ * XSLT_IS_TEXT_NODE:
+ *
+ * check if the argument is a text node
+ */
 #define XSLT_IS_TEXT_NODE(n) ((n != NULL) && \
     (((n)->type == XML_TEXT_NODE) || \
      ((n)->type == XML_CDATA_SECTION_NODE)))
 
 
+/**
+ * XSLT_MARK_RES_TREE_FRAG:
+ *
+ * internal macro to set up tree fragments
+ */
 #define XSLT_MARK_RES_TREE_FRAG(n) \
     (n)->name = (char *) xmlStrdup(BAD_CAST " fake node libxslt");
 
+/**
+ * XSLT_IS_RES_TREE_FRAG:
+ *
+ * internal macro to test tree fragments
+ */
 #define XSLT_IS_RES_TREE_FRAG(n) \
     ((n != NULL) && ((n)->type == XML_DOCUMENT_NODE) && \
      ((n)->name != NULL) && ((n)->name[0] == ' '))
@@ -64,6 +79,11 @@ extern "C" {
 /* #define XSLT_REFACTORED */
 /* ==================================================================== */
 
+/**
+ * XSLT_REFACTORED_VARS:
+ *
+ * Internal define to enable the refactored variable part of libxslt
+ */
 #define XSLT_REFACTORED_VARS
 
 #ifdef XSLT_REFACTORED
@@ -95,10 +115,20 @@ extern const xmlChar *xsltXSLTAttrMarker;
 
 extern const xmlChar *xsltConstNamespaceNameXSLT;
 
+/**
+ * IS_XSLT_ELEM_FAST:
+ *
+ * quick test to detect XSLT elements
+ */
 #define IS_XSLT_ELEM_FAST(n) \
     (((n) != NULL) && ((n)->ns != NULL) && \
     ((n)->ns->href == xsltConstNamespaceNameXSLT))
 
+/**
+ * IS_XSLT_ATTR_FAST:
+ *
+ * quick test to detect XSLT attributes
+ */
 #define IS_XSLT_ATTR_FAST(a) \
     (((a) != NULL) && ((a)->ns != NULL) && \
     ((a)->ns->href == xsltConstNamespaceNameXSLT))

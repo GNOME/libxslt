@@ -25,6 +25,7 @@ registerExtensionClass()
 
 # functions from module xslt
 cleanupGlobals()
+init()
 
 # functions from module xsltInternals
 isBlank()
@@ -32,6 +33,7 @@ loadStylesheetPI()
 newStylesheet()
 parseStylesheetDoc()
 parseStylesheetFile()
+uninit()
 
 # functions from module xsltutils
 calibrateAdjust()
@@ -130,9 +132,12 @@ Class transformCtxt()
     # functions from module xsltInternals
     allocateExtraCtxt()
     createRVT()
+    extensionInstructionResultFinalize()
     freeRVTs()
+    registerLocalRVT()
     registerPersistRVT()
     registerTmpRVT()
+    releaseRVT()
 
     # functions from module xsltutils
     message()

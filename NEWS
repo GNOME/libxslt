@@ -10,6 +10,28 @@ ChangeLog.html
 to the CVS at 
 http://cvs.gnome.org/viewcvs/libxslt/
  code base.Those are the public releases made:
+1.1.18: Oct 26 2006:
+   - portability and build fixes: DESTDIR problem, build paths in python
+      shared lib, compile when libxml2 doesn't support XInclude (Gary Coady).
+   - bug fixes: a number of namespace related bugs (Kasimier Buchcik), 
+      parameters bugs (Kasimier Buchcik), proximity position in predicates
+      of match patterns (Kasimier), exslt-node-set troubles with strings
+      (Kasimier), CDATA serialization, Python floats and booleans XPath
+      conversions, XInclude support fixes, RVT cleanup problem (William Brack
+      and Kasimier), attribute checking in stylesheets (Kasimier), xsltForEach
+      context problem (Kasimier), security check should pass full URLs (Shane
+      Corgatelli), security cleanup patch (Mikhail Zabaluev), some python
+      accessor for stylesheet were broken, memory errors when compiling 
+      stylesheets (Mike Hommey), EXSLT current date end-of-month problem
+      (William Brack).
+   - improvements: refactoring of namespace handling, value-of impleemntation
+      and template internal processing (Kasimier Buchcik), new xsltproc
+      flag to apply Xinclude to stylesheets.
+   - documentation: xsltproc man pages (Daniel Leidert), tests updates
+      (William Brack), various typo fixes (Daniel Leidert), comments on
+      versions macros (Peter Breitenlohner).
+
+
 1.1.17: Jun 6 2006:
    - portability fixes: python detection
    - bug fixes: some regression tests, attribute/namespaces output (Kasimier
