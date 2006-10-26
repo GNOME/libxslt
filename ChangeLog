@@ -1,3 +1,7 @@
+Thu Oct 26 10:36:43 CEST 2006 Daniel Veillard <daniel@veillard.com>
+
+	* doc//*: removed all remaining references to the old Wiki
+
 Thu Oct 12 23:12:24 HKT 2006 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/date.c: fixed end-of-month problem in exsltDateCurrent
