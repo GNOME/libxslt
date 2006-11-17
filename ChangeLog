@@ -1,3 +1,10 @@
+Fri Nov 17 09:53:08 HKT 2006 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: fixed problem with entity handling
+	  within xsltCopyAttrListNoOverwrite (#352907)
+	* tests/general/bug-164.xsl, tests/general/bug-164.out,
+	  tests/docs/bug-164.oxml: added a regression test for this
+
 Thu Oct 26 15:31:01 CEST 2006 Daniel Veillard <daniel@veillard.com>
 
 	* NEWS configure.in doc//*: preparing release of libxslt-1.1.18,
