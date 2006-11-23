@@ -1,3 +1,8 @@
+Thu Nov 23 15:36:28 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: fix a python detection problem pointed out by 
+	  Joseph Sacco, fixes bug #376391
+
 Fri Nov 17 09:53:08 HKT 2006 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: fixed problem with entity handling
