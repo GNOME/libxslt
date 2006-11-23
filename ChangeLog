@@ -1,3 +1,9 @@
+Thu Nov 23 17:49:31 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/transform.c: applied patch from Mike Hommey about saving
+	  the current in-scope namespace list when calling a template, fixes
+	  bug #377579
+
 Thu Nov 23 15:36:28 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: fix a python detection problem pointed out by 

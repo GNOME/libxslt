@@ -4638,11 +4638,12 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlNodePtr cur, delNode = NULL, oldContextNode;    
     xmlNodeSetPtr list = NULL, oldList;
     xsltStackElemPtr withParams = NULL;
-    int oldXPProximityPosition, oldXPContextSize;
+    int oldXPProximityPosition, oldXPContextSize, oldXPNsNr;
     const xmlChar *oldMode, *oldModeURI;
     xmlDocPtr oldXPDoc;
     xsltDocumentPtr oldDocInfo;
     xmlXPathContextPtr xpctxt;
+    xmlNsPtr *oldXPNamespaces;
 
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, inst,
@@ -4676,6 +4677,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
     oldXPContextSize = xpctxt->contextSize;
     oldXPProximityPosition = xpctxt->proximityPosition;
     oldXPDoc = xpctxt->doc;
+    oldXPNsNr = xpctxt->nsNr;
+    oldXPNamespaces = xpctxt->namespaces;
 
     /*
     * Set up contexts.
@@ -4993,6 +4996,8 @@ error:
     /*
     * Restore context states.
     */
+    xpctxt->nsNr = oldXPNsNr;
+    xpctxt->namespaces = oldXPNamespaces;
     xpctxt->doc = oldXPDoc;
     xpctxt->contextSize = oldXPContextSize;
     xpctxt->proximityPosition = oldXPProximityPosition;
