@@ -75,7 +75,9 @@ xsltCreateRVT(xsltTransformContextPtr ctxt)
     if (ctxt->cache->RVT) {
 	container = ctxt->cache->RVT;
 	ctxt->cache->RVT = (xmlDocPtr) container->next;
+	/* clear the internal pointers */
 	container->next = NULL;
+	container->prev = NULL;
 	if (ctxt->cache->nbRVT > 0)
 	    ctxt->cache->nbRVT--;
 #ifdef XSLT_DEBUG_PROFILE_CACHE

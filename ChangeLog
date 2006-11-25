@@ -1,3 +1,8 @@
+Sat Nov 25 11:48:28 HKT 2006 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/variables.c: fixed problem with cached RVT's,
+	  bug #378766
+
 Thu Nov 23 17:49:31 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/transform.c: applied patch from Mike Hommey about saving
