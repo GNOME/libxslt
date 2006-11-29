@@ -1,3 +1,7 @@
+Wed Nov 29 16:06:43 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* NEWS configure.in doc//*: preparing release of libxslt-1.1.19
+
 Sat Nov 25 11:48:28 HKT 2006 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/variables.c: fixed problem with cached RVT's,
