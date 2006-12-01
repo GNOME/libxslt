@@ -1,3 +1,8 @@
+Fri Dec  1 23:02:27 HKT 2006 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: fixed problem with housekeeping of
+	  localRVTBase, bug #378766
+
 Wed Nov 29 16:06:43 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* NEWS configure.in doc//*: preparing release of libxslt-1.1.19

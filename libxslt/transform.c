@@ -2118,14 +2118,14 @@ xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
 	    cur = (xmlDocPtr) cur->next;
 
 	    if (tmp == ctxt->localRVT)
-		ctxt->localRVT = (xmlDocPtr) tmp->next;
+		ctxt->localRVT = cur;
 
 	    /*
 	    * We need ctxt->localRVTBase for extension instructions
 	    * which return values (like EXSLT's function).
 	    */
 	    if (tmp == ctxt->localRVTBase)
-		ctxt->localRVTBase = (xmlDocPtr) tmp->next;
+		ctxt->localRVTBase = cur;
 
 	    if (tmp->prev)
 		tmp->prev->next = (xmlNodePtr) cur;
@@ -3032,6 +3032,9 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 	do {
 	    tmp = curdoc;
 	    curdoc = (xmlDocPtr) curdoc->next;
+	    /* Need to housekeep localRVTBase */
+	    if (tmp == ctxt->localRVTBase)
+	        ctxt->localRVTBase = curdoc;
 	    xsltReleaseRVT(ctxt, tmp);
 	} while (curdoc != oldLocalFragmentTop);
     }
