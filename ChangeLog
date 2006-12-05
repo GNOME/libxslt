@@ -1,3 +1,8 @@
+Tue Dec  5 10:45:04 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.c: applied patch from Marcus Meissner removing
+	  a strict aliasing problem should fix #317921
+
 Fri Dec  1 23:02:27 HKT 2006 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: fixed problem with housekeeping of

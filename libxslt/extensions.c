@@ -324,6 +324,7 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     const xmlChar *ext_directory = NULL;
     const xmlChar *protocol = NULL;
     xmlChar *i, *regfunc_name;
+    void *vregfunc;
     int rc;
 
     /* check for bad inputs */
@@ -414,7 +415,9 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     regfunc_name = xmlStrdup(ext_name);
     regfunc_name = xmlStrcat(regfunc_name, BAD_CAST "_init");
 
-    rc = xmlModuleSymbol(m, (const char *) regfunc_name, (void **) &regfunc);
+    vregfunc = NULL;
+    rc = xmlModuleSymbol(m, (const char *) regfunc_name, &vregfunc);
+    regfunc = vregfunc;
     if (0 == rc) {
         /* call the module's init function */
         (*regfunc) ();
