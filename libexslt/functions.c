@@ -281,7 +281,7 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     int oldBase;
     xsltStackElemPtr params = NULL, param;
     xsltTransformContextPtr tctxt = xsltXPathGetTransformContext(ctxt);
-    int i;
+    int i, notSet;;
 
     /*
      * retrieve func:function template
@@ -316,46 +316,47 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "param == NULL\n");
 	return;
     }
-    /*
-    * Process xsl:param instructions which were not set by the
-    * invoking function call.
-    */
-    for (i = func->nargs; (i > nargs) && (paramNode != NULL); i--) {
+    /* 
+     * In order to give the function params and variables a new 'scope'
+     * we change varsBase in the context.
+     */
+    oldBase = tctxt->varsBase;
+    tctxt->varsBase = tctxt->varsNr;
+
+    /* If there are any parameters */
+    if (paramNode != NULL) {
 	/*
-	* Those are the xsl:param instructions, which were not
-	* set by the calling function.	
-	*/
-	param = xsltParseStylesheetCallerParam (tctxt, paramNode);
-	param->next = params;
-	params = param;
-	paramNode = paramNode->prev;
-    }
-    /*
-    * Process xsl:param instructions which are set by the
-    * invoking function call.
-    */
-    while ((i-- > 0) && (paramNode != NULL)) {
-	obj = valuePop(ctxt);
+	 * We need to process params which have been set by the invoking
+	 * function call before those which were not (in case the set values
+	 * are used within non-set 'select' default values), so we position
+	 * to the beginning of the params.
+	 */
+	for (i = 1; i <= func->nargs; i++) {
+    	    if (paramNode->prev == NULL)
+		break;
+	    paramNode = paramNode->prev;
+	}
 	/*
-	* TODO: Using xsltParseStylesheetCallerParam() is actually
-	* not correct, since we are processing an xsl:param; but
-	* using xsltParseStylesheetParam() won't work, as it puts
-	* the param on the varible stack and does not give access to
-	* the created xsltStackElemPtr.
-	* It's also not correct, as xsltParseStylesheetCallerParam()
-	* will report error messages indicating an "xsl:with-param" and
-	* not the actual "xsl:param".
-	*/
-	param = xsltParseStylesheetCallerParam (tctxt, paramNode);
-	param->computed = 1;
-	if (param->value != NULL)
-	    xmlXPathFreeObject(param->value);
-	param->value = obj;
-	param->next = params;
-	params = param;
-	paramNode = paramNode->prev;
+	 * i has total # params found, nargs is number which are present
+	 * as arguments from the caller
+	 */
+	notSet = func->nargs - nargs;
+	for (; i > 0; i--) {
+	    if (i > notSet) 	/* if parameter value set */
+	        obj = valuePop(ctxt);
+	    param = xsltParseStylesheetCallerParam (tctxt, paramNode);
+	    if (i > notSet) {	/* if parameter value set */
+		param->computed = 1;
+		if (param->value != NULL)
+		    xmlXPathFreeObject(param->value);
+		param->value = obj;
+	    }
+	    xsltLocalVariablePush(tctxt, param, -1);
+	    param->next = params;
+	    params = param;
+	    paramNode = paramNode->next;
+	}
     }
-    
     /*
      * actual processing
      */
@@ -363,14 +364,9 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 (const xmlChar *)"fake", NULL);
     oldInsert = tctxt->insert;
     tctxt->insert = fake;
-    /* 
-     * In order to give the function variables a new 'scope' we
-     * change varsBase in the context.
-     */
-    oldBase = tctxt->varsBase;
-    tctxt->varsBase = tctxt->varsNr;
     xsltApplyOneTemplate (tctxt, xmlXPathGetContextNode(ctxt),
-			  func->content, NULL, params);
+			  func->content, NULL, NULL);
+    xsltLocalVariablePop(tctxt, tctxt->varsBase, -2);
     tctxt->insert = oldInsert;
     tctxt->varsBase = oldBase;	/* restore original scope */
     if (params != NULL)

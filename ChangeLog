@@ -1,3 +1,13 @@
+Sat Dec  9 15:22:34 PST 2006 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/functions.c: changed handling of function params
+	  to fix bug #381319
+	* libxslt/transform.[ch]: exposed xsltLocalVariablePush and
+	  xsltLocalVariablePop as global entries so that they could
+	  be used from within libexslt/functions.c
+	* tests/exslt/functions/function.9.[xsl,xml,out] added to
+	  regression tests
+
 Tue Dec  5 10:45:04 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.c: applied patch from Marcus Meissner removing

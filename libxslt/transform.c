@@ -173,8 +173,10 @@ templPop(xsltTransformContextPtr ctxt)
  * Pops all variable values at the given @depth from the stack.
  *
  * Returns the stored variable value
+ * **NOTE:**
+ * This is an internal routine and should not be called by users!
  */
-static void
+void
 xsltLocalVariablePop(xsltTransformContextPtr ctxt, int limitNr, int level)
 {
     xsltStackElemPtr variable;
@@ -2067,7 +2069,19 @@ xsltDebuggerStartSequenceConstructor(xsltTransformContextPtr ctxt,
     return(debugedNode);
 }
 
-static int
+/**
+ * xsltVariablePush:
+ * @ctxt: the transformation context
+ * @variable: variable to be pushed to the variable stack
+ * @level: new value for variable's level
+ *
+ * Places the variable onto the local variable stack
+ *
+ * Returns: 0 for success, -1 for any error
+ * **NOTE:**
+ * This is an internal routine and should not be called by users!
+ */
+int
 xsltLocalVariablePush(xsltTransformContextPtr ctxt,
 		      xsltStackElemPtr variable,
 		      int level)
@@ -3132,6 +3146,11 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt,
     CHECK_STOPPED;
 
     if (params) {
+	/*
+	 * This code should be obsolete - was previously used
+	 * by libexslt/functions.c, but due to bug 381319 the
+	 * logic there was changed.
+	 */
 	int oldVarsNr = ctxt->varsNr;
 
 	/*
