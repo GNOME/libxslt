@@ -8,13 +8,15 @@
   extension-element-prefixes="exsl func">
 
   <xsl:template match="table">          
-    <xsl:variable name="cols" select="mg:function(.)"/>         
+    <xsl:variable name="cols" select="mg:function(., .)"/>         
     <xsl:value-of select="$cols"/>
   </xsl:template>       
 
   <func:function name="mg:function">
     <xsl:param name="table"/>
+    <xsl:param name="t2" select="$table/tr[1]"/>
     <xsl:param name="tr" select="$table/tr[1]"/>                
+    <xsl:param name="trd" select="$tr/td[1]"/>
     <func:result select="$tr"/>
   </func:function>      
 </xsl:stylesheet>

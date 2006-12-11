@@ -12,7 +12,8 @@ EXTRA_DIST = 						\
 	function.6.out  function.6.xml  function.6.xsl  \
 	function.7.out  function.7.xml  function.7.xsl  \
 	function.8.out  function.8.xml  function.8.xsl  \
-	function.9.out  function.9.xml  function.9.xsl
+	function.9.out  function.9.xml  function.9.xsl  \
+	function.10.out function.10.xml function.10.xsl
 
 all:
 

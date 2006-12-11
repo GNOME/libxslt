@@ -1,3 +1,11 @@
+Mon Dec 11 14:38:22 PST 2006 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/functions.c: further enhancement to the original
+	  fix for bug #381319 (which was not correct).
+	* tests/exslt/functions: minor enhancement to function.9.xsl;
+	  function.10.[xsl,xml,out] added to regression tests to check
+	  recursive calls.
+
 Mon Dec 11 12:13:14 CET 2006 Daniel Veillard <daniel@veillard.com>
 
 	* configure python/generator.py python/libxsl.py

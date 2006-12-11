@@ -274,14 +274,19 @@ exsltFreeFuncResultPreComp (exsltFuncResultPreComp *comp) {
  */
 static void
 exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
-    xmlXPathObjectPtr obj, oldResult, ret;
+    xmlXPathObjectPtr oldResult, ret;
     exsltFuncData *data;
     exsltFuncFunctionData *func;
     xmlNodePtr paramNode, oldInsert, fake;
     int oldBase;
     xsltStackElemPtr params = NULL, param;
     xsltTransformContextPtr tctxt = xsltXPathGetTransformContext(ctxt);
-    int i, notSet;;
+    int i, notSet;
+    struct objChain {
+	struct objChain *next;
+	xmlXPathObjectPtr obj;
+    };
+    struct objChain	*savedObjChain = NULL, *savedObj;
 
     /*
      * retrieve func:function template
@@ -316,40 +321,65 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "param == NULL\n");
 	return;
     }
+    /*
+     * We have a problem with the evaluation of function parameters.
+     * The original library code did not evaluate XPath expressions until
+     * the last moment.  After version 1.1.17 of the libxslt, the logic
+     * of other parts of the library was changed, and the evaluation of
+     * XPath expressions within parameters now takes place as soon as the
+     * parameter is parsed/evaluated (xsltParseStylesheetCallerParam).
+     * This means that the parameters need to be evaluated in lexical
+     * order (since a variable is "in scope" as soon as it is declared).
+     * However, on entry to this routine, the values (from the caller) are
+     * in reverse order (held on the XPath context variable stack).  To
+     * accomplish what is required, I have added code to pop the XPath
+     * objects off of the stack at the beginning and save them, then use
+     * them (in the reverse order) as the params are evaluated.  This
+     * requires an xmlMalloc/xmlFree for each param set by the caller,
+     * which is not very nice.  There is probably a much better solution
+     * (like change other code to delay the evaluation).
+     */
     /* 
      * In order to give the function params and variables a new 'scope'
      * we change varsBase in the context.
      */
     oldBase = tctxt->varsBase;
     tctxt->varsBase = tctxt->varsNr;
-
     /* If there are any parameters */
     if (paramNode != NULL) {
+        /* Fetch the stored argument values from the caller */
+	for (i = 0; i < nargs; i++) {
+	    savedObj = xmlMalloc(sizeof(struct objChain));
+	    savedObj->next = savedObjChain;
+	    savedObj->obj = valuePop(ctxt);
+	    savedObjChain = savedObj;
+	}
+
 	/*
-	 * We need to process params which have been set by the invoking
-	 * function call before those which were not (in case the set values
-	 * are used within non-set 'select' default values), so we position
-	 * to the beginning of the params.
+	 * Prepare to process params in reverse order.  First, go to
+	 * the beginning of the param chain.
 	 */
 	for (i = 1; i <= func->nargs; i++) {
-    	    if (paramNode->prev == NULL)
-		break;
+	    if (paramNode->prev == NULL)
+	        break;
 	    paramNode = paramNode->prev;
 	}
 	/*
 	 * i has total # params found, nargs is number which are present
 	 * as arguments from the caller
+	 * Calculate the number of un-set parameters
 	 */
 	notSet = func->nargs - nargs;
 	for (; i > 0; i--) {
-	    if (i > notSet) 	/* if parameter value set */
-	        obj = valuePop(ctxt);
 	    param = xsltParseStylesheetCallerParam (tctxt, paramNode);
 	    if (i > notSet) {	/* if parameter value set */
 		param->computed = 1;
 		if (param->value != NULL)
 		    xmlXPathFreeObject(param->value);
-		param->value = obj;
+		savedObj = savedObjChain;	/* get next val from chain */
+		param->value = savedObj->obj;
+		savedObjChain = savedObjChain->next;
+		xmlFree(savedObj);
 	    }
 	    xsltLocalVariablePush(tctxt, param, -1);
 	    param->next = params;
