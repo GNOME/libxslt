@@ -22,6 +22,7 @@ registerErrorHandler()
 registerExtModuleElement()
 registerExtModuleFunction()
 registerExtensionClass()
+setLoaderFunc()
 
 # functions from module xslt
 cleanupGlobals()
@@ -74,7 +75,9 @@ Class xpathContext(libxml2.xpathContext)
 
     # functions from module functions
     registerAllFunctions()
-Class transformCtxt()
+
+
+Class transformCtxt(transformCtxtBase)
     # accessors
     context()
     current()
@@ -112,6 +115,11 @@ Class transformCtxt()
     plainNamespace()
     specialNamespace()
 
+    # functions from module python
+    compareTransformContextsEqual()
+    freeTransformContext()
+    transformContextHashCode()
+
     # functions from module templates
     attrListTemplateProcess()
     attrTemplateProcess()
@@ -145,7 +153,9 @@ Class transformCtxt()
     profileInformation()
     saveProfiling()
     setCtxtParseOptions()
-Class stylesheet()
+
+
+Class stylesheet(stylesheetBase)
     # accessors
     doc()
     doctypePublic()
@@ -195,7 +205,11 @@ Class stylesheet()
 
     # functions from module python
     applyStylesheet()
+    applyStylesheetUser()
+    compareStylesheetsEqual()
+    newTransformContext()
     saveResultToString()
+    stylesheetHashCode()
 
     # functions from module variables
     parseGlobalParam()

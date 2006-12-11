@@ -564,6 +564,8 @@ primary_classes = ["xpathParserContext", "xpathContext", "transformCtxt", "style
 classes_ancestor = {
     "xpathContext" : "libxml2.xpathContext",
     "xpathParserContext" : "libxml2.xpathParserContext",
+    "transformCtxt": "transformCtxtBase",
+    "stylesheet": "stylesheetBase",
 }
 classes_destructors = {
     "xpathContext" : "pass"

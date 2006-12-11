@@ -1,3 +1,11 @@
+Mon Dec 11 12:13:14 CET 2006 Daniel Veillard <daniel@veillard.com>
+
+	* configure python/generator.py python/libxsl.py
+	  python/libxslt-python-api.xml python/libxslt.c
+	  python/tests/2stage.py python/tests/loader.py: applied patch from
+	  Nic James Ferrier to make stylesheets comparable and to add
+	  transformContext handling
+
 Sat Dec  9 15:22:34 PST 2006 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/functions.c: changed handling of function params

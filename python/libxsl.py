@@ -56,6 +56,37 @@ else:
         import libxsltmod
         import libxml2
 
+
+class transformCtxtBase:
+    def __init__(self, _obj=None):
+        if _obj != None: 
+            self._o = _obj;
+            return
+        self._o = None
+    def __hash__(self):
+        v = libxsltmod.xsltGetTransformContextHashCode(self._o)
+        return v
+    def __eq__(self, other):
+        if other == None:
+            return 0
+        v = libxsltmod.xsltCompareTransformContextsEqual(self._o, other._o)
+        return v
+        
+class stylesheetBase:
+    def __init__(self, _obj=None):
+        if _obj != None: 
+            self._o = _obj;
+            return
+        self._o = None
+    def __hash__(self):
+        v = libxsltmod.xsltGetStylesheetHashCode(self._o)
+        return v
+    def __eq__(self, other):
+        if other == None:
+            return 0
+        v = libxsltmod.xsltCompareStylesheetsEqual(self._o, other._o)
+        return v
+
 class extensionModule:
     def _styleInit(self, style, URI):
         return self.styleInit(stylesheet(_obj=style), URI)
