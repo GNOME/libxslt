@@ -13,7 +13,6 @@
       <xsl:param name="b"/>
       <xsl:choose>
          <xsl:when test="$a > 0">            
-	    <xsl:message>using <xsl:value-of select="$a"/> and <xsl:value-of select="$b"/></xsl:message>
             <func:result select="$a+mg:recurse($a - $b, $b)"/>
          </xsl:when>
          <xsl:otherwise>
