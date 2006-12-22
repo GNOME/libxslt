@@ -516,7 +516,7 @@ pythonDocLoaderFuncWrapper(const xmlChar * URI, xmlDictPtr dict, int options,
                            xsltLoadType type ATTRIBUTE_UNUSED)
 {
     xmlParserCtxtPtr pctxt;
-    xmlDocPtr doc;
+    xmlDocPtr doc=NULL;
 
     pctxt = xmlNewParserCtxt();
     if (pctxt == NULL)
@@ -570,9 +570,9 @@ pythonDocLoaderFuncWrapper(const xmlChar * URI, xmlDictPtr dict, int options,
     if (! pctxt->wellFormed) {
         if (doc != NULL) {
             xmlFreeDoc(doc);
+	    doc = NULL;
         }
         if (pctxt->myDoc != NULL) {
-            doc = NULL;
             xmlFreeDoc(pctxt->myDoc);
             pctxt->myDoc = NULL;
         }
