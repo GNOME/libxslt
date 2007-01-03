@@ -31,6 +31,14 @@ if test -f CVS/Entries; then
   then
       LIBXSLT_VERSION_EXTRA="-CVS$extra"
   fi
+else if test -d .svn ; then
+  extra=`svn info | grep Revision | sed 's+Revision: ++'`
+  echo extra=$extra
+  if test "$extra" != ""
+  then
+      LIBXSLT_VERSION_EXTRA="-SVN$extra"
+  fi
+fi
 fi
 
 AC_SUBST(LIBXSLT_MAJOR_VERSION)

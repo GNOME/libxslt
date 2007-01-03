@@ -1,3 +1,7 @@
+Wed Jan  3 16:46:05 CET 2007 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: adapt the extra versioning code to SVN
+
 Fri Dec 22 09:12:08 PST 2006 William Brack <wbrack@mmm.com.hk>
 
 	* python/libxslt.c: applied patch supplied by Kjartan Maraas
