@@ -456,18 +456,20 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 
 	xmlFreeDoc(res);
     } else {
-
+        int ret;
 	ctxt = xsltNewTransformContext(cur, doc);
 	if (ctxt == NULL)
 	    return;
 	if (profile) {
-	    xsltRunStylesheetUser(cur, doc, params, output,
+	    ret = xsltRunStylesheetUser(cur, doc, params, output,
 		                        NULL, NULL, stderr, ctxt);
 	} else {
-	    xsltRunStylesheetUser(cur, doc, params, output,
+	    ret = xsltRunStylesheetUser(cur, doc, params, output,
 		                        NULL, NULL, NULL, ctxt);
 	}
-	if (ctxt->state == XSLT_STATE_ERROR)
+	if (ret == -1)
+	    errorno = 11;
+	else if (ctxt->state == XSLT_STATE_ERROR)
 	    errorno = 9;
 	else if (ctxt->state == XSLT_STATE_STOPPED)
 	    errorno = 10;

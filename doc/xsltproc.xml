@@ -518,6 +518,13 @@
 	</listitem>
 		</varlistentry>
 
+		<varlistentry>
+	<term><errorcode>11</errorcode></term>
+	<listitem>
+		<para>Could not write the result to the output file</para>
+	</listitem>
+		</varlistentry>
+
 	</variablelist>
 </refsect1>
 

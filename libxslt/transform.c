@@ -1753,6 +1753,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if (node->content == NULL) {
 		XSLT_TRACE(ctxt,XSLT_TRACE_PROCESS_NODE,xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltDefaultProcessOneNode: copy empty text\n"));
+		return;
 	    } else {
 		XSLT_TRACE(ctxt,XSLT_TRACE_PROCESS_NODE,xsltGenericDebug(xsltGenericDebugContext,
 		 "xsltDefaultProcessOneNode: copy text %s\n",
