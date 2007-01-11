@@ -1,3 +1,18 @@
+Wed Jan 10 19:13:08 PST 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/strings.c: added new function 'replace' from Joel
+	  Reed.
+	* tests/exslt/Makefile.am, replace.1.xml, replace.1.xsl,
+	  replace.1.out: added new test case for above.
+	* libxslt.spec.in: trivial change from 'Gnome' to 'GNOME'
+	* configure.in: trivial change for flags on my compilations
+	* libxslt/documents.c, libxslt/documents.h, libxslt/keys.c,
+	  libxslt/keys.h, libxslt/variables.c, libxslt/templates.c,
+	  libxslt/transform.c, libxslt/variables.c, libxslt/xslt.c,
+	  libxslt/xsltutils.c: fixed some documentation/comments and
+	  compilation warnings - no change to logic.
+	* re-generated the documentation.
+
 Wed Jan  3 16:46:05 CET 2007 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: adapt the extra versioning code to SVN

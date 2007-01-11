@@ -1,4 +1,4 @@
-Summary: Library providing the Gnome XSLT engine
+Summary: Library providing the GNOME XSLT engine
 Name: libxslt
 Version: @VERSION@
 Release: 1
@@ -22,7 +22,7 @@ mechanism. To use it you need to have a version of libxml2 >= @LIBXML_REQUIRED_V
 installed. The xsltproc command is a command line interface to the XSLT engine
 
 %package devel
-Summary: Libraries, includes, etc. to embed the Gnome XSLT engine
+Summary: Libraries, includes, etc. to embed the GNOME XSLT engine
 Group: Development/Libraries
 Requires: libxslt = %{version}
 Requires: libxml2-devel >= 2.5.6

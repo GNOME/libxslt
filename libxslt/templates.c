@@ -597,7 +597,7 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
  * xsltAttrListTemplateProcess:
  * @ctxt:  the XSLT transformation context
  * @target:  the element where the attributes will be grafted
- * @cur:  the first attribute
+ * @attrs:  the first attribute
  *
  * Processes all attributes of a Literal Result Element.
  * Attribute references are applied via xsl:use-attribute-set
@@ -807,7 +807,9 @@ error:
  * @ctxt:  the XSLT transformation context
  * @node:  the attribute template node
  *
- * Obsolete. Does always return NULL. Don't use it.
+ * Obsolete. Don't use it.
+ *
+ * Returns NULL.
  */
 xmlNodePtr *
 xsltTemplateProcess(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED, xmlNodePtr node) {

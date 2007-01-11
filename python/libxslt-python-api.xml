@@ -58,7 +58,7 @@
       <return type='xmlDocPtr' info="the result document or NULL in case of error"/>
       <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet'/>
       <arg name='doc' type='xmlDocPtr' info='a parsed XML document'/>
-      <arg name='params' type='pythonObject' info='the parameters dictionnary'/>
+      <arg name='params' type='pythonObject' info='the parameters dictionary'/>
       <arg name='transformCtxt' type='xsltTransformContextPtr' info='transformation context'/>
     </function>
     <function name='xsltApplyStylesheet' file='python'>
@@ -66,7 +66,7 @@
       <return type='xmlDocPtr' info="the result document or NULL in case of error"/>
       <arg name='style' type='xsltStylesheetPtr' info='a parsed XSLT stylesheet'/>
       <arg name='doc' type='xmlDocPtr' info='a parsed XML document'/>
-      <arg name='params' type='pythonObject' info='the parameters dictionnary'/>
+      <arg name='params' type='pythonObject' info='the parameters dictionary'/>
     </function>
     <function name='xsltRegisterErrorHandler' file='python'>
       <info>Register a Python written function to for error reporting. The function is called back as f(ctx, error).</info>

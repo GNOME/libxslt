@@ -49,7 +49,7 @@ def callback(ctx, str):
 libxml2.registerErrorHandler(callback, None)
 
 #
-# The dictionnary of tables required and the SQL command needed
+# The dictionary of tables required and the SQL command needed
 # to create them
 #
 TABLES={
@@ -434,7 +434,7 @@ def updateWordArchive(name, id, relevance):
 
 #########################################################################
 #									#
-#                  Word dictionnary and analysis routines		#
+#                  Word dictionary and analysis routines		#
 #									#
 #########################################################################
 

@@ -104,7 +104,7 @@ extern const xmlChar *xsltXSLTAttrMarker;
 /* #define XSLT_REFACTORED_XSLT_NSCOMP */
 
 /**
- * XSLT_REFACTORED_XPATHCOMP
+ * XSLT_REFACTORED_XPATHCOMP:
  *
  * Internal define to enable the optimization of the
  * compilation of XPath expressions.
@@ -133,19 +133,39 @@ extern const xmlChar *xsltConstNamespaceNameXSLT;
     (((a) != NULL) && ((a)->ns != NULL) && \
     ((a)->ns->href == xsltConstNamespaceNameXSLT))
 
+/**
+ * XSLT_HAS_INTERNAL_NSMAP:
+ *
+ * check for namespace mapping
+ */
 #define XSLT_HAS_INTERNAL_NSMAP(s) \
     (((s) != NULL) && ((s)->principal) && \
      ((s)->principal->principalData) && \
      ((s)->principal->principalData->nsMap))
 
+/**
+ * XSLT_GET_INTERNAL_NSMAP:
+ *
+ * get pointer to namespace map
+ */
 #define XSLT_GET_INTERNAL_NSMAP(s) ((s)->principal->principalData->nsMap)
 
 #else /* XSLT_REFACTORED_XSLT_NSCOMP */
 
+/**
+ * IS_XSLT_ELEM_FAST:
+ *
+ * quick check whether this is an xslt element
+ */
 #define IS_XSLT_ELEM_FAST(n) \
     (((n) != NULL) && ((n)->ns != NULL) && \
      (xmlStrEqual((n)->ns->href, XSLT_NAMESPACE)))
 
+/**
+ * IS_XSLT_ATTR_FAST:
+ *
+ * quick check for xslt namespace attribute
+ */
 #define IS_XSLT_ATTR_FAST(a) \
     (((a) != NULL) && ((a)->ns != NULL) && \
      (xmlStrEqual((a)->ns->href, XSLT_NAMESPACE)))
@@ -1273,6 +1293,11 @@ struct _xsltCompilerNodeInfo {
     xsltStyleType curChildType;    
 };
 
+/**
+ * XSLT_CCTXT:
+ *
+ * get pointer to compiler context
+ */
 #define XSLT_CCTXT(style) ((xsltCompilerCtxtPtr) style->compCtxt) 
 
 typedef enum {
@@ -1732,7 +1757,7 @@ struct _xsltTransformContext {
     int parserOptions;			/* parser options xmlParserOption */
 
     /*
-     * dictionnary: shared between stylesheet, context and documents.
+     * dictionary: shared between stylesheet, context and documents.
      */
     xmlDictPtr dict;
     xmlDocPtr		tmpDoc; /* Obsolete; not used in the library. */

@@ -365,7 +365,7 @@ to the <a href="http://cvs.gnome.org/viewcvs/libxslt/">CVS</a> code base.</p>
   <li>bug fixes: negative number formatting (William Brack), number
     formatting per mille definition (William Brack), XInclude default values
     (William), text copy bugs (William), bug related to xmlXPathContext size,
-    reuse libxml2 memory management for text nodes, dictionnary text bug,
+    reuse libxml2 memory management for text nodes, dictionary text bug,
     forbid variables in match (needs libxml2-2.6.21)</li>
   <li>improvements: EXSLT dyn:map (Mark Vakoc),</li>
   <li>documentation: EXSLT date and time functions namespace in man (Jonathan
@@ -381,7 +381,7 @@ to the <a href="http://cvs.gnome.org/viewcvs/libxslt/">CVS</a> code base.</p>
     select, xinclude and document() problem, build outside of source tree
     (Mike Castle)</li>
   <li>improvement: added a --nodict mode to xsltproc to check problems for
-    docuemtns without dictionnaries</li>
+    docuemtns without dictionaries</li>
 </ul>
 
 <h3>1.1.13: Mar 13 2005</h3>
@@ -396,7 +396,7 @@ to the <a href="http://cvs.gnome.org/viewcvs/libxslt/">CVS</a> code base.</p>
     (Aleksey Gurtovoy), pattern expression fixes (William Brack), out of
     memory detection misses (William), parserOptions propagation (William),
     exclude-result-prefixes fix (William), // patten fix (William).</li>
-  <li>extensions: module support (Joel Reed), dictionnary based speedups
+  <li>extensions: module support (Joel Reed), dictionary based speedups
     trying to get rid of xmlStrEqual as much as possible.</li>
   <li>documentation: added Wiki (Joel Reed)</li>
 </ul>
@@ -477,14 +477,14 @@ to the <a href="http://cvs.gnome.org/viewcvs/libxslt/">CVS</a> code base.</p>
 
 <h3>1.1.5: Mar 23 2004</h3>
 <ul>
-  <li>performance: use dictionnary lookup for variables</li>
+  <li>performance: use dictionary lookup for variables</li>
   <li>remove use of _private from source documents</li>
   <li>cleanup of "make tests" output</li>
   <li>bugfixes: AVT in local variables, use localtime_r to avoid thread
     troubles (William), dictionary handling bug (William), limited number of
     stubstitutions in AVT (William), tokenize fix for UTF-8 (William),
     superfluous namespace (William), xsltproc error code on
-    &lt;xsl:message&gt; halt, OpenVMS fix, dictionnary reference counting
+    &lt;xsl:message&gt; halt, OpenVMS fix, dictionary reference counting
     change.</li>
 </ul>
 
@@ -499,7 +499,7 @@ to the <a href="http://cvs.gnome.org/viewcvs/libxslt/">CVS</a> code base.</p>
 <h3>1.1.3: Feb 16 2004</h3>
 <ul>
   <li>Rewrote the Attribute Value Template code, new XPath compilation
-    interfaces, dictionnary reuses for XSLT with potential for serious
+    interfaces, dictionary reuses for XSLT with potential for serious
     performance improvements.</li>
   <li>bug fixes: portability (William Brack), key() in node-set() results
     (William), comment before doctype (William), math and node-set() problems
@@ -1423,7 +1423,7 @@ style.freeStylesheet()
 doc.freeDoc()</pre>
 
 <p>that part is identical, to the basic example except that the
-transformation is passed a dictionnary of parameters. Note that the string
+transformation is passed a dictionary of parameters. Note that the string
 passed "success" had to be quoted, otherwise it is interpreted as an XPath
 query for the childs of root named "success".</p>
 <pre>root = result.children

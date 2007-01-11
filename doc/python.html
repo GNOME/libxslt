@@ -145,7 +145,7 @@ doc = libxml2.parseDoc("&lt;doc/&gt;")
 result = style.applyStylesheet(doc, { "bar": "'success'" })
 style.freeStylesheet()
 doc.freeDoc()</pre><p>that part is identical, to the basic example except that the
-transformation is passed a dictionnary of parameters. Note that the string
+transformation is passed a dictionary of parameters. Note that the string
 passed "success" had to be quoted, otherwise it is interpreted as an XPath
 query for the childs of root named "success".</p><pre>root = result.children
 if root.name != "article":

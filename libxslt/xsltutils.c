@@ -76,7 +76,7 @@
  * default declaration values unless DTD use has been turned off.
  *
  * Returns the attribute value or NULL if not found. The string is allocated
- *         in the stylesheet dictionnary.
+ *         in the stylesheet dictionary.
  */
 const xmlChar *
 xsltGetCNsProp(xsltStylesheetPtr style, xmlNodePtr node,
@@ -347,6 +347,7 @@ xsltPointerListAddSize(xsltPointerListPtr list,
 
 /**
  * xsltPointerListCreate:
+ * @initialSize: the initial size for the list
  *
  * Creates an xsltPointerList structure.
  *
@@ -373,6 +374,7 @@ xsltPointerListCreate(int initialSize)
 
 /**
  * xsltPointerListFree:
+ * @list: pointer to the list to be freed
  *
  * Frees the xsltPointerList structure. This does not free
  * the content of the list.
@@ -388,7 +390,8 @@ xsltPointerListFree(xsltPointerListPtr list)
 }
 
 /**
- * xsltPointerListFree:
+ * xsltPointerListClear:
+ * @list: pointer to the list to be cleared
  *
  * Resets the list, but does not free the allocated array
  * and does not free the content of the list.
@@ -717,11 +720,11 @@ xsltTransformError(xsltTransformContextPtr ctxt,
 
 /**
  * xsltSplitQName:
- * @dict: a dictionnary
+ * @dict: a dictionary
  * @name:  the full QName
  * @prefix: the return value
  *
- * Split QNames into prefix and local names, both allocated from a dictionnary.
+ * Split QNames into prefix and local names, both allocated from a dictionary.
  *
  * Returns: the localname or NULL in case of error.
  */

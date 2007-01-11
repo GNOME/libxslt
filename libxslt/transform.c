@@ -166,9 +166,10 @@ templPop(xsltTransformContextPtr ctxt)
 }
 
 /**
- * xsltVariablePop:
+ * xsltLocalVariablePop:
  * @ctxt: the transformation context
- * @depth:  the depth in the xsl:template's tree
+ * @limitNr: number of variables which should remain
+ * @level: the depth in the xsl:template's tree
  *
  * Pops all variable values at the given @depth from the stack.
  *
@@ -430,7 +431,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     if (cur->cache == NULL)
 	goto internal_err;
     /*
-     * setup of the dictionnary must be done early as some of the
+     * setup of the dictionary must be done early as some of the
      * processing later like key handling may need it.
      */
     cur->dict = xmlDictCreateSub(style->dict);
@@ -600,7 +601,7 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
     xmlDictFree(ctxt->dict);
 #ifdef WITH_XSLT_DEBUG
     xsltGenericDebug(xsltGenericDebugContext,
-                     "freeing transformation dictionnary\n");
+                     "freeing transformation dictionary\n");
 #endif
     memset(ctxt, -1, sizeof(xsltTransformContext));
     xmlFree(ctxt);
@@ -768,7 +769,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
  * @ctxt:  a XSLT process context
  * @target:  the element where the text will be attached
  * @cur:  the text or CDATA node
- * @interned:  the string is in the target doc dictionnary
+ * @interned:  the string is in the target doc dictionary
  *
  * Copy the text content of @cur and append it to @target's children.
  *
@@ -2070,7 +2071,7 @@ xsltDebuggerStartSequenceConstructor(xsltTransformContextPtr ctxt,
 }
 
 /**
- * xsltVariablePush:
+ * xsltLocalVariablePush:
  * @ctxt: the transformation context
  * @variable: variable to be pushed to the variable stack
  * @level: new value for variable's level
@@ -3180,7 +3181,7 @@ xsltApplyOneTemplate(xsltTransformContextPtr ctxt,
  * @ctxt:  an XSLT processing context
  * @node:  The current node
  * @inst:  the instruction in the stylesheet
- * @comp:  precomputed information
+ * @castedComp:  precomputed information
  *
  * Process an EXSLT/XSLT-1.1 document element
  */
@@ -3686,7 +3687,7 @@ xsltSort(xsltTransformContextPtr ctxt,
  * @ctxt:  an XSLT process context
  * @node:  the node in the source tree
  * @inst:  the element node of the XSLT-copy instruction
- * @comp:  computed information of the XSLT-copy instruction
+ * @castedComp:  computed information of the XSLT-copy instruction
  *
  * Execute the XSLT-copy instruction on the source node.
  */
@@ -3842,7 +3843,7 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt element node
- * @comp:  precomputed information
+ * @castedComp:  precomputed information
  *
  * Process the xslt element node on the source node
  */
@@ -4075,7 +4076,7 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt processing-instruction node
- * @comp:  precomputed information
+ * @castedComp:  precomputed information
  *
  * Process the xslt processing-instruction node on the source node
  */
@@ -4141,7 +4142,7 @@ error:
  * @ctxt:  an XSLT transformation context
  * @node:  the current node in the source tree
  * @inst:  the element node of the XSLT copy-of instruction 
- * @comp:  precomputed information of the XSLT copy-of instruction
+ * @castedComp:  precomputed information of the XSLT copy-of instruction
  *
  * Process the XSLT copy-of instruction.
  */
@@ -4305,6 +4306,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		    */
 		    xsltCopyTextString(ctxt, ctxt->insert, value, 0);
 		}
+		xmlFree(value);
 		
 #ifdef WITH_XSLT_DEBUG_PROCESS
 		XSLT_TRACE(ctxt,XSLT_TRACE_COPY_OF,xsltGenericDebug(xsltGenericDebugContext,
@@ -4325,7 +4327,7 @@ xsltCopyOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt value-of node
- * @comp:  precomputed information
+ * @castedComp:  precomputed information
  *
  * Process the xslt value-of node on the source node
  */
@@ -4441,7 +4443,7 @@ error:
  * @ctxt:  a XSLT process context
  * @node:  the node in the source tree.
  * @inst:  the xslt number node
- * @comp:  precomputed information
+ * @castedComp:  precomputed information
  *
  * Process the xslt number node on the source node
  */
@@ -4539,7 +4541,7 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
  * @ctxt:  a XSLT transformation context
  * @node:  the "current node" in the source tree
  * @inst:  the XSLT 'call-template' instruction
- * @comp:  the compiled information of the instruction
+ * @castedComp:  the compiled information of the instruction
  *
  * Processes the XSLT call-template instruction on the source node.
  */
@@ -4642,7 +4644,7 @@ xsltCallTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
  * @ctxt:  a XSLT transformation context
  * @node:  the 'current node' in the source tree
  * @inst:  the element node of an XSLT 'apply-templates' instruction
- * @comp:  the compiled instruction
+ * @castedComp:  the compiled instruction
  *
  * Processes the XSLT 'apply-templates' instruction on the current node.
  */
@@ -5227,7 +5229,7 @@ error:
  * @ctxt:  a XSLT process context
  * @contextNode:  the current node in the source tree
  * @inst:  the xsl:if instruction
- * @comp:  compiled information of the instruction
+ * @castedComp:  compiled information of the instruction
  *
  * Processes the xsl:if instruction on the source node.
  */
@@ -5408,9 +5410,9 @@ error:
 /**
  * xsltForEach:
  * @ctxt:  an XSLT transformation context
- * @node:  the "current node" in the source tree  
+ * @contextNode:  the "current node" in the source tree  
  * @inst:  the element node of the xsl:for-each instruction
- * @comp:  the compiled information of the instruction
+ * @castedComp:  the compiled information of the instruction
  *
  * Process the xslt for-each node on the source node
  */

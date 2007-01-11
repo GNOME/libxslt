@@ -225,7 +225,7 @@ xsltExtensionInstructionResultFinalize(xsltTransformContextPtr ctxt)
 /**
  * xsltExtensionInstructionResultRegister:
  * @ctxt: an XSLT transformation context
- * @nodeSet: a node set to be inspected for result tree fragments
+ * @obj: an XPath object to be inspected for result tree fragments
  *
  * Marks the result of a value-returning extension instruction
  * in order to avoid it being garbage collected before the

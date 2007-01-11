@@ -560,6 +560,8 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
  * @keyDef: the key definition
  *
  * Computes the key tables this key and for the current input document.
+ *
+ * Returns: 0 on success, -1 on error
  */
 int
 xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
@@ -842,7 +844,7 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc) {
 
 /**
  * xsltFreeDocumentKeys:
- * @doc: a XSLT document
+ * @idoc: a XSLT document
  *
  * Free the keys associated to a document
  */

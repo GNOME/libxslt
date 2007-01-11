@@ -561,8 +561,8 @@ pythonDocLoaderFuncWrapper(const xmlChar * URI, xmlDictPtr dict, int options,
 	     * The return value should be the document
              * Should we test it somehow before getting the C object from it?
 	     */
-            PyObject *py_doc = PyObject_GetAttrString(result, "_o");
-            doc = PyxmlNode_Get(py_doc);
+            PyObject *py_doc = PyObject_GetAttrString(result, (char *) "_o");
+            doc = (xmlDocPtr) PyxmlNode_Get(py_doc);
             /* do we have to DECCREF the result?? */
         }
     }

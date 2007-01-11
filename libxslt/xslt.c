@@ -6409,7 +6409,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 /**
  * xsltParseStylesheetImportedDoc:
  * @doc:  an xmlDoc parsed XML
- * @style: pointer to the parent stylesheet (if it exists)
+ * @parentStyle: pointer to the parent stylesheet (if it exists)
  *
  * parse an XSLT stylesheet building the associated structures
  * except the processing not needed for imported documents.
@@ -6850,7 +6850,7 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 		fake = xmlNewDoc(NULL);
 		if (fake != NULL) {
                     /*
-		     * the dictionnary should be shared since nodes are
+		     * the dictionary should be shared since nodes are
 		     * moved over.
 		     */
 		    fake->dict = doc->dict;

@@ -137,6 +137,8 @@ xsltKeyFunction
 xsltLoadDocument
 xsltLoadStyleDocument
 xsltLoadStylesheetPI
+xsltLocalVariablePop
+xsltLocalVariablePush
 /*xsltMatchPattern*/
 xsltMessage
 xsltNamespaceAlias

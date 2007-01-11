@@ -14,8 +14,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="APIchunk3.html">b-c</a>
 <a href="APIchunk4.html">d-e</a>
 <a href="APIchunk5.html">f-g</a>
-<a href="APIchunk6.html">h-k</a>
-<a href="APIchunk7.html">l-n</a>
+<a href="APIchunk6.html">h-i</a>
+<a href="APIchunk7.html">j-n</a>
 <a href="APIchunk8.html">o-p</a>
 <a href="APIchunk9.html">q-s</a>
 <a href="APIchunk10.html">t-u</a>
@@ -158,6 +158,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-documents.html#xsltFreeStyleDocuments">xsltFreeStyleDocuments</a><br />
 <a href="html/libxslt-preproc.html#xsltFreeStylePreComps">xsltFreeStylePreComps</a><br />
 <a href="html/libxslt-keys.html#xsltInitCtxtKeys">xsltInitCtxtKeys</a><br />
+<a href="html/libxslt-transform.html#xsltLocalVariablePop">xsltLocalVariablePop</a><br />
 <a href="html/libxslt-transform.html#xsltRegisterAllElement">xsltRegisterAllElement</a><br />
 <a href="html/libxslt-functions.html#xsltRegisterAllFunctions">xsltRegisterAllFunctions</a><br />
 </dd><dt>allocated</dt><dd><a href="html/libxslt-xsltInternals.html#_xsltTransformContext">_xsltTransformContext</a><br />
@@ -169,6 +170,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#xsltGetCNsProp">xsltGetCNsProp</a><br />
 <a href="html/libxslt-xsltInternals.html#xsltNewStylesheet">xsltNewStylesheet</a><br />
 <a href="html/libxslt-transform.html#xsltNewTransformContext">xsltNewTransformContext</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltPointerListClear">xsltPointerListClear</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSaveResultToString">xsltSaveResultToString</a><br />
 <a href="html/libxslt-xsltutils.html#xsltSplitQName">xsltSplitQName</a><br />
 </dd><dt>allow</dt><dd><a href="html/libxslt-transform.html#xsltApplyStylesheetUser">xsltApplyStylesheetUser</a><br />
@@ -192,7 +194,6 @@ A:link, A:visited, A:active { text-decoration: underline }
 </dd><dt>always</dt><dd><a href="html/libxslt-transform.html#xsltApplyOneTemplate">xsltApplyOneTemplate</a><br />
 <a href="html/libxslt-security.html#xsltSecurityAllow">xsltSecurityAllow</a><br />
 <a href="html/libxslt-security.html#xsltSecurityForbid">xsltSecurityForbid</a><br />
-<a href="html/libxslt-templates.html#xsltTemplateProcess">xsltTemplateProcess</a><br />
 </dd><dt>analyzes</dt><dd><a href="html/libxslt-xsltutils.html#xsltGetQNameURI">xsltGetQNameURI</a><br />
 </dd><dt>anchor</dt><dd><a href="html/libxslt-namespaces.html#xsltGetSpecialNamespace">xsltGetSpecialNamespace</a><br />
 </dd><dt>anchored</dt><dd><a href="html/libxslt-xsltutils.html#xsltGetCNsProp">xsltGetCNsProp</a><br />
@@ -205,6 +206,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltInternals.html#xsltFormatNumberConversion">xsltFormatNumberConversion</a><br />
 <a href="html/libxslt-namespaces.html#xsltGetPlainNamespace">xsltGetPlainNamespace</a><br />
 <a href="html/libxslt-extensions.html#xsltInitElemPreComp">xsltInitElemPreComp</a><br />
+<a href="html/libxslt-transform.html#xsltLocalVariablePush">xsltLocalVariablePush</a><br />
 <a href="html/libxslt-transform.html#xsltRunStylesheet">xsltRunStylesheet</a><br />
 <a href="html/libxslt-transform.html#xsltRunStylesheetUser">xsltRunStylesheetUser</a><br />
 </dd><dt>anymore</dt><dd><a href="html/libxslt-transform.html#xsltApplyOneTemplate">xsltApplyOneTemplate</a><br />
@@ -271,6 +273,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="html/libxslt-xsltutils.html#xsltDefaultSortFunction">xsltDefaultSortFunction</a><br />
 <a href="html/libxslt-xsltutils.html#xsltDoSortFunction">xsltDoSortFunction</a><br />
 <a href="html/libxslt-variables.html#xsltEvalUserParams">xsltEvalUserParams</a><br />
+<a href="html/libxslt-xsltInternals.html#xsltPointerListClear">xsltPointerListClear</a><br />
 <a href="html/libxslt-transform.html#xsltRunStylesheet">xsltRunStylesheet</a><br />
 <a href="html/libxslt-transform.html#xsltRunStylesheetUser">xsltRunStylesheetUser</a><br />
 <a href="html/libxslt-variables.html#xsltVariableLookup">xsltVariableLookup</a><br />
@@ -310,8 +313,7 @@ A:link, A:visited, A:active { text-decoration: underline }
 </dd><dt>attr</dt><dd><a href="html/libxslt-namespaces.html#xsltGetSpecialNamespace">xsltGetSpecialNamespace</a><br />
 </dd><dt>attribute-set</dt><dd><a href="html/libxslt-attributes.html#xsltParseStylesheetAttributeSet">xsltParseStylesheetAttributeSet</a><br />
 </dd><dt>attribute-sets</dt><dd><a href="html/libxslt-attributes.html#xsltApplyAttributeSet">xsltApplyAttributeSet</a><br />
-</dd><dt>attributes</dt><dd><a href="html/libxslt-xsltInternals.html#IS_XSLT_ATTR_FAST">IS_XSLT_ATTR_FAST</a><br />
-<a href="html/libxslt-templates.html#xsltAttrListTemplateProcess">xsltAttrListTemplateProcess</a><br />
+</dd><dt>attributes</dt><dd><a href="html/libxslt-templates.html#xsltAttrListTemplateProcess">xsltAttrListTemplateProcess</a><br />
 <a href="html/libxslt-namespaces.html#xsltNamespaceAlias">xsltNamespaceAlias</a><br />
 </dd><dt>attrubute</dt><dd><a href="html/libxslt-xsltInternals.html#xsltCompileAttr">xsltCompileAttr</a><br />
 </dd><dt>automatically</dt><dd><a href="html/libxslt-namespaces.html#xsltCopyNamespaceList">xsltCopyNamespaceList</a><br />
@@ -329,8 +331,8 @@ A:link, A:visited, A:active { text-decoration: underline }
 <a href="APIchunk3.html">b-c</a>
 <a href="APIchunk4.html">d-e</a>
 <a href="APIchunk5.html">f-g</a>
-<a href="APIchunk6.html">h-k</a>
-<a href="APIchunk7.html">l-n</a>
+<a href="APIchunk6.html">h-i</a>
+<a href="APIchunk7.html">j-n</a>
 <a href="APIchunk8.html">o-p</a>
 <a href="APIchunk9.html">q-s</a>
 <a href="APIchunk10.html">t-u</a>
