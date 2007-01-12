@@ -537,7 +537,7 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
         module = xmlHashLookup(xsltExtensionsHash, URI);
         if (NULL == module) {
             if (!xsltExtModuleRegisterDynamic(URI)) {
-                module = xmlHashLookup(xsltExtensionsHash, URI);
+                module = xmlHashLookup(xsltModuleHash, URI);
             }
         }
         if (module != NULL) {

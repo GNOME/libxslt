@@ -39,6 +39,9 @@
   #define PLUGINPUBFUN
 #endif
 
+/* include a prototype to make gcc happy */
+void
+PLUGINPUBFUN xmlsoft_org_xslt_testplugin_init(void);
 
 /************************************************************************
  * 									*
