@@ -1,3 +1,10 @@
+Fri Jan 12 23:24:08 PST 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/extensions.c: reverted last change, fixed some
+	  comments.  Note that in it's current state the 'plugin'
+	  implementation will fail if called from a program
+	  compiled as static!
+
 Fri Jan 12 15:40:08 PST 2007 William Brack <wbrack@mmm.com.hk>
 
 	* configure.in: fixed problem with DV/WMB testing env.

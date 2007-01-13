@@ -419,7 +419,11 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     rc = xmlModuleSymbol(m, (const char *) regfunc_name, &vregfunc);
     regfunc = vregfunc;
     if (0 == rc) {
-        /* call the module's init function */
+        /*
+	 * Call the module's init function.  Note that this function
+	 * calls xsltRegisterExtModuleFull which will add the module
+	 * to xsltExtensionsHash (together with it's entry points).
+	 */
         (*regfunc) ();
 
         /* register this module in our hash */
@@ -522,12 +526,12 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
     style->nsDefs = ret;
 
     /*
-     * check wether there is an extension module with a stylesheet
+     * check whether there is an extension module with a stylesheet
      * initialization function.
      */
 #ifdef XSLT_REFACTORED
     /*
-    * Don't initialize modules based on specified namespaced via
+    * Don't initialize modules based on specified namespaces via
     * the attribute "[xsl:]extension-element-prefixes".
     */
 #else
@@ -537,7 +541,7 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
         module = xmlHashLookup(xsltExtensionsHash, URI);
         if (NULL == module) {
             if (!xsltExtModuleRegisterDynamic(URI)) {
-                module = xmlHashLookup(xsltModuleHash, URI);
+                module = xmlHashLookup(xsltExtensionsHash, URI);
             }
         }
         if (module != NULL) {
