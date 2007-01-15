@@ -1,3 +1,9 @@
+Sun Jan 14 18:45:08 PST 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/functions.c: fixed two problems related to checking
+	  of fragments, related to python htmlCtxtReadFile problem
+	  reported on mailing list by Nic Ferrier.
+
 Fri Jan 12 23:24:08 PST 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/extensions.c: reverted last change, fixed some
