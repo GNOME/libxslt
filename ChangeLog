@@ -1,3 +1,11 @@
+Wed Jan 17 14:20:18 CET 2007 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: preparing release of 1.1.20
+	* libexslt/crypto.c: small patch for missing includes on some BSD,
+	  fixes #397373
+	* configure.in: replace == by = in test, raised by Roland Illig,
+	  should fix #397371
+
 Sun Jan 14 18:45:08 PST 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/functions.c: fixed two problems related to checking
