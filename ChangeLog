@@ -1,3 +1,12 @@
+Wed Jan 24 11:05:28 PST 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: added check for memory allocation error
+	  (bug #400242); fixed "type-punned pointer" warnings.
+	* libxslt/xsltutils.c: added checks for memory allocation error
+	  (bug #400242)
+	* restored NEWS, doc/EXSLT/downloads.html which mysteriously
+	  disappeared from svn
+	
 Wed Jan 17 14:20:18 CET 2007 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/*: preparing release of 1.1.20

@@ -2098,13 +2098,17 @@ xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
 	    xpathCtxt = XSLT_CCTXT(style)->xpathCtxt;
 	    xpathCtxt->doc = style->doc;
 	} else
-	    xpathCtxt = xmlXPathNewContext(style->doc);	
+	    xpathCtxt = xmlXPathNewContext(style->doc);
 #else
 	xpathCtxt = xmlXPathNewContext(style->doc);
 #endif
+	if (xpathCtxt == NULL)
+	    return NULL;
 	xpathCtxt->dict = style->dict;
     } else {
 	xpathCtxt = xmlXPathNewContext(NULL);
+	if (xpathCtxt == NULL)
+	    return NULL;
     }
     /*
     * Compile the expression.

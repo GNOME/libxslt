@@ -10,6 +10,18 @@ ChangeLog.html
 to the CVS at 
 http://cvs.gnome.org/viewcvs/libxslt/
  code base.Those are the public releases made:
+1.1.20: Jan 17 2007:
+   - Portability fixes: strict aliasing fix (Marcus Meissner), BSD portability
+      patches (Roland Illig)
+   - Bug fixes: Result Value Tree handling fix (William Brack), function
+      parameters fix (William), uninitialized variable (Kjartan Maraas),
+      empty text node handling (William), plugin support and test fixes (William),
+      fragment support fixes (William)
+   - Improvements: python stylesheet compare and transform context
+      access (Nic Ferrier), EXSLT string replace support (Joel Reed),
+      xsltproc better low level error handling (Mike Hommey and William)
+
+
 1.1.19: Nov 29 2006:
    - Bug fixes: entities within attributes (William Brack), Python detection
       problem (Joseph Sacco), in-scope namespace bug (Mike Hommey), Result

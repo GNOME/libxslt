@@ -142,7 +142,7 @@ xsltNewCompMatch(void) {
     cur = (xsltCompMatchPtr) xmlMalloc(sizeof(xsltCompMatch));
     if (cur == NULL) {
 	xsltTransformError(NULL, NULL, NULL,
-		"xsltNewCompMatch : malloc failed\n");
+		"xsltNewCompMatch : out of memory error\n");
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltCompMatch));
@@ -2066,7 +2066,12 @@ xsltCompilePattern(const xmlChar *pattern, xmlDocPtr doc,
 int
 xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	        const xmlChar *mode, const xmlChar *modeURI) {
-    xsltCompMatchPtr pat, list, *top = NULL, next;
+    xsltCompMatchPtr pat, list, next;
+    /*
+     * 'top' will point to style->xxxMatch ptr - declaring as 'void'
+     *  avoids gcc 'type-punned pointer' warning.
+     */
+    void **top = NULL;
     const xmlChar *name = NULL;
     float priority;              /* the priority */
 
@@ -2076,6 +2081,8 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
     priority = cur->priority;
     pat = xsltCompilePatternInternal(cur->match, style->doc, cur->elem,
 		    style, NULL, 1);
+    if (pat == NULL)
+    	return(-1);
     while (pat) {
 	next = pat->next;
 	pat->next = NULL;
@@ -2097,24 +2104,24 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	    if (pat->steps[0].value != NULL)
 		name = pat->steps[0].value;
 	    else
-		top = (xsltCompMatchPtr *) &(style->attrMatch);
+		top = &(style->attrMatch);
 	    break;
         case XSLT_OP_CHILD:
         case XSLT_OP_PARENT:
         case XSLT_OP_ANCESTOR:
-	    top = (xsltCompMatchPtr *) &(style->elemMatch);
+	    top = &(style->elemMatch);
 	    break;
         case XSLT_OP_ROOT:
-	    top = (xsltCompMatchPtr *) &(style->rootMatch);
+	    top = &(style->rootMatch);
 	    break;
         case XSLT_OP_KEY:
-	    top = (xsltCompMatchPtr *) &(style->keyMatch);
+	    top = &(style->keyMatch);
 	    break;
         case XSLT_OP_ID:
 	    /* TODO optimize ID !!! */
         case XSLT_OP_NS:
         case XSLT_OP_ALL:
-	    top = (xsltCompMatchPtr *) &(style->elemMatch);
+	    top = &(style->elemMatch);
 	    break;
         case XSLT_OP_END:
 	case XSLT_OP_PREDICATE:
@@ -2130,20 +2137,20 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 	    if (pat->steps[0].value != NULL)
 		name = pat->steps[0].value;
 	    else
-		top = (xsltCompMatchPtr *) &(style->piMatch);
+		top = &(style->piMatch);
 	    break;
 	case XSLT_OP_COMMENT:
-	    top = (xsltCompMatchPtr *) &(style->commentMatch);
+	    top = &(style->commentMatch);
 	    break;
 	case XSLT_OP_TEXT:
-	    top = (xsltCompMatchPtr *) &(style->textMatch);
+	    top = &(style->textMatch);
 	    break;
         case XSLT_OP_ELEM:
 	case XSLT_OP_NODE:
 	    if (pat->steps[0].value != NULL)
 		name = pat->steps[0].value;
 	    else
-		top = (xsltCompMatchPtr *) &(style->elemMatch);
+		top = &(style->elemMatch);
 	    break;
 	}
 	if (name != NULL) {
