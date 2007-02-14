@@ -1,3 +1,8 @@
+Wed Feb 14 01:21:38 PST 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/pattern.c: Fixed problem with namespace on compound
+	  predicate (bug #407731)
+
 Wed Jan 24 11:05:28 PST 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: added check for memory allocation error

@@ -449,6 +449,8 @@ xsltPatPushState(xsltStepStates *states, int step, xmlNodePtr node) {
  * @ctxt:  a XSLT process context
  * @comp: the precompiled pattern
  * @node: a node
+ * @nsList: the namespaces in scope
+ * @nsNr: the number of namespaces in scope
  *
  * Test whether the node matches the pattern, do a direct evalutation
  * and not a step by step evaluation.
@@ -457,7 +459,7 @@ xsltPatPushState(xsltStepStates *states, int step, xmlNodePtr node) {
  */
 static int
 xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
-	                xmlNodePtr node) {
+	                xmlNodePtr node, xmlNsPtr *nsList, int nsNr) {
     xsltStepOpPtr sel = NULL;
     xmlDocPtr prevdoc;
     xmlDocPtr doc;
@@ -484,14 +486,22 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	xmlNodePtr parent = node->parent;
 	xmlDocPtr olddoc;
 	xmlNodePtr oldnode;
+	int oldNsNr;
+	xmlNsPtr *oldNamespaces;
 
 	oldnode = ctxt->xpathCtxt->node;
 	olddoc = ctxt->xpathCtxt->doc;
+	oldNsNr = ctxt->xpathCtxt->nsNr;
+	oldNamespaces = ctxt->xpathCtxt->namespaces;
 	ctxt->xpathCtxt->node = node;
 	ctxt->xpathCtxt->doc = doc;
+	ctxt->xpathCtxt->namespaces = nsList;
+	ctxt->xpathCtxt->nsNr = nsNr;
 	newlist = xmlXPathEval(comp->pattern, ctxt->xpathCtxt);
 	ctxt->xpathCtxt->node = oldnode;
 	ctxt->xpathCtxt->doc = olddoc;
+	ctxt->xpathCtxt->namespaces = oldNamespaces;
+	ctxt->xpathCtxt->nsNr = oldNsNr;
 	if (newlist == NULL)
 	    return(-1);
 	if (newlist->type != XPATH_NODESET) {
@@ -818,7 +828,8 @@ restart:
 			/* Free the rollback states */
 			xmlFree(states.states);
 		    }
-		    return(xsltTestCompMatchDirect(ctxt, comp, node));
+		    return(xsltTestCompMatchDirect(ctxt, comp, node,
+		    				   comp->nsList, comp->nsNr));
 		}
 
 		doc = node->doc;
