@@ -1,3 +1,9 @@
+Thu Feb 15 14:03:18 PST 2007 William Brack <wbrack@mmm.com.hk>
+
+	* doc/xslt.html: Changed all
+	  references to CVS to be SVN; changed corresponding links.
+	* doc/*html: regenerated the documentation for above
+
 Wed Feb 14 01:21:38 PST 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/pattern.c: Fixed problem with namespace on compound
