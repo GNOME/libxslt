@@ -1,3 +1,8 @@
+Sun Feb 18 09:00:08 PST 2007 William Brack <wbrack@mmm.com.hk
+
+	* python/libxsl.py: fixed tab/space inconsistency with patch
+	  provided by Andreas Hanke (bug #409193)
+
 Thu Feb 15 14:03:18 PST 2007 William Brack <wbrack@mmm.com.hk>
 
 	* doc/xslt.html: Changed all

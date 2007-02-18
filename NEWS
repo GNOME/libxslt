@@ -7,8 +7,8 @@
 The change log at 
 ChangeLog.html
  describes the recents commits
-to the CVS at 
-http://cvs.gnome.org/viewcvs/libxslt/
+to the SVN at 
+http://svn.gnome.org/viewcvs/libxslt/trunk/
  code base.Those are the public releases made:
 1.1.20: Jan 17 2007:
    - Portability fixes: strict aliasing fix (Marcus Meissner), BSD portability
@@ -518,7 +518,7 @@ This is a bugfix only release   - error message missing argument (William Brack)
    - patches for Windows and update of Windows Makefiles by Igor
    - OpenVMS port instructions from John A Fotheringham
    - fixed some Makefiles annoyance and libraries prelinking
-  informations
+  information
 
 
 1.0.7: Nov 10 2001:
