@@ -77,7 +77,7 @@ extern "C" {
 /**
  * XSLT_NEED_TRIO:
  *
- * should be activated in the existing libc library lacks some of the
+ * should be activated if the existing libc library lacks some of the
  * string formatting function, in that case reuse the Trio ones already
  * compiled in the libxml2 library.
  */
@@ -91,6 +91,10 @@ extern "C" {
 #ifndef XSLT_NEED_TRIO
 #define XSLT_NEED_TRIO
 #endif
+#endif
+
+#ifdef	XSLT_NEED_TRIO
+#define	TRIO_REPLACE_STDIO
 #endif
 
 /**

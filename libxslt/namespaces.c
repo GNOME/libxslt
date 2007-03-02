@@ -32,6 +32,11 @@
 #ifdef HAVE_CTYPE_H
 #include <ctype.h>
 #endif
+#ifndef	XSLT_NEED_TRIO
+#include <stdio.h>
+#else
+#include <trio.h>
+#endif
 
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>

@@ -12,7 +12,12 @@
 #define IN_LIBXSLT
 #include "libxslt.h"
 
+#ifndef	XSLT_NEED_TRIO
 #include <stdio.h>
+#else
+#include <trio.h>
+#endif
+
 #include <string.h>
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
@@ -46,11 +51,6 @@
 #define XSLT_WIN32_PERFORMANCE_COUNTER
 #endif /* _MS_VER */
 #endif /* WIN32 */
-
-#ifdef XSLT_NEED_TRIO
-#include "trio.h"
-#define vsnprintf trio_vsnprintf
-#endif
 
 /************************************************************************
  * 									*
