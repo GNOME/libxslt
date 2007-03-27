@@ -1,3 +1,10 @@
+Tue Mar 27 16:50:52 CEST 2007 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltutils.c: apply patch fron Shaun McCance to hook
+	  xsl:message construct to the new per-xsltTransformCtxt error
+	  callback if set up.
+	* Makefile.am: do not package svn files in releases
+
 Fri Mar  2 18:45:48 HKT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xsltconfig.h.in: added setting of TRIO_REPLACE_STDIO

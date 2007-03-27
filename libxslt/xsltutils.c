@@ -425,11 +425,18 @@ xsltPointerListClear(xsltPointerListPtr list)
  */
 void
 xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
+    xmlGenericErrorFunc error = xsltGenericError;
+    void *errctx = xsltGenericErrorContext;
     xmlChar *prop, *message;
     int terminate = 0;
 
     if ((ctxt == NULL) || (inst == NULL))
 	return;
+
+    if (ctxt->error != NULL) {
+	error = ctxt->error;
+	errctx = ctxt->errctx;
+    }
 
     prop = xmlGetNsProp(inst, (const xmlChar *)"terminate", NULL);
     if (prop != NULL) {
@@ -438,7 +445,7 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
 	} else if (xmlStrEqual(prop, (const xmlChar *)"no")) {
 	    terminate = 0;
 	} else {
-	    xsltGenericError(xsltGenericErrorContext,
+	    error(errctx,
 		"xsl:message : terminate expecting 'yes' or 'no'\n");
 	    ctxt->state = XSLT_STATE_ERROR;
 	}
@@ -448,10 +455,9 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
     if (message != NULL) {
 	int len = xmlStrlen(message);
 
-	xsltGenericError(xsltGenericErrorContext, "%s",
-		         (const char *)message);
+	error(errctx, "%s", (const char *)message);
 	if ((len > 0) && (message[len - 1] != '\n'))
-	    xsltGenericError(xsltGenericErrorContext, "\n");
+	    error(errctx, "\n");
 	xmlFree(message);
     }
     if (terminate)
