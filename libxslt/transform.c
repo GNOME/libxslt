@@ -2576,9 +2576,12 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 		oldCurInst = ctxt->inst;
 		ctxt->inst = cur;
                 ctxt->insert = insert;
+		oldLocalFragmentBase = ctxt->localRVTBase;
+		ctxt->localRVTBase = NULL;
 
                 info->func(ctxt, contextNode, cur, (xsltElemPreCompPtr) info);
 
+		ctxt->localRVTBase = oldLocalFragmentBase;
 		/*
 		* Cleanup temporary tree fragments.
 		*/

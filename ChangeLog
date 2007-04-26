@@ -1,3 +1,8 @@
+Thu Apr 26 11:10:18 HKT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: fixed (another) problem with cached
+	  RVT's (from re-opened #378766).
+
 Tue Mar 27 16:50:52 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: apply patch fron Shaun McCance to hook
