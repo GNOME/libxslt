@@ -1,3 +1,8 @@
+Fri May  4 15:51:58 HKT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: fixed xpath context housekeeping problem
+	  on processing "choose" (bug 435479).
+
 Thu Apr 26 11:10:18 HKT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: fixed (another) problem with cached

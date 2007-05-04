@@ -5085,6 +5085,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
 	xmlDocPtr oldXPContextDoc = xpctxt->doc;
 	int oldXPProximityPosition = xpctxt->proximityPosition;
 	int oldXPContextSize = xpctxt->contextSize;
+	xmlNsPtr oldXPNamespaces = xpctxt->namespaces;
+	int oldXPNsNr = xpctxt->nsNr;
 	
 #ifdef XSLT_REFACTORED
 	xsltStyleItemWhenPtr wcomp = NULL;
@@ -5204,6 +5206,8 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
 	xpctxt->doc = oldXPContextDoc;
 	xpctxt->proximityPosition = oldXPProximityPosition;
 	xpctxt->contextSize = oldXPContextSize;
+	xpctxt->namespaces = oldXPNamespaces;
+	xpctxt->nsNr = oldXPNsNr;
 	goto exit;
 
 test_is_true:
@@ -5212,6 +5216,8 @@ test_is_true:
 	xpctxt->doc = oldXPContextDoc;
 	xpctxt->proximityPosition = oldXPProximityPosition;
 	xpctxt->contextSize = oldXPContextSize;
+	xpctxt->namespaces = oldXPNamespaces;
+	xpctxt->nsNr = oldXPNsNr;
 	goto process_sequence;
     }
 
