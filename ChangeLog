@@ -1,3 +1,8 @@
+Sun May  6 23:42:38 HKT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/math.c: fixed two memory leaks, one in exsltMathConstant
+	  and one in exsltMathConstantFunction (bug #436324)
+
 Fri May  4 15:51:58 HKT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: fixed xpath context housekeeping problem
