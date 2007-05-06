@@ -5085,7 +5085,7 @@ xsltChoose(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
 	xmlDocPtr oldXPContextDoc = xpctxt->doc;
 	int oldXPProximityPosition = xpctxt->proximityPosition;
 	int oldXPContextSize = xpctxt->contextSize;
-	xmlNsPtr oldXPNamespaces = xpctxt->namespaces;
+	xmlNsPtr *oldXPNamespaces = xpctxt->namespaces;
 	int oldXPNsNr = xpctxt->nsNr;
 	
 #ifdef XSLT_REFACTORED
