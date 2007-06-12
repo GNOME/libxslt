@@ -8,12 +8,18 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.19</version>
-    <last-release> Nov 29 2006</last-release>
+    <version>1.1.20</version>
+    <last-release> Jan 17 2007</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - Bug fixes: entities within attributes (William Brack), Python detection
-      problem (Joseph Sacco), in-scope namespace bug (Mike Hommey), Result
-      value tree caching bug (William Brack)
+    <changes>   - Portability fixes: strict aliasing fix (Marcus Meissner), BSD portability
+      patches (Roland Illig)
+   - Bug fixes: Result Value Tree handling fix (William Brack), function
+      parameters fix (William), uninitialized variable (Kjartan Maraas),
+      empty text node handling (William), plugin support and test fixes (William),
+      fragment support fixes (William)
+   - Improvements: python stylesheet compare and transform context
+      access (Nic Ferrier), EXSLT string replace support (Joel Reed),
+      xsltproc better low level error handling (Mike Hommey and William)
 
 </changes>
   </product>

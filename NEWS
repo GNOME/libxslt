@@ -10,6 +10,20 @@ ChangeLog.html
 to the SVN at 
 http://svn.gnome.org/viewcvs/libxslt/trunk/
  code base.Those are the public releases made:
+1.1.21: Jun 12 2007:
+   - Bug fixes: out of memory allocation errors (William Brack), 
+      namespace problem on compound predicates (William Brack),
+      python space/tab inconsistencies (Andreas Hanke), hook xsl:message
+      to per transformation error callbacks (Shaun McCance),
+      cached RVT problem (William Brack), XPath context maintainance
+      on choose (William Brack), memory leaks in the math module (William
+      Brack), exclude-result-prefix induced namespace problem (William
+      Brack)
+   - Build: configure setup for TRIO_REPLACE_STDIO (William Brack)
+  
+   - Documentation: updated after change from CVs to SVN (William Brack)
+
+
 1.1.20: Jan 17 2007:
    - Portability fixes: strict aliasing fix (Marcus Meissner), BSD portability
       patches (Roland Illig)
