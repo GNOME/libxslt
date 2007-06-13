@@ -1,6 +1,11 @@
+Wed Jun 13 13:27:48 PDT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* tests/exslt/common/node-set.9.[xml,xsl,out],
+	  tests/exslt/common/Makefile.am: added test case for bug #413451
+
 Tue Jun 12 18:43:05 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
-	* NEWS configure.in doc/*: preparing release of 1.1.20
+	* NEWS configure.in doc/*: preparing release of 1.1.21
 
 Thu May 31 12:38:08 PDT 2007 WIlliam Brack <wbrack@mmm.com.hk>
 
