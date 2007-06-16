@@ -1,3 +1,8 @@
+Sat Jun 16 07:42:18 PDT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/transform.c: Fixed problem with RVT cleanup related
+	  to some exslt functions (reported on the list by Marc Adkins).
+
 Wed Jun 13 13:27:48 PDT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* tests/exslt/common/node-set.9.[xml,xsl,out],

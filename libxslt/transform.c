@@ -3054,6 +3054,10 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 	    /* Need to housekeep localRVTBase */
 	    if (tmp == ctxt->localRVTBase)
 	        ctxt->localRVTBase = curdoc;
+	    if (tmp->prev)
+		tmp->prev->next = (xmlNodePtr) curdoc;
+	    if (curdoc)
+		curdoc->prev = tmp->prev;
 	    xsltReleaseRVT(ctxt, tmp);
 	} while (curdoc != oldLocalFragmentTop);
     }
