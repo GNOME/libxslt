@@ -3469,7 +3469,7 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 	    }
 	    	     
 	    if ((cur->nsDef != NULL) && (style->exclPrefixNr > 0)) {
-		xmlNsPtr ns = cur->nsDef, prev = NULL, next, rns;
+		xmlNsPtr ns = cur->nsDef, prev = NULL, next;
 		xmlNodePtr root = NULL;
 		int i, moved;
 
@@ -3482,27 +3482,18 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 			    if ((ns->prefix != NULL) && 
 			        (xmlStrEqual(ns->href,
 					     style->exclPrefixTab[i]))) {
-				/* Remove the namespace from this node */
+				/*
+				 * Move the namespace definition on the root
+				 * element to avoid duplicating it without
+				 * loosing it.
+				 */
 				if (prev == NULL) {
 				    cur->nsDef = ns->next;
 				} else {
 				    prev->next = ns->next;
 				}
-				/*
-				 * If this prefix is not already present,
-				 * move the namespace definition on the root
-				 * element to avoid duplicating it without
-				 * loosing it.
-				 */
-				for (rns = root->nsDef; rns != NULL; rns = rns->next)
-				    if (xmlStrEqual(ns->prefix, rns->prefix))
-					break;
-				if (rns == NULL) {
-				    ns->next = root->nsDef;
-				    root->nsDef = ns;
-				}
-				else
-				    xmlFreeNs(ns);
+				ns->next = root->nsDef;
+				root->nsDef = ns;
 				moved = 1;
 				break;
 			    }

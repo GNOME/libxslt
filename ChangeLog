@@ -1,3 +1,8 @@
+Thu Jul 26 12:43:38 PDT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/xslt.c: Removed the exclude-result-prefix change of
+	  31 May 2007.  Fixes bug #459713.
+
 Sat Jun 16 07:42:18 PDT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/transform.c: Fixed problem with RVT cleanup related
@@ -12,7 +17,7 @@ Tue Jun 12 18:43:05 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
 	* NEWS configure.in doc/*: preparing release of 1.1.21
 
-Thu May 31 12:38:08 PDT 2007 WIlliam Brack <wbrack@mmm.com.hk>
+Thu May 31 12:38:08 PDT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xslt.c: fixed obscure namespace problem related to
 	  exclude-result-prefix
