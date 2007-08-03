@@ -1,3 +1,8 @@
+Fri Aug  3 15:49:26 CEST 2007 Daniel Veillard <daniel@veillard.com>
+
+	* win32/Makefile.msvc win32/configure.js: apply patch from
+	  Rob Richards to improve build with VS2005
+
 Thu Jul 26 12:43:38 PDT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/xslt.c: Removed the exclude-result-prefix change of

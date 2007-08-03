@@ -24,8 +24,8 @@ installed. The xsltproc command is a command line interface to the XSLT engine
 %package devel
 Summary: Libraries, includes, etc. to embed the GNOME XSLT engine
 Group: Development/Libraries
-Requires: libxslt = %{version}
-Requires: libxml2-devel >= 2.5.6
+Requires: libxslt = %{version}-%{release}
+Requires: libxml2-devel >= @LIBXML_REQUIRED_VERSION@
 Requires: libgcrypt-devel
 Requires: pkgconfig
 
@@ -38,10 +38,10 @@ installed.
 %package python
 Summary: Python bindings for the libxslt library
 Group: Development/Libraries
-Requires: libxslt = %{version}
+Requires: libxslt = %{version}-%{release}
 Requires: libxml2 >= @LIBXML_REQUIRED_VERSION@
 Requires: libxml2-python >= @LIBXML_REQUIRED_VERSION@
-Requires: %{_libdir}/python%(echo `python -c "import sys; print sys.version[0:3]"`)
+Requires: python
 
 %description python
 The libxslt-python package contains a module that permits applications

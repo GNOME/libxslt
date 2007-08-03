@@ -141,6 +141,14 @@ EXSLT_OBJS_A = $(EXSLT_INTDIR_A)\common.obj\
 # Xsltproc and friends executables.
 UTILS = $(BINDIR)\xsltproc.exe
 
+!if "$(VCMANIFEST)" == "1"
+_VC_MANIFEST_EMBED_EXE= if exist $@.manifest mt.exe -nologo -manifest $@.manifest -outputresource:$@;1
+_VC_MANIFEST_EMBED_DLL= if exist $@.manifest mt.exe -nologo -manifest $@.manifest -outputresource:$@;2
+!else
+_VC_MANIFEST_EMBED_EXE=
+_VC_MANIFEST_EMBED_DLL=
+!endif
+
 all : libxslt libxslta libexslt libexslta utils
 
 libxslt : $(BINDIR)\$(XSLT_SO) 
@@ -233,6 +241,7 @@ $(BINDIR)\$(XSLT_SO) : $(BINDIR) $(XSLT_OBJS) $(XSLT_INTDIR)\$(XSLT_DEF)
 		/VERSION:$(LIBXSLT_MAJOR_VERSION).$(LIBXSLT_MINOR_VERSION) \
 		/IMPLIB:$(BINDIR)\$(XSLT_IMP) /OUT:$(BINDIR)\$(XSLT_SO) \
 		$(XSLT_OBJS) $(LIBS) libxml2.lib
+			@$(_VC_MANIFEST_EMBED_DLL)
 
 #$(BINDIR)\$(XSLT_SO) : $(BINDIR) $(XSLT_OBJS) $(XSLT_INTDIR)\$(XSLT_DEF)
 #	$(LD) $(LDFLAGS) /DLL /DEF:$(XSLT_INTDIR)\$(XSLT_DEF) \
@@ -278,6 +287,7 @@ $(BINDIR)\$(EXSLT_SO) : $(BINDIR) $(EXSLT_OBJS) $(EXSLT_INTDIR)\$(EXSLT_DEF) lib
 		/VERSION:$(LIBEXSLT_MAJOR_VERSION).$(LIBEXSLT_MINOR_VERSION) \
 		/IMPLIB:$(BINDIR)\$(EXSLT_IMP) /OUT:$(BINDIR)\$(EXSLT_SO) \
 		$(EXSLT_OBJS) $(XSLT_IMP) $(LIBS) libxml2.lib
+			@$(_VC_MANIFEST_EMBED_DLL)
 
 #$(BINDIR)\$(EXSLT_SO) : $(BINDIR) $(EXSLT_OBJS) $(EXSLT_INTDIR)\$(EXSLT_DEF) libxslt
 #	$(LD) $(LDFLAGS) /DLL /DEF:$(EXSLT_INTDIR)\$(EXSLT_DEF) \
@@ -308,11 +318,13 @@ APPLIBS = $(APPLIBS) zlib.lib
 	$(CC) /D "LIBXML_STATIC" /D "LIBXSLT_STATIC" /D "LIBEXSLT_STATIC" \
 		$(CFLAGS) /Fo$(UTILS_INTDIR)\ /c $< 
 	$(LD) $(LDFLAGS) /OUT:$@ $(XSLT_A) $(EXSLT_A) $(APPLIBS) $(UTILS_INTDIR)\$(<B).obj
+	@$(_VC_MANIFEST_EMBED_EXE)
 !else
 APPLIBS = $(LIBS) libxml2.lib
 {$(UTILS_SRCDIR)}.c{$(BINDIR)}.exe:
 	$(CC) $(CFLAGS) /Fo$(UTILS_INTDIR)\ /c $< 
 	$(LD) $(LDFLAGS) /OUT:$@ $(XSLT_IMP) $(EXSLT_IMP) $(APPLIBS) $(UTILS_INTDIR)\$(<B).obj
+	@$(_VC_MANIFEST_EMBED_EXE)
 !endif
 
 # Builds xsltproc and friends. Uses the implicit rule for commands.
