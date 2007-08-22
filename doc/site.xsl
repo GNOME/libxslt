@@ -162,6 +162,8 @@
       <li><a href="http://garypennington.net/libxml2/">Solaris binaries</a></li>
       <li><a href="http://www.explain.com.au/oss/libxml2xslt.html">MacOsX binaries</a></li>
       <li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li>
+      <li><a href="http://codespeak.net/lxml/">lxml Python bindings</a></li>
+      <li><a href="http://cpan.uwinnipeg.ca/dist/XML-LibXSLT">Perl XSLT bindings</a></li>
       <li><a href="http://www.zend.com/php5/articles/php5-xmlphp.php#Heading17">XSLT with PHP</a></li>
       <li><a href="http://www.mod-xslt2.com/">Apache module</a></li>
       <li><a href="http://sourceforge.net/projects/libxml2-pas/">Pascal bindings</a></li>
