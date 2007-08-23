@@ -82,6 +82,7 @@ static int nodict = 0;
 #ifdef LIBXML_HTML_ENABLED
 static int html = 0;
 #endif
+static char *encoding = NULL;
 static int load_trace = 0;
 #ifdef LIBXML_XINCLUDE_ENABLED
 static int xinclude = 0;
@@ -382,10 +383,10 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 		xmlFreeDoc(doc);
 #ifdef LIBXML_HTML_ENABLED
 		if (html)
-		    doc = htmlReadFile(filename, NULL, options);
+		    doc = htmlReadFile(filename, encoding, options);
 		else
 #endif
-		    doc = xmlReadFile(filename, NULL, options);
+		    doc = xmlReadFile(filename, encoding, options);
 	    }
 	}
 	ctxt = xsltNewTransformContext(cur, doc);
@@ -500,6 +501,7 @@ static void usage(const char *name) {
 #ifdef LIBXML_HTML_ENABLED
     printf("\t--html: the input document is(are) an HTML file(s)\n");
 #endif
+    printf("\t--encoding: the input document character encoding\n");
     printf("\t--param name value : pass a (parameter,value) pair\n");
     printf("\t       value is an UTF8 XPath expression.\n");
     printf("\t       string values must be quoted like \"'string'\"\n or");
@@ -603,6 +605,9 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "--html"))) {
             html++;
 #endif
+	} else if ((!strcmp(argv[i], "-encoding")) ||
+		   (!strcmp(argv[i], "--encoding"))) {
+	    encoding = argv[++i];
         } else if ((!strcmp(argv[i], "-timing")) ||
                    (!strcmp(argv[i], "--timing"))) {
             timing++;
@@ -762,6 +767,10 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "--output"))) {
             i++;
 	    continue;
+	} else if ((!strcmp(argv[i], "-encoding")) ||
+		   (!strcmp(argv[i], "--encoding"))) {
+	    i++;
+	    continue;
         } else if ((!strcmp(argv[i], "-writesubtree")) ||
                    (!strcmp(argv[i], "--writesubtree"))) {
             i++;
@@ -839,10 +848,10 @@ main(int argc, char **argv)
                 startTimer();
 #ifdef LIBXML_HTML_ENABLED
             if (html)
-                doc = htmlReadFile(argv[i], NULL, options);
+                doc = htmlReadFile(argv[i], encoding, options);
             else
 #endif
-                doc = xmlReadFile(argv[i], NULL, options);
+                doc = xmlReadFile(argv[i], encoding, options);
             if (doc == NULL) {
                 fprintf(stderr, "unable to parse %s\n", argv[i]);
 		errorno = 6;

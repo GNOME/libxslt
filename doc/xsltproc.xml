@@ -72,6 +72,9 @@
 			<arg choice="plain"><option>--maxdepth <replaceable class="option">VALUE</replaceable></option></arg>
 			<arg choice="plain"><option>--html</option></arg>
 			<arg choice="plain"><option>--param
+			 <replaceable class="option">ENCODING</replaceable>
+			</option></arg>
+			<arg choice="plain"><option>--param
 			 <replaceable class="option">PARAMNAME</replaceable>
 			 <replaceable class="option">PARAMVALUE</replaceable>
 			</option></arg>
@@ -283,6 +286,16 @@
 	</listitem>
 		</varlistentry>
 
+		<varlistentry>
+	<term>
+		<option>--encoding <replaceable>ENCODING</replaceable></option>
+	</term>
+	<listitem>
+		<para>
+			Allow to specify the encoding for the input.
+		</para>
+	</listitem>
+		</varlistentry>
 		<varlistentry>
 	<term>
 		<option>--param <replaceable>PARAMNAME</replaceable> <replaceable>PARAMVALUE</replaceable></option>
