@@ -1,3 +1,8 @@
+Thu Aug 23 15:39:18 CEST 2007 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xslt.c: applied patch from Rob Richards to fix a 
+	  stylesheet compilation error handling problem #382570
+
 Thu Aug 23 15:22:55 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/security.c: applied patch from Roland Schwarz and Rob

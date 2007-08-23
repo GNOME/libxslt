@@ -6565,7 +6565,11 @@ xsltParseStylesheetImportedDoc(xmlDocPtr doc,
     * Old behaviour.
     */
     retStyle->doc = doc;
-    xsltParseStylesheetProcess(retStyle, doc);
+    if (xsltParseStylesheetProcess(retStyle, doc) == NULL) {
+		retStyle->doc = NULL;
+		xsltFreeStylesheet(retStyle);
+		retStyle = NULL;
+    }
     if (retStyle != NULL) {
 	if (retStyle->errors != 0) {
 	    retStyle->doc = NULL;
