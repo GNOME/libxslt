@@ -1,3 +1,7 @@
+Thu Aug 23 17:18:03 CEST 2007 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: preparing release of 1.1.22
+
 Thu Aug 23 15:39:18 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: applied patch from Rob Richards to fix a 
