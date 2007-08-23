@@ -1,3 +1,9 @@
+Thu Aug 23 21:15:28 HKT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* tests/general/bug-165.[xsl,out,err], tests/docs/bug-165.xml,
+	  tests/general/Makefile.am, tests/docs/Makefile.am:
+	  added regression test for bug #469410
+
 Thu Aug 23 14:13:02 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
 	* xsltproc/xsltproc.c: patch from Drazen Kacar to add a --encoding
