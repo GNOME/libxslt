@@ -34,6 +34,13 @@
 #include <ctype.h>
 #endif
 
+#if defined(WIN32) && !defined(__CYGWIN__)
+#include <windows.h>
+#ifndef INVALID_FILE_ATTRIBUTES
+#define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
+#endif
+#endif
+
 #ifndef HAVE_STAT
 #  ifdef HAVE__STAT
      /* MS C library seems to define stat and _stat. The definition
@@ -267,6 +274,16 @@ xsltCheckFilename (const char *path)
 {
 #ifdef HAVE_STAT
     struct stat stat_buffer;
+#if defined(WIN32) && !defined(__CYGWIN__)
+    DWORD dwAttrs;
+
+    dwAttrs = GetFileAttributes(path); 
+    if (dwAttrs != INVALID_FILE_ATTRIBUTES) {
+        if (dwAttrs & FILE_ATTRIBUTE_DIRECTORY) {
+            return 2;
+		}
+    }
+#endif
 
     if (stat(path, &stat_buffer) == -1)
         return 0;
@@ -361,6 +378,13 @@ xsltCheckWrite(xsltSecurityPrefsPtr sec,
     }
     if ((uri->scheme == NULL) ||
 	(xmlStrEqual(BAD_CAST uri->scheme, BAD_CAST "file"))) {
+
+#if defined(WIN32) && !defined(__CYGWIN__)
+    if ((uri->path)&&(uri->path[0]=='/')&&
+        (uri->path[1]!='\0')&&(uri->path[2]==':'))
+    ret = xsltCheckWritePath(sec, ctxt, uri->path+1);
+    else
+#endif
 
 	/*
 	 * Check if we are allowed to write this file

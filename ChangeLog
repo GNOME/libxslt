@@ -1,3 +1,9 @@
+Thu Aug 23 15:22:55 CEST 2007 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/security.c: applied patch from Roland Schwarz and Rob
+	  Richards to fix the security file checks on Windows, should 
+	  close #464432
+
 Thu Aug 23 21:15:28 HKT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* tests/general/bug-165.[xsl,out,err], tests/docs/bug-165.xml,
