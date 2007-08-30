@@ -1,3 +1,9 @@
+Thu Aug 30 08:18:08 HKT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* python/libxslt.c: applied patch from Daniel Gryniewicz to
+	  fix a segfault caused by a parameter array not being preset
+	  to zero.
+
 Thu Aug 23 17:18:03 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/*: preparing release of 1.1.22

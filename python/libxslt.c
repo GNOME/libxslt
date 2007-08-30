@@ -1,5 +1,5 @@
 /*
-  libxslt.c: this modules implements the main part of the glue of the
+  libxslt.c: this module implements the main part of the glue of the
  *           libxslt library and the Python interpreter. It provides the
  *           entry points where an automatically generated stub is either
  *           unpractical or would not match cleanly the Python model.
@@ -740,7 +740,7 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
     PyObject *pyobj_doc;
     PyObject *pyobj_params;
     const char **params = NULL;
-    int len = 0, i = 0, j;
+    int len = 0, i = 0, j, params_size;
     PyObject *name;
     PyObject *value;
 
@@ -752,13 +752,14 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
 	if (PyDict_Check(pyobj_params)) {
 	    len = PyDict_Size(pyobj_params);
 	    if (len > 0) {
-		params = (const char **) xmlMalloc((len + 1) * 2 *
-			                           sizeof(char *));
+	        params_size = (len + 1) * 2 * sizeof(char *);
+		params = (const char **) xmlMalloc(params_size);
 		if (params == NULL) {
 		    printf("libxslt_xsltApplyStylesheet: out of memory\n");
 		    Py_INCREF(Py_None);
 		    return(Py_None);
 		}
+		memset(params, 0, params_size);
 		j = 0;
 		while (PyDict_Next(pyobj_params, &i, &name, &value)) {
 		    const char *tmp;
@@ -829,7 +830,7 @@ libxslt_xsltSaveResultToString(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) 
     if(!buffer || emitted < 0) 
       goto FAIL;
     /* We haven't tested the aberrant case of a transformation that
-     * renders to an empty string. For now we try to play it save.
+     * renders to an empty string. For now we try to play it safe.
      */
     if(size)
       {
