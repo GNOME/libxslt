@@ -1,3 +1,11 @@
+Wed Oct 10 16:33:09 CEST 2007 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.c tests/exslt/date/datetime.1.out
+	  tests/exslt/date/date.1.out tests/exslt/date/date.1.xml:
+	  applied patch from Maurice van der Pot to fix EXSLT
+	  week-in-year extenson which was not conforming to the definition.
+	  This also changes the output of the tests a bit. Should fix #452876
+
 Thu Aug 30 08:18:08 HKT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* python/libxslt.c: applied patch from Daniel Gryniewicz to

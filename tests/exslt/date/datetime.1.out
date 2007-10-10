@@ -25,7 +25,7 @@
     month-in-year        : 12
     month-name           : December
     month-abbreviation   : Dec
-    week-in-year         : 53
+    week-in-year         : 1
     day-in-year          : 365
     day-in-month         : 31
     day-of-week-in-month : 5
@@ -43,7 +43,7 @@
     month-in-year        : 12
     month-name           : December
     month-abbreviation   : Dec
-    week-in-year         : 53
+    week-in-year         : 52
     day-in-year          : 365
     day-in-month         : 31
     day-of-week-in-month : 5
@@ -61,7 +61,7 @@
     month-in-year        : 12
     month-name           : December
     month-abbreviation   : Dec
-    week-in-year         : 53
+    week-in-year         : 52
     day-in-year          : 366
     day-in-month         : 31
     day-of-week-in-month : 5
@@ -79,7 +79,7 @@
     month-in-year        : 12
     month-name           : December
     month-abbreviation   : Dec
-    week-in-year         : 53
+    week-in-year         : 1
     day-in-year          : 366
     day-in-month         : 31
     day-of-week-in-month : 5

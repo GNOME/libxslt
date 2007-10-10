@@ -10,6 +10,16 @@ ChangeLog.html
 to the SVN at 
 http://svn.gnome.org/viewcvs/libxslt/trunk/
  code base.Those are the public releases made:
+1.1.22: Aug 23 2007:
+   - Bug fixes: RVT cleanup problems (William Brack), exclude-result-prefix
+      bug (William Brack), stylesheet compilation error handling (Rob Richards).
+      
+   - Portability fixes: improve build with VS2005 (Rob Richards), 
+      fixing build on AIX (Bjorn Wiberg), fix the security file checks on
+      Windows (Roland Schwarz and Rob Richards). 
+   - Improvement: add an --encoding option to xsltproc (Drazen Kacar). 
+
+
 1.1.21: Jun 12 2007:
    - Bug fixes: out of memory allocation errors (William Brack), 
       namespace problem on compound predicates (William Brack),
