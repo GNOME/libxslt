@@ -666,7 +666,8 @@ libxslt_xsltApplyStylesheetUser(PyObject *self ATTRIBUTE_UNUSED, PyObject *args)
     PyObject *pyobj_params;
     PyObject *pyobj_transformCtxt;
     const char **params = NULL;
-    int len = 0, i = 0, j;
+    int len = 0, i, j;
+    ssize_t ppos = 0;
     PyObject *name;
     PyObject *value;
 
@@ -686,7 +687,7 @@ libxslt_xsltApplyStylesheetUser(PyObject *self ATTRIBUTE_UNUSED, PyObject *args)
 		    return(Py_None);
 		}
 		j = 0;
-		while (PyDict_Next(pyobj_params, &i, &name, &value)) {
+		while (PyDict_Next(pyobj_params, &ppos, &name, &value)) {
 		    const char *tmp;
 		    int size;
 
@@ -740,7 +741,8 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
     PyObject *pyobj_doc;
     PyObject *pyobj_params;
     const char **params = NULL;
-    int len = 0, i = 0, j, params_size;
+    int len = 0, i, j, params_size;
+    ssize_t ppos = 0;
     PyObject *name;
     PyObject *value;
 
@@ -761,7 +763,7 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
 		}
 		memset(params, 0, params_size);
 		j = 0;
-		while (PyDict_Next(pyobj_params, &i, &name, &value)) {
+		while (PyDict_Next(pyobj_params, &ppos, &name, &value)) {
 		    const char *tmp;
 		    int size;
 

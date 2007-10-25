@@ -1,3 +1,9 @@
+Wed Oct 24 17:41:08 PDT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* python/libxslt.c: changed iterator argument for Py_Dict_Next
+	  from int to ssize_t (seems Python docs are incorrect) to fix
+	  x86_64 bug #489854.
+
 Wed Oct 10 16:33:09 CEST 2007 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/date.c tests/exslt/date/datetime.1.out
