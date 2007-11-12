@@ -1,3 +1,10 @@
+Mon Nov 12 13:53:58 PDT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/strings.c: Added code to mark the results of
+	  str:tokenize and str:split as "function result" to avoid
+	  garbage-collecting them during global variable initialisation.
+	  Should fix bug #495995.
+
 Wed Oct 24 17:41:08 PDT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* python/libxslt.c: changed iterator argument for Py_Dict_Next
