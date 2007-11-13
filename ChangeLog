@@ -1,3 +1,10 @@
+Tue Nov 13 13:08:08 PDT 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/common.c, libexslt/dynamic.c: After discussion on
+	  Bugzilla with Peter Pawlowski, added same code for preventing
+	  deletion of function result during garbage collection (see
+	  bug #495995).
+	  
 Mon Nov 12 13:53:58 PDT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/strings.c: Added code to mark the results of
