@@ -261,18 +261,18 @@ else
       then
         LIBGCRYPT_CFLAGS=""
         LIBGCRYPT_LIBS=""
-        echo gcrypt library version < 1.1.42 - Crypto extensions will not be available.
+        echo 'gcrypt library version < 1.1.42 - Crypto extensions will not be available.'
       else
         LIBGCRYPT_CFLAGS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --cflags`
         LIBGCRYPT_LIBS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --libs`
         AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
-        echo Crypto extensions will be available.
+        echo 'Crypto extensions will be available.'
 		WITH_CRYPTO=1
       fi
     else
       LIBGCRYPT_CFLAGS=""
       LIBGCRYPT_LIBS=""
-      echo Crypto extensions will not be available. Install libgcrypt and reconfigure to make available.
+      echo 'Crypto extensions will not be available. Install libgcrypt and reconfigure to make available.'
     fi
 fi
 AC_SUBST(WITH_CRYPTO)

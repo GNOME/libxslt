@@ -1,3 +1,8 @@
+Thu Nov 29 11:43:14 CET 2007 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in: avoid a problem in configure if an old gcrypt
+	  version is installed, patch from Brent Cowgill, fixes #500390
+
 Tue Nov 13 13:08:08 PDT 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/common.c, libexslt/dynamic.c: After discussion on
