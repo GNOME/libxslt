@@ -1,3 +1,9 @@
+Sun Dec 23 16:40:38 PST 2007 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/keys.c, libxslt/pattern.c, libxslt/xsltInternals.h:
+	  fixed a problem on superfluous re-generation of keys reported
+	  on the mailing list by Joseph Urban.
+
 Thu Nov 29 11:43:14 CET 2007 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in: avoid a problem in configure if an old gcrypt

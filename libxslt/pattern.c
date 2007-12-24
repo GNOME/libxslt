@@ -2242,10 +2242,6 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
 static int
 xsltComputeAllKeys(xsltTransformContextPtr ctxt, xmlNodePtr contextNode)
 {
-    xsltStylesheetPtr style, style2;
-    xsltKeyDefPtr keyd, keyd2;
-    xsltKeyTablePtr table;
-
     if ((ctxt == NULL) || (contextNode == NULL)) {
 	xsltTransformError(ctxt, NULL, ctxt->inst,
 	    "Internal error in xsltComputeAllKeys(): "
@@ -2266,57 +2262,7 @@ xsltComputeAllKeys(xsltTransformContextPtr ctxt, xmlNodePtr contextNode)
 	if (ctxt->document == NULL)
 	    return(-1);
     }
-
-    if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
-	return(0);
-    /*
-    * TODO: This could be further optimized
-    */
-    style = ctxt->style;
-    while (style) {
-	keyd = (xsltKeyDefPtr) style->keys;
-	while (keyd != NULL) {
-	    /*
-	    * Check if keys with this QName have been already
-	    * computed.
-	    */
-	    table = (xsltKeyTablePtr) ctxt->document->keys;
-	    while (table) {
-		if (((keyd->nameURI != NULL) == (table->nameURI != NULL)) &&
-		    xmlStrEqual(keyd->name, table->name) &&
-		    xmlStrEqual(keyd->nameURI, table->nameURI))
-		{
-		    break;
-		}		
-		table = table->next;
-	    }
-	    if (table == NULL) {
-		/*
-		* Keys with this QName have not been yet computed.
-		*/
-		style2 = ctxt->style;
-		while (style2 != NULL) {
-		    keyd2 = (xsltKeyDefPtr) style2->keys;
-		    while (keyd2 != NULL) {
-			if (((keyd2->nameURI != NULL) ==
-			     (keyd->nameURI != NULL)) &&
-			    xmlStrEqual(keyd2->name, keyd->name) &&
-			    xmlStrEqual(keyd2->nameURI, keyd->nameURI))
-			{
-			    xsltInitCtxtKey(ctxt, ctxt->document, keyd2);
-			    if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
-				return(0);
-			}
-			keyd2 = keyd2->next;
-		    }
-		    style2 = xsltNextImport(style2);
-		}
-	    }
-	    keyd = keyd->next;
-	}
-	style = xsltNextImport(style);
-    }
-    return(0);
+    return xsltInitAllDocKeys(ctxt);
 
 doc_info_mismatch:
     xsltTransformError(ctxt, NULL, ctxt->inst,

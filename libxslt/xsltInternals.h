@@ -1958,7 +1958,8 @@ XSLTPUBFUN int XSLTCALL
 			xsltInitCtxtKey		(xsltTransformContextPtr ctxt,
 						 xsltDocumentPtr doc,
 						 xsltKeyDefPtr keyd);
-
+XSLTPUBFUN int XSLTCALL
+			xsltInitAllDocKeys	(xsltTransformContextPtr ctxt);
 #ifdef __cplusplus
 }
 #endif

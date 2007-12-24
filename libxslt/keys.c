@@ -393,8 +393,10 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	   const xmlChar *nameURI, const xmlChar *value) {
     xmlNodeSetPtr ret;
     xsltKeyTablePtr table;
+#if 0
 #ifdef XSLT_REFACTORED_KEYCOMP
     int found = 0;
+#endif
 #endif
 
     if ((ctxt == NULL) || (name == NULL) || (value == NULL) ||
@@ -406,20 +408,23 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	"Get key %s, value %s\n", name, value);
 #endif
 
+#ifdef XSLT_REFACTORED_KEYCOMP
+    if (xsltInitAllDocKeys(ctxt))
+	return(NULL);
+#endif
+
     table = (xsltKeyTablePtr) ctxt->document->keys;
     while (table != NULL) {
 	if (((nameURI != NULL) == (table->nameURI != NULL)) &&
 	    xmlStrEqual(table->name, name) &&
 	    xmlStrEqual(table->nameURI, nameURI))
 	{
-#ifdef XSLT_REFACTORED_KEYCOMP
-	    found = 1;
-#endif
 	    ret = (xmlNodeSetPtr)xmlHashLookup(table->keys, value);
 	    return(ret);
 	}
 	table = table->next;
     }
+#if 0
 #ifdef XSLT_REFACTORED_KEYCOMP
     if (! found) {
 	xsltStylesheetPtr style = ctxt->style;	
@@ -463,6 +468,7 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 
 	}
     }
+#endif
 #endif
     return(NULL);
 }
@@ -550,6 +556,77 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
     ctxt->xpathCtxt->nsNr = oldNsNr;
     ctxt->xpathCtxt->namespaces = oldNamespaces;
     return(ret);
+}
+#endif
+
+#ifdef XSLT_REFACTORED_KEYCOMP
+/**
+ * xsltInitAllDocKeys:
+ *
+ * INTERNAL ROUTINE ONLY
+ *
+ * Check if any keys on the current document need to be computed
+ */
+int
+xsltInitAllDocKeys(xsltTransformContextPtr ctxt)
+{
+    xsltStylesheetPtr style, style2;
+    xsltKeyDefPtr keyd, keyd2;
+    xsltKeyTablePtr table;
+
+    if (ctxt == NULL)
+	return(-1);
+
+    if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
+	return(0);
+    /*
+    * TODO: This could be further optimized
+    */
+    style = ctxt->style;
+    while (style) {
+	keyd = (xsltKeyDefPtr) style->keys;
+	while (keyd != NULL) {
+	    /*
+	    * Check if keys with this QName have been already
+	    * computed.
+	    */
+	    table = (xsltKeyTablePtr) ctxt->document->keys;
+	    while (table) {
+		if (((keyd->nameURI != NULL) == (table->nameURI != NULL)) &&
+		    xmlStrEqual(keyd->name, table->name) &&
+		    xmlStrEqual(keyd->nameURI, table->nameURI))
+		{
+		    break;
+		}		
+		table = table->next;
+	    }
+	    if (table == NULL) {
+		/*
+		* Keys with this QName have not been yet computed.
+		*/
+		style2 = ctxt->style;
+		while (style2 != NULL) {
+		    keyd2 = (xsltKeyDefPtr) style2->keys;
+		    while (keyd2 != NULL) {
+			if (((keyd2->nameURI != NULL) ==
+			     (keyd->nameURI != NULL)) &&
+			    xmlStrEqual(keyd2->name, keyd->name) &&
+			    xmlStrEqual(keyd2->nameURI, keyd->nameURI))
+			{
+			    xsltInitCtxtKey(ctxt, ctxt->document, keyd2);
+			    if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
+				return(0);
+			}
+			keyd2 = keyd2->next;
+		    }
+		    style2 = xsltNextImport(style2);
+		}
+	    }
+	    keyd = keyd->next;
+	}
+	style = xsltNextImport(style);
+    }
+    return(0);
 }
 #endif
 
