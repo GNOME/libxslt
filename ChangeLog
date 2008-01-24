@@ -1,3 +1,8 @@
+Thu Jan 24 16:24:05 CET 2008 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xslt.html doc/docbook.html: fix links for Cygwin DocBook
+	  setup as suggested by Philippe Bourcier
+
 Sun Dec 23 16:40:38 PST 2007 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/keys.c, libxslt/pattern.c, libxslt/xsltInternals.h:
