@@ -1,3 +1,8 @@
+Tue Feb  5 08:53:30 CET 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xslt.c: applied documentation patch from Jason Viers
+	  for xsltParseStylesheetDoc
+
 Tue Feb  5 08:36:53 CET 2008 Daniel Veillard <daniel@veillard.com>
 
 	* python/tests/pyxsltproc.py: applied a portability patch from 

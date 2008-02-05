@@ -6589,7 +6589,11 @@ xsltParseStylesheetImportedDoc(xmlDocPtr doc,
  * xsltParseStylesheetDoc:
  * @doc:  and xmlDoc parsed XML
  *
- * parse an XSLT stylesheet building the associated structures
+ * parse an XSLT stylesheet, building the associated structures.  doc
+ * is kept as a reference within the returned stylesheet, so changes
+ * to doc after the parsing will be reflected when the stylesheet
+ * is applied, and the doc is automatically freed when the
+ * stylesheet is closed.
  *
  * Returns a new XSLT stylesheet structure.
  */
