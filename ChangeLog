@@ -1,3 +1,8 @@
+Tue Feb  5 08:36:53 CET 2008 Daniel Veillard <daniel@veillard.com>
+
+	* python/tests/pyxsltproc.py: applied a portability patch from 
+	  Stephane Bidoul
+
 Thu Jan 24 16:24:05 CET 2008 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xslt.html doc/docbook.html: fix links for Cygwin DocBook

@@ -6,7 +6,7 @@
 #
 import sys
 import time
-import posix
+import os
 import string
 import libxml2
 # Memory debug specific
@@ -185,7 +185,7 @@ def main(args = None):
             nonet = 1
         elif args[i] == "-catalogs" or args[i] == "--catalogs":
             try:
-                catalogs = posix.environ['SGML_CATALOG_FILES']
+                catalogs = os.environ['SGML_CATALOG_FILES']
             except:
                 catalogs = None
             if catalogs != none:
