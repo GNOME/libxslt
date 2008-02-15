@@ -1,3 +1,9 @@
+Sat Feb 16 01:24:58 HKT 2008 William Brack <wbrack@mmm.com.hk>
+
+	*libxslt/extensions.c: fixed minor error bug #516483
+	*tests/exslt/common - deleted node-set.9 regression test,
+	 because it relied upon an external web import.
+
 Tue Feb  5 08:53:30 CET 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c: applied documentation patch from Jason Viers

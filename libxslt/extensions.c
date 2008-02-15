@@ -1951,7 +1951,7 @@ xsltExtInitTest(xsltTransformContextPtr ctxt, const xmlChar * URI)
         xsltGenericDebug(xsltGenericErrorContext,
                          "xsltExtInitTest: not initialized,"
                          " calling xsltStyleGetExtData\n");
-        xsltStyleGetExtData(ctxt->style, URI);
+        testStyleData = xsltStyleGetExtData(ctxt->style, URI);
         if (testStyleData == NULL) {
             xsltTransformError(ctxt, NULL, NULL,
                                "xsltExtInitTest: not initialized\n");
