@@ -203,7 +203,7 @@
 			before <citerefentry>
 			<refentrytitle>libxslt</refentrytitle>
 			<manvolnum>3</manvolnum>
-		</citerefentry> concludes it is in an infinite loop. The default is 500.
+		</citerefentry> concludes it is in an infinite loop. The default is 3000.
 		</para>
 	</listitem>
 		</varlistentry>
