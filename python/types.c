@@ -11,6 +11,7 @@ xmlParserInputPtr xmlNoNetExternalEntityLoader(const char *URL,
  * daniel@veillard.com
  */
 #include "libxml_wrap.h"
+#include <libxml/xpathInternals.h>
 
 PyObject *
 libxml_intWrap(int val)
@@ -333,6 +334,24 @@ libxml_xmlParserCtxtPtrWrap(xmlParserCtxtPtr ctxt)
     return (ret);
 }
 
+/**
+ * libxml_xmlXPathDestructNsNode:
+ * cobj: xmlNsPtr namespace node
+ * desc: ignored string
+ *
+ * This function is called if and when a namespace node returned in
+ * an XPath node set is to be destroyed. That's the only kind of
+ * object returned in node set not directly linked to the original
+ * xmlDoc document, see xmlXPathNodeSetDupNs.
+ */
+static void
+libxml_xmlXPathDestructNsNode(void *cobj, void *desc ATTRIBUTE_UNUSED) {
+#ifdef DEBUG
+    fprintf(stderr, "libxml_xmlXPathDestructNsNode called %p\n", cobj);
+#endif
+    xmlXPathNodeSetFreeNs((xmlNsPtr) cobj);
+}
+
 PyObject *
 libxml_xmlXPathObjectPtrWrap(xmlXPathObjectPtr obj)
 {
@@ -383,8 +402,17 @@ libxml_xmlXPathObjectPtrWrap(xmlXPathObjectPtr obj)
                 ret = PyList_New(obj->nodesetval->nodeNr);
                 for (i = 0; i < obj->nodesetval->nodeNr; i++) {
                     node = obj->nodesetval->nodeTab[i];
-                    /* TODO: try to cast directly to the proper node type */
-                    PyList_SetItem(ret, i, libxml_xmlNodePtrWrap(node));
+                    if (node->type == XML_NAMESPACE_DECL) {
+		        PyObject *ns = 
+			    PyCObject_FromVoidPtrAndDesc((void *) node,
+                                     (char *) "xmlNsPtr",
+				     libxml_xmlXPathDestructNsNode);
+			PyList_SetItem(ret, i, ns);
+			/* make sure the xmlNsPtr is not destroyed now */
+			obj->nodesetval->nodeTab[i] = NULL;
+		    } else {
+			PyList_SetItem(ret, i, libxml_xmlNodePtrWrap(node));
+		    }
                 }
             }
             break;

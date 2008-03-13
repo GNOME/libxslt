@@ -1,3 +1,9 @@
+Thu Mar 13 09:33:21 CET 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/win32config.h: patch from Rob Richards for VS 2008
+	* python/types.c: fix a problem with namespace nodes coming from
+	  XPath nodesets.
+
 Mon Mar  3 09:39:31 CET 2008 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.xml doc/xsltproc.1: fix maxdepth default value
