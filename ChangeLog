@@ -1,3 +1,9 @@
+Sat Mar 15 11:13:18 HKT 2008 William Brack <wbrack@mmm.com.hk>
+
+	*libexslt/functions.c: fixed minor error reported on the mailing
+	 list by Mark Howe, which caused a segfault if func:result was
+	 postitioned as top-level element.
+
 Thu Mar 13 09:33:21 CET 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/win32config.h: patch from Rob Richards for VS 2008

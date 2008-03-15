@@ -559,6 +559,13 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
      * instanciation of a func:result element.
      */
     for (test = inst->parent; test != NULL; test = test->parent) {
+	if (IS_XSLT_ELEM(test) &&
+	    IS_XSLT_NAME(test, "stylesheet")) {
+	    xsltGenericError(xsltGenericErrorContext,
+			     "func:result element not a descendant "
+			     "of a func:function\n");
+	    return (NULL);
+	}
 	if ((test->ns != NULL) &&
 	    (xmlStrEqual(test->ns->href, EXSLT_FUNCTIONS_NAMESPACE))) {
 	    if (xmlStrEqual(test->name, (const xmlChar *) "function")) {
@@ -657,8 +664,8 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	 */
 	if (inst->children != NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
-			     "func:result content must be empty if it"
-			     " has a select attribute\n");
+			     "func:result content must be empty if"
+			     " the function has a select attribute\n");
 	    data->error = 1;
 	    return;
 	}
