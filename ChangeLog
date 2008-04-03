@@ -1,6 +1,11 @@
+Thu Apr  3 06:25:02 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.xml doc/xsltproc.1 doc/xsltproc.html: small fix to
+	  man page synopsis, should fix #525822
+
 Sat Mar 15 11:13:18 HKT 2008 William Brack <wbrack@mmm.com.hk>
 
-	*libexslt/functions.c: fixed minor error reported on the mailing
+	* libexslt/functions.c: fixed minor error reported on the mailing
 	 list by Mark Howe, which caused a segfault if func:result was
 	 postitioned as top-level element.
 

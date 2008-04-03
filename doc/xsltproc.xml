@@ -71,7 +71,7 @@
 			<arg choice="plain"><option>--noout</option></arg>
 			<arg choice="plain"><option>--maxdepth <replaceable class="option">VALUE</replaceable></option></arg>
 			<arg choice="plain"><option>--html</option></arg>
-			<arg choice="plain"><option>--param
+			<arg choice="plain"><option>--encoding
 			 <replaceable class="option">ENCODING</replaceable>
 			</option></arg>
 			<arg choice="plain"><option>--param
