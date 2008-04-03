@@ -747,7 +747,8 @@ static exsltDateValPtr
 exsltDateCurrent (void)
 {
     struct tm *localTm, *gmTm;
-    time_t secs, gsecs;
+    time_t secs;
+    int local_s, gm_s;
 #if HAVE_LOCALTIME_R
     struct tm localTmS;
 #endif
@@ -795,9 +796,30 @@ exsltDateCurrent (void)
                            ((gmTm->tm_mday * 1440) + (gmTm->tm_hour * 60) +
                              gmTm->tm_min));
 #endif
-    gsecs = mktime(gmTm);
-    ret->value.date.tzo = (secs - gsecs) / 60;
-
+    local_s = localTm->tm_hour * SECS_PER_HOUR +
+        localTm->tm_min * SECS_PER_MIN +
+        localTm->tm_sec;
+    
+    gm_s = gmTm->tm_hour * SECS_PER_HOUR +
+        gmTm->tm_min * SECS_PER_MIN +
+        gmTm->tm_sec;
+    
+    if (localTm->tm_year < gmTm->tm_year) {
+ 	ret->value.date.tzo = -((SECS_PER_DAY - local_s) + gm_s)/60;
+    } else if (localTm->tm_year > gmTm->tm_year) {
+ 	ret->value.date.tzo = ((SECS_PER_DAY - gm_s) + local_s)/60;
+    } else if (localTm->tm_mon < gmTm->tm_mon) {
+ 	ret->value.date.tzo = -((SECS_PER_DAY - local_s) + gm_s)/60;
+    } else if (localTm->tm_mon > gmTm->tm_mon) {
+ 	ret->value.date.tzo = ((SECS_PER_DAY - gm_s) + local_s)/60;
+    } else if (localTm->tm_mday < gmTm->tm_mday) {
+ 	ret->value.date.tzo = -((SECS_PER_DAY - local_s) + gm_s)/60;
+    } else if (localTm->tm_mday > gmTm->tm_mday) {
+ 	ret->value.date.tzo = ((SECS_PER_DAY - gm_s) + local_s)/60;
+    } else  {
+ 	ret->value.date.tzo = (local_s - gm_s)/60;
+    }
+ 
     return ret;
 }
 #endif
@@ -2158,7 +2180,7 @@ exsltDateWeekInYear (const xmlChar *dateTime)
 
     /* ISO 8601 adjustment, 3 is Thu */
     diy += (3 - diw);
-    if(diy < 1) {
+    if (diy < 1) {
 	year = dt->value.date.year - 1;
 	if(year == 0) year--;
 	diy = DAY_IN_YEAR(31, 12, year) + diy;

@@ -546,7 +546,7 @@ xsltGetSpecialNamespace(xsltTransformContextPtr ctxt, xmlNodePtr invocNode,
 	    * Hmm, we could also try to reuse an in-scope
 	    * namespace with a matching ns-name but a different
 	    * ns-prefix.
-	    * What has higher priority? 
+	    * What has higher priority?
 	    *  1) If keeping the prefix: create a new ns-decl.
 	    *  2) If reusal: first lookup ns-names; then fallback
 	    *     to creation of a new ns-decl.
@@ -583,13 +583,13 @@ declare_new_prefix:
     {
 	xmlChar pref[30];
 	int counter = 1;
-		
+
 	do {
 	    snprintf((char *) pref, 30, "%s_%d", nsPrefix, counter++);
 	    ns = xmlSearchNs(target->doc, target, BAD_CAST pref);
 	    if (counter > 1000) {
 		xsltTransformError(ctxt, NULL, invocNode,
-		    "Internal error in xsltAcquireResultInScopeNs(): "		    
+		    "Internal error in xsltAcquireResultInScopeNs(): "
 		    "Failed to compute a unique ns-prefix for the "
 		    "generated element");
 		return(NULL);
@@ -599,7 +599,7 @@ declare_new_prefix:
 	/* TODO: Check result */
 	return(ns);
     }
-    return(NULL);   
+    return(NULL);
 }
 
 /**

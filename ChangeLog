@@ -1,3 +1,9 @@
+Thu Apr  3 07:32:36 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libexslt/date.c: applied patch from Peter Pawlowski  fixing
+	  a timezone offset problem, fixes #521680
+	* libxslt/namespaces.c: a bit of space/tabs cleanup
+
 Thu Apr  3 06:25:02 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.xml doc/xsltproc.1 doc/xsltproc.html: small fix to
