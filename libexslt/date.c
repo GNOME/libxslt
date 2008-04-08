@@ -2143,7 +2143,7 @@ static double
 exsltDateWeekInYear (const xmlChar *dateTime)
 {
     exsltDateValPtr dt;
-    long fdiy, fdiw, ret;
+    long diy, diw, year, ret;
 
     if (dateTime == NULL) {
 #ifdef WITH_TIME
@@ -2161,20 +2161,26 @@ exsltDateWeekInYear (const xmlChar *dateTime)
 	}
     }
 
-    fdiy = DAY_IN_YEAR(1, 1, dt->value.date.year);
-    
+    diy = DAY_IN_YEAR(dt->value.date.day, dt->value.date.mon,
+                      dt->value.date.year);
+
     /*
      * Determine day-in-week (0=Sun, 1=Mon, etc.) then adjust so Monday
      * is the first day-in-week
      */
-    fdiw = (_exsltDateDayInWeek(fdiy, dt->value.date.year) + 6) % 7;
-
-    ret = (DAY_IN_YEAR(dt->value.date.day, dt->value.date.mon,
-                      dt->value.date.year) + fdiw) / 7;
+    diw = (_exsltDateDayInWeek(diy, dt->value.date.year) + 6) % 7;
 
     /* ISO 8601 adjustment, 3 is Thu */
-    if (fdiw <= 3)
-	ret += 1;
+    diy += (3 - diw);
+    if(diy < 1) {
+	year = dt->value.date.year - 1;
+	if(year == 0) year--;
+	diy = DAY_IN_YEAR(31, 12, year) + diy;
+    } else if (diy > DAY_IN_YEAR(31, 12, dt->value.date.year)) {
+	diy -= DAY_IN_YEAR(31, 12, dt->value.date.year);
+    }
+
+    ret = ((diy - 1) / 7) + 1;
 
     exsltDateFreeDate(dt);
 
