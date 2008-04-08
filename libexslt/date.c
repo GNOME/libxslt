@@ -746,15 +746,9 @@ exsltDateFreeDate (exsltDateValPtr date) {
 static exsltDateValPtr
 exsltDateCurrent (void)
 {
-    struct tm *localTm, *gmTm;
-    time_t secs;
+    struct tm localTm, gmTm;
+    time_t secs, gsecs;
     int local_s, gm_s;
-#if HAVE_LOCALTIME_R
-    struct tm localTmS;
-#endif
-#if HAVE_GMTIME_R
-    struct tm gmTmS;
-#endif
     exsltDateValPtr ret;
 
     ret = exsltDateCreateDate(XS_DATETIME);
@@ -764,57 +758,55 @@ exsltDateCurrent (void)
     /* get current time */
     secs    = time(NULL);
 #if HAVE_LOCALTIME_R
-    localtime_r(&secs, &localTmS);
-    localTm = &localTmS;
+    localtime_r(&secs, &localTm);
 #else
-    localTm = localtime(&secs);
+    localTm = *localtime(&secs);
 #endif
 
     /* get real year, not years since 1900 */
-    ret->value.date.year = localTm->tm_year + 1900;
+    ret->value.date.year = localTm.tm_year + 1900;
 
-    ret->value.date.mon  = localTm->tm_mon + 1;
-    ret->value.date.day  = localTm->tm_mday;
-    ret->value.date.hour = localTm->tm_hour;
-    ret->value.date.min  = localTm->tm_min;
+    ret->value.date.mon  = localTm.tm_mon + 1;
+    ret->value.date.day  = localTm.tm_mday;
+    ret->value.date.hour = localTm.tm_hour;
+    ret->value.date.min  = localTm.tm_min;
 
     /* floating point seconds */
-    ret->value.date.sec  = (double) localTm->tm_sec;
+    ret->value.date.sec  = (double) localTm.tm_sec;
 
     /* determine the time zone offset from local to gm time */
 #if HAVE_GMTIME_R
-    gmtime_r(&secs, &gmTmS);
-    gmTm = &gmTmS;
+    gmtime_r(&secs, &gmTm);
 #else
-    gmTm = gmtime(&secs);
+    gmTm = *gmtime(&secs);
 #endif
     ret->value.date.tz_flag = 0;
 #if 0
     ret->value.date.tzo = (((ret->value.date.day * 1440) +
                             (ret->value.date.hour * 60) +
                              ret->value.date.min) -
-                           ((gmTm->tm_mday * 1440) + (gmTm->tm_hour * 60) +
-                             gmTm->tm_min));
+                           ((gmTm.tm_mday * 1440) + (gmTm.tm_hour * 60) +
+                             gmTm.tm_min));
 #endif
-    local_s = localTm->tm_hour * SECS_PER_HOUR +
-        localTm->tm_min * SECS_PER_MIN +
-        localTm->tm_sec;
+    local_s = localTm.tm_hour * SECS_PER_HOUR +
+        localTm.tm_min * SECS_PER_MIN +
+        localTm.tm_sec;
     
-    gm_s = gmTm->tm_hour * SECS_PER_HOUR +
-        gmTm->tm_min * SECS_PER_MIN +
-        gmTm->tm_sec;
+    gm_s = gmTm.tm_hour * SECS_PER_HOUR +
+        gmTm.tm_min * SECS_PER_MIN +
+        gmTm.tm_sec;
     
-    if (localTm->tm_year < gmTm->tm_year) {
+    if (localTm.tm_year < gmTm.tm_year) {
  	ret->value.date.tzo = -((SECS_PER_DAY - local_s) + gm_s)/60;
-    } else if (localTm->tm_year > gmTm->tm_year) {
+    } else if (localTm.tm_year > gmTm.tm_year) {
  	ret->value.date.tzo = ((SECS_PER_DAY - gm_s) + local_s)/60;
-    } else if (localTm->tm_mon < gmTm->tm_mon) {
+    } else if (localTm.tm_mon < gmTm.tm_mon) {
  	ret->value.date.tzo = -((SECS_PER_DAY - local_s) + gm_s)/60;
-    } else if (localTm->tm_mon > gmTm->tm_mon) {
+    } else if (localTm.tm_mon > gmTm.tm_mon) {
  	ret->value.date.tzo = ((SECS_PER_DAY - gm_s) + local_s)/60;
-    } else if (localTm->tm_mday < gmTm->tm_mday) {
+    } else if (localTm.tm_mday < gmTm.tm_mday) {
  	ret->value.date.tzo = -((SECS_PER_DAY - local_s) + gm_s)/60;
-    } else if (localTm->tm_mday > gmTm->tm_mday) {
+    } else if (localTm.tm_mday > gmTm.tm_mday) {
  	ret->value.date.tzo = ((SECS_PER_DAY - gm_s) + local_s)/60;
     } else  {
  	ret->value.date.tzo = (local_s - gm_s)/60;
@@ -2151,7 +2143,7 @@ static double
 exsltDateWeekInYear (const xmlChar *dateTime)
 {
     exsltDateValPtr dt;
-    long diy, diw, year, ret;
+    long fdiy, fdiw, ret;
 
     if (dateTime == NULL) {
 #ifdef WITH_TIME
@@ -2169,26 +2161,20 @@ exsltDateWeekInYear (const xmlChar *dateTime)
 	}
     }
 
-    diy = DAY_IN_YEAR(dt->value.date.day, dt->value.date.mon,
-                      dt->value.date.year);
-
+    fdiy = DAY_IN_YEAR(1, 1, dt->value.date.year);
+    
     /*
      * Determine day-in-week (0=Sun, 1=Mon, etc.) then adjust so Monday
      * is the first day-in-week
      */
-    diw = (_exsltDateDayInWeek(diy, dt->value.date.year) + 6) % 7;
+    fdiw = (_exsltDateDayInWeek(fdiy, dt->value.date.year) + 6) % 7;
+
+    ret = (DAY_IN_YEAR(dt->value.date.day, dt->value.date.mon,
+                      dt->value.date.year) + fdiw) / 7;
 
     /* ISO 8601 adjustment, 3 is Thu */
-    diy += (3 - diw);
-    if (diy < 1) {
-	year = dt->value.date.year - 1;
-	if(year == 0) year--;
-	diy = DAY_IN_YEAR(31, 12, year) + diy;
-    } else if (diy > DAY_IN_YEAR(31, 12, dt->value.date.year)) {
-	diy -= DAY_IN_YEAR(31, 12, dt->value.date.year);
-    }
-
-    ret = ((diy - 1) / 7) + 1;
+    if (fdiw <= 3)
+	ret += 1;
 
     exsltDateFreeDate(dt);
 
