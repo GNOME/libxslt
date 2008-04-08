@@ -1,3 +1,7 @@
+Tue Apr  8 19:15:19 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: release of 1.1.23
+
 Tue Apr  8 18:52:36 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libexslt/date.c: new version of patch from Peter Pawlowski

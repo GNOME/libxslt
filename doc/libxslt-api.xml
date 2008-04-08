@@ -529,6 +529,7 @@
      <exports symbol='xsltAllocateExtra' type='function'/>
      <exports symbol='xsltParseSequenceConstructor' type='function'/>
      <exports symbol='xsltRegisterTmpRVT' type='function'/>
+     <exports symbol='xsltInitAllDocKeys' type='function'/>
      <exports symbol='xsltExtensionInstructionResultFinalize' type='function'/>
      <exports symbol='xsltPointerListFree' type='function'/>
      <exports symbol='xsltIsBlank' type='function'/>
@@ -2337,6 +2338,11 @@ exits'/>
       <info>Initializes the processor (e.g. registers built-in extensions, etc.)</info>
       <return type='void'/>
     </function>
+    <function name='xsltInitAllDocKeys' file='xsltInternals'>
+      <info>INTERNAL ROUTINE ONLY  Check if any keys on the current document need to be computed</info>
+      <return type='int' info=''/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info=''/>
+    </function>
     <function name='xsltInitCtxtExts' file='extensions'>
       <info>Initialize the set of modules with registered stylesheet data</info>
       <return type='int' info='the number of modules initialized or -1 in case of error'/>
@@ -2530,7 +2536,7 @@ exits'/>
       <arg name='inst' type='xmlNodePtr' info='the xsl:with-param instruction element'/>
     </function>
     <function name='xsltParseStylesheetDoc' file='xsltInternals'>
-      <info>parse an XSLT stylesheet building the associated structures</info>
+      <info>parse an XSLT stylesheet, building the associated structures.  doc is kept as a reference within the returned stylesheet, so changes to doc after the parsing will be reflected when the stylesheet is applied, and the doc is automatically freed when the stylesheet is closed.</info>
       <return type='xsltStylesheetPtr' info='a new XSLT stylesheet structure.'/>
       <arg name='doc' type='xmlDocPtr' info='and xmlDoc parsed XML'/>
     </function>

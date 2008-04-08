@@ -8,20 +8,16 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.21</version>
-    <last-release> Jun 12 2007</last-release>
+    <version>1.1.22</version>
+    <last-release> Aug 23 2007</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - Bug fixes: out of memory allocation errors (William Brack), 
-      namespace problem on compound predicates (William Brack),
-      python space/tab inconsistencies (Andreas Hanke), hook xsl:message
-      to per transformation error callbacks (Shaun McCance),
-      cached RVT problem (William Brack), XPath context maintainance
-      on choose (William Brack), memory leaks in the math module (William
-      Brack), exclude-result-prefix induced namespace problem (William
-      Brack)
-   - Build: configure setup for TRIO_REPLACE_STDIO (William Brack)
-  
-   - Documentation: updated after change from CVs to SVN (William Brack)
+    <changes>   - Bug fixes: RVT cleanup problems (William Brack), exclude-result-prefix
+      bug (William Brack), stylesheet compilation error handling (Rob Richards).
+      
+   - Portability fixes: improve build with VS2005 (Rob Richards), 
+      fixing build on AIX (Bjorn Wiberg), fix the security file checks on
+      Windows (Roland Schwarz and Rob Richards). 
+   - Improvement: add an --encoding option to xsltproc (Drazen Kacar). 
 
 </changes>
   </product>
