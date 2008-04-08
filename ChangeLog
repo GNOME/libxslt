@@ -1,3 +1,7 @@
+Tue Apr  8 10:19:01 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* python/generator.py: fix an infinite loop bug
+
 Thu Apr  3 09:32:49 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltutils.c: avoid a scary realloc() loop should fix #520383
