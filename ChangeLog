@@ -1,3 +1,8 @@
+Mon Apr 14 11:19:14 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/pattern.c: fixes #527297 general patter comps fix and cleanup
+	* libxslt/xsltInternals.h libxslt/pattern.h: other cleanups
+
 Tue Apr  8 19:15:19 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/*: release of 1.1.23

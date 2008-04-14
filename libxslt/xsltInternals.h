@@ -1766,8 +1766,8 @@ struct _xsltTransformContext {
      */
     int internalized;
     int nbKeys;
-    int hasTemplKeyPatterns;    
-    xsltTemplatePtr currentTemplateRule; /* the Current Template Rule */    
+    int hasTemplKeyPatterns;
+    xsltTemplatePtr currentTemplateRule; /* the Current Template Rule */
     xmlNodePtr initialContextNode;
     xmlDocPtr initialContextDoc;
     xsltTransformCachePtr cache;
@@ -1775,7 +1775,7 @@ struct _xsltTransformContext {
     xmlDocPtr localRVT; /* list of local tree fragments; will be freed when
 			   the instruction which created the fragment
                            exits */
-    xmlDocPtr localRVTBase;    
+    xmlDocPtr localRVTBase;
 };
 
 /**

@@ -10,6 +10,21 @@ ChangeLog.html
 to the SVN at 
 http://svn.gnome.org/viewcvs/libxslt/trunk/
  code base.Those are the public releases made:
+1.1.23: Apr  8 2008:
+   - Documentation: fix links for Cygwin DocBook setup (Philippe Bourcier),
+      xsltParseStylesheetDoc doc fix (Jason Viers), fix manpage default
+      maxdepth value 
+   - Bug fixes: python segfault (Daniel Gryniewicz), week-in-year bug fix
+      (Maurice van der Pot), fix python iterator problem (William Brack),
+      avoid garbage collection problems on str:tokenize and str:split
+      and function results (William Brack and Peter Pawlowski) 
+      superfluous re-generation of keys (William Brack), remove superfluous
+      code in xsltExtInitTest (Tony Graham), func:result segfault fix
+      (William Brack), timezone offset problem (Peter Pawlowski),
+   - Portability fixes: old gcrypt support fix (Brent Cowgill), Python
+      portability patch (Stephane Bidoul), VS 2008 fix (Rob Richard) 
+
+
 1.1.22: Aug 23 2007:
    - Bug fixes: RVT cleanup problems (William Brack), exclude-result-prefix
       bug (William Brack), stylesheet compilation error handling (Rob Richards).

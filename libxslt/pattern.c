@@ -106,7 +106,7 @@ struct _xsltCompMatch {
     int maxStep;
     xmlNsPtr *nsList;		/* the namespaces in scope */
     int nsNr;			/* the number of namespaces in scope */
-    xsltStepOp steps[40];        /* ops for computation */
+    xsltStepOpPtr steps;        /* ops for computation */
 };
 
 typedef struct _xsltParserContext xsltParserContext;
@@ -146,7 +146,16 @@ xsltNewCompMatch(void) {
 	return(NULL);
     }
     memset(cur, 0, sizeof(xsltCompMatch));
-    cur->maxStep = 40;
+    cur->maxStep = 10;
+    cur->nbStep = 0;
+    cur-> steps = (xsltStepOpPtr) xmlMalloc(sizeof(xsltStepOp) *
+                                            cur->maxStep);
+    if (cur->steps == NULL) {
+	xsltTransformError(NULL, NULL, NULL,
+		"xsltNewCompMatch : out of memory error\n");
+	xmlFree(cur);
+	return(NULL);
+    }
     cur->nsNr = 0;
     cur->nsList = NULL;
     cur->direct = 0;
@@ -181,6 +190,7 @@ xsltFreeCompMatch(xsltCompMatchPtr comp) {
 	if (op->comp != NULL)
 	    xmlXPathFreeCompExpr(op->comp);
     }
+    xmlFree(comp->steps);
     memset(comp, -1, sizeof(xsltCompMatch));
     xmlFree(comp);
 }
@@ -279,14 +289,26 @@ static int
 xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
                  xsltOp op, xmlChar * value, xmlChar * value2, int novar)
 {
-    if (comp->nbStep >= 40) {
-        xsltTransformError(NULL, NULL, NULL,
-                         "xsltCompMatchAdd: overflow\n");
-        return (-1);
+    if (comp->nbStep >= comp->maxStep) {
+        xsltStepOpPtr tmp;
+
+	tmp = (xsltStepOpPtr) xmlRealloc(comp->steps, comp->maxStep * 2 *
+	                                 sizeof(xsltStepOp));
+	if (tmp == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+	     "xsltCompMatchAdd: memory re-allocation failure.\n");
+	    if (ctxt->style != NULL)
+		ctxt->style->errors++;
+	    return (-1);
+	}
+        comp->maxStep *= 2;
+	comp->steps = tmp;
     }
     comp->steps[comp->nbStep].op = op;
     comp->steps[comp->nbStep].value = value;
     comp->steps[comp->nbStep].value2 = value2;
+    comp->steps[comp->nbStep].value3 = NULL;
+    comp->steps[comp->nbStep].comp = NULL;
     if (ctxt->ctxt != NULL) {
 	comp->steps[comp->nbStep].previousExtra =
 	    xsltAllocateExtraCtxt(ctxt->ctxt);
@@ -343,6 +365,7 @@ xsltSwapTopCompMatch(xsltCompMatchPtr comp) {
 	register xmlChar *tmp;
 	register xsltOp op;
 	register xmlXPathCompExprPtr expr; 
+	register int t;
 	i = j - 1;
 	tmp = comp->steps[i].value;
 	comp->steps[i].value = comp->steps[j].value;
@@ -350,46 +373,74 @@ xsltSwapTopCompMatch(xsltCompMatchPtr comp) {
 	tmp = comp->steps[i].value2;
 	comp->steps[i].value2 = comp->steps[j].value2;
 	comp->steps[j].value2 = tmp;
+	tmp = comp->steps[i].value3;
+	comp->steps[i].value3 = comp->steps[j].value3;
+	comp->steps[j].value3 = tmp;
 	op = comp->steps[i].op;
 	comp->steps[i].op = comp->steps[j].op;
 	comp->steps[j].op = op;
 	expr = comp->steps[i].comp;
 	comp->steps[i].comp = comp->steps[j].comp;
 	comp->steps[j].comp = expr;
+	t = comp->steps[i].previousExtra;
+	comp->steps[i].previousExtra = comp->steps[j].previousExtra;
+	comp->steps[j].previousExtra = t;
+	t = comp->steps[i].indexExtra;
+	comp->steps[i].indexExtra = comp->steps[j].indexExtra;
+	comp->steps[j].indexExtra = t;
+	t = comp->steps[i].lenExtra;
+	comp->steps[i].lenExtra = comp->steps[j].lenExtra;
+	comp->steps[j].lenExtra = t;
     }
 }
 
 /**
  * xsltReverseCompMatch:
+ * @ctxt: the parser context
  * @comp:  the compiled match expression
  *
  * reverse all the stack of expressions
  */
 static void
-xsltReverseCompMatch(xsltCompMatchPtr comp) {
+xsltReverseCompMatch(xsltParserContextPtr ctxt, xsltCompMatchPtr comp) {
     int i = 0;
     int j = comp->nbStep - 1;
 
     while (j > i) {
 	register xmlChar *tmp;
 	register xsltOp op;
-	register xmlXPathCompExprPtr expr; 
+	register xmlXPathCompExprPtr expr;
+	register int t;
+
 	tmp = comp->steps[i].value;
 	comp->steps[i].value = comp->steps[j].value;
 	comp->steps[j].value = tmp;
 	tmp = comp->steps[i].value2;
 	comp->steps[i].value2 = comp->steps[j].value2;
 	comp->steps[j].value2 = tmp;
+	tmp = comp->steps[i].value3;
+	comp->steps[i].value3 = comp->steps[j].value3;
+	comp->steps[j].value3 = tmp;
 	op = comp->steps[i].op;
 	comp->steps[i].op = comp->steps[j].op;
 	comp->steps[j].op = op;
 	expr = comp->steps[i].comp;
 	comp->steps[i].comp = comp->steps[j].comp;
 	comp->steps[j].comp = expr;
+	t = comp->steps[i].previousExtra;
+	comp->steps[i].previousExtra = comp->steps[j].previousExtra;
+	comp->steps[j].previousExtra = t;
+	t = comp->steps[i].indexExtra;
+	comp->steps[i].indexExtra = comp->steps[j].indexExtra;
+	comp->steps[j].indexExtra = t;
+	t = comp->steps[i].lenExtra;
+	comp->steps[i].lenExtra = comp->steps[j].lenExtra;
+	comp->steps[j].lenExtra = t;
 	j--;
 	i++;
     }
-    comp->steps[comp->nbStep++].op = XSLT_OP_END;
+    xsltCompMatchAdd(ctxt, comp, XSLT_OP_END, NULL, NULL, 0);
+
     /*
      * detect consecutive XSLT_OP_PREDICATE indicating a direct
      * matching should be done.
@@ -420,7 +471,8 @@ xsltReverseCompMatch(xsltCompMatchPtr comp) {
  ************************************************************************/
 
 static int
-xsltPatPushState(xsltStepStates *states, int step, xmlNodePtr node) {
+xsltPatPushState(xsltTransformContextPtr ctxt, xsltStepStates *states,
+                 int step, xmlNodePtr node) {
     if ((states->states == NULL) || (states->maxstates <= 0)) {
         states->maxstates = 4;
 	states->nbstates = 0;
@@ -431,8 +483,12 @@ xsltPatPushState(xsltStepStates *states, int step, xmlNodePtr node) {
 
 	tmp = (xsltStepStatePtr) xmlRealloc(states->states,
 			       2 * states->maxstates * sizeof(xsltStepState));
-	if (tmp == NULL)
+	if (tmp == NULL) {
+	    xsltGenericError(xsltGenericErrorContext,
+	     "xsltPatPushState: memory re-allocation failure.\n");
+	    ctxt->state = XSLT_STATE_STOPPED;
 	    return(-1);
+	}
 	states->states = tmp;
 	states->maxstates *= 2;
     }
@@ -738,12 +794,12 @@ restart:
 		    goto rollback;
 		node = node->parent;
 		if ((step->op != XSLT_OP_ELEM) && step->op != XSLT_OP_ALL) {
-		    xsltPatPushState(&states, i, node);
+		    xsltPatPushState(ctxt, &states, i, node);
 		    continue;
 		}
 		i++;
 		if (step->value == NULL) {
-		    xsltPatPushState(&states, i - 1, node);
+		    xsltPatPushState(ctxt, &states, i - 1, node);
 		    continue;
 		}
 		while (node != NULL) {
@@ -764,7 +820,7 @@ restart:
 		}
 		if (node == NULL)
 		    goto rollback;
-		xsltPatPushState(&states, i - 1, node);
+		xsltPatPushState(ctxt, &states, i - 1, node);
 		continue;
             case XSLT_OP_ID: {
 		/* TODO Handle IDs decently, must be done differently */
@@ -1971,7 +2027,7 @@ xsltCompilePatternInternal(const xmlChar *pattern, xmlDocPtr doc,
 	/*
 	 * Reverse for faster interpretation.
 	 */
-	xsltReverseCompMatch(element);
+	xsltReverseCompMatch(ctxt, element);
 
 	/*
 	 * Set-up the priority
