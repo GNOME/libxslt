@@ -174,9 +174,9 @@ Pass a parameter of name
 \fIPARAMNAME\fR
 and value
 \fIPARAMVALUE\fR
-to the stylesheet\. You may pass multiple name/value pairs up to a maximum of 32\. If the value being passed is a string rather than a node identifier, use
+to the stylesheet\. You may pass multiple name/value pairs up to a maximum of 32\. If the value being passed is a string, you can use
 \fB\-\-stringparam\fR
-instead\.
+instead, to avoid additional quote characters that appear in string expressions\. Note: the XPath expression must be UTF\-8 encoded\.
 .RE
 .PP
 \fB\-\-path "\fR\fB\fIPATH(S)\fR\fR\fB"\fR

@@ -1,3 +1,8 @@
+Mon Apr 21 16:16:29 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* doc/xsltproc.1 doc/xsltproc.xml: update the man page based on
+	  Vincent Lefevre suggestion.
+
 Mon Apr 14 11:19:14 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/pattern.c: fixes #527297 general patter comps fix and cleanup
