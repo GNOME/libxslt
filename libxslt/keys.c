@@ -32,6 +32,9 @@
 #define WITH_XSLT_DEBUG_KEYS
 #endif
 
+static int
+xsltInitDocKeyTable(xsltTransformContextPtr ctxt, const xmlChar *name,
+                    const xmlChar *nameURI);
 
 /************************************************************************
  * 									*
@@ -267,7 +270,7 @@ skipPredicate(const xmlChar *cur, int end) {
  *
  * Returns 0 in case of success, and -1 in case of failure.
  */
-int	
+int
 xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 	   const xmlChar *nameURI, const xmlChar *match,
 	   const xmlChar *use, xmlNodePtr inst) {
@@ -345,7 +348,7 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
     xsltGenericDebug(xsltGenericDebugContext,
 	"   resulting pattern %s\n", pattern);
 #endif
-    /*    
+    /*
     * XSLT-1: "It is an error for the value of either the use
     *  attribute or the match attribute to contain a
     *  VariableReference."
@@ -367,8 +370,24 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 		         use);
 	if (style != NULL) style->errors++;
     }
-    key->next = style->keys;
-    style->keys = key;
+
+    /*
+     * Sometimes the stylesheet writer use the order to ease the
+     * resolution of keys when they are dependant, keep the provided
+     * order so add the new one at the end.
+     */
+    if (style->keys == NULL) {
+	style->keys = key;
+    } else {
+        xsltKeyDefPtr prev = style->keys;
+
+	while (prev->next != NULL)
+	    prev = prev->next;
+
+	prev->next = key;
+    }
+    key->next = NULL;
+
 error:
     if (pattern != NULL)
 	xmlFree(pattern);
@@ -393,11 +412,7 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	   const xmlChar *nameURI, const xmlChar *value) {
     xmlNodeSetPtr ret;
     xsltKeyTablePtr table;
-#if 0
-#ifdef XSLT_REFACTORED_KEYCOMP
-    int found = 0;
-#endif
-#endif
+    int init_table = 0;
 
     if ((ctxt == NULL) || (name == NULL) || (value == NULL) ||
 	(ctxt->document == NULL))
@@ -408,11 +423,19 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	"Get key %s, value %s\n", name, value);
 #endif
 
-#ifdef XSLT_REFACTORED_KEYCOMP
-    if (xsltInitAllDocKeys(ctxt))
-	return(NULL);
-#endif
+    /*
+     * keys are computed only on-demand on first key access for a document
+     */
+    if ((ctxt->document->nbKeysComputed < ctxt->nbKeys) &&
+        (ctxt->keyInitLevel == 0)) {
+        /*
+	 * If non-recursive behaviour, just try to initialize all keys
+	 */
+	if (xsltInitAllDocKeys(ctxt))
+	    return(NULL);
+    }
 
+retry:
     table = (xsltKeyTablePtr) ctxt->document->keys;
     while (table != NULL) {
 	if (((nameURI != NULL) == (table->nameURI != NULL)) &&
@@ -424,142 +447,74 @@ xsltGetKey(xsltTransformContextPtr ctxt, const xmlChar *name,
 	}
 	table = table->next;
     }
-#if 0
-#ifdef XSLT_REFACTORED_KEYCOMP
-    if (! found) {
-	xsltStylesheetPtr style = ctxt->style;	
-	xsltKeyDefPtr keyd;
-	/*
-	* This might be the first call to the key with the specified
-	* name and the specified document.
-	* Find all keys with a matching name and compute them for the
-	* current tree.
-	*/
-	found = 0;
-	while (style != NULL) {
-	    keyd = (xsltKeyDefPtr) style->keys;
-	    while (keyd != NULL) {
-		if (((nameURI != NULL) == (keyd->nameURI != NULL)) &&
-		    xmlStrEqual(keyd->name, name) &&
-		    xmlStrEqual(keyd->nameURI, nameURI))
-		{
-		    found = 1;
-		    xsltInitCtxtKey(ctxt, ctxt->document, keyd);
-		}
-		keyd = keyd->next;		
-	    }	    
-	    style = xsltNextImport(style);
-	}
-	if (found) {
-	    /*
-	    * The key was computed, so look it up.
-	    */
-	    table = (xsltKeyTablePtr) ctxt->document->keys;
-	    while (table != NULL) {
-		if (((nameURI != NULL) == (table->nameURI != NULL)) &&
-		    xmlStrEqual(table->name, name) &&
-		    xmlStrEqual(table->nameURI, nameURI))
-		{
-		    ret = (xmlNodeSetPtr)xmlHashLookup(table->keys, value);
-		    return(ret);
-		}
-		table = table->next;
-	    }
 
-	}
+    if ((ctxt->keyInitLevel != 0) && (init_table == 0)) {
+        /*
+	 * Apparently one key is recursive and this one is needed,
+	 * initialize just it, that time and retry
+	 */
+        xsltInitDocKeyTable(ctxt, name, nameURI);
+	init_table = 1;
+	goto retry;
     }
-#endif
-#endif
+
     return(NULL);
 }
 
-#if 0 /* Merged with xsltInitCtxtKey() */
+
 /**
- * xsltEvalXPathKeys:
- * @ctxt:  the XSLT transformation context
- * @comp:  the compiled XPath expression
+ * xsltInitDocKeyTable:
  *
- * Process the expression using XPath to get the list of keys
+ * INTERNAL ROUTINE ONLY
  *
- * Returns the array of computed string value or NULL, must be deallocated
- *         by the caller.
+ * Check if any keys on the current document need to be computed
  */
-static xmlChar **
-xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
-                  xsltKeyDefPtr keyd) {
-    xmlChar **ret = NULL;
-    xmlXPathObjectPtr res;
-    xmlNodePtr oldInst;
-    xmlNodePtr oldNode;
-    int	oldPos, oldSize;
-    int oldNsNr;
-    xmlNsPtr *oldNamespaces;
+static int
+xsltInitDocKeyTable(xsltTransformContextPtr ctxt, const xmlChar *name,
+                    const xmlChar *nameURI)
+{
+    xsltStylesheetPtr style;
+    xsltKeyDefPtr keyd;
+    int found = 0;
 
-    oldInst = ctxt->inst;
-    oldNode = ctxt->node;
-    oldPos = ctxt->xpathCtxt->proximityPosition;
-    oldSize = ctxt->xpathCtxt->contextSize;
-    oldNsNr = ctxt->xpathCtxt->nsNr;
-    oldNamespaces = ctxt->xpathCtxt->namespaces;
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "xsltInitDocKeyTable %s\n", name);
+#endif
 
-    ctxt->xpathCtxt->node = ctxt->node;
-    ctxt->xpathCtxt->namespaces = keyd->nsList;
-    ctxt->xpathCtxt->nsNr = keyd->nsNr;
-    res = xmlXPathCompiledEval(comp, ctxt->xpathCtxt);
-    if (res != NULL) {
-	if (res->type == XPATH_NODESET) {
-	    int len, i, j;
-
-	    if (res->nodesetval != NULL)
-		len = res->nodesetval->nodeNr;
-	    else
-		len = 0;
-	    if (len != 0) {
-		ret = (xmlChar **) xmlMalloc((len + 1) * sizeof(xmlChar *));
-		if (ret != NULL) {
-		    for (i = 0,j = 0;i < len;i++) {
-			ret[j] = xmlXPathCastNodeToString(
-				res->nodesetval->nodeTab[i]);
-			if (ret[j] != NULL)
-			    j++;
-		    }
-		    ret[j] = NULL;
-		}
+    style = ctxt->style;
+    while (style != NULL) {
+	keyd = (xsltKeyDefPtr) style->keys;
+	while (keyd != NULL) {
+	    if (((keyd->nameURI != NULL) ==
+		 (nameURI != NULL)) &&
+		xmlStrEqual(keyd->name, name) &&
+		xmlStrEqual(keyd->nameURI, nameURI))
+	    {
+		xsltInitCtxtKey(ctxt, ctxt->document, keyd);
+		if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
+		    return(0);
+		found = 1;
 	    }
-	} else {
-	    if (res->type != XPATH_STRING)
-		res = xmlXPathConvertString(res);
-	    if (res->type == XPATH_STRING) {
-		ret = (xmlChar **) xmlMalloc(2 * sizeof(xmlChar *));
-		if (ret != NULL) {
-		    ret[0] = res->stringval;
-		    ret[1] = NULL;
-		    res->stringval = NULL;
-		}
-	    } else {
-		xsltTransformError(ctxt, NULL, NULL,
-		     "xpath : string() function didn't return a String\n");
-	    }
+	    keyd = keyd->next;
 	}
-	xmlXPathFreeObject(res);
-    } else {
-	ctxt->state = XSLT_STATE_STOPPED;
+	style = xsltNextImport(style);
     }
-#ifdef WITH_XSLT_DEBUG_TEMPLATES
-    xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltEvalXPathString: returns %s\n", ret);
+    if (found == 0) {
+#ifdef WITH_XSLT_DEBUG_KEYS
+	XSLT_TRACE(ctxt,XSLT_TRACE_KEYS,xsltGenericDebug(xsltGenericDebugContext,
+	     "xsltInitDocKeyTable: did not found %s\n", name));
 #endif
-    ctxt->inst = oldInst;
-    ctxt->node = oldNode;
-    ctxt->xpathCtxt->contextSize = oldSize;
-    ctxt->xpathCtxt->proximityPosition = oldPos;
-    ctxt->xpathCtxt->nsNr = oldNsNr;
-    ctxt->xpathCtxt->namespaces = oldNamespaces;
-    return(ret);
+	xsltTransformError(ctxt, NULL, keyd->inst,
+	    "Failed to find key definition for %s\n", name);
+	ctxt->state = XSLT_STATE_STOPPED;
+        return(-1);
+    }
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "xsltInitDocKeyTable %s done\n", name);
+#endif
+    return(0);
 }
-#endif
 
-#ifdef XSLT_REFACTORED_KEYCOMP
 /**
  * xsltInitAllDocKeys:
  *
@@ -570,15 +525,22 @@ xsltEvalXPathKeys(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
 int
 xsltInitAllDocKeys(xsltTransformContextPtr ctxt)
 {
-    xsltStylesheetPtr style, style2;
-    xsltKeyDefPtr keyd, keyd2;
+    xsltStylesheetPtr style;
+    xsltKeyDefPtr keyd;
     xsltKeyTablePtr table;
 
     if (ctxt == NULL)
 	return(-1);
 
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "xsltInitAllDocKeys %d %d\n",
+        ctxt->document->nbKeysComputed, ctxt->nbKeys);
+#endif
+
     if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
 	return(0);
+
+
     /*
     * TODO: This could be further optimized
     */
@@ -586,6 +548,9 @@ xsltInitAllDocKeys(xsltTransformContextPtr ctxt)
     while (style) {
 	keyd = (xsltKeyDefPtr) style->keys;
 	while (keyd != NULL) {
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "Init key %s\n", keyd->name);
+#endif
 	    /*
 	    * Check if keys with this QName have been already
 	    * computed.
@@ -597,38 +562,24 @@ xsltInitAllDocKeys(xsltTransformContextPtr ctxt)
 		    xmlStrEqual(keyd->nameURI, table->nameURI))
 		{
 		    break;
-		}		
+		}
 		table = table->next;
 	    }
 	    if (table == NULL) {
 		/*
 		* Keys with this QName have not been yet computed.
 		*/
-		style2 = ctxt->style;
-		while (style2 != NULL) {
-		    keyd2 = (xsltKeyDefPtr) style2->keys;
-		    while (keyd2 != NULL) {
-			if (((keyd2->nameURI != NULL) ==
-			     (keyd->nameURI != NULL)) &&
-			    xmlStrEqual(keyd2->name, keyd->name) &&
-			    xmlStrEqual(keyd2->nameURI, keyd->nameURI))
-			{
-			    xsltInitCtxtKey(ctxt, ctxt->document, keyd2);
-			    if (ctxt->document->nbKeysComputed == ctxt->nbKeys)
-				return(0);
-			}
-			keyd2 = keyd2->next;
-		    }
-		    style2 = xsltNextImport(style2);
-		}
+		xsltInitDocKeyTable(ctxt, keyd->name, keyd->nameURI);
 	    }
 	    keyd = keyd->next;
 	}
 	style = xsltNextImport(style);
     }
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "xsltInitAllDocKeys: done\n");
+#endif
     return(0);
 }
-#endif
 
 /**
  * xsltInitCtxtKey:
@@ -644,7 +595,7 @@ int
 xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
 	        xsltKeyDefPtr keyDef)
 {
-    int i, len, k;    
+    int i, len, k;
     xmlNodeSetPtr matchList = NULL, keylist;
     xmlXPathObjectPtr matchRes = NULL, useRes = NULL;
     xmlChar *str = NULL;
@@ -655,11 +606,32 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
     int	oldXPPos, oldXPSize;
     xmlDocPtr oldXPDoc;
     int oldXPNsNr;
-    xmlNsPtr *oldXPNamespaces;    
+    xmlNsPtr *oldXPNamespaces;
     xmlXPathContextPtr xpctxt;
+
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "xsltInitCtxtKey %s : %d\n", keyDef->name, ctxt->keyInitLevel);
+#endif
 
     if ((keyDef->comp == NULL) || (keyDef->usecomp == NULL))
 	return(-1);
+
+    /*
+     * Detect recursive keys
+     */
+    if (ctxt->keyInitLevel > ctxt->nbKeys) {
+#ifdef WITH_XSLT_DEBUG_KEYS
+	XSLT_TRACE(ctxt,XSLT_TRACE_KEYS,
+	           xsltGenericDebug(xsltGenericDebugContext,
+		       "xsltInitCtxtKey: key definition of %s is recursive\n",
+		       keyDef->name));
+#endif
+	xsltTransformError(ctxt, NULL, keyDef->inst,
+	    "Key definition for %s is recursive\n", keyDef->name);
+	ctxt->state = XSLT_STATE_STOPPED;
+        return(-1);
+    }
+    ctxt->keyInitLevel++;
 
     xpctxt = ctxt->xpathCtxt;
     idoc->nbKeysComputed++;
@@ -681,10 +653,10 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
     */
     ctxt->document = idoc;
     ctxt->node = (xmlNodePtr) idoc->doc;
-    ctxt->inst = keyDef->inst;      
+    ctxt->inst = keyDef->inst;
 
     xpctxt->doc = idoc->doc;
-    xpctxt->node = (xmlNodePtr) idoc->doc;    
+    xpctxt->node = (xmlNodePtr) idoc->doc;
     /* TODO : clarify the use of namespaces in keys evaluation */
     xpctxt->namespaces = keyDef->nsList;
     xpctxt->nsNr = keyDef->nsNr;
@@ -764,7 +736,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
     */
     xpctxt->contextSize = 1;
     xpctxt->proximityPosition = 1;
-    
+
     for (i = 0; i < matchList->nodeNr; i++) {
 	cur = matchList->nodeTab[i];
 	if (! IS_XSLT_REAL_NODE(cur))
@@ -806,7 +778,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
 	    } else {
 		str = xmlXPathCastToString(useRes);
 	    }
-	}	
+	}
 	/*
 	* Process all strings.
 	*/
@@ -819,7 +791,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
 	    XSLT_TRACE(ctxt,XSLT_TRACE_KEYS,xsltGenericDebug(xsltGenericDebugContext,
 		"xsl:key : node associated to ('%s', '%s')\n", keyDef->name, str));
 #endif
-	    
+
 	    keylist = xmlHashLookup(table->keys, str);
 	    if (keylist == NULL) {
 		keylist = xmlXPathNodeSetCreate(cur);
@@ -830,7 +802,7 @@ xsltInitCtxtKey(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc,
 		/*
 		* TODO: How do we know if this function failed?
 		*/
-		xmlXPathNodeSetAdd(keylist, cur);		
+		xmlXPathNodeSetAdd(keylist, cur);
 	    }
 	    switch (cur->type) {
 		case XML_ELEMENT_NODE:
@@ -857,12 +829,13 @@ next_string:
 	    k++;
 	    if (k >= len)
 		break;
-	    str = xmlXPathCastNodeToString(useRes->nodesetval->nodeTab[k]);	    
+	    str = xmlXPathCastNodeToString(useRes->nodesetval->nodeTab[k]);
 	}
     }
 
 exit:
 error:
+    ctxt->keyInitLevel--;
     /*
     * Restore context state.
     */
@@ -901,6 +874,11 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc) {
 
     if ((ctxt == NULL) || (idoc == NULL))
 	return;
+
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "xsltInitCtxtKeys on document\n");
+#endif
+
 #ifdef WITH_XSLT_DEBUG_KEYS
     if ((idoc->doc != NULL) && (idoc->doc->URL != NULL))
 	XSLT_TRACE(ctxt,XSLT_TRACE_KEYS,xsltGenericDebug(xsltGenericDebugContext, "Initializing keys on %s\n",
@@ -917,6 +895,11 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc) {
 
 	style = xsltNextImport(style);
     }
+
+#ifdef KEY_INIT_DEBUG
+fprintf(stderr, "xsltInitCtxtKeys on document: done\n");
+#endif
+
 }
 
 /**
@@ -925,7 +908,7 @@ xsltInitCtxtKeys(xsltTransformContextPtr ctxt, xsltDocumentPtr idoc) {
  *
  * Free the keys associated to a document
  */
-void	
+void
 xsltFreeDocumentKeys(xsltDocumentPtr idoc) {
     if (idoc != NULL)
         xsltFreeKeyTableList(idoc->keys);

@@ -157,20 +157,15 @@ xsltNewDocument(xsltTransformContextPtr ctxt, xmlDocPtr doc) {
 	    cur->next = ctxt->docList;
 	    ctxt->docList = cur;
 	}
-#ifdef XSLT_REFACTORED_KEYCOMP
 	/*
 	* A key with a specific name for a specific document
 	* will only be computed if there's a call to the key()
 	* function using that specific name for that specific
 	* document. I.e. computation of keys will be done in
 	* xsltGetKey() (keys.c) on an on-demand basis.
+	*
+	* xsltInitCtxtKeys(ctxt, cur); not called here anymore
 	*/
-#else
-	/*
-	* Old behaviour.
-	*/
-	xsltInitCtxtKeys(ctxt, cur);
-#endif
     }
     return(cur);
 }

@@ -540,13 +540,14 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
 	goto internal_err;
     }
     docu->main = 1;
-    cur->document = docu;    
+    cur->document = docu;
     cur->inst = NULL;
     cur->outputFile = NULL;
     cur->sec = xsltGetDefaultSecurityPrefs();
     cur->debugStatus = xslDebugStatus;
     cur->traceCode = (unsigned long*) &xsltDefaultTrace;
     cur->xinclude = xsltGetXIncludeDefault();
+    cur->keyInitLevel = 0;
 
     return(cur);
 
@@ -5769,7 +5770,6 @@ done:
     return;
 }
 
-#ifdef XSLT_REFACTORED_KEYCOMP
 static int
 xsltCountKeys(xsltTransformContextPtr ctxt)
 {
@@ -5777,7 +5777,7 @@ xsltCountKeys(xsltTransformContextPtr ctxt)
     xsltKeyDefPtr keyd;
 
     if (ctxt == NULL)
-	return(-1);    
+	return(-1);
 
     /*
     * Do we have those nastly templates with a key() in the match pattern?
@@ -5803,10 +5803,9 @@ xsltCountKeys(xsltTransformContextPtr ctxt)
 	    keyd = keyd->next;
 	}
 	style = xsltNextImport(style);
-    }        
+    }
     return(ctxt->nbKeys);
 }
-#endif /* XSLT_REFACTORED_KEYCOMP */
 
 /**
  * xsltApplyStylesheetInternal:
@@ -6012,17 +6011,17 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     if (params != NULL) {	
         xsltEvalUserParams(ctxt, params);
     }
-    xsltEvalGlobalVariables(ctxt);
 
-#ifdef XSLT_REFACTORED_KEYCOMP    
+    /* need to be called before evaluating global variables */
     xsltCountKeys(ctxt);
-#endif
+
+    xsltEvalGlobalVariables(ctxt);
 
     ctxt->node = (xmlNodePtr) doc;
     ctxt->output = res;
-    ctxt->insert = (xmlNodePtr) res;    
-    ctxt->varsBase = ctxt->varsNr - 1; 
-    
+    ctxt->insert = (xmlNodePtr) res;
+    ctxt->varsBase = ctxt->varsNr - 1;
+
     ctxt->xpathCtxt->contextSize = 1;
     ctxt->xpathCtxt->proximityPosition = 1;
     ctxt->xpathCtxt->node = NULL; /* TODO: Set the context node here? */

@@ -60,6 +60,7 @@ extern "C" {
  * XSLT_REFACTORED_KEYCOMP:
  *
  * Internal define to enable on-demand xsl:key computation.
+ * That's the only mode now but the define is kept for compatibility
  */
 #define XSLT_REFACTORED_KEYCOMP
 
@@ -1776,6 +1777,7 @@ struct _xsltTransformContext {
 			   the instruction which created the fragment
                            exits */
     xmlDocPtr localRVTBase;
+    int keyInitLevel;   /* Needed to catch recursive keys issues */
 };
 
 /**

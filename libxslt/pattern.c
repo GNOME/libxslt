@@ -2294,7 +2294,6 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
     return(0);
 }
 
-#ifdef XSLT_REFACTORED_KEYCOMP
 static int
 xsltComputeAllKeys(xsltTransformContextPtr ctxt, xmlNodePtr contextNode)
 {
@@ -2304,7 +2303,7 @@ xsltComputeAllKeys(xsltTransformContextPtr ctxt, xmlNodePtr contextNode)
 	    "Bad arguments.\n");
 	return(-1);
     }
-    
+
     if (ctxt->document == NULL) {
 	/*
 	* The document info will only be NULL if we have a RTF.
@@ -2328,7 +2327,6 @@ doc_info_mismatch:
     ctxt->state = XSLT_STATE_STOPPED;
     return(-1);
 }
-#endif
 
 /**
  * xsltGetTemplate:
@@ -2517,9 +2515,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    }
 	}
 
-#ifdef XSLT_REFACTORED_KEYCOMP
 keyed_match:
-#endif
 	if (keyed) {
 	    list = curstyle->keyMatch;
 	    while ((list != NULL) &&
@@ -2533,7 +2529,6 @@ keyed_match:
 		list = list->next;
 	    }
 	}
-#ifdef XSLT_REFACTORED_KEYCOMP	
 	else if (ctxt->hasTemplKeyPatterns &&
 	    ((ctxt->document == NULL) ||
 	     (ctxt->document->nbKeysComputed < ctxt->nbKeys)))
@@ -2569,7 +2564,6 @@ keyed_match:
 	    if (keyed)
 		goto keyed_match;
 	}
-#endif /* XSLT_REFACTORED_KEYCOMP */
 	if (ret != NULL)
 	    return(ret);
 

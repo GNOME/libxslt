@@ -1,3 +1,15 @@
+Fri May  9 14:30:35 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/documents.c libxslt/keys.c libxslt/xsltInternals.h
+	  libxslt/transform.c libxslt/pattern.c: fix the key initialization
+	  problem introduced when tracking Josef Urban problem from 22 Dec
+	  2007, this should also handle the problem of recursive keys
+	  definitions should fix #531873.
+	* tests/docs/bug-166.xml tests/docs/Makefile.am
+	  tests/general/Makefile.am tests/general/bug-166.xsl
+	  tests/general/bug-166.out: add the regression tests when a key
+	  computation depends on another one.
+
 Mon Apr 21 16:16:29 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* doc/xsltproc.1 doc/xsltproc.xml: update the man page based on
