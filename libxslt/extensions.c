@@ -1115,7 +1115,7 @@ xsltShutdownExts(xsltStylesheetPtr style)
 /**
  * xsltCheckExtPrefix:
  * @style: the stylesheet
- * @URI: the namespace URI (possibly NULL)
+ * @URI: the namespace prefix (possibly NULL)
  *
  * Check if the given prefix is one of the declared extensions.
  * This is intended to be called only at compile-time.
@@ -1169,6 +1169,37 @@ xsltCheckExtPrefix(xsltStylesheetPtr style, const xmlChar * URI)
         cur = cur->next;
     }
 #endif
+    return (0);
+}
+
+/**
+ * xsltCheckExtURI:
+ * @style: the stylesheet
+ * @URI: the namespace URI (possibly NULL)
+ *
+ * Check if the given prefix is one of the declared extensions.
+ * This is intended to be called only at compile-time.
+ * Called by:
+ *  xsltPrecomputeStylesheet() (xslt.c)
+ *  xsltParseTemplateContent (xslt.c)
+ *
+ * Returns 1 if this is an extension, 0 otherwise
+ */
+int
+xsltCheckExtURI(xsltStylesheetPtr style, const xmlChar * URI)
+{
+    xsltExtDefPtr cur;
+
+    if ((style == NULL) || (style->nsDefs == NULL))
+        return (0);
+    if (URI == NULL)
+        return (0);
+    cur = (xsltExtDefPtr) style->nsDefs;
+    while (cur != NULL) {
+        if (xmlStrEqual(URI, cur->URI))
+            return (1);
+        cur = cur->next;
+    }
     return (0);
 }
 

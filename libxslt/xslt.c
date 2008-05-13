@@ -3397,7 +3397,7 @@ internal_err:
 static void
 xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 {
-    xmlNodePtr deleteNode;
+    xmlNodePtr deleteNode, styleelem;
     int internalize = 0;
 
     if ((style == NULL) || (cur == NULL))
@@ -3408,6 +3408,14 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 	internalize = 1;
     else
         style->internalized = 0;
+
+    if ((cur != NULL) && (IS_XSLT_ELEM(cur)) &&
+        (IS_XSLT_NAME(cur, "stylesheet"))) {
+	styleelem = cur;
+    } else {
+        styleelem = NULL;
+    }
+
     /*
      * This content comes from the stylesheet
      * For stylesheets, the set of whitespace-preserving
@@ -3539,9 +3547,16 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 	}
 
 	/*
-	 * Skip to next node
+	 * Skip to next node. In case of a namespaced element children of
+	 * the stylesheet and not in the XSLT namespace and not an extension
+	 * element, ignore its content.
 	 */
-	if (cur->children != NULL) {
+	if ((cur->type == XML_ELEMENT_NODE) && (cur->ns != NULL) &&
+	    (styleelem != NULL) && (cur->parent == styleelem) &&
+	    (!xmlStrEqual(cur->ns->href, XSLT_NAMESPACE)) &&
+	    (!xsltCheckExtURI(style, cur->ns->href))) {
+	    goto skip_children;
+	} else if (cur->children != NULL) {
 	    if ((cur->children->type != XML_ENTITY_DECL) &&
 		(cur->children->type != XML_ENTITY_REF_NODE) &&
 		(cur->children->type != XML_ENTITY_NODE)) {
@@ -3554,7 +3569,7 @@ skip_children:
 	if (cur->next != NULL) {
 	    cur = cur->next;
 	    continue;
-	}	
+	}
 	do {
 
 	    cur = cur->parent;
@@ -6023,11 +6038,10 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	xmlFree(prop);
     }
 
-    cur = top->children;
-
     /*
      * process xsl:import elements
      */
+    cur = top->children;
     while (cur != NULL) {
 	    if (IS_BLANK_NODE(cur)) {
 		    cur = cur->next;

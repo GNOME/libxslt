@@ -1,3 +1,13 @@
+Tue May 13 16:32:22 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xslt.c libxslt/extensions.c libxslt/extensions.h:
+	  fix the processing of top level elements of stylesheets which
+	  are not in the XSLT namespace and are not an extension either
+	  should fix #529223
+	* tests/docs/Makefile.am tests/docs/bug-167.xml
+	  tests/general/Makefile.am tests/general/bug-167.*: add the
+	  test to the regression suite
+
 Fri May  9 14:30:35 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/documents.c libxslt/keys.c libxslt/xsltInternals.h
