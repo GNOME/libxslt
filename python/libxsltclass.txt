@@ -179,6 +179,7 @@ Class stylesheet(stylesheetBase)
 
     # functions from module extensions
     checkExtPrefix()
+    checkExtURI()
     freeExts()
     registerExtPrefix()
     shutdownExts()

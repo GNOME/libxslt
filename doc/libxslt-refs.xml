@@ -206,6 +206,7 @@
     <reference name='xsltCalibrateAdjust' href='html/libxslt-xsltutils.html#xsltCalibrateAdjust'/>
     <reference name='xsltCallTemplate' href='html/libxslt-transform.html#xsltCallTemplate'/>
     <reference name='xsltCheckExtPrefix' href='html/libxslt-extensions.html#xsltCheckExtPrefix'/>
+    <reference name='xsltCheckExtURI' href='html/libxslt-extensions.html#xsltCheckExtURI'/>
     <reference name='xsltCheckRead' href='html/libxslt-security.html#xsltCheckRead'/>
     <reference name='xsltCheckWrite' href='html/libxslt-security.html#xsltCheckWrite'/>
     <reference name='xsltChoose' href='html/libxslt-transform.html#xsltChoose'/>
@@ -788,6 +789,7 @@
       <ref name='xsltCalibrateAdjust'/>
       <ref name='xsltCallTemplate'/>
       <ref name='xsltCheckExtPrefix'/>
+      <ref name='xsltCheckExtURI'/>
       <ref name='xsltCheckRead'/>
       <ref name='xsltCheckWrite'/>
       <ref name='xsltChoose'/>
@@ -1322,6 +1324,7 @@
       <ref name='xsltAttrTemplateValueProcess'/>
       <ref name='xsltAttrTemplateValueProcessNode'/>
       <ref name='xsltCheckExtPrefix'/>
+      <ref name='xsltCheckExtURI'/>
       <ref name='xsltCheckRead'/>
       <ref name='xsltCheckWrite'/>
       <ref name='xsltCompilePattern'/>
@@ -1707,6 +1710,7 @@
       <ref name='xsltApplyStylesheet'/>
       <ref name='xsltApplyStylesheetUser'/>
       <ref name='xsltCheckExtPrefix'/>
+      <ref name='xsltCheckExtURI'/>
       <ref name='xsltCleanupTemplates'/>
       <ref name='xsltCompileAttr'/>
       <ref name='xsltCompilePattern'/>
@@ -1925,6 +1929,7 @@
     </file>
     <file name='extensions'>
       <ref name='xsltCheckExtPrefix'/>
+      <ref name='xsltCheckExtURI'/>
       <ref name='xsltDebugDumpExtensions'/>
       <ref name='xsltExtElementLookup'/>
       <ref name='xsltExtFunctionLookup'/>
@@ -2573,6 +2578,7 @@
           <ref name='xsltAttrListTemplateProcess'/>
           <ref name='xsltAttrTemplateValueProcessNode'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltCopyNamespaceList'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltRegisterExtPrefix'/>
@@ -2593,6 +2599,7 @@
           <ref name='IS_XSLT_REAL_NODE'/>
           <ref name='_xsltStyleItemDocument'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltCheckRead'/>
           <ref name='xsltCheckWrite'/>
           <ref name='xsltEvalStaticAttrValueTemplate'/>
@@ -3004,6 +3011,9 @@
         <word name='Namespaces'>
           <ref name='_xsltStylesheet'/>
         </word>
+        <word name='Needed'>
+          <ref name='_xsltTransformContext'/>
+        </word>
         <word name='Norm'>
           <ref name='XSLT_NORM_SAXON_NAMESPACE'/>
         </word>
@@ -3349,6 +3359,9 @@
         </word>
         <word name='Test'>
           <ref name='xsltTestCompMatchList'/>
+        </word>
+        <word name='That'>
+          <ref name='XSLT_REFACTORED_KEYCOMP'/>
         </word>
         <word name='TransformContext'>
           <ref name='xsltNewTransformContext'/>
@@ -3945,6 +3958,7 @@
           <ref name='xsltRegisterExtras'/>
         </word>
         <word name='but'>
+          <ref name='XSLT_REFACTORED_KEYCOMP'/>
           <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
           <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
           <ref name='xsltGetCNsProp'/>
@@ -3962,6 +3976,7 @@
           <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltAttrTemplateValueProcessNode'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltCopyNamespaceList'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltRegisterExtPrefix'/>
@@ -4020,6 +4035,7 @@
         <word name='called'>
           <ref name='_xsltTemplate'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltDoSortFunction'/>
           <ref name='xsltEvalGlobalVariables'/>
           <ref name='xsltEvalOneUserParam'/>
@@ -4087,6 +4103,7 @@
         </word>
         <word name='catch'>
           <ref name='_xsltFormatNumberInfo'/>
+          <ref name='_xsltTransformContext'/>
         </word>
         <word name='chained'>
           <ref name='_xsltDecimalFormat'/>
@@ -4206,6 +4223,7 @@
         </word>
         <word name='compatibility'>
           <ref name='XSLT_ITEM_COMPATIBILITY_FIELDS'/>
+          <ref name='XSLT_REFACTORED_KEYCOMP'/>
         </word>
         <word name='compilation'>
           <ref name='XSLT_REFACTORED_XPATHCOMP'/>
@@ -4220,6 +4238,7 @@
         <word name='compile-time'>
           <ref name='_xsltStylesheet'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltRegisterExtPrefix'/>
         </word>
         <word name='compiled'>
@@ -4473,6 +4492,7 @@
         </word>
         <word name='declared'>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltCopyNamespace'/>
         </word>
         <word name='declaring'>
@@ -4884,6 +4904,7 @@
           <ref name='XSLT_XALAN_NAMESPACE'/>
           <ref name='XSLT_XT_NAMESPACE'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltFreeExts'/>
           <ref name='xsltInit'/>
           <ref name='xsltRegisterAllExtras'/>
@@ -5211,6 +5232,7 @@
           <ref name='xsltAttrTemplateValueProcess'/>
           <ref name='xsltAttrTemplateValueProcessNode'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltEvalAVT'/>
           <ref name='xsltEvalTemplateString'/>
           <ref name='xsltFreeStyleDocuments'/>
@@ -5528,6 +5550,7 @@
           <ref name='XSLT_ITEM_NAVIGATION_FIELDS'/>
           <ref name='xsltApplyOneTemplate'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltCopyNamespaceList'/>
         </word>
         <word name='interest'>
@@ -5581,6 +5604,9 @@
         <word name='invoking'>
           <ref name='xsltGetSpecialNamespace'/>
         </word>
+        <word name='issues'>
+          <ref name='_xsltTransformContext'/>
+        </word>
         <word name='item'>
           <ref name='_xsltEffectiveNs'/>
           <ref name='_xsltElemPreComp'/>
@@ -5633,6 +5659,7 @@
           <ref name='_xsltStylesheet'/>
         </word>
         <word name='kept'>
+          <ref name='XSLT_REFACTORED_KEYCOMP'/>
           <ref name='_xsltDocument'/>
           <ref name='xsltParseStylesheetDoc'/>
         </word>
@@ -5647,6 +5674,7 @@
           <ref name='xsltNewStyleDocument'/>
         </word>
         <word name='keys'>
+          <ref name='_xsltTransformContext'/>
           <ref name='xsltFreeDocumentKeys'/>
           <ref name='xsltFreeKeys'/>
           <ref name='xsltInitAllDocKeys'/>
@@ -5926,6 +5954,7 @@
           <ref name='xsltTimestamp'/>
         </word>
         <word name='mode'>
+          <ref name='XSLT_REFACTORED_KEYCOMP'/>
           <ref name='_xsltCompilerCtxt'/>
           <ref name='_xsltCompilerNodeInfo'/>
           <ref name='_xsltTemplate'/>
@@ -6134,6 +6163,7 @@
         </word>
         <word name='now'>
           <ref name='XML_CAST_FPTR'/>
+          <ref name='XSLT_REFACTORED_KEYCOMP'/>
         </word>
         <word name='nowhere'>
           <ref name='_xsltStyleItemDocument'/>
@@ -6210,6 +6240,7 @@
         <word name='one'>
           <ref name='xsltAttrTemplateProcess'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltExtensionInstructionResultRegister'/>
           <ref name='xsltGetTemplate'/>
           <ref name='xsltGetUTF8Char'/>
@@ -6226,8 +6257,10 @@
           <ref name='xsltCleanupTemplates'/>
         </word>
         <word name='only'>
+          <ref name='XSLT_REFACTORED_KEYCOMP'/>
           <ref name='_xsltCompilerCtxt'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltCopyNamespaceList'/>
           <ref name='xsltEvalGlobalVariables'/>
           <ref name='xsltExtElementLookup'/>
@@ -6289,6 +6322,7 @@
           <ref name='xslAddCall'/>
           <ref name='xsltAddTemplate'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltEvalXPathPredicate'/>
           <ref name='xsltExtModuleElementLookup'/>
           <ref name='xsltExtModuleElementPreComputeLookup'/>
@@ -6509,6 +6543,7 @@
         </word>
         <word name='possibly'>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
         </word>
         <word name='pre-computation'>
           <ref name='xsltExtModuleElementPreComputeLookup'/>
@@ -6571,6 +6606,7 @@
           <ref name='_xsltFormatNumberInfo'/>
           <ref name='_xsltStylesheet'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltFormatNumberConversion'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltGetQNameURI'/>
@@ -6763,6 +6799,9 @@
         </word>
         <word name='recorded'>
           <ref name='xsltParseStylesheetCallerParam'/>
+        </word>
+        <word name='recursive'>
+          <ref name='_xsltTransformContext'/>
         </word>
         <word name='refactored'>
           <ref name='XSLT_REFACTORED_VARS'/>
@@ -8201,6 +8240,7 @@
           <ref name='xslHandleDebugger'/>
           <ref name='xsltAttribute'/>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
           <ref name='xsltComment'/>
           <ref name='xsltElement'/>
           <ref name='xsltForEach'/>
@@ -8295,10 +8335,14 @@
         </word>
         <word name='xsltParseTemplateContent'>
           <ref name='xsltCheckExtPrefix'/>
+          <ref name='xsltCheckExtURI'/>
         </word>
         <word name='xsltPointerList'>
           <ref name='xsltPointerListCreate'/>
           <ref name='xsltPointerListFree'/>
+        </word>
+        <word name='xsltPrecomputeStylesheet'>
+          <ref name='xsltCheckExtURI'/>
         </word>
         <word name='xsltProcessOneUserParamInternal'>
           <ref name='xsltEvalOneUserParam'/>

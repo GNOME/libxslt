@@ -1,3 +1,8 @@
+Tue May 13 17:51:05 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in doc/*: release of 1.1.24
+	* python/generator.py: syntactic cleanup (Martin)
+
 Tue May 13 16:32:22 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xslt.c libxslt/extensions.c libxslt/extensions.h:

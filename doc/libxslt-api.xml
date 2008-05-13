@@ -51,6 +51,7 @@
      <exports symbol='xsltGetExtInfo' type='function'/>
      <exports symbol='xsltExtModuleTopLevelLookup' type='function'/>
      <exports symbol='xsltFreeExts' type='function'/>
+     <exports symbol='xsltCheckExtURI' type='function'/>
      <exports symbol='xsltExtModuleFunctionLookup' type='function'/>
      <exports symbol='xsltPreComputeExtModuleElement' type='function'/>
      <exports symbol='xsltRegisterExtModuleTopLevel' type='function'/>
@@ -778,7 +779,7 @@
       <info>Specific value for pattern without priority expressed.</info>
     </macro>
     <macro name='XSLT_REFACTORED_KEYCOMP' file='xsltInternals'>
-      <info>Internal define to enable on-demand xsl:key computation.</info>
+      <info>Internal define to enable on-demand xsl:key computation. That&apos;s the only mode now but the define is kept for compatibility</info>
     </macro>
     <macro name='XSLT_REFACTORED_VARS' file='xsltInternals'>
       <info>Internal define to enable the refactored variable part of libxslt</info>
@@ -1532,6 +1533,7 @@ TODO: We need to get rid of this.
 the instruction which created the fragment
 exits'/>
       <field name='localRVTBase' type='xmlDocPtr' info=''/>
+      <field name='keyInitLevel' type='int' info=' Needed to catch recursive keys issues'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -1720,6 +1722,12 @@ exits'/>
     </function>
     <function name='xsltCheckExtPrefix' file='extensions'>
       <info>Check if the given prefix is one of the declared extensions. This is intended to be called only at compile-time. Called by: xsltGetInheritedNsList() (xslt.c) xsltParseTemplateContent (xslt.c)</info>
+      <return type='int' info='1 if this is an extension, 0 otherwise'/>
+      <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
+      <arg name='URI' type='const xmlChar *' info='the namespace prefix (possibly NULL)'/>
+    </function>
+    <function name='xsltCheckExtURI' file='extensions'>
+      <info>Check if the given prefix is one of the declared extensions. This is intended to be called only at compile-time. Called by: xsltPrecomputeStylesheet() (xslt.c) xsltParseTemplateContent (xslt.c)</info>
       <return type='int' info='1 if this is an extension, 0 otherwise'/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
       <arg name='URI' type='const xmlChar *' info='the namespace URI (possibly NULL)'/>

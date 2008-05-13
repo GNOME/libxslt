@@ -36,6 +36,7 @@ xsltAttribute
 xsltCalibrateAdjust
 xsltCallTemplate
 xsltCheckExtPrefix
+xsltCheckExtURI
 xsltCheckRead
 xsltCheckWrite
 xsltChoose
@@ -128,6 +129,7 @@ xsltGetUTF8Char
 xsltGetXIncludeDefault
 xsltIf
 xsltInit
+xsltInitAllDocKeys
 xsltInitCtxtExts
 xsltInitCtxtKey
 xsltInitCtxtKeys

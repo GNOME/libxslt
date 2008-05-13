@@ -10,6 +10,13 @@ ChangeLog.html
 to the SVN at 
 http://svn.gnome.org/viewcvs/libxslt/trunk/
  code base.Those are the public releases made:
+1.1.24: May 13 20088:
+   - Documentation: man page fix (Vincent Lefevre).
+   - Bug fixes: pattern bug fix, key initialization problems, exclusion of
+      unknown namespaced element on top of stylesheets, python generator
+      syntactic cleanup (Martin)
+
+
 1.1.23: Apr  8 2008:
    - Documentation: fix links for Cygwin DocBook setup (Philippe Bourcier),
       xsltParseStylesheetDoc doc fix (Jason Viers), fix manpage default
