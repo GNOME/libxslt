@@ -123,6 +123,9 @@
 /* Define to 1 if you have the `vsprintf' function. */
 #undef HAVE_VSPRINTF
 
+/* Have working xlocale.h */
+#undef HAVE_XLOCALE_H
+
 /* Define to 1 if you have the `_stat' function. */
 #undef HAVE__STAT
 
@@ -149,6 +152,11 @@
 
 /* Version number of package */
 #undef VERSION
+
+/* Enable GNU extensions on systems that have them.  */
+#ifndef _GNU_SOURCE
+# undef _GNU_SOURCE
+#endif
 
 /* Using the Win32 Socket implementation */
 #undef _WINSOCKAPI_

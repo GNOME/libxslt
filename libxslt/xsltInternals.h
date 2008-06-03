@@ -21,6 +21,7 @@
 #include <libxml/xmlstring.h>
 #include <libxslt/xslt.h>
 #include "xsltexports.h"
+#include "xsltlocale.h"
 #include "numbersInternals.h"
 
 #ifdef __cplusplus
@@ -1045,6 +1046,7 @@ struct _xsltStyleItemSort {
     int      descending;	/* sort */
     const xmlChar *lang;	/* sort */
     int      has_lang;		/* sort */
+    xsltLocale locale;		/* sort */
     const xmlChar *case_order;	/* sort */
     int      lower_first;	/* sort */
 
@@ -1381,6 +1383,7 @@ struct _xsltStylePreComp {
     int      descending;	/* sort */
     const xmlChar *lang;	/* sort */
     int      has_lang;		/* sort */
+    xsltLocale locale;		/* sort */
     const xmlChar *case_order;	/* sort */
     int      lower_first;	/* sort */
 

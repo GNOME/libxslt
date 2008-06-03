@@ -1,3 +1,11 @@
+Tue Jun  3 18:26:26 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* configure.in libxslt/extra.c libxslt/Makefile.am libxslt/preproc.c
+	  libxslt/xsltInternals.h libxslt/xsltlocale.c libxslt/xsltlocale.h
+	  libxslt/xsltutils.c win32/Makefile.mingw win32/Makefile.msvc: patch
+	  from Nick Wellnhofer adding xsl:sort lang support using the locale
+	  support from the C library.
+
 Tue Jun  3 18:14:55 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/extensions.h: as Ralf Junker pointed out

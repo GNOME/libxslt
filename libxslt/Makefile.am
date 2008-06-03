@@ -24,11 +24,13 @@ xsltinc_HEADERS = 			\
 	security.h			\
 	xsltInternals.h			\
 	xsltconfig.h			\
-	xsltexports.h
+	xsltexports.h			\
+	xsltlocale.h
 
 libxslt_la_SOURCES = 			\
 	attrvt.c			\
 	xslt.c				\
+	xsltlocale.c			\
 	xsltutils.c			\
 	pattern.c			\
 	templates.c			\
