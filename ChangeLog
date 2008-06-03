@@ -1,3 +1,8 @@
+Tue Jun  3 18:14:55 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/extensions.h: as Ralf Junker pointed out
+	  xsltExtFunctionLookup was defined but never implemented, removing it
+
 Tue May 13 17:51:05 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in doc/*: release of 1.1.24

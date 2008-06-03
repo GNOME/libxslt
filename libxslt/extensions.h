@@ -118,10 +118,6 @@ XSLTPUBFUN int XSLTCALL
 					 const xmlChar *URI,
 					 xmlXPathFunction function);
 XSLTPUBFUN xmlXPathFunction XSLTCALL
-	xsltExtFunctionLookup		(xsltTransformContextPtr ctxt,
-					 const xmlChar *name,
-					 const xmlChar *URI);
-XSLTPUBFUN xmlXPathFunction XSLTCALL
 	xsltExtModuleFunctionLookup	(const xmlChar *name,
 					 const xmlChar *URI);
 XSLTPUBFUN int XSLTCALL	
