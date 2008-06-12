@@ -123,7 +123,7 @@
 /* Define to 1 if you have the `vsprintf' function. */
 #undef HAVE_VSPRINTF
 
-/* Have working xlocale.h */
+/* Define to 1 if you have the <xlocale.h> header file. */
 #undef HAVE_XLOCALE_H
 
 /* Define to 1 if you have the `_stat' function. */

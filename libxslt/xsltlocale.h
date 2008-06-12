@@ -13,9 +13,7 @@
 
 #include <libxml/xmlstring.h>
 
-#ifdef HAVE_XLOCALE_H
-
-#define XSLT_LOCALE_XLOCALE
+#ifdef XSLT_LOCALE_XLOCALE
 
 #include <locale.h>
 #include <xlocale.h>
@@ -27,10 +25,7 @@ typedef locale_t xsltLocale;
 #endif
 typedef xmlChar xsltLocaleChar;
 
-#else
-#if defined(_MSC_VER) || defined (__MINGW32__) && defined(__MSVCRT__)
-
-#define XSLT_LOCALE_MSVCRT
+#elif defined(XSLT_LOCALE_MSVCRT)
 
 #include <locale.h>
 
@@ -39,12 +34,13 @@ typedef wchar_t xsltLocaleChar;
 
 #else
 
+#ifndef XSLT_LOCALE_NONE
 #define XSLT_LOCALE_NONE
+#endif
 
 typedef void *xsltLocale;
 typedef xmlChar xsltLocaleChar;
 
-#endif
 #endif
 
 xsltLocale xsltNewLocale(const xmlChar *langName);

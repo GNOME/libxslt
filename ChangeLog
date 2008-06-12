@@ -1,3 +1,10 @@
+Thu Jun 12 11:23:23 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/xsltconfig.h.in libxslt/xsltlocale.h configure.in
+	  config.h.in win32/configure.js: patch from Nick Wellnhofer and
+	  Roumen Petrov to fix some portability problems on the previous
+	  xsl:sort locale patch
+
 Tue Jun  3 18:26:26 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* configure.in libxslt/extra.c libxslt/Makefile.am libxslt/preproc.c
