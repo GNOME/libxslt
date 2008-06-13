@@ -1,3 +1,8 @@
+Fri Jun 13 10:58:52 CEST 2008 Daniel Veillard <daniel@veillard.com>
+
+	* libxslt/libxslt.h libexslt/libexslt.h libexslt/exslt.h: patch
+	  from Roumen Petrov fixing include path when compiling with MinGW
+
 Thu Jun 12 11:23:23 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/xsltconfig.h.in libxslt/xsltlocale.h configure.in

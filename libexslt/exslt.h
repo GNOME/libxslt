@@ -4,7 +4,7 @@
 
 #include <libxml/tree.h>
 #include "exsltexports.h"
-#include "exsltconfig.h"
+#include <libexslt/exsltconfig.h>
 
 #ifdef __cplusplus
 extern "C" {
