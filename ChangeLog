@@ -1,3 +1,11 @@
+Tue Jun 24 23:55:48 PST 2008 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/attrvt.c: added code to handle literal within an
+	  AVT #539741.
+	* tests/docs/Makefile.am tests/docs/bug-168.xsl
+	* tests/general/Makefile.am tests/general/bug-168.* add a
+	  test for this bug to the regression suite.
+
 Fri Jun 13 10:58:52 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/libxslt.h libexslt/libexslt.h libexslt/exslt.h: patch
