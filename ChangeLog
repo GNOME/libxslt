@@ -1,3 +1,9 @@
+Thu Jul 10 10:04:28 PST 2008 William Brack <wbrack@mmm.com.hk>
+
+	* libxslt/functions.c: patch from Ron Burk to fix problem
+	  with string check for element-available and
+	  function-available #530891.
+
 Tue Jun 24 23:55:48 PST 2008 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/attrvt.c: added code to handle literal within an
