@@ -972,22 +972,22 @@ exsltMathAtan2 (double y, double x) {
  */
 static void
 exsltMathAtan2Function (xmlXPathParserContextPtr ctxt, int nargs) {
-    double ret, y;
+    double ret, x;
 
     if (nargs != 2) {
 	xmlXPathSetArityError(ctxt);
 	return;
     }
-    y = xmlXPathPopNumber(ctxt);
+    x = xmlXPathPopNumber(ctxt);
     if (xmlXPathCheckError(ctxt))
 	return;
 
-    /* x */
+    /* y */
     ret = xmlXPathPopNumber(ctxt);
     if (xmlXPathCheckError(ctxt))
 	return;
 
-    ret = exsltMathAtan2(y, ret);
+    ret = exsltMathAtan2(ret, x);
 
     xmlXPathReturnNumber(ctxt, ret);
 }

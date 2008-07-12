@@ -1,3 +1,8 @@
+Sat Jul 12 16:36:58 PST 2008 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/math.c: fixed incorrect argument popping in
+	  exsltMathAtan2Function #541965
+
 Thu Jul 10 10:04:28 PST 2008 William Brack <wbrack@mmm.com.hk>
 
 	* libxslt/functions.c: patch from Ron Burk to fix problem
