@@ -1,3 +1,8 @@
+Sat Jul 26 12:43:18 PST 2008 William Brack <wbrack@mmm.com.hk>
+
+	*configure.in: fixed option --with-debugger with patch from
+	 Arun Ragnavan #544829
+
 Sat Jul 12 16:36:58 PST 2008 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/math.c: fixed incorrect argument popping in

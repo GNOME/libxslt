@@ -387,7 +387,7 @@ AC_SUBST(WITH_MEM_DEBUG)
 dnl 
 dnl Is debugger support requested
 dnl
-AC_ARG_WITH(with_debugger, [  --with-debugger        Add the debugging support (on)])
+AC_ARG_WITH(debugger, [  --with-debugger        Add the debugging support (on)])
 if test "$with_debugger" = "no" ; then
     echo Disabling debugger
     WITH_DEBUGGER=0
