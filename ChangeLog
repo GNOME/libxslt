@@ -1,3 +1,8 @@
+Sun Jul 27 13:52:10 CEST 2008 Daniel Veillard <veillard@redhat.com>
+
+	* libxslt/xslt.c: avoid a quadratic behaviour when hitting duplicates
+	  exclude-result-prefixes declarations, should fix #544906
+
 Sat Jul 26 12:43:18 PST 2008 William Brack <wbrack@mmm.com.hk>
 
 	*configure.in: fixed option --with-debugger with patch from

@@ -141,11 +141,14 @@ xsltParseContentError(xsltStylesheetPtr style,
  *
  * Push an excluded namespace name on the stack
  *
- * Returns the new index in the stack or 0 in case of error
+ * Returns the new index in the stack or -1 if already present or
+ * in case of error
  */
 static int
 exclPrefixPush(xsltStylesheetPtr style, xmlChar * value)
 {
+    int i;
+
     if (style->exclPrefixMax == 0) {
         style->exclPrefixMax = 4;
         style->exclPrefixTab =
@@ -153,8 +156,13 @@ exclPrefixPush(xsltStylesheetPtr style, xmlChar * value)
                                    sizeof(style->exclPrefixTab[0]));
         if (style->exclPrefixTab == NULL) {
             xmlGenericError(xmlGenericErrorContext, "malloc failed !\n");
-            return (0);
+            return (-1);
         }
+    }
+    /* do not push duplicates */
+    for (i = 0;i < style->exclPrefixNr;i++) {
+        if (xmlStrEqual(style->exclPrefixTab[i], value))
+	    return(-1);
     }
     if (style->exclPrefixNr >= style->exclPrefixMax) {
         style->exclPrefixMax *= 2;
@@ -164,7 +172,7 @@ exclPrefixPush(xsltStylesheetPtr style, xmlChar * value)
                                     sizeof(style->exclPrefixTab[0]));
         if (style->exclPrefixTab == NULL) {
             xmlGenericError(xmlGenericErrorContext, "realloc failed !\n");
-            return (0);
+            return (-1);
         }
     }
     style->exclPrefixTab[style->exclPrefixNr] = value;
@@ -1704,12 +1712,13 @@ xsltParseStylesheetExcludePrefix(xsltStylesheetPtr style, xmlNodePtr cur,
 	                         prefix);
 		if (style != NULL) style->warnings++;
 	    } else {
+		if (exclPrefixPush(style, (xmlChar *) ns->href) >= 0) {
 #ifdef WITH_XSLT_DEBUG_PARSING
-		xsltGenericDebug(xsltGenericDebugContext,
-		    "exclude result prefix %s\n", prefix);
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"exclude result prefix %s\n", prefix);
 #endif
-		exclPrefixPush(style, (xmlChar *) ns->href);
-		nb++;
+		    nb++;
+		}
 	    }
 	    xmlFree(prefix);
 	}
