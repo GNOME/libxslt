@@ -1,3 +1,7 @@
+Mon Jul 28 14:46:27 CEST 2008 Daniel Veillard <veillard@redhat.com>
+
+	* configure.in: fix my static linking setup on x86_64
+
 Sun Jul 27 13:52:10 CEST 2008 Daniel Veillard <veillard@redhat.com>
 
 	* libxslt/xslt.c: avoid a quadratic behaviour when hitting duplicates
