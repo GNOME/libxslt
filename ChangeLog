@@ -1,3 +1,8 @@
+Fri Aug  1 07:54:02 CEST 2008 Daniel Veillard <veillard@redhat.com>
+
+	* libexslt/crypto.c: fix for CVE-2008-2935 libexslt RC4
+	  encryption/decryption functions
+
 Mon Jul 28 14:46:27 CEST 2008 Daniel Veillard <veillard@redhat.com>
 
 	* configure.in: fix my static linking setup on x86_64
