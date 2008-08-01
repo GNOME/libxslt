@@ -18,18 +18,20 @@
 #include <locale.h>
 #include <xlocale.h>
 
-#if defined(__GLIBC__) && __GLIBC__ == 2 && __GLIBC_MINOR__ <= 2
+#ifdef __GLIBC__
+/*locale_t is defined only if _GNU_SOURCE is defined*/
 typedef __locale_t xsltLocale;
 #else
 typedef locale_t xsltLocale;
 #endif
 typedef xmlChar xsltLocaleChar;
 
-#elif defined(XSLT_LOCALE_MSVCRT)
+#elif defined(XSLT_LOCALE_WINAPI)
 
-#include <locale.h>
+#include <windows.h>
+#include <winnls.h>
 
-typedef _locale_t xsltLocale;
+typedef LCID xsltLocale;
 typedef wchar_t xsltLocaleChar;
 
 #else
@@ -46,6 +48,6 @@ typedef xmlChar xsltLocaleChar;
 xsltLocale xsltNewLocale(const xmlChar *langName);
 void xsltFreeLocale(xsltLocale locale);
 xsltLocaleChar *xsltStrxfrm(xsltLocale locale, const xmlChar *string);
-int xsltLocaleStrcmp(const xsltLocaleChar *str1, const xsltLocaleChar *str2);
+int xsltLocaleStrcmp(xsltLocale locale, const xsltLocaleChar *str1, const xsltLocaleChar *str2);
 
 #endif /* __XML_XSLTLOCALE_H__ */

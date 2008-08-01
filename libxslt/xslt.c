@@ -83,6 +83,9 @@ const xmlChar *xsltXSLTAttrMarker = (const xmlChar *) "LRE XSLT Attr";
 
 #endif
 
+#ifdef XSLT_LOCALE_WINAPI
+extern xmlRMutexPtr xsltLocaleMutex;
+#endif
 /*
  * Harmless but avoiding a problem when compiling against a
  * libxml <= 2.3.11 without LIBXML_DEBUG_ENABLED
@@ -222,6 +225,9 @@ void
 xsltInit (void) {
     if (initialized == 0) {
 	initialized = 1;
+#ifdef XSLT_LOCALE_WINAPI
+	xsltLocaleMutex = xmlNewRMutex();
+#endif
         xsltRegisterAllExtras();
     }
 }

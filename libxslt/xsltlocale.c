@@ -7,6 +7,7 @@
  * ISO 639-1, ISO 3166-1
  *
  * Author: Nick Wellnhofer
+ * winapi port: Roumen Petrov
  */
 
 #define IN_LIBXSLT
@@ -29,6 +30,42 @@
 #define TOUPPER(c) (c & ~0x20)
 #define TOLOWER(c) (c | 0x20)
 
+/*without terminating null character*/
+#define XSLTMAX_ISO639LANGLEN		8
+#define XSLTMAX_ISO3166CNTRYLEN		8
+					/* <lang>-<cntry> */
+#define XSLTMAX_LANGTAGLEN		(XSLTMAX_ISO639LANGLEN+1+XSLTMAX_ISO3166CNTRYLEN)
+
+static const xmlChar* xsltDefaultRegion(const xmlChar *localeName);
+
+#ifdef XSLT_LOCALE_WINAPI
+xmlRMutexPtr xsltLocaleMutex = NULL;
+
+struct xsltRFC1766Info_s {
+      /*note typedef unsigned char xmlChar !*/
+    xmlChar    tag[XSLTMAX_LANGTAGLEN+1];
+      /*note typedef LCID xsltLocale !*/
+    xsltLocale lcid;
+};
+typedef struct xsltRFC1766Info_s xsltRFC1766Info;
+
+static int xsltLocaleListSize = 0;
+static xsltRFC1766Info *xsltLocaleList = NULL;
+
+
+static xsltLocale
+xslt_locale_WINAPI(const xmlChar *languageTag) {
+    int k;
+    xsltRFC1766Info *p = xsltLocaleList;
+
+    for (k=0; k<xsltLocaleListSize; k++, p++)
+	if (xmlStrcmp(p->tag, languageTag) == 0) return p->lcid;
+    return((xsltLocale)0);
+}
+
+static void xsltEnumSupportedLocales(void);
+#endif
+
 /**
  * xsltNewLocale:
  * @languageTag: RFC 3066 language tag
@@ -43,7 +80,7 @@ xsltLocale
 xsltNewLocale(const xmlChar *languageTag) {
 #ifdef XSLT_LOCALE_XLOCALE
     xsltLocale locale;
-    char localeName[23]; /* 8*lang + "-" + 8*region + ".utf8\0" */
+    char localeName[XSLTMAX_LANGTAGLEN+6]; /* 8*lang + "-" + 8*region + ".utf8\0" */
     const xmlChar *p = languageTag;
     const char *region = NULL;
     char *q = localeName;
@@ -54,7 +91,7 @@ xsltNewLocale(const xmlChar *languageTag) {
     if (languageTag == NULL)
     	return(NULL);
     
-    for (i=0; i<8 && ISALPHA(*p); ++i)
+    for (i=0; i<XSLTMAX_ISO639LANGLEN && ISALPHA(*p); ++i)
 	*q++ = TOLOWER(*p++);
     
     if (i == 0)
@@ -67,7 +104,7 @@ xsltNewLocale(const xmlChar *languageTag) {
     	if (*p++ != '-')
     	    return(NULL);
 	
-	for (i=0; i<8 && ISALPHA(*p); ++i)
+	for (i=0; i<XSLTMAX_ISO3166CNTRYLEN && ISALPHA(*p); ++i)
 	    *q++ = TOUPPER(*p++);
     
     	if (i == 0 || *p)
@@ -86,8 +123,70 @@ xsltNewLocale(const xmlChar *languageTag) {
     if (llen != 2)
         return(NULL);
 
-    c = localeName[1];
+    region = xsltDefaultRegion(localeName);
+    if (region == NULL)
+        return(NULL);
+     
+    *q++ = region[0];
+    *q++ = region[1];
+    memcpy(q, ".utf8", 6);
+    locale = newlocale(LC_COLLATE_MASK, localeName, NULL);
     
+    return(locale);
+#endif
+
+#ifdef XSLT_LOCALE_WINAPI
+{
+    xsltLocale    locale = (xsltLocale)0;
+    xmlChar       localeName[XSLTMAX_LANGTAGLEN+1];
+    xmlChar       *q = localeName;
+    const xmlChar *p = languageTag;
+    int           i, llen;
+    const xmlChar *region = NULL;
+
+    if (languageTag == NULL) goto end;
+
+    xsltEnumSupportedLocales();
+
+    for (i=0; i<XSLTMAX_ISO639LANGLEN && ISALPHA(*p); ++i)
+	*q++ = TOLOWER(*p++);
+    if (i == 0) goto end;
+
+    llen = i;
+    *q++ = '-';
+    if (*p) { /*if country tag is given*/
+	if (*p++ != '-') goto end;
+	
+	for (i=0; i<XSLTMAX_ISO3166CNTRYLEN && ISALPHA(*p); ++i)
+	    *q++ = TOUPPER(*p++);
+	if (i == 0 || *p) goto end;
+
+	*q = '\0';
+	locale = xslt_locale_WINAPI(localeName);
+	if (locale != (xsltLocale)0) goto end;
+    }
+    /* Try to find most common country for language */
+    region = xsltDefaultRegion(localeName);
+    if (region == NULL) goto end;
+
+    strcpy(localeName + llen + 1, region);
+    locale = xslt_locale_WINAPI(localeName);
+end:
+    return(locale);
+}
+#endif
+
+#ifdef XSLT_LOCALE_NONE
+    return(NULL);
+#endif
+}
+
+static const xmlChar*
+xsltDefaultRegion(const xmlChar *localeName) {
+    xmlChar c;
+    const xmlChar *region = NULL;
+    
+    c = localeName[1];
     /* This is based on the locales from glibc 2.3.3 */
     
     switch (localeName[0]) {
@@ -216,95 +315,7 @@ xsltNewLocale(const xmlChar *languageTag) {
             else if (c == 'u') region = "ZA";
             break;
     }
-    
-    if (region == NULL)
-        return(NULL);
-    
-    *q++ = region[0];
-    *q++ = region[1];
-    memcpy(q, ".utf8", 6);
-    locale = newlocale(LC_COLLATE_MASK, localeName, NULL);
-    
-    return(locale);
-#endif
-
-#ifdef XSLT_LOCALE_MSVCRT
-    const char *localeName = NULL;
-    int c;
-    
-    /* We only look at the language and ignore the region. I think Windows
-       doesn't care about the region for LC_COLLATE anyway. */
-    
-    if (languageTag == NULL ||
-        !languageTag[0] ||
-        !languageTag[1] ||
-        languageTag[2] && languageTag[2] != '-')
-    	return(NULL);
-    
-    c = TOLOWER(languageTag[1]);
-    
-    switch (TOLOWER(languageTag[0])) {
-        case 'c':
-            if (c == 's') localeName = "csy"; /* Czech */
-            break;
-        case 'd':
-            if (c == 'a') localeName = "dan"; /* Danish */
-            else if (c == 'e') localeName = "deu"; /* German */
-            break;
-        case 'e':
-            if (c == 'l') localeName = "ell"; /* Greek */
-            else if (c == 'n') localeName = "english";
-            else if (c == 's') localeName = "esp"; /* Spanish */
-            break;
-        case 'f':
-            if (c == 'i') localeName = "fin"; /* Finnish */
-            else if (c == 'r') localeName = "fra"; /* French */
-            break;
-        case 'h':
-            if (c == 'u') localeName = "hun"; /* Hungarian */
-            break;
-        case 'i':
-            if (c == 's') localeName = "isl"; /* Icelandic */
-            else if (c == 't') localeName = "ita"; /* Italian */
-            break;
-        case 'j':
-            if (c == 'a') localeName = "jpn"; /* Japanese */
-            break;
-        case 'k':
-            if (c == 'o') localeName = "kor"; /* Korean */
-            break;
-        case 'n':
-            if (c == 'l') localeName = "nld"; /* Dutch */
-            else if (c == 'o') localeName = "norwegian";
-            break;
-        case 'p':
-            if (c == 'l') localeName = "plk"; /* Polish */
-            else if (c == 't') localeName = "ptg"; /* Portuguese */
-            break;
-        case 'r':
-            if (c == 'u') localeName = "rus"; /* Russian */
-            break;
-        case 's':
-            if (c == 'k') localeName = "sky"; /* Slovak */
-            else if (c == 'v') localeName = "sve"; /* Swedish */
-            break;
-        case 't':
-            if (c == 'r') localeName = "trk"; /* Turkish */
-            break;
-        case 'z':
-            if (c == 'h') localeName = "chinese";
-            break;
-    }
-    
-    if (localeName == NULL)
-        return(NULL);
-
-    return(_create_locale(LC_COLLATE, localeName));
-#endif
-
-#ifdef XSLT_LOCALE_NONE
-    return(NULL);
-#endif
+    return(region);
 }
 
 /**
@@ -316,10 +327,6 @@ void
 xsltFreeLocale(xsltLocale locale) {
 #ifdef XSLT_LOCALE_XLOCALE
     freelocale(locale);
-#endif
-
-#ifdef XSLT_LOCALE_MSVCRT
-    _free_locale(locale);
 #endif
 }
 
@@ -354,71 +361,26 @@ xsltStrxfrm(xsltLocale locale, const xmlChar *string)
     r = strxfrm_l((char *)xstr, (const char *)string, xstrlen, locale);
 #endif
 
-#ifdef XSLT_LOCALE_MSVCRT
-    wchar_t *wcs;
-    wchar_t dummy;
-    int wcslen;
-    int i, j;
-    
-    /* convert UTF8 to Windows wide chars (UTF16) */
-    
-    wcslen = xmlUTF8Strlen(string);
-    if (wcslen < 0) {
-	xsltTransformError(NULL, NULL, NULL,
-	    "xsltStrxfrm : invalid UTF-8 string\n");
+#ifdef XSLT_LOCALE_WINAPI
+    xstrlen = MultiByteToWideChar(CP_UTF8, 0, string, -1, NULL, 0);
+    if (xstrlen == 0) {
+        xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : MultiByteToWideChar check failed\n");
         return(NULL);
     }
-    wcs = (wchar_t *) xmlMalloc(sizeof(wchar_t) * (wcslen + 1));
-    if (wcs == NULL) {
-	xsltTransformError(NULL, NULL, NULL,
-	    "xsltStrxfrm : out of memory error\n");
-	return(NULL);
-    }
-
-    for (i=0, j=0; i<wcslen; ++i) {
-        int len = 4; /* not really, but string is already checked */
-        int c = xmlGetUTF8Char(string, &len);
-#if 0        
-        if (c < 0) {
-	    xsltTransformError(NULL, NULL, NULL,
-	        "xsltStrxfrm : invalid UTF-8 string\n");
-            xmlFree(wcs);
-            return(NULL);
-        }
-#endif
-
-        if (c == (wchar_t)c) {
-            wcs[j] = (wchar_t)c;
-            ++j;
-        }
-        
-        string += len;
-    }
-    
-    wcs[j] = 0;
-    
-    /* _wcsxfrm_l needs a dummy strDest because it always writes at least one
-       terminating zero wchar */
-    xstrlen = _wcsxfrm_l(&dummy, wcs, 0, locale);
-    if (xstrlen == INT_MAX) {
-	xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : strxfrm failed\n");
-        xmlFree(wcs);
-        return(NULL);
-    }
-    ++xstrlen;
-    xstr = (wchar_t *) xmlMalloc(sizeof(wchar_t) * xstrlen);
+    xstr = (xsltLocaleChar*) xmlMalloc(xstrlen * sizeof(xsltLocaleChar));
     if (xstr == NULL) {
-	xsltTransformError(NULL, NULL, NULL,
-	    "xsltStrxfrm : out of memory error\n");
-        xmlFree(wcs);
-	return(NULL);
+        xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : out of memory\n");
+        return(NULL);
     }
+    r = MultiByteToWideChar(CP_UTF8, 0, string, -1, xstr, xstrlen);
+    if (r == 0) {
+        xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : MultiByteToWideChar failed\n");
+        xmlFree(xstr);
+        return(NULL);
+    }
+    return(xstr);
+#endif /* XSLT_LOCALE_WINAPI */
 
-    r = _wcsxfrm_l(xstr, wcs, xstrlen, locale);
-    
-    xmlFree(wcs);
-#endif /* XSLT_LOCALE_MSVCRT */
-    
     if (r >= xstrlen) {
 	xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : strxfrm failed\n");
         xmlFree(xstr);
@@ -431,6 +393,7 @@ xsltStrxfrm(xsltLocale locale, const xmlChar *string)
 
 /**
  * xsltLocaleStrcmp:
+ * @locale: a locale identifier
  * @str1: a string transformed with xsltStrxfrm
  * @str2: a string transformed with xsltStrxfrm
  *
@@ -441,13 +404,79 @@ xsltStrxfrm(xsltLocale locale, const xmlChar *string)
  *         0 if str1 and str2 are equal wrt sorting
  */
 int
-xsltLocaleStrcmp(const xsltLocaleChar *str1, const xsltLocaleChar *str2) {
-#ifdef XSLT_LOCALE_MSVCRT
+xsltLocaleStrcmp(xsltLocale locale, const xsltLocaleChar *str1, const xsltLocaleChar *str2) {
+    (void)locale;
+#ifdef XSLT_LOCALE_WINAPI
+{
+    int ret;
     if (str1 == str2) return(0);
     if (str1 == NULL) return(-1);
     if (str2 == NULL) return(1);
-    return(wcscmp(str1, str2));
+    ret = CompareStringW(locale, 0, str1, -1, str2, -1);
+    if (ret == 0) {
+        xsltTransformError(NULL, NULL, NULL, "xsltLocaleStrcmp : CompareStringW fail\n");
+        return(0);
+    }
+    return(ret - 2);
+}
 #else
     return(xmlStrcmp(str1, str2));
 #endif
 }
+
+#ifdef XSLT_LOCALE_WINAPI
+BOOL CALLBACK
+xsltCountSupportedLocales(LPSTR lcid) {
+    (void) lcid;
+    ++xsltLocaleListSize;
+    return(TRUE);
+}
+
+BOOL CALLBACK
+xsltIterateSupportedLocales(LPSTR lcid) {
+    static int count = 0;
+    xmlChar    iso639lang [XSLTMAX_ISO639LANGLEN  +1];
+    xmlChar    iso3136ctry[XSLTMAX_ISO3166CNTRYLEN+1];
+    int        k, l;
+    xsltRFC1766Info *p = xsltLocaleList + count;
+
+    k = sscanf(lcid, "%lx", (long*)&p->lcid);
+    if (k < 1) goto end;
+    /*don't count terminating null character*/
+    k = GetLocaleInfoA(p->lcid, LOCALE_SISO639LANGNAME , iso639lang , sizeof(iso639lang ));
+    if (--k < 1) goto end;
+    l = GetLocaleInfoA(p->lcid, LOCALE_SISO3166CTRYNAME, iso3136ctry, sizeof(iso3136ctry));
+    if (--l < 1) goto end;
+
+    {  /*fill results*/
+	xmlChar    *q = p->tag;
+	memcpy(q, iso639lang, k);
+	q += k;
+	*q++ = '-';
+	memcpy(q, iso3136ctry, l);
+	q += l;
+	*q = '\0';
+    }
+    ++count;
+end:
+    return((count < xsltLocaleListSize) ? TRUE : FALSE);
+}
+
+
+static void
+xsltEnumSupportedLocales(void) {
+    xmlRMutexLock(xsltLocaleMutex);
+    if (xsltLocaleListSize <= 0) {
+	size_t len;
+
+	EnumSystemLocalesA(xsltCountSupportedLocales, LCID_SUPPORTED);
+
+	len = xsltLocaleListSize * sizeof(xsltRFC1766Info);
+	xsltLocaleList = xmlMalloc(len);
+	memset(xsltLocaleList, 0, len);
+	EnumSystemLocalesA(xsltIterateSupportedLocales, LCID_SUPPORTED);
+    }
+    xmlRMutexUnlock(xsltLocaleMutex);
+}
+
+#endif /*def XSLT_LOCALE_WINAPI*/

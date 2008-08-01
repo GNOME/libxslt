@@ -391,7 +391,7 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
             break;
         case XSLT_FUNC_SORT: {
 		xsltStyleItemSortPtr item = (xsltStyleItemSortPtr) comp;
-		if (item->locale != NULL)
+		if (item->locale != (xsltLocale)0)
 		    xsltFreeLocale(item->locale);
 		if (item->comp != NULL)
 		    xmlXPathFreeCompExpr(item->comp);
@@ -489,7 +489,7 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
 	    break;
     }
 #else    
-    if (comp->locale != NULL)
+    if (comp->locale != (xsltLocale)0)
 	xsltFreeLocale(comp->locale);
     if (comp->comp != NULL)
 	xmlXPathFreeCompExpr(comp->comp);
@@ -736,7 +736,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 	comp->locale = xsltNewLocale(comp->lang);
     }
     else {
-        comp->locale = NULL;
+        comp->locale = (xsltLocale)0;
     }
 
     comp->select = xsltGetCNsProp(style, inst,(const xmlChar *)"select", XSLT_NAMESPACE);

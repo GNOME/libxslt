@@ -34,7 +34,9 @@
 
 #ifdef _WIN32
 #include <stdlib.h>             /* for _MAX_PATH */
+#ifndef PATH_MAX
 #define PATH_MAX _MAX_PATH
+#endif
 #endif
 
 #ifdef WITH_XSLT_DEBUG

@@ -107,7 +107,7 @@ function usage()
 	txt += "  zlib:       Use zlib library (" + (withZlib? "yes" : "no") + ")\n";
 	txt += "  crypto:     Enable Crypto support (" + (withCrypto? "yes" : "no") + ")\n";
 	txt += "  modules:    Enable Module support (" + (withModules? "yes" : "no") + ")\n";
-	txt += "  locale:     Enable Locale support, requires msvcr80.dll (" + (withLocale? "yes" : "no") + ")\n";
+	txt += "  locale:     Enable Locale support, requires unicode OS support (" + (withLocale? "yes" : "no") + ")\n";
 	txt += "\nWin32 build options, default value given in parentheses:\n\n";
 	txt += "  compiler:   Compiler to be used [msvc|mingw] (" + compiler + ")\n";
 	txt += "  cruntime:   C-runtime compiler option (only msvc) (" + cruntime + ")\n";
@@ -244,8 +244,8 @@ function configureXslt()
 			of.WriteLine(s.replace(/\@WITH_MODULES\@/, withModules? "1" : "0"));
 		} else if (s.search(/\@XSLT_LOCALE_XLOCALE\@/) != -1) {
 			of.WriteLine(s.replace(/\@XSLT_LOCALE_XLOCALE\@/, "0"));
-		} else if (s.search(/\@XSLT_LOCALE_MSVCRT\@/) != -1) {
-			of.WriteLine(s.replace(/\@XSLT_LOCALE_MSVCRT\@/, withLocale? "1" : "0"));
+		} else if (s.search(/\@XSLT_LOCALE_WINAPI\@/) != -1) {
+			of.WriteLine(s.replace(/\@XSLT_LOCALE_WINAPI\@/, withLocale? "1" : "0"));
 		} else if (s.search(/\@LIBXSLT_DEFAULT_PLUGINS_PATH\@/) != -1) {
 			of.WriteLine(s.replace(/\@LIBXSLT_DEFAULT_PLUGINS_PATH\@/, "NULL"));
 		} else

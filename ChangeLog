@@ -1,3 +1,12 @@
+Fri Aug  1 10:16:48 CEST 2008 Daniel Veillard <veillard@redhat.com>
+
+	* libxslt/xsltconfig.h.in libxslt/xslt.c libxslt/extensions.c
+	  libxslt/xsltlocale.c libxslt/preproc.c libxslt/xsltutils.c
+	  libxslt/xsltlocale.h libxslt/win32config.h configure.in
+	  config.h.in win32/configure.js: big patch from Roumen Petrov
+	  finishing xsl:sort lang support with many portability issues
+	  fixed and feedback from Nick Wellnhofer and Rob Richards
+
 Fri Aug  1 07:54:02 CEST 2008 Daniel Veillard <veillard@redhat.com>
 
 	* libexslt/crypto.c: fix for CVE-2008-2935 libexslt RC4
@@ -39,7 +48,8 @@ Tue Jun 24 23:55:48 PST 2008 William Brack <wbrack@mmm.com.hk>
 Fri Jun 13 10:58:52 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
 	* libxslt/libxslt.h libexslt/libexslt.h libexslt/exslt.h: patch
-	  from Roumen Petrov fixing include path when compiling with MinGW
+	  from Roumen Petrov fixing include path when compiling outside
+	  source tree
 
 Thu Jun 12 11:23:23 CEST 2008 Daniel Veillard <daniel@veillard.com>
 
