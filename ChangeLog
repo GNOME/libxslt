@@ -1,3 +1,10 @@
+Wed Aug  6 20:10:08 HKT 2008 William Brack <wbrack@mmm.com.hk>
+
+	* Minor cleanup of "typo" and some compilation warnings:
+	  tests/namespaces/tst7.xsl: fixed typo detected by new libxml2 code
+	  libxslt/keys.c, libxslt/xsltlocale.c, libexslt/date.c: trivial
+	  changes for gcc warnings.
+
 Fri Aug  1 10:16:48 CEST 2008 Daniel Veillard <veillard@redhat.com>
 
 	* libxslt/xsltconfig.h.in libxslt/xslt.c libxslt/extensions.c

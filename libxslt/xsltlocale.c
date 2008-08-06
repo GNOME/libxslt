@@ -84,7 +84,7 @@ xsltNewLocale(const xmlChar *languageTag) {
     const xmlChar *p = languageTag;
     const char *region = NULL;
     char *q = localeName;
-    int c, i, llen;
+    int i, llen;
     
     /* Convert something like "pt-br" to "pt_BR.utf8" */
     
@@ -123,7 +123,7 @@ xsltNewLocale(const xmlChar *languageTag) {
     if (llen != 2)
         return(NULL);
 
-    region = xsltDefaultRegion(localeName);
+    region = (char *)xsltDefaultRegion((xmlChar *)localeName);
     if (region == NULL)
         return(NULL);
      
@@ -184,7 +184,8 @@ end:
 static const xmlChar*
 xsltDefaultRegion(const xmlChar *localeName) {
     xmlChar c;
-    const xmlChar *region = NULL;
+    /* region should be xmlChar, but gcc warns on all string assignments */
+    const char *region = NULL;
     
     c = localeName[1];
     /* This is based on the locales from glibc 2.3.3 */
@@ -315,7 +316,7 @@ xsltDefaultRegion(const xmlChar *localeName) {
             else if (c == 'u') region = "ZA";
             break;
     }
-    return(region);
+    return((xmlChar *)region);
 }
 
 /**

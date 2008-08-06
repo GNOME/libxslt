@@ -747,7 +747,7 @@ static exsltDateValPtr
 exsltDateCurrent (void)
 {
     struct tm localTm, gmTm;
-    time_t secs, gsecs;
+    time_t secs;
     int local_s, gm_s;
     exsltDateValPtr ret;
 
@@ -2176,7 +2176,7 @@ exsltDateWeekInYear (const xmlChar *dateTime)
 	year = dt->value.date.year - 1;
 	if(year == 0) year--;
 	diy = DAY_IN_YEAR(31, 12, year) + diy;
-    } else if (diy > DAY_IN_YEAR(31, 12, dt->value.date.year)) {
+    } else if (diy > (long)DAY_IN_YEAR(31, 12, dt->value.date.year)) {
 	diy -= DAY_IN_YEAR(31, 12, dt->value.date.year);
     }
 
