@@ -984,8 +984,10 @@ restart:
 			/*
 			 * recompute the index
 			 */
-			xmlNodePtr siblings = node->parent->children;
 			xmlNodePtr parent = node->parent;
+			xmlNodePtr siblings = NULL;
+
+                        if (parent) siblings = parent->children;
 
 			while (siblings != NULL) {
 			    if (siblings->type == XML_ELEMENT_NODE) {
@@ -1088,8 +1090,10 @@ restart:
 			/*
 			 * recompute the index
 			 */
-			xmlNodePtr siblings = node->parent->children;
 			xmlNodePtr parent = node->parent;
+			xmlNodePtr siblings = NULL;
+
+                        if (parent) siblings = parent->children;
 
 			while (siblings != NULL) {
 			    if (siblings->type == XML_ELEMENT_NODE) {
