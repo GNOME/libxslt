@@ -1,3 +1,8 @@
+Tue Oct 28 11:55:27 CET 2008 Daniel Veillard <veillard@redhat.com>
+
+	* configure.in Makefile.am: patch from Richard Jones to build
+	  shared libs with MinGW cross-compiler
+
 Tue Oct  7 18:16:08 CEST 2008 Daniel Veillard <veillard@redhat.com>
 
 	* libxslt/pattern.c: prevent some unchecked pointer accesses, patch
