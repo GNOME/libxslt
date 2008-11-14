@@ -24,7 +24,7 @@ EXTRA_DIST = 			\
 	libxslt-python-api.xml	\
 	$(DOCS)
 
-libxsltmod_la_LDFLAGS = -module -avoid-version
+libxsltmod_la_LDFLAGS =  $(WIN32_EXTRA_LDFLAGS) -module -avoid-version
 
 if WITH_PYTHON
 mylibs = \

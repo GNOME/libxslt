@@ -3,7 +3,6 @@ AC_PREREQ(2.2)
 AC_INIT(libxslt/xslt.c)
 AM_CONFIG_HEADER(config.h)
 AC_CANONICAL_HOST
-AC_LIBTOOL_WIN32_DLL
 AC_GNU_SOURCE
 
 dnl
@@ -105,6 +104,8 @@ AC_PATH_PROG(MV, mv, /bin/mv)
 AC_PATH_PROG(TAR, tar, /bin/tar)
 
 AC_STDC_HEADERS
+
+AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 
 
@@ -588,6 +589,9 @@ fi
 WIN32_EXTRA_LIBADD=
 WIN32_EXTRA_LDFLAGS=
 case "$host" in
+ *-*-cygwin*)
+ WIN32_EXTRA_LDFLAGS="-no-undefined"
+ ;;
  *-*-mingw*)
  WIN32_EXTRA_LIBADD="-lwsock32"
  WIN32_EXTRA_LDFLAGS="-no-undefined"

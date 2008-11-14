@@ -1,3 +1,9 @@
+Fri Nov 14 15:06:55 CET 2008 Daniel Veillard <veillard@redhat.com>
+
+	* python/Makefile.am libxslt/Makefile.am configure.in
+	  libexslt/Makefile.am: applied patch from Roumen Petrov for
+	  mingw cross compilation problems raised by Rich Jones
+
 Tue Oct 28 11:55:27 CET 2008 Daniel Veillard <veillard@redhat.com>
 
 	* configure.in Makefile.am: patch from Richard Jones to build

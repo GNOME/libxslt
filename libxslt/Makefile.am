@@ -53,7 +53,7 @@ libxslt_la_SOURCES = 			\
 	libxslt.h
 
 libxslt_la_LIBADD = $(EXTRA_LIBS)
-libxslt_la_LDFLAGS = -version-info @LIBXSLT_VERSION_INFO@ -no-undefined
+libxslt_la_LDFLAGS = $(WIN32_EXTRA_LDFLAGS) -version-info @LIBXSLT_VERSION_INFO@
 
 man_MANS = libxslt.3
 
