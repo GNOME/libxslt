@@ -1,3 +1,8 @@
+Fri Jan 23 19:02:28 PST 2009 William Brack <wbrack@mmm.com.hk>
+
+	* libexslt/strings.c: Fixed indexing error reported by
+	  Ron Burk on the mailing list.
+
 Fri Nov 14 15:06:55 CET 2008 Daniel Veillard <veillard@redhat.com>
 
 	* python/Makefile.am libxslt/Makefile.am configure.in

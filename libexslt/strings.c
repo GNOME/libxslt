@@ -589,15 +589,14 @@ exsltStrReplaceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
       }
 
       str = xmlXPathPopString(ctxt);
-			ret = xmlStrdup(str);
+      ret = xmlStrdup(str);
 
-			for (i = 0; i < searchSet->nodeNr; i++) {
-
-				searchStr = xmlXPathCastNodeToString(searchSet->nodeTab[i]);
+      for (i = 0; i < searchSet->nodeNr; i++) {
+	searchStr = xmlXPathCastNodeToString(searchSet->nodeTab[i]);
 
         if (replaceSet != NULL) {
           replaceStr = NULL;
-          if (i <= replaceSet->nodeNr) {
+          if (i < replaceSet->nodeNr) {
             replaceStr = xmlXPathCastNodeToString(replaceSet->nodeTab[i]);
           }
 
