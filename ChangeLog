@@ -1,3 +1,8 @@
+Tue May 12 09:03:46 CEST 2009 Daniel Veillard <veillard@redhat.com>
+
+	* configure.in: adapt the extra version detection code to git
+	* libxslt.doap: adding RDF dope file
+
 Fri Jan 23 19:02:28 PST 2009 William Brack <wbrack@mmm.com.hk>
 
 	* libexslt/strings.c: Fixed indexing error reported by
