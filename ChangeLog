@@ -1,3 +1,7 @@
+Fri Jul 24 10:16:24 CEST 2009 Daniel Veillard <veillard@redhat.com>
+
+	* libxslt/attributes.c: fix an IDness issue when building the tree
+
 Tue May 12 09:03:46 CEST 2009 Daniel Veillard <veillard@redhat.com>
 
 	* configure.in: adapt the extra version detection code to git
