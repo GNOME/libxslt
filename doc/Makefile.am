@@ -196,7 +196,7 @@ install-data-local:
 
 dist-hook:
 	(cd $(srcdir) ; tar cvf - *.1 *.html site.xsl news.xsl xsa.xsl \
-	  *.gif html/*.html html/*.png tutorial*/libxslt*) | \
+	  *.gif *.png images html/*.html html/*.png tutorial*/libxslt*) | \
 	  (cd $(distdir); tar xf -)
 
 .PHONY : html EXSLT EXSLT/html
