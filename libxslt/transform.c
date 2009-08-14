@@ -419,6 +419,8 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     xsltDocumentPtr docu;
     int i;
 
+    xsltInitGlobals();
+
     cur = (xsltTransformContextPtr) xmlMalloc(sizeof(xsltTransformContext));
     if (cur == NULL) {
 	xsltTransformError(NULL, NULL, (xmlNodePtr)doc,
@@ -5835,6 +5837,8 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     const xmlChar *version;
     xsltStackElemPtr variables;
     xsltStackElemPtr vptr;
+
+    xsltInitGlobals();
 
     if ((style == NULL) || (doc == NULL))
         return (NULL);

@@ -6289,6 +6289,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr style, xmlDocPtr doc)
     xmlNodePtr cur;
     int oldIsSimplifiedStylesheet;
 
+    xsltInitGlobals();
 
     if ((style == NULL) || (doc == NULL))
 	return(NULL);
@@ -6344,6 +6345,8 @@ xsltParseStylesheetProcess(xsltStylesheetPtr style, xmlDocPtr doc)
 xsltStylesheetPtr
 xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
     xmlNodePtr cur;
+
+    xsltInitGlobals();
 
     if (doc == NULL)
 	return(NULL);
@@ -6631,6 +6634,8 @@ xsltStylesheetPtr
 xsltParseStylesheetDoc(xmlDocPtr doc) {
     xsltStylesheetPtr ret;
 
+    xsltInitGlobals();
+
     ret = xsltParseStylesheetImportedDoc(doc, NULL);
     if (ret == NULL)
 	return(NULL);
@@ -6665,6 +6670,7 @@ xsltParseStylesheetFile(const xmlChar* filename) {
     xsltStylesheetPtr ret;
     xmlDocPtr doc;
     
+    xsltInitGlobals();
 
     if (filename == NULL)
 	return(NULL);
@@ -6825,6 +6831,8 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
     xsltStylesheetPtr ret = NULL;
     xmlChar *href = NULL;
     xmlURIPtr URI;
+
+    xsltInitGlobals();
 
     if (doc == NULL)
 	return(NULL);
