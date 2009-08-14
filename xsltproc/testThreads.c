@@ -12,6 +12,7 @@
  */
 
 #include "config.h"
+#include "libexslt/exslt.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -30,6 +31,7 @@
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 #include <libxslt/extensions.h>
+#include <libexslt/exsltconfig.h>
 #include <pthread.h>
 #include <string.h>
 #if !defined(_MSC_VER)
@@ -179,12 +181,22 @@ main(void)
 
     xmlInitParser();
 
+    /*
+     * Register the EXSLT extensions and the test module
+     */
+    exsltRegisterAll();
+    xsltRegisterTestModule();
+
+    /*
+     * Register our own extension module
+     */
     registerFooModule();
 
     /*
      * First pass each thread has its own version of the stylesheet
      * each of them will initialize and shutdown the extension
      */
+    printf("Pass 1\n");
     for (repeat = 0;repeat < 500;repeat++) {
 	for (i = 0; i < num_threads; i++) {
 	    results[i] = NULL;
@@ -212,6 +224,7 @@ main(void)
      * Second pass all threads share the same stylesheet instance
      * look for transformation clashes
      */
+    printf("Pass 2\n");
     for (repeat = 0;repeat < 500;repeat++) {
         xmlDocPtr style;
         xsltStylesheetPtr cur;
@@ -251,6 +264,7 @@ main(void)
     xsltCleanupGlobals();
     xmlCleanupParser();
     xmlMemoryDump();
+    printf("Ok\n");
     return (0);
 }
 #else /* !LIBXML_THREADS_ENABLED | !HAVE_PTHREAD_H */
