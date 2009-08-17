@@ -375,15 +375,16 @@ xsltExtModuleRegisterDynamic(const xmlChar * URI)
     /* determine module directory */
     ext_directory = (xmlChar *) getenv("LIBXSLT_PLUGINS_PATH");
 
-#ifdef WITH_XSLT_DEBUG_EXTENSIONS
-    xsltGenericDebug(xsltGenericDebugContext,
-                     "LIBXSLT_PLUGINS_PATH is %s\n", ext_directory);
-#endif
-
-    if (NULL == ext_directory)
+    if (NULL == ext_directory) {
         ext_directory = BAD_CAST LIBXSLT_DEFAULT_PLUGINS_PATH();
-    if (NULL == ext_directory)
-        return (-1);
+	if (NULL == ext_directory)
+	  return (-1);
+    }
+#ifdef WITH_XSLT_DEBUG_EXTENSIONS
+    else
+      xsltGenericDebug(xsltGenericDebugContext,
+		       "LIBXSLT_PLUGINS_PATH is %s\n", ext_directory);
+#endif
 
     /* build the module filename, and confirm the module exists */
     xmlStrPrintf((xmlChar *) module_filename, sizeof(module_filename),
