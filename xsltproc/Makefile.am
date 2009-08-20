@@ -16,7 +16,7 @@ xsltproc_DEPENDENCIES = $(DEPS)
 testThreads_SOURCES=testThreads.c
 testThreads_LDFLAGS =
 testThreads_DEPENDENCIES = $(DEPS)
-testThreads_LDADD= $(LDADDS)
+testThreads_LDADD=  $(THREAD_LIBS) $(LDADDS)
 
 DEPS = $(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la 
