@@ -86,17 +86,19 @@ AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 
 # AM_MAINTAINER_MODE
 
-AC_ARG_WITH(html-dir, [  --with-html-dir=PATH path to installed docs ])
-
 dnl
 dnl Specific dir for HTML output ?
 dnl
 
-if test "x$with_html_dir" = "x" ; then
-  HTML_DIR='$(prefix)/doc'
-else
-  HTML_DIR=$with_html_dir
-fi
+AC_ARG_WITH(html-dir, AC_HELP_STRING([--with-html-dir=path],
+            [path to base html directory, default $datadir/doc/html]),
+            [HTML_DIR=$withval], [HTML_DIR='$(datadir)/doc'])
+
+AC_ARG_WITH(html-subdir, AC_HELP_STRING([--with-html-subdir=path],
+            [directory used under html-dir, default $PACKAGE-$VERSION/html]),
+            [test "x$withval" != "x" && HTML_DIR="$HTML_DIR/$withval"],
+            [HTML_DIR="$HTML_DIR/\$(PACKAGE)-\$(VERSION)/html"])
+
 AC_SUBST(HTML_DIR)
 
 dnl
