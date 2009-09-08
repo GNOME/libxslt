@@ -1424,15 +1424,19 @@ xsltExtModuleFunctionLookup(const xmlChar * name, const xmlChar * URI)
 
     XML_CAST_FPTR(ret) = xmlHashLookup2(xsltFunctionsHash, name, URI);
 
+    xmlMutexUnlock(xsltExtMutex);
+
     /* if lookup fails, attempt a dynamic load on supported platforms */
     if (NULL == ret) {
         if (!xsltExtModuleRegisterDynamic(URI)) {
+            xmlMutexLock(xsltExtMutex);
+
             XML_CAST_FPTR(ret) =
                 xmlHashLookup2(xsltFunctionsHash, name, URI);
+
+            xmlMutexUnlock(xsltExtMutex);
         }
     }
-
-    xmlMutexUnlock(xsltExtMutex);
 
     return ret;
 }
