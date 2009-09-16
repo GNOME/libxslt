@@ -1697,6 +1697,7 @@ xsltApplyFallbacks(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *									*
  ************************************************************************/
 
+static
 void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			xsltStackElemPtr params);
 /**
