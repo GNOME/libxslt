@@ -4940,13 +4940,14 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 	     * okay this is an extension element compile it too
 	     */
 	    xsltStylePreCompute(style, cur);
-	} else {
+	}
+	else if (cur->type == XML_ELEMENT_NODE)
+	{
 	    /*
 	     * This is an element which will be output as part of the
 	     * template exectution, precompile AVT if found.
 	     */
-	    if ((cur->ns == NULL) && (style->defaultAlias != NULL) &&
-	    		(cur->type == XML_ELEMENT_NODE)) {
+	    if ((cur->ns == NULL) && (style->defaultAlias != NULL)) {
 		cur->ns = xmlSearchNsByHref(cur->doc, cur,
 			style->defaultAlias);
 	    }
