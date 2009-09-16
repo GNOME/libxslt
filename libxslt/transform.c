@@ -1964,7 +1964,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *
  * Process the source node.
  */
-void
+static void
 xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
 	           xsltStackElemPtr withParams)
 {
