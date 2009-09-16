@@ -1248,10 +1248,6 @@ struct _xsltVarInfo {
     const xmlChar *nsName;
 };
 
-#define XSLT_ELEMENT_CATEGORY_XSLT 0
-#define XSLT_ELEMENT_CATEGORY_EXTENSION 1
-#define XSLT_ELEMENT_CATEGORY_LRE 2
-
 /**
  * xsltCompilerNodeInfo:
  *
@@ -1420,9 +1416,6 @@ struct _xsltStylePreComp {
 #endif /* XSLT_REFACTORED */
 
 
-#define XSLT_VAR_GLOBAL 1<<0
-#define XSLT_VAR_IN_SELECT 1<<1
-#define XSLT_TCTXT_VARIABLE(c) ((xsltStackElemPtr) (c)->contextVariable)
 /*
  * The in-memory structure corresponding to an XSLT Variable
  * or Param.

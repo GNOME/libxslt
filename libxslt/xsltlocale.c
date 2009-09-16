@@ -321,6 +321,7 @@ xsltDefaultRegion(const xmlChar *localeName) {
 
 /**
  * xsltFreeLocale:
+ * @locale: the locale to free
  *
  * Frees a locale created with xsltNewLocale
  */
@@ -426,6 +427,14 @@ xsltLocaleStrcmp(xsltLocale locale, const xsltLocaleChar *str1, const xsltLocale
 }
 
 #ifdef XSLT_LOCALE_WINAPI
+/**
+ * xsltCountSupportedLocales:
+ * @lcid: not used
+ *
+ * callback used to count locales
+ *
+ * Returns TRUE
+ */
 BOOL CALLBACK
 xsltCountSupportedLocales(LPSTR lcid) {
     (void) lcid;
@@ -433,6 +442,14 @@ xsltCountSupportedLocales(LPSTR lcid) {
     return(TRUE);
 }
 
+/**
+ * xsltIterateSupportedLocales:
+ * @lcid: not used
+ *
+ * callback used to track locales
+ *
+ * Returns TRUE if not at the end of the array
+ */
 BOOL CALLBACK
 xsltIterateSupportedLocales(LPSTR lcid) {
     static int count = 0;

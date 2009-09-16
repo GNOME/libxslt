@@ -36,6 +36,10 @@ typedef wchar_t xsltLocaleChar;
 
 #else
 
+/*
+ * XSLT_LOCALE_NONE:
+ * Macro indicating that locale are not supported
+ */
 #ifndef XSLT_LOCALE_NONE
 #define XSLT_LOCALE_NONE
 #endif

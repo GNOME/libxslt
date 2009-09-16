@@ -517,10 +517,13 @@ fprintf(stderr, "xsltInitDocKeyTable %s done\n", name);
 
 /**
  * xsltInitAllDocKeys:
+ * @ctxt: transformation context
  *
  * INTERNAL ROUTINE ONLY
  *
  * Check if any keys on the current document need to be computed
+ *
+ * Returns 0 in case of success, -1 in case of failure
  */
 int
 xsltInitAllDocKeys(xsltTransformContextPtr ctxt)

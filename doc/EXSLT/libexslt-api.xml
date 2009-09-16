@@ -81,7 +81,7 @@
       <return type='void'/>
     </function>
     <function name='exsltCryptoRegister' file='exslt'>
-      <info></info>
+      <info>Registers the EXSLT - Crypto module</info>
       <return type='void'/>
     </function>
     <function name='exsltDateRegister' file='exslt'>

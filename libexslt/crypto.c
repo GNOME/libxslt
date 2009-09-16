@@ -140,7 +140,7 @@ exsltCryptoCryptoApiReportError (xmlXPathParserContextPtr ctxt,
     LocalFree (lpMsgBuf);
 }
 
-HCRYPTHASH
+static HCRYPTHASH
 exsltCryptoCryptoApiCreateHash (xmlXPathParserContextPtr ctxt,
 				HCRYPTPROV hCryptProv, ALG_ID algorithm,
 				const char *msg, unsigned int msglen,
@@ -203,7 +203,7 @@ exsltCryptoCryptoApiHash (xmlXPathParserContextPtr ctxt,
     CryptReleaseContext (hCryptProv, 0);
 }
 
-void
+static void
 exsltCryptoCryptoApiRc4Encrypt (xmlXPathParserContextPtr ctxt,
 				const unsigned char *key,
 				const unsigned char *msg, int msglen,
@@ -254,7 +254,7 @@ exsltCryptoCryptoApiRc4Encrypt (xmlXPathParserContextPtr ctxt,
     CryptReleaseContext (hCryptProv, 0);
 }
 
-void
+static void
 exsltCryptoCryptoApiRc4Decrypt (xmlXPathParserContextPtr ctxt,
 				const unsigned char *key,
 				const unsigned char *msg, int msglen,
@@ -801,6 +801,11 @@ exsltCryptoRegister (void) {
 }
 
 #else
+/**
+ * exsltCryptoRegister:
+ *
+ * Registers the EXSLT - Crypto module
+ */
 void
 exsltCryptoRegister (void) {
 }

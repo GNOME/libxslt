@@ -114,6 +114,9 @@
         <word name='Common'>
           <ref name='exsltCommonRegister'/>
         </word>
+        <word name='Crypto'>
+          <ref name='exsltCryptoRegister'/>
+        </word>
       </letter>
       <letter name='D'>
         <word name='Dates'>
@@ -134,6 +137,7 @@
           <ref name='EXSLT_SETS_NAMESPACE'/>
           <ref name='EXSLT_STRINGS_NAMESPACE'/>
           <ref name='exsltCommonRegister'/>
+          <ref name='exsltCryptoRegister'/>
           <ref name='exsltDateRegister'/>
           <ref name='exsltDynRegister'/>
           <ref name='exsltFuncRegister'/>
@@ -169,6 +173,7 @@
       <letter name='R'>
         <word name='Registers'>
           <ref name='exsltCommonRegister'/>
+          <ref name='exsltCryptoRegister'/>
           <ref name='exsltDateRegister'/>
           <ref name='exsltDynRegister'/>
           <ref name='exsltFuncRegister'/>
@@ -260,6 +265,7 @@
         </word>
         <word name='module'>
           <ref name='exsltCommonRegister'/>
+          <ref name='exsltCryptoRegister'/>
           <ref name='exsltDateRegister'/>
           <ref name='exsltDynRegister'/>
           <ref name='exsltFuncRegister'/>

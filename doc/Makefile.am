@@ -32,6 +32,9 @@ EXTRA_DIST =			\
 	EXSLT/libexslt-refs.xml	\
 	libxslt-api.xml		\
 	libxslt-refs.xml	\
+	symbols.xml		\
+	checkapisym.xsl		\
+	syms.xsl		\
 	libxslt.xsa		\
 	newapi.xsl		\
 	news.xsl		\
@@ -137,10 +140,12 @@ EXSLT/html/index.html: EXSLT/libexslt-api.xml \
 
 
 libxslt-api.xml libxslt-refs.xml EXSLT/libexslt-api.xml \
-  EXSLT/libexslt-refs.xml: $(srcdir)/apibuild.py $(top_srcdir)/libxslt/*.h \
+  EXSLT/libexslt-refs.xml ../libxslt/libxslt.syms : $(srcdir)/apibuild.py $(top_srcdir)/libxslt/*.h \
 		$(top_srcdir)/libxslt/*.c $(top_srcdir)/libexslt/*.h \
 		$(top_srcdir)/libexslt/*.c
 	-($(srcdir)/apibuild.py)
+	($(XSLTPROC) checkapisym.xsl libxslt-api.xml)
+	($(XSLTPROC) -o ../libxslt/libxslt.syms syms.xsl symbols.xml)
 
 xsltproc.1: xsltproc.xml
 	-@(xsltproc --nonet xsltproc.xml)

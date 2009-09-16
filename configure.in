@@ -112,6 +112,8 @@ AC_PROG_CPP
 AC_PATH_PROG(RM, rm, /bin/rm)
 AC_PATH_PROG(MV, mv, /bin/mv)
 AC_PATH_PROG(TAR, tar, /bin/tar)
+AC_PATH_PROG(XMLLINT, xmllint, /usr/bin/xmllint)
+AC_PATH_PROG(XSLTPROC, xsltproc, /usr/bin/xsltproc)
 
 AC_STDC_HEADERS
 
@@ -120,6 +122,18 @@ AM_PROG_LIBTOOL
 
 
 AC_CHECK_HEADERS(sys/types.h sys/time.h stdlib.h unistd.h string.h)
+
+dnl
+dnl if the system support linker version scripts for symbol versioning
+dnl then add it
+dnl
+VERSION_SCRIPT_FLAGS=
+$(/usr/bin/ld --help 2>&1 | grep -- --version-script >/dev/null) && \
+    VERSION_SCRIPT_FLAGS=-Wl,--version-script=
+test "`uname`" == "SunOS" && \
+    VERSION_SCRIPT_FLAGS="-Wl,-M -Wl,"
+AC_SUBST(VERSION_SCRIPT_FLAGS)
+AM_CONDITIONAL([USE_VERSION_SCRIPT], [test -n "$VERSION_SCRIPT_FLAGS"])
 
 dnl Look for pthread.h, needed for testThreads
 THREAD_LIBS=""

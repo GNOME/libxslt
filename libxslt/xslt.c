@@ -56,6 +56,10 @@ const int xsltLibxmlVersion = LIBXML_VERSION;
 
 const xmlChar *xsltConstNamespaceNameXSLT = (const xmlChar *) XSLT_NAMESPACE;
 
+#define XSLT_ELEMENT_CATEGORY_XSLT 0
+#define XSLT_ELEMENT_CATEGORY_EXTENSION 1
+#define XSLT_ELEMENT_CATEGORY_LRE 2
+
 /*
 * xsltLiteralResultMarker:
 * Marker for Literal result elements, in order to avoid multiple attempts
@@ -6248,6 +6252,15 @@ xsltParseSimplifiedStylesheetTree(xsltCompilerCtxtPtr cctxt,
 }
 
 #ifdef XSLT_REFACTORED_XSLT_NSCOMP
+/**
+ * xsltRestoreDocumentNamespaces:
+ * @ns: map of namespaces
+ * @doc: the document
+ *
+ * Restore the namespaces for the document
+ *
+ * Returns 0 in case of success, -1 in case of failure
+ */
 int
 xsltRestoreDocumentNamespaces(xsltNsMapPtr ns, xmlDocPtr doc)
 {
@@ -6342,6 +6355,19 @@ xsltParseStylesheetProcess(xsltStylesheetPtr style, xmlDocPtr doc)
 
 #else /* XSLT_REFACTORED */
 
+/**
+ * xsltParseStylesheetProcess:
+ * @ret:  the XSLT stylesheet (the current stylesheet-level)
+ * @doc:  and xmlDoc parsed XML
+ *
+ * Parses an XSLT stylesheet, adding the associated structures.
+ * Called by:
+ *  xsltParseStylesheetImportedDoc() (xslt.c)
+ *  xsltParseStylesheetInclude() (imports.c)
+ *
+ * Returns the value of the @style parameter if everything
+ * went right, NULL if something went amiss.
+ */
 xsltStylesheetPtr
 xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
     xmlNodePtr cur;
