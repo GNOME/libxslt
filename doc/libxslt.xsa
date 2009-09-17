@@ -8,21 +8,13 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.23</version>
-    <last-release> Apr  8 2008</last-release>
+    <version>1.1.24</version>
+    <last-release> May 13 2008</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
-    <changes>   - Documentation: fix links for Cygwin DocBook setup (Philippe Bourcier),
-      xsltParseStylesheetDoc doc fix (Jason Viers), fix manpage default
-      maxdepth value 
-   - Bug fixes: python segfault (Daniel Gryniewicz), week-in-year bug fix
-      (Maurice van der Pot), fix python iterator problem (William Brack),
-      avoid garbage collection problems on str:tokenize and str:split
-      and function results (William Brack and Peter Pawlowski) 
-      superfluous re-generation of keys (William Brack), remove superfluous
-      code in xsltExtInitTest (Tony Graham), func:result segfault fix
-      (William Brack), timezone offset problem (Peter Pawlowski),
-   - Portability fixes: old gcrypt support fix (Brent Cowgill), Python
-      portability patch (Stephane Bidoul), VS 2008 fix (Rob Richard) 
+    <changes>   - Documentation: man page fix (Vincent Lefevre).
+   - Bug fixes: pattern bug fix, key initialization problems, exclusion of
+      unknown namespaced element on top of stylesheets, python generator
+      syntactic cleanup (Martin)
 
 </changes>
   </product>

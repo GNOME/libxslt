@@ -2565,9 +2565,6 @@
           <ref name='xsltAllocateExtra'/>
           <ref name='xsltAllocateExtraCtxt'/>
         </word>
-        <word name='Alpha-3'>
-          <ref name='xsltNewLocale'/>
-        </word>
         <word name='Apache'>
           <ref name='XSLT_XALAN_NAMESPACE'/>
         </word>
@@ -2880,7 +2877,6 @@
         </word>
         <word name='ISO'>
           <ref name='XML_CAST_FPTR'/>
-          <ref name='xsltNewLocale'/>
         </word>
         <word name='Implement'>
           <ref name='xsltDocumentFunction'/>
@@ -3400,9 +3396,6 @@
         <word name='That'>
           <ref name='XSLT_REFACTORED_KEYCOMP'/>
         </word>
-        <word name='Three-letter'>
-          <ref name='xsltNewLocale'/>
-        </word>
         <word name='TransformContext'>
           <ref name='xsltNewTransformContext'/>
         </word>
@@ -3785,7 +3778,6 @@
           <ref name='xsltGetSpecialNamespace'/>
           <ref name='xsltInitCtxtKeys'/>
           <ref name='xsltLocaleStrcmp'/>
-          <ref name='xsltNewLocale'/>
           <ref name='xsltQuoteUserParams'/>
         </word>
         <word name='argument'>
@@ -4246,9 +4238,6 @@
           <ref name='xsltCopyNamespaceList'/>
           <ref name='xsltGetNamespace'/>
           <ref name='xsltInitCtxtKeys'/>
-        </word>
-        <word name='codes'>
-          <ref name='xsltNewLocale'/>
         </word>
         <word name='collected'>
           <ref name='xsltExtensionInstructionResultRegister'/>
@@ -7626,7 +7615,6 @@
         <word name='supported'>
           <ref name='XSLT_DEFAULT_VERSION'/>
           <ref name='XSLT_LOCALE_NONE'/>
-          <ref name='xsltNewLocale'/>
         </word>
         <word name='sure'>
           <ref name='xsltAllocateExtraCtxt'/>

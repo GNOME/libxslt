@@ -1535,6 +1535,7 @@ the instruction which created the fragment
 exits'/>
       <field name='localRVTBase' type='xmlDocPtr' info=''/>
       <field name='keyInitLevel' type='int' info=' Needed to catch recursive keys issues'/>
+      <field name='funcLevel' type='int' info=' Needed to catch recursive functions issues'/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -2471,7 +2472,7 @@ exits'/>
       <arg name='function' type='xsltTransformFunction' info='the transform function'/>
     </function>
     <function name='xsltNewLocale' file='xsltlocale'>
-      <info>Creates a new locale of an opaque system dependent type based on the language tag. Three-letter language codes (ISO 639-2 Alpha-3) are not supported.</info>
+      <info>Creates a new locale of an opaque system dependent type based on the language tag.</info>
       <return type='xsltLocale' info='the locale or NULL on error or if no matching locale was found'/>
       <arg name='languageTag' type='const xmlChar *' info='RFC 3066 language tag'/>
     </function>
