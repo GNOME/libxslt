@@ -137,3 +137,9 @@ xsltproc/.deps
 xsltproc/Makefile
 xsltproc/Makefile.in
 xsltproc/xsltproc
+tests/XSLTMark/db100.xml
+tests/XSLTMark/db1000.xml
+tests/XSLTMark/db10000.xml
+tests/plugins/.libs
+tests/plugins/plugin.res
+xsltproc/testThreads
