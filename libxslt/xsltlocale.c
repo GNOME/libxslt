@@ -71,8 +71,7 @@ static void xsltEnumSupportedLocales(void);
  * @languageTag: RFC 3066 language tag
  *
  * Creates a new locale of an opaque system dependent type based on the
- * language tag. Three-letter language codes (ISO 639-2 Alpha-3) are not
- * supported.
+ * language tag.
  *
  * Returns the locale or NULL on error or if no matching locale was found
  */
@@ -80,7 +79,7 @@ xsltLocale
 xsltNewLocale(const xmlChar *languageTag) {
 #ifdef XSLT_LOCALE_XLOCALE
     xsltLocale locale;
-    char localeName[XSLTMAX_LANGTAGLEN+6]; /* 8*lang + "-" + 8*region + ".utf8\0" */
+    char localeName[XSLTMAX_LANGTAGLEN+6]; /* 6 chars for ".utf8\0" */
     const xmlChar *p = languageTag;
     const char *region = NULL;
     char *q = localeName;
@@ -115,9 +114,18 @@ xsltNewLocale(const xmlChar *languageTag) {
         if (locale != NULL)
             return(locale);
         
+        /* Continue without using country code */
+        
         q = localeName + llen + 1;
     }
     
+    /* Try locale without territory, e.g. for Esperanto (eo) */
+
+    memcpy(q, ".utf8", 6);
+    locale = newlocale(LC_COLLATE_MASK, localeName, NULL);
+    if (locale != NULL)
+        return(locale);
+
     /* Try to find most common country for language */
     
     if (llen != 2)
@@ -127,6 +135,7 @@ xsltNewLocale(const xmlChar *languageTag) {
     if (region == NULL)
         return(NULL);
      
+    q = localeName + llen + 1;
     *q++ = region[0];
     *q++ = region[1];
     memcpy(q, ".utf8", 6);
@@ -216,7 +225,7 @@ xsltDefaultRegion(const xmlChar *localeName) {
             break;
         case 'e':
             if (c == 'l') region = "GR";
-            else if (c == 'n') region = "US";
+            else if (c == 'n' || c == 'o') region = "US";
             else if (c == 's' || c == 'u') region = "ES";
             else if (c == 't') region = "EE";
             break;
