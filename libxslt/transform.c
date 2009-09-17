@@ -3220,6 +3220,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     const xmlChar *doctypePublic;
     const xmlChar *doctypeSystem;
     const xmlChar *version;
+    const xmlChar *encoding;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
         return;
@@ -3509,6 +3510,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
     XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
     XSLT_GET_IMPORT_PTR(version, style, version)
+    XSLT_GET_IMPORT_PTR(encoding, style, encoding)
 
     if ((method != NULL) &&
 	(!xmlStrEqual(method, (const xmlChar *) "xml"))) {
@@ -3568,8 +3570,8 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
     }
     res->charset = XML_CHAR_ENCODING_UTF8;
-    if (style->encoding != NULL)
-	res->encoding = xmlStrdup(style->encoding);
+    if (encoding != NULL)
+	res->encoding = xmlStrdup(encoding);
     ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
     xsltApplySequenceConstructor(ctxt, node, inst->children, NULL);
@@ -5836,6 +5838,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     const xmlChar *doctypePublic;
     const xmlChar *doctypeSystem;
     const xmlChar *version;
+    const xmlChar *encoding;
     xsltStackElemPtr variables;
     xsltStackElemPtr vptr;
 
@@ -5909,6 +5912,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     XSLT_GET_IMPORT_PTR(doctypePublic, style, doctypePublic)
     XSLT_GET_IMPORT_PTR(doctypeSystem, style, doctypeSystem)
     XSLT_GET_IMPORT_PTR(version, style, version)
+    XSLT_GET_IMPORT_PTR(encoding, style, encoding)
 
     if ((method != NULL) &&
 	(!xmlStrEqual(method, (const xmlChar *) "xml")))
@@ -5997,8 +6001,8 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 #endif
     }
     res->charset = XML_CHAR_ENCODING_UTF8;
-    if (style->encoding != NULL)
-        res->encoding = xmlStrdup(style->encoding);
+    if (encoding != NULL)
+        res->encoding = xmlStrdup(encoding);
     variables = style->variables;
 
     /*
