@@ -6912,8 +6912,14 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 		    "xml-stylesheet : no ID %s found\n", URI->fragment);
 	    } else {
 		xmlDocPtr fake;
-		xmlNodePtr subtree;
+		xmlNodePtr subtree, newtree;
+		xmlNsPtr ns;
 
+#ifdef WITH_XSLT_DEBUG
+		xsltGenericDebug(xsltGenericDebugContext,
+		    "creating new document from %s for embedded stylesheet\n",
+		    doc->URL);
+#endif
 		/*
 		 * move the subtree in a new document passed to
 		 * the stylesheet analyzer
@@ -6921,20 +6927,38 @@ xsltLoadStylesheetPI(xmlDocPtr doc) {
 		subtree = ID->parent;
 		fake = xmlNewDoc(NULL);
 		if (fake != NULL) {
-                    /*
-		     * the dictionary should be shared since nodes are
-		     * moved over.
-		     */
+		    /*
+		    * Should the dictionary still be shared even though
+		    * the nodes are being copied rather than moved?
+		    */
 		    fake->dict = doc->dict;
 		    xmlDictReference(doc->dict);
 #ifdef WITH_XSLT_DEBUG
 		    xsltGenericDebug(xsltGenericDebugContext,
-                         "reusing dictionary from %s for stylesheet\n",
-			 doc->URL);
+			"reusing dictionary from %s for embedded stylesheet\n",
+			doc->URL);
 #endif
 
-		    xmlUnlinkNode(subtree);
-		    xmlAddChild((xmlNodePtr) fake, subtree);
+		    newtree = xmlDocCopyNode(subtree, fake, 1);
+
+		    fake->URL = xmlNodeGetBase(doc, subtree->parent);
+#ifdef WITH_XSLT_DEBUG
+		    xsltGenericDebug(xsltGenericDebugContext,
+			"set base URI for embedded stylesheet as %s\n",
+			fake->URL);
+#endif
+
+		    /*
+		    * Add all namespaces in scope of embedded stylesheet to
+		    * root element of newly created stylesheet document
+		    */
+		    while ((subtree = subtree->parent) != (xmlNodePtr)doc) {
+			for (ns = subtree->ns; ns; ns = ns->next) {
+			    xmlNewNs(newtree,  ns->href, ns->prefix);
+			}
+		    }
+
+		    xmlAddChild((xmlNodePtr)fake, newtree);
 		    ret = xsltParseStylesheetDoc(fake);
 		    if (ret == NULL)
 			xmlFreeDoc(fake);
