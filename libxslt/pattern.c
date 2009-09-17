@@ -1420,7 +1420,7 @@ xsltScanQName(xsltParserContextPtr ctxt, xmlChar **prefix) {
 
     *prefix = NULL;
     ret = xsltScanNCName(ctxt);
-    if (CUR == ':') {
+    if (ret && CUR == ':') {
         *prefix = ret;
 	NEXT;
 	ret = xsltScanNCName(ctxt);
@@ -1669,6 +1669,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token, int novar) {
 		xsltTransformError(NULL, NULL, NULL,
 	    "xsltCompileStepPattern : no namespace bound to prefix %s\n",
 				 prefix);
+		xmlFree(prefix);
 		ctxt->error = 1;
 		goto error;
 	    } else {
