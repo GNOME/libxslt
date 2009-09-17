@@ -42,6 +42,9 @@ EXTRA_DIST = 						\
     test-5.2-16.out test-5.2-16.xml test-5.2-16.xsl	\
     test-5.2-17.out test-5.2-17.xml test-5.2-17.xsl	\
     test-5.2-18.out test-5.2-18.xml test-5.2-18.xsl	\
+    test-5.2-19.out test-5.2-19.xml test-5.2-19.xsl	\
+    test-5.2-20.out test-5.2-20.xml test-5.2-20.xsl	\
+    test-5.2-21.out test-5.2-21.xml test-5.2-21.xsl	\
     test-5.3.out test-5.3.xml test-5.3.xsl		\
     test-5.4-1.out test-5.4-1.xml test-5.4-1.xsl	\
     test-5.4-2.out test-5.4-2.xml test-5.4-2.xsl	\
