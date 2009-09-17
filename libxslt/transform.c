@@ -620,6 +620,32 @@ xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt,
                         xmlNodePtr node, xmlNodePtr insert, int literal);
 
 /**
+ * xsltAddChild:
+ * @parent:  the parent node
+ * @cur:  the child node
+ *
+ * Wrapper version of xmlAddChild with a more consistent behaviour on
+ * error. One expect the use to be child = xsltAddChild(parent, child);
+ * and the routine will take care of not leaking on errors or node merge
+ *
+ * Returns the child is successfully attached or NULL if merged or freed
+ */
+static xmlNodePtr
+xsltAddChild(xmlNodePtr parent, xmlNodePtr cur) {
+   xmlNodePtr ret;
+
+   if ((cur == NULL) || (parent == NULL))
+       return(NULL);
+   if (parent == NULL) {
+       xmlFreeNode(cur);
+       return(NULL);
+   }
+   ret = xmlAddChild(parent, cur);
+
+   return(ret);
+}
+
+/**
  * xsltAddTextString:
  * @ctxt:  a XSLT process context
  * @target:  the text node where the text will be attached
@@ -755,7 +781,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
     }
     if (copy != NULL) {
 	if (target != NULL)
-	    xmlAddChild(target, copy);
+	    copy = xsltAddChild(target, copy);
 	ctxt->lasttext = copy->content;
 	ctxt->lasttsize = len;
 	ctxt->lasttuse = len;
@@ -921,7 +947,7 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	    *  to ensure that the optimized text-merging mechanism
 	    *  won't interfere with normal node-merging in any case.
 	    */
-	    xmlAddChild(target, copy);
+	    copy = xsltAddChild(target, copy);
 	}
     } else {
 	xsltTransformError(ctxt, NULL, target,
@@ -1143,7 +1169,7 @@ xsltShallowCopyElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     copy = xmlDocCopyNode(node, insert->doc, 0);
     if (copy != NULL) {
 	copy->doc = ctxt->output;
-	xmlAddChild(insert, copy);
+	copy = xsltAddChild(insert, copy);
 
 	if (node->type == XML_ELEMENT_NODE) {
 	    /*
@@ -1476,7 +1502,7 @@ xsltCopyTreeInternal(xsltTransformContextPtr ctxt,
     copy = xmlDocCopyNode(node, insert->doc, 0);
     if (copy != NULL) {
 	copy->doc = ctxt->output;
-	xmlAddChild(insert, copy);
+	copy = xsltAddChild(insert, copy);
 	/*
 	 * The node may have been coalesced into another text node.
 	 */
@@ -2297,7 +2323,7 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 		    * Add the element-node to the result tree.
 		    */
 		    copy->doc = ctxt->output;
-		    xmlAddChild(insert, copy);
+		    copy = xsltAddChild(insert, copy);
 		    /*
 		    * Create effective namespaces declarations.
 		    * OLD: xsltCopyNamespaceList(ctxt, copy, cur->nsDef);
@@ -3765,7 +3791,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 		copy = xmlNewDocPI(ctxt->insert->doc, node->name,
 		                   node->content);
-		xmlAddChild(ctxt->insert, copy);
+		copy = xsltAddChild(ctxt->insert, copy);
 		break;
 	    case XML_COMMENT_NODE:
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -3773,7 +3799,7 @@ xsltCopy(xsltTransformContextPtr ctxt, xmlNodePtr node,
 				 "xsltCopy: comment\n"));
 #endif
 		copy = xmlNewComment(node->content);
-		xmlAddChild(ctxt->insert, copy);
+		copy = xsltAddChild(ctxt->insert, copy);
 		break;
 	    case XML_NAMESPACE_DECL:
 #ifdef WITH_XSLT_DEBUG_PROCESS
@@ -3832,7 +3858,7 @@ xsltText(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
 #endif
 		copy->name = xmlStringTextNoenc;
 	    }
-	    xmlAddChild(ctxt->insert, copy);
+	    copy = xsltAddChild(ctxt->insert, copy);
 	    text = text->next;
 	}
     }
@@ -3925,7 +3951,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    "xsl:element : creation of %s failed\n", name);
 	return;
     }
-    xmlAddChild(ctxt->insert, copy);
+    copy = xsltAddChild(ctxt->insert, copy);
 
     /*
     * Namespace
@@ -4065,7 +4091,7 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 
     commentNode = xmlNewComment(value);
-    xmlAddChild(ctxt->insert, commentNode);
+    commentNode = xsltAddChild(ctxt->insert, commentNode);
 
     if (value != NULL)
 	xmlFree(value);
@@ -4128,7 +4154,7 @@ xsltProcessingInstruction(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #endif
 
     pi = xmlNewDocPI(ctxt->insert->doc, name, value);
-    xmlAddChild(ctxt->insert, pi);
+    pi = xsltAddChild(ctxt->insert, pi);
 
 error:
     if ((name != NULL) && (name != comp->name))
