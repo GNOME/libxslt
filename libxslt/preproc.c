@@ -82,7 +82,7 @@ xsltCheckTopLevelElement(xsltStylesheetPtr style, xmlNodePtr inst, int err) {
 	}
 	return(0);
     }
-    if ((parent->ns == NULL) ||
+    if ((parent->ns == NULL) || (parent->type != XML_ELEMENT_NODE) ||
         ((parent->ns != inst->ns) &&
 	 (!xmlStrEqual(parent->ns->href, inst->ns->href))) ||
 	((!xmlStrEqual(parent->name, BAD_CAST "stylesheet")) &&
