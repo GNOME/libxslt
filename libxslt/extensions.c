@@ -313,8 +313,6 @@ typedef void (*exsltRegisterFunction) (void);
  * by LIBXSLT_DEFAULT_PLUGINS_PATH() which is determined at
  * compile time.
  *
- * Always called with xsltExtMutex lock taken.
- *
  * Returns 0 if successful, -1 in case of error. 
  */
 
@@ -550,10 +548,14 @@ xsltRegisterExtPrefix(xsltStylesheetPtr style,
     if (xsltExtensionsHash != NULL) {
         xsltExtModulePtr module;
 
+        xmlMutexLock(xsltExtMutex);
         module = xmlHashLookup(xsltExtensionsHash, URI);
+        xmlMutexUnlock(xsltExtMutex);
         if (NULL == module) {
             if (!xsltExtModuleRegisterDynamic(URI)) {
+                xmlMutexLock(xsltExtMutex);
                 module = xmlHashLookup(xsltExtensionsHash, URI);
+                xmlMutexUnlock(xsltExtMutex);
             }
         }
         if (module != NULL) {
@@ -1669,17 +1671,12 @@ xsltExtElementLookup(xsltTransformContextPtr ctxt,
     if ((name == NULL) || (URI == NULL))
         return (NULL);
 
-    xmlMutexLock(xsltExtMutex);
-
     if ((ctxt != NULL) && (ctxt->extElements != NULL)) {
         XML_CAST_FPTR(ret) = xmlHashLookup2(ctxt->extElements, name, URI);
         if (ret != NULL) {
-            xmlMutexUnlock(xsltExtMutex);
             return(ret);
         }
     }
-
-    xmlMutexUnlock(xsltExtMutex);
 
     ret = xsltExtModuleElementLookup(name, URI);
 
@@ -1707,18 +1704,22 @@ xsltExtModuleElementLookup(const xmlChar * name, const xmlChar * URI)
 
     ext = (xsltExtElementPtr) xmlHashLookup2(xsltElementsHash, name, URI);
 
+    xmlMutexUnlock(xsltExtMutex);
+
     /*
      * if function lookup fails, attempt a dynamic load on
      * supported platforms
      */
     if (NULL == ext) {
         if (!xsltExtModuleRegisterDynamic(URI)) {
+            xmlMutexLock(xsltExtMutex);
+
             ext = (xsltExtElementPtr)
 	          xmlHashLookup2(xsltElementsHash, name, URI);
+
+            xmlMutexUnlock(xsltExtMutex);
         }
     }
-
-    xmlMutexUnlock(xsltExtMutex);
 
     if (ext == NULL)
         return (NULL);
@@ -1747,13 +1748,18 @@ xsltExtModuleElementPreComputeLookup(const xmlChar * name,
 
     ext = (xsltExtElementPtr) xmlHashLookup2(xsltElementsHash, name, URI);
 
+    xmlMutexUnlock(xsltExtMutex);
+
     if (ext == NULL) {
         if (!xsltExtModuleRegisterDynamic(URI)) {
+            xmlMutexLock(xsltExtMutex);
+
             ext = (xsltExtElementPtr)
 	          xmlHashLookup2(xsltElementsHash, name, URI);
+
+            xmlMutexUnlock(xsltExtMutex);
         }
     }
-    xmlMutexUnlock(xsltExtMutex);
 
     if (ext == NULL)
         return (NULL);
@@ -1856,14 +1862,18 @@ xsltExtModuleTopLevelLookup(const xmlChar * name, const xmlChar * URI)
 
     XML_CAST_FPTR(ret) = xmlHashLookup2(xsltTopLevelsHash, name, URI);
 
+    xmlMutexUnlock(xsltExtMutex);
+
     /* if lookup fails, attempt a dynamic load on supported platforms */
     if (NULL == ret) {
         if (!xsltExtModuleRegisterDynamic(URI)) {
+            xmlMutexLock(xsltExtMutex);
+
             XML_CAST_FPTR(ret) = xmlHashLookup2(xsltTopLevelsHash, name, URI);
+
+            xmlMutexUnlock(xsltExtMutex);
         }
     }
-
-    xmlMutexUnlock(xsltExtMutex);
 
     return (ret);
 }
