@@ -1709,9 +1709,6 @@ xsltApplyFallbacks(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *									*
  ************************************************************************/
 
-static
-void xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
-			xsltStackElemPtr params);
 /**
  * xsltDefaultProcessOneNode:
  * @ctxt:  a XSLT process context
@@ -1977,7 +1974,7 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
  *
  * Process the source node.
  */
-static void
+void
 xsltProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
 	           xsltStackElemPtr withParams)
 {
@@ -2280,7 +2277,7 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 		if (IS_XSLT_ELEM_FAST(cur) && IS_XSLT_NAME(cur, "message")) {
 		    xsltMessage(ctxt, contextNode, cur);
 		    goto skip_children;
-		}		   
+		}
 		/*
 		* Something really went wrong:
 		*/
@@ -2467,7 +2464,7 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 		    xsltMessage(ctxt, contextNode, cur);
 		} else {
 		    xsltTransformError(ctxt, NULL, cur,
-			"Unexpected XSLT element '%s'.\n", cur->name);		   
+			"Unexpected XSLT element '%s'.\n", cur->name);
 		}
 		goto skip_children;
 
@@ -4076,7 +4073,7 @@ xsltComment(xsltTransformContextPtr ctxt, xmlNodePtr node,
         if ((value[len-1] == '-') ||
 	    (xmlStrstr(value, BAD_CAST "--"))) {
 	    xsltTransformError(ctxt, NULL, inst,
-	   	    "xsl:comment : '--' or ending '-' not allowed in comment\n");
+		    "xsl:comment : '--' or ending '-' not allowed in comment\n");
 	    /* fall through to try to catch further errors */
 	}
     }
@@ -4816,7 +4813,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	*/
 #if 0
 	if ((ctxt->nbKeys > 0) &&
-	    (list->nodeNr != 0) &&	   
+	    (list->nodeNr != 0) &&
 	    (list->nodeTab[0]->doc != NULL) &&
 	    XSLT_IS_RES_TREE_FRAG(list->nodeTab[0]->doc))
 	{
