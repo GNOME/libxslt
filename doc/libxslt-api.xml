@@ -239,6 +239,7 @@
      <exports symbol='xsltChoose' type='function'/>
      <exports symbol='xsltCopyTextString' type='function'/>
      <exports symbol='xsltText' type='function'/>
+     <exports symbol='xsltProcessOneNode' type='function'/>
      <exports symbol='xsltLocalVariablePop' type='function'/>
      <exports symbol='xsltNumber' type='function'/>
      <exports symbol='xsltRunStylesheetUser' type='function'/>
@@ -2658,6 +2659,13 @@ exits'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the transformation context'/>
       <arg name='style' type='xsltStylesheetPtr' info='the stylesheet'/>
       <arg name='node' type='xmlNodePtr' info='the current node being processed'/>
+    </function>
+    <function name='xsltProcessOneNode' file='transform'>
+      <info>Process the source node.</info>
+      <return type='void'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
+      <arg name='contextNode' type='xmlNodePtr' info='the &quot;current node&quot; in the source tree'/>
+      <arg name='withParams' type='xsltStackElemPtr' info='extra parameters (e.g. xsl:with-param) passed to the template if any'/>
     </function>
     <function name='xsltProcessingInstruction' file='transform'>
       <info>Process the xslt processing-instruction node on the source node</info>

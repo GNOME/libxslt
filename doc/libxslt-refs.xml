@@ -404,6 +404,7 @@
     <reference name='xsltPrincipalStylesheetData' href='html/libxslt-xsltInternals.html#xsltPrincipalStylesheetData'/>
     <reference name='xsltPrincipalStylesheetDataPtr' href='html/libxslt-xsltInternals.html#xsltPrincipalStylesheetDataPtr'/>
     <reference name='xsltPrintErrorContext' href='html/libxslt-xsltutils.html#xsltPrintErrorContext'/>
+    <reference name='xsltProcessOneNode' href='html/libxslt-transform.html#xsltProcessOneNode'/>
     <reference name='xsltProcessingInstruction' href='html/libxslt-transform.html#xsltProcessingInstruction'/>
     <reference name='xsltProfileStylesheet' href='html/libxslt-transform.html#xsltProfileStylesheet'/>
     <reference name='xsltQuoteOneUserParam' href='html/libxslt-variables.html#xsltQuoteOneUserParam'/>
@@ -988,6 +989,7 @@
       <ref name='xsltPrincipalStylesheetData'/>
       <ref name='xsltPrincipalStylesheetDataPtr'/>
       <ref name='xsltPrintErrorContext'/>
+      <ref name='xsltProcessOneNode'/>
       <ref name='xsltProcessingInstruction'/>
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltQuoteOneUserParam'/>
@@ -1535,6 +1537,7 @@
       <ref name='xsltPreComputeExtModuleElement'/>
       <ref name='xsltPreComputeFunction'/>
       <ref name='xsltPrintErrorContext'/>
+      <ref name='xsltProcessOneNode'/>
       <ref name='xsltProcessingInstruction'/>
       <ref name='xsltSort'/>
       <ref name='xsltStylePreCompute'/>
@@ -1692,6 +1695,7 @@
       <ref name='xsltApplyOneTemplate'/>
       <ref name='xsltFreeStackElemList'/>
       <ref name='xsltLocalVariablePush'/>
+      <ref name='xsltProcessOneNode'/>
     </type>
     <type name='xsltStyleExtInitFunction'>
       <ref name='xsltRegisterExtModuleFull'/>
@@ -1877,6 +1881,7 @@
       <ref name='xsltParseStylesheetParam'/>
       <ref name='xsltParseStylesheetVariable'/>
       <ref name='xsltPrintErrorContext'/>
+      <ref name='xsltProcessOneNode'/>
       <ref name='xsltProcessingInstruction'/>
       <ref name='xsltQuoteOneUserParam'/>
       <ref name='xsltQuoteUserParams'/>
@@ -2124,6 +2129,7 @@
       <ref name='xsltLocalVariablePush'/>
       <ref name='xsltNewTransformContext'/>
       <ref name='xsltNumber'/>
+      <ref name='xsltProcessOneNode'/>
       <ref name='xsltProcessingInstruction'/>
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltRegisterAllElement'/>
@@ -3148,6 +3154,7 @@
           <ref name='xsltForEach'/>
           <ref name='xsltMessage'/>
           <ref name='xsltNumber'/>
+          <ref name='xsltProcessOneNode'/>
           <ref name='xsltProcessingInstruction'/>
           <ref name='xsltText'/>
           <ref name='xsltValueOf'/>
@@ -3704,6 +3711,7 @@
           <ref name='xsltInitAllDocKeys'/>
           <ref name='xsltInitElemPreComp'/>
           <ref name='xsltLocalVariablePush'/>
+          <ref name='xsltProcessOneNode'/>
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
         </word>
@@ -4986,6 +4994,7 @@
           <ref name='_xsltTransformContext'/>
           <ref name='xsltAllocateExtra'/>
           <ref name='xsltAllocateExtraCtxt'/>
+          <ref name='xsltProcessOneNode'/>
           <ref name='xsltTransformError'/>
         </word>
         <word name='extract'>
@@ -6485,6 +6494,7 @@
           <ref name='xsltEvalGlobalVariables'/>
           <ref name='xsltEvalOneUserParam'/>
           <ref name='xsltEvalUserParams'/>
+          <ref name='xsltProcessOneNode'/>
           <ref name='xsltProfileStylesheet'/>
           <ref name='xsltQuoteOneUserParam'/>
           <ref name='xsltQuoteUserParams'/>
@@ -6555,6 +6565,7 @@
           <ref name='xsltEvalXPathStringNs'/>
         </word>
         <word name='passed'>
+          <ref name='xsltProcessOneNode'/>
           <ref name='xsltSetCtxtParseOptions'/>
           <ref name='xsltSetGenericDebugFunc'/>
           <ref name='xsltSetGenericErrorFunc'/>
@@ -8370,6 +8381,7 @@
         <word name='xsl:with-param'>
           <ref name='_xsltStackElem'/>
           <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltProcessOneNode'/>
         </word>
         <word name='xslDebugBreak'>
           <ref name='xslHandleDebugger'/>

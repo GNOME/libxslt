@@ -10,6 +10,17 @@ ChangeLog.html
 to the SVN at 
 http://svn.gnome.org/viewcvs/libxslt/trunk/
  code base.Those are the public releases made:
+1.1.26: Sep 24 2009:
+   -  Improvement:
+    Add xsltProcessOneNode to exported symbols for lxml (Daniel Veillard)
+  
+   -  Bug fixes:
+    Fix an idness generation problem (Daniel Veillard),
+    595612 Try to fix some locking problems (Daniel Veillard),
+    Fix a crash on misformed imported stylesheets (Daniel Veillard)
+  
+
+
 1.1.25: Sep 17 2009:
    -  Features:
       Add API versioning and various cleanups (Daniel Veillard),

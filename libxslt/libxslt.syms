@@ -470,3 +470,10 @@ LIBXML2_1.1.25 {
   xsltInitGlobals;
 } LIBXML2_1.1.24;
 
+LIBXML2_1.1.26 {
+    global:
+
+# transform
+  xsltProcessOneNode;
+} LIBXML2_1.1.25;
+
