@@ -239,12 +239,22 @@ AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor,
 
 AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, fabs,
   [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
+
+
 AC_CHECK_FUNCS(gettimeofday)
 AC_CHECK_FUNCS(mktime localtime localtime_r asctime time gmtime_r ftime)
 
 dnl Checking the standard string functions availability
 AC_CHECK_FUNCS(printf sprintf fprintf snprintf vfprintf vsprintf vsnprintf sscanf,,
                NEED_TRIO=1)
+
+dnl Checking for POSIX timers
+AC_CHECK_FUNCS(clock_gettime, [], [
+  AC_CHECK_LIB(rt, clock_gettime, [
+    AC_DEFINE(HAVE_CLOCK_GETTIME, 1)
+    EXTRA_LIBS="$EXTRA_LIBS -lrt"
+  ])
+])
 
 dnl
 dnl Check for trio string functions
@@ -458,7 +468,7 @@ dnl the ability to specify the location of the libxml
 dnl library during linking and compilation.
 dnl
 dnl original work - Mathieu Lacage 30/03/2000
-dnl some tweaking - David Härdeman 30/10/2001
+dnl some tweaking - David HÃ¤rdeman 30/10/2001
 dnl
 
 LIBXML_CONFIG_PREFIX=""

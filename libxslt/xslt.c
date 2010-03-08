@@ -417,6 +417,11 @@ xsltFreeTemplate(xsltTemplatePtr template) {
     if (template->modeURI) xmlFree(template->modeURI);
  */
     if (template->inheritedNs) xmlFree(template->inheritedNs);
+    
+    /* free profiling data */
+    if (template->templCalledTab) xmlFree(template->templCalledTab);
+    if (template->templCountTab) xmlFree(template->templCountTab);
+    
     memset(template, -1, sizeof(xsltTemplate));
     xmlFree(template);
 }
@@ -5167,7 +5172,7 @@ xsltParseXSLTTemplate(xsltCompilerCtxtPtr cctxt, xmlNodePtr templNode) {
 	/*
 	* TODO: We need a standardized function for extraction
 	*  of namespace names and local names from QNames.
-	*  Don't use xsltGetQNameURI() as it cannot channeö
+	*  Don't use xsltGetQNameURI() as it cannot channeï¿½
 	*  reports through the context.
 	*/
 	modeURI = xsltGetQNameURI(templNode, &prop);
