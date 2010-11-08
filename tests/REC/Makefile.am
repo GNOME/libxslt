@@ -65,6 +65,7 @@ EXTRA_DIST = 						\
     test-7.6.1-2.out test-7.6.1-2.xml test-7.6.1-2.xsl	\
     test-7.6.1-3.out test-7.6.1-3.xml test-7.6.1-3.xsl	\
     test-7.6.2-1.out test-7.6.2-1.xml test-7.6.2-1.xsl	\
+    test-7.6.2-2.out test-7.6.2-2.xml test-7.6.2-2.xsl	\
     test-7.7-1.out test-7.7-1.xml test-7.7-1.xsl	\
     test-7.7-2.out test-7.7-2.xml test-7.7-2.xsl	\
     test-7.7-3.out test-7.7-3.xml test-7.7-3.xsl	\
