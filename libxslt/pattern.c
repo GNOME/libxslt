@@ -546,13 +546,15 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	xmlNodePtr parent = node->parent;
 	xmlDocPtr olddoc;
 	xmlNodePtr oldnode;
-	int oldNsNr;
+	int oldNsNr, oldContextSize, oldProximityPosition;
 	xmlNsPtr *oldNamespaces;
 
 	oldnode = ctxt->xpathCtxt->node;
 	olddoc = ctxt->xpathCtxt->doc;
 	oldNsNr = ctxt->xpathCtxt->nsNr;
 	oldNamespaces = ctxt->xpathCtxt->namespaces;
+	oldContextSize = ctxt->xpathCtxt->contextSize;
+	oldProximityPosition = ctxt->xpathCtxt->proximityPosition;
 	ctxt->xpathCtxt->node = node;
 	ctxt->xpathCtxt->doc = doc;
 	ctxt->xpathCtxt->namespaces = nsList;
@@ -562,6 +564,8 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	ctxt->xpathCtxt->doc = olddoc;
 	ctxt->xpathCtxt->namespaces = oldNamespaces;
 	ctxt->xpathCtxt->nsNr = oldNsNr;
+	ctxt->xpathCtxt->contextSize = oldContextSize;
+	ctxt->xpathCtxt->proximityPosition = oldProximityPosition;
 	if (newlist == NULL)
 	    return(-1);
 	if (newlist->type != XPATH_NODESET) {

@@ -143,3 +143,4 @@ tests/XSLTMark/db10000.xml
 tests/plugins/.libs
 tests/plugins/plugin.res
 xsltproc/testThreads
+xsltproc/.libs/
