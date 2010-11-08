@@ -21,8 +21,7 @@ testThreads_LDADD=  $(THREAD_LIBS) $(LDADDS)
 DEPS = $(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la 
 
-LDADDS = @STATIC_BINARIES@ \
-         $(top_builddir)/libxslt/libxslt.la \
+LDADDS = $(top_builddir)/libxslt/libxslt.la \
          $(top_builddir)/libexslt/libexslt.la \
 	@LIBXML_LIBS@ $(EXTRA_LIBS) @WIN32_EXTRA_LIBADD@
 

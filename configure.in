@@ -414,21 +414,7 @@ if [[ "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ]] || \
 	with_mem_debug="yes"
     fi
     CFLAGS="-Wall -g -O -ansi -pedantic -W -Wunused -Wimplicit -Wreturn-type -Wswitch -Wcomment -Wtrigraphs -Wformat -Wchar-subscripts -Wuninitialized -Wparentheses -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline "
-    if test "`uname -m`" != "x86_64" ;
-    then
-	STATIC_BINARIES="-static"
-    else
-        STATIC_BINARIES="-static"
-    fi
-    if test "$LOGNAME" = "veillard"
-    then
-        LIBXML_SRC="/u/veillard/XML"
-	EXTRA_LIBS="$EXTRA_LIBS -ldl"
-    fi
-else
-    STATIC_BINARIES=
 fi
-AC_SUBST(STATIC_BINARIES)
 
 AC_ARG_WITH(debug, [  --with-debug            Add the debugging code (on)])
 if test "$with_debug" = "no" ; then
@@ -616,21 +602,6 @@ module_prefix=$prefix
 test "x$module_prefix" = xNONE && module_prefix=$ac_default_prefix
 LIBXSLT_DEFAULT_PLUGINS_PATH="$module_prefix/lib/libxslt-plugins"
 AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
-
-dnl
-dnl In build tree I use a static version with memory debug enabled
-dnl
-if test "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ; then
-dnl    if test "`uname -i`" != "x86_64" -a -e $HOME/XML/.libs/libxml2.a ;
-    if test -e $HOME/XML/.libs/libxml2.a ;
-    then
-	LIBXML_LIBS="$HOME/XML/.libs/libxml2.a -lpthread -lz"
-    fi
-    DV_LINK="1"
-    XSLTPROCDV="xsltproc.dv"
-    INSTALLED_XSLT_LIB=""
-    LIBXML_SRC="$HOME/XML/"
-fi
 
 WIN32_EXTRA_LIBADD=
 WIN32_EXTRA_LDFLAGS=
