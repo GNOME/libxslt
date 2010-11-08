@@ -2437,13 +2437,13 @@ xsltCompilerNodePop(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
 	"xsltCompilerNodePop: Depth mismatch.\n");
 	goto mismatch;
     }
+    cctxt->depth--;
     /*
     * Pop information of variables.
     */
     if ((cctxt->ivar) && (cctxt->ivar->depth > cctxt->depth))
 	xsltCompilerVarInfoPop(cctxt);
 
-    cctxt->depth--;
     cctxt->inode = cctxt->inode->prev;
     if (cctxt->inode != NULL)
 	cctxt->inode->curChildType = 0;
