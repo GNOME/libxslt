@@ -39,6 +39,7 @@
 #include "extra.h"
 #include "imports.h"
 #include "extensions.h"
+#include "pattern.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PREPROC
@@ -420,6 +421,10 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
 	    }
             break;
         case XSLT_FUNC_NUMBER:
+            if (item->numdata.countPat != NULL)
+                xsltFreeCompMatchList(item->numdata.countPat);
+            if (item->numdata.fromPat != NULL)
+                xsltFreeCompMatchList(item->numdata.fromPat);
             break;
         case XSLT_FUNC_APPLYIMPORTS:
             break;
@@ -1426,7 +1431,7 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
     comp->numdata.node = cur;
     comp->numdata.value = xsltGetCNsProp(style, cur, (const xmlChar *)"value",
 	                                XSLT_NAMESPACE);
-    
+
     prop = xsltEvalStaticAttrValueTemplate(style, cur,
 			 (const xmlChar *)"format",
 			 XSLT_NAMESPACE, &comp->numdata.has_format);
@@ -1437,10 +1442,22 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
     }
 
     comp->numdata.count = xsltGetCNsProp(style, cur, (const xmlChar *)"count",
-					XSLT_NAMESPACE);
+                                         XSLT_NAMESPACE);
     comp->numdata.from = xsltGetCNsProp(style, cur, (const xmlChar *)"from",
-					XSLT_NAMESPACE);
-    
+                                        XSLT_NAMESPACE);
+
+    prop = xsltGetCNsProp(style, cur, (const xmlChar *)"count", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	comp->numdata.countPat = xsltCompilePattern(prop, cur->doc, cur, style,
+                                                    NULL);
+    }
+
+    prop = xsltGetCNsProp(style, cur, (const xmlChar *)"from", XSLT_NAMESPACE);
+    if (prop != NULL) {
+	comp->numdata.fromPat = xsltCompilePattern(prop, cur->doc, cur, style,
+                                                   NULL);
+    }
+
     prop = xsltGetCNsProp(style, cur, (const xmlChar *)"level", XSLT_NAMESPACE);
     if (prop != NULL) {
 	if (xmlStrEqual(prop, BAD_CAST("single")) ||
