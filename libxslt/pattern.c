@@ -888,11 +888,10 @@ restart:
 		    (node->type == XML_ELEMENT_NODE) &&
 		    (node->parent != NULL)) {
 		    xmlNodePtr previous;
-		    int ix, nocache = 0;
+		    int nocache = 0;
 
 		    previous = (xmlNodePtr)
 			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr);
-		    ix = XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival);
 		    if ((previous != NULL) &&
 			(previous->parent == node->parent)) {
 			/*
@@ -904,7 +903,7 @@ restart:
 			while (sibling != NULL) {
 			    if (sibling == previous)
 				break;
-			    if ((previous->type == XML_ELEMENT_NODE) &&
+			    if ((sibling->type == XML_ELEMENT_NODE) &&
 				(previous->name != NULL) &&
 				(sibling->name != NULL) &&
 				(previous->name[0] == sibling->name[0]) &&
@@ -925,7 +924,7 @@ restart:
 			    while (sibling != NULL) {
 				if (sibling == previous)
 				    break;
-				if ((previous->type == XML_ELEMENT_NODE) &&
+				if ((sibling->type == XML_ELEMENT_NODE) &&
 				    (previous->name != NULL) &&
 				    (sibling->name != NULL) &&
 				    (previous->name[0] == sibling->name[0]) &&
@@ -943,7 +942,8 @@ restart:
 			    }
 			}
 			if (sibling != NULL) {
-			    pos = ix + indx;
+		            pos = XSLT_RUNTIME_EXTRA(ctxt,
+                                sel->indexExtra, ival) + indx;
 			    /*
 			     * If the node is in a Value Tree we need to
 			     * save len, but cannot cache the node!
@@ -959,7 +959,6 @@ restart:
 				        sel->indexExtra, ival) = pos;
 				}
 			    }
-			    ix = pos;
 			} else
 			    pos = 0;
 		    } else {
@@ -1020,11 +1019,10 @@ restart:
 		} else if ((sel != NULL) && (sel->op == XSLT_OP_ALL) &&
 			   (node->type == XML_ELEMENT_NODE)) {
 		    xmlNodePtr previous;
-		    int ix, nocache = 0;
+		    int nocache = 0;
 
 		    previous = (xmlNodePtr)
 			XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr);
-		    ix = XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival);
 		    if ((previous != NULL) &&
 			(previous->parent == node->parent)) {
 			/*
@@ -1053,7 +1051,8 @@ restart:
 			    }
 			}
 			if (sibling != NULL) {
-			    pos = ix + indx;
+			    pos = XSLT_RUNTIME_EXTRA(ctxt,
+                                sel->indexExtra, ival) + indx;
 			    /*
 			     * If the node is in a Value Tree we cannot
 			     * cache it !
