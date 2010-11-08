@@ -1844,6 +1844,9 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     comp->select = xsltGetCNsProp(style, inst, (const xmlChar *)"select",
 	                        XSLT_NAMESPACE);
     if (comp->select != NULL) {
+#ifndef XSLT_REFACTORED
+        xmlNodePtr cur;
+#endif
 	comp->comp = xsltXPathCompile(style, comp->select);
 	if (comp->comp == NULL) {
 	    xsltTransformError(NULL, style, inst,
@@ -1851,12 +1854,25 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 		comp->select);
 	    style->errors++;
 	}
+#ifdef XSLT_REFACTORED
 	if (inst->children != NULL) {
 	    xsltTransformError(NULL, style, inst,
-		"XSLT-variable: The must be no child nodes, since the "
+		"XSLT-variable: There must be no child nodes, since the "
 		"attribute 'select' was specified.\n");
 	    style->errors++;
 	}
+#else
+        for (cur = inst->children; cur != NULL; cur = cur->next) {
+            if (cur->type != XML_COMMENT_NODE &&
+                (cur->type != XML_TEXT_NODE || !xsltIsBlank(cur->content)))
+            {
+                xsltTransformError(NULL, style, inst,
+                    "XSLT-variable: There must be no child nodes, since the "
+                    "attribute 'select' was specified.\n");
+                style->errors++;
+            }
+        }
+#endif
     }
 }
 
