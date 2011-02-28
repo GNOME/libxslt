@@ -243,6 +243,10 @@ xsltInit (void) {
  */
 void
 xsltUninit (void) {
+#ifdef XSLT_LOCALE_WINAPI
+    xmlFreeRMutex(xsltLocaleMutex);
+    xsltLocaleMutex = NULL;
+#endif
     initialized = 0;
 }
 

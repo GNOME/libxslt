@@ -67,6 +67,21 @@ static void xsltEnumSupportedLocales(void);
 #endif
 
 /**
+ * xsltFreeLocales:
+ *
+ * Cleanup function for the locale support on shutdown
+ */
+void
+xsltFreeLocales(void) {
+#ifdef XSLT_LOCALE_WINAPI
+    xmlRMutexLock(xsltLocaleMutex);
+    xmlFree(xsltLocaleList);
+    xsltLocaleList = NULL;
+    xmlRMutexUnlock(xsltLocaleMutex);
+#endif
+}
+
+/**
  * xsltNewLocale:
  * @languageTag: RFC 3066 language tag
  *
