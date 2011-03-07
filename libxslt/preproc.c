@@ -498,6 +498,10 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
 	xsltFreeLocale(comp->locale);
     if (comp->comp != NULL)
 	xmlXPathFreeCompExpr(comp->comp);
+    if (comp->numdata.countPat != NULL)
+        xsltFreeCompMatchList(comp->numdata.countPat);
+    if (comp->numdata.fromPat != NULL)
+        xsltFreeCompMatchList(comp->numdata.fromPat);
     if (comp->nsList != NULL)
 	xmlFree(comp->nsList);
 #endif
