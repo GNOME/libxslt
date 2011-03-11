@@ -11,7 +11,7 @@ WIN32_DIR=$(top_srcdir)/win32
 
 PAGES=   API.html bugs.html contribs.html FAQ.html docs.html \
          downloads.html help.html index.html intro.html news.html \
-	 xsltproc.html xsltproc2.html
+	 xsltproc2.html
 
 EPAGES=	 EXSLT/bugs.html EXSLT/docs.html EXSLT/downloads.html \
 	 EXSLT/help.html EXSLT/index.html EXSLT/intro.html
