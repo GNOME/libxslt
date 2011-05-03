@@ -420,11 +420,13 @@ xsltFreeStylePreComp(xsltStylePreCompPtr comp) {
 		    xmlXPathFreeCompExpr(item->comp);
 	    }
             break;
-        case XSLT_FUNC_NUMBER:
-            if (item->numdata.countPat != NULL)
-                xsltFreeCompMatchList(item->numdata.countPat);
-            if (item->numdata.fromPat != NULL)
-                xsltFreeCompMatchList(item->numdata.fromPat);
+        case XSLT_FUNC_NUMBER: {
+                xsltStyleItemNumberPtr item = (xsltStyleItemNumberPtr) comp;
+                if (item->numdata.countPat != NULL)
+                    xsltFreeCompMatchList(item->numdata.countPat);
+                if (item->numdata.fromPat != NULL)
+                    xsltFreeCompMatchList(item->numdata.fromPat);
+            }
             break;
         case XSLT_FUNC_APPLYIMPORTS:
             break;
