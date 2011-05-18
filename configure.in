@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configuration script.
-AC_PREREQ(2.2)
+AC_PREREQ(2.59)
 AC_INIT(libxslt/xslt.c)
 AM_CONFIG_HEADER(config.h)
 AC_CANONICAL_HOST
@@ -231,19 +231,19 @@ AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h ansidecl.h)
 AC_CHECK_HEADERS(sys/timeb.h time.h sys/stat.h sys/select.h stdarg.h)
 AC_CHECK_FUNCS(stat _stat)
 AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,
-  [M_LIBS="-lm"; AC_DEFINE(HAVE_ISNAN)]))
+  [M_LIBS="-lm"; AC_DEFINE([HAVE_ISNAN],[], [Define if isnan is there])]))
 
 AC_CHECK_FUNC(isinf, , AC_CHECK_LIB(m, isinf,
-  [M_LIBS="-lm"; AC_DEFINE(HAVE_ISINF)]))
+  [M_LIBS="-lm"; AC_DEFINE([HAVE_ISINF],[], [Define if isinf is there])]))
 
 AC_CHECK_FUNC(pow, , AC_CHECK_LIB(m, pow,
-  [M_LIBS="-lm"; AC_DEFINE(HAVE_POW)]))
+  [M_LIBS="-lm"; AC_DEFINE([HAVE_POW],[], [Define if pow is there])]))
 
 AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor,
-  [M_LIBS="-lm"; AC_DEFINE(HAVE_FLOOR)]))
+  [M_LIBS="-lm"; AC_DEFINE([HAVE_FLOOR],[], [Define if floor is there])]))
 
 AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, fabs,
-  [M_LIBS="-lm"; AC_DEFINE(HAVE_FABS)]))
+  [M_LIBS="-lm"; AC_DEFINE([HAVE_FABS],[], [Define if fabs is there])]))
 
 
 AC_CHECK_FUNCS(gettimeofday)
@@ -449,7 +449,7 @@ if test "$with_debugger" = "no" ; then
 else
     echo Enabling debugger
     WITH_DEBUGGER=1
-    AC_DEFINE(WITH_DEBUGGER)
+    AC_DEFINE([WITH_DEBUGGER],[], [Define if debugging support is enabled])
 fi
 AC_SUBST(WITH_DEBUGGER)
 
