@@ -230,12 +230,6 @@ dnl
 AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h ansidecl.h)
 AC_CHECK_HEADERS(sys/timeb.h time.h sys/stat.h sys/select.h stdarg.h)
 AC_CHECK_FUNCS(stat _stat)
-AC_CHECK_FUNC(isnan, , AC_CHECK_LIB(m, isnan,
-  [M_LIBS="-lm"; AC_DEFINE([HAVE_ISNAN],[], [Define if isnan is there])]))
-
-AC_CHECK_FUNC(isinf, , AC_CHECK_LIB(m, isinf,
-  [M_LIBS="-lm"; AC_DEFINE([HAVE_ISINF],[], [Define if isinf is there])]))
-
 AC_CHECK_FUNC(pow, , AC_CHECK_LIB(m, pow,
   [M_LIBS="-lm"; AC_DEFINE([HAVE_POW],[], [Define if pow is there])]))
 
