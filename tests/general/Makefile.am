@@ -180,6 +180,7 @@ EXTRA_DIST = \
     bug-170.out bug-170.xsl \
     bug-171.out bug-171.xsl \
     bug-172.out bug-172.xsl \
+    bug-173.out bug-173.xsl \
     character.out character.xsl \
     character2.out character2.xsl \
     itemschoose.out itemschoose.xsl \

@@ -1587,13 +1587,14 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    while (child != NULL) {
 		xmlNodeDumpOutput(buf, result, child, 0, (indent == 1),
 			          (const char *) encoding);
-		if ((child->type == XML_DTD_NODE) ||
+		if (indent && ((child->type == XML_DTD_NODE) ||
 		    ((child->type == XML_COMMENT_NODE) &&
-		     (child->next != NULL)))
+		     (child->next != NULL))))
 		    xmlOutputBufferWriteString(buf, "\n");
 		child = child->next;
 	    }
-	    xmlOutputBufferWriteString(buf, "\n");
+	    if (indent)
+			xmlOutputBufferWriteString(buf, "\n");
 	}
 	xmlOutputBufferFlush(buf);
     }
