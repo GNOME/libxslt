@@ -1,3 +1,7 @@
+*/*.o
+*/*.lo
+tags
+*/tags
 .deps
 .gitignore
 .memdump
