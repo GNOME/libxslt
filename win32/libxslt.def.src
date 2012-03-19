@@ -12,6 +12,7 @@ xsltGenericErrorContext DATA
 xsltLibxmlVersion DATA
 xsltLibxsltVersion DATA
 xsltMaxDepth DATA
+xsltMaxVars DATA
 xsltXSLTAttrMarker DATA
 xslAddCall
 xslDropCall

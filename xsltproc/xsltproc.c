@@ -466,6 +466,9 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 	if (xinclude)
 	    ctxt->xinclude = 1;
 #endif
+	ctxt->maxTemplateDepth = xsltMaxDepth;
+	ctxt->maxTemplateVars = xsltMaxVars;
+
 	if (profile) {
 	    ret = xsltRunStylesheetUser(cur, doc, params, output,
 		                        NULL, NULL, stderr, ctxt);
@@ -501,7 +504,8 @@ static void usage(const char *name) {
     printf("\t--novalid skip the DTD loading phase\n");
     printf("\t--nodtdattr do not default attributes from the DTD\n");
     printf("\t--noout: do not dump the result\n");
-    printf("\t--maxdepth val : increase the maximum depth\n");
+    printf("\t--maxdepth val : increase the maximum depth (default %d)\n", xsltMaxDepth);
+    printf("\t--maxvars val : increase the maximum variables (default %d)\n", xsltMaxVars);
     printf("\t--maxparserdepth val : increase the maximum parser depth\n");
 #ifdef LIBXML_HTML_ENABLED
     printf("\t--html: the input document is(are) an HTML file(s)\n");
@@ -720,6 +724,15 @@ main(int argc, char **argv)
             if (sscanf(argv[i], "%d", &value) == 1) {
                 if (value > 0)
                     xsltMaxDepth = value;
+            }
+        } else if ((!strcmp(argv[i], "-maxvars")) ||
+                   (!strcmp(argv[i], "--maxvars"))) {
+            int value;
+
+            i++;
+            if (sscanf(argv[i], "%d", &value) == 1) {
+                if (value > 0)
+                    xsltMaxVars = value;
             }
         } else if ((!strcmp(argv[i], "-maxparserdepth")) ||
                    (!strcmp(argv[i], "--maxparserdepth"))) {

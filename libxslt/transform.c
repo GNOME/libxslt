@@ -64,6 +64,7 @@ static int xsltGetHTMLIDs(const xmlChar *version, const xmlChar **publicID,
 #endif
 
 int xsltMaxDepth = 3000;
+int xsltMaxVars = 15000;
 
 /*
  * Useful macros
@@ -504,6 +505,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->templNr = 0;
     cur->templMax = 5;
     cur->templ = NULL;
+    cur->maxTemplateDepth = xsltMaxDepth;
 
     /*
      * initialize the variables stack
@@ -519,6 +521,7 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->varsMax = 10;
     cur->vars = NULL;
     cur->varsBase = 0;
+    cur->maxTemplateVars = xsltMaxVars;
 
     /*
      * the profiling stack is not initialized by default
@@ -2983,8 +2986,7 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     * Check for infinite recursion: stop if the maximum of nested templates
     * is excceeded. Adjust xsltMaxDepth if you need more.
     */
-    if (((ctxt->templNr >= xsltMaxDepth) ||
-        (ctxt->varsNr >= 5 * xsltMaxDepth)))
+    if (ctxt->templNr >= ctxt->maxTemplateDepth)
     {
         xsltTransformError(ctxt, NULL, list,
 	    "xsltApplyXSLTTemplate: A potential infinite template recursion "
@@ -2992,10 +2994,22 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 	    "You can adjust xsltMaxDepth (--maxdepth) in order to "
 	    "raise the maximum number of nested template calls and "
 	    "variables/params (currently set to %d).\n",
-	    xsltMaxDepth);
+	    ctxt->maxTemplateDepth);
         xsltDebug(ctxt, contextNode, list, NULL);
         return;
     }
+
+    if (ctxt->varsNr >= ctxt->maxTemplateVars)
+	{
+        xsltTransformError(ctxt, NULL, list,
+	    "xsltApplyXSLTTemplate: A potential infinite template recursion "
+	    "was detected.\n"
+	    "You can adjust maxTemplateVars (--maxvars) in order to "
+	    "raise the maximum number of variables/params (currently set to %d).\n",
+	    ctxt->maxTemplateVars);
+        xsltDebug(ctxt, contextNode, list, NULL);
+        return;
+	}
 
     oldUserFragmentTop = ctxt->tmpRVT;
     ctxt->tmpRVT = NULL;

@@ -307,6 +307,7 @@ LIBXML2_1.0.24 {
   xsltLibxmlVersion; # variable
   xsltLibxsltVersion; # variable
   xsltMaxDepth; # variable
+  xsltMaxVars; # variable
 
 # xsltInternals
   xsltParseStylesheetImportedDoc;

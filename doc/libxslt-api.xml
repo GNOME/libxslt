@@ -291,6 +291,7 @@
      <exports symbol='xsltEngineVersion' type='variable'/>
      <exports symbol='xsltLibxsltVersion' type='variable'/>
      <exports symbol='xsltMaxDepth' type='variable'/>
+     <exports symbol='xsltMaxVars' type='variable'/>
      <exports symbol='xsltCleanupGlobals' type='function'/>
      <exports symbol='xsltInit' type='function'/>
     </file>
@@ -1560,6 +1561,7 @@ exits'/>
     <variable name='xsltLibxmlVersion' file='xslt' type='const int'/>
     <variable name='xsltLibxsltVersion' file='xslt' type='const int'/>
     <variable name='xsltMaxDepth' file='xslt' type='int'/>
+    <variable name='xsltMaxVars' file='xslt' type='int'/>
     <variable name='xsltXSLTAttrMarker' file='xsltInternals' type='const xmlChar *'/>
     <function name='xslAddCall' file='xsltutils'>
       <info>Add template &quot;call&quot; to call stack</info>

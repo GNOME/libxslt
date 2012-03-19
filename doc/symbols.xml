@@ -221,6 +221,7 @@
     <symbol file="xslt">xsltLibxmlVersion</symbol>
     <symbol file="xslt">xsltLibxsltVersion</symbol>
     <symbol file="xslt">xsltMaxDepth</symbol>
+    <symbol file="xslt">xsltMaxVars</symbol>
     <symbol file="xsltInternals">xsltParseStylesheetImportedDoc</symbol>
     <symbol file="xsltutils">xsltSetCtxtSortFunc</symbol>
     <symbol file="xsltutils">xsltSetSortFunc</symbol>

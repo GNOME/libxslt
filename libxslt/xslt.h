@@ -62,6 +62,13 @@ extern "C" {
 XSLTPUBVAR int xsltMaxDepth;
 
 /**
+ *  * xsltMaxVars:
+ *   *
+ *    * This value is used to detect templates loops.
+ *     */
+XSLTPUBVAR int xsltMaxVars;
+
+/**
  * xsltEngineVersion:
  *
  * The version string for libxslt.

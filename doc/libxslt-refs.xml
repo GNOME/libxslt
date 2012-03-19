@@ -352,6 +352,7 @@
     <reference name='xsltLocaleStrcmp' href='html/libxslt-xsltlocale.html#xsltLocaleStrcmp'/>
     <reference name='xsltMatchPattern' href='html/libxslt-pattern.html#xsltMatchPattern'/>
     <reference name='xsltMaxDepth' href='html/libxslt-xslt.html#xsltMaxDepth'/>
+    <reference name='xsltMaxVars' href='html/libxslt-xslt.html#xsltMaxVars'/>
     <reference name='xsltMessage' href='html/libxslt-xsltutils.html#xsltMessage'/>
     <reference name='xsltNamespaceAlias' href='html/libxslt-namespaces.html#xsltNamespaceAlias'/>
     <reference name='xsltNeedElemSpaceHandling' href='html/libxslt-imports.html#xsltNeedElemSpaceHandling'/>
@@ -937,6 +938,7 @@
       <ref name='xsltLocaleStrcmp'/>
       <ref name='xsltMatchPattern'/>
       <ref name='xsltMaxDepth'/>
+      <ref name='xsltMaxVars'/>
       <ref name='xsltMessage'/>
       <ref name='xsltNamespaceAlias'/>
       <ref name='xsltNeedElemSpaceHandling'/>
@@ -2169,6 +2171,7 @@
       <ref name='xsltLibxmlVersion'/>
       <ref name='xsltLibxsltVersion'/>
       <ref name='xsltMaxDepth'/>
+      <ref name='xsltMaxVars'/>
     </file>
     <file name='xsltInternals'>
       <ref name='CHECK_STOPPED'/>

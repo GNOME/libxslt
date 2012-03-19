@@ -1780,6 +1780,8 @@ struct _xsltTransformContext {
     xmlDocPtr localRVTBase;
     int keyInitLevel;   /* Needed to catch recursive keys issues */
     int funcLevel;      /* Needed to catch recursive functions issues */
+    int maxTemplateDepth;
+    int maxTemplateVars;
 };
 
 /**
