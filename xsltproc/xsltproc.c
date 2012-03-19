@@ -498,7 +498,7 @@ static void usage(const char *name) {
     printf("\t--debug: dump the tree of the result instead\n");
 #endif
     printf("\t--dumpextensions: dump the registered extension elements and functions to stdout\n");
-    printf("\t--novalid skip the Dtd loading phase\n");
+    printf("\t--novalid skip the DTD loading phase\n");
     printf("\t--nodtdattr do not default attributes from the DTD\n");
     printf("\t--noout: do not dump the result\n");
     printf("\t--maxdepth val : increase the maximum depth\n");
