@@ -135,7 +135,7 @@ void parsePath(const xmlChar *path) {
 
 xmlExternalEntityLoader defaultEntityLoader = NULL;
 
-static xmlParserInputPtr 
+static xmlParserInputPtr
 xsltprocExternalEntityLoader(const char *URL, const char *ID,
 			     xmlParserCtxtPtr ctxt) {
     xmlParserInputPtr ret;
@@ -186,10 +186,10 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
 		    ctxt->sax->warning = warning;
 		if (load_trace) {
 		    fprintf \
-		    	(stderr,
-		    	 "Loaded URL=\"%s\" ID=\"%s\"\n",
+			(stderr,
+			 "Loaded URL=\"%s\" ID=\"%s\"\n",
 			 newURL,
-		    	 ID ? ID : "(null)");
+			 ID ? ID : "(null)");
 		}
 		xmlFree(newURL);
 		return(ret);
@@ -211,7 +211,7 @@ xsltprocExternalEntityLoader(const char *URL, const char *ID,
  * Internal timing routines to remove the necessity to have unix-specific
  * function calls
  */
-#ifndef HAVE_GETTIMEOFDAY 
+#ifndef HAVE_GETTIMEOFDAY
 #ifdef HAVE_SYS_TIMEB_H
 #ifdef HAVE_SYS_TIME_H
 #ifdef HAVE_FTIME
@@ -355,7 +355,7 @@ static void
 xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
     xmlDocPtr res;
     xsltTransformContextPtr ctxt;
-   
+
 
 #ifdef LIBXML_XINCLUDE_ENABLED
     if (xinclude) {
@@ -746,7 +746,6 @@ main(int argc, char **argv)
         } else if ((!strcmp(argv[i],"-dumpextensions"))||
 			(!strcmp(argv[i],"--dumpextensions"))) {
 		dumpextensions++;
-		
 	} else {
             fprintf(stderr, "Unknown option %s\n", argv[i]);
             usage(argv[0]);
@@ -768,7 +767,7 @@ main(int argc, char **argv)
     exsltRegisterAll();
     xsltRegisterTestModule();
 
-    if (dumpextensions) 
+    if (dumpextensions)
 	xsltDebugDumpExtensions(NULL);
 
     for (i = 1; i < argc; i++) {
@@ -811,7 +810,7 @@ main(int argc, char **argv)
             if (timing)
                 startTimer();
 	    style = xmlReadFile((const char *) argv[i], NULL, options);
-            if (timing) 
+            if (timing)
 		endTimer("Parsing stylesheet %s", argv[i]);
 	    if (xincludestyle) {
 		if (style != NULL) {
