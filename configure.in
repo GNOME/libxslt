@@ -380,6 +380,14 @@ if test "$with_crypto" = "no" ; then
     LIBGCRYPT_CFLAGS=""
     LIBGCRYPT_LIBS=""
 else
+case $host in
+  *-mingw*)
+    dnl Use only native crypto-API for mingw* hosts
+    dnl TODO: to implement --with-crypto=foo to allow switch between
+    dnl crypto libraries
+    WITH_CRYPTO=1
+    ;;
+  *)
     AC_PATH_PROG(LIBGCRYPT_CONFIG, libgcrypt-config, no)
     if test "$LIBGCRYPT_CONFIG" != "no" ; then
       LIBGCRYPT_VERSION=`$LIBGCRYPT_CONFIG --version`
@@ -400,6 +408,7 @@ else
       LIBGCRYPT_LIBS=""
       echo 'Crypto extensions will not be available. Install libgcrypt and reconfigure to make available.'
     fi
+esac
 fi
 AC_SUBST(WITH_CRYPTO)
 AC_SUBST(LIBGCRYPT_CFLAGS)
