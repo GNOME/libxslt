@@ -752,7 +752,7 @@ exsltCryptoRc4DecryptFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     ret_len = exsltCryptoHex2Bin (str, str_len, bin, bin_len);
 
 /* decrypt the binary blob */
-    ret = xmlMallocAtomic (ret_len);
+    ret = xmlMallocAtomic (ret_len + 1);
     if (ret == NULL) {
 	xsltTransformError(tctxt, NULL, tctxt->inst,
 	    "exsltCryptoRc4EncryptFunction: Failed to allocate result\n");
@@ -761,6 +761,7 @@ exsltCryptoRc4DecryptFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	goto done;
     }
     PLATFORM_RC4_DECRYPT (ctxt, padkey, bin, ret_len, ret, ret_len);
+    ret[ret_len] = 0;
 
     xmlXPathReturnString (ctxt, ret);
 
