@@ -1538,9 +1538,11 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 
 	if (omitXmlDecl != 1) {
 	    xmlOutputBufferWriteString(buf, "<?xml version=");
-	    if (result->version != NULL) 
-		xmlBufferWriteQuotedString(buf->buffer, result->version);
-	    else
+	    if (result->version != NULL) {
+		xmlOutputBufferWriteString(buf, "\"");
+		xmlOutputBufferWriteString(buf, (const char *)result->version);
+		xmlOutputBufferWriteString(buf, "\"");
+	    } else
 		xmlOutputBufferWriteString(buf, "\"1.0\"");
 	    if (encoding == NULL) {
 		if (result->encoding != NULL)
@@ -1552,7 +1554,9 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    }
 	    if (encoding != NULL) {
 		xmlOutputBufferWriteString(buf, " encoding=");
-		xmlBufferWriteQuotedString(buf->buffer, (xmlChar *) encoding);
+		xmlOutputBufferWriteString(buf, "\"");
+		xmlOutputBufferWriteString(buf, (const char *) encoding);
+		xmlOutputBufferWriteString(buf, "\"");
 	    }
 	    switch (standalone) {
 		case 0:
@@ -1755,6 +1759,15 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
     if (buf == NULL)
 	return(-1);
     xsltSaveResultTo(buf, result, style);
+#ifdef LIBXML2_NEW_BUFFER
+    if (buf->conv != NULL) {
+	*doc_txt_len = xmlBufUse(buf->conv);
+	*doc_txt_ptr = xmlStrndup(xmlBufContent(buf->conv), *doc_txt_len);
+    } else {
+	*doc_txt_len = xmlBufUse(buf->buffer);
+	*doc_txt_ptr = xmlStrndup(xmlBufContent(buf->buffer), *doc_txt_len);
+    }
+#else
     if (buf->conv != NULL) {
 	*doc_txt_len = buf->conv->use;
 	*doc_txt_ptr = xmlStrndup(buf->conv->content, *doc_txt_len);
@@ -1762,6 +1775,7 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
 	*doc_txt_len = buf->buffer->use;
 	*doc_txt_ptr = xmlStrndup(buf->buffer->content, *doc_txt_len);
     }
+#endif
     (void)xmlOutputBufferClose(buf);
     return 0;
 }
