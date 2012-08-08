@@ -4895,7 +4895,10 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	list = xmlXPathNodeSetCreate(NULL);
 	if (list == NULL)
 	    goto error;
-	cur = node->children;
+	if (node->type != XML_NAMESPACE_DECL)
+	    cur = node->children;
+	else
+	    cur = NULL;
 	while (cur != NULL) {
 	    switch (cur->type) {
 		case XML_TEXT_NODE:
@@ -4943,6 +4946,8 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			cur->next->prev = cur->prev;
 		    if (cur->prev != NULL)
 			cur->prev->next = cur->next;
+		    break;
+		case XML_NAMESPACE_DECL:
 		    break;
 		default:
 #ifdef WITH_XSLT_DEBUG_PROCESS
