@@ -303,6 +303,10 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	     "xsltCompMatchAdd: memory re-allocation failure.\n");
 	    if (ctxt->style != NULL)
 		ctxt->style->errors++;
+	    if (value)
+	        xmlFree(value);
+	    if (value2)
+	        xmlFree(value2);
 	    return (-1);
 	}
         comp->maxStep *= 2;
@@ -1384,17 +1388,22 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	NEXT;
 	SKIP_BLANKS;
         lit = xsltScanLiteral(ctxt);
-	if (ctxt->error)
+	if (ctxt->error) {
+	    xsltTransformError(NULL, NULL, NULL,
+		    "xsltCompileIdKeyPattern : Literal expected\n");
 	    return;
+	}
 	SKIP_BLANKS;
 	if (CUR != ')') {
 	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : ) expected\n");
+	    xmlFree(lit);
 	    ctxt->error = 1;
 	    return;
 	}
 	NEXT;
 	PUSH(XSLT_OP_ID, lit, NULL, novar);
+	lit = NULL;
     } else if ((aid) && (xmlStrEqual(name, (const xmlChar *)"key"))) {
 	if (axis != 0) {
 	    xsltTransformError(NULL, NULL, NULL,
@@ -1405,8 +1414,11 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	NEXT;
 	SKIP_BLANKS;
         lit = xsltScanLiteral(ctxt);
-	if (ctxt->error)
+	if (ctxt->error) {
+	    xsltTransformError(NULL, NULL, NULL,
+		    "xsltCompileIdKeyPattern : Literal expected\n");
 	    return;
+	}
 	SKIP_BLANKS;
 	if (CUR != ',') {
 	    xsltTransformError(NULL, NULL, NULL,
@@ -1417,25 +1429,36 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	NEXT;
 	SKIP_BLANKS;
         lit2 = xsltScanLiteral(ctxt);
-	if (ctxt->error)
+	if (ctxt->error) {
+	    xsltTransformError(NULL, NULL, NULL,
+		    "xsltCompileIdKeyPattern : Literal expected\n");
+	    xmlFree(lit);
 	    return;
+	}
 	SKIP_BLANKS;
 	if (CUR != ')') {
 	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : ) expected\n");
+	    xmlFree(lit);
+	    xmlFree(lit2);
 	    ctxt->error = 1;
 	    return;
 	}
 	NEXT;
 	/* URGENT TODO: support namespace in keys */
 	PUSH(XSLT_OP_KEY, lit, lit2, novar);
+	lit = NULL;
+	lit2 = NULL;
     } else if (xmlStrEqual(name, (const xmlChar *)"processing-instruction")) {
 	NEXT;
 	SKIP_BLANKS;
 	if (CUR != ')') {
 	    lit = xsltScanLiteral(ctxt);
-	    if (ctxt->error)
+	    if (ctxt->error) {
+		xsltTransformError(NULL, NULL, NULL,
+			"xsltCompileIdKeyPattern : Literal expected\n");
 		return;
+	    }
 	    SKIP_BLANKS;
 	    if (CUR != ')') {
 		xsltTransformError(NULL, NULL, NULL,
@@ -1446,6 +1469,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	}
 	NEXT;
 	PUSH(XSLT_OP_PI, lit, NULL, novar);
+	lit = NULL;
     } else if (xmlStrEqual(name, (const xmlChar *)"text")) {
 	NEXT;
 	SKIP_BLANKS;
@@ -1496,8 +1520,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	return;
     }
 error:
-    if (name != NULL)
-	xmlFree(name);
+    return;
 }
 
 /**
@@ -1560,6 +1583,8 @@ parse_node_test:
     SKIP_BLANKS;
     if (CUR == '(') {
 	xsltCompileIdKeyPattern(ctxt, token, 0, novar, axis);
+	xmlFree(token);
+	token = NULL;
 	if (ctxt->error)
 	    goto error;
     } else if (CUR == ':') {
@@ -1578,20 +1603,24 @@ parse_node_test:
 	    "xsltCompileStepPattern : no namespace bound to prefix %s\n",
 				 prefix);
 		xmlFree(prefix);
+		prefix=NULL;
 		ctxt->error = 1;
 		goto error;
 	    } else {
 		URL = xmlStrdup(ns->href);
 	    }
 	    xmlFree(prefix);
+	    prefix=NULL;
 	    if (token == NULL) {
 		if (CUR == '*') {
 		    NEXT;
                     if (axis == AXIS_ATTRIBUTE) {
                         PUSH(XSLT_OP_ATTR, NULL, URL, novar);
+			URL = NULL;
                     }
                     else {
                         PUSH(XSLT_OP_NS, URL, NULL, novar);
+			URL = NULL;
                     }
 		} else {
 		    xsltTransformError(NULL, NULL, NULL,
@@ -1602,9 +1631,13 @@ parse_node_test:
 	    } else {
                 if (axis == AXIS_ATTRIBUTE) {
                     PUSH(XSLT_OP_ATTR, token, URL, novar);
+		    token = NULL;
+		    URL = NULL;
                 }
                 else {
                     PUSH(XSLT_OP_ELEM, token, URL, novar);
+		    token = NULL;
+		    URL = NULL;
                 }
 	    }
 	} else {
@@ -1626,6 +1659,7 @@ parse_node_test:
 		goto error;
 	    }
 	    xmlFree(token);
+	    token = NULL;
             SKIP_BLANKS;
             token = xsltScanNCName(ctxt);
 	    goto parse_node_test;
@@ -1640,9 +1674,13 @@ parse_node_test:
 	    URL = xmlStrdup(URI);
         if (axis == AXIS_ATTRIBUTE) {
             PUSH(XSLT_OP_ATTR, token, URL, novar);
+	    token = NULL;
+	    URL = NULL;
         }
         else {
             PUSH(XSLT_OP_ELEM, token, URL, novar);
+	    token = NULL;
+	    URL = NULL;
         }
     }
 parse_predicate:
@@ -1682,6 +1720,7 @@ parse_predicate:
         }
 	ret = xmlStrndup(q, CUR_PTR - q);
 	PUSH(XSLT_OP_PREDICATE, ret, NULL, novar);
+	ret = NULL;
 	/* push the predicate lower than local test */
 	SWAP();
 	NEXT;
@@ -1790,6 +1829,8 @@ xsltCompileLocationPathPattern(xsltParserContextPtr ctxt, int novar) {
 	SKIP_BLANKS;
 	if ((CUR == '(') && !xmlXPathIsNodeType(name)) {
 	    xsltCompileIdKeyPattern(ctxt, name, 1, novar, 0);
+	    xmlFree(name);
+	    name = NULL;
 	    if ((CUR == '/') && (NXT(1) == '/')) {
 		PUSH(XSLT_OP_ANCESTOR, NULL, NULL, novar);
 		NEXT;
