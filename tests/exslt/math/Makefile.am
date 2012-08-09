@@ -17,7 +17,7 @@ EXTRA_DIST = 						\
 	min.1.out      min.1.xml      min.1.xsl		\
 	min.2.out      min.2.xml      min.2.xsl
 
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

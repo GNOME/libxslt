@@ -185,8 +185,7 @@ EXTRA_DIST = \
     itemschoose.out itemschoose.xsl \
     inner.xsl date_add.xsl
 
-
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

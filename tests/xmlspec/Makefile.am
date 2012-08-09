@@ -7,7 +7,7 @@ EXTRA_DIST = REC-xml-20001006.xml xmlspec-v21.dtd W3C-REC.css \
              logo-REC xmlspec.xsl REC-xml-2e.xsl diffspec.xsl \
 	     REC-xml-20001006.html REC-xml-20001006-review.html
 
-all:
+CLEANFILES = .memdump debug
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

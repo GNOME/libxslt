@@ -16,7 +16,7 @@ EXTRA_DIST = \
     tst8.xml tst8.xsl tst8.out \
     tst9.xml tst9.xsl tst9.out
 
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

@@ -51,9 +51,9 @@ libtoolize --copy --force
 echo "Running aclocal..."
 aclocal $ACLOCAL_FLAGS
 echo "Running automake..."
-automake --add-missing
+automake --add-missing --warnings=all
 echo "Running autoconf..."
-autoconf
+autoconf --warnings=all
 
 cd $THEDIR
 

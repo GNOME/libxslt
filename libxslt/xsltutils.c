@@ -1867,19 +1867,26 @@ xsltTimestamp(void)
 
 #else /* XSLT_WIN32_PERFORMANCE_COUNTER */
 #ifdef HAVE_CLOCK_GETTIME
+#  if defined(CLOCK_MONOTONIC)
+#    define XSLT_CLOCK CLOCK_MONOTONIC
+#  elif defined(CLOCK_HIGHRES)
+#    define XSLT_CLOCK CLOCK_HIGHRES
+#  else
+#    define XSLT_CLOCK CLOCK_REALTIME
+#  endif
     static struct timespec startup;
     struct timespec cur;
     long tics;
 
     if (calibration < 0) {
-        clock_gettime(CLOCK_MONOTONIC, &startup);
+        clock_gettime(XSLT_CLOCK, &startup);
         calibration = 0;
         calibration = xsltCalibrateTimestamps();
-        clock_gettime(CLOCK_MONOTONIC, &startup);
+        clock_gettime(XSLT_CLOCK, &startup);
         return (0);
     }
 
-    clock_gettime(CLOCK_MONOTONIC, &cur);
+    clock_gettime(XSLT_CLOCK, &cur);
     tics = (cur.tv_sec - startup.tv_sec) * XSLT_TIMESTAMP_TICS_PER_SEC;
     tics += (cur.tv_nsec - startup.tv_nsec) /
                           (1000000000l / XSLT_TIMESTAMP_TICS_PER_SEC);

@@ -10,7 +10,7 @@ EXTRA_DIST = 						\
 	split.1.xml split.1.xsl split.1.out \
 	replace.1.xml replace.1.xsl replace.1.out 
 
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

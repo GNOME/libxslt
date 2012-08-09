@@ -11,8 +11,7 @@ EXTRA_DIST = \
 	recglobparam.xsl recglobvar.xsl reclocparam.xsl reclocvar.xsl \
 	recglobparam.xml recglobvar.xml reclocparam.xml reclocvar.xml 
 
-
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

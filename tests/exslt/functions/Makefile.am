@@ -15,7 +15,7 @@ EXTRA_DIST = 						\
 	function.9.out  function.9.xml  function.9.xsl  \
 	function.10.out function.10.xml function.10.xsl
 
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

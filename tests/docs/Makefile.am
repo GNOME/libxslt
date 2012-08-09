@@ -172,6 +172,4 @@ EXTRA_DIST =	\
 	array.xml \
 	items.xml
 
-all:
-
 tests:

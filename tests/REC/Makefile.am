@@ -77,10 +77,10 @@ EXTRA_DIST = 						\
     test-9.2-1.xsl					\
     stand-2.7-1.dtd stand-2.7-1.stand.out stand-2.7-1.xsl \
     stand-2.7-1.out stand-2.7-1.xml			\
-    stand-2.7-2.xml stand-2.7-3.xml
+    stand-2.7-2.stand.out stand-2.7-2.xml stand-2.7-3.xml \
+    stand-2.7-3.stand.out
 
-
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'

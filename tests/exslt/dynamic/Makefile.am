@@ -6,7 +6,7 @@ $(top_builddir)/xsltproc/xsltproc:
 EXTRA_DIST = 							\
   dynmap.out     dynmap.xml     dynmap.xsl
 
-all:
+CLEANFILES = .memdump
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'
