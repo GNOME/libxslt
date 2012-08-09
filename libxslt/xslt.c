@@ -1162,9 +1162,9 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
     xmlChar *element,
      *end;
 
-    if ((cur == NULL) || (style == NULL))
+    if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
         return;
-   
+
     prop = xmlGetNsProp(cur, (const xmlChar *) "version", NULL);
     if (prop != NULL) {
         if (style->version != NULL)
@@ -1377,12 +1377,12 @@ xsltParseStylesheetDecimalFormat(xsltStylesheetPtr style, xmlNodePtr cur)
     xmlChar *prop;
     xsltDecimalFormatPtr format;
     xsltDecimalFormatPtr iter;
-    
-    if ((cur == NULL) || (style == NULL))
+
+    if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return;
 
     format = style->decimalFormat;
-    
+
     prop = xmlGetNsProp(cur, BAD_CAST("name"), NULL);
     if (prop != NULL) {
 	format = xsltDecimalFormatGetByName(style, prop);
@@ -1484,7 +1484,7 @@ xsltParseStylesheetPreserveSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlChar *elements;
     xmlChar *element, *end;
 
-    if ((cur == NULL) || (style == NULL))
+    if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return;
 
     elements = xmlGetNsProp(cur, (const xmlChar *)"elements", NULL);
@@ -1558,7 +1558,7 @@ xsltParseStylesheetExtPrefix(xsltStylesheetPtr style, xmlNodePtr cur,
     xmlChar *prefixes;
     xmlChar *prefix, *end;
 
-    if ((cur == NULL) || (style == NULL))
+    if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return;
 
     if (isXsltElem) {
@@ -1623,7 +1623,7 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlChar *elements;
     xmlChar *element, *end;
 
-    if ((cur == NULL) || (style == NULL))
+    if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return;
 
     elements = xmlGetNsProp(cur, (const xmlChar *)"elements", NULL);
@@ -1696,7 +1696,7 @@ xsltParseStylesheetExcludePrefix(xsltStylesheetPtr style, xmlNodePtr cur,
     xmlChar *prefixes;
     xmlChar *prefix, *end;
 
-    if ((cur == NULL) || (style == NULL))
+    if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return(0);
 
     if (isXsltElem)
@@ -4287,7 +4287,7 @@ static int
 xsltParseUnknownXSLTElem(xsltCompilerCtxtPtr cctxt,
 			    xmlNodePtr node)
 {
-    if ((cctxt == NULL) || (node == NULL))
+    if ((cctxt == NULL) || (node == NULL) || (node->type != XML_ELEMENT_NODE))
 	return(-1);
 
     /*
@@ -4384,7 +4384,7 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
     if (cctxt->inode->category == XSLT_ELEMENT_CATEGORY_EXTENSION) {
 	cctxt->inode->extContentHandled = 1;
     }
-    if (cur == NULL)
+    if ((cur == NULL) || (cur->type == XML_NAMESPACE_DECL))
 	return;
     /*
     * This is the content reffered to as a "template".
@@ -4789,7 +4789,8 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
  */
 void
 xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
-    if ((style == NULL) || (templ == NULL))
+    if ((style == NULL) || (templ == NULL) ||
+        (templ->type == XML_NAMESPACE_DECL))
 	return;
 
     /*
@@ -4838,6 +4839,10 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 void
 xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
     xmlNodePtr cur, delete;
+
+    if ((style == NULL) || (templ == NULL) ||
+        (templ->type == XML_NAMESPACE_DECL)) return;
+
     /*
      * This content comes from the stylesheet
      * For stylesheets, the set of whitespace-preserving
@@ -5057,7 +5062,7 @@ xsltParseStylesheetKey(xsltStylesheetPtr style, xmlNodePtr key) {
     xmlChar *name = NULL;
     xmlChar *nameURI = NULL;
 
-    if ((style == NULL) || (key == NULL))
+    if ((style == NULL) || (key == NULL) || (key->type != XML_ELEMENT_NODE))
 	return;
 
     /*
@@ -5147,7 +5152,8 @@ xsltParseXSLTTemplate(xsltCompilerCtxtPtr cctxt, xmlNodePtr templNode) {
     xmlChar *prop;    
     double  priority;    
 
-    if ((cctxt == NULL) || (templNode == NULL))
+    if ((cctxt == NULL) || (templNode == NULL) ||
+        (templNode->type != XML_ELEMENT_NODE))
 	return;
 
     /*
@@ -5308,7 +5314,8 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
     xmlChar *modeURI = NULL;
     double  priority;
 
-    if (template == NULL)
+    if ((style == NULL) || (template == NULL) ||
+        (template->type != XML_ELEMENT_NODE))
 	return;
 
     /*
@@ -5440,7 +5447,7 @@ static xsltStyleItemIncludePtr
 xsltCompileXSLTIncludeElem(xsltCompilerCtxtPtr cctxt, xmlNodePtr node) {
     xsltStyleItemIncludePtr item;
 
-    if ((cctxt == NULL) || (node == NULL))
+    if ((cctxt == NULL) || (node == NULL) || (node->type != XML_ELEMENT_NODE))
 	return(NULL);
 
     node->psvi = NULL;
@@ -5960,7 +5967,7 @@ xsltParseXSLTStylesheetElem(xsltCompilerCtxtPtr cctxt, xmlNodePtr node)
 {
     xmlNodePtr cur, start;
 
-    if ((cctxt == NULL) || (node == NULL))
+    if ((cctxt == NULL) || (node == NULL) || (node->type != XML_ELEMENT_NODE))
 	return(-1);
     
     if (node->children == NULL)
@@ -6048,7 +6055,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     int templates = 0;
 #endif
 
-    if (top == NULL)
+    if ((top == NULL) || (top->type != XML_ELEMENT_NODE))
 	return;
 
     prop = xmlGetNsProp(top, (const xmlChar *)"version", NULL);

@@ -777,7 +777,7 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 #endif
 
     /*
-    * Play save and reset the merging mechanism for every new
+    * Play safe and reset the merging mechanism for every new
     * target node.
     */
     if ((target == NULL) || (target->children == NULL)) {

@@ -198,7 +198,8 @@ xsltEvalTemplateString(xsltTransformContextPtr ctxt,
     xmlNodePtr oldInsert, insert = NULL;
     xmlChar *ret;
 
-    if ((ctxt == NULL) || (contextNode == NULL) || (inst == NULL))
+    if ((ctxt == NULL) || (contextNode == NULL) || (inst == NULL) ||
+        (inst->type != XML_ELEMENT_NODE))
 	return(NULL);
 
     if (inst->children == NULL)
@@ -390,7 +391,8 @@ xsltEvalAttrValueTemplate(xsltTransformContextPtr ctxt, xmlNodePtr inst,
     xmlChar *ret;
     xmlChar *expr;
 
-    if ((ctxt == NULL) || (inst == NULL) || (name == NULL))
+    if ((ctxt == NULL) || (inst == NULL) || (name == NULL) ||
+        (inst->type != XML_ELEMENT_NODE))
 	return(NULL);
 
     expr = xsltGetNsProp(inst, name, ns);
@@ -434,7 +436,8 @@ xsltEvalStaticAttrValueTemplate(xsltStylesheetPtr style, xmlNodePtr inst,
     const xmlChar *ret;
     xmlChar *expr;
 
-    if ((style == NULL) || (inst == NULL) || (name == NULL))
+    if ((style == NULL) || (inst == NULL) || (name == NULL) ||
+        (inst->type != XML_ELEMENT_NODE))
 	return(NULL);
 
     expr = xsltGetNsProp(inst, name, ns);
@@ -475,7 +478,8 @@ xsltAttrTemplateProcess(xsltTransformContextPtr ctxt, xmlNodePtr target,
     const xmlChar *value;
     xmlAttrPtr ret;
 
-    if ((ctxt == NULL) || (attr == NULL) || (target == NULL))
+    if ((ctxt == NULL) || (attr == NULL) || (target == NULL) ||
+        (target->type != XML_ELEMENT_NODE))
 	return(NULL);
     
     if (attr->type != XML_ATTRIBUTE_NODE)
@@ -632,7 +636,8 @@ xsltAttrListTemplateProcess(xsltTransformContextPtr ctxt,
     const xmlChar *value;
     xmlChar *valueAVT;
 
-    if ((ctxt == NULL) || (target == NULL) || (attrs == NULL))
+    if ((ctxt == NULL) || (target == NULL) || (attrs == NULL) ||
+        (target->type != XML_ELEMENT_NODE))
 	return(NULL);
 
     oldInsert = ctxt->insert;

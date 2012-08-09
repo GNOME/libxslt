@@ -680,7 +680,7 @@ xsltSortComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #else
     xsltStylePreCompPtr comp;
 #endif
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -788,7 +788,7 @@ xsltCopyComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 #ifdef XSLT_REFACTORED
     comp = (xsltStyleItemCopyPtr) xsltNewStylePreComp(style, XSLT_FUNC_COPY);
@@ -832,7 +832,7 @@ xsltTextComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #endif
     const xmlChar *prop;
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -885,7 +885,7 @@ xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     *   <!-- Content: template -->
     * </xsl:element>
     */
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1002,7 +1002,7 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     *   <!-- Content: template -->
     * </xsl:attribute>
     */
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1122,7 +1122,7 @@ xsltCommentComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1152,7 +1152,7 @@ xsltProcessingInstructionComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1186,7 +1186,7 @@ xsltCopyOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1233,7 +1233,7 @@ xsltValueOfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #endif
     const xmlChar *prop;
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1358,7 +1358,7 @@ xsltWithParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1417,7 +1417,7 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 #endif
     const xmlChar *prop;
 
-    if ((style == NULL) || (cur == NULL))
+    if ((style == NULL) || (cur == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1543,7 +1543,7 @@ xsltApplyImportsComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1573,7 +1573,7 @@ xsltCallTemplateComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1612,7 +1612,7 @@ xsltApplyTemplatesComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1664,7 +1664,7 @@ xsltChooseComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1695,7 +1695,7 @@ xsltIfComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1741,7 +1741,7 @@ xsltWhenComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1787,7 +1787,7 @@ xsltForEachComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1835,7 +1835,7 @@ xsltVariableComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -1914,7 +1914,7 @@ xsltParamComp(xsltStylesheetPtr style, xmlNodePtr inst) {
     xsltStylePreCompPtr comp;
 #endif
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
 
 #ifdef XSLT_REFACTORED
@@ -2006,7 +2006,7 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr node) {
     *  the parsing mechanism for all elements in the XSLT namespace.
     */
     if (style == NULL) {
-	if (node != NULL)
+	if ((node != NULL) && (node->type == XML_ELEMENT_NODE))
 	    node->psvi = NULL;
 	return;
     }
@@ -2221,7 +2221,8 @@ xsltStylePreCompute(xsltStylesheetPtr style, xmlNodePtr inst) {
     *   namespace- and local-name of the node, but can evaluate this
     *   using cctxt->style->inode->category;
     */
-    if (inst->psvi != NULL)
+    if ((inst == NULL) || (inst->type != XML_ELEMENT_NODE) ||
+        (inst->psvi != NULL))
 	return;
 
     if (IS_XSLT_ELEM(inst)) {

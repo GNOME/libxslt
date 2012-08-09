@@ -293,7 +293,7 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     xmlNodePtr child;
     xsltAttrElemPtr attrItems;
 
-    if ((cur == NULL) || (style == NULL))
+    if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return;
 
     value = xmlGetNsProp(cur, (const xmlChar *)"name", NULL);
@@ -656,7 +656,8 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
     xmlNsPtr ns = NULL;
     xmlAttrPtr attr;    
 
-    if ((ctxt == NULL) || (contextNode == NULL) || (inst == NULL))
+    if ((ctxt == NULL) || (contextNode == NULL) || (inst == NULL) ||
+        (inst->type != XML_ELEMENT_NODE) )
         return;
 
     /* 
