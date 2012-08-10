@@ -60,7 +60,7 @@ else
 LIBXSLT_VERSION_SCRIPT =
 endif
 
-libxslt_la_LIBADD = $(EXTRA_LIBS)
+libxslt_la_LIBADD = $(LIBXML_LIBS) $(EXTRA_LIBS)
 libxslt_la_LDFLAGS =					\
 		$(WIN32_EXTRA_LDFLAGS)			\
 		$(LIBXSLT_VERSION_SCRIPT)		\
