@@ -3978,14 +3978,6 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	}
 	name = xsltSplitQName(ctxt->dict, prop, &prefix);
 	xmlFree(prop);
-	if ((prefix != NULL) &&
-	    (!xmlStrncasecmp(prefix, (xmlChar *)"xml", 3)))
-	{
-	    /*
-	    * TODO: Should we really disallow an "xml" prefix?
-	    */
-	    goto error;
-	}
     } else {
 	/*
 	* The "name" value was static.
@@ -4040,8 +4032,20 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    if ((tmpNsName != NULL) && (tmpNsName[0] != 0))
 		nsName = xmlDictLookup(ctxt->dict, BAD_CAST tmpNsName, -1);
 	    xmlFree(tmpNsName);
-	};
-    } else {
+	}
+
+        if (xmlStrEqual(nsName, BAD_CAST "http://www.w3.org/2000/xmlns/")) {
+            xsltTransformError(ctxt, NULL, inst,
+                "xsl:attribute: Namespace http://www.w3.org/2000/xmlns/ "
+                "forbidden.\n");
+            goto error;
+        }
+        if (xmlStrEqual(nsName, XML_XML_NAMESPACE)) {
+            prefix = BAD_CAST "xml";
+        } else if (xmlStrEqual(prefix, BAD_CAST "xml")) {
+            prefix = NULL;
+        }
+    } else if (prefix != NULL) {
 	xmlNsPtr ns;
 	/*
 	* SPEC XSLT 1.0:
@@ -4056,13 +4060,11 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    * TODO: Check this in the compilation layer in case it's a
 	    * static value.
 	    */
-	    if (prefix != NULL) {
-		xsltTransformError(ctxt, NULL, inst,
-		    "xsl:element: The QName '%s:%s' has no "
-		    "namespace binding in scope in the stylesheet; "
-		    "this is an error, since the namespace was not "
-		    "specified by the instruction itself.\n", prefix, name);
-	    }
+            xsltTransformError(ctxt, NULL, inst,
+                "xsl:element: The QName '%s:%s' has no "
+                "namespace binding in scope in the stylesheet; "
+                "this is an error, since the namespace was not "
+                "specified by the instruction itself.\n", prefix, name);
 	} else
 	    nsName = ns->href;
     }
@@ -4070,7 +4072,17 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
     * Find/create a matching ns-decl in the result tree.
     */
     if (nsName != NULL) {
-	copy->ns = xsltGetSpecialNamespace(ctxt, inst, nsName, prefix, copy);
+	if (xmlStrEqual(prefix, BAD_CAST "xmlns")) {
+            /* Don't use a prefix of "xmlns" */
+	    xmlChar *pref = xmlStrdup(BAD_CAST "ns_1");
+
+	    copy->ns = xsltGetSpecialNamespace(ctxt, inst, nsName, pref, copy);
+
+	    xmlFree(pref);
+	} else {
+	    copy->ns = xsltGetSpecialNamespace(ctxt, inst, nsName, prefix,
+		copy);
+	}
     } else if ((copy->parent != NULL) &&
 	(copy->parent->type == XML_ELEMENT_NODE) &&
 	(copy->parent->ns != NULL))
@@ -4427,7 +4439,6 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xsltStylePreCompPtr comp = castedComp;
 #endif
     xmlXPathObjectPtr res = NULL;
-    xmlNodePtr copy = NULL;
     xmlChar *value = NULL;
     xmlDocPtr oldXPContextDoc;
     xmlNsPtr *oldXPNamespaces;
@@ -4500,8 +4511,7 @@ xsltValueOf(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    goto error;
 	}
 	if (value[0] != 0) {
-	    copy = xsltCopyTextString(ctxt,
-		ctxt->insert, value, comp->noescape);
+	    xsltCopyTextString(ctxt, ctxt->insert, value, comp->noescape);
 	}
     } else {
 	xsltTransformError(ctxt, NULL, inst,

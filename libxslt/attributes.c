@@ -822,7 +822,19 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
 	    if ((tmpNsName != NULL) && (tmpNsName[0] != 0))
 		nsName = xmlDictLookup(ctxt->dict, BAD_CAST tmpNsName, -1);
 	    xmlFree(tmpNsName);		
-	};	    
+	}
+
+        if (xmlStrEqual(nsName, BAD_CAST "http://www.w3.org/2000/xmlns/")) {
+            xsltTransformError(ctxt, NULL, inst,
+                "xsl:attribute: Namespace http://www.w3.org/2000/xmlns/ "
+                "forbidden.\n");
+            goto error;
+        }
+        if (xmlStrEqual(nsName, XML_XML_NAMESPACE)) {
+            prefix = BAD_CAST "xml";
+        } else if (xmlStrEqual(prefix, BAD_CAST "xml")) {
+            prefix = NULL;
+        }
     } else if (prefix != NULL) {
 	/*
 	* SPEC XSLT 1.0:
