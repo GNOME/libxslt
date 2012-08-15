@@ -799,7 +799,9 @@ xsltSystemPropertyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	    } else {
 		valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
 	    }
-	}
+	} else {
+	    valuePush(ctxt, xmlXPathNewString((const xmlChar *)""));
+        }
 	if (name != NULL)
 	    xmlFree(name);
 	if (prefix != NULL)
