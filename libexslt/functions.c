@@ -562,6 +562,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 	xsltGenericError(xsltGenericErrorContext,
 			 "exsltFuncResultElem: only xsl:fallback is "
 			 "allowed to follow func:result\n");
+	style->errors++;
 	return (NULL);
     }
     /* it is an error for a func:result element to not be a descendant
@@ -578,6 +579,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 	    xsltGenericError(xsltGenericErrorContext,
 			     "func:result element not a descendant "
 			     "of a func:function\n");
+	    style->errors++;
 	    return (NULL);
 	}
 	if ((test->ns != NULL) &&
@@ -589,6 +591,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 		xsltGenericError(xsltGenericErrorContext,
 				 "func:result element not allowed within"
 				 " another func:result element\n");
+	        style->errors++;
 		return (NULL);
 	    }
 	}
@@ -598,6 +601,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 	    xsltGenericError(xsltGenericErrorContext,
 			     "func:result element not allowed within"
 			     " a variable binding element\n");
+            style->errors++;
 	    return (NULL);
 	}
     }
@@ -611,6 +615,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 	xsltPrintErrorContext(NULL, NULL, NULL);
         xsltGenericError(xsltGenericErrorContext,
                          "exsltFuncResultComp : malloc failed\n");
+        style->errors++;
         return (NULL);
     }
     memset(ret, 0, sizeof(exsltFuncResultPreComp));
