@@ -758,6 +758,7 @@ xsltNewStylesheet(void) {
     ret->extrasNr = 0;
     ret->internalized = 1;
     ret->literal_result = 0;
+    ret->forwards_compatible = 0;
     ret->dict = xmlDictCreate();
 #ifdef WITH_XSLT_DEBUG
     xsltGenericDebug(xsltGenericDebugContext,
@@ -6068,8 +6069,10 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
             (!xmlStrEqual(prop, (const xmlChar *)"1.1"))) {
 	    xsltTransformError(NULL, style, top,
 		"xsl:version: only 1.0 features are supported\n");
-	     /* TODO set up compatibility when not XSLT 1.0 */
-	    if (style != NULL) style->warnings++;
+	    if (style != NULL) {
+                style->forwards_compatible = 1;
+                style->warnings++;
+            }
 	}
 	xmlFree(prop);
     }
@@ -6163,12 +6166,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
     } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
 	    xsltNamespaceAlias(style, cur);
 	} else {
-	    /*
-	    * BUG TODO: The version of the *doc* is irrelevant for
-	    *  the forwards-compatible mode.
-	    */
-            if ((style != NULL) && (style->doc->version != NULL) &&
-	        (!strncmp((const char *) style->doc->version, "1.0", 3))) {
+            if ((style != NULL) && (style->forwards_compatible == 0)) {
 	        xsltTransformError(NULL, style, cur,
 			"xsltParseStylesheetTop: unknown %s element\n",
 			cur->name);

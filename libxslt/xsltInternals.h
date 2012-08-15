@@ -1635,6 +1635,10 @@ struct _xsltStylesheet {
 
     xsltPrincipalStylesheetDataPtr principalData;    
 #endif
+    /*
+     * Forwards-compatible processing
+     */
+    int forwards_compatible;
 };
 
 typedef struct _xsltTransformCache xsltTransformCache;
