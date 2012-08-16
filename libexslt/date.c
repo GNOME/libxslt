@@ -28,7 +28,7 @@
 #include "config.h"
 #endif
 
-#if HAVE_LOCALTIME_R	/* _POSIX_SOURCE required by gnu libc */
+#if defined(HAVE_LOCALTIME_R) && defined(__GLIBC__)	/* _POSIX_SOURCE required by gnu libc */
 #ifndef _AIX51		/* but on AIX we're not using gnu libc */
 #define _POSIX_SOURCE
 #endif
