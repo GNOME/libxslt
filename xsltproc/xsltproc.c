@@ -819,6 +819,7 @@ main(int argc, char **argv)
 	    style = xmlReadFile((const char *) argv[i], NULL, options);
             if (timing)
 		endTimer("Parsing stylesheet %s", argv[i]);
+#ifdef LIBXML_XINCLUDE_ENABLED
 	    if (xincludestyle) {
 		if (style != NULL) {
 		    if (timing)
@@ -833,6 +834,7 @@ main(int argc, char **argv)
 		    }
 		}
 	    }
+#endif
 	    if (style == NULL) {
 		fprintf(stderr,  "cannot parse %s\n", argv[i]);
 		cur = NULL;
