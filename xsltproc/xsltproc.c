@@ -359,16 +359,23 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 
 #ifdef LIBXML_XINCLUDE_ENABLED
     if (xinclude) {
+        int ret;
+
 	if (timing)
 	    startTimer();
 #if LIBXML_VERSION >= 20603
-	xmlXIncludeProcessFlags(doc, XSLT_PARSE_OPTIONS);
+	ret = xmlXIncludeProcessFlags(doc, XSLT_PARSE_OPTIONS);
 #else
-	xmlXIncludeProcess(doc);
+	ret = xmlXIncludeProcess(doc);
 #endif
 	if (timing) {
 	    endTimer("XInclude processing %s", filename);
 	}
+
+        if (ret < 0) {
+	    errorno = 6;
+            return;
+        }
     }
 #endif
     if (timing)
