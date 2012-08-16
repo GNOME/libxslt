@@ -459,9 +459,8 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
     xmlHashTablePtr data;
     exsltFuncFunctionData *func;
 
-    if ((style == NULL) || (inst == NULL))
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
 	return;
-
 
     {
 	xmlChar *qname;
@@ -545,6 +544,9 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
     xmlNodePtr test;
     xmlChar *sel;
     exsltFuncResultPreComp *ret;
+
+    if ((style == NULL) || (inst == NULL) || (inst->type != XML_ELEMENT_NODE))
+        return (NULL);
 
     /*
      * "Validity" checking
