@@ -1048,6 +1048,10 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 		"xsl:attribute: The value '%s' of the attribute 'name' is "
 		"not a valid QName.\n", comp->name);
 	    style->errors++;
+        } else if (xmlStrEqual(comp->name, BAD_CAST "xmlns")) {
+	    xsltTransformError(NULL, style, inst,
+                "xsl:attribute: The attribute name 'xmlns' is not allowed.\n");
+	    style->errors++;
 	} else {
 	    const xmlChar *prefix = NULL, *name;
 
@@ -1081,27 +1085,6 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 			style->errors++;
 		    }
 		}
-		if (!xmlStrncasecmp(prefix, (xmlChar *) "xmlns", 5)) {
-		    /*
-		    * SPEC XSLT 1.0:
-		    *  "It is an error if the string that results from
-		    *  instantiating the attribute value template is not a
-		    *  QName or is the string xmlns. An XSLT processor may
-		    *  signal the error; if it does not signal the error,
-		    *  it must recover by not adding the attribute to the
-		    *  result tree."
-		    *
-		    * Reject a prefix of "xmlns". Mark to be skipped.
-		    */
-		    comp->has_name = 0;
-		    
-#ifdef WITH_XSLT_DEBUG_PARSING
-		    xsltGenericDebug(xsltGenericDebugContext,
-			"xsltAttribute: xmlns prefix forbidden\n");
-#endif		    
-		    return;
-		}
-		
 	    }
 	}	
     }
