@@ -302,6 +302,8 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
     if (obj->stringval == NULL) {
         valuePush(ctxt, xmlXPathNewNodeSet(NULL));
     } else {
+        xsltTransformContextPtr tctxt;
+        tctxt = xsltXPathGetTransformContext(ctxt);
         if ((obj2 != NULL) && (obj2->nodesetval != NULL) &&
             (obj2->nodesetval->nodeNr > 0) &&
             IS_XSLT_REAL_NODE(obj2->nodesetval->nodeTab[0])) {
@@ -314,9 +316,6 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
             }
             base = xmlNodeGetBase(target->doc, target);
         } else {
-            xsltTransformContextPtr tctxt;
-
-            tctxt = xsltXPathGetTransformContext(ctxt);
             if ((tctxt != NULL) && (tctxt->inst != NULL)) {
                 base = xmlNodeGetBase(tctxt->inst->doc, tctxt->inst);
             } else if ((tctxt != NULL) && (tctxt->style != NULL) &&
@@ -329,7 +328,14 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
         if (base != NULL)
             xmlFree(base);
         if (URI == NULL) {
-            valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+            if ((tctxt != NULL) && (tctxt->style != NULL) &&
+                (tctxt->style->doc != NULL) &&
+                (xmlStrEqual(URI, tctxt->style->doc->URL))) {
+                /* This selects the stylesheet's doc itself. */
+                valuePush(ctxt, xmlXPathNewNodeSet((xmlNodePtr) tctxt->style->doc));
+            } else {
+                valuePush(ctxt, xmlXPathNewNodeSet(NULL));
+            }
         } else {
 	    xsltDocumentFunctionLoadDocument( ctxt, URI );
 	    xmlFree(URI);
