@@ -1602,7 +1602,7 @@ exsltDateNormalize (exsltDateValPtr dt)
     if (dt == NULL)
         return;
 
-    if (((dt->type & XS_TIME) != XS_TIME) || (dt->value.date.tzo == 0))
+    if (((dt->type & XS_TIME) != XS_TIME) && (dt->value.date.tzo == 0))
         return;
 
     dur = exsltDateCreateDate(XS_DURATION);
