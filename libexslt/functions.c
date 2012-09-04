@@ -488,6 +488,8 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
     }
     xmlFree(prefix);
 
+    xsltParseTemplateContent(style, inst);
+
     /*
      * Create function data
      */
@@ -498,8 +500,6 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
 	func->content = func->content->next;
 	func->nargs++;
     }
-
-    xsltParseTemplateContent(style, inst);
 
     /*
      * Register the function data such that it can be retrieved
