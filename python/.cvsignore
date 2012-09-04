@@ -1,8 +1,0 @@
-Makefile
-Makefile.in
-gen_prog
-libxslt-export.c
-libxslt-py.c
-libxslt-py.h
-libxslt.py
-libxsltclass.py
