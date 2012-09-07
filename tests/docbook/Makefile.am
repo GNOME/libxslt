@@ -44,7 +44,7 @@ single:
 	  if [ -n "$$log" ] ; then \
 		echo ; \
 		echo result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	  fi ; \
 	  rm -f $$out ; \
 	  echo -n "fo " ; \
@@ -65,7 +65,7 @@ single:
 	  if [ -n "$$log" ] ; then \
 		echo ; \
 		echo result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	  fi ; \
 	  rm -f $$out $$msg ; \
 	  echo -n "xhtml " ; \
@@ -85,7 +85,7 @@ single:
 	  if [ -n "$$log" ] ; then \
 		echo ; \
 		echo result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	  fi ; \
 	  rm -f $$out ; \
 	  done )
@@ -123,7 +123,7 @@ xtchunk:
 	  if [ -n "$$log" ] ; then \
 		echo ; \
 		echo result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	  fi ; \
 	  rm -f result/xtchunk/html/gdp-handbook ; \
 	  done )

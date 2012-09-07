@@ -26,7 +26,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo REC-xml-20001006 result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f REC-xml-20001006.out
 	@log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc  \
@@ -40,7 +40,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo "REC-xml-20001006 (show.diff.markup) result" ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f REC-xml-20001006-review.out
 

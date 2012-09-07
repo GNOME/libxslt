@@ -93,7 +93,7 @@ alphabetize:	db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -109,7 +109,7 @@ avts:			db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -125,7 +125,7 @@ creation:		db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -141,7 +141,7 @@ dbonerow:		db10000.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -157,7 +157,7 @@ dbtail:		db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -173,7 +173,7 @@ decoy:		db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -189,7 +189,7 @@ encrypt:		db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -205,7 +205,7 @@ functions:		db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -221,7 +221,7 @@ identity:		db1000.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -237,7 +237,7 @@ patterns:		db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -253,7 +253,7 @@ prettyprint:	db100.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -269,7 +269,7 @@ stringsort:		db1000.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 else
@@ -301,7 +301,7 @@ attsets:		chart.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -317,7 +317,7 @@ axis:			axis.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -333,7 +333,7 @@ backwards:		game.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -349,7 +349,7 @@ bottles:		bottles.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -365,7 +365,7 @@ brutal:		brutal.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -381,7 +381,7 @@ chart:		chart.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -397,7 +397,7 @@ current:		current.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -413,7 +413,7 @@ game:			game.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -429,7 +429,7 @@ html:			html.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -445,7 +445,7 @@ inventory:		inventory.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -461,7 +461,7 @@ metric:		metric.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -477,7 +477,7 @@ number:		number.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -493,7 +493,7 @@ oddtemplate:	oddtemplate.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -509,7 +509,7 @@ priority:		priority.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -525,7 +525,7 @@ products:		products.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -541,7 +541,7 @@ queens:		queens.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -557,7 +557,7 @@ reverser:		gettysburg.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -573,7 +573,7 @@ summarize:		queens.xsl $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -589,7 +589,7 @@ total:		chart.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -605,7 +605,7 @@ tower:		tower.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -621,7 +621,7 @@ trend:		trend.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -637,7 +637,7 @@ union:		union.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -653,7 +653,7 @@ xpath:		xpath.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -669,7 +669,7 @@ xslbench1:		xslbench1.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -685,7 +685,7 @@ xslbench2:		xslbenchdream.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -701,7 +701,7 @@ xslbench3:		xslbenchdream.xml $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -718,7 +718,7 @@ breadth: $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
@@ -735,7 +735,7 @@ depth: $(xsltproc)
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`
 	@if [ -n "$$log" ] ; then \
 	  	echo $@ result ; \
-		echo $$log ; \
+		echo "$$log" ; \
 	fi
 	@rm -f $@.tmp
 
