@@ -43,7 +43,7 @@ extern "C" {
  *
  * The XSLT specification namespace.
  */
-#define XSLT_NAMESPACE ((xmlChar *) "http://www.w3.org/1999/XSL/Transform")
+#define XSLT_NAMESPACE ((const xmlChar *)"http://www.w3.org/1999/XSL/Transform")
 
 /**
  * XSLT_PARSE_OPTIONS:
