@@ -242,6 +242,10 @@ XSLTPUBFUN int XSLTCALL
 XSLTPUBFUN xmlXPathCompExprPtr XSLTCALL
 		xsltXPathCompile		(xsltStylesheetPtr style,
 						 const xmlChar *str);
+XSLTPUBFUN xmlXPathCompExprPtr XSLTCALL
+		xsltXPathCompileFlags		(xsltStylesheetPtr style,
+						 const xmlChar *str,
+						 int flags);
 
 /*
  * Profiling.

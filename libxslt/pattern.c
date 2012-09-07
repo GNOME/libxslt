@@ -25,6 +25,7 @@
 #include <libxml/hash.h>
 #include <libxml/xmlerror.h>
 #include <libxml/parserInternals.h>
+#include <libxml/xpath.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"

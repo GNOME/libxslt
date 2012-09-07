@@ -2273,9 +2273,10 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
  ************************************************************************/
 
 /**
- * xsltXPathCompile:
+ * xsltXPathCompileFlags:
  * @style: the stylesheet
  * @str:  the XPath expression
+ * @flags: extra compilation flags to pass down to libxml2 XPath
  *
  * Compile an XPath expression
  *
@@ -2283,7 +2284,7 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
  *         the caller has to free the object.
  */
 xmlXPathCompExprPtr
-xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
+xsltXPathCompileFlags(xsltStylesheetPtr style, const xmlChar *str, int flags) {
     xmlXPathContextPtr xpathCtxt;
     xmlXPathCompExprPtr ret;
 
@@ -2315,6 +2316,8 @@ xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
 	if (xpathCtxt == NULL)
 	    return NULL;
     }
+    xpathCtxt->flags = flags;
+
     /*
     * Compile the expression.
     */
@@ -2333,6 +2336,21 @@ xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
      */
 
     return(ret);
+}
+
+/**
+ * xsltXPathCompile:
+ * @style: the stylesheet
+ * @str:  the XPath expression
+ *
+ * Compile an XPath expression
+ *
+ * Returns the xmlXPathCompExprPtr resulting from the compilation or NULL.
+ *         the caller has to free the object.
+ */
+xmlXPathCompExprPtr
+xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
+    return(xsltXPathCompileFlags(style, str, 0));
 }
 
 /************************************************************************
