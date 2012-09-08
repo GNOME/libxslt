@@ -20,6 +20,7 @@
 #include "libxslt.h"
 
 #include <string.h>
+#include <stdio.h>
 
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
@@ -3293,6 +3294,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     const xmlChar *doctypeSystem;
     const xmlChar *version;
     const xmlChar *encoding;
+    int redirect_write_append = 0;
 
     if ((ctxt == NULL) || (node == NULL) || (inst == NULL) || (comp == NULL))
         return;
@@ -3708,10 +3710,38 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     }
 
     /*
-     * Save the result
+     * Calls to redirect:write also take an optional attribute append.
+     * Attribute append="true|yes" which will attempt to simply append
+     * to an existing file instead of always opening a new file. The
+     * default behavior of always overwriting the file still happens
+     * if we do not specify append.
+     * Note that append use will forbid use of remote URI target.
      */
-    ret = xsltSaveResultToFilename((const char *) filename,
-                                   res, style, 0);
+    prop = xsltEvalAttrValueTemplate(ctxt, inst, (const xmlChar *)"append",
+				     NULL);
+    if (prop != NULL) {
+	if (xmlStrEqual(prop, (const xmlChar *) "true") ||
+	    xmlStrEqual(prop, (const xmlChar *) "yes")) {
+	    style->omitXmlDeclaration = 1;
+	    redirect_write_append = 1;
+	} else
+	    style->omitXmlDeclaration = 0;
+	xmlFree(prop);
+    }
+
+    if (redirect_write_append) {
+        FILE *f;
+
+	f = fopen((const char *) filename, "ab");
+	if (f == NULL) {
+	    ret = -1;
+	} else {
+	    ret = xsltSaveResultToFile(f, res, style);
+	    fclose(f);
+	}
+    } else {
+	ret = xsltSaveResultToFilename((const char *) filename, res, style, 0);
+    }
     if (ret < 0) {
 	xsltTransformError(ctxt, NULL, inst,
                          "xsltDocumentElem: unable to save to %s\n",
