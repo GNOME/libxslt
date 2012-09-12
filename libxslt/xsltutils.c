@@ -54,9 +54,9 @@
 #endif /* WIN32 */
 
 /************************************************************************
- * 									*
- * 			Convenience function				*
- * 									*
+ *									*
+ *			Convenience function				*
+ *									*
  ************************************************************************/
 
 /**
@@ -326,7 +326,7 @@ error:
  *         -1 in case of an error.
  */
 int
-xsltPointerListAddSize(xsltPointerListPtr list,		       
+xsltPointerListAddSize(xsltPointerListPtr list,
 		       void *item,
 		       int initialSize)
 {
@@ -422,9 +422,9 @@ xsltPointerListClear(xsltPointerListPtr list)
 #endif /* XSLT_REFACTORED */
 
 /************************************************************************
- * 									*
- * 		Handling of XSLT stylesheets messages			*
- * 									*
+ *									*
+ *		Handling of XSLT stylesheets messages			*
+ *									*
  ************************************************************************/
 
 /**
@@ -477,9 +477,9 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
 }
 
 /************************************************************************
- * 									*
- * 		Handling of out of context errors			*
- * 									*
+ *									*
+ *		Handling of out of context errors			*
+ *									*
  ************************************************************************/
 
 #define XSLT_GET_VAR_STR(msg, str) {				\
@@ -489,14 +489,14 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
     va_list   ap;						\
 								\
     str = (char *) xmlMalloc(150);				\
-    if (str == NULL) 						\
+    if (str == NULL)						\
 	return;							\
 								\
     size = 150;							\
 								\
     while (size < 64000) {					\
 	va_start(ap, msg);					\
-  	chars = vsnprintf(str, size, msg, ap);			\
+	chars = vsnprintf(str, size, msg, ap);			\
 	va_end(ap);						\
 	if ((chars > -1) && (chars < size))			\
 	    break;						\
@@ -516,7 +516,7 @@ xsltMessage(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr inst) {
  * @ctx:  an error context
  * @msg:  the message to display/transmit
  * @...:  extra parameters for the message display
- * 
+ *
  * Default handler for out of context error messages.
  */
 static void
@@ -562,7 +562,7 @@ xsltSetGenericErrorFunc(void *ctx, xmlGenericErrorFunc handler) {
  * @ctx:  an error context
  * @msg:  the message to display/transmit
  * @...:  extra parameters for the message display
- * 
+ *
  * Default handler for out of context error messages.
  */
 static void
@@ -644,8 +644,8 @@ xsltPrintErrorContext(xsltTransformContextPtr ctxt,
 	    if (node->name != NULL)
 		name = node->name;
 	}
-    } 
-    
+    }
+
     if (ctxt != NULL)
 	type = "runtime error";
     else if (style != NULL) {
@@ -731,9 +731,9 @@ xsltTransformError(xsltTransformContextPtr ctxt,
 }
 
 /************************************************************************
- * 									*
- * 				QNames					*
- * 									*
+ *									*
+ *				QNames					*
+ *									*
  ************************************************************************/
 
 /**
@@ -808,9 +808,9 @@ xsltGetQNameURI(xmlNodePtr node, xmlChar ** name)
      * we are not trying to validate but just to cut, and yes it will
      * work even if this is a set of UTF-8 encoded chars
      */
-    while ((qname[len] != 0) && (qname[len] != ':')) 
+    while ((qname[len] != 0) && (qname[len] != ':'))
 	len++;
-    
+
     if (qname[len] == 0)
 	return(NULL);
 
@@ -915,11 +915,11 @@ xsltGetQNameURI2(xsltStylesheetPtr style, xmlNodePtr node,
     xmlFree(qname);
     return(ns->href);
 }
-										      
+
 /************************************************************************
- * 									*
- * 				Sorting					*
- * 									*
+ *									*
+ *				Sorting					*
+ *									*
  ************************************************************************/
 
 /**
@@ -974,7 +974,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
     xmlNodeSetPtr list = NULL;
     xmlXPathObjectPtr res;
     int len = 0;
-    int i;    
+    int i;
     xmlNodePtr oldNode;
     xmlNodePtr oldInst;
     int	oldPos, oldSize ;
@@ -1090,7 +1090,7 @@ xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
  * reorder the current node list accordingly to the set of sorting
  * requirement provided by the arry of nodes.
  */
-void	
+void
 xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	           int nbsorts) {
 #ifdef XSLT_REFACTORED
@@ -1107,7 +1107,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     int tst;
     int depth;
     xmlNodePtr node;
-    xmlXPathObjectPtr tmp;    
+    xmlXPathObjectPtr tmp;
     int tempstype[XSLT_MAX_SORT], temporder[XSLT_MAX_SORT];
 
     if ((ctxt == NULL) || (sorts == NULL) || (nbsorts <= 0) ||
@@ -1187,7 +1187,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	    j = i - incr;
 	    if (results[i] == NULL)
 		continue;
-	    
+
 	    while (j >= 0) {
 		if (results[j] == NULL)
 		    tst = 1;
@@ -1205,7 +1205,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			else if (results[j]->floatval ==
 				results[j + incr]->floatval)
 			    tst = 0;
-			else if (results[j]->floatval > 
+			else if (results[j]->floatval >
 				results[j + incr]->floatval)
 			    tst = 1;
 			else tst = -1;
@@ -1213,10 +1213,10 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			tst = xsltLocaleStrcmp(
 			    comp->locale,
 			    (xsltLocaleChar *) results[j]->stringval,
-			    (xsltLocaleChar *) results[j + incr]->stringval); 
+			    (xsltLocaleChar *) results[j + incr]->stringval);
 		    } else {
 			tst = xmlStrcmp(results[j]->stringval,
-				     results[j + incr]->stringval); 
+				     results[j + incr]->stringval);
 		    }
 		    if (descending)
 			tst = -tst;
@@ -1239,11 +1239,11 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			 * Compute the result of the next level for the
 			 * full set, this might be optimized ... or not
 			 */
-			if (resultsTab[depth] == NULL) 
+			if (resultsTab[depth] == NULL)
 			    resultsTab[depth] = xsltComputeSortResult(ctxt,
 				                        sorts[depth]);
 			res = resultsTab[depth];
-			if (res == NULL) 
+			if (res == NULL)
 			    break;
 			if (res[j] == NULL) {
 			    if (res[j+incr] != NULL)
@@ -1254,7 +1254,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 				   accordance with XSLT spec */
 				if (xmlXPathIsNaN(res[j]->floatval)) {
 				    if (xmlXPathIsNaN(res[j +
-				    		incr]->floatval))
+						incr]->floatval))
 					tst = 0;
 				    else
 				        tst = -1;
@@ -1264,7 +1264,7 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 				else if (res[j]->floatval == res[j + incr]->
 						floatval)
 				    tst = 0;
-				else if (res[j]->floatval > 
+				else if (res[j]->floatval >
 					res[j + incr]->floatval)
 				    tst = 1;
 				else tst = -1;
@@ -1272,10 +1272,10 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 				tst = xsltLocaleStrcmp(
 				    comp->locale,
 				    (xsltLocaleChar *) res[j]->stringval,
-				    (xsltLocaleChar *) res[j + incr]->stringval); 
+				    (xsltLocaleChar *) res[j + incr]->stringval);
 			    } else {
 				tst = xmlStrcmp(res[j]->stringval,
-					     res[j + incr]->stringval); 
+					     res[j + incr]->stringval);
 			    }
 			    if (desc)
 				tst = -tst;
@@ -1387,32 +1387,32 @@ xsltSetSortFunc(xsltSortFunc handler) {
  * @handler:  the new handler function
  *
  * Function to set the handler for XSLT sorting
- * for the specified context. 
+ * for the specified context.
  * If the handler is NULL, then the global
  * sort function will be called
  */
-void 
+void
 xsltSetCtxtSortFunc(xsltTransformContextPtr ctxt, xsltSortFunc handler) {
     ctxt->sortfunc = handler;
 }
 
 /************************************************************************
- * 									*
- * 				Parsing options				*
- * 									*
+ *									*
+ *				Parsing options				*
+ *									*
  ************************************************************************/
 
 /**
  * xsltSetCtxtParseOptions:
  * @ctxt:  a XSLT process context
  * @options:  a combination of libxml2 xmlParserOption
- * 
- * Change the default parser option passed by the XSLT engine to the 
+ *
+ * Change the default parser option passed by the XSLT engine to the
  * parser when using document() loading.
  *
  * Returns the previous options or -1 in case of error
  */
-int 
+int
 xsltSetCtxtParseOptions(xsltTransformContextPtr ctxt, int options)
 {
     int oldopts;
@@ -1431,9 +1431,9 @@ xsltSetCtxtParseOptions(xsltTransformContextPtr ctxt, int options)
 }
 
 /************************************************************************
- * 									*
- * 				Output					*
- * 									*
+ *									*
+ *				Output					*
+ *									*
  ************************************************************************/
 
 /**
@@ -1524,7 +1524,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 		cur = cur->next;
 		continue;
 	    }
-	    
+
 	    do {
 		cur = cur->parent;
 		if (cur == NULL)
@@ -1745,7 +1745,7 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
  * Returns 0 in case of success and -1 in case of error
  */
 int
-xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len, 
+xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
 		       xmlDocPtr result, xsltStylesheetPtr style) {
     xmlOutputBufferPtr buf;
     const xmlChar *encoding;
@@ -1793,9 +1793,9 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
 }
 
 /************************************************************************
- * 									*
- * 		Generating profiling informations			*
- * 									*
+ *									*
+ *		Generating profiling informations			*
+ *									*
  ************************************************************************/
 
 static long calibration = -1;
@@ -1912,7 +1912,7 @@ xsltTimestamp(void)
     tics = (cur.tv_sec - startup.tv_sec) * XSLT_TIMESTAMP_TICS_PER_SEC;
     tics += (cur.tv_usec - startup.tv_usec) /
                           (1000000l / XSLT_TIMESTAMP_TICS_PER_SEC);
-    
+
     tics -= calibration;
     return(tics);
 #else
@@ -1930,7 +1930,7 @@ pretty_templ_match(xsltTemplatePtr templ) {
   static char dst[1001];
   char *src = (char *)templ->match;
   int i=0,j;
-  
+
   /* strip white spaces */
   for (j=0; i<1000 && src[j]; i++,j++) {
       for(;src[j]==' ';j++);
@@ -2055,11 +2055,11 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
     childt = xmlMalloc((nb + 1) * sizeof(int));
     if (childt == NULL)
 	return;
-      
+
     /* precalculate children times */
     for (i = 0; i < nb; i++) {
         templ1 = templates[i];
-  
+
         childt[i] = 0;
         for (k = 0; k < nb; k++) {
             templ2 = templates[k];
@@ -2071,9 +2071,9 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
         }
     }
     childt[i] = 0;
-     
+
     fprintf(output, "\nindex %% time    self  children    called     name\n");
-    
+
     for (i = 0; i < nb; i++) {
         char ix_str[20], timep_str[20], times_str[20], timec_str[20], called_str[20];
         int t;
@@ -2103,7 +2103,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
         sprintf(times_str,"%8.3f",(float)templ1->time/XSLT_TIMESTAMP_TICS_PER_SEC);
         sprintf(timec_str,"%8.3f",(float)childt[i]/XSLT_TIMESTAMP_TICS_PER_SEC);
         fprintf(output, "%-5s %-6s %-8s %-8s %6d     %s [%d]\n",
-            ix_str, timep_str,times_str,timec_str, 
+            ix_str, timep_str,times_str,timec_str,
             templ1->nbCalls,
             templ1->name?(char *)templ1->name:pretty_templ_match(templ1),i);
         /* callees
@@ -2136,7 +2136,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
         }
         fprintf(output, "-----------------------------------------------\n");
     }
-    
+
     fprintf(output, "\f\nIndex by function name\n");
     for (i = 0; i < nb; i++) {
         templ1 = templates[i];
@@ -2144,7 +2144,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
             i, templ1->name?(char *)templ1->name:pretty_templ_match(templ1),
             templ1->style->doc->URL,templ1->elem->line);
     }
-    
+
     fprintf(output, "\f\n");
     xmlFree(childt);
 
@@ -2152,9 +2152,9 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 }
 
 /************************************************************************
- * 									*
- * 		Fetching profiling informations				*
- * 									*
+ *									*
+ *		Fetching profiling informations				*
+ *									*
  ************************************************************************/
 
 /**
@@ -2267,9 +2267,9 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
 }
 
 /************************************************************************
- * 									*
- * 		Hooks for libxml2 XPath					*
- * 									*
+ *									*
+ *		Hooks for libxml2 XPath					*
+ *									*
  ************************************************************************/
 
 /**
@@ -2354,9 +2354,9 @@ xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
 }
 
 /************************************************************************
- * 									*
- * 		Hooks for the debugger					*
- * 									*
+ *									*
+ *		Hooks for the debugger					*
+ *									*
  ************************************************************************/
 
 /*
@@ -2384,18 +2384,18 @@ int xslDebugStatus;
 /**
  * xsltSetDebuggerStatus:
  * @value : the value to be set
- * 
+ *
  * This function sets the value of xslDebugStatus.
  */
 void
 xsltSetDebuggerStatus(int value)
 {
-    xslDebugStatus = value;	
+    xslDebugStatus = value;
 }
 
 /**
- * xsltGetDebuggerStatus: 
- * 
+ * xsltGetDebuggerStatus:
+ *
  * Get xslDebugStatus.
  *
  * Returns the value of xslDebugStatus.
@@ -2403,16 +2403,16 @@ xsltSetDebuggerStatus(int value)
 int
 xsltGetDebuggerStatus(void)
 {
-    return(xslDebugStatus);	
+    return(xslDebugStatus);
 }
 
 /**
  * xsltSetDebuggerCallbacks:
  * @no : number of callbacks
  * @block : the block of callbacks
- * 
+ *
  * This function allow to plug a debugger into the XSLT library
- * @block points to a block of memory containing the address of @no 
+ * @block points to a block of memory containing the address of @no
  * callback routines.
  *
  * Returns 0 in case of success and -1 in case of error
@@ -2437,9 +2437,9 @@ xsltSetDebuggerCallbacks(int no, void *block)
  * @cur : source node being executed
  * @node : data node being processed
  * @templ : temlate that applies to node
- * @ctxt : the xslt transform context 
- * 
- * If either cur or node are a breakpoint, or xslDebugStatus in state 
+ * @ctxt : the xslt transform context
+ *
+ * If either cur or node are a breakpoint, or xslDebugStatus in state
  *   where debugging must occcur at this time then transfer control
  *   to the xslDebugBreak function
  */
@@ -2457,7 +2457,7 @@ xslHandleDebugger(xmlNodePtr cur, xmlNodePtr node, xsltTemplatePtr templ,
  * @source : the source node being processed
  *
  * Add template "call" to call stack
- * Returns : 1 on sucess 0 otherwise an error may be printed if 
+ * Returns : 1 on sucess 0 otherwise an error may be printed if
  *            WITH_XSLT_DEBUG_BREAKPOINTS is defined
  */
 int

@@ -27,7 +27,7 @@
  * @nargs: the number of arguments
  *
  * Splits up a string on the characters of the delimiter string and returns a
- * node set of token elements, each containing one token from the string. 
+ * node set of token elements, each containing one token from the string.
  */
 static void
 exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
@@ -106,7 +106,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                 }
             }
             if (token != cur) {
-	    	node = xmlNewDocRawNode(container, NULL,
+		node = xmlNewDocRawNode(container, NULL,
 				    (const xmlChar *) "token", token);
                 xmlAddChild((xmlNodePtr) container, node);
 	        xmlXPathNodeSetAddUnique(ret->nodesetval, node);
@@ -136,7 +136,7 @@ fail:
  * @nargs: the number of arguments
  *
  * Splits up a string on a delimiting string and returns a node set of token
- * elements, each containing one token from the string. 
+ * elements, each containing one token from the string.
  */
 static void
 exsltStrSplitFunction(xmlXPathParserContextPtr ctxt, int nargs) {
@@ -335,7 +335,7 @@ exsltStrDecodeUriFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	xmlFree(ret);
 	return;
     }
-    
+
     xmlXPathReturnString(ctxt, ret);
 
     if (str != NULL)
@@ -552,7 +552,7 @@ exsltStrReturnString(xmlXPathParserContextPtr ctxt, const xmlChar *str,
  * @ctxt: an XPath parser context
  * @nargs: the number of arguments
  *
- * Takes a string, and two node sets and returns the string with all strings in 
+ * Takes a string, and two node sets and returns the string with all strings in
  * the first node set replaced by all strings in the second node set.
  */
 static void

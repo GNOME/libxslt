@@ -1,5 +1,5 @@
 /*
- * Summary: compile-time version informations for the XSLT engine 
+ * Summary: compile-time version informations for the XSLT engine
  *          when compiled on windows
  * Description: compile-time version informations for the XSLT engine
  *              when compiled on windows. This file is generated.

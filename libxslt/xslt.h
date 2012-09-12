@@ -99,7 +99,7 @@ XSLTPUBFUN void XSLTCALL
 /*
  * Global cleanup function.
  */
-XSLTPUBFUN void XSLTCALL	
+XSLTPUBFUN void XSLTCALL
 		xsltCleanupGlobals	(void);
 
 #ifdef __cplusplus

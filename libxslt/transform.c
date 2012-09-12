@@ -294,7 +294,7 @@ static void
 profCallgraphAdd(xsltTemplatePtr templ, xsltTemplatePtr parent)
 {
     int i;
-  
+
     if (templ->templMax == 0) {
         templ->templMax = 4;
         templ->templCalledTab =

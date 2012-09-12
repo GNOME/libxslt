@@ -209,7 +209,7 @@ exsltSaxonSystemIdFunction(xmlXPathParserContextPtr ctxt, int nargs)
  * exsltSaxonLineNumberFunction:
  * @ctxt:  an XPath parser context
  * @nargs: number of arguments
- * 
+ *
  * Implements the SAXON line-number() function
  *     integer saxon:line-number()
  *
