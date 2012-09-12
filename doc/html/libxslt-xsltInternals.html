@@ -560,7 +560,8 @@ The content of this structure is not made public by the API.
     int	literal_result	: * The principal stylesheet *
     <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a>	principal	: * Compilation context used during compil
     <a href="libxslt-xsltInternals.html#xsltCompilerCtxtPtr">xsltCompilerCtxtPtr</a>	compCtxt	: TODO: Change this to (void *).
-    <a href="libxslt-xsltInternals.html#xsltPrincipalStylesheetDataPtr">xsltPrincipalStylesheetDataPtr</a>	principalData
+    <a href="libxslt-xsltInternals.html#xsltPrincipalStylesheetDataPtr">xsltPrincipalStylesheetDataPtr</a>	principalData	: * Forwards-compatible processing *
+    int	forwards_compatible
 }</pre><h3><a name="xsltTemplate" id="xsltTemplate">Structure xsltTemplate</a></h3><pre class="programlisting">Structure xsltTemplate<br />struct _xsltTemplate {
     struct _xsltTemplate *	next	: chained list sorted by priority
     struct _xsltStylesheet *	style	: the containing stylesheet
@@ -577,6 +578,10 @@ The content of this structure is not made public by the API.
     int	nbCalls	: the number of time the template was cal
     unsigned long	time	: the time spent in this template
     void *	params	: xsl:param instructions
+    int	templNr	: Nb of templates in the stack
+    int	templMax	: Size of the templtes stack
+    <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> *	templCalledTab	: templates called
+    int *	templCountTab	: .. and how often
 }</pre><h3><a name="xsltTransformCache" id="xsltTransformCache">Structure xsltTransformCache</a></h3><pre class="programlisting">Structure xsltTransformCache<br />struct _xsltTransformCache {
     xmlDocPtr	RVT
     int	nbRVT
@@ -652,6 +657,8 @@ The content of this structure is not made public by the API.
     xmlDocPtr	localRVTBase
     int	keyInitLevel	: Needed to catch recursive keys issues
     int	funcLevel	: Needed to catch recursive functions iss
+    int	maxTemplateDepth
+    int	maxTemplateVars
 }</pre><h3>Enum <a name="xsltTransformState" id="xsltTransformState">xsltTransformState</a></h3><pre class="programlisting">Enum xsltTransformState {
     <a name="XSLT_STATE_OK" id="XSLT_STATE_OK">XSLT_STATE_OK</a> = 0
     <a name="XSLT_STATE_ERROR" id="XSLT_STATE_ERROR">XSLT_STATE_ERROR</a> = 1

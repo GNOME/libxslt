@@ -99,6 +99,7 @@ xsltFreeExts
 xsltFreeGlobalVariables
 xsltFreeKeys
 xsltFreeLocale
+xsltFreeLocales
 xsltFreeNamespaceAliasHashes
 xsltFreeRVTs
 xsltFreeSecurityPrefs
@@ -253,6 +254,7 @@ xsltUnregisterExtModuleTopLevel
 xsltValueOf
 xsltVariableLookup
 xsltXPathCompile
+xsltXPathCompileFlags
 xsltXPathFunctionLookup
 xsltXPathGetTransformContext
 xsltXPathVariableLookup

@@ -478,3 +478,13 @@ LIBXML2_1.1.26 {
   xsltProcessOneNode;
 } LIBXML2_1.1.25;
 
+LIBXML2_1.1.27 {
+    global:
+
+# xsltlocale
+  xsltFreeLocales;
+
+# xsltutils
+  xsltXPathCompileFlags;
+} LIBXML2_1.1.26;
+

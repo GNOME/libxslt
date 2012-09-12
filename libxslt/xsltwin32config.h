@@ -1,5 +1,5 @@
 /*
- * Summary: compile-time version informations for the XSLT engine
+ * Summary: compile-time version informations for the XSLT engine 
  *          when compiled on windows
  * Description: compile-time version informations for the XSLT engine
  *              when compiled on windows. This file is generated.
@@ -23,21 +23,21 @@ extern "C" {
  *
  * the version string like "1.2.3"
  */
-#define LIBXSLT_DOTTED_VERSION "1.1.26"
+#define LIBXSLT_DOTTED_VERSION "1.1.27"
 
 /**
  * LIBXSLT_VERSION:
  *
  * the version number: 1.2.3 value is 1002003
  */
-#define LIBXSLT_VERSION 10126
+#define LIBXSLT_VERSION 10127
 
 /**
  * LIBXSLT_VERSION_STRING:
  *
  * the version number string, 1.2.3 value is "1002003"
  */
-#define LIBXSLT_VERSION_STRING "10126"
+#define LIBXSLT_VERSION_STRING "10127"
 
 /**
  * LIBXSLT_VERSION_EXTRA:
