@@ -1909,14 +1909,6 @@ XSLTPUBFUN void XSLTCALL
 XSLTPUBFUN void XSLTCALL
 			xsltReleaseRVT		(xsltTransformContextPtr ctxt,
 						 xmlDocPtr RVT);
-XSLTPUBFUN int XSLTCALL
-			xsltTransStorageAdd	(xsltTransformContextPtr ctxt,
-						 void *id,
-						 void *data);
-XSLTPUBFUN void * XSLTCALL
-			xsltTransStorageRemove	(xsltTransformContextPtr ctxt,
-						 void *id);
-
 /*
  * Extra functions for Attribute Value Templates
  */
