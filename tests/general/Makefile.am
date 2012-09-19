@@ -172,7 +172,7 @@ EXTRA_DIST = \
     bug-161.out bug-161.xsl \
     bug-163.out bug-163.xsl \
     bug-164.out bug-164.xsl \
-    bug-165.out bug-165.xsl bug-145.err \
+    bug-165.out bug-165.xsl bug-165.err \
     bug-166.out bug-166.xsl \
     bug-167.out bug-167.xsl \
     bug-168.out bug-168.xsl \
