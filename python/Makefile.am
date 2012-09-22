@@ -3,12 +3,6 @@ AUTOMAKE_OPTIONS = 1.4 foreign
 
 SUBDIRS= . tests
 
-AM_CPPFLAGS = \
-	-I$(PYTHON_INCLUDES) \
-	-I$(top_srcdir)/libxslt \
-	-I$(top_srcdir) \
-	-I../libexslt
-
 AM_CFLAGS = $(LIBXML_CFLAGS)
 
 DOCS_DIR = $(datadir)/doc/libxslt-python-$(LIBXSLT_VERSION)
@@ -36,6 +30,11 @@ all-local: libxslt.py
 
 python_LTLIBRARIES = libxsltmod.la
 
+libxsltmod_la_CPPFLAGS = \
+	-I$(PYTHON_INCLUDES) \
+	-I$(top_srcdir)/libxslt \
+	-I$(top_srcdir) \
+	-I../libexslt
 libxsltmod_la_SOURCES = libxslt.c types.c
 nodist_libxsltmod_la_SOURCES = libxslt-py.c
 libxsltmod_la_LIBADD = $(mylibs) $(PYTHON_LIBS)
