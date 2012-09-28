@@ -4075,7 +4075,7 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
         } else if (xmlStrEqual(prefix, BAD_CAST "xml")) {
             prefix = NULL;
         }
-    } else if (prefix != NULL) {
+    } else {
 	xmlNsPtr ns;
 	/*
 	* SPEC XSLT 1.0:
@@ -4090,11 +4090,13 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    * TODO: Check this in the compilation layer in case it's a
 	    * static value.
 	    */
-            xsltTransformError(ctxt, NULL, inst,
-                "xsl:element: The QName '%s:%s' has no "
-                "namespace binding in scope in the stylesheet; "
-                "this is an error, since the namespace was not "
-                "specified by the instruction itself.\n", prefix, name);
+            if (prefix != NULL) {
+                xsltTransformError(ctxt, NULL, inst,
+                    "xsl:element: The QName '%s:%s' has no "
+                    "namespace binding in scope in the stylesheet; "
+                    "this is an error, since the namespace was not "
+                    "specified by the instruction itself.\n", prefix, name);
+            }
 	} else
 	    nsName = ns->href;
     }
