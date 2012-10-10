@@ -178,6 +178,7 @@ EXTRA_DIST =	\
 	bug-177.xml \
 	bug-178.xml \
 	bug-179.xml \
+	bug-180.xml \
 	character.xml \
 	array.xml \
 	items.xml
