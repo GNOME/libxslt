@@ -124,6 +124,8 @@ tests/plugins/.deps/
 tests/plugins/Makefile
 tests/plugins/Makefile.in
 tests/plugins/xmlsoft_org_xslt_testplugin.la
+tests/plugins/*.o
+tests/plugins/*.lo
 tests/reports/.memdump
 tests/reports/Makefile
 tests/reports/Makefile.in
