@@ -29,8 +29,8 @@ test-logall:
 test tests: $(top_builddir)/xsltproc/xsltproc test-logall $(noinst_LTLIBRARIES)
 	@LD_LIBRARY_PATH=$(plugindir):$(top_builddir)/libxslt/.libs:$(LD_LIBRARY_PATH) \
 	 LIBXSLT_PLUGINS_PATH=$(plugindir) \
-	 $(top_builddir)/xsltproc/xsltproc plugin.xsl plugin.xml > plugin.res
-	@diff plugin.out plugin.res
+	 $(top_builddir)/xsltproc/xsltproc $(srcdir)/plugin.xsl $(srcdir)/plugin.xml > plugin.res
+	@diff $(srcdir)/plugin.out plugin.res
 	@rm plugin.res
 
 else
