@@ -305,6 +305,31 @@ to get a description of the recent commits.</p>
 
 <p>Those are the public releases made:</p>
 
+<h3>1.1.28: Nov 21 2012</h3>
+<ul>
+  <li> Portability:<br/>
+    Fix python build by using libxsltmod_la_CPPFLAGS instead of AM_CPPFLAGS (Alexandre Rostovtsev),<br/>
+    configure should be more careful with linker script (Igor Pashev),<br/>
+    add gcrypt library in LIBADD, not LDFLAGS, as recommended (Roumen Petrov)<br/>
+  </li>
+
+  <li> Bug fixes:<br/>
+    Fix generate-id() to avoid generating the same ID (Stewart Brodie),<br/>
+    Fix crash with empty xsl:key/@match attribute (Nick Wellnhofer),<br/>
+    Crash when passing an uninitialized variable to document() (Nick Wellnhofer),<br/>
+    Add missing test docs to EXTRA_DIST (Nick Wellnhofer),<br/>
+    Fix regression: Default namespace not correctly used (Nick Wellnhofer)<br/>
+  </li>
+
+  <li> Cleanups:<br/>
+    Remove xsltTransStorageAdd and xsltTransStorageRemove from symbols.xml (Daniel Veillard),<br/>
+    autogen.sh cleanup (Daniel Richard),<br/>
+    consistent use of xslt processor (Roumen Petrov),<br/>
+    Add object files in tests/plugins to .gitignore (Nick Wellnhofer),<br/>
+    Fix error on bug-165 regression test (Daniel Veillard),<br/>
+    Remove xsltTransStorageAdd and xsltTransStorageRemove (Daniel Veillard),<br/>
+  </li>
+</ul>
 <h3>1.1.27: Sep 12 2012</h3>
 <ul>
   <li> Portability:<br/>
