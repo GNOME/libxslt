@@ -27,7 +27,6 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\
 	rm -f result)
 	@($(CHECKER) $(top_builddir)/xsltproc/xsltproc $(srcdir)/test.xsl $(srcdir)/test_bad.xml > result 2>err ; \
-	sed 's|$(srcdir)/||' err > err.tmp; mv err.tmp err; \
 	diff $(srcdir)/test_bad.result result; \
 	diff $(srcdir)/test_bad.err err; \
 	grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true;\

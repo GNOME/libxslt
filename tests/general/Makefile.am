@@ -209,30 +209,26 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  if [ ! -f $$j ] ; then continue ; fi ; \
 	  if [ -d $$j ] ; then continue ; fi ; \
 	  name=`basename $$j .xsl`; \
-	  real_docs_path=`cd $(srcdir)/../docs && pwd`; \
 	  out=$(srcdir)/"$$name".out; \
 	  err=$(srcdir)/"$$name".err; \
 	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc $$j $$i \
-		2>&1 > result.$$name | sed 's|$(srcdir)|.|' >err.$$name; \
+	  	> result.$$name 2>err.$$name; \
 	  if [ ! -f $$out ] ; then \
-		cp result.$$name $$out ; \
+	  	cp result.$$name $$out ; \
 		if [ -s err.$$name ] ; then \
 			cp err.$$name $$err ; \
 		fi ; \
 	  else \
-		grep '../docs/' $$out >/dev/null && \
-		  sed "s|$$real_docs_path|../docs|" result.$$name > \
-		  result.$$name.tmp && mv result.$$name.tmp result.$$name; \
-		diff $$out result.$$name; \
+	  	diff $$out result.$$name; \
 		if [ -s $$err ] ; then \
-			diff $$err err.$$name; \
+	  		diff $$err err.$$name; \
 		else \
 			diff /dev/null err.$$name; \
 		fi ; \
 	  fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`;\
 	  if [ -n "$$log" ] ; then \
-		echo $$name result ; \
+	  	echo $$name result ; \
 		echo "$$log" ; \
 	  fi ; \
 	  rm -f result.$$name err.$$name; \
@@ -245,30 +241,26 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  if [ ! -f $$j ] ; then continue ; fi ; \
 	  if [ -d $$j ] ; then continue ; fi ; \
 	  name=`basename $$j .xsl`; \
-	  real_docs_path=`cd $(srcdir)/../docs && pwd`; \
 	  out=$(srcdir)/"$$name".out; \
 	  err=$(srcdir)/"$$name".err; \
 	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc --nodict $$j $$i \
-		2>&1 > result.$$name | sed 's|$(srcdir)|.|' >err.$$name; \
+	  	> result.$$name 2>err.$$name; \
 	  if [ ! -f $$out ] ; then \
-		cp result.$$name $$out ; \
+	  	cp result.$$name $$out ; \
 		if [ -s err.$$name ] ; then \
 			cp err.$$name $$err ; \
 		fi ; \
 	  else \
-		grep '../docs/' $$out >/dev/null && \
-		  sed "s|$$real_docs_path|../docs|" result.$$name > \
-		  result.$$name.tmp && mv result.$$name.tmp result.$$name; \
-		diff $$out result.$$name; \
+	  	diff $$out result.$$name; \
 		if [ -s $$err ] ; then \
-			diff $$err err.$$name; \
+	  		diff $$err err.$$name; \
 		else \
 			diff /dev/null err.$$name; \
 		fi ; \
 	  fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true`;\
 	  if [ -n "$$log" ] ; then \
-		echo $$name result ; \
+	  	echo $$name result ; \
 		echo "$$log" ; \
 	  fi ; \
 	  rm -f result.$$name err.$$name; \

@@ -3,8 +3,8 @@
 $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
-EXTRA_DIST =						\
-    article.xsl bigfont.xsl				\
+EXTRA_DIST = 						\
+    article.xsl bigfont.xsl 				\
     test-10-1.out test-10-1.xml test-10-1.xsl		\
     test-11.2-1.out test-11.2-1.xml test-11.2-1.xsl	\
     test-11.2-2.out test-11.2-2.xml test-11.2-2.xsl	\
@@ -92,32 +92,32 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	-@(for i in $(srcdir)/*.xsl ; do \
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then \
-		continue ; \
+	  	continue ; \
 	  fi ; \
 	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc \
-		$(srcdir)/$$name.xsl $(srcdir)/$$name.xml \
-		2>&1 > $$name.res | sed 's|$(srcdir)|.|' >$$name.bad ; \
+	  	$(srcdir)/$$name.xsl $(srcdir)/$$name.xml \
+	  	> $$name.res 2>$$name.bad ; \
 	  if [ ! -f $(srcdir)/$$name.out ] ; then \
-		cp $$name.res $(srcdir)/$$name.out ; \
+	  	cp $$name.res $(srcdir)/$$name.out ; \
 		if [ -s $$name.bad ] ; then \
 			cp $$name.bad $(srcdir)/$$name.err ; \
 		fi ; \
 	  else \
-		if  [ ! -s $$name.res ] ; then \
-			echo "Fatal error, no $$name.res\n" ; \
-		else \
-			diff $(srcdir)/$$name.out $$name.res ; \
+	  	if  [ ! -s $$name.res ] ; then \
+	  		echo "Fatal error, no $$name.res\n" ; \
+	  	else \
+	  		diff $(srcdir)/$$name.out $$name.res ; \
 			if [ -s $(srcdir)/$$name.err ] ; then \
 				diff $(srcdir)/$$name.err $$name.bad ; \
 			else \
 				diff /dev/null $$name.bad ; \
 			fi ; \
-		fi ; \
+	  	fi ; \
 	  fi ; \
 	  grep "MORY ALLO" .memdump  | \
 	  grep -v "MEMORY ALLOCATED : 0" || true` ; \
 	  if [ -n "$$log" ] ; then \
-		echo $$name result ; \
+	  	echo $$name result ; \
 		echo "$$log" ; \
 	  fi ; \
 	  rm -f $$name.res $$name.bad ; \
@@ -125,19 +125,19 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	@(for i in $(srcdir)/stand*.xml ; do \
 	  name=`basename $$i .xml` ; \
 	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc \
-		$(srcdir)/$$name.xml > $$name.res 2>$$name.bad ;\
+	  	$(srcdir)/$$name.xml > $$name.res 2>$$name.bad ;\
 	  if [ ! -f $(srcdir)/$$name.stand.out ] ; then \
 		cp $$name.res $(srcdir)/$$name.stand.out ; \
 		if [ -s $$name.bad ] ; then \
 			cp $$name.bad $(srcdir)/$$name.stand.err ; \
 		fi ; \
 	  else \
-		if  [ ! -s $$name.res ] ; then \
-			echo "Fatal error, no $$name.res\n" ; \
-		else \
-			diff $(srcdir)/$$name.stand.out $$name.res ; \
+	  	if  [ ! -s $$name.res ] ; then \
+	  		echo "Fatal error, no $$name.res\n" ; \
+	  	else \
+	  		diff $(srcdir)/$$name.stand.out $$name.res ; \
 			if [ -s $(srcdir)/$$name.stand.err ] ; then \
-				diff $(srcdir)/$$name.stand.err $$name.bad ; \
+	  			diff $(srcdir)/$$name.stand.err $$name.bad ; \
 			else \
 				diff /dev/null $$name.bad; \
 			fi ; \
@@ -145,7 +145,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true` ; \
 	  if [ -n "$$log" ] ; then \
-		echo $$name result ; \
+	  	echo $$name result ; \
 		echo "$$log" ; \
 	  fi ; \
 	  rm -f $$name.res $$name.bad ; \
@@ -154,32 +154,32 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	-@(for i in $(srcdir)/*.xsl ; do \
 	  name=`basename $$i .xsl` ; \
 	  if [ ! -f $(srcdir)/$$name.xml ] ; then \
-		continue ; \
+	  	continue ; \
 	  fi ; \
 	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc --nodict \
-		$(srcdir)/$$name.xsl $(srcdir)/$$name.xml \
-		2>&1 > $$name.res | sed 's|$(srcdir)|.|' >$$name.bad ; \
+	  	$(srcdir)/$$name.xsl $(srcdir)/$$name.xml \
+	  	> $$name.res 2>$$name.bad ; \
 	  if [ ! -f $(srcdir)/$$name.out ] ; then \
-		cp $$name.res $(srcdir)/$$name.out ; \
+	  	cp $$name.res $(srcdir)/$$name.out ; \
 		if [ -s $$name.bad ] ; then \
 			cp $$name.bad $(srcdir)/$$name.err ; \
 		fi ; \
 	  else \
-		if  [ ! -s $$name.res ] ; then \
-			echo "Fatal error, no $$name.res\n" ; \
-		else \
-			diff $(srcdir)/$$name.out $$name.res ; \
+	  	if  [ ! -s $$name.res ] ; then \
+	  		echo "Fatal error, no $$name.res\n" ; \
+	  	else \
+	  		diff $(srcdir)/$$name.out $$name.res ; \
 			if [ -s $(srcdir)/$$name.err ] ; then \
 				diff $(srcdir)/$$name.err $$name.bad ; \
 			else \
 				diff /dev/null $$name.bad ; \
 			fi ; \
-		fi ; \
+	  	fi ; \
 	  fi ; \
 	  grep "MORY ALLO" .memdump  | \
 	  grep -v "MEMORY ALLOCATED : 0" || true` ; \
 	  if [ -n "$$log" ] ; then \
-		echo $$name result ; \
+	  	echo $$name result ; \
 		echo "$$log" ; \
 	  fi ; \
 	  rm -f $$name.res $$name.bad ; \
@@ -187,19 +187,19 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	@(for i in $(srcdir)/stand*.xml ; do \
 	  name=`basename $$i .xml` ; \
 	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc --nodict \
-		$(srcdir)/$$name.xml > $$name.res 2>$$name.bad ;\
+	  	$(srcdir)/$$name.xml > $$name.res 2>$$name.bad ;\
 	  if [ ! -f $(srcdir)/$$name.stand.out ] ; then \
 		cp $$name.res $(srcdir)/$$name.stand.out ; \
 		if [ -s $$name.bad ] ; then \
 			cp $$name.bad $(srcdir)/$$name.stand.err ; \
 		fi ; \
 	  else \
-		if  [ ! -s $$name.res ] ; then \
-			echo "Fatal error, no $$name.res\n" ; \
-		else \
-			diff $(srcdir)/$$name.stand.out $$name.res ; \
+	  	if  [ ! -s $$name.res ] ; then \
+	  		echo "Fatal error, no $$name.res\n" ; \
+	  	else \
+	  		diff $(srcdir)/$$name.stand.out $$name.res ; \
 			if [ -s $(srcdir)/$$name.stand.err ] ; then \
-				diff $(srcdir)/$$name.stand.err $$name.bad ; \
+	  			diff $(srcdir)/$$name.stand.err $$name.bad ; \
 			else \
 				diff /dev/null $$name.bad; \
 			fi ; \
@@ -207,7 +207,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  fi ; \
 	  grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true` ; \
 	  if [ -n "$$log" ] ; then \
-		echo $$name result ; \
+	  	echo $$name result ; \
 		echo "$$log" ; \
 	  fi ; \
 	  rm -f $$name.res $$name.bad ; \
