@@ -41,9 +41,9 @@ test -f libxslt/xslt.h  || {
 	exit 1
 }
 
-if test -z "$*"; then
-	echo "I am going to run ./configure with no arguments - if you wish "
-        echo "to pass any to it, please specify them on the $0 command line."
+if test -z "$NOCONFIGURE" -a -z "$*"; then
+	echo "I am going to run $srcdir/configure with no arguments - if you wish "
+	echo "to pass any to it, please specify them on the $0 command line."
 fi
 
 echo "Running libtoolize..."
@@ -73,14 +73,10 @@ if test "x$1" = "x--system"; then
       libdir=$prefix/lib64
     fi
     EXTRA_ARGS="--prefix=$prefix --sysconfdir=$sysconfdir --localstatedir=$localstatedir --libdir=$libdir"
-    echo "Running ./configure with $EXTRA_ARGS $@"
-else
-    echo "I am going to run ./configure with no arguments - if you wish "
-    echo "to pass any to it, please specify them on the $0 command line."
 fi
 
 if test -z "$NOCONFIGURE"; then
-    echo Running configure $EXTRA_ARGS "$@" ...
+    echo "Running configure $EXTRA_ARGS $*" ...
     $srcdir/configure $EXTRA_ARGS "$@"
     echo 
     echo "Now type 'make' to compile libxslt."
