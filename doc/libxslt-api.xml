@@ -523,7 +523,6 @@
      <exports symbol='xsltRegisterPersistRVT' type='function'/>
      <exports symbol='xsltParseStylesheetImportedDoc' type='function'/>
      <exports symbol='xsltFreeStackElemList' type='function'/>
-     <exports symbol='xsltTransStorageAdd' type='function'/>
      <exports symbol='xsltAllocateExtra' type='function'/>
      <exports symbol='xsltParseSequenceConstructor' type='function'/>
      <exports symbol='xsltRegisterTmpRVT' type='function'/>
@@ -547,7 +546,6 @@
      <exports symbol='xsltFreeRVTs' type='function'/>
      <exports symbol='xsltExtensionInstructionResultRegister' type='function'/>
      <exports symbol='xsltPointerListCreate' type='function'/>
-     <exports symbol='xsltTransStorageRemove' type='function'/>
      <exports symbol='xsltFreeAVTList' type='function'/>
      <exports symbol='xsltAllocateExtraCtxt' type='function'/>
      <exports symbol='xsltParseTemplateContent' type='function'/>
@@ -3102,19 +3100,6 @@ exits'/>
       <arg name='style' type='xsltStylesheetPtr' info=''/>
       <arg name='inst' type='xmlNodePtr' info=''/>
     </functype>
-    <function name='xsltTransStorageAdd' file='xsltInternals'>
-      <info></info>
-      <return type='int' info=''/>
-      <arg name='ctxt' type='xsltTransformContextPtr' info=''/>
-      <arg name='id' type='void *' info=''/>
-      <arg name='data' type='void *' info=''/>
-    </function>
-    <function name='xsltTransStorageRemove' file='xsltInternals'>
-      <info></info>
-      <return type='void *' info=''/>
-      <arg name='ctxt' type='xsltTransformContextPtr' info=''/>
-      <arg name='id' type='void *' info=''/>
-    </function>
     <function name='xsltTransformError' file='xsltutils'>
       <info>Display and format an error messages, gives file, line, position and extra parameters, will use the specific transformation context if available</info>
       <return type='void'/>

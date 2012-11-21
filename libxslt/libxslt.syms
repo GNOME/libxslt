@@ -430,8 +430,8 @@ LIBXML2_1.1.18 {
   xsltStyleStylesheetLevelGetExtData;
 
 # xsltInternals
-  xsltTransStorageAdd;
-  xsltTransStorageRemove;
+# xsltTransStorageAdd; removed in 1.1.28
+# xsltTransStorageRemove; removed in 1.1.28
   xsltUninit;
   xsltXSLTAttrMarker; # variable
 } LIBXML2_1.1.9;

@@ -548,8 +548,6 @@
     <reference name='xsltText' href='html/libxslt-transform.html#xsltText'/>
     <reference name='xsltTimestamp' href='html/libxslt-xsltutils.html#xsltTimestamp'/>
     <reference name='xsltTopLevelFunction' href='html/libxslt-extensions.html#xsltTopLevelFunction'/>
-    <reference name='xsltTransStorageAdd' href='html/libxslt-xsltInternals.html#xsltTransStorageAdd'/>
-    <reference name='xsltTransStorageRemove' href='html/libxslt-xsltInternals.html#xsltTransStorageRemove'/>
     <reference name='xsltTransformCache' href='html/libxslt-xsltInternals.html#xsltTransformCache'/>
     <reference name='xsltTransformCachePtr' href='html/libxslt-xsltInternals.html#xsltTransformCachePtr'/>
     <reference name='xsltTransformContext' href='html/libxslt-xsltInternals.html#xsltTransformContext'/>
@@ -1137,8 +1135,6 @@
       <ref name='xsltText'/>
       <ref name='xsltTimestamp'/>
       <ref name='xsltTopLevelFunction'/>
-      <ref name='xsltTransStorageAdd'/>
-      <ref name='xsltTransStorageRemove'/>
       <ref name='xsltTransformCache'/>
       <ref name='xsltTransformCachePtr'/>
       <ref name='xsltTransformContext'/>
@@ -1181,7 +1177,6 @@
       <ref name='xsltStyleExtInitFunction'/>
       <ref name='xsltStyleGetExtData'/>
       <ref name='xsltStyleStylesheetLevelGetExtData'/>
-      <ref name='xsltTransStorageRemove'/>
     </type>
     <type name='xmlAttrPtr'>
       <ref name='xsltAttrListTemplateProcess'/>
@@ -1426,8 +1421,6 @@
       <ref name='xsltSetGenericErrorFunc'/>
       <ref name='xsltSetTransformErrorFunc'/>
       <ref name='xsltStyleExtShutdownFunction'/>
-      <ref name='xsltTransStorageAdd'/>
-      <ref name='xsltTransStorageRemove'/>
       <ref name='xsltXPathVariableLookup'/>
     </type>
     <type name='xmlAttrPtr'>
@@ -1919,8 +1912,6 @@
       <ref name='xsltTemplateProcess'/>
       <ref name='xsltTestCompMatchList'/>
       <ref name='xsltText'/>
-      <ref name='xsltTransStorageAdd'/>
-      <ref name='xsltTransStorageRemove'/>
       <ref name='xsltTransformError'/>
       <ref name='xsltTransformFunction'/>
       <ref name='xsltValueOf'/>
@@ -2433,8 +2424,6 @@
       <ref name='xsltStylesheetPtr'/>
       <ref name='xsltTemplate'/>
       <ref name='xsltTemplatePtr'/>
-      <ref name='xsltTransStorageAdd'/>
-      <ref name='xsltTransStorageRemove'/>
       <ref name='xsltTransformCache'/>
       <ref name='xsltTransformCachePtr'/>
       <ref name='xsltTransformContext'/>

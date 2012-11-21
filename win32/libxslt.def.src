@@ -242,8 +242,6 @@ xsltTemplateProcess
 xsltTestCompMatchList
 xsltText
 xsltTimestamp
-xsltTransStorageAdd
-xsltTransStorageRemove
 xsltTransformError
 xsltUninit
 xsltUnparsedEntityURIFunction
