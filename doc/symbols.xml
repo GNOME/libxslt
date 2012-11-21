@@ -284,8 +284,8 @@
     <symbol file="xsltInternals">xsltReleaseRVT</symbol>
     <symbol file="xsltInternals">xsltRestoreDocumentNamespaces</symbol>
     <symbol file="extensions">xsltStyleStylesheetLevelGetExtData</symbol>
-    <symbol file="xsltInternals">xsltTransStorageAdd</symbol>
-    <symbol file="xsltInternals">xsltTransStorageRemove</symbol>
+    <symbol removed="1.1.28" file="xsltInternals">xsltTransStorageAdd</symbol>
+    <symbol removed="1.1.28" file="xsltInternals">xsltTransStorageRemove</symbol>
     <symbol file="xsltInternals">xsltUninit</symbol>
     <symbol file="xsltInternals">xsltXSLTAttrMarker</symbol>
   </release>
