@@ -137,8 +137,6 @@ EXTRA_DIST =				\
 
 man_MANS = xsltproc.1
 
-xsltproc = $(top_builddir)/xsltproc/xsltproc
-
 all-local:	web ../NEWS libxslt.xsa $(man_MANS)
 
 api:	libxslt-api.xml libxslt-refs.xml $(APIPAGES) search.php \
@@ -150,9 +148,9 @@ eapi:	EXSLT/libexslt-api.xml EXSLT/libexslt-refs.xml $(EAPIPAGES) \
 web: $(PAGES) $(EPAGES)
 
 $(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl
-	-@(if [ -x $(xsltproc) ] ; then \
+	-@(if [ -x $(XSLTPROC) ] ; then \
 	  echo "Rebuilding the HTML Web pages from xslt.html" ; \
-	  $(xsltproc) --nonet --html $(srcdir)/site.xsl \
+	  $(XSLTPROC) --nonet --html $(srcdir)/site.xsl \
 	    $(srcdir)/xslt.html > index.html ; fi )
 	-@(if [ -x $(XMLLINT) ] ; then \
 	  echo "Validating the HTML Web pages" ; \
@@ -161,9 +159,9 @@ $(PAGES): $(srcdir)/xslt.html $(srcdir)/site.xsl
 $(EPAGES): $(srcdir)/EXSLT/exslt.html $(srcdir)/site.xsl
 	 -@(if [ ! -d EXSLT/html ] ; then \
 	   mkdir -p EXSLT/html ; fi )
-	 -@(if [ -x $(xsltproc) ] ; then \
+	 -@(if [ -x $(XSLTPROC) ] ; then \
 	   echo "Rebuilding the HTML Web pages from exslt.html" ; \
-	   $(xsltproc) --nonet --html \
+	   $(XSLTPROC) --nonet --html \
 		--stringparam dirname EXSLT/ \
 		--stringparam libname libexslt \
 		--stringparam logo_base ../ \
@@ -174,20 +172,20 @@ $(EPAGES): $(srcdir)/EXSLT/exslt.html $(srcdir)/site.xsl
 	   $(XMLLINT) --nonet --valid --noout $(EPAGES) ; fi );
 
 ../NEWS: $(srcdir)/news.xsl $(srcdir)/news.html
-	-@(if [ -x $(xsltproc) ] ; then \
-	  $(xsltproc) --nonet $(srcdir)/news.xsl \
+	-@(if [ -x $(XSLTPROC) ] ; then \
+	  $(XSLTPROC) --nonet $(srcdir)/news.xsl \
 	    $(srcdir)/news.html > ../NEWS ; fi );
 
 libxslt.xsa: $(srcdir)/xsa.xsl $(srcdir)/news.html
-	-@(if [ -x $(xsltproc) ] ; then \
-	  $(xsltproc) --nonet $(srcdir)/xsa.xsl \
+	-@(if [ -x $(XSLTPROC) ] ; then \
+	  $(XSLTPROC) --nonet $(srcdir)/xsa.xsl \
 	    news.html > libxslt.xsa ; fi );
 
 $(APIPAGES): libxslt-refs.xml site.xsl api.xsl $(srcdir)/site.xsl \
 	     $(srcdir)/api.xsl
-	-@(if [ -x $(xsltproc) ] ; then \
+	-@(if [ -x $(XSLTPROC) ] ; then \
 	  echo "Rebuilding the HTML API pages from libxslt-refs.xml" ; \
-	  $(xsltproc) --nonet --html \
+	  $(XSLTPROC) --nonet --html \
 			     $(srcdir)/api.xsl \
 			     $(srcdir)/xslt.html ; fi );
 	-@(if [ -x $(XMLLINT) ] ; then \
@@ -195,9 +193,9 @@ $(APIPAGES): libxslt-refs.xml site.xsl api.xsl $(srcdir)/site.xsl \
 	  $(XMLLINT) --nonet --valid --noout API*.html; fi );
 
 $(EAPIPAGES): EXSLT/libexslt-refs.xml site.xsl api.xsl
-	-@(if [ -x $(xsltproc) ] ; then \
+	-@(if [ -x $(XSLTPROC) ] ; then \
 	  echo "Rebuilding the HTML API pages from libexslt-refs.xml" ; \
-	  $(xsltproc) --nonet --html --output EXSLT/ \
+	  $(XSLTPROC) --nonet --html --output EXSLT/ \
 			     --stringparam libname libexslt \
 			     --stringparam dirname EXSLT/ \
 			     --stringparam logo_base ../ \
@@ -205,24 +203,24 @@ $(EAPIPAGES): EXSLT/libexslt-refs.xml site.xsl api.xsl
 			     $(srcdir)/EXSLT/exslt.html ; fi );
 
 html/index.html: libxslt-api.xml $(srcdir)/newapi.xsl
-	-@(if [ -x $(xsltproc) ] ; then \
+	-@(if [ -x $(XSLTPROC) ] ; then \
 	  echo "Rebuilding the HTML pages from the XSLT API" ; \
-	  $(xsltproc) --nonet \
+	  $(XSLTPROC) --nonet \
 			     $(srcdir)/newapi.xsl $(srcdir)/libxslt-api.xml ; fi );
 	-@(if [ -x $(XMLLINT) ] ; then \
 	  echo "Validating the resulting XHTML pages" ; \
 	  $(XMLLINT) --nonet --valid --noout html/*.html ; fi );
 
 wiki: libxslt-api.xml $(srcdir)/wiki.xsl
-	-@(if [ -x $(xsltproc) ] ; then \
+	-@(if [ -x $(XSLTPROC) ] ; then \
 		echo "Rebuilding the wiki HTML pages from the XSLT API" ; \
-		$(xsltproc) --nonet $(srcdir)/wiki.xsl $(srcdir)/libxslt-api.xml; fi )
+		$(XSLTPROC) --nonet $(srcdir)/wiki.xsl $(srcdir)/libxslt-api.xml; fi )
 
 EXSLT/html/index.html: EXSLT/libexslt-api.xml \
 	$(srcdir)/newapi.xsl
-	-@(if [ -x $(xsltproc) ] ; then \
+	-@(if [ -x $(XSLTPROC) ] ; then \
 	  echo "Rebuilding the HTML pages from the EXSLT API" ; \
-	  $(xsltproc) --nonet --output EXSLT/ \
+	  $(XSLTPROC) --nonet --output EXSLT/ \
 			     --stringparam libname libexslt \
 			     --stringparam dirname EXSLT/ \
 			     --stringparam logo_base ../../ \
@@ -242,27 +240,27 @@ libxslt-api.xml libxslt-refs.xml EXSLT/libexslt-api.xml \
 	($(XSLTPROC) -o ../libxslt/libxslt.syms $(srcdir)/syms.xsl $(srcdir)/symbols.xml)
 
 xsltproc.1: $(srcdir)/xsltproc.xml
-	-@(xsltproc --nonet $(srcdir)/xsltproc.xml)
+	-@$(XSLTPROC) --nonet $(srcdir)/xsltproc.xml
 
 # Note that in the following, xmllint output is piped to xsltproc
 search.php: $(srcdir)/api.xsl $(srcdir)/site.xsl $(srcdir)/search.templ \
             $(srcdir)/search.xml $(srcdir)/search.php.inc
-	-@(if test -x $(XMLLINT) -a -x $(xsltproc); then \
+	-@(if test -x $(XMLLINT) -a -x $(XSLTPROC); then \
 	   echo "Rebuilding search.php" ; \
 	   $(XMLLINT) --xinclude --nonet \
 	                      $(srcdir)/search.xml | \
-	   $(xsltproc) --nonet - search.templ \
+	   $(XSLTPROC) --nonet - search.templ \
 			      > search.php ; else \
 	   echo "Unable to find xmllint or xsltproc in $(bindir)" ; fi)
 
 $(WIN32_DIR)/libxslt.def.src: libxslt-api.xml
-	-@(if [ -x $(xsltproc) ] ; then \
-	  $(xsltproc) -o $(WIN32_DIR)/libxslt.def.src \
+	-@(if [ -x $(XSLTPROC) ] ; then \
+	  $(XSLTPROC) -o $(WIN32_DIR)/libxslt.def.src \
 	  --nonet $(WIN32_DIR)/defgen.xsl $(srcdir)/libxslt-api.xml ; fi )
 
 $(WIN32_DIR)/libexslt.def.src: EXSLT/libexslt-api.xml
-	-@(if [ -x $(xsltproc) ] ; then \
-	  $(xsltproc) -o $(WIN32_DIR)/libexslt.def.src \
+	-@(if [ -x $(XSLTPROC) ] ; then \
+	  $(XSLTPROC) -o $(WIN32_DIR)/libexslt.def.src \
 	  --nonet $(WIN32_DIR)/defgen.xsl $(srcdir)/EXSLT/libexslt-api.xml ; fi )
 
 clean-local:
