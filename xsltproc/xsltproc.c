@@ -514,6 +514,7 @@ static void usage(const char *name) {
     printf("\t--maxdepth val : increase the maximum depth (default %d)\n", xsltMaxDepth);
     printf("\t--maxvars val : increase the maximum variables (default %d)\n", xsltMaxVars);
     printf("\t--maxparserdepth val : increase the maximum parser depth\n");
+    printf("\t--seed-rand val : initialize pseudo random number generator with specific seed\n");
 #ifdef LIBXML_HTML_ENABLED
     printf("\t--html: the input document is(are) an HTML file(s)\n");
 #endif
@@ -556,6 +557,7 @@ main(int argc, char **argv)
         return (1);
     }
 
+    srand(time(NULL));
     xmlInitMemory();
 
     LIBXML_TEST_VERSION
@@ -750,6 +752,15 @@ main(int argc, char **argv)
                 if (value > 0)
                     xmlParserMaxDepth = value;
             }
+        } else if ((!strcmp(argv[i], "-seed-rand")) ||
+                   (!strcmp(argv[i], "--seed-rand"))) {
+            int value;
+
+            i++;
+            if (sscanf(argv[i], "%d", &value) == 1) {
+                if (value > 0)
+                    srand(value);
+            }
         } else if ((!strcmp(argv[i],"-dumpextensions"))||
 			(!strcmp(argv[i],"--dumpextensions"))) {
 		dumpextensions++;
@@ -784,6 +795,10 @@ main(int argc, char **argv)
             continue;
         } else if ((!strcmp(argv[i], "-maxparserdepth")) ||
             (!strcmp(argv[i], "--maxparserdepth"))) {
+            i++;
+            continue;
+        } else if ((!strcmp(argv[i], "-seed-rand")) ||
+            (!strcmp(argv[i], "--seed-rand"))) {
             i++;
             continue;
         } else if ((!strcmp(argv[i], "-o")) ||
