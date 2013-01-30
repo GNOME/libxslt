@@ -319,7 +319,7 @@ static void endTimer(char *format, ...)
     va_start(ap, format);
     vfprintf(stderr,format,ap);
     va_end(ap);
-    fprintf(stderr, " was not timed\n", msec);
+    fprintf(stderr, " was not timed\n");
 #else
   /* We don't have gettimeofday, time or stdarg.h, what crazy world is
    * this ?!
