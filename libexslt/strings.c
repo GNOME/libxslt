@@ -838,11 +838,7 @@ exsltStrXpathCtxtRegister (xmlXPathContextPtr ctxt, const xmlChar *prefix)
         && !xmlXPathRegisterFuncNS(ctxt,
                                    (const xmlChar *) "concat",
                                    (const xmlChar *) EXSLT_STRINGS_NAMESPACE,
-                                   exsltStrConcatFunction)
-        && !xmlXPathRegisterFuncNS(ctxt,
-                                   (const xmlChar *) "replace",
-                                   (const xmlChar *) EXSLT_STRINGS_NAMESPACE,
-                                   exsltStrReplaceFunction)) {
+                                   exsltStrConcatFunction)) {
         return 0;
     }
     return -1;
