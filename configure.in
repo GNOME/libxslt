@@ -196,21 +196,21 @@ typedef locale_t xsltLocale;
 #endif
 ]],[[
     xsltLocale locale;
-    const char *src[[2]] = { "\xc3\x84rger", "Zeppelin" };
-    char *dst[[2]];
+    const char *src[2] = { "\xc3\x84rger", "Zeppelin" };
+    char *dst[2];
     size_t len, r;
     int i;
 
     locale = newlocale(LC_COLLATE_MASK, "en_US.utf8", NULL);
     if (locale == NULL) exit(1);
     for (i=0; i<2; ++i) {
-        len = strxfrm_l(NULL, src[[i]], 0, locale) + 1;
-        dst[[i]] = malloc(len);
-        if(dst[[i]] == NULL) exit(1);
-        r = strxfrm_l(dst[[i]], src[[i]], len, locale);
+        len = strxfrm_l(NULL, src[i], 0, locale) + 1;
+        dst[i] = malloc(len);
+        if(dst[i] == NULL) exit(1);
+        r = strxfrm_l(dst[i], src[i], len, locale);
         if(r >= len) exit(1);
     }
-    if (strcmp(dst[[0]], dst[[1]]) >= 0) exit(1);
+    if (strcmp(dst[0], dst[1]) >= 0) exit(1);
 
     exit(0);
     return(0);
