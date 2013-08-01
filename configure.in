@@ -378,6 +378,7 @@ AC_SUBST(PYTHON_LIBS)
 
 AC_ARG_WITH(crypto, [  --with-crypto           Add crypto support to exslt (on)])
 WITH_CRYPTO=0
+CRYPTO_TESTDIR=
 if test "$with_crypto" = "no" ; then
     echo Disabling crypto support
     LIBGCRYPT_CFLAGS=""
@@ -389,6 +390,7 @@ case $host in
     dnl TODO: to implement --with-crypto=foo to allow switch between
     dnl crypto libraries
     WITH_CRYPTO=1
+    CRYPTO_TESTDIR=crypto
     ;;
   *)
     AC_PATH_PROG(LIBGCRYPT_CONFIG, libgcrypt-config, no)
@@ -404,7 +406,8 @@ case $host in
         LIBGCRYPT_LIBS=`$LIBGCRYPT_CONFIG $libgcrypt_config_args --libs`
         AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
         echo 'Crypto extensions will be available.'
-		WITH_CRYPTO=1
+        WITH_CRYPTO=1
+        CRYPTO_TESTDIR=crypto
       fi
     else
       LIBGCRYPT_CFLAGS=""
@@ -414,6 +417,7 @@ case $host in
 esac
 fi
 AC_SUBST(WITH_CRYPTO)
+AC_SUBST(CRYPTO_TESTDIR)
 AC_SUBST(LIBGCRYPT_CFLAGS)
 AC_SUBST(LIBGCRYPT_LIBS)
 
@@ -709,6 +713,7 @@ tests/exslt/sets/Makefile
 tests/exslt/strings/Makefile
 tests/exslt/date/Makefile
 tests/exslt/dynamic/Makefile
+tests/exslt/crypto/Makefile
 tests/plugins/Makefile
 doc/Makefile
 xslt-config
