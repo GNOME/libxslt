@@ -451,11 +451,14 @@ xsltReverseCompMatch(xsltParserContextPtr ctxt, xsltCompMatchPtr comp) {
     xsltCompMatchAdd(ctxt, comp, XSLT_OP_END, NULL, NULL, 0);
 
     /*
-     * detect consecutive XSLT_OP_PREDICATE indicating a direct
-     * matching should be done.
+     * Detect consecutive XSLT_OP_PREDICATE and predicates on ops which
+     * haven't been optimized yet indicating a direct matching should be done.
      */
     for (i = 0;i < comp->nbStep - 1;i++) {
-        if ((comp->steps[i].op == XSLT_OP_PREDICATE) &&
+        xsltOp op = comp->steps[i].op;
+
+        if ((op != XSLT_OP_ELEM) &&
+            (op != XSLT_OP_ALL) &&
 	    (comp->steps[i + 1].op == XSLT_OP_PREDICATE)) {
 
 	    comp->direct = 1;
@@ -655,8 +658,10 @@ xsltTestPredicateMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
         isRVT = 0;
 
     /*
-     * Depending on the last selection, one may need to
-     * recompute contextSize and proximityPosition.
+     * Recompute contextSize and proximityPosition.
+     *
+     * TODO: Make this work for additional ops. Currently, only XSLT_OP_ELEM
+     * and XSLT_OP_ALL are supported.
      */
     oldCS = ctxt->xpathCtxt->contextSize;
     oldCP = ctxt->xpathCtxt->proximityPosition;
@@ -1128,7 +1133,8 @@ restart:
 		break;
 	    case XSLT_OP_PREDICATE: {
 		/*
-		 * when there is cascading XSLT_OP_PREDICATE, then use a
+		 * When there is cascading XSLT_OP_PREDICATE or a predicate
+		 * after an op which hasn't been optimized yet, then use a
 		 * direct computation approach. It's not done directly
 		 * at the beginning of the routine to filter out as much
 		 * as possible this costly computation.
