@@ -906,9 +906,10 @@ xsltTestPredicateMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
  */
 static int
 xsltTestCompMatch(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
-	          xmlNodePtr node, const xmlChar *mode,
+	          xmlNodePtr matchNode, const xmlChar *mode,
 		  const xmlChar *modeURI) {
     int i;
+    xmlNodePtr node = matchNode;
     xsltStepOpPtr step, sel = NULL;
     xsltStepStates states = {0, 0, NULL}; /* // may require backtrack */
 
@@ -1137,7 +1138,7 @@ restart:
 			/* Free the rollback states */
 			xmlFree(states.states);
 		    }
-		    return(xsltTestCompMatchDirect(ctxt, comp, node,
+		    return(xsltTestCompMatchDirect(ctxt, comp, matchNode,
 						   comp->nsList, comp->nsNr));
 		}
 
