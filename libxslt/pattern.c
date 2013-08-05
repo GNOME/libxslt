@@ -1433,6 +1433,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	if (CUR != ',') {
 	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : , expected\n");
+	    xmlFree(lit);
 	    ctxt->error = 1;
 	    return;
 	}
