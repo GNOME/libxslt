@@ -730,6 +730,11 @@ main(int argc, char **argv)
             int value;
 
             i++;
+            if (i == argc) {
+                fprintf(stderr, "XSLT maxdepth value not specified!\n");
+                return (2);
+            }
+
             if (sscanf(argv[i], "%d", &value) == 1) {
                 if (value > 0)
                     xsltMaxDepth = value;
@@ -748,6 +753,11 @@ main(int argc, char **argv)
             int value;
 
             i++;
+            if (i == argc) {
+                fprintf(stderr, "XML maxparserdepth value not specified!\n");
+                return (2);
+            }
+
             if (sscanf(argv[i], "%d", &value) == 1) {
                 if (value > 0)
                     xmlParserMaxDepth = value;
