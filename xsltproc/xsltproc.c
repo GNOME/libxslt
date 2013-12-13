@@ -803,6 +803,10 @@ main(int argc, char **argv)
             (!strcmp(argv[i], "--maxdepth"))) {
             i++;
             continue;
+        } else if ((!strcmp(argv[i], "-maxvars")) ||
+            (!strcmp(argv[i], "--maxvars"))) {
+            i++;
+            continue;
         } else if ((!strcmp(argv[i], "-maxparserdepth")) ||
             (!strcmp(argv[i], "--maxparserdepth"))) {
             i++;
