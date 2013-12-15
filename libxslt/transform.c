@@ -4594,6 +4594,10 @@ xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
 #else
     xsltStylePreCompPtr comp = castedComp;
 #endif
+    xmlXPathContextPtr xpctxt;
+    xmlNsPtr *oldXPNamespaces;
+    int oldXPNsNr;
+
     if (comp == NULL) {
 	xsltTransformError(ctxt, NULL, inst,
 	     "xsl:number : compilation failed\n");
@@ -4606,7 +4610,27 @@ xsltNumber(xsltTransformContextPtr ctxt, xmlNodePtr node,
     comp->numdata.doc = inst->doc;
     comp->numdata.node = inst;
 
+    xpctxt = ctxt->xpathCtxt;
+    oldXPNsNr = xpctxt->nsNr;
+    oldXPNamespaces = xpctxt->namespaces;
+
+#ifdef XSLT_REFACTORED
+    if (comp->inScopeNs != NULL) {
+        xpctxt->namespaces = comp->inScopeNs->list;
+        xpctxt->nsNr = comp->inScopeNs->xpathNumber;
+    } else {
+        xpctxt->namespaces = NULL;
+        xpctxt->nsNr = 0;
+    }
+#else
+    xpctxt->namespaces = comp->nsList;
+    xpctxt->nsNr = comp->nsNr;
+#endif
+
     xsltNumberFormat(ctxt, &comp->numdata, node);
+
+    xpctxt->nsNr = oldXPNsNr;
+    xpctxt->namespaces = oldXPNamespaces;
 }
 
 /**
