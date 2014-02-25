@@ -949,6 +949,8 @@ xsltElementComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #ifdef XSLT_REFACTORED
 		    comp->nsPrefix = prefix;
 		    comp->name = name;
+#else
+                    (void)name; /* Suppress unused variable warning. */
 #endif
 		} else if (prefix != NULL) {
 		    xsltTransformError(NULL, style, inst,
@@ -1074,6 +1076,8 @@ xsltAttributeComp(xsltStylesheetPtr style, xmlNodePtr inst) {
 #ifdef XSLT_REFACTORED
 			comp->nsPrefix = prefix;
 			comp->name = name;
+#else
+                        (void)name; /* Suppress unused variable warning. */
 #endif
 		    } else {
 			xsltTransformError(NULL, style, inst,
