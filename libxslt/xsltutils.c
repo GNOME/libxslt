@@ -1963,7 +1963,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
     int nb, i,j,k,l;
     int max;
     int total;
-    long totalt;
+    unsigned long totalt;
     xsltTemplatePtr *templates;
     xsltStylesheetPtr style;
     xsltTemplatePtr templ1,templ2;
@@ -2076,7 +2076,7 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
 
     for (i = 0; i < nb; i++) {
         char ix_str[20], timep_str[20], times_str[20], timec_str[20], called_str[20];
-        int t;
+        unsigned long t;
 
         templ1 = templates[i];
         /* callers */
