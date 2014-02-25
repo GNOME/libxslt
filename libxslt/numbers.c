@@ -536,9 +536,7 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			    xmlNodePtr node,
 			    xsltCompMatchPtr countPat,
 			    xsltCompMatchPtr fromPat,
-			    double *array,
-			    xmlDocPtr doc,
-			    xmlNodePtr elem)
+			    double *array)
 {
     int amount = 0;
     int cnt = 0;
@@ -615,9 +613,7 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 				 xsltCompMatchPtr countPat,
 				 xsltCompMatchPtr fromPat,
 				 double *array,
-				 int max,
-				 xmlDocPtr doc,
-				 xmlNodePtr elem)
+				 int max)
 {
     int amount = 0;
     int cnt;
@@ -759,9 +755,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 						      data->countPat,
 						      data->fromPat,
 						      &number,
-						      1,
-						      data->doc,
-						      data->node);
+						      1);
 	    if (amount == 1) {
 		xsltNumberFormatInsertNumbers(data,
 					      &number,
@@ -777,9 +771,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 						      data->countPat,
 						      data->fromPat,
 						      numarray,
-						      max,
-						      data->doc,
-						      data->node);
+						      max);
 	    if (amount > 0) {
 		xsltNumberFormatInsertNumbers(data,
 					      numarray,
@@ -792,9 +784,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 						 node,
 						 data->countPat,
 						 data->fromPat,
-						 &number,
-						 data->doc,
-						 data->node);
+						 &number);
 	    if (amount > 0) {
 		xsltNumberFormatInsertNumbers(data,
 					      &number,
