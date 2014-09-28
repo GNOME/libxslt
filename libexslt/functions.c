@@ -112,6 +112,8 @@ exsltFuncRegisterImportFunc (exsltFuncFunctionData *data,
     func = (exsltFuncFunctionData*)xmlHashLookup2(ch->hash, URI, name);
     if (func == NULL) {		/* Not yet present - copy it in */
 	func = exsltFuncNewFunctionData();
+        if (func == NULL)
+            return;
 	memcpy(func, data, sizeof(exsltFuncFunctionData));
 	if (xmlHashAddEntry2(ch->hash, URI, name, func) < 0) {
 	    xsltGenericError(xsltGenericErrorContext,
@@ -494,6 +496,10 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
      * Create function data
      */
     func = exsltFuncNewFunctionData();
+    if (func == NULL) {
+        xmlFree(name);
+        return;
+    }
     func->content = inst->children;
     while (IS_XSLT_ELEM(func->content) &&
 	   IS_XSLT_NAME(func->content, "param")) {
