@@ -353,10 +353,12 @@ xsltPreCompEval(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlXPathContextPtr xpctxt;
     xmlNodePtr oldXPContextNode;
     xmlNsPtr *oldXPNamespaces;
-    int oldXPNsNr;
+    int oldXPProximityPosition, oldXPContextSize, oldXPNsNr;
 
     xpctxt = ctxt->xpathCtxt;
     oldXPContextNode = xpctxt->node;
+    oldXPProximityPosition = xpctxt->proximityPosition;
+    oldXPContextSize = xpctxt->contextSize;
     oldXPNsNr = xpctxt->nsNr;
     oldXPNamespaces = xpctxt->namespaces;
 
@@ -377,6 +379,8 @@ xsltPreCompEval(xsltTransformContextPtr ctxt, xmlNodePtr node,
     res = xmlXPathCompiledEval(comp->comp, xpctxt);
 
     xpctxt->node = oldXPContextNode;
+    xpctxt->proximityPosition = oldXPProximityPosition;
+    xpctxt->contextSize = oldXPContextSize;
     xpctxt->nsNr = oldXPNsNr;
     xpctxt->namespaces = oldXPNamespaces;
 
@@ -398,10 +402,12 @@ xsltPreCompEvalToBoolean(xsltTransformContextPtr ctxt, xmlNodePtr node,
     xmlXPathContextPtr xpctxt;
     xmlNodePtr oldXPContextNode;
     xmlNsPtr *oldXPNamespaces;
-    int oldXPNsNr;
+    int oldXPProximityPosition, oldXPContextSize, oldXPNsNr;
 
     xpctxt = ctxt->xpathCtxt;
     oldXPContextNode = xpctxt->node;
+    oldXPProximityPosition = xpctxt->proximityPosition;
+    oldXPContextSize = xpctxt->contextSize;
     oldXPNsNr = xpctxt->nsNr;
     oldXPNamespaces = xpctxt->namespaces;
 
@@ -422,6 +428,8 @@ xsltPreCompEvalToBoolean(xsltTransformContextPtr ctxt, xmlNodePtr node,
     res = xmlXPathCompiledEvalToBoolean(comp->comp, xpctxt);
 
     xpctxt->node = oldXPContextNode;
+    xpctxt->proximityPosition = oldXPProximityPosition;
+    xpctxt->contextSize = oldXPContextSize;
     xpctxt->nsNr = oldXPNsNr;
     xpctxt->namespaces = oldXPNamespaces;
 
