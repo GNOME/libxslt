@@ -4,6 +4,11 @@
 ]> 
  
 <root> 
+  <!--
+    Expanding the following entity results in a spurious warning because
+    of libxml2 bug #737840. The warning should be removed from the expected
+    error output once the bug is resolved.
+  -->
   &target;
   <!-- <elem id='id0' /> --> 
 </root> 
