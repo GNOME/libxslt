@@ -447,7 +447,7 @@ exsltStrAlignFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	} else {
 	    int str_s;
 
-	    str_s = xmlStrlen (str);
+	    str_s = xmlUTF8Strsize(padding, str_l);
 	    ret = xmlStrdup (str);
 	    ret = xmlStrcat (ret, padding + str_s);
 	}
