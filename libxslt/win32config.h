@@ -78,7 +78,9 @@ static int isnan (double d) {
 
 #include <direct.h>
 #if defined(_MSC_VER) || defined(__MINGW32__)
+#if _MSC_VER < 1900
 #define snprintf _snprintf
+#endif
 #if _MSC_VER < 1500
 #define vsnprintf(b,c,f,a) _vsnprintf(b,c,f,a)
 #endif

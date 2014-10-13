@@ -57,7 +57,9 @@
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <winsock2.h>
 #define gettimeofday(p1,p2)
+#if _MSC_VER < 1900
 #define snprintf _snprintf
+#endif
 #endif /* _MS_VER */
 #else /* WIN32 */
 #if defined(HAVE_SYS_TIME_H)
