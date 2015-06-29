@@ -297,9 +297,11 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	return;
 
     value = xmlGetNsProp(cur, (const xmlChar *)"name", NULL);
-    if (value == NULL) {
+    if ((value == NULL) || (*value == 0)) {
 	xsltGenericError(xsltGenericErrorContext,
 	     "xsl:attribute-set : name is missing\n");
+        if (value)
+	    xmlFree(value);
 	return;
     }
 
@@ -495,6 +497,8 @@ xsltResolveSASCallback(xsltAttrElemPtr values, xsltStylesheetPtr style,
     xsltAttrElemPtr refs;
 
     tmp = values;
+    if ((name == NULL) || (name[0] == 0))
+        return;
     while (tmp != NULL) {
 	if (tmp->set != NULL) {
 	    /*
