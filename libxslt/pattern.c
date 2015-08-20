@@ -2090,8 +2090,33 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
     const xmlChar *name = NULL;
     float priority;              /* the priority */
 
-    if ((style == NULL) || (cur == NULL) || (cur->match == NULL))
+    if ((style == NULL) || (cur == NULL))
 	return(-1);
+
+    /* Register named template */
+    if (cur->name != NULL) {
+        if (style->namedTemplates == NULL) {
+            style->namedTemplates = xmlHashCreate(10);
+            if (style->namedTemplates == NULL)
+                return(-1);
+        }
+        else {
+            void *dup = xmlHashLookup2(style->namedTemplates, cur->name,
+                                       cur->nameURI);
+            if (dup != NULL) {
+                xsltTransformError(NULL, style, NULL,
+                                   "xsl:template: error duplicate name '%s'\n",
+                                   cur->name);
+                style->errors++;
+                return(-1);
+            }
+        }
+
+        xmlHashAddEntry2(style->namedTemplates, cur->name, cur->nameURI, cur);
+    }
+
+    if (cur->match == NULL)
+	return(0);
 
     priority = cur->priority;
     pat = xsltCompilePatternInternal(cur->match, style->doc, cur->elem,
@@ -2562,5 +2587,7 @@ xsltFreeTemplateHashes(xsltStylesheetPtr style) {
         xsltFreeCompMatchList(style->piMatch);
     if (style->commentMatch != NULL)
         xsltFreeCompMatchList(style->commentMatch);
+    if (style->namedTemplates != NULL)
+        xmlHashFree(style->namedTemplates, NULL);
 }
 
