@@ -1006,6 +1006,8 @@ xsltFreeStylesheet(xsltStylesheetPtr style)
         xsltFreeAVTList(style->attVTs);
     if (style->imports != NULL)
         xsltFreeStylesheetList(style->imports);
+    if (style->namedTemplatesHash != NULL)
+        xmlHashFree(style->namedTemplatesHash, NULL);
 
 #ifdef XSLT_REFACTORED
     /*
@@ -5133,6 +5135,28 @@ error:
     }
 }
 
+/**
+ * xsltHasNamedTemplate
+ * @style: an XSLT stylesheet
+ * @name: a template name
+ * @URI: a template URI
+ * Returns -1 if the named template was already compiled.
+ * Returns 0 if the template has not been compiled yet.
+ */
+static int
+xsltHasNamedTemplate(xsltStylesheetPtr style,
+                    const xmlChar * name,
+                    const xmlChar * URI){
+
+    if(style->namedTemplatesHash != NULL){
+        xsltTemplatePtr list = (xsltTemplatePtr)
+                xmlHashLookup2(style->namedTemplatesHash, name, URI);
+        if (list != NULL)
+            return -1;
+    }
+    return 0;
+}
+
 #ifdef XSLT_REFACTORED
 /**
  * xsltParseXSLTTemplate:
@@ -5405,20 +5429,24 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 		ret->nameURI = xmlDictLookup(style->dict, BAD_CAST URI, -1);
 	    else
 		ret->nameURI = NULL;
-	    cur = ret->next;
-	    while (cur != NULL) {
-	        if ((URI != NULL && xmlStrEqual(cur->name, ret->name) &&
-				xmlStrEqual(cur->nameURI, URI) ) ||
-		    (URI == NULL && cur->nameURI == NULL &&
-				xmlStrEqual(cur->name, ret->name))) {
-		    xsltTransformError(NULL, style, template,
-		        "xsl:template: error duplicate name '%s'\n", ret->name);
-		    style->errors++;
-		    goto error;
-		}
-		cur = cur->next;
-	    }
+        /* validate that the named template exists only once */
+        if(xsltHasNamedTemplate(style, ret->name, ret->nameURI)){
+             xsltTransformError(NULL, style, template,
+                                 "xsl:template: error duplicate name '%s'\n", ret->name);
+             style->errors++;
+             goto error;
+        }
 	}
+    /* register named template for future error validation */
+    if(style->namedTemplatesHash == NULL ){
+        style->namedTemplatesHash = xmlHashCreate(1024);
+    }
+    if(style->namedTemplatesHash == NULL){
+        xmlGenericError(NULL, "malloc failed !\n");
+        goto error;
+    }
+    xmlHashAddEntry2(style->namedTemplatesHash, ret->name, ret->nameURI, template);
+
     }
 
     /*

@@ -1639,6 +1639,7 @@ struct _xsltStylesheet {
      * Forwards-compatible processing
      */
     int forwards_compatible;
+    void *namedTemplatesHash;	/* hash table on named templates */
 };
 
 typedef struct _xsltTransformCache xsltTransformCache;
