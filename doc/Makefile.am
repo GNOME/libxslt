@@ -242,7 +242,7 @@ libxslt-api.xml libxslt-refs.xml EXSLT/libexslt-api.xml \
 xsltproc.1: $(srcdir)/xsltproc.xml
 	-@(if [ -x $(XSLTPROC) ] ; then \
 	   echo "Rebuilding the man pages from the xml" ; \
-	   $(XSLTPROC) --nonet $(srcdir)/xsltproc.xml );
+	   $(XSLTPROC) --nonet $(srcdir)/xsltproc.xml ; fi)
 
 # Note that in the following, xmllint output is piped to xsltproc
 search.php: $(srcdir)/api.xsl $(srcdir)/site.xsl $(srcdir)/search.templ \
