@@ -2090,7 +2090,22 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
     const xmlChar *name = NULL;
     float priority;              /* the priority */
 
-    if ((style == NULL) || (cur == NULL) || (cur->match == NULL))
+    if ((style == NULL) || (cur == NULL))
+	return(-1);
+
+    /* register named template for future error validation */
+    if (cur->name != NULL && cur->nameURI != NULL){
+        if (style->namedTemplatesHash == NULL ){
+            style->namedTemplatesHash = xmlHashCreate(8);
+        }
+        if (style->namedTemplatesHash == NULL){
+            xmlGenericError(NULL, "malloc failed !\n");
+            return (-1);
+        }
+        xmlHashAddEntry2(style->namedTemplatesHash, cur->name, cur->nameURI, cur);
+    }
+
+    if (cur->match == NULL)
 	return(-1);
 
     priority = cur->priority;

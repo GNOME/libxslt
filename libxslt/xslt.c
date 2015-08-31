@@ -5147,7 +5147,6 @@ static int
 xsltHasNamedTemplate(xsltStylesheetPtr style,
                     const xmlChar * name,
                     const xmlChar * URI){
-
     if(style->namedTemplatesHash != NULL){
         xsltTemplatePtr list = (xsltTemplatePtr)
                 xmlHashLookup2(style->namedTemplatesHash, name, URI);
@@ -5437,15 +5436,6 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
              goto error;
         }
 	}
-    /* register named template for future error validation */
-    if(style->namedTemplatesHash == NULL ){
-        style->namedTemplatesHash = xmlHashCreate(1024);
-    }
-    if(style->namedTemplatesHash == NULL){
-        xmlGenericError(NULL, "malloc failed !\n");
-        goto error;
-    }
-    xmlHashAddEntry2(style->namedTemplatesHash, ret->name, ret->nameURI, template);
 
     }
 
