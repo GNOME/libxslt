@@ -809,6 +809,7 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 XSLT_NUMBER_FORMAT_END:
     if (tempformat == 1) {
 	/* The format need to be recomputed each time */
+	xmlFree(data->format);
 	data->format = NULL;
     }
     if (output != NULL)
