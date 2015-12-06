@@ -618,7 +618,16 @@ AM_CONDITIONAL(WITH_MODULES, test "$WITH_MODULES" = "1")
 dnl
 dnl setup default module path
 dnl
-LIBXSLT_DEFAULT_PLUGINS_PATH="$libdir/libxslt-plugins"
+expanded_libdir=$(
+    test "x$prefix" = xNONE && prefix="$ac_default_prefix"
+    test "x$exec_prefix" = xNONE && exec_prefix="$prefix"
+    while test "$libdir_old" != "$libdir"; do
+      libdir_old="$libdir"
+      eval libdir="$libdir"
+    done
+    echo "$libdir"
+)
+LIBXSLT_DEFAULT_PLUGINS_PATH="$expanded_libdir/libxslt-plugins"
 AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
 
 WIN32_EXTRA_LIBADD=
