@@ -1320,6 +1320,11 @@ xsltShallowCopyElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
     if (copy != NULL) {
 	copy->doc = ctxt->output;
 	copy = xsltAddChild(insert, copy);
+        if (copy == NULL) {
+             xsltTransformError(ctxt, NULL, node,
+                "xsltShallowCopyElem: copy failed\n");
+             return (copy);
+        }
 
 	if (node->type == XML_ELEMENT_NODE) {
 	    /*
@@ -1653,6 +1658,11 @@ xsltCopyTreeInternal(xsltTransformContextPtr ctxt,
     if (copy != NULL) {
 	copy->doc = ctxt->output;
 	copy = xsltAddChild(insert, copy);
+        if (copy == NULL) {
+            xsltTransformError(ctxt, NULL, invocNode,
+            "xsltCopyTreeInternal: Copying of '%s' failed.\n", node->name);
+            return (copy);
+        }
 	/*
 	 * The node may have been coalesced into another text node.
 	 */
@@ -4132,6 +4142,11 @@ xsltElement(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	return;
     }
     copy = xsltAddChild(ctxt->insert, copy);
+    if (copy == NULL) {
+        xsltTransformError(ctxt, NULL, inst,
+            "xsl:element : xsltAddChild failed\n");
+        return;
+    }
 
     /*
     * Namespace
