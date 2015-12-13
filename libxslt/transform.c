@@ -929,9 +929,9 @@ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	}
 	copy = xmlNewTextLen(string, len);
     }
+    if (copy != NULL && target != NULL)
+	copy = xsltAddChild(target, copy);
     if (copy != NULL) {
-	if (target != NULL)
-	    copy = xsltAddChild(target, copy);
 	ctxt->lasttext = copy->content;
 	ctxt->lasttsize = len;
 	ctxt->lasttuse = len;
