@@ -303,6 +303,14 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     func = (exsltFuncFunctionData*) xmlHashLookup2 (data->funcs,
 						    ctxt->context->functionURI,
 						    ctxt->context->function);
+    if (func == NULL) {
+        /* Should never happen */
+        xsltGenericError(xsltGenericErrorContext,
+                         "{%s}%s: not found\n",
+                         ctxt->context->functionURI, ctxt->context->function);
+        ctxt->error = XPATH_UNKNOWN_FUNC_ERROR;
+        return;
+    }
 
     /*
      * params handling
