@@ -1305,7 +1305,8 @@ xsltGetQNameProperty(xsltStylesheetPtr style, xmlNodePtr inst,
 	    if (prop == NULL) {
 		style->errors++;
 	    } else {
-		*localName = prop;
+		if (localName)
+		    *localName = prop;
 		if (hasProp)
 		    *hasProp = 1;
 		if (URI != NULL) {
