@@ -703,9 +703,9 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
 
     val = (long)((char *)cur - (char *)&base_address);
     if (val >= 0) {
-      sprintf((char *)str, "idp%ld", val);
+      snprintf((char *)str, sizeof(str), "idp%ld", val);
     } else {
-      sprintf((char *)str, "idm%ld", -val);
+      snprintf((char *)str, sizeof(str), "idm%ld", -val);
     }
     valuePush(ctxt, xmlXPathNewString(str));
 }
