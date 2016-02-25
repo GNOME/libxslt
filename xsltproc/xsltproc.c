@@ -560,6 +560,10 @@ main(int argc, char **argv)
     srand(time(NULL));
     xmlInitMemory();
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+    _set_output_format(_TWO_DIGIT_EXPONENT);
+#endif
+
     LIBXML_TEST_VERSION
 
     sec = xsltNewSecurityPrefs();
