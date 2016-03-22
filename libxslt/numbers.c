@@ -532,6 +532,43 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 }
 
 static int
+xsltTestCompMatchCount(xsltTransformContextPtr context,
+                       xmlNodePtr node,
+                       xsltCompMatchPtr countPat,
+                       xmlNodePtr cur)
+{
+    if (countPat != NULL) {
+        return xsltTestCompMatchList(context, node, countPat);
+    }
+    else {
+        /*
+         * 7.7 Numbering
+         *
+         * If count attribute is not specified, then it defaults to the
+         * pattern that matches any node with the same node type as the
+         * current node and, if the current node has an expanded-name, with
+         * the same expanded-name as the current node.
+         */
+        if (node->type != cur->type)
+            return 0;
+        if (node->type == XML_NAMESPACE_DECL)
+            /*
+             * Namespace nodes have no preceding siblings and no parents
+             * that are namespace nodes. This means that node == cur.
+             */
+            return 1;
+        /* TODO: Skip node types without expanded names like text nodes. */
+        if (!xmlStrEqual(node->name, cur->name))
+            return 0;
+        if (node->ns == cur->ns)
+            return 1;
+        if ((node->ns == NULL) || (cur->ns == NULL))
+            return 0;
+        return (xmlStrEqual(node->ns->href, cur->ns->href));
+    }
+}
+
+static int
 xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 			    xmlNodePtr node,
 			    xsltCompMatchPtr countPat,
@@ -562,21 +599,8 @@ xsltNumberFormatGetAnyLevel(xsltTransformContextPtr context,
 
     while (cur != NULL) {
 	/* process current node */
-	if (countPat == NULL) {
-	    if ((node->type == cur->type) &&
-		/* FIXME: must use expanded-name instead of local name */
-		xmlStrEqual(node->name, cur->name)) {
-		    if ((node->ns == cur->ns) ||
-		        ((node->ns != NULL) &&
-			 (cur->ns != NULL) &&
-		         (xmlStrEqual(node->ns->href,
-		             cur->ns->href) )))
-		        cnt++;
-	    }
-	} else {
-	    if (xsltTestCompMatchList(context, cur, countPat))
-		cnt++;
-	}
+	if (xsltTestCompMatchCount(context, cur, countPat, node))
+	    cnt++;
 	if ((fromPat != NULL) &&
 	    xsltTestCompMatchList(context, cur, fromPat)) {
 	    break; /* while */
@@ -633,30 +657,18 @@ xsltNumberFormatGetMultipleLevel(xsltTransformContextPtr context,
 		xsltTestCompMatchList(context, ancestor, fromPat))
 		break; /* for */
 
-	    if ((countPat == NULL && node->type == ancestor->type &&
-		xmlStrEqual(node->name, ancestor->name)) ||
-		xsltTestCompMatchList(context, ancestor, countPat)) {
+	    if (xsltTestCompMatchCount(context, ancestor, countPat, node)) {
 		/* count(preceding-sibling::*) */
-		cnt = 0;
-		for (preceding = ancestor;
+		cnt = 1;
+		for (preceding =
+                        xmlXPathNextPrecedingSibling(parser, ancestor);
 		     preceding != NULL;
 		     preceding =
 		        xmlXPathNextPrecedingSibling(parser, preceding)) {
-		    if (countPat == NULL) {
-			if ((preceding->type == ancestor->type) &&
-			    xmlStrEqual(preceding->name, ancestor->name)){
-			    if ((preceding->ns == ancestor->ns) ||
-			        ((preceding->ns != NULL) &&
-				 (ancestor->ns != NULL) &&
-			         (xmlStrEqual(preceding->ns->href,
-			             ancestor->ns->href) )))
-			        cnt++;
-			}
-		    } else {
-			if (xsltTestCompMatchList(context, preceding,
-				                  countPat))
-			    cnt++;
-		    }
+
+	            if (xsltTestCompMatchCount(context, preceding, countPat,
+                                               node))
+			cnt++;
 		}
 		array[amount++] = (double)cnt;
 		if (amount >= max)
