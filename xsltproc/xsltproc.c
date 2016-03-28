@@ -287,7 +287,7 @@ static void startTimer(void)
 {
     begin=clock();
 }
-static void endTimer(char *format, ...)
+static void endTimer(const char *format, ...)
 {
     long msec;
     va_list ap;
@@ -313,7 +313,7 @@ static void startTimer(void)
    * Do nothing
    */
 }
-static void endTimer(char *format, ...)
+static void endTimer(const char *format, ...)
 {
   /*
    * We cannot do anything because we don't have a timing function
