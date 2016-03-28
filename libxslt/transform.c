@@ -3714,8 +3714,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    xmlDictReference(res->dict);
 	} else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltTransformError(ctxt, NULL, inst,
-	     "xsltDocumentElem: unsupported method xhtml (%s)\n",
-		             style->method);
+	     "xsltDocumentElem: unsupported method xhtml\n");
 	    ctxt->type = XSLT_OUTPUT_HTML;
 	    res = htmlNewDocNoDtD(doctypeSystem, doctypePublic);
 	    if (res == NULL)
@@ -3736,7 +3735,7 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	} else {
 	    xsltTransformError(ctxt, NULL, inst,
 			     "xsltDocumentElem: unsupported method (%s)\n",
-		             style->method);
+		             method);
 	    goto error;
 	}
     } else {
@@ -5973,8 +5972,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
 #endif
         } else if (xmlStrEqual(method, (const xmlChar *) "xhtml")) {
 	    xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
-		"xsltApplyStylesheetInternal: unsupported method xhtml (%s), using html\n",
-		style->method);
+		"xsltApplyStylesheetInternal: unsupported method xhtml, using html\n");
             ctxt->type = XSLT_OUTPUT_HTML;
             res = htmlNewDoc(doctypeSystem, doctypePublic);
             if (res == NULL)
@@ -6001,7 +5999,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
         } else {
 	    xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
 		"xsltApplyStylesheetInternal: unsupported method (%s)\n",
-		style->method);
+		method);
             goto error;
         }
     } else {
