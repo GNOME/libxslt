@@ -7,6 +7,7 @@
  */
 
 #include "libxslt/libxslt.h"
+#include "libxslt/xsltconfig.h"
 #include "libexslt/exslt.h"
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -235,6 +236,8 @@ my_gettimeofday(struct timeval *tvp, void *tzp)
 #endif /* HAVE_SYS_TIME_H */
 #endif /* HAVE_SYS_TIMEB_H */
 #endif /* !HAVE_GETTIMEOFDAY */
+
+static void endTimer(const char *format, ...) LIBXSLT_ATTR_FORMAT(1,2);
 
 #if defined(HAVE_GETTIMEOFDAY)
 static struct timeval begin, endtime;
