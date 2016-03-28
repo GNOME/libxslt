@@ -523,6 +523,7 @@ static void usage(const char *name) {
 #endif
     printf("\t--encoding: the input document character encoding\n");
     printf("\t--param name value : pass a (parameter,value) pair\n");
+    printf("\t       name is a QName or a string of the form {URI}NCName.\n");
     printf("\t       value is an UTF8 XPath expression.\n");
     printf("\t       string values must be quoted like \"'string'\"\n or");
     printf("\t       use stringparam to avoid it\n");
