@@ -246,7 +246,7 @@ xsltNumberFormatAlpha(xmlBufferPtr buffer,
 	number--;
 	*(--pointer) = alpha_list[((int)fmod(number, alpha_size))];
 	number /= alpha_size;
-	if (fabs(number) < 1.0)
+	if (number < 1.0)
 	    break; /* for */
     }
     xmlBufferCCat(buffer, pointer);
@@ -442,6 +442,21 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 	number = numbers[(numbers_max - 1) - i];
         /* Round to nearest like XSLT 2.0 */
         number = floor(number + 0.5);
+        /*
+         * XSLT 1.0 isn't clear on how to handle negative numbers, but XSLT
+         * 2.0 says:
+         *
+         *     It is a non-recoverable dynamic error if any undiscarded item
+         *     in the atomized sequence supplied as the value of the value
+         *     attribute of xsl:number cannot be converted to an integer, or
+         *     if the resulting integer is less than 0 (zero).
+         */
+        if (number < 0.0) {
+            xsltTransformError(NULL, NULL, NULL,
+                    "xsl-number : negative value\n");
+            /* Recover by treating negative values as zero. */
+            number = 0.0;
+        }
 	if (i < tokens->nTokens) {
 	  /*
 	   * The "n"th format token will be used to format the "n"th
