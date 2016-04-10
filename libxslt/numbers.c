@@ -440,6 +440,8 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
     for (i = 0; i < numbers_max; i++) {
 	/* Insert number */
 	number = numbers[(numbers_max - 1) - i];
+        /* Round to nearest like XSLT 2.0 */
+        number = floor(number + 0.5);
 	if (i < tokens->nTokens) {
 	  /*
 	   * The "n"th format token will be used to format the "n"th
