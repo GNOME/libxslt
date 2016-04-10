@@ -227,7 +227,8 @@ xsltNumberFormatDecimal(xmlBufferPtr buffer,
 }
 
 static void
-xsltNumberFormatAlpha(xmlBufferPtr buffer,
+xsltNumberFormatAlpha(xsltNumberDataPtr data,
+		      xmlBufferPtr buffer,
 		      double number,
 		      int is_upper)
 {
@@ -236,6 +237,26 @@ xsltNumberFormatAlpha(xmlBufferPtr buffer,
     int i;
     char *alpha_list;
     double alpha_size = (double)(sizeof(alpha_upper_list) - 1);
+
+    /*
+     * XSLT 1.0 isn't clear on how to handle zero, but XSLT 2.0 says:
+     *
+     *     For all format tokens other than the first kind above (one that
+     *     consists of decimal digits), there may be implementation-defined
+     *     lower and upper bounds on the range of numbers that can be
+     *     formatted using this format token; indeed, for some numbering
+     *     sequences there may be intrinsic limits. [...] Numbers that fall
+     *     outside this range must be formatted using the format token 1.
+     *
+     * The "a" token has an intrinsic lower limit of 1.
+     */
+    if (number < 1.0) {
+        xsltNumberFormatDecimal(buffer, number, '0', 1,
+                                data->digitsPerGroup,
+                                data->groupingCharacter,
+                                data->groupingCharacterLen);
+        return;
+    }
 
     /* Build buffer from back */
     pointer = &temp_string[sizeof(temp_string)];
@@ -500,16 +521,10 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 
 		switch (token->token) {
 		case 'A':
-		    xsltNumberFormatAlpha(buffer,
-					  number,
-					  TRUE);
-
+		    xsltNumberFormatAlpha(data, buffer, number, TRUE);
 		    break;
 		case 'a':
-		    xsltNumberFormatAlpha(buffer,
-					  number,
-					  FALSE);
-
+		    xsltNumberFormatAlpha(data, buffer, number, FALSE);
 		    break;
 		case 'I':
 		    xsltNumberFormatRoman(buffer,
