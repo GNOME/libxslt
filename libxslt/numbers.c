@@ -274,10 +274,23 @@ xsltNumberFormatAlpha(xsltNumberDataPtr data,
 }
 
 static void
-xsltNumberFormatRoman(xmlBufferPtr buffer,
+xsltNumberFormatRoman(xsltNumberDataPtr data,
+		      xmlBufferPtr buffer,
 		      double number,
 		      int is_upper)
 {
+    /*
+     * See discussion in xsltNumberFormatAlpha. Also use a reasonable upper
+     * bound to avoid denial of service.
+     */
+    if (number < 1.0 || number > 5000.0) {
+        xsltNumberFormatDecimal(buffer, number, '0', 1,
+                                data->digitsPerGroup,
+                                data->groupingCharacter,
+                                data->groupingCharacterLen);
+        return;
+    }
+
     /*
      * Based on an example by Jim Walsh
      */
@@ -527,16 +540,10 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 		    xsltNumberFormatAlpha(data, buffer, number, FALSE);
 		    break;
 		case 'I':
-		    xsltNumberFormatRoman(buffer,
-					  number,
-					  TRUE);
-
+		    xsltNumberFormatRoman(data, buffer, number, TRUE);
 		    break;
 		case 'i':
-		    xsltNumberFormatRoman(buffer,
-					  number,
-					  FALSE);
-
+		    xsltNumberFormatRoman(data, buffer, number, FALSE);
 		    break;
 		default:
 		    if (IS_DIGIT_ZERO(token->token)) {
