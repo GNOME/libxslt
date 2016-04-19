@@ -1172,21 +1172,20 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
             }
 #endif
 	    /*
-	    * Lookup the referenced attribute-set.
+	    * Lookup the referenced attribute-set. All attribute sets were
+            * moved to the top stylesheet so there's no need to iterate
+            * imported stylesheets
 	    */
-            while (style != NULL) {
-                set = xmlHashLookup2(style->attributeSets, ncname, nsUri);
-                if (set != NULL) {
-                    xsltAttrElemPtr cur = set->attrs;
-                    while (cur != NULL) {
-                        if (cur->attr != NULL) {
-                            xsltAttribute(ctxt, node, cur->attr,
-                                cur->attr->psvi);
-                        }
-                        cur = cur->next;
+            set = xmlHashLookup2(style->attributeSets, ncname, nsUri);
+            if (set != NULL) {
+                xsltAttrElemPtr cur = set->attrs;
+                while (cur != NULL) {
+                    if (cur->attr != NULL) {
+                        xsltAttribute(ctxt, node, cur->attr,
+                            cur->attr->psvi);
                     }
+                    cur = cur->next;
                 }
-                style = xsltNextImport(style);
             }
         }
         curstr = endstr;
