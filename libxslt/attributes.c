@@ -343,9 +343,14 @@ xsltMergeAttrSets(xsltAttrSetPtr set, xsltAttrSetPtr other) {
 	cur = set->attrs;
 	add = 1;
 	while (cur != NULL) {
-            /*
-             * TODO: Compare attrs by name.
-             */
+            xsltStylePreCompPtr curComp = cur->attr->psvi;
+            xsltStylePreCompPtr oldComp = old->attr->psvi;
+
+            if ((curComp->name == oldComp->name) &&
+                (curComp->ns == oldComp->ns)) {
+                add = 0;
+                break;
+            }
 	    if (cur->next == NULL)
 		break;
             cur = cur->next;
@@ -459,7 +464,14 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"add attribute to list %s\n", ncname);
 #endif
-	    set->attrs = xsltAddAttrElemList(set->attrs, child);
+            if (child->psvi == NULL) {
+                xsltTransformError(NULL, style, child,
+                    "xsl:attribute-set : internal error, attribute %s not "
+                    "compiled\n", child->name);
+            }
+            else {
+	        set->attrs = xsltAddAttrElemList(set->attrs, child);
+            }
 	}
 
 	child = child->next;
@@ -700,21 +712,19 @@ xsltResolveStylesheetAttributeSet(xsltStylesheetPtr style) {
 }
 
 /**
- * xsltAttributeInternal:
+ * xsltAttribute:
  * @ctxt:  a XSLT process context
  * @node:  the current node in the source tree
  * @inst:  the xsl:attribute element
  * @comp:  precomputed information
- * @fromAttributeSet:  the attribute comes from an attribute-set
  *
  * Process the xslt attribute node on the source node
  */
-static void
-xsltAttributeInternal(xsltTransformContextPtr ctxt,
-		      xmlNodePtr contextNode,
-                      xmlNodePtr inst,
-		      xsltStylePreCompPtr castedComp,
-                      int fromAttributeSet)
+void
+xsltAttribute(xsltTransformContextPtr ctxt,
+	      xmlNodePtr contextNode,
+              xmlNodePtr inst,
+	      xsltStylePreCompPtr castedComp)
 {
 #ifdef XSLT_REFACTORED
     xsltStyleItemAttributePtr comp =
@@ -754,7 +764,7 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
 
     if (comp == NULL) {
         xsltTransformError(ctxt, NULL, inst,
-	    "Internal error in xsltAttributeInternal(): "
+	    "Internal error in xsltAttribute(): "
 	    "The XSLT 'attribute' instruction was not compiled.\n");
         return;
     }
@@ -919,19 +929,6 @@ xsltAttributeInternal(xsltTransformContextPtr ctxt,
 	    nsName = ns->href;
     }
 
-    if (fromAttributeSet) {
-	/*
-	* This tries to ensure that xsl:attribute(s) coming
-	* from an xsl:attribute-set won't override attribute of
-	* literal result elements or of explicit xsl:attribute(s).
-	* URGENT TODO: This might be buggy, since it will miss to
-	*  overwrite two equal attributes both from attribute sets.
-	*/
-	attr = xmlHasNsProp(targetElem, name, nsName);
-	if (attr != NULL)
-	    return;
-    }
-
     /*
     * Find/create a matching ns-decl in the result tree.
     */
@@ -1082,21 +1079,6 @@ error:
 }
 
 /**
- * xsltAttribute:
- * @ctxt:  a XSLT process context
- * @node:  the node in the source tree.
- * @inst:  the xslt attribute node
- * @comp:  precomputed information
- *
- * Process the xslt attribute node on the source node
- */
-void
-xsltAttribute(xsltTransformContextPtr ctxt, xmlNodePtr node,
-	      xmlNodePtr inst, xsltStylePreCompPtr comp) {
-    xsltAttributeInternal(ctxt, node, inst, comp, 0);
-}
-
-/**
  * xsltApplyAttributeSet:
  * @ctxt:  the XSLT stylesheet
  * @node:  the node in the source tree.
@@ -1198,8 +1180,8 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
                     xsltAttrElemPtr cur = set->attrs;
                     while (cur != NULL) {
                         if (cur->attr != NULL) {
-                            xsltAttributeInternal(ctxt, node, cur->attr,
-                                cur->attr->psvi, 1);
+                            xsltAttribute(ctxt, node, cur->attr,
+                                cur->attr->psvi);
                         }
                         cur = cur->next;
                     }
