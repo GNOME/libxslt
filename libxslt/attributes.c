@@ -403,6 +403,15 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	return;
     }
 
+    if (xmlValidateQName(value, 0)) {
+        xsltTransformError(NULL, style, cur,
+            "xsl:attribute-set : The name '%s' is not a valid QName.\n",
+            value);
+        style->errors++;
+        xmlFree(value);
+        return;
+    }
+
     ncname = xsltSplitQName(style->dict, value, &prefix);
     xmlFree(value);
     value = NULL;
@@ -500,6 +509,16 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 		xsltGenericDebug(xsltGenericDebugContext,
 		    "xsl:attribute-set : %s adds use %s\n", ncname, curval);
 #endif
+
+                if (xmlValidateQName(curval, 0)) {
+                    xsltTransformError(NULL, style, cur,
+                        "xsl:attribute-set : The name '%s' in "
+                        "use-attribute-sets is not a valid QName.\n", curval);
+                    style->errors++;
+                    xmlFree(value);
+                    return;
+                }
+
 		ncname2 = xsltSplitQName(style->dict, curval, &prefix2);
                 if (prefix2 != NULL) {
                     xmlNsPtr ns2 = xmlSearchNs(style->doc, cur, prefix2);
@@ -1135,9 +1154,6 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
             endstr++;
         curstr = xmlDictLookup(ctxt->dict, curstr, endstr - curstr);
         if (curstr) {
-	    /*
-	    * TODO: Validate the QName.
-	    */
             xmlNsPtr ns;
             const xmlChar *nsUri = NULL;
 
@@ -1145,6 +1161,14 @@ xsltApplyAttributeSet(xsltTransformContextPtr ctxt, xmlNodePtr node,
             xsltGenericDebug(xsltGenericDebugContext,
                              "apply attribute set %s\n", curstr);
 #endif
+
+            if (xmlValidateQName(curstr, 0)) {
+                xsltTransformError(ctxt, NULL, inst,
+                    "The name '%s' in use-attribute-sets is not a valid "
+                    "QName.\n", curstr);
+                return;
+            }
+
             ncname = xsltSplitQName(ctxt->dict, curstr, &prefix);
             if (prefix != NULL) {
 	        ns = xmlSearchNs(inst->doc, inst, prefix);
