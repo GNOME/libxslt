@@ -56,6 +56,7 @@
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_EXTRA
 #define WITH_XSLT_DEBUG_PROCESS
+#define WITH_XSLT_DEBUG_VARIABLE
 #endif
 
 #define XSLT_GENERATE_HTML_DOCTYPE
@@ -2299,30 +2300,28 @@ xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
 {
     xmlDocPtr cur = ctxt->localRVT, tmp;
 
-    while ((cur != NULL) && (cur != base)) {
-	if (cur->psvi == (void *) ((long) 1)) {
-	    cur = (xmlDocPtr) cur->next;
-	} else {
-	    tmp = cur;
-	    cur = (xmlDocPtr) cur->next;
+    if (cur == base)
+        return;
+    if (cur->prev != NULL)
+        xsltTransformError(ctxt, NULL, NULL, "localRVT not head of list\n");
 
-	    if (tmp == ctxt->localRVT)
-		ctxt->localRVT = cur;
+    do {
+        tmp = cur;
+        cur = (xmlDocPtr) cur->next;
+        if (tmp->psvi == XSLT_RVT_LOCAL) {
+            xsltReleaseRVT(ctxt, tmp);
+        } else if (tmp->psvi == XSLT_RVT_GLOBAL) {
+            xsltRegisterPersistRVT(ctxt, tmp);
+        } else if (tmp->psvi != XSLT_RVT_FUNC_RESULT) {
+            xmlGenericError(xmlGenericErrorContext,
+                    "xsltReleaseLocalRVTs: Unexpected RVT flag %p\n",
+                    tmp->psvi);
+        }
+    } while (cur != base);
 
-	    /*
-	    * We need ctxt->localRVTBase for extension instructions
-	    * which return values (like EXSLT's function).
-	    */
-	    if (tmp == ctxt->localRVTBase)
-		ctxt->localRVTBase = cur;
-
-	    if (tmp->prev)
-		tmp->prev->next = (xmlNodePtr) cur;
-	    if (cur)
-		cur->prev = tmp->prev;
-	    xsltReleaseRVT(ctxt, tmp);
-	}
-    }
+    if (base != NULL)
+        base->prev = NULL;
+    ctxt->localRVT = base;
 }
 
 /**
@@ -2348,7 +2347,7 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
     xmlNodePtr oldInsert, oldInst, oldCurInst, oldContextNode;
     xmlNodePtr cur, insert, copy = NULL;
     int level = 0, oldVarsNr;
-    xmlDocPtr oldLocalFragmentTop, oldLocalFragmentBase;
+    xmlDocPtr oldLocalFragmentTop;
 
 #ifdef XSLT_REFACTORED
     xsltStylePreCompPtr info;
@@ -2676,16 +2675,9 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 			cur->name));
 #endif
 		    ctxt->insert = insert;
-		    /*
-		    * We need the fragment base for extension instructions
-		    * which return values (like EXSLT's function).
-		    */
-		    oldLocalFragmentBase = ctxt->localRVTBase;
-		    ctxt->localRVTBase = NULL;
 
 		    func(ctxt, contextNode, cur, cur->psvi);
 
-		    ctxt->localRVTBase = oldLocalFragmentBase;
 		    /*
 		    * Cleanup temporary tree fragments.
 		    */
@@ -2749,12 +2741,9 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 		oldCurInst = ctxt->inst;
 		ctxt->inst = cur;
                 ctxt->insert = insert;
-		oldLocalFragmentBase = ctxt->localRVTBase;
-		ctxt->localRVTBase = NULL;
 
                 info->func(ctxt, contextNode, cur, (xsltElemPreCompPtr) info);
 
-		ctxt->localRVTBase = oldLocalFragmentBase;
 		/*
 		* Cleanup temporary tree fragments.
 		*/
@@ -2869,12 +2858,6 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 #endif
 
                 ctxt->insert = insert;
-		/*
-		* We need the fragment base for extension instructions
-		* which return values (like EXSLT's function).
-		*/
-		oldLocalFragmentBase = ctxt->localRVTBase;
-		ctxt->localRVTBase = NULL;
 
                 function(ctxt, contextNode, cur, cur->psvi);
 		/*
@@ -2883,7 +2866,6 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
 		if (oldLocalFragmentTop != ctxt->localRVT)
 		    xsltReleaseLocalRVTs(ctxt, oldLocalFragmentTop);
 
-		ctxt->localRVTBase = oldLocalFragmentBase;
                 ctxt->insert = oldInsert;
 
             }
@@ -3059,7 +3041,7 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     long start = 0;
     xmlNodePtr cur;
     xsltStackElemPtr tmpParam = NULL;
-    xmlDocPtr oldUserFragmentTop, oldLocalFragmentTop;
+    xmlDocPtr oldUserFragmentTop;
 
 #ifdef XSLT_REFACTORED
     xsltStyleItemParamPtr iparam;
@@ -3122,7 +3104,6 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 
     oldUserFragmentTop = ctxt->tmpRVT;
     ctxt->tmpRVT = NULL;
-    oldLocalFragmentTop = ctxt->localRVT;
 
     /*
     * Initiate a distinct scope of local params/variables.
@@ -3222,31 +3203,6 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     if (ctxt->varsNr > ctxt->varsBase)
 	xsltTemplateParamsCleanup(ctxt);
     ctxt->varsBase = oldVarsBase;
-
-    /*
-    * Clean up remaining local tree fragments.
-    * This also frees fragments which are the result of
-    * extension instructions. Should normally not be hit; but
-    * just for the case xsltExtensionInstructionResultFinalize()
-    * was not called by the extension author.
-    */
-    if (oldLocalFragmentTop != ctxt->localRVT) {
-	xmlDocPtr curdoc = ctxt->localRVT, tmp;
-
-	do {
-	    tmp = curdoc;
-	    curdoc = (xmlDocPtr) curdoc->next;
-	    /* Need to housekeep localRVTBase */
-	    if (tmp == ctxt->localRVTBase)
-	        ctxt->localRVTBase = curdoc;
-	    if (tmp->prev)
-		tmp->prev->next = (xmlNodePtr) curdoc;
-	    if (curdoc)
-		curdoc->prev = tmp->prev;
-	    xsltReleaseRVT(ctxt, tmp);
-	} while (curdoc != oldLocalFragmentTop);
-    }
-    ctxt->localRVT = oldLocalFragmentTop;
 
     /*
     * Release user-created fragments stored in the scope
@@ -6039,6 +5995,9 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     xsltCountKeys(ctxt);
 
     xsltEvalGlobalVariables(ctxt);
+
+    /* Clean up any unused RVTs. */
+    xsltReleaseLocalRVTs(ctxt, NULL);
 
     ctxt->node = (xmlNodePtr) doc;
     ctxt->output = res;

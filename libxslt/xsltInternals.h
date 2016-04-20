@@ -1783,7 +1783,7 @@ struct _xsltTransformContext {
     xmlDocPtr localRVT; /* list of local tree fragments; will be freed when
 			   the instruction which created the fragment
                            exits */
-    xmlDocPtr localRVTBase;
+    xmlDocPtr localRVTBase; /* Obsolete */
     int keyInitLevel;   /* Needed to catch recursive keys issues */
     int funcLevel;      /* Needed to catch recursive functions issues */
     int maxTemplateDepth;
@@ -1906,6 +1906,11 @@ XSLTPUBFUN int XSLTCALL
 XSLTPUBFUN int XSLTCALL
 			xsltExtensionInstructionResultFinalize(
 						 xsltTransformContextPtr ctxt);
+XSLTPUBFUN int XSLTCALL
+			xsltFlagRVTs(
+						 xsltTransformContextPtr ctxt,
+						 xmlXPathObjectPtr obj,
+						 void *val);
 XSLTPUBFUN void XSLTCALL
 			xsltFreeRVTs		(xsltTransformContextPtr ctxt);
 XSLTPUBFUN void XSLTCALL
