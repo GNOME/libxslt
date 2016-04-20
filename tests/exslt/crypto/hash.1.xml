@@ -23,4 +23,9 @@
 	<pattern>Hello, WorldЖ</pattern>
 	<pattern>Hello, WorldZ</pattern>
 
+	<br/>
+
+        <!-- Empty string. -->
+        <pattern/>
+
 </patterns>
