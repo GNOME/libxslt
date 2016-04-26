@@ -68,6 +68,9 @@ runtests("tests/exslt/functions")
 print("## Running exslt math tests")
 runtests("tests/exslt/math")
 
+print("## Running exslt saxon tests")
+runtests("tests/exslt/saxon")
+
 print("## Running exslt sets tests")
 runtests("tests/exslt/sets")
 
