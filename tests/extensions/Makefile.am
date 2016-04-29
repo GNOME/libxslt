@@ -4,6 +4,7 @@ $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../xsltproc ; $(MAKE) xsltproc)
 
 EXTRA_DIST = \
+    evaluate.xml evaluate.xsl evaluate.out \
     module.xml module.xsl module.out \
     list.xml list.xsl list.out
 

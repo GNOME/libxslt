@@ -4,11 +4,13 @@ $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../../xsltproc ; $(MAKE) xsltproc)
 
 EXTRA_DIST = 						\
+	align.1.xml align.1.xsl align.1.out		\
+	padding.1.xml padding.1.xsl padding.1.out	\
+	replace.1.xml replace.1.xsl replace.1.out	\
+	split.1.xml split.1.xsl split.1.out		\
 	tokenize.1.xml tokenize.1.xsl tokenize.1.out	\
 	tokenize.2.xml tokenize.2.xsl tokenize.2.out	\
-	tokenize.3.xml tokenize.3.xsl tokenize.3.out	\
-	split.1.xml split.1.xsl split.1.out \
-	replace.1.xml replace.1.xsl replace.1.out 
+	tokenize.3.xml tokenize.3.xsl tokenize.3.out
 
 CLEANFILES = .memdump
 
