@@ -1,4 +1,3 @@
-<![CDATA[
 /*
  * libxslt_tutorial.c: demo program for the XSL Transformation 1.0 engine
  *
@@ -83,4 +82,3 @@ main(int argc, char **argv) {
 	return(0);
 
 }
-]]>
