@@ -103,7 +103,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 			cp $$name.bad $(srcdir)/$$name.err ; \
 		fi ; \
 	  else \
-	  	if  [ ! -s $$name.res ] ; then \
+	  	if  [ ! -f $$name.res ] ; then \
 	  		echo "Fatal error, no $$name.res\n" ; \
 	  	else \
 	  		diff $(srcdir)/$$name.out $$name.res ; \
@@ -132,7 +132,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 			cp $$name.bad $(srcdir)/$$name.stand.err ; \
 		fi ; \
 	  else \
-	  	if  [ ! -s $$name.res ] ; then \
+	  	if  [ ! -f $$name.res ] ; then \
 	  		echo "Fatal error, no $$name.res\n" ; \
 	  	else \
 	  		diff $(srcdir)/$$name.stand.out $$name.res ; \
@@ -165,7 +165,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 			cp $$name.bad $(srcdir)/$$name.err ; \
 		fi ; \
 	  else \
-	  	if  [ ! -s $$name.res ] ; then \
+	  	if  [ ! -f $$name.res ] ; then \
 	  		echo "Fatal error, no $$name.res\n" ; \
 	  	else \
 	  		diff $(srcdir)/$$name.out $$name.res ; \
@@ -194,7 +194,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 			cp $$name.bad $(srcdir)/$$name.stand.err ; \
 		fi ; \
 	  else \
-	  	if  [ ! -s $$name.res ] ; then \
+	  	if  [ ! -f $$name.res ] ; then \
 	  		echo "Fatal error, no $$name.res\n" ; \
 	  	else \
 	  		diff $(srcdir)/$$name.stand.out $$name.res ; \
