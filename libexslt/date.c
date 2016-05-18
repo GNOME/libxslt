@@ -763,8 +763,8 @@ exsltDateCurrent (void)
     exsltDateValPtr ret;
 #ifdef HAVE_ERRNO_H
     char *source_date_epoch;
-    int override = 0;
 #endif /* HAVE_ERRNO_H */
+    int override = 0;
 
     ret = exsltDateCreateDate(XS_DATETIME);
     if (ret == NULL)
