@@ -4674,6 +4674,10 @@ xsltApplyImports(xsltTransformContextPtr ctxt, xmlNodePtr contextNode,
 
 	ctxt->currentTemplateRule = oldCurTemplRule;
     }
+    else {
+        /* Use built-in templates. */
+        xsltDefaultProcessOneNode(ctxt, contextNode, NULL);
+    }
 }
 
 /**
