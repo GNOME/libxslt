@@ -2021,6 +2021,9 @@ xsltDefaultProcessOneNode(xsltTransformContextPtr ctxt, xmlNodePtr node,
 
     /*
      * Handling of Elements: second pass, actual processing
+     *
+     * Note that params are passed to the next template. This matches
+     * XSLT 2.0 behavior but doesn't conform to XSLT 1.0.
      */
     oldSize = ctxt->xpathCtxt->contextSize;
     oldPos = ctxt->xpathCtxt->proximityPosition;
