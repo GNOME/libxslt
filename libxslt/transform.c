@@ -3090,6 +3090,7 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 	    "variables/params (currently set to %d).\n",
 	    ctxt->maxTemplateDepth);
         xsltDebug(ctxt, contextNode, list, NULL);
+	ctxt->state = XSLT_STATE_STOPPED;
         return;
     }
 
@@ -3102,6 +3103,7 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 	    "raise the maximum number of variables/params (currently set to %d).\n",
 	    ctxt->maxTemplateVars);
         xsltDebug(ctxt, contextNode, list, NULL);
+	ctxt->state = XSLT_STATE_STOPPED;
         return;
 	}
 
