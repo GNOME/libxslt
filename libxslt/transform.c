@@ -3814,7 +3814,6 @@ xsltDocumentElem(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	xsltTransformError(ctxt, NULL, inst,
                          "xsltDocumentElem: unable to save to %s\n",
                          filename);
-	ctxt->state = XSLT_STATE_ERROR;
 #ifdef WITH_XSLT_DEBUG_EXTRA
     } else {
         xsltGenericDebug(xsltGenericDebugContext,
