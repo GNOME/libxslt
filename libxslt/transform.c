@@ -6151,7 +6151,7 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     /*
      * Be pedantic.
      */
-    if ((ctxt != NULL) && (ctxt->state == XSLT_STATE_ERROR)) {
+    if ((ctxt != NULL) && (ctxt->state != XSLT_STATE_OK)) {
 	xmlFreeDoc(res);
 	res = NULL;
     }
