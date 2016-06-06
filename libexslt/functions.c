@@ -56,8 +56,6 @@ static void exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt,
 				       int nargs);
 static exsltFuncFunctionData *exsltFuncNewFunctionData(void);
 
-#define MAX_FUNC_RECURSION 1000
-
 /*static const xmlChar *exsltResultDataID = (const xmlChar *) "EXSLT Result";*/
 
 /**
@@ -332,14 +330,6 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "param == NULL\n");
 	return;
     }
-    if (tctxt->funcLevel > MAX_FUNC_RECURSION) {
-	xsltGenericError(xsltGenericErrorContext,
-			 "{%s}%s: detected a recursion\n",
-			 ctxt->context->functionURI, ctxt->context->function);
-	ctxt->error = XPATH_MEMORY_ERROR;
-	return;
-    }
-    tctxt->funcLevel++;
 
     /*
      * We have a problem with the evaluation of function parameters.
@@ -423,7 +413,7 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	xsltFreeStackElemList(params);
 
     if (data->error != 0)
-	goto error;
+	return;
 
     if (data->result != NULL) {
 	ret = data->result;
@@ -451,13 +441,10 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "executing a function\n",
 			 ctxt->context->functionURI, ctxt->context->function);
 	xmlFreeNode(fake);
-	goto error;
+	return;
     }
     xmlFreeNode(fake);
     valuePush(ctxt, ret);
-
-error:
-    tctxt->funcLevel--;
 }
 
 

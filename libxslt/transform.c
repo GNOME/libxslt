@@ -2378,6 +2378,24 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
         return;
     CHECK_STOPPED;
 
+    /*
+    * Check for infinite recursion: stop if the maximum of nested templates
+    * is excceeded. Adjust xsltMaxDepth if you need more.
+    */
+    if (ctxt->depth >= ctxt->maxTemplateDepth) {
+        xsltTransformError(ctxt, NULL, list,
+	    "xsltApplySequenceConstructor: A potential infinite template "
+            "recursion was detected.\n"
+	    "You can adjust xsltMaxDepth (--maxdepth) in order to "
+	    "raise the maximum number of nested template calls and "
+	    "variables/params (currently set to %d).\n",
+	    ctxt->maxTemplateDepth);
+        xsltDebug(ctxt, contextNode, list, NULL);
+	ctxt->state = XSLT_STATE_STOPPED;
+        return;
+    }
+    ctxt->depth++;
+
     oldLocalFragmentTop = ctxt->localRVT;
     oldInsert = insert = ctxt->insert;
     oldInst = oldCurInst = ctxt->inst;
@@ -3010,6 +3028,8 @@ error:
     ctxt->inst = oldInst;
     ctxt->insert = oldInsert;
 
+    ctxt->depth--;
+
 #ifdef WITH_DEBUGGER
     if ((ctxt->debugStatus != XSLT_DEBUG_NONE) && (addCallResult)) {
         xslDropCall();
@@ -3075,24 +3095,6 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     if (list == NULL)
         return;
     CHECK_STOPPED;
-
-    /*
-    * Check for infinite recursion: stop if the maximum of nested templates
-    * is excceeded. Adjust xsltMaxDepth if you need more.
-    */
-    if (ctxt->templNr >= ctxt->maxTemplateDepth)
-    {
-        xsltTransformError(ctxt, NULL, list,
-	    "xsltApplyXSLTTemplate: A potential infinite template recursion "
-	    "was detected.\n"
-	    "You can adjust xsltMaxDepth (--maxdepth) in order to "
-	    "raise the maximum number of nested template calls and "
-	    "variables/params (currently set to %d).\n",
-	    ctxt->maxTemplateDepth);
-        xsltDebug(ctxt, contextNode, list, NULL);
-	ctxt->state = XSLT_STATE_STOPPED;
-        return;
-    }
 
     if (ctxt->varsNr >= ctxt->maxTemplateVars)
 	{
