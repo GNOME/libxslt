@@ -1803,8 +1803,7 @@ xsltBuildVariable(xsltTransformContextPtr ctxt,
     elem->tree = tree;
     elem->value = xsltEvalVariable(ctxt, elem,
 	(xsltStylePreCompPtr) comp);
-    if (elem->value != NULL)
-	elem->computed = 1;
+    elem->computed = 1;
     return(elem);
 }
 
