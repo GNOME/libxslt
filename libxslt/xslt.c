@@ -6423,10 +6423,11 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 		"xsltParseStylesheetProcess : document is stylesheet\n");
 #endif
 
-	if (!xmlStrEqual(prop, (const xmlChar *)"1.0")) {
+	if ((!xmlStrEqual(prop, (const xmlChar *)"1.0")) &&
+            (!xmlStrEqual(prop, (const xmlChar *)"1.1"))) {
 	    xsltTransformError(NULL, ret, cur,
-		"xsl:version: only 1.0 features are supported\n");
-	     /* TODO set up compatibility when not XSLT 1.0 */
+		"xsl:version: only 1.1 features are supported\n");
+            ret->forwards_compatible = 1;
 	    ret->warnings++;
 	}
 	xmlFree(prop);
