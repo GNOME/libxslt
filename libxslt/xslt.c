@@ -6123,31 +6123,31 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	    xsltTransformError(NULL, style, cur,
 			"xsltParseStylesheetTop: ignoring misplaced import element\n");
 	    if (style != NULL) style->errors++;
-    } else if (IS_XSLT_NAME(cur, "include")) {
+        } else if (IS_XSLT_NAME(cur, "include")) {
 	    if (xsltParseStylesheetInclude(style, cur) != 0)
 		if (style != NULL) style->errors++;
-    } else if (IS_XSLT_NAME(cur, "strip-space")) {
+        } else if (IS_XSLT_NAME(cur, "strip-space")) {
 	    xsltParseStylesheetStripSpace(style, cur);
-    } else if (IS_XSLT_NAME(cur, "preserve-space")) {
+        } else if (IS_XSLT_NAME(cur, "preserve-space")) {
 	    xsltParseStylesheetPreserveSpace(style, cur);
-    } else if (IS_XSLT_NAME(cur, "output")) {
+        } else if (IS_XSLT_NAME(cur, "output")) {
 	    xsltParseStylesheetOutput(style, cur);
-    } else if (IS_XSLT_NAME(cur, "key")) {
+        } else if (IS_XSLT_NAME(cur, "key")) {
 	    xsltParseStylesheetKey(style, cur);
-    } else if (IS_XSLT_NAME(cur, "decimal-format")) {
+        } else if (IS_XSLT_NAME(cur, "decimal-format")) {
 	    xsltParseStylesheetDecimalFormat(style, cur);
-    } else if (IS_XSLT_NAME(cur, "attribute-set")) {
+        } else if (IS_XSLT_NAME(cur, "attribute-set")) {
 	    xsltParseStylesheetAttributeSet(style, cur);
-    } else if (IS_XSLT_NAME(cur, "variable")) {
+        } else if (IS_XSLT_NAME(cur, "variable")) {
 	    xsltParseGlobalVariable(style, cur);
-    } else if (IS_XSLT_NAME(cur, "param")) {
+        } else if (IS_XSLT_NAME(cur, "param")) {
 	    xsltParseGlobalParam(style, cur);
-    } else if (IS_XSLT_NAME(cur, "template")) {
+        } else if (IS_XSLT_NAME(cur, "template")) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 	    templates++;
 #endif
 	    xsltParseStylesheetTemplate(style, cur);
-    } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
+        } else if (IS_XSLT_NAME(cur, "namespace-alias")) {
 	    xsltNamespaceAlias(style, cur);
 	} else {
             if ((style != NULL) && (style->forwards_compatible == 0)) {
