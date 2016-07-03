@@ -3422,7 +3422,7 @@ internal_err:
 #ifdef XSLT_REFACTORED
 #else
 static void
-xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
+xsltPreprocessStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 {
     xmlNodePtr deleteNode, styleelem;
     int internalize = 0;
@@ -3453,7 +3453,7 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 	if (deleteNode != NULL) {
 #ifdef WITH_XSLT_DEBUG_BLANKS
 	    xsltGenericDebug(xsltGenericDebugContext,
-	     "xsltPrecomputeStylesheet: removing ignorable blank node\n");
+	     "xsltPreprocessStylesheet: removing ignorable blank node\n");
 #endif
 	    xmlUnlinkNode(deleteNode);
 	    xmlFreeNode(deleteNode);
@@ -3493,7 +3493,6 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 	    }
 	    if (IS_XSLT_ELEM(cur)) {
 		exclPrefixes = 0;
-		xsltStylePreCompute(style, cur);
 		if (IS_XSLT_NAME(cur, "text")) {
 		    for (;exclPrefixes > 0;exclPrefixes--)
 			exclPrefixPop(style);
@@ -3544,7 +3543,7 @@ xsltPrecomputeStylesheet(xsltStylesheetPtr style, xmlNodePtr cur)
 	     * going back
 	     */
 	    if (exclPrefixes > 0) {
-		xsltPrecomputeStylesheet(style, cur->children);
+		xsltPreprocessStylesheet(style, cur->children);
 		for (;exclPrefixes > 0;exclPrefixes--)
 		    exclPrefixPop(style);
 		goto skip_children;
@@ -3615,7 +3614,7 @@ skip_children:
     if (deleteNode != NULL) {
 #ifdef WITH_XSLT_DEBUG_PARSING
 	xsltGenericDebug(xsltGenericDebugContext,
-	 "xsltPrecomputeStylesheet: removing ignorable blank node\n");
+	 "xsltPreprocessStylesheet: removing ignorable blank node\n");
 #endif
 	xmlUnlinkNode(deleteNode);
 	xmlFreeNode(deleteNode);
@@ -4860,10 +4859,12 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 	    delete = NULL;
 	}
 	if (IS_XSLT_ELEM(cur)) {
+            xsltStylePreCompute(style, cur);
+
 	    if (IS_XSLT_NAME(cur, "text")) {
 		/*
 		* TODO: Processing of xsl:text should be moved to
-		*   xsltPrecomputeStylesheet(), since otherwise this
+		*   xsltPreprocessStylesheet(), since otherwise this
 		*   will be performed for every multiply included
 		*   stylesheet; i.e. this here is not skipped with
 		*   the use of the style->nopreproc flag.
@@ -6406,7 +6407,7 @@ xsltParseStylesheetProcess(xsltStylesheetPtr ret, xmlDocPtr doc) {
 	ret->literal_result = 1;
     }
     if (!ret->nopreproc) {
-	xsltPrecomputeStylesheet(ret, cur);
+	xsltPreprocessStylesheet(ret, cur);
     }
     if (ret->literal_result == 0) {
 	xsltParseStylesheetTop(ret, cur);

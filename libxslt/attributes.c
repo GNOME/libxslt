@@ -473,6 +473,15 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
 	    xsltGenericDebug(xsltGenericDebugContext,
 		"add attribute to list %s\n", ncname);
 #endif
+            xsltStylePreCompute(style, child);
+            if (child->children != NULL) {
+#ifdef XSLT_REFACTORED
+                xsltParseSequenceConstructor(XSLT_CCTXT(style),
+                                             child->children);
+#else
+                xsltParseTemplateContent(style, child);
+#endif
+            }
             if (child->psvi == NULL) {
                 xsltTransformError(NULL, style, child,
                     "xsl:attribute-set : internal error, attribute %s not "
