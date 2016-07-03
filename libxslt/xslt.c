@@ -6157,13 +6157,6 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 			cur->name);
 	        if (style != NULL) style->errors++;
 	    }
-	    else {
-                /* do Forwards-Compatible Processing */
-	        xsltTransformError(NULL, style, cur,
-			"xsltParseStylesheetTop: ignoring unknown %s element\n",
-			cur->name);
-	        if (style != NULL) style->warnings++;
-            }
 	}
 	cur = cur->next;
     }
