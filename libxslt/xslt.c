@@ -6053,7 +6053,7 @@ xsltParseStylesheetTop(xsltStylesheetPtr style, xmlNodePtr top) {
 	if ((!xmlStrEqual(prop, (const xmlChar *)"1.0")) &&
             (!xmlStrEqual(prop, (const xmlChar *)"1.1"))) {
 	    xsltTransformError(NULL, style, top,
-		"xsl:version: only 1.0 features are supported\n");
+		"xsl:version: only 1.1 features are supported\n");
 	    if (style != NULL) {
                 style->forwards_compatible = 1;
                 style->warnings++;
