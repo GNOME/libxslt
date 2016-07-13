@@ -1418,9 +1418,6 @@ xsltNumberComp(xsltStylesheetPtr style, xmlNodePtr cur) {
 	return;
     cur->psvi = comp;
 
-    if ((style == NULL) || (cur == NULL))
-	return;
-
     comp->numdata.doc = cur->doc;
     comp->numdata.node = cur;
     comp->numdata.value = xsltGetCNsProp(style, cur, (const xmlChar *)"value",
