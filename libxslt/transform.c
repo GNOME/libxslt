@@ -785,7 +785,7 @@ static xmlNodePtr
 xsltAddChild(xmlNodePtr parent, xmlNodePtr cur) {
    xmlNodePtr ret;
 
-   if ((cur == NULL) || (parent == NULL))
+   if (cur == NULL)
        return(NULL);
    if (parent == NULL) {
        xmlFreeNode(cur);
