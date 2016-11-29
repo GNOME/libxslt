@@ -47,6 +47,7 @@ ignored_words = {
   "X_IN_Y": (5, "macro function builder"),
   "XSLT_ITEM_COMMON_FIELDS": (0, "Special macro"),
   "CALLBACK": (0, "macro keyword"),
+  "LIBXSLT_ATTR_FORMAT": (5, "macro for gcc printf args checking extension"),
 }
 
 def escape(raw):
