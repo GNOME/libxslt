@@ -44,6 +44,13 @@
       <xsl:apply-templates select="."/>
     </xsl:for-each>
 
+    <xsl:if test="not($prev)">
+      <xsl:text>
+  local:
+    *;
+</xsl:text>
+    </xsl:if>
+
     <xsl:text>} </xsl:text>
     <xsl:if test="$prev">
       <xsl:text>LIBXML2_</xsl:text>
