@@ -314,7 +314,6 @@ install-data-local:
 	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)/html
 	-$(INSTALL) -m 0644 $(srcdir)/html/*.html $(DESTDIR)$(HTML_DIR)/html
 	-$(INSTALL) -m 0644 $(srcdir)/html/*.png $(DESTDIR)$(HTML_DIR)/html
-	-$(INSTALL) -m 0644 $(srcdir)/html/index.sgml $(DESTDIR)$(HTML_DIR)/html
 	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)/EXSLT
 	-$(INSTALL) -m 0644 $(srcdir)/EXSLT/*.html $(DESTDIR)$(HTML_DIR)/EXSLT
 	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)/tutorial
