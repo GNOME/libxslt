@@ -468,7 +468,7 @@ xsltGetXIncludeDefault(void) {
     return(xsltDoXIncludeDefault);
 }
 
-unsigned long xsltDefaultTrace = (unsigned long) XSLT_TRACE_ALL;
+static unsigned long xsltDefaultTrace = (unsigned long) XSLT_TRACE_ALL;
 
 /**
  * xsltDebugSetDefaultTrace:
@@ -767,8 +767,9 @@ xsltFreeTransformContext(xsltTransformContextPtr ctxt) {
  *									*
  ************************************************************************/
 
-xmlNodePtr xsltCopyTree(xsltTransformContextPtr ctxt,
-                        xmlNodePtr node, xmlNodePtr insert, int literal);
+static xmlNodePtr
+xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNodePtr insert,
+             int literal);
 
 /**
  * xsltAddChild:
@@ -1812,7 +1813,7 @@ xsltCopyTreeInternal(xsltTransformContextPtr ctxt,
  *
  * Returns a pointer to the new tree, or NULL in case of error
  */
-xmlNodePtr
+static xmlNodePtr
 xsltCopyTree(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	     xmlNodePtr insert, int literal)
 {
