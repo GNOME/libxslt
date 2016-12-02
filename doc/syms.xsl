@@ -66,6 +66,14 @@
         <xsl:text>
 </xsl:text>
       </xsl:when>
+      <xsl:when test="@switch">
+        <xsl:text># </xsl:text>
+        <xsl:value-of select="$name"/>
+        <xsl:text>; requires switch </xsl:text>
+        <xsl:value-of select="@switch"/>
+        <xsl:text>
+</xsl:text>
+      </xsl:when>
       <xsl:otherwise>
         <!-- make sure we can find that symbol exported from the API list -->
         <xsl:variable name="def"
