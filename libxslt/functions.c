@@ -835,7 +835,7 @@ xsltElementAvailableFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
     obj = valuePop(ctxt);
     tctxt = xsltXPathGetTransformContext(ctxt);
-    if (tctxt == NULL) {
+    if ((tctxt == NULL) || (tctxt->inst == NULL)) {
 	xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
 		"element-available() : internal error tctxt == NULL\n");
 	xmlXPathFreeObject(obj);
