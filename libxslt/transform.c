@@ -5621,6 +5621,7 @@ typedef struct xsltHTMLVersion {
 } xsltHTMLVersion;
 
 static xsltHTMLVersion xsltHTMLVersions[] = {
+    { "5", NULL, "about:legacy-compat" },
     { "4.01frame", "-//W3C//DTD HTML 4.01 Frameset//EN",
       "http://www.w3.org/TR/1999/REC-html401-19991224/frameset.dtd"},
     { "4.01strict", "-//W3C//DTD HTML 4.01//EN",
