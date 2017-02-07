@@ -316,5 +316,6 @@
   </release>
   <release version="1.1.30">
     <symbol file="xsltInternals">xsltFlagRVTs</symbol>
+    <symbol file="xsltInternals">xsltDecimalFormatGetByQName</symbol>
   </release>
 </symbols>
