@@ -139,7 +139,6 @@ struct _exsltDateVal {
 	((c == 0) || (c == 'Z') || (c == '+') || (c == '-'))
 
 #define VALID_ALWAYS(num)	(num >= 0)
-#define VALID_YEAR(yr)          (yr != 0)
 #define VALID_MONTH(mon)        ((mon >= 1) && (mon <= 12))
 /* VALID_DAY should only be used when month is unknown */
 #define VALID_DAY(day)          ((day >= 1) && (day <= 31))
@@ -164,7 +163,7 @@ static const unsigned long daysInMonthLeap[12] =
 	    (dt->day <= daysInMonth[dt->mon - 1]))
 
 #define VALID_DATE(dt)						\
-	(VALID_YEAR(dt->year) && VALID_MONTH(dt->mon) && VALID_MDAY(dt))
+	(VALID_MONTH(dt->mon) && VALID_MDAY(dt))
 
 /*
     hour and min structure vals are unsigned, so normal macros give
@@ -201,6 +200,10 @@ static const unsigned long dayInLeapYearByMonth[12] =
  * xs:gYear. It is supposed that @dt->year is big enough to contain
  * the year.
  *
+ * According to XML Schema Part 2, the year "0000" is an illegal year value
+ * which probably means that the year preceding AD 1 is BC 1. Internally,
+ * we allow a year 0 and adjust the value when parsing and formatting.
+ *
  * Returns 0 or the error code
  */
 static int
@@ -231,17 +234,18 @@ _exsltDateParseGYear (exsltDateValDatePtr dt, const xmlChar **str)
     if ((digcnt < 4) || ((digcnt > 4) && (*firstChar == '0')))
 	return 1;
 
-    if (isneg)
-	dt->year = - dt->year;
-
-    if (!VALID_YEAR(dt->year))
+    if (dt->year == 0)
 	return 2;
+
+    /* The internal representation of negative years is continuous. */
+    if (isneg)
+	dt->year = -dt->year + 1;
 
     *str = cur;
 
 #ifdef DEBUG_EXSLT_DATE
     xsltGenericDebug(xsltGenericDebugContext,
-		     "Parsed year %04i\n", dt->year);
+		     "Parsed year %04ld\n", dt->year);
 #endif
 
     return 0;
@@ -256,12 +260,12 @@ _exsltDateParseGYear (exsltDateValDatePtr dt, const xmlChar **str)
  * @cur is updated to point after the xsl:gYear.
  */
 #define FORMAT_GYEAR(yr, cur)					\
-	if (yr < 0) {					        \
+	if (yr <= 0) {					        \
 	    *cur = '-';						\
 	    cur++;						\
 	}							\
 	{							\
-	    long year = (yr < 0) ? - yr : yr;                   \
+	    long year = (yr <= 0) ? -yr + 1 : yr;               \
 	    xmlChar tmp_buf[100], *tmp = tmp_buf;		\
 	    /* result is in reverse-order */			\
 	    while (year > 0) {					\
@@ -1348,7 +1352,7 @@ exsltDateFormat (const exsltDateValPtr dt)
  * Convert mon and year of @dt to total number of days. Take the
  * number of years since (or before) 1 AD and add the number of leap
  * years. This is a function  because negative
- * years must be handled a little differently and there is no zero year.
+ * years must be handled a little differently.
  *
  * Returns number of days.
  */
@@ -1357,11 +1361,11 @@ _exsltDateCastYMToDays (const exsltDateValPtr dt)
 {
     long ret;
 
-    if (dt->value.date.year < 0)
-        ret = (dt->value.date.year * 365) +
-              (((dt->value.date.year+1)/4)-((dt->value.date.year+1)/100)+
-               ((dt->value.date.year+1)/400)) +
-              DAY_IN_YEAR(0, dt->value.date.mon, dt->value.date.year);
+    if (dt->value.date.year <= 0)
+        ret = ((dt->value.date.year-1) * 365) +
+              (((dt->value.date.year)/4)-((dt->value.date.year)/100)+
+               ((dt->value.date.year)/400)) +
+              DAY_IN_YEAR(0, dt->value.date.mon, dt->value.date.year) - 1;
     else
         ret = ((dt->value.date.year-1) * 365) +
               (((dt->value.date.year-1)/4)-((dt->value.date.year-1)/100)+
@@ -1387,7 +1391,7 @@ _exsltDateCastYMToDays (const exsltDateValPtr dt)
  * exsltDateCastDateToNumber:
  * @dt:  an #exsltDateValPtr
  *
- * Calculates the number of seconds from year zero.
+ * Calculates the number of seconds from year 1 AD.
  *
  * Returns seconds from zero year.
  */
@@ -1461,7 +1465,7 @@ _exsltDateTruncateDate (exsltDateValPtr dt, exsltDateType type)
  * a Monday so all other days are calculated from there. Take the
  * number of years since (or before) add the number of leap years and
  * the day-in-year and mod by 7. This is a function  because negative
- * years must be handled a little differently and there is no zero year.
+ * years must be handled a little differently.
  *
  * Returns day in week (Sunday = 0).
  */
@@ -1470,8 +1474,8 @@ _exsltDateDayInWeek(long yday, long yr)
 {
     long ret;
 
-    if (yr < 0) {
-        ret = ((yr + (((yr+1)/4)-((yr+1)/100)+((yr+1)/400)) + yday) % 7);
+    if (yr <= 0) {
+        ret = ((yr-2 + ((yr/4)-(yr/100)+(yr/400)) + yday) % 7);
         if (ret < 0)
             ret += 7;
     } else
@@ -1524,12 +1528,6 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 
     /* year (may be modified later) */
     r->year = d->year + carry;
-    if (r->year == 0) {
-        if (d->year > 0)
-            r->year--;
-        else
-            r->year++;
-    }
 
     /* time zone */
     r->tzo     = d->tzo;
@@ -1557,7 +1555,7 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
      * Note we use tempdays because the temporary values may need more
      * than 5 bits
      */
-    if ((VALID_YEAR(r->year)) && (VALID_MONTH(r->mon)) &&
+    if ((VALID_MONTH(r->mon)) &&
                   (d->day > MAX_DAYINMONTH(r->year, r->mon)))
         tempdays = MAX_DAYINMONTH(r->year, r->mon);
     else if (d->day < 1)
@@ -1592,12 +1590,6 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
         temp = r->mon + carry;
         r->mon = (unsigned int)MODULO_RANGE(temp, 1, 13);
         r->year = r->year + (long)FQUOTIENT_RANGE(temp, 1, 13);
-        if (r->year == 0) {
-            if (temp < 1)
-                r->year--;
-            else
-                r->year++;
-	}
     }
 
     r->day = tempdays;
@@ -1908,6 +1900,7 @@ static double
 exsltDateYear (const xmlChar *dateTime)
 {
     exsltDateValPtr dt;
+    long year;
     double ret;
 
     if (dateTime == NULL) {
@@ -1927,7 +1920,9 @@ exsltDateYear (const xmlChar *dateTime)
 	}
     }
 
-    ret = (double) dt->value.date.year;
+    year = dt->value.date.year;
+    if (year <= 0) year -= 1; /* Adjust for missing year 0. */
+    ret = (double) year;
     exsltDateFreeDate(dt);
 
     return ret;
@@ -1956,16 +1951,32 @@ exsltDateYear (const xmlChar *dateTime)
 static xmlXPathObjectPtr
 exsltDateLeapYear (const xmlChar *dateTime)
 {
-    double year;
+    exsltDateValPtr dt = NULL;
+    xmlXPathObjectPtr ret;
 
-    year = exsltDateYear(dateTime);
-    if (xmlXPathIsNaN(year))
-	return xmlXPathNewFloat(xmlXPathNAN);
+    if (dateTime == NULL) {
+#ifdef WITH_TIME
+	dt = exsltDateCurrent();
+#endif
+    } else {
+	dt = exsltDateParse(dateTime);
+	if ((dt != NULL) &&
+            (dt->type != XS_DATETIME) && (dt->type != XS_DATE) &&
+	    (dt->type != XS_GYEARMONTH) && (dt->type != XS_GYEAR)) {
+	    exsltDateFreeDate(dt);
+	    dt = NULL;
+	}
+    }
 
-    if (IS_LEAP((long)year))
-	return xmlXPathNewBoolean(1);
+    if (dt == NULL) {
+        ret = xmlXPathNewFloat(xmlXPathNAN);
+    }
+    else {
+        ret = xmlXPathNewBoolean(IS_LEAP(dt->value.date.year));
+        exsltDateFreeDate(dt);
+    }
 
-    return xmlXPathNewBoolean(0);
+    return ret;
 }
 
 /**

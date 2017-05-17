@@ -14,7 +14,9 @@ result     : -P366D
 difference : 0002-05-05 - 0001-01
 result     : -P1Y4M
 difference : -0002-01-05 - 0001-01-04
-result     : P729D
+result     : P730D
+difference : 0002 - -0001
+result     : -P2Y
 difference : 1970-01-01T05:04:03 - 1970-01-01T04:03:02
 result     : -PT1H1M1S
 difference : 2000-01-01T05:00:03 - 2000-01-01T04:03:02
