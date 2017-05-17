@@ -1388,40 +1388,6 @@ _exsltDateCastYMToDays (const exsltDateValPtr dt)
               (dt->value.date.min * SECS_PER_MIN)) + dt->value.date.sec)
 
 /**
- * exsltDateCastDateToNumber:
- * @dt:  an #exsltDateValPtr
- *
- * Calculates the number of seconds from year 1 AD.
- *
- * Returns seconds from zero year.
- */
-static double
-exsltDateCastDateToNumber (const exsltDateValPtr dt)
-{
-    double ret = 0.0;
-
-    if (dt == NULL)
-        return 0.0;
-
-    if ((dt->type & XS_GYEAR) == XS_GYEAR) {
-        ret = (double)_exsltDateCastYMToDays(dt) * SECS_PER_DAY;
-    }
-
-    /* add in days */
-    if (dt->type == XS_DURATION) {
-        ret += (double)dt->value.dur.day * SECS_PER_DAY;
-        ret += dt->value.dur.sec;
-    } else {
-        ret += (double)dt->value.date.day * SECS_PER_DAY;
-        /* add in time */
-        ret += TIME_TO_NUMBER(dt);
-    }
-
-
-    return ret;
-}
-
-/**
  * _exsltDateTruncateDate:
  * @dt: an #exsltDateValPtr
  * @type: dateTime type to set to
@@ -2950,14 +2916,17 @@ exsltDateSeconds (const xmlChar *dateTime)
 
             dur = _exsltDateDifference(y, dt, 1);
             if (dur != NULL) {
-                ret = exsltDateCastDateToNumber(dur);
+                ret = (double)dur->value.dur.day * SECS_PER_DAY +
+                      dur->value.dur.sec;
                 exsltDateFreeDate(dur);
             }
             exsltDateFreeDate(y);
         }
 
-    } else if ((dt->type == XS_DURATION) && (dt->value.dur.mon == 0))
-        ret = exsltDateCastDateToNumber(dt);
+    } else if ((dt->type == XS_DURATION) && (dt->value.dur.mon == 0)) {
+        ret = (double)dt->value.dur.day * SECS_PER_DAY +
+              dt->value.dur.sec;
+    }
 
     exsltDateFreeDate(dt);
 
