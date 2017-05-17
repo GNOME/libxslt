@@ -179,6 +179,8 @@ static const unsigned long daysInMonthLeap[12] =
 #define SECS_PER_MIN            (60)
 #define SECS_PER_HOUR           (60 * SECS_PER_MIN)
 #define SECS_PER_DAY            (24 * SECS_PER_HOUR)
+#define DAYS_PER_EPOCH          (400 * 365 + 100 - 4 + 1)
+#define YEARS_PER_EPOCH         400
 
 static const unsigned long dayInYearByMonth[12] =
 	{ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
@@ -1450,14 +1452,6 @@ _exsltDateDayInWeek(long yday, long yr)
     return ret;
 }
 
-/*
- * macros for adding date/times and durations
- */
-#define FQUOTIENT(a,b)                  ((floor(((double)a/(double)b))))
-#define MODULO(a,b)                     ((a - FQUOTIENT(a,b) * b))
-#define FQUOTIENT_RANGE(a,low,high)     (FQUOTIENT((a-low),(high-low)))
-#define MODULO_RANGE(a,low,high)        ((MODULO((a-low),(high-low)))+low)
-
 /**
  * _exsltDateAdd:
  * @dt: an #exsltDateValPtr
@@ -1472,7 +1466,8 @@ static exsltDateValPtr
 _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 {
     exsltDateValPtr ret;
-    long carry, tempdays, temp;
+    long carry, temp;
+    double sum, quot;
     exsltDateValDatePtr r, d;
     exsltDateValDurationPtr u;
 
@@ -1487,12 +1482,37 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
     d = &(dt->value.date);
     u = &(dur->value.dur);
 
-    /* month */
-    carry  = d->mon + u->mon;
-    r->mon = (unsigned int)MODULO_RANGE(carry, 1, 13);
-    carry  = (long)FQUOTIENT_RANGE(carry, 1, 13);
+    /*
+     * Note that temporary values may need more bits than the values in
+     * bit field.
+     */
 
-    /* year (may be modified later) */
+    /* month */
+    temp  = d->mon + u->mon % 12;
+    carry = u->mon / 12;
+    if (temp < 1) {
+        temp  += 12;
+        carry -= 1;
+    }
+    else if (temp > 12) {
+        temp  -= 12;
+        carry += 1;
+    }
+    r->mon = temp;
+
+    /*
+     * year (may be modified later)
+     *
+     * Add epochs from u->day now to avoid overflow later and to speed up
+     * pathological cases.
+     */
+    carry += (u->day / DAYS_PER_EPOCH) * YEARS_PER_EPOCH;
+    if ((carry > 0 && d->year > LONG_MAX - carry) ||
+        (carry < 0 && d->year < LONG_MIN - carry)) {
+        /* Overflow */
+        exsltDateFreeDate(ret);
+        return NULL;
+    }
     r->year = d->year + carry;
 
     /* time zone */
@@ -1500,65 +1520,79 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
     r->tz_flag = d->tz_flag;
 
     /* seconds */
-    r->sec = d->sec + u->sec;
-    carry  = (long)FQUOTIENT((long)r->sec, 60);
-    if (r->sec != 0.0) {
-        r->sec = MODULO(r->sec, 60.0);
-    }
+    sum    = d->sec + u->sec;
+    quot   = floor(sum / 60.0);
+    r->sec = sum - quot * 60.0;
+    carry  = (long)quot;
 
     /* minute */
-    carry += d->min;
-    r->min = (unsigned int)MODULO(carry, 60);
-    carry  = (long)FQUOTIENT(carry, 60);
+    temp  = d->min + carry % 60;
+    carry = carry / 60;
+    if (temp < 0) {
+        temp  += 60;
+        carry -= 1;
+    }
+    else if (temp >= 60) {
+        temp  -= 60;
+        carry += 1;
+    }
+    r->min = temp;
 
     /* hours */
-    carry  += d->hour;
-    r->hour = (unsigned int)MODULO(carry, 24);
-    carry   = (long)FQUOTIENT(carry, 24);
+    temp  = d->hour + carry % 24;
+    carry = carry / 24;
+    if (temp < 0) {
+        temp  += 24;
+        carry -= 1;
+    }
+    else if (temp >= 24) {
+        temp  -= 24;
+        carry += 1;
+    }
+    r->hour = temp;
 
-    /*
-     * days
-     * Note we use tempdays because the temporary values may need more
-     * than 5 bits
-     */
-    if ((VALID_MONTH(r->mon)) &&
-                  (d->day > MAX_DAYINMONTH(r->year, r->mon)))
-        tempdays = MAX_DAYINMONTH(r->year, r->mon);
+    /* days */
+    if (d->day > MAX_DAYINMONTH(r->year, r->mon))
+        temp = MAX_DAYINMONTH(r->year, r->mon);
     else if (d->day < 1)
-        tempdays = 1;
+        temp = 1;
     else
-        tempdays = d->day;
+        temp = d->day;
 
-    tempdays += u->day + carry;
+    temp += u->day % DAYS_PER_EPOCH + carry;
 
     while (1) {
-        if (tempdays < 1) {
-            long tmon = (long)MODULO_RANGE((int)r->mon-1, 1, 13);
-            long tyr  = r->year + (long)FQUOTIENT_RANGE((int)r->mon-1, 1, 13);
-            if (tyr == 0)
-                tyr--;
-	    /*
-	     * Coverity detected an overrun in daysInMonth
-	     * of size 12 at position 12 with index variable "((r)->mon - 1)"
-	     */
-	    if (tmon < 0)
-	        tmon = 0;
-	    if (tmon > 12)
-	        tmon = 12;
-            tempdays += MAX_DAYINMONTH(tyr, tmon);
-            carry = -1;
-        } else if (tempdays > (long)MAX_DAYINMONTH(r->year, r->mon)) {
-            tempdays = tempdays - MAX_DAYINMONTH(r->year, r->mon);
-            carry = 1;
+        if (temp < 1) {
+            if (r->mon > 1) {
+                r->mon -= 1;
+            }
+            else {
+                if (r->year == LONG_MIN) {
+                    exsltDateFreeDate(ret);
+                    return NULL;
+                }
+                r->mon   = 12;
+                r->year -= 1;
+            }
+            temp += MAX_DAYINMONTH(r->year, r->mon);
+        } else if (temp > (long)MAX_DAYINMONTH(r->year, r->mon)) {
+            temp -= MAX_DAYINMONTH(r->year, r->mon);
+            if (r->mon < 12) {
+                r->mon += 1;
+            }
+            else {
+                if (r->year == LONG_MAX) {
+                    exsltDateFreeDate(ret);
+                    return NULL;
+                }
+                r->mon   = 1;
+                r->year += 1;
+            }
         } else
             break;
-
-        temp = r->mon + carry;
-        r->mon = (unsigned int)MODULO_RANGE(temp, 1, 13);
-        r->year = r->year + (long)FQUOTIENT_RANGE(temp, 1, 13);
     }
 
-    r->day = tempdays;
+    r->day = temp;
 
     /*
      * adjust the date/time type to the date values
@@ -1657,27 +1691,16 @@ static int
 _exsltDateAddDurCalc (exsltDateValPtr ret, exsltDateValPtr x,
 		      exsltDateValPtr y)
 {
+    double sum;
     long carry;
 
     /* months */
     ret->value.dur.mon = x->value.dur.mon + y->value.dur.mon;
 
     /* seconds */
-    ret->value.dur.sec = x->value.dur.sec + y->value.dur.sec;
-    carry = (long)FQUOTIENT(ret->value.dur.sec, SECS_PER_DAY);
-    if (ret->value.dur.sec != 0.0) {
-        ret->value.dur.sec = MODULO(ret->value.dur.sec, SECS_PER_DAY);
-	/*
-	 * Our function MODULO always gives us a positive value, so
-	 * if we end up with a "-ve" carry we need to adjust it
-	 * appropriately (bug 154021)
-	 */
-	if ((carry < 0) && (ret->value.dur.sec != 0)) {
-	    /* change seconds to equiv negative modulus */
-	    ret->value.dur.sec = ret->value.dur.sec - SECS_PER_DAY;
-	    carry++;
-	}
-    }
+    sum = x->value.dur.sec + y->value.dur.sec;
+    carry = (long)(sum / SECS_PER_DAY);
+    ret->value.dur.sec = fmod(sum, SECS_PER_DAY);
 
     /* days */
     ret->value.dur.day = x->value.dur.day + y->value.dur.day + carry;
