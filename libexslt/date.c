@@ -148,7 +148,7 @@ struct _exsltDateVal {
 #define VALID_SEC(sec)          ((sec >= 0) && (sec < 60))
 #define VALID_TZO(tzo)          ((tzo > -1440) && (tzo < 1440))
 #define IS_LEAP(y)						\
-	(((y % 4 == 0) && (y % 100 != 0)) || (y % 400 == 0))
+	(((y & 3) == 0) && ((y % 25 != 0) || ((y & 15) == 0)))
 
 static const unsigned long daysInMonth[12] =
 	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
