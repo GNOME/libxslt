@@ -101,9 +101,10 @@ struct _exsltDateValDate {
 typedef struct _exsltDateValDuration exsltDateValDuration;
 typedef exsltDateValDuration *exsltDateValDurationPtr;
 struct _exsltDateValDuration {
-    long	        mon;		/* mon stores years also */
+    long	mon;	/* mon stores years also */
     long	day;
-    double		sec;            /* sec stores min and hour also */
+    double	sec;	/* sec stores min and hour also
+			   0 <= sec < SECS_PER_DAY */
 };
 
 typedef struct _exsltDateVal exsltDateVal;
@@ -1052,7 +1053,7 @@ exsltDateParseDuration (const xmlChar *duration)
         double         num;
         int            num_type = 0;  /* -1 = invalid, 0 = int, 1 = floating */
         const xmlChar  desig[] = {'Y', 'M', 'D', 'H', 'M', 'S'};
-        const double   multi[] = { 0.0, 0.0, 86400.0, 3600.0, 60.0, 1.0, 0.0};
+        const double   multi[] = { 0.0, 0.0, 0.0, 3600.0, 60.0, 1.0, 0.0};
 
         /* input string should be empty or invalid date/time item */
         if (seq >= sizeof(desig))
@@ -1089,6 +1090,8 @@ exsltDateParseDuration (const xmlChar *duration)
                     case 1:
                         dur->value.dur.mon += (long)num;
                         break;
+                    case 2:
+                        dur->value.dur.day = (long)num;
                     default:
                         /* convert to seconds using multiplier */
                         dur->value.dur.sec += num * multi[seq];
@@ -1105,10 +1108,17 @@ exsltDateParseDuration (const xmlChar *duration)
         cur++;
     }
 
+    /* Clamp seconds to 0..SECS_PER_DAY range. */
+    dur->value.dur.day += (long)(dur->value.dur.sec / SECS_PER_DAY);
+    dur->value.dur.sec = fmod(dur->value.dur.sec, SECS_PER_DAY);
+
     if (isneg) {
         dur->value.dur.mon = -dur->value.dur.mon;
         dur->value.dur.day = -dur->value.dur.day;
-        dur->value.dur.sec = -dur->value.dur.sec;
+        if (dur->value.dur.sec != 0.0) {
+            dur->value.dur.sec = SECS_PER_DAY - dur->value.dur.sec;
+            dur->value.dur.day -= 1;
+        }
     }
 
 #ifdef DEBUG_EXSLT_DATE
@@ -1170,11 +1180,11 @@ exsltDateFormatDuration (const exsltDateValDurationPtr dt)
     months = (double)(dt->mon % 12);
 
     *cur = '\0';
-    if (secs < 0.0) {
-        secs = -secs;
-        *cur = '-';
-    }
     if (days < 0) {
+        if (secs != 0.0) {
+            secs = SECS_PER_DAY - secs;
+            days += 1;
+        }
         days = -days;
         *cur = '-';
     }
@@ -1197,12 +1207,6 @@ exsltDateFormatDuration (const exsltDateValDurationPtr dt)
 
     if (months != 0.0) {
         FORMAT_ITEM(months, cur, 1, 'M');
-    }
-
-    if (secs >= SECS_PER_DAY) {
-        double tmp = floor(secs / SECS_PER_DAY);
-        days += tmp;
-        secs -= (tmp * SECS_PER_DAY);
     }
 
     FORMAT_ITEM(days, cur, 1, 'D');
@@ -1467,7 +1471,7 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 {
     exsltDateValPtr ret;
     long carry, temp;
-    double sum, quot;
+    double sum;
     exsltDateValDatePtr r, d;
     exsltDateValDurationPtr u;
 
@@ -1521,18 +1525,13 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
 
     /* seconds */
     sum    = d->sec + u->sec;
-    quot   = floor(sum / 60.0);
-    r->sec = sum - quot * 60.0;
-    carry  = (long)quot;
+    r->sec = fmod(sum, 60.0);
+    carry  = (long)(sum / 60.0);
 
     /* minute */
     temp  = d->min + carry % 60;
     carry = carry / 60;
-    if (temp < 0) {
-        temp  += 60;
-        carry -= 1;
-    }
-    else if (temp >= 60) {
+    if (temp >= 60) {
         temp  -= 60;
         carry += 1;
     }
@@ -1541,11 +1540,7 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateValPtr dur)
     /* hours */
     temp  = d->hour + carry % 24;
     carry = carry / 24;
-    if (temp < 0) {
-        temp  += 24;
-        carry -= 1;
-    }
-    else if (temp >= 24) {
+    if (temp >= 24) {
         temp  -= 24;
         carry += 1;
     }
@@ -1662,21 +1657,13 @@ _exsltDateDifference (exsltDateValPtr x, exsltDateValPtr y, int flag)
         ret->value.dur.sec  = TIME_TO_NUMBER(y) - TIME_TO_NUMBER(x);
         ret->value.dur.sec += (x->value.date.tzo - y->value.date.tzo) *
                               SECS_PER_MIN;
-        carry = (long)(ret->value.dur.sec / SECS_PER_DAY);
-        ret->value.dur.sec = fmod(ret->value.dur.sec, SECS_PER_DAY);
+        carry = (long)floor(ret->value.dur.sec / SECS_PER_DAY);
+        ret->value.dur.sec = ret->value.dur.sec - carry * SECS_PER_DAY;
 
         ret->value.dur.day  = _exsltDateCastYMToDays(y) -
                               _exsltDateCastYMToDays(x);
         ret->value.dur.day += y->value.date.day - x->value.date.day;
         ret->value.dur.day += carry;
-
-	if (ret->value.dur.day > 0.0 && ret->value.dur.sec < 0.0) {
-	    ret->value.dur.day -= 1;
-	    ret->value.dur.sec = ret->value.dur.sec + SECS_PER_DAY;
-	} else if (ret->value.dur.day < 0.0 && ret->value.dur.sec > 0.0) {
-	    ret->value.dur.day += 1;
-	    ret->value.dur.sec = ret->value.dur.sec - SECS_PER_DAY;
-	}
     }
 
     return ret;
@@ -1697,27 +1684,44 @@ static int
 _exsltDateAddDurCalc (exsltDateValDurationPtr ret, exsltDateValDurationPtr x,
 		      exsltDateValDurationPtr y)
 {
-    double sum;
-    long carry;
-
     /* months */
+    if ((x->mon > 0 && y->mon > LONG_MAX - x->mon) ||
+        (x->mon < 0 && y->mon < LONG_MIN - x->mon)) {
+        /* Overflow */
+        return 0;
+    }
     ret->mon = x->mon + y->mon;
 
-    /* seconds */
-    sum = x->sec + y->sec;
-    carry = (long)(sum / SECS_PER_DAY);
-    ret->sec = fmod(sum, SECS_PER_DAY);
-
     /* days */
-    ret->day = x->day + y->day + carry;
+    if ((x->day > 0 && y->day > LONG_MAX - x->day) ||
+        (x->day < 0 && y->day < LONG_MIN - x->day)) {
+        /* Overflow */
+        return 0;
+    }
+    ret->day = x->day + y->day;
+
+    /* seconds */
+    ret->sec = x->sec + y->sec;
+    if (ret->sec >= SECS_PER_DAY) {
+        if (ret->day == LONG_MAX) {
+            /* Overflow */
+            return 0;
+        }
+        ret->sec -= SECS_PER_DAY;
+        ret->day += 1;
+    }
 
     /*
      * are the results indeterminate? i.e. how do you subtract days from
      * months or years?
      */
-    if ((((ret->day > 0) || (ret->sec > 0)) && (ret->mon < 0)) ||
-        (((ret->day < 0) || (ret->sec < 0)) && (ret->mon > 0))) {
-        return 0;
+    if (ret->day >= 0) {
+        if (((ret->day > 0) || (ret->sec > 0)) && (ret->mon < 0))
+            return 0;
+    }
+    else {
+        if (ret->mon > 0)
+            return 0;
     }
     return 1;
 }
@@ -3062,7 +3066,7 @@ static xmlChar *
 exsltDateDuration (const xmlChar *number)
 {
     exsltDateValPtr dur;
-    double       secs;
+    double       secs, days;
     xmlChar     *ret;
 
     if (number == NULL)
@@ -3077,7 +3081,9 @@ exsltDateDuration (const xmlChar *number)
     if (dur == NULL)
         return NULL;
 
-    dur->value.dur.sec = secs;
+    days = floor(secs / SECS_PER_DAY);
+    dur->value.dur.day = (long)days;
+    dur->value.dur.sec = secs - days * SECS_PER_DAY;
 
     ret = exsltDateFormatDuration(&(dur->value.dur));
     exsltDateFreeDate(dur);
