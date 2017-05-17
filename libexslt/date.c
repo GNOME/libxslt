@@ -1658,12 +1658,18 @@ _exsltDateDifference (exsltDateValPtr x, exsltDateValPtr y, int flag)
 	/* The above will give a wrong result if x and y are on different sides
 	 of the September 1752. Resolution is welcome :-) */
     } else {
-        ret->value.dur.day  = _exsltDateCastYMToDays(y) -
-                              _exsltDateCastYMToDays(x);
-        ret->value.dur.day += y->value.date.day - x->value.date.day;
+        long carry;
         ret->value.dur.sec  = TIME_TO_NUMBER(y) - TIME_TO_NUMBER(x);
         ret->value.dur.sec += (x->value.date.tzo - y->value.date.tzo) *
                               SECS_PER_MIN;
+        carry = (long)(ret->value.dur.sec / SECS_PER_DAY);
+        ret->value.dur.sec = fmod(ret->value.dur.sec, SECS_PER_DAY);
+
+        ret->value.dur.day  = _exsltDateCastYMToDays(y) -
+                              _exsltDateCastYMToDays(x);
+        ret->value.dur.day += y->value.date.day - x->value.date.day;
+        ret->value.dur.day += carry;
+
 	if (ret->value.dur.day > 0.0 && ret->value.dur.sec < 0.0) {
 	    ret->value.dur.day -= 1;
 	    ret->value.dur.sec = ret->value.dur.sec + SECS_PER_DAY;
