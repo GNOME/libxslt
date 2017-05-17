@@ -632,7 +632,9 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
                 sheet->errors++;
                 ncname = NULL;
             }
-            nsUri = ns->href;
+            else {
+                nsUri = ns->href;
+            }
         }
         if (ncname != NULL) {
 	    formatValues = xsltDecimalFormatGetByQName(sheet, nsUri, ncname);
