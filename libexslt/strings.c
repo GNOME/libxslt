@@ -75,7 +75,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
         ret = xmlXPathNewNodeSet(NULL);
         if (ret != NULL) {
             for (cur = str, token = str; *cur != 0; cur += clen) {
-	        clen = xmlUTF8Size(cur);
+	        clen = xmlUTF8Strsize(cur, 1);
 		if (*delimiters == 0) {	/* empty string case */
 		    xmlChar ctmp;
 		    ctmp = *(cur+clen);
@@ -87,7 +87,7 @@ exsltStrTokenizeFunction(xmlXPathParserContextPtr ctxt, int nargs)
                     *(cur+clen) = ctmp; /* restore the changed byte */
                     token = cur + clen;
                 } else for (delimiter = delimiters; *delimiter != 0;
-				delimiter += xmlUTF8Size(delimiter)) {
+				delimiter += xmlUTF8Strsize(delimiter, 1)) {
                     if (!xmlUTF8Charcmp(cur, delimiter)) {
                         if (cur == token) {
                             /* discard empty tokens */
@@ -729,7 +729,7 @@ exsltStrReplaceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
                 start = src;
             }
 
-            src += xmlUTF8Size(src);
+            src += xmlUTF8Strsize(src, 1);
         }
         else {
             if ((start < src &&
