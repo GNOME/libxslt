@@ -265,7 +265,10 @@ exsltStrEncodeUriFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     str = xmlXPathPopString(ctxt);
     str_len = xmlUTF8Strlen(str);
 
-    if (str_len == 0) {
+    if (str_len <= 0) {
+        if (str_len < 0)
+            xsltGenericError(xsltGenericErrorContext,
+                             "exsltStrEncodeUriFunction: invalid UTF-8\n");
 	xmlXPathReturnEmptyString(ctxt);
 	xmlFree(str);
 	return;
@@ -310,7 +313,10 @@ exsltStrDecodeUriFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     str = xmlXPathPopString(ctxt);
     str_len = xmlUTF8Strlen(str);
 
-    if (str_len == 0) {
+    if (str_len <= 0) {
+        if (str_len < 0)
+            xsltGenericError(xsltGenericErrorContext,
+                             "exsltStrDecodeUriFunction: invalid UTF-8\n");
 	xmlXPathReturnEmptyString(ctxt);
 	xmlFree(str);
 	return;
@@ -354,6 +360,13 @@ exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	str = xmlXPathPopString(ctxt);
 	str_len = xmlUTF8Strlen(str);
 	str_size = xmlStrlen(str);
+        if (str_len < 0) {
+            xsltGenericError(xsltGenericErrorContext,
+                             "exsltStrPaddingFunction: invalid UTF-8\n");
+            xmlXPathReturnEmptyString(ctxt);
+            xmlFree(str);
+            return;
+        }
     }
     if (str_len == 0) {
 	if (str != NULL) xmlFree(str);
@@ -421,6 +434,16 @@ exsltStrAlignFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 
     str_l = xmlUTF8Strlen (str);
     padding_l = xmlUTF8Strlen (padding);
+
+    if (str_l < 0 || padding_l < 0) {
+        xsltGenericError(xsltGenericErrorContext,
+                         "exsltStrAlignFunction: invalid UTF-8\n");
+        xmlXPathReturnEmptyString(ctxt);
+        xmlFree(str);
+        xmlFree(padding);
+        xmlFree(alignment);
+        return;
+    }
 
     if (str_l == padding_l) {
 	xmlXPathReturnString (ctxt, str);
