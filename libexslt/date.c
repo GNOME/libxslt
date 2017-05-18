@@ -220,6 +220,8 @@ _exsltDateParseGYear (exsltDateValPtr dt, const xmlChar **str)
     firstChar = cur;
 
     while ((*cur >= '0') && (*cur <= '9')) {
+        if (dt->year >= LONG_MAX / 10)
+            return -1;
 	dt->year = dt->year * 10 + (*cur - '0');
 	cur++;
 	digcnt++;
