@@ -349,7 +349,8 @@ static void
 exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     int number, str_len = 0, str_size = 0;
     double floatval;
-    xmlChar *str = NULL, *ret = NULL;
+    xmlChar *str = NULL;
+    xmlBufferPtr buf;
 
     if ((nargs < 1) || (nargs > 2)) {
 	xmlXPathSetArityError(ctxt);
@@ -392,17 +393,26 @@ exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
+    buf = xmlBufferCreateSize(number);
+    if (buf == NULL) {
+        xmlXPathSetError(ctxt, XPATH_MEMORY_ERROR);
+	xmlFree(str);
+	return;
+    }
+    xmlBufferSetAllocationScheme(buf, XML_BUFFER_ALLOC_DOUBLEIT);
+
     while (number >= str_len) {
-	ret = xmlStrncat(ret, str, str_size);
+        xmlBufferAdd(buf, str, str_size);
 	number -= str_len;
     }
     if (number > 0) {
 	str_size = xmlUTF8Strsize(str, number);
-	ret = xmlStrncat(ret, str, str_size);
+        xmlBufferAdd(buf, str, str_size);
     }
 
-    xmlXPathReturnString(ctxt, ret);
+    xmlXPathReturnString(ctxt, xmlBufferDetach(buf));
 
+    xmlBufferFree(buf);
     if (str != NULL)
 	xmlFree(str);
 }
@@ -495,7 +505,7 @@ exsltStrAlignFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 static void
 exsltStrConcatFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     xmlXPathObjectPtr obj;
-    xmlChar *ret = NULL;
+    xmlBufferPtr buf;
     int i;
 
     if (nargs  != 1) {
@@ -515,18 +525,27 @@ exsltStrConcatFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	return;
     }
 
+    buf = xmlBufferCreate();
+    if (buf == NULL) {
+        xmlXPathSetError(ctxt, XPATH_MEMORY_ERROR);
+        xmlXPathFreeObject(obj);
+	return;
+    }
+    xmlBufferSetAllocationScheme(buf, XML_BUFFER_ALLOC_DOUBLEIT);
+
     for (i = 0; i < obj->nodesetval->nodeNr; i++) {
 	xmlChar *tmp;
 	tmp = xmlXPathCastNodeToString(obj->nodesetval->nodeTab[i]);
 
-	ret = xmlStrcat (ret, tmp);
+        xmlBufferCat(buf, tmp);
 
 	xmlFree(tmp);
     }
 
     xmlXPathFreeObject (obj);
 
-    xmlXPathReturnString(ctxt, ret);
+    xmlXPathReturnString(ctxt, xmlBufferDetach(buf));
+    xmlBufferFree(buf);
 }
 
 /**
@@ -702,6 +721,7 @@ exsltStrReplaceFunction (xmlXPathParserContextPtr ctxt, int nargs) {
         xmlXPathSetError(ctxt, XPATH_MEMORY_ERROR);
         goto fail_buffer;
     }
+    xmlBufferSetAllocationScheme(buf, XML_BUFFER_ALLOC_DOUBLEIT);
     src = string;
     start = string;
 
