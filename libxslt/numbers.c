@@ -222,7 +222,7 @@ xsltNumberFormatDecimal(xmlBufferPtr buffer,
     }
     if (i < 0)
         xsltGenericError(xsltGenericErrorContext,
-		"xsltNumberFormatDecimal: Internal buffer size exceeded");
+		"xsltNumberFormatDecimal: Internal buffer size exceeded\n");
     xmlBufferCat(buffer, pointer);
 }
 
