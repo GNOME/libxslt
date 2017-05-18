@@ -1171,14 +1171,12 @@ error:
  * @item:       char designator
  *
  */
-#define FORMAT_ITEM(num, cur, limit, item)                      \
-        if (num != 0) {                                         \
-            long comp = (long)num / limit;                      \
-            if (comp != 0) {                                    \
-                FORMAT_FLOAT((double)comp, cur, 0);             \
-                *cur++ = item;                                  \
-                num -= (double)(comp * limit);                  \
-            }                                                   \
+#define FORMAT_ITEM(num, cur, limit, item)			\
+        if (num >= limit) {					\
+            double comp = floor(num / limit);			\
+            FORMAT_FLOAT(comp, cur, 0);				\
+            *cur++ = item;					\
+            num -= comp * limit;				\
         }
 
 /**
