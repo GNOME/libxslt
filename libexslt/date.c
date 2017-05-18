@@ -1622,6 +1622,8 @@ static exsltDateValPtr
 _exsltDateDifference (exsltDateValPtr x, exsltDateValPtr y, int flag)
 {
     exsltDateValPtr ret;
+    exsltDateValDatePtr xd, yd;
+    exsltDateValDurationPtr rd;
 
     if ((x == NULL) || (y == NULL))
         return NULL;
@@ -1646,24 +1648,37 @@ _exsltDateDifference (exsltDateValPtr x, exsltDateValPtr y, int flag)
     if (ret == NULL)
         return NULL;
 
+    xd = &x->value.date;
+    yd = &y->value.date;
+    rd = &ret->value.dur;
+
     if (((x->type == XS_GYEAR) || (x->type == XS_GYEARMONTH)) && (!flag)) {
         /* compute the difference in months */
-        ret->value.dur.mon = ((y->value.date.year * 12) + y->value.date.mon) -
-                             ((x->value.date.year * 12) + x->value.date.mon);
-	/* The above will give a wrong result if x and y are on different sides
-	 of the September 1752. Resolution is welcome :-) */
+        if ((xd->year >= LONG_MAX / 24) || (xd->year <= LONG_MIN / 24) ||
+            (yd->year >= LONG_MAX / 24) || (yd->year <= LONG_MIN / 24)) {
+            /* Possible overflow. */
+            exsltDateFreeDate(ret);
+            return NULL;
+        }
+        rd->mon = (yd->year - xd->year) * 12 + (yd->mon - xd->mon);
     } else {
         long carry;
-        ret->value.dur.sec  = TIME_TO_NUMBER(y) - TIME_TO_NUMBER(x);
-        ret->value.dur.sec += (x->value.date.tzo - y->value.date.tzo) *
-                              SECS_PER_MIN;
-        carry = (long)floor(ret->value.dur.sec / SECS_PER_DAY);
-        ret->value.dur.sec = ret->value.dur.sec - carry * SECS_PER_DAY;
 
-        ret->value.dur.day  = _exsltDateCastYMToDays(y) -
-                              _exsltDateCastYMToDays(x);
-        ret->value.dur.day += y->value.date.day - x->value.date.day;
-        ret->value.dur.day += carry;
+        if ((xd->year > LONG_MAX / 731) || (xd->year < LONG_MIN / 731) ||
+            (yd->year > LONG_MAX / 731) || (yd->year < LONG_MIN / 731)) {
+            /* Possible overflow. */
+            exsltDateFreeDate(ret);
+            return NULL;
+        }
+
+        rd->sec  = TIME_TO_NUMBER(y) - TIME_TO_NUMBER(x);
+        rd->sec += (xd->tzo - yd->tzo) * SECS_PER_MIN;
+        carry    = (long)floor(rd->sec / SECS_PER_DAY);
+        rd->sec  = rd->sec - carry * SECS_PER_DAY;
+
+        rd->day  = _exsltDateCastYMToDays(y) - _exsltDateCastYMToDays(x);
+        rd->day += yd->day - xd->day;
+        rd->day += carry;
     }
 
     return ret;
