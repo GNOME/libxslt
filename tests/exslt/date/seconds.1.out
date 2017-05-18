@@ -17,6 +17,10 @@ seconds : -P0Y0M31DT10H10M10.09S
 result  : -2715010.09
 seconds : PT100H100M100.001S
 result  : 366100.001
+seconds : PT10H10M.5S
+result  : 36600.5
+seconds : PT10H10M5.S
+result  : 36605
 seconds : 2001
 result  : 978307200
 seconds : 2001-10-29T10:31:07

@@ -177,9 +177,12 @@ static const unsigned long daysInMonthLeap[12] =
 #define VALID_DATETIME(dt)					\
 	(VALID_DATE(dt) && VALID_TIME(dt))
 
-#define SECS_PER_MIN            (60)
-#define SECS_PER_HOUR           (60 * SECS_PER_MIN)
-#define SECS_PER_DAY            (24 * SECS_PER_HOUR)
+#define SECS_PER_MIN            60
+#define MINS_PER_HOUR           60
+#define HOURS_PER_DAY           24
+#define SECS_PER_HOUR           (MINS_PER_HOUR * SECS_PER_MIN)
+#define SECS_PER_DAY            (HOURS_PER_DAY * SECS_PER_HOUR)
+#define MINS_PER_DAY            (HOURS_PER_DAY * MINS_PER_HOUR)
 #define DAYS_PER_EPOCH          (400 * 365 + 100 - 4 + 1)
 #define YEARS_PER_EPOCH         400
 
@@ -702,56 +705,6 @@ exsltDateFreeDate (exsltDateValPtr date) {
     xmlFree(date);
 }
 
-/**
- * PARSE_DIGITS:
- * @num:  the integer to fill in
- * @cur:  an #xmlChar *
- * @num_type: an integer flag
- *
- * Parses a digits integer and updates @num with the value. @cur is
- * updated to point just after the integer.
- * In case of error, @num_type is set to -1, values of @num and
- * @cur are undefined.
- */
-#define PARSE_DIGITS(num, cur, num_type)	                \
-	if ((*cur < '0') || (*cur > '9'))			\
-	    num_type = -1;					\
-        else                                                    \
-	    while ((*cur >= '0') && (*cur <= '9')) {		\
-	        num = num * 10 + (*cur - '0');		        \
-	        cur++;                                          \
-            }
-
-/**
- * PARSE_NUM:
- * @num:  the double to fill in
- * @cur:  an #xmlChar *
- * @num_type: an integer flag
- *
- * Parses a float or integer and updates @num with the value. @cur is
- * updated to point just after the number. If the number is a float,
- * then it must have an integer part and a decimal part; @num_type will
- * be set to 1. If there is no decimal part, @num_type is set to zero.
- * In case of error, @num_type is set to -1, values of @num and
- * @cur are undefined.
- */
-#define PARSE_NUM(num, cur, num_type)				\
-        num = 0;                                                \
-	PARSE_DIGITS(num, cur, num_type);	                \
-	if (!num_type && (*cur == '.')) {			\
-	    double mult = 1;				        \
-	    cur++;						\
-	    if ((*cur < '0') || (*cur > '9'))			\
-		num_type = -1;					\
-            else                                                \
-                num_type = 1;                                   \
-	    while ((*cur >= '0') && (*cur <= '9')) {		\
-		mult /= 10;					\
-		num += (*cur - '0') * mult;			\
-		cur++;						\
-	    }							\
-	}
-
 #ifdef WITH_TIME
 /**
  * exsltDateCurrent:
@@ -1032,6 +985,8 @@ exsltDateParseDuration (const xmlChar *duration)
     exsltDateValPtr dur;
     int isneg = 0;
     unsigned int seq = 0;
+    long days, secs = 0;
+    double sec_frac = 0.0;
 
     if (duration == NULL)
 	return NULL;
@@ -1050,10 +1005,10 @@ exsltDateParseDuration (const xmlChar *duration)
 	return NULL;
 
     while (*cur != 0) {
-        double         num;
-        int            num_type = 0;  /* -1 = invalid, 0 = int, 1 = floating */
+        long           num = 0;
+        size_t         has_digits = 0;
+        int            has_frac = 0;
         const xmlChar  desig[] = {'Y', 'M', 'D', 'H', 'M', 'S'};
-        const double   multi[] = { 0.0, 0.0, 0.0, 3600.0, 60.0, 1.0, 0.0};
 
         /* input string should be empty or invalid date/time item */
         if (seq >= sizeof(desig))
@@ -1061,56 +1016,103 @@ exsltDateParseDuration (const xmlChar *duration)
 
         /* T designator must be present for time items */
         if (*cur == 'T') {
-            if (seq <= 3) {
-                seq = 3;
-                cur++;
-            } else
-                return NULL;
+            if (seq > 3)
+                goto error;
+            cur++;
+            seq = 3;
         } else if (seq == 3)
             goto error;
 
-        /* parse the number portion of the item */
-        PARSE_NUM(num, cur, num_type);
+        /* Parse integral part. */
+        while (*cur >= '0' && *cur <= '9') {
+            long digit = *cur - '0';
 
-        if ((num_type == -1) || (*cur == 0))
-            goto error;
+            if (num > LONG_MAX / 10)
+                goto error;
+            num *= 10;
+            if (num > LONG_MAX - digit)
+                goto error;
+            num += digit;
 
-        /* update duration based on item type */
-        while (seq < sizeof(desig)) {
-            if (*cur == desig[seq]) {
+            has_digits = 1;
+            cur++;
+        }
 
-                /* verify numeric type; only seconds can be float */
-                if ((num_type != 0) && (seq < (sizeof(desig)-1)))
-                    goto error;
-
-                switch (seq) {
-                    case 0:
-                        dur->value.dur.mon = (long)num * 12;
-                        break;
-                    case 1:
-                        dur->value.dur.mon += (long)num;
-                        break;
-                    case 2:
-                        dur->value.dur.day = (long)num;
-                    default:
-                        /* convert to seconds using multiplier */
-                        dur->value.dur.sec += num * multi[seq];
-                        seq++;
-                        break;
-                }
-
-                break;          /* exit loop */
+        if (*cur == '.') {
+            /* Parse fractional part. */
+            double mult = 1.0;
+            cur++;
+            has_frac = 1;
+            while (*cur >= '0' && *cur <= '9') {
+                mult /= 10.0;
+                sec_frac += (*cur - '0') * mult;
+                has_digits = 1;
+                cur++;
             }
-            /* no date designators found? */
-            if (++seq == 3)
+        }
+
+        while (*cur != desig[seq]) {
+            seq++;
+            /* No T designator or invalid char. */
+            if (seq == 3 || seq == sizeof(desig))
                 goto error;
         }
         cur++;
+
+        if (!has_digits || (has_frac && (seq != 5)))
+            goto error;
+
+        switch (seq) {
+            case 0:
+                /* Year */
+                if (num > LONG_MAX / 12)
+                    goto error;
+                dur->value.dur.mon = num * 12;
+                break;
+            case 1:
+                /* Month */
+                if (dur->value.dur.mon > LONG_MAX - num)
+                    goto error;
+                dur->value.dur.mon += num;
+                break;
+            case 2:
+                /* Day */
+                dur->value.dur.day = num;
+                break;
+            case 3:
+                /* Hour */
+                days = num / HOURS_PER_DAY;
+                if (dur->value.dur.day > LONG_MAX - days)
+                    goto error;
+                dur->value.dur.day += days;
+                secs = (num % HOURS_PER_DAY) * SECS_PER_HOUR;
+                break;
+            case 4:
+                /* Minute */
+                days = num / MINS_PER_DAY;
+                if (dur->value.dur.day > LONG_MAX - days)
+                    goto error;
+                dur->value.dur.day += days;
+                secs += (num % MINS_PER_DAY) * SECS_PER_MIN;
+                break;
+            case 5:
+                /* Second */
+                days = num / SECS_PER_DAY;
+                if (dur->value.dur.day > LONG_MAX - days)
+                    goto error;
+                dur->value.dur.day += days;
+                secs += num % SECS_PER_DAY;
+                break;
+        }
+
+        seq++;
     }
 
-    /* Clamp seconds to 0..SECS_PER_DAY range. */
-    dur->value.dur.day += (long)(dur->value.dur.sec / SECS_PER_DAY);
-    dur->value.dur.sec = fmod(dur->value.dur.sec, SECS_PER_DAY);
+    days = secs / SECS_PER_DAY;
+    if (dur->value.dur.day > LONG_MAX - days)
+        goto error;
+    dur->value.dur.day += days;
+    dur->value.dur.sec = (secs % SECS_PER_DAY) + sec_frac;
 
     if (isneg) {
         dur->value.dur.mon = -dur->value.dur.mon;
