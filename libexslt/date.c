@@ -2096,11 +2096,12 @@ exsltDateMonthName (const xmlChar *dateTime)
 	{ 'N', 'o', 'v', 'e', 'm', 'b', 'e', 'r', 0 },
 	{ 'D', 'e', 'c', 'e', 'm', 'b', 'e', 'r', 0 }
     };
-    int month;
-    month = (int) exsltDateMonthInYear(dateTime);
-    if (!VALID_MONTH(month))
-      month = 0;
-    return monthNames[month];
+    double month;
+    int index = 0;
+    month = exsltDateMonthInYear(dateTime);
+    if (!xmlXPathIsNaN(month) && (month >= 1.0) && (month <= 12.0))
+      index = (int) month;
+    return monthNames[index];
 }
 
 /**
@@ -2144,11 +2145,12 @@ exsltDateMonthAbbreviation (const xmlChar *dateTime)
 	{ 'N', 'o', 'v', 0 },
 	{ 'D', 'e', 'c', 0 }
     };
-    int month;
-    month = (int) exsltDateMonthInYear(dateTime);
-    if(!VALID_MONTH(month))
-      month = 0;
-    return monthAbbreviations[month];
+    double month;
+    int index = 0;
+    month = exsltDateMonthInYear(dateTime);
+    if (!xmlXPathIsNaN(month) && (month >= 1.0) && (month <= 12.0))
+      index = (int) month;
+    return monthAbbreviations[index];
 }
 
 /**
@@ -2504,11 +2506,12 @@ exsltDateDayName (const xmlChar *dateTime)
 	{ 'F', 'r', 'i', 'd', 'a', 'y', 0 },
 	{ 'S', 'a', 't', 'u', 'r', 'd', 'a', 'y', 0 }
     };
-    int day;
-    day = (int) exsltDateDayInWeek(dateTime);
-    if((day < 1) || (day > 7))
-      day = 0;
-    return dayNames[day];
+    double day;
+    int index = 0;
+    day = exsltDateDayInWeek(dateTime);
+    if(!xmlXPathIsNaN(day) && (day >= 1.0) && (day <= 7.0))
+      index = (int) day;
+    return dayNames[index];
 }
 
 /**
@@ -2544,11 +2547,12 @@ exsltDateDayAbbreviation (const xmlChar *dateTime)
 	{ 'F', 'r', 'i', 0 },
 	{ 'S', 'a', 't', 0 }
     };
-    int day;
-    day = (int) exsltDateDayInWeek(dateTime);
-    if((day < 1) || (day > 7))
-      day = 0;
-    return dayAbbreviations[day];
+    double day;
+    int index = 0;
+    day = exsltDateDayInWeek(dateTime);
+    if(!xmlXPathIsNaN(day) && (day >= 1.0) && (day <= 7.0))
+      index = (int) day;
+    return dayAbbreviations[index];
 }
 
 /**

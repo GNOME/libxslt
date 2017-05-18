@@ -342,6 +342,7 @@ exsltStrDecodeUriFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 static void
 exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     int number, str_len = 0, str_size = 0;
+    double floatval;
     xmlChar *str = NULL, *ret = NULL;
 
     if ((nargs < 1) || (nargs > 2)) {
@@ -361,7 +362,16 @@ exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	str_size = 1;
     }
 
-    number = (int) xmlXPathPopNumber(ctxt);
+    floatval = xmlXPathPopNumber(ctxt);
+
+    if (xmlXPathIsNaN(floatval) || floatval < 0.0) {
+        number = 0;
+    } else if (floatval >= 100000.0) {
+        number = 100000;
+    }
+    else {
+        number = (int) floatval;
+    }
 
     if (number <= 0) {
 	xmlXPathReturnEmptyString(ctxt);
