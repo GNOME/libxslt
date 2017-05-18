@@ -1684,9 +1684,9 @@ _exsltDateDifference (exsltDateValPtr x, exsltDateValPtr y, int flag)
 
 /**
  * _exsltDateAddDurCalc
- * @ret: an exsltDateValPtr for the return value:
- * @x: an exsltDateValPtr for the first operand
- * @y: an exsltDateValPtr for the second operand
+ * @ret: an exsltDateValDurationPtr for the return value:
+ * @x: an exsltDateValDurationPtr for the first operand
+ * @y: an exsltDateValDurationPtr for the second operand
  *
  * Add two durations, catering for possible negative values.
  * The sum is placed in @ret.
@@ -1694,31 +1694,29 @@ _exsltDateDifference (exsltDateValPtr x, exsltDateValPtr y, int flag)
  * Returns 1 for success, 0 if error detected.
  */
 static int
-_exsltDateAddDurCalc (exsltDateValPtr ret, exsltDateValPtr x,
-		      exsltDateValPtr y)
+_exsltDateAddDurCalc (exsltDateValDurationPtr ret, exsltDateValDurationPtr x,
+		      exsltDateValDurationPtr y)
 {
     double sum;
     long carry;
 
     /* months */
-    ret->value.dur.mon = x->value.dur.mon + y->value.dur.mon;
+    ret->mon = x->mon + y->mon;
 
     /* seconds */
-    sum = x->value.dur.sec + y->value.dur.sec;
+    sum = x->sec + y->sec;
     carry = (long)(sum / SECS_PER_DAY);
-    ret->value.dur.sec = fmod(sum, SECS_PER_DAY);
+    ret->sec = fmod(sum, SECS_PER_DAY);
 
     /* days */
-    ret->value.dur.day = x->value.dur.day + y->value.dur.day + carry;
+    ret->day = x->day + y->day + carry;
 
     /*
      * are the results indeterminate? i.e. how do you subtract days from
      * months or years?
      */
-    if ((((ret->value.dur.day > 0) || (ret->value.dur.sec > 0)) &&
-         (ret->value.dur.mon < 0)) ||
-        (((ret->value.dur.day < 0) || (ret->value.dur.sec < 0)) &&
-         (ret->value.dur.mon > 0))) {
+    if ((((ret->day > 0) || (ret->sec > 0)) && (ret->mon < 0)) ||
+        (((ret->day < 0) || (ret->sec < 0)) && (ret->mon > 0))) {
         return 0;
     }
     return 1;
@@ -1745,7 +1743,7 @@ _exsltDateAddDuration (exsltDateValPtr x, exsltDateValPtr y)
     if (ret == NULL)
         return NULL;
 
-    if (_exsltDateAddDurCalc(ret, x, y))
+    if (_exsltDateAddDurCalc(&ret->value.dur, &x->value.dur, &y->value.dur))
         return ret;
 
     exsltDateFreeDate(ret);
@@ -2855,7 +2853,8 @@ exsltDateSumFunction (xmlXPathParserContextPtr ctxt, int nargs)
 	    return;
 	}
 
-	result = _exsltDateAddDurCalc(total, total, x);
+	result = _exsltDateAddDurCalc(&total->value.dur, &total->value.dur,
+                                      &x->value.dur);
 
 	exsltDateFreeDate (x);
 	xmlFree (tmp);
