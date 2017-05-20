@@ -522,6 +522,7 @@ exsltStrConcatFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     obj = valuePop (ctxt);
 
     if (xmlXPathNodeSetIsEmpty(obj->nodesetval)) {
+        xmlXPathFreeObject(obj);
 	xmlXPathReturnEmptyString(ctxt);
 	return;
     }
