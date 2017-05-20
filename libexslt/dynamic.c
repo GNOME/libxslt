@@ -113,24 +113,12 @@ exsltDynMapFunction(xmlXPathParserContextPtr ctxt, int nargs)
         return;
     }
     str = xmlXPathPopString(ctxt);
-    if (xmlXPathCheckError(ctxt)) {
-        xmlXPathSetTypeError(ctxt);
-        return;
-    }
+    if (xmlXPathCheckError(ctxt))
+        goto cleanup;
 
     nodeset = xmlXPathPopNodeSet(ctxt);
-    if (xmlXPathCheckError(ctxt)) {
-        xmlXPathSetTypeError(ctxt);
-        return;
-    }
-    if (str == NULL || !xmlStrlen(str) || !(comp = xmlXPathCompile(str))) {
-        if (nodeset != NULL)
-            xmlXPathFreeNodeSet(nodeset);
-        if (str != NULL)
-            xmlFree(str);
-        valuePush(ctxt, xmlXPathNewNodeSet(NULL));
-        return;
-    }
+    if (xmlXPathCheckError(ctxt))
+        goto cleanup;
 
     ret = xmlXPathNewNodeSet(NULL);
     if (ret == NULL) {
@@ -138,6 +126,9 @@ exsltDynMapFunction(xmlXPathParserContextPtr ctxt, int nargs)
                          "exsltDynMapFunction: ret == NULL\n");
         goto cleanup;
     }
+
+    if (str == NULL || !xmlStrlen(str) || !(comp = xmlXPathCompile(str)))
+        goto cleanup;
 
     oldDoc = ctxt->context->doc;
     oldNode = ctxt->context->node;

@@ -540,6 +540,7 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
 	xsltGenericError(xsltGenericErrorContext,
 			 "exsltFuncFunctionComp: no stylesheet data\n");
 	xmlFree(name);
+        xmlFree(func);
 	return;
     }
 
@@ -548,6 +549,7 @@ exsltFuncFunctionComp (xsltStylesheetPtr style, xmlNodePtr inst) {
 	    "Failed to register function {%s}%s\n",
 			 ns->href, name);
 	style->errors++;
+        xmlFree(func);
     } else {
 	xsltGenericDebug(xsltGenericDebugContext,
 			 "exsltFuncFunctionComp: register {%s}%s\n",
