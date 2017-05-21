@@ -1480,6 +1480,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 		xsltTransformError(NULL, NULL, NULL,
 			"xsltCompileIdKeyPattern : ) expected\n");
 		ctxt->error = 1;
+                xmlFree(lit);
 		return;
 	    }
 	}
@@ -1642,6 +1643,7 @@ parse_node_test:
 		    xsltTransformError(NULL, NULL, NULL,
 			    "xsltCompileStepPattern : Name expected\n");
 		    ctxt->error = 1;
+                    xmlFree(URL);
 		    goto error;
 		}
 	    } else {

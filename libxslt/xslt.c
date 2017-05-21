@@ -1240,6 +1240,7 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 		xsltTransformError(NULL, style, cur,
                                  "invalid value for method: %s\n", prop);
                 if (style != NULL) style->warnings++;
+                xmlFree(prop);
             }
 	} else {
 	    style->method = prop;
@@ -5446,6 +5447,7 @@ xsltParseStylesheetTemplate(xsltStylesheetPtr style, xmlNodePtr template) {
 	        xsltTransformError(NULL, style, template,
 	            "xsl:template : error invalid name '%s'\n", prop);
 		if (style != NULL) style->errors++;
+                xmlFree(prop);
 		goto error;
 	    }
 	    ret->name = xmlDictLookup(style->dict, BAD_CAST prop, -1);
