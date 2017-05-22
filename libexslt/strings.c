@@ -361,6 +361,11 @@ exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	str = xmlXPathPopString(ctxt);
 	str_len = xmlUTF8Strlen(str);
 	str_size = xmlStrlen(str);
+    }
+
+    floatval = xmlXPathPopNumber(ctxt);
+
+    if (str_len <= 0) {
         if (str_len < 0) {
             xsltGenericError(xsltGenericErrorContext,
                              "exsltStrPaddingFunction: invalid UTF-8\n");
@@ -368,15 +373,11 @@ exsltStrPaddingFunction (xmlXPathParserContextPtr ctxt, int nargs) {
             xmlFree(str);
             return;
         }
-    }
-    if (str_len == 0) {
 	if (str != NULL) xmlFree(str);
 	str = xmlStrdup((const xmlChar *) " ");
 	str_len = 1;
 	str_size = 1;
     }
-
-    floatval = xmlXPathPopNumber(ctxt);
 
     if (xmlXPathIsNaN(floatval) || floatval < 0.0) {
         number = 0;
