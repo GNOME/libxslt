@@ -96,7 +96,10 @@ xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
                 xsltGenericError(xsltGenericErrorContext, "noname !!!!");
 #ifdef LIBXML_DEBUG_ENABLED
             if (cur->value != NULL) {
-                xmlXPathDebugDumpObject(stdout, cur->value, 1);
+                if ((xsltGenericDebugContext == stdout) ||
+                    (xsltGenericDebugContext == stderr))
+                    xmlXPathDebugDumpObject((FILE*)xsltGenericDebugContext,
+                                            cur->value, 1);
             } else {
                 xsltGenericError(xsltGenericErrorContext, "NULL !!!!");
             }
