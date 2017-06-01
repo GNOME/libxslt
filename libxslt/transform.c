@@ -19,6 +19,7 @@
 #define IN_LIBXSLT
 #include "libxslt.h"
 
+#include <limits.h>
 #include <string.h>
 #include <stdio.h>
 
