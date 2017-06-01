@@ -41,4 +41,4 @@ xsltproc.dv: xsltproc.o
 tests: testThreads
 	@echo > .memdump
 	@echo '## Running testThreads'
-	@($(CHECKER) ./testThreads ; grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true)
+	@($(CHECKER) ./testThreads > /dev/null; grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true)
