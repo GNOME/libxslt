@@ -567,10 +567,10 @@ then
 	CWD=`pwd`
 	if cd $LIBXML_SRC
 	then
-		SRC_DIR=`pwd`
-		XML_CONFIG=${SRC_DIR}/xml2-config
-		LIBXML_CFLAGS="-I${SRC_DIR}/include"
-		LIBXML_LIBS="-L${SRC_DIR}"
+		LIBXML_SRC=`pwd`
+		XML_CONFIG="${LIBXML_SRC}/xml2-config"
+		LIBXML_CFLAGS="-I${LIBXML_SRC}/include"
+		LIBXML_LIBS="-L${LIBXML_SRC}"
 		cd $CWD
 	else
 		AC_MSG_ERROR([libxml source dir not found (${LIBXML_SRC}), typo?])
