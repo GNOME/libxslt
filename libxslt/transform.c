@@ -4959,36 +4959,15 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    cur = NULL;
 	while (cur != NULL) {
 	    switch (cur->type) {
+#if 0 // Space stripping handled at document load
 		case XML_TEXT_NODE:
 		    if ((IS_BLANK_NODE(cur)) &&
-			(cur->parent != NULL) &&
-			(cur->parent->type == XML_ELEMENT_NODE) &&
-			(ctxt->style->stripSpaces != NULL)) {
-			const xmlChar *val;
-
-			if (cur->parent->ns != NULL) {
-			    val = (const xmlChar *)
-				  xmlHashLookup2(ctxt->style->stripSpaces,
-						 cur->parent->name,
-						 cur->parent->ns->href);
-			    if (val == NULL) {
-				val = (const xmlChar *)
-				  xmlHashLookup2(ctxt->style->stripSpaces,
-						 BAD_CAST "*",
-						 cur->parent->ns->href);
-			    }
-			} else {
-			    val = (const xmlChar *)
-				  xmlHashLookup2(ctxt->style->stripSpaces,
-						 cur->parent->name, NULL);
-			}
-			if ((val != NULL) &&
-			    (xmlStrEqual(val, (xmlChar *) "strip"))) {
-			    delNode = cur;
-			    break;
-			}
+			(xsltFindElemSpaceHandling(ctxt, cur->parent))) {
+			delNode = cur;
+			break;
 		    }
 		    /* no break on purpose */
+#endif
 		case XML_ELEMENT_NODE:
 		case XML_DOCUMENT_NODE:
 		case XML_HTML_DOCUMENT_NODE:
