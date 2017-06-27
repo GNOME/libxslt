@@ -341,10 +341,14 @@ xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt, xmlNodePtr node) {
     xsltStylesheetPtr style;
     const xmlChar *val;
 
-    if ((ctxt == NULL) || (node == NULL))
+    if ((ctxt == NULL) || (ctxt->style == NULL) || (node == NULL))
+	return(0);
+    if ((node->type != XML_ELEMENT_NODE) || (xmlNodeGetSpacePreserve(node) == 1))
 	return(0);
     style = ctxt->style;
-    while (style != NULL) {
+    do {
+	if (style->stripSpaces == NULL)
+	    continue;
 	if (node->ns != NULL) {
 	    val = (const xmlChar *)
 	      xmlHashLookup2(style->stripSpaces, node->name, node->ns->href);
@@ -368,8 +372,7 @@ xsltFindElemSpaceHandling(xsltTransformContextPtr ctxt, xmlNodePtr node) {
 	if (style->stripAll == -1)
 	    return(0);
 
-	style = xsltNextImport(style);
-    }
+    } while ((style = xsltNextImport(style)) != NULL);
     return(0);
 }
 
