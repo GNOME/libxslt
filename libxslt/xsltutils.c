@@ -1249,6 +1249,8 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			if (res[j] == NULL) {
 			    if (res[j+incr] != NULL)
 				tst = 1;
+			} else if (res[j+incr] == NULL) {
+			    tst = -1;
 			} else {
 			    if (numb) {
 				/* We make NaN smaller than number in
