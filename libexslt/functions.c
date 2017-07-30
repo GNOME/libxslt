@@ -419,7 +419,7 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 (const xmlChar *)"fake", NULL);
     oldInsert = tctxt->insert;
     tctxt->insert = fake;
-    xsltApplyOneTemplate (tctxt, xmlXPathGetContextNode(ctxt),
+    xsltApplyOneTemplate (tctxt, tctxt->node,
 			  func->content, NULL, NULL);
     xsltLocalVariablePop(tctxt, tctxt->varsBase, -2);
     tctxt->insert = oldInsert;
