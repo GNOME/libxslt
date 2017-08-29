@@ -714,6 +714,7 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 
 	ctxt->xpathCtxt->namespaces = comp->nsList;
 	ctxt->xpathCtxt->nsNr = comp->nsNr;
+        ctxt->xpathCtxt->node = ctxt->node;
 
 	ret = xmlXPathCompiledEval(comp->select, ctxt->xpathCtxt);
 
@@ -752,7 +753,7 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 
 	oldInsert = ctxt->insert;
 	ctxt->insert = (xmlNodePtr) container;
-	xsltApplyOneTemplate (ctxt, ctxt->xpathCtxt->node,
+	xsltApplyOneTemplate (ctxt, ctxt->node,
 			      inst->children, NULL, NULL);
 	ctxt->insert = oldInsert;
 
