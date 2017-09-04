@@ -9,7 +9,95 @@ H3 {font-family: Verdana,Arial,Helvetica}
 A:link, A:visited, A:active { text-decoration: underline }
     </style><title>News</title></head><body bgcolor="#8b7765" text="#000000" link="#a06060" vlink="#000000"><table border="0" width="100%" cellpadding="5" cellspacing="0" align="center"><tr><td width="120"><a href="http://swpat.ffii.org/"><img src="epatents.png" alt="Action against software patents" /></a></td><td width="180"><a href="http://www.gnome.org/"><img src="gnome2.png" alt="GNOME2 Logo" /></a><a href="http://www.w3.org/Status"><img src="w3c.png" alt="W3C logo" /></a><a href="http://www.redhat.com"><img src="redhat.gif" alt="Red Hat Logo" /></a><div align="left"><a href="http://xmlsoft.org/XSLT/"><img src="Libxslt-Logo-180x168.gif" alt="Made with Libxslt Logo" /></a></div></td><td><table border="0" width="90%" cellpadding="2" cellspacing="0" align="center" bgcolor="#000000"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="3" bgcolor="#fffacd"><tr><td align="center"><h1>The XSLT C library for GNOME</h1><h2>News</h2></td></tr></table></td></tr></table></td></tr></table><table border="0" cellpadding="4" cellspacing="0" width="100%" align="center"><tr><td bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="2" width="100%"><tr><td valign="top" width="200" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="3"><tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>Main Menu</b></center></td></tr><tr><td bgcolor="#fffacd"><form action="search.php" enctype="application/x-www-form-urlencoded" method="get"><input name="query" type="text" size="20" value="" /><input name="submit" type="submit" value="Search ..." /></form><ul><li><a href="index.html">Home</a></li><li><a href="intro.html">Introduction</a></li><li><a href="docs.html">Documentation</a></li><li><a href="bugs.html">Reporting bugs and getting help</a></li><li><a href="help.html">How to help</a></li><li><a href="downloads.html">Downloads</a></li><li><a href="FAQ.html">FAQ</a></li><li><a href="news.html">News</a></li><li><a href="xsltproc2.html">The xsltproc tool</a></li><li><a href="docbook.html">DocBook</a></li><li><a href="API.html">The programming API</a></li><li><a href="python.html">Python and bindings</a></li><li><a href="internals.html">Library internals</a></li><li><a href="extensions.html">Writing extensions</a></li><li><a href="contribs.html">Contributions</a></li><li><a href="EXSLT/index.html" style="font-weight:bold">libexslt</a></li><li><a href="xslt.html">flat page</a>, <a href="site.xsl">stylesheet</a></li><li><a href="html/index.html" style="font-weight:bold">API Menu</a></li><li><a href="ChangeLog.html">ChangeLog</a></li></ul></td></tr></table><table width="100%" border="0" cellspacing="1" cellpadding="3"><tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>Related links</b></center></td></tr><tr><td bgcolor="#fffacd"><ul><li><a href="tutorial/libxslttutorial.html">Tutorial</a>,
           <a href="tutorial2/libxslt_pipes.html">Tutorial2</a></li><li><a href="xsltproc.html">Man page for xsltproc</a></li><li><a href="http://mail.gnome.org/archives/xslt/">Mail archive</a></li><li><a href="http://xmlsoft.org/">XML libxml2</a></li><li><a href="ftp://xmlsoft.org/">FTP</a></li><li><a href="http://www.zlatkovic.com/projects/libxml/">Windows binaries</a></li><li><a href="http://garypennington.net/libxml2/">Solaris binaries</a></li><li><a href="http://www.explain.com.au/oss/libxml2xslt.html">MacOsX binaries</a></li><li><a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Bug Tracker</a></li><li><a href="http://codespeak.net/lxml/">lxml Python bindings</a></li><li><a href="http://cpan.uwinnipeg.ca/dist/XML-LibXSLT">Perl XSLT bindings</a></li><li><a href="http://www.zend.com/php5/articles/php5-xmlphp.php#Heading17">XSLT with PHP</a></li><li><a href="http://www.mod-xslt2.com/">Apache module</a></li><li><a href="http://sourceforge.net/projects/libxml2-pas/">Pascal bindings</a></li><li><a href="http://xsldbg.sourceforge.net/">Xsldbg Debugger</a></li></ul></td></tr></table><table width="100%" border="0" cellspacing="1" cellpadding="3"><tr><td colspan="1" bgcolor="#eecfa1" align="center"><center><b>API Indexes</b></center></td></tr><tr><td bgcolor="#fffacd"><ul><li><a href="APIchunk0.html">Alphabetic</a></li><li><a href="APIconstructors.html">Constructors</a></li><li><a href="APIfunctions.html">Functions/Types</a></li><li><a href="APIfiles.html">Modules</a></li><li><a href="APIsymbols.html">Symbols</a></li></ul></td></tr></table></td></tr></table></td><td valign="top" bgcolor="#8b7765"><table border="0" cellspacing="0" cellpadding="1" width="100%"><tr><td><table border="0" cellspacing="0" cellpadding="1" width="100%" bgcolor="#000000"><tr><td><table border="0" cellpadding="3" cellspacing="1" width="100%"><tr><td bgcolor="#fffacd"><p>See the <a href="http://git.gnome.org/browse/libxslt/">git page</a>
-to get a description of the recent commits.</p><p>Those are the public releases made:</p><h3>1.1.29: May 24 2016</h3><ul>
+to get a description of the recent commits.</p><p>Those are the public releases made:</p><h3>v1.1.30: Sep 04 2017</h3><ul>
+  <li>Documentation:<br />
+  Misc doc fixes (Nick Wellnhofer)<br />
+  </li>
+
+  <li>Portability:<br />
+  Look for libxml2 via pkg-config first (Elliott Sales de Andrade),<br />
+  Change default SOPREFIX on Windows to "bin" (Nick Wellnhofer),<br />
+  Add WIN32_EXTRA_LDFLAGS to tests/plugins/Makefile.am (Michael Haubenwallner)<br />
+  </li>
+
+  <li>Bug Fixes:<br />
+  Also fix memory hazards in exsltFuncResultElem (Nick Wellnhofer),<br />
+  Fix NULL deref in xsltDefaultSortFunction (Nick Wellnhofer),<br />
+  Fix memory hazards in exsltFuncFunctionFunction (Nick Wellnhofer),<br />
+  Fix memory leaks in EXSLT error paths (Nick Wellnhofer),<br />
+  Fix memory leak in str:concat with empty node-set (Nick Wellnhofer),<br />
+  Fix memory leaks in error paths (Nick Wellnhofer),<br />
+  Switch to xmlUTF8Strsize in numbers.c (Nick Wellnhofer),<br />
+  Fix NULL pointer deref in xsltFormatNumberFunction (Nick Wellnhofer),<br />
+  Fix UTF-8 check in str:padding (Nick Wellnhofer),<br />
+  Fix xmlStrPrintf argument (Nick Wellnhofer),<br />
+  Check for overflow in _exsltDateParseGYear (Nick Wellnhofer),<br />
+  Fix double to int conversion (Nick Wellnhofer),<br />
+  Check for overflow in exsltDateParseDuration (Nick Wellnhofer),<br />
+  Change version of xsltMaxVars back to 1.0.24 (Nick Wellnhofer),<br />
+  Disable xsltCopyTextString optimization for extensions (Nick Wellnhofer),<br />
+  Create DOCTYPE for HTML version 5 (Nick Wellnhofer),<br />
+  Make xsl:decimal-format work with namespaces (Nick Wellnhofer),<br />
+  Remove norm:localTime extension function (Nick Wellnhofer),<br />
+  Check for integer overflow in xsltAddTextString (Nick Wellnhofer),<br />
+  Detect infinite recursion when evaluating function arguments (Nick Wellnhofer),<br />
+  Fix memory leak in xsltElementAvailableFunction (Nick Wellnhofer),<br />
+  Fix for pattern predicates calling functions (Nick Wellnhofer),<br />
+  Fix cmd.exe invocations in Makefile.mingw (Nick Wellnhofer),<br />
+  Don't try to install index.sgml (Nick Wellnhofer),<br />
+  Fix symbols.xml (Nick Wellnhofer),<br />
+  Fix heap overread in xsltFormatNumberConversion (Nick Wellnhofer),<br />
+  Fix &lt;xsl:number level="any"/&gt; for non-element nodes (Nick Wellnhofer),<br />
+  Fix unreachable code in xsltAddChild (mahendra.n),<br />
+  Change version number in xsl:version warning (Nick Wellnhofer),<br />
+  Avoid infinite recursion after failed param evaluation (Nick Wellnhofer),<br />
+  Stop if potential recursion is detected (Nick Wellnhofer),<br />
+  Consider built-in templates in apply-imports (Nick Wellnhofer),<br />
+  Fix precedence with multiple attribute sets (Nick Wellnhofer),<br />
+  Rework attribute set resolution (Nick Wellnhofer)<br />
+  </li>
+
+  <li>Improvements:<br />
+  Add .travis.yml (Nick Wellnhofer),<br />
+  Silence tests a little (Nick Wellnhofer),<br />
+  Set LIBXML_SRC to absolute path (Nick Wellnhofer),<br />
+  Add missing #include (Nick Wellnhofer),<br />
+  Adjust expected error messages in tests (Nick Wellnhofer),<br />
+  Make xsltDebug more quiet (Nick Wellnhofer),<br />
+  New-line terminate error message that missed this convention (Jan Pokorný),<br />
+  Use xmlBuffers in EXSLT string functions (Nick Wellnhofer),<br />
+  Switch to xmlUTF8Strsize in EXSLT string functions (Nick Wellnhofer),<br />
+  Check for return value of xmlUTF8Strlen (Nick Wellnhofer),<br />
+  Avoid double/long round trip in FORMAT_ITEM (Nick Wellnhofer),<br />
+  Separate date and duration structs (Nick Wellnhofer),<br />
+  Check for overflow in _exsltDateDifference (Nick Wellnhofer),<br />
+  Clamp seconds field of durations (Nick Wellnhofer),<br />
+  Change _exsltDateAddDurCalc parameter types (Nick Wellnhofer),<br />
+  Fix date:difference with time zones (Nick Wellnhofer),<br />
+  Rework division/remainder arithmetic in date.c (Nick Wellnhofer),<br />
+  Remove exsltDateCastDateToNumber (Nick Wellnhofer),<br />
+  Change internal representation of years (Nick Wellnhofer),<br />
+  Optimize IS_LEAP (Nick Wellnhofer),<br />
+  Link libraries with libm (Jussi Kukkonen),<br />
+  Rename xsltCopyTreeInternal to xsltCopyTree (Nick Wellnhofer),<br />
+  Update linker version script (Nick Wellnhofer),<br />
+  Add local wildcard to version script (Nick Wellnhofer),<br />
+  Make some symbols static (Nick Wellnhofer),<br />
+  Remove redundant NULL check in xsltNumberComp (mahendra.n),<br />
+  Fix forwards compatibility for imported stylesheets (Nick Wellnhofer),<br />
+  Reduce warnings in forwards-compatible mode (Nick Wellnhofer),<br />
+  Precompute XSLT elements after preprocessing (Nick Wellnhofer),<br />
+  Fix whitespace in xsltParseStylesheetTop (Nick Wellnhofer),<br />
+  Consolidate recursion checks (Nick Wellnhofer),<br />
+  Treat XSLT_STATE_STOPPED same as errors (Nick Wellnhofer),<br />
+  Make sure that XSLT_STATE_STOPPED isn't overwritten (Nick Wellnhofer),<br />
+  Add comment regarding built-in templates and params (Nick Wellnhofer),<br />
+  Rewrite memory management of local RVTs (Nick Wellnhofer),<br />
+  Validate QNames of attribute sets (Nick Wellnhofer),<br />
+  Add xsl:attribute-set regression tests (Nick Wellnhofer),<br />
+  Ignore imported stylesheets in xsltApplyAttributeSet (Nick Wellnhofer)<br />
+  </li>
+</ul><h3>1.1.29: May 24 2016</h3><ul>
   <li>Security:<br />
   CVE-2015-7995 Fix for type confusion in preprocessing attributes (Daniel Veillard)<br />
   </li>
