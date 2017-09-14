@@ -502,31 +502,10 @@ AC_ARG_WITH(libxml-src,
 AC_SUBST(LIBXML_SRC)
 
 dnl
-dnl Try pkg-config first if nothing is set
-dnl
-
-if test "x$LIBXML_CONFIG_PREFIX" == "x" -a "x$LIBXML_SRC" == "x"
-then
-	PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION], [
-		LIBXML_MANUAL_SEARCH=no
-		WITH_MODULES="`$PKG_CONFIG --variable=modules libxml-2.0`"
-	],
-	[
-		LIBXML_MANUAL_SEARCH=yes
-	])
-else
-	LIBXML_MANUAL_SEARCH=yes
-fi
-
-if test "x$LIBXML_MANUAL_SEARCH" != "xno"
-then
-
-dnl
 dnl where is xml2-config
 dnl
 
 AC_SUBST(LIBXML_REQUIRED_VERSION)
-AC_MSG_CHECKING(for libxml libraries >= $LIBXML_REQUIRED_VERSION) 
 if test "x$LIBXML_CONFIG_PREFIX" != "x"
 then
 	AC_PATH_TOOL([XML_CONFIG], [xml2-config], [false], [${LIBXML_CONFIG_PREFIX}/bin])
@@ -570,7 +549,8 @@ then
 		LIBXML_SRC=`pwd`
 		XML_CONFIG="${LIBXML_SRC}/xml2-config"
 		LIBXML_CFLAGS="-I${LIBXML_SRC}/include"
-		LIBXML_LIBS="-L${LIBXML_SRC}"
+		LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs`"
+                WITH_MODULES="`$XML_CONFIG --modules`"
 		cd $CWD
 	else
 		AC_MSG_ERROR([libxml source dir not found (${LIBXML_SRC}), typo?])
@@ -578,12 +558,24 @@ then
 fi
 
 dnl
+dnl Try pkg-config first if nothing is set
+dnl
+
+if test "x$LIBXML_CONFIG_PREFIX" = "x" -a "x$LIBXML_LIBS" = "x"
+then
+	PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION], [
+		WITH_MODULES="`$PKG_CONFIG --variable=modules libxml-2.0`"
+	], [ ])
+fi
+
+dnl
 dnl make sure xml2-config is executable,
 dnl test version and init our variables
 dnl
 
-if ${XML_CONFIG} --libs print > /dev/null 2>&1
+if test "x$LIBXML_LIBS" = "x" && ${XML_CONFIG} --libs print > /dev/null 2>&1
 then
+        AC_MSG_CHECKING(for libxml libraries >= $LIBXML_REQUIRED_VERSION)
 	XMLVERS=`$XML_CONFIG --version`
 	if test VERSION_TO_NUMBER(echo $XMLVERS) -ge VERSION_TO_NUMBER(echo $LIBXML_REQUIRED_VERSION)
 	then
@@ -591,17 +583,15 @@ then
 	else
 		AC_MSG_ERROR(Version $XMLVERS found. You need at least libxml2 $LIBXML_REQUIRED_VERSION for this version of libxslt)
 	fi
-	LIBXML_LIBS="$LIBXML_LIBS `$XML_CONFIG --libs`"
-	if test "x$LIBXML_SRC" = "x"; then
-		LIBXML_CFLAGS="$LIBXML_CFLAGS `$XML_CONFIG --cflags`"
-	fi
-else
-	AC_MSG_ERROR([Could not find libxml2 anywhere, check ftp://xmlsoft.org/.])
+	LIBXML_LIBS="`$XML_CONFIG --libs`"
+	LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
+        WITH_MODULES="`$XML_CONFIG --modules`"
 fi
 
-WITH_MODULES="`$XML_CONFIG --modules`"
-
-fi  # LIBXML_MANUAL_SEARCH
+if test "x$LIBXML_LIBS" = "x"
+then
+	AC_MSG_ERROR([Could not find libxml2 anywhere, check ftp://xmlsoft.org/.])
+fi
 
 
 AC_SUBST(CFLAGS)
