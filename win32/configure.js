@@ -19,7 +19,7 @@ var baseNameXslt = "libxslt";
 var baseNameExslt = "libexslt";
 /* Configure file which contains the version and the output file where
    we can store our build configuration. */
-var configFile = baseDir + "\\configure.in";
+var configFile = baseDir + "\\configure.ac";
 var versionFile = ".\\config.msvc";
 /* Input and output files regarding the lib(e)xml features. The second
    output file is there for the compatibility reasons, otherwise it
@@ -165,15 +165,15 @@ function discoverVersion()
 	while (cf.AtEndOfStream != true) {
 		ln = cf.ReadLine();
 		s = new String(ln);
-		if (s.search(/^LIBXSLT_MAJOR_VERSION=/) != -1) {
-			vf.WriteLine(s);
-			verMajorXslt = s.substring(s.indexOf("=") + 1, s.length)
-		} else if(s.search(/^LIBXSLT_MINOR_VERSION=/) != -1) {
-			vf.WriteLine(s);
-			verMinorXslt = s.substring(s.indexOf("=") + 1, s.length)
-		} else if(s.search(/^LIBXSLT_MICRO_VERSION=/) != -1) {
-			vf.WriteLine(s);
-			verMicroXslt = s.substring(s.indexOf("=") + 1, s.length)
+		if (m = s.match(/^m4_define\(\[MAJOR_VERSION\], \[(.*)\]\)/)) {
+			vf.WriteLine("LIBXSLT_MAJOR_VERSION=" + m[1]);
+			verMajorXslt = m[1];
+		} else if(m = s.match(/^m4_define\(\[MINOR_VERSION\], \[(.*)\]\)/)) {
+			vf.WriteLine("LIBXSLT_MINOR_VERSION=" + m[1]);
+			verMinorXslt = m[1];
+		} else if(m = s.match(/^m4_define\(\[MICRO_VERSION\], \[(.*)\]\)/)) {
+			vf.WriteLine("LIBXSLT_MICRO_VERSION=" + m[1]);
+			verMicroXslt = m[1];
 		} else if (s.search(/^LIBEXSLT_MAJOR_VERSION=/) != -1) {
 			vf.WriteLine(s);
 			verMajorExslt = s.substring(s.indexOf("=") + 1, s.length)
