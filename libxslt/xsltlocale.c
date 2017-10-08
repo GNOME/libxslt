@@ -19,13 +19,6 @@
 #include "xsltlocale.h"
 #include "xsltutils.h"
 
-#if defined(__GLIBC__) && __GLIBC__ == 2 && __GLIBC_MINOR__ <= 2
-#define newlocale __newlocale
-#define freelocale __freelocale
-#define strxfrm_l __strxfrm_l
-#define LC_COLLATE_MASK (1 << LC_COLLATE)
-#endif
-
 #define TOUPPER(c) (c & ~0x20)
 #define TOLOWER(c) (c | 0x20)
 #define ISALPHA(c) ((unsigned)(TOUPPER(c) - 'A') < 26)
@@ -92,7 +85,7 @@ xsltFreeLocales(void) {
  */
 xsltLocale
 xsltNewLocale(const xmlChar *languageTag) {
-#ifdef XSLT_LOCALE_XLOCALE
+#ifdef XSLT_LOCALE_POSIX
     xsltLocale locale;
     char localeName[XSLTMAX_LANGTAGLEN+6]; /* 6 chars for ".utf8\0" */
     const xmlChar *p = languageTag;
@@ -352,7 +345,7 @@ xsltDefaultRegion(const xmlChar *localeName) {
  */
 void
 xsltFreeLocale(xsltLocale locale) {
-#ifdef XSLT_LOCALE_XLOCALE
+#ifdef XSLT_LOCALE_POSIX
     freelocale(locale);
 #endif
 }
@@ -376,7 +369,7 @@ xsltStrxfrm(xsltLocale locale, const xmlChar *string)
     size_t xstrlen, r;
     xsltLocaleChar *xstr;
 
-#ifdef XSLT_LOCALE_XLOCALE
+#ifdef XSLT_LOCALE_POSIX
     xstrlen = strxfrm_l(NULL, (const char *)string, 0, locale) + 1;
     xstr = (xsltLocaleChar *) xmlMalloc(xstrlen);
     if (xstr == NULL) {

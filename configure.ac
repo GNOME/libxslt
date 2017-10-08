@@ -161,74 +161,8 @@ dnl
 dnl Detect supported locale
 dnl
 
-XSLT_LOCALE_XLOCALE=0
-XSLT_LOCALE_WINAPI=0
-
 AC_CHECK_HEADERS([locale.h xlocale.h])
-if test $ac_cv_header_xlocale_h = yes; then
-dnl
-dnl Check for generic locale_t declaration
-dnl
-AC_MSG_CHECKING([if xlocale program link])
-AC_LINK_IFELSE([AC_LANG_PROGRAM([[
-#ifdef HAVE_LOCALE_H
-#include <locale.h>
-#endif
-#ifdef HAVE_XLOCALE_H
-#include <xlocale.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-
-#ifdef __GLIBC__
-typedef __locale_t xsltLocale;
-#else
-typedef locale_t xsltLocale;
-#endif
-#if defined(__GLIBC__) && __GLIBC__ == 2 && __GLIBC_MINOR__ <= 2
-#define newlocale __newlocale
-#define freelocale __freelocale
-#define strxfrm_l __strxfrm_l
-#define LC_COLLATE_MASK (1 << LC_COLLATE)
-#endif
-]],[[
-    xsltLocale locale;
-    const char *src[2] = { "\xc3\x84rger", "Zeppelin" };
-    char *dst[2];
-    size_t len, r;
-    int i;
-
-    locale = newlocale(LC_COLLATE_MASK, "en_US.utf8", NULL);
-    if (locale == NULL) exit(1);
-    for (i=0; i<2; ++i) {
-        len = strxfrm_l(NULL, src[i], 0, locale) + 1;
-        dst[i] = malloc(len);
-        if(dst[i] == NULL) exit(1);
-        r = strxfrm_l(dst[i], src[i], len, locale);
-        if(r >= len) exit(1);
-    }
-    if (strcmp(dst[0], dst[1]) >= 0) exit(1);
-
-    exit(0);
-    return(0);
-]])],
-  [AC_MSG_RESULT(yes); XSLT_LOCALE_XLOCALE=1],
-  [AC_MSG_RESULT(no)]
-)
-else
-  case "$host" in
-    *-*-mingw*)
-      AC_MSG_NOTICE([using winapi locale])
-      XSLT_LOCALE_WINAPI=1;;
-  esac
-fi
-
-AC_SUBST(XSLT_LOCALE_XLOCALE)
-AC_SUBST(XSLT_LOCALE_WINAPI)
+AC_CHECK_FUNCS([strxfrm_l])
 
 dnl
 dnl Math detection

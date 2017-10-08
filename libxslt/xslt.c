@@ -42,6 +42,7 @@
 #include "preproc.h"
 #include "extra.h"
 #include "security.h"
+#include "xsltlocale.h"
 
 #ifdef WITH_XSLT_DEBUG
 #define WITH_XSLT_DEBUG_PARSING
