@@ -44,6 +44,7 @@ libxslt/libxslt.la
 libxslt/xsltconfig.h
 ltmain.sh
 missing
+python/*.pyc
 python/.deps
 python/.libs
 python/Makefile
