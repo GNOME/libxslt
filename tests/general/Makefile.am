@@ -219,7 +219,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  name=`basename $$j .xsl`; \
 	  out=$(srcdir)/"$$name".out; \
 	  err=$(srcdir)/"$$name".err; \
-	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc $$j $$i \
+	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc --maxdepth 200 $$j $$i \
 	  	> result.$$name 2>err.$$name; \
 	  if [ ! -f $$out ] ; then \
 	  	cp result.$$name $$out ; \
@@ -251,7 +251,7 @@ test tests: $(top_builddir)/xsltproc/xsltproc
 	  name=`basename $$j .xsl`; \
 	  out=$(srcdir)/"$$name".out; \
 	  err=$(srcdir)/"$$name".err; \
-	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc --nodict $$j $$i \
+	  log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc --nodict --maxdepth 200 $$j $$i \
 	  	> result.$$name 2>err.$$name; \
 	  if [ ! -f $$out ] ; then \
 	  	cp result.$$name $$out ; \
