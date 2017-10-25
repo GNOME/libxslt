@@ -1,7 +1,7 @@
 #define IN_LIBEXSLT
 #include "libexslt/libexslt.h"
 
-#if defined(WIN32) && !defined (__CYGWIN__) && (!__MINGW32__)
+#if defined(_WIN32) && !defined (__CYGWIN__) && (!__MINGW32__)
 #include <win32config.h>
 #else
 #include "config.h"
@@ -109,7 +109,7 @@ exsltCryptoHex2Bin (const unsigned char *hex, int hexlen,
     return j;
 }
 
-#if defined(WIN32)
+#if defined(_WIN32) && !defined(__CYGWIN__)
 
 #define HAVE_CRYPTO
 #define PLATFORM_HASH	exsltCryptoCryptoApiHash
@@ -307,7 +307,7 @@ exsltCryptoCryptoApiRc4Decrypt (xmlXPathParserContextPtr ctxt,
     CryptReleaseContext (hCryptProv, 0);
 }
 
-#endif /* defined(WIN32) */
+#endif /* defined(_WIN32) */
 
 #if defined(HAVE_GCRYPT)
 

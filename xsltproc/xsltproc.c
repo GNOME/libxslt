@@ -594,7 +594,7 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "-output")) ||
                    (!strcmp(argv[i], "--output"))) {
             i++;
-#if defined(WIN32) || defined (__CYGWIN__)
+#if defined(_WIN32) || defined (__CYGWIN__)
 	    output = (char *) xmlCanonicPath((xmlChar *) argv[i]);
             if (output == NULL)
 #endif
