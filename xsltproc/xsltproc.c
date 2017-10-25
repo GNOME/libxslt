@@ -31,6 +31,9 @@
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #endif
+#if defined(_WIN32) && !defined(__CYGWIN__)
+#include <fcntl.h>
+#endif
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
@@ -557,6 +560,10 @@ main(int argc, char **argv)
     srand(time(NULL));
     xmlInitMemory();
 
+#if defined(_WIN32) && !defined(__CYGINW__)
+    setmode(fileno(stdout), O_BINARY);
+    setmode(fileno(stderr), O_BINARY);
+#endif
 #if defined(_MSC_VER) && _MSC_VER < 1900
     _set_output_format(_TWO_DIGIT_EXPONENT);
 #endif
