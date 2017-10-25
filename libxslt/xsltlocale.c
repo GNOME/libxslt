@@ -187,7 +187,7 @@ xsltNewLocale(const xmlChar *languageTag) {
     region = xsltDefaultRegion(localeName);
     if (region == NULL) goto end;
 
-    strcpy(localeName + llen + 1, region);
+    strcpy((char *) localeName + llen + 1, (char *) region);
     locale = xslt_locale_WINAPI(localeName);
 end:
     return(locale);
@@ -382,7 +382,7 @@ xsltStrxfrm(xsltLocale locale, const xmlChar *string)
 #endif
 
 #ifdef XSLT_LOCALE_WINAPI
-    xstrlen = MultiByteToWideChar(CP_UTF8, 0, string, -1, NULL, 0);
+    xstrlen = MultiByteToWideChar(CP_UTF8, 0, (char *) string, -1, NULL, 0);
     if (xstrlen == 0) {
         xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : MultiByteToWideChar check failed\n");
         return(NULL);
@@ -392,7 +392,7 @@ xsltStrxfrm(xsltLocale locale, const xmlChar *string)
         xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : out of memory\n");
         return(NULL);
     }
-    r = MultiByteToWideChar(CP_UTF8, 0, string, -1, xstr, xstrlen);
+    r = MultiByteToWideChar(CP_UTF8, 0, (char *) string, -1, xstr, xstrlen);
     if (r == 0) {
         xsltTransformError(NULL, NULL, NULL, "xsltStrxfrm : MultiByteToWideChar failed\n");
         xmlFree(xstr);
@@ -479,9 +479,11 @@ xsltIterateSupportedLocales(LPSTR lcid) {
     k = sscanf(lcid, "%lx", (long*)&p->lcid);
     if (k < 1) goto end;
     /*don't count terminating null character*/
-    k = GetLocaleInfoA(p->lcid, LOCALE_SISO639LANGNAME , iso639lang , sizeof(iso639lang ));
+    k = GetLocaleInfoA(p->lcid, LOCALE_SISO639LANGNAME,
+                       (char *) iso639lang, sizeof(iso639lang));
     if (--k < 1) goto end;
-    l = GetLocaleInfoA(p->lcid, LOCALE_SISO3166CTRYNAME, iso3136ctry, sizeof(iso3136ctry));
+    l = GetLocaleInfoA(p->lcid, LOCALE_SISO3166CTRYNAME,
+                       (char *) iso3136ctry, sizeof(iso3136ctry));
     if (--l < 1) goto end;
 
     {  /*fill results*/

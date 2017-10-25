@@ -808,8 +808,9 @@ exsltDateCurrent (void)
     gmtime_r(&secs, &gmTm);
 #else
     tb = gmtime(&secs);
-    if (tb != NULL)
-        gmTm = *tb;
+    if (tb == NULL)
+        return NULL;
+    gmTm = *tb;
 #endif
     ret->tz_flag = 0;
 #if 0

@@ -22,6 +22,7 @@
 #include <limits.h>
 #include <string.h>
 #include <stdio.h>
+#include <stddef.h>
 
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
@@ -5872,7 +5873,8 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
      */
     root = xmlDocGetRootElement(doc);
     if (root != NULL) {
-	if (((long) root->content) >= 0 && (xslDebugStatus == XSLT_DEBUG_NONE))
+	if (((ptrdiff_t) root->content >= 0) &&
+            (xslDebugStatus == XSLT_DEBUG_NONE))
 	    xmlXPathOrderDocElems(doc);
     }
 

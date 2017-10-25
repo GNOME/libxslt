@@ -54,18 +54,11 @@
 
 #include <libexslt/exsltconfig.h>
 
-#if defined(WIN32) && !defined (__CYGWIN__)
-#if defined(_MSC_VER) || defined(__MINGW32__)
-#include <winsock2.h>
-#define gettimeofday(p1,p2)
-#endif /* _MS_VER */
-#else /* WIN32 */
 #if defined(HAVE_SYS_TIME_H)
 #include <sys/time.h>
 #elif defined(HAVE_TIME_H)
 #include <time.h>
 #endif
-#endif /* WIN32 */
 
 #ifdef HAVE_SYS_TIMEB_H
 #include <sys/timeb.h>
@@ -595,7 +588,7 @@ main(int argc, char **argv)
                    (!strcmp(argv[i], "--output"))) {
             i++;
 #if defined(WIN32) || defined (__CYGWIN__)
-	    output = xmlCanonicPath(argv[i]);
+	    output = (char *) xmlCanonicPath((xmlChar *) argv[i]);
             if (output == NULL)
 #endif
 		output = (char *) xmlStrdup((xmlChar *) argv[i]);
