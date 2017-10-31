@@ -123,7 +123,7 @@ def usage(name = 'pyxsltproc'):
     print "\t             otherwise XML Catalogs starting from "
     print "\t         file:///etc/xml/catalog are activated by default"
     print "\t--xinclude : do XInclude processing on document input"
-    print "\t--profile or --norman : dump profiling informations "
+    print "\t--profile or --norman : dump profiling information "
     print "\nProject libxslt home page: http://xmlsoft.org/XSLT/"
     print "To report bugs and get help: http://xmlsoft.org/XSLT/bugs.html"
 
@@ -166,7 +166,7 @@ def main(args = None):
             print "TODO: xsltSetGenericDebugFunc() mapping missing"
         elif args[i] == "-version" or args[i] == "--version" or \
              args[i] == "-V":
-            print "TODO: version informations mapping missing"
+            print "TODO: version information mapping missing"
         elif args[i] == "-verbose" or args[i] == "--verbose" or \
              args[i] == "-v":
             if repeat == 0:
