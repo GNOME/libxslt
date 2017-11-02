@@ -579,7 +579,9 @@
      <summary>Locale handling</summary>
      <description>Interfaces for locale handling. Needed for language dependent sorting. </description>
      <author>Nick Wellnhofer </author>
+     <exports symbol='XSLT_LOCALE_WINAPI' type='macro'/>
      <exports symbol='XSLT_LOCALE_NONE' type='macro'/>
+     <exports symbol='XSLT_LOCALE_POSIX' type='macro'/>
      <exports symbol='xsltLocale' type='typedef'/>
      <exports symbol='xsltLocaleChar' type='typedef'/>
      <exports symbol='xsltNewLocale' type='function'/>
@@ -769,7 +771,13 @@
       <info>This is the libxslt namespace for specific extensions.</info>
     </macro>
     <macro name='XSLT_LOCALE_NONE' file='xsltlocale'>
-      <info>Macro indicating that locale are not supported</info>
+      <info>Macro indicating that there&apos;s no extended locale support</info>
+    </macro>
+    <macro name='XSLT_LOCALE_POSIX' file='xsltlocale'>
+      <info>Macro indicating to use POSIX locale extensions</info>
+    </macro>
+    <macro name='XSLT_LOCALE_WINAPI' file='xsltlocale'>
+      <info>Macro indicating to use WinAPI for extended locale support</info>
     </macro>
     <macro name='XSLT_MARK_RES_TREE_FRAG' file='xsltInternals'>
       <info>internal macro to set up tree fragments</info>

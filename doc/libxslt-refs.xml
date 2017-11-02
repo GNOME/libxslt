@@ -77,6 +77,8 @@
     <reference name='XSLT_LOAD_START' href='html/libxslt-documents.html#XSLT_LOAD_START'/>
     <reference name='XSLT_LOAD_STYLESHEET' href='html/libxslt-documents.html#XSLT_LOAD_STYLESHEET'/>
     <reference name='XSLT_LOCALE_NONE' href='html/libxslt-xsltlocale.html#XSLT_LOCALE_NONE'/>
+    <reference name='XSLT_LOCALE_POSIX' href='html/libxslt-xsltlocale.html#XSLT_LOCALE_POSIX'/>
+    <reference name='XSLT_LOCALE_WINAPI' href='html/libxslt-xsltlocale.html#XSLT_LOCALE_WINAPI'/>
     <reference name='XSLT_MARK_RES_TREE_FRAG' href='html/libxslt-xsltInternals.html#XSLT_MARK_RES_TREE_FRAG'/>
     <reference name='XSLT_MAX_SORT' href='html/libxslt-xsltInternals.html#XSLT_MAX_SORT'/>
     <reference name='XSLT_NAMESPACE' href='html/libxslt-xslt.html#XSLT_NAMESPACE'/>
@@ -665,6 +667,8 @@
       <ref name='XSLT_LOAD_START'/>
       <ref name='XSLT_LOAD_STYLESHEET'/>
       <ref name='XSLT_LOCALE_NONE'/>
+      <ref name='XSLT_LOCALE_POSIX'/>
+      <ref name='XSLT_LOCALE_WINAPI'/>
       <ref name='XSLT_MARK_RES_TREE_FRAG'/>
       <ref name='XSLT_MAX_SORT'/>
       <ref name='XSLT_NAMESPACE'/>
@@ -2465,6 +2469,8 @@
     </file>
     <file name='xsltlocale'>
       <ref name='XSLT_LOCALE_NONE'/>
+      <ref name='XSLT_LOCALE_POSIX'/>
+      <ref name='XSLT_LOCALE_WINAPI'/>
       <ref name='xsltFreeLocale'/>
       <ref name='xsltFreeLocales'/>
       <ref name='xsltLocale'/>
@@ -3018,6 +3024,8 @@
           <ref name='CHECK_STOPPEDE'/>
           <ref name='XML_CAST_FPTR'/>
           <ref name='XSLT_LOCALE_NONE'/>
+          <ref name='XSLT_LOCALE_POSIX'/>
+          <ref name='XSLT_LOCALE_WINAPI'/>
           <ref name='XSLT_RUNTIME_EXTRA'/>
           <ref name='XSLT_RUNTIME_EXTRA_FREE'/>
           <ref name='XSLT_RUNTIME_EXTRA_LST'/>
@@ -3120,6 +3128,9 @@
         </word>
       </letter>
       <letter name='P'>
+        <word name='POSIX'>
+          <ref name='XSLT_LOCALE_POSIX'/>
+        </word>
         <word name='Parser'>
           <ref name='xsltDocumentFunction'/>
           <ref name='xsltElementAvailableFunction'/>
@@ -3533,6 +3544,9 @@
           <ref name='CHECK_STOPPED0'/>
           <ref name='CHECK_STOPPEDE'/>
         </word>
+        <word name='WinAPI'>
+          <ref name='XSLT_LOCALE_WINAPI'/>
+        </word>
       </letter>
       <letter name='X'>
         <word name='XALAN'>
@@ -3823,7 +3837,6 @@
           <ref name='xsltSaveResultToString'/>
         </word>
         <word name='are'>
-          <ref name='XSLT_LOCALE_NONE'/>
           <ref name='_xsltDocument'/>
           <ref name='_xsltStackElem'/>
           <ref name='_xsltStylesheet'/>
@@ -5035,6 +5048,10 @@
         <word name='extInfos'>
           <ref name='xsltGetExtInfo'/>
         </word>
+        <word name='extended'>
+          <ref name='XSLT_LOCALE_NONE'/>
+          <ref name='XSLT_LOCALE_WINAPI'/>
+        </word>
         <word name='extending'>
           <ref name='xsltInitElemPreComp'/>
         </word>
@@ -5043,6 +5060,7 @@
         </word>
         <word name='extensions'>
           <ref name='XSLT_LIBXSLT_NAMESPACE'/>
+          <ref name='XSLT_LOCALE_POSIX'/>
           <ref name='XSLT_SAXON_NAMESPACE'/>
           <ref name='XSLT_XALAN_NAMESPACE'/>
           <ref name='XSLT_XT_NAMESPACE'/>
@@ -5580,6 +5598,8 @@
         </word>
         <word name='indicating'>
           <ref name='XSLT_LOCALE_NONE'/>
+          <ref name='XSLT_LOCALE_POSIX'/>
+          <ref name='XSLT_LOCALE_WINAPI'/>
           <ref name='xsltDocLoaderFunc'/>
         </word>
         <word name='indicator'>
@@ -5964,6 +5984,8 @@
         </word>
         <word name='locale'>
           <ref name='XSLT_LOCALE_NONE'/>
+          <ref name='XSLT_LOCALE_POSIX'/>
+          <ref name='XSLT_LOCALE_WINAPI'/>
           <ref name='xsltFreeLocale'/>
           <ref name='xsltFreeLocales'/>
           <ref name='xsltLocaleStrcmp'/>
@@ -7752,11 +7774,12 @@
           <ref name='xsltFormatNumberConversion'/>
         </word>
         <word name='support'>
+          <ref name='XSLT_LOCALE_NONE'/>
+          <ref name='XSLT_LOCALE_WINAPI'/>
           <ref name='xsltFreeLocales'/>
         </word>
         <word name='supported'>
           <ref name='XSLT_DEFAULT_VERSION'/>
-          <ref name='XSLT_LOCALE_NONE'/>
         </word>
         <word name='sure'>
           <ref name='xsltAllocateExtraCtxt'/>
@@ -7911,6 +7934,7 @@
           <ref name='xsltStrxfrm'/>
         </word>
         <word name='there'>
+          <ref name='XSLT_LOCALE_NONE'/>
           <ref name='_xsltCompilerCtxt'/>
           <ref name='xsltAllocateExtraCtxt'/>
           <ref name='xsltGetQNameURI'/>
@@ -8081,6 +8105,8 @@
           <ref name='XSLT_FAST_IF'/>
         </word>
         <word name='use'>
+          <ref name='XSLT_LOCALE_POSIX'/>
+          <ref name='XSLT_LOCALE_WINAPI'/>
           <ref name='xsltAddKey'/>
           <ref name='xsltCopyNamespaceList'/>
           <ref name='xsltDocLoaderFunc'/>
