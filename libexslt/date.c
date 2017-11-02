@@ -46,6 +46,7 @@
 #include "exslt.h"
 
 #include <string.h>
+#include <limits.h>
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
