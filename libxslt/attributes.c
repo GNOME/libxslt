@@ -754,13 +754,13 @@ void
 xsltAttribute(xsltTransformContextPtr ctxt,
 	      xmlNodePtr contextNode,
               xmlNodePtr inst,
-	      xsltStylePreCompPtr castedComp)
+	      xsltElemPreCompPtr castedComp)
 {
 #ifdef XSLT_REFACTORED
     xsltStyleItemAttributePtr comp =
 	(xsltStyleItemAttributePtr) castedComp;
 #else
-    xsltStylePreCompPtr comp = castedComp;
+    xsltStylePreCompPtr comp = (xsltStylePreCompPtr) castedComp;
 #endif
     xmlNodePtr targetElem;
     xmlChar *prop = NULL;

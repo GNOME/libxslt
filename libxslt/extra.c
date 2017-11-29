@@ -54,7 +54,7 @@
 void
 xsltDebug(xsltTransformContextPtr ctxt, xmlNodePtr node ATTRIBUTE_UNUSED,
           xmlNodePtr inst ATTRIBUTE_UNUSED,
-          xsltStylePreCompPtr comp ATTRIBUTE_UNUSED)
+          xsltElemPreCompPtr comp ATTRIBUTE_UNUSED)
 {
     int i, j;
 
@@ -179,21 +179,21 @@ xsltRegisterAllExtras (void) {
     xsltRegisterExtModuleElement((const xmlChar *) "debug",
 				 XSLT_LIBXSLT_NAMESPACE,
 				 NULL,
-				 (xsltTransformFunction) xsltDebug);
+				 xsltDebug);
     xsltRegisterExtModuleElement((const xmlChar *) "output",
 				 XSLT_SAXON_NAMESPACE,
 				 xsltDocumentComp,
-				 (xsltTransformFunction) xsltDocumentElem);
+				 xsltDocumentElem);
     xsltRegisterExtModuleElement((const xmlChar *) "write",
 				 XSLT_XALAN_NAMESPACE,
 				 xsltDocumentComp,
-				 (xsltTransformFunction) xsltDocumentElem);
+				 xsltDocumentElem);
     xsltRegisterExtModuleElement((const xmlChar *) "document",
 				 XSLT_XT_NAMESPACE,
 				 xsltDocumentComp,
-				 (xsltTransformFunction) xsltDocumentElem);
+				 xsltDocumentElem);
     xsltRegisterExtModuleElement((const xmlChar *) "document",
 				 XSLT_NAMESPACE,
 				 xsltDocumentComp,
-				 (xsltTransformFunction) xsltDocumentElem);
+				 xsltDocumentElem);
 }

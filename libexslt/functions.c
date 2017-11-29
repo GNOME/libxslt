@@ -680,7 +680,8 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
 static void
 exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	             xmlNodePtr node ATTRIBUTE_UNUSED, xmlNodePtr inst,
-		     exsltFuncResultPreComp *comp) {
+		     xsltElemPreCompPtr ecomp) {
+    exsltFuncResultPreComp *comp = (exsltFuncResultPreComp *) ecomp;
     exsltFuncData *data;
     xmlXPathObjectPtr ret;
 
@@ -805,6 +806,6 @@ exsltFuncRegister (void) {
 				   exsltFuncFunctionComp);
     xsltRegisterExtModuleElement ((const xmlChar *) "result",
 			  EXSLT_FUNCTIONS_NAMESPACE,
-			  (xsltPreComputeFunction)exsltFuncResultComp,
-			  (xsltTransformFunction) exsltFuncResultElem);
+			  exsltFuncResultComp,
+			  exsltFuncResultElem);
 }
