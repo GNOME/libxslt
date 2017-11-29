@@ -218,6 +218,12 @@ xsltFreeCompMatchList(xsltCompMatchPtr comp) {
     }
 }
 
+static void
+xsltFreeCompMatchListEntry(void *payload,
+                           const xmlChar *name ATTRIBUTE_UNUSED) {
+    xsltFreeCompMatchList((xsltCompMatchPtr) payload);
+}
+
 /**
  * xsltNormalizeCompSteps:
  * @payload: pointer to template hash table entry
@@ -2578,7 +2584,7 @@ void
 xsltFreeTemplateHashes(xsltStylesheetPtr style) {
     if (style->templatesHash != NULL)
 	xmlHashFree((xmlHashTablePtr) style->templatesHash,
-		    (xmlHashDeallocator) xsltFreeCompMatchList);
+		    xsltFreeCompMatchListEntry);
     if (style->rootMatch != NULL)
         xsltFreeCompMatchList(style->rootMatch);
     if (style->keyMatch != NULL)

@@ -68,10 +68,12 @@ static exsltFuncFunctionData *exsltFuncNewFunctionData(void);
  * Registers a function declared by a func:function element
  */
 static void
-exsltFuncRegisterFunc (exsltFuncFunctionData *data,
-		       xsltTransformContextPtr ctxt,
+exsltFuncRegisterFunc (void *payload, void *vctxt,
 		       const xmlChar *URI, const xmlChar *name,
 		       ATTRIBUTE_UNUSED const xmlChar *ignored) {
+    exsltFuncFunctionData *data = (exsltFuncFunctionData *) payload;
+    xsltTransformContextPtr ctxt = (xsltTransformContextPtr) vctxt;
+
     if ((data == NULL) || (ctxt == NULL) || (URI == NULL) || (name == NULL))
 	return;
 
@@ -93,10 +95,11 @@ exsltFuncRegisterFunc (exsltFuncFunctionData *data,
  * stylesheet.  If not, copies function data and registers function
  */
 static void
-exsltFuncRegisterImportFunc (exsltFuncFunctionData *data,
-			     exsltFuncImportRegData *ch,
+exsltFuncRegisterImportFunc (void *payload, void *vctxt,
 			     const xmlChar *URI, const xmlChar *name,
 			     ATTRIBUTE_UNUSED const xmlChar *ignored) {
+    exsltFuncFunctionData *data = (exsltFuncFunctionData *) payload;
+    exsltFuncImportRegData *ch = (exsltFuncImportRegData *) vctxt;
     exsltFuncFunctionData *func=NULL;
 
     if ((data == NULL) || (ch == NULL) || (URI == NULL) || (name == NULL))
@@ -159,14 +162,13 @@ exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 
     ch.hash = (xmlHashTablePtr) xsltStyleGetExtData(ctxt->style, URI);
     ret->funcs = ch.hash;
-    xmlHashScanFull(ch.hash, (xmlHashScannerFull) exsltFuncRegisterFunc, ctxt);
+    xmlHashScanFull(ch.hash, exsltFuncRegisterFunc, ctxt);
     tmp = ctxt->style;
     ch.ctxt = ctxt;
     while ((tmp=xsltNextImport(tmp))!=NULL) {
 	hash = xsltGetExtInfo(tmp, URI);
 	if (hash != NULL) {
-	    xmlHashScanFull(hash,
-		    (xmlHashScannerFull) exsltFuncRegisterImportFunc, &ch);
+	    xmlHashScanFull(hash, exsltFuncRegisterImportFunc, &ch);
 	}
     }
 
@@ -207,6 +209,11 @@ exsltFuncStyleInit (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
     return xmlHashCreate(1);
 }
 
+static void
+exsltFuncFreeDataEntry(void *payload, const xmlChar *name ATTRIBUTE_UNUSED) {
+    xmlFree(payload);
+}
+
 /**
  * exsltFuncStyleShutdown:
  * @style: an XSLT stylesheet
@@ -220,7 +227,7 @@ static void
 exsltFuncStyleShutdown (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 			const xmlChar *URI ATTRIBUTE_UNUSED,
 			xmlHashTablePtr data) {
-    xmlHashFree(data, (xmlHashDeallocator) xmlFree);
+    xmlHashFree(data, exsltFuncFreeDataEntry);
 }
 
 /**

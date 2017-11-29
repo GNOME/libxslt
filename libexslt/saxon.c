@@ -35,6 +35,12 @@ exsltSaxonInit (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
     return xmlHashCreate(1);
 }
 
+static void
+exsltSaxonFreeCompExprEntry(void *payload,
+                            const xmlChar *name ATTRIBUTE_UNUSED) {
+    xmlXPathFreeCompExpr((xmlXPathCompExprPtr) payload);
+}
+
 /**
  * exsltSaxonShutdown:
  * @ctxt: an XSLT transformation context
@@ -47,7 +53,7 @@ static void
 exsltSaxonShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
 		    const xmlChar *URI ATTRIBUTE_UNUSED,
 		    xmlHashTablePtr data) {
-    xmlHashFree(data, (xmlHashDeallocator) xmlXPathFreeCompExpr);
+    xmlHashFree(data, exsltSaxonFreeCompExprEntry);
 }
 
 
