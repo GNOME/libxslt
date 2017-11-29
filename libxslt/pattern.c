@@ -519,6 +519,11 @@ xsltPatPushState(xsltTransformContextPtr ctxt, xsltStepStates *states,
     return(0);
 }
 
+static void
+xmlXPathFreeObjectWrapper(void *obj) {
+    xmlXPathFreeObject((xmlXPathObjectPtr) obj);
+}
+
 /**
  * xsltTestCompMatchDirect:
  * @ctxt:  a XSLT process context
@@ -604,7 +609,7 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	    XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) =
 		0;
 	    XSLT_RUNTIME_EXTRA_FREE(ctxt, sel->lenExtra) =
-		(xmlFreeFunc) xmlXPathFreeObject;
+		xmlXPathFreeObjectWrapper;
 	} else
 	    list = newlist;
     }

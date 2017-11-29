@@ -262,7 +262,9 @@ exsltFuncNewFunctionData (void) {
  * Deallocates an #exsltFuncResultPreComp
  */
 static void
-exsltFreeFuncResultPreComp (exsltFuncResultPreComp *comp) {
+exsltFreeFuncResultPreComp (xsltElemPreCompPtr ecomp) {
+    exsltFuncResultPreComp *comp = (exsltFuncResultPreComp *) ecomp;
+
     if (comp == NULL)
 	return;
 
@@ -648,7 +650,7 @@ exsltFuncResultComp (xsltStylesheetPtr style, xmlNodePtr inst,
     memset(ret, 0, sizeof(exsltFuncResultPreComp));
 
     xsltInitElemPreComp ((xsltElemPreCompPtr) ret, style, inst, function,
-		 (xsltElemPreCompDeallocator) exsltFreeFuncResultPreComp);
+		 exsltFreeFuncResultPreComp);
     ret->select = NULL;
 
     /*

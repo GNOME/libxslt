@@ -1501,6 +1501,11 @@ xsltUnregisterAllExtModuleFunction(void)
 }
 
 
+static void
+xsltFreeElemPreComp(xsltElemPreCompPtr comp) {
+    xmlFree(comp);
+}
+
 /**
  * xsltNewElemPreComp:
  * @style:  the XSLT stylesheet
@@ -1525,8 +1530,7 @@ xsltNewElemPreComp(xsltStylesheetPtr style, xmlNodePtr inst,
     }
     memset(cur, 0, sizeof(xsltElemPreComp));
 
-    xsltInitElemPreComp(cur, style, inst, function,
-                        (xsltElemPreCompDeallocator) xmlFree);
+    xsltInitElemPreComp(cur, style, inst, function, xsltFreeElemPreComp);
 
     return (cur);
 }
