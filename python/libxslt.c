@@ -1127,10 +1127,10 @@ libxslt_xsltRegisterExtensionClass(PyObject *self ATTRIBUTE_UNUSED,
     Py_XINCREF(pyobj_c);
 
     ret = xsltRegisterExtModuleFull(ns_uri,
-       (xsltExtInitFunction) libxslt_xsltPythonExtModuleCtxtInit,
-       (xsltExtShutdownFunction) libxslt_xsltPythonExtModuleCtxtShutdown,
-       (xsltStyleExtInitFunction) libxslt_xsltPythonExtModuleStyleInit,
-       (xsltStyleExtShutdownFunction) libxslt_xsltPythonExtModuleStyleShutdown);
+       libxslt_xsltPythonExtModuleCtxtInit,
+       libxslt_xsltPythonExtModuleCtxtShutdown,
+       libxslt_xsltPythonExtModuleStyleInit,
+       libxslt_xsltPythonExtModuleStyleShutdown);
     py_retval = libxml_intWrap((int) ret);
     if (ret < 0) {
 	Py_XDECREF(pyobj_c);

@@ -142,7 +142,7 @@ exsltFuncRegisterImportFunc (void *payload, void *vctxt,
  *
  * Returns the data for this transformation
  */
-static exsltFuncData *
+static void *
 exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
     exsltFuncData *ret;
     xsltStylesheetPtr tmp;
@@ -187,7 +187,9 @@ exsltFuncInit (xsltTransformContextPtr ctxt, const xmlChar *URI) {
 static void
 exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
 		   const xmlChar *URI ATTRIBUTE_UNUSED,
-		   exsltFuncData *data) {
+		   void *vdata) {
+    exsltFuncData *data = (exsltFuncData *) vdata;
+
     if (data->result != NULL)
 	xmlXPathFreeObject(data->result);
     xmlFree(data);
@@ -203,7 +205,7 @@ exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
  *
  * Returns the allocated data
  */
-static xmlHashTablePtr
+static void *
 exsltFuncStyleInit (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 		    const xmlChar *URI ATTRIBUTE_UNUSED) {
     return xmlHashCreate(1);
@@ -226,7 +228,8 @@ exsltFuncFreeDataEntry(void *payload, const xmlChar *name ATTRIBUTE_UNUSED) {
 static void
 exsltFuncStyleShutdown (xsltStylesheetPtr style ATTRIBUTE_UNUSED,
 			const xmlChar *URI ATTRIBUTE_UNUSED,
-			xmlHashTablePtr data) {
+			void *vdata) {
+    xmlHashTablePtr data = (xmlHashTablePtr) vdata;
     xmlHashFree(data, exsltFuncFreeDataEntry);
 }
 
@@ -792,10 +795,10 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 void
 exsltFuncRegister (void) {
     xsltRegisterExtModuleFull (EXSLT_FUNCTIONS_NAMESPACE,
-		       (xsltExtInitFunction) exsltFuncInit,
-		       (xsltExtShutdownFunction) exsltFuncShutdown,
-		       (xsltStyleExtInitFunction) exsltFuncStyleInit,
-		       (xsltStyleExtShutdownFunction) exsltFuncStyleShutdown);
+		       exsltFuncInit,
+		       exsltFuncShutdown,
+		       exsltFuncStyleInit,
+		       exsltFuncStyleShutdown);
 
     xsltRegisterExtModuleTopLevel ((const xmlChar *) "function",
 				   EXSLT_FUNCTIONS_NAMESPACE,
