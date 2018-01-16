@@ -180,7 +180,7 @@ static xmlHashTablePtr libxslt_extModuleElements = NULL;
 static xmlHashTablePtr libxslt_extModuleElementPreComp = NULL;
 
 static void
-deallocateCallback(void *payload, xmlChar *name ATTRIBUTE_UNUSED) {
+deallocateCallback(void *payload, const xmlChar *name ATTRIBUTE_UNUSED) {
     PyObject *function = (PyObject *) payload;
 
 #ifdef DEBUG_EXTENSIONS
@@ -191,7 +191,7 @@ deallocateCallback(void *payload, xmlChar *name ATTRIBUTE_UNUSED) {
 }
 
 static void
-deallocateClasse(void *payload, xmlChar *name ATTRIBUTE_UNUSED) {
+deallocateClasse(void *payload, const xmlChar *name ATTRIBUTE_UNUSED) {
     PyObject *class = (PyObject *) payload;
 
 #ifdef DEBUG_EXTENSIONS
