@@ -292,6 +292,7 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     exsltFuncFunctionData *func;
     xmlNodePtr paramNode, oldInsert, fake;
     int oldBase;
+    void *oldCtxtVar;
     xsltStackElemPtr params = NULL, param;
     xsltTransformContextPtr tctxt = xsltXPathGetTransformContext(ctxt);
     int i, notSet;
@@ -430,11 +431,14 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     fake = xmlNewDocNode(tctxt->output, NULL,
 			 (const xmlChar *)"fake", NULL);
     oldInsert = tctxt->insert;
+    oldCtxtVar = tctxt->contextVariable;
     tctxt->insert = fake;
+    tctxt->contextVariable = NULL;
     xsltApplyOneTemplate (tctxt, tctxt->node,
 			  func->content, NULL, NULL);
     xsltLocalVariablePop(tctxt, tctxt->varsBase, -2);
     tctxt->insert = oldInsert;
+    tctxt->contextVariable = oldCtxtVar;
     tctxt->varsBase = oldBase;	/* restore original scope */
     if (params != NULL)
 	xsltFreeStackElemList(params);
