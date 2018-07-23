@@ -426,7 +426,15 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	}
     }
     /*
-     * actual processing
+     * Actual processing. Note that contextVariable is set to NULL which
+     * means that RVTs returned from functions always end up as local RVTs,
+     * not as variable fragments if the function is called in the select
+     * expression of an xsl:variable. This is a hack that only works because
+     * xsltReleaseLocalRVTs isn't called after processing xsl:variable.
+     *
+     * It would probably be better to remove the fragile contextVariable
+     * logic and make xsltEvalVariable move the required RVTs into the
+     * variable manually.
      */
     fake = xmlNewDocNode(tctxt->output, NULL,
 			 (const xmlChar *)"fake", NULL);
@@ -766,6 +774,7 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	    return;
 	}
         /* Mark as function result. */
+        xsltRegisterLocalRVT(ctxt, container);
         container->psvi = XSLT_RVT_FUNC_RESULT;
 
 	oldInsert = ctxt->insert;

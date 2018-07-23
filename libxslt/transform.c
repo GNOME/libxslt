@@ -2295,6 +2295,7 @@ static void
 xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
 {
     xmlDocPtr cur = ctxt->localRVT, tmp;
+    xmlDocPtr prev = NULL;
 
     if (cur == base)
         return;
@@ -2308,16 +2309,26 @@ xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
             xsltReleaseRVT(ctxt, tmp);
         } else if (tmp->psvi == XSLT_RVT_GLOBAL) {
             xsltRegisterPersistRVT(ctxt, tmp);
-        } else if (tmp->psvi != XSLT_RVT_FUNC_RESULT) {
+        } else if (tmp->psvi == XSLT_RVT_FUNC_RESULT) {
+            if (prev == NULL)
+                ctxt->localRVT = tmp;
+            else
+                prev->next = (xmlNodePtr) tmp;
+            tmp->prev = (xmlNodePtr) prev;
+            prev = tmp;
+        } else {
             xmlGenericError(xmlGenericErrorContext,
                     "xsltReleaseLocalRVTs: Unexpected RVT flag %p\n",
                     tmp->psvi);
         }
     } while (cur != base);
 
+    if (prev == NULL)
+        ctxt->localRVT = base;
+    else
+        prev->next = (xmlNodePtr) base;
     if (base != NULL)
-        base->prev = NULL;
-    ctxt->localRVT = base;
+        base->prev = (xmlNodePtr) prev;
 }
 
 /**
