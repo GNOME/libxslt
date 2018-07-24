@@ -1,5 +1,5 @@
 language: c
-sudo: false
+sudo: required
 matrix:
   include:
     # Try to emulate a C89 compiler on a POSIX system by disabling as many
