@@ -126,7 +126,7 @@
     #if !defined(LIBXSLT_STATIC)
       #define XSLTPUBVAR __declspec(dllimport) extern
     #else
-      #define XSLTPUBVAR
+      #define XSLTPUBVAR extern
     #endif
   #endif
   #define XSLTCALL __cdecl
