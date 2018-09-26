@@ -34,6 +34,7 @@ typedef struct _exsltFuncData exsltFuncData;
 struct _exsltFuncData {
     xmlHashTablePtr funcs;	/* pointer to the stylesheet module data */
     xmlXPathObjectPtr result;	/* returned by func:result */
+    xsltStackElemPtr ctxtVar;   /* context variable */
     int error;			/* did an error occur? */
 };
 
@@ -426,28 +427,23 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	}
     }
     /*
-     * Actual processing. Note that contextVariable is set to NULL which
-     * means that RVTs returned from functions always end up as local RVTs,
-     * not as variable fragments if the function is called in the select
-     * expression of an xsl:variable. This is a hack that only works because
-     * xsltReleaseLocalRVTs isn't called after processing xsl:variable.
-     *
-     * It would probably be better to remove the fragile contextVariable
-     * logic and make xsltEvalVariable move the required RVTs into the
-     * variable manually.
+     * Actual processing. The context variable is cleared and restored
+     * when func:result is evaluated.
      */
     fake = xmlNewDocNode(tctxt->output, NULL,
 			 (const xmlChar *)"fake", NULL);
     oldInsert = tctxt->insert;
-    oldCtxtVar = tctxt->contextVariable;
+    oldCtxtVar = data->ctxtVar;
+    data->ctxtVar = tctxt->contextVariable;
     tctxt->insert = fake;
     tctxt->contextVariable = NULL;
     xsltApplyOneTemplate (tctxt, tctxt->node,
 			  func->content, NULL, NULL);
     xsltLocalVariablePop(tctxt, tctxt->varsBase, -2);
     tctxt->insert = oldInsert;
-    tctxt->contextVariable = oldCtxtVar;
+    tctxt->contextVariable = data->ctxtVar;
     tctxt->varsBase = oldBase;	/* restore original scope */
+    data->ctxtVar = oldCtxtVar;
     if (params != NULL)
 	xsltFreeStackElemList(params);
 
@@ -714,6 +710,11 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
 	data->error = 1;
 	return;
     }
+    /*
+     * Restore context variable, so that it will receive the function
+     * result RVTs.
+     */
+    ctxt->contextVariable = data->ctxtVar;
     /*
      * Processing
      */

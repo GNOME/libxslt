@@ -2295,12 +2295,16 @@ static void
 xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
 {
     xmlDocPtr cur = ctxt->localRVT, tmp;
-    xmlDocPtr prev = NULL;
 
     if (cur == base)
         return;
     if (cur->prev != NULL)
         xsltTransformError(ctxt, NULL, NULL, "localRVT not head of list\n");
+
+    /* Reset localRVT early because some RVTs might be registered again. */
+    ctxt->localRVT = base;
+    if (base != NULL)
+        base->prev = NULL;
 
     do {
         tmp = cur;
@@ -2310,25 +2314,18 @@ xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
         } else if (tmp->psvi == XSLT_RVT_GLOBAL) {
             xsltRegisterPersistRVT(ctxt, tmp);
         } else if (tmp->psvi == XSLT_RVT_FUNC_RESULT) {
-            if (prev == NULL)
-                ctxt->localRVT = tmp;
-            else
-                prev->next = (xmlNodePtr) tmp;
-            tmp->prev = (xmlNodePtr) prev;
-            prev = tmp;
+            /*
+             * This will either register the RVT again or move it to the
+             * context variable.
+             */
+            xsltRegisterLocalRVT(ctxt, tmp);
+            tmp->psvi = XSLT_RVT_FUNC_RESULT;
         } else {
             xmlGenericError(xmlGenericErrorContext,
                     "xsltReleaseLocalRVTs: Unexpected RVT flag %p\n",
                     tmp->psvi);
         }
     } while (cur != base);
-
-    if (prev == NULL)
-        ctxt->localRVT = base;
-    else
-        prev->next = (xmlNodePtr) base;
-    if (base != NULL)
-        base->prev = (xmlNodePtr) prev;
 }
 
 /**
