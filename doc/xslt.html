@@ -304,6 +304,36 @@ to get a description of the recent commits.</p>
 
 <p>Those are the public releases made:</p>
 
+<h3>v1.1.33: Jan 03 2019</h3>
+<ul>
+  <li>Portability:<br/>
+  Variables need 'extern' in static lib on Cygwin (Nick Wellnhofer),<br/>
+  Really declare dllexport/dllimport for Cygwin (Michael Haubenwallner),<br/>
+  Fix callback signatures in Python bindings (Nick Wellnhofer),<br/>
+  Fix transform callback signatures (Nick Wellnhofer),<br/>
+  Fix extension callback signatures (Nick Wellnhofer),<br/>
+  Fix deallocator signatures (Nick Wellnhofer),<br/>
+  Fix XPath callback signatures (Nick Wellnhofer),<br/>
+  Fix hash callback signatures (Nick Wellnhofer)<br/>
+  </li>
+
+  <li>Bug Fixes:<br/>
+  Don't cache direct evaluation of patterns with variables (Nick Wellnhofer),<br/>
+  Move function result RVTs to context variable (Nick Wellnhofer),<br/>
+  Fix EXSLT functions returning RVTs from outer scopes (Nick Wellnhofer),<br/>
+  Fix handling of RVTs returned from nested EXSLT functions (Nick Wellnhofer),<br/>
+  Fix typos (Nick Wellnhofer)<br/>
+  </li>
+
+  <li>Improvements:<br/>
+  Run Travis ASan tests with "sudo: required" (Nick Wellnhofer)<br/>
+  </li>
+
+  <li>Cleanups:<br/>
+  Remove doc/libxslt-decl.txt (Nick Wellnhofer),<br/>
+  Docs for 1.1.32 release (Daniel Veillard)<br/>
+  </li>
+</ul>
 <h3>1.1.32: Nov 02 2017</h3>
 <ul>
   <li>Portability:<br/>
