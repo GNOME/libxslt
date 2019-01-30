@@ -582,13 +582,8 @@ AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
 WIN32_EXTRA_LIBADD=
 WIN32_EXTRA_LDFLAGS=
 case "$host" in
- *-*-cygwin*)
+ *-*-cygwin*|*-*-mingw*)
  WIN32_EXTRA_LDFLAGS="-no-undefined"
- ;;
- *-*-mingw*)
- WIN32_EXTRA_LIBADD="-lwsock32"
- WIN32_EXTRA_LDFLAGS="-no-undefined"
- AC_DEFINE([_WINSOCKAPI_],1,[Using the Win32 Socket implementation])
  ;;
 esac
 AC_SUBST(WIN32_EXTRA_LIBADD)
