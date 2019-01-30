@@ -23,8 +23,29 @@
 #include <stdio.h>
 #include <stddef.h>
 
-#if (defined(_MSC_VER) || defined(__MINGW32__)) && !defined(vsnprintf)
-#define vsnprintf(b,c,f,a) _vsnprintf(b,c,f,a)
+#ifdef _MSC_VER
+
+/* snprintf emulation taken from http://stackoverflow.com/a/8712996/1956010 */
+#if _MSC_VER < 1900
+
+#include <stdarg.h>
+
+#define vsnprintf c99_vsnprintf
+
+__inline int c99_vsnprintf(char *outBuf, size_t size, const char *format, va_list ap)
+{
+    int count = -1;
+
+    if (size != 0)
+        count = _vsnprintf_s(outBuf, size, _TRUNCATE, format, ap);
+    if (count == -1)
+        count = _vscprintf(format, ap);
+
+    return count;
+}
+
+#endif /* _MSC_VER < 1900 */
+
 #elif defined(XSLT_NEED_TRIO)
 #include "trio.h"
 #define vsnprintf trio_vsnprintf
