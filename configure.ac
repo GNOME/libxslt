@@ -589,8 +589,6 @@ case "$host" in
  WIN32_EXTRA_LIBADD="-lwsock32"
  WIN32_EXTRA_LDFLAGS="-no-undefined"
  AC_DEFINE([_WINSOCKAPI_],1,[Using the Win32 Socket implementation])
- AC_DEFINE([snprintf],[_snprintf],[Win32 Std C name mangling work-around])
- AC_DEFINE([vsnprintf],[_vsnprintf],[Win32 Std C name mangling work-around])
  ;;
 esac
 AC_SUBST(WIN32_EXTRA_LIBADD)
