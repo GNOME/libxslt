@@ -579,15 +579,11 @@ expanded_libdir=$(
 LIBXSLT_DEFAULT_PLUGINS_PATH="$expanded_libdir/libxslt-plugins"
 AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
 
-WIN32_EXTRA_LIBADD=
-WIN32_EXTRA_LDFLAGS=
 case "$host" in
  *-*-cygwin*|*-*-mingw*)
- WIN32_EXTRA_LDFLAGS="-no-undefined"
+ LDFLAGS="$LDFLAGS -no-undefined"
  ;;
 esac
-AC_SUBST(WIN32_EXTRA_LIBADD)
-AC_SUBST(WIN32_EXTRA_LDFLAGS)
 
 
 AC_SUBST(XSLTPROCDV)
