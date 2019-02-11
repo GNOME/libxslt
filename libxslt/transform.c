@@ -6011,6 +6011,13 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
         res->encoding = xmlStrdup(encoding);
     variables = style->variables;
 
+    ctxt->node = (xmlNodePtr) doc;
+    ctxt->output = res;
+
+    ctxt->xpathCtxt->contextSize = 1;
+    ctxt->xpathCtxt->proximityPosition = 1;
+    ctxt->xpathCtxt->node = NULL; /* TODO: Set the context node here? */
+
     /*
      * Start the evaluation, evaluate the params, the stylesheets globals
      * and start by processing the top node.
@@ -6020,7 +6027,6 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     /*
     * Evaluate global params and user-provided params.
     */
-    ctxt->node = (xmlNodePtr) doc;
     if (ctxt->globalVars == NULL)
 	ctxt->globalVars = xmlHashCreate(20);
     if (params != NULL) {
@@ -6035,14 +6041,9 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     /* Clean up any unused RVTs. */
     xsltReleaseLocalRVTs(ctxt, NULL);
 
-    ctxt->node = (xmlNodePtr) doc;
-    ctxt->output = res;
     ctxt->insert = (xmlNodePtr) res;
     ctxt->varsBase = ctxt->varsNr - 1;
 
-    ctxt->xpathCtxt->contextSize = 1;
-    ctxt->xpathCtxt->proximityPosition = 1;
-    ctxt->xpathCtxt->node = NULL; /* TODO: Set the context node here? */
     /*
     * Start processing the source tree -----------------------------------
     */
