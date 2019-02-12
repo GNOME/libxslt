@@ -476,6 +476,7 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "executing a function\n",
 			 ctxt->context->functionURI, ctxt->context->function);
 	xmlFreeNode(fake);
+        xmlXPathFreeObject(ret);
 	goto error;
     }
     xmlFreeNode(fake);
