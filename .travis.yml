@@ -16,7 +16,7 @@ matrix:
            UBSAN_OPTIONS=print_stacktrace=1
 script:
 - |
-    git clone --depth 1 https://git.gnome.org/browse/libxml2
+    git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git
     cd libxml2
     sh autogen.sh $CONFIG
     make -j2
