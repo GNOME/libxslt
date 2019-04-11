@@ -2401,7 +2401,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    list = NULL;
 	while (list != NULL) {
 	    if (xsltTestCompMatch(ctxt, list, node,
-			          ctxt->mode, ctxt->modeURI)) {
+			          ctxt->mode, ctxt->modeURI) == 1) {
 		ret = list->template;
 		priority = list->priority;
 		break;
@@ -2470,7 +2470,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	while ((list != NULL) &&
 	       ((ret == NULL)  || (list->priority > priority))) {
 	    if (xsltTestCompMatch(ctxt, list, node,
-			          ctxt->mode, ctxt->modeURI)) {
+			          ctxt->mode, ctxt->modeURI) == 1) {
 		ret = list->template;
 		priority = list->priority;
 		break;
@@ -2487,7 +2487,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    while ((list != NULL) &&
 		   ((ret == NULL)  || (list->priority > priority))) {
 		if (xsltTestCompMatch(ctxt, list, node,
-				      ctxt->mode, ctxt->modeURI)) {
+				      ctxt->mode, ctxt->modeURI) == 1) {
 		    ret = list->template;
 		    priority = list->priority;
 		    break;
@@ -2500,7 +2500,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    while ((list != NULL) &&
 		   ((ret == NULL)  || (list->priority > priority))) {
 		if (xsltTestCompMatch(ctxt, list, node,
-				      ctxt->mode, ctxt->modeURI)) {
+				      ctxt->mode, ctxt->modeURI) == 1) {
 		    ret = list->template;
 		    priority = list->priority;
 		    break;
@@ -2515,7 +2515,7 @@ keyed_match:
 	    while ((list != NULL) &&
 		   ((ret == NULL)  || (list->priority > priority))) {
 		if (xsltTestCompMatch(ctxt, list, node,
-				      ctxt->mode, ctxt->modeURI)) {
+				      ctxt->mode, ctxt->modeURI) == 1) {
 		    ret = list->template;
 		    priority = list->priority;
 		    break;
