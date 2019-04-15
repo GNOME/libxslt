@@ -1,4 +1,4 @@
-*/*.o
+*.o
 */*.lo
 tags
 */tags
