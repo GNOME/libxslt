@@ -105,14 +105,6 @@ extern const xmlChar *xsltXSLTAttrMarker;
  */
 /* #define XSLT_REFACTORED_XSLT_NSCOMP */
 
-/**
- * XSLT_REFACTORED_XPATHCOMP:
- *
- * Internal define to enable the optimization of the
- * compilation of XPath expressions.
- */
-#define XSLT_REFACTORED_XPATHCOMP
-
 #ifdef XSLT_REFACTORED_XSLT_NSCOMP
 
 extern const xmlChar *xsltConstNamespaceNameXSLT;
@@ -1346,9 +1338,6 @@ struct _xsltCompilerCtxt {
     */
     int strict;
     xsltPrincipalStylesheetDataPtr psData;
-#ifdef XSLT_REFACTORED_XPATHCOMP
-    xmlXPathContextPtr xpathCtxt;
-#endif
     xsltStyleItemUknownPtr unknownItem;
     int hasNsAliases; /* Indicator if there was an xsl:namespace-alias. */
     xsltNsAliasPtr nsAliases;
@@ -1642,6 +1631,8 @@ struct _xsltStylesheet {
     int forwards_compatible;
 
     xmlHashTablePtr namedTemplates; /* hash table of named templates */
+
+    xmlXPathContextPtr xpathCtxt;
 };
 
 typedef struct _xsltTransformCache xsltTransformCache;
@@ -1871,6 +1862,9 @@ XSLTPUBFUN xsltStylesheetPtr XSLTCALL
 XSLTPUBFUN xsltStylesheetPtr XSLTCALL
 			xsltParseStylesheetImportedDoc(xmlDocPtr doc,
 						xsltStylesheetPtr style);
+XSLTPUBFUN int XSLTCALL
+			xsltParseStylesheetUser(xsltStylesheetPtr style,
+						xmlDocPtr doc);
 XSLTPUBFUN xsltStylesheetPtr XSLTCALL
 			xsltLoadStylesheetPI	(xmlDocPtr doc);
 XSLTPUBFUN void XSLTCALL

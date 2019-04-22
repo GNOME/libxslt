@@ -79,6 +79,13 @@ LLVMFuzzerInitialize(int *argc_p ATTRIBUTE_UNUSED,
     return 0;
 }
 
+static void
+xsltSetXPathResourceLimits(xmlXPathContextPtr ctxt) {
+    ctxt->maxParserDepth = 15;
+    ctxt->maxDepth = 100;
+    ctxt->opLimit = 100000;
+}
+
 int
 LLVMFuzzerTestOneInput(const char *data, size_t size) {
     xmlDocPtr xsltDoc;
@@ -101,8 +108,15 @@ LLVMFuzzerTestOneInput(const char *data, size_t size) {
     xmlNewNs(xsltRoot, EXSLT_STRINGS_NAMESPACE, BAD_CAST "str");
     xmlNewNs(xsltRoot, SAXON_NAMESPACE, BAD_CAST "saxon");
 
-    sheet = xsltParseStylesheetDoc(xsltDoc);
+    sheet = xsltNewStylesheet();
     if (sheet == NULL) {
+        xmlFreeDoc(xsltDoc);
+        return 0;
+    }
+    xsltSetXPathResourceLimits(sheet->xpathCtxt);
+    sheet->xpathCtxt->opCount = 0;
+    if (xsltParseStylesheetUser(sheet, xsltDoc) != 0) {
+        xsltFreeStylesheet(sheet);
         xmlFreeDoc(xsltDoc);
         return 0;
     }
@@ -110,10 +124,8 @@ LLVMFuzzerTestOneInput(const char *data, size_t size) {
     ctxt = xsltNewTransformContext(sheet, doc);
     xsltSetCtxtSecurityPrefs(sec, ctxt);
     ctxt->maxTemplateDepth = 100;
-    ctxt->xpathCtxt->maxParserDepth = 15;
-    ctxt->xpathCtxt->maxDepth = 100;
-    ctxt->xpathCtxt->opCount = 0;
-    ctxt->xpathCtxt->opLimit = 100000;
+    xsltSetXPathResourceLimits(ctxt->xpathCtxt);
+    ctxt->xpathCtxt->opCount = sheet->xpathCtxt->opCount;
 
     result = xsltApplyStylesheetUser(sheet, doc, NULL, NULL, NULL, ctxt);
 
