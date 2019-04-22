@@ -1349,8 +1349,8 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
 			*  via the stylesheet's error handling.
 			*/
 			xsltTransformError(NULL, style, cur,
-			    "Attribute 'cdata-section-elements': The value "
-			    "'%s' is not a valid QName.\n", element);
+			    "Attribute 'cdata-section-elements': "
+			    "Not a valid QName.\n");
 			style->errors++;
 		    } else {
 			xmlNsPtr ns;
