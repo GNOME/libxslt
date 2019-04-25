@@ -1780,6 +1780,8 @@ struct _xsltTransformContext {
     int depth;          /* Needed to catch recursions */
     int maxTemplateDepth;
     int maxTemplateVars;
+    unsigned long opLimit;
+    unsigned long opCount;
 };
 
 /**

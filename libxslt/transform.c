@@ -2411,6 +2411,17 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
     */
     cur = list;
     while (cur != NULL) {
+        if (ctxt->opLimit != 0) {
+            if (ctxt->opCount >= ctxt->opLimit) {
+		xsltTransformError(ctxt, NULL, cur,
+		    "xsltApplySequenceConstructor: "
+                    "Operation limit exceeded\n");
+	        ctxt->state = XSLT_STATE_STOPPED;
+                goto error;
+            }
+            ctxt->opCount += 1;
+        }
+
         ctxt->inst = cur;
 
 #ifdef WITH_DEBUGGER

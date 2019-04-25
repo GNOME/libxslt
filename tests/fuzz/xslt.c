@@ -124,6 +124,7 @@ LLVMFuzzerTestOneInput(const char *data, size_t size) {
     ctxt = xsltNewTransformContext(sheet, doc);
     xsltSetCtxtSecurityPrefs(sec, ctxt);
     ctxt->maxTemplateDepth = 100;
+    ctxt->opLimit = 200000;
     xsltSetXPathResourceLimits(ctxt->xpathCtxt);
     ctxt->xpathCtxt->opCount = sheet->xpathCtxt->opCount;
 
