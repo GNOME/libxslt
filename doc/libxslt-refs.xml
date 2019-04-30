@@ -89,7 +89,6 @@
     <reference name='XSLT_PAT_NO_PRIORITY' href='html/libxslt-xsltInternals.html#XSLT_PAT_NO_PRIORITY'/>
     <reference name='XSLT_REFACTORED_KEYCOMP' href='html/libxslt-xsltInternals.html#XSLT_REFACTORED_KEYCOMP'/>
     <reference name='XSLT_REFACTORED_VARS' href='html/libxslt-xsltInternals.html#XSLT_REFACTORED_VARS'/>
-    <reference name='XSLT_REFACTORED_XPATHCOMP' href='html/libxslt-xsltInternals.html#XSLT_REFACTORED_XPATHCOMP'/>
     <reference name='XSLT_REGISTER_FUNCTION_LOOKUP' href='html/libxslt-functions.html#XSLT_REGISTER_FUNCTION_LOOKUP'/>
     <reference name='XSLT_REGISTER_VARIABLE_LOOKUP' href='html/libxslt-variables.html#XSLT_REGISTER_VARIABLE_LOOKUP'/>
     <reference name='XSLT_RUNTIME_EXTRA' href='html/libxslt-xsltInternals.html#XSLT_RUNTIME_EXTRA'/>
@@ -400,6 +399,7 @@
     <reference name='xsltParseStylesheetOutput' href='html/libxslt-xsltInternals.html#xsltParseStylesheetOutput'/>
     <reference name='xsltParseStylesheetParam' href='html/libxslt-variables.html#xsltParseStylesheetParam'/>
     <reference name='xsltParseStylesheetProcess' href='html/libxslt-xsltInternals.html#xsltParseStylesheetProcess'/>
+    <reference name='xsltParseStylesheetUser' href='html/libxslt-xsltInternals.html#xsltParseStylesheetUser'/>
     <reference name='xsltParseStylesheetVariable' href='html/libxslt-variables.html#xsltParseStylesheetVariable'/>
     <reference name='xsltParseTemplateContent' href='html/libxslt-xsltInternals.html#xsltParseTemplateContent'/>
     <reference name='xsltPointerList' href='html/libxslt-xsltInternals.html#xsltPointerList'/>
@@ -678,7 +678,6 @@
       <ref name='XSLT_PAT_NO_PRIORITY'/>
       <ref name='XSLT_REFACTORED_KEYCOMP'/>
       <ref name='XSLT_REFACTORED_VARS'/>
-      <ref name='XSLT_REFACTORED_XPATHCOMP'/>
       <ref name='XSLT_REGISTER_FUNCTION_LOOKUP'/>
       <ref name='XSLT_REGISTER_VARIABLE_LOOKUP'/>
       <ref name='XSLT_RUNTIME_EXTRA'/>
@@ -993,6 +992,7 @@
       <ref name='xsltParseStylesheetOutput'/>
       <ref name='xsltParseStylesheetParam'/>
       <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetUser'/>
       <ref name='xsltParseStylesheetVariable'/>
       <ref name='xsltParseTemplateContent'/>
       <ref name='xsltPointerList'/>
@@ -1471,6 +1471,7 @@
       <ref name='xsltParseStylesheetDoc'/>
       <ref name='xsltParseStylesheetImportedDoc'/>
       <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetUser'/>
       <ref name='xsltProfileStylesheet'/>
       <ref name='xsltRegisterLocalRVT'/>
       <ref name='xsltRegisterPersistRVT'/>
@@ -1782,6 +1783,7 @@
       <ref name='xsltParseStylesheetInclude'/>
       <ref name='xsltParseStylesheetOutput'/>
       <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetUser'/>
       <ref name='xsltParseTemplateContent'/>
       <ref name='xsltPreComputeExtModuleElement'/>
       <ref name='xsltPreComputeFunction'/>
@@ -2248,7 +2250,6 @@
       <ref name='XSLT_PAT_NO_PRIORITY'/>
       <ref name='XSLT_REFACTORED_KEYCOMP'/>
       <ref name='XSLT_REFACTORED_VARS'/>
-      <ref name='XSLT_REFACTORED_XPATHCOMP'/>
       <ref name='XSLT_RUNTIME_EXTRA'/>
       <ref name='XSLT_RUNTIME_EXTRA_FREE'/>
       <ref name='XSLT_RUNTIME_EXTRA_LST'/>
@@ -2356,6 +2357,7 @@
       <ref name='xsltParseStylesheetImportedDoc'/>
       <ref name='xsltParseStylesheetOutput'/>
       <ref name='xsltParseStylesheetProcess'/>
+      <ref name='xsltParseStylesheetUser'/>
       <ref name='xsltParseTemplateContent'/>
       <ref name='xsltPointerList'/>
       <ref name='xsltPointerListAddSize'/>
@@ -2945,7 +2947,6 @@
           <ref name='XSLT_FAST_IF'/>
           <ref name='XSLT_REFACTORED_KEYCOMP'/>
           <ref name='XSLT_REFACTORED_VARS'/>
-          <ref name='XSLT_REFACTORED_XPATHCOMP'/>
           <ref name='xsltFreeRVTs'/>
         </word>
       </letter>
@@ -3125,6 +3126,9 @@
       <letter name='P'>
         <word name='POSIX'>
           <ref name='XSLT_LOCALE_POSIX'/>
+        </word>
+        <word name='Parse'>
+          <ref name='xsltParseStylesheetUser'/>
         </word>
         <word name='Parser'>
           <ref name='xsltDocumentFunction'/>
@@ -3565,6 +3569,7 @@
           <ref name='xsltParseStylesheetDoc'/>
           <ref name='xsltParseStylesheetImportedDoc'/>
           <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltParseStylesheetUser'/>
           <ref name='xsltProfileStylesheet'/>
           <ref name='xsltRunStylesheet'/>
           <ref name='xsltRunStylesheetUser'/>
@@ -4344,7 +4349,6 @@
           <ref name='XSLT_REFACTORED_KEYCOMP'/>
         </word>
         <word name='compilation'>
-          <ref name='XSLT_REFACTORED_XPATHCOMP'/>
           <ref name='_xsltCompilerCtxt'/>
           <ref name='_xsltStylesheet'/>
           <ref name='xsltDocLoaderFunc'/>
@@ -4644,7 +4648,6 @@
           <ref name='XSLT_FAST_IF'/>
           <ref name='XSLT_REFACTORED_KEYCOMP'/>
           <ref name='XSLT_REFACTORED_VARS'/>
-          <ref name='XSLT_REFACTORED_XPATHCOMP'/>
           <ref name='XSLT_RUNTIME_EXTRA'/>
         </word>
         <word name='defined'>
@@ -4851,7 +4854,6 @@
           <ref name='XSLT_FAST_IF'/>
           <ref name='XSLT_REFACTORED_KEYCOMP'/>
           <ref name='XSLT_REFACTORED_VARS'/>
-          <ref name='XSLT_REFACTORED_XPATHCOMP'/>
         </word>
         <word name='enabled'>
           <ref name='_xsltCompilerNodeInfo'/>
@@ -5014,7 +5016,6 @@
           <ref name='xsltXPathCompileFlags'/>
         </word>
         <word name='expressions'>
-          <ref name='XSLT_REFACTORED_XPATHCOMP'/>
           <ref name='_xsltStylesheet'/>
           <ref name='xsltEvalAttrValueTemplate'/>
           <ref name='xsltEvalStaticAttrValueTemplate'/>
@@ -6436,7 +6437,6 @@
           <ref name='xsltSecurityForbid'/>
         </word>
         <word name='optimization'>
-          <ref name='XSLT_REFACTORED_XPATHCOMP'/>
           <ref name='_xsltTransformContext'/>
         </word>
         <word name='option'>
@@ -6588,6 +6588,7 @@
           <ref name='xsltParseStylesheetDoc'/>
           <ref name='xsltParseStylesheetImportedDoc'/>
           <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltParseStylesheetUser'/>
           <ref name='xsltProfileStylesheet'/>
           <ref name='xsltQuoteUserParams'/>
           <ref name='xsltRunStylesheet'/>
@@ -7573,6 +7574,7 @@
         </word>
         <word name='struct'>
           <ref name='xsltInitElemPreComp'/>
+          <ref name='xsltParseStylesheetUser'/>
         </word>
         <word name='structure'>
           <ref name='XSLT_ITEM_COMPATIBILITY_FIELDS'/>
@@ -7678,6 +7680,7 @@
           <ref name='xsltSetDebuggerCallbacks'/>
         </word>
         <word name='successful'>
+          <ref name='xsltParseStylesheetUser'/>
           <ref name='xsltRegisterExtModuleElement'/>
           <ref name='xsltRegisterExtModuleFunction'/>
           <ref name='xsltRegisterExtModuleTopLevel'/>
@@ -8087,6 +8090,9 @@
         <word name='user-code'>
           <ref name='xsltFreeRVTs'/>
         </word>
+        <word name='user-provided'>
+          <ref name='xsltParseStylesheetUser'/>
+        </word>
         <word name='users!'>
           <ref name='xsltLocalVariablePush'/>
         </word>
@@ -8307,6 +8313,7 @@
           <ref name='xsltInitCtxtExts'/>
           <ref name='xsltLocaleStrcmp'/>
           <ref name='xsltParseStylesheetCallerParam'/>
+          <ref name='xsltParseStylesheetUser'/>
           <ref name='xsltStrxfrm'/>
         </word>
         <word name='with-params'>
@@ -8362,6 +8369,7 @@
           <ref name='xsltParseStylesheetDoc'/>
           <ref name='xsltParseStylesheetImportedDoc'/>
           <ref name='xsltParseStylesheetProcess'/>
+          <ref name='xsltParseStylesheetUser'/>
           <ref name='xsltReleaseRVT'/>
         </word>
         <word name='xmlDocPtr'>

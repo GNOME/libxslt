@@ -316,7 +316,6 @@
      <exports symbol='XSLT_MARK_RES_TREE_FRAG' type='macro'/>
      <exports symbol='XSLT_GET_INTERNAL_NSMAP' type='macro'/>
      <exports symbol='XSLT_REFACTORED_KEYCOMP' type='macro'/>
-     <exports symbol='XSLT_REFACTORED_XPATHCOMP' type='macro'/>
      <exports symbol='XSLT_ITEM_NAVIGATION_FIELDS' type='macro'/>
      <exports symbol='XSLT_MAX_SORT' type='macro'/>
      <exports symbol='XSLT_RUNTIME_EXTRA' type='macro'/>
@@ -532,6 +531,7 @@
      <exports symbol='xsltInitAllDocKeys' type='function'/>
      <exports symbol='xsltDecimalFormatGetByName' type='function'/>
      <exports symbol='xsltExtensionInstructionResultFinalize' type='function'/>
+     <exports symbol='xsltParseStylesheetUser' type='function'/>
      <exports symbol='xsltPointerListFree' type='function'/>
      <exports symbol='xsltIsBlank' type='function'/>
      <exports symbol='xsltFormatNumberConversion' type='function'/>
@@ -799,9 +799,6 @@
     <macro name='XSLT_REFACTORED_VARS' file='xsltInternals'>
       <info>Internal define to enable the refactored variable part of libxslt</info>
     </macro>
-    <macro name='XSLT_REFACTORED_XPATHCOMP' file='xsltInternals'>
-      <info>Internal define to enable the optimization of the compilation of XPath expressions.</info>
-    </macro>
     <macro name='XSLT_REGISTER_FUNCTION_LOOKUP' file='functions'>
       <info>Registering macro, not general purpose at all but used in different modules.</info>
     </macro>
@@ -958,7 +955,6 @@ in a parsing episode'/>
 *'/>
       <field name='strict' type='int' info=''/>
       <field name='psData' type='xsltPrincipalStylesheetDataPtr' info=''/>
-      <field name='xpathCtxt' type='xmlXPathContextPtr' info=''/>
       <field name='unknownItem' type='xsltStyleItemUknownPtr' info=''/>
       <field name='hasNsAliases' type='int' info=' Indicator if there was an xsl:namespace-alias.'/>
       <field name='nsAliases' type='xsltNsAliasPtr' info=''/>
@@ -1455,6 +1451,7 @@ TODO: We need to get rid of this.
 *'/>
       <field name='forwards_compatible' type='int' info=''/>
       <field name='namedTemplates' type='xmlHashTablePtr' info=' hash table of named templates'/>
+      <field name='xpathCtxt' type='xmlXPathContextPtr' info=''/>
     </struct>
     <typedef name='xsltStylesheetPtr' file='xsltInternals' type='xsltStylesheet *'/>
     <struct name='xsltTemplate' file='xsltInternals' type='struct _xsltTemplate'>
@@ -1570,6 +1567,8 @@ exits'/>
       <field name='depth' type='int' info=' Needed to catch recursions'/>
       <field name='maxTemplateDepth' type='int' info=''/>
       <field name='maxTemplateVars' type='int' info=''/>
+      <field name='opLimit' type='unsigned long' info=''/>
+      <field name='opCount' type='unsigned long' info=''/>
     </struct>
     <typedef name='xsltTransformContextPtr' file='xsltInternals' type='xsltTransformContext *'/>
     <typedef name='xsltTransformState' file='xsltInternals' type='enum'/>
@@ -2657,6 +2656,12 @@ exits'/>
       <return type='xsltStylesheetPtr' info='the value of the @style parameter if everything went right, NULL if something went amiss.'/>
       <arg name='ret' type='xsltStylesheetPtr' info='the XSLT stylesheet (the current stylesheet-level)'/>
       <arg name='doc' type='xmlDocPtr' info='and xmlDoc parsed XML'/>
+    </function>
+    <function name='xsltParseStylesheetUser' file='xsltInternals'>
+      <info>Parse an XSLT stylesheet with a user-provided stylesheet struct.</info>
+      <return type='int' info='0 if successful, -1 in case of error.'/>
+      <arg name='style' type='xsltStylesheetPtr' info='pointer to the stylesheet'/>
+      <arg name='doc' type='xmlDocPtr' info='an xmlDoc parsed XML'/>
     </function>
     <function name='xsltParseStylesheetVariable' file='variables'>
       <info>Registers a local XSLT &apos;variable&apos; instruction at transformation time and evaluates its value.</info>
