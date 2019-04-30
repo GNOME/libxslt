@@ -26,6 +26,7 @@ script:
     for target in libxslt libexslt xsltproc python tests/plugins; do
         make -j2 -C $target V=1
     done
+    make -j2 -C tests/fuzz testTargets
     make tests | tee test.log
     ! grep -qv '^## Running' test.log
 git:

@@ -2,14 +2,22 @@ LIBXSLT_LIBS = $(top_builddir)/libxslt/libxslt.la \
                $(top_builddir)/libexslt/libexslt.la
 
 EXTRA_PROGRAMS = xpath xslt
+check_PROGRAMS = testTargets
 EXTRA_DIST = xpath.dict xpath.xml xslt.dict xslt.xml seed
 CLEANFILES = $(EXTRA_PROGRAMS)
 AM_CPPFLAGS = -I$(top_srcdir)
 AM_CFLAGS = $(LIBXML_CFLAGS)
-AM_LDFLAGS = -fsanitize=fuzzer
 DEPENDENCIES = $(LIBXSLT_LIBS)
 LDADD = $(LIBXSLT_LIBS) \
         $(LIBGCRYPT_LIBS) $(LIBXML_LIBS) $(EXTRA_LIBS) $(M_LIBS)
+
+xpath_SOURCES = xpath.c fuzz.c
+xpath_LDFLAGS = -fsanitize=fuzzer
+
+xslt_SOURCES = xslt.c fuzz.c
+xslt_LDFLAGS = -fsanitize=fuzzer
+
+testTargets_SOURCES = testTargets.c fuzz.c
 
 $(top_builddir)/libxslt/libxslt.la:
 	cd $(top_builddir)/libxslt && $(MAKE) libxslt.la
@@ -17,7 +25,11 @@ $(top_builddir)/libxslt/libxslt.la:
 $(top_builddir)/libexslt/libexslt.la: $(top_builddir)/libxslt/libxslt.la
 	cd $(top_builddir)/libexslt && $(MAKE) libexslt.la
 
-.PHONY: fuzz-xpath fuzz-xslt
+.PHONY: tests fuzz-xpath fuzz-xslt
+
+tests: $(check_PROGRAMS)
+	@echo '## Running fuzz target tests'
+	@./testTargets $(srcdir)
 
 fuzz-xpath: xpath$(EXEEXT)
 	@mkdir -p corpus/xpath
