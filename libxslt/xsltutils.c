@@ -1578,7 +1578,15 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    xmlOutputBufferWriteString(buf, "?>\n");
 	}
 	if (result->children != NULL) {
-	    xmlNodePtr child = result->children;
+            xmlNodePtr children = result->children;
+	    xmlNodePtr child = children;
+
+            /*
+             * Hack to avoid quadratic behavior when scanning
+             * result->children in xmlGetIntSubset called by
+             * xmlNodeDumpOutput.
+             */
+            result->children = NULL;
 
 	    while (child != NULL) {
 		xmlNodeDumpOutput(buf, result, child, 0, (indent == 1),
@@ -1591,6 +1599,8 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	    }
 	    if (indent)
 			xmlOutputBufferWriteString(buf, "\n");
+
+            result->children = children;
 	}
 	xmlOutputBufferFlush(buf);
     }
