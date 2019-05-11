@@ -7,12 +7,12 @@ matrix:
     # TODO: Build and test Python bindings.
     - compiler: gcc
       env: CONFIG="--without-python"
-           CFLAGS="-O2 -std=c89 -D_POSIX_C_SOURCE=200112L"
+           CFLAGS="-O2 -std=c89 -D_POSIX_C_SOURCE=200112L -Werror -Wno-error=array-bounds"
     # clang with AddressSanitizer and UndefinedBehaviorSanitizer.
     - compiler: clang
       dist: trusty
       env: CONFIG="--without-python"
-           CFLAGS="-O2 -g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all"
+           CFLAGS="-O2 -g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -Wno-error=cast-align"
            UBSAN_OPTIONS=print_stacktrace=1
 script:
 - |

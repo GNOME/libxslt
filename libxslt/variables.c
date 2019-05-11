@@ -205,7 +205,8 @@ xsltRegisterLocalRVT(xsltTransformContextPtr ctxt,
  * This function is unsupported in newer releases of libxslt.
  */
 int
-xsltExtensionInstructionResultFinalize(xsltTransformContextPtr ctxt)
+xsltExtensionInstructionResultFinalize(
+        xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED)
 {
     xmlGenericError(xmlGenericErrorContext,
             "xsltExtensionInstructionResultFinalize is unsupported "
@@ -230,8 +231,9 @@ xsltExtensionInstructionResultFinalize(xsltTransformContextPtr ctxt)
  * libxslt.
  */
 int
-xsltExtensionInstructionResultRegister(xsltTransformContextPtr ctxt,
-				       xmlXPathObjectPtr obj)
+xsltExtensionInstructionResultRegister(
+        xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
+	xmlXPathObjectPtr obj ATTRIBUTE_UNUSED)
 {
     return(0);
 }
