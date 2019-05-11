@@ -232,6 +232,8 @@ xsltTemplateParamsCleanup(xsltTransformContextPtr ctxt)
         ctxt->vars = NULL;
 }
 
+#ifdef WITH_PROFILER
+
 /**
  * profPush:
  * @ctxt: the transformation context
@@ -339,6 +341,8 @@ profCallgraphAdd(xsltTemplatePtr templ, xsltTemplatePtr parent)
         templ->templNr++;
     }
 }
+
+#endif /* WITH_PROFILER */
 
 /**
  * xsltPreCompEval:
@@ -3099,10 +3103,12 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 		      xsltStackElemPtr withParams)
 {
     int oldVarsBase = 0;
-    long start = 0;
     xmlNodePtr cur;
     xsltStackElemPtr tmpParam = NULL;
     xmlDocPtr oldUserFragmentTop;
+#ifdef WITH_PROFILER
+    long start = 0;
+#endif
 
 #ifdef XSLT_REFACTORED
     xsltStyleItemParamPtr iparam;
@@ -3157,12 +3163,16 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     ctxt->varsBase = ctxt->varsNr;
 
     ctxt->node = contextNode;
+
+#ifdef WITH_PROFILER
     if (ctxt->profile) {
 	templ->nbCalls++;
 	start = xsltTimestamp();
 	profPush(ctxt, 0);
 	profCallgraphAdd(templ, ctxt->templ);
     }
+#endif
+
     /*
     * Push the xsl:template declaration onto the stack.
     */
@@ -3270,6 +3280,8 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
     * Pop the xsl:template declaration from the stack.
     */
     templPop(ctxt);
+
+#ifdef WITH_PROFILER
     if (ctxt->profile) {
 	long spent, child, total, end;
 
@@ -3290,6 +3302,7 @@ xsltApplyXSLTTemplate(xsltTransformContextPtr ctxt,
 	if (ctxt->profNr > 0)
 	    ctxt->profTab[ctxt->profNr - 1] += total;
     }
+#endif
 
 #ifdef WITH_DEBUGGER
     if ((ctxt->debugStatus != XSLT_DEBUG_NONE) && (addCallResult)) {
@@ -5911,8 +5924,16 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     ctxt->initialContextDoc = doc;
     ctxt->initialContextNode = (xmlNodePtr) doc;
 
-    if (profile != NULL)
+    if (profile != NULL) {
+#ifdef WITH_PROFILER
         ctxt->profile = 1;
+#else
+        xsltTransformError(ctxt, NULL, (xmlNodePtr) doc,
+                "xsltApplyStylesheetInternal: "
+                "libxslt compiled without profiler\n");
+        goto error;
+#endif
+    }
 
     if (output != NULL)
         ctxt->outputFile = output;
@@ -6187,9 +6208,12 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
         }
     }
     xmlXPathFreeNodeSet(ctxt->nodeList);
+
+#ifdef WITH_PROFILER
     if (profile != NULL) {
         xsltSaveProfiling(ctxt, profile);
     }
+#endif
 
     /*
      * Be pedantic.

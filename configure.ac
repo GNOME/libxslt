@@ -403,6 +403,20 @@ fi
 AC_SUBST(WITH_DEBUGGER)
 
 dnl
+dnl Is profiler support requested
+dnl
+AC_ARG_WITH(profiler, [  --with-profiler        Add the profiling support (on)])
+if test "$with_profiler" = "no" ; then
+    echo Disabling profiler
+    WITH_PROFILER=0
+else
+    echo Enabling profiler
+    WITH_PROFILER=1
+    AC_DEFINE([WITH_PROFILER],[], [Define if profiling support is enabled])
+fi
+AC_SUBST(WITH_PROFILER)
+
+dnl
 dnl The following new parameters were added to offer
 dnl the ability to specify the location of the libxml
 dnl library during linking and compilation.

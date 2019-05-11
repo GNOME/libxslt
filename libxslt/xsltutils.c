@@ -1798,6 +1798,8 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
     return 0;
 }
 
+#ifdef WITH_PROFILER
+
 /************************************************************************
  *									*
  *		Generating profiling information			*
@@ -2274,6 +2276,29 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
 
     return ret;
 }
+
+#else /* WITH_PROFILER */
+
+void
+xsltCalibrateAdjust(long delta ATTRIBUTE_UNUSED) {
+}
+
+long
+xsltTimestamp(void) {
+    return(0);
+}
+
+void
+xsltSaveProfiling(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
+                  FILE *output ATTRIBUTE_UNUSED) {
+}
+
+xmlDocPtr
+xsltGetProfileInformation(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED) {
+    return(NULL);
+}
+
+#endif /* WITH_PROFILER */
 
 /************************************************************************
  *									*
