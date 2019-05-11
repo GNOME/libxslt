@@ -2346,6 +2346,23 @@ xsltXPathCompile(xsltStylesheetPtr style, const xmlChar *str) {
  *									*
  ************************************************************************/
 
+int xslDebugStatus;
+
+/**
+ * xsltGetDebuggerStatus:
+ *
+ * Get xslDebugStatus.
+ *
+ * Returns the value of xslDebugStatus.
+ */
+int
+xsltGetDebuggerStatus(void)
+{
+    return(xslDebugStatus);
+}
+
+#ifdef WITH_DEBUGGER
+
 /*
  * There is currently only 3 debugging callback defined
  * Debugger callbacks are disabled by default
@@ -2366,8 +2383,6 @@ static xsltDebuggerCallbacks xsltDebuggerCurrentCallbacks = {
     NULL  /* drop */
 };
 
-int xslDebugStatus;
-
 /**
  * xsltSetDebuggerStatus:
  * @value : the value to be set
@@ -2378,19 +2393,6 @@ void
 xsltSetDebuggerStatus(int value)
 {
     xslDebugStatus = value;
-}
-
-/**
- * xsltGetDebuggerStatus:
- *
- * Get xslDebugStatus.
- *
- * Returns the value of xslDebugStatus.
- */
-int
-xsltGetDebuggerStatus(void)
-{
-    return(xslDebugStatus);
 }
 
 /**
@@ -2466,4 +2468,39 @@ xslDropCall(void)
     if (xsltDebuggerCurrentCallbacks.drop != NULL)
 	xsltDebuggerCurrentCallbacks.drop();
 }
+
+#else /* WITH_DEBUGGER */
+
+void
+xsltSetDebuggerStatus(int value) {
+    if (value != XSLT_DEBUG_NONE) {
+        xsltGenericError(xsltGenericErrorContext,
+                "xsltSetDebuggerStatus: libxslt compiled without debugger\n");
+    }
+}
+
+int
+xsltSetDebuggerCallbacks(int no ATTRIBUTE_UNUSED,
+                         void *block ATTRIBUTE_UNUSED) {
+    return(-1);
+}
+
+void
+xslHandleDebugger(xmlNodePtr cur ATTRIBUTE_UNUSED,
+                  xmlNodePtr node ATTRIBUTE_UNUSED,
+                  xsltTemplatePtr templ ATTRIBUTE_UNUSED,
+	          xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED) {
+}
+
+int
+xslAddCall(xsltTemplatePtr templ ATTRIBUTE_UNUSED,
+           xmlNodePtr source ATTRIBUTE_UNUSED) {
+    return(-1);
+}
+
+void
+xslDropCall(void) {
+}
+
+#endif /* WITH_DEBUGGER */
 
