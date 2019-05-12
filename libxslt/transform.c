@@ -2884,6 +2884,7 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
                 /*
                  * Search if there are fallbacks
                  */
+                ctxt->insert = insert;
                 child = cur->children;
                 while (child != NULL) {
                     if ((IS_XSLT_ELEM(child)) &&
@@ -2895,6 +2896,7 @@ xsltApplySequenceConstructor(xsltTransformContextPtr ctxt,
                     }
                     child = child->next;
                 }
+                ctxt->insert = oldInsert;
 
                 if (!found) {
                     xsltTransformError(ctxt, NULL, cur,
