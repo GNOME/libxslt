@@ -860,7 +860,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr variable,
 	if ((comp != NULL) && (comp->comp != NULL)) {
 	    xpExpr = comp->comp;
 	} else {
-	    xpExpr = xmlXPathCompile(variable->select);
+	    xpExpr = xmlXPathCtxtCompile(ctxt->xpathCtxt, variable->select);
 	}
 	if (xpExpr == NULL)
 	    return(NULL);
@@ -1101,7 +1101,7 @@ xsltEvalGlobalVariable(xsltStackElemPtr elem, xsltTransformContextPtr ctxt)
 	if ((comp != NULL) && (comp->comp != NULL)) {
 	    xpExpr = comp->comp;
 	} else {
-	    xpExpr = xmlXPathCompile(elem->select);
+	    xpExpr = xmlXPathCtxtCompile(ctxt->xpathCtxt, elem->select);
 	}
 	if (xpExpr == NULL)
 	    goto error;
@@ -1552,7 +1552,7 @@ xsltProcessUserParamInternal(xsltTransformContextPtr ctxt,
 
     result = NULL;
     if (eval != 0) {
-        xpExpr = xmlXPathCompile(value);
+        xpExpr = xmlXPathCtxtCompile(ctxt->xpathCtxt, value);
 	if (xpExpr != NULL) {
 	    xmlDocPtr oldXPDoc;
 	    xmlNodePtr oldXPContextNode;
