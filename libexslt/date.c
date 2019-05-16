@@ -141,9 +141,9 @@ struct _exsltDateDurVal {
 #define IS_LEAP(y)						\
 	(((y & 3) == 0) && ((y % 25 != 0) || ((y & 15) == 0)))
 
-static const unsigned long daysInMonth[12] =
+static const long daysInMonth[12] =
 	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-static const unsigned long daysInMonthLeap[12] =
+static const long daysInMonthLeap[12] =
 	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 #define MAX_DAYINMONTH(yr,mon)                                  \
@@ -177,9 +177,9 @@ static const unsigned long daysInMonthLeap[12] =
 #define DAYS_PER_EPOCH          (400 * 365 + 100 - 4 + 1)
 #define YEARS_PER_EPOCH         400
 
-static const unsigned long dayInYearByMonth[12] =
+static const long dayInYearByMonth[12] =
 	{ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
-static const unsigned long dayInLeapYearByMonth[12] =
+static const long dayInLeapYearByMonth[12] =
 	{ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 };
 
 #define DAY_IN_YEAR(day, month, year)				\
