@@ -62,9 +62,9 @@ testXslt(int argc, char **argv) {
     if (result == NULL) {
         fprintf(stderr, "Result is NULL\n");
         ret = 1;
-    } else if (xmlStrcmp(result, BAD_CAST "<r>39</r>\n") != 0) {
+    } else if (xmlStrcmp(result, BAD_CAST "<r>42</r>\n") != 0) {
         fprintf(stderr, "Stylesheet returned\n%sexpected \n%s\n",
-                result, "<r>39</r>");
+                result, "<r>42</r>");
         ret = 1;
     }
 

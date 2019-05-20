@@ -35,8 +35,18 @@ static xsltTransformContextPtr tctxt;
 static xmlHashTablePtr saxonExtHash;
 
 static void
-xsltFuzzErrorFunc(void *ctx ATTRIBUTE_UNUSED, const char *msg ATTRIBUTE_UNUSED,
-                  ...) {
+xsltFuzzXmlErrorFunc(void *vctxt, const char *msg ATTRIBUTE_UNUSED, ...) {
+    xmlParserCtxtPtr ctxt = (xmlParserCtxtPtr) vctxt;
+    /*
+     * Stopping the parser should be slightly faster and might catch some
+     * issues related to recent libxml2 changes.
+     */
+    xmlStopParser(ctxt);
+}
+
+static void
+xsltFuzzXsltErrorFunc(void *vctxt ATTRIBUTE_UNUSED,
+                      const char *msg ATTRIBUTE_UNUSED, ...) {
 }
 
 static void
@@ -48,8 +58,8 @@ xsltFuzzInit(void) {
     exsltRegisterAll();
 
     /* Suppress error messages */
-    xmlSetGenericErrorFunc(NULL, xsltFuzzErrorFunc);
-    xsltSetGenericErrorFunc(NULL, xsltFuzzErrorFunc);
+    xmlSetGenericErrorFunc(NULL, xsltFuzzXmlErrorFunc);
+    xsltSetGenericErrorFunc(NULL, xsltFuzzXsltErrorFunc);
 
     /* Disallow I/O */
     sec = xsltNewSecurityPrefs();

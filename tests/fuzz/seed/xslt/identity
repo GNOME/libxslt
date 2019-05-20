@@ -1,3 +1,0 @@
-<x:stylesheet xmlns:x="http://www.w3.org/1999/XSL/Transform" xmlns:a="a" xmlns:b="b" version="1.0">
-<x:template match="@*|node()"><x:copy><x:apply-templates select="@*|node()"/></x:copy></x:template>
-</x:stylesheet>

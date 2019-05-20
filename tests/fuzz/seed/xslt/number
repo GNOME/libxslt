@@ -3,7 +3,7 @@
 <x:number level="any" count="*" from="*" format="1.i.I.A.a"/>
 <x:number level="multiple" count="*" format="A.a.I.i.1"/>
 <x:number level="single" from="*"/>
-<x:number value="123456789" format="1" grouping-separator="." grouping-size="3"/>
+<x:number value="123456789" format="1" grouping-separator="’" grouping-size="3"/>
 <x:apply-templates select="*"/>
 </x:template>
 </x:stylesheet>

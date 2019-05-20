@@ -2,9 +2,11 @@
 <a xmlns:a="a">
     <b xmlns:b="b" a="1" id="b">
         <c b="2">Ärger</c>
-        <b:d b="3">text</b:d>
+        <b:d b="3">text &amp; &lt;&gt;</b:d>
         <!-- comment -->
-        <a:b b="4">ß&#x1f600;</a:b>
+        <a:b b="4">
+            <a:c>ß&#x1f600;</a:c>
+        </a:b>
         <b:c a="4"><![CDATA[text]]></b:c>
     </b>
     <?pi content?>

@@ -62,3 +62,9 @@ var_num="=$f"
 var_bool="=$b"
 var_str="=$s"
 var_node_set="=$n"
+
+# Unicode
+
+utf8_2="\xC3\x84"
+utf8_3="\xE2\x80\x9C"
+utf8_4="\xF0\x9F\x98\x80"
