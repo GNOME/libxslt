@@ -14,6 +14,11 @@ matrix:
       env: CONFIG="--without-python"
            CFLAGS="-O2 -g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -Wno-error=cast-align"
            UBSAN_OPTIONS=print_stacktrace=1
+    # clang with MemorySanitizer.
+    - compiler: clang
+      dist: xenial
+      env: CONFIG="--without-python --without-zlib --without-lzma --without-crypto"
+           CFLAGS="-O2 -g -fno-omit-frame-pointer -fsanitize=memory -Werror -Wno-error=cast-align"
 script:
 - |
     git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git
