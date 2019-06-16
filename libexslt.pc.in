@@ -9,4 +9,5 @@ Version: @LIBEXSLT_VERSION@
 Description: EXSLT Extension library
 Requires: libxml-2.0
 Libs: @EXSLT_LIBDIR@ @EXSLT_LIBS@
+Libs.private: @M_LIBS@ @LIBGCRYPT_LIBS@
 Cflags: @EXSLT_INCLUDEDIR@
