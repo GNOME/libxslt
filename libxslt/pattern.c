@@ -113,7 +113,6 @@ struct _xsltCompMatch {
     xmlNsPtr *nsList;		/* the namespaces in scope */
     int nsNr;			/* the number of namespaces in scope */
     xsltStepOpPtr steps;        /* ops for computation */
-    int novar;                  /* doesn't contain variables */
 };
 
 typedef struct _xsltParserContext xsltParserContext;
@@ -589,8 +588,7 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 	}
 	ix = 0;
 
-	if ((parent == NULL) || (node->doc == NULL) || isRVT ||
-            (comp->novar == 0))
+	if ((parent == NULL) || (node->doc == NULL) || isRVT)
 	    nocache = 1;
 
 	if (nocache == 0) {
@@ -1243,6 +1241,27 @@ xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	comp = comp->next;
     }
     return(0);
+}
+
+void
+xsltCompMatchClearCache(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp) {
+    xsltStepOpPtr sel;
+    xmlXPathObjectPtr list;
+
+    if ((ctxt == NULL) || (comp == NULL))
+        return;
+
+    sel = &comp->steps[0];
+    list = (xmlXPathObjectPtr) XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra);
+
+    if (list != NULL) {
+        xmlXPathFreeObject(list);
+
+        XSLT_RUNTIME_EXTRA_LST(ctxt, sel->lenExtra) = NULL;
+        XSLT_RUNTIME_EXTRA(ctxt, sel->previousExtra, ptr) = NULL;
+        XSLT_RUNTIME_EXTRA(ctxt, sel->indexExtra, ival) = 0;
+        XSLT_RUNTIME_EXTRA_FREE(ctxt, sel->lenExtra) = NULL;
+    }
 }
 
 /************************************************************************
@@ -1966,7 +1985,6 @@ xsltCompilePatternInternal(const xmlChar *pattern, xmlDocPtr doc,
 		j++;
 	}
 	element->nsNr = j;
-        element->novar = novar;
 
 
 #ifdef WITH_XSLT_DEBUG_PATTERN

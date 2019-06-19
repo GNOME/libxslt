@@ -504,5 +504,8 @@ LIBXML2_1.1.34 {
 
 # xsltInternals
   xsltParseStylesheetUser;
+
+# pattern
+  xsltCompMatchClearCache;
 } LIBXML2_1.1.30;
 

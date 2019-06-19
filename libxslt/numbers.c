@@ -829,6 +829,16 @@ xsltNumberFormat(xsltTransformContextPtr ctxt,
 					      output);
 	    }
 	}
+
+        /*
+         * Unlike `match` patterns, `count` and `from` patterns can contain
+         * variable references, so we have to clear the pattern match
+         * cache if the "direct" matching algorithm was used.
+         */
+        if (data->countPat != NULL)
+            xsltCompMatchClearCache(ctxt, data->countPat);
+        if (data->fromPat != NULL)
+            xsltCompMatchClearCache(ctxt, data->fromPat);
     }
     /* Insert number as text node */
     xsltCopyTextString(ctxt, ctxt->insert, xmlBufferContent(output), 0);
