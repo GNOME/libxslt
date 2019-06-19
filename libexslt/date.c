@@ -187,6 +187,9 @@ static const long dayInLeapYearByMonth[12] =
                 dayInLeapYearByMonth[month - 1] :		\
                 dayInYearByMonth[month - 1]) + day)
 
+#define YEAR_MAX LONG_MAX
+#define YEAR_MIN (-LONG_MAX + 1)
+
 /**
  * _exsltDateParseGYear:
  * @dt:  pointer to a date structure
@@ -221,7 +224,7 @@ _exsltDateParseGYear (exsltDateValPtr dt, const xmlChar **str)
     firstChar = cur;
 
     while ((*cur >= '0') && (*cur <= '9')) {
-        if (dt->year >= LONG_MAX / 10)
+        if (dt->year >= YEAR_MAX / 10) /* Not really exact */
             return -1;
 	dt->year = dt->year * 10 + (*cur - '0');
 	cur++;
@@ -1533,8 +1536,8 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateDurValPtr dur)
      * pathological cases.
      */
     carry += (dur->day / DAYS_PER_EPOCH) * YEARS_PER_EPOCH;
-    if ((carry > 0 && dt->year > LONG_MAX - carry) ||
-        (carry < 0 && dt->year < LONG_MIN - carry)) {
+    if ((carry > 0 && dt->year > YEAR_MAX - carry) ||
+        (carry < 0 && dt->year < YEAR_MIN - carry)) {
         /* Overflow */
         exsltDateFreeDate(ret);
         return NULL;
@@ -1584,7 +1587,7 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateDurValPtr dur)
                 ret->mon -= 1;
             }
             else {
-                if (ret->year == LONG_MIN) {
+                if (ret->year == YEAR_MIN) {
                     exsltDateFreeDate(ret);
                     return NULL;
                 }
@@ -1598,7 +1601,7 @@ _exsltDateAdd (exsltDateValPtr dt, exsltDateDurValPtr dur)
                 ret->mon += 1;
             }
             else {
-                if (ret->year == LONG_MAX) {
+                if (ret->year == YEAR_MAX) {
                     exsltDateFreeDate(ret);
                     return NULL;
                 }
