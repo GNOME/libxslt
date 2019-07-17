@@ -29,8 +29,6 @@ if test $# -eq 0; then
     usage 1
 fi
 
-libs=false
-
 while test $# -gt 0; do
     case "$1" in
     -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
@@ -77,7 +75,7 @@ while test $# -gt 0; do
        	;;
 
     --libs)
-       	libs=true
+        echo @XSLT_LIBDIR@ @XSLT_LIBS@ @EXTRA_LIBS@
        	;;
 
     *)
@@ -87,41 +85,5 @@ while test $# -gt 0; do
     esac
     shift
 done
-
-the_libs="@XSLT_LIBDIR@ @XSLT_LIBS@ @EXTRA_LIBS@"
-
-if $libs; then
-    all_flags="$the_libs"
-fi
-
-if test -z "$all_flags" || test "x$all_flags" = "x "; then
-    exit 1
-fi
-
-# Straight out any possible duplicates, but be careful to
-# get `-lfoo -lbar -lbaz' for `-lfoo -lbaz -lbar -lbaz'
-other_flags=
-rev_libs=
-for i in $all_flags; do
-    case "$i" in
-    # a library, save it for later, in reverse order
-    -l*) rev_libs="$i $rev_libs" ;;
-    *)
-	case " $other_flags " in
-	*\ $i\ *) ;;				# already there
-	*) other_flags="$other_flags $i" ;;	# add it to output
-        esac ;;
-    esac
-done
-
-ord_libs=
-for i in $rev_libs; do
-    case " $ord_libs " in
-    *\ $i\ *) ;;			# already there
-    *) ord_libs="$i $ord_libs" ;;	# add it to output in reverse order
-    esac
-done
-
-echo $other_flags $ord_libs
 
 exit 0
