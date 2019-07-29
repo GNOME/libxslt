@@ -16,6 +16,7 @@ Known values for OPTION are:
   --prefix=DIR		change XSLT prefix [default $prefix]
   --exec-prefix=DIR	change XSLT executable prefix [default $exec_prefix]
   --libs		print library linking information
+                        add --dynamic to print only shared libraries
   --cflags		print pre-processor and compiler flags
   --plugins		print plugin directory
   --help		display this help and exit
@@ -79,8 +80,18 @@ while test $# -gt 0; do
        	;;
 
     --libs)
-        libs="@XSLT_LIBDIR@ @XSLT_LIBS@ @EXTRA_LIBS@"
-        all_flags="$all_flags $libs"
+        if [ "$2" = "--dynamic" ]; then
+            shift
+            libs="@XSLT_LIBS@"
+        else
+            libs="@XSLT_LIBS@ @XSLT_PRIVATE_LIBS@"
+        fi
+
+        if [ "@XSLT_LIBDIR@" != "-L/usr/lib" -a "@XSLT_LIBDIR@" != "-L/usr/lib64" ]; then
+            libs="@XSLT_LIBDIR@ $libs"
+        fi
+
+        all_flags="$all_flags $libs @EXTRA_LIBS@"
        	;;
 
     *)
