@@ -76,7 +76,6 @@ while test $# -gt 0; do
         if test "$includedir" != "/usr/include"; then
             cflags="$cflags @XSLT_INCLUDEDIR@"
         fi
-        all_flags="$cflags $all_flags"
        	;;
 
     --libs)
@@ -91,7 +90,7 @@ while test $# -gt 0; do
             libs="@XSLT_LIBDIR@ $libs"
         fi
 
-        all_flags="$all_flags $libs @EXTRA_LIBS@"
+        libs="$libs @EXTRA_LIBS@"
        	;;
 
     *)
@@ -101,6 +100,8 @@ while test $# -gt 0; do
     esac
     shift
 done
+
+all_flags="$cflags $libs"
 
 if test -z "$all_flags" || test "x$all_flags" = "x "; then
     exit 1
