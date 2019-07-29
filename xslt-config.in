@@ -29,7 +29,6 @@ if test $# -eq 0; then
     usage 1
 fi
 
-cflags=false
 libs=false
 
 while test $# -gt 0; do
@@ -74,7 +73,11 @@ while test $# -gt 0; do
 	;;
 
     --cflags)
-       	cflags=true
+        cflags="@LIBXML_CFLAGS@"
+        if test "$includedir" != "/usr/include"; then
+            cflags="$cflags @XSLT_INCLUDEDIR@"
+        fi
+        all_flags="$cflags $all_flags"
        	;;
 
     --libs)
@@ -90,15 +93,6 @@ while test $# -gt 0; do
 done
 
 the_libs="@XSLT_LIBDIR@ @XSLT_LIBS@ @EXTRA_LIBS@"
-if test "$includedir" != "/usr/include"; then
-    the_flags="$the_flags -I$includedir `@XML_CONFIG@ --cflags`"
-else
-    the_flags="$the_flags `@XML_CONFIG@ --cflags`"
-fi
-
-if $cflags; then
-    all_flags="$the_flags"
-fi
 
 if $libs; then
     all_flags="$all_flags $services $the_libs"
