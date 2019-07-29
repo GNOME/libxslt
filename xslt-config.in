@@ -29,8 +29,6 @@ if test $# -eq 0; then
     usage 1
 fi
 
-libs=false
-
 while test $# -gt 0; do
     case "$1" in
     -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
@@ -81,7 +79,8 @@ while test $# -gt 0; do
        	;;
 
     --libs)
-       	libs=true
+        libs="@XSLT_LIBDIR@ @XSLT_LIBS@ @EXTRA_LIBS@"
+        all_flags="$all_flags $libs"
        	;;
 
     *)
@@ -91,12 +90,6 @@ while test $# -gt 0; do
     esac
     shift
 done
-
-the_libs="@XSLT_LIBDIR@ @XSLT_LIBS@ @EXTRA_LIBS@"
-
-if $libs; then
-    all_flags="$all_flags $the_libs"
-fi
 
 if test -z "$all_flags" || test "x$all_flags" = "x "; then
     exit 1
