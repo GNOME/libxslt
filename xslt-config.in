@@ -39,6 +39,8 @@ while test $# -gt 0; do
     case "$1" in
     --prefix=*)
 	prefix=$optarg
+        includedir=${prefix}/include
+        libdir=${prefix}/lib
 	if test $exec_prefix_set = no ; then
 	    exec_prefix=$optarg
 	fi
