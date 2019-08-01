@@ -486,23 +486,44 @@ else
 fi
 
 dnl
+dnl Check which type of library to build. Default to building shared and static.
+dnl
+
+build_shared_libs="yes"
+build_static_libs="yes"
+
+if test "$enable_shared" = "no"; then
+    build_shared_libs="no"
+fi
+
+if test "$enable_static" = "no"; then
+    build_static_libs="no"
+fi
+
+if test "$build_shared_libs" = "no" -a "$build_static_libs" = "no"; then
+    build_static_libs="yes"
+fi
+
+dnl
 dnl Override other variables if LIBXML_SRC is set
 dnl
 
-if test "x$LIBXML_SRC" != "x"
-then
-	CWD=`pwd`
-	if cd $LIBXML_SRC
-	then
-		LIBXML_SRC=`pwd`
-		XML_CONFIG="${LIBXML_SRC}/xml2-config"
-		LIBXML_CFLAGS="-I${LIBXML_SRC}/include"
-		LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs`"
-                WITH_MODULES="`$XML_CONFIG --modules`"
-		cd $CWD
-	else
-		AC_MSG_ERROR([libxml source dir not found (${LIBXML_SRC}), typo?])
-	fi
+if test "x$LIBXML_SRC" != "x"; then
+    CWD=`pwd`
+    if cd $LIBXML_SRC; then
+        LIBXML_SRC=`pwd`
+        XML_CONFIG="${LIBXML_SRC}/xml2-config"
+        LIBXML_CFLAGS="-I${LIBXML_SRC}/include"
+        if test "$build_static_libs" = "no"; then
+            LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs --dynamic`"
+        else
+            LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs`"
+        fi
+        WITH_MODULES="`$XML_CONFIG --modules`"
+        cd $CWD
+    else
+        AC_MSG_ERROR([libxml source dir not found (${LIBXML_SRC}), typo?])
+    fi
 fi
 
 dnl
@@ -523,15 +544,19 @@ dnl
 
 if test "x$LIBXML_LIBS" = "x" && ${XML_CONFIG} --libs print > /dev/null 2>&1
 then
-        AC_MSG_CHECKING(for libxml libraries >= $LIBXML_REQUIRED_VERSION)
-	XMLVERS=`$XML_CONFIG --version`
-	if test VERSION_TO_NUMBER(echo $XMLVERS) -ge VERSION_TO_NUMBER(echo $LIBXML_REQUIRED_VERSION)
-	then
-		AC_MSG_RESULT($XMLVERS found)
-	else
-		AC_MSG_ERROR(Version $XMLVERS found. You need at least libxml2 $LIBXML_REQUIRED_VERSION for this version of libxslt)
-	fi
-	LIBXML_LIBS="`$XML_CONFIG --libs`"
+    AC_MSG_CHECKING(for libxml libraries >= $LIBXML_REQUIRED_VERSION)
+    XMLVERS=`$XML_CONFIG --version`
+    if test VERSION_TO_NUMBER(echo $XMLVERS) -ge VERSION_TO_NUMBER(echo $LIBXML_REQUIRED_VERSION); then
+        AC_MSG_RESULT($XMLVERS found)
+    else
+        AC_MSG_ERROR(Version $XMLVERS found. You need at least libxml2 $LIBXML_REQUIRED_VERSION for this version of libxslt)
+    fi
+
+    if test "$build_static_libs" = "no"; then
+        LIBXML_LIBS="`$XML_CONFIG --libs --dynamic`"
+    else
+        LIBXML_LIBS="`$XML_CONFIG --libs`"
+    fi
 	LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
         WITH_MODULES="`$XML_CONFIG --modules`"
 fi
@@ -554,7 +579,7 @@ then
 fi
 
 AC_MSG_CHECKING([whether shared libraries will be built (required for plugins)])
-if test "$enable_shared" = "no" -a "$with_plugins" = "yes"; then
+if test "$build_shared_libs" = "no" -a "$with_plugins" = "yes"; then
 	 AC_MSG_RESULT(no)
 	 AC_MSG_WARN([Disabling plugin support.])
 	 AC_MSG_WARN([Plugins require that shared libraries be built.])
