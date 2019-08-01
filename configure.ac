@@ -530,11 +530,15 @@ dnl
 dnl Try pkg-config first if nothing is set
 dnl
 
-if test "x$LIBXML_CONFIG_PREFIX" = "x" -a "x$LIBXML_LIBS" = "x"
-then
-	PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION], [
-		WITH_MODULES="`$PKG_CONFIG --variable=modules libxml-2.0`"
-	], [ ])
+if test "x$LIBXML_CONFIG_PREFIX" = "x" -a "x$LIBXML_LIBS" = "x"; then
+    if test "$build_static_libs" = "no"; then
+        PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION], [
+            WITH_MODULES="`$PKG_CONFIG --variable=modules libxml-2.0`"
+        ], [ ])
+    else
+        PKG_CHECK_MODULES_STATIC([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION],
+        [ ], [ ])
+    fi
 fi
 
 dnl
