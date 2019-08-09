@@ -1808,7 +1808,7 @@ exits'/>
       <arg name='comp' type='xsltElemPreCompPtr' info='precomputed information'/>
     </function>
     <function name='xsltCompileAttr' file='xsltInternals'>
-      <info>Precompile an attribute in a stylesheet, basically it checks if it is an attrubute value template, and if yes establish some structures needed to process it at transformation time.</info>
+      <info>Precompile an attribute in a stylesheet, basically it checks if it is an attribute value template, and if yes, establish some structures needed to process it at transformation time.</info>
       <return type='void'/>
       <arg name='style' type='xsltStylesheetPtr' info='a XSLT process context'/>
       <arg name='attr' type='xmlAttrPtr' info='the attribute coming from the stylesheet.'/>

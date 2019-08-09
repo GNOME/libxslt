@@ -173,7 +173,7 @@ xsltSetAttrVTsegment(xsltAttrVTPtr avt, void *val) {
  * @attr: the attribute coming from the stylesheet.
  *
  * Precompile an attribute in a stylesheet, basically it checks if it is
- * an attrubute value template, and if yes establish some structures needed
+ * an attribute value template, and if yes, establish some structures needed
  * to process it at transformation time.
  */
 void
