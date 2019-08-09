@@ -1030,7 +1030,7 @@ extension element'/>
     <typedef name='xsltEffectiveNsPtr' file='xsltInternals' type='xsltEffectiveNs *'/>
     <struct name='xsltElemPreComp' file='xsltInternals' type='struct _xsltElemPreComp'>
       <field name='next' type='xsltElemPreCompPtr' info=' next item in the global chained
-list hold by xsltStylesheet.'/>
+list held by xsltStylesheet.'/>
       <field name='type' type='xsltStyleType' info=' type of the element'/>
       <field name='func' type='xsltTransformFunction' info=' handling function'/>
       <field name='inst' type='xmlNodePtr' info=' the node in the stylesheet&apos;s tree

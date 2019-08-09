@@ -470,7 +470,7 @@ typedef void (*xsltElemPreCompDeallocator) (xsltElemPreCompPtr comp);
  */
 struct _xsltElemPreComp {
     xsltElemPreCompPtr next;		/* next item in the global chained
-					   list hold by xsltStylesheet. */
+					   list held by xsltStylesheet. */
     xsltStyleType type;		/* type of the element */
     xsltTransformFunction func;	/* handling function */
     xmlNodePtr inst;			/* the node in the stylesheet's tree
@@ -582,7 +582,7 @@ struct _xsltNsListContainer {
  */
 struct _xsltStylePreComp {
     xsltElemPreCompPtr next;    /* next item in the global chained
-				   list hold by xsltStylesheet */
+				   list held by xsltStylesheet */
     xsltStyleType type;         /* type of the item */
     xsltTransformFunction func; /* handling function */
     xmlNodePtr inst;		/* the node in the stylesheet's tree
