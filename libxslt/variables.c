@@ -1969,7 +1969,7 @@ xsltVariableLookup(xsltTransformContextPtr ctxt, const xmlChar *name,
  * @inst:  the xsl:with-param instruction element
  *
  * Processes an xsl:with-param instruction at transformation time.
- * The value is compute, but not recorded.
+ * The value is computed, but not recorded.
  * NOTE that this is also called with an *xsl:param* element
  * from exsltFuncFunctionFunction().
  *

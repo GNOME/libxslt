@@ -2606,7 +2606,7 @@ exits'/>
       <arg name='cur' type='xmlNodePtr' info='the &quot;attribute-set&quot; element'/>
     </function>
     <function name='xsltParseStylesheetCallerParam' file='variables'>
-      <info>Processes an xsl:with-param instruction at transformation time. The value is compute, but not recorded. NOTE that this is also called with an *xsl:param* element from exsltFuncFunctionFunction().</info>
+      <info>Processes an xsl:with-param instruction at transformation time. The value is computed, but not recorded. NOTE that this is also called with an *xsl:param* element from exsltFuncFunctionFunction().</info>
       <return type='xsltStackElemPtr' info='the new xsltStackElemPtr or NULL'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context'/>
       <arg name='inst' type='xmlNodePtr' info='the xsl:with-param instruction element'/>
