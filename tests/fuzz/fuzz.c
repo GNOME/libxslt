@@ -209,16 +209,6 @@ xsltFuzzXPath(const char *data, size_t size) {
     memcpy(xpathExpr, data, size);
     xpathExpr[size] = 0;
 
-    /*
-     * format-number() can still cause memory errors with invalid UTF-8 in
-     * prefixes or suffixes. This shouldn't be exploitable in practice, but
-     * should be fixed. Check UTF-8 validity for now.
-     */
-    if (xmlCheckUTF8(xpathExpr) == 0) {
-        free(xpathExpr);
-        return NULL;
-    }
-
     /* Compile and return early if the expression is invalid */
     xmlXPathCompExprPtr compExpr = xmlXPathCtxtCompile(xpctxt, xpathExpr);
     free(xpathExpr);
