@@ -241,6 +241,8 @@ skipString(const xmlChar *cur, int end) {
  */
 static int
 skipPredicate(const xmlChar *cur, int end) {
+    int level = 0;
+
     if ((cur == NULL) || (end < 0)) return(-1);
     if (cur[end] != '[') return(end);
     end++;
@@ -251,12 +253,12 @@ skipPredicate(const xmlChar *cur, int end) {
 	        return(-1);
 	    continue;
 	} else if (cur[end] == '[') {
-	    end = skipPredicate(cur, end);
-	    if (end <= 0)
-	        return(-1);
-	    continue;
-	} else if (cur[end] == ']')
-	    return(end + 1);
+            level += 1;
+	} else if (cur[end] == ']') {
+            if (level == 0)
+	        return(end + 1);
+            level -= 1;
+        }
 	end++;
     }
     return(-1);
