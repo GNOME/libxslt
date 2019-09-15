@@ -1030,7 +1030,7 @@ extension element'/>
     <typedef name='xsltEffectiveNsPtr' file='xsltInternals' type='xsltEffectiveNs *'/>
     <struct name='xsltElemPreComp' file='xsltInternals' type='struct _xsltElemPreComp'>
       <field name='next' type='xsltElemPreCompPtr' info=' next item in the global chained
-list hold by xsltStylesheet.'/>
+list held by xsltStylesheet.'/>
       <field name='type' type='xsltStyleType' info=' type of the element'/>
       <field name='func' type='xsltTransformFunction' info=' handling function'/>
       <field name='inst' type='xmlNodePtr' info=' the node in the stylesheet&apos;s tree
@@ -1808,7 +1808,7 @@ exits'/>
       <arg name='comp' type='xsltElemPreCompPtr' info='precomputed information'/>
     </function>
     <function name='xsltCompileAttr' file='xsltInternals'>
-      <info>Precompile an attribute in a stylesheet, basically it checks if it is an attrubute value template, and if yes establish some structures needed to process it at transformation time.</info>
+      <info>Precompile an attribute in a stylesheet, basically it checks if it is an attribute value template, and if yes, establish some structures needed to process it at transformation time.</info>
       <return type='void'/>
       <arg name='style' type='xsltStylesheetPtr' info='a XSLT process context'/>
       <arg name='attr' type='xmlAttrPtr' info='the attribute coming from the stylesheet.'/>
@@ -2606,7 +2606,7 @@ exits'/>
       <arg name='cur' type='xmlNodePtr' info='the &quot;attribute-set&quot; element'/>
     </function>
     <function name='xsltParseStylesheetCallerParam' file='variables'>
-      <info>Processes an xsl:with-param instruction at transformation time. The value is compute, but not recorded. NOTE that this is also called with an *xsl:param* element from exsltFuncFunctionFunction().</info>
+      <info>Processes an xsl:with-param instruction at transformation time. The value is computed, but not recorded. NOTE that this is also called with an *xsl:param* element from exsltFuncFunctionFunction().</info>
       <return type='xsltStackElemPtr' info='the new xsltStackElemPtr or NULL'/>
       <arg name='ctxt' type='xsltTransformContextPtr' info='the XSLT transformation context'/>
       <arg name='inst' type='xmlNodePtr' info='the xsl:with-param instruction element'/>

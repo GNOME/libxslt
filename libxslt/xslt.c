@@ -5498,7 +5498,7 @@ error:
 
 /**
  * xsltIncludeComp:
- * @cctxt: the compilation contenxt
+ * @cctxt: the compilation context
  * @node:  the xsl:include node
  *
  * Process the xslt include node on the source node
