@@ -1808,9 +1808,7 @@ xsltCompileRelativePathPattern(xsltParserContextPtr ctxt, xmlChar *token, int no
 	    PUSH(XSLT_OP_PARENT, NULL, NULL, novar);
 	    NEXT;
 	    SKIP_BLANKS;
-	    if ((CUR != 0) && (CUR != '|')) {
-		xsltCompileRelativePathPattern(ctxt, NULL, novar);
-	    }
+	    xsltCompileStepPattern(ctxt, NULL, novar);
 	} else {
 	    ctxt->error = 1;
 	}
