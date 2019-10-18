@@ -26,30 +26,14 @@
 
 <h2><a name="Introducti">Introduction</a></h2>
 
-<p>This document describes <a href="http://xmlsoft.org/XSLT/">libxslt</a>,
-the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developed for the
+<p>This document describes libexslt, the EXSLT C library developed for the
 <a href="http://www.gnome.org/">Gnome</a> project.</p>
-
-<p>Here are some key points about libxslt:</p>
-<ul>
-  <li>Libxslt is a C implementation</li>
-  <li>Libxslt is based on libxml for XML parsing, tree manipulation and XPath
-    support</li>
-  <li>It is written in plain C, making as few assumptions as possible, and
-    sticking closely to ANSI C/POSIX for easy embedding. Should works on
-    Linux/Unix/Windows.</li>
-  <li>This library is released under the <a
-    href="http://www.opensource.org/licenses/mit-license.html">MIT
-  Licence</a></li>
-  <li>Though not designed primarily with performances in mind, libxslt seems
-    to be a relatively fast processor.</li>
-</ul>
 
 <h2><a name="Documentat">Documentation</a></h2>
 
-<p>There are some on-line resources about using libxslt:</p>
+<p>There are some on-line resources about using libexslt:</p>
 <ol>
-  <li>Check the <a href="html/libxslt-lib.html#LIBXSLT-LIB">API
+  <li>Check the <a href="html/libexslt-lib.html">API
     documentation</a> automatically extracted from code comments (using
         the program apibuild.py, developed for libxml, together with the
 	    xsl script 'newapi.xsl' and the libxslt xsltproc program).</li>
@@ -63,7 +47,7 @@ the <a href="http://www.w3.org/TR/xslt">XSLT</a> C library developed for the
 
 <p>Well, bugs or missing features are always possible, and I will make a
 point of fixing them in a timely fashion. The best way to report a bug is to
-use the <a href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">Gnome
+use the <a href="https://gitlab.gnome.org/GNOME/libxslt/issues">Gnome
 bug tracking database</a> (make sure to use the "libxslt" module name). I
 look at reports there regularly and it's good to have a reminder when a bug
 is still open. Be sure to specify that the bug is for the package libxslt.</p>
@@ -98,7 +82,7 @@ posting</span>:</p>
   <li>check the <a href="http://mail.gnome.org/archives/xslt/">list
     archives</a> to see if the problem was reported already, in this case
     there is probably a fix available, similarly check the <a
-    href="http://bugzilla.gnome.org/buglist.cgi?product=libxslt">registered
+    href="https://gitlab.gnome.org/GNOME/libxslt/issues">registered
     open bugs</a></li>
   <li>make sure you can reproduce the bug with xsltproc, a very useful thing
     to do is run the transformation with -v argument and redirect the
@@ -195,16 +179,14 @@ binaries</a>.</p>
 platform, get in touch with me to upload the package. I will keep them in the
 <a href="ftp://xmlsoft.org/contribs/">contrib directory</a></p>
 
-<p>Libxslt is also available from CVS:</p>
+<p>Libexslt is also available from GIT:</p>
 <ul>
-  <li><p>The <a
-    href="http://cvs.gnome.org/bonsai/rview.cgi?cvsroot=/cvs/gnome&amp;dir=libxslt">Gnome
-    CVS base</a>. Check the <a
-    href="http://developer.gnome.org/tools/cvs.html">Gnome CVS Tools</a>
-    page; the CVS module is <b>libxslt</b>.</p>
+  <li><p>See <a href="https://gitlab.gnome.org/GNOME/libxslt">libxslt Git web</a>.
+         To checkout a local tree use:</p>
+       <pre>git clone https://gitlab.gnome.org/GNOME/libxslt.git</pre>
   </li>
-  <li><a href="ftp://xmlsoft.org/XSLT/cvs-snapshot.tar.gz">daily snapshots
-    from CVS</a> are also provided</li>
+  <li>The <strong>libxml2</strong> module is also present
+      <a href="https://gitlab.gnome.org/GNOME/libxml2">there</a></li>
 </ul>
 
 <p></p>
