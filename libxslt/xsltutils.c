@@ -2277,27 +2277,6 @@ xsltGetProfileInformation(xsltTransformContextPtr ctxt)
     return ret;
 }
 
-#else /* WITH_PROFILER */
-
-void
-xsltCalibrateAdjust(long delta ATTRIBUTE_UNUSED) {
-}
-
-long
-xsltTimestamp(void) {
-    return(0);
-}
-
-void
-xsltSaveProfiling(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
-                  FILE *output ATTRIBUTE_UNUSED) {
-}
-
-xmlDocPtr
-xsltGetProfileInformation(xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED) {
-    return(NULL);
-}
-
 #endif /* WITH_PROFILER */
 
 /************************************************************************
@@ -2492,39 +2471,6 @@ xslDropCall(void)
 {
     if (xsltDebuggerCurrentCallbacks.drop != NULL)
 	xsltDebuggerCurrentCallbacks.drop();
-}
-
-#else /* WITH_DEBUGGER */
-
-void
-xsltSetDebuggerStatus(int value) {
-    if (value != XSLT_DEBUG_NONE) {
-        xsltGenericError(xsltGenericErrorContext,
-                "xsltSetDebuggerStatus: libxslt compiled without debugger\n");
-    }
-}
-
-int
-xsltSetDebuggerCallbacks(int no ATTRIBUTE_UNUSED,
-                         void *block ATTRIBUTE_UNUSED) {
-    return(-1);
-}
-
-void
-xslHandleDebugger(xmlNodePtr cur ATTRIBUTE_UNUSED,
-                  xmlNodePtr node ATTRIBUTE_UNUSED,
-                  xsltTemplatePtr templ ATTRIBUTE_UNUSED,
-	          xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED) {
-}
-
-int
-xslAddCall(xsltTemplatePtr templ ATTRIBUTE_UNUSED,
-           xmlNodePtr source ATTRIBUTE_UNUSED) {
-    return(-1);
-}
-
-void
-xslDropCall(void) {
 }
 
 #endif /* WITH_DEBUGGER */
