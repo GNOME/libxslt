@@ -39,7 +39,6 @@ EXTRA_DIST =				\
 	APIchunk10.html			\
 	APIchunk11.html			\
 	APIchunk12.html			\
-	APIchunk13.html			\
 	APIconstructors.html		\
 	APIfiles.html			\
 	APIfunctions.html		\
