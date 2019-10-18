@@ -6565,9 +6565,8 @@ xsltParseStylesheetImportedDoc(xmlDocPtr doc,
 
 /**
  * xsltParseStylesheetUser:
- * @doc:  an xmlDoc parsed XML
  * @style: pointer to the stylesheet
- * @parentStyle: pointer to the parent stylesheet (if it exists)
+ * @doc:  an xmlDoc parsed XML
  *
  * Parse an XSLT stylesheet with a user-provided stylesheet struct.
  *

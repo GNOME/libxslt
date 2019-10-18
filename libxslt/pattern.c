@@ -1243,6 +1243,13 @@ xsltTestCompMatchList(xsltTransformContextPtr ctxt, xmlNodePtr node,
     return(0);
 }
 
+/**
+ * xsltCompMatchClearCache:
+ * @ctxt:  a XSLT process context
+ * @comp: the precompiled pattern list
+ *
+ * Clear pattern match cache.
+ */
 void
 xsltCompMatchClearCache(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp) {
     xsltStepOpPtr sel;
