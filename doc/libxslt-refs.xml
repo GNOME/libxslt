@@ -213,6 +213,7 @@
     <reference name='xsltCleanupTemplates' href='html/libxslt-pattern.html#xsltCleanupTemplates'/>
     <reference name='xsltComment' href='html/libxslt-transform.html#xsltComment'/>
     <reference name='xsltCompMatch' href='html/libxslt-pattern.html#xsltCompMatch'/>
+    <reference name='xsltCompMatchClearCache' href='html/libxslt-pattern.html#xsltCompMatchClearCache'/>
     <reference name='xsltCompMatchPtr' href='html/libxslt-pattern.html#xsltCompMatchPtr'/>
     <reference name='xsltCompileAttr' href='html/libxslt-xsltInternals.html#xsltCompileAttr'/>
     <reference name='xsltCompilePattern' href='html/libxslt-pattern.html#xsltCompilePattern'/>
@@ -806,6 +807,7 @@
       <ref name='xsltCleanupTemplates'/>
       <ref name='xsltComment'/>
       <ref name='xsltCompMatch'/>
+      <ref name='xsltCompMatchClearCache'/>
       <ref name='xsltCompMatchPtr'/>
       <ref name='xsltCompileAttr'/>
       <ref name='xsltCompilePattern'/>
@@ -1625,6 +1627,7 @@
       <ref name='xsltXPathGetTransformContext'/>
     </type>
     <type name='xsltCompMatchPtr'>
+      <ref name='xsltCompMatchClearCache'/>
       <ref name='xsltFreeCompMatchList'/>
       <ref name='xsltTestCompMatchList'/>
     </type>
@@ -1840,6 +1843,7 @@
       <ref name='xsltCheckWrite'/>
       <ref name='xsltChoose'/>
       <ref name='xsltComment'/>
+      <ref name='xsltCompMatchClearCache'/>
       <ref name='xsltCompilePattern'/>
       <ref name='xsltComputeSortResult'/>
       <ref name='xsltCopy'/>
@@ -2074,6 +2078,7 @@
       <ref name='xsltAddTemplate'/>
       <ref name='xsltCleanupTemplates'/>
       <ref name='xsltCompMatch'/>
+      <ref name='xsltCompMatchClearCache'/>
       <ref name='xsltCompMatchPtr'/>
       <ref name='xsltCompilePattern'/>
       <ref name='xsltFreeCompMatchList'/>
@@ -2674,6 +2679,9 @@
         <word name='Cleanup'>
           <ref name='xsltCleanupTemplates'/>
           <ref name='xsltFreeLocales'/>
+        </word>
+        <word name='Clear'>
+          <ref name='xsltCompMatchClearCache'/>
         </word>
         <word name='Common'>
           <ref name='XSLT_ITEM_COMMON_FIELDS'/>
@@ -3640,6 +3648,7 @@
           <ref name='xsltRegisterExtFunction'/>
         </word>
         <word name='actually'>
+          <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathVariableLookup'/>
         </word>
         <word name='add'>
@@ -3937,9 +3946,6 @@
           <ref name='xsltAttrListTemplateProcess'/>
           <ref name='xsltNamespaceAlias'/>
         </word>
-        <word name='attrubute'>
-          <ref name='xsltCompileAttr'/>
-        </word>
         <word name='automatically'>
           <ref name='xsltCopyNamespaceList'/>
           <ref name='xsltParseStylesheetDoc'/>
@@ -4087,6 +4093,7 @@
           <ref name='xsltPointerListClear'/>
           <ref name='xsltQuoteUserParams'/>
           <ref name='xsltSort'/>
+          <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathVariableLookup'/>
         </word>
         <word name='by:'>
@@ -4117,6 +4124,7 @@
       <letter name='c'>
         <word name='cache'>
           <ref name='_xsltStackElem'/>
+          <ref name='xsltCompMatchClearCache'/>
           <ref name='xsltReleaseRVT'/>
         </word>
         <word name='calibration'>
@@ -4402,9 +4410,6 @@
           <ref name='xsltNewDocument'/>
           <ref name='xsltNewStyleDocument'/>
         </word>
-        <word name='compute'>
-          <ref name='xsltParseStylesheetCallerParam'/>
-        </word>
         <word name='computed'>
           <ref name='_xsltStackElem'/>
           <ref name='_xsltStylePreComp'/>
@@ -4421,6 +4426,7 @@
           <ref name='xsltInitAllDocKeys'/>
           <ref name='xsltLoadDocument'/>
           <ref name='xsltLoadStyleDocument'/>
+          <ref name='xsltParseStylesheetCallerParam'/>
         </word>
         <word name='construct'>
           <ref name='xsltMessage'/>
@@ -5483,12 +5489,14 @@
           <ref name='_xsltStylesheet'/>
           <ref name='xsltEvalOneUserParam'/>
         </word>
+        <word name='held'>
+          <ref name='_xsltElemPreComp'/>
+        </word>
         <word name='hence'>
           <ref name='xsltGetQNameURI'/>
         </word>
         <word name='hold'>
           <ref name='XSLT_ITEM_NAVIGATION_FIELDS'/>
-          <ref name='_xsltElemPreComp'/>
         </word>
         <word name='holding'>
           <ref name='_xsltNsMap'/>
@@ -6016,6 +6024,7 @@
         </word>
         <word name='match'>
           <ref name='xsltAddKey'/>
+          <ref name='xsltCompMatchClearCache'/>
           <ref name='xsltNormalizeCompSteps'/>
         </word>
         <word name='match='>
@@ -6639,6 +6648,7 @@
           <ref name='_xsltDecimalFormat'/>
           <ref name='_xsltFormatNumberInfo'/>
           <ref name='xsltAddTemplate'/>
+          <ref name='xsltCompMatchClearCache'/>
           <ref name='xsltCompilePattern'/>
           <ref name='xsltFormatNumberConversion'/>
           <ref name='xsltTestCompMatchList'/>
@@ -6733,6 +6743,7 @@
           <ref name='_xsltStyleItemValueOf'/>
           <ref name='_xsltStylePreComp'/>
           <ref name='_xsltStylesheet'/>
+          <ref name='xsltCompMatchClearCache'/>
           <ref name='xsltCompilePattern'/>
           <ref name='xsltDocumentComp'/>
           <ref name='xsltTestCompMatchList'/>
@@ -8188,6 +8199,7 @@
         <word name='void'>
           <ref name='XML_CAST_FPTR'/>
           <ref name='_xsltStylesheet'/>
+          <ref name='xsltXPathFunctionLookup'/>
           <ref name='xsltXPathVariableLookup'/>
         </word>
       </letter>

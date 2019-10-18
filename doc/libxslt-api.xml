@@ -164,6 +164,7 @@
      <exports symbol='xsltCompilePattern' type='function'/>
      <exports symbol='xsltMatchPattern' type='function'/>
      <exports symbol='xsltGetTemplate' type='function'/>
+     <exports symbol='xsltCompMatchClearCache' type='function'/>
      <exports symbol='xsltTestCompMatchList' type='function'/>
      <exports symbol='xsltFreeCompMatchList' type='function'/>
      <exports symbol='xsltFreeTemplateHashes' type='function'/>
@@ -1807,6 +1808,12 @@ exits'/>
       <arg name='inst' type='xmlNodePtr' info='the xslt comment node'/>
       <arg name='comp' type='xsltElemPreCompPtr' info='precomputed information'/>
     </function>
+    <function name='xsltCompMatchClearCache' file='pattern'>
+      <info>Clear pattern match cache.</info>
+      <return type='void'/>
+      <arg name='ctxt' type='xsltTransformContextPtr' info='a XSLT process context'/>
+      <arg name='comp' type='xsltCompMatchPtr' info='the precompiled pattern list'/>
+    </function>
     <function name='xsltCompileAttr' file='xsltInternals'>
       <info>Precompile an attribute in a stylesheet, basically it checks if it is an attribute value template, and if yes, establish some structures needed to process it at transformation time.</info>
       <return type='void'/>
@@ -3220,7 +3227,7 @@ exits'/>
     <function name='xsltXPathFunctionLookup' file='functions'>
       <info>This is the entry point when a function is needed by the XPath interpretor.</info>
       <return type='xmlXPathFunction' info='the callback function or NULL if not found'/>
-      <arg name='vctxt' type='void *' info=''/>
+      <arg name='vctxt' type='void *' info='a void * but the XSLT transformation context actually'/>
       <arg name='name' type='const xmlChar *' info='the function name'/>
       <arg name='ns_uri' type='const xmlChar *' info='the function namespace URI'/>
     </function>
