@@ -2383,6 +2383,7 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		case XML_ELEMENT_NODE:
 		    if (node->name[0] == ' ')
 			break;
+                    /* Intentional fall-through */
 		case XML_ATTRIBUTE_NODE:
 		case XML_PI_NODE:
 		    name = node->name;

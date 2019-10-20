@@ -985,7 +985,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 		*result = xmlStrdup(BAD_CAST "-");
 	    else
 		*result = xmlStrdup(self->minusSign);
-	    /* no-break on purpose */
+	    /* Intentional fall-through */
 	case 1:
 	    if ((self == NULL) || (self->infinity == NULL))
 		*result = xmlStrcat(*result, BAD_CAST "Infinity");

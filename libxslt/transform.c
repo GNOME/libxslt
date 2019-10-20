@@ -5028,7 +5028,7 @@ xsltApplyTemplates(xsltTransformContextPtr ctxt, xmlNodePtr node,
 			    break;
 			}
 		    }
-		    /* no break on purpose */
+		    /* Intentional fall-through */
 		case XML_ELEMENT_NODE:
 		case XML_DOCUMENT_NODE:
 		case XML_HTML_DOCUMENT_NODE:
