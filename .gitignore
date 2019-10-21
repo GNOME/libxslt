@@ -41,6 +41,7 @@ python/libxslt-py.c
 python/libxslt-py.h
 python/libxslt.py
 python/libxsltclass.py
+python/libxsltclass.txt
 python/tests/foo
 stamp-h1
 tests/xmlspec/debug
