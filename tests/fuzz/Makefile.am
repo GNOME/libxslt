@@ -11,13 +11,13 @@ DEPENDENCIES = $(LIBXSLT_LIBS)
 LDADD = $(LIBXSLT_LIBS) \
         $(LIBGCRYPT_LIBS) $(LIBXML_LIBS) $(EXTRA_LIBS) $(M_LIBS)
 
-xpath_SOURCES = xpath.c fuzz.c
+xpath_SOURCES = xpath.c fuzz.c fuzz.h
 xpath_LDFLAGS = -fsanitize=fuzzer
 
-xslt_SOURCES = xslt.c fuzz.c
+xslt_SOURCES = xslt.c fuzz.c fuzz.h
 xslt_LDFLAGS = -fsanitize=fuzzer
 
-testTargets_SOURCES = testTargets.c fuzz.c
+testTargets_SOURCES = testTargets.c fuzz.c fuzz.h
 
 $(top_builddir)/libxslt/libxslt.la:
 	cd $(top_builddir)/libxslt && $(MAKE) libxslt.la
@@ -27,7 +27,9 @@ $(top_builddir)/libexslt/libexslt.la: $(top_builddir)/libxslt/libxslt.la
 
 .PHONY: tests fuzz-xpath fuzz-xslt
 
-tests: $(check_PROGRAMS)
+tests:
+
+fuzz: $(check_PROGRAMS)
 	@echo '## Running fuzz target tests'
 	@./testTargets $(srcdir)
 

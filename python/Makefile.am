@@ -7,7 +7,7 @@ AM_CFLAGS = $(LIBXML_CFLAGS)
 
 DOCS_DIR = $(datadir)/doc/libxslt-python-$(LIBXSLT_VERSION)
 # libxsltclass.txt is generated
-DOCS = TODO
+DOCS=
 
 EXTRA_DIST = 			\
 	libxslt.c		\
