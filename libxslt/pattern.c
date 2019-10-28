@@ -2156,8 +2156,15 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
         xmlHashAddEntry2(style->namedTemplates, cur->name, cur->nameURI, cur);
     }
 
-    if (cur->match == NULL)
+    if (cur->match == NULL) {
+            if (cur->name == NULL) {
+                xsltTransformError(NULL, style, cur->elem,
+                    "xsl:template: need to specify match or name attribute\n");
+                style->errors++;
+                return(-1);
+            }
 	return(0);
+    }
 
     priority = cur->priority;
     pat = xsltCompilePatternInternal(cur->match, style->doc, cur->elem,
