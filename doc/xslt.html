@@ -304,6 +304,103 @@ to get a description of the recent commits.</p>
 
 <p>Those are the public releases made:</p>
 
+<h3>v1.1.34: Oct 30 2019</h3>
+<ul>
+  <li>Documentation:<br/>
+  Fix EXSLT web pages (Nick Wellnhofer),<br/>
+  Regenerate web pages (Nick Wellnhofer),<br/>
+  Fix Git link in news.html (Nick Wellnhofer),<br/>
+  Minor documentation fixes after recent changes (Nick Wellnhofer),<br/>
+  Fix typos (Jan Pokorný),<br/>
+  Regenerate symbols and API docs (Nick Wellnhofer),<br/>
+  Regenerate EXSLT website (Nick Wellnhofer)<br/>
+  </li>
+
+  <li>Portability:<br/>
+  Remove stubs when compiling without debugger or profiler (Nick Wellnhofer),<br/>
+  configure.ac: Invoke PKG_CHECK_MODULES for building shared libraries (Hugh McMaster),<br/>
+  configure.ac: Conditionally determine whether xml2-config should pass shared libraries or static libraries (Hugh McMaster),<br/>
+  xslt-config.in: Fix broken --prefix=DIR support (Hugh McMaster),<br/>
+  libexslt.pc.in: Do not expose private library  dependencies unless invoked (Hugh McMaster),<br/>
+  libxslt.pc.in: Do not expose private library dependencies  unless invoked (Hugh McMaster),<br/>
+  Fix -Wformat-overflow warning (GCC 9) (Nick Wellnhofer),<br/>
+  Stop including ansidecl.h (Nick Wellnhofer),<br/>
+  Remove WIN32_EXTRA_* variables (Nick Wellnhofer),<br/>
+  Fix vsnprintf in Python bindings on Windows (Nick Wellnhofer),<br/>
+  Build without winsock (Nick Wellnhofer),<br/>
+  Stop redefining snprintf on MinGW (Nick Wellnhofer)<br/>
+  </li>
+
+  <li>Bug Fixes:<br/>
+  xsl:template without name and match attributes should not be allowed (Nikolai Weibull),<br/>
+  Make sure that Python tests exit with error code (Nick Wellnhofer),<br/>
+  Improve handling of invalid UTF-8 in format-number (Nick Wellnhofer),<br/>
+  Fix dangling pointer in xsltCopyText (Nick Wellnhofer),<br/>
+  Fix memory leak in pattern compilation error path (Nick Wellnhofer),<br/>
+  Fix uninitialized read with UTF-8 grouping chars (Nick Wellnhofer),<br/>
+  Fix integer overflow in FORMAT_GYEAR (Nick Wellnhofer),<br/>
+  Fix performance regression with xsl:number (Nick Wellnhofer),<br/>
+  Backup XPath context node in xsltInitCtxtKey (Nick Wellnhofer),<br/>
+  Fix unsigned integer overflow in date.c (Nick Wellnhofer),<br/>
+  Fix insertion of xsl:fallback content (Nick Wellnhofer),<br/>
+  Avoid quadratic behavior in xsltSaveResultTo (Nick Wellnhofer),<br/>
+  Fix numbering in non-Latin scripts (Nick Wellnhofer),<br/>
+  Fix uninitialized read of xsl:number token (Nick Wellnhofer),<br/>
+  Fix integer overflow in _exsltDateDayInWeek (Nick Wellnhofer),<br/>
+  Rework xsltAttrVT allocation (Nick Wellnhofer),<br/>
+  Fix check of xsltTestCompMatch return value (Nick Wellnhofer),<br/>
+  Fix security framework bypass (Nick Wellnhofer),<br/>
+  Use xmlNewTextChild in EXSLT dyn:map (Nick Wellnhofer),<br/>
+  Fix float casts in exsltDateDuration (Nick Wellnhofer),<br/>
+  Always set context node before calling XPath iterators (Nick Wellnhofer),<br/>
+  Fix attribute precedence with xsl:use-attribute-sets (Nick Wellnhofer),<br/>
+  Backup context node in exsltFuncFunctionFunction (Nick Wellnhofer),<br/>
+  Initialize ctxt-&gt;output before evaluating global vars (Nick Wellnhofer),<br/>
+  Fix memory leak in EXSLT functions error path (Nick Wellnhofer)<br/>
+  </li>
+
+  <li>Improvements:<br/>
+  Enable continuous integration via GitLab CI (Nick Wellnhofer),<br/>
+  Fix -Wimplicit-fallthrough warnings (Nick Wellnhofer),<br/>
+  Adjust number of API index pages (Nick Wellnhofer),<br/>
+  Make xsltCompileRelativePathPattern non-recursive (Nick Wellnhofer),<br/>
+  Check that crypto:rc4_decrypt produces valid UTF-8 (Nick Wellnhofer),<br/>
+  Avoid recursion in keys.c:skipPredicate (Nick Wellnhofer),<br/>
+  xslt-config.in: Simply handling of $all_flags (Hugh McMaster),<br/>
+  xslt-config.in: Add a --dynamic option to --libs (Hugh McMaster),<br/>
+  xslt-config.in: Simplify basic library handling (Hugh McMaster),<br/>
+  xslt-config.in: Remove unused variable (Hugh McMaster),<br/>
+  xslt-config: Simply handling of --cflags (Hugh McMaster),<br/>
+  Add Travis test with MemorySanitizer (Nick Wellnhofer),<br/>
+  Run Travis ASan tests under Xenial (Nick Wellnhofer),<br/>
+  Improve fuzzers (Nick Wellnhofer),<br/>
+  Always reuse XPath context (Nick Wellnhofer),<br/>
+  Compile with -Wextra (Nick Wellnhofer),<br/>
+  Make profiler support optional (Nick Wellnhofer),<br/>
+  Hide unused code when compiling without debugger (Nick Wellnhofer),<br/>
+  Reorganize fuzzing code (Nick Wellnhofer),<br/>
+  Simplify .gitignore (Nick Wellnhofer),<br/>
+  Optional operation limit (Nick Wellnhofer),<br/>
+  Improve seed corpus and dictionary (Nick Wellnhofer),<br/>
+  Reuse XPath context when compiling stylesheets (Nick Wellnhofer),<br/>
+  Reuse XPath context in dyn:map (Nick Wellnhofer),<br/>
+  Reuse XPath context in saxon:expression (Nick Wellnhofer),<br/>
+  Add libFuzzer targets (Nick Wellnhofer),<br/>
+  Adjust error message in expected test output (Nick Wellnhofer),<br/>
+  Change bug tracker URL (Nick Wellnhofer),<br/>
+  Change git repo URL (Nick Wellnhofer),<br/>
+  Regenerate NEWS (Nick Wellnhofer),<br/>
+  Fix misleading indentation in security.c (Nick Wellnhofer)<br/>
+  </li>
+
+  <li>Cleanups:<br/>
+  Candidate release 1 of libxslt 1.1.34 * doc/xsltproc.xml: moved to new place for docbook stylesheet and work   around a missing / inrewrite of  docbook xsl catalog in Fedora 30 * tests/fuzz/Makefile.am: add fuzz.h to sources * python/Makefile.am: there is no more TODO * libxslt.spec.in: run make tests instead of check to avoid fuzz in that   environment, and drop python TODO (Daniel Veillard),<br/>
+  Remove empty TODO file (Nick Wellnhofer),<br/>
+  Remove generated file libxsltclass.txt from version control (Nick Wellnhofer),<br/>
+  Rebuild docs (Nick Wellnhofer)<br/>
+  </li>
+</ul>
+
 <h3>v1.1.33: Jan 03 2019</h3>
 <ul>
   <li>Portability:<br/>

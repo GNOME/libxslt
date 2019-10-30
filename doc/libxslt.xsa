@@ -8,23 +8,32 @@
   </vendor>
   <product id="libxslt">
     <name>libxslt</name>
-    <version>1.1.32</version>
-    <last-release> Nov 02 2017</last-release>
+    <version>v1.1.33</version>
+    <last-release> Jan 03 2019</last-release>
     <info-url>http://xmlsoft.org/XSLT/</info-url>
     <changes>   - Portability:
-  Add missing limits.h include (Nick Wellnhofer),
-  Also run Windows tests with --maxdepth 200 (Nick Wellnhofer),
-  Disable some MSVC warnings (Nick Wellnhofer),
-  Fix deprecated Travis compiler flag (Nick Wellnhofer),
-  Run general tests with maxdepth=200 (Nick Wellnhofer),
-  Use _WIN32 macro instead of WIN32 (Nick Wellnhofer),
-  Fix xsltproc newlines on Windows (Nick Wellnhofer),
-  Fix Windows compiler warnings (Nick Wellnhofer),
-  Rework locale feature tests (Nick Wellnhofer)
+  Variables need 'extern' in static lib on Cygwin (Nick Wellnhofer),
+  Really declare dllexport/dllimport for Cygwin (Michael Haubenwallner),
+  Fix callback signatures in Python bindings (Nick Wellnhofer),
+  Fix transform callback signatures (Nick Wellnhofer),
+  Fix extension callback signatures (Nick Wellnhofer),
+  Fix deallocator signatures (Nick Wellnhofer),
+  Fix XPath callback signatures (Nick Wellnhofer),
+  Fix hash callback signatures (Nick Wellnhofer)
+  
+   - Bug Fixes:
+  Don't cache direct evaluation of patterns with variables (Nick Wellnhofer),
+  Move function result RVTs to context variable (Nick Wellnhofer),
+  Fix EXSLT functions returning RVTs from outer scopes (Nick Wellnhofer),
+  Fix handling of RVTs returned from nested EXSLT functions (Nick Wellnhofer),
+  Fix typos (Nick Wellnhofer)
   
    - Improvements:
-  Rebuild win32/libxslt.def.src (Nick Wellnhofer),
-  Fix compiler warnings in Python bindings (Nick Wellnhofer)
+  Run Travis ASan tests with "sudo: required" (Nick Wellnhofer)
+  
+   - Cleanups:
+  Remove doc/libxslt-decl.txt (Nick Wellnhofer),
+  Docs for 1.1.32 release (Daniel Veillard)
   
 
 </changes>
