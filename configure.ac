@@ -491,6 +491,7 @@ dnl
 
 build_shared_libs="yes"
 build_static_libs="yes"
+xml_config_dynamic=
 
 if test "$enable_shared" = "no"; then
     build_shared_libs="no"
@@ -515,10 +516,11 @@ if test "x$LIBXML_SRC" != "x"; then
         XML_CONFIG="${LIBXML_SRC}/xml2-config"
         LIBXML_CFLAGS="-I${LIBXML_SRC}/include"
         if test "$build_static_libs" = "no"; then
-            LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs --dynamic`"
-        else
-            LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs`"
+            if $XML_CONFIG --help | grep -q '\--dynamic'; then
+                xml_config_dynamic=--dynamic
+            fi
         fi
+        LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs $xml_config_dynamic`"
         WITH_MODULES="`$XML_CONFIG --modules`"
         cd $CWD
     else
@@ -557,12 +559,13 @@ then
     fi
 
     if test "$build_static_libs" = "no"; then
-        LIBXML_LIBS="`$XML_CONFIG --libs --dynamic`"
-    else
-        LIBXML_LIBS="`$XML_CONFIG --libs`"
+        if $XML_CONFIG --help | grep -q '\--dynamic'; then
+            xml_config_dynamic=--dynamic
+        fi
     fi
-	LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
-        WITH_MODULES="`$XML_CONFIG --modules`"
+    LIBXML_LIBS="`$XML_CONFIG --libs $xml_config_dynamic`"
+    LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
+    WITH_MODULES="`$XML_CONFIG --modules`"
 fi
 
 if test "x$LIBXML_LIBS" = "x"
