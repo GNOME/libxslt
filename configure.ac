@@ -548,7 +548,7 @@ dnl make sure xml2-config is executable,
 dnl test version and init our variables
 dnl
 
-if test "x$LIBXML_LIBS" = "x" && ${XML_CONFIG} --libs print > /dev/null 2>&1
+if test "x$LIBXML_LIBS" = "x" && ${XML_CONFIG} --libs > /dev/null 2>&1
 then
     AC_MSG_CHECKING(for libxml libraries >= $LIBXML_REQUIRED_VERSION)
     XMLVERS=`$XML_CONFIG --version`
