@@ -960,7 +960,7 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
     xmlChar *nprefix, *nsuffix = NULL;
     int	    prefix_length, suffix_length = 0, nprefix_length, nsuffix_length;
     double  scale;
-    int	    j, len;
+    int	    j, len = 0;
     int     self_grouping_len;
     xsltFormatNumberInfo format_info;
     /*
