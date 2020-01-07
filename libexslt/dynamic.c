@@ -195,19 +195,19 @@ exsltDynMapFunction(xmlXPathParserContextPtr ctxt, int nargs)
                         break;
                     case XPATH_BOOLEAN:
                         if (container != NULL) {
-                            xmlNodePtr cur =
+                            xmlNodePtr newChildNode =
                                 xmlNewTextChild((xmlNodePtr) container, NULL,
                                                 BAD_CAST "boolean",
                                                 BAD_CAST (subResult->
                                                 boolval ? "true" : ""));
-                            if (cur != NULL) {
-                                cur->ns =
-                                    xmlNewNs(cur,
+                            if (newChildNode != NULL) {
+                                newChildNode->ns =
+                                    xmlNewNs(newChildNode,
                                              BAD_CAST
                                              "http://exslt.org/common",
                                              BAD_CAST "exsl");
                                 xmlXPathNodeSetAddUnique(ret->nodesetval,
-                                                         cur);
+                                                         newChildNode);
                             }
                         }
                         break;
@@ -216,37 +216,37 @@ exsltDynMapFunction(xmlXPathParserContextPtr ctxt, int nargs)
                             xmlChar *val =
                                 xmlXPathCastNumberToString(subResult->
                                                            floatval);
-                            xmlNodePtr cur =
+                            xmlNodePtr newChildNode =
                                 xmlNewTextChild((xmlNodePtr) container, NULL,
                                                 BAD_CAST "number", val);
                             if (val != NULL)
                                 xmlFree(val);
 
-                            if (cur != NULL) {
-                                cur->ns =
-                                    xmlNewNs(cur,
+                            if (newChildNode != NULL) {
+                                newChildNode->ns =
+                                    xmlNewNs(newChildNode,
                                              BAD_CAST
                                              "http://exslt.org/common",
                                              BAD_CAST "exsl");
                                 xmlXPathNodeSetAddUnique(ret->nodesetval,
-                                                         cur);
+                                                         newChildNode);
                             }
                         }
                         break;
                     case XPATH_STRING:
                         if (container != NULL) {
-                            xmlNodePtr cur =
+                            xmlNodePtr newChildNode =
                                 xmlNewTextChild((xmlNodePtr) container, NULL,
                                                 BAD_CAST "string",
                                                 subResult->stringval);
-                            if (cur != NULL) {
-                                cur->ns =
-                                    xmlNewNs(cur,
+                            if (newChildNode != NULL) {
+                                newChildNode->ns =
+                                    xmlNewNs(newChildNode,
                                              BAD_CAST
                                              "http://exslt.org/common",
                                              BAD_CAST "exsl");
                                 xmlXPathNodeSetAddUnique(ret->nodesetval,
-                                                         cur);
+                                                         newChildNode);
                             }
                         }
                         break;

@@ -474,7 +474,7 @@ if test "${GCC}" != "yes" ; then
                ;;
     esac
 else
-    CFLAGS="${CFLAGS} -Wall -Wextra -Wformat=2 -Wmissing-format-attribute"
+    CFLAGS="${CFLAGS} -Wall -Wextra -Wformat=2 -Wmissing-format-attribute -Wshadow"
     case "${host}" in
           alpha*-*-linux* )
 	       CFLAGS="${CFLAGS} -mieee"
