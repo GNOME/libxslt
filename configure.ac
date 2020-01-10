@@ -272,17 +272,17 @@ except: print 0"`
 	   -d $with_python/lib/python$PYTHON_VERSION/site-packages
 	then
 	    PYTHON_INCLUDES=$with_python/include/python$PYTHON_VERSION
-	    PYTHON_SITE_PACKAGES='$(libdir)/python$(PYTHON_VERSION)/site-packages'
+	    PYTHON_SITE_PACKAGES=$libdir/python$PYTHON_VERSION/site-packages
 	else
 	    if test -r $prefix/include/python$PYTHON_VERSION/Python.h
 	    then
 	        PYTHON_INCLUDES=$prefix/include/python$PYTHON_VERSION
-		PYTHON_SITE_PACKAGES='$(libdir)/python$(PYTHON_VERSION)/site-packages'
+		PYTHON_SITE_PACKAGES=$libdir/python$PYTHON_VERSION/site-packages
 	    else
 		if test -r /usr/include/python$PYTHON_VERSION/Python.h
 		then
 		    PYTHON_INCLUDES=/usr/include/python$PYTHON_VERSION
-		    PYTHON_SITE_PACKAGES='$(libdir)/python$(PYTHON_VERSION)/site-packages'
+		    PYTHON_SITE_PACKAGES=$libdir/python$PYTHON_VERSION/site-packages
 		else
 		    echo could not find python$PYTHON_VERSION/Python.h
 		fi
@@ -296,9 +296,9 @@ except: print 0"`
     fi
     if test "$with_python" != ""
     then
-        pythondir='$(PYTHON_SITE_PACKAGES)'
+        pythondir=$PYTHON_SITE_PACKAGES
     else
-        pythondir='$(libdir)/python$(PYTHON_VERSION)/site-packages'
+        pythondir=$libdir/python$PYTHON_VERSION/site-packages
     fi
 fi
 AM_CONDITIONAL(WITH_PYTHON, test "$PYTHON_INCLUDES" != "")
