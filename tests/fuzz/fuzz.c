@@ -77,6 +77,10 @@ xsltFuzzLoadDoc(const char *argv0, const char *dir, const char *filename) {
     if (dir != NULL) {
         path = malloc(strlen(dir) + 1 + strlen(filename) + 1);
         sprintf(path, "%s/%s", dir, filename);
+        doc = xmlReadFile(path, NULL, 0);
+        if (doc == NULL)
+            fprintf(stderr, "Error: unable to parse file '%s' in '%s'\n",
+                    filename, dir);
     } else {
         const char *end;
         size_t dirLen;
@@ -87,11 +91,22 @@ xsltFuzzLoadDoc(const char *argv0, const char *dir, const char *filename) {
         memcpy(path, argv0, dirLen);
         path[dirLen] = '\0';
         strcat(path, filename);
+        doc = xmlReadFile(path, NULL, 0);
+
+        if (doc == NULL && dirLen > 0) {
+            /* Binary might be in .libs, try parent directory */
+            path[dirLen-1] = 0;
+            end = strrchr(path, DIR_SEP);
+            dirLen = (end == NULL) ? 0 : end - path + 1;
+            path[dirLen] = '\0';
+            strcat(path, filename);
+            doc = xmlReadFile(path, NULL, 0);
+        }
+
+        if (doc == NULL)
+            fprintf(stderr, "Error: unable to parse file '%s'\n", filename);
     }
 
-    doc = xmlReadFile(path, NULL, 0);
-    if (doc == NULL)
-        fprintf(stderr, "Error: unable to parse file '%s'\n", path);
     free(path);
 
     return doc;
