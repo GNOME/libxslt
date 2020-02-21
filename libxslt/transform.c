@@ -859,7 +859,19 @@ xsltAddTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	ctxt->lasttuse += len;
 	target->content[ctxt->lasttuse] = 0;
     } else {
-	xmlNodeAddContent(target, string);
+	// if we are in the context of a "text output" document, it is preferable
+	// to lose some memory rather than attempting to "append", else we finish
+	// with O(n^2) behaviour which is catastrophic on big files
+	if (ctxt->type == XSLT_OUTPUT_TEXT)
+	{
+	    xmlNodePtr old = xmlNewChild(target->parent, NULL, "text", NULL);
+	    target = xmlNewText(string);
+	    xmlReplaceNode(old, target);
+	}
+	else
+	{
+	    xmlNodeAddContent(target, string);
+	}
 	ctxt->lasttext = target->content;
 	len = xmlStrlen(target->content);
 	ctxt->lasttsize = len;
