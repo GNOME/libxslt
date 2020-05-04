@@ -25,6 +25,9 @@ set(LIBXSLT_DOTTED_VERSION "${LIBXSLT_MAJOR_VERSION}.${LIBXSLT_MINOR_VERSION}.${
 math(EXPR LIBXSLT_VERSION_NUMBER "${LIBXSLT_MAJOR_VERSION} * 10000 + ${LIBXSLT_MINOR_VERSION} * 100 + ${LIBXSLT_MICRO_VERSION}")
 set(LIBXSLT_VERSION_EXTRA "")
 
+set(VERSION ${LIBXSLT_DOTTED_VERSION})
+set(LIBEXSLT_VERSION ${LIBEXSLT_DOTTED_VERSION})
+
 find_package(Iconv)
 find_package(LibXml2)
 find_package(Python2 COMPONENTS Interpreter Development)
@@ -154,9 +157,7 @@ else()
 	configure_file(config.h.cmake.in config.h)
 endif()
 
-set(VERSION ${LIBEXSLT_DOTTED_VERSION})
 configure_file(libexslt/exsltconfig.h.in libexslt/exsltconfig.h)
-set(VERSION ${LIBXSLT_DOTTED_VERSION})
 configure_file(libxslt/xsltconfig.h.in libxslt/xsltconfig.h)
 
 set(
@@ -339,7 +340,7 @@ set_target_properties(
 	OUTPUT_NAME exslt
 	POSITION_INDEPENDENT_CODE ON
 	PREFIX lib
-	VERSION ${VERSION}
+	VERSION ${LIBEXSLT_VERSION}
 )
 
 if(WIN32)
