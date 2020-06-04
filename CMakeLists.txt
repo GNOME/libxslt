@@ -397,6 +397,8 @@ if(LIBXSLT_WITH_PYTHON)
 		${CMAKE_CURRENT_SOURCE_DIR}/python/generator.py
 		${CMAKE_CURRENT_SOURCE_DIR}/doc/libxslt-api.xml
 		${CMAKE_CURRENT_SOURCE_DIR}/python/libxslt-python-api.xml
+		WORKING_DIRECTORY
+		${CMAKE_CURRENT_BINARY_DIR}
 	)
 	unset(ENV{SRCDIR})
 	file(READ python/libxsl.py LIBXSL_PY)
