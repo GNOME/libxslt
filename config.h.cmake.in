@@ -1,4 +1,5 @@
-/* config.h.in.  Generated from configure.in by autoheader.  */
+/* config.h.  Generated from config.h.in by configure.  */
+/* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the `clock_gettime' function. */
 #cmakedefine HAVE_CLOCK_GETTIME 1
@@ -145,7 +146,7 @@
 #cmakedefine HAVE__STAT 1
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
-#cmakedefine LT_OBJDIR @LT_OBJDIR@
+#cmakedefine LT_OBJDIR "@LT_OBJDIR@"
 
 /* Name of package */
 #cmakedefine PACKAGE "@PACKAGE@"
@@ -199,6 +200,9 @@
 /* Define if debugging support is enabled */
 #cmakedefine WITH_DEBUGGER 1
 
+/* Define if profiling support is enabled */
+#cmakedefine WITH_PROFILER 1
+
 /* Define to 1 if on MINIX. */
 #cmakedefine _MINIX 1
 
@@ -208,12 +212,3 @@
 
 /* Define to 1 if you need to in order for `stat' and other things to work. */
 #cmakedefine _POSIX_SOURCE 1
-
-/* Using the Win32 Socket implementation */
-#cmakedefine _WINSOCKAPI_ 1
-
-/* Win32 Std C name mangling work-around */
-#cmakedefine snprintf
-
-/* Win32 Std C name mangling work-around */
-#cmakedefine vsnprintf
