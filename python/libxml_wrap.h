@@ -15,6 +15,16 @@
 #include <libxml/xinclude.h>
 #include <libxml/xpointer.h>
 
+PyObject* PY_IMPORT_INT(long ival);
+PyObject* PY_IMPORT_STRING(const char *u);
+PyObject* PY_IMPORT_CPTRD(void *po, const char *na, void *de);
+int PY_IMPORT_LONG_CHECK(PyObject *o);
+int PY_IMPORT_STRING_CHECK(PyObject *o);
+int PY_IMPORT_CPTR_CHECK(PyObject *o);
+Py_ssize_t PY_IMPORT_STRING_GET_SIZE(PyObject *o);
+char* PY_IMPORT_AS_STRING(PyObject *o);
+long PY_IMPORT_AS_LONG(PyObject *io);
+
 #define PyxmlNode_Get(v) (((v) == Py_None) ? NULL : \
 	(((PyxmlNode_Object *)(v))->obj))
 
