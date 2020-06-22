@@ -3110,7 +3110,7 @@ exsltDateDuration (const xmlChar *number)
         return NULL;
 
     days = floor(secs / SECS_PER_DAY);
-    if ((days <= LONG_MIN) || (days >= LONG_MAX))
+    if ((days <= (double)LONG_MIN) || (days >= (double)LONG_MAX))
         return NULL;
 
     dur = exsltDateCreateDuration();
