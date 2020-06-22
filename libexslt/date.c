@@ -1025,6 +1025,9 @@ exsltDateParseDuration (const xmlChar *duration)
     if (*cur++ != 'P')
 	return NULL;
 
+    if (*cur == 0)
+	return NULL;
+
     dur = exsltDateCreateDuration();
     if (dur == NULL)
 	return NULL;
