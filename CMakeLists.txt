@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(libxslt1)
+project(libxslt1 C)
 
 include(CheckCSourceCompiles)
 include(CheckFunctionExists)
