@@ -183,8 +183,7 @@ xsltFuzzXPathInit(int *argc_p ATTRIBUTE_UNUSED, char ***argv_p,
     xpctxt = tctxt->xpathCtxt;
 
     /* Resource limits to avoid timeouts and call stack overflows */
-    xpctxt->maxParserDepth = 15;
-    xpctxt->maxDepth = 100;
+    xpctxt->maxDepth = 500;
     xpctxt->opLimit = 500000;
 
     /* Test namespaces used in xpath.xml */
@@ -317,8 +316,7 @@ xsltFuzzXsltInit(int *argc_p ATTRIBUTE_UNUSED, char ***argv_p,
 
 static void
 xsltSetXPathResourceLimits(xmlXPathContextPtr ctxt) {
-    ctxt->maxParserDepth = 15;
-    ctxt->maxDepth = 100;
+    ctxt->maxDepth = 200;
     ctxt->opLimit = 100000;
 }
 
