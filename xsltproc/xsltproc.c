@@ -513,6 +513,8 @@ static void usage(const char *name) {
     printf("\t--maxdepth val : increase the maximum depth (default %d)\n", xsltMaxDepth);
     printf("\t--maxvars val : increase the maximum variables (default %d)\n", xsltMaxVars);
     printf("\t--maxparserdepth val : increase the maximum parser depth\n");
+    printf("\t--huge: relax any hardcoded limit from the parser\n");
+    printf("\t             fixes \"parser error : internal error: Huge input lookup\"\n");
     printf("\t--seed-rand val : initialize pseudo random number generator with specific seed\n");
 #ifdef LIBXML_HTML_ENABLED
     printf("\t--html: the input document is(are) an HTML file(s)\n");
@@ -770,6 +772,9 @@ main(int argc, char **argv)
                 if (value > 0)
                     xmlParserMaxDepth = value;
             }
+        } else if ((!strcmp(argv[i], "-huge")) ||
+                   (!strcmp(argv[i], "--huge"))) {
+            options |= XML_PARSE_HUGE;
         } else if ((!strcmp(argv[i], "-seed-rand")) ||
                    (!strcmp(argv[i], "--seed-rand"))) {
             int value;
