@@ -182,7 +182,7 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
     defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
     xptrctxt->opLimit = ctxt->context->opLimit;
     xptrctxt->opCount = ctxt->context->opCount;
-    xptrctxt->maxDepth = ctxt->context->maxDepth - ctxt->context->depth;
+    xptrctxt->depth = ctxt->context->depth;
 
     resObj = xmlXPtrEval(fragment, xptrctxt);
 

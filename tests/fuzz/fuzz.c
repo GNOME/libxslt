@@ -183,7 +183,6 @@ xsltFuzzXPathInit(int *argc_p ATTRIBUTE_UNUSED, char ***argv_p,
     xpctxt = tctxt->xpathCtxt;
 
     /* Resource limits to avoid timeouts and call stack overflows */
-    xpctxt->maxDepth = 500;
     xpctxt->opLimit = 500000;
 
     /* Test namespaces used in xpath.xml */
@@ -314,12 +313,6 @@ xsltFuzzXsltInit(int *argc_p ATTRIBUTE_UNUSED, char ***argv_p,
     return 0;
 }
 
-static void
-xsltSetXPathResourceLimits(xmlXPathContextPtr ctxt) {
-    ctxt->maxDepth = 200;
-    ctxt->opLimit = 100000;
-}
-
 xmlChar *
 xsltFuzzXslt(const char *data, size_t size) {
     xmlDocPtr xsltDoc;
@@ -349,7 +342,7 @@ xsltFuzzXslt(const char *data, size_t size) {
         xmlFreeDoc(xsltDoc);
         return NULL;
     }
-    xsltSetXPathResourceLimits(sheet->xpathCtxt);
+    sheet->xpathCtxt->opLimit = 100000;
     sheet->xpathCtxt->opCount = 0;
     if (xsltParseStylesheetUser(sheet, xsltDoc) != 0) {
         xsltFreeStylesheet(sheet);
@@ -361,7 +354,7 @@ xsltFuzzXslt(const char *data, size_t size) {
     xsltSetCtxtSecurityPrefs(sec, ctxt);
     ctxt->maxTemplateDepth = 100;
     ctxt->opLimit = 20000;
-    xsltSetXPathResourceLimits(ctxt->xpathCtxt);
+    ctxt->xpathCtxt->opLimit = 100000;
     ctxt->xpathCtxt->opCount = sheet->xpathCtxt->opCount;
 
     result = xsltApplyStylesheetUser(sheet, doc, NULL, NULL, NULL, ctxt);
