@@ -88,6 +88,11 @@ static int profile = 0;
 
 #define MAX_PARAMETERS 64
 #define MAX_PATHS 64
+#ifdef _WIN32
+# define PATH_SEPARATOR ';'
+#else
+# define PATH_SEPARATOR ':'
+#endif
 
 static int options = XSLT_PARSE_OPTIONS;
 static const char *params[MAX_PARAMETERS + 1];
@@ -103,6 +108,7 @@ static const char *writesubtree = NULL;
 /*
  * Entity loading control and customization.
  */
+
 static
 void parsePath(const xmlChar *path) {
     const xmlChar *cur;
@@ -115,10 +121,10 @@ void parsePath(const xmlChar *path) {
 	    return;
 	}
 	cur = path;
-	while ((*cur == ' ') || (*cur == ':'))
+	while ((*cur == ' ') || (*cur == PATH_SEPARATOR))
 	    cur++;
 	path = cur;
-	while ((*cur != 0) && (*cur != ' ') && (*cur != ':'))
+	while ((*cur != 0) && (*cur != ' ') && (*cur != PATH_SEPARATOR))
 	    cur++;
 	if (cur != path) {
 	    paths[nbpaths] = xmlStrndup(path, cur - path);
