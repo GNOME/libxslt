@@ -28,7 +28,6 @@
 /* snprintf emulation taken from http://stackoverflow.com/a/8712996/1956010 */
 #if _MSC_VER < 1900
 
-
 #include <stdarg.h>
 
 #define vsnprintf c99_vsnprintf
@@ -78,8 +77,8 @@ libxslt_xsltStylesheetPtrWrap(xsltStylesheetPtr style) {
 	Py_INCREF(Py_None);
 	return(Py_None);
     }
-    ret = PY_IMPORT_CPTRD((void *) style,
-                        (char *)"xsltStylesheetPtr", NULL);
+    ret = PyCapsule_New((void *) style, (char *)"xsltStylesheetPtr", NULL);
+
     return(ret);
 }
 
@@ -94,9 +93,8 @@ libxslt_xsltTransformContextPtrWrap(xsltTransformContextPtr ctxt) {
 	Py_INCREF(Py_None);
 	return(Py_None);
     }
-    ret = PY_IMPORT_CPTRD((void *) ctxt,
-                        (char *)"xsltTransformContextPtr", NULL);
-
+    ret = PyCapsule_New((void *) ctxt, (char *)"xsltTransformContextPtr",
+                        NULL);
     return(ret);
 }
 
@@ -111,8 +109,7 @@ libxslt_xsltElemPreCompPtrWrap(xsltElemPreCompPtr ctxt) {
 	Py_INCREF(Py_None);
 	return(Py_None);
     }
-    ret = PY_IMPORT_CPTRD((void *) ctxt,
-                        (char *)"xsltElemPreCompPtr", NULL);
+    ret = PyCapsule_New((void *) ctxt, (char *)"xsltElemPreCompPtr", NULL);
     return(ret);
 }
 
@@ -129,7 +126,8 @@ libxslt_xsltGetTransformContextHashCode(PyObject *self ATTRIBUTE_UNUSED, PyObjec
 
     tctxt =  (xsltTransformContextPtr) PytransformCtxt_Get(py_tctxt);
     hash_code = (ptrdiff_t) tctxt;
-    ret = PY_IMPORT_INT(hash_code);
+
+    ret = PyLong_FromLong(hash_code);
     return ret;
 }
 
@@ -166,8 +164,7 @@ libxslt_xsltGetStylesheetHashCode(PyObject *self ATTRIBUTE_UNUSED, PyObject *arg
     style =  (xsltStylesheetPtr) Pystylesheet_Get(py_style);
     hash_code = (ptrdiff_t) style;
 
-    ret = PY_IMPORT_INT(hash_code);
-
+    ret = PyLong_FromLong(hash_code);
     return ret;
 }
 
@@ -621,8 +618,7 @@ libxslt_xsltSetLoaderFunc(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
     pythonDocLoaderObject = loader;
     xsltSetLoaderFunc(pythonDocLoaderFuncWrapper);
 
-    py_retval = PY_IMPORT_INT(0);
-
+    py_retval = PyLong_FromLong(0);
     return(py_retval);
 }
 
@@ -713,11 +709,13 @@ libxslt_xsltApplyStylesheetUser(PyObject *self ATTRIBUTE_UNUSED, PyObject *args)
 		j = 0;
 		while (PyDict_Next(pyobj_params, &ppos, &name, &value)) {
 		    const char *tmp;
-		    int size;
 
 #if PY_MAJOR_VERSION >= 3
+		    Py_ssize_t size;
+
 		    tmp = PyUnicode_AsUTF8AndSize(name, &size);
 #else
+                    int size;
 
 		    tmp = PyString_AS_STRING(name);
 		    size = PyString_GET_SIZE(name);
@@ -800,11 +798,13 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
 		j = 0;
 		while (PyDict_Next(pyobj_params, &ppos, &name, &value)) {
 		    const char *tmp;
-		    int size;
-
 #if PY_MAJOR_VERSION >= 3
+		    Py_ssize_t size;
+
 		    tmp = PyUnicode_AsUTF8AndSize(name, &size);
 #else
+		    int size;
+
 		    tmp = PyString_AS_STRING(name);
 		    size = PyString_GET_SIZE(name);
 #endif
@@ -1236,6 +1236,8 @@ extern void initlibxml2mod(void);
 #endif
 
 #if PY_MAJOR_VERSION >= 3
+#define INITERROR return NULL
+
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
     "libxsltmod",
@@ -1247,6 +1249,8 @@ static struct PyModuleDef moduledef = {
     NULL,
     NULL
 };
+#else
+#define INITERROR return
 #endif
 
 #if PY_MAJOR_VERSION >= 3
@@ -1254,7 +1258,6 @@ PyObject* PyInit_libxsltmod(void){
 #else
 void initlibxsltmod(void) {
 #endif
-    static int initialized = 0;
     PyObject *m;
 
 #ifdef MERGED_MODULES
@@ -1265,16 +1268,13 @@ void initlibxsltmod(void) {
 #endif
 #endif
 
-    if (initialized != 0)
-	return;
 #if PY_MAJOR_VERSION >= 3
     m = PyModule_Create(&moduledef);
 #else
     m = Py_InitModule((char *)"libxsltmod", libxsltMethods);
 #endif
     if (!m)
-	return;
-    initialized = 1;
+	INITERROR;
     /*
      * Specific XSLT initializations
      */

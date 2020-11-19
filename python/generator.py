@@ -2,15 +2,11 @@
 #
 # generate python wrappers from the XML API description
 #
-from __future__ import print_function
 
 functions = {}
 enums = {} # { enumType: { enumConstant: enumValue } }
-import sys
-if sys.version_info < (3, 0):
-    import string as re_str
-else:
-    re_str=str
+
+import string
 
 #######################################################################
 #
@@ -461,7 +457,7 @@ def buildStubs():
                                                               failed, skipped))
     print("Missing type converters:")
     for type in list(unknown_types.keys()):
-        print("%s:%d " % (type, len(unknown_types[type])), end=' ')
+        print("%s:%d " % (type, len(unknown_types[type])))
     print()
 
 #######################################################################
@@ -537,55 +533,55 @@ def nameFixup(name, classe, type, file):
     l = len(classe)
     if name[0:l] == listname:
         func = name[l:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:12] == "xmlParserGet" and file == "python_accessor":
         func = name[12:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:12] == "xmlParserSet" and file == "python_accessor":
         func = name[12:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:10] == "xmlNodeGet" and file == "python_accessor":
         func = name[10:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:18] == "xsltXPathParserGet" and file == "python_accessor":
         func = name[18:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:12] == "xsltXPathGet" and file == "python_accessor":
         func = name[12:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:16] == "xsltTransformGet" and file == "python_accessor":
         func = name[16:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:16] == "xsltTransformSet" and file == "python_accessor":
         func = name[13:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:17] == "xsltStylesheetGet" and file == "python_accessor":
         func = name[17:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:17] == "xsltStylesheetSet" and file == "python_accessor":
         func = name[14:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:l] == classe:
         func = name[l:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:7] == "libxml_":
         func = name[7:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:8] == "libxslt_":
         func = name[8:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:6] == "xmlGet":
         func = name[6:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:3] == "xml":
         func = name[3:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:7] == "xsltGet":
         func = name[7:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     elif name[0:4] == "xslt":
         func = name[4:]
-        func = re_str.lower(func[0:1]) + func[1:]
+        func = func[0:1].lower() + func[1:]
     else:
         func = name
     if func[0:5] == "xPath":

@@ -1,6 +1,4 @@
 #!/usr/bin/python -u
-from __future__ import print_function
-
 import sys
 import string
 import libxml2
@@ -24,7 +22,7 @@ def f(ctx, str):
     except:
         pass
 
-    return string.upper(str)
+    return str.upper()
 
 libxslt.registerExtModuleFunction("foo", "http://example.com/foo", f)
 

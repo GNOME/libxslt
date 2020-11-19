@@ -1,15 +1,6 @@
 #!/usr/bin/python -u
-from __future__ import print_function
-
 import sys
 import string
-import sys
-
-if sys.version_info < (3, 0):
-    import StringIO as io
-else:
-    import io
-
 import libxml2
 # Memory debug specific
 libxml2.debugMemory(1)
@@ -42,7 +33,7 @@ def transform_test(ctx, node, inst, comp):
         pass
 
     tctxt.insertNode().addContent('SUCCESS')
-
+    
 
 
 styledoc = libxml2.parseDoc("""
@@ -64,14 +55,6 @@ doc = libxml2.parseDoc("<doc/>")
 result = style.applyStylesheet(doc, None)
 style.freeStylesheet()
 doc.freeDoc()
-
-
-extensions = io.StringIO()
-libxslt.debugDumpExtensions(extensions)
-
-if 0 and extensions.buf.find(EXT_URL) < 0:
-    print("Element extension not registered (or dumping broken)")
-    sys.exit(1)
 
 root = result.children
 

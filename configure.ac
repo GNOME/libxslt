@@ -204,7 +204,7 @@ dnl
 if test "${NEED_TRIO}" = "1" ; then
     echo Reusing trio library for string functions
     WITH_TRIO=1
-else
+else    
     WITH_TRIO=0
 fi
 AC_SUBST(WITH_TRIO)
@@ -405,7 +405,7 @@ AC_ARG_WITH(debug, [  --with-debug            Add the debugging code (on)])
 if test "$with_debug" = "no" ; then
     echo Disabling debug support
     WITH_XSLT_DEBUG=0
-else
+else    
     WITH_XSLT_DEBUG=1
 fi
 AC_SUBST(WITH_XSLT_DEBUG)
@@ -414,12 +414,12 @@ AC_ARG_WITH(mem_debug, [  --with-mem-debug        Add the memory debugging modul
 if test "$with_mem_debug" = "yes" ; then
     echo Enabling memory debug support
     WITH_MEM_DEBUG=1
-else
+else    
     WITH_MEM_DEBUG=0
 fi
 AC_SUBST(WITH_MEM_DEBUG)
 
-dnl
+dnl 
 dnl Is debugger support requested
 dnl
 AC_ARG_WITH(debugger, [  --with-debugger        Add the debugging support (on)])
@@ -463,7 +463,7 @@ AC_ARG_WITH(libxml-prefix,
         [  --with-libxml-prefix=[PFX]		Specify location of libxml config],
 	LIBXML_CONFIG_PREFIX=$withval
 )
-
+        
 AC_ARG_WITH(libxml-include-prefix,
         [  --with-libxml-include-prefix=[PFX]	Specify location of libxml headers],
         LIBXML_CFLAGS="-I$withval"
@@ -493,7 +493,7 @@ else
 fi
 
 dnl
-dnl imported from libxml2, c.f. #77827
+dnl imported from libxml2, c.f. #77827 
 dnl
 if test "${GCC}" != "yes" ; then
     case "${host}" in

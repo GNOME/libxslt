@@ -4,8 +4,6 @@
 # bindings, not complete yet and shows up the things missing
 # from the existing python interfaces
 #
-from __future__ import print_function
-
 import sys
 import time
 import os
@@ -150,7 +148,7 @@ def main(args = None):
         args = sys.argv[1:]
         if len(args) <= 0:
             usage(sys.argv[0])
-
+            
 
     i = 0
     while i < len(args):
@@ -211,12 +209,12 @@ def main(args = None):
             print("Unknown option %s" % (args[i]))
             usage()
             return(3)
-
-
-
-
+        
+        
+        
+        
         i = i + 1
-
+        
     libxml2.lineNumbersDefault(1)
     libxml2.substituteEntitiesDefault(1)
     # TODO: xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS

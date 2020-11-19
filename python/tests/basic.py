@@ -1,6 +1,4 @@
 #!/usr/bin/python -u
-from __future__ import print_function
-
 import sys
 import libxml2
 # Memory debug specific
