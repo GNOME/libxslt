@@ -28,8 +28,7 @@ set(LIBXSLT_VERSION_EXTRA "")
 set(VERSION ${LIBXSLT_DOTTED_VERSION})
 set(LIBEXSLT_VERSION ${LIBEXSLT_DOTTED_VERSION})
 
-find_package(Iconv)
-find_package(LibXml2 REQUIRED)
+find_package(LibXml2 CONFIG REQUIRED)
 find_package(Python2 COMPONENTS Interpreter Development)
 find_package(Threads)
 
@@ -214,10 +213,6 @@ target_include_directories(
 
 if(LIBXSLT_WITH_CRYPTO)
 	target_link_libraries(LibXslt PRIVATE gcrypt)
-endif()
-
-if(Iconv_FOUND)
-	target_link_libraries(LibXslt PUBLIC Iconv::Iconv)
 endif()
 
 target_link_libraries(LibXslt PUBLIC LibXml2::LibXml2)
