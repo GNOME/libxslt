@@ -26,6 +26,12 @@ gcc:
   variables:
     CFLAGS: "-O2 -std=c89 -D_POSIX_C_SOURCE=200112L"
 
+gcc:python3:
+  extends: .test
+  variables:
+    CONFIG: "--with-python=/usr/bin/python3"
+    CFLAGS: "-O2"
+
 clang:asan:
   extends: .test
   variables:
