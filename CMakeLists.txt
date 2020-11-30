@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.12)
 
 project(libxslt1 C)
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+
 include(CheckCSourceCompiles)
 include(CheckFunctionExists)
 include(CheckIncludeFiles)
@@ -29,33 +31,30 @@ set(VERSION ${LIBXSLT_DOTTED_VERSION})
 set(LIBEXSLT_VERSION ${LIBEXSLT_DOTTED_VERSION})
 
 find_package(LibXml2 CONFIG REQUIRED)
-find_package(Python2 COMPONENTS Interpreter Development)
-find_package(Threads)
-
-check_library_exists(grypt gcry_control "gcrypt.h" HAVE_GCRYPT)
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(LIBXSLT_WITH_DEBUGGER "Add the debugging support" ON)
-
-if(HAVE_GCRYPT)
-	option(LIBXSLT_WITH_CRYPTO "Add crypto support to exslt" ON)
-else()
-	set(LIBXSLT_WITH_CRYPTO OFF)
-endif()
-
+option(LIBXSLT_WITH_CRYPTO "Add crypto support to exslt" OFF)
 option(LIBXSLT_WITH_MEM_DEBUG "Add the memory debugging module" OFF)
 option(LIBXSLT_WITH_MODULES "Add the module support" ON)
 option(LIBXSLT_WITH_PROFILER "Add the profiling support" ON)
-
-if(Python2_FOUND)
-	option(LIBXSLT_WITH_PYTHON "Build Python bindings" ON)
-	set(LIBXSLT_PYTHON_INSTALL_DIR ${Python2_SITEARCH} CACHE PATH "Python bindings install directory")
-else()
-	set(LIBXSLT_WITH_PYTHON OFF)
-endif()
-
+option(LIBXSLT_WITH_PYTHON "Build Python bindings" ON)
+option(LIBXSLT_WITH_THREADS "Add multithread support" ON)
 set(LIBXSLT_WITH_TRIO OFF)
 option(LIBXSLT_WITH_XSLT_DEBUG "Add the debugging code" ON)
+
+if(LIBXSLT_WITH_CRYPTO)
+	find_package(Gcrypt REQUIRED)
+endif()
+
+if(LIBXSLT_WITH_PYTHON)
+	find_package(Python2 COMPONENTS Interpreter Development REQUIRED)
+	set(LIBXSLT_PYTHON_INSTALL_DIR ${Python2_SITEARCH} CACHE PATH "Python bindings install directory")
+endif()
+
+if(LIBXSLT_WITH_THREADS)
+	find_package(Threads REQUIRED)
+endif()
 
 foreach(VARIABLE IN ITEMS WITH_CRYPTO WITH_DEBUGGER WITH_MEM_DEBUG WITH_MODULES WITH_PROFILER WITH_PYTHON WITH_TRIO WITH_XSLT_DEBUG)
 	if(LIBXSLT_${VARIABLE})
@@ -67,7 +66,11 @@ endforeach()
 
 set(MODULE_EXTENSION "${CMAKE_SHARED_LIBRARY_SUFFIX}")
 
-if(Threads_FOUND)
+if(LIBXSLT_WITH_CRYPTO)
+	list(APPEND CMAKE_REQUIRED_LIBRARIES Gcrypt::Gcrypt)
+endif()
+
+if(LIBXSLT_WITH_THREADS)
 	list(APPEND CMAKE_REQUIRED_LIBRARIES Threads::Threads)
 endif()
 
@@ -86,6 +89,7 @@ else()
 	check_function_exists(fprintf HAVE_FPRINTF)
 	check_include_files(fp_class.h HAVE_FP_CLASS_H)
 	check_function_exists(ftime HAVE_FTIME)
+	check_library_exists(gcrypt gcry_control "gcrypt.h" HAVE_GCRYPT)
 	check_function_exists(gettimeofday HAVE_GETTIMEOFDAY)
 	check_function_exists(gmtime HAVE_GMTIME)
 	check_function_exists(gmtime_r HAVE_GMTIME_R)
@@ -212,7 +216,7 @@ target_include_directories(
 )
 
 if(LIBXSLT_WITH_CRYPTO)
-	target_link_libraries(LibXslt PRIVATE gcrypt)
+	target_link_libraries(LibXslt PRIVATE Gcrypt::Gcrypt)
 endif()
 
 target_link_libraries(LibXslt PUBLIC LibXml2::LibXml2)
@@ -221,7 +225,7 @@ if(UNIX)
 	target_link_libraries(LibXslt PRIVATE m)
 endif()
 
-if(Threads_FOUND)
+if(LIBXSLT_WITH_THREADS)
 	target_link_libraries(LibXslt PRIVATE Threads::Threads)
 endif()
 
@@ -300,8 +304,8 @@ target_include_directories(
 	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-if(LIBXSLT_WITH_GCRYPT)
-	target_link_libraries(LibExslt PRIVATE gcrypt)
+if(LIBXSLT_WITH_CRYPTO)
+	target_link_libraries(LibExslt PRIVATE Gcrypt::Gcrypt)
 endif()
 
 target_link_libraries(LibExslt PUBLIC LibXslt LibXml2::LibXml2)
@@ -310,7 +314,7 @@ if(UNIX)
 	target_link_libraries(LibExslt PRIVATE m)
 endif()
 
-if(Threads_FOUND)
+if(LIBXSLT_WITH_THREADS)
 	target_link_libraries(LibExslt PRIVATE Threads::Threads)
 endif()
 
@@ -418,6 +422,10 @@ install(FILES libexslt/libexslt.3 DESTINATION ${CMAKE_INSTALL_MANDIR}/man3 COMPO
 install(FILES libxslt/libxslt.3 DESTINATION ${CMAKE_INSTALL_MANDIR}/man3 COMPONENT documentation)
 install(FILES doc/xsltproc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 COMPONENT documentation)
 install(DIRECTORY doc/ DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/libxslt COMPONENT documentation PATTERN Makefile.* EXCLUDE)
+
+if(LIBXSLT_WITH_CRYPTO)
+	install(FILES FindGcrypt.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libxslt-${VERSION} COMPONENT development)
+endif()
 
 configure_package_config_file(
 	libxslt-config.cmake.in libxslt-config.cmake
