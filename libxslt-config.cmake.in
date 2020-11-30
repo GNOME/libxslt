@@ -46,7 +46,7 @@ select_library_location(LibXslt::LibExslt LIBXSLT_EXSLT)
 
 include(CMakeFindDependencyMacro)
 
-find_dependency(LibXml2)
+find_dependency(LibXml2 CONFIG)
 list(APPEND LIBXSLT_INCLUDE_DIRS ${LIBXML2_INCLUDE_DIRS})
 list(APPEND LIBXSLT_LIBRARIES ${LIBXML2_LIBRARIES})
 
