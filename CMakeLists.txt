@@ -364,7 +364,7 @@ endif()
 add_executable(xsltproc xsltproc/xsltproc.c)
 target_include_directories(xsltproc PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(xsltproc LibExslt LibXslt)
-install(TARGETS	xsltproc RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT programs)
+install(TARGETS xsltproc EXPORT LibXslt RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT programs)
 
 if(LIBXSLT_WITH_PYTHON)
 	set(ENV{SRCDIR} ${CMAKE_CURRENT_SOURCE_DIR}/python)
