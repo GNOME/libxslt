@@ -73,6 +73,9 @@ rpm: cleantar
 pkgconfigdir=$(libdir)/pkgconfig
 pkgconfig_DATA = libxslt.pc libexslt.pc
 
+cmakedir = $(libdir)/cmake/libxslt
+cmake_DATA = FindGcrypt.cmake libxslt-config.cmake
+
 m4datadir = $(datadir)/aclocal
 m4data_DATA = libxslt.m4
 

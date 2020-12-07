@@ -146,15 +146,18 @@ dnl Look for pthread.h, needed for testThreads
 case $host in
   *-mingw*) ;;
   *)
+WITH_THREADS=0
 THREAD_LIBS=""
 AC_CHECK_HEADER(pthread.h,
     AC_CHECK_LIB(pthread, pthread_join,[
        AC_DEFINE([HAVE_LIBPTHREAD], [], [Define if pthread library is there (-lpthread)])
        AC_DEFINE([HAVE_PTHREAD_H], [], [Define if <pthread.h> is there])
+       WITH_THREADS="1"
        THREAD_LIBS="-lpthread"]))
   ;;
 esac
 
+AC_SUBST(WITH_THREADS)
 AC_SUBST(THREAD_LIBS)
 
 dnl
@@ -706,6 +709,7 @@ AC_CONFIG_FILES([
 Makefile
 libxslt.pc
 libexslt.pc
+libxslt-config.cmake
 libxslt/Makefile
 libxslt/xsltconfig.h
 libxslt/xsltwin32config.h
