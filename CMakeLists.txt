@@ -428,7 +428,7 @@ if(LIBXSLT_WITH_CRYPTO)
 endif()
 
 configure_package_config_file(
-	libxslt-config.cmake.in libxslt-config.cmake
+	libxslt-config.cmake.cmake.in libxslt-config.cmake
 	INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libxslt-${VERSION}
 )
 
