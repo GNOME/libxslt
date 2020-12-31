@@ -216,18 +216,10 @@ target_include_directories(
 	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-if(LIBXSLT_WITH_CRYPTO)
-	target_link_libraries(LibXslt PRIVATE Gcrypt::Gcrypt)
-endif()
-
 target_link_libraries(LibXslt PUBLIC LibXml2::LibXml2)
 
 if(UNIX)
 	target_link_libraries(LibXslt PRIVATE m)
-endif()
-
-if(LIBXSLT_WITH_THREADS)
-	target_link_libraries(LibXslt PRIVATE Threads::Threads)
 endif()
 
 set_target_properties(
@@ -310,14 +302,6 @@ if(LIBXSLT_WITH_CRYPTO)
 endif()
 
 target_link_libraries(LibExslt PUBLIC LibXslt LibXml2::LibXml2)
-
-if(UNIX)
-	target_link_libraries(LibExslt PRIVATE m)
-endif()
-
-if(LIBXSLT_WITH_THREADS)
-	target_link_libraries(LibExslt PRIVATE Threads::Threads)
-endif()
 
 set_target_properties(
 	LibExslt
