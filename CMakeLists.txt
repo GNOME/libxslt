@@ -220,6 +220,7 @@ target_link_libraries(LibXslt PUBLIC LibXml2::LibXml2)
 
 if(UNIX)
 	target_link_libraries(LibXslt PRIVATE m)
+	set(M_LIBS "-lm")
 endif()
 
 set_target_properties(
@@ -299,6 +300,7 @@ target_include_directories(
 
 if(LIBXSLT_WITH_CRYPTO)
 	target_link_libraries(LibExslt PRIVATE Gcrypt::Gcrypt)
+	set(LIBGCRYPT_LIBS "-lgcrypt")
 endif()
 
 target_link_libraries(LibExslt PUBLIC LibXslt LibXml2::LibXml2)
@@ -451,6 +453,38 @@ install(
 	FILE libxslt-export.cmake
 	COMPONENT development
 )
+
+set(LIBXSLT_DEFAULT_PLUGINS_PATH "\${libdir}/libxslt-plugins")
+set(XSLT_INCLUDEDIR "-I\${includedir}")
+set(XSLT_LIBDIR "-L\${libdir}")
+set(XSLT_LIBS "-lxslt -lxml2")
+set(XSLT_PRIVATE_LIBS "${M_LIBS}")
+
+set(EXSLT_INCLUDEDIR "-I\${includedir}")
+set(EXSLT_LIBDIR "-L\${libdir}")
+set(EXSLT_LIBS "-lexslt ${XSLT_LIBS}")
+set(EXSLT_PRIVATE_LIBS "${XSLT_PRIVATE_LIBS} ${LIBGCRYPT_LIBS}")
+
+file(RELATIVE_PATH PACKAGE_RELATIVE_PATH "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig" "${CMAKE_INSTALL_PREFIX}")
+string(REGEX REPLACE "/$" "" PACKAGE_RELATIVE_PATH "${PACKAGE_RELATIVE_PATH}")
+
+set(prefix "\${pcfiledir}/${PACKAGE_RELATIVE_PATH}")
+set(exec_prefix "\${prefix}")
+set(libdir "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
+set(includedir "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+configure_file(libxslt.pc.in libxslt.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libxslt.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig COMPONENT development)
+configure_file(libexslt.pc.in libexslt.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libexslt.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig COMPONENT development)
+
+set(prefix "\$(cd \"\$(dirname \"\$0\")\"; pwd -P)/..")
+configure_file(xslt-config.in xslt-config @ONLY)
+install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/xslt-config DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT development)
+
+set(XSLT_INCLUDEDIR "-I${CMAKE_INSTALL_FULL_INCLUDEDIR}")
+set(XSLT_LIBDIR "-L${CMAKE_INSTALL_FULL_LIBDIR}")
+configure_file(xsltConf.sh.in xsltConf.sh @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/xsltConf.sh DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT development)
 
 set(CPACK_COMPONENT_DEVELOPMENT_DEPENDS runtime)
 set(CPACK_COMPONENT_PROGRAMS_DEPENDS runtime)
