@@ -50,12 +50,11 @@ clang:msan:
 .cmake:linux:
   image: registry.gitlab.gnome.org/gnome/libxml2
   before_script:
-    - "[ ! -d libxml2-install ] && \
-        git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source && \
-        cmake -DBUILD_SHARED_LIBS=$BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxml2-install -DCMAKE_BUILD_TYPE=RelWithDebInfo -DLIBXML2_WITH_TESTS=OFF -S libxml2-source -B libxml2-build && \
-        cmake --build libxml2-build --target install && \
-        mkdir -p libxml2-install/share/libxml2 && \
-        cp libxml2-source/Copyright libxml2-install/share/libxml2"
+    - git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source
+    - cmake -DBUILD_SHARED_LIBS=$BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxml2-install -DCMAKE_BUILD_TYPE=RelWithDebInfo -DLIBXML2_WITH_TESTS=OFF -S libxml2-source -B libxml2-build
+    - cmake --build libxml2-build --target install
+    - mkdir -p libxml2-install/share/libxml2
+    - cp libxml2-source/Copyright libxml2-install/share/libxml2
     - export CMAKE_PREFIX_PATH=$CI_PROJECT_DIR/libxml2-install:$CMAKE_PREFIX_PATH
     - export PATH=$CI_PROJECT_DIR/libxml2-install/bin:$PATH
     - export LD_LIBRARY_PATH=$CI_PROJECT_DIR/libxml2-install/bin:$LD_LIBRARY_PATH
@@ -67,10 +66,6 @@ clang:msan:
   after_script:
     - cd libxslt-install
     - tar -czf ../libxslt-$CI_COMMIT_SHORT_SHA-$CC-$SUFFIX.tar.gz *
-  cache:
-    key: "Linux-x86_64"
-    paths:
-      - libxml2-$Env:LIBXML2_VERSION-install/
   artifacts:
     paths:
       - libxslt-$CI_COMMIT_SHORT_SHA-$CC-$SUFFIX.tar.gz
@@ -123,13 +118,11 @@ cmake:linux:clang:static:
         Invoke-WebRequest -Uri https://www.7-zip.org/a/7z1900-extra.7z -OutFile 7z1900-extra.7z ;
         cmake -E tar xf 7z1900-extra.7z 7za.exe
       }
-    - if (-not (Test-Path libxml2-install)) {
-        git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source ;
-        cmake -G Ninja -DBUILD_SHARED_LIBS=$Env:BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxml2-install -DLIBXML2_WITH_TESTS=OFF -S libxml2-source -B libxml2-build ;
-        cmake --build libxml2-build --config RelWithDebInfo --target install ;
-        New-Item -ItemType Directory libxml2-install\share\libxml2 ;
-        Copy-Item libxml2-source\Copyright libxml2-install\share\libxml2
-      }
+    - git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source
+    - cmake -G Ninja -DBUILD_SHARED_LIBS=$Env:BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxml2-install -DLIBXML2_WITH_TESTS=OFF -S libxml2-source -B libxml2-build
+    - cmake --build libxml2-build --config RelWithDebInfo --target install
+    - New-Item -ItemType Directory libxml2-install\share\libxml2
+    - Copy-Item libxml2-source\Copyright libxml2-install\share\libxml2
     - $Env:CMAKE_PREFIX_PATH="$Env:CI_PROJECT_DIR\libxml2-install;$Env:CMAKE_PREFIX_PATH"
     - $Env:Path="$Env:CI_PROJECT_DIR\libxml2-install\bin;$Env:Path"
   script:
@@ -142,7 +135,6 @@ cmake:linux:clang:static:
   cache:
     key: "$MINGW_PACKAGE_PREFIX"
     paths:
-      - libxml2-install/
       - 7za.exe
   artifacts:
     paths:
