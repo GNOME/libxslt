@@ -126,7 +126,7 @@ cmake:linux:clang:static:
     - $Env:CMAKE_PREFIX_PATH="$Env:CI_PROJECT_DIR\libxml2-install;$Env:CMAKE_PREFIX_PATH"
     - $Env:Path="$Env:CI_PROJECT_DIR\libxml2-install\bin;$Env:Path"
   script:
-    - cmake -G Ninja -DBUILD_SHARED_LIBS=$Env:BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxslt-install -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B libxslt-build
+    - cmake -G Ninja -DBUILD_SHARED_LIBS="$Env:BUILD_SHARED_LIBS" -DCMAKE_INSTALL_PREFIX=libxslt-install -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B libxslt-build
     - cmake --build libxslt-build --target install
     - New-Item -ItemType Directory libxslt-install\share\libxslt
     - Copy-Item Copyright libxslt-install\share\libxslt
@@ -171,4 +171,89 @@ cmake:mingw:w64-x86_64:static:
     BUILD_SHARED_LIBS: "OFF"
     MINGW_PACKAGE_PREFIX: mingw-w64-x86_64
     MINGW_PATH: mingw64
+    SUFFIX: static
+
+.cmake:msvc:
+  tags:
+    - win32-ps
+  variables:
+    CMAKE_VERSION: 3.19.4
+  before_script:
+    - "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
+    - if (-not (Test-Path cmake-$Env:CMAKE_VERSION-win64-x64)) {
+        Invoke-WebRequest -Uri http://github.com/Kitware/CMake/releases/download/v$Env:CMAKE_VERSION/cmake-$Env:CMAKE_VERSION-win64-x64.zip -OutFile cmake-$Env:CMAKE_VERSION-win64-x64.zip ;
+        Expand-Archive cmake-$Env:CMAKE_VERSION-win64-x64.zip -DestinationPath .
+      }
+    - $Env:Path="$Env:CI_PROJECT_DIR\cmake-$Env:CMAKE_VERSION-win64-x64\bin;$Env:Path"
+    - if (-not (Test-Path 7za.exe)) {
+        Invoke-WebRequest -Uri https://www.7-zip.org/a/7z1900-extra.7z -OutFile 7z1900-extra.7z ;
+        cmake -E tar xf 7z1900-extra.7z 7za.exe
+      }
+    - git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source
+    - cmake -DBUILD_SHARED_LIBS="$Env:BUILD_SHARED_LIBS" -DCMAKE_INSTALL_PREFIX=libxml2-install -DLIBXML2_WITH_ICONV=OFF -DLIBXML2_WITH_LZMA=OFF -DLIBXML2_WITH_PYTHON=OFF -DLIBXML2_WITH_ZLIB=OFF -S libxml2-source -B libxml2-build
+    - cmake --build libxml2-build --config Debug --target install
+    - cmake --build libxml2-build --config Release --target install
+    - New-Item -ItemType Directory libxml2-install\share\libxml2
+    - Copy-Item libxml2-source\Copyright libxml2-install\share\libxml2
+    - $Env:CMAKE_PREFIX_PATH="$Env:CI_PROJECT_DIR\libxml2-install;$Env:CMAKE_PREFIX_PATH"
+    - $Env:Path="$Env:CI_PROJECT_DIR\libxml2-install\bin;$Env:Path"
+  script:
+    - cmake -DBUILD_SHARED_LIBS="$Env:BUILD_SHARED_LIBS" -DCMAKE_INSTALL_PREFIX=libxslt-install -DLIBXSLT_WITH_PYTHON=OFF -S . -B libxslt-build
+    - cmake --build libxslt-build --config Debug --target install
+    - cmake --build libxslt-build --config Release --target install
+    - New-Item -ItemType Directory libxslt-install\share\libxslt
+    - Copy-Item Copyright libxslt-install\share\libxslt
+    - cd libxslt-build
+    - ctest -C Debug -VV
+    - ctest -C Release -VV
+  after_script:
+    - .\7za.exe a libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:CMAKE_GENERATOR_TOOLSET-$Env:CMAKE_GENERATOR_PLATFORM-$Env:SUFFIX.7z .\libxslt-install\*
+  cache:
+    key: "msvc"
+    paths:
+      - cmake-$Env:CMAKE_VERSION-win64-x64/
+      - 7za.exe
+  artifacts:
+    paths:
+      - libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:CMAKE_GENERATOR_TOOLSET-$Env:CMAKE_GENERATOR_PLATFORM-$Env:SUFFIX.7z
+    expire_in: 1 day
+
+.cmake:msvc:v141:
+  extends: .cmake:msvc
+  variables:
+    CMAKE_GENERATOR: Visual Studio 15 2017
+    CMAKE_GENERATOR_TOOLSET: v141
+
+.cmake:msvc:v141:x64:
+  extends: .cmake:msvc:v141
+  variables:
+    CMAKE_GENERATOR_PLATFORM: x64
+
+cmake:msvc:v141:x64:shared:
+  extends: .cmake:msvc:v141:x64
+  variables:
+    BUILD_SHARED_LIBS: "ON"
+    SUFFIX: shared
+
+cmake:msvc:v141:x64:static:
+  extends: .cmake:msvc:v141:x64
+  variables:
+    BUILD_SHARED_LIBS: "OFF"
+    SUFFIX: static
+
+.cmake:msvc:v141:x86:
+  extends: .cmake:msvc:v141
+  variables:
+    CMAKE_GENERATOR_PLATFORM: Win32
+
+cmake:msvc:v141:x86:shared:
+  extends: .cmake:msvc:v141:x86
+  variables:
+    BUILD_SHARED_LIBS: "ON"
+    SUFFIX: shared
+
+cmake:msvc:v141:x86:static:
+  extends: .cmake:msvc:v141:x86
+  variables:
+    BUILD_SHARED_LIBS: "OFF"
     SUFFIX: static
