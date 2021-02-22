@@ -8,6 +8,7 @@ include(CheckCSourceCompiles)
 include(CheckFunctionExists)
 include(CheckIncludeFiles)
 include(CheckLibraryExists)
+include(CheckSymbolExists)
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
@@ -49,8 +50,17 @@ if(LIBXSLT_WITH_CRYPTO)
 endif()
 
 if(LIBXSLT_WITH_PYTHON)
-	find_package(Python2 COMPONENTS Interpreter Development REQUIRED)
-	set(LIBXSLT_PYTHON_INSTALL_DIR ${Python2_SITEARCH} CACHE PATH "Python bindings install directory")
+	check_include_files(unistd.h HAVE_UNISTD_H)
+	check_symbol_exists(F_GETFL fcntl.h HAVE_F_GETFL)
+	if(HAVE_UNISTD_H AND HAVE_F_GETFL)
+		find_package(Python COMPONENTS Interpreter Development REQUIRED)
+	else()
+		find_package(Python2 COMPONENTS Interpreter Development REQUIRED)
+		add_library(Python::Python ALIAS Python2::Python)
+		set(Python_EXECUTABLE ${Python2_EXECUTABLE})
+		set(Python_SITEARCH ${Python2_SITEARCH})
+	endif()
+	set(LIBXSLT_PYTHON_INSTALL_DIR ${Python_SITEARCH} CACHE PATH "Python bindings install directory")
 endif()
 
 if(LIBXSLT_WITH_THREADS)
@@ -366,7 +376,7 @@ if(LIBXSLT_WITH_PYTHON)
 	set(ENV{SRCDIR} ${CMAKE_CURRENT_SOURCE_DIR}/python)
 	execute_process(
 		COMMAND
-		${Python2_EXECUTABLE}
+		${Python_EXECUTABLE}
 		${CMAKE_CURRENT_SOURCE_DIR}/python/generator.py
 		${CMAKE_CURRENT_SOURCE_DIR}/doc/libxslt-api.xml
 		${CMAKE_CURRENT_SOURCE_DIR}/python/libxslt-python-api.xml
@@ -393,7 +403,7 @@ if(LIBXSLT_WITH_PYTHON)
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/python>
 	)
-	target_link_libraries(LibXsltMod LibXslt LibExslt Python2::Python)
+	target_link_libraries(LibXsltMod LibXslt LibExslt Python::Python)
 	set_target_properties(
 		LibXsltMod
 		PROPERTIES
