@@ -243,7 +243,7 @@ set_target_properties(
 	VERSION ${PROJECT_VERSION}
 )
 
-if(WIN32)
+if(MSVC)
 	if(BUILD_SHARED_LIBS)
 		set_target_properties(
 			LibXslt
@@ -325,7 +325,7 @@ set_target_properties(
 	VERSION ${LIBEXSLT_VERSION}
 )
 
-if(WIN32)
+if(MSVC)
 	if(BUILD_SHARED_LIBS)
 		set_target_properties(
 			LibExslt
