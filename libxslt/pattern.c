@@ -1348,6 +1348,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	if (ctxt->error) {
 	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : Literal expected\n");
+	    xmlFree(lit);
 	    return;
 	}
 	SKIP_BLANKS;
@@ -1374,6 +1375,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	if (ctxt->error) {
 	    xsltTransformError(NULL, NULL, NULL,
 		    "xsltCompileIdKeyPattern : Literal expected\n");
+	    xmlFree(lit);
 	    return;
 	}
 	SKIP_BLANKS;
@@ -1415,6 +1417,7 @@ xsltCompileIdKeyPattern(xsltParserContextPtr ctxt, xmlChar *name,
 	    if (ctxt->error) {
 		xsltTransformError(NULL, NULL, NULL,
 			"xsltCompileIdKeyPattern : Literal expected\n");
+                xmlFree(lit);
 		return;
 	    }
 	    SKIP_BLANKS;
