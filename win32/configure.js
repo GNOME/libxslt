@@ -489,7 +489,7 @@ txtOut += "-------------------------\n";
 txtOut += "          Compiler: " + compiler + "\n";
 if (compiler == "msvc")
 	txtOut += "  C-Runtime option: " + cruntime + "\n";
-	txtOut += "    Embed Manifest: " + boolToStr(vcmanifest) + "\n";
+txtOut += "    Embed Manifest: " + boolToStr(vcmanifest) + "\n";
 txtOut += "     Debug symbols: " + boolToStr(buildDebug) + "\n";
 txtOut += "   Static xsltproc: " + boolToStr(buildStatic) + "\n";
 txtOut += "    Install prefix: " + buildPrefix + "\n";
