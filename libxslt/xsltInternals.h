@@ -291,6 +291,9 @@ struct _xsltTemplate {
     int              templMax;		/* Size of the templtes stack */
     xsltTemplatePtr *templCalledTab;	/* templates called */
     int             *templCountTab;  /* .. and how often */
+
+    /* Conflict resolution */
+    int position;
 };
 
 /**

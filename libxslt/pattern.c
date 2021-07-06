@@ -2134,6 +2134,9 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
     if ((style == NULL) || (cur == NULL))
 	return(-1);
 
+    if (cur->next != NULL)
+        cur->position = cur->next->position + 1;
+
     /* Register named template */
     if (cur->name != NULL) {
         if (style->namedTemplates == NULL) {
@@ -2495,7 +2498,10 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		break;
 	}
 	while ((list != NULL) &&
-	       ((ret == NULL)  || (list->priority > priority))) {
+	       ((ret == NULL) ||
+                (list->priority > priority) ||
+                ((list->priority == priority) &&
+                 (list->template->position > ret->position)))) {
 	    if (xsltTestCompMatch(ctxt, list, node,
 			          ctxt->mode, ctxt->modeURI) == 1) {
 		ret = list->template;
@@ -2512,7 +2518,10 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 	    (node->type == XML_TEXT_NODE)) {
 	    list = curstyle->elemMatch;
 	    while ((list != NULL) &&
-		   ((ret == NULL)  || (list->priority > priority))) {
+                   ((ret == NULL) ||
+                    (list->priority > priority) ||
+                    ((list->priority == priority) &&
+                     (list->template->position > ret->position)))) {
 		if (xsltTestCompMatch(ctxt, list, node,
 				      ctxt->mode, ctxt->modeURI) == 1) {
 		    ret = list->template;
@@ -2525,7 +2534,10 @@ xsltGetTemplate(xsltTransformContextPtr ctxt, xmlNodePtr node,
 		   (node->type == XML_COMMENT_NODE)) {
 	    list = curstyle->elemMatch;
 	    while ((list != NULL) &&
-		   ((ret == NULL)  || (list->priority > priority))) {
+                   ((ret == NULL) ||
+                    (list->priority > priority) ||
+                    ((list->priority == priority) &&
+                     (list->template->position > ret->position)))) {
 		if (xsltTestCompMatch(ctxt, list, node,
 				      ctxt->mode, ctxt->modeURI) == 1) {
 		    ret = list->template;
@@ -2540,7 +2552,10 @@ keyed_match:
 	if (keyed) {
 	    list = curstyle->keyMatch;
 	    while ((list != NULL) &&
-		   ((ret == NULL)  || (list->priority > priority))) {
+                   ((ret == NULL) ||
+                    (list->priority > priority) ||
+                    ((list->priority == priority) &&
+                     (list->template->position > ret->position)))) {
 		if (xsltTestCompMatch(ctxt, list, node,
 				      ctxt->mode, ctxt->modeURI) == 1) {
 		    ret = list->template;
