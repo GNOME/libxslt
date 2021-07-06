@@ -1500,17 +1500,18 @@ struct _xsltStylesheet {
     /*
      * Template descriptions.
      */
-    xsltTemplatePtr templates;	/* the ordered list of templates */
-    void *templatesHash;	/* hash table or wherever compiled templates
-				   information is stored */
-    void *rootMatch;		/* template based on / */
-    void *keyMatch;		/* template based on key() */
-    void *elemMatch;		/* template based on * */
-    void *attrMatch;		/* template based on @* */
-    void *parentMatch;		/* template based on .. */
-    void *textMatch;		/* template based on text() */
-    void *piMatch;		/* template based on processing-instruction() */
-    void *commentMatch;		/* template based on comment() */
+    xsltTemplatePtr templates;           /* the ordered list of templates */
+    xmlHashTablePtr templatesHash;       /* hash table or wherever compiled
+                                            templates information is stored */
+    struct _xsltCompMatch *rootMatch;    /* template based on / */
+    struct _xsltCompMatch *keyMatch;     /* template based on key() */
+    struct _xsltCompMatch *elemMatch;    /* template based on * */
+    struct _xsltCompMatch *attrMatch;    /* template based on @* */
+    struct _xsltCompMatch *parentMatch;  /* template based on .. */
+    struct _xsltCompMatch *textMatch;    /* template based on text() */
+    struct _xsltCompMatch *piMatch;      /* template based on
+                                            processing-instruction() */
+    struct _xsltCompMatch *commentMatch; /* template based on comment() */
 
     /*
      * Namespace aliases.

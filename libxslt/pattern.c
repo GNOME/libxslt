@@ -2127,7 +2127,7 @@ xsltAddTemplate(xsltStylesheetPtr style, xsltTemplatePtr cur,
      * 'top' will point to style->xxxMatch ptr - declaring as 'void'
      *  avoids gcc 'type-punned pointer' warning.
      */
-    void **top = NULL;
+    xsltCompMatchPtr *top = NULL;
     const xmlChar *name = NULL;
     float priority;              /* the priority */
 
@@ -2618,8 +2618,7 @@ xsltCleanupTemplates(xsltStylesheetPtr style ATTRIBUTE_UNUSED) {
 void
 xsltFreeTemplateHashes(xsltStylesheetPtr style) {
     if (style->templatesHash != NULL)
-	xmlHashFree((xmlHashTablePtr) style->templatesHash,
-		    xsltFreeCompMatchListEntry);
+	xmlHashFree(style->templatesHash, xsltFreeCompMatchListEntry);
     if (style->rootMatch != NULL)
         xsltFreeCompMatchList(style->rootMatch);
     if (style->keyMatch != NULL)
