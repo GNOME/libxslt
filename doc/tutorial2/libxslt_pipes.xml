@@ -3,6 +3,8 @@
                "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
 <article id="libxslt">
+<title>libxslt: An Extended Tutorial</title>
+
 <articleinfo>
   <author><firstname>Panos</firstname><surname>Louridas</surname></author>
   <copyright>
@@ -33,8 +35,6 @@
 
   </legalnotice>
 </articleinfo>
-
-<title>libxslt: An Extended Tutorial</title>
 
 <sect1><title>Introduction</title>
 
