@@ -630,6 +630,152 @@ xsltTestCompMatchDirect(xsltTransformContextPtr ctxt, xsltCompMatchPtr comp,
 }
 
 /**
+ * xsltTestStepMatch:
+ * @ctxt:  a XSLT process context
+ * @node: a node
+ * @step:  the step
+ *
+ * Test whether the node matches the step.
+ *
+ * Returns 1 if it matches, 0 if it doesn't and -1 in case of failure
+ */
+static int
+xsltTestStepMatch(xsltTransformContextPtr ctxt, xmlNodePtr node,
+                  xsltStepOpPtr step) {
+    switch (step->op) {
+        case XSLT_OP_ROOT:
+            if ((node->type == XML_DOCUMENT_NODE) ||
+#ifdef LIBXML_DOCB_ENABLED
+                (node->type == XML_DOCB_DOCUMENT_NODE) ||
+#endif
+                (node->type == XML_HTML_DOCUMENT_NODE))
+                return(1);
+            if ((node->type == XML_ELEMENT_NODE) && (node->name[0] == ' '))
+                return(1);
+            return(0);
+        case XSLT_OP_ELEM:
+            if (node->type != XML_ELEMENT_NODE)
+                return(0);
+            if (step->value == NULL)
+                return(1);
+            if (step->value[0] != node->name[0])
+                return(0);
+            if (!xmlStrEqual(step->value, node->name))
+                return(0);
+
+            /* Namespace test */
+            if (node->ns == NULL) {
+                if (step->value2 != NULL)
+                    return(0);
+            } else if (node->ns->href != NULL) {
+                if (step->value2 == NULL)
+                    return(0);
+                if (!xmlStrEqual(step->value2, node->ns->href))
+                    return(0);
+            }
+            return(1);
+        case XSLT_OP_ATTR:
+            if (node->type != XML_ATTRIBUTE_NODE)
+                return(0);
+            if (step->value != NULL) {
+                if (step->value[0] != node->name[0])
+                    return(0);
+                if (!xmlStrEqual(step->value, node->name))
+                    return(0);
+            }
+            /* Namespace test */
+            if (node->ns == NULL) {
+                if (step->value2 != NULL)
+                    return(0);
+            } else if (step->value2 != NULL) {
+                if (!xmlStrEqual(step->value2, node->ns->href))
+                    return(0);
+            }
+            return(1);
+        case XSLT_OP_ID: {
+            /* TODO Handle IDs decently, must be done differently */
+            xmlAttrPtr id;
+
+            if (node->type != XML_ELEMENT_NODE)
+                return(0);
+
+            id = xmlGetID(node->doc, step->value);
+            if ((id == NULL) || (id->parent != node))
+                return(0);
+            break;
+        }
+        case XSLT_OP_KEY: {
+            xmlNodeSetPtr list;
+            int indx;
+
+            list = xsltGetKey(ctxt, step->value,
+                              step->value3, step->value2);
+            if (list == NULL)
+                return(0);
+            for (indx = 0;indx < list->nodeNr;indx++)
+                if (list->nodeTab[indx] == node)
+                    break;
+            if (indx >= list->nodeNr)
+                return(0);
+            break;
+        }
+        case XSLT_OP_NS:
+            if (node->type != XML_ELEMENT_NODE)
+                return(0);
+            if (node->ns == NULL) {
+                if (step->value != NULL)
+                    return(0);
+            } else if (node->ns->href != NULL) {
+                if (step->value == NULL)
+                    return(0);
+                if (!xmlStrEqual(step->value, node->ns->href))
+                    return(0);
+            }
+            break;
+        case XSLT_OP_ALL:
+            if (node->type != XML_ELEMENT_NODE)
+                return(0);
+            break;
+        case XSLT_OP_PI:
+            if (node->type != XML_PI_NODE)
+                return(0);
+            if (step->value != NULL) {
+                if (!xmlStrEqual(step->value, node->name))
+                    return(0);
+            }
+            break;
+        case XSLT_OP_COMMENT:
+            if (node->type != XML_COMMENT_NODE)
+                return(0);
+            break;
+        case XSLT_OP_TEXT:
+            if ((node->type != XML_TEXT_NODE) &&
+                (node->type != XML_CDATA_SECTION_NODE))
+                return(0);
+            break;
+        case XSLT_OP_NODE:
+            switch (node->type) {
+                case XML_ELEMENT_NODE:
+                case XML_CDATA_SECTION_NODE:
+                case XML_PI_NODE:
+                case XML_COMMENT_NODE:
+                case XML_TEXT_NODE:
+                    break;
+                default:
+                    return(0);
+            }
+            break;
+        default:
+            xsltTransformError(ctxt, NULL, node,
+                    "xsltTestStepMatch: unexpected step op %d\n",
+                    step->op);
+            return(-1);
+    }
+
+    return(1);
+}
+
+/**
  * xsltTestPredicateMatch:
  * @ctxt: a XSLT process context
  * @comp: the precompiled pattern
@@ -969,55 +1115,6 @@ restart:
 	switch (step->op) {
             case XSLT_OP_END:
 		goto found;
-            case XSLT_OP_ROOT:
-		if ((node->type == XML_DOCUMENT_NODE) ||
-#ifdef LIBXML_DOCB_ENABLED
-		    (node->type == XML_DOCB_DOCUMENT_NODE) ||
-#endif
-		    (node->type == XML_HTML_DOCUMENT_NODE))
-		    continue;
-		if ((node->type == XML_ELEMENT_NODE) && (node->name[0] == ' '))
-		    continue;
-		goto rollback;
-            case XSLT_OP_ELEM:
-		if (node->type != XML_ELEMENT_NODE)
-		    goto rollback;
-		if (step->value == NULL)
-		    continue;
-		if (step->value[0] != node->name[0])
-		    goto rollback;
-		if (!xmlStrEqual(step->value, node->name))
-		    goto rollback;
-
-		/* Namespace test */
-		if (node->ns == NULL) {
-		    if (step->value2 != NULL)
-			goto rollback;
-		} else if (node->ns->href != NULL) {
-		    if (step->value2 == NULL)
-			goto rollback;
-		    if (!xmlStrEqual(step->value2, node->ns->href))
-			goto rollback;
-		}
-		continue;
-            case XSLT_OP_ATTR:
-		if (node->type != XML_ATTRIBUTE_NODE)
-		    goto rollback;
-		if (step->value != NULL) {
-		    if (step->value[0] != node->name[0])
-			goto rollback;
-		    if (!xmlStrEqual(step->value, node->name))
-			goto rollback;
-		}
-		/* Namespace test */
-		if (node->ns == NULL) {
-		    if (step->value2 != NULL)
-			goto rollback;
-		} else if (step->value2 != NULL) {
-		    if (!xmlStrEqual(step->value2, node->ns->href))
-			goto rollback;
-		}
-		continue;
             case XSLT_OP_PARENT:
 		if ((node->type == XML_DOCUMENT_NODE) ||
 		    (node->type == XML_HTML_DOCUMENT_NODE) ||
@@ -1099,50 +1196,6 @@ restart:
 		    goto rollback;
 		xsltPatPushState(ctxt, &states, i - 1, node);
 		continue;
-            case XSLT_OP_ID: {
-		/* TODO Handle IDs decently, must be done differently */
-		xmlAttrPtr id;
-
-		if (node->type != XML_ELEMENT_NODE)
-		    goto rollback;
-
-		id = xmlGetID(node->doc, step->value);
-		if ((id == NULL) || (id->parent != node))
-		    goto rollback;
-		break;
-	    }
-            case XSLT_OP_KEY: {
-		xmlNodeSetPtr list;
-		int indx;
-
-		list = xsltGetKey(ctxt, step->value,
-			          step->value3, step->value2);
-		if (list == NULL)
-		    goto rollback;
-		for (indx = 0;indx < list->nodeNr;indx++)
-		    if (list->nodeTab[indx] == node)
-			break;
-		if (indx >= list->nodeNr)
-		    goto rollback;
-		break;
-	    }
-            case XSLT_OP_NS:
-		if (node->type != XML_ELEMENT_NODE)
-		    goto rollback;
-		if (node->ns == NULL) {
-		    if (step->value != NULL)
-			goto rollback;
-		} else if (node->ns->href != NULL) {
-		    if (step->value == NULL)
-			goto rollback;
-		    if (!xmlStrEqual(step->value, node->ns->href))
-			goto rollback;
-		}
-		break;
-            case XSLT_OP_ALL:
-		if (node->type != XML_ELEMENT_NODE)
-		    goto rollback;
-		break;
 	    case XSLT_OP_PREDICATE: {
 		/*
 		 * When there is cascading XSLT_OP_PREDICATE or a predicate
@@ -1162,34 +1215,9 @@ restart:
 
 		break;
 	    }
-            case XSLT_OP_PI:
-		if (node->type != XML_PI_NODE)
-		    goto rollback;
-		if (step->value != NULL) {
-		    if (!xmlStrEqual(step->value, node->name))
-			goto rollback;
-		}
-		break;
-            case XSLT_OP_COMMENT:
-		if (node->type != XML_COMMENT_NODE)
-		    goto rollback;
-		break;
-            case XSLT_OP_TEXT:
-		if ((node->type != XML_TEXT_NODE) &&
-		    (node->type != XML_CDATA_SECTION_NODE))
-		    goto rollback;
-		break;
-            case XSLT_OP_NODE:
-		switch (node->type) {
-		    case XML_ELEMENT_NODE:
-		    case XML_CDATA_SECTION_NODE:
-		    case XML_PI_NODE:
-		    case XML_COMMENT_NODE:
-		    case XML_TEXT_NODE:
-			break;
-		    default:
-			goto rollback;
-		}
+            default:
+                if (xsltTestStepMatch(ctxt, node, step) != 1)
+                    goto rollback;
 		break;
 	}
     }
