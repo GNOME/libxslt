@@ -281,3 +281,19 @@ cmake:msvc:v141:x86:static:
   variables:
     BUILD_SHARED_LIBS: "OFF"
     SUFFIX: static
+
+pages:
+  script:
+    - mkdir -p public/EXSLT
+    - cp -r doc/devhelp doc/tutorial doc/tutorial2 doc/xsltproc.html public
+    - cp -r doc/EXSLT/devhelp public/EXSLT
+  artifacts:
+    paths:
+      - public
+    exclude:
+      - public/devhelp/Makefile*
+      - public/devhelp/*.xsl
+      - public/EXSLT/devhelp/Makefile*
+      - public/EXSLT/devhelp/*.xsl
+  only:
+    - master@GNOME/libxslt
