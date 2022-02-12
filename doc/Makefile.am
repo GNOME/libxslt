@@ -136,6 +136,8 @@ EXTRA_DIST =				\
 
 man_MANS = xsltproc.1
 
+if REBUILD_DOCS
+
 all-local:	web ../NEWS libxslt.xsa $(man_MANS)
 
 api:	libxslt-api.xml libxslt-refs.xml $(APIPAGES) search.php \
@@ -305,6 +307,8 @@ check-extra-dist:
 		done ; \
 		test -n "$$present" || echo "not in EXTRA_DIST: $$a" ; \
 	done
+
+endif
 
 install-data-local:
 	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)
