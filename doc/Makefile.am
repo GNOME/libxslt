@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+SUBDIRS = devhelp EXSLT/devhelp
+
 # The top-level SGML file.
 DOC_MAIN_XML_FILE=libxslt.xml
 

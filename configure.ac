@@ -753,6 +753,8 @@ tests/exslt/crypto/Makefile
 tests/plugins/Makefile
 tests/fuzz/Makefile
 doc/Makefile
+doc/devhelp/Makefile
+doc/EXSLT/devhelp/Makefile
 xslt-config
 libxslt.spec
 ])
