@@ -548,8 +548,7 @@ static void usage(const char *name) {
 #endif
     printf("\t--load-trace : print trace of all external entites loaded\n");
     printf("\t--profile or --norman : dump profiling information \n");
-    printf("\nProject libxslt home page: http://xmlsoft.org/XSLT/\n");
-    printf("To report bugs and get help: http://xmlsoft.org/XSLT/bugs.html\n");
+    printf("\nProject libxslt home page: https://gitlab.gnome.org/GNOME/libxslt\n");
 }
 
 int

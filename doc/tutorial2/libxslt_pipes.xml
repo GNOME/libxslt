@@ -61,7 +61,7 @@ anything to do with libxml or libxslt per se, but rather with the
 different compilation and linking procedures of each system.</para>
 
 <para>The presented solution is an extension of <ulink
-url="http://xmlsoft.org/XSLT/tutorial/libxslttutorial.html">John
+url="https://gnome.pages.gitlab.gnome.org/libxslt/tutorial/libxslttutorial.html">John
 Fleck's libxslt tutorial</ulink>, but the present tutorial tries to be
 self-contained. It develops a minimal libxslt application
 (libxslt_pipes) that can perform a series of transformations to a

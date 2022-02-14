@@ -124,8 +124,7 @@ def usage(name = 'pyxsltproc'):
     print("\t         file:///etc/xml/catalog are activated by default")
     print("\t--xinclude : do XInclude processing on document input")
     print("\t--profile or --norman : dump profiling information ")
-    print("\nProject libxslt home page: http://xmlsoft.org/XSLT/")
-    print("To report bugs and get help: http://xmlsoft.org/XSLT/bugs.html")
+    print("\nProject libxslt home page: https://gitlab.gnome.org/GNOME/libxslt")
 
 def main(args = None):
     global debug

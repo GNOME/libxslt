@@ -611,7 +611,7 @@ fi
 
 if test "x$LIBXML_LIBS" = "x"
 then
-	AC_MSG_ERROR([Could not find libxml2 anywhere, check ftp://xmlsoft.org/.])
+	AC_MSG_ERROR([Could not find libxml2 anywhere.])
 fi
 
 
