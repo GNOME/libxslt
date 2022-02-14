@@ -333,7 +333,7 @@ except:
 	    then
 		PYTHON_SITE_PACKAGES=$with_python/lib/site-packages
 	    else
-		PYTHON_SITE_PACKAGES=`$PYTHON -c "from distutils import sysconfig; print(sysconfig.get_python_lib())"`
+		PYTHON_SITE_PACKAGES=$($PYTHON -c 'from distutils import sysconfig; print(sysconfig.get_python_lib(True,False,"${exec_prefix}"))')
 	    fi
 	fi
     fi
