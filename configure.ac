@@ -717,7 +717,6 @@ libexslt.pc
 libxslt-config.cmake
 libxslt/Makefile
 libxslt/xsltconfig.h
-libxslt/xsltwin32config.h
 libexslt/Makefile
 libexslt/exsltconfig.h
 xsltproc/Makefile
