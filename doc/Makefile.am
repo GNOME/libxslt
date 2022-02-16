@@ -140,7 +140,7 @@ man_MANS = xsltproc.1
 
 if REBUILD_DOCS
 
-all-local:	web ../NEWS libxslt.xsa $(man_MANS)
+all-local:	web ../NEWS libxslt.xsa $(man_MANS) xsltproc.html
 
 api:	libxslt-api.xml libxslt-refs.xml $(APIPAGES) search.php \
         html/index.html $(WIN32_DIR)/libxslt.def.src
@@ -241,6 +241,9 @@ libxslt-api.xml libxslt-refs.xml EXSLT/libexslt-api.xml \
 	-(cd $(srcdir) && ./apibuild.py)
 	($(XSLTPROC) $(srcdir)/checkapisym.xsl $(srcdir)/libxslt-api.xml)
 	($(XSLTPROC) -o ../libxslt/libxslt.syms $(srcdir)/syms.xsl $(srcdir)/symbols.xml)
+
+xsltproc.html: xsltproc.xml
+	-@($(XSLTPROC) --nonet -o $@ http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl xsltproc.xml)
 
 xsltproc.1: $(srcdir)/xsltproc.xml
 	-@(if [ -x $(XSLTPROC) ] ; then \
