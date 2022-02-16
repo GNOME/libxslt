@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(libxslt1 VERSION 1.1.34 LANGUAGES C)
+project(libxslt1 VERSION 1.1.35 LANGUAGES C)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
