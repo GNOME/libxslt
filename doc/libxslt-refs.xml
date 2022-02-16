@@ -2702,6 +2702,9 @@
           <ref name='xsltInitCtxtKey'/>
           <ref name='xsltInitCtxtKeys'/>
         </word>
+        <word name='Conflict'>
+          <ref name='_xsltTemplate'/>
+        </word>
         <word name='Context'>
           <ref name='_xsltTransformContext'/>
         </word>
@@ -7090,6 +7093,9 @@
         </word>
         <word name='resets'>
           <ref name='xsltSetLoaderFunc'/>
+        </word>
+        <word name='resolution'>
+          <ref name='_xsltTemplate'/>
         </word>
         <word name='resolve'>
           <ref name='xsltResolveStylesheetAttributeSet'/>

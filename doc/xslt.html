@@ -302,7 +302,86 @@ platform, get in touch with me to upload the package. I will keep them in the
 <p>See the <a href="https://gitlab.gnome.org/GNOME/libxslt">git page</a>
 to get a description of the recent commits.</p>
 
-<p>Those are the public releases made:</p>
+<h3>v1.1.35: Feb 16 2022</h3>
+<ul>
+  <li>Security:<br/>
+  [CVE-2021-30560] Fix use-after-free in xsltApplyTemplates<br/>
+  Fix memory leak in xsltDocumentElem (David King)<br/>
+  Fix memory leak in xsltCompileIdKeyPattern (David King)<br/>
+  Fix double-free with stylesheets containing entity nodes<br/>
+  </li>
+
+  <li>Fixed regressions:<br/>
+  Fix performance regression with predicates in patterns<br/>
+  Fix regression in xsltComputeSortResult<br/>
+  </li>
+
+  <li>Bug fixes:<br/>
+  Fix conflict resolution for templates with same priority<br/>
+  Fix xsl:number generating invalid UTF-8<br/>
+  Support attribute value templates in xsl:sort lang attributes<br/>
+  Don't pass first &lt;xsl:sort&gt; in &lt;xsl:apply-templates&gt; twice<br/>
+  Fix quadratic runtime with text and &lt;xsl:message&gt;<br/>
+  Don't allow empty EXSLT durations<br/>
+  </li>
+
+  <li>Improvements:<br/>
+  Add xsltproc --huge Argument via libxml XML_PARSE_HUGE (William N. Braswell, Jr.)<br/>
+  </li>
+
+  <li>Tests, code quality, fuzzing:<br/>
+  Remove .travis.yml<br/>
+  Fix some misleading indentation (David King)<br/>
+  Use actual types for templates in struct _xsltStylesheet<br/>
+  Add CI for CMake on MSVC (Markus Rickert)<br/>
+  Check for null pointer before calling freelocale<br/>
+  Add CI test for Python 3<br/>
+  Don't set maxDepth in XPath contexts<br/>
+  Transfer XPath limits to XPtr context<br/>
+  Stop using maxParserDepth XPath limit<br/>
+  Make long-to-double cast explicit in date.c<br/>
+  Disable LeakSanitizer<br/>
+  Run clang CI tests with -Wimplicit-int-conversion<br/>
+  Fix implicit-int-conversion warning in exslt/crypto.c<br/>
+  Fix clang -Wimplicit-int-conversion warning (David Kilzer)<br/>
+  Fix clang -Wconditional-uninitialized warning in libxslt/numbers.c (David Kilzer)<br/>
+  Fix -Wshadow warnings in libexslt/dynamic.c (David Kilzer)<br/>
+  Also search parent dir for source XML when fuzzing<br/>
+  </li>
+
+  <li>Build system, portability:<br/>
+  Add CMake build files (Markus Rickert)<br/>
+  Initial support for Python 3 (Suleyman Poyraz)<br/>
+  Call ANSI versions of WinAPI functions explicitly<br/>
+  Remove redundant flags from pkg-config files<br/>
+  Suppress automake warning in tests/XSLTMark<br/>
+  Fix linking libexslt dynamic library when using MinGW (Vadim Zeitlin)<br/>
+  Added platform specific path separators (Dmitriy Korovkin)<br/>
+  win32: allow passing *FLAGS on command line<br/>
+  Fix export of xsltExtMarker on Windows (David Kilzer)<br/>
+  Fix redundant includes already in libexslt.h (David Kilzer)<br/>
+  Minor fixes to configure.js<br/>
+  Fix variable syntax in Python configuration<br/>
+  Add new EXSLT string tests to EXTRA_DIST<br/>
+  Fix xml2-config check in configure script<br/>
+  win32: Add configuration for profiler (Chun-wei Fan)<br/>
+  Check whether 'xml2-config --dynamic' is supported<br/>
+  </li>
+
+  <li>Documentation:<br/>
+  Add Makefile rule to regenerate xsltproc.html<br/>
+  Update links<br/>
+  Remove MAINTAINERS<br/>
+  Upload documentation to GitLab Pages<br/>
+  Add documentation in devhelp format<br/>
+  Add --enable-rebuild-docs configure option<br/>
+  Fix libexslt header summaries<br/>
+  Fix validity of tutorial XML (David King)<br/>
+  Use DocBook URL for tutorial DTD (David King)<br/>
+  Update libxslt.doap<br/>
+  Add missing options to xsltproc man page<br/>
+  </li>
+</ul>
 
 <h3>v1.1.34: Oct 30 2019</h3>
 <ul>

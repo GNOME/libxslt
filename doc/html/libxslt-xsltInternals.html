@@ -516,15 +516,15 @@ The content of this structure is not made public by the API.
     xmlHashTablePtr	cdataSection	: * Global variable or parameters. *
     <a href="libxslt-xsltInternals.html#xsltStackElemPtr">xsltStackElemPtr</a>	variables	: * Template descriptions. *
     <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a>	templates	: the ordered list of templates
-    void *	templatesHash	: hash table or wherever compiled templat
-    void *	rootMatch	: template based on /
-    void *	keyMatch	: template based on key()
-    void *	elemMatch	: template based on *
-    void *	attrMatch	: template based on @*
-    void *	parentMatch	: template based on ..
-    void *	textMatch	: template based on text()
-    void *	piMatch	: template based on processing-instructio
-    void *	commentMatch	: * Namespace aliases. * NOTE: Not used in
+    xmlHashTablePtr	templatesHash	: hash table or wherever compiled templat
+    struct _xsltCompMatch *	rootMatch	: template based on /
+    struct _xsltCompMatch *	keyMatch	: template based on key()
+    struct _xsltCompMatch *	elemMatch	: template based on *
+    struct _xsltCompMatch *	attrMatch	: template based on @*
+    struct _xsltCompMatch *	parentMatch	: template based on ..
+    struct _xsltCompMatch *	textMatch	: template based on text()
+    struct _xsltCompMatch *	piMatch	: template based on processing-instructio
+    struct _xsltCompMatch *	commentMatch	: * Namespace aliases. * NOTE: Not used in
     xmlHashTablePtr	nsAliases	: * Attribute sets. *
     xmlHashTablePtr	attributeSets	: * Namespaces. * TODO: Eliminate this. *
     xmlHashTablePtr	nsHash	: the set of namespaces in use: ATTENTION
@@ -583,7 +583,8 @@ The content of this structure is not made public by the API.
     int	templNr	: Nb of templates in the stack
     int	templMax	: Size of the templtes stack
     <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> *	templCalledTab	: templates called
-    int *	templCountTab	: .. and how often
+    int *	templCountTab	: .. and how often Conflict resolution
+    int	position
 }</pre><h3><a name="xsltTransformCache" id="xsltTransformCache">Structure xsltTransformCache</a></h3><pre class="programlisting">Structure xsltTransformCache<br />struct _xsltTransformCache {
     xmlDocPtr	RVT
     int	nbRVT

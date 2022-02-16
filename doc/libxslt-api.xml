@@ -1377,16 +1377,17 @@ preserve space elements'/>
       <field name='variables' type='xsltStackElemPtr' info='* Template descriptions.
 *'/>
       <field name='templates' type='xsltTemplatePtr' info=' the ordered list of templates'/>
-      <field name='templatesHash' type='void *' info=' hash table or wherever compiled templates
-information is stored'/>
-      <field name='rootMatch' type='void *' info=' template based on /'/>
-      <field name='keyMatch' type='void *' info=' template based on key()'/>
-      <field name='elemMatch' type='void *' info=' template based on *'/>
-      <field name='attrMatch' type='void *' info=' template based on @*'/>
-      <field name='parentMatch' type='void *' info=' template based on ..'/>
-      <field name='textMatch' type='void *' info=' template based on text()'/>
-      <field name='piMatch' type='void *' info=' template based on processing-instruction()'/>
-      <field name='commentMatch' type='void *' info='* Namespace aliases.
+      <field name='templatesHash' type='xmlHashTablePtr' info=' hash table or wherever compiled
+templates information is stored'/>
+      <field name='rootMatch' type='struct _xsltCompMatch *' info=' template based on /'/>
+      <field name='keyMatch' type='struct _xsltCompMatch *' info=' template based on key()'/>
+      <field name='elemMatch' type='struct _xsltCompMatch *' info=' template based on *'/>
+      <field name='attrMatch' type='struct _xsltCompMatch *' info=' template based on @*'/>
+      <field name='parentMatch' type='struct _xsltCompMatch *' info=' template based on ..'/>
+      <field name='textMatch' type='struct _xsltCompMatch *' info=' template based on text()'/>
+      <field name='piMatch' type='struct _xsltCompMatch *' info=' template based on
+processing-instruction()'/>
+      <field name='commentMatch' type='struct _xsltCompMatch *' info='* Namespace aliases.
 * NOTE: Not used in the refactored code.
 *'/>
       <field name='nsAliases' type='xmlHashTablePtr' info='* Attribute sets.
@@ -1476,7 +1477,8 @@ TODO: We need to get rid of this.
       <field name='templNr' type='int' info=' Nb of templates in the stack'/>
       <field name='templMax' type='int' info=' Size of the templtes stack'/>
       <field name='templCalledTab' type='xsltTemplatePtr *' info=' templates called'/>
-      <field name='templCountTab' type='int *' info=' .. and how often'/>
+      <field name='templCountTab' type='int *' info=' .. and how often Conflict resolution'/>
+      <field name='position' type='int' info=''/>
     </struct>
     <typedef name='xsltTemplatePtr' file='xsltInternals' type='xsltTemplate *'/>
     <struct name='xsltTransformCache' file='xsltInternals' type='struct _xsltTransformCache'>
