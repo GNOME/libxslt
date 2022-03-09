@@ -17,6 +17,7 @@ EXTRA_DIST = 			\
 	libxslt_wrap.h		\
 	libxsl.py		\
 	libxslt-python-api.xml	\
+	setup.py.in	\
 	$(DOCS)
 
 libxsltmod_la_LDFLAGS =  -module -avoid-version
