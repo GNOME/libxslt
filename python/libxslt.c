@@ -692,7 +692,7 @@ libxslt_xsltApplyStylesheetUser(PyObject *self ATTRIBUTE_UNUSED, PyObject *args)
     PyObject *pyobj_transformCtxt;
     const char **params = NULL;
     int len = 0, i, j;
-    ssize_t ppos = 0;
+    Py_ssize_t ppos = 0;
     PyObject *name;
     PyObject *value;
 
@@ -780,7 +780,7 @@ libxslt_xsltApplyStylesheet(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
     PyObject *pyobj_params;
     const char **params = NULL;
     int len = 0, i, j, params_size;
-    ssize_t ppos = 0;
+    Py_ssize_t ppos = 0;
     PyObject *name;
     PyObject *value;
 
