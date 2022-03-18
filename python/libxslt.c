@@ -1279,7 +1279,6 @@ void initlibxsltmod(void) {
      * Specific XSLT initializations
      */
     libxslt_xsltErrorInitialize();
-    xmlInitMemory();
     xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
     xmlDefaultSAXHandler.cdataBlock = NULL;
     /*

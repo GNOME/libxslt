@@ -565,7 +565,6 @@ main(int argc, char **argv)
     }
 
     srand(time(NULL));
-    xmlInitMemory();
 
 #if defined(_WIN32) && !defined(__CYGINW__)
     setmode(fileno(stdout), O_BINARY);

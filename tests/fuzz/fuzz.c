@@ -53,7 +53,6 @@ static void
 xsltFuzzInit(void) {
     /* Init libxml2, libxslt and libexslt */
     xmlInitParser();
-    xmlXPathInit();
     xsltInit();
     exsltRegisterAll();
 
