@@ -137,21 +137,15 @@ dnl
 
 AC_CHECK_HEADERS(sys/timeb.h sys/stat.h sys/select.h)
 AC_CHECK_FUNCS(stat _stat)
-AC_CHECK_FUNC(pow, , AC_CHECK_LIB(m, pow,
-  [M_LIBS="-lm"; AC_DEFINE([HAVE_POW],[], [Define if pow is there])]))
-
-AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor,
-  [M_LIBS="-lm"; AC_DEFINE([HAVE_FLOOR],[], [Define if floor is there])]))
-
-AC_CHECK_FUNC(fabs, , AC_CHECK_LIB(m, fabs,
-  [M_LIBS="-lm"; AC_DEFINE([HAVE_FABS],[], [Define if fabs is there])]))
-
+AC_CHECK_LIB(m, pow, [M_LIBS="-lm"])
+AC_CHECK_LIB(m, floor, [M_LIBS="-lm"])
+AC_CHECK_LIB(m, fabs, [M_LIBS="-lm"])
 
 AC_CHECK_FUNCS(gettimeofday)
-AC_CHECK_FUNCS(localtime localtime_r time gmtime gmtime_r ftime)
+AC_CHECK_FUNCS(localtime_r gmtime_r ftime)
 
 dnl Checking the standard string functions availability
-AC_CHECK_FUNCS(printf sprintf fprintf snprintf vfprintf vsprintf vsnprintf sscanf,,
+AC_CHECK_FUNCS(snprintf vsnprintf,,
                NEED_TRIO=1)
 
 dnl Checking for POSIX timers

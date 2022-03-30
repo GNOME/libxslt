@@ -4,15 +4,6 @@
 /* Define to 1 if you have the `clock_gettime' function. */
 #cmakedefine HAVE_CLOCK_GETTIME 1
 
-/* Define if fabs is there */
-#cmakedefine HAVE_FABS
-
-/* Define if floor is there */
-#cmakedefine HAVE_FLOOR
-
-/* Define to 1 if you have the `fprintf' function. */
-#cmakedefine HAVE_FPRINTF 1
-
 /* Define to 1 if you have the `ftime' function. */
 #cmakedefine HAVE_FTIME 1
 
@@ -21,9 +12,6 @@
 
 /* Define to 1 if you have the `gettimeofday' function. */
 #cmakedefine HAVE_GETTIMEOFDAY 1
-
-/* Define to 1 if you have the `gmtime' function. */
-#cmakedefine HAVE_GMTIME 1
 
 /* Define to 1 if you have the `gmtime_r' function. */
 #cmakedefine HAVE_GMTIME_R 1
@@ -37,29 +25,14 @@
 /* Define to 1 if you have the <locale.h> header file. */
 #cmakedefine HAVE_LOCALE_H 1
 
-/* Define to 1 if you have the `localtime' function. */
-#cmakedefine HAVE_LOCALTIME 1
-
 /* Define to 1 if you have the `localtime_r' function. */
 #cmakedefine HAVE_LOCALTIME_R 1
-
-/* Define if pow is there */
-#cmakedefine HAVE_POW
-
-/* Define to 1 if you have the `printf' function. */
-#cmakedefine HAVE_PRINTF 1
 
 /* Define if <pthread.h> is there */
 #cmakedefine HAVE_PTHREAD_H
 
 /* Define to 1 if you have the `snprintf' function. */
 #cmakedefine HAVE_SNPRINTF 1
-
-/* Define to 1 if you have the `sprintf' function. */
-#cmakedefine HAVE_SPRINTF 1
-
-/* Define to 1 if you have the `sscanf' function. */
-#cmakedefine HAVE_SSCANF 1
 
 /* Define to 1 if you have the `stat' function. */
 #cmakedefine HAVE_STAT 1
@@ -82,20 +55,11 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #cmakedefine HAVE_SYS_TYPES_H 1
 
-/* Define to 1 if you have the `time' function. */
-#cmakedefine HAVE_TIME 1
-
 /* Define to 1 if you have the <unistd.h> header file. */
 #cmakedefine HAVE_UNISTD_H 1
 
-/* Define to 1 if you have the `vfprintf' function. */
-#cmakedefine HAVE_VFPRINTF 1
-
 /* Define to 1 if you have the `vsnprintf' function. */
 #cmakedefine HAVE_VSNPRINTF 1
-
-/* Define to 1 if you have the `vsprintf' function. */
-#cmakedefine HAVE_VSPRINTF 1
 
 /* Define to 1 if you have the <xlocale.h> header file. */
 #cmakedefine HAVE_XLOCALE_H 1
