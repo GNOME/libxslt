@@ -90,13 +90,6 @@ AC_ARG_WITH(html-subdir, AS_HELP_STRING([--with-html-subdir=path],
 
 AC_SUBST(HTML_DIR)
 
-AC_ARG_ENABLE(rebuild-docs,
-[  --enable-rebuild-docs[[=yes/no]]  rebuild some generated docs [[default=no]]])
-if test "$enable_rebuild_docs" = "yes" -a "$srcdir" != "."; then
-  AC_MSG_ERROR([cannot rebuild docs when builddir != srcdir])
-fi
-AM_CONDITIONAL([REBUILD_DOCS], [test "$enable_rebuild_docs" = "yes"])
-
 dnl
 dnl Check the environment
 dnl

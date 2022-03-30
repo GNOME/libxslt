@@ -37,37 +37,16 @@ EXTRA_DIST =				\
 
 man_MANS = xsltproc.1
 
-if REBUILD_DOCS
-
-all-local: $(man_MANS) xsltproc.html
-
-libxslt-api.xml libxslt-refs.xml EXSLT/libexslt-api.xml \
-  EXSLT/libexslt-refs.xml ../libxslt/libxslt.syms : $(srcdir)/apibuild.py $(top_srcdir)/libxslt/*.h \
-		$(top_srcdir)/libxslt/*.c $(top_srcdir)/libexslt/*.h \
-		$(top_srcdir)/libexslt/*.c
-	-(cd $(srcdir) && ./apibuild.py)
-	($(XSLTPROC) $(srcdir)/checkapisym.xsl $(srcdir)/libxslt-api.xml)
-	($(XSLTPROC) -o ../libxslt/libxslt.syms $(srcdir)/syms.xsl $(srcdir)/symbols.xml)
-
-xsltproc.html: xsltproc.xml
-	-@($(XSLTPROC) --nonet -o $@ http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl xsltproc.xml)
-
-xsltproc.1: $(srcdir)/xsltproc.xml
-	-@(if [ -x $(XSLTPROC) ] ; then \
-	   echo "Rebuilding the man pages from the xml" ; \
-	   $(XSLTPROC) --nonet $(srcdir)/xsltproc.xml ; fi)
-
-$(WIN32_DIR)/libxslt.def.src: libxslt-api.xml
-	-@(if [ -x $(XSLTPROC) ] ; then \
-	  $(XSLTPROC) -o $(WIN32_DIR)/libxslt.def.src \
-	  --nonet $(WIN32_DIR)/defgen.xsl $(srcdir)/libxslt-api.xml ; fi )
-
-$(WIN32_DIR)/libexslt.def.src: EXSLT/libexslt-api.xml
-	-@(if [ -x $(XSLTPROC) ] ; then \
-	  $(XSLTPROC) -o $(WIN32_DIR)/libexslt.def.src \
-	  --nonet $(WIN32_DIR)/defgen.xsl $(srcdir)/EXSLT/libexslt-api.xml ; fi )
-
-rebuild: all
+rebuild:
+	cd $(srcdir) && ./apibuild.py
+	cd $(srcdir) && $(XSLTPROC) checkapisym.xsl libxslt-api.xml
+	cd $(srcdir) && $(XSLTPROC) -o ../libxslt/libxslt.syms syms.xsl symbols.xml
+	cd $(srcdir) && $(XSLTPROC) --nonet xsltproc.xml
+	cd $(srcdir) && $(XSLTPROC) --nonet -o xsltproc.html http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl xsltproc.xml
+	cd $(srcdir) && $(XSLTPROC) -o $(WIN32_DIR)/libxslt.def.src \
+	  --nonet $(WIN32_DIR)/defgen.xsl libxslt-api.xml
+	cd $(srcdir) && $(XSLTPROC) -o $(WIN32_DIR)/libexslt.def.src \
+	  --nonet $(WIN32_DIR)/defgen.xsl EXSLT/libexslt-api.xml
 
 wildcards =			\
 	*.1			\
@@ -92,8 +71,6 @@ check-extra-dist:
 		done ; \
 		test -n "$$present" || echo "not in EXTRA_DIST: $$a" ; \
 	done
-
-endif
 
 install-data-local:
 	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)
