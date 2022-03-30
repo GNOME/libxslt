@@ -9,11 +9,6 @@
 #ifndef __LIBXSLT_WIN32_CONFIG__
 #define __LIBXSLT_WIN32_CONFIG__
 
-#define HAVE_FCNTL_H 1
-
-#include <io.h>
-#include <direct.h>
-
 /* snprintf emulation taken from http://stackoverflow.com/a/8712996/1956010 */
 #if defined(_MSC_VER) && _MSC_VER < 1900
 
@@ -51,14 +46,6 @@ __inline int c99_snprintf(char *outBuf, size_t size, const char *format, ...)
 
 #define HAVE_SYS_STAT_H
 #define HAVE__STAT
-
-#include <libxml/xmlversion.h>
-
-#ifndef ATTRIBUTE_UNUSED
-#define ATTRIBUTE_UNUSED
-#endif
-
-#define _WINSOCKAPI_
 
 #endif /* __LIBXSLT_WIN32_CONFIG__ */
 
