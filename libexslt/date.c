@@ -40,13 +40,8 @@
 
 #include <string.h>
 #include <limits.h>
-
-#ifdef HAVE_ERRNO_H
 #include <errno.h>
-#endif
-#ifdef HAVE_MATH_H
 #include <math.h>
-#endif
 
 /* needed to get localtime_r on Solaris */
 #ifdef __sun
@@ -55,9 +50,7 @@
 #endif
 #endif
 
-#ifdef HAVE_TIME_H
 #include <time.h>
-#endif
 
 /*
  * types of date and/or time (from schema datatypes)
@@ -107,8 +100,7 @@ struct _exsltDateDurVal {
  *								*
  ****************************************************************/
 
-#if defined(HAVE_TIME_H)					\
-    && (defined(HAVE_LOCALTIME) || defined(HAVE_LOCALTIME_R))	\
+#if (defined(HAVE_LOCALTIME) || defined(HAVE_LOCALTIME_R))	\
     && (defined(HAVE_GMTIME) || defined(HAVE_GMTIME_R))		\
     && defined(HAVE_TIME)
 #define WITH_TIME
@@ -745,16 +737,13 @@ exsltDateCurrent (void)
     time_t secs;
     int local_s, gm_s;
     exsltDateValPtr ret;
-#ifdef HAVE_ERRNO_H
     char *source_date_epoch;
-#endif /* HAVE_ERRNO_H */
     int override = 0;
 
     ret = exsltDateCreateDate(XS_DATETIME);
     if (ret == NULL)
         return NULL;
 
-#ifdef HAVE_ERRNO_H
     /*
      * Allow the date and time to be set externally by an exported
      * environment variable to enable reproducible builds.
@@ -776,7 +765,6 @@ exsltDateCurrent (void)
 #endif
         }
     }
-#endif /* HAVE_ERRNO_H */
 
     if (override == 0) {
     /* get current time */

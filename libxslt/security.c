@@ -18,22 +18,6 @@
 #include <sys/stat.h>
 #endif
 
-#ifdef HAVE_MATH_H
-#include <math.h>
-#endif
-#ifdef HAVE_FLOAT_H
-#include <float.h>
-#endif
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h>
-#endif
-#ifdef HAVE_NAN_H
-#include <nan.h>
-#endif
-#ifdef HAVE_CTYPE_H
-#include <ctype.h>
-#endif
-
 #if defined(_WIN32) && !defined(__CYGWIN__)
 #include <windows.h>
 #ifndef INVALID_FILE_ATTRIBUTES

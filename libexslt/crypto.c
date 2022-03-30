@@ -315,9 +315,6 @@ exsltCryptoCryptoApiRc4Decrypt (xmlXPathParserContextPtr ctxt,
 #ifdef HAVE_SYS_TYPES_H
 # include <sys/types.h>
 #endif
-#ifdef HAVE_STDINT_H
-# include <stdint.h>
-#endif
 
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>		/* needed by gcrypt.h 4 Jul 04 */

@@ -9,27 +9,21 @@
 #include "libxslt/libxslt.h"
 #include "libxslt/xsltconfig.h"
 #include "libexslt/exslt.h"
+
 #include <stdio.h>
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
+#include <stdlib.h>
+#include <stdarg.h>
+#include <time.h>
+
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
-#endif
-#ifdef HAVE_TIME_H
-#include <time.h>
 #endif
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
-#endif
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STDARG_H
-#include <stdarg.h>
 #endif
 #if defined(_WIN32) && !defined(__CYGWIN__)
 #include <fcntl.h>
@@ -56,12 +50,6 @@
 #include <libxslt/security.h>
 
 #include <libexslt/exsltconfig.h>
-
-#if defined(HAVE_SYS_TIME_H)
-#include <sys/time.h>
-#elif defined(HAVE_TIME_H)
-#include <time.h>
-#endif
 
 #ifdef HAVE_SYS_TIMEB_H
 #include <sys/timeb.h>
@@ -265,16 +253,13 @@ static void endTimer(const char *format, ...)
     msec *= 1000;
     msec += (endtime.tv_usec - begin.tv_usec) / 1000;
 
-#ifndef HAVE_STDARG_H
-#error "endTimer required stdarg functions"
-#endif
     va_start(ap, format);
     vfprintf(stderr,format,ap);
     va_end(ap);
 
     fprintf(stderr, " took %ld ms\n", msec);
 }
-#elif defined(HAVE_TIME_H)
+#else
 /*
  * No gettimeofday function, so we have to make do with calling clock.
  * This is obviously less accurate, but there's little we can do about
@@ -297,39 +282,10 @@ static void endTimer(const char *format, ...)
     endtime=clock();
     msec = ((endtime-begin) * 1000) / CLOCKS_PER_SEC;
 
-#ifndef HAVE_STDARG_H
-#error "endTimer required stdarg functions"
-#endif
     va_start(ap, format);
     vfprintf(stderr,format,ap);
     va_end(ap);
     fprintf(stderr, " took %ld ms\n", msec);
-}
-#else
-/*
- * We don't have a gettimeofday or time.h, so we just don't do timing
- */
-static void startTimer(void)
-{
-  /*
-   * Do nothing
-   */
-}
-static void endTimer(const char *format, ...)
-{
-  /*
-   * We cannot do anything because we don't have a timing function
-   */
-#ifdef HAVE_STDARG_H
-    va_start(ap, format);
-    vfprintf(stderr,format,ap);
-    va_end(ap);
-    fprintf(stderr, " was not timed\n");
-#else
-  /* We don't have gettimeofday, time or stdarg.h, what crazy world is
-   * this ?!
-   */
-#endif
 }
 #endif
 

@@ -15,13 +15,6 @@
 
 #include <string.h>
 
-#ifdef HAVE_SYS_TYPES_H
-#include <sys/types.h>
-#endif
-#ifdef HAVE_CTYPE_H
-#include <ctype.h>
-#endif
-
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>

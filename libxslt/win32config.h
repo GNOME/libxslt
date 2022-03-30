@@ -9,15 +9,9 @@
 #ifndef __LIBXSLT_WIN32_CONFIG__
 #define __LIBXSLT_WIN32_CONFIG__
 
-#define HAVE_CTYPE_H 1
-#define HAVE_STDLIB_H 1
-#define HAVE_STDARG_H 1
-#define HAVE_MALLOC_H 1
-#define HAVE_TIME_H 1
 #define HAVE_LOCALTIME 1
 #define HAVE_GMTIME 1
 #define HAVE_TIME 1
-#define HAVE_MATH_H 1
 #define HAVE_FCNTL_H 1
 
 #include <io.h>
@@ -115,7 +109,6 @@ __inline int c99_snprintf(char *outBuf, size_t size, const char *format, ...)
 
 #define HAVE_SYS_STAT_H
 #define HAVE__STAT
-#define HAVE_STRING_H
 
 #include <libxml/xmlversion.h>
 

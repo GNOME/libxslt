@@ -89,7 +89,7 @@ PKG_PROG_PKG_CONFIG
 LT_INIT(win32-dll)
 
 
-AC_CHECK_HEADERS(sys/types.h sys/time.h stdlib.h unistd.h string.h)
+AC_CHECK_HEADERS(sys/types.h sys/time.h unistd.h)
 
 dnl
 dnl if the system support linker version scripts for symbol versioning
@@ -135,9 +135,7 @@ dnl
 dnl Math detection
 dnl
 
-AC_CHECK_HEADERS(ieeefp.h nan.h math.h fp_class.h float.h)
-AC_CHECK_HEADERS(sys/timeb.h time.h sys/stat.h sys/select.h stdarg.h)
-AC_CHECK_HEADERS(errno.h)
+AC_CHECK_HEADERS(sys/timeb.h sys/stat.h sys/select.h)
 AC_CHECK_FUNCS(stat _stat)
 AC_CHECK_FUNC(pow, , AC_CHECK_LIB(m, pow,
   [M_LIBS="-lm"; AC_DEFINE([HAVE_POW],[], [Define if pow is there])]))
