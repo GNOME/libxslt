@@ -102,7 +102,7 @@ exsltCryptoHex2Bin (const unsigned char *hex, int hexlen,
     return j;
 }
 
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if defined(_WIN32)
 
 #define HAVE_CRYPTO
 #define PLATFORM_HASH	exsltCryptoCryptoApiHash

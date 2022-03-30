@@ -41,7 +41,7 @@
 #include "imports.h"
 #include "transform.h"
 
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if defined(_WIN32)
 #define XSLT_WIN32_PERFORMANCE_COUNTER
 #endif
 

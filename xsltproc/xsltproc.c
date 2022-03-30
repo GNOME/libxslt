@@ -25,7 +25,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#if defined(_WIN32) && !defined(__CYGWIN__)
+#if defined(_WIN32)
 #include <fcntl.h>
 #endif
 #include <libxml/xmlmemory.h>
