@@ -76,21 +76,6 @@ AM_INIT_AUTOMAKE([foreign])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 dnl
-dnl Specific dir for HTML output ?
-dnl
-
-AC_ARG_WITH(html-dir, AS_HELP_STRING([--with-html-dir=path],
-            [path to base html directory, default $datadir/doc/html]),
-            [HTML_DIR=$withval], [HTML_DIR='$(datadir)/doc'])
-
-AC_ARG_WITH(html-subdir, AS_HELP_STRING([--with-html-subdir=path],
-            [directory used under html-dir, default $PACKAGE-$VERSION/html]),
-            [test "x$withval" != "x" && HTML_DIR="$HTML_DIR/$withval"],
-            [HTML_DIR="$HTML_DIR/\$(PACKAGE)-\$(VERSION)/html"])
-
-AC_SUBST(HTML_DIR)
-
-dnl
 dnl Check the environment
 dnl
 

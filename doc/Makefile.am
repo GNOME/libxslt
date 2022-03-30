@@ -25,15 +25,17 @@ EXTRA_DIST =				\
 	libxslt-refs.xml		\
 	symbols.xml			\
 	syms.xsl			\
-	tutorial/libxslt_tutorial.c	\
-	tutorial/libxslttutorial.html	\
 	tutorial/libxslttutorial.xml	\
-	tutorial2/libxslt_pipes.c	\
-	tutorial2/libxslt_pipes.html	\
 	tutorial2/libxslt_pipes.xml	\
 	xsltproc.1			\
-	xsltproc.html			\
 	xsltproc.xml
+
+nobase_doc_DATA =			\
+	tutorial/libxslt_tutorial.c	\
+	tutorial/libxslttutorial.html	\
+	tutorial2/libxslt_pipes.c	\
+	tutorial2/libxslt_pipes.html	\
+	xsltproc.html
 
 man_MANS = xsltproc.1
 
@@ -71,16 +73,5 @@ check-extra-dist:
 		done ; \
 		test -n "$$present" || echo "not in EXTRA_DIST: $$a" ; \
 	done
-
-install-data-local:
-	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)
-	-$(INSTALL) -m 0644 $(srcdir)/xsltproc.html $(DESTDIR)$(HTML_DIR)
-	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)/tutorial
-	-$(INSTALL) -m 0644 $(srcdir)/tutorial/* $(DESTDIR)$(HTML_DIR)/tutorial
-	$(MKDIR_P) $(DESTDIR)$(HTML_DIR)/tutorial2
-	-$(INSTALL) -m 0644 $(srcdir)/tutorial2/* $(DESTDIR)$(HTML_DIR)/tutorial2
-
-uninstall-local:
-	rm -rf $(DESTDIR)$(HTML_DIR)
 
 .PHONY : rebuild check-extra-dist
