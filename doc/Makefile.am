@@ -11,16 +11,6 @@ EXTRA_DIST =				\
 	api.xsl				\
 	apibuild.py			\
 	checkapisym.xsl			\
-	images/callouts/1.png		\
-	images/callouts/10.png		\
-	images/callouts/2.png		\
-	images/callouts/3.png		\
-	images/callouts/4.png		\
-	images/callouts/5.png		\
-	images/callouts/6.png		\
-	images/callouts/7.png		\
-	images/callouts/8.png		\
-	images/callouts/9.png		\
 	libxslt-api.xml			\
 	libxslt-refs.xml		\
 	symbols.xml			\
@@ -31,6 +21,16 @@ EXTRA_DIST =				\
 	xsltproc.xml
 
 nobase_doc_DATA =			\
+	tutorial/images/callouts/1.png	\
+	tutorial/images/callouts/10.png	\
+	tutorial/images/callouts/2.png	\
+	tutorial/images/callouts/3.png	\
+	tutorial/images/callouts/4.png	\
+	tutorial/images/callouts/5.png	\
+	tutorial/images/callouts/6.png	\
+	tutorial/images/callouts/7.png	\
+	tutorial/images/callouts/8.png	\
+	tutorial/images/callouts/9.png	\
 	tutorial/libxslt_tutorial.c	\
 	tutorial/libxslttutorial.html	\
 	tutorial2/libxslt_pipes.c	\
@@ -50,11 +50,11 @@ rebuild:
 	cd $(srcdir) && $(XSLTPROC) -o $(WIN32_DIR)/libexslt.def.src \
 	  --nonet $(WIN32_DIR)/defgen.xsl EXSLT/libexslt-api.xml
 
-wildcards =			\
-	*.1			\
-	*.html			\
-	*.xsl			\
-	images/callouts/*.png	\
+wildcards =				\
+	*.1				\
+	*.html				\
+	*.xsl				\
+	tutorial/images/callouts/*.png	\
 	tutorial*/libxslt*
 
 # This target verifies that EXTRA_DIST contains all the files matched by
