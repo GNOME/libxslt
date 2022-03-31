@@ -8,7 +8,6 @@ WIN32_DIR=$(top_srcdir)/win32
 EXTRA_DIST =				\
 	EXSLT/libexslt-api.xml		\
 	EXSLT/libexslt-refs.xml		\
-	api.xsl				\
 	apibuild.py			\
 	checkapisym.xsl			\
 	libxslt-api.xml			\
