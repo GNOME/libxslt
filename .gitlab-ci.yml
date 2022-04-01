@@ -29,6 +29,7 @@ gcc:python3:
   only:
     - schedules
   variables:
+    PYTHON: "/usr/bin/python3"
     CONFIG: "--with-python=/usr/bin/python3"
     CFLAGS: "-O2"
 
