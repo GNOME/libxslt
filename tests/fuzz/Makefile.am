@@ -9,7 +9,7 @@ AM_CPPFLAGS = -I$(top_srcdir)
 AM_CFLAGS = $(LIBXML_CFLAGS)
 DEPENDENCIES = $(LIBXSLT_LIBS)
 LDADD = $(LIBXSLT_LIBS) \
-        $(LIBGCRYPT_LIBS) $(LIBXML_LIBS) $(EXTRA_LIBS) $(M_LIBS)
+        $(LIBGCRYPT_LIBS) $(LIBXML_LIBS) $(EXTRA_LIBS) $(LIBM)
 
 xpath_SOURCES = xpath.c fuzz.c fuzz.h
 xpath_LDFLAGS = -fsanitize=fuzzer

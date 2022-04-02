@@ -205,7 +205,7 @@ target_link_libraries(LibXslt PUBLIC LibXml2::LibXml2)
 
 if(UNIX)
 	target_link_libraries(LibXslt PRIVATE m)
-	set(M_LIBS "-lm")
+	set(LIBM "-lm")
 endif()
 
 set_target_properties(
@@ -445,7 +445,7 @@ set(LIBXSLT_DEFAULT_PLUGINS_PATH "\${libdir}/libxslt-plugins")
 set(XSLT_INCLUDEDIR "-I\${includedir}")
 set(XSLT_LIBDIR "-L\${libdir}")
 set(XSLT_LIBS "-lxslt -lxml2")
-set(XSLT_PRIVATE_LIBS "${M_LIBS}")
+set(XSLT_PRIVATE_LIBS "${LIBM}")
 
 set(EXSLT_INCLUDEDIR "-I\${includedir}")
 set(EXSLT_LIBDIR "-L\${libdir}")

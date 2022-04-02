@@ -84,6 +84,7 @@ AC_PATH_PROG(XSLTPROC, xsltproc, /usr/bin/xsltproc)
 PKG_PROG_PKG_CONFIG
 
 LT_INIT([disable-static win32-dll])
+LT_LIB_M
 
 
 AC_CHECK_HEADERS(sys/types.h sys/time.h unistd.h)
@@ -134,9 +135,6 @@ dnl
 
 AC_CHECK_HEADERS(sys/timeb.h sys/stat.h sys/select.h)
 AC_CHECK_FUNCS(stat _stat)
-AC_CHECK_LIB(m, pow, [M_LIBS="-lm"])
-AC_CHECK_LIB(m, floor, [M_LIBS="-lm"])
-AC_CHECK_LIB(m, fabs, [M_LIBS="-lm"])
 
 AC_CHECK_FUNCS(gettimeofday)
 AC_CHECK_FUNCS(localtime_r gmtime_r ftime)
@@ -516,7 +514,7 @@ AC_SUBST(LIBXML_CFLAGS)
 XSLT_LIBDIR='-L${libdir}'
 XSLT_INCLUDEDIR='-I${includedir}'
 XSLT_LIBS="-lxslt $LIBXML_LIBS"
-XSLT_PRIVATE_LIBS="$M_LIBS"
+XSLT_PRIVATE_LIBS="$LIBM"
 AC_SUBST(XSLT_LIBDIR)
 AC_SUBST(XSLT_INCLUDEDIR)
 AC_SUBST(XSLT_LIBS)
@@ -530,8 +528,6 @@ AC_SUBST(EXSLT_INCLUDEDIR)
 AC_SUBST(EXSLT_PRIVATE_LIBS)
 
 AC_SUBST(EXTRA_LIBS)
-
-AC_SUBST(M_LIBS)
 
 dnl for the spec file
 RELDATE=`date +'%a %b %e %Y'`
