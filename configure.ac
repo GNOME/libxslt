@@ -235,19 +235,6 @@ AC_SUBST(CRYPTO_TESTDIR)
 AC_SUBST(LIBGCRYPT_CFLAGS)
 AC_SUBST(LIBGCRYPT_LIBS)
 
-dnl
-dnl Debug for DV (-Wunreachable-code)
-dnl
-if [[ "${LOGNAME}" = "veillard" -a "`pwd`" = "/u/veillard/XSLT" ]] || \
-   [[ "${LOGNAME}" = "bill" -a "`pwd`" = "/home/bill/gnomesvn/libxslt" ]]
-   then
-    if test "${with_mem_debug}" = "" ;
-    then
-	with_mem_debug="yes"
-    fi
-    CFLAGS="-Wall -g -O -ansi -pedantic -W -Wunused -Wimplicit -Wreturn-type -Wswitch -Wcomment -Wtrigraphs -Wformat=2 -Wmissing-format-attribute -Wchar-subscripts -Wuninitialized -Wparentheses -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline "
-fi
-
 AC_ARG_WITH(debug, [  --with-debug            Add the debugging code (on)])
 if test "$with_debug" = "no" ; then
     echo Disabling debug support
