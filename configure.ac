@@ -186,121 +186,14 @@ dnl
 dnl check for python
 dnl
 
-PYTHON_VERSION=
-PYTHON_INCLUDES=
-PYTHON_SITE_PACKAGES=
-PYTHON_TESTS=
-pythondir=
 AC_ARG_WITH(python,
-[  --with-python[[=DIR]]     build Python bindings if found])
-AC_ARG_WITH(python_install_dir,
-[  --with-python-install-dir=DIR
-                          install Python bindings in DIR])
-if test "$with_python" != "no" ; then
-    if test -x "$with_python/bin/python"
-    then
-        echo Found python in $with_python/bin/python
-        PYTHON="$with_python/bin/python"
-    else
-        if test -x "$with_python/python.exe"
-        then
-            echo Found python in $with_python/python.exe
-            PYTHON="$with_python/python.exe"
-        else
-            if test -x "$with_python"
-            then
-                echo Found python in $with_python
-                PYTHON="$with_python"
-            else
-                if test -x "$PYTHON"
-                then
-                    echo Found python in environment PYTHON=$PYTHON
-                    with_python=`$PYTHON -c "import sys; print(sys.exec_prefix)"`
-                else
-                    AC_PATH_PROG(PYTHON, python python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 python1.6 python1.5)
-		fi
-	    fi
-	fi
-    fi
-    if test "$PYTHON" != ""
-    then
-        PYTHON_VERSION=`$PYTHON -c "from distutils import sysconfig; print(sysconfig.get_python_version())"`
-	PYTHON_INCLUDES=`$PYTHON -c "from distutils import sysconfig; print(sysconfig.get_python_inc())"`
-# does not work as it produce a /usr/lib/python path instead of/usr/lib64/python
-#
-#	PYTHON_SITE_PACKAGES=`$PYTHON -c "from distutils import sysconfig; print(sysconfig.get_python_lib())"`
-	echo Found Python version $PYTHON_VERSION
-  LIBXML2_PYTHON=`$PYTHON -c "import sys
-try:
-    import libxml2
-    sys.stdout.write('1')
-except:
-    sys.stdout.write('0')
-"`
-	if test "$LIBXML2_PYTHON" = "1"
-	then
-	    echo Found libxml2-python module
-	else
-	    echo Warning: Missing libxml2-python
-  fi
-    fi
-    if test "$PYTHON_VERSION" != "" -a "$PYTHON_INCLUDES" = ""
-    then
-	if test -r $with_python/include/python$PYTHON_VERSION/Python.h
-	then
-	    PYTHON_INCLUDES=$with_python/include/python$PYTHON_VERSION
-	else
-	    if test -r $prefix/include/python$PYTHON_VERSION/Python.h
-	    then
-	        PYTHON_INCLUDES=$prefix/include/python$PYTHON_VERSION
-	    else
-		if test -r /usr/include/python$PYTHON_VERSION/Python.h
-		then
-		    PYTHON_INCLUDES=/usr/include/python$PYTHON_VERSION
-		else
-	            if test -r $with_python/include/Python.h
-	            then
-	                PYTHON_INCLUDES=$with_python/include
-	            else
-		        echo could not find python$PYTHON_VERSION/Python.h or $with_python/include/Python.h
-		    fi
-		fi
-	    fi
-	fi
-    fi
-    if test "$with_python_install_dir" != ""
-    then
-	PYTHON_SITE_PACKAGES="$with_python_install_dir"
-    fi
-    if test "$PYTHON_VERSION" != "" -a "$PYTHON_SITE_PACKAGES" = ""
-    then
-	if test -d $libdir/python$PYTHON_VERSION/site-packages
-	then
-	    PYTHON_SITE_PACKAGES=$libdir/python$PYTHON_VERSION/site-packages
-	else
-	    if test -d $with_python/lib/site-packages
-	    then
-		PYTHON_SITE_PACKAGES=$with_python/lib/site-packages
-	    else
-		PYTHON_SITE_PACKAGES=$($PYTHON -c 'from distutils import sysconfig; print(sysconfig.get_python_lib(True,False,"${exec_prefix}"))')
-	    fi
-	fi
-    fi
-    pythondir='$(PYTHON_SITE_PACKAGES)'
-    PYTHON_LIBS=`python$PYTHON_VERSION-config --ldflags`
-else
-    PYTHON=
-fi
-AM_CONDITIONAL(WITH_PYTHON, test "$PYTHON_INCLUDES" != "")
-if test "$PYTHON_INCLUDES" != ""
-then
-    PYTHON_SUBDIR=python
-else
-    PYTHON_SUBDIR=
-fi
-AC_SUBST(pythondir)
-AC_SUBST(PYTHON_SUBDIR)
-AC_SUBST(PYTHON_LIBS)
+[  --with-python           build Python bindings (on)])
+
+AS_IF([test "x$with_python" != "xno"], [
+    AM_PATH_PYTHON
+    PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
+])
+AM_CONDITIONAL([WITH_PYTHON], [test "x$with_python" != "xno"])
 
 AC_ARG_WITH(crypto, [  --with-crypto           Add crypto support to exslt (on)])
 WITH_CRYPTO=0
@@ -623,14 +516,9 @@ esac
 
 
 AC_SUBST(XSLTPROCDV)
-AC_SUBST(PYTHONSODV)
 AC_SUBST(XML_CONFIG)
 AC_SUBST(LIBXML_LIBS)
 AC_SUBST(LIBXML_CFLAGS)
-AC_SUBST(PYTHON)
-AC_SUBST(PYTHON_VERSION)
-AC_SUBST(PYTHON_INCLUDES)
-AC_SUBST(PYTHON_SITE_PACKAGES)
 
 XSLT_LIBDIR='-L${libdir}'
 XSLT_INCLUDEDIR='-I${includedir}'

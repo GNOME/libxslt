@@ -36,6 +36,7 @@ libxslt.spec.in.orig
 libxslt/xsltconfig.h
 ltmain.sh
 missing
+py-compile
 python/*.pyc
 python/gen_prog
 python/libxslt-export.c

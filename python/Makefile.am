@@ -1,13 +1,7 @@
 # Makefile for libxml2 python library
 AUTOMAKE_OPTIONS = 1.4 foreign
 
-SUBDIRS= . tests
-
-AM_CFLAGS = $(LIBXML_CFLAGS)
-
-DOCS_DIR = $(datadir)/doc/libxslt-python-$(LIBXSLT_VERSION)
-# libxsltclass.txt is generated
-DOCS=
+SUBDIRS = . tests
 
 EXTRA_DIST = 			\
 	libxslt.c		\
@@ -16,54 +10,44 @@ EXTRA_DIST = 			\
 	libxml_wrap.h		\
 	libxslt_wrap.h		\
 	libxsl.py		\
-	libxslt-python-api.xml	\
-	$(DOCS)
-
-libxsltmod_la_LDFLAGS =  -module -avoid-version
+	libxslt-python-api.xml
 
 if WITH_PYTHON
-mylibs = \
-	$(top_builddir)/libxslt/libxslt.la \
-	$(top_builddir)/libexslt/libexslt.la
 
-all-local: libxslt.py
-
-python_LTLIBRARIES = libxsltmod.la
+pyexec_LTLIBRARIES = libxsltmod.la
 
 libxsltmod_la_CPPFLAGS = \
-	-I$(PYTHON_INCLUDES) \
 	-I$(top_srcdir)/libxslt \
 	-I$(top_srcdir) \
-	-I../libexslt
+	-I../libexslt \
+	$(PYTHON_CFLAGS) $(LIBXML_CFLAGS)
 libxsltmod_la_SOURCES = libxslt.c types.c
 nodist_libxsltmod_la_SOURCES = libxslt-py.c
-libxsltmod_la_LIBADD = $(mylibs) $(PYTHON_LIBS)
+libxsltmod_la_LIBADD = \
+	$(top_builddir)/libxslt/libxslt.la \
+	$(top_builddir)/libexslt/libexslt.la \
+	$(PYTHON_LIBS) $(LIBXML_LIBS)
+libxsltmod_la_LDFLAGS = -module -avoid-version
 
 libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
 	cat $(srcdir)/libxsl.py libxsltclass.py > $@
 
-install-data-local:
-	$(MKDIR_P) $(DESTDIR)$(pythondir)
-	$(INSTALL) -m 0644 libxslt.py $(DESTDIR)$(pythondir)
-	$(MKDIR_P) $(DESTDIR)$(DOCS_DIR)
-	@(for doc in $(DOCS) ; \
-	   do $(INSTALL) -m 0644 $(srcdir)/$$doc $(DESTDIR)$(DOCS_DIR) ; done)
-
-uninstall-local:
-	rm -f $(DESTDIR)$(pythondir)/libxslt.py
-	rm -rf $(DESTDIR)$(DOCS_DIR)
+python_PYTHON = libxslt.py
 
 GENERATE = generator.py
 API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml
-GENERATED= libxsltclass.py \
+GENERATED = libxsltclass.py \
 	   libxslt-export.c \
 	   libxslt-py.c \
 	   libxslt-py.h \
 	   libxsltclass.txt
 
+# Generated sources
+all-local: libxslt.py
+
 $(GENERATED): gen_prog
 
-gen_prog:  $(srcdir)/$(GENERATE) $(API_DESC)
+gen_prog: $(srcdir)/$(GENERATE) $(API_DESC)
 	SRCDIR=$(srcdir) $(PYTHON) $(srcdir)/$(GENERATE)
 	touch gen_prog
 
@@ -74,4 +58,4 @@ endif
 tests test: all
 	cd tests && $(MAKE) tests
 
-CLEANFILES= $(GENERATED) *.o libxslt.so *.pyc libxslt.py gen_prog
+CLEANFILES = $(GENERATED) *.o libxslt.so *.pyc libxslt.py gen_prog

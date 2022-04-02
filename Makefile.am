@@ -1,10 +1,7 @@
-SUBDIRS = \
-	libxslt \
-	libexslt \
-	xsltproc \
-	doc \
-	$(PYTHON_SUBDIR) \
-	tests
+SUBDIRS = libxslt libexslt xsltproc doc tests
+if WITH_PYTHON
+SUBDIRS += python
+endif
 
 DIST_SUBDIRS = libxslt libexslt xsltproc python doc tests
 
@@ -50,7 +47,9 @@ tests: dummy
 	@echo '## Running the regression test suite'
 	@(cd tests ; $(MAKE) -s tests)
 	@(cd xsltproc ; $(MAKE) -s tests)
-	@(if [ "$(PYTHON_SUBDIR)" != "" ] ; then cd python ; $(MAKE) -s tests ; fi)
+if WITH_PYTHON
+	@cd python && $(MAKE) tests
+endif
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'
