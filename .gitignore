@@ -35,6 +35,7 @@ libxslt.spec
 libxslt.spec.in.orig
 libxslt/xsltconfig.h
 ltmain.sh
+m4/
 missing
 py-compile
 python/*.pyc
