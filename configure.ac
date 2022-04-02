@@ -457,10 +457,6 @@ then
 fi
 
 
-AC_SUBST(CFLAGS)
-AC_SUBST(CPPFLAGS)
-AC_SUBST(LDFLAGS)
-
 AC_ARG_WITH(plugins,
 [  --with-plugins          Add plugin extension support (on)])
 if test "$with_plugins" = ""
