@@ -66,14 +66,11 @@ AC_SUBST(LIBEXSLT_VERSION_INFO)
 AC_SUBST(LIBEXSLT_VERSION_NUMBER)
 AC_SUBST(LIBEXSLT_VERSION_EXTRA)
 
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([1.15 foreign])
 
 # AM_MAINTAINER_MODE
 
-# Support silent build rules, requires at least automake-1.11. Disable
-# by either passing --disable-silent-rules to configure or passing V=1
-# to make
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+AM_SILENT_RULES([yes])
 
 dnl
 dnl Check the environment
