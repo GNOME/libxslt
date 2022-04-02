@@ -520,8 +520,6 @@ dnl for the spec file
 RELDATE=`date +'%a %b %e %Y'`
 AC_SUBST(RELDATE)
 
-rm -f COPYING.LIB COPYING 2>/dev/null && $LN_S $srcdir/Copyright COPYING
-
 
 AC_CONFIG_FILES([
 Makefile
