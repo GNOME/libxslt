@@ -365,7 +365,7 @@ if test "$enable_static" = "no"; then
     build_static_libs="no"
 fi
 
-if test "$build_shared_libs" = "no" -a "$build_static_libs" = "no"; then
+if test "$build_shared_libs" = "no" && test "$build_static_libs" = "no"; then
     build_static_libs="yes"
 fi
 
@@ -396,7 +396,7 @@ dnl
 dnl Try pkg-config first if nothing is set
 dnl
 
-if test "x$LIBXML_CONFIG_PREFIX" = "x" -a "x$LIBXML_LIBS" = "x"; then
+if test "x$LIBXML_CONFIG_PREFIX" = "x" && test "x$LIBXML_LIBS" = "x"; then
     if test "$build_shared_libs" = "yes"; then
         PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION], [
             WITH_MODULES="`$PKG_CONFIG --variable=modules libxml-2.0`"
@@ -446,7 +446,7 @@ then
 fi
 
 AC_MSG_CHECKING([whether shared libraries will be built (required for plugins)])
-if test "$build_shared_libs" = "no" -a "$with_plugins" = "yes"; then
+if test "$build_shared_libs" = "no" && test "$with_plugins" = "yes"; then
 	 AC_MSG_RESULT(no)
 	 AC_MSG_WARN([Disabling plugin support.])
 	 AC_MSG_WARN([Plugins require that shared libraries be built.])

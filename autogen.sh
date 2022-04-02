@@ -42,7 +42,7 @@ test -f libxslt/xslt.h  || {
 	exit 1
 }
 
-if test -z "$NOCONFIGURE" -a -z "$*"; then
+if test -z "$NOCONFIGURE" && test -z "$*"; then
 	echo "I am going to run $srcdir/configure with no arguments - if you wish "
 	echo "to pass any to it, please specify them on the $0 command line."
 fi
