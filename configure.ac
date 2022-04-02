@@ -83,7 +83,7 @@ AC_PATH_PROG(XMLLINT, xmllint, /usr/bin/xmllint)
 AC_PATH_PROG(XSLTPROC, xsltproc, /usr/bin/xsltproc)
 PKG_PROG_PKG_CONFIG
 
-LT_INIT(win32-dll)
+LT_INIT([disable-static win32-dll])
 
 
 AC_CHECK_HEADERS(sys/types.h sys/time.h unistd.h)
