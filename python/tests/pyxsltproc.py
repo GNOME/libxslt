@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/env python
 #
 # The exercise of rewriting xsltproc on top of the python
 # bindings, not complete yet and shows up the things missing
