@@ -491,9 +491,6 @@ libxml_xmlXPathObjectPtrWrap(xmlXPathObjectPtr obj)
         case XPATH_STRING:
             ret = PY_IMPORT_STRING((char *) obj->stringval);
             break;
-        case XPATH_POINT:
-        case XPATH_RANGE:
-        case XPATH_LOCATIONSET:
         default:
 #ifdef DEBUG
             printf("Unable to convert XPath object type %d\n", obj->type);
