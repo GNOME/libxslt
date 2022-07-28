@@ -3,8 +3,14 @@
 $(top_builddir)/xsltproc/xsltproc:
 	@(cd ../../../xsltproc ; $(MAKE) xsltproc)
 
-EXTRA_DIST = 							\
-  dynmap.out     dynmap.xml     dynmap.xsl
+EXTRA_DIST = \
+    dynmap.out \
+    dynmap.xml \
+    dynmap.xsl \
+    recursion.err \
+    recursion.out \
+    recursion.xml \
+    recursion.xsl
 
 CLEANFILES = .memdump
 

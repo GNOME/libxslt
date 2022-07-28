@@ -1,0 +1,7 @@
+XPath error : Recursion limit exceeded
+dyn:evaluate(.)
+             ^
+dyn:evaluate() : unable to evaluate expression 'dyn:evaluate(.)'
+XPath error : Recursion limit exceeded
+dyn:map(., .)
+        ^

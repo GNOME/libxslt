@@ -1,0 +1,4 @@
+<doc>
+    <eval>dyn:evaluate(.)</eval>
+    <map>dyn:map(., .)</map>
+</doc>
