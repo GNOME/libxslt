@@ -3,7 +3,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
 	      -I$(top_builddir)/libexslt
 
 EXTRA_PROGRAMS=
-bin_PROGRAMS = xsltproc $(XSLTPROCDV)
+bin_PROGRAMS = xsltproc
 
 noinst_PROGRAMS=testThreads
 
@@ -34,9 +34,6 @@ $(top_builddir)/libxslt/libxslt.la:
 
 $(top_builddir)/libexslt/libexslt.la: $(top_builddir)/libxslt/libxslt.la
 	cd $(top_builddir)/libexslt && $(MAKE) libexslt.la
-
-xsltproc.dv: xsltproc.o
-	$(CC) $(CFLAGS) -o xsltproc xsltproc.o ../libexslt/.libs/libexslt.a ../libxslt/.libs/libxslt.a $(LIBXML_LIBS) $(EXTRA_LIBS) $(LIBGCRYPT_LIBS)
 
 tests: testThreads
 	@echo > .memdump
