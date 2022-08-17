@@ -49,5 +49,7 @@ rebuild:
 	  --nonet $(WIN32_DIR)/defgen.xsl libxslt-api.xml
 	cd $(srcdir) && $(XSLTPROC) -o $(WIN32_DIR)/libexslt.def.src \
 	  --nonet $(WIN32_DIR)/defgen.xsl EXSLT/libexslt-api.xml
+	cd devhelp && $(MAKE) rebuild
+	cd EXSLT/devhelp && $(MAKE) rebuild
 
 .PHONY: rebuild
