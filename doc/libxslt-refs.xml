@@ -15,6 +15,7 @@
     <reference name='XML_CAST_FPTR' href='html/libxslt-xsltInternals.html#XML_CAST_FPTR'/>
     <reference name='XSLTCALL' href='html/libxslt-xsltexports.html#XSLTCALL'/>
     <reference name='XSLTPUBFUN' href='html/libxslt-xsltexports.html#XSLTPUBFUN'/>
+    <reference name='XSLTPUBLIC' href='html/libxslt-xsltexports.html#XSLTPUBLIC'/>
     <reference name='XSLTPUBVAR' href='html/libxslt-xsltexports.html#XSLTPUBVAR'/>
     <reference name='XSLT_CCTXT' href='html/libxslt-xsltInternals.html#XSLT_CCTXT'/>
     <reference name='XSLT_DEBUG_CONT' href='html/libxslt-xsltutils.html#XSLT_DEBUG_CONT'/>
@@ -131,7 +132,6 @@
     <reference name='XSLT_TRACE_VARIABLES' href='html/libxslt-xsltutils.html#XSLT_TRACE_VARIABLES'/>
     <reference name='XSLT_XALAN_NAMESPACE' href='html/libxslt-extra.html#XSLT_XALAN_NAMESPACE'/>
     <reference name='XSLT_XT_NAMESPACE' href='html/libxslt-extra.html#XSLT_XT_NAMESPACE'/>
-    <reference name='_REENTRANT' href='html/libxslt-xsltexports.html#_REENTRANT'/>
     <reference name='_xsltCompMatch' href='html/libxslt-numbersInternals.html#_xsltCompMatch'/>
     <reference name='_xsltCompilerCtxt' href='html/libxslt-xsltInternals.html#_xsltCompilerCtxt'/>
     <reference name='_xsltCompilerNodeInfo' href='html/libxslt-xsltInternals.html#_xsltCompilerNodeInfo'/>
@@ -605,6 +605,7 @@
       <ref name='XML_CAST_FPTR'/>
       <ref name='XSLTCALL'/>
       <ref name='XSLTPUBFUN'/>
+      <ref name='XSLTPUBLIC'/>
       <ref name='XSLTPUBVAR'/>
       <ref name='XSLT_CCTXT'/>
       <ref name='XSLT_DEBUG_CONT'/>
@@ -723,7 +724,6 @@
       <ref name='XSLT_XT_NAMESPACE'/>
     </letter>
     <letter name='_'>
-      <ref name='_REENTRANT'/>
       <ref name='_xsltCompMatch'/>
       <ref name='_xsltCompilerCtxt'/>
       <ref name='_xsltCompilerNodeInfo'/>
@@ -2466,8 +2466,8 @@
       <ref name='LIBXSLT_PUBLIC'/>
       <ref name='XSLTCALL'/>
       <ref name='XSLTPUBFUN'/>
+      <ref name='XSLTPUBLIC'/>
       <ref name='XSLTPUBVAR'/>
-      <ref name='_REENTRANT'/>
     </file>
     <file name='xsltlocale'>
       <ref name='XSLT_LOCALE_NONE'/>
@@ -3030,6 +3030,10 @@
           <ref name='CHECK_STOPPED0'/>
           <ref name='CHECK_STOPPEDE'/>
           <ref name='XML_CAST_FPTR'/>
+          <ref name='XSLTCALL'/>
+          <ref name='XSLTPUBFUN'/>
+          <ref name='XSLTPUBLIC'/>
+          <ref name='XSLTPUBVAR'/>
           <ref name='XSLT_LOCALE_NONE'/>
           <ref name='XSLT_LOCALE_POSIX'/>
           <ref name='XSLT_LOCALE_WINAPI'/>
@@ -4207,6 +4211,9 @@
           <ref name='xsltXPathCompile'/>
           <ref name='xsltXPathCompileFlags'/>
         </word>
+        <word name='calling'>
+          <ref name='XSLTCALL'/>
+        </word>
         <word name='calls='>
           <ref name='xsltGetProfileInformation'/>
         </word>
@@ -4484,6 +4491,9 @@
         <word name='control'>
           <ref name='xslHandleDebugger'/>
         </word>
+        <word name='convention'>
+          <ref name='XSLTCALL'/>
+        </word>
         <word name='converts'>
           <ref name='xsltEvalTemplateString'/>
         </word>
@@ -4629,6 +4639,12 @@
           <ref name='xsltCheckExtPrefix'/>
           <ref name='xsltCheckExtURI'/>
           <ref name='xsltCopyNamespace'/>
+        </word>
+        <word name='declares'>
+          <ref name='XSLTCALL'/>
+          <ref name='XSLTPUBFUN'/>
+          <ref name='XSLTPUBLIC'/>
+          <ref name='XSLTPUBVAR'/>
         </word>
         <word name='declaring'>
           <ref name='xsltGetSpecialNamespace'/>
@@ -5006,6 +5022,13 @@
         <word name='expect'>
           <ref name='xsltApplyOneTemplate'/>
         </word>
+        <word name='exportable'>
+          <ref name='XSLTPUBFUN'/>
+          <ref name='XSLTPUBVAR'/>
+        </word>
+        <word name='exported'>
+          <ref name='XSLTCALL'/>
+        </word>
         <word name='expressed'>
           <ref name='XSLT_PAT_NO_PRIORITY'/>
         </word>
@@ -5305,6 +5328,7 @@
           <ref name='xsltExtensionInstructionResultFinalize'/>
         </word>
         <word name='functions'>
+          <ref name='XSLTCALL'/>
           <ref name='XSLT_ITEM_COMPATIBILITY_FIELDS'/>
           <ref name='_xsltTransformContext'/>
           <ref name='xsltApplyOneTemplate'/>
@@ -6920,6 +6944,9 @@
           <ref name='xsltRunStylesheetUser'/>
           <ref name='xsltSecurityCheck'/>
         </word>
+        <word name='public'>
+          <ref name='XSLTPUBLIC'/>
+        </word>
         <word name='public?'>
           <ref name='xsltAttrTemplateValueProcessNode'/>
         </word>
@@ -7740,6 +7767,9 @@
         <word name='sure'>
           <ref name='xsltAllocateExtraCtxt'/>
         </word>
+        <word name='symbol'>
+          <ref name='XSLTPUBLIC'/>
+        </word>
         <word name='system'>
           <ref name='xsltNewLocale'/>
         </word>
@@ -8281,6 +8311,10 @@
           <ref name='xsltTestCompMatchList'/>
         </word>
         <word name='which'>
+          <ref name='XSLTCALL'/>
+          <ref name='XSLTPUBFUN'/>
+          <ref name='XSLTPUBLIC'/>
+          <ref name='XSLTPUBVAR'/>
           <ref name='XSLT_ITEM_COMPATIBILITY_FIELDS'/>
           <ref name='_xsltStackElem'/>
           <ref name='_xsltTransformContext'/>

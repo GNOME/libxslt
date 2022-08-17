@@ -33,9 +33,8 @@
     </file>
     <file name='exsltexports'>
      <summary>macros for marking symbols as exportable/importable. </summary>
-     <author>Igor Zlatkovic &lt;igor@zlatkovic.com&gt; </author>
      <exports symbol='LIBEXSLT_PUBLIC' type='macro'/>
-     <exports symbol='_REENTRANT' type='macro'/>
+     <exports symbol='EXSLTPUBLIC' type='macro'/>
      <exports symbol='EXSLTCALL' type='macro'/>
      <exports symbol='EXSLTPUBFUN' type='macro'/>
      <exports symbol='EXSLTPUBVAR' type='macro'/>
@@ -43,10 +42,16 @@
   </files>
   <symbols>
     <macro name='EXSLTCALL' file='exsltexports'>
+      <info>Macro which declares the calling convention for exported functions</info>
     </macro>
     <macro name='EXSLTPUBFUN' file='exsltexports'>
+      <info>Macro which declares an exportable function</info>
+    </macro>
+    <macro name='EXSLTPUBLIC' file='exsltexports'>
+      <info>Macro which declares a public symbol</info>
     </macro>
     <macro name='EXSLTPUBVAR' file='exsltexports'>
+      <info>Macro which declares an exportable variable</info>
     </macro>
     <macro name='EXSLT_COMMON_NAMESPACE' file='exslt'>
       <info>Namespace for EXSLT common functions</info>
@@ -76,8 +81,6 @@
     </macro>
     <macro name='SAXON_NAMESPACE' file='exslt'>
       <info>Namespace for SAXON extensions functions</info>
-    </macro>
-    <macro name='_REENTRANT' file='exsltexports'>
     </macro>
     <variable name='exsltLibexsltVersion' file='exslt' type='const int'/>
     <variable name='exsltLibraryVersion' file='exslt' type='const char *'/>

@@ -40,13 +40,13 @@
     </h2>
     <p>xsltexports - macros for marking symbols as exportable/importable.</p>
     <p>macros for marking symbols as exportable/importable. </p>
-    <p>Author(s): Igor Zlatkovic &lt;igor@zlatkovic.com&gt; </p>
+    <p>Author(s): </p>
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
       <pre class="synopsis">#define <a href="#LIBXSLT_PUBLIC">LIBXSLT_PUBLIC</a>;
 #define <a href="#XSLTPUBFUN">XSLTPUBFUN</a>;
 #define <a href="#XSLTPUBVAR">XSLTPUBVAR</a>;
-#define <a href="#_REENTRANT">_REENTRANT</a>;
+#define <a href="#XSLTPUBLIC">XSLTPUBLIC</a>;
 #define <a href="#XSLTCALL">XSLTCALL</a>;
 </pre>
     </div>
@@ -61,19 +61,19 @@
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="XSLTCALL">Macro </a>XSLTCALL</h3><pre class="programlisting">#define <a href="#XSLTCALL">XSLTCALL</a>;
-</pre><p/>
+</pre><p>Macro which declares the calling convention for exported functions</p>
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="XSLTPUBFUN">Macro </a>XSLTPUBFUN</h3><pre class="programlisting">#define <a href="#XSLTPUBFUN">XSLTPUBFUN</a>;
-</pre><p/>
+</pre><p>Macro which declares an exportable function</p>
+</div>
+        <hr/>
+        <div class="refsect2" lang="en"><h3><a name="XSLTPUBLIC">Macro </a>XSLTPUBLIC</h3><pre class="programlisting">#define <a href="#XSLTPUBLIC">XSLTPUBLIC</a>;
+</pre><p>Macro which declares a public symbol</p>
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="XSLTPUBVAR">Macro </a>XSLTPUBVAR</h3><pre class="programlisting">#define <a href="#XSLTPUBVAR">XSLTPUBVAR</a>;
-</pre><p/>
-</div>
-        <hr/>
-        <div class="refsect2" lang="en"><h3><a name="_REENTRANT">Macro </a>_REENTRANT</h3><pre class="programlisting">#define <a href="#_REENTRANT">_REENTRANT</a>;
-</pre><p/>
+</pre><p>Macro which declares an exportable variable</p>
 </div>
         <hr/>
       </div>

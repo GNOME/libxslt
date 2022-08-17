@@ -3,6 +3,7 @@
   <references>
     <reference name='EXSLTCALL' href='html/libexslt-exsltexports.html#EXSLTCALL'/>
     <reference name='EXSLTPUBFUN' href='html/libexslt-exsltexports.html#EXSLTPUBFUN'/>
+    <reference name='EXSLTPUBLIC' href='html/libexslt-exsltexports.html#EXSLTPUBLIC'/>
     <reference name='EXSLTPUBVAR' href='html/libexslt-exsltexports.html#EXSLTPUBVAR'/>
     <reference name='EXSLT_COMMON_NAMESPACE' href='html/libexslt-exslt.html#EXSLT_COMMON_NAMESPACE'/>
     <reference name='EXSLT_CRYPTO_NAMESPACE' href='html/libexslt-exslt.html#EXSLT_CRYPTO_NAMESPACE'/>
@@ -14,7 +15,6 @@
     <reference name='EXSLT_STRINGS_NAMESPACE' href='html/libexslt-exslt.html#EXSLT_STRINGS_NAMESPACE'/>
     <reference name='LIBEXSLT_PUBLIC' href='html/libexslt-exsltexports.html#LIBEXSLT_PUBLIC'/>
     <reference name='SAXON_NAMESPACE' href='html/libexslt-exslt.html#SAXON_NAMESPACE'/>
-    <reference name='_REENTRANT' href='html/libexslt-exsltexports.html#_REENTRANT'/>
     <reference name='exsltCommonRegister' href='html/libexslt-exslt.html#exsltCommonRegister'/>
     <reference name='exsltCryptoRegister' href='html/libexslt-exslt.html#exsltCryptoRegister'/>
     <reference name='exsltDateRegister' href='html/libexslt-exslt.html#exsltDateRegister'/>
@@ -38,6 +38,7 @@
     <letter name='E'>
       <ref name='EXSLTCALL'/>
       <ref name='EXSLTPUBFUN'/>
+      <ref name='EXSLTPUBLIC'/>
       <ref name='EXSLTPUBVAR'/>
       <ref name='EXSLT_COMMON_NAMESPACE'/>
       <ref name='EXSLT_CRYPTO_NAMESPACE'/>
@@ -53,9 +54,6 @@
     </letter>
     <letter name='S'>
       <ref name='SAXON_NAMESPACE'/>
-    </letter>
-    <letter name='_'>
-      <ref name='_REENTRANT'/>
     </letter>
     <letter name='e'>
       <ref name='exsltCommonRegister'/>
@@ -127,9 +125,9 @@
     <file name='exsltexports'>
       <ref name='EXSLTCALL'/>
       <ref name='EXSLTPUBFUN'/>
+      <ref name='EXSLTPUBLIC'/>
       <ref name='EXSLTPUBVAR'/>
       <ref name='LIBEXSLT_PUBLIC'/>
-      <ref name='_REENTRANT'/>
     </file>
   </files>
   <index>
@@ -182,6 +180,12 @@
         </word>
       </letter>
       <letter name='M'>
+        <word name='Macro'>
+          <ref name='EXSLTCALL'/>
+          <ref name='EXSLTPUBFUN'/>
+          <ref name='EXSLTPUBLIC'/>
+          <ref name='EXSLTPUBVAR'/>
+        </word>
         <word name='Math'>
           <ref name='exsltMathRegister'/>
           <ref name='exsltMathXpathCtxtRegister'/>
@@ -255,8 +259,14 @@
         </word>
       </letter>
       <letter name='c'>
+        <word name='calling'>
+          <ref name='EXSLTCALL'/>
+        </word>
         <word name='common'>
           <ref name='EXSLT_COMMON_NAMESPACE'/>
+        </word>
+        <word name='convention'>
+          <ref name='EXSLTCALL'/>
         </word>
         <word name='crypto'>
           <ref name='EXSLT_CRYPTO_NAMESPACE'/>
@@ -266,11 +276,24 @@
         <word name='date'>
           <ref name='EXSLT_DATE_NAMESPACE'/>
         </word>
+        <word name='declares'>
+          <ref name='EXSLTCALL'/>
+          <ref name='EXSLTPUBFUN'/>
+          <ref name='EXSLTPUBLIC'/>
+          <ref name='EXSLTPUBVAR'/>
+        </word>
         <word name='dynamic'>
           <ref name='EXSLT_DYNAMIC_NAMESPACE'/>
         </word>
       </letter>
       <letter name='e'>
+        <word name='exportable'>
+          <ref name='EXSLTPUBFUN'/>
+          <ref name='EXSLTPUBVAR'/>
+        </word>
+        <word name='exported'>
+          <ref name='EXSLTCALL'/>
+        </word>
         <word name='extension'>
           <ref name='EXSLT_FUNCTIONS_NAMESPACE'/>
           <ref name='exsltSaxonRegister'/>
@@ -282,6 +305,7 @@
       </letter>
       <letter name='f'>
         <word name='for'>
+          <ref name='EXSLTCALL'/>
           <ref name='EXSLT_COMMON_NAMESPACE'/>
           <ref name='EXSLT_CRYPTO_NAMESPACE'/>
           <ref name='EXSLT_DATE_NAMESPACE'/>
@@ -296,7 +320,11 @@
           <ref name='exsltSetsXpathCtxtRegister'/>
           <ref name='exsltStrXpathCtxtRegister'/>
         </word>
+        <word name='function'>
+          <ref name='EXSLTPUBFUN'/>
+        </word>
         <word name='functions'>
+          <ref name='EXSLTCALL'/>
           <ref name='EXSLT_COMMON_NAMESPACE'/>
           <ref name='EXSLT_CRYPTO_NAMESPACE'/>
           <ref name='EXSLT_DATE_NAMESPACE'/>
@@ -336,12 +364,20 @@
           <ref name='exsltStrXpathCtxtRegister'/>
         </word>
       </letter>
+      <letter name='p'>
+        <word name='public'>
+          <ref name='EXSLTPUBLIC'/>
+        </word>
+      </letter>
       <letter name='s'>
         <word name='set'>
           <ref name='EXSLT_SETS_NAMESPACE'/>
         </word>
         <word name='strings'>
           <ref name='EXSLT_STRINGS_NAMESPACE'/>
+        </word>
+        <word name='symbol'>
+          <ref name='EXSLTPUBLIC'/>
         </word>
       </letter>
       <letter name='u'>
@@ -352,9 +388,22 @@
           <ref name='exsltStrXpathCtxtRegister'/>
         </word>
       </letter>
+      <letter name='v'>
+        <word name='variable'>
+          <ref name='EXSLTPUBVAR'/>
+        </word>
+      </letter>
+      <letter name='w'>
+        <word name='which'>
+          <ref name='EXSLTCALL'/>
+          <ref name='EXSLTPUBFUN'/>
+          <ref name='EXSLTPUBLIC'/>
+          <ref name='EXSLTPUBVAR'/>
+        </word>
+      </letter>
     </chunk>
     <chunks>
-      <chunk name='chunk0' start='C' end='u'/>
+      <chunk name='chunk0' start='C' end='w'/>
     </chunks>
   </index>
 </apirefs>

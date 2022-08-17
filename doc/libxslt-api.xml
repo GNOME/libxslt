@@ -568,11 +568,10 @@
     <file name='xsltexports'>
      <summary>macros for marking symbols as exportable/importable.</summary>
      <description>macros for marking symbols as exportable/importable. </description>
-     <author>Igor Zlatkovic &lt;igor@zlatkovic.com&gt; </author>
      <exports symbol='LIBXSLT_PUBLIC' type='macro'/>
      <exports symbol='XSLTPUBFUN' type='macro'/>
      <exports symbol='XSLTPUBVAR' type='macro'/>
-     <exports symbol='_REENTRANT' type='macro'/>
+     <exports symbol='XSLTPUBLIC' type='macro'/>
      <exports symbol='XSLTCALL' type='macro'/>
     </file>
     <file name='xsltlocale'>
@@ -717,10 +716,16 @@
       <arg name='fptr' info='pointer to a function'/>
     </macro>
     <macro name='XSLTCALL' file='xsltexports'>
+      <info>Macro which declares the calling convention for exported functions</info>
     </macro>
     <macro name='XSLTPUBFUN' file='xsltexports'>
+      <info>Macro which declares an exportable function</info>
+    </macro>
+    <macro name='XSLTPUBLIC' file='xsltexports'>
+      <info>Macro which declares a public symbol</info>
     </macro>
     <macro name='XSLTPUBVAR' file='xsltexports'>
+      <info>Macro which declares an exportable variable</info>
     </macro>
     <macro name='XSLT_CCTXT' file='xsltInternals'>
       <info>get pointer to compiler context</info>
@@ -850,8 +855,6 @@
     </macro>
     <macro name='XSLT_XT_NAMESPACE' file='extra'>
       <info>This is James Clark&apos;s XT processor namespace for extensions.</info>
-    </macro>
-    <macro name='_REENTRANT' file='xsltexports'>
     </macro>
     <enum name='XSLT_DEBUG_CONT' file='xsltutils' value='6' type='xsltDebugStatusCodes'/>
     <enum name='XSLT_DEBUG_INIT' file='xsltutils' value='1' type='xsltDebugStatusCodes'/>

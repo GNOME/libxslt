@@ -39,6 +39,7 @@
     <keyword type="macro" name="XML_CAST_FPTR" link="libxslt-xsltInternals.html#XML_CAST_FPTR"/>
     <keyword type="macro" name="XSLTCALL" link="libxslt-xsltexports.html#XSLTCALL"/>
     <keyword type="macro" name="XSLTPUBFUN" link="libxslt-xsltexports.html#XSLTPUBFUN"/>
+    <keyword type="macro" name="XSLTPUBLIC" link="libxslt-xsltexports.html#XSLTPUBLIC"/>
     <keyword type="macro" name="XSLTPUBVAR" link="libxslt-xsltexports.html#XSLTPUBVAR"/>
     <keyword type="macro" name="XSLT_CCTXT" link="libxslt-xsltInternals.html#XSLT_CCTXT"/>
     <keyword type="macro" name="XSLT_DEFAULT_URL" link="libxslt-xslt.html#XSLT_DEFAULT_URL"/>
@@ -81,7 +82,6 @@
     <keyword type="macro" name="XSLT_TRACE" link="libxslt-xsltutils.html#XSLT_TRACE"/>
     <keyword type="macro" name="XSLT_XALAN_NAMESPACE" link="libxslt-extra.html#XSLT_XALAN_NAMESPACE"/>
     <keyword type="macro" name="XSLT_XT_NAMESPACE" link="libxslt-extra.html#XSLT_XT_NAMESPACE"/>
-    <keyword type="macro" name="_REENTRANT" link="libxslt-xsltexports.html#_REENTRANT"/>
     <keyword type="enum" name="XSLT_DEBUG_CONT" link="libxslt-xsltutils.html#XSLT_DEBUG_CONT"/>
     <keyword type="enum" name="XSLT_DEBUG_INIT" link="libxslt-xsltutils.html#XSLT_DEBUG_INIT"/>
     <keyword type="enum" name="XSLT_DEBUG_NEXT" link="libxslt-xsltutils.html#XSLT_DEBUG_NEXT"/>
