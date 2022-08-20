@@ -7,7 +7,7 @@ bin_PROGRAMS = xsltproc
 
 noinst_PROGRAMS=testThreads
 
-AM_CFLAGS = $(LIBGCRYPT_CFLAGS) $(LIBXML_CFLAGS)
+AM_CFLAGS = $(LIBGCRYPT_CFLAGS) $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
 
 xsltproc_SOURCES = xsltproc.c
 xsltproc_LDFLAGS = 

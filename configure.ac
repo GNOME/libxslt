@@ -505,6 +505,21 @@ AC_SUBST(XSLT_INCLUDEDIR)
 AC_SUBST(XSLT_LIBS)
 AC_SUBST(XSLT_PRIVATE_LIBS)
 
+LIBXSLT_CFLAGS=""
+case ${host} in
+    *-*-mingw* | *-*-cygwin* | *-*-msvc* )
+        # If the host is Windows, and shared libraries are disabled, we
+        # need to add -DLIBXML_STATIC to EXTRA_CFLAGS in order for linking to
+        # work properly (without it, xmlexports.h would force the use of
+        # DLL imports, which obviously aren't present in a static
+        # library).
+        if test "x$enable_shared" = "xno"; then
+           LIBXSLT_CFLAGS="$LIBXSLT_CFLAGS -DLIBXSLT_STATIC -DLIBEXSLT_STATIC"
+        fi
+        ;;
+esac
+AC_SUBST(LIBXSLT_CFLAGS)
+
 EXSLT_LIBDIR='-L${libdir}'
 EXSLT_INCLUDEDIR='-I${includedir}'
 EXSLT_PRIVATE_LIBS="$XSLT_PRIVATE_LIBS $LIBGCRYPT_LIBS"

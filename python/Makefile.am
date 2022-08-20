@@ -19,7 +19,7 @@ libxsltmod_la_CPPFLAGS = \
 	-I$(top_srcdir)/libxslt \
 	-I$(top_srcdir) \
 	-I../libexslt \
-	$(PYTHON_CFLAGS) $(LIBXML_CFLAGS)
+	$(PYTHON_CFLAGS) $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
 libxsltmod_la_SOURCES = libxslt.c types.c
 nodist_libxsltmod_la_SOURCES = libxslt-py.c
 libxsltmod_la_LIBADD = \
