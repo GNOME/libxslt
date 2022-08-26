@@ -1264,7 +1264,6 @@ xsltScanLiteral(xsltParserContextPtr ctxt) {
 	cur += len;
 	CUR_PTR = cur;
     } else {
-	/* XP_ERROR(XPATH_START_LITERAL_ERROR); */
 	ctxt->error = 1;
 	return(NULL);
     }
