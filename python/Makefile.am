@@ -57,4 +57,7 @@ endif
 tests test: all
 	cd tests && $(MAKE) tests
 
-CLEANFILES = $(GENERATED) *.o libxslt.so *.pyc libxslt.py gen_prog
+CLEANFILES = $(GENERATED) *.pyc libxslt.py gen_prog
+
+clean-local:
+	rm -rf __pycache__
