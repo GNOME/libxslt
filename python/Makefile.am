@@ -31,7 +31,7 @@ libxsltmod_la_LDFLAGS = -module -avoid-version
 libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
 	cat $(srcdir)/libxsl.py libxsltclass.py > $@
 
-python_PYTHON = libxslt.py
+nodist_python_PYTHON = libxslt.py
 
 GENERATE = generator.py
 API_DESC = $(top_srcdir)/doc/libxslt-api.xml $(srcdir)/libxslt-python-api.xml
