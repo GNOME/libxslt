@@ -1,6 +1,7 @@
 *.o
 *.la
 *.lo
+*.pyc
 tags
 */tags
 .deps/
@@ -38,8 +39,6 @@ ltmain.sh
 m4/
 missing
 py-compile
-__pycache__/
-python/*.pyc
 python/gen_prog
 python/libxslt-export.c
 python/libxslt-py.c
