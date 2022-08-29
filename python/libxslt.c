@@ -299,7 +299,7 @@ libxslt_xsltElementPreCompCallback(xsltStylesheetPtr style, xmlNodePtr inst,
 	    pyobj_element_f);
 
     Py_INCREF(pyobj_precomp_f); /* Protect refcount against reentrant manipulation of callback hash */
-    result = PyEval_CallObject(pyobj_precomp_f, args);
+    result = PyObject_CallObject(pyobj_precomp_f, args);
     Py_DECREF(pyobj_precomp_f);
     Py_DECREF(args);
 
@@ -357,7 +357,7 @@ libxslt_xsltElementTransformCallback(xsltTransformContextPtr ctxt,
 	libxslt_xsltElemPreCompPtrWrap(comp));
 
     Py_INCREF(func); /* Protect refcount against reentrant manipulation of callback hash */
-    result = PyEval_CallObject(func, args);
+    result = PyObject_CallObject(func, args);
     Py_DECREF(func);
     Py_DECREF(args);
 
@@ -468,7 +468,7 @@ libxslt_xmlXPathFuncCallback(xmlXPathParserContextPtr ctxt, int nargs) {
     }
 
     Py_INCREF(current_function);
-    result = PyEval_CallObject(current_function, list);
+    result = PyObject_CallObject(current_function, list);
     Py_DECREF(current_function);
     Py_DECREF(list);
 
@@ -961,7 +961,7 @@ libxslt_xsltErrorFuncHandler(void *ctx ATTRIBUTE_UNUSED, const char *msg,
         Py_XINCREF(libxslt_xsltPythonErrorFuncCtxt);
         message = libxml_charPtrWrap(str);
         PyTuple_SetItem(list, 1, message);
-        result = PyEval_CallObject(libxslt_xsltPythonErrorFuncHandler, list);
+        result = PyObject_CallObject(libxslt_xsltPythonErrorFuncHandler, list);
         Py_XDECREF(list);
         Py_XDECREF(result);
     }

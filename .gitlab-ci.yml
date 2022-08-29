@@ -27,8 +27,7 @@ gcc:
 gcc:python3:
   extends: .test
   variables:
-    # TODO: Re-enable the warning after libxml2 #208 is fixed.
-    CFLAGS: "-O2 -Wno-error=deprecated-declarations"
+    CFLAGS: "-O2"
     PYTHON: "/usr/bin/python3"
 
 gcc:static:
