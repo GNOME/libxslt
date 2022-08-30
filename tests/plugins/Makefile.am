@@ -36,7 +36,6 @@ test tests: $(top_builddir)/xsltproc/xsltproc test-logall $(noinst_LTLIBRARIES)
 else
 
 test tests:
-	@echo Skipping the plugin tests.
 
 endif
 
