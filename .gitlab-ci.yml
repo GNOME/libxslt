@@ -27,6 +27,7 @@ gcc:
 gcc:python3:
   extends: .test
   variables:
+    CONFIG: "--without-crypto --without-debug --without-debugger --without-plugins"
     CFLAGS: "-O2"
     PYTHON: "/usr/bin/python3"
 
