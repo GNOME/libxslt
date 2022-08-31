@@ -1787,6 +1787,7 @@ struct _xsltTransformContext {
     unsigned long opLimit;
     unsigned long opCount;
     int sourceDocDirty;
+    unsigned long currentId; /* For generate-id() */
 };
 
 /**
