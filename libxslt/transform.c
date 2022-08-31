@@ -5747,6 +5747,37 @@ xsltCountKeys(xsltTransformContextPtr ctxt)
 }
 
 /**
+ * xsltCleanupSourceDoc:
+ * @doc:  Document
+ *
+ * Resets source node flags and ids stored in 'psvi' member.
+ */
+static void
+xsltCleanupSourceDoc(xmlDocPtr doc) {
+    xmlNodePtr cur = (xmlNodePtr) doc;
+    void **psviPtr;
+
+    while (1) {
+        xsltClearSourceNodeFlags(cur, XSLT_SOURCE_NODE_MASK);
+        psviPtr = xsltGetPSVIPtr(cur);
+        if (psviPtr)
+            *psviPtr = NULL;
+
+        if (cur->children != NULL && cur->type != XML_ENTITY_REF_NODE) {
+            cur = cur->children;
+        } else {
+            while (cur->next == NULL) {
+                cur = cur->parent;
+                if (cur == (xmlNodePtr) doc)
+                    return;
+            }
+
+            cur = cur->next;
+        }
+    }
+}
+
+/**
  * xsltApplyStylesheetInternal:
  * @style:  a parsed XSLT stylesheet
  * @doc:  a parsed XML document
@@ -6143,6 +6174,9 @@ xsltApplyStylesheetInternal(xsltStylesheetPtr style, xmlDocPtr doc,
     printf("# Reused tree fragments: %d\n", ctxt->cache->dbgReusedRVTs);
     printf("# Reused variables     : %d\n", ctxt->cache->dbgReusedVars);
 #endif
+
+    if (ctxt->sourceDocDirty)
+        xsltCleanupSourceDoc(doc);
 
     if ((ctxt != NULL) && (userCtxt == NULL))
 	xsltFreeTransformContext(ctxt);

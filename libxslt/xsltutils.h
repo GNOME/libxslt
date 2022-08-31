@@ -244,6 +244,19 @@ XSLTPUBFUN xmlXPathCompExprPtr XSLTCALL
 						 const xmlChar *str,
 						 int flags);
 
+#ifdef IN_LIBXSLT
+#define XSLT_SOURCE_NODE_MASK       15
+int
+xsltGetSourceNodeFlags(xmlNodePtr node);
+int
+xsltSetSourceNodeFlags(xsltTransformContextPtr ctxt, xmlNodePtr node,
+                       int flags);
+int
+xsltClearSourceNodeFlags(xmlNodePtr node, int flags);
+void **
+xsltGetPSVIPtr(xmlNodePtr cur);
+#endif
+
 #ifdef WITH_PROFILER
 /*
  * Profiling.

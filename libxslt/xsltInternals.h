@@ -1786,6 +1786,7 @@ struct _xsltTransformContext {
     int maxTemplateVars;
     unsigned long opLimit;
     unsigned long opCount;
+    int sourceDocDirty;
 };
 
 /**
