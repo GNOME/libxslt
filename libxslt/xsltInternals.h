@@ -1916,7 +1916,7 @@ XSLTPUBFUN int XSLTCALL
 			xsltFlagRVTs(
 						 xsltTransformContextPtr ctxt,
 						 xmlXPathObjectPtr obj,
-						 void *val);
+						 int val);
 XSLTPUBFUN void XSLTCALL
 			xsltFreeRVTs		(xsltTransformContextPtr ctxt);
 XSLTPUBFUN void XSLTCALL

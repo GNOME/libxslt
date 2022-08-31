@@ -2275,17 +2275,17 @@ xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
     do {
         tmp = cur;
         cur = (xmlDocPtr) cur->next;
-        if (tmp->psvi == XSLT_RVT_LOCAL) {
+        if (tmp->compression == XSLT_RVT_LOCAL) {
             xsltReleaseRVT(ctxt, tmp);
-        } else if (tmp->psvi == XSLT_RVT_GLOBAL) {
+        } else if (tmp->compression == XSLT_RVT_GLOBAL) {
             xsltRegisterPersistRVT(ctxt, tmp);
-        } else if (tmp->psvi == XSLT_RVT_FUNC_RESULT) {
+        } else if (tmp->compression == XSLT_RVT_FUNC_RESULT) {
             /*
              * This will either register the RVT again or move it to the
              * context variable.
              */
             xsltRegisterLocalRVT(ctxt, tmp);
-            tmp->psvi = XSLT_RVT_FUNC_RESULT;
+            tmp->compression = XSLT_RVT_FUNC_RESULT;
         } else {
             xmlGenericError(xmlGenericErrorContext,
                     "xsltReleaseLocalRVTs: Unexpected RVT flag %p\n",
