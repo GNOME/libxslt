@@ -5763,6 +5763,16 @@ xsltCleanupSourceDoc(xmlDocPtr doc) {
         if (psviPtr)
             *psviPtr = NULL;
 
+        if (cur->type == XML_ELEMENT_NODE) {
+            xmlAttrPtr prop = cur->properties;
+
+            while (prop) {
+                prop->atype &= ~(XSLT_SOURCE_NODE_MASK << 27);
+                prop->psvi = NULL;
+                prop = prop->next;
+            }
+        }
+
         if (cur->children != NULL && cur->type != XML_ENTITY_REF_NODE) {
             cur = cur->children;
         } else {

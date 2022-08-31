@@ -245,9 +245,9 @@ XSLTPUBFUN xmlXPathCompExprPtr XSLTCALL
 						 int flags);
 
 #ifdef IN_LIBXSLT
-#define XSLT_SOURCE_NODE_MASK       15
-#define XSLT_SOURCE_NODE_HAS_KEY    1
-#define XSLT_SOURCE_NODE_HAS_ID     2
+#define XSLT_SOURCE_NODE_MASK       15u
+#define XSLT_SOURCE_NODE_HAS_KEY    1u
+#define XSLT_SOURCE_NODE_HAS_ID     2u
 int
 xsltGetSourceNodeFlags(xmlNodePtr node);
 int
