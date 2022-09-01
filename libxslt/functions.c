@@ -739,7 +739,7 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
     }
 
     if (xsltGetSourceNodeFlags(cur) & XSLT_SOURCE_NODE_HAS_ID) {
-        id = (unsigned long) *psviPtr;
+        id = (unsigned long) (size_t) *psviPtr;
     } else {
         if (cur->type == XML_TEXT_NODE && cur->line == USHRT_MAX) {
             /* Text nodes store big line numbers in psvi. */
@@ -759,7 +759,7 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
         }
 
         id = ++tctxt->currentId;
-        *psviPtr = (void *) id;
+        *psviPtr = (void *) (size_t) id;
         xsltSetSourceNodeFlags(tctxt, cur, XSLT_SOURCE_NODE_HAS_ID);
     }
 
