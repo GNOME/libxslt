@@ -58,7 +58,11 @@ __inline int c99_vsnprintf(char *outBuf, size_t size, const char *format, va_lis
 /* #define DEBUG_EXTENSIONS */
 /* #define DEBUG_EXTENSIONS */
 
+#if PY_MAJOR_VERSION >= 3
+PyObject* PyInit_libxsltmod(void);
+#else
 void initlibxsltmod(void);
+#endif
 
 /************************************************************************
  *									*
@@ -623,7 +627,8 @@ libxslt_xsltSetLoaderFunc(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) {
 }
 
 PyObject *
-libxslt_xsltGetLoaderFunc(void) {
+libxslt_xsltGetLoaderFunc(PyObject *self ATTRIBUTE_UNUSED,
+	                  PyObject *args ATTRIBUTE_UNUSED) {
     PyObject *py_retval;
 
     py_retval = pythonDocLoaderObject;
@@ -1229,9 +1234,9 @@ static PyMethodDef libxsltMethods[] = {
 
 #ifdef MERGED_MODULES
 #if PY_MAJOR_VERSION >= 3
-extern PyObject*  PyInit_libxml2mod(void);
+PyObject* PyInit_libxml2mod(void);
 #else
-extern void initlibxml2mod(void);
+void initlibxml2mod(void);
 #endif
 #endif
 

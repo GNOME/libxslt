@@ -9,7 +9,7 @@
 #include "fuzz.h"
 #include <libxml/globals.h>
 
-int
+static int
 testXPath(int argc, char **argv) {
     xmlXPathObjectPtr obj;
     const char expr[] = "count(//node())";
@@ -36,7 +36,7 @@ testXPath(int argc, char **argv) {
     return ret;
 }
 
-int
+static int
 testXslt(int argc, char **argv) {
     xmlChar *result;
     const char styleBuf[] =

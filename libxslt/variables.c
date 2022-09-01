@@ -310,8 +310,10 @@ xsltFlagRVTs(xsltTransformContextPtr ctxt, xmlXPathObjectPtr obj, int val) {
 	    *  document() function?
 	    */
 #ifdef WITH_XSLT_DEBUG_VARIABLE
-            XSLT_TRACE(ctxt,XSLT_TRACE_VARIABLES,xsltGenericDebug(xsltGenericDebugContext,
-                "Flagging RVT %p: %d -> %d\n", doc, doc->compression, val));
+            XSLT_TRACE(ctxt, XSLT_TRACE_VARIABLES,
+                       xsltGenericDebug(xsltGenericDebugContext,
+                       "Flagging RVT %p: %d -> %d\n",
+                       (void *) doc, doc->compression, val));
 #endif
 
             if (val == XSLT_RVT_LOCAL) {

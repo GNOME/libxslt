@@ -18,7 +18,7 @@
     </function>
     <function name='xsltGetLoaderFunc' file='python'>
       <info>Get the function for controlling document loading</info>
-      <return type='pythonObject *' info='the function'/>
+      <return type='pythonObject' info='the function'/>
     </function>
     <function name='xsltNewTransformContext' file='python'>
       <info>Create a new XSLT TransformContext</info>
