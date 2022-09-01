@@ -68,7 +68,7 @@ clang:msan:
     - export PATH=$CI_PROJECT_DIR/libxml2-install/bin:$PATH
     - export LD_LIBRARY_PATH=$CI_PROJECT_DIR/libxml2-install/bin:$LD_LIBRARY_PATH
   script:
-    - cmake -DBUILD_SHARED_LIBS=$BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxslt-install -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B libxslt-build
+    - cmake -DBUILD_SHARED_LIBS=$BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxslt-install -DCMAKE_C_FLAGS='-Werror' -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B libxslt-build
     - cmake --build libxslt-build --target install
     - mkdir -p libxslt-install/share/libxslt
     - cp Copyright libxslt-install/share/libxslt
@@ -143,7 +143,7 @@ cmake:linux:clang:static:
     - $Env:CMAKE_PREFIX_PATH="$Env:CI_PROJECT_DIR\libxml2-install;$Env:CMAKE_PREFIX_PATH"
     - $Env:Path="$Env:CI_PROJECT_DIR\libxml2-install\bin;$Env:Path"
   script:
-    - cmake -G Ninja -DBUILD_SHARED_LIBS="$Env:BUILD_SHARED_LIBS" -DCMAKE_INSTALL_PREFIX=libxslt-install -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B libxslt-build
+    - cmake -G Ninja -DBUILD_SHARED_LIBS="$Env:BUILD_SHARED_LIBS" -DCMAKE_INSTALL_PREFIX=libxslt-install -DCMAKE_C_FLAGS='-Werror' -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B libxslt-build
     - cmake --build libxslt-build --target install
     - New-Item -ItemType Directory libxslt-install\share\libxslt
     - Copy-Item Copyright libxslt-install\share\libxslt
