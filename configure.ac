@@ -188,7 +188,7 @@ AS_IF([test "x$with_python" != "xno"], [
     PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
     case "$host" in
         *-*-cygwin* | *-*-mingw* | *-*-msys* )
-            PYTHON_LDFLAGS="-no-undefined"
+            PYTHON_LDFLAGS="-no-undefined -shrext .pyd"
             ;;
     esac
 ])

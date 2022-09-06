@@ -404,6 +404,9 @@ if(LIBXSLT_WITH_PYTHON)
 		PREFIX lib
 		VERSION ${PROJECT_VERSION}
 	)
+	if (WIN32)
+		set_target_properties(LibXsltMod PROPERTIES SUFFIX ".pyd")
+	endif()
 	install(
 		TARGETS	LibXsltMod
 		ARCHIVE DESTINATION ${LIBXSLT_PYTHON_INSTALL_DIR} COMPONENT development
