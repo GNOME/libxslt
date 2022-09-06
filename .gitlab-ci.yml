@@ -150,10 +150,6 @@ cmake:linux:clang:static:
     - Copy-Item Copyright libxslt-install\share\libxslt
   after_script:
     - .\7za.exe a libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:MSYSTEM-$Env:SUFFIX.7z .\libxslt-install\*
-  cache:
-    key: "$MSYSTEM"
-    paths:
-      - 7za.exe
   artifacts:
     paths:
       - libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:MSYSTEM-$Env:SUFFIX.7z
@@ -231,7 +227,6 @@ cmake:mingw:w64-x86_64:static:
     key: "msvc"
     paths:
       - cmake-$Env:CMAKE_VERSION-win64-x64/
-      - 7za.exe
   artifacts:
     paths:
       - libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:CMAKE_GENERATOR_TOOLSET-$Env:CMAKE_GENERATOR_PLATFORM-$Env:SUFFIX.7z
