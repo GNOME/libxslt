@@ -1,4 +1,8 @@
-# Makefile for libxml2 python library
+# Makefile for libxslt python library
+
+# We use a rule with multiple output files which creates problems with
+# parallel builds.
+.NOTPARALLEL:
 
 SUBDIRS = . tests
 
