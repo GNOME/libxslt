@@ -6,7 +6,6 @@ check_PROGRAMS = testTargets
 EXTRA_DIST = xpath.dict xpath.xml xslt.dict xslt.xml seed
 CLEANFILES = $(EXTRA_PROGRAMS)
 AM_CPPFLAGS = -I$(top_srcdir)
-AM_CFLAGS = $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
 DEPENDENCIES = $(LIBXSLT_LIBS)
 LDADD = $(LIBXSLT_LIBS) \
         $(LIBXML_LIBS) $(EXTRA_LIBS) $(LIBM)

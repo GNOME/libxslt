@@ -18,8 +18,8 @@ pyexec_LTLIBRARIES = libxsltmod.la
 libxsltmod_la_CPPFLAGS = \
 	-I$(top_srcdir)/libxslt \
 	-I$(top_srcdir) \
-	-I../libexslt \
-	$(PYTHON_CFLAGS) $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
+	-I../libexslt
+libxsltmod_la_CFLAGS = $(AM_CFLAGS) $(PYTHON_CFLAGS)
 libxsltmod_la_SOURCES = libxslt.c types.c
 nodist_libxsltmod_la_SOURCES = libxslt-py.c
 libxsltmod_la_LIBADD = \

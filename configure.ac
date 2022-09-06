@@ -337,20 +337,20 @@ dnl
 if test "${GCC}" != "yes" ; then
     case "${host}" in
           *-*-hpux* )
-	       CFLAGS="${CFLAGS} -Wp,-H30000"
+	       AM_CFLAGS="${AM_CFLAGS} -Wp,-H30000"
 	       ;;
           *-dec-osf* )
-               CFLAGS="${CFLAGS} -ieee"
+               AM_CFLAGS="${AM_CFLAGS} -ieee"
                ;;
     esac
 else
-    CFLAGS="${CFLAGS} -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wredundant-decls"
+    AM_CFLAGS="${AM_CFLAGS} -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wredundant-decls"
     case "${host}" in
           alpha*-*-linux* )
-	       CFLAGS="${CFLAGS} -mieee"
+	       AM_CFLAGS="${AM_CFLAGS} -mieee"
 	       ;;
 	  alpha*-*-osf* )
-	       CFLAGS="${CFLAGS} -mieee"
+	       AM_CFLAGS="${AM_CFLAGS} -mieee"
 	       ;;
     esac
 fi
@@ -443,6 +443,8 @@ then
 	AC_MSG_ERROR([Could not find libxml2 anywhere.])
 fi
 
+AM_CFLAGS="$AM_CFLAGS $LIBXML_CFLAGS"
+
 
 AC_ARG_WITH(plugins,
 [  --with-plugins          Add plugin extension support (on)])
@@ -508,16 +510,19 @@ LIBXSLT_CFLAGS=""
 case ${host} in
     *-*-mingw* | *-*-cygwin* | *-*-msvc* )
         # If the host is Windows, and shared libraries are disabled, we
-        # need to add -DLIBXML_STATIC to EXTRA_CFLAGS in order for linking to
+        # need to add -DLIBXML_STATIC to AM_CFLAGS in order for linking to
         # work properly (without it, xmlexports.h would force the use of
         # DLL imports, which obviously aren't present in a static
         # library).
         if test "x$enable_shared" = "xno"; then
            LIBXSLT_CFLAGS="$LIBXSLT_CFLAGS -DLIBXSLT_STATIC -DLIBEXSLT_STATIC"
+           AM_CFLAGS="$AM_CFLAGS -DLIBXSLT_STATIC -DLIBEXSLT_STATIC"
         fi
         ;;
 esac
 AC_SUBST(LIBXSLT_CFLAGS)
+
+AC_SUBST(AM_CFLAGS)
 
 EXSLT_LIBDIR='-L${libdir}'
 EXSLT_INCLUDEDIR='-I${includedir}'
