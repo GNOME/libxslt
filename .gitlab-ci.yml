@@ -51,7 +51,7 @@ clang:asan:
   before_script:
     - "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
     - $Env:Path="C:\msys64\$Env:MINGW_PATH\bin;C:\msys64\usr\bin;$Env:Path"
-    - bash -lc 'sh .gitlab-ci/setup_mingw.sh'
+    - bash -lc 'sh .gitlab-ci/setup_mingw.sh autotools'
   script:
     - bash -lc 'sh .gitlab-ci/test.sh'
 
@@ -136,7 +136,7 @@ cmake:linux:clang:static:
   before_script:
     - "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
     - $Env:Path="C:\msys64\$Env:MINGW_PATH\bin;C:\msys64\usr\bin;$Env:Path"
-    - bash -lc 'sh .gitlab-ci/setup_mingw.sh'
+    - bash -lc 'sh .gitlab-ci/setup_mingw.sh cmake ninja'
     - .gitlab-ci/Install-7-Zip
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source
     - cmake -G Ninja -DBUILD_SHARED_LIBS=$Env:BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxml2-install -DLIBXML2_WITH_TESTS=OFF -S libxml2-source -B libxml2-build
