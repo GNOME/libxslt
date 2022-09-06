@@ -2,22 +2,7 @@
   # Reuse libxml2 image
   image: registry.gitlab.gnome.org/gnome/libxml2
   script:
-    - |
-      git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git
-      cd libxml2
-      sh autogen.sh $CONFIG
-      make -j$(nproc)
-      cd ..
-      sh autogen.sh $CONFIG --with-libxml-src=libxml2
-      # Don't run make in "doc" directory
-      for target in libxslt libexslt xsltproc python tests/plugins; do
-          make -j$(nproc) -C $target V=1 CFLAGS="$CFLAGS -Werror"
-      done
-      make -j$(nproc) -C tests/fuzz V=1 CFLAGS="$CFLAGS -Werror" testTargets
-      make -s -C tests tests | tee test.log
-      make -s -C xsltproc tests | tee -a test.log
-      grep -qv '^## Running' test.log && exit 1
-      make -s -C python tests
+    - sh .gitlab-ci/test.sh
 
 gcc:
   extends: .test
@@ -57,14 +42,40 @@ clang:asan:
     CC: clang
     CFLAGS: "-O2 -g -fno-omit-frame-pointer -fsanitize=memory -Wimplicit-int-conversion -Wno-error=cast-align"
 
+.mingw:
+  tags:
+    - win32-ps
+  variables:
+    CONFIG: "--without-crypto"
+    CHERE_INVOKING: "yes"
+  before_script:
+    - "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
+    - $Env:Path="C:\msys64\$Env:MINGW_PATH\bin;C:\msys64\usr\bin;$Env:Path"
+    - bash -lc 'sh .gitlab-ci/setup_mingw.sh'
+  script:
+    - bash -lc 'sh .gitlab-ci/test.sh'
+
+mingw:w64-x86_64:shared:
+  extends: .mingw
+  variables:
+    CFLAGS: "-O2"
+    MSYSTEM: MINGW64
+    MINGW_PATH: mingw64
+
+# Disabled, GCC missing?
+.mingw:msys:shared:
+  extends: .mingw
+  variables:
+    CFLAGS: "-O2"
+    MSYSTEM: MSYS
+    MINGW_PATH: usr
+
 .cmake:linux:
   image: registry.gitlab.gnome.org/gnome/libxml2
   before_script:
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source
     - cmake -DBUILD_SHARED_LIBS=$BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxml2-install -DCMAKE_BUILD_TYPE=RelWithDebInfo -DLIBXML2_WITH_TESTS=OFF -S libxml2-source -B libxml2-build
     - cmake --build libxml2-build --target install
-    - mkdir -p libxml2-install/share/libxml2
-    - cp libxml2-source/Copyright libxml2-install/share/libxml2
     - export CMAKE_PREFIX_PATH=$CI_PROJECT_DIR/libxml2-install:$CMAKE_PREFIX_PATH
     - export PATH=$CI_PROJECT_DIR/libxml2-install/bin:$PATH
     - export LD_LIBRARY_PATH=$CI_PROJECT_DIR/libxml2-install/bin:$LD_LIBRARY_PATH
@@ -120,27 +131,16 @@ cmake:linux:clang:static:
 .cmake:mingw:
   tags:
     - win32-ps
+  variables:
+    CHERE_INVOKING: "yes"
   before_script:
     - "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
     - $Env:Path="C:\msys64\$Env:MINGW_PATH\bin;C:\msys64\usr\bin;$Env:Path"
-    - pacman --noconfirm -Syu
-    - pacman --noconfirm -S
-        $Env:MINGW_PACKAGE_PREFIX-cmake
-        $Env:MINGW_PACKAGE_PREFIX-libiconv
-        $Env:MINGW_PACKAGE_PREFIX-ninja
-        $Env:MINGW_PACKAGE_PREFIX-python
-        $Env:MINGW_PACKAGE_PREFIX-python2
-        $Env:MINGW_PACKAGE_PREFIX-xz
-        $Env:MINGW_PACKAGE_PREFIX-zlib
-    - if (-not (Test-Path 7za.exe)) {
-        Invoke-WebRequest -Uri https://www.7-zip.org/a/7z1900-extra.7z -OutFile 7z1900-extra.7z ;
-        cmake -E tar xf 7z1900-extra.7z 7za.exe
-      }
+    - bash -lc 'sh .gitlab-ci/setup_mingw.sh'
+    - .gitlab-ci/Install-7-Zip
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source
     - cmake -G Ninja -DBUILD_SHARED_LIBS=$Env:BUILD_SHARED_LIBS -DCMAKE_INSTALL_PREFIX=libxml2-install -DLIBXML2_WITH_TESTS=OFF -S libxml2-source -B libxml2-build
     - cmake --build libxml2-build --config RelWithDebInfo --target install
-    - New-Item -ItemType Directory libxml2-install\share\libxml2
-    - Copy-Item libxml2-source\Copyright libxml2-install\share\libxml2
     - $Env:CMAKE_PREFIX_PATH="$Env:CI_PROJECT_DIR\libxml2-install;$Env:CMAKE_PREFIX_PATH"
     - $Env:Path="$Env:CI_PROJECT_DIR\libxml2-install\bin;$Env:Path"
   script:
@@ -149,14 +149,14 @@ cmake:linux:clang:static:
     - New-Item -ItemType Directory libxslt-install\share\libxslt
     - Copy-Item Copyright libxslt-install\share\libxslt
   after_script:
-    - .\7za.exe a libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:MINGW_PACKAGE_PREFIX-$Env:SUFFIX.7z .\libxslt-install\*
+    - .\7za.exe a libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:MSYSTEM-$Env:SUFFIX.7z .\libxslt-install\*
   cache:
-    key: "$MINGW_PACKAGE_PREFIX"
+    key: "$MSYSTEM"
     paths:
       - 7za.exe
   artifacts:
     paths:
-      - libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:MINGW_PACKAGE_PREFIX-$Env:SUFFIX.7z
+      - libxslt-$Env:CI_COMMIT_SHORT_SHA-$Env:MSYSTEM-$Env:SUFFIX.7z
     expire_in: 1 day
 
 cmake:mingw:w64-i686:shared:
@@ -165,7 +165,7 @@ cmake:mingw:w64-i686:shared:
     - schedules
   variables:
     BUILD_SHARED_LIBS: "ON"
-    MINGW_PACKAGE_PREFIX: mingw-w64-i686
+    MSYSTEM: MINGW32
     MINGW_PATH: mingw32
     SUFFIX: shared
 
@@ -175,7 +175,7 @@ cmake:mingw:w64-i686:static:
     - schedules
   variables:
     BUILD_SHARED_LIBS: "OFF"
-    MINGW_PACKAGE_PREFIX: mingw-w64-i686
+    MSYSTEM: MINGW32
     MINGW_PATH: mingw32
     SUFFIX: static
 
@@ -183,7 +183,7 @@ cmake:mingw:w64-x86_64:shared:
   extends: .cmake:mingw
   variables:
     BUILD_SHARED_LIBS: "ON"
-    MINGW_PACKAGE_PREFIX: mingw-w64-x86_64
+    MSYSTEM: MINGW64
     MINGW_PATH: mingw64
     SUFFIX: shared
 
@@ -193,7 +193,7 @@ cmake:mingw:w64-x86_64:static:
     - schedules
   variables:
     BUILD_SHARED_LIBS: "OFF"
-    MINGW_PACKAGE_PREFIX: mingw-w64-x86_64
+    MSYSTEM: MINGW64
     MINGW_PATH: mingw64
     SUFFIX: static
 
@@ -209,16 +209,11 @@ cmake:mingw:w64-x86_64:static:
         Expand-Archive cmake-$Env:CMAKE_VERSION-win64-x64.zip -DestinationPath .
       }
     - $Env:Path="$Env:CI_PROJECT_DIR\cmake-$Env:CMAKE_VERSION-win64-x64\bin;$Env:Path"
-    - if (-not (Test-Path 7za.exe)) {
-        Invoke-WebRequest -Uri https://www.7-zip.org/a/7z1900-extra.7z -OutFile 7z1900-extra.7z ;
-        cmake -E tar xf 7z1900-extra.7z 7za.exe
-      }
+    - .gitlab-ci/Install-7-Zip
     - git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git libxml2-source
     - cmake -DBUILD_SHARED_LIBS="$Env:BUILD_SHARED_LIBS" -DCMAKE_INSTALL_PREFIX=libxml2-install -DLIBXML2_WITH_ICONV=OFF -DLIBXML2_WITH_LZMA=OFF -DLIBXML2_WITH_PYTHON=OFF -DLIBXML2_WITH_ZLIB=OFF -S libxml2-source -B libxml2-build
     - cmake --build libxml2-build --config Debug --target install
     - cmake --build libxml2-build --config Release --target install
-    - New-Item -ItemType Directory libxml2-install\share\libxml2
-    - Copy-Item libxml2-source\Copyright libxml2-install\share\libxml2
     - $Env:CMAKE_PREFIX_PATH="$Env:CI_PROJECT_DIR\libxml2-install;$Env:CMAKE_PREFIX_PATH"
     - $Env:Path="$Env:CI_PROJECT_DIR\libxml2-install\bin;$Env:Path"
   script:
