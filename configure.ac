@@ -186,7 +186,13 @@ AC_ARG_WITH(python,
 AS_IF([test "x$with_python" != "xno"], [
     AM_PATH_PYTHON
     PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
+    case "$host" in
+        *-*-cygwin* | *-*-mingw* | *-*-msys* )
+            PYTHON_LDFLAGS="-no-undefined"
+            ;;
+    esac
 ])
+AC_SUBST(PYTHON_LDFLAGS)
 AM_CONDITIONAL([WITH_PYTHON], [test "x$with_python" != "xno"])
 
 AC_ARG_WITH(crypto, [  --with-crypto           Add crypto support to exslt (on)])
@@ -484,13 +490,6 @@ expanded_libdir=$(
 )
 LIBXSLT_DEFAULT_PLUGINS_PATH="$expanded_libdir/libxslt-plugins"
 AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
-
-case "$host" in
- *-*-cygwin*|*-*-mingw*)
- LDFLAGS="$LDFLAGS -no-undefined"
- ;;
-esac
-
 
 AC_SUBST(XML_CONFIG)
 AC_SUBST(LIBXML_LIBS)

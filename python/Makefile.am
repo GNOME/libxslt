@@ -26,7 +26,7 @@ libxsltmod_la_LIBADD = \
 	$(top_builddir)/libxslt/libxslt.la \
 	$(top_builddir)/libexslt/libexslt.la \
 	$(PYTHON_LIBS) $(LIBXML_LIBS)
-libxsltmod_la_LDFLAGS = -module -avoid-version
+libxsltmod_la_LDFLAGS = $(AM_LDFLAGS) $(PYTHON_LDFLAGS) -module -avoid-version
 
 libxslt.py: $(srcdir)/libxsl.py libxsltclass.py
 	cat $(srcdir)/libxsl.py libxsltclass.py > $@
