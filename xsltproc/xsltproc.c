@@ -55,7 +55,9 @@
 #include <sys/timeb.h>
 #endif
 
+#ifdef LIBXML_DEBUG_ENABLED
 static int debug = 0;
+#endif
 static int repeat = 0;
 static int timing = 0;
 static int dumpextensions = 0;
