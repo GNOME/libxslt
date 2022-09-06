@@ -91,13 +91,7 @@ const xmlChar *xsltXSLTAttrMarker = (const xmlChar *) "LRE XSLT Attr";
 #ifdef XSLT_LOCALE_WINAPI
 extern xmlRMutexPtr xsltLocaleMutex;
 #endif
-/*
- * Harmless but avoiding a problem when compiling against a
- * libxml <= 2.3.11 without LIBXML_DEBUG_ENABLED
- */
-#ifndef LIBXML_DEBUG_ENABLED
-double xmlXPathStringEvalNumber(const xmlChar *str);
-#endif
+
 /*
  * Useful macros
  */
