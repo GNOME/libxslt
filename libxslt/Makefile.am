@@ -61,6 +61,7 @@ endif
 
 libxslt_la_LIBADD = $(LIBXML_LIBS) $(EXTRA_LIBS) $(LIBM)
 libxslt_la_LDFLAGS =					\
+		$(AM_LDFLAGS) -no-undefined		\
 		$(LIBXSLT_VERSION_SCRIPT)		\
 		-version-info $(LIBXSLT_VERSION_INFO)
 

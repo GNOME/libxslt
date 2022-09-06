@@ -28,7 +28,8 @@ libexslt_la_SOURCES =                   \
 	dynamic.c
 
 libexslt_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS) $(EXTRA_LIBS) $(LIBGCRYPT_LIBS) $(LIBM)
-libexslt_la_LDFLAGS = -version-info $(LIBEXSLT_VERSION_INFO)
+libexslt_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined \
+		      -version-info $(LIBEXSLT_VERSION_INFO)
 
 man_MANS = libexslt.3
 
