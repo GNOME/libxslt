@@ -21,7 +21,7 @@ tests: $(TESTSPY)
           fi; \
 	  for test in $(TESTSPY) ; do \
 	    echo "-- $$test" ; \
-	    (cd $(srcdir) && $(PYTHON) $$test ) || exit 1; \
+	    $(PYTHON) $(srcdir)/$$test; \
 	  done)
 else
 tests:
