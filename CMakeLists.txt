@@ -377,11 +377,17 @@ if(LIBXSLT_WITH_TESTS)
 				PREFIX ""
 				OUTPUT_NAME xmlsoft_org_xslt_testplugin
 			)
+			# There must be an easier way...
+			get_cmake_property(MULTI_CONFIG GENERATOR_IS_MULTI_CONFIG)
+			if (MULTI_CONFIG)
+				set(PLUGINS_PATH ${PROJECT_BINARY_DIR}/$<CONFIG>)
+			else()
+				set(PLUGINS_PATH ${PROJECT_BINARY_DIR})
+			endif()
 			set_tests_properties(
 				runtest PROPERTIES
-				ENVIRONMENT "LIBXSLT_PLUGINS_PATH=${CMAKE_CURRENT_BINARY_DIR}"
-			)
-		endif()
+				ENVIRONMENT LIBXSLT_PLUGINS_PATH=${PLUGINS_PATH}
+		)
 	endif()
 
 	if(Threads_FOUND)
