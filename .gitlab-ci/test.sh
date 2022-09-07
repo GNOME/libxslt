@@ -8,6 +8,8 @@ sh autogen.sh $CONFIG
 make -j$(nproc)
 cd ..
 
-sh autogen.sh $CONFIG --with-libxml-src=libxml2
+mkdir -p libxslt-build
+cd libxslt-build
+sh ../autogen.sh $CONFIG --with-libxml-src=../libxml2
 make -j$(nproc) V=1 CFLAGS="$CFLAGS -Werror"
-make -s check
+make -s CFLAGS="$CFLAGS -Werror" check
