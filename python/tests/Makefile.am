@@ -8,7 +8,7 @@ TESTSPY =	\
 exampledir = $(docdir)/python/examples
 dist_example_DATA = test.xml test.xsl pyxsltproc.py $(TESTSPY)
 
-tests: $(TESTSPY)
+check-local: $(TESTSPY)
 	@(export PYTHONPATH="..:../.libs:$(srcdir)/..:$$PYTHONPATH"; \
 	  export LD_LIBRARY_PATH="$(top_builddir)/libxslt/.libs:$(top_builddir)/libexslt/.libs:$$LD_LIBRARY_PATH"; \
 	  export DYLD_LIBRARY_PATH="$(top_builddir)/libxslt/.libs:$(top_builddir)/libexslt/.libs:$$DYLD_LIBRARY_PATH"; \
@@ -23,8 +23,6 @@ tests: $(TESTSPY)
 	    echo "-- $$test" ; \
 	    $(PYTHON) $(srcdir)/$$test; \
 	  done)
-else
-tests:
 endif
 
 CLEANFILES = *.pyc core

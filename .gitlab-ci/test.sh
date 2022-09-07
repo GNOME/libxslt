@@ -10,7 +10,4 @@ cd ..
 
 sh autogen.sh $CONFIG --with-libxml-src=libxml2
 make -j$(nproc) V=1 CFLAGS="$CFLAGS -Werror"
-make -s -C tests tests | tee test.log
-make -s -C xsltproc tests | tee -a test.log
-grep -qv '^## Running' test.log && exit 1
-make -s -C python tests
+make -s check

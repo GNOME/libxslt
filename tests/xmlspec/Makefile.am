@@ -9,11 +9,7 @@ EXTRA_DIST = REC-xml-20001006.xml xmlspec-v21.dtd W3C-REC.css \
 
 CLEANFILES = .memdump debug
 
-valgrind:
-	@echo '## Running the regression tests under Valgrind'
-	$(MAKE) CHECKER='libtool --mode=execute valgrind -q --leak-check=full' tests
-
-test tests: $(top_builddir)/xsltproc/xsltproc
+check-local: $(top_builddir)/xsltproc/xsltproc
 	@echo '## Running xmlspec tests'
 	@(echo > .memdump)
 	@log=`$(CHECKER) $(top_builddir)/xsltproc/xsltproc -timing \

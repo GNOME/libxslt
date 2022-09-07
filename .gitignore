@@ -48,6 +48,7 @@ python/libxsltclass.py
 python/libxsltclass.txt
 python/tests/foo
 stamp-h1
+tests/runtest
 tests/xmlspec/debug
 xslt-config
 xsltConf.sh

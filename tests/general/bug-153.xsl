@@ -10,7 +10,7 @@
 
   <xsl:template match="c">
     <p>
-      <xsl:value-of select="document('../docs/bug-153.doc')/ch/v[@name=current()/v]"/>
+      <xsl:value-of select="document('bug-153.doc')/ch/v[@name=current()/v]"/>
     </p>
   </xsl:template>
 

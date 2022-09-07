@@ -26,6 +26,10 @@ option(LIBXSLT_WITH_THREADS "Add multithread support" ON)
 set(LIBXSLT_WITH_TRIO OFF)
 option(LIBXSLT_WITH_XSLT_DEBUG "Add the debugging code" ON)
 
+if(NOT BUILD_SHARED_LIBS)
+	set(LIBXSLT_WITH_MODULES OFF)
+endif()
+
 if(LIBXSLT_WITH_CRYPTO AND NOT WIN32)
 	find_package(Gcrypt REQUIRED)
 endif()
@@ -352,10 +356,38 @@ install(TARGETS xsltproc EXPORT LibXslt RUNTIME DESTINATION ${CMAKE_INSTALL_BIND
 
 if(LIBXSLT_WITH_TESTS)
 	enable_testing()
+
+	if (NOT MSVC)
+		# TODO:
+		# - Unsupported encoding windows-1251
+		# - Segfault in exslt dynamic tests
+
+		add_executable(runtest tests/runtest.c)
+		target_link_libraries(runtest LibXslt LibExslt)
+		add_test(
+			NAME runtest COMMAND runtest
+			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tests"
+		)
+
+		if (LIBXSLT_WITH_MODULES)
+			add_library(testplugin SHARED tests/testplugin.c)
+			target_link_libraries(testplugin LibExslt LibXslt)
+			set_target_properties(
+				testplugin PROPERTIES
+				PREFIX ""
+				OUTPUT_NAME xmlsoft_org_xslt_testplugin
+			)
+			set_tests_properties(
+				runtest PROPERTIES
+				ENVIRONMENT "LIBXSLT_PLUGINS_PATH=${CMAKE_CURRENT_BINARY_DIR}"
+			)
+		endif()
+	endif()
+
 	if(Threads_FOUND)
 		add_executable(testThreads xsltproc/testThreads.c)
 		target_link_libraries(testThreads LibXslt LibExslt Threads::Threads)
-		add_test(NAME testThreads COMMAND testThreads WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+		add_test(NAME testThreads COMMAND testThreads)
 	endif()
 endif()
 

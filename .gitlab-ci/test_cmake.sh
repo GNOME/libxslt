@@ -21,8 +21,10 @@ cmake "$@" \
     -DCMAKE_C_FLAGS='-Werror' \
     -S . -B libxslt-build
 cmake --build libxslt-build --target install
+
+(cd libxslt-build && ctest -VV)
+
 mkdir -p libxslt-install/share/libxslt
 cp Copyright libxslt-install/share/libxslt
-
 (cd libxslt-install &&
     tar -czf ../libxslt-$CI_COMMIT_SHORT_SHA-$SUFFIX.tar.gz *)

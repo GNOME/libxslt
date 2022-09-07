@@ -10,7 +10,7 @@
 
 <xsl:output method="html" indent="no"/>
 
-<xsl:variable name="g.doc.root" select="document('../docs/bug-130.doc')"/>
+<xsl:variable name="g.doc.root" select="document('bug-130.doc')"/>
 
 <xsl:template match="/">
   <html>

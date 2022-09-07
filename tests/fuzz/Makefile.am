@@ -24,11 +24,9 @@ $(top_builddir)/libxslt/libxslt.la:
 $(top_builddir)/libexslt/libexslt.la: $(top_builddir)/libxslt/libxslt.la
 	cd $(top_builddir)/libexslt && $(MAKE) libexslt.la
 
-.PHONY: tests fuzz-xpath fuzz-xslt
+.PHONY: fuzz-xpath fuzz-xslt
 
-tests:
-
-fuzz: $(check_PROGRAMS)
+check-local: $(check_PROGRAMS)
 	@echo '## Running fuzz target tests'
 	@./testTargets $(srcdir)
 

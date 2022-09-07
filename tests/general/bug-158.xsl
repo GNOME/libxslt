@@ -7,7 +7,7 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
 <xsl:variable name="myPath" select="/dsl:page/@path" />
-<xsl:variable name="layout" select="document('../docs/bug-158.doc')"/>
+<xsl:variable name="layout" select="document('bug-158.doc')"/>
 <xsl:variable name="root"><xsl:value-of select="$layout//layout:page[@path=$myPath]" />
 </xsl:variable>
 

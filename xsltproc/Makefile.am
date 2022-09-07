@@ -2,10 +2,9 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/libxslt -I$(top_srcdir)/libexslt \
 	      -I$(top_builddir) -I$(top_builddir)/libxslt \
 	      -I$(top_builddir)/libexslt
 
-EXTRA_PROGRAMS=
 bin_PROGRAMS = xsltproc
 
-noinst_PROGRAMS=testThreads
+check_PROGRAMS = testThreads
 
 xsltproc_SOURCES = xsltproc.c
 xsltproc_LDFLAGS = 
@@ -33,7 +32,7 @@ $(top_builddir)/libxslt/libxslt.la:
 $(top_builddir)/libexslt/libexslt.la: $(top_builddir)/libxslt/libxslt.la
 	cd $(top_builddir)/libexslt && $(MAKE) libexslt.la
 
-tests: testThreads
+check-local:
 	@echo > .memdump
 	@echo '## Running testThreads'
 	@($(CHECKER) ./testThreads > /dev/null; grep "MORY ALLO" .memdump  | grep -v "MEMORY ALLOCATED : 0" || true)
