@@ -357,36 +357,31 @@ install(TARGETS xsltproc EXPORT LibXslt RUNTIME DESTINATION ${CMAKE_INSTALL_BIND
 if(LIBXSLT_WITH_TESTS)
 	enable_testing()
 
-	if (NOT MSVC)
-		# TODO:
-		# - Unsupported encoding windows-1251
-		# - Segfault in exslt dynamic tests
+	add_executable(runtest tests/runtest.c)
+	target_link_libraries(runtest LibXslt LibExslt)
+	add_test(
+		NAME runtest COMMAND runtest
+		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tests"
+	)
 
-		add_executable(runtest tests/runtest.c)
-		target_link_libraries(runtest LibXslt LibExslt)
-		add_test(
-			NAME runtest COMMAND runtest
-			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tests"
+	if (LIBXSLT_WITH_MODULES)
+		add_library(testplugin SHARED tests/testplugin.c)
+		target_link_libraries(testplugin LibExslt LibXslt)
+		set_target_properties(
+			testplugin PROPERTIES
+			PREFIX ""
+			OUTPUT_NAME xmlsoft_org_xslt_testplugin
 		)
-
-		if (LIBXSLT_WITH_MODULES)
-			add_library(testplugin SHARED tests/testplugin.c)
-			target_link_libraries(testplugin LibExslt LibXslt)
-			set_target_properties(
-				testplugin PROPERTIES
-				PREFIX ""
-				OUTPUT_NAME xmlsoft_org_xslt_testplugin
-			)
-			# There must be an easier way...
-			get_cmake_property(MULTI_CONFIG GENERATOR_IS_MULTI_CONFIG)
-			if (MULTI_CONFIG)
-				set(PLUGINS_PATH ${PROJECT_BINARY_DIR}/$<CONFIG>)
-			else()
-				set(PLUGINS_PATH ${PROJECT_BINARY_DIR})
-			endif()
-			set_tests_properties(
-				runtest PROPERTIES
-				ENVIRONMENT LIBXSLT_PLUGINS_PATH=${PLUGINS_PATH}
+		# There must be an easier way...
+		get_cmake_property(MULTI_CONFIG GENERATOR_IS_MULTI_CONFIG)
+		if (MULTI_CONFIG)
+			set(PLUGINS_PATH ${PROJECT_BINARY_DIR}/$<CONFIG>)
+		else()
+			set(PLUGINS_PATH ${PROJECT_BINARY_DIR})
+		endif()
+		set_tests_properties(
+			runtest PROPERTIES
+			ENVIRONMENT LIBXSLT_PLUGINS_PATH=${PLUGINS_PATH}
 		)
 	endif()
 
