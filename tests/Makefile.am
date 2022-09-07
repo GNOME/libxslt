@@ -44,6 +44,7 @@ docbook_tests:
 dist-hook:
 	cp -a $(srcdir)/REC $(distdir)
 	cp -a $(srcdir)/REC2 $(distdir)
+	cp -a $(srcdir)/encoding $(distdir)
 	cp -a $(srcdir)/exslt $(distdir)
 	cp -a $(srcdir)/extensions $(distdir)
 	cp -a $(srcdir)/general $(distdir)

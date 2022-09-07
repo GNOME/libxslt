@@ -680,6 +680,10 @@ testDesc testDescriptions[] = {
       xsltTest, "general", "./*.xsl", 0 },
     { "general tests without dictionaries",
       xsltTest, "general", "./*.xsl", XML_PARSE_NODICT },
+#if defined(LIBXML_ICONV_ENABLED) || defined(LIBXML_ICU_ENABLED)
+    { "encoding tests",
+      xsltTest, "encoding", "./*.xsl", 0 },
+#endif
     { "documents tests",
       xsltTest, "documents", "./*.xsl", 0 },
     { "numbers tests",
