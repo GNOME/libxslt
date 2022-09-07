@@ -6681,6 +6681,9 @@ xsltParseStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc) {
     }
 #endif /* else of XSLT_REFACTORED */
 
+    if (style->parent == NULL)
+        xsltResolveStylesheetAttributeSet(style);
+
     if (style->errors != 0) {
         /*
         * Detach the doc from the stylesheet; otherwise the doc
@@ -6694,9 +6697,6 @@ xsltParseStylesheetUser(xsltStylesheetPtr style, xmlDocPtr doc) {
             xsltCleanupStylesheetTree(doc, xmlDocGetRootElement(doc));
         return(-1);
     }
-
-    if (style->parent == NULL)
-        xsltResolveStylesheetAttributeSet(style);
 
     return(0);
 }
