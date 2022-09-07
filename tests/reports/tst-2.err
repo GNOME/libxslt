@@ -1,5 +1,5 @@
-compilation error: file ./tst-2.xsl line 2 element text
-misplaced text element: '
+compilation error: file ./tst-2.xsl line 6 element text
+misplaced text node: '
 
 a not allowed top level element
 

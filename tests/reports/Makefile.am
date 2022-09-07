@@ -20,7 +20,7 @@ valgrind:
 test tests: $(top_builddir)/xsltproc/xsltproc
 	@echo '## Running reports tests'
 	@(echo > .memdump)
-	-@(for i in $(srcdir)/../docs/*.xml ; do \
+	-@(for i in $(srcdir)/*.xml ; do \
 	  if [ -d $$i ] ; then continue ; fi ; \
 	  doc=`basename $$i .xml` ; \
 	  for j in $(srcdir)/$$doc*.xsl ; do \
