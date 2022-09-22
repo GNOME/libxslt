@@ -32,7 +32,9 @@ include(CheckSymbolExists)
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
-find_package(LibXml2 CONFIG REQUIRED)
+if(NOT TARGET LibXml2)
+	find_package(LibXml2 CONFIG REQUIRED)
+endif()
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(LIBXSLT_WITH_DEBUGGER "Add the debugging support" ON)
