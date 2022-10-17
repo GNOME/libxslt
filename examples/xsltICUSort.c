@@ -42,15 +42,14 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     xmlXPathObjectPtr *resultsTab[XSLT_MAX_SORT];
     xmlXPathObjectPtr *results = NULL, *res;
     xmlNodeSetPtr list = NULL;
-    int descending, number, desc, numb;
     int len = 0;
     int i, j, incr;
     int tst;
     int depth;
     xmlNodePtr node;
     xmlXPathObjectPtr tmp;
-    xsltStylePreCompPtr comp;
-    int tempstype[XSLT_MAX_SORT], temporder[XSLT_MAX_SORT];
+    const xsltStylePreComp *comp;
+    int number[XSLT_MAX_SORT], desc[XSLT_MAX_SORT];
 
     /* Start ICU change */
     UCollator *coll = 0;
@@ -75,45 +74,46 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 
     for (j = 0; j < nbsorts; j++) {
 	comp = sorts[j]->_private;
-	tempstype[j] = 0;
 	if ((comp->stype == NULL) && (comp->has_stype != 0)) {
-	    comp->stype =
+	    xmlChar *stype =
 		xsltEvalAttrValueTemplate(ctxt, sorts[j],
 					  (const xmlChar *) "data-type",
 					  XSLT_NAMESPACE);
-	    if (comp->stype != NULL) {
-		tempstype[j] = 1;
-		if (xmlStrEqual(comp->stype, (const xmlChar *) "text"))
-		    comp->number = 0;
-		else if (xmlStrEqual(comp->stype, (const xmlChar *) "number"))
-		    comp->number = 1;
+	    number[j] = 0;
+	    if (stype != NULL) {
+		if (xmlStrEqual(stype, (const xmlChar *) "text"))
+		    ;
+		else if (xmlStrEqual(stype, (const xmlChar *) "number"))
+		    number[j] = 1;
 		else {
 		    xsltTransformError(ctxt, NULL, sorts[j],
 			  "xsltDoSortFunction: no support for data-type = %s\n",
-				     comp->stype);
-		    comp->number = 0; /* use default */
+			  stype);
 		}
+                xmlFree(stype);
 	    }
+        } else {
+            number[j] = comp->number;
 	}
-	temporder[j] = 0;
 	if ((comp->order == NULL) && (comp->has_order != 0)) {
-	    comp->order = xsltEvalAttrValueTemplate(ctxt, sorts[j],
-						    (const xmlChar *) "order",
-						    XSLT_NAMESPACE);
-	    if (comp->order != NULL) {
-		temporder[j] = 1;
-		if (xmlStrEqual(comp->order, (const xmlChar *) "ascending"))
-		    comp->descending = 0;
-		else if (xmlStrEqual(comp->order,
-				     (const xmlChar *) "descending"))
-		    comp->descending = 1;
+	    xmlChar *order = xsltEvalAttrValueTemplate(ctxt, sorts[j],
+						       BAD_CAST "order",
+						       XSLT_NAMESPACE);
+	    desc[j] = 0;
+	    if (order != NULL) {
+		if (xmlStrEqual(order, (const xmlChar *) "ascending"))
+		    ;
+		else if (xmlStrEqual(order, (const xmlChar *) "descending"))
+		    desc[j] = 1;
 		else {
 		    xsltTransformError(ctxt, NULL, sorts[j],
 			     "xsltDoSortFunction: invalid value %s for order\n",
-				     comp->order);
-		    comp->descending = 0; /* use default */
+			     order);
 		}
+                xmlFree(order);
 	    }
+        } else {
+            desc[j] = comp->descending;
 	}
     }
 
@@ -126,8 +126,6 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
     results = resultsTab[0];
 
     comp = sorts[0]->_private;
-    descending = comp->descending;
-    number = comp->number;
     if (results == NULL)
 	return;
 
@@ -166,7 +164,7 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 		if (results[j] == NULL)
 		    tst = 1;
 		else {
-		    if (number) {
+		    if (number[0]) {
 			if (results[j]->floatval == results[j + incr]->floatval)
 			    tst = 0;
 			else if (results[j]->floatval >
@@ -186,7 +184,7 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			tst = ucol_strcoll(coll, target, u_strlen(target), target2, u_strlen(target2));
 			/* End ICU change */
 		    }
-		    if (descending)
+		    if (desc[0])
 			tst = -tst;
 		}
 		if (tst == 0) {
@@ -200,8 +198,6 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			comp = sorts[depth]->_private;
 			if (comp == NULL)
 			    break;
-			desc = comp->descending;
-			numb = comp->number;
 
 			/*
 			 * Compute the result of the next level for the
@@ -216,7 +212,7 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			if (res[j] == NULL)
 			    tst = 1;
 			else {
-			    if (numb) {
+			    if (number[depth]) {
 				if (res[j]->floatval == res[j + incr]->floatval)
 				    tst = 0;
 				else if (res[j]->floatval >
@@ -236,7 +232,7 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 				tst = ucol_strcoll(coll, target, u_strlen(target), target2, u_strlen(target2));
 				/* End ICU change */
 			    }
-			    if (desc)
+			    if (desc[depth])
 			      tst = -tst;
 			}
 			/*
@@ -284,16 +280,6 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 
     for (j = 0; j < nbsorts; j++) {
 	comp = sorts[j]->_private;
-	if (tempstype[j] == 1) {
-	    /* The data-type needs to be recomputed each time */
-	    xmlFree(comp->stype);
-	    comp->stype = NULL;
-	}
-	if (temporder[j] == 1) {
-	    /* The order needs to be recomputed each time */
-	    xmlFree(comp->order);
-	    comp->order = NULL;
-	}
 	if (resultsTab[j] != NULL) {
 	    for (i = 0;i < len;i++)
 		xmlXPathFreeObject(resultsTab[j][i]);
