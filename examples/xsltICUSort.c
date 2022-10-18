@@ -136,7 +136,7 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 	xsltTransformError(ctxt, NULL, NULL, "xsltICUSortFunction: Error opening converter\n");
     }
     if(comp->has_lang)
-	coll = ucol_open(comp->lang, &status);
+	coll = ucol_open((const char *) comp->lang, &status);
     if(U_FAILURE(status) || !comp->has_lang) {
 	status = U_ZERO_ERROR;
 	coll = ucol_open("en", &status);
@@ -179,8 +179,12 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 			target2len = xmlStrlen(results[j + incr]->stringval) * 2;
 			target = xmlMalloc(targetlen * sizeof(UChar));
 			target2 = xmlMalloc(target2len * sizeof(UChar));
-			targetlen = ucnv_toUChars(conv, target, targetlen, results[j]->stringval, -1, &status);
-			target2len = ucnv_toUChars(conv, target2, target2len, results[j+incr]->stringval, -1, &status);
+			targetlen = ucnv_toUChars(conv, target, targetlen,
+                                                  (const char *) results[j]->stringval,
+                                                  -1, &status);
+			target2len = ucnv_toUChars(conv, target2, target2len,
+                                                   (const char *) results[j+incr]->stringval,
+                                                   -1, &status);
 			tst = ucol_strcoll(coll, target, u_strlen(target), target2, u_strlen(target2));
 			/* End ICU change */
 		    }
@@ -227,8 +231,12 @@ xsltICUSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 				target2len = xmlStrlen(res[j + incr]->stringval) * 2;
 				target = xmlMalloc(targetlen * sizeof(UChar));
 				target2 = xmlMalloc(target2len * sizeof(UChar));
-				targetlen = ucnv_toUChars(conv, target, targetlen, res[j]->stringval, -1, &status);
-				target2len = ucnv_toUChars(conv, target2, target2len, res[j+incr]->stringval, -1, &status);
+				targetlen = ucnv_toUChars(conv, target, targetlen,
+                                                          (const char *) res[j]->stringval,
+                                                          -1, &status);
+				target2len = ucnv_toUChars(conv, target2, target2len,
+                                                           (const char *) res[j+incr]->stringval,
+                                                           -1, &status);
 				tst = ucol_strcoll(coll, target, u_strlen(target), target2, u_strlen(target2));
 				/* End ICU change */
 			    }
