@@ -582,7 +582,7 @@ static int compareFileMem(const char *filename, const char *mem, int size) {
 static int
 xsltTest(const char *filename, int options) {
     xsltStylesheetPtr style;
-    xmlDocPtr styleDoc, doc, outDoc;
+    xmlDocPtr styleDoc, doc = NULL, outDoc;
     xmlChar *out = NULL;
     const char *outSuffix, *errSuffix;
     char *docFilename, *outFilename, *errFilename;
@@ -602,6 +602,7 @@ xsltTest(const char *filename, int options) {
     } else {
         docFilename = changeSuffix(filename, ".xml");
         if (!checkTestFile(docFilename)) {
+            xmlFreeDoc(styleDoc);
             goto out;
         }
         style = xsltParseStylesheetDoc(styleDoc);
@@ -632,6 +633,7 @@ xsltTest(const char *filename, int options) {
         }
         xsltFreeStylesheet(style);
     }
+    xmlFreeDoc(doc);
 
     outFilename = changeSuffix(filename, outSuffix);
     res = compareFileMem(outFilename, (char *) out, outSize);
