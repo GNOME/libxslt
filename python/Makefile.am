@@ -13,7 +13,8 @@ EXTRA_DIST = 			\
 	libxml_wrap.h		\
 	libxslt_wrap.h		\
 	libxsl.py		\
-	libxslt-python-api.xml
+	libxslt-python-api.xml	\
+	setup.py.in
 
 if WITH_PYTHON
 
