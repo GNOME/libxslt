@@ -29,6 +29,13 @@ xmlParserInputPtr xmlNoNetExternalEntityLoader(const char *URL,
 
 #ifdef _WIN32
 
+#ifndef XML_IGNORE_FPTR_CAST_WARNINGS
+#define XML_IGNORE_FPTR_CAST_WARNINGS
+#endif
+#ifndef XML_POP_WARNINGS
+#define XML_POP_WARNINGS
+#endif
+
 #include <windows.h>
 #include <crtdbg.h>
 
