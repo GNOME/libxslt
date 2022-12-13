@@ -24,6 +24,7 @@
 #include <libxslt/extensions.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltInternals.h>
+#include <libxslt/xsltlocale.h>
 #include <libxslt/xsltutils.h>
 #include <libexslt/exslt.h>
 
@@ -589,6 +590,14 @@ xsltTest(const char *filename, int options) {
     int outSize = 0;
     int res;
     int ret = 0;
+
+    if (strcmp(filename, "./test-10-3.xsl") == 0) {
+        void *locale = xsltNewLocale(BAD_CAST "de", 0);
+        /* Skip test requiring "de" locale */
+        if (locale == NULL)
+            return(0);
+        xsltFreeLocale(locale);
+    }
 
     styleDoc = xmlReadFile(filename, NULL, XSLT_PARSE_OPTIONS | options);
     style = xsltLoadStylesheetPI(styleDoc);
