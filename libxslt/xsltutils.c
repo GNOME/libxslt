@@ -1089,8 +1089,12 @@ xsltComputeSortResultInternal(xsltTransformContextPtr ctxt, xmlNodePtr sort,
  */
 xmlXPathObjectPtr *
 xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
-    return xsltComputeSortResultInternal(ctxt, sort, /* number */ 0,
-                                         /* locale */ 0);
+    const xsltStylePreComp *comp = sort->_private;
+    int number = 0;
+
+    if (comp != NULL)
+        number = comp->number;
+    return xsltComputeSortResultInternal(ctxt, sort, number, /* locale */ 0);
 }
 
 /**
