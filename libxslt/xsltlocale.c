@@ -111,13 +111,13 @@ void *
 xsltNewLocale(const xmlChar *languageTag, int lowerFirst ATTRIBUTE_UNUSED) {
 #ifdef XSLT_LOCALE_POSIX
     locale_t locale;
-    char localeName[XSLTMAX_LANGTAGLEN+6]; /* 6 chars for ".utf8\0" */
+    char localeName[XSLTMAX_LANGTAGLEN+7]; /* 7 chars for ".UTF-8\0" */
     const xmlChar *p = languageTag;
     const char *region = NULL;
     char *q = localeName;
     int i, llen;
 
-    /* Convert something like "pt-br" to "pt_BR.utf8" */
+    /* Convert something like "pt-br" to "pt_BR.UTF-8" */
 
     if (languageTag == NULL)
 	return(NULL);
@@ -141,7 +141,7 @@ xsltNewLocale(const xmlChar *languageTag, int lowerFirst ATTRIBUTE_UNUSED) {
 	if (i == 0 || *p)
 	    return(NULL);
 
-        memcpy(q, ".utf8", 6);
+        memcpy(q, ".UTF-8", 7);
         locale = newlocale(LC_COLLATE_MASK, localeName, NULL);
         if (locale != NULL)
             return(locale);
@@ -153,7 +153,7 @@ xsltNewLocale(const xmlChar *languageTag, int lowerFirst ATTRIBUTE_UNUSED) {
 
     /* Try locale without territory, e.g. for Esperanto (eo) */
 
-    memcpy(q, ".utf8", 6);
+    memcpy(q, ".UTF-8", 7);
     locale = newlocale(LC_COLLATE_MASK, localeName, NULL);
     if (locale != NULL)
         return(locale);
@@ -171,7 +171,7 @@ xsltNewLocale(const xmlChar *languageTag, int lowerFirst ATTRIBUTE_UNUSED) {
     *q++ = '_';
     *q++ = region[0];
     *q++ = region[1];
-    memcpy(q, ".utf8", 6);
+    memcpy(q, ".UTF-8", 7);
     locale = newlocale(LC_COLLATE_MASK, localeName, NULL);
 
     return(locale);
