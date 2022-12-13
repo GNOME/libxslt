@@ -40,6 +40,7 @@
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltutils.h"
+#include "xsltlocale.h"
 #include "pattern.h"
 #include "transform.h"
 #include "variables.h"
@@ -706,6 +707,10 @@ xsltNewTransformContext(xsltStylesheetPtr style, xmlDocPtr doc) {
     cur->xinclude = xsltGetXIncludeDefault();
     cur->keyInitLevel = 0;
 
+    cur->newLocale = xsltNewLocale;
+    cur->freeLocale = xsltFreeLocale;
+    cur->genSortKey = xsltStrxfrm;
+
     return(cur);
 
 internal_err:
@@ -716,7 +721,7 @@ internal_err:
 
 /**
  * xsltFreeTransformContext:
- * @ctxt:  an XSLT parser context
+ * @ctxt:  an XSLT transform context
  *
  * Free up the memory allocated by @ctxt
  */

@@ -28,6 +28,7 @@
 #include <libxml/xmlIO.h>
 #include "xslt.h"
 #include "xsltInternals.h"
+#include "xsltlocale.h"
 #include "xsltutils.h"
 #include "imports.h"
 #include "extensions.h"
