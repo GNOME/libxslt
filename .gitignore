@@ -46,6 +46,7 @@ python/libxslt-py.h
 python/libxslt.py
 python/libxsltclass.py
 python/libxsltclass.txt
+python/setup.py
 python/tests/foo
 stamp-h1
 tests/runtest
