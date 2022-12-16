@@ -1089,7 +1089,7 @@ xsltComputeSortResultInternal(xsltTransformContextPtr ctxt, xmlNodePtr sort,
  */
 xmlXPathObjectPtr *
 xsltComputeSortResult(xsltTransformContextPtr ctxt, xmlNodePtr sort) {
-    const xsltStylePreComp *comp = sort->_private;
+    const xsltStylePreComp *comp = sort->psvi;
     int number = 0;
 
     if (comp != NULL)
