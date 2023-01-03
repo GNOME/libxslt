@@ -6838,7 +6838,8 @@ xsltParseStylesheetPI(const xmlChar *value) {
 	    if (val == NULL)
 		return(NULL);
 	    if ((xmlStrcasecmp(val, BAD_CAST "text/xml")) &&
-		(xmlStrcasecmp(val, BAD_CAST "text/xsl"))) {
+		(xmlStrcasecmp(val, BAD_CAST "text/xsl")) &&
+		(xmlStrcasecmp(val, BAD_CAST "application/xslt+xml"))) {
                 xmlFree(val);
 		break;
 	    }
