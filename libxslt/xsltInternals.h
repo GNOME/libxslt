@@ -1665,7 +1665,7 @@ typedef void *
 typedef void
 (*xsltFreeLocaleFunc)(void *locale);
 typedef xmlChar *
-(*xsltGenSortKeFunc)(void *locale, const xmlChar *lang);
+(*xsltGenSortKeyFunc)(void *locale, const xmlChar *lang);
 
 typedef enum {
     XSLT_STATE_OK = 0,
@@ -1795,7 +1795,7 @@ struct _xsltTransformContext {
 
     xsltNewLocaleFunc newLocale;
     xsltFreeLocaleFunc freeLocale;
-    xsltGenSortKeFunc genSortKey;
+    xsltGenSortKeyFunc genSortKey;
 };
 
 /**

@@ -182,7 +182,7 @@ XSLTPUBFUN void XSLTCALL
 		xsltSetCtxtLocaleHandlers	(xsltTransformContextPtr ctxt,
 						 xsltNewLocaleFunc newLocale,
 						 xsltFreeLocaleFunc freeLocale,
-						 xsltGenSortKeFunc genSortKey);
+						 xsltGenSortKeyFunc genSortKey);
 XSLTPUBFUN void XSLTCALL
 		xsltDefaultSortFunction		(xsltTransformContextPtr ctxt,
 						 xmlNodePtr *sorts,

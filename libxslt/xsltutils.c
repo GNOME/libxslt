@@ -1441,7 +1441,7 @@ void
 xsltSetCtxtLocaleHandlers(xsltTransformContextPtr ctxt,
                           xsltNewLocaleFunc newLocale,
                           xsltFreeLocaleFunc freeLocale,
-                          xsltGenSortKeFunc genSortKey) {
+                          xsltGenSortKeyFunc genSortKey) {
     if (ctxt == NULL)
         return;
 
