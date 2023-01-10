@@ -1353,11 +1353,8 @@ xsltDefaultSortFunction(xsltTransformContextPtr ctxt, xmlNodePtr *sorts,
 
 cleanup:
     for (j = 0; j < nbsorts; j++) {
-	comp = sorts[j]->psvi;
-	if ((comp->lang == NULL) && (comp->has_lang != 0)) {
-            if (locale[j] != NULL) {
-                ctxt->freeLocale(locale[j]);
-            }
+        if (locale[j] != NULL) {
+            ctxt->freeLocale(locale[j]);
         }
 	if (resultsTab[j] != NULL) {
 	    for (i = 0;i < len;i++)
