@@ -1276,8 +1276,11 @@ exsltFormatTime(xmlChar **cur, xmlChar *end, exsltDateValPtr dt) {
 
     tmp = floor(dt->sec);
     intSecs = (long) tmp;
-    /* Round down to make sure seconds stay below 60 */
-    nsecs = (long) floor((dt->sec - tmp) * 1000000000);
+    /*
+     * Round to nearest to avoid issues with floating point precision,
+     * but don't carry over so seconds stay below 60.
+     */
+    nsecs = (long) floor((dt->sec - tmp) * 1000000000 + 0.5);
     if (nsecs > 999999999)
         nsecs = 999999999;
     exsltFormatTwoDigits(cur, end, intSecs);
