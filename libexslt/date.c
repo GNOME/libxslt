@@ -326,29 +326,6 @@ _exsltDateParseGYear (exsltDateValPtr dt, const xmlChar **str)
 	}
 
 /**
- * FORMAT_FLOAT:
- * @num:  the double to format
- * @cur: a pointer to an allocated buffer
- * @pad: a flag for padding to 2 integer digits
- *
- * Formats a float. Result is appended to @cur and @cur is updated to
- * point after the integer. If the @pad flag is non-zero, then the
- * float representation has a minimum 2-digits integer part. The
- * fractional part is formatted if @num has a fractional value.
- */
-#define FORMAT_FLOAT(num, cur, pad)				\
-	{							\
-            xmlChar *sav, *str;                                 \
-            if ((pad) && (num < 10.0))                          \
-                *cur++ = '0';                                   \
-            str = xmlXPathCastNumberToString(num);              \
-            sav = str;                                          \
-            while (*str != 0)                                   \
-                *cur++ = *str++;                                \
-            xmlFree(sav);                                       \
-	}
-
-/**
  * _exsltDateParseGMonth:
  * @dt:  pointer to a date structure
  * @str: pointer to the string to analyze
@@ -504,23 +481,6 @@ _exsltDateParseTime (exsltDateValPtr dt, const xmlChar **str)
 
     return 0;
 }
-
-/**
- * FORMAT_TIME:
- * @dt:  the #exsltDateVal to format
- * @cur: a pointer to an allocated buffer
- *
- * Formats @dt in xsl:time format. Result is appended to @cur and
- * @cur is updated to point after the xsl:time.
- */
-#define FORMAT_TIME(dt, cur)					\
-	FORMAT_2_DIGITS(dt->hour, cur);				\
-	*cur = ':';						\
-	cur++;							\
-	FORMAT_2_DIGITS(dt->min, cur);				\
-	*cur = ':';						\
-	cur++;							\
-	FORMAT_FLOAT(dt->sec, cur, 1);
 
 /**
  * _exsltDateParseTimeZone:
@@ -1146,21 +1106,41 @@ error:
     return NULL;
 }
 
-/**
- * FORMAT_ITEM:
- * @num:        number to format
- * @cur:        current location to convert number
- * @limit:      max value
- * @item:       char designator
- *
- */
-#define FORMAT_ITEM(num, cur, limit, item)			\
-        if (num >= limit) {					\
-            double comp = floor(num / limit);			\
-            FORMAT_FLOAT(comp, cur, 0);				\
-            *cur++ = item;					\
-            num -= comp * limit;				\
+static void
+exsltFormatLong(xmlChar **cur, xmlChar *end, long num) {
+    xmlChar buf[20];
+    int i = 0;
+
+    while (i < 20) {
+        buf[i++] = '0' + num % 10;
+        num /= 10;
+        if (num == 0)
+            break;
+    }
+
+    while (i > 0) {
+        if (*cur < end)
+            *(*cur)++ = buf[--i];
+    }
+}
+
+static void
+exsltFormatNanoseconds(xmlChar **cur, xmlChar *end, long nsecs) {
+    long p10, digit;
+
+    if (nsecs > 0) {
+        if (*cur < end)
+            *(*cur)++ = '.';
+        p10 = 100000000;
+        while (nsecs > 0) {
+            digit = nsecs / p10;
+            if (*cur < end)
+                *(*cur)++ = '0' + digit;
+            nsecs -= digit * p10;
+            p10 /= 10;
         }
+    }
+}
 
 /**
  * exsltDateFormatDuration:
@@ -1173,9 +1153,9 @@ error:
 static xmlChar *
 exsltDateFormatDuration (const exsltDateDurValPtr dur)
 {
-    xmlChar buf[100], *cur = buf;
-    double secs, days;
-    double years, months;
+    xmlChar buf[100], *cur = buf, *end = buf + 99;
+    double secs, tmp;
+    long days, months, intSecs, nsecs;
 
     if (dur == NULL)
 	return NULL;
@@ -1185,9 +1165,8 @@ exsltDateFormatDuration (const exsltDateDurValPtr dur)
         return xmlStrdup((xmlChar*)"P0D");
 
     secs   = dur->sec;
-    days   = (double)dur->day;
-    years  = (double)(dur->mon / 12);
-    months = (double)(dur->mon % 12);
+    days   = dur->day;
+    months = dur->mon;
 
     *cur = '\0';
     if (days < 0) {
@@ -1196,10 +1175,6 @@ exsltDateFormatDuration (const exsltDateDurValPtr dur)
             days += 1;
         }
         days = -days;
-        *cur = '-';
-    }
-    if (years < 0) {
-        years = -years;
         *cur = '-';
     }
     if (months < 0) {
@@ -1211,28 +1186,102 @@ exsltDateFormatDuration (const exsltDateDurValPtr dur)
 
     *cur++ = 'P';
 
-    if (years != 0.0) {
-        FORMAT_ITEM(years, cur, 1, 'Y');
+    if (months >= 12) {
+        long years = months / 12;
+
+        months -= years * 12;
+        exsltFormatLong(&cur, end, years);
+        if (cur < end)
+            *cur++ = 'Y';
     }
 
-    if (months != 0.0) {
-        FORMAT_ITEM(months, cur, 1, 'M');
+    if (months != 0) {
+        exsltFormatLong(&cur, end, months);
+        if (cur < end)
+            *cur++ = 'M';
     }
 
-    FORMAT_ITEM(days, cur, 1, 'D');
-    if (secs > 0.0) {
-        *cur++ = 'T';
+    if (days != 0) {
+        exsltFormatLong(&cur, end, days);
+        if (cur < end)
+            *cur++ = 'D';
     }
-    FORMAT_ITEM(secs, cur, SECS_PER_HOUR, 'H');
-    FORMAT_ITEM(secs, cur, SECS_PER_MIN, 'M');
-    if (secs > 0.0) {
-        FORMAT_FLOAT(secs, cur, 0);
-        *cur++ = 'S';
+
+    tmp = floor(secs);
+    intSecs = (long) tmp;
+    /* Round to nearest to avoid issues with floating point precision */
+    nsecs = (long) floor((secs - tmp) * 1000000000 + 0.5);
+    if (nsecs >= 1000000000) {
+        nsecs -= 1000000000;
+        intSecs += 1;
+    }
+
+    if ((intSecs > 0) || (nsecs > 0)) {
+        if (cur < end)
+            *cur++ = 'T';
+
+        if (intSecs >= SECS_PER_HOUR) {
+            long hours = intSecs / SECS_PER_HOUR;
+
+            intSecs -= hours * SECS_PER_HOUR;
+            exsltFormatLong(&cur, end, hours);
+            if (cur < end)
+                *cur++ = 'H';
+        }
+
+        if (intSecs >= SECS_PER_MIN) {
+            long mins = intSecs / SECS_PER_MIN;
+
+            intSecs -= mins * SECS_PER_MIN;
+            exsltFormatLong(&cur, end, mins);
+            if (cur < end)
+                *cur++ = 'M';
+        }
+
+        if ((intSecs > 0) || (nsecs > 0)) {
+            exsltFormatLong(&cur, end, intSecs);
+            exsltFormatNanoseconds(&cur, end, nsecs);
+            if (cur < end)
+                *cur++ = 'S';
+        }
     }
 
     *cur = 0;
 
     return xmlStrdup(buf);
+}
+
+static void
+exsltFormatTwoDigits(xmlChar **cur, xmlChar *end, int num) {
+    if (num < 0 || num >= 100)
+        return;
+    if (*cur < end)
+        *(*cur)++ = '0' + num / 10;
+    if (*cur < end)
+        *(*cur)++ = '0' + num % 10;
+}
+
+static void
+exsltFormatTime(xmlChar **cur, xmlChar *end, exsltDateValPtr dt) {
+    double tmp;
+    long intSecs, nsecs;
+
+    exsltFormatTwoDigits(cur, end, dt->hour);
+    if (*cur < end)
+        *(*cur)++ = ':';
+
+    exsltFormatTwoDigits(cur, end, dt->min);
+    if (*cur < end)
+        *(*cur)++ = ':';
+
+    tmp = floor(dt->sec);
+    intSecs = (long) tmp;
+    /* Round down to make sure seconds stay below 60 */
+    nsecs = (long) floor((dt->sec - tmp) * 1000000000);
+    if (nsecs > 999999999)
+        nsecs = 999999999;
+    exsltFormatTwoDigits(cur, end, intSecs);
+    exsltFormatNanoseconds(cur, end, nsecs);
 }
 
 /**
@@ -1246,7 +1295,7 @@ exsltDateFormatDuration (const exsltDateDurValPtr dur)
 static xmlChar *
 exsltDateFormatDateTime (const exsltDateValPtr dt)
 {
-    xmlChar buf[100], *cur = buf;
+    xmlChar buf[100], *cur = buf, *end = buf + 99;
 
     if ((dt == NULL) ||	!VALID_DATETIME(dt))
 	return NULL;
@@ -1254,7 +1303,7 @@ exsltDateFormatDateTime (const exsltDateValPtr dt)
     FORMAT_DATE(dt, cur);
     *cur = 'T';
     cur++;
-    FORMAT_TIME(dt, cur);
+    exsltFormatTime(&cur, end, dt);
     FORMAT_TZ(dt->tzo, cur);
     *cur = 0;
 
@@ -1297,12 +1346,12 @@ exsltDateFormatDate (const exsltDateValPtr dt)
 static xmlChar *
 exsltDateFormatTime (const exsltDateValPtr dt)
 {
-    xmlChar buf[100], *cur = buf;
+    xmlChar buf[100], *cur = buf, *end = buf + 99;
 
     if ((dt == NULL) || !VALID_TIME(dt))
 	return NULL;
 
-    FORMAT_TIME(dt, cur);
+    exsltFormatTime(&cur, end, dt);
     if (dt->tz_flag || (dt->tzo != 0)) {
 	FORMAT_TZ(dt->tzo, cur);
     }
