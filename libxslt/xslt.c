@@ -1111,9 +1111,9 @@ xsltGetInheritedNsList(xsltStylesheetPtr style,
 	               xmlNodePtr node)
 {
     xmlNsPtr cur;
-    xmlNsPtr *ret = NULL;
+    xmlNsPtr *ret = NULL, *tmp;
     int nbns = 0;
-    int maxns = 10;
+    int maxns = 0;
     int i;
 
     if ((style == NULL) || (template == NULL) || (node == NULL) ||
@@ -1138,17 +1138,6 @@ xsltGetInheritedNsList(xsltStylesheetPtr style,
 		    if (xmlStrEqual(cur->href, style->exclPrefixTab[i]))
 			goto skip_ns;
 		}
-                if (ret == NULL) {
-                    ret =
-                        (xmlNsPtr *) xmlMalloc((maxns + 1) *
-                                               sizeof(xmlNsPtr));
-                    if (ret == NULL) {
-                        xmlGenericError(xmlGenericErrorContext,
-                                        "xsltGetInheritedNsList : out of memory!\n");
-                        return(0);
-                    }
-                    ret[nbns] = NULL;
-                }
 		/*
 		* Skip shadowed namespace bindings.
 		*/
@@ -1159,16 +1148,16 @@ xsltGetInheritedNsList(xsltStylesheetPtr style,
                 }
                 if (i >= nbns) {
                     if (nbns >= maxns) {
-                        maxns *= 2;
-                        ret = (xmlNsPtr *) xmlRealloc(ret,
-                                                      (maxns +
-                                                       1) *
-                                                      sizeof(xmlNsPtr));
-                        if (ret == NULL) {
+                        maxns = (maxns == 0) ? 10 : 2 * maxns;
+                        tmp = (xmlNsPtr *) xmlRealloc(ret,
+                                (maxns + 1) * sizeof(xmlNsPtr));
+                        if (tmp == NULL) {
                             xmlGenericError(xmlGenericErrorContext,
                                             "xsltGetInheritedNsList : realloc failed!\n");
+                            xmlFree(ret);
                             return(0);
                         }
+                        ret = tmp;
                     }
                     ret[nbns++] = cur;
                     ret[nbns] = NULL;
