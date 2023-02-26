@@ -739,8 +739,11 @@ xsltStyleInitializeStylesheetModule(xsltStylesheetPtr style,
     * Store the user-data in the context of the given stylesheet.
     */
     dataContainer = xsltNewExtData(module, userData);
-    if (dataContainer == NULL)
+    if (dataContainer == NULL) {
+	if (module->styleShutdownFunc)
+	    module->styleShutdownFunc(style, URI, userData);
 	return (NULL);
+    }
 
     if (xmlHashAddEntry(style->extInfos, URI,
 	(void *) dataContainer) < 0)
