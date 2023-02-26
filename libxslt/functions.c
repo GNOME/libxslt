@@ -249,7 +249,7 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
         obj = valuePop(ctxt);
         ret = xmlXPathNewNodeSet(NULL);
 
-        if ((obj != NULL) && obj->nodesetval) {
+        if ((obj != NULL) && (obj->nodesetval != NULL) && (ret != NULL)) {
             for (i = 0; i < obj->nodesetval->nodeNr; i++) {
                 valuePush(ctxt,
                           xmlXPathNewNodeSet(obj->nodesetval->nodeTab[i]));
@@ -263,9 +263,11 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
                 }
                 xsltDocumentFunction(ctxt, 2);
                 newobj = valuePop(ctxt);
-                ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
-                                                       newobj->nodesetval);
-                xmlXPathFreeObject(newobj);
+                if (newobj != NULL) {
+                    ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
+                                                           newobj->nodesetval);
+                    xmlXPathFreeObject(newobj);
+                }
             }
         }
 
