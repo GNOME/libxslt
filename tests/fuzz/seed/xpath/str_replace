@@ -1,1 +1,0 @@
-str:replace('abcdefgh',str:split('a,c,e,g',','),str:split('w,x,y,z',','))

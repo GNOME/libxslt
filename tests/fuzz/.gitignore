@@ -1,4 +1,6 @@
 /corpus/
+/genSeed
+/seed/
 /testTargets
 /xpath
 /xslt

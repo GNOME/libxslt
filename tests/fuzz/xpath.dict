@@ -68,3 +68,18 @@ var_node_set="=$n"
 utf8_2="\xC3\x84"
 utf8_3="\xE2\x80\x9C"
 utf8_4="\xF0\x9F\x98\x80"
+
+# XML
+
+elem_start_end="<a></a>"
+elem_ns_start_end="<a:a></a:a>"
+
+attr=" a='a'"
+
+ns_decl=" xmlns:a='a'"
+ns_default=" xmlns='a'"
+ns_prefix="a:"
+
+cdata_section="<![CDATA[ ]]>"
+comment="<!-- -->"
+pi="<?a?>"

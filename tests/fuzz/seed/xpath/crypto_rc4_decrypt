@@ -1,1 +1,0 @@
-crypto:rc4_decrypt(crypto:rc4_encrypt('key','msg'))

@@ -8,8 +8,9 @@
 #include <libxml/globals.h>
 
 int
-LLVMFuzzerInitialize(int *argc_p, char ***argv_p) {
-    return xsltFuzzXsltInit(argc_p, argv_p, NULL);
+LLVMFuzzerInitialize(int *argc_p ATTRIBUTE_UNUSED,
+                     char ***argv_p ATTRIBUTE_UNUSED) {
+    return xsltFuzzXsltInit();
 }
 
 int
