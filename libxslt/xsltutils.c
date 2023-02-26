@@ -1828,6 +1828,8 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
 			 (const xmlChar *) "UTF-8")))
 	    encoder = NULL;
 	buf = xmlAllocOutputBuffer(encoder);
+        if (buf == NULL)
+            xmlCharEncCloseFunc(encoder);
     } else {
 	buf = xmlAllocOutputBuffer(NULL);
     }
