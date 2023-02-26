@@ -185,9 +185,11 @@ exsltFuncShutdown (xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
 		   void *vdata) {
     exsltFuncData *data = (exsltFuncData *) vdata;
 
-    if (data->result != NULL)
-	xmlXPathFreeObject(data->result);
-    xmlFree(data);
+    if (data != NULL) {
+        if (data->result != NULL)
+            xmlXPathFreeObject(data->result);
+        xmlFree(data);
+    }
 }
 
 /**
