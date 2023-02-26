@@ -1035,6 +1035,8 @@ xsltComputeSortResultInternal(xsltTransformContextPtr ctxt, xmlNodePtr sort,
 		res = xmlXPathConvertString(res);
 	    if (number)
 		res = xmlXPathConvertNumber(res);
+        }
+        if (res != NULL) {
 	    res->index = i;	/* Save original pos for dupl resolv */
 	    if (number) {
 		if (res->type == XPATH_NUMBER) {
