@@ -921,9 +921,8 @@ xsltGetExtData(xsltTransformContextPtr ctxt, const xmlChar * URI)
                 return (NULL);
 
             data = xsltNewExtData(module, extData);
-            if (data == NULL)
-                return (NULL);
-            if (xmlHashAddEntry(ctxt->extInfos, URI, (void *) data) < 0) {
+            if ((data == NULL) ||
+                (xmlHashAddEntry(ctxt->extInfos, URI, (void *) data) < 0)) {
                 xsltTransformError(ctxt, NULL, NULL,
                                    "Failed to register module data: %s\n",
                                    URI);
