@@ -483,16 +483,12 @@ xsltReverseCompMatch(xsltParserContextPtr ctxt, xsltCompMatchPtr comp) {
 static int
 xsltPatPushState(xsltTransformContextPtr ctxt, xsltStepStates *states,
                  int step, xmlNodePtr node) {
-    if ((states->states == NULL) || (states->maxstates <= 0)) {
-        states->maxstates = 4;
-	states->nbstates = 0;
-	states->states = xmlMalloc(4 * sizeof(xsltStepState));
-    }
-    else if (states->maxstates <= states->nbstates) {
+    if (states->maxstates <= states->nbstates) {
         xsltStepState *tmp;
+        int newMax = states->maxstates == 0 ? 4 : 2 * states->maxstates;
 
 	tmp = (xsltStepStatePtr) xmlRealloc(states->states,
-			       2 * states->maxstates * sizeof(xsltStepState));
+                newMax * sizeof(xsltStepState));
 	if (tmp == NULL) {
 	    xsltGenericError(xsltGenericErrorContext,
 	     "xsltPatPushState: memory re-allocation failure.\n");
@@ -500,7 +496,7 @@ xsltPatPushState(xsltTransformContextPtr ctxt, xsltStepStates *states,
 	    return(-1);
 	}
 	states->states = tmp;
-	states->maxstates *= 2;
+	states->maxstates = newMax;
     }
     states->states[states->nbstates].step = step;
     states->states[states->nbstates++].node = node;
