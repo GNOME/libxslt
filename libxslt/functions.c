@@ -390,8 +390,9 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 		xmlXPathStringFunction(ctxt, 1);
 		xsltKeyFunction(ctxt, 2);
 		newobj = valuePop(ctxt);
-		ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
-						       newobj->nodesetval);
+                if (newobj != NULL)
+		    ret->nodesetval = xmlXPathNodeSetMerge(ret->nodesetval,
+						           newobj->nodesetval);
 		xmlXPathFreeObject(newobj);
 	    }
 	}
