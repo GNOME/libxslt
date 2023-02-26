@@ -151,7 +151,7 @@ xsltEvalXPathStringNs(xsltTransformContextPtr ctxt, xmlXPathCompExprPtr comp,
     if (res != NULL) {
 	if (res->type != XPATH_STRING)
 	    res = xmlXPathConvertString(res);
-	if (res->type == XPATH_STRING) {
+	if ((res != NULL) && (res->type == XPATH_STRING)) {
             ret = res->stringval;
 	    res->stringval = NULL;
 	} else {
