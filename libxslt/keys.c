@@ -829,7 +829,10 @@ fprintf(stderr, "xsltInitCtxtKey %s : %d\n", keyDef->name, ctxt->keyInitLevel);
 		keylist = xmlXPathNodeSetCreate(cur);
 		if (keylist == NULL)
 		    goto error;
-		xmlHashAddEntry(table->keys, str, keylist);
+		if (xmlHashAddEntry(table->keys, str, keylist) < 0) {
+                    xmlXPathFreeNodeSet(keylist);
+                    goto error;
+                }
 	    } else {
 		/*
 		* TODO: How do we know if this function failed?
