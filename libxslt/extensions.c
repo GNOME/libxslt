@@ -994,6 +994,8 @@ xsltInitCtxtExt(void *payload, void *data, const xmlChar * URI)
     }
     ctxtData = xsltNewExtData(module, extData);
     if (ctxtData == NULL) {
+        if (module->shutdownFunc)
+            module->shutdownFunc(ctxt->ctxt, URI, extData);
         ctxt->ret = -1;
         return;
     }
@@ -1001,6 +1003,9 @@ xsltInitCtxtExt(void *payload, void *data, const xmlChar * URI)
     if (ctxt->ctxt->extInfos == NULL)
         ctxt->ctxt->extInfos = xmlHashCreate(10);
     if (ctxt->ctxt->extInfos == NULL) {
+        if (module->shutdownFunc)
+            module->shutdownFunc(ctxt->ctxt, URI, extData);
+        xsltFreeExtData(ctxtData);
         ctxt->ret = -1;
         return;
     }
