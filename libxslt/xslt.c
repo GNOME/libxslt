@@ -1313,8 +1313,10 @@ xsltParseStylesheetOutput(xsltStylesheetPtr style, xmlNodePtr cur)
     if (elements != NULL) {
         if (style->cdataSection == NULL)
             style->cdataSection = xmlHashCreate(10);
-        if (style->cdataSection == NULL)
+        if (style->cdataSection == NULL) {
+            xmlFree(elements);
             return;
+        }
 
         element = elements;
         while (*element != 0) {
