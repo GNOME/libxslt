@@ -1692,6 +1692,11 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
     if ((cur == NULL) || (style == NULL) || (cur->type != XML_ELEMENT_NODE))
 	return;
 
+    if (style->stripSpaces == NULL)
+	style->stripSpaces = xmlHashCreate(10);
+    if (style->stripSpaces == NULL)
+	return;
+
     elements = xmlGetNsProp(cur, (const xmlChar *)"elements", NULL);
     if (elements == NULL) {
 	xsltTransformError(NULL, style, cur,
@@ -1699,11 +1704,6 @@ xsltParseStylesheetStripSpace(xsltStylesheetPtr style, xmlNodePtr cur) {
 	if (style != NULL) style->warnings++;
 	return;
     }
-
-    if (style->stripSpaces == NULL)
-	style->stripSpaces = xmlHashCreate(10);
-    if (style->stripSpaces == NULL)
-	return;
 
     element = elements;
     while (*element != 0) {
