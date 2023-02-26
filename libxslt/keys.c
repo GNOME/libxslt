@@ -294,6 +294,8 @@ xsltAddKey(xsltStylesheetPtr style, const xmlChar *name,
 #endif
 
     key = xsltNewKeyDef(name, nameURI);
+    if (key == NULL)
+        return(-1);
     key->match = xmlStrdup(match);
     key->use = xmlStrdup(use);
     key->inst = inst;
