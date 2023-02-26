@@ -286,16 +286,12 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     exsltFuncData *data;
     exsltFuncFunctionData *func;
     xmlNodePtr paramNode, oldInsert, oldXPNode, fake;
-    int oldBase;
+    int oldBase, newBase;
     void *oldCtxtVar;
     xsltStackElemPtr params = NULL, param;
     xsltTransformContextPtr tctxt = xsltXPathGetTransformContext(ctxt);
-    int i, notSet;
-    struct objChain {
-	struct objChain *next;
-	xmlXPathObjectPtr obj;
-    };
-    struct objChain	*savedObjChain = NULL, *savedObj;
+    int i;
+    xmlXPathObjectPtr *args = NULL;
 
     /*
      * retrieve func:function template
@@ -357,6 +353,10 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
     /* Evaluating templates can change the XPath context node. */
     oldXPNode = tctxt->xpathCtxt->node;
 
+    fake = xmlNewDocNode(tctxt->output, NULL,
+			 (const xmlChar *)"fake", NULL);
+    if (fake == NULL)
+        goto error;
     /*
      * We have a problem with the evaluation of function parameters.
      * The original library code did not evaluate XPath expressions until
@@ -379,16 +379,15 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
      * In order to give the function params and variables a new 'scope'
      * we change varsBase in the context.
      */
-    oldBase = tctxt->varsBase;
-    tctxt->varsBase = tctxt->varsNr;
+    newBase = tctxt->varsNr;
     /* If there are any parameters */
     if (paramNode != NULL) {
+        args = (xmlXPathObjectPtr *) xmlMalloc(sizeof(*args) * nargs);
+        if (args == NULL)
+            goto error;
         /* Fetch the stored argument values from the caller */
-	for (i = 0; i < nargs; i++) {
-	    savedObj = xmlMalloc(sizeof(struct objChain));
-	    savedObj->next = savedObjChain;
-	    savedObj->obj = valuePop(ctxt);
-	    savedObjChain = savedObj;
+	for (i = nargs - 1; i >= 0; i--) {
+            args[i] = valuePop(ctxt);
 	}
 
 	/*
@@ -405,17 +404,20 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 	 * as arguments from the caller
 	 * Calculate the number of un-set parameters
 	 */
-	notSet = func->nargs - nargs;
-	for (; i > 0; i--) {
+	for (i = 0; i < func->nargs; i++) {
 	    param = xsltParseStylesheetCallerParam (tctxt, paramNode);
-	    if (i > notSet) {	/* if parameter value set */
+            if (param == NULL) {
+                xsltLocalVariablePop(tctxt, newBase, -2);
+	        xsltFreeStackElemList(params);
+                for (; i < nargs; i++)
+                    xmlXPathFreeObject(args[i]);
+                goto error;
+            }
+	    if (i < nargs) {	/* if parameter value set */
 		param->computed = 1;
 		if (param->value != NULL)
 		    xmlXPathFreeObject(param->value);
-		savedObj = savedObjChain;	/* get next val from chain */
-		param->value = savedObj->obj;
-		savedObjChain = savedObjChain->next;
-		xmlFree(savedObj);
+		param->value = args[i];
 	    }
 	    xsltLocalVariablePush(tctxt, param, -1);
 	    param->next = params;
@@ -427,11 +429,11 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
      * Actual processing. The context variable is cleared and restored
      * when func:result is evaluated.
      */
-    fake = xmlNewDocNode(tctxt->output, NULL,
-			 (const xmlChar *)"fake", NULL);
+    oldBase = tctxt->varsBase;
     oldInsert = tctxt->insert;
     oldCtxtVar = data->ctxtVar;
     data->ctxtVar = tctxt->contextVariable;
+    tctxt->varsBase = newBase;
     tctxt->insert = fake;
     tctxt->contextVariable = NULL;
     xsltApplyOneTemplate (tctxt, tctxt->node,
@@ -470,14 +472,14 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
 			 "{%s}%s: cannot write to result tree while "
 			 "executing a function\n",
 			 ctxt->context->functionURI, ctxt->context->function);
-	xmlFreeNode(fake);
         xmlXPathFreeObject(ret);
 	goto error;
     }
-    xmlFreeNode(fake);
     valuePush(ctxt, ret);
 
 error:
+    xmlFree(args);
+    xmlFreeNode(fake);
     tctxt->depth--;
 }
 
