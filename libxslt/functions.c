@@ -647,7 +647,7 @@ xsltFormatNumberFunction(xmlXPathParserContextPtr ctxt, int nargs)
         return;
     }
 
-    if (formatValues != NULL) {
+    if ((formatValues != NULL) && (formatObj != NULL) && (numberObj != NULL)) {
 	if (xsltFormatNumberConversion(formatValues,
 				       formatObj->stringval,
 				       numberObj->floatval,
