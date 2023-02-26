@@ -558,6 +558,10 @@ xsltUnparsedEntityURIFunction(xmlXPathParserContextPtr ctxt, int nargs){
     obj = valuePop(ctxt);
     if (obj->type != XPATH_STRING) {
 	obj = xmlXPathConvertString(obj);
+        if (obj == NULL) {
+            xmlXPathErr(ctxt, XPATH_MEMORY_ERROR);
+            return;
+        }
     }
 
     str = obj->stringval;
