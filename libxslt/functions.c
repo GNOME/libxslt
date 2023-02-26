@@ -282,7 +282,7 @@ xsltDocumentFunction(xmlXPathParserContextPtr ctxt, int nargs)
      * Make sure it's converted to a string
      */
     xmlXPathStringFunction(ctxt, 1);
-    if (ctxt->value->type != XPATH_STRING) {
+    if ((ctxt->value == NULL) || (ctxt->value->type != XPATH_STRING)) {
         xsltTransformError(xsltXPathGetTransformContext(ctxt), NULL, NULL,
                          "document() : invalid arg expecting a string\n");
         ctxt->error = XPATH_INVALID_TYPE;
