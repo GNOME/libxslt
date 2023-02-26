@@ -1310,8 +1310,13 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
 	    if (def == NULL) {
 
 		def = xsltCopyStackElem(elem);
-		xmlHashAddEntry2(ctxt->globalVars,
-				 elem->name, elem->nameURI, def);
+		if (xmlHashAddEntry2(ctxt->globalVars,
+				     elem->name, elem->nameURI, def) < 0) {
+                    xmlGenericError(xmlGenericErrorContext,
+                                    "hash update failed\n");
+                    xsltFreeStackElem(def);
+                    return(-1);
+                }
 	    } else if ((elem->comp != NULL) &&
 		       (elem->comp->type == XSLT_FUNC_VARIABLE)) {
 		/*
