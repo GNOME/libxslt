@@ -1087,8 +1087,10 @@ xsltCopyText(xsltTransformContextPtr ctxt, xmlNodePtr target,
 	if (xmlDictOwns(ctxt->dict, cur->content))
 	    copy->content = cur->content;
 	else {
-	    if ((copy->content = xmlStrdup(cur->content)) == NULL)
+	    if ((copy->content = xmlStrdup(cur->content)) == NULL) {
+                xmlFreeNode(copy);
 		return NULL;
+            }
 	}
 
 	ctxt->lasttext = NULL;
