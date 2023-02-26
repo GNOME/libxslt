@@ -114,6 +114,7 @@ exsltFuncRegisterImportFunc (void *payload, void *vctxt,
 	    xsltGenericError(xsltGenericErrorContext,
 		    "Failed to register function {%s}%s\n",
 		    URI, name);
+            xmlFree(func);
 	} else {		/* Do the registration */
 	    xsltGenericDebug(xsltGenericDebugContext,
 	            "exsltFuncRegisterImportFunc: register {%s}%s\n",
