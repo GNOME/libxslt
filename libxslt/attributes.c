@@ -421,9 +421,12 @@ xsltParseStylesheetAttributeSet(xsltStylesheetPtr style, xmlNodePtr cur) {
     set = xmlHashLookup2(style->attributeSets, ncname, nsUri);
     if (set == NULL) {
         set = xsltNewAttrSet();
-        if (set == NULL)
+        if ((set == NULL) ||
+            (xmlHashAddEntry2(style->attributeSets, ncname, nsUri, set) < 0)) {
+	    xsltGenericError(xsltGenericErrorContext, "memory error\n");
+            xsltFreeAttrSet(set);
             return;
-        xmlHashAddEntry2(style->attributeSets, ncname, nsUri, set);
+        }
     }
 
     /*
