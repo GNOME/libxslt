@@ -1869,7 +1869,10 @@ xsltRegisterVariable(xsltTransformContextPtr ctxt,
 #endif /* else of XSLT_REFACTORED */
 
     variable = xsltBuildVariable(ctxt, (xsltStylePreCompPtr) comp, tree);
-    xsltAddStackElem(ctxt, variable);
+    if (xsltAddStackElem(ctxt, variable) < 0) {
+        xsltFreeStackElem(variable);
+        return(-1);
+    }
     return(0);
 }
 
