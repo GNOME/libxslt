@@ -1300,7 +1300,8 @@ OUTPUT_NUMBER:
     /* Next do the integer part of the number */
     number = fabs(number) * (double)format_info.multiplier;
     scale = pow(10.0, (double)(format_info.frac_digits + format_info.frac_hash));
-    number = floor((scale * number + 0.5)) / scale;
+    number += .5 / scale;
+    number -= fmod(number, 1 / scale);
     if ((self->grouping != NULL) &&
         (self->grouping[0] != 0)) {
         int gchar;
