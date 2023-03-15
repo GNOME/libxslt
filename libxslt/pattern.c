@@ -311,10 +311,6 @@ xsltCompMatchAdd(xsltParserContextPtr ctxt, xsltCompMatchPtr comp,
 	     "xsltCompMatchAdd: memory re-allocation failure.\n");
 	    if (ctxt->style != NULL)
 		ctxt->style->errors++;
-	    if (value)
-	        xmlFree(value);
-	    if (value2)
-	        xmlFree(value2);
 	    return (-1);
 	}
         comp->maxStep *= 2;
