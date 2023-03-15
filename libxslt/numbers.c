@@ -985,27 +985,12 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
 		"Invalid format (0-length)\n");
     }
     *result = NULL;
-    switch (xmlXPathIsInf(number)) {
-	case -1:
-	    if (self->minusSign == NULL)
-		*result = xmlStrdup(BAD_CAST "-");
-	    else
-		*result = xmlStrdup(self->minusSign);
-	    /* Intentional fall-through */
-	case 1:
-	    if ((self == NULL) || (self->infinity == NULL))
-		*result = xmlStrcat(*result, BAD_CAST "Infinity");
-	    else
-		*result = xmlStrcat(*result, self->infinity);
-	    return(status);
-	default:
-	    if (xmlXPathIsNaN(number)) {
-		if ((self == NULL) || (self->noNumber == NULL))
-		    *result = xmlStrdup(BAD_CAST "NaN");
-		else
-		    *result = xmlStrdup(self->noNumber);
-		return(status);
-	    }
+    if (xmlXPathIsNaN(number)) {
+        if ((self == NULL) || (self->noNumber == NULL))
+            *result = xmlStrdup(BAD_CAST "NaN");
+        else
+            *result = xmlStrdup(self->noNumber);
+        return(status);
     }
 
     buffer = xmlBufferCreate();
@@ -1283,6 +1268,25 @@ OUTPUT_NUMBER:
 	format_info.add_decimal = TRUE;
     }
 
+    /* Apply multiplier */
+    number *= (double)format_info.multiplier;
+    switch (xmlXPathIsInf(number)) {
+	case -1:
+	    if (self->minusSign == NULL)
+		*result = xmlStrdup(BAD_CAST "-");
+	    else
+		*result = xmlStrdup(self->minusSign);
+	    /* Intentional fall-through */
+	case 1:
+	    if ((self == NULL) || (self->infinity == NULL))
+		*result = xmlStrcat(*result, BAD_CAST "Infinity");
+	    else
+		*result = xmlStrcat(*result, self->infinity);
+	    return(status);
+	default:
+            break;
+    }
+
     /* Ready to output our number.  First see if "default sign" is required */
     if (default_sign != 0)
 	xmlBufferAdd(buffer, self->minusSign, xmlUTF8Strsize(self->minusSign, 1));
@@ -1297,11 +1301,13 @@ OUTPUT_NUMBER:
         j += len;
     }
 
-    /* Next do the integer part of the number */
-    number = fabs(number) * (double)format_info.multiplier;
+    /* Round to n digits */
+    number = fabs(number);
     scale = pow(10.0, (double)(format_info.frac_digits + format_info.frac_hash));
     number += .5 / scale;
     number -= fmod(number, 1 / scale);
+
+    /* Next do the integer part of the number */
     if ((self->grouping != NULL) &&
         (self->grouping[0] != 0)) {
         int gchar;
