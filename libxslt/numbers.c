@@ -993,11 +993,6 @@ xsltFormatNumberConversion(xsltDecimalFormatPtr self,
         return(status);
     }
 
-    buffer = xmlBufferCreate();
-    if (buffer == NULL) {
-	return XPATH_MEMORY_ERROR;
-    }
-
     format_info.integer_hash = 0;
     format_info.integer_digits = 0;
     format_info.frac_digits = 0;
@@ -1285,6 +1280,11 @@ OUTPUT_NUMBER:
 	    return(status);
 	default:
             break;
+    }
+
+    buffer = xmlBufferCreate();
+    if (buffer == NULL) {
+	return XPATH_MEMORY_ERROR;
     }
 
     /* Ready to output our number.  First see if "default sign" is required */
