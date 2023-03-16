@@ -1504,6 +1504,7 @@ xsltCompileStepPattern(xsltParserContextPtr ctxt, xmlChar *token, int novar) {
     xmlChar *name = NULL;
     const xmlChar *URI = NULL;
     xmlChar *URL = NULL;
+    xmlChar *ret = NULL;
     int level;
     xsltAxis axis = 0;
 
@@ -1643,7 +1644,6 @@ parse_predicate:
     level = 0;
     while (CUR == '[') {
 	const xmlChar *q;
-	xmlChar *ret = NULL;
 
 	level++;
 	NEXT;
@@ -1687,6 +1687,8 @@ error:
 	xmlFree(token);
     if (name != NULL)
 	xmlFree(name);
+    if (ret != NULL)
+	xmlFree(ret);
 }
 
 /**
