@@ -1581,7 +1581,6 @@ parse_node_test:
 		    xsltTransformError(NULL, NULL, NULL,
 			    "xsltCompileStepPattern : Name expected\n");
 		    ctxt->error = 1;
-                    xmlFree(URL);
 		    goto error;
 		}
 	    } else {
@@ -1687,6 +1686,8 @@ error:
 	xmlFree(token);
     if (name != NULL)
 	xmlFree(name);
+    if (URL != NULL)
+	xmlFree(URL);
     if (ret != NULL)
 	xmlFree(ret);
 }
