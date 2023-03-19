@@ -155,10 +155,8 @@ xsltSetAttrVTsegment(xsltAttrVTPtr avt, void *val) {
         size_t size = sizeof(xsltAttrVT) +
                       (avt->max_seg + MAX_AVT_SEG) * sizeof(void *);
 	xsltAttrVTPtr tmp = (xsltAttrVTPtr) xmlRealloc(avt, size);
-	if (tmp == NULL) {
-            xsltFreeAttrVT(avt);
+	if (tmp == NULL)
 	    return NULL;
-	}
         avt = tmp;
 	memset(&avt->segments[avt->nb_seg], 0, MAX_AVT_SEG*sizeof(void *));
 	avt->max_seg += MAX_AVT_SEG;
