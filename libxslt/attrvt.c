@@ -180,6 +180,7 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
     const xmlChar *cur;
     xmlChar *ret = NULL;
     xmlChar *expr = NULL;
+    xmlXPathCompExprPtr comp = NULL;
     xsltAttrVTPtr avt;
     int i = 0, lastavt = 0;
 
@@ -278,8 +279,6 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 	        XSLT_TODO
 		goto error;
 	    } else {
-		xmlXPathCompExprPtr comp;
-
 		comp = xsltXPathCompile(style, expr);
 		if (comp == NULL) {
 		    xsltTransformError(NULL, style, attr->parent,
@@ -291,14 +290,21 @@ xsltCompileAttr(xsltStylesheetPtr style, xmlAttrPtr attr) {
 		if (avt->nb_seg == 0)
 		    avt->strstart = 0;
 		if (lastavt == 1) {
-		    if ((avt = xsltSetAttrVTsegment(avt, NULL)) == NULL)
+		    if ((avt = xsltSetAttrVTsegment(avt, NULL)) == NULL) {
+                        xsltTransformError(NULL, style, attr->parent,
+                                           "out of memory\n");
 		        goto error;
+                    }
 		}
-		if ((avt = xsltSetAttrVTsegment(avt, (void *) comp)) == NULL)
+		if ((avt = xsltSetAttrVTsegment(avt, (void *) comp)) == NULL) {
+                    xsltTransformError(NULL, style, attr->parent,
+                                       "out of memory\n");
 		    goto error;
+                }
 		lastavt = 1;
 		xmlFree(expr);
 		expr = NULL;
+                comp = NULL;
 	    }
 	    cur++;
 	    str = cur;
@@ -348,6 +354,8 @@ error:
 	xmlFree(ret);
     if (expr != NULL)
 	xmlFree(expr);
+    if (comp != NULL)
+        xmlXPathFreeCompExpr(comp);
 }
 
 
