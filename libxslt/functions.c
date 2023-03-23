@@ -383,6 +383,12 @@ xsltKeyFunction(xmlXPathParserContextPtr ctxt, int nargs){
 	xmlXPathObjectPtr newobj, ret;
 
 	ret = xmlXPathNewNodeSet(NULL);
+        if (ret == NULL) {
+            ctxt->error = XPATH_MEMORY_ERROR;
+            xmlXPathFreeObject(obj1);
+            xmlXPathFreeObject(obj2);
+            return;
+        }
 
 	if (obj2->nodesetval != NULL) {
 	    for (i = 0; i < obj2->nodesetval->nodeNr; i++) {
