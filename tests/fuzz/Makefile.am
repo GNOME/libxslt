@@ -3,7 +3,7 @@ LIBXSLT_LIBS = $(top_builddir)/libxslt/libxslt.la \
 
 EXTRA_PROGRAMS = genSeed xpath xslt
 check_PROGRAMS = testTargets
-EXTRA_DIST = xpath.dict xpath.xml xslt.dict seed
+EXTRA_DIST = xpath.dict xslt.dict
 CLEANFILES = $(EXTRA_PROGRAMS)
 AM_CPPFLAGS = -I$(top_srcdir)
 DEPENDENCIES = $(LIBXSLT_LIBS)
