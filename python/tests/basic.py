@@ -13,6 +13,7 @@ style = libxslt.parseStylesheetDoc(styledoc)
 doc = libxml2.parseFile("%s/test.xml" % basedir)
 result = style.applyStylesheet(doc, None)
 style.saveResultToFilename("foo", result, 0)
+os.remove("foo")
 stringval = style.saveResultToString(result)
 if (len(stringval) != 68):
   print("Error in saveResultToString")
