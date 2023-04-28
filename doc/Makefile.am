@@ -40,10 +40,6 @@ rebuild:
 	cd $(srcdir) && ./apibuild.py
 	cd $(srcdir) && $(XSLTPROC) --nonet xsltproc.xml
 	cd $(srcdir) && $(XSLTPROC) --nonet -o xsltproc.html $(DOCBOOK_HTML) xsltproc.xml
-	cd $(srcdir) && $(XSLTPROC) -o $(WIN32_DIR)/libxslt.def.src \
-	  --nonet $(WIN32_DIR)/defgen.xsl libxslt-api.xml
-	cd $(srcdir) && $(XSLTPROC) -o $(WIN32_DIR)/libexslt.def.src \
-	  --nonet $(WIN32_DIR)/defgen.xsl EXSLT/libexslt-api.xml
 	cd devhelp && $(MAKE) rebuild
 	cd EXSLT/devhelp && $(MAKE) rebuild
 
