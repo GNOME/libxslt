@@ -91,6 +91,13 @@ XSLTPUBFUN const xmlChar * XSLTCALL
 XSLTPUBFUN int XSLTCALL
 		xsltGetUTF8Char	(const unsigned char *utf,
 				 int *len);
+#ifdef IN_LIBXSLT
+/** DOC_DISABLE */
+XSLTPUBFUN int XSLTCALL
+		xsltGetUTF8CharZ (const unsigned char *utf,
+				  int *len);
+/** DOC_ENABLE */
+#endif
 
 /*
  * XSLT Debug Tracing Tracing Types
