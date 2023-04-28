@@ -26,10 +26,8 @@ dist_man_MANS = xsltproc.1
 
 EXTRA_DIST =				\
 	EXSLT/libexslt-api.xml		\
-	EXSLT/libexslt-refs.xml		\
 	apibuild.py			\
 	libxslt-api.xml			\
-	libxslt-refs.xml		\
 	tutorial/libxslttutorial.xml	\
 	tutorial2/libxslt_pipes.xml	\
 	xsltproc.xml
