@@ -250,6 +250,7 @@ XSLTPUBFUN xmlXPathCompExprPtr XSLTCALL
 						 int flags);
 
 #ifdef IN_LIBXSLT
+/** DOC_DISABLE */
 #define XSLT_SOURCE_NODE_MASK       15u
 #define XSLT_SOURCE_NODE_HAS_KEY    1u
 #define XSLT_SOURCE_NODE_HAS_ID     2u
@@ -262,6 +263,7 @@ int
 xsltClearSourceNodeFlags(xmlNodePtr node, int flags);
 void **
 xsltGetPSVIPtr(xmlNodePtr cur);
+/** DOC_ENABLE */
 #endif
 
 #ifdef WITH_PROFILER

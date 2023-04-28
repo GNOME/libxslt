@@ -1432,7 +1432,7 @@ xsltSetCtxtSortFunc(xsltTransformContextPtr ctxt, xsltSortFunc handler) {
  * @ctxt:  an XSLT transform context
  * @newLocale:  locale constructor
  * @freeLocale:  locale destructor
- * @genSortKey  sort key generator
+ * @genSortKey:  sort key generator
  *
  * Set the locale handlers.
  */
