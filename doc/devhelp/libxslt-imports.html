@@ -43,14 +43,14 @@
     <p>Author(s): Daniel Veillard </p>
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
-      <pre class="synopsis">#define <a href="#XSLT_GET_IMPORT_PTR">XSLT_GET_IMPORT_PTR</a>;
-#define <a href="#XSLT_GET_IMPORT_INT">XSLT_GET_IMPORT_INT</a>;
-<a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a>	<a href="#xsltFindTemplate">xsltFindTemplate</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameURI);
-<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a>	<a href="#xsltNextImport">xsltNextImport</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> cur);
-int	<a href="#xsltParseStylesheetInclude">xsltParseStylesheetInclude</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr cur);
-int	<a href="#xsltNeedElemSpaceHandling">xsltNeedElemSpaceHandling</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+      <pre class="synopsis">#define <a href="#XSLT_GET_IMPORT_INT">XSLT_GET_IMPORT_INT</a>;
+#define <a href="#XSLT_GET_IMPORT_PTR">XSLT_GET_IMPORT_PTR</a>;
 int	<a href="#xsltFindElemSpaceHandling">xsltFindElemSpaceHandling</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node);
+<a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a>	<a href="#xsltFindTemplate">xsltFindTemplate</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameURI);
+int	<a href="#xsltNeedElemSpaceHandling">xsltNeedElemSpaceHandling</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a>	<a href="#xsltNextImport">xsltNextImport</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> cur);
 int	<a href="#xsltParseStylesheetImport">xsltParseStylesheetImport</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr cur);
+int	<a href="#xsltParseStylesheetInclude">xsltParseStylesheetInclude</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr cur);
 </pre>
     </div>
     <div class="refsect1" lang="en">

@@ -44,11 +44,11 @@
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
       <pre class="synopsis">#define <a href="#NODE_IS_KEYED">NODE_IS_KEYED</a>;
-void	<a href="#xsltInitCtxtKeys">xsltInitCtxtKeys</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a> idoc);
+int	<a href="#xsltAddKey">xsltAddKey</a>			(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameURI, <br/>					 const xmlChar * match, <br/>					 const xmlChar * use, <br/>					 xmlNodePtr inst);
+void	<a href="#xsltFreeDocumentKeys">xsltFreeDocumentKeys</a>		(<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a> idoc);
 void	<a href="#xsltFreeKeys">xsltFreeKeys</a>			(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
 xmlNodeSetPtr	<a href="#xsltGetKey">xsltGetKey</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameURI, <br/>					 const xmlChar * value);
-void	<a href="#xsltFreeDocumentKeys">xsltFreeDocumentKeys</a>		(<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a> idoc);
-int	<a href="#xsltAddKey">xsltAddKey</a>			(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameURI, <br/>					 const xmlChar * match, <br/>					 const xmlChar * use, <br/>					 xmlNodePtr inst);
+void	<a href="#xsltInitCtxtKeys">xsltInitCtxtKeys</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a> idoc);
 </pre>
     </div>
     <div class="refsect1" lang="en">

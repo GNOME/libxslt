@@ -43,11 +43,11 @@
     <p>Author(s): Daniel Veillard </p>
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
-      <pre class="synopsis">#define <a href="#XSLT_DEFAULT_VERSION">XSLT_DEFAULT_VERSION</a>;
+      <pre class="synopsis">#define <a href="#XSLT_DEFAULT_URL">XSLT_DEFAULT_URL</a>;
 #define <a href="#XSLT_DEFAULT_VENDOR">XSLT_DEFAULT_VENDOR</a>;
-#define <a href="#XSLT_PARSE_OPTIONS">XSLT_PARSE_OPTIONS</a>;
-#define <a href="#XSLT_DEFAULT_URL">XSLT_DEFAULT_URL</a>;
+#define <a href="#XSLT_DEFAULT_VERSION">XSLT_DEFAULT_VERSION</a>;
 #define <a href="#XSLT_NAMESPACE">XSLT_NAMESPACE</a>;
+#define <a href="#XSLT_PARSE_OPTIONS">XSLT_PARSE_OPTIONS</a>;
 void	<a href="#xsltCleanupGlobals">xsltCleanupGlobals</a>		(void);
 void	<a href="#xsltInit">xsltInit</a>			(void);
 </pre>
@@ -79,19 +79,19 @@ void	<a href="#xsltInit">xsltInit</a>			(void);
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltEngineVersion">Variable </a>xsltEngineVersion</h3><pre class="programlisting">const char * xsltEngineVersion;
-</pre><p/>
+</pre><p>The version string for libxslt.</p>
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltLibxmlVersion">Variable </a>xsltLibxmlVersion</h3><pre class="programlisting">const int xsltLibxmlVersion;
-</pre><p/>
+</pre><p>The version of libxml libxslt was compiled against.</p>
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltLibxsltVersion">Variable </a>xsltLibxsltVersion</h3><pre class="programlisting">const int xsltLibxsltVersion;
-</pre><p/>
+</pre><p>The version of libxslt compiled.</p>
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltMaxDepth">Variable </a>xsltMaxDepth</h3><pre class="programlisting">int xsltMaxDepth;
-</pre><p/>
+</pre><p>This value is used to detect templates loops.</p>
 </div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltMaxVars">Variable </a>xsltMaxVars</h3><pre class="programlisting">int xsltMaxVars;

@@ -45,16 +45,16 @@
       <h2>Synopsis</h2>
       <pre class="synopsis">typedef struct _xsltCompMatch <a href="#xsltCompMatch">xsltCompMatch</a>;
 typedef <a href="libxslt-pattern.html#xsltCompMatch">xsltCompMatch</a> * <a href="#xsltCompMatchPtr">xsltCompMatchPtr</a>;
-void	<a href="#xsltNormalizeCompSteps">xsltNormalizeCompSteps</a>		(void * payload, <br/>					 void * data, <br/>					 const xmlChar * name);
 int	<a href="#xsltAddTemplate">xsltAddTemplate</a>			(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> cur, <br/>					 const xmlChar * mode, <br/>					 const xmlChar * modeURI);
-<a href="libxslt-pattern.html#xsltCompMatchPtr">xsltCompMatchPtr</a>	<a href="#xsltCompilePattern">xsltCompilePattern</a>	(const xmlChar * pattern, <br/>						 xmlDocPtr doc, <br/>						 xmlNodePtr node, <br/>						 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>						 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> runtime);
-int	<a href="#xsltMatchPattern">xsltMatchPattern</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 const xmlChar * pattern, <br/>					 xmlDocPtr ctxtdoc, <br/>					 xmlNodePtr ctxtnode);
-<a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a>	<a href="#xsltGetTemplate">xsltGetTemplate</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
+void	<a href="#xsltCleanupTemplates">xsltCleanupTemplates</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
 void	<a href="#xsltCompMatchClearCache">xsltCompMatchClearCache</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-pattern.html#xsltCompMatchPtr">xsltCompMatchPtr</a> comp);
-int	<a href="#xsltTestCompMatchList">xsltTestCompMatchList</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 <a href="libxslt-pattern.html#xsltCompMatchPtr">xsltCompMatchPtr</a> comp);
+<a href="libxslt-pattern.html#xsltCompMatchPtr">xsltCompMatchPtr</a>	<a href="#xsltCompilePattern">xsltCompilePattern</a>	(const xmlChar * pattern, <br/>						 xmlDocPtr doc, <br/>						 xmlNodePtr node, <br/>						 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>						 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> runtime);
 void	<a href="#xsltFreeCompMatchList">xsltFreeCompMatchList</a>		(<a href="libxslt-pattern.html#xsltCompMatchPtr">xsltCompMatchPtr</a> comp);
 void	<a href="#xsltFreeTemplateHashes">xsltFreeTemplateHashes</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
-void	<a href="#xsltCleanupTemplates">xsltCleanupTemplates</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
+<a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a>	<a href="#xsltGetTemplate">xsltGetTemplate</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
+int	<a href="#xsltMatchPattern">xsltMatchPattern</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 const xmlChar * pattern, <br/>					 xmlDocPtr ctxtdoc, <br/>					 xmlNodePtr ctxtnode);
+void	<a href="#xsltNormalizeCompSteps">xsltNormalizeCompSteps</a>		(void * payload, <br/>					 void * data, <br/>					 const xmlChar * name);
+int	<a href="#xsltTestCompMatchList">xsltTestCompMatchList</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 <a href="libxslt-pattern.html#xsltCompMatchPtr">xsltCompMatchPtr</a> comp);
 </pre>
     </div>
     <div class="refsect1" lang="en">

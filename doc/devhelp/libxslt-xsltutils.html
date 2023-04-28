@@ -38,55 +38,56 @@
     <p>Author(s): Daniel Veillard </p>
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
-      <pre class="synopsis">#define <a href="#IS_XSLT_REAL_NODE">IS_XSLT_REAL_NODE</a>;
-#define <a href="#IS_XSLT_ELEM">IS_XSLT_ELEM</a>;
+      <pre class="synopsis">#define <a href="#IS_XSLT_ELEM">IS_XSLT_ELEM</a>;
 #define <a href="#IS_XSLT_NAME">IS_XSLT_NAME</a>;
-#define <a href="#XSLT_TODO">XSLT_TODO</a>;
+#define <a href="#IS_XSLT_REAL_NODE">IS_XSLT_REAL_NODE</a>;
 #define <a href="#XSLT_STRANGE">XSLT_STRANGE</a>;
 #define <a href="#XSLT_TIMESTAMP_TICS_PER_SEC">XSLT_TIMESTAMP_TICS_PER_SEC</a>;
+#define <a href="#XSLT_TODO">XSLT_TODO</a>;
 #define <a href="#XSLT_TRACE">XSLT_TRACE</a>;
-typedef enum <a href="#xsltDebugTraceCodes">xsltDebugTraceCodes</a>;
 typedef enum <a href="#xsltDebugStatusCodes">xsltDebugStatusCodes</a>;
-int	<a href="#xsltSaveResultToFile">xsltSaveResultToFile</a>		(FILE * file, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
-void	<a href="#xsltSetGenericErrorFunc">xsltSetGenericErrorFunc</a>		(void * ctx, <br/>					 xmlGenericErrorFunc handler);
-int	<a href="#xsltSetDebuggerCallbacks">xsltSetDebuggerCallbacks</a>	(int no, <br/>					 void * block);
-int	<a href="#xsltSaveResultTo">xsltSaveResultTo</a>		(xmlOutputBufferPtr buf, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
-void	<a href="#xsltTransformError">xsltTransformError</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node, <br/>					 const char * msg, <br/>					 ... ...);
+typedef enum <a href="#xsltDebugTraceCodes">xsltDebugTraceCodes</a>;
 int	<a href="#xslAddCall">xslAddCall</a>			(<a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> templ, <br/>					 xmlNodePtr source);
-void	<a href="#xsltDocumentSortFunction">xsltDocumentSortFunction</a>	(xmlNodeSetPtr list);
-const xmlChar *	<a href="#xsltGetQNameURI2">xsltGetQNameURI2</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node, <br/>					 const xmlChar ** name);
-xmlXPathObjectPtr *	<a href="#xsltComputeSortResult">xsltComputeSortResult</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>						 xmlNodePtr sort);
-void	<a href="#xsltPrintErrorContext">xsltPrintErrorContext</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node);
-int	<a href="#xsltGetUTF8Char">xsltGetUTF8Char</a>			(const unsigned char * utf, <br/>					 int * len);
-void	<a href="#xsltDefaultSortFunction">xsltDefaultSortFunction</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr * sorts, <br/>					 int nbsorts);
-int	<a href="#xsltSaveResultToFd">xsltSaveResultToFd</a>		(int fd, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
-void	<a href="#xsltSetCtxtSortFunc">xsltSetCtxtSortFunc</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltSortFunc">xsltSortFunc</a> handler);
-xmlChar *	<a href="#xsltGetNsProp">xsltGetNsProp</a>		(xmlNodePtr node, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameSpace);
-const xmlChar *	<a href="#xsltGetCNsProp">xsltGetCNsProp</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameSpace);
-const xmlChar *	<a href="#xsltGetQNameURI">xsltGetQNameURI</a>		(xmlNodePtr node, <br/>					 xmlChar ** name);
+void	<a href="#xslDropCall">xslDropCall</a>			(void);
 typedef int <a href="#xsltAddCallCallback">xsltAddCallCallback</a>		(<a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> templ, <br/>					 xmlNodePtr source);
 void	<a href="#xsltCalibrateAdjust">xsltCalibrateAdjust</a>		(long delta);
-void	<a href="#xsltSaveProfiling">xsltSaveProfiling</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 FILE * output);
-int	<a href="#xsltSaveResultToString">xsltSaveResultToString</a>		(xmlChar ** doc_txt_ptr, <br/>					 int * doc_txt_len, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
-const xmlChar *	<a href="#xsltSplitQName">xsltSplitQName</a>		(xmlDictPtr dict, <br/>					 const xmlChar * name, <br/>					 const xmlChar ** prefix);
-void	<a href="#xsltDoSortFunction">xsltDoSortFunction</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr * sorts, <br/>					 int nbsorts);
+xmlXPathObjectPtr *	<a href="#xsltComputeSortResult">xsltComputeSortResult</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>						 xmlNodePtr sort);
 <a href="libxslt-xsltutils.html#xsltDebugTraceCodes">xsltDebugTraceCodes</a>	<a href="#xsltDebugGetDefaultTrace">xsltDebugGetDefaultTrace</a>	(void);
-void	<a href="#xsltMessage">xsltMessage</a>			(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 xmlNodePtr inst);
-int	<a href="#xsltGetDebuggerStatus">xsltGetDebuggerStatus</a>		(void);
-long	<a href="#xsltTimestamp">xsltTimestamp</a>			(void);
-void	<a href="#xsltSetTransformErrorFunc">xsltSetTransformErrorFunc</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 void * ctx, <br/>					 xmlGenericErrorFunc handler);
-xmlXPathCompExprPtr	<a href="#xsltXPathCompile">xsltXPathCompile</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>						 const xmlChar * str);
 void	<a href="#xsltDebugSetDefaultTrace">xsltDebugSetDefaultTrace</a>	(<a href="libxslt-xsltutils.html#xsltDebugTraceCodes">xsltDebugTraceCodes</a> val);
-void	<a href="#xsltSetGenericDebugFunc">xsltSetGenericDebugFunc</a>		(void * ctx, <br/>					 xmlGenericErrorFunc handler);
-xmlXPathCompExprPtr	<a href="#xsltXPathCompileFlags">xsltXPathCompileFlags</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>						 const xmlChar * str, <br/>						 int flags);
-int	<a href="#xsltSetCtxtParseOptions">xsltSetCtxtParseOptions</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 int options);
-void	<a href="#xsltSetDebuggerStatus">xsltSetDebuggerStatus</a>		(int value);
-void	<a href="#xslDropCall">xslDropCall</a>			(void);
-void	<a href="#xsltSetSortFunc">xsltSetSortFunc</a>			(<a href="libxslt-xsltInternals.html#xsltSortFunc">xsltSortFunc</a> handler);
-typedef void <a href="#xsltHandleDebuggerCallback">xsltHandleDebuggerCallback</a>	(xmlNodePtr cur, <br/>					 xmlNodePtr node, <br/>					 <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> templ, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
-int	<a href="#xsltSaveResultToFilename">xsltSaveResultToFilename</a>	(const char * URL, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 int compression);
+void	<a href="#xsltDefaultSortFunction">xsltDefaultSortFunction</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr * sorts, <br/>					 int nbsorts);
+void	<a href="#xsltDoSortFunction">xsltDoSortFunction</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr * sorts, <br/>					 int nbsorts);
+void	<a href="#xsltDocumentSortFunction">xsltDocumentSortFunction</a>	(xmlNodeSetPtr list);
 typedef void <a href="#xsltDropCallCallback">xsltDropCallCallback</a>		(void);
+const xmlChar *	<a href="#xsltGetCNsProp">xsltGetCNsProp</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameSpace);
+int	<a href="#xsltGetDebuggerStatus">xsltGetDebuggerStatus</a>		(void);
+xmlChar *	<a href="#xsltGetNsProp">xsltGetNsProp</a>		(xmlNodePtr node, <br/>					 const xmlChar * name, <br/>					 const xmlChar * nameSpace);
 xmlDocPtr	<a href="#xsltGetProfileInformation">xsltGetProfileInformation</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+const xmlChar *	<a href="#xsltGetQNameURI">xsltGetQNameURI</a>		(xmlNodePtr node, <br/>					 xmlChar ** name);
+const xmlChar *	<a href="#xsltGetQNameURI2">xsltGetQNameURI2</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node, <br/>					 const xmlChar ** name);
+int	<a href="#xsltGetUTF8Char">xsltGetUTF8Char</a>			(const unsigned char * utf, <br/>					 int * len);
+typedef void <a href="#xsltHandleDebuggerCallback">xsltHandleDebuggerCallback</a>	(xmlNodePtr cur, <br/>					 xmlNodePtr node, <br/>					 <a href="libxslt-xsltInternals.html#xsltTemplatePtr">xsltTemplatePtr</a> templ, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+void	<a href="#xsltMessage">xsltMessage</a>			(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr node, <br/>					 xmlNodePtr inst);
+void	<a href="#xsltPrintErrorContext">xsltPrintErrorContext</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node);
+void	<a href="#xsltSaveProfiling">xsltSaveProfiling</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 FILE * output);
+int	<a href="#xsltSaveResultTo">xsltSaveResultTo</a>		(xmlOutputBufferPtr buf, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
+int	<a href="#xsltSaveResultToFd">xsltSaveResultToFd</a>		(int fd, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
+int	<a href="#xsltSaveResultToFile">xsltSaveResultToFile</a>		(FILE * file, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
+int	<a href="#xsltSaveResultToFilename">xsltSaveResultToFilename</a>	(const char * URL, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 int compression);
+int	<a href="#xsltSaveResultToString">xsltSaveResultToString</a>		(xmlChar ** doc_txt_ptr, <br/>					 int * doc_txt_len, <br/>					 xmlDocPtr result, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
+void	<a href="#xsltSetCtxtLocaleHandlers">xsltSetCtxtLocaleHandlers</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltNewLocaleFunc">xsltNewLocaleFunc</a> newLocale, <br/>					 <a href="libxslt-xsltInternals.html#xsltFreeLocaleFunc">xsltFreeLocaleFunc</a> freeLocale, <br/>					 <a href="libxslt-xsltInternals.html#xsltGenSortKeyFunc">xsltGenSortKeyFunc</a> genSortKey);
+int	<a href="#xsltSetCtxtParseOptions">xsltSetCtxtParseOptions</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 int options);
+void	<a href="#xsltSetCtxtSortFunc">xsltSetCtxtSortFunc</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltSortFunc">xsltSortFunc</a> handler);
+int	<a href="#xsltSetDebuggerCallbacks">xsltSetDebuggerCallbacks</a>	(int no, <br/>					 void * block);
+void	<a href="#xsltSetDebuggerStatus">xsltSetDebuggerStatus</a>		(int value);
+void	<a href="#xsltSetGenericDebugFunc">xsltSetGenericDebugFunc</a>		(void * ctx, <br/>					 xmlGenericErrorFunc handler);
+void	<a href="#xsltSetGenericErrorFunc">xsltSetGenericErrorFunc</a>		(void * ctx, <br/>					 xmlGenericErrorFunc handler);
+void	<a href="#xsltSetSortFunc">xsltSetSortFunc</a>			(<a href="libxslt-xsltInternals.html#xsltSortFunc">xsltSortFunc</a> handler);
+void	<a href="#xsltSetTransformErrorFunc">xsltSetTransformErrorFunc</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 void * ctx, <br/>					 xmlGenericErrorFunc handler);
+const xmlChar *	<a href="#xsltSplitQName">xsltSplitQName</a>		(xmlDictPtr dict, <br/>					 const xmlChar * name, <br/>					 const xmlChar ** prefix);
+long	<a href="#xsltTimestamp">xsltTimestamp</a>			(void);
+void	<a href="#xsltTransformError">xsltTransformError</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr node, <br/>					 const char * msg, <br/>					 ... ...);
+xmlXPathCompExprPtr	<a href="#xsltXPathCompile">xsltXPathCompile</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>						 const xmlChar * str);
+xmlXPathCompExprPtr	<a href="#xsltXPathCompileFlags">xsltXPathCompileFlags</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>						 const xmlChar * str, <br/>						 int flags);
 </pre>
     </div>
     <div class="refsect1" lang="en">
@@ -290,12 +291,16 @@ xmlDocPtr	<a href="#xsltGetProfileInformation">xsltGetProfileInformation</a>	(<a
 </pre><p>Save the result @result obtained by applying the @style stylesheet to a new allocated string.</p>
 <div class="variablelist"><table border="0"><col align="left"/><tbody><tr><td><span class="term"><i><tt>doc_txt_ptr</tt></i>:</span></td><td>Memory pointer for allocated XML text</td></tr><tr><td><span class="term"><i><tt>doc_txt_len</tt></i>:</span></td><td>Length of the generated XML text</td></tr><tr><td><span class="term"><i><tt>result</tt></i>:</span></td><td>the result xmlDocPtr</td></tr><tr><td><span class="term"><i><tt>style</tt></i>:</span></td><td>the stylesheet</td></tr><tr><td><span class="term"><i><tt>Returns</tt></i>:</span></td><td>0 in case of success and -1 in case of error</td></tr></tbody></table></div></div>
         <hr/>
+        <div class="refsect2" lang="en"><h3><a name="xsltSetCtxtLocaleHandlers"/>xsltSetCtxtLocaleHandlers ()</h3><pre class="programlisting">void	xsltSetCtxtLocaleHandlers	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltNewLocaleFunc">xsltNewLocaleFunc</a> newLocale, <br/>					 <a href="libxslt-xsltInternals.html#xsltFreeLocaleFunc">xsltFreeLocaleFunc</a> freeLocale, <br/>					 <a href="libxslt-xsltInternals.html#xsltGenSortKeyFunc">xsltGenSortKeyFunc</a> genSortKey)<br/>
+</pre><p>Set the locale handlers.</p>
+<div class="variablelist"><table border="0"><col align="left"/><tbody><tr><td><span class="term"><i><tt>ctxt</tt></i>:</span></td><td>an XSLT transform context</td></tr><tr><td><span class="term"><i><tt>newLocale</tt></i>:</span></td><td>locale constructor</td></tr><tr><td><span class="term"><i><tt>freeLocale</tt></i>:</span></td><td>locale destructor</td></tr><tr><td><span class="term"><i><tt>genSortKey</tt></i>:</span></td><td>sort key generator</td></tr></tbody></table></div></div>
+        <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltSetCtxtParseOptions"/>xsltSetCtxtParseOptions ()</h3><pre class="programlisting">int	xsltSetCtxtParseOptions		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 int options)<br/>
 </pre><p>Change the default parser option passed by the XSLT engine to the parser when using document() loading.</p>
 <div class="variablelist"><table border="0"><col align="left"/><tbody><tr><td><span class="term"><i><tt>ctxt</tt></i>:</span></td><td>a XSLT process context</td></tr><tr><td><span class="term"><i><tt>options</tt></i>:</span></td><td>a combination of libxml2 xmlParserOption</td></tr><tr><td><span class="term"><i><tt>Returns</tt></i>:</span></td><td>the previous options or -1 in case of error</td></tr></tbody></table></div></div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltSetCtxtSortFunc"/>xsltSetCtxtSortFunc ()</h3><pre class="programlisting">void	xsltSetCtxtSortFunc		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltSortFunc">xsltSortFunc</a> handler)<br/>
-</pre><p>Function to set the handler for XSLT sorting for the specified context. If the handler is NULL, then the global sort function will be called</p>
+</pre><p>DEPRECATED: Use xsltSetCtxtLocaleHandlers. Function to set the handler for XSLT sorting for the specified context. If the handler is NULL, then the global sort function will be called</p>
 <div class="variablelist"><table border="0"><col align="left"/><tbody><tr><td><span class="term"><i><tt>ctxt</tt></i>:</span></td><td>a XSLT process context</td></tr><tr><td><span class="term"><i><tt>handler</tt></i>:</span></td><td>the new handler function</td></tr></tbody></table></div></div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltSetDebuggerCallbacks"/>xsltSetDebuggerCallbacks ()</h3><pre class="programlisting">int	xsltSetDebuggerCallbacks	(int no, <br/>					 void * block)<br/>
@@ -315,7 +320,7 @@ xmlDocPtr	<a href="#xsltGetProfileInformation">xsltGetProfileInformation</a>	(<a
 <div class="variablelist"><table border="0"><col align="left"/><tbody><tr><td><span class="term"><i><tt>ctx</tt></i>:</span></td><td>the new error handling context</td></tr><tr><td><span class="term"><i><tt>handler</tt></i>:</span></td><td>the new handler function</td></tr></tbody></table></div></div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltSetSortFunc"/>xsltSetSortFunc ()</h3><pre class="programlisting">void	xsltSetSortFunc			(<a href="libxslt-xsltInternals.html#xsltSortFunc">xsltSortFunc</a> handler)<br/>
-</pre><p>Function to reset the global handler for XSLT sorting. If the handler is NULL, the default sort function will be used.</p>
+</pre><p>DEPRECATED: Use xsltSetCtxtLocaleHandlers. Function to reset the global handler for XSLT sorting. If the handler is NULL, the default sort function will be used.</p>
 <div class="variablelist"><table border="0"><col align="left"/><tbody><tr><td><span class="term"><i><tt>handler</tt></i>:</span></td><td>the new handler function</td></tr></tbody></table></div></div>
         <hr/>
         <div class="refsect2" lang="en"><h3><a name="xsltSetTransformErrorFunc"/>xsltSetTransformErrorFunc ()</h3><pre class="programlisting">void	xsltSetTransformErrorFunc	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 void * ctx, <br/>					 xmlGenericErrorFunc handler)<br/>

@@ -47,20 +47,20 @@
 #define <a href="#XSLT_RVT_FUNC_RESULT">XSLT_RVT_FUNC_RESULT</a>;
 #define <a href="#XSLT_RVT_GLOBAL">XSLT_RVT_GLOBAL</a>;
 #define <a href="#XSLT_RVT_LOCAL">XSLT_RVT_LOCAL</a>;
-void	<a href="#xsltFreeGlobalVariables">xsltFreeGlobalVariables</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
-int	<a href="#xsltQuoteUserParams">xsltQuoteUserParams</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char ** params);
-xmlXPathObjectPtr	<a href="#xsltXPathVariableLookup">xsltXPathVariableLookup</a>	(void * ctxt, <br/>						 const xmlChar * name, <br/>						 const xmlChar * ns_uri);
-int	<a href="#xsltEvalUserParams">xsltEvalUserParams</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char ** params);
-<a href="libxslt-xsltInternals.html#xsltStackElemPtr">xsltStackElemPtr</a>	<a href="#xsltParseStylesheetCallerParam">xsltParseStylesheetCallerParam</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>							 xmlNodePtr inst);
 int	<a href="#xsltAddStackElemList">xsltAddStackElemList</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 <a href="libxslt-xsltInternals.html#xsltStackElemPtr">xsltStackElemPtr</a> elems);
-void	<a href="#xsltParseGlobalVariable">xsltParseGlobalVariable</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr cur);
-int	<a href="#xsltQuoteOneUserParam">xsltQuoteOneUserParam</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * name, <br/>					 const xmlChar * value);
-void	<a href="#xsltParseGlobalParam">xsltParseGlobalParam</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr cur);
-void	<a href="#xsltParseStylesheetVariable">xsltParseStylesheetVariable</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr inst);
 int	<a href="#xsltEvalGlobalVariables">xsltEvalGlobalVariables</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
 int	<a href="#xsltEvalOneUserParam">xsltEvalOneUserParam</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * name, <br/>					 const xmlChar * value);
+int	<a href="#xsltEvalUserParams">xsltEvalUserParams</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char ** params);
+void	<a href="#xsltFreeGlobalVariables">xsltFreeGlobalVariables</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+void	<a href="#xsltParseGlobalParam">xsltParseGlobalParam</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr cur);
+void	<a href="#xsltParseGlobalVariable">xsltParseGlobalVariable</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlNodePtr cur);
+<a href="libxslt-xsltInternals.html#xsltStackElemPtr">xsltStackElemPtr</a>	<a href="#xsltParseStylesheetCallerParam">xsltParseStylesheetCallerParam</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>							 xmlNodePtr inst);
 void	<a href="#xsltParseStylesheetParam">xsltParseStylesheetParam</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr cur);
+void	<a href="#xsltParseStylesheetVariable">xsltParseStylesheetVariable</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlNodePtr inst);
+int	<a href="#xsltQuoteOneUserParam">xsltQuoteOneUserParam</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * name, <br/>					 const xmlChar * value);
+int	<a href="#xsltQuoteUserParams">xsltQuoteUserParams</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char ** params);
 xmlXPathObjectPtr	<a href="#xsltVariableLookup">xsltVariableLookup</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>						 const xmlChar * name, <br/>						 const xmlChar * ns_uri);
+xmlXPathObjectPtr	<a href="#xsltXPathVariableLookup">xsltXPathVariableLookup</a>	(void * ctxt, <br/>						 const xmlChar * name, <br/>						 const xmlChar * ns_uri);
 </pre>
     </div>
     <div class="refsect1" lang="en">

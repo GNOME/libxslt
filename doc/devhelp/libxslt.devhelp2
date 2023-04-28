@@ -57,9 +57,6 @@
     <keyword type="macro" name="XSLT_ITEM_NAVIGATION_FIELDS" link="libxslt-xsltInternals.html#XSLT_ITEM_NAVIGATION_FIELDS"/>
     <keyword type="macro" name="XSLT_ITEM_NSINSCOPE_FIELDS" link="libxslt-xsltInternals.html#XSLT_ITEM_NSINSCOPE_FIELDS"/>
     <keyword type="macro" name="XSLT_LIBXSLT_NAMESPACE" link="libxslt-extra.html#XSLT_LIBXSLT_NAMESPACE"/>
-    <keyword type="macro" name="XSLT_LOCALE_NONE" link="libxslt-xsltlocale.html#XSLT_LOCALE_NONE"/>
-    <keyword type="macro" name="XSLT_LOCALE_POSIX" link="libxslt-xsltlocale.html#XSLT_LOCALE_POSIX"/>
-    <keyword type="macro" name="XSLT_LOCALE_WINAPI" link="libxslt-xsltlocale.html#XSLT_LOCALE_WINAPI"/>
     <keyword type="macro" name="XSLT_MARK_RES_TREE_FRAG" link="libxslt-xsltInternals.html#XSLT_MARK_RES_TREE_FRAG"/>
     <keyword type="macro" name="XSLT_MAX_SORT" link="libxslt-xsltInternals.html#XSLT_MAX_SORT"/>
     <keyword type="macro" name="XSLT_NAMESPACE" link="libxslt-xslt.html#XSLT_NAMESPACE"/>
@@ -286,7 +283,10 @@
     <keyword type="function" name="xsltElemPreCompDeallocator" link="libxslt-xsltInternals.html#xsltElemPreCompDeallocator"/>
     <keyword type="function" name="xsltExtInitFunction" link="libxslt-extensions.html#xsltExtInitFunction"/>
     <keyword type="function" name="xsltExtShutdownFunction" link="libxslt-extensions.html#xsltExtShutdownFunction"/>
+    <keyword type="function" name="xsltFreeLocaleFunc" link="libxslt-xsltInternals.html#xsltFreeLocaleFunc"/>
+    <keyword type="function" name="xsltGenSortKeyFunc" link="libxslt-xsltInternals.html#xsltGenSortKeyFunc"/>
     <keyword type="function" name="xsltHandleDebuggerCallback" link="libxslt-xsltutils.html#xsltHandleDebuggerCallback"/>
+    <keyword type="function" name="xsltNewLocaleFunc" link="libxslt-xsltInternals.html#xsltNewLocaleFunc"/>
     <keyword type="function" name="xsltPreComputeFunction" link="libxslt-extensions.html#xsltPreComputeFunction"/>
     <keyword type="function" name="xsltSecurityCheck" link="libxslt-security.html#xsltSecurityCheck"/>
     <keyword type="function" name="xsltSortFunc" link="libxslt-xsltInternals.html#xsltSortFunc"/>
@@ -514,6 +514,7 @@
     <keyword type="function" name="xsltSaveResultToString ()" link="libxslt-xsltutils.html#xsltSaveResultToString"/>
     <keyword type="function" name="xsltSecurityAllow ()" link="libxslt-security.html#xsltSecurityAllow"/>
     <keyword type="function" name="xsltSecurityForbid ()" link="libxslt-security.html#xsltSecurityForbid"/>
+    <keyword type="function" name="xsltSetCtxtLocaleHandlers ()" link="libxslt-xsltutils.html#xsltSetCtxtLocaleHandlers"/>
     <keyword type="function" name="xsltSetCtxtParseOptions ()" link="libxslt-xsltutils.html#xsltSetCtxtParseOptions"/>
     <keyword type="function" name="xsltSetCtxtSecurityPrefs ()" link="libxslt-security.html#xsltSetCtxtSecurityPrefs"/>
     <keyword type="function" name="xsltSetCtxtSortFunc ()" link="libxslt-xsltutils.html#xsltSetCtxtSortFunc"/>

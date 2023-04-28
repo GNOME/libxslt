@@ -43,21 +43,21 @@
     <p>Author(s): Daniel Veillard </p>
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
-      <pre class="synopsis">typedef struct _xsltSecurityPrefs <a href="#xsltSecurityPrefs">xsltSecurityPrefs</a>;
+      <pre class="synopsis">typedef enum <a href="#xsltSecurityOption">xsltSecurityOption</a>;
+typedef struct _xsltSecurityPrefs <a href="#xsltSecurityPrefs">xsltSecurityPrefs</a>;
 typedef <a href="libxslt-security.html#xsltSecurityPrefs">xsltSecurityPrefs</a> * <a href="#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a>;
-typedef enum <a href="#xsltSecurityOption">xsltSecurityOption</a>;
-<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a>	<a href="#xsltNewSecurityPrefs">xsltNewSecurityPrefs</a>	(void);
-typedef int <a href="#xsltSecurityCheck">xsltSecurityCheck</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char * value);
-int	<a href="#xsltSetSecurityPrefs">xsltSetSecurityPrefs</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-security.html#xsltSecurityOption">xsltSecurityOption</a> option, <br/>					 <a href="libxslt-security.html#xsltSecurityCheck">xsltSecurityCheck</a> func);
-<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a>	<a href="#xsltGetDefaultSecurityPrefs">xsltGetDefaultSecurityPrefs</a>	(void);
-void	<a href="#xsltFreeSecurityPrefs">xsltFreeSecurityPrefs</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec);
-void	<a href="#xsltSetDefaultSecurityPrefs">xsltSetDefaultSecurityPrefs</a>	(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec);
-int	<a href="#xsltSetCtxtSecurityPrefs">xsltSetCtxtSecurityPrefs</a>	(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
-<a href="libxslt-security.html#xsltSecurityCheck">xsltSecurityCheck</a>	<a href="#xsltGetSecurityPrefs">xsltGetSecurityPrefs</a>	(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>						 <a href="libxslt-security.html#xsltSecurityOption">xsltSecurityOption</a> option);
-int	<a href="#xsltSecurityAllow">xsltSecurityAllow</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char * value);
-int	<a href="#xsltCheckWrite">xsltCheckWrite</a>			(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * URL);
 int	<a href="#xsltCheckRead">xsltCheckRead</a>			(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * URL);
+int	<a href="#xsltCheckWrite">xsltCheckWrite</a>			(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * URL);
+void	<a href="#xsltFreeSecurityPrefs">xsltFreeSecurityPrefs</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec);
+<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a>	<a href="#xsltGetDefaultSecurityPrefs">xsltGetDefaultSecurityPrefs</a>	(void);
+<a href="libxslt-security.html#xsltSecurityCheck">xsltSecurityCheck</a>	<a href="#xsltGetSecurityPrefs">xsltGetSecurityPrefs</a>	(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>						 <a href="libxslt-security.html#xsltSecurityOption">xsltSecurityOption</a> option);
+<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a>	<a href="#xsltNewSecurityPrefs">xsltNewSecurityPrefs</a>	(void);
+int	<a href="#xsltSecurityAllow">xsltSecurityAllow</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char * value);
+typedef int <a href="#xsltSecurityCheck">xsltSecurityCheck</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char * value);
 int	<a href="#xsltSecurityForbid">xsltSecurityForbid</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const char * value);
+int	<a href="#xsltSetCtxtSecurityPrefs">xsltSetCtxtSecurityPrefs</a>	(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+void	<a href="#xsltSetDefaultSecurityPrefs">xsltSetDefaultSecurityPrefs</a>	(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec);
+int	<a href="#xsltSetSecurityPrefs">xsltSetSecurityPrefs</a>		(<a href="libxslt-security.html#xsltSecurityPrefsPtr">xsltSecurityPrefsPtr</a> sec, <br/>					 <a href="libxslt-security.html#xsltSecurityOption">xsltSecurityOption</a> option, <br/>					 <a href="libxslt-security.html#xsltSecurityCheck">xsltSecurityCheck</a> func);
 </pre>
     </div>
     <div class="refsect1" lang="en">

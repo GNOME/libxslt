@@ -44,15 +44,15 @@
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
       <pre class="synopsis">typedef enum <a href="#xsltLoadType">xsltLoadType</a>;
-void	<a href="#xsltFreeStyleDocuments">xsltFreeStyleDocuments</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
 typedef xmlDocPtr <a href="#xsltDocLoaderFunc">xsltDocLoaderFunc</a>	(const xmlChar * URI, <br/>					 xmlDictPtr dict, <br/>					 int options, <br/>					 void * ctxt, <br/>					 <a href="libxslt-documents.html#xsltLoadType">xsltLoadType</a> type);
+<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltFindDocument">xsltFindDocument</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlDocPtr doc);
+void	<a href="#xsltFreeDocuments">xsltFreeDocuments</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
+void	<a href="#xsltFreeStyleDocuments">xsltFreeStyleDocuments</a>		(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style);
 <a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltLoadDocument">xsltLoadDocument</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 const xmlChar * URI);
+<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltLoadStyleDocument">xsltLoadStyleDocument</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 const xmlChar * URI);
+<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltNewDocument">xsltNewDocument</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlDocPtr doc);
 <a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltNewStyleDocument">xsltNewStyleDocument</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 xmlDocPtr doc);
 void	<a href="#xsltSetLoaderFunc">xsltSetLoaderFunc</a>		(<a href="libxslt-documents.html#xsltDocLoaderFunc">xsltDocLoaderFunc</a> f);
-void	<a href="#xsltFreeDocuments">xsltFreeDocuments</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt);
-<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltNewDocument">xsltNewDocument</a>		(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlDocPtr doc);
-<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltLoadStyleDocument">xsltLoadStyleDocument</a>	(<a href="libxslt-xsltInternals.html#xsltStylesheetPtr">xsltStylesheetPtr</a> style, <br/>					 const xmlChar * URI);
-<a href="libxslt-xsltInternals.html#xsltDocumentPtr">xsltDocumentPtr</a>	<a href="#xsltFindDocument">xsltFindDocument</a>	(<a href="libxslt-xsltInternals.html#xsltTransformContextPtr">xsltTransformContextPtr</a> ctxt, <br/>					 xmlDocPtr doc);
 </pre>
     </div>
     <div class="refsect1" lang="en">

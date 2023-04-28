@@ -38,29 +38,29 @@
     <p>Author(s): </p>
     <div class="refsynopsisdiv">
       <h2>Synopsis</h2>
-      <pre class="synopsis">#define <a href="#EXSLT_DATE_NAMESPACE">EXSLT_DATE_NAMESPACE</a>;
+      <pre class="synopsis">#define <a href="#EXSLT_COMMON_NAMESPACE">EXSLT_COMMON_NAMESPACE</a>;
+#define <a href="#EXSLT_CRYPTO_NAMESPACE">EXSLT_CRYPTO_NAMESPACE</a>;
+#define <a href="#EXSLT_DATE_NAMESPACE">EXSLT_DATE_NAMESPACE</a>;
+#define <a href="#EXSLT_DYNAMIC_NAMESPACE">EXSLT_DYNAMIC_NAMESPACE</a>;
+#define <a href="#EXSLT_FUNCTIONS_NAMESPACE">EXSLT_FUNCTIONS_NAMESPACE</a>;
+#define <a href="#EXSLT_MATH_NAMESPACE">EXSLT_MATH_NAMESPACE</a>;
+#define <a href="#EXSLT_SETS_NAMESPACE">EXSLT_SETS_NAMESPACE</a>;
 #define <a href="#EXSLT_STRINGS_NAMESPACE">EXSLT_STRINGS_NAMESPACE</a>;
 #define <a href="#SAXON_NAMESPACE">SAXON_NAMESPACE</a>;
-#define <a href="#EXSLT_COMMON_NAMESPACE">EXSLT_COMMON_NAMESPACE</a>;
-#define <a href="#EXSLT_FUNCTIONS_NAMESPACE">EXSLT_FUNCTIONS_NAMESPACE</a>;
-#define <a href="#EXSLT_SETS_NAMESPACE">EXSLT_SETS_NAMESPACE</a>;
-#define <a href="#EXSLT_DYNAMIC_NAMESPACE">EXSLT_DYNAMIC_NAMESPACE</a>;
-#define <a href="#EXSLT_CRYPTO_NAMESPACE">EXSLT_CRYPTO_NAMESPACE</a>;
-#define <a href="#EXSLT_MATH_NAMESPACE">EXSLT_MATH_NAMESPACE</a>;
-void	<a href="#exsltDynRegister">exsltDynRegister</a>		(void);
 void	<a href="#exsltCommonRegister">exsltCommonRegister</a>		(void);
-void	<a href="#exsltRegisterAll">exsltRegisterAll</a>		(void);
-int	<a href="#exsltStrXpathCtxtRegister">exsltStrXpathCtxtRegister</a>	(xmlXPathContextPtr ctxt, <br/>					 const xmlChar * prefix);
-int	<a href="#exsltSetsXpathCtxtRegister">exsltSetsXpathCtxtRegister</a>	(xmlXPathContextPtr ctxt, <br/>					 const xmlChar * prefix);
-void	<a href="#exsltFuncRegister">exsltFuncRegister</a>		(void);
-void	<a href="#exsltStrRegister">exsltStrRegister</a>		(void);
-void	<a href="#exsltSetsRegister">exsltSetsRegister</a>		(void);
-void	<a href="#exsltDateRegister">exsltDateRegister</a>		(void);
 void	<a href="#exsltCryptoRegister">exsltCryptoRegister</a>		(void);
+void	<a href="#exsltDateRegister">exsltDateRegister</a>		(void);
+int	<a href="#exsltDateXpathCtxtRegister">exsltDateXpathCtxtRegister</a>	(xmlXPathContextPtr ctxt, <br/>					 const xmlChar * prefix);
+void	<a href="#exsltDynRegister">exsltDynRegister</a>		(void);
+void	<a href="#exsltFuncRegister">exsltFuncRegister</a>		(void);
 void	<a href="#exsltMathRegister">exsltMathRegister</a>		(void);
 int	<a href="#exsltMathXpathCtxtRegister">exsltMathXpathCtxtRegister</a>	(xmlXPathContextPtr ctxt, <br/>					 const xmlChar * prefix);
+void	<a href="#exsltRegisterAll">exsltRegisterAll</a>		(void);
 void	<a href="#exsltSaxonRegister">exsltSaxonRegister</a>		(void);
-int	<a href="#exsltDateXpathCtxtRegister">exsltDateXpathCtxtRegister</a>	(xmlXPathContextPtr ctxt, <br/>					 const xmlChar * prefix);
+void	<a href="#exsltSetsRegister">exsltSetsRegister</a>		(void);
+int	<a href="#exsltSetsXpathCtxtRegister">exsltSetsXpathCtxtRegister</a>	(xmlXPathContextPtr ctxt, <br/>					 const xmlChar * prefix);
+void	<a href="#exsltStrRegister">exsltStrRegister</a>		(void);
+int	<a href="#exsltStrXpathCtxtRegister">exsltStrXpathCtxtRegister</a>	(xmlXPathContextPtr ctxt, <br/>					 const xmlChar * prefix);
 </pre>
     </div>
     <div class="refsect1" lang="en">
