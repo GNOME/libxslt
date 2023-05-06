@@ -95,7 +95,11 @@ dnl
 AC_MSG_CHECKING([how to pass version script to the linker ($LD)])
 VERSION_SCRIPT_FLAGS=none
 if $LD --help 2>&1 | grep "version-script" >/dev/null 2>/dev/null; then
-    VERSION_SCRIPT_FLAGS=-Wl,--version-script=
+    dnl lld 16 defaults to --no-undefined-version but the version script
+    dnl can contain symbols disabled by configuration options.
+    VERSION_SCRIPT_FLAGS=''
+    AX_APPEND_LINK_FLAGS([-Wl,--undefined-version], [VERSION_SCRIPT_FLAGS])
+    AX_APPEND_FLAG([-Wl,--version-script=], [VERSION_SCRIPT_FLAGS])
 elif $LD --help 2>&1 | grep "M mapfile" >/dev/null 2>/dev/null; then
     VERSION_SCRIPT_FLAGS="-Wl,-M -Wl,"
 fi

@@ -36,7 +36,8 @@ libxslt.spec
 libxslt.spec.in.orig
 libxslt/xsltconfig.h
 ltmain.sh
-m4/
+m4/libtool*
+m4/lt*
 missing
 py-compile
 python/gen_prog
