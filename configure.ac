@@ -565,8 +565,8 @@ tests/fuzz/Makefile
 doc/Makefile
 doc/devhelp/Makefile
 doc/EXSLT/devhelp/Makefile
-xslt-config
 libxslt.spec
 ])
+AC_CONFIG_FILES([xslt-config], [chmod +x xslt-config])
 
 AC_OUTPUT
