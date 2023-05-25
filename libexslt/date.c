@@ -244,12 +244,14 @@ _exsltDateParseGYear (exsltDateValPtr dt, const xmlChar **str)
 static void
 exsltFormatGYear(xmlChar **cur, xmlChar *end, long yr)
 {
+    long year;
+    xmlChar tmp_buf[100], *tmp = tmp_buf, *tmp_end = tmp_buf + 99;
+
     if (yr <= 0 && *cur < end) {
         *(*cur)++ = '-';
     }
 
-    long year = (yr <= 0) ? -yr + 1 : yr;
-    xmlChar tmp_buf[100], *tmp = tmp_buf, *tmp_end = tmp_buf + 99;
+    year = (yr <= 0) ? -yr + 1 : yr;
     /* result is in reverse-order */
     while (year > 0 && tmp < tmp_end) {
         *tmp++ = '0' + (xmlChar)(year % 10);
