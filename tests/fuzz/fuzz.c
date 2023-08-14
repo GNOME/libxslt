@@ -734,7 +734,7 @@ xmlFuzzEntityLoader(const char *URL, const char *ID ATTRIBUTE_UNUSED,
         return(NULL);
     }
     input->base = input->cur = xmlBufContent(input->buf->buffer);
-    input->end = input->base + entity->size;
+    input->end = input->base + xmlBufUse(input->buf->buffer);
 
     return input;
 }
