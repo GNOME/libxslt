@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import string
+import setup_test
 import libxml2
 # Memory debug specific
 libxml2.debugMemory(1)

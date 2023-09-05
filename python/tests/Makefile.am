@@ -21,7 +21,7 @@ check-local: $(TESTSPY)
           fi; \
 	  for test in $(TESTSPY) ; do \
 	    echo "-- $$test" ; \
-	    $(PYTHON) $(srcdir)/$$test; \
+	    LIBXML_SRC="$(LIBXML_SRC)" $(PYTHON) $(srcdir)/$$test; \
 	  done)
 endif
 
