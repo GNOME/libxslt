@@ -511,6 +511,7 @@ AC_SUBST(XSLT_LIBS)
 AC_SUBST(XSLT_PRIVATE_LIBS)
 
 LIBXSLT_CFLAGS=""
+LIBEXSLT_CFLAGS=""
 case ${host} in
     *-*-mingw* | *-*-cygwin* | *-*-msvc* )
         # If the host is Windows, and shared libraries are disabled, we
@@ -519,12 +520,14 @@ case ${host} in
         # DLL imports, which obviously aren't present in a static
         # library).
         if test "x$enable_shared" = "xno"; then
-           LIBXSLT_CFLAGS="$LIBXSLT_CFLAGS -DLIBXSLT_STATIC -DLIBEXSLT_STATIC"
+           LIBXSLT_CFLAGS="$LIBXSLT_CFLAGS -DLIBXSLT_STATIC"
+           LIBEXSLT_CFLAGS="$LIBEXSLT_CFLAGS -DLIBEXSLT_STATIC"
            AM_CFLAGS="$AM_CFLAGS -DLIBXSLT_STATIC -DLIBEXSLT_STATIC"
         fi
         ;;
 esac
 AC_SUBST(LIBXSLT_CFLAGS)
+AC_SUBST(LIBEXSLT_CFLAGS)
 
 AC_SUBST(AM_CFLAGS)
 

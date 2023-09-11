@@ -74,7 +74,7 @@ while test $# -gt 0; do
 	;;
 
     --cflags)
-        cflags="@LIBXML_CFLAGS@ @LIBXSLT_CFLAGS@"
+        cflags="@LIBXML_CFLAGS@ @LIBXSLT_CFLAGS@ @LIBEXSLT_CFLAGS@"
         if test "$includedir" != "/usr/include"; then
             cflags="$cflags @XSLT_INCLUDEDIR@"
         fi
