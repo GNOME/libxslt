@@ -12,6 +12,7 @@
 #define IN_LIBXSLT
 #include "libxslt.h"
 
+#include <stdlib.h>
 #include <string.h>
 #include <limits.h>
 
@@ -26,6 +27,7 @@
 #endif
 #include <libxml/list.h>
 #include <libxml/xmlIO.h>
+#include <libxml/threads.h>
 #include "xslt.h"
 #include "xsltInternals.h"
 #include "xsltlocale.h"
