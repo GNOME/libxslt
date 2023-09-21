@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include <libxml/xmlmemory.h>
-#include <libxml/tree.h>
+#include <libxml/parser.h>
 #include <libxml/hash.h>
 #include <libxml/xmlerror.h>
 #include <libxml/uri.h>
