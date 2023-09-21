@@ -1284,7 +1284,6 @@ void initlibxsltmod(void) {
      * Specific XSLT initializations
      */
     libxslt_xsltErrorInitialize();
-    xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
     /*
      * Register the EXSLT extensions and the test module
      */
