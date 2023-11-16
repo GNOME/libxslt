@@ -14,6 +14,7 @@ EXTRA_DIST = 			\
 	libxslt_wrap.h		\
 	libxsl.py		\
 	libxslt-python-api.xml	\
+	pyproject.toml		\
 	setup.py.in
 
 if WITH_PYTHON

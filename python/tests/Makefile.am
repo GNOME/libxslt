@@ -6,7 +6,7 @@ TESTSPY =	\
     extfunc.py
 
 exampledir = $(docdir)/python/examples
-dist_example_DATA = test.xml test.xsl pyxsltproc.py $(TESTSPY)
+dist_example_DATA = test.xml test.xsl pyxsltproc.py setup_test.py $(TESTSPY)
 
 check-local: $(TESTSPY)
 	@(export PYTHONPATH="..:../.libs:$(srcdir)/..:$$PYTHONPATH"; \
