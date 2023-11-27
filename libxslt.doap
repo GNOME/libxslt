@@ -12,7 +12,7 @@ based on libxml2, the XML C library developed for the GNOME project. It also
 implements most of the EXSLT set of processor-portable extensions
 functions and some of Saxon's evaluate and expressions
 extensions.</description>
-  <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/xslt" />
+  <developer-forum rdf:resource="https://discourse.gnome.org/tag/libxml2" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#infrastructure" />
   <programming-language>C</programming-language>
 
