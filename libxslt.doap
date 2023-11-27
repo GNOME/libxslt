@@ -13,6 +13,8 @@ implements most of the EXSLT set of processor-portable extensions
 functions and some of Saxon's evaluate and expressions
 extensions.</description>
   <developer-forum rdf:resource="https://discourse.gnome.org/tag/libxml2" />
+  <download-page rdf:resource="https://download.gnome.org/sources/libxslt/" />
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/libxslt/issues/" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#infrastructure" />
   <programming-language>C</programming-language>
 
