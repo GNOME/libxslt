@@ -456,7 +456,8 @@ initializeLibxml2(void) {
     xmlSetExternalEntityLoader(xmlNoNetExternalEntityLoader);
     xmlSetGenericErrorFunc(NULL, testErrorHandler);
     xsltSetGenericErrorFunc(NULL, testErrorHandler);
-    xmlSetStructuredErrorFunc(NULL, testStructuredErrorHandler);
+    xmlSetStructuredErrorFunc(NULL,
+            (xmlStructuredErrorFunc) testStructuredErrorHandler);
     exsltRegisterAll();
     xsltRegisterTestModule();
     xsltMaxDepth = 200;
