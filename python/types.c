@@ -753,22 +753,6 @@ libxml_xmlXPathObjectPtrConvert(PyObject *obj)
 }
 
 PyObject *
-libxml_xmlCatalogPtrWrap(xmlCatalogPtr catal)
-{
-    PyObject *ret;
-
-#ifdef DEBUG
-    printf("libxml_xmlNodePtrWrap: catal = %p\n", catal);
-#endif
-    if (catal == NULL) {
-        Py_INCREF(Py_None);
-        return (Py_None);
-    }
-    ret = PyCapsule_New((void *) catal, (char *) "xmlCatalogPtr", NULL);
-    return (ret);
-}
-
-PyObject *
 libxml_xmlOutputBufferPtrWrap(xmlOutputBufferPtr buffer)
 {
     PyObject *ret;
@@ -798,21 +782,5 @@ libxml_xmlParserInputBufferPtrWrap(xmlParserInputBufferPtr buffer)
     }
     ret = PyCapsule_New((void *) buffer, (char *) "xmlParserInputBufferPtr",
                         NULL);
-    return (ret);
-}
-
-PyObject *
-libxml_xmlRegexpPtrWrap(xmlRegexpPtr regexp)
-{
-    PyObject *ret;
-
-#ifdef DEBUG
-    printf("libxml_xmlRegexpPtrWrap: regexp = %p\n", regexp);
-#endif
-    if (regexp == NULL) {
-        Py_INCREF(Py_None);
-        return (Py_None);
-    }
-    ret = PyCapsule_New((void *) regexp, (char *) "xmlRegexpPtr", NULL);
     return (ret);
 }
