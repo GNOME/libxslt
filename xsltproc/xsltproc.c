@@ -476,7 +476,6 @@ static void usage(const char *name) {
     printf("\t--noout: do not dump the result\n");
     printf("\t--maxdepth val : increase the maximum depth (default %d)\n", xsltMaxDepth);
     printf("\t--maxvars val : increase the maximum variables (default %d)\n", xsltMaxVars);
-    printf("\t--maxparserdepth val : increase the maximum parser depth\n");
     printf("\t--huge: relax any hardcoded limit from the parser\n");
     printf("\t             fixes \"parser error : internal error: Huge input lookup\"\n");
     printf("\t--seed-rand val : initialize pseudo random number generator with specific seed\n");
@@ -720,20 +719,6 @@ main(int argc, char **argv)
                 if (value > 0)
                     xsltMaxVars = value;
             }
-        } else if ((!strcmp(argv[i], "-maxparserdepth")) ||
-                   (!strcmp(argv[i], "--maxparserdepth"))) {
-            int value;
-
-            i++;
-            if (i == argc) {
-                fprintf(stderr, "XML maxparserdepth value not specified!\n");
-                return (2);
-            }
-
-            if (sscanf(argv[i], "%d", &value) == 1) {
-                if (value > 0)
-                    xmlParserMaxDepth = value;
-            }
         } else if ((!strcmp(argv[i], "-huge")) ||
                    (!strcmp(argv[i], "--huge"))) {
             options |= XML_PARSE_HUGE;
@@ -780,10 +765,6 @@ main(int argc, char **argv)
             continue;
         } else if ((!strcmp(argv[i], "-maxvars")) ||
             (!strcmp(argv[i], "--maxvars"))) {
-            i++;
-            continue;
-        } else if ((!strcmp(argv[i], "-maxparserdepth")) ||
-            (!strcmp(argv[i], "--maxparserdepth"))) {
             i++;
             continue;
         } else if ((!strcmp(argv[i], "-seed-rand")) ||
