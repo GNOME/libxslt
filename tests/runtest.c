@@ -595,10 +595,28 @@ xsltTest(const char *filename, int options) {
 
     if (strcmp(filename, "./test-10-3.xsl") == 0) {
         void *locale = xsltNewLocale(BAD_CAST "de", 0);
+        xmlChar *str1, *str2;
+
         /* Skip test requiring "de" locale */
         if (locale == NULL)
             return(0);
+
+        /*
+         * Some C libraries like musl or older macOS don't support
+         * collation with locales.
+         */
+        str1 = xsltStrxfrm(locale, BAD_CAST "\xC3\xA4");
+        str2 = xsltStrxfrm(locale, BAD_CAST "b");
+        res = xmlStrcmp(str1, str2);
+        xmlFree(str1);
+        xmlFree(str2);
         xsltFreeLocale(locale);
+
+        if (res >= 0) {
+            fprintf(stderr, "Warning: Your C library doesn't seem to support "
+                    "collation with locales");
+            return(0);
+        }
     }
 
     styleDoc = xmlReadFile(filename, NULL, XSLT_PARSE_OPTIONS | options);
