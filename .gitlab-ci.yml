@@ -45,7 +45,7 @@ clang:msan:
   tags:
     - win32-ps
   variables:
-    CONFIG: "--without-crypto"
+    CONFIG: "--without-python --without-crypto"
     CHERE_INVOKING: "yes"
   before_script:
     - $Env:Path="C:\msys64\usr\bin;$Env:Path"
