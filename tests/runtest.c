@@ -614,7 +614,7 @@ xsltTest(const char *filename, int options) {
 
         if (res >= 0) {
             fprintf(stderr, "Warning: Your C library doesn't seem to support "
-                    "collation with locales");
+                    "collation with locales\n");
             return(0);
         }
     }
