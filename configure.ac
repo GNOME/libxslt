@@ -253,15 +253,6 @@ else
 fi
 AC_SUBST(WITH_XSLT_DEBUG)
 
-AC_ARG_WITH(mem_debug, [  --with-mem-debug        Add the memory debugging module (off)])
-if test "$with_mem_debug" = "yes" ; then
-    echo Enabling memory debug support
-    WITH_MEM_DEBUG=1
-else    
-    WITH_MEM_DEBUG=0
-fi
-AC_SUBST(WITH_MEM_DEBUG)
-
 dnl 
 dnl Is debugger support requested
 dnl
