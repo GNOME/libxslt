@@ -4500,7 +4500,11 @@ xsltParseSequenceConstructor(xsltCompilerCtxtPtr cctxt, xmlNodePtr cur)
 			* Leave the contained text-node in the tree.
 			*/
 			xmlUnlinkNode(tmp);
-			xmlAddPrevSibling(cur, tmp);
+			if (xmlAddPrevSibling(cur, tmp) == NULL) {
+                            xsltTransformError(ctxt, NULL, NULL,
+                                    "out of memory\n");
+                            xmlFreeNode(tmp);
+                        }
 		    } else {
 			tmp = NULL;
 			xsltTransformError(NULL, cctxt->style, cur,
@@ -4986,7 +4990,11 @@ xsltParseTemplateContent(xsltStylesheetPtr style, xmlNodePtr templ) {
 
 			    next = text->next;
 			    xmlUnlinkNode(text);
-			    xmlAddPrevSibling(cur, text);
+                            if (xmlAddPrevSibling(cur, text) == NULL) {
+                                xsltTransformError(NULL, style, NULL,
+                                        "out of memory\n");
+                                xmlFreeNode(text);
+                            }
 			    text = next;
 			}
 		    }
