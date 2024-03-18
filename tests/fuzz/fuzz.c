@@ -307,6 +307,7 @@ xsltFuzzXslt(const char *data, size_t size) {
     sheet = xsltNewStylesheet();
     if (sheet == NULL)
         goto exit;
+    sheet->opLimit = 10000;
     sheet->xpathCtxt->opLimit = 100000;
     sheet->xpathCtxt->opCount = 0;
     if (xsltParseStylesheetUser(sheet, xsltDoc) != 0)
