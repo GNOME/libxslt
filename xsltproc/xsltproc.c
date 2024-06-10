@@ -611,7 +611,7 @@ main(int argc, char **argv)
             profile++;
         } else if ((!strcmp(argv[i], "-nonet")) ||
                    (!strcmp(argv[i], "--nonet"))) {
-	    defaultEntityLoader = xmlNoNetExternalEntityLoader;
+            options |= XML_PARSE_NONET;
         } else if ((!strcmp(argv[i], "-nowrite")) ||
                    (!strcmp(argv[i], "--nowrite"))) {
 	    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_FILE,
