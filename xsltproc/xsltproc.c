@@ -883,7 +883,6 @@ done:
     xsltFreeSecurityPrefs(sec);
     xsltCleanupGlobals();
     xmlCleanupParser();
-    xmlMemoryDump();
     return(errorno);
 }
 
