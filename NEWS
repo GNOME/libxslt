@@ -1,5 +1,26 @@
 NEWS file for libxslt
 
+v1.1.40: Jun 12 2024
+
+### Removals
+
+- xsltproc: remove maxparserdepth option (Mike Dalessio)
+
+### Improvements
+
+- functions: xmlXPtrNewContext is deprecated
+- xsltproc: Stop calling xmlMemoryDump
+- xsltproc: Prefer XML_PARSE_NONET over xmlNoNetEntityLoader
+- functions: Fix build if libxml2 modules are disabled
+- extensions: Don't call deprecated xmlCheckFilename
+- documents: Don't set ctxt->directory
+- exslt: Fix EXSLT functions without parameters
+
+### Build systems
+
+- build: Remove mem-debug option
+
+
 v1.1.39: Nov 16 2023
 
 ### Bug fixes
