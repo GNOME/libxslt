@@ -159,7 +159,7 @@ xsltDocumentFunctionLoadDocument(xmlXPathParserContextPtr ctxt, xmlChar* URI)
 
     /* use XPointer of HTML location for fragment ID */
 #ifdef LIBXML_XPTR_ENABLED
-    xptrctxt = xmlXPtrNewContext(doc, NULL, NULL);
+    xptrctxt = xmlXPathNewContext(doc);
     if (xptrctxt == NULL) {
 	xsltTransformError(tctxt, NULL, NULL,
 	    "document() : internal error xptrctxt == NULL\n");
