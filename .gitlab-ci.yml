@@ -7,14 +7,13 @@
 gcc:
   extends: .test
   variables:
-    CFLAGS: "-O2 -std=c89 -D_POSIX_C_SOURCE=200112L"
+    CFLAGS: "-O2"
 
-gcc:python3:
+gcc:c89:
   extends: .test
   variables:
-    CONFIG: "--without-crypto --without-debug --without-debugger --without-plugins"
-    CFLAGS: "-O2"
-    PYTHON: "/usr/bin/python3"
+    CONFIG: "--without-python"
+    CFLAGS: "-O2 -std=c89 -D_POSIX_C_SOURCE=200112L"
 
 gcc:static:
   extends: .test
