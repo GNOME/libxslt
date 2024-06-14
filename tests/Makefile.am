@@ -26,7 +26,7 @@ plugindir = $(abs_builddir)/.libs
 
 xmlsoft_org_xslt_testplugin_la_CFLAGS = $(AM_CFLAGS) -DMODULE_COMPILE
 xmlsoft_org_xslt_testplugin_la_SOURCES = testplugin.c
-xmlsoft_org_xslt_testplugin_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
+xmlsoft_org_xslt_testplugin_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS) $(EXTRA_LIBS)
 xmlsoft_org_xslt_testplugin_la_LDFLAGS = \
 	$(AM_LDFLAGS) -no-undefined \
 	-module -avoid-version -rpath $(plugindir)
