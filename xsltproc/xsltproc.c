@@ -55,6 +55,10 @@
 #include <sys/timeb.h>
 #endif
 
+#ifndef STDIN_FILENO
+  #define STDIN_FILENO 0
+#endif
+
 #ifdef LIBXML_DEBUG_ENABLED
 static int debug = 0;
 #endif
@@ -314,6 +318,28 @@ xsltSubtreeCheck(xsltSecurityPrefsPtr sec ATTRIBUTE_UNUSED,
     return(0);
 }
 
+static xmlDocPtr
+xsltReadFile(const char *filename) {
+    xmlDocPtr doc;
+
+#ifdef LIBXML_HTML_ENABLED
+    if (html) {
+        if (strcmp(filename, "-") == 0)
+            doc = htmlReadFd(STDIN_FILENO, "-", encoding, options);
+        else
+            doc = htmlReadFile(filename, encoding, options);
+    } else
+#endif
+    {
+        if (strcmp(filename, "-") == 0)
+            doc = xmlReadFd(STDIN_FILENO, "-", encoding, options);
+        else
+            doc = xmlReadFile(filename, encoding, options);
+    }
+
+    return(doc);
+}
+
 static void
 xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
     xmlDocPtr res;
@@ -351,12 +377,7 @@ xsltProcess(xmlDocPtr doc, xsltStylesheetPtr cur, const char *filename) {
 		res = xsltApplyStylesheet(cur, doc, params);
 		xmlFreeDoc(res);
 		xmlFreeDoc(doc);
-#ifdef LIBXML_HTML_ENABLED
-		if (html)
-		    doc = htmlReadFile(filename, encoding, options);
-		else
-#endif
-		    doc = xmlReadFile(filename, encoding, options);
+                doc = xsltReadFile(filename);
 	    }
 	}
 	ctxt = xsltNewTransformContext(cur, doc);
@@ -857,12 +878,7 @@ main(int argc, char **argv)
 	    doc = NULL;
             if (timing)
                 startTimer();
-#ifdef LIBXML_HTML_ENABLED
-            if (html)
-                doc = htmlReadFile(argv[i], encoding, options);
-            else
-#endif
-                doc = xmlReadFile(argv[i], encoding, options);
+            doc = xsltReadFile(argv[i]);
             if (doc == NULL) {
                 fprintf(stderr, "unable to parse %s\n", argv[i]);
 		errorno = 6;
