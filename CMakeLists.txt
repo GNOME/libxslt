@@ -390,7 +390,7 @@ if(LIBXSLT_WITH_TESTS)
 
 	if (LIBXSLT_WITH_MODULES)
 		add_library(testplugin SHARED tests/testplugin.c)
-		target_link_libraries(testplugin LibExslt LibXslt)
+		target_link_libraries(testplugin LibExslt LibXslt LibXml2::LibXml2)
 		set_target_properties(
 			testplugin PROPERTIES
 			PREFIX ""
