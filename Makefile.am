@@ -49,6 +49,3 @@ cmakedir = $(libdir)/cmake/libxslt
 dist_cmake_DATA = FindGcrypt.cmake
 cmake_DATA = libxslt-config.cmake
 
-m4datadir = $(datadir)/aclocal
-dist_m4data_DATA = libxslt.m4
-

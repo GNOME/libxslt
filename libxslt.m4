@@ -5,6 +5,8 @@
 # Configure paths for GLIB
 # Owen Taylor     97-11-3
 #
+# Deprecated and unmaintained. Use pkg-config or xslt-config.
+#
 # Modified to work with libxslt by Thomas Schraitle 2002/10/25
 # Fixed by Edward Rudd 2004/05/12
 
