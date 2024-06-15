@@ -35,8 +35,6 @@ libtool
 libxslt-1.1.24.tar.gz
 libxslt-config.cmake
 libxslt.pc
-libxslt.spec
-libxslt.spec.in.orig
 libxslt/xsltconfig.h
 ltmain.sh
 m4/libtool*
