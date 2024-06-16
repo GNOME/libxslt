@@ -15,19 +15,16 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <time.h>
-
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
-#ifdef HAVE_SYS_STAT_H
-#include <sys/stat.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
+#ifdef HAVE_SYS_TIMEB_H
+#include <sys/timeb.h>
 #endif
 #if defined(_WIN32)
 #include <fcntl.h>
 #endif
+
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
@@ -50,10 +47,6 @@
 #include <libxslt/security.h>
 
 #include <libexslt/exsltconfig.h>
-
-#ifdef HAVE_SYS_TIMEB_H
-#include <sys/timeb.h>
-#endif
 
 #ifndef STDIN_FILENO
   #define STDIN_FILENO 0
