@@ -1,5 +1,32 @@
 NEWS file for libxslt
 
+v1.1.41: Jun 19 2024
+
+### Removals
+
+- autotools: Stop installing libxslt.m4
+- autotools: Remove RPM build
+
+### Improvements
+
+- libxslt: Set _FILE_OFFSET_BITS to 64
+- xsltproc: Remove unneeded includes
+- include: Don't define ATTRIBUTE_UNUSED in public header
+- xsltproc: Make "-" read from stdin
+
+### Build systems
+
+- cmake: Adjust paths for UNIX or UNIX-like target systems (Daniel E)
+
+### Tests
+
+- cmake: Link testplugin with libxml2
+- tests: Link testplugin with libxml2
+- tests: Fix expected error after libxml2 change
+- runtest: Switch to xmlFormatError
+- fuzz: Avoid accessing internal struct members
+
+
 v1.1.40: Jun 12 2024
 
 ### Removals
