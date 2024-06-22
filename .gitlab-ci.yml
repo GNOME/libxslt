@@ -67,6 +67,8 @@ mingw:w64-x86_64:shared:
 
 .cmake:linux:
   image: registry.gitlab.gnome.org/gnome/libxml2
+  variables:
+    CMAKE_OPTIONS: -DLIBXSLT_WITH_CRYPTO=ON
   script:
     - sh .gitlab-ci/test_cmake.sh
   artifacts:

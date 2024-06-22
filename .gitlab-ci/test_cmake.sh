@@ -19,6 +19,7 @@ cmake "$@" \
     -DCMAKE_INSTALL_PREFIX=libxslt-install \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_C_FLAGS='-Werror' \
+    $CMAKE_OPTIONS \
     -S . -B libxslt-build
 cmake --build libxslt-build --target install
 
