@@ -1,5 +1,23 @@
 NEWS file for libxslt
 
+v1.1.42: Jul 4 2024
+
+### Regressions
+
+- extensions: Readd call to xmlCheckFilename with older libxml2
+
+### Improvmenets
+
+- utils: Don't use deprecated xmlCharEncodingHandler member
+- transform: Handle filesystem paths after libxml2 changes
+- locale: Work around issue with FreeBSD's strxfrm_l
+
+### Build systems
+
+- cmake: Add LIBXSLT_WITH_PROGRAMS option (Don Olmstead)
+- cmake: Fix HAVE_GCRYPT check
+
+
 v1.1.41: Jun 19 2024
 
 ### Removals
