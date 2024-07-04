@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: xsltproc
 .\"    Author: John Fleck <jfleck@inkstain.net>
-.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
-.\"      Date: 08/17/2022
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/04/2024
 .\"    Manual: xsltproc Manual
 .\"    Source: libxslt
 .\"  Language: English
 .\"
-.TH "XSLTPROC" "1" "08/17/2022" "libxslt" "xsltproc Manual"
+.TH "XSLTPROC" "1" "07/04/2024" "libxslt" "xsltproc Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 xsltproc \- command line XSLT processor
 .SH "SYNOPSIS"
 .HP \w'\fBxsltproc\fR\ 'u
-\fBxsltproc\fR [[\fB\-V\fR | \fB\-\-version\fR] [\fB\-v\fR | \fB\-\-verbose\fR] [{\fB\-o\fR | \fB\-\-output\fR} {\fIFILE\fR | \fIDIRECTORY\fR}] | \fB\-\-timing\fR | \fB\-\-repeat\fR | \fB\-\-debug\fR | \fB\-\-novalid\fR | \fB\-\-noout\fR | \fB\-\-maxdepth\ \fR\fB\fIVALUE\fR\fR | \fB\-\-maxvars\ \fR\fB\fIVALUE\fR\fR | \fB\-\-maxparserdepth\ \fR\fB\fIVALUE\fR\fR | \fB\-\-huge\fR | \fB\-\-seed\-rand\ \fR\fB\fIVALUE\fR\fR | \fB\-\-html\fR | \fB\-\-encoding\ \fR\fB\fIENCODING\fR\fR\fB\ \fR | \fB\-\-param\ \fR\fB\fIPARAMNAME\fR\fR\fB\ \fR\fB\fIPARAMVALUE\fR\fR\fB\ \fR | \fB\-\-stringparam\ \fR\fB\fIPARAMNAME\fR\fR\fB\ \fR\fB\fIPARAMVALUE\fR\fR\fB\ \fR | \fB\-\-nonet\fR | \fB\-\-path\ "\fR\fB\fIPATH(S)\fR\fR\fB"\fR | \fB\-\-load\-trace\fR | \fB\-\-catalogs\fR | \fB\-\-xinclude\fR | \fB\-\-xincludestyle\fR | [\fB\-\-profile\fR\ |\ \fB\-\-norman\fR] | \fB\-\-dumpextensions\fR | \fB\-\-nowrite\fR | \fB\-\-nomkdir\fR | \fB\-\-writesubtree\ \fR\fB\fIPATH\fR\fR | \fB\-\-nodtdattr\fR] [\fISTYLESHEET\fR] {\fIXML\-FILE\fR... | \-}
+\fBxsltproc\fR [[\fB\-V\fR | \fB\-\-version\fR] [\fB\-v\fR | \fB\-\-verbose\fR] [{\fB\-o\fR | \fB\-\-output\fR} {\fIFILE\fR | \fIDIRECTORY\fR}] | \fB\-\-timing\fR | \fB\-\-repeat\fR | \fB\-\-debug\fR | \fB\-\-novalid\fR | \fB\-\-noout\fR | \fB\-\-maxdepth\ \fR\fB\fIVALUE\fR\fR | \fB\-\-maxvars\ \fR\fB\fIVALUE\fR\fR | \fB\-\-huge\fR | \fB\-\-seed\-rand\ \fR\fB\fIVALUE\fR\fR | \fB\-\-html\fR | \fB\-\-encoding\ \fR\fB\fIENCODING\fR\fR\fB\ \fR | \fB\-\-param\ \fR\fB\fIPARAMNAME\fR\fR\fB\ \fR\fB\fIPARAMVALUE\fR\fR\fB\ \fR | \fB\-\-stringparam\ \fR\fB\fIPARAMNAME\fR\fR\fB\ \fR\fB\fIPARAMVALUE\fR\fR\fB\ \fR | \fB\-\-nonet\fR | \fB\-\-path\ "\fR\fB\fIPATH(S)\fR\fR\fB"\fR | \fB\-\-load\-trace\fR | \fB\-\-catalogs\fR | \fB\-\-xinclude\fR | \fB\-\-xincludestyle\fR | [\fB\-\-profile\fR\ |\ \fB\-\-norman\fR] | \fB\-\-dumpextensions\fR | \fB\-\-nowrite\fR | \fB\-\-nomkdir\fR | \fB\-\-writesubtree\ \fR\fB\fIPATH\fR\fR | \fB\-\-nodtdattr\fR] [\fISTYLESHEET\fR] {\fIXML\-FILE\fR... | \-}
 .SH "DESCRIPTION"
 .PP
 \fBxsltproc\fR
@@ -113,11 +113,6 @@ concludes it is in an infinite loop\&. The default is 3000\&.
 \fB\-\-maxvars \fR\fB\fIVALUE\fR\fR
 .RS 4
 Maximum number of variables\&. The default is 15000\&.
-.RE
-.PP
-\fB\-\-maxparserdepth \fR\fB\fIVALUE\fR\fR
-.RS 4
-Maximum element nesting level of parsed XML documents\&. The default is 256\&.
 .RE
 .PP
 \fB\-\-huge\fR

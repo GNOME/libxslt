@@ -1463,6 +1463,8 @@ TODO: We need to get rid of this.
       <field name='forwards_compatible' type='int' info=''/>
       <field name='namedTemplates' type='xmlHashTablePtr' info=' hash table of named templates'/>
       <field name='xpathCtxt' type='xmlXPathContextPtr' info=''/>
+      <field name='opLimit' type='unsigned long' info=''/>
+      <field name='opCount' type='unsigned long' info=''/>
     </struct>
     <typedef name='xsltStylesheetPtr' file='xsltInternals' type='xsltStylesheet *'/>
     <struct name='xsltTemplate' file='xsltInternals' type='struct _xsltTemplate'>
