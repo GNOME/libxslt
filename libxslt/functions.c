@@ -700,7 +700,7 @@ xsltGenerateIdFunction(xmlXPathParserContextPtr ctxt, int nargs){
     const xmlChar *nsPrefix = NULL;
     void **psviPtr;
     unsigned long id;
-    size_t size, nsPrefixSize;
+    size_t size, nsPrefixSize = 0;
 
     tctxt = xsltXPathGetTransformContext(ctxt);
 
