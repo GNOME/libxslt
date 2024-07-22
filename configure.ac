@@ -386,7 +386,6 @@ if test "x$LIBXML_SRC" != "x"; then
             fi
         fi
         LIBXML_LIBS="-L${LIBXML_SRC} `$XML_CONFIG --libs $xml_config_dynamic`"
-        WITH_MODULES="`$XML_CONFIG --modules`"
         cd $CWD
     else
         AC_MSG_ERROR([libxml source dir not found (${LIBXML_SRC}), typo?])
@@ -399,9 +398,8 @@ dnl
 
 if test "x$LIBXML_CONFIG_PREFIX" = "x" && test "x$LIBXML_LIBS" = "x"; then
     if test "$build_shared_libs" = "yes"; then
-        PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION], [
-            WITH_MODULES="`$PKG_CONFIG --variable=modules libxml-2.0`"
-        ], [ ])
+        PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION],
+                          [ ], [ ])
     else
         PKG_CHECK_MODULES_STATIC([LIBXML], [libxml-2.0 >= $LIBXML_REQUIRED_VERSION],
         [ ], [ ])
@@ -430,7 +428,6 @@ then
     fi
     LIBXML_LIBS="`$XML_CONFIG --libs $xml_config_dynamic`"
     LIBXML_CFLAGS="`$XML_CONFIG --cflags`"
-    WITH_MODULES="`$XML_CONFIG --modules`"
 fi
 
 if test "x$LIBXML_LIBS" = "x"
@@ -459,34 +456,53 @@ else
 fi
 
 if test "$with_plugins" = "yes" ; then
-  AC_MSG_CHECKING([libxml2 module support])
-  if test "${WITH_MODULES}" = "1"; then
-    AC_MSG_RESULT(yes)
-  else
-    AC_MSG_RESULT(no)
-    WITH_MODULES="0"
-  fi
+    WITH_MODULES=1
+
+    case "$host" in
+        *-*-cygwin* | *-*-mingw* | *-*-msys* )
+            AC_DEFINE([MODULE_EXTENSION], [".dll"], [plugin file extension])
+            ;;
+        *)
+            AC_DEFINE([MODULE_EXTENSION], [".so"], [plugin file extension])
+	    ;;
+    esac
+
+    case "$host" in
+        *-*-mingw*)
+            ;;
+        *)
+            _libs=$LIBS
+            AC_SEARCH_LIBS([dlopen], [dl], [
+                WITH_MODULES=1
+                if test "$ac_cv_search_dlopen" != "none required"; then
+                    MODULE_LIBS=$ac_cv_search_dlopen
+                fi], [
+                    AC_MSG_ERROR([dlopen or equivalent not found])
+                ])
+            LIBS=$_libs
+	    ;;
+    esac
+
+    dnl
+    dnl setup default module path
+    dnl
+    expanded_libdir=$(
+        test "x$prefix" = xNONE && prefix="$ac_default_prefix"
+        test "x$exec_prefix" = xNONE && exec_prefix="$prefix"
+        while test "$libdir_old" != "$libdir"; do
+          libdir_old="$libdir"
+          eval libdir="$libdir"
+        done
+        echo "$libdir"
+    )
+    LIBXSLT_DEFAULT_PLUGINS_PATH="$expanded_libdir/libxslt-plugins"
+    AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
 else
-  WITH_MODULES="0"
+    WITH_MODULES="0"
 fi
 
 AC_SUBST(WITH_MODULES)
 AM_CONDITIONAL(WITH_MODULES, test "$WITH_MODULES" = "1")
-
-dnl
-dnl setup default module path
-dnl
-expanded_libdir=$(
-    test "x$prefix" = xNONE && prefix="$ac_default_prefix"
-    test "x$exec_prefix" = xNONE && exec_prefix="$prefix"
-    while test "$libdir_old" != "$libdir"; do
-      libdir_old="$libdir"
-      eval libdir="$libdir"
-    done
-    echo "$libdir"
-)
-LIBXSLT_DEFAULT_PLUGINS_PATH="$expanded_libdir/libxslt-plugins"
-AC_SUBST(LIBXSLT_DEFAULT_PLUGINS_PATH)
 
 AC_SUBST(XML_CONFIG)
 AC_SUBST(LIBXML_LIBS)
@@ -495,7 +511,7 @@ AC_SUBST(LIBXML_CFLAGS)
 XSLT_LIBDIR='-L${libdir}'
 XSLT_INCLUDEDIR='-I${includedir}'
 XSLT_LIBS="-lxslt $LIBXML_LIBS"
-XSLT_PRIVATE_LIBS="$LIBM"
+XSLT_PRIVATE_LIBS="$MODULE_LIBS $LIBM"
 AC_SUBST(XSLT_LIBDIR)
 AC_SUBST(XSLT_INCLUDEDIR)
 AC_SUBST(XSLT_LIBS)

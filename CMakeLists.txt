@@ -85,7 +85,9 @@ foreach(VARIABLE IN ITEMS WITH_CRYPTO WITH_DEBUGGER WITH_MODULES WITH_PROFILER W
 	endif()
 endforeach()
 
-set(MODULE_EXTENSION "${CMAKE_SHARED_LIBRARY_SUFFIX}")
+if(LIBXSLT_WITH_MODULES)
+    set(MODULE_EXTENSION "${CMAKE_SHARED_LIBRARY_SUFFIX}")
+endif()
 
 if(LIBXSLT_WITH_CRYPTO AND NOT WIN32)
 	list(APPEND CMAKE_REQUIRED_LIBRARIES Gcrypt::Gcrypt)
@@ -230,6 +232,11 @@ target_include_directories(
 )
 
 target_link_libraries(LibXslt PUBLIC LibXml2::LibXml2)
+
+if(LIBXSLT_WITH_MODULES)
+	target_link_libraries(LibXslt PRIVATE ${CMAKE_DL_LIBS})
+	set(MODULE_LIBS ${CMAKE_DL_LIBS})
+endif()
 
 if(UNIX)
 	target_link_libraries(LibXslt PRIVATE m)
@@ -520,7 +527,7 @@ set(LIBXSLT_DEFAULT_PLUGINS_PATH "\${libdir}/libxslt-plugins")
 set(XSLT_INCLUDEDIR "-I\${includedir}")
 set(XSLT_LIBDIR "-L\${libdir}")
 set(XSLT_LIBS "-lxslt -lxml2")
-set(XSLT_PRIVATE_LIBS "${LIBM}")
+set(XSLT_PRIVATE_LIBS "${MODULE_LIBS} ${LIBM}")
 
 set(EXSLT_INCLUDEDIR "-I\${includedir}")
 set(EXSLT_LIBDIR "-L\${libdir}")
