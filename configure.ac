@@ -439,10 +439,10 @@ AM_CFLAGS="$AM_CFLAGS $LIBXML_CFLAGS"
 
 
 AC_ARG_WITH(plugins,
-[  --with-plugins          Add plugin extension support (on)])
+[  --with-plugins          Add plugin extension support (off)])
 if test "$with_plugins" = ""
 then
-    with_plugins=yes
+    with_plugins=no
 fi
 
 AC_MSG_CHECKING([whether shared libraries will be built (required for plugins)])
