@@ -1,5 +1,5 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-    <xsl:output indent="yes"/>
+    <xsl:output encoding="UTF-8" indent="yes"/>
     <xsl:template match="test">
         <results>
             <xsl:for-each select="formats/format">
