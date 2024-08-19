@@ -10,6 +10,10 @@ cd ..
 
 mkdir -p libxslt-build
 cd libxslt-build
-sh ../autogen.sh --with-plugins --with-libxml-src=../libxml2 $CONFIG
+sh ../autogen.sh \
+    --with-crypto \
+    --with-plugins \
+    --with-libxml-src=../libxml2 \
+    $CONFIG
 make -j$(nproc) V=1 CFLAGS="$CFLAGS -Werror"
 make -s CFLAGS="$CFLAGS -Werror" check

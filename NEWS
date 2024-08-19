@@ -1,5 +1,15 @@
 NEWS file for libxslt
 
+v1.1.43: not yet released
+
+### Major changes
+
+The non-standard EXSLT crypto extensions and support for dynamically
+loaded plugins are now disabled by default. These features can be
+enabled by passing --with-crypto or --with-plugins to configure.
+In a future release, these features will be removed.
+
+
 v1.1.42: Jul 4 2024
 
 ### Regressions

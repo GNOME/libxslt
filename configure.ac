@@ -199,14 +199,14 @@ AS_IF([test "x$with_python" != "xno"], [
 AC_SUBST(PYTHON_LDFLAGS)
 AM_CONDITIONAL([WITH_PYTHON], [test "x$with_python" != "xno"])
 
-AC_ARG_WITH(crypto, [  --with-crypto           Add crypto support to exslt (on)])
+AC_ARG_WITH(crypto, [  --with-crypto           Add crypto support to exslt (off)])
 WITH_CRYPTO=0
 CRYPTO_TESTDIR=
-if test "$with_crypto" = "no" ; then
-    echo Disabling crypto support
+if test "$with_crypto" != "yes" ; then
     LIBGCRYPT_CFLAGS=""
     LIBGCRYPT_LIBS=""
 else
+echo Enabling crypto support
 case $host in
   *-mingw*)
     dnl Use only native crypto-API for mingw* hosts
