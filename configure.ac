@@ -233,9 +233,16 @@ case $host in
         CRYPTO_TESTDIR=crypto
       fi
     else
-      LIBGCRYPT_CFLAGS=""
-      LIBGCRYPT_LIBS=""
-      echo 'Crypto extensions will not be available. Install libgcrypt and reconfigure to make available.'
+      PKG_CHECK_MODULES([LIBGCRYPT], [libgcrypt >= 1.1.42], [
+          AC_DEFINE(HAVE_GCRYPT, 1, [Define if gcrypt library is available.])
+          echo 'Crypto extensions will be available.'
+          WITH_CRYPTO=1
+          CRYPTO_TESTDIR=crypt
+      ], [
+          LIBGCRYPT_CFLAGS=""
+          LIBGCRYPT_LIBS=""
+          echo 'Crypto extensions will not be available. Install libgcrypt >= 1.1.42 and reconfigure to make available.'
+      ])
     fi
 esac
 fi
