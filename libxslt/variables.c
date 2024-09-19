@@ -1403,28 +1403,21 @@ xsltRegisterGlobalVariable(xsltStylesheetPtr style, const xmlChar *name,
 	elem->nameURI = xmlDictLookup(style->dict, ns_uri, -1);
     elem->tree = tree;
     tmp = style->variables;
-    if (tmp == NULL) {
-	elem->next = NULL;
-	style->variables = elem;
-    } else {
-	while (tmp != NULL) {
-	    if ((elem->comp->type == XSLT_FUNC_VARIABLE) &&
-		(tmp->comp->type == XSLT_FUNC_VARIABLE) &&
-		(xmlStrEqual(elem->name, tmp->name)) &&
-		((elem->nameURI == tmp->nameURI) ||
-		 (xmlStrEqual(elem->nameURI, tmp->nameURI))))
-	    {
-		xsltTransformError(NULL, style, comp->inst,
-		"redefinition of global variable %s\n", elem->name);
-		style->errors++;
-	    }
-	    if (tmp->next == NULL)
-	        break;
-	    tmp = tmp->next;
-	}
-	elem->next = NULL;
-	tmp->next = elem;
+    while (tmp != NULL) {
+        if ((elem->comp->type == XSLT_FUNC_VARIABLE) &&
+            (tmp->comp->type == XSLT_FUNC_VARIABLE) &&
+            (xmlStrEqual(elem->name, tmp->name)) &&
+            ((elem->nameURI == tmp->nameURI) ||
+             (xmlStrEqual(elem->nameURI, tmp->nameURI))))
+        {
+            xsltTransformError(NULL, style, comp->inst,
+            "redefinition of global variable %s\n", elem->name);
+            style->errors++;
+        }
+        tmp = tmp->next;
     }
+    elem->next = style->variables;;
+    style->variables = elem;
     if (value != NULL) {
 	elem->computed = 1;
 	elem->value = xmlXPathNewString(value);
