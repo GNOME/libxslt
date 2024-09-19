@@ -1259,13 +1259,6 @@ error:
     return(result);
 }
 
-static void
-xsltEvalGlobalVariableWrapper(void *payload, void *data,
-                              const xmlChar *name ATTRIBUTE_UNUSED) {
-    xsltEvalGlobalVariable((xsltStackElemPtr) payload,
-                           (xsltTransformContextPtr) data);
-}
-
 /**
  * xsltEvalGlobalVariables:
  * @ctxt:  the XSLT transformation context
@@ -1278,6 +1271,7 @@ xsltEvalGlobalVariableWrapper(void *payload, void *data,
 int
 xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
     xsltStackElemPtr elem;
+    xsltStackElemPtr head = NULL;
     xsltStylesheetPtr style;
 
     if ((ctxt == NULL) || (ctxt->document == NULL))
@@ -1321,6 +1315,8 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
                     xsltFreeStackElem(def);
                     return(-1);
                 }
+                def->next = head;
+                head = def;
 	    } else if ((elem->comp != NULL) &&
 		       (elem->comp->type == XSLT_FUNC_VARIABLE)) {
 		/*
@@ -1343,9 +1339,19 @@ xsltEvalGlobalVariables(xsltTransformContextPtr ctxt) {
     }
 
     /*
-     * This part does the actual evaluation
+     * This part does the actual evaluation. Note that scanning the hash
+     * table would result in a non-deterministic order, leading to
+     * non-deterministic generated IDs.
      */
-    xmlHashScan(ctxt->globalVars, xsltEvalGlobalVariableWrapper, ctxt);
+    elem = head;
+    while (elem != NULL) {
+        xsltStackElemPtr next;
+
+        xsltEvalGlobalVariable(elem, ctxt);
+        next = elem->next;
+        elem->next = NULL;
+        elem = next;
+    }
 
     return(0);
 }
