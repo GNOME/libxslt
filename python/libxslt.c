@@ -869,7 +869,7 @@ libxslt_xsltSaveResultToString(PyObject *self ATTRIBUTE_UNUSED, PyObject *args) 
     /* FIXME: We should probably add more restrictive error checking
      * and raise an error instead of "just" returning NULL.
      * FIXME: Documentation and code for xsltSaveResultToString diff
-     * -> emmitted will never be positive non-null.
+     * -> emitted will never be positive non-null.
      */
     emitted = xsltSaveResultToString(&buffer, &size, result, style);
     if(!buffer || emitted < 0)

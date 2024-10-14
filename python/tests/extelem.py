@@ -19,7 +19,7 @@ def transform_test(ctx, node, inst, comp):
     global insertNodeName
 
     #
-    # Small check to verify the context is correcly accessed
+    # Small check to verify the context is correctly accessed
     #
     try:
         #

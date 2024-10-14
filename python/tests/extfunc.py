@@ -13,7 +13,7 @@ def f(ctx, str):
     global nodeName
 
     #
-    # Small check to verify the context is correcly accessed
+    # Small check to verify the context is correctly accessed
     #
     try:
         pctxt = libxslt.xpathParserContext(_obj=ctx)

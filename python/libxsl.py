@@ -1,5 +1,5 @@
 #
-# Both libxml2mod and libxsltmod have a dependancy on libxml2.so
+# Both libxml2mod and libxsltmod have a dependency on libxml2.so
 # and they should share the same module, try to convince the python
 # loader to work in that mode if feasible
 #
