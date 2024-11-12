@@ -190,10 +190,254 @@ testErrorHandler(void *ctx  ATTRIBUTE_UNUSED, const char *msg, ...) {
     testErrors[testErrorsSize] = 0;
 }
 
+#if LIBXML_VERSION < 21300
+
+/**
+ * xmlParserPrintFileContext:
+ * @input:  an xmlParserInputPtr input
+ *
+ * Displays current context within the input content for error tracking
+ */
+
+static void
+xmlParserPrintFileContextInternal(xmlParserInputPtr input ,
+		xmlGenericErrorFunc chanl, void *data ) {
+    const xmlChar *cur, *base;
+    unsigned int n, col;	/* GCC warns if signed, because compared with sizeof() */
+    xmlChar  content[81]; /* space for 80 chars + line terminator */
+    xmlChar *ctnt;
+
+    if (input == NULL) return;
+    cur = input->cur;
+    base = input->base;
+    /* skip backwards over any end-of-lines */
+    while ((cur > base) && ((*(cur) == '\n') || (*(cur) == '\r'))) {
+	cur--;
+    }
+    n = 0;
+    /* search backwards for beginning-of-line (to max buff size) */
+    while ((n++ < (sizeof(content)-1)) && (cur > base) &&
+   (*(cur) != '\n') && (*(cur) != '\r'))
+        cur--;
+    if ((*(cur) == '\n') || (*(cur) == '\r')) cur++;
+    /* calculate the error position in terms of the current position */
+    col = input->cur - cur;
+    /* search forward for end-of-line (to max buff size) */
+    n = 0;
+    ctnt = content;
+    /* copy selected text to our buffer */
+    while ((*cur != 0) && (*(cur) != '\n') &&
+   (*(cur) != '\r') && (n < sizeof(content)-1)) {
+		*ctnt++ = *cur++;
+	n++;
+    }
+    *ctnt = 0;
+    /* print out the selected text */
+    chanl(data ,"%s\n", content);
+    /* create blank line with problem pointer */
+    n = 0;
+    ctnt = content;
+    /* (leave buffer space for pointer + line terminator) */
+    while ((n<col) && (n++ < sizeof(content)-2) && (*ctnt != 0)) {
+	if (*(ctnt) != '\t')
+	    *(ctnt) = ' ';
+	ctnt++;
+    }
+    *ctnt++ = '^';
+    *ctnt = 0;
+    chanl(data ,"%s\n", content);
+}
+
+static void
+testStructuredErrorHandler(void *ctx ATTRIBUTE_UNUSED, const xmlError *err) {
+    char *file = NULL;
+    int line = 0;
+    int code = -1;
+    int domain;
+    void *data = NULL;
+    const char *str;
+    const xmlChar *name = NULL;
+    xmlNodePtr node;
+    xmlErrorLevel level;
+    xmlParserInputPtr input = NULL;
+    xmlParserInputPtr cur = NULL;
+    xmlParserCtxtPtr ctxt = NULL;
+
+    if (err == NULL)
+        return;
+
+    file = err->file;
+    line = err->line;
+    code = err->code;
+    domain = err->domain;
+    level = err->level;
+    node = err->node;
+    if ((domain == XML_FROM_PARSER) || (domain == XML_FROM_HTML) ||
+        (domain == XML_FROM_DTD) || (domain == XML_FROM_NAMESPACE) ||
+	(domain == XML_FROM_IO) || (domain == XML_FROM_VALID)) {
+	ctxt = err->ctxt;
+    }
+    str = err->message;
+
+    if (code == XML_ERR_OK)
+        return;
+
+    if ((node != NULL) && (node->type == XML_ELEMENT_NODE))
+        name = node->name;
+
+    /*
+     * Maintain the compatibility with the legacy error handling
+     */
+    if (ctxt != NULL) {
+        input = ctxt->input;
+        if ((input != NULL) && (input->filename == NULL) &&
+            (ctxt->inputNr > 1)) {
+            cur = input;
+            input = ctxt->inputTab[ctxt->inputNr - 2];
+        }
+        if (input != NULL) {
+            if (input->filename)
+                testErrorHandler(data, "%s:%d: ", input->filename, input->line);
+            else if ((line != 0) && (domain == XML_FROM_PARSER))
+                testErrorHandler(data, "Entity: line %d: ", input->line);
+        }
+    } else {
+        if (file != NULL)
+            testErrorHandler(data, "%s:%d: ", file, line);
+        else if ((line != 0) && (domain == XML_FROM_PARSER))
+            testErrorHandler(data, "Entity: line %d: ", line);
+    }
+    if (name != NULL) {
+        testErrorHandler(data, "element %s: ", name);
+    }
+    if (code == XML_ERR_OK)
+        return;
+    switch (domain) {
+        case XML_FROM_PARSER:
+            testErrorHandler(data, "parser ");
+            break;
+        case XML_FROM_NAMESPACE:
+            testErrorHandler(data, "namespace ");
+            break;
+        case XML_FROM_DTD:
+        case XML_FROM_VALID:
+            testErrorHandler(data, "validity ");
+            break;
+        case XML_FROM_HTML:
+            testErrorHandler(data, "HTML parser ");
+            break;
+        case XML_FROM_MEMORY:
+            testErrorHandler(data, "memory ");
+            break;
+        case XML_FROM_OUTPUT:
+            testErrorHandler(data, "output ");
+            break;
+        case XML_FROM_IO:
+            testErrorHandler(data, "I/O ");
+            break;
+        case XML_FROM_XINCLUDE:
+            testErrorHandler(data, "XInclude ");
+            break;
+        case XML_FROM_XPATH:
+            testErrorHandler(data, "XPath ");
+            break;
+        case XML_FROM_XPOINTER:
+            testErrorHandler(data, "parser ");
+            break;
+        case XML_FROM_REGEXP:
+            testErrorHandler(data, "regexp ");
+            break;
+        case XML_FROM_MODULE:
+            testErrorHandler(data, "module ");
+            break;
+        case XML_FROM_SCHEMASV:
+            testErrorHandler(data, "Schemas validity ");
+            break;
+        case XML_FROM_SCHEMASP:
+            testErrorHandler(data, "Schemas parser ");
+            break;
+        case XML_FROM_RELAXNGP:
+            testErrorHandler(data, "Relax-NG parser ");
+            break;
+        case XML_FROM_RELAXNGV:
+            testErrorHandler(data, "Relax-NG validity ");
+            break;
+        case XML_FROM_CATALOG:
+            testErrorHandler(data, "Catalog ");
+            break;
+        case XML_FROM_C14N:
+            testErrorHandler(data, "C14N ");
+            break;
+        case XML_FROM_XSLT:
+            testErrorHandler(data, "XSLT ");
+            break;
+        default:
+            break;
+    }
+    if (code == XML_ERR_OK)
+        return;
+    switch (level) {
+        case XML_ERR_NONE:
+            testErrorHandler(data, ": ");
+            break;
+        case XML_ERR_WARNING:
+            testErrorHandler(data, "warning : ");
+            break;
+        case XML_ERR_ERROR:
+            testErrorHandler(data, "error : ");
+            break;
+        case XML_ERR_FATAL:
+            testErrorHandler(data, "error : ");
+            break;
+    }
+    if (code == XML_ERR_OK)
+        return;
+    if (str != NULL) {
+        int len;
+	len = xmlStrlen((const xmlChar *)str);
+	if ((len > 0) && (str[len - 1] != '\n'))
+	    testErrorHandler(data, "%s\n", str);
+	else
+	    testErrorHandler(data, "%s", str);
+    } else {
+        testErrorHandler(data, "%s\n", "out of memory error");
+    }
+    if (code == XML_ERR_OK)
+        return;
+
+    if (ctxt != NULL) {
+        xmlParserPrintFileContextInternal(input, testErrorHandler, data);
+        if (cur != NULL) {
+            if (cur->filename)
+                testErrorHandler(data, "%s:%d: \n", cur->filename, cur->line);
+            else if ((line != 0) && (domain == XML_FROM_PARSER))
+                testErrorHandler(data, "Entity: line %d: \n", cur->line);
+            xmlParserPrintFileContextInternal(cur, testErrorHandler, data);
+        }
+    }
+    if ((domain == XML_FROM_XPATH) && (err->str1 != NULL) &&
+        (err->int1 < 100) &&
+	(err->int1 < xmlStrlen((const xmlChar *)err->str1))) {
+	xmlChar buf[150];
+	int i;
+
+	testErrorHandler(data, "%s\n", err->str1);
+	for (i=0;i < err->int1;i++)
+	     buf[i] = ' ';
+	buf[i++] = '^';
+	buf[i] = 0;
+	testErrorHandler(data, "%s\n", buf);
+    }
+}
+
+#else /* LIBXML_VERSION */
+
 static void
 testStructuredErrorHandler(void *ctx ATTRIBUTE_UNUSED, const xmlError *err) {
     xmlFormatError(err, testErrorHandler, NULL);
 }
+
+#endif /* LIBXML_VERSION */
 
 static void
 initializeLibxml2(void) {
