@@ -52,7 +52,7 @@ __inline int c99_vsnprintf(char *outBuf, size_t size, const char *format, va_lis
 #endif
 
 #if PY_MAJOR_VERSION >= 3
-PyObject* PyInit_libxsltmod(void);
+PyMODINIT_FUNC PyInit_libxsltmod(void);
 #else
 void initlibxsltmod(void);
 #endif
@@ -1227,7 +1227,7 @@ static PyMethodDef libxsltMethods[] = {
 
 #ifdef MERGED_MODULES
 #if PY_MAJOR_VERSION >= 3
-PyObject* PyInit_libxml2mod(void);
+PyMODINIT_FUNC PyInit_libxml2mod(void);
 #else
 void initlibxml2mod(void);
 #endif
@@ -1252,7 +1252,7 @@ static struct PyModuleDef moduledef = {
 #endif
 
 #if PY_MAJOR_VERSION >= 3
-PyObject* PyInit_libxsltmod(void){
+PyMODINIT_FUNC PyInit_libxsltmod(void){
 #else
 void initlibxsltmod(void) {
 #endif
