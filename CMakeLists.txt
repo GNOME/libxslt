@@ -444,7 +444,7 @@ if(LIBXSLT_WITH_PYTHON)
 	file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/libxslt.py.in "${LIBXSLTCLASS_PY}")
 	configure_file(${CMAKE_CURRENT_BINARY_DIR}/libxslt.py.in libxslt.py COPYONLY)
 	add_library(
-		LibXsltMod
+		LibXsltMod SHARED
 		libxslt-py.c
 		libxslt-py.h
 		python/libxml_wrap.h
