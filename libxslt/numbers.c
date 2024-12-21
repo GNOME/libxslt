@@ -58,9 +58,13 @@ struct _xsltFormat {
     xmlChar		*end;
 };
 
-static char alpha_upper_list[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static char alpha_lower_list[] = "abcdefghijklmnopqrstuvwxyz";
-static xsltFormatToken default_token;
+static const char alpha_upper_list[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static const char alpha_lower_list[] = "abcdefghijklmnopqrstuvwxyz";
+static const xsltFormatToken default_token = {
+    BAD_CAST(DEFAULT_SEPARATOR),
+    DEFAULT_TOKEN,
+    1
+};
 
 /*
  * Helper functions copied from libxml2
@@ -242,7 +246,7 @@ xsltNumberFormatAlpha(xsltNumberDataPtr data,
     char temp_string[sizeof(double) * CHAR_BIT * sizeof(xmlChar) + 1];
     char *pointer;
     int i;
-    char *alpha_list;
+    const char *alpha_list;
     double alpha_size = (double)(sizeof(alpha_upper_list) - 1);
 
     /*
@@ -364,11 +368,6 @@ xsltNumberFormatTokenize(const xmlChar *format,
     int val;
     int len;
 
-    default_token.token = DEFAULT_TOKEN;
-    default_token.width = 1;
-    default_token.separator = BAD_CAST(DEFAULT_SEPARATOR);
-
-
     tokens->start = NULL;
     tokens->tokens[0].separator = NULL;
     tokens->end = NULL;
@@ -472,7 +471,7 @@ xsltNumberFormatInsertNumbers(xsltNumberDataPtr data,
 {
     int i = 0;
     double number;
-    xsltFormatTokenPtr token;
+    const xsltFormatToken *token;
 
     /*
      * Handle initial non-alphanumeric token
