@@ -14,6 +14,6 @@ sh ../autogen.sh \
     --with-crypto \
     --with-plugins \
     --with-libxml-src=../libxml2 \
-    $CONFIG
+    $BASE_CONFIG $CONFIG
 make -j$(nproc) V=1 CFLAGS="$CFLAGS -Werror"
 make -s CFLAGS="$CFLAGS -Werror" check
