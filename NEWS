@@ -9,6 +9,9 @@ loaded plugins are now disabled by default. These features can be
 enabled by passing --with-crypto or --with-plugins to configure.
 In a future release, these features will be removed.
 
+Debug output and the debugger are disabled by default and can be
+enabled by passing --with-debug or --with-debugger.
+
 
 v1.1.42: Jul 4 2024
 

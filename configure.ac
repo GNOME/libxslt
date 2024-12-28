@@ -252,10 +252,10 @@ AC_SUBST(LIBGCRYPT_CFLAGS)
 AC_SUBST(LIBGCRYPT_LIBS)
 
 AC_ARG_WITH(debug, [  --with-debug            Add the debugging code (on)])
-if test "$with_debug" = "no" ; then
-    echo Disabling debug support
+if test "$with_debug" != "yes" ; then
     WITH_XSLT_DEBUG=0
 else    
+    echo Enabling debug support
     WITH_XSLT_DEBUG=1
 fi
 AC_SUBST(WITH_XSLT_DEBUG)
@@ -264,8 +264,7 @@ dnl
 dnl Is debugger support requested
 dnl
 AC_ARG_WITH(debugger, [  --with-debugger        Add the debugging support (on)])
-if test "$with_debugger" = "no" ; then
-    echo Disabling debugger
+if test "$with_debugger" != "yes" ; then
     WITH_DEBUGGER=0
 else
     echo Enabling debugger
