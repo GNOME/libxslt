@@ -1,4 +1,4 @@
-<doc xmlns="s:def">
+<doc xmlns="urn:def">
     <elem attr="value" xmlns:äöü="uri"/>
     <text>text</text>
     <!-- comment -->

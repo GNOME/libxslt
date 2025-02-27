@@ -1,7 +1,7 @@
 <xsl:stylesheet
     version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:d="s:def"
+    xmlns:d="urn:def"
     exclude-result-prefixes="d">
 
 <xsl:output indent="yes"/>
