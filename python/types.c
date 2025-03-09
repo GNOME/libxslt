@@ -29,13 +29,6 @@ xmlParserInputPtr xmlNoNetExternalEntityLoader(const char *URL,
 
 #ifdef _WIN32
 
-#ifndef XML_IGNORE_FPTR_CAST_WARNINGS
-#define XML_IGNORE_FPTR_CAST_WARNINGS
-#endif
-#ifndef XML_POP_WARNINGS
-#define XML_POP_WARNINGS
-#endif
-
 #include <windows.h>
 #include <crtdbg.h>
 
@@ -122,9 +115,8 @@ libxml_PyFileGet(PyObject *f) {
 
     if (hntdll == NULL)
         return(NULL);
-XML_IGNORE_FPTR_CAST_WARNINGS
-    NtQueryInformationFile = (t_NtQueryInformationFile)GetProcAddress(hntdll, "NtQueryInformationFile");
-XML_POP_WARNINGS
+    NtQueryInformationFile = (t_NtQueryInformationFile) (void (*)(void))
+        GetProcAddress(hntdll, "NtQueryInformationFile");
 
     if (NtQueryInformationFile != NULL &&
         (NtQueryInformationFile((HANDLE)w_fh,
