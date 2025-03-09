@@ -608,6 +608,11 @@ xsltTest(const char *filename, int options) {
         }
     }
 
+#if LIBXML_VERSION < 21300
+    if (strcmp(filename, "./test_bad.xsl") == 0)
+        return(0);
+#endif
+
     styleDoc = xmlReadFile(filename, NULL, XSLT_PARSE_OPTIONS | options);
     style = xsltLoadStylesheetPI(styleDoc);
     if (style != NULL) {
