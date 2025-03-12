@@ -1,6 +1,6 @@
 NEWS file for libxslt
 
-v1.1.43: not yet released
+v1.1.43: Mar 12 2025
 
 ### Major changes
 
@@ -11,6 +11,46 @@ In a future release, these features will be removed.
 
 Debug output and the debugger are disabled by default and can be
 enabled by passing --with-debug or --with-debugger.
+
+### Security
+
+- [CVE-2025-24855] Fix use-after-free of XPath context node
+- [CVE-2024-55549] Fix UAF related to excluded namespaces
+
+### Bug fixes
+
+- variables: Fix non-deterministic generated IDs
+
+### libxml2 related cleanup
+
+- python: Don't use removed libxml2 macro
+- tests: Skip test_bad.xsl with libxml2 before 2.13
+- python: Don't include nanoftp.h and nanohttp.h
+- tests: Avoid namespace warning on Windows
+- numbers: Stop using libxml2 XPath axis API
+- numbers: Use private copy of xmlCopyCharMultiByte
+- documents: Use xmlCtxtParseDocument if available
+- tests: Make runtest compile with older libxml2 versions
+- utils: Account for libxml2 change
+- tests: Make bug-219.xsl compatible with older libxml2
+- extensions: always include stdlib.h (Hugo Beauzée-Luyssen)
+- extensions: Don't use libxml2's "modules" feature
+
+### Code cleanup
+
+- numbers: Make static variables const
+- variables: Remove debug code
+
+### Portability
+
+- python: Declare init func with PyMODINIT_FUNC
+- exslt: Use C99 NAN macro
+
+### Build
+
+- cmake: Always build Python module as shared library
+- cmake: Fix compatibility in package version file
+- configure.ac: Find libgcrypt via pkg-config (Alessandro Astone)
 
 
 v1.1.42: Jul 4 2024

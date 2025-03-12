@@ -1,3 +1,9 @@
+include:
+  - component: "gitlab.gnome.org/GNOME/citemplates/release-service@master"
+    inputs:
+      dist-job-name: "dist"
+      tarball-artifact-path: "libxslt-dist/libxslt-1.1.43.tar.xz"
+
 .test:
   # Reuse libxml2 image
   image: registry.gitlab.gnome.org/gnome/libxml2
