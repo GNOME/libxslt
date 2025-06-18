@@ -20,8 +20,8 @@ extensions.</description>
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>Daniel Veillard</foaf:name>
-      <gnome:userid>veillard</gnome:userid>
+      <foaf:name>Nobody</foaf:name>
+      <gnome:userid>nobody</gnome:userid>
     </foaf:Person>
   </maintainer>
 </Project>
