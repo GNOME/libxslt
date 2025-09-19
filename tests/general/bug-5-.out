@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>Churn by Product</title>
 <style type="text/css">	.PROD {background-color:cyan}
 	.PROD * {background-color:cyan}
