@@ -258,7 +258,7 @@ xsltFuzzXsltInit(void) {
     return(0);
 }
 
-xmlChar *
+const xmlChar *
 xsltFuzzXslt(const char *data, size_t size) {
     const char *xsltBuffer, *xsltUrl, *docBuffer, *docUrl;
     xmlDocPtr xsltDoc = NULL, doc = NULL;
@@ -266,7 +266,7 @@ xsltFuzzXslt(const char *data, size_t size) {
     xmlNodePtr root;
     xsltStylesheetPtr sheet = NULL;
     xsltTransformContextPtr ctxt = NULL;
-    xmlChar *ret = NULL;
+    const xmlChar *ret = NULL;
     size_t xsltSize, docSize, maxAllocs;
     int retLen;
 
