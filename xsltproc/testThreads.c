@@ -97,7 +97,7 @@ threadRoutine1(void *data)
     xmlDocPtr input;
     xmlDocPtr style;
     xmlDocPtr res;
-    xmlChar *result;
+    const xmlChar *result;
     int len;
     xsltStylesheetPtr cur;
     int id = (int) (size_t) data;
@@ -133,7 +133,7 @@ threadRoutine1(void *data)
     xsltFreeStylesheet(cur);
     xmlFreeDoc(input);
     xmlFreeDoc(res);
-    xmlFree(result);
+    xmlFree((void *) result);
     return(0);
 }
 
@@ -142,7 +142,7 @@ threadRoutine2(void *data)
 {
     xmlDocPtr input;
     xmlDocPtr res;
-    xmlChar *result;
+    const xmlChar *result;
     int len;
     xsltStylesheetPtr cur = (xsltStylesheetPtr) data;
 
@@ -170,7 +170,7 @@ threadRoutine2(void *data)
     }
     xmlFreeDoc(input);
     xmlFreeDoc(res);
-    xmlFree(result);
+    xmlFree((void *) result);
     return(0);
 }
 int

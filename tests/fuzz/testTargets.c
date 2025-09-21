@@ -40,7 +40,7 @@ testXPath(void) {
 
 static int
 testXslt(void) {
-    xmlChar *result;
+    const xmlChar *result;
     const char fuzzData[] =
         "\0\0\0\0stylesheet.xsl\\\n"
         "<xsl:stylesheet"
@@ -73,7 +73,7 @@ testXslt(void) {
         ret = 1;
     }
 
-    xmlFree(result);
+    xmlFree((void *) result);
     xsltFuzzXsltCleanup();
 
     return ret;
