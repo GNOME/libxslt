@@ -1583,7 +1583,7 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
         return(-1);
     }
 
-    base = buf->written;
+    base = xmlOutputBufferGetSize(buf);
 
     XSLT_GET_IMPORT_PTR(method, style, method)
     XSLT_GET_IMPORT_PTR(encoding, style, encoding)
@@ -1721,7 +1721,8 @@ xsltSaveResultTo(xmlOutputBufferPtr buf, xmlDocPtr result,
 	}
 	xmlOutputBufferFlush(buf);
     }
-    return(buf->written - base);
+
+    return(xmlOutputBufferGetSize(buf) - base);
 }
 
 /**
@@ -1824,7 +1825,7 @@ xsltSaveResultToFile(FILE *file, xmlDocPtr result, xsltStylesheetPtr style) {
  */
 int
 xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
-    xmlOutputBufferPtr buf;
+        xmlOutputBufferPtr buf;
     const xmlChar *encoding;
     int ret;
 
@@ -1865,48 +1866,34 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
  * Returns 0 in case of success and -1 in case of error
  */
 int
-xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
-		       xmlDocPtr result, xsltStylesheetPtr style) {
+xsltSaveResultToString(const xmlChar **doc_txt_ptr, int * doc_txt_len,
+        xmlDocPtr result, xsltStylesheetPtr style) {
     xmlOutputBufferPtr buf;
     const xmlChar *encoding;
 
     *doc_txt_ptr = NULL;
     *doc_txt_len = 0;
     if (result->children == NULL)
-	return(0);
+        return(0);
 
     XSLT_GET_IMPORT_PTR(encoding, style, encoding)
     if (encoding != NULL) {
-	xmlCharEncodingHandlerPtr encoder = NULL;
+        xmlCharEncodingHandlerPtr encoder = NULL;
 
         /* Don't use UTF-8 dummy encoder */
         if ((xmlStrcasecmp(encoding, BAD_CAST "UTF-8") != 0) &&
             (xmlStrcasecmp(encoding, BAD_CAST "UTF8") != 0))
-	    encoder = xmlFindCharEncodingHandler((char *) encoding);
-	buf = xmlAllocOutputBuffer(encoder);
+            encoder = xmlFindCharEncodingHandler((char *) encoding);
+        buf = xmlAllocOutputBuffer(encoder);
     } else {
-	buf = xmlAllocOutputBuffer(NULL);
+        buf = xmlAllocOutputBuffer(NULL);
     }
     if (buf == NULL)
-	return(-1);
+        return(-1);
     xsltSaveResultTo(buf, result, style);
-#ifdef LIBXML2_NEW_BUFFER
-    if (buf->conv != NULL) {
-	*doc_txt_len = xmlBufUse(buf->conv);
-	*doc_txt_ptr = xmlStrndup(xmlBufContent(buf->conv), *doc_txt_len);
-    } else {
-	*doc_txt_len = xmlBufUse(buf->buffer);
-	*doc_txt_ptr = xmlStrndup(xmlBufContent(buf->buffer), *doc_txt_len);
-    }
-#else
-    if (buf->conv != NULL) {
-	*doc_txt_len = buf->conv->use;
-	*doc_txt_ptr = xmlStrndup(buf->conv->content, *doc_txt_len);
-    } else {
-	*doc_txt_len = buf->buffer->use;
-	*doc_txt_ptr = xmlStrndup(buf->buffer->content, *doc_txt_len);
-    }
-#endif
+
+    *doc_txt_ptr = xmlOutputBufferGetContent(buf);
+    *doc_txt_len = xmlOutputBufferGetSize(buf);
     (void)xmlOutputBufferClose(buf);
     return 0;
 }
