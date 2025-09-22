@@ -240,7 +240,7 @@ XSLTPUBFUN int XSLTCALL
 						 xmlDocPtr result,
 						 xsltStylesheetPtr style);
 XSLTPUBFUN int XSLTCALL
-		xsltSaveResultToString          (const xmlChar **doc_txt_ptr,
+		xsltSaveResultToString          (xmlChar **doc_txt_ptr,
                                                  int * doc_txt_len,
                                                  xmlDocPtr result,
                                                  xsltStylesheetPtr style);

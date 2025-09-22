@@ -1866,7 +1866,7 @@ xsltSaveResultToFd(int fd, xmlDocPtr result, xsltStylesheetPtr style) {
  * Returns 0 in case of success and -1 in case of error
  */
 int
-xsltSaveResultToString(const xmlChar **doc_txt_ptr, int * doc_txt_len,
+xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
         xmlDocPtr result, xsltStylesheetPtr style) {
     xmlOutputBufferPtr buf;
     const xmlChar *encoding;
@@ -1892,7 +1892,7 @@ xsltSaveResultToString(const xmlChar **doc_txt_ptr, int * doc_txt_len,
         return(-1);
     xsltSaveResultTo(buf, result, style);
 
-    *doc_txt_ptr = xmlOutputBufferGetContent(buf);
+    *doc_txt_ptr = xmlStrdup(xmlOutputBufferGetContent(buf));
     *doc_txt_len = xmlOutputBufferGetSize(buf);
     (void)xmlOutputBufferClose(buf);
     return 0;
