@@ -97,7 +97,7 @@ threadRoutine1(void *data)
     xmlDocPtr input;
     xmlDocPtr style;
     xmlDocPtr res;
-    const xmlChar *result;
+    xmlChar *result;
     int len;
     xsltStylesheetPtr cur;
     int id = (int) (size_t) data;
@@ -142,7 +142,7 @@ threadRoutine2(void *data)
 {
     xmlDocPtr input;
     xmlDocPtr res;
-    const xmlChar *result;
+    xmlChar *result;
     int len;
     xsltStylesheetPtr cur = (xsltStylesheetPtr) data;
 
