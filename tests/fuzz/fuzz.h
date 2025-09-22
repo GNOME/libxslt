@@ -38,7 +38,7 @@ xsltFuzzXPathCleanup(void);
 int
 xsltFuzzXsltInit(void);
 
-const xmlChar *
+xmlChar *
 xsltFuzzXslt(const char *data, size_t size);
 
 void
