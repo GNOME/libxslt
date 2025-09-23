@@ -435,7 +435,7 @@
           that jade is platform dependent (eg. i386), while the other packages
           are in the <fo:inline font-family="Courier">noarch</fo:inline>
           directory.) You can find more 
-          information on DocBook Tools <fo:basic-link external-destination="           http://sourceware.cygnus.com/docbook-tools/">here</fo:basic-link><fo:inline hyphenate="false"> [           http://sourceware.cygnus.com/docbook-tools/]</fo:inline>.
+          information on DocBook Tools <fo:basic-link external-destination="http://sourceware.cygnus.com/docbook-tools/">here</fo:basic-link><fo:inline hyphenate="false"> [http://sourceware.cygnus.com/docbook-tools/]</fo:inline>.
         </fo:block>
             <fo:block space-before.optimum="1em" space-before.minimum="0.8em" space-before.maximum="1.2em">
           If you are an Emacs user you may
