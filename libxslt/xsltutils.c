@@ -1890,10 +1890,22 @@ xsltSaveResultToString(xmlChar **doc_txt_ptr, int * doc_txt_len,
     }
     if (buf == NULL)
         return(-1);
+
     xsltSaveResultTo(buf, result, style);
 
+#ifdef LIBXML2_NEW_BUFFER
     *doc_txt_ptr = xmlStrdup(xmlOutputBufferGetContent(buf));
     *doc_txt_len = xmlOutputBufferGetSize(buf);
+#else
+    if (buf->conv != NULL) {
+        *doc_txt_len = buf->conv->use;
+        *doc_txt_ptr = xmlStrndup(buf->conv->content, *doc_txt_len);
+    } else {
+        *doc_txt_len = buf->buffer->use;
+        *doc_txt_ptr = xmlStrndup(buf->buffer->content, *doc_txt_len);
+    }
+#endif
+
     (void)xmlOutputBufferClose(buf);
     return 0;
 }
