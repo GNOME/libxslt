@@ -15,6 +15,7 @@ include:
 gcc:
   extends: .test
   variables:
+    CONFIG: "--with-python"
     CFLAGS: "-O2"
 
 gcc:c89:
