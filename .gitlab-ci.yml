@@ -262,6 +262,8 @@ dist:
   artifacts:
     paths:
       - libxslt-dist/*.tar.xz
+  variables:
+    CONFIG: "--with-python"
 
 pages:
   script:

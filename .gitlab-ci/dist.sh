@@ -5,7 +5,7 @@ set -e
 LIBXML2_PREFIX="$CI_PROJECT_DIR/libxml2/install"
 git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git
 cd libxml2
-sh autogen.sh --prefix="$LIBXML2_PREFIX"
+sh autogen.sh --prefix="$LIBXML2_PREFIX" $CONFIG
 make -j$(nproc)
 make install
 cd ..
