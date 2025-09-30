@@ -442,7 +442,10 @@ testStructuredErrorHandler(void *ctx ATTRIBUTE_UNUSED, const xmlError *err) {
 static void
 initializeLibxml2(void) {
     xmlInitParser();
-    xmlSetExternalEntityLoader(xmlNoNetExternalEntityLoader);
+    /*TODO: Update this code for the thread safe versions based on
+     * the xmlCtxtSetResourceLoader function
+     */
+    xmlSetExternalEntityLoader(xmlGetExternalEntityLoader());
     xmlSetGenericErrorFunc(NULL, testErrorHandler);
     xsltSetGenericErrorFunc(NULL, testErrorHandler);
     xmlSetStructuredErrorFunc(NULL,
