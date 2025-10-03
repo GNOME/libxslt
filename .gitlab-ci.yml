@@ -212,7 +212,7 @@ cmake:mingw:w64-x86_64:static:
 .cmake:msvc:v141:
   extends: .cmake:msvc
   variables:
-    CMAKE_GENERATOR: Visual Studio 15 2017
+    CMAKE_GENERATOR: Visual Studio 17 2022
     CMAKE_GENERATOR_TOOLSET: v141
 
 .cmake:msvc:v141:x64:
