@@ -16,6 +16,7 @@
   #define WIN32_LEAN_AND_MEAN
   #include <windows.h>
   #include <io.h>
+  #include <direct.h>
 #else
   #include <unistd.h>
   #include <glob.h>
@@ -442,7 +443,7 @@ testStructuredErrorHandler(void *ctx ATTRIBUTE_UNUSED, const xmlError *err) {
 static void
 initializeLibxml2(void) {
     xmlInitParser();
-    /*TODO: Update this code for the thread safe versions based on
+    /* TODO: Update this code for the thread safe versions based on
      * the xmlCtxtSetResourceLoader function
      */
     xmlSetExternalEntityLoader(xmlGetExternalEntityLoader());
