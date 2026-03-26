@@ -2401,7 +2401,8 @@ xsltSaveProfiling(xsltTransformContextPtr ctxt, FILE *output) {
         templ1 = templates[i];
         fprintf(output, "[%d] %s (%s:%d)\n",
             i, templ1->name?(char *)templ1->name:pretty_templ_match(templ1),
-            templ1->style->doc->URL,templ1->elem->line);
+            templ1->elem->doc->URL,
+            templ1->elem->line);
     }
 
     fprintf(output, "\f\n");
