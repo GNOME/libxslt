@@ -1646,6 +1646,7 @@ struct _xsltTransformCache {
     int nbRVT;
     xsltStackElemPtr stackItems;
     int nbStackItems;
+    xmlHashTablePtr failedDocLoads;
 #ifdef XSLT_DEBUG_PROFILE_CACHE
     int dbgCachedRVTs;
     int dbgReusedRVTs;
@@ -1992,4 +1993,3 @@ XSLTPUBFUN int XSLTCALL
 #endif
 
 #endif /* __XML_XSLT_H__ */
-

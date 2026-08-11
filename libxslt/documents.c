@@ -35,6 +35,12 @@
 #define WITH_XSLT_DEBUG_DOCUMENTS
 #endif
 
+static int
+xsltHasFailedDocLoad(xsltTransformContextPtr ctxt, const xmlChar *URI);
+
+static void
+xsltRegisterFailedDocLoad(xsltTransformContextPtr ctxt, const xmlChar *URI);
+
 /************************************************************************
  *									*
  *		Hooks for the document loader				*
@@ -59,12 +65,23 @@
  */
 static xmlDocPtr
 xsltDocDefaultLoaderFunc(const xmlChar * URI, xmlDictPtr dict, int options,
-                         void *ctxt ATTRIBUTE_UNUSED,
-			 xsltLoadType type ATTRIBUTE_UNUSED)
+                         void *ctxt,
+			 xsltLoadType type)
 {
     xmlParserCtxtPtr pctxt;
     xmlParserInputPtr inputStream;
     xmlDocPtr doc;
+    xsltTransformContextPtr tctxt = NULL;
+
+    /*
+     * Only document() loads pass a transformation context. Keep this NULL for
+     * other load types so failed-load registration remains a no-op below.
+     */
+    if (type == XSLT_LOAD_DOCUMENT) {
+        tctxt = (xsltTransformContextPtr) ctxt;
+        if (xsltHasFailedDocLoad(tctxt, URI))
+            return(NULL);
+    }
 
     pctxt = xmlNewParserCtxt();
     if (pctxt == NULL)
@@ -85,6 +102,7 @@ xsltDocDefaultLoaderFunc(const xmlChar * URI, xmlDictPtr dict, int options,
     inputStream = xmlLoadExternalEntity((const char *) URI, NULL, pctxt);
     if (inputStream == NULL) {
         xmlFreeParserCtxt(pctxt);
+        xsltRegisterFailedDocLoad(tctxt, URI);
 	return(NULL);
     }
 
@@ -107,11 +125,42 @@ xsltDocDefaultLoaderFunc(const xmlChar * URI, xmlDictPtr dict, int options,
 
     xmlFreeParserCtxt(pctxt);
 
+    if (doc == NULL)
+        xsltRegisterFailedDocLoad(tctxt, URI);
+
     return(doc);
 }
 
 
 xsltDocLoaderFunc xsltDocDefaultLoader = xsltDocDefaultLoaderFunc;
+
+static int xsltFailedDocLoadMarker;
+
+static int
+xsltHasFailedDocLoad(xsltTransformContextPtr ctxt, const xmlChar *URI)
+{
+    if ((ctxt == NULL) || (ctxt->cache == NULL) ||
+        (ctxt->cache->failedDocLoads == NULL) || (URI == NULL))
+        return(0);
+
+    return(xmlHashLookup(ctxt->cache->failedDocLoads, URI) != NULL);
+}
+
+static void
+xsltRegisterFailedDocLoad(xsltTransformContextPtr ctxt, const xmlChar *URI)
+{
+    if ((ctxt == NULL) || (ctxt->cache == NULL) || (URI == NULL))
+        return;
+
+    if (ctxt->cache->failedDocLoads == NULL) {
+        ctxt->cache->failedDocLoads = xmlHashCreate(16);
+        if (ctxt->cache->failedDocLoads == NULL)
+            return;
+    }
+
+    xmlHashUpdateEntry(ctxt->cache->failedDocLoads, URI,
+                       &xsltFailedDocLoadMarker, NULL);
+}
 
 /**
  * xsltSetLoaderFunc:
@@ -439,4 +488,3 @@ xsltFindDocument (xsltTransformContextPtr ctxt, xmlDocPtr doc) {
 	return(ctxt->document);
     return(NULL);
 }
-

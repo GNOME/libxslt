@@ -516,6 +516,8 @@ xsltTransformCacheFree(xsltTransformCachePtr cache)
 {
     if (cache == NULL)
 	return;
+    if (cache->failedDocLoads != NULL)
+	xmlHashFree(cache->failedDocLoads, NULL);
     /*
     * Free tree fragments.
     */
