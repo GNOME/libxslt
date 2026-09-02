@@ -326,6 +326,18 @@ xsltLoadDocument(xsltTransformContextPtr ctxt, const xmlChar *URI) {
     if (doc == NULL)
 	return(NULL);
 
+    /*
+     * Stopgap hardening: with security prefs enabled, reject XInclude
+     * until per-URI xsltCheckRead enforcement is wired for xi:include fetches.
+     */
+    if ((ctxt->xinclude != 0) && (ctxt->sec != NULL)) {
+        xsltTransformError(ctxt, NULL, NULL,
+            "xsltLoadDocument(%s): XInclude disabled when security prefs a re active\n",
+            URI);
+        xmlFreeDoc(doc);
+        return(NULL);
+    }
+
     if (ctxt->xinclude != 0) {
 #ifdef LIBXML_XINCLUDE_ENABLED
 #if LIBXML_VERSION >= 20603
