@@ -298,6 +298,7 @@ xsltSubtreeCheck(xsltSecurityPrefsPtr sec ATTRIBUTE_UNUSED,
 	          xsltTransformContextPtr ctxt ATTRIBUTE_UNUSED,
 		  const char *value ATTRIBUTE_UNUSED) {
     int len, ret;
+    xmlChar next;
 
     if (writesubtree == NULL)
 	return(0);
@@ -307,6 +308,12 @@ xsltSubtreeCheck(xsltSecurityPrefsPtr sec ATTRIBUTE_UNUSED,
     len = xmlStrlen(BAD_CAST writesubtree);
     ret = xmlStrncmp(BAD_CAST writesubtree, BAD_CAST value, len);
     if (ret == 0)
+	if (len <= 0)
+	    return(0);
+
+    next = (xmlChar) value[len];
+    if ((next == 0) || (next == '/') || (next == ' ') ||
+	writesubtree[len - 1] == '/' || writesubtree[len - 1] == ' ')
 	return(1);
     return(0);
 }
