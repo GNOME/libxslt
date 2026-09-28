@@ -24,6 +24,7 @@
 
 #include <libxml/parser.h>
 #include <libxslt/extensions.h>
+#include <libxslt/security.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltInternals.h>
 #include <libxslt/xsltlocale.h>
@@ -688,6 +689,223 @@ out:
 
 /************************************************************************
  *									*
+ *		Security tests						*
+ *									*
+ ************************************************************************/
+
+#ifdef LIBXML_XINCLUDE_ENABLED
+/*
+ * Test that xsltLoadDocument rejects XInclude processing when security
+ * preferences are active (fix for xinclude read-bypass vulnerability).
+ *
+ * The vulnerability: xsltLoadDocument checks read permissions on the root
+ * document via xsltCheckRead, but when xinclude is enabled, xi:include
+ * elements in loaded documents could pull in arbitrary files without the
+ * same check.  The fix disables xinclude processing entirely when
+ * ctxt->sec is non-NULL.
+ */
+static int
+securityXIncludeTest(const char *filename ATTRIBUTE_UNUSED,
+                     int options ATTRIBUTE_UNUSED) {
+    xsltStylesheetPtr style = NULL;
+    xmlDocPtr styleDoc = NULL, inputDoc = NULL, resultDoc = NULL;
+    xsltTransformContextPtr ctxt = NULL;
+    xsltSecurityPrefsPtr sec = NULL;
+    int ret = 0;
+
+    /*
+     * Build a minimal stylesheet that calls document() on an XML file
+     * containing xi:include elements.
+     */
+    styleDoc = xmlReadFile("security/load_document.xsl", NULL,
+                           XSLT_PARSE_OPTIONS);
+    if (styleDoc == NULL) {
+        fprintf(stderr, "securityXIncludeTest: failed to parse stylesheet\n");
+        return(-1);
+    }
+
+    style = xsltParseStylesheetDoc(styleDoc);
+    if (style == NULL) {
+        fprintf(stderr, "securityXIncludeTest: failed to compile stylesheet\n");
+        xmlFreeDoc(styleDoc);
+        return(-1);
+    }
+
+    inputDoc = xmlReadFile("security/input.xml", NULL, XSLT_PARSE_OPTIONS);
+    if (inputDoc == NULL) {
+        fprintf(stderr, "securityXIncludeTest: failed to parse input\n");
+        xsltFreeStylesheet(style);
+        return(-1);
+    }
+
+    /* Set up security prefs to simulate a security-aware context */
+    sec = xsltNewSecurityPrefs();
+    if (sec == NULL) {
+        fprintf(stderr, "securityXIncludeTest: failed to create security prefs\n");
+        xsltFreeStylesheet(style);
+        xmlFreeDoc(inputDoc);
+        return(-1);
+    }
+
+    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_FILE, xsltSecurityForbid);
+
+    ctxt = xsltNewTransformContext(style, inputDoc);
+    if (ctxt == NULL) {
+        fprintf(stderr, "securityXIncludeTest: failed to create context\n");
+        xsltFreeSecurityPrefs(sec);
+        xsltFreeStylesheet(style);
+        xmlFreeDoc(inputDoc);
+        return(-1);
+    }
+
+    /* Enable xinclude on the transform context */
+    ctxt->xinclude = 1;
+
+    /* Set security prefs on the context */
+    xsltSetCtxtSecurityPrefs(sec, ctxt);
+
+    /* The transform should succeed but the document() call should fail
+     * to load because xinclude + security prefs triggers rejection */
+    resultDoc = xsltApplyStylesheetUser(style, inputDoc, NULL, NULL,
+                                         NULL, ctxt);
+
+    /*
+     * The expected behavior: xsltLoadDocument should reject the loaded
+     * document because xinclude is enabled and security prefs are set.
+     * The error message should mention "XInclude disabled".
+     */
+    if (testErrorsSize > 0 &&
+        strstr(testErrors, "XInclude disabled") != NULL) {
+        /* Expected: xinclude was correctly blocked */
+    } else {
+        fprintf(stderr,
+                "securityXIncludeTest: XInclude was not blocked with "
+                "security prefs active\n");
+        ret = -1;
+    }
+
+    /* Verify the secret content did not leak */
+    if (resultDoc != NULL) {
+        xmlChar *content = NULL;
+        int size = 0;
+
+        xsltSaveResultToString(&content, &size, resultDoc, style);
+        if (content != NULL) {
+            if (strstr((char *) content, "should-not-be-readable") != NULL) {
+                fprintf(stderr,
+                        "securityXIncludeTest: SECURITY FAILURE - secret "
+                        "content leaked via xinclude\n");
+                ret = -1;
+            }
+            xmlFree(content);
+        }
+        xmlFreeDoc(resultDoc);
+    }
+
+    xsltFreeTransformContext(ctxt);
+    xsltFreeSecurityPrefs(sec);
+    xsltFreeStylesheet(style);
+    xmlFreeDoc(inputDoc);
+
+    return(ret);
+}
+
+/*
+ * Test that xsltLoadDocument works normally when xinclude is NOT enabled,
+ * even with security prefs set. This ensures the fix doesn't over-block.
+ */
+static int
+securityXIncludeNoFlagTest(const char *filename ATTRIBUTE_UNUSED,
+                           int options ATTRIBUTE_UNUSED) {
+    xsltStylesheetPtr style = NULL;
+    xmlDocPtr styleDoc = NULL, inputDoc = NULL, resultDoc = NULL;
+    xsltTransformContextPtr ctxt = NULL;
+    xsltSecurityPrefsPtr sec = NULL;
+    int ret = 0;
+
+    styleDoc = xmlReadFile("security/load_document.xsl", NULL,
+                           XSLT_PARSE_OPTIONS);
+    if (styleDoc == NULL) {
+        fprintf(stderr,
+                "securityXIncludeNoFlagTest: failed to parse stylesheet\n");
+        return(-1);
+    }
+
+    style = xsltParseStylesheetDoc(styleDoc);
+    if (style == NULL) {
+        fprintf(stderr,
+                "securityXIncludeNoFlagTest: failed to compile stylesheet\n");
+        xmlFreeDoc(styleDoc);
+        return(-1);
+    }
+
+    inputDoc = xmlReadFile("security/input.xml", NULL, XSLT_PARSE_OPTIONS);
+    if (inputDoc == NULL) {
+        fprintf(stderr,
+                "securityXIncludeNoFlagTest: failed to parse input\n");
+        xsltFreeStylesheet(style);
+        return(-1);
+    }
+
+    sec = xsltNewSecurityPrefs();
+    if (sec == NULL) {
+        fprintf(stderr,
+                "securityXIncludeNoFlagTest: failed to create security prefs\n");
+        xsltFreeStylesheet(style);
+        xmlFreeDoc(inputDoc);
+        return(-1);
+    }
+
+    xsltSetSecurityPrefs(sec, XSLT_SECPREF_WRITE_FILE, xsltSecurityForbid);
+
+    ctxt = xsltNewTransformContext(style, inputDoc);
+    if (ctxt == NULL) {
+        fprintf(stderr,
+                "securityXIncludeNoFlagTest: failed to create context\n");
+        xsltFreeSecurityPrefs(sec);
+        xsltFreeStylesheet(style);
+        xmlFreeDoc(inputDoc);
+        return(-1);
+    }
+
+    /* xinclude is NOT enabled (ctxt->xinclude stays 0) */
+    xsltSetCtxtSecurityPrefs(sec, ctxt);
+
+    resultDoc = xsltApplyStylesheetUser(style, inputDoc, NULL, NULL,
+                                         NULL, ctxt);
+
+    /*
+     * Without xinclude, document() should load normally.
+     * The xi:include elements remain as-is (unexpanded).
+     * There should be no "XInclude disabled" error.
+     */
+    if (testErrorsSize > 0 &&
+        strstr(testErrors, "XInclude disabled") != NULL) {
+        fprintf(stderr,
+                "securityXIncludeNoFlagTest: document() was incorrectly "
+                "blocked without --xinclude\n");
+        ret = -1;
+    }
+
+    if (resultDoc == NULL) {
+        fprintf(stderr,
+                "securityXIncludeNoFlagTest: document() failed to load\n");
+        ret = -1;
+    } else {
+        xmlFreeDoc(resultDoc);
+    }
+
+    xsltFreeTransformContext(ctxt);
+    xsltFreeSecurityPrefs(sec);
+    xsltFreeStylesheet(style);
+    xmlFreeDoc(inputDoc);
+
+    return(ret);
+}
+#endif /* LIBXML_XINCLUDE_ENABLED */
+
+/************************************************************************
+ *									*
  *			Tests Descriptions				*
  *									*
  ************************************************************************/
@@ -747,6 +965,12 @@ testDesc testDescriptions[] = {
 #ifdef LIBXSLT_DEFAULT_PLUGINS_PATH
     { "plugin tests",
       xsltTest, "plugins", "./*.xsl", 0 },
+#endif
+#ifdef LIBXML_XINCLUDE_ENABLED
+    { "security xinclude with prefs",
+      securityXIncludeTest, NULL, NULL, 0 },
+    { "security xinclude without flag",
+      securityXIncludeNoFlagTest, NULL, NULL, 0 },
 #endif
     {NULL, NULL, NULL, NULL, 0}
 };

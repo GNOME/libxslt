@@ -26,4 +26,3 @@ check-local: $(top_builddir)/xsltproc/xsltproc
 	rm -f res)
 
 
-

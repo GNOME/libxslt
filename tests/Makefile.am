@@ -54,3 +54,4 @@ dist-hook:
 	cp -a $(srcdir)/numbers $(distdir)
 	cp -a $(srcdir)/plugins $(distdir)
 	cp -a $(srcdir)/reports $(distdir)
+	cp -a $(srcdir)/security $(distdir)
